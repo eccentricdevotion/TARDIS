@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
@@ -84,9 +85,9 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 }
                 // get the world
                 World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
-                String chk_w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld().getName();
+                String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
                 if (!w.getName().equals(chk_w)) {
-                    TARDISMessage.send(player, "SCHM_WORLD!");
+                    TARDISMessage.send(player, "SCHM_WORLD");
                     return true;
                 }
                 // get the raw coords
@@ -118,7 +119,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return true;
             }
-            if (!args[0].equalsIgnoreCase("load") && !args[0].equalsIgnoreCase("save")) {
+            if (!args[0].equalsIgnoreCase("load") && !args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("replace")) {
                 TARDISMessage.send(player, "SCHM_NAME");
                 return true;
             }
@@ -134,9 +135,9 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 }
                 // get the world
                 World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
-                String chk_w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld().getName();
+                String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
                 if (!w.getName().equals(chk_w)) {
-                    TARDISMessage.send(player, "SCHM_WORLD!");
+                    TARDISMessage.send(player, "SCHM_WORLD");
                     return true;
                 }
                 // get the raw coords
@@ -264,6 +265,60 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 plugin.getTrackerKeeper().getPastes().put(uuid, sch);
                 TARDISMessage.send(player, "SCHM_LOADED", ChatColor.GREEN + "/ts paste" + ChatColor.RESET);
                 return true;
+            }
+            if (args[0].equalsIgnoreCase("replace")) {
+                if (args.length < 3) {
+                    TARDISMessage.send(player, "TOO_FEW_ARGS");
+                    return true;
+                }
+                // check they have selected start and end blocks
+                if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
+                    TARDISMessage.send(player, "SCHM_NO_START");
+                    return true;
+                }
+                if (!plugin.getTrackerKeeper().getEndLocation().containsKey(uuid)) {
+                    TARDISMessage.send(player, "SCHM_NO_END");
+                    return true;
+                }
+                // get the world
+                World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
+                String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
+                if (!w.getName().equals(chk_w)) {
+                    TARDISMessage.send(player, "SCHM_WORLD");
+                    return true;
+                }
+                try {
+                    Material from = Material.valueOf(args[1].toUpperCase());
+                    Material to = Material.valueOf(args[2].toUpperCase());
+                    // get the raw coords
+                    int sx = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockX();
+                    int sy = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockY();
+                    int sz = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockZ();
+                    int ex = plugin.getTrackerKeeper().getEndLocation().get(uuid).getBlockX();
+                    int ey = plugin.getTrackerKeeper().getEndLocation().get(uuid).getBlockY();
+                    int ez = plugin.getTrackerKeeper().getEndLocation().get(uuid).getBlockZ();
+                    // get the min & max coords
+                    int minx = Math.min(sx, ex);
+                    int maxx = Math.max(sx, ex);
+                    int miny = Math.min(sy, ey);
+                    int maxy = Math.max(sy, ey);
+                    int minz = Math.min(sz, ez);
+                    int maxz = Math.max(sz, ez);
+                    // loop through the blocks inside this cube
+                    for (int l = miny; l <= maxy; l++) {
+                        for (int r = minx; r <= maxx; r++) {
+                            for (int c = minz; c <= maxz; c++) {
+                                Block b = w.getBlockAt(r, l, c);
+                                if (b.getType().equals(from)) {
+                                    b.setType(to);
+                                }
+                            }
+                        }
+                    }
+                } catch (IllegalArgumentException e) {
+                    TARDISMessage.send(player, "ARG_MATERIAL");
+                    return true;
+                }
             }
         }
         return false;
