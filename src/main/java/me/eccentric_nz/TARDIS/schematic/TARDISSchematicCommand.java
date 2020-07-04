@@ -28,6 +28,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -310,6 +311,10 @@ public class TARDISSchematicCommand implements CommandExecutor {
                             for (int c = minz; c <= maxz; c++) {
                                 Block b = w.getBlockAt(r, l, c);
                                 if (b.getType().equals(from)) {
+                                    BlockState state = b.getState();
+                                    if (state instanceof BlockState) {
+                                        plugin.getTardisHelper().removeTileEntity(state);
+                                    }
                                     b.setType(to);
                                 }
                             }
@@ -319,6 +324,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                     TARDISMessage.send(player, "ARG_MATERIAL");
                     return true;
                 }
+                return true;
             }
         }
         return false;

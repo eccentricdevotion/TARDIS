@@ -44,6 +44,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
@@ -571,11 +572,17 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 } else if (type.equals(Material.SPONGE)) {
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
                 } else {
-                    Block tmp = world.getBlockAt(x, y, z);
-                    if (clean && !tmp.getType().equals(type) && !tmp.getType().isAir()) {
+                    BlockState state = world.getBlockAt(x, y, z).getState();
+                    if (state instanceof BlockState) {
+                        plugin.getTardisHelper().removeTileEntity(state);
                         TARDISBlockSetters.setBlock(world, x, y, z, data);
-                    } else if (!tmp.getType().equals(type)) {
-                        TARDISBlockSetters.setBlock(world, x, y, z, data);
+                    } else {
+                        Block tmp = world.getBlockAt(x, y, z);
+                        if (clean && !tmp.getType().equals(type) && !tmp.getType().isAir()) {
+                            TARDISBlockSetters.setBlock(world, x, y, z, data);
+                        } else if (!tmp.getType().equals(type)) {
+                            TARDISBlockSetters.setBlock(world, x, y, z, data);
+                        }
                     }
                 }
             }

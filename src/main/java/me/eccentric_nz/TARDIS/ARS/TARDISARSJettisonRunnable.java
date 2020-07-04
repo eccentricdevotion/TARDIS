@@ -23,6 +23,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -76,6 +77,10 @@ class TARDISARSJettisonRunnable implements Runnable {
                                 plugin.getGeneralKeeper().getGravityDownList().remove(l);
                             }
                         }
+                    }
+                    BlockState state = b.getState();
+                    if (state instanceof BlockState) {
+                        plugin.getTardisHelper().removeTileEntity(state);
                     }
                     b.setBlockData(TARDISConstants.AIR);
                 }

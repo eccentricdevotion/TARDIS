@@ -44,7 +44,10 @@ import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
-import org.bukkit.block.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
@@ -678,12 +681,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
                 } else {
                     BlockState state = world.getBlockAt(x, y, z).getState();
-                    if (state instanceof TileState) {
-                        state.getBlock().setBlockData(data);
-                        state.update(true);
-                    } else {
-                        TARDISBlockSetters.setBlock(world, x, y, z, data);
+                    if (state instanceof BlockState) {
+                        plugin.getTardisHelper().removeTileEntity(state);
                     }
+                    TARDISBlockSetters.setBlock(world, x, y, z, data);
                 }
             }
             // remove items
@@ -752,6 +753,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             for (int xx = jx; xx < (jx + 16); xx++) {
                 for (int zz = jz; zz < (jz + 16); zz++) {
                     Block b = jw.getBlockAt(xx, yy, zz);
+                    BlockState state = b.getState();
+                    if (state instanceof BlockState) {
+                        plugin.getTardisHelper().removeTileEntity(state);
+                    }
                     b.setBlockData(TARDISConstants.AIR);
                 }
             }
