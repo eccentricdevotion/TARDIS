@@ -121,6 +121,7 @@ public class TARDISCondensablesUpdater {
             list.put("GRANITE_STAIRS", 2);
             list.put("GRANITE_WALL", 2);
             list.put("GRINDSTONE", 30);
+            list.put("HONEYCOMB_BLOCK", 80);
             list.put("JUNGLE_SIGN", 2);
             list.put("JUNGLE_WALL_SIGN", 2);
             list.put("LANTERN", 28);

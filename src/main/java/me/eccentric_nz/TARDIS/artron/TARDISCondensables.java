@@ -402,6 +402,7 @@ public class TARDISCondensables {
             condensables.put("HAY_BLOCK", 81);
             condensables.put("HEART_OF_THE_SEA", 200);
             condensables.put("HEAVY_WEIGHTED_PRESSURE_PLATE", 144);
+            condensables.put("HONEYCOMB_BLOCK", 80);
             condensables.put("HOPPER", 110);
             condensables.put("HOPPER_MINECART", 133);
             condensables.put("HORN_CORAL", 2);
