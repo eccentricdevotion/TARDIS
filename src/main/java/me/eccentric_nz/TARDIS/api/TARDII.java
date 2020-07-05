@@ -463,7 +463,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public HashMap<Schematic, ShapedRecipe> getSeedRecipes() {
-        return TARDIS.plugin.getSemen().getSeedRecipes();
+        return TARDIS.plugin.getOobstructionum().getSeedRecipes();
     }
 
     @Override

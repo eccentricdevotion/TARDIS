@@ -1139,6 +1139,46 @@ shapeless:
     amount: 4
     lore: ''
 # -------------------
+# these are the smithing recipes
+# -------------------
+smithing:
+  Admin Repair:
+    base: BLAZE_ROD
+    addition: GLOWSTONE_DUST=Server Admin Circuit
+    result: BLAZE_ROD
+  Bio-scanner Repair:
+    base: BLAZE_ROD
+    addition: GLOWSTONE_DUST=Bio-scanner Circuit
+    result: BLAZE_ROD
+  Redstone Repair:
+    base: BLAZE_ROD
+    addition: GLOWSTONE_DUST=Redstone Activator Circuit
+    result: BLAZE_ROD
+  Diamond Repair:
+    base: BLAZE_ROD
+    addition: GLOWSTONE_DUST=Diamond Disruptor Circuit
+    result: BLAZE_ROD
+  Emerald Repair:
+    base: BLAZE_ROD
+    addition: GLOWSTONE_DUST=Emerald Environment Circuit
+    result: BLAZE_ROD
+  Painter Repair:
+    base: BLAZE_ROD
+    addition: GLOWSTONE_DUST=Painter Circuit
+    result: BLAZE_ROD
+  Ignite Repair:
+    base: BLAZE_ROD
+    addition: GLOWSTONE_DUST=Ignite Circuit
+    result: BLAZE_ROD
+  Pickup Arrows Repair:
+    base: BLAZE_ROD
+    addition: GLOWSTONE_DUST=Pickup Arrows Circuit
+    result: BLAZE_ROD
+  Knockback Repair:
+    base: BLAZE_ROD
+    addition: GLOWSTONE_DUST=Knockback Circuit
+    result: BLAZE_ROD
+# -------------------
 ## furnace recipes are not used yet...
 # -------------------
 furnace:

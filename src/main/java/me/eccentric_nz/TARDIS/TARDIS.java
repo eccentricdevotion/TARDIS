@@ -58,10 +58,7 @@ import me.eccentric_nz.TARDIS.planets.TARDISGallifrey;
 import me.eccentric_nz.TARDIS.planets.TARDISSiluria;
 import me.eccentric_nz.TARDIS.planets.TARDISSkaro;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
-import me.eccentric_nz.TARDIS.recipes.TARDISSeedRecipe;
-import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
-import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
-import me.eccentric_nz.TARDIS.recipes.TARDISUUIDDataType;
+import me.eccentric_nz.TARDIS.recipes.*;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomPersister;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
@@ -139,7 +136,7 @@ public class TARDIS extends JavaPlugin {
     private TARDISChameleonPreset presets;
     private TARDISPerceptionFilter filter;
     private TARDISPluginRespect pluginRespect;
-    private TARDISSeedRecipe seeds;
+    private TARDISSeedRecipe obstructionum;
     private TARDISShapedRecipe figura;
     private TARDISShapelessRecipe incomposita;
     private TARDISUtils utils;
@@ -376,12 +373,13 @@ public class TARDIS extends JavaPlugin {
                 difficulty = Difficulty.EASY;
             }
             // register recipes
-            seeds = new TARDISSeedRecipe(this);
-            seeds.addSeedRecipes();
+            obstructionum = new TARDISSeedRecipe(this);
+            obstructionum.addSeedRecipes();
             figura = new TARDISShapedRecipe(this);
             figura.addShapedRecipes();
             incomposita = new TARDISShapelessRecipe(this);
             incomposita.addShapelessRecipes();
+            new TARDISSmithingRecipe(this).addSmithingRecipes();
             TARDISInformationSystemListener info = new TARDISListenerRegisterer(this).registerListeners();
             new TARDISCommandSetter(this, info).loadCommands();
             startSound();
@@ -1135,8 +1133,8 @@ public class TARDIS extends JavaPlugin {
         return figura;
     }
 
-    public TARDISSeedRecipe getSemen() {
-        return seeds;
+    public TARDISSeedRecipe getOobstructionum() {
+        return obstructionum;
     }
 
     public TARDISShapelessRecipe getIncomposita() {

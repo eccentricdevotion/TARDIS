@@ -867,6 +867,35 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Artron Furnace.lore", "");
             i++;
         }
+        if (!recipes_config.contains("smithing.Admin Repair")) {
+            recipes_config.set("smithing.Admin Repair.base", "BLAZE_ROD");
+            recipes_config.set("smithing.Admin Repair.addition", "GLOWSTONE_DUST=Server Admin Circuit");
+            recipes_config.set("smithing.Admin Repair.result", "BLAZE_ROD");
+            recipes_config.set("smithing.Bio-scanner Repair.base", "BLAZE_ROD");
+            recipes_config.set("smithing.Bio-scanner Repair.addition", "GLOWSTONE_DUST=Bio-scanner Circuit");
+            recipes_config.set("smithing.Bio-scanner Repair.result", "BLAZE_ROD");
+            recipes_config.set("smithing.Redstone Repair.base", "BLAZE_ROD");
+            recipes_config.set("smithing.Redstone Repair.addition", "GLOWSTONE_DUST=Redstone Activator Circuit");
+            recipes_config.set("smithing.Redstone Repair.result", "BLAZE_ROD");
+            recipes_config.set("smithing.Diamond Repair.base", "BLAZE_ROD");
+            recipes_config.set("smithing.Diamond Repair.addition", "GLOWSTONE_DUST=Diamond Disruptor Circuit");
+            recipes_config.set("smithing.Diamond Repair.result", "BLAZE_ROD");
+            recipes_config.set("smithing.Emerald Repair.base", "BLAZE_ROD");
+            recipes_config.set("smithing.Emerald Repair.addition", "GLOWSTONE_DUST=Emerald Environment Circuit");
+            recipes_config.set("smithing.Emerald Repair.result", "BLAZE_ROD");
+            recipes_config.set("smithing.Painter Repair.base", "BLAZE_ROD");
+            recipes_config.set("smithing.Painter Repair.addition", "GLOWSTONE_DUST=Painter Circuit");
+            recipes_config.set("smithing.Painter Repair.result", "BLAZE_ROD");
+            recipes_config.set("smithing.Ignite Repair.base", "BLAZE_ROD");
+            recipes_config.set("smithing.Ignite Repair.addition", "GLOWSTONE_DUST=Ignite Circuit");
+            recipes_config.set("smithing.Ignite Repair.result", "BLAZE_ROD");
+            recipes_config.set("smithing.Pickup Arrows Repair.base", "BLAZE_ROD");
+            recipes_config.set("smithing.Pickup Arrows Repair.addition", "GLOWSTONE_DUST=Pickup Arrows Circuit");
+            recipes_config.set("smithing.Pickup Arrows Repair.result", "BLAZE_ROD");
+            recipes_config.set("smithing.Knockback Repair.base", "BLAZE_ROD");
+            recipes_config.set("smithing.Knockback Repair.addition", "GLOWSTONE_DUST=Knockback Circuit");
+            recipes_config.set("smithing.Knockback Repair.result", "BLAZE_ROD");
+        }
         if (!recipes_config.contains("furnace.Nuclear Wool.experience")) {
             recipes_config.set("furnace.Nuclear Wool.experience", 0);
             recipes_config.set("furnace.Nuclear Wool.cooktime", 200);
