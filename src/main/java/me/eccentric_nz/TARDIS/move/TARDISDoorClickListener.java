@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import me.eccentric_nz.TARDIS.utility.TARDISRedProtectChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -210,7 +211,11 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                     if (isPoliceBox) {
                                                         new TARDISCustomModelDataChanger(plugin, block, player, id).toggleOuterDoor();
                                                     } else {
-                                                        new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
+                                                        if (doortype == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {
+                                                            new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
+                                                        } else {
+                                                            new TARDISInnerDoorOpener(plugin, playerUUID, id).openDoor();
+                                                        }
                                                     }
                                                 }
                                             } else if (Tag.TRAPDOORS.isTagged(blockType)) {
