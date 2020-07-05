@@ -15,7 +15,7 @@ import java.util.Set;
 public class FractalFence {
 
     public static void grow(Block start, int i) {
-        Material material = (i % 2 == 0) ? Material.WARPED_FENCE : Material.CRIMSON_FENCE;
+        Material material = start.getType();
         for (Location location : getPoints(start.getLocation(), i)) {
             location.getBlock().setType(material, true);
         }
@@ -23,7 +23,7 @@ public class FractalFence {
 
     private static Set<Location> getPoints(Location location, int i) {
         List<Vector> points = new ArrayList<>();
-        points.add(new Vector(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
+        points.add(location.toVector());
         Set<Location> adjacent = new HashSet<>();
         World world = location.getWorld();
         int minx = location.getBlockX();
