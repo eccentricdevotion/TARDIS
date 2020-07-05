@@ -176,6 +176,13 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     }
                 }
             }
+            if (tardis.getRotor() != null) {
+                // remove item frame and delete UUID in db
+                ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                itemFrame.setItem(null, false);
+                itemFrame.remove();
+                TARDISTimeRotor.updateRotorRecord(id, "");
+            }
             chunks = getChunks(chunk, tud.getSchematic());
             if (!tardis.getCreeper().isEmpty()) {
                 // remove the charged creeper
