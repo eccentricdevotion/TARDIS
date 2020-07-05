@@ -68,6 +68,8 @@ public class TARDISSonicListener implements Listener {
         doors.add(Material.ACACIA_TRAPDOOR);
         doors.add(Material.BIRCH_DOOR);
         doors.add(Material.BIRCH_TRAPDOOR);
+        doors.add(Material.CRIMSON_DOOR);
+        doors.add(Material.CRIMSON_TRAPDOOR);
         doors.add(Material.DARK_OAK_DOOR);
         doors.add(Material.DARK_OAK_TRAPDOOR);
         doors.add(Material.IRON_DOOR);
@@ -78,6 +80,8 @@ public class TARDISSonicListener implements Listener {
         doors.add(Material.OAK_TRAPDOOR);
         doors.add(Material.SPRUCE_DOOR);
         doors.add(Material.SPRUCE_TRAPDOOR);
+        doors.add(Material.WARPED_DOOR);
+        doors.add(Material.WARPED_TRAPDOOR);
         redstone.add(Material.DETECTOR_RAIL);
         redstone.add(Material.IRON_DOOR);
         redstone.add(Material.IRON_TRAPDOOR);
@@ -90,6 +94,9 @@ public class TARDISSonicListener implements Listener {
         ignite.add(Material.CAMPFIRE);
         ignite.add(Material.NETHERRACK);
         ignite.add(Material.OBSIDIAN);
+        ignite.add(Material.SOUL_CAMPFIRE);
+        ignite.add(Material.SOUL_SAND);
+        ignite.add(Material.SOUL_SOIL);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
