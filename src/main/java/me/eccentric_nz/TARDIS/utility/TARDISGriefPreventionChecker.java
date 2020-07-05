@@ -41,7 +41,7 @@ public class TARDISGriefPreventionChecker {
      *
      * @param p the player to check access for.
      * @param l the location to check.
-     * @return true or false depending on whether the location is within the border
+     * @return true or false depending on whether the player has access to the claim
      */
     public boolean isInClaim(Player p, Location l) {
         boolean bool = true;

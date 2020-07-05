@@ -791,6 +791,7 @@ public class TARDIS extends JavaPlugin {
         pluginRespect.loadTowny();
         pluginRespect.loadWorldBorder();
         pluginRespect.loadGriefPrevention();
+        pluginRespect.loadRedProtect();
     }
 
     /**

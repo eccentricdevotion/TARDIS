@@ -411,6 +411,14 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>br.net.fabiozumbi12.RedProtect</groupId>
+            <artifactId>RedProtect</artifactId>
+            <version>7.7.2</version>
+            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/RedProtect.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.rauschig</groupId>
             <artifactId>jarchivelib</artifactId>
             <version>0.7.1</version>

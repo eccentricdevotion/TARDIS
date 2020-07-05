@@ -109,6 +109,7 @@ public class TARDISConfiguration {
         booleanOptions.put("preferences.render_entities", false);
         booleanOptions.put("preferences.respect_factions", true);
         booleanOptions.put("preferences.respect_grief_prevention", true);
+        booleanOptions.put("preferences.respect_red_protect", true);
         booleanOptions.put("preferences.respect_worldborder", true);
         booleanOptions.put("preferences.spawn_random_monsters", true);
         booleanOptions.put("preferences.strike_lightning", true);

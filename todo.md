@@ -11,6 +11,7 @@
 7. More sudo commands - [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
 8. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
 9. TCG API - use Police Box location instead of player location?
+10. Retry Smithing recipes
 
 ## Resource Pack / TARDISWeepingAngels
 1. Re-skin mobs for Resource pack, and add new mob sounds

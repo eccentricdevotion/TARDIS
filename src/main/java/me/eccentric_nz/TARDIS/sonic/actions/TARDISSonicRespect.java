@@ -23,6 +23,7 @@ import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISRedProtectChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.block.Block;
@@ -55,6 +56,10 @@ public class TARDISSonicRespect {
         // GriefPrevention
         if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
             return !(new TARDISGriefPreventionChecker(plugin).isInClaim(player, block.getLocation()));
+        }
+        // RedProtect
+        if (plugin.getPM().isPluginEnabled("RedProtect")) {
+            return TARDISRedProtectChecker.canSonic(player, block);
         }
         // LockettePro
         if (plugin.getPM().isPluginEnabled("LockettePro")) {

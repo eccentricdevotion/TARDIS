@@ -78,6 +78,7 @@ preferences:
   respect_worldborder: true
   respect_factions: true
   respect_grief_prevention: true
+  respect_red_protect: true
   sfx_volume: 10
   difficulty: easy
   strike_lightning: true

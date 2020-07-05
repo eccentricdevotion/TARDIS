@@ -35,6 +35,7 @@ public class Parameters {
     private boolean repectWorldBorder = false;
     private boolean respectFactions = false;
     private boolean respectGreifPrevention = false;
+    private boolean respectRedProtect = false;
     private boolean respectTowny = false;
     private boolean respectWorldguard = false;
     private boolean spaceTardis = false;
@@ -61,6 +62,9 @@ public class Parameters {
                     break;
                 case RESPECT_GRIEFPREVENTION:
                     respectGreifPrevention = true;
+                    break;
+                case RESPECT_REDPROTECT:
+                    respectRedProtect = true;
                     break;
                 case RESPECT_TOWNY:
                     respectTowny = true;
@@ -106,6 +110,10 @@ public class Parameters {
 
     public boolean respectGreifPrevention() {
         return respectGreifPrevention;
+    }
+
+    public boolean respectRedProtect() {
+        return respectRedProtect;
     }
 
     public boolean respectTowny() {

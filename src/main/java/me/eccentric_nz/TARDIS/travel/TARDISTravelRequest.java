@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.ResultSetTravelledTo;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISRedProtectChecker;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
@@ -113,6 +114,11 @@ public class TARDISTravelRequest {
             TARDISMessage.send(p, "GRIEFPREVENTION");
             bool = false;
         }
+        if (plugin.getPluginRespect().isRedProtectOnServer() && plugin.getConfig().getBoolean("preferences.respect_red_protect") && !TARDISRedProtectChecker.canBuild(to, l)) {
+            TARDISMessage.send(p, "REDPROTECT");
+            bool = false;
+        }
+
         if (plugin.getTardisArea().areaCheckLocPlayer(p, l)) {
             TARDISMessage.send(p, "TRAVEL_NO_PERM", plugin.getTrackerKeeper().getPerm().get(p.getUniqueId()));
             plugin.getTrackerKeeper().getPerm().remove(p.getUniqueId());
