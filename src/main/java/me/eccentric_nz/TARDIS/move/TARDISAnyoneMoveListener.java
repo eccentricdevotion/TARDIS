@@ -101,12 +101,9 @@ public class TARDISAnyoneMoveListener implements Listener {
                 petsAndFollowers = tf.farmAnimals(l, d, id, p, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
             }
             // set travelling status
-            if (exit) {
-                // unoccupied
-                plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
-            } else {
+            plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
+            if (!exit) {
                 // occupied
-                plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
                 set.put("uuid", uuid.toString());

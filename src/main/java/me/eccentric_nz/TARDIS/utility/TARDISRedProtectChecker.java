@@ -2,7 +2,6 @@ package me.eccentric_nz.TARDIS.utility;
 
 import br.net.fabiozumbi12.RedProtect.Bukkit.RedProtect;
 import br.net.fabiozumbi12.RedProtect.Bukkit.Region;
-import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -98,7 +97,6 @@ public class TARDISRedProtectChecker {
     public static boolean shouldToggleDoor(Block block) {
         Region region = RedProtect.get().getRegionManager().getTopRegion(block.getLocation());
         if (region == null) {
-            TARDIS.plugin.debug("RedProtect region was null");
             return true;
         }
         return !region.getFlagBool("smart-door");
