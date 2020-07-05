@@ -25,6 +25,7 @@ public enum GUIConfiguration {
     ALLOW(1, 0, Material.REPEATER),
     ARCH(2, 22, Material.REPEATER),
     ARCHIVE(3, 25, Material.REPEATER),
+    BLUEPRINTS(48, 23, Material.REPEATER),
     CREATION(4, 26, Material.REPEATER),
     GROWTH(5, 36, Material.REPEATER),
     HANDLES(6, 37, Material.REPEATER),
