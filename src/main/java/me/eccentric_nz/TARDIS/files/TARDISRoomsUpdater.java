@@ -78,8 +78,12 @@ public class TARDISRoomsUpdater {
         booleanOptions.put("rooms.LAZARUS.user", false);
         booleanOptions.put("rooms.LIBRARY.enabled", true);
         booleanOptions.put("rooms.LIBRARY.user", false);
+        booleanOptions.put("rooms.MAZE.enabled", true);
+        booleanOptions.put("rooms.MAZE.user", false);
         booleanOptions.put("rooms.MUSHROOM.enabled", true);
         booleanOptions.put("rooms.MUSHROOM.user", false);
+        booleanOptions.put("rooms.NETHER.enabled", true);
+        booleanOptions.put("rooms.NETHER.user", false);
         booleanOptions.put("rooms.PASSAGE.enabled", true);
         booleanOptions.put("rooms.PASSAGE.user", false);
         booleanOptions.put("rooms.POOL.enabled", true);
@@ -147,8 +151,12 @@ public class TARDISRoomsUpdater {
         integerOptions.put("rooms.LAZARUS.offset", -4);
         integerOptions.put("rooms.LIBRARY.cost", 550);
         integerOptions.put("rooms.LIBRARY.offset", -4);
+        integerOptions.put("rooms.MAZE.cost", 650);
+        integerOptions.put("rooms.MAZE.offset", -4);
         integerOptions.put("rooms.MUSHROOM.cost", 350);
         integerOptions.put("rooms.MUSHROOM.offset", -4);
+        integerOptions.put("rooms.NETHER.cost", 450);
+        integerOptions.put("rooms.NETHER.offset", -4);
         integerOptions.put("rooms.PASSAGE.cost", 200);
         integerOptions.put("rooms.PASSAGE.offset", -4);
         integerOptions.put("rooms.POOL.cost", 450);
@@ -197,7 +205,9 @@ public class TARDISRoomsUpdater {
         stringOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
         stringOptions.put("rooms.LAZARUS.seed", "FURNACE");
         stringOptions.put("rooms.LIBRARY.seed", "ENCHANTMENT_TABLE");
+        stringOptions.put("rooms.MAZE.seed", "LODESTONE");
         stringOptions.put("rooms.MUSHROOM.seed", "GRAVEL");
+        stringOptions.put("rooms.NETHER.seed", "BLACKSTONE");
         stringOptions.put("rooms.PASSAGE.seed", "CLAY");
         stringOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
         stringOptions.put("rooms.RAIL.seed", "HOPPER");

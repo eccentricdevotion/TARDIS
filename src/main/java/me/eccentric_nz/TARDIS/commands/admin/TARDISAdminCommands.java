@@ -25,9 +25,12 @@ import me.eccentric_nz.TARDIS.database.tool.Converter;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
+import me.eccentric_nz.TARDIS.maze.TARDISMazeBuilder;
+import me.eccentric_nz.TARDIS.maze.TARDISMazeGenerator;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.UpdateTARDISPlugins;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
@@ -92,6 +95,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("language", "preferences");
         firstsStr.put("list", "");
         firstsStr.put("make_preset", "");
+        firstsStr.put("maze", "");
         firstsStr.put("playercount", "");
         firstsStr.put("prune", "");
         firstsStr.put("prunelist", "");
@@ -274,6 +278,17 @@ public class TARDISAdminCommands implements CommandExecutor {
                             return true;
                         }
                         return new UpdateTARDISPlugins(plugin).fetchFromJenkins(sender);
+                    }
+                    if (first.equals("maze")) {
+                        if (sender instanceof Player) {
+                            Player p = (Player) sender;
+                            Location l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation();
+                            TARDISMazeGenerator generator = new TARDISMazeGenerator();
+                            generator.makeMaze();
+                            TARDISMazeBuilder builder = new TARDISMazeBuilder(generator.getMaze(), l);
+                            builder.build(false);
+                        }
+                        return true;
                     }
                 }
                 if (first.equals("adv")) {

@@ -10,11 +10,7 @@
 6. Time travel - [Bukkit #1182](https://dev.bukkit.org/projects/tardis/issues/1182)
 7. More sudo commands - [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
 8. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-9. Maze & Nether room
-   * update rooms.yml
-   * fix maze reconfiguration not getting the right location / player direction
-   * save maze spawn location - add soulsand block to schematic
-10. TCG API - use Police Box location instead of player location?
+9. TCG API - use Police Box location instead of player location?
 
 ## Resource Pack / TARDISWeepingAngels
 1. Re-skin mobs for Resource pack, and add new mob sounds

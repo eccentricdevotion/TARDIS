@@ -7,8 +7,6 @@ import java.util.Random;
 
 public class TARDISMazeGenerator {
 
-    static final char MAZE_WALL = '#';
-    static final char MAZE_PATH = ' ';
     private final boolean[][] field; // The field we are cutting into
     private final ArrayDeque<Integer[]> tracker; // stack to trace location
     private final int rows; // number of rows in the representative 2r+1 array
@@ -16,11 +14,11 @@ public class TARDISMazeGenerator {
     private final int act_rows; // number of rows in the real maze
     private final int act_cols; // number of columns in the real maze
 
-    public TARDISMazeGenerator(int size) {
-        act_rows = size;
-        act_cols = size;
-        rows = 2 * size + 1;
-        cols = 2 * size + 1;
+    public TARDISMazeGenerator() {
+        act_rows = 5;
+        act_cols = 5;
+        rows = 11;
+        cols = 11;
         // initializes the field to proper size
         field = new boolean[rows][cols];
         // initialize tracker to ample size
@@ -95,7 +93,6 @@ public class TARDISMazeGenerator {
             // are the more locations in stack?
             not_done = stackPeek();
         }
-        makeOpenings();
     }
 
     public boolean[][] getMaze() {
@@ -300,26 +297,5 @@ public class TARDISMazeGenerator {
 
     private void back() {
         tracker.removeFirst();
-    }
-
-    public void makeOpenings() {
-        // two different random number generators
-        Random rand = new Random();
-        Random rand2 = new Random();
-        // a random location for the entrance and exit
-        int entrance_row = rand.nextInt(act_rows - 1) * 2 + 1;
-        int exit_row = rand2.nextInt(act_rows - 1) * 2 + 1;
-        // clear the location
-        field[entrance_row][0] = false;
-        field[exit_row][cols - 1] = true;
-    }
-
-    public void printMaze() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                System.out.print(field[i][j] ? MAZE_WALL : MAZE_PATH);
-            }
-            System.out.println();
-        }
     }
 }

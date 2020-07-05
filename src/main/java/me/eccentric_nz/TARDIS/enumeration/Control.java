@@ -62,7 +62,12 @@ public enum Control {
     ROTOR(36, "", false, false),
     MAP(37, "map", false, false),
     WEATHER(38, "weather", false, false),
-    THROTTLE(39, "throttle", false, true);
+    THROTTLE(39, "throttle", false, true),
+    MAZE_NORTH(40, "", true, false),
+    MAZE_WEST(41, "", true, false),
+    MAZE_EAST(42, "", true, false),
+    MAZE_SOUTH(43, "", true, false),
+    MAZE_SPAWN(44, "", true, false);
 
     private static final HashMap<String, Integer> UPDATE_CONTROLS = new HashMap<>();
     private static final HashMap<Integer, Control> BY_ID = new HashMap<>();

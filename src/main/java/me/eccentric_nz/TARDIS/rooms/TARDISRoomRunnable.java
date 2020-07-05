@@ -88,6 +88,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final HashMap<Integer, Integer> repeaterOrder = new HashMap<>();
     private final boolean wasResumed;
     private final List<String> postBlocks;
+    private int maze_count = 0;
     private int task, level, row, col, h, w, c, startx, starty, startz, resetx, resety, resetz;
     private boolean running;
     private World world;
@@ -615,13 +616,16 @@ public class TARDISRoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertControl(tardis_id, 19, plate, 0);
                 }
                 // set stable
-                if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE"))) {
+                if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE"))) {
                     HashMap<String, Object> sets = new HashMap<>();
                     sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                     HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("tardis_id", tardis_id);
                     if (room.equals("RENDERER") || room.equals("ZERO")) {
                         plugin.getQueryFactory().doUpdate("tardis", sets, wheres);
+                    } else if (room.equals("MAZE")) {
+                        String loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty + 1, startz);
+                        plugin.getQueryFactory().insertControl(tardis_id, 44, loc_str, 0);
                     } else {
                         ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
                         if (rsf.resultSet()) {
@@ -640,6 +644,7 @@ public class TARDISRoomRunnable implements Runnable {
                         case HUTCH:
                         case STABLE:
                         case STALL:
+                        case MAZE:
                             data = Material.GRASS_BLOCK.createBlockData();
                             break;
                         case BAMBOO:
@@ -673,7 +678,7 @@ public class TARDISRoomRunnable implements Runnable {
                             }
                             break;
                     }
-                    if (!room.equals("ZERO") && !room.equals("RENDERER")) {
+                    if (!room.equals("ZERO") && !room.equals("RENDERER") && !room.equals("MAZE")) {
                         // update player prefs - turn on mob farming
                         if (player != null) {
                             turnOnFarming(player);
@@ -921,6 +926,12 @@ public class TARDISRoomRunnable implements Runnable {
                         Double[] values = {1D, 16D, 0.5D};
                         plugin.getGeneralKeeper().getGravityUpList().put(loc, values);
                     }
+                }
+                if (room.equals("MAZE") && type.equals(Material.STONE_PRESSURE_PLATE)) {
+                    String loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty, startz);
+                    int maze = 40 + maze_count;
+                    plugin.getQueryFactory().insertControl(tardis_id, maze, loc_str, 0);
+                    maze_count++;
                 }
                 if (room.equals("BAKER") || room.equals("WOOD")) {
                     // remember the controls

@@ -44,7 +44,9 @@ public enum TARDISARS implements ARS {
     KITCHEN("PUMPKIN", "Kitchen", 1),
     LAZARUS("FURNACE", "Genetic Manipulator", 1),
     LIBRARY("ENCHANTING_TABLE", "Library", 1),
+    MAZE("LODESTONE", "Maze", 1),
     MUSHROOM("GRAVEL", "Mycellium", 1),
+    NETHER("BLACKSTONE", "Nether", 1),
     PASSAGE("CLAY", "Passage", 1),
     POOL("SNOW_BLOCK", "Pool", 1),
     RAIL("HOPPER", "Rail Transfer Station", 1),
@@ -80,13 +82,6 @@ public enum TARDISARS implements ARS {
         this.material = material;
         this.descriptiveName = descriptiveName;
         configPath = toString();
-        this.offset = offset;
-    }
-
-    TARDISARS(String material, String descriptiveName, String configPath, int offset) {
-        this.material = material;
-        this.descriptiveName = descriptiveName;
-        this.configPath = configPath;
         this.offset = offset;
     }
 

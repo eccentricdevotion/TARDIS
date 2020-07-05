@@ -34,6 +34,8 @@ import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramInventory;
 import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
+import me.eccentric_nz.TARDIS.maze.TARDISMazeBuilder;
+import me.eccentric_nz.TARDIS.maze.TARDISMazeGenerator;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
@@ -72,7 +74,7 @@ public class TARDISControlListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<>();
-    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33, 35, 38, 39);
+    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33, 35, 38, 39, 40, 41, 42, 43);
 
     public TARDISControlListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -96,21 +98,21 @@ public class TARDISControlListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onControlInteract(PlayerInteractEvent event) {
-        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND) || TARDISKeyboardListener.isKeyboardEditor(event.getPlayer().getInventory().getItemInMainHand())) {
+        Action action = event.getAction();
+        if ((event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND) || TARDISKeyboardListener.isKeyboardEditor(event.getPlayer().getInventory().getItemInMainHand())) && action != Action.PHYSICAL) {
             return;
         }
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
-            Action action = event.getAction();
             // only proceed if they are clicking a valid block type!
             if (validBlocks.contains(blockType)) {
                 // get clicked block location
-                String buttonloc = block.getLocation().toString();
+                Location blockLocation = block.getLocation();
                 // get tardis from saved button location
                 HashMap<String, Object> where = new HashMap<>();
-                where.put("location", buttonloc);
+                where.put("location", blockLocation.toString());
                 ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                 if (rsc.resultSet()) {
                     int id = rsc.getTardis_id();
@@ -425,7 +427,7 @@ public class TARDISControlListener implements Listener {
                                     if (TARDISPermission.hasPermission(player, "tardis.forcefield")) {
                                         if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(player.getUniqueId())) {
                                             plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
-                                            TARDISSounds.playTARDISSound(block.getLocation(), "tardis_force_field_down");
+                                            TARDISSounds.playTARDISSound(blockLocation, "tardis_force_field_down");
                                             TARDISMessage.send(player, "FORCE_FIELD", "OFF");
                                         } else {
                                             // check there is enough artron
@@ -434,7 +436,7 @@ public class TARDISControlListener implements Listener {
                                                 return;
                                             }
                                             if (TARDISForceField.addToTracker(player)) {
-                                                TARDISSounds.playTARDISSound(block.getLocation(), "tardis_force_field_up");
+                                                TARDISSounds.playTARDISSound(blockLocation, "tardis_force_field_up");
                                                 TARDISMessage.send(player, "FORCE_FIELD", "ON");
                                             }
                                         }
@@ -508,8 +510,54 @@ public class TARDISControlListener implements Listener {
                                 default:
                                     break;
                             }
-                        } else if (action.equals(Action.PHYSICAL) && type == 16) {
-                            doZero(level, player, tardis.getZero(), id);
+                        } else if (action.equals(Action.PHYSICAL)) {
+                            switch (type) {
+                                case 16:
+                                    doZero(level, player, tardis.getZero(), id);
+                                    break;
+                                case 40: // WEST
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        // has player moved out of the maze  in a northerly direction
+                                        Location playerLocation = player.getLocation();
+                                        if (playerLocation.getBlockX() < blockLocation.getBlockX()) {
+                                            // reconfigure maze
+                                            reconfigureMaze(id);
+                                        }
+                                    }, 20L);
+                                    break;
+                                case 41: // NORTH
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        // has player moved out of the maze  in a westerly direction
+                                        Location playerLocation = player.getLocation();
+                                        if (playerLocation.getBlockZ() < blockLocation.getBlockZ()) {
+                                            // reconfigure maze
+                                            reconfigureMaze(id);
+                                        }
+                                    }, 20L);
+                                    break;
+                                case 42: // SOUTH
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        // has player moved out of the maze  in an easterly direction
+                                        Location playerLocation = player.getLocation();
+                                        if (playerLocation.getBlockZ() > blockLocation.getBlockZ()) {
+                                            // reconfigure maze
+                                            reconfigureMaze(id);
+                                        }
+                                    }, 20L);
+                                    break;
+                                case 43: // EAST
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        // has player moved out of the maze  in a southerly direction
+                                        Location playerLocation = player.getLocation();
+                                        if (playerLocation.getBlockX() > blockLocation.getBlockX()) {
+                                            // reconfigure maze
+                                            reconfigureMaze(id);
+                                        }
+                                    }, 20L);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
                 }
@@ -536,6 +584,22 @@ public class TARDISControlListener implements Listener {
             plugin.getQueryFactory().alterEnergyLevel("tardis", -zero_amount, wherez, player);
         } else {
             TARDISMessage.send(player, "NO_ZERO");
+        }
+    }
+
+    private void reconfigureMaze(int id) {
+        HashMap<String, Object> wherec = new HashMap<>();
+        wherec.put("tardis_id", id);
+        wherec.put("type", 44);
+        ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+        if (rsc.resultSet()) {
+            Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+            if (location != null) {
+                TARDISMazeGenerator generator = new TARDISMazeGenerator();
+                generator.makeMaze();
+                TARDISMazeBuilder builder = new TARDISMazeBuilder(generator.getMaze(), location);
+                builder.build(true);
+            }
         }
     }
 }

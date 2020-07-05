@@ -123,6 +123,15 @@ class TARDISARSJettisonRunnable implements Runnable {
                 del.put("z", 0);
                 plugin.getQueryFactory().doDelete("vaults", del);
             }
+            // if it is a maze room remove the controls
+            if (r.equals("MAZE")) {
+                for (int c = 40; c < 45; c++) {
+                    HashMap<String, Object> del = new HashMap<>();
+                    del.put("tardis_id", id);
+                    del.put("type", c);
+                    plugin.getQueryFactory().doDelete("controls", del);
+                }
+            }
             if (r.equals("RENDERER")) {
                 // remove stored location from the database
                 HashMap<String, Object> setd = new HashMap<>();

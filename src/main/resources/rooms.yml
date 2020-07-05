@@ -66,6 +66,18 @@ rooms:
     offset: -4
     seed: ENCHANTING_TABLE
     user: false
+  MAZE:
+    enabled: true
+    cost: 650
+    offset: -4
+    seed: LODESTONE
+    user: false
+  NETHER:
+    enabled: true
+    cost: 450
+    offset: -4
+    seed: BLACKSTONE
+    user: false
   POOL:
     enabled: true
     cost: 450
