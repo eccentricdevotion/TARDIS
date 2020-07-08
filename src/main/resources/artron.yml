@@ -36,6 +36,7 @@ upgrades:
   ender: 5000
   factory: 7500
   master: 10000
+  nether: 7500
   plank: 5000
   pyramid: 5000
   redstone: 7500
