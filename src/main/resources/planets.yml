@@ -18,6 +18,7 @@ planets:
     environment: NORMAL
     generator: DEFAULT
     keep_spawn_in_memory: false
+    spawn_other_mobs: true
   Siluria:
     enabled: false
     resource_pack: default
@@ -27,6 +28,7 @@ planets:
     environment: NORMAL
     generator: DEFAULT
     keep_spawn_in_memory: false
+    spawn_other_mobs: true
   Gallifrey:
     enabled: false
     resource_pack: https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1
@@ -36,6 +38,7 @@ planets:
     environment: NORMAL
     generator: DEFAULT
     keep_spawn_in_memory: false
+    spawn_other_mobs: true
   TARDIS_TimeVortex:
     enabled: true
     resource_pack: default

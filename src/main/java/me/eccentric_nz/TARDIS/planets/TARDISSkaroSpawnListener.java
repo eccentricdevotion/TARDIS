@@ -45,25 +45,30 @@ public class TARDISSkaroSpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onDalekSpawn(CreatureSpawnEvent event) {
-        if (!event.getSpawnReason().equals(SpawnReason.SPAWNER)) {
+        SpawnReason spawnReason = event.getSpawnReason();
+        // if configured prevent spawns (unless from spawners and plugins)
+        if (!plugin.getPlanetsConfig().getBoolean("planets.Skaro.spawn_other_mobs") && spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
+            event.setCancelled(true);
             return;
         }
-        if (!event.getLocation().getWorld().getName().equalsIgnoreCase("Skaro")) {
-            return;
-        }
-        if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
-            return;
-        }
-        LivingEntity le = event.getEntity();
-        // it's a Dalek - disguise it!
-        twaAPI.setDalekEquipment(le, false);
-        if (plugin.getPlanetsConfig().getBoolean("planets.Skaro.flying_daleks") && TARDISConstants.RANDOM.nextInt(100) < 10) {
-            // make the Dalek fly
-            EntityEquipment ee = le.getEquipment();
-            ee.setChestplate(new ItemStack(Material.ELYTRA, 1));
-            // teleport them straight up
-            le.teleport(le.getLocation().add(0.0d, 20.0d, 0.0d));
-            plugin.getTardisHelper().setFallFlyingTag(le);
+        if (spawnReason == SpawnReason.SPAWNER) {
+            if (!event.getLocation().getWorld().getName().equalsIgnoreCase("Skaro")) {
+                return;
+            }
+            if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
+                return;
+            }
+            LivingEntity le = event.getEntity();
+            // it's a Dalek - disguise it!
+            twaAPI.setDalekEquipment(le, false);
+            if (plugin.getPlanetsConfig().getBoolean("planets.Skaro.flying_daleks") && TARDISConstants.RANDOM.nextInt(100) < 10) {
+                // make the Dalek fly
+                EntityEquipment ee = le.getEquipment();
+                ee.setChestplate(new ItemStack(Material.ELYTRA, 1));
+                // teleport them straight up
+                le.teleport(le.getLocation().add(0.0d, 20.0d, 0.0d));
+                plugin.getTardisHelper().setFallFlyingTag(le);
+            }
         }
     }
 }

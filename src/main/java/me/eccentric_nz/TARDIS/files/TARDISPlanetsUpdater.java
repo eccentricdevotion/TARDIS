@@ -151,6 +151,12 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.Gallifrey.resource_pack", "https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1");
             save++;
         }
+        if (!planets_config.contains("planets.Skaro.spawn_other_mobs")) {
+            planets_config.set("planets.Skaro.spawn_other_mobs", true);
+            planets_config.set("planets.Siluria.spawn_other_mobs", true);
+            planets_config.set("planets.Gallifrey.spawn_other_mobs", true);
+            save++;
+        }
         if (planets_config.contains("planets.Gallifrey.resource_pack") && planets_config.getString("planets.Gallifrey.resource_pack").equalsIgnoreCase("default")) {
             planets_config.set("planets.Gallifrey.resource_pack", "https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1");
             save++;

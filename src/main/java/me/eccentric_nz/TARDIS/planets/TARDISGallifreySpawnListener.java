@@ -25,6 +25,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 /**
  * @author eccentric_nz
@@ -39,23 +40,28 @@ public final class TARDISGallifreySpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onGallifreyanSpawn(CreatureSpawnEvent event) {
-        if (!event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.SPAWNER)) {
+        CreatureSpawnEvent.SpawnReason spawnReason = event.getSpawnReason();
+        // if configured prevent spawns (unless from spawners and plugins)
+        if (!plugin.getPlanetsConfig().getBoolean("planets.Gallifrey.spawn_other_mobs") && spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
+            event.setCancelled(true);
             return;
         }
-        if (!event.getLocation().getWorld().getName().equalsIgnoreCase("Gallifrey")) {
-            return;
+        if (spawnReason == SpawnReason.SPAWNER) {
+            if (!event.getLocation().getWorld().getName().equalsIgnoreCase("Gallifrey")) {
+                return;
+            }
+            if (!event.getEntity().getType().equals(EntityType.VILLAGER)) {
+                return;
+            }
+            LivingEntity le = event.getEntity();
+            // it's a Gallifreyan - give it a random profession and outfit!
+            Villager villager = (Villager) le;
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                villager.setProfession(Villager.Profession.values()[TARDISConstants.RANDOM.nextInt(Villager.Profession.values().length)]);
+                villager.setVillagerLevel(1); // minimum level is 1
+                villager.setVillagerExperience(1); // should be greater than 0 so villager doesn't lose its profession
+                villager.setVillagerType(Villager.Type.values()[TARDISConstants.RANDOM.nextInt(Villager.Type.values().length)]);
+            }, 2L);
         }
-        if (!event.getEntity().getType().equals(EntityType.VILLAGER)) {
-            return;
-        }
-        LivingEntity le = event.getEntity();
-        // it's a Gallifreyan - give it a random profession and outfit!
-        Villager villager = (Villager) le;
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            villager.setProfession(Villager.Profession.values()[TARDISConstants.RANDOM.nextInt(Villager.Profession.values().length)]);
-            villager.setVillagerLevel(1); // minimum level is 1
-            villager.setVillagerExperience(1); // should be greater than 0 so villager doesn't lose its profession
-            villager.setVillagerType(Villager.Type.values()[TARDISConstants.RANDOM.nextInt(Villager.Type.values().length)]);
-        }, 2L);
     }
 }
