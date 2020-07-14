@@ -7,7 +7,7 @@ title: Planet Skaro
 
 ![planet skaro](images/docs/skaro.jpg)
 
-- This world is limited to Desert, Mesa and Ocean biomes.
+- This world is limited to Desert, Badlands, and Ocean biomes.
 - If configured, all water is acid and will harm / kill the player (wearing armour reduces the effect). Use a boat!
 - Dalek structures will generate automatically as you explore the world — there are currently two building types, a big main building and a smaller corridor type one.
 - Daleks will spawn in the big main buildings — you will need to have TARDISWeepingAngels plugin installed and the TARDISWeepingAngels-Resource-Pack to see them properly. There is a 10% chance that a Dalek will spawn flying in the air, but this can be disabled in the config described below.
