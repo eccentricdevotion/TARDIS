@@ -162,61 +162,13 @@
                 <td colspan="2">A list of game rules that should be applied to the world &mdash; such as: doWeatherCycle, doDaylightCycle &mdash; values must be true or false. See <a href="https://minecraft.gamepedia.com/Commands/gamerule" target="_blank">https://minecraft.gamepedia.com/Commands/gamerule</a></td>
             </tr>
         </table>
-        <p>The following options are specific to the listed world:</p>
-        <table>
-            <tr>
-                <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;<code>Skaro:</code></td>
-            </tr>
-            <tr class="coption">
-                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>acid</code></td>
-                <td class="noborder">boolean</td>
-                <td class="noborder"><code>true</code></td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td colspan="2">Whether all the water in the world is acid (and harms the player)</td>
-            </tr>
-            <tr class="coption">
-                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>acid_damage</code></td>
-                <td class="noborder">integer</td>
-                <td class="noborder"><code>5</code></td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td colspan="2">The amount of damage a player takes when in acid water</td>
-            </tr>
-            <tr class="coption">
-                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>acid_potions</code></td>
-                <td class="noborder">string list</td>
-                <td class="noborder"><code>- WEAKNESS<br>
-                    - POISON </code></td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td colspan="2">Optional list of potion effects to give the player when they are in acid water. You can add any potion types from the list here: <a href="https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/src/main/java/org/bukkit/potion/PotionType.java" target="_blank">SPIGOT PotionType.java</a>. Set to <code>[]</code> to remove potion effects</td>
-            </tr>
-            <tr class="coption">
-                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>rust</code></td>
-                <td class="noborder">boolean</td>
-                <td class="noborder"><code>true</code></td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td colspan="2">Whether rust is enabled (not actually used yet)</td>
-            </tr>
-            <tr>
-                <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;<code>TARDIS_TimeVortex / TARDIS_Zero_Room:</code></td>
-            </tr>
-            <tr class="coption">
-                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>void</code></td>
-                <td class="noborder">boolean</td>
-                <td class="noborder"><code>true</code></td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td colspan="2">Identifies this as a void world &mdash; Do NOT change...</td>
-            </tr>
-        </table>
+        <p>Each world on your server has their own section in planets.yml, however there are TARDIS specific worlds as well:</p>
+        <ul>
+          <li><a href="planets#planet-skaro">Skaro</a></li>
+          <li><a href="planets#planet-siluria">Siluria</a></li>
+          <li><a href="planets#planet-gallifrey">Gallifrey</a></li>
+        </ul>
+
         <p><a href="configuration.html">Back to main configuration page</a></p>
 </section>
 </div>
