@@ -27,12 +27,16 @@ To get the best experience on these planets, it's recommended to download the ac
 
 ## Planet Gallifrey
 
+![planet gallifrey](images/docs/gallifrey.jpg)
+
 - This world is limited to the Badlands biome.
 - Time Lord structures will generate automatically as you explore the world — there is currently one building type.
 - Time Lords will spawn in these structures.
 - A random loot chest is also located in the structures.
 
 ## Planet Siluria
+
+![planet siluria](images/docs/siluria.jpg)
 
 - This world is limited to the Bamboo Jungle biome.
 - Structures will generate automatically as you explore the jungles.
