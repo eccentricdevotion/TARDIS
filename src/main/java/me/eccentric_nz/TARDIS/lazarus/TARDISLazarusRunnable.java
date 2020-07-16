@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Material;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.MultipleFacing;
+import org.bukkit.block.data.type.Wall;
 
 /**
  * The Genetic Manipulation Device uses hypersonic sound waves to destabilise the cell structure, then a metagenic
@@ -30,19 +30,21 @@ import org.bukkit.block.data.MultipleFacing;
  */
 class TARDISLazarusRunnable implements Runnable {
 
-    private final TARDIS plugin;
-    private final Block b;
-    private int taskID;
     private static final int LOOPS = 12;
+    private final TARDIS plugin;
+    private final Block block;
+    private final Wall NORTH_SOUTH = (Wall) Bukkit.createBlockData("minecraft:cobblestone_wall[east=tall,north=none,south=none,up=false,waterlogged=false,west=tall]");
+    private final Wall EAST_WEST = (Wall) Bukkit.createBlockData("minecraft:cobblestone_wall[east=none,north=tall,south=tall,up=false,waterlogged=false,west=none]");
+    private final Wall NORTH_SOUTH_MOSSY = (Wall) Bukkit.createBlockData("minecraft:mossy_cobblestone_wall[east=tall,north=none,south=none,up=false,waterlogged=false,west=tall]");
+    private final Wall EAST_WEST_MOSSY = (Wall) Bukkit.createBlockData("minecraft:mossy_cobblestone_wall[east=none,north=tall,south=tall,up=false,waterlogged=false,west=none]");
+    private Wall MOSSY;
+    private Wall PLAIN;
+    private int taskID;
     private int i = 0;
-    private final MultipleFacing MOSSY = (MultipleFacing) Material.MOSSY_COBBLESTONE_WALL.createBlockData();
-    private final MultipleFacing PLAIN = (MultipleFacing) Material.COBBLESTONE_WALL.createBlockData();
 
-    TARDISLazarusRunnable(TARDIS plugin, Block b) {
+    TARDISLazarusRunnable(TARDIS plugin, Block block) {
         this.plugin = plugin;
-        this.b = b;
-        MOSSY.setFace(BlockFace.UP, true);
-        PLAIN.setFace(BlockFace.UP, true);
+        this.block = block;
     }
 
     @Override
@@ -53,34 +55,22 @@ class TARDISLazarusRunnable implements Runnable {
                 switch (face) {
                     case EAST:
                     case WEST:
-                        MOSSY.setFace(BlockFace.NORTH, true);
-                        MOSSY.setFace(BlockFace.SOUTH, true);
-                        MOSSY.setFace(BlockFace.EAST, false);
-                        MOSSY.setFace(BlockFace.WEST, false);
-                        PLAIN.setFace(BlockFace.NORTH, true);
-                        PLAIN.setFace(BlockFace.SOUTH, true);
-                        PLAIN.setFace(BlockFace.EAST, false);
-                        PLAIN.setFace(BlockFace.WEST, false);
+                        MOSSY = EAST_WEST_MOSSY;
+                        PLAIN = EAST_WEST;
                         break;
                     default:
-                        MOSSY.setFace(BlockFace.NORTH, false);
-                        MOSSY.setFace(BlockFace.SOUTH, false);
-                        MOSSY.setFace(BlockFace.EAST, true);
-                        MOSSY.setFace(BlockFace.WEST, true);
-                        PLAIN.setFace(BlockFace.NORTH, false);
-                        PLAIN.setFace(BlockFace.SOUTH, false);
-                        PLAIN.setFace(BlockFace.EAST, true);
-                        PLAIN.setFace(BlockFace.WEST, true);
+                        MOSSY = NORTH_SOUTH_MOSSY;
+                        PLAIN = NORTH_SOUTH;
                         break;
                 }
                 if ((i % 4) == face.ordinal()) {
                     // set mossy
-                    b.getRelative(face).setBlockData(MOSSY);
-                    b.getRelative(face).getRelative(BlockFace.UP).setBlockData(MOSSY);
+                    block.getRelative(face).setBlockData(MOSSY);
+                    block.getRelative(face).getRelative(BlockFace.UP).setBlockData(MOSSY);
                 } else {
                     // set plain
-                    b.getRelative(face).setBlockData(PLAIN);
-                    b.getRelative(face).getRelative(BlockFace.UP).setBlockData(PLAIN);
+                    block.getRelative(face).setBlockData(PLAIN);
+                    block.getRelative(face).getRelative(BlockFace.UP).setBlockData(PLAIN);
                 }
             });
             i++;
@@ -89,28 +79,14 @@ class TARDISLazarusRunnable implements Runnable {
                 switch (face) {
                     case EAST:
                     case WEST:
-                        MOSSY.setFace(BlockFace.NORTH, true);
-                        MOSSY.setFace(BlockFace.SOUTH, true);
-                        MOSSY.setFace(BlockFace.EAST, false);
-                        MOSSY.setFace(BlockFace.WEST, false);
-                        PLAIN.setFace(BlockFace.NORTH, true);
-                        PLAIN.setFace(BlockFace.SOUTH, true);
-                        PLAIN.setFace(BlockFace.EAST, false);
-                        PLAIN.setFace(BlockFace.WEST, false);
+                        PLAIN = EAST_WEST;
                         break;
                     default:
-                        MOSSY.setFace(BlockFace.NORTH, false);
-                        MOSSY.setFace(BlockFace.SOUTH, false);
-                        MOSSY.setFace(BlockFace.EAST, true);
-                        MOSSY.setFace(BlockFace.WEST, true);
-                        PLAIN.setFace(BlockFace.NORTH, false);
-                        PLAIN.setFace(BlockFace.SOUTH, false);
-                        PLAIN.setFace(BlockFace.EAST, true);
-                        PLAIN.setFace(BlockFace.WEST, true);
+                        PLAIN = NORTH_SOUTH;
                         break;
                 }
-                b.getRelative(face).setBlockData(PLAIN);
-                b.getRelative(face).getRelative(BlockFace.UP).setBlockData(PLAIN);
+                block.getRelative(face).setBlockData(PLAIN);
+                block.getRelative(face).getRelative(BlockFace.UP).setBlockData(PLAIN);
             });
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;

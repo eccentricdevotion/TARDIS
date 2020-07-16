@@ -39,7 +39,10 @@ public class TARDISWorlds {
 
     public static void loadWorld(String world) {
         try {
-            String wt = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".world_type");
+//            String wt = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".world_type");
+//            if (wt.equalsIgnoreCase("BUFFET")) {
+//                wt = "FIXED";
+//            }
 //            WorldType worldType = WorldType.valueOf(wt);
             String e = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".environment");
             World.Environment environment = World.Environment.valueOf(e);

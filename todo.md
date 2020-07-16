@@ -23,7 +23,8 @@
    * Slimes -> Adipose
    * Husk -> Sycorax
    * Stray -> Scarecrows
-2. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
+2. Use custom model data to make carved pumpkin head into gas mask when player is killed by an Empty Child
+3. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
 
 ## Minecraft Bedrock Edition
 1. Recreate everything :)
