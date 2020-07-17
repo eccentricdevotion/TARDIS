@@ -6,9 +6,9 @@
    * Add advanced console and disk storage to schematics
 3. Set Master button to ON (In Lazarus GUI) when it is in use
 4. Use the Vortex Manipulator to teleport past force fields
-5. Optional world name in `/tardistravel` - [Bukkit #1275](https://dev.bukkit.org/projects/tardis/issues/1275)
-6. Time travel - [Bukkit #1182](https://dev.bukkit.org/projects/tardis/issues/1182)
-7. More sudo commands - [Bukkit #1109](https://dev.bukkit.org/projects/tardis/issues/1109)
+5. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
+6. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
+7. More sudo commands - [#307](https://github.com/eccentricdevotion/TARDIS/issues/307)
 8. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
 9. TCG API - use Police Box location instead of player location?
 10. Retry Smithing recipes? Maybe not possible without a [`PrepareSmithingEvent` event](https://hub.spigotmc.org/jira/browse/SPIGOT-5950)

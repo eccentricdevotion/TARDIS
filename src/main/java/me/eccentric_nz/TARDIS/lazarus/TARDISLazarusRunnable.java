@@ -48,7 +48,6 @@ class TARDISLazarusRunnable implements Runnable {
     }
 
     @Override
-
     public void run() {
         if (i < LOOPS) {
             plugin.getGeneralKeeper().getFaces().forEach((face) -> {
