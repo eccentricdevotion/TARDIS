@@ -173,7 +173,7 @@ public class TARDISWorldGuardUtils {
         dd.addPlayer(p);
         region.setOwners(dd);
         HashMap<Flag<?>, Object> flags = new HashMap<>();
-        if (!p.equals("junk")) {
+        if (!p.equals("junk") && p.length() != 36) {
             flags.put(Flags.ENTRY, State.DENY);
         } else {
             flags.put(Flags.BUILD, State.DENY);
@@ -440,6 +440,7 @@ public class TARDISWorldGuardUtils {
             parentNames.forEach((name) -> regions.remove(name));
             String region = regions.getFirst();
             ProtectedRegion pr = rm.getRegion(region);
+            pr.setFlag(Flags.ENTRY, State.DENY);
             DefaultDomain dd = pr.getOwners();
             dd.addPlayer(uuid);
             pr.setOwners(dd);
