@@ -53,6 +53,8 @@ public class TARDISConsoleLoader {
         Consoles.getBY_NAMES().put("ELEVENTH", new Schematic("EMERALD_BLOCK", "eleventh", "11th Doctor's Console", ConsoleSize.TALL, true, true, false));
         // ENDER schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         Consoles.getBY_NAMES().put("ENDER", new Schematic("PURPUR_BLOCK", "ender", "Ender Console", ConsoleSize.SMALL, true, true, false));
+        // FACTORY designed by Razihel
+        Consoles.getBY_NAMES().put("FACTORY", new Schematic("YELLOW_CONCRETE_POWDER", "factory", "Factory Console (1st Doctor)", ConsoleSize.MEDIUM, false, true, false));
         // MASTER's schematic designed by ShadowAssociate
         Consoles.getBY_NAMES().put("MASTER", new Schematic("NETHER_BRICKS", "master", "The Master's Console", ConsoleSize.TALL, true, false, false));
         Consoles.getBY_NAMES().put("PLANK", new Schematic("BOOKSHELF", "plank", "Wood Console", ConsoleSize.SMALL, false, false, false));
@@ -63,8 +65,6 @@ public class TARDISConsoleLoader {
         Consoles.getBY_NAMES().put("STEAMPUNK", new Schematic("COAL_BLOCK", "steampunk", "Steampunk Console", ConsoleSize.SMALL, true, false, false));
         // THIRTEENTH designed by Razihel
         Consoles.getBY_NAMES().put("THIRTEENTH", new Schematic("ORANGE_CONCRETE", "thirteenth", "13th Doctor's Console", ConsoleSize.MEDIUM, false, false, false));
-        // FACTORY designed by Razihel
-        Consoles.getBY_NAMES().put("FACTORY", new Schematic("YELLOW_CONCRETE_POWDER", "factory", "Factory Console (1st Doctor)", ConsoleSize.MEDIUM, false, true, false));
         Consoles.getBY_NAMES().put("TOM", new Schematic("LAPIS_BLOCK", "tom", "4th Doctor's Console", ConsoleSize.SMALL, false, false, false));
         Consoles.getBY_NAMES().put("TWELFTH", new Schematic("PRISMARINE", "twelfth", "12th Doctor's Console", ConsoleSize.MEDIUM, true, true, false));
         Consoles.getBY_NAMES().put("WAR", new Schematic("WHITE_TERRACOTTA", "war", "War Doctor's Console", ConsoleSize.SMALL, true, false, false));

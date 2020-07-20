@@ -182,8 +182,17 @@ permissions:
   tardis.rebuild:
     description: Allow players to rebuild the TARDIS.
     default: true
+  tardis.ars:
+    description: Allow players to build the 'Architectural Reconfiguration System' TARDIS.
+    default: op
   tardis.bigger:
     description: Allow players to build the 'bigger' TARDIS.
+    default: op
+  tardis.coral:
+    description: Allow players to build the Tenth Doctor's coral TARDIS.
+    default: op
+  tardis.delta:
+    description: Allow players to build the Nether TARDIS.
     default: op
   tardis.deluxe:
     description: Allow players to build the 'deluxe' TARDIS.
@@ -191,32 +200,44 @@ permissions:
   tardis.eleventh:
     description: Allow players to build the 'eleventh' TARDIS.
     default: op
-  tardis.twelfth:
-    description: Allow players to build the 'twelfth' TARDIS.
+  tardis.ender:
+    description: Allow players to build the Ender TARDIS.
     default: op
-  tardis.redstone:
-    description: Allow players to build the 'redstone' TARDIS.
-    default: op
-  tardis.steampunk:
-    description: Allow players to build the 'steampunk' TARDIS.
-    default: op
-  tardis.ars:
-    description: Allow players to build the 'Architectural Reconfiguration System' TARDIS.
-    default: op
-  tardis.war:
-    description: Allow players to build the 'War Doctor's' TARDIS.
-    default: op
-  tardis.pyramid:
-    description: Allow players to build the Sandstone Pyramid TARDIS.
+  tardis.factory:
+    description: Allow players to build the First Doctor's TARDIS.
     default: op
   tardis.master:
     description: Allow players to build the Master's TARDIS.
     default: op
-  tardis.ender:
-    description: Allow players to build the Ender TARDIS.
+  tardis.plank:
+    description: Allow players to build the 'wood' TARDIS.
     default: op
-  tardis.coral:
-    description: Allow players to build the Tenth Doctor's coral TARDIS.
+  tardis.pyramid:
+    description: Allow players to build the Sandstone Pyramid TARDIS.
+    default: op
+  tardis.redstone:
+    description: Allow players to build the 'redstone' TARDIS.
+    default: op
+  tardis.rotor:
+    description: Allow players to build the Time Rotor TARDIS.
+    default: op
+  tardis.steampunk:
+    description: Allow players to build the 'steampunk' TARDIS.
+    default: op
+  tardis.thirteenth:
+    description: Allow players to build the Thirteenth Doctor's TARDIS.
+    default: op
+  tardis.tom:
+    description: Allow players to build the '4th Doctor's' TARDIS.
+    default: op
+  tardis.twelfth:
+    description: Allow players to build the 'twelfth' TARDIS.
+    default: op
+  tardis.war:
+    description: Allow players to build the 'War Doctor's' TARDIS.
+    default: op
+  tardis.custom:
+    description: Allow players to build the server's 'custom' TARDIS.
     default: op
   tardis.legacy_budget:
     description: Allow players to build the legacy 'budget' TARDIS.
@@ -247,15 +268,6 @@ permissions:
     default: op
   tardis.kit.create:
     description: Allow players to automatically get a TARDIS Item Kit when they create a TARDIS.
-    default: op
-  tardis.plank:
-    description: Allow players to build the 'wood' TARDIS.
-    default: op
-  tardis.tom:
-    description: Allow players to build the '4th Doctor's' TARDIS.
-    default: op
-  tardis.custom:
-    description: Allow players to build the server's 'custom' TARDIS.
     default: op
   tardis.end:
     description: Allow players to time travel to the END.
