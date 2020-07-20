@@ -34,6 +34,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.util.SpongeUtil;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -175,10 +176,11 @@ public class TARDISWorldGuardUtils {
         HashMap<Flag<?>, Object> flags = new HashMap<>();
         if (!p.equals("junk") && p.length() != 36) {
             flags.put(Flags.ENTRY, State.DENY);
-        } else {
-            flags.put(Flags.BUILD, State.DENY);
         }
-        //flags.put(Flags.TNT, State.DENY);
+//        else {
+//            flags.put(Flags.BUILD, State.DENY);
+//        }
+//        flags.put(Flags.TNT, State.DENY);
         flags.put(Flags.FIRE_SPREAD, State.DENY);
         flags.put(Flags.LAVA_FIRE, State.DENY);
         flags.put(Flags.LAVA_FLOW, State.DENY);
@@ -443,6 +445,11 @@ public class TARDISWorldGuardUtils {
             pr.setFlag(Flags.ENTRY, State.DENY);
             DefaultDomain dd = pr.getOwners();
             dd.addPlayer(uuid);
+            // get Player
+            Player player = Bukkit.getPlayer(uuid);
+            if (player != null) {
+                dd.addPlayer(player.getName());
+            }
             pr.setOwners(dd);
             try {
                 rm.save();
@@ -478,19 +485,19 @@ public class TARDISWorldGuardUtils {
         }
     }
 
-    /**
-     * Checks whether a block can be broken
-     *
-     * @param p the player trying to break the block
-     * @param b the block
-     * @return whether the block can be broken
-     */
-    public boolean canBreakBlock(Player p, Block b) {
-        BlockVector3 vector = BlockVector3.at(b.getX(), b.getY(), b.getZ());
-        RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(b.getWorld()));
-        ApplicableRegionSet rs = rm.getApplicableRegions(vector);
-        return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
-    }
+//    /**
+//     * Checks whether a block can be broken
+//     *
+//     * @param p the player trying to break the block
+//     * @param b the block
+//     * @return whether the block can be broken
+//     */
+//    public boolean canBreakBlock(Player p, Block b) {
+//        BlockVector3 vector = BlockVector3.at(b.getX(), b.getY(), b.getZ());
+//        RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(b.getWorld()));
+//        ApplicableRegionSet rs = rm.getApplicableRegions(vector);
+//        return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
+//    }
 
     /**
      * Gets a TARDIS WorldGuard region.
@@ -508,22 +515,22 @@ public class TARDISWorldGuardUtils {
         return rm.getRegion("TARDIS_" + p);
     }
 
-    /**
-     * Gets a List of all TARDIS regions in a world where the build flag is set.
-     *
-     * @param w the world to get the regions for
-     * @return a list of TARDIS region names for this world
-     */
-    public List<String> getRegions(World w) {
-        List<String> regions = new ArrayList<>();
-        RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
-        rm.getRegions().forEach((key, value) -> {
-            if (key.contains("tardis") && value.getFlags().containsKey(Flags.BUILD)) {
-                regions.add(key);
-            }
-        });
-        return regions;
-    }
+//    /**
+//     * Gets a List of all TARDIS regions in a world where the build flag is set.
+//     *
+//     * @param w the world to get the regions for
+//     * @return a list of TARDIS region names for this world
+//     */
+//    public List<String> getRegions(World w) {
+//        List<String> regions = new ArrayList<>();
+//        RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
+//        rm.getRegions().forEach((key, value) -> {
+//            if (key.contains("tardis") && value.getFlags().containsKey(Flags.BUILD)) {
+//                regions.add(key);
+//            }
+//        });
+//        return regions;
+//    }
 
     /**
      * Gets a List of all TARDIS regions in a world.

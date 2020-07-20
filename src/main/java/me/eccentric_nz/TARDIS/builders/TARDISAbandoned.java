@@ -24,6 +24,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -93,7 +94,8 @@ public class TARDISAbandoned {
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
-                TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, Material.BLUE_WOOL.createBlockData(), Adaption.OFF);
+                BlockData data = (preset.equals(PRESET.FACTORY)) ? Material.LIGHT_GRAY_TERRACOTTA.createBlockData() : Material.BLUE_WOOL.createBlockData();
+                TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, data, Adaption.OFF);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             }

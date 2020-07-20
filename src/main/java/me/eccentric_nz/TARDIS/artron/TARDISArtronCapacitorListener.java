@@ -220,6 +220,10 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 if (!init) {
                                     // kickstart the TARDIS Artron Energy Capacitor
                                     TARDISSounds.playTARDISSound(block.getLocation(), "power_up");
+                                    if (abandoned) {
+                                        // transfer ownership to the player who clicked
+                                        claimAbandoned(player, id, block, tardis);
+                                    }
                                     // get locations from database
                                     String creeper = tardis.getCreeper();
                                     if (!creeper.isEmpty() && !creeper.equals(":")) {
@@ -249,48 +253,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         boolean pu = true;
                                         if (abandoned) {
                                             // transfer ownership to the player who clicked
-                                            pu = plugin.getQueryFactory().claimTARDIS(player, id);
-                                            // make sure player is added as owner of interior WorldGuard region
-                                            if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                                                plugin.getWorldGuardUtils().updateRegionForClaim(block.getLocation(), player.getUniqueId());
-                                            }
-                                            HashMap<String, Object> wherec = new HashMap<>();
-                                            wherec.put("tardis_id", id);
-                                            ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
-                                            if (rscl.resultSet()) {
-                                                Location current = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-                                                if (pu) {
-                                                    new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
-                                                    TARDISMessage.send(player, "ABANDON_CLAIMED");
-                                                    plugin.getPM().callEvent(new TARDISClaimEvent(player, tardis, current));
-                                                }
-                                                if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
-                                                    PRESET preset = rs.getTardis().getPreset();
-                                                    Sign sign = getSign(current, rscl.getDirection(), preset);
-                                                    if (sign != null) {
-                                                        String player_name = TARDISStaticUtils.getNick(player);
-                                                        String owner;
-                                                        if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
-                                                            owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
-                                                        } else {
-                                                            owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
-                                                        }
-                                                        switch (preset) {
-                                                            case GRAVESTONE:
-                                                                sign.setLine(3, owner);
-                                                                break;
-                                                            case ANGEL:
-                                                            case JAIL:
-                                                                sign.setLine(2, owner);
-                                                                break;
-                                                            default:
-                                                                sign.setLine(0, owner);
-                                                                break;
-                                                        }
-                                                        sign.update();
-                                                    }
-                                                }
-                                            }
+                                            pu = claimAbandoned(player, id, block, tardis);
                                         }
                                         if (pu) {
                                             new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().hasLanterns()).clickButton();
@@ -347,5 +310,52 @@ public class TARDISArtronCapacitorListener implements Listener {
                 }
             }
         }
+    }
+
+    private boolean claimAbandoned(Player player, int id, Block block, Tardis tardis) {
+        // transfer ownership to the player who clicked
+        boolean pu = plugin.getQueryFactory().claimTARDIS(player, id);
+        // make sure player is added as owner of interior WorldGuard region
+        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+            plugin.getWorldGuardUtils().updateRegionForClaim(block.getLocation(), player.getUniqueId());
+        }
+        HashMap<String, Object> wherec = new HashMap<>();
+        wherec.put("tardis_id", id);
+        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
+        if (rscl.resultSet()) {
+            Location current = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
+            if (pu) {
+                new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
+                TARDISMessage.send(player, "ABANDON_CLAIMED");
+                plugin.getPM().callEvent(new TARDISClaimEvent(player, tardis, current));
+            }
+            if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
+                PRESET preset = tardis.getPreset();
+                Sign sign = getSign(current, rscl.getDirection(), preset);
+                if (sign != null) {
+                    String player_name = TARDISStaticUtils.getNick(player);
+                    String owner;
+                    if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
+                        owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
+                    } else {
+                        owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
+                    }
+                    switch (preset) {
+                        case GRAVESTONE:
+                            sign.setLine(3, owner);
+                            break;
+                        case ANGEL:
+                        case JAIL:
+                            sign.setLine(2, owner);
+                            break;
+                        default:
+                            sign.setLine(0, owner);
+                            break;
+                    }
+                    sign.update();
+                }
+            }
+        }
+        return pu;
     }
 }
