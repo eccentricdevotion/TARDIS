@@ -242,16 +242,16 @@ public class TARDISItemFrameListener implements Listener {
                     }
                 }
             }
-            if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
-                TARDISMessage.send(player, "NO_PERMS");
-                return;
-            }
             // is it an already registered handles frame?
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("location", l);
             whereh.put("type", 26);
             ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
             if (rsh.resultSet()) {
+                if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
+                    TARDISMessage.send(player, "NO_PERMS");
+                    return;
+                }
                 ItemStack is = frame.getItem();
                 if (isHandles(is)) {
                     // play sound
@@ -303,6 +303,10 @@ public class TARDISItemFrameListener implements Listener {
             } else {
                 ItemStack is = player.getInventory().getItemInMainHand();
                 if (isHandles(is)) {
+                    if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
+                        TARDISMessage.send(player, "NO_PERMS");
+                        return;
+                    }
                     // cannot place unless inside the TARDIS
                     if (!plugin.getUtils().inTARDISWorld(event.getPlayer())) {
                         TARDISMessage.handlesSend(player, "HANDLES_TARDIS");
