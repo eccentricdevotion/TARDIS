@@ -204,6 +204,11 @@ public class TARDISInteriorPostioning {
                             slot.setY(l);
                             slot.setX(x);
                             slot.setZ(z);
+                            Chunk tipsChunk = w.getBlockAt(slot.getX(), slot.getY(), slot.getZ()).getChunk();
+                            // remove mobs
+                            for (Entity e : tipsChunk.getEntities()) {
+                                e.remove();
+                            }
                             for (int y = 0; y < 16; y++) {
                                 for (int col = 0; col < 16; col++) {
                                     for (int row = 0; row < 16; row++) {
@@ -211,13 +216,21 @@ public class TARDISInteriorPostioning {
                                     }
                                 }
                             }
+                            // remove dropped items
+                            for (Entity e : tipsChunk.getEntities()) {
+                                e.remove();
+                            }
                         }
                     }
                 }
             }
+            // remove dropped items
+            for (Entity e : c.getEntities()) {
+                e.remove();
+            }
         }
     }
-    
+
     public void reclaimZeroChunk(World w, TARDISTIPSData data) {
         // get starting chunk
         Location l = new Location(w, data.getMinX(), 0, data.getMinZ());
