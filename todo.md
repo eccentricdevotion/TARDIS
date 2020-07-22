@@ -11,7 +11,6 @@
 7. More sudo commands - [#307](https://github.com/eccentricdevotion/TARDIS/issues/307)
 8. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
 9. TCG API - use Police Box location instead of player location?
-10. Retry Smithing recipes? Maybe not possible without a [`PrepareSmithingEvent` event](https://hub.spigotmc.org/jira/browse/SPIGOT-5950)
 
 ## Resource Pack / TARDISWeepingAngels
 1. Re-skin mobs for Resource pack, and add new mob sounds

@@ -219,6 +219,7 @@ class TARDISListenerRegisterer {
         }
         plugin.getPM().registerEvents(new TARDISSleepListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSmelterListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISSmithingListener(), plugin);
         plugin.getPM().registerEvents(new TARDISSonicEntityListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicConfiguratorMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicGeneratorMenuListener(plugin), plugin);
