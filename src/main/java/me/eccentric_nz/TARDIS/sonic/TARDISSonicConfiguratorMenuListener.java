@@ -298,14 +298,14 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
             // get the upgrades from the lore
             List<String> lore = im.getLore();
             UUID uuid = player.getUniqueId();
-            int bio = lore.contains("Bio-scanner Upgrade") ? 1 : 0;
-            int diamond = lore.contains("Diamond Upgrade") ? 1 : 0;
-            int emerald = lore.contains("Emerald Upgrade") ? 1 : 0;
-            int redstone = lore.contains("Redstone Upgrade") ? 1 : 0;
-            int painter = lore.contains("Painter Upgrade") ? 1 : 0;
-            int ignite = lore.contains("Ignite Upgrade") ? 1 : 0;
-            int arrow = lore.contains("Pickup Arrows Upgrade") ? 1 : 0;
-            int knockback = lore.contains("Knockback Upgrade") ? 1 : 0;
+            int bio = lore != null && lore.contains("Bio-scanner Upgrade") ? 1 : 0;
+            int diamond = lore != null && lore.contains("Diamond Upgrade") ? 1 : 0;
+            int emerald = lore != null && lore.contains("Emerald Upgrade") ? 1 : 0;
+            int redstone = lore != null && lore.contains("Redstone Upgrade") ? 1 : 0;
+            int painter = lore != null && lore.contains("Painter Upgrade") ? 1 : 0;
+            int ignite = lore != null && lore.contains("Ignite Upgrade") ? 1 : 0;
+            int arrow = lore != null && lore.contains("Pickup Arrows Upgrade") ? 1 : 0;
+            int knockback = lore != null && lore.contains("Knockback Upgrade") ? 1 : 0;
             // create a new UUID
             UUID sonic_uuid = UUID.randomUUID();
             // set the UUID to the sonic
