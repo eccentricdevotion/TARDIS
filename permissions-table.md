@@ -4,6 +4,7 @@ title: Big list of permissions
 ---
 
 <style>
+td { vertical-align: top; }
 #child>tbody>tr>td,
 #child>tbody>tr>th {
   border-top: none!important;
@@ -144,18 +145,22 @@ Permission Node | Description | Default
 `tardis.help` | Allow players to view TARDIS help pages. | true
 `tardis.update` | Allow players to modify the TARDIS interior. | true
 `tardis.rebuild` | Allow players to rebuild the TARDIS. | true
+`tardis.factory` | Allow players to build the 'factory' TARDIS. | op
 `tardis.bigger` | Allow players to build the 'bigger' TARDIS. | op
 `tardis.deluxe` | Allow players to build the 'deluxe' TARDIS. | op
 `tardis.eleventh` | Allow players to build the 'eleventh' TARDIS. | op
 `tardis.twelfth` | Allow players to build the 'twelfth' TARDIS. | op
 `tardis.redstone` | Allow players to build the 'redstone' TARDIS. | op
+`tardis.rotor` | Allow players to build the 'Time Rotor' TARDIS. | op
 `tardis.steampunk` | Allow players to build the 'steampunk' TARDIS. | op
+`tardis.thirteenth` | Allow players to build the 'thirteenth' TARDIS. | op
 `tardis.ars` | Allow players to build the 'Architectural Reconfiguration System' TARDIS. | op
 `tardis.war` | Allow players to build the 'War Doctor's' TARDIS. | op
 `tardis.pyramid` | Allow players to build the Sandstone Pyramid TARDIS. | op
 `tardis.master` | Allow players to build the Master's TARDIS. | op
 `tardis.ender` | Allow players to build the Ender TARDIS. | op
 `tardis.coral` | Allow players to build the Tenth Doctor's coral TARDIS. | op
+`tardis.delta` | Allow players to build the Nether TARDIS. | op
 `tardis.legacy_budget` | Allow players to build the legacy 'budget' TARDIS. | op
 `tardis.legacy_bigger` | Allow players to build the legacy 'bigger' TARDIS. | op
 `tardis.legacy_deluxe` | Allow players to build the legacy 'deluxe' TARDIS. | op

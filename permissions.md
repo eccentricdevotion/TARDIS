@@ -55,10 +55,12 @@ There are a number of (probably unnecessary and self explanatory) child nodes. T
 
 In order to be able to create a ‘bigger’, ‘deluxe’, ‘eleventh’, ‘twelfth’, ‘redstone’, ‘steampunk’, ‘ARS’, ‘tom’, ‘plank’, ‘war’, ‘master’, ‘pyramid’, ‘custom’TARDIS, or any of the other consoles players will need:
 
+    tardis.factory
     tardis.bigger
     tardis.deluxe
     tardis.eleventh
     tardis.twelfth
+    tardis.thirteenth
     tardis.redstone
     tardis.steampunk
     tardis.ars
@@ -69,6 +71,8 @@ In order to be able to create a ‘bigger’, ‘deluxe’, ‘eleventh’, ‘t
     tardis.pyramid
     tardis.coral
     tardis.ender
+    tardis.rotor
+    tardis.delta
     tardis.legacy_bigger
     tardis.legacy_budget
     tardis.legacy_deluxe
