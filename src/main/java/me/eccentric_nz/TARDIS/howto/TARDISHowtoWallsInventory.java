@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIWallFloor;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -66,24 +68,28 @@ class TARDISHowtoWallsInventory {
         ItemStack scroll_up = new ItemStack(Material.ARROW, 1);
         ItemMeta uim = scroll_up.getItemMeta();
         uim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_U"));
+        uim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_U.getCustomModelData());
         scroll_up.setItemMeta(uim);
         stack[8] = scroll_up;
         // scroll down
         ItemStack scroll_down = new ItemStack(Material.ARROW, 1);
         ItemMeta dim = scroll_down.getItemMeta();
         dim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_D"));
+        dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.getCustomModelData());
         scroll_down.setItemMeta(dim);
         stack[26] = scroll_down;
         // back
         ItemStack back = new ItemStack(Material.BOWL, 1);
         ItemMeta back_im = back.getItemMeta();
         back_im.setDisplayName("Back");
+        back_im.setCustomModelData(GUIChameleonPresets.BACK.getCustomModelData());
         back.setItemMeta(back_im);
         stack[44] = back;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        close_im.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[53] = close;
 
