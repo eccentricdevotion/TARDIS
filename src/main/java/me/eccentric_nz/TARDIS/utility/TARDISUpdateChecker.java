@@ -32,9 +32,6 @@ public class TARDISUpdateChecker implements Runnable {
     private final TARDIS plugin;
     private final JsonParser jp;
 
-    private static int buildNumber = 0;
-    private static int newBuildNumber = 0;
-
     public TARDISUpdateChecker(TARDIS plugin) {
         this.plugin = plugin;
         jp = new JsonParser();
@@ -51,13 +48,13 @@ public class TARDISUpdateChecker implements Runnable {
             // local build, not a Jenkins build
             return;
         }
-        buildNumber = Integer.parseInt(build);
+        int buildNumber = Integer.parseInt(build);
         JsonObject lastBuild = fetchLatestJenkinsBuild();
         if (lastBuild == null || !lastBuild.has("id")) {
             // couldn't get Jenkins info
             return;
         }
-        newBuildNumber = lastBuild.get("id").getAsInt();
+        int newBuildNumber = lastBuild.get("id").getAsInt();
         if (newBuildNumber <= buildNumber) {
             // if new build number is same or older
             return;
@@ -67,12 +64,6 @@ public class TARDISUpdateChecker implements Runnable {
         plugin.setUpdateNumber(newBuildNumber);
         plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(TARDISMessage.JENKINS_UPDATE_READY, buildNumber, newBuildNumber));
         plugin.getConsole().sendMessage(plugin.getPluginName() + TARDISMessage.UPDATE_COMMAND);
-    }
-
-    public int[] getBuildNumbers() {
-        if(newBuildNumber == 0)
-            run();
-        return new int[]{buildNumber, newBuildNumber};
     }
 
     /**
