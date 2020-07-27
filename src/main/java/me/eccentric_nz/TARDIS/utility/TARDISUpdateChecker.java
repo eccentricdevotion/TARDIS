@@ -32,6 +32,9 @@ public class TARDISUpdateChecker implements Runnable {
     private final TARDIS plugin;
     private final JsonParser jp;
 
+    private static int buildNumber = 0;
+    private static int newBuildNumber = 0;
+
     public TARDISUpdateChecker(TARDIS plugin) {
         this.plugin = plugin;
         jp = new JsonParser();
@@ -48,13 +51,13 @@ public class TARDISUpdateChecker implements Runnable {
             // local build, not a Jenkins build
             return;
         }
-        int buildNumber = Integer.parseInt(build);
+        buildNumber = Integer.parseInt(build);
         JsonObject lastBuild = fetchLatestJenkinsBuild();
         if (lastBuild == null || !lastBuild.has("id")) {
             // couldn't get Jenkins info
             return;
         }
-        int newBuildNumber = lastBuild.get("id").getAsInt();
+        newBuildNumber = lastBuild.get("id").getAsInt();
         if (newBuildNumber <= buildNumber) {
             // if new build number is same or older
             return;
@@ -66,6 +69,12 @@ public class TARDISUpdateChecker implements Runnable {
         plugin.getConsole().sendMessage(plugin.getPluginName() + TARDISMessage.UPDATE_COMMAND);
     }
 
+    public int[] getBuildNumbers() {
+        if(newBuildNumber == 0)
+            run();
+        return new int[]{buildNumber, newBuildNumber};
+    }
+
     /**
      * Fetches from jenkins, using the REST api the last snapshot build information
      */
@@ -75,11 +84,11 @@ public class TARDISUpdateChecker implements Runnable {
             URL url = new URL("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/api/json");
             // Create a connection
             URLConnection request = url.openConnection();
+            request.setRequestProperty("User-Agent", "TARDISPlugin");
             request.connect();
             // Convert to a JSON object
             JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-            JsonObject rootobj = root.getAsJsonObject();
-            return rootobj;
+            return root.getAsJsonObject();
         } catch (Exception ex) {
             plugin.debug("Failed to check for a snapshot update on TARDIS Jenkins.");
         }

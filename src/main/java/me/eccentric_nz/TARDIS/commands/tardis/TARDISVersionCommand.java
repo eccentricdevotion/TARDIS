@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISUpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -42,9 +43,8 @@ class TARDISVersionCommand {
         String tardisversion = plugin.getDescription().getVersion();
         String chunkversion = plugin.getPM().getPlugin("TARDISChunkGenerator").getDescription().getVersion();
         String cb = Bukkit.getVersion();
-        String bv = Bukkit.getBukkitVersion();
         // send server and TARDIS versions
-        sender.sendMessage(pluginName + "Server version: " + ChatColor.AQUA + bv + " " + cb);
+        sender.sendMessage(pluginName + "Server version: " + ChatColor.AQUA + cb);
         sender.sendMessage(pluginName + "TARDIS version: " + ChatColor.AQUA + tardisversion);
         sender.sendMessage(pluginName + "TARDISChunkGenerator version: " + ChatColor.AQUA + chunkversion);
         // send dependent plugin versions
@@ -54,6 +54,22 @@ class TARDISVersionCommand {
             String version = desc.getVersion();
             if (hooks.contains(name)) {
                 sender.sendMessage(pluginName + name + " version: " + ChatColor.AQUA + version);
+            }
+        }
+        if(sender.isOp()) {
+            sender.sendMessage(pluginName + "Checking for new TARDIS builds...");
+            int[] buildNumbers = new TARDISUpdateChecker(plugin).getBuildNumbers();
+            if (buildNumbers[1] == 0) {
+                sender.sendMessage(pluginName + "Unable to check for new builds!");
+                return true;
+            }
+            if (buildNumbers[0] == buildNumbers[1]) {
+                sender.sendMessage(pluginName + "You are running the latest version!");
+            } else {
+                sender.sendMessage(pluginName +
+                        "You are " + (buildNumbers[1] - buildNumbers[0]) + " builds behind! Type " + ChatColor.AQUA +
+                        "/tadmin update_plugins" + ChatColor.RESET + " to update!"
+                );
             }
         }
         return true;
