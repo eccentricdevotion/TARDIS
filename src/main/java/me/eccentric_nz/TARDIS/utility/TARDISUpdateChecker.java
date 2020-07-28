@@ -75,11 +75,11 @@ public class TARDISUpdateChecker implements Runnable {
             URL url = new URL("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/api/json");
             // Create a connection
             URLConnection request = url.openConnection();
+            request.setRequestProperty("User-Agent", "TARDISPlugin");
             request.connect();
             // Convert to a JSON object
             JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-            JsonObject rootobj = root.getAsJsonObject();
-            return rootobj;
+            return root.getAsJsonObject();
         } catch (Exception ex) {
             plugin.debug("Failed to check for a snapshot update on TARDIS Jenkins.");
         }
