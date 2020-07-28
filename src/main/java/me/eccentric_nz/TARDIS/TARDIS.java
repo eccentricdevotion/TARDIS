@@ -179,7 +179,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("Multiverse-Core", "4.0");
         versions.put("Multiverse-Inventories", "3.0");
         versions.put("MultiInv", "3.3.6");
-        versions.put("My_Worlds", "1.15.2");
+        versions.put("My_Worlds", "1.16.1");
         versions.put("PerWorldInventory", "2.3.0");
         versions.put("TARDISChunkGenerator", "4.4.5");
         versions.put("Towny", "0.95");
