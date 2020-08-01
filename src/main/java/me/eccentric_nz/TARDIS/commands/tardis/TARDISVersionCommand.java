@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISUpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -55,22 +56,10 @@ class TARDISVersionCommand {
                 sender.sendMessage(pluginName + name + " version: " + ChatColor.AQUA + version);
             }
         }
-        if(sender.isOp()) {
+        // check for new TARDIS build
+        if (sender.isOp()) {
             sender.sendMessage(pluginName + "Checking for new TARDIS builds...");
-            int build = plugin.getBuildNumber();
-            int latest = plugin.getUpdateNumber();
-            if (build == 0) {
-                sender.sendMessage(pluginName + "Unable to check for new builds!");
-                return true;
-            }
-            if (build == latest) {
-                sender.sendMessage(pluginName + "You are running the latest version!");
-            } else {
-                sender.sendMessage(pluginName +
-                        "You are " + (latest - build) + " builds behind! Type " + ChatColor.AQUA +
-                        "/tadmin update_plugins" + ChatColor.RESET + " to update!"
-                );
-            }
+            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new TARDISUpdateChecker(plugin, sender));
         }
         return true;
     }

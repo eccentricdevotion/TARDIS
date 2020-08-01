@@ -479,7 +479,7 @@ public class TARDIS extends JavaPlugin {
             }, 199L);
             // check TARDIS build
             if (getConfig().getBoolean("preferences.notify_update")) {
-                getServer().getScheduler().runTaskAsynchronously(this, new TARDISUpdateChecker(this));
+                getServer().getScheduler().runTaskAsynchronously(this, new TARDISUpdateChecker(this, null));
             }
             // check Spigot build
             getServer().getScheduler().runTaskAsynchronously(this, new TARDISSpigotChecker(this));
