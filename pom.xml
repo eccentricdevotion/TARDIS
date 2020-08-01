@@ -407,8 +407,10 @@
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
-            <version>2.10.6</version>
-            <scope>provided</scope>
+            <version>2.10.7</version>
+            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/PlaceholderAPI.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>br.net.fabiozumbi12.RedProtect</groupId>
