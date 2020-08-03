@@ -560,6 +560,17 @@ public class TARDISControlListener implements Listener {
                             }
                         }
                     }
+                } else {
+                    // check for junk mode save sign?
+                    if (blockType.equals(Material.OAK_WALL_SIGN)) {
+                        HashMap<String, Object> wherej = new HashMap<>();
+                        wherej.put("save_sign", blockLocation.toString());
+                        ResultSetJunk rsj = new ResultSetJunk(plugin, wherej);
+                        if (rsj.resultSet()) {
+                            // save_sign
+                            new TARDISSaveSign(plugin).openGUI(player, rsj.getTardis_id());
+                        }
+                    }
                 }
             }
         }
