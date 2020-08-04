@@ -21,9 +21,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
 
@@ -37,17 +38,17 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
      * @return The identifier in {@code %<identifier>_<value>%} as String.
      */
     @Override
-    public String getIdentifier() {
+    public @NotNull String getIdentifier() {
         return "tardis";
     }
 
     @Override
-    public String getAuthor() {
+    public @NotNull String getAuthor() {
         return "eccentric_nz";
     }
 
     @Override
-    public String getVersion() {
+    public @NotNull String getVersion() {
         return "1.0.0";
     }
 
@@ -70,7 +71,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
      * @return a possibly-null String of the requested identifier
      */
     @Override
-    public String onPlaceholderRequest(Player player, String identifier) {
+    public String onRequest(OfflinePlayer player, @NotNull String identifier) {
         String result = null;
         if (player == null) {
             result = "";
@@ -118,12 +119,10 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         default:
                             // user
                             if (split.length > 2) {
-                                OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(split[2]);
-                                if (offlinePlayer != null) {
-                                    rsti = new ResultSetTardisID(plugin);
-                                    if (rsti.fromUUID(offlinePlayer.getUniqueId().toString()) && rsti.getTardis_id() == rsv.getTardis_id()) {
-                                        result = "true";
-                                    }
+                                OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(UUID.fromString(split[2]));
+                                rsti = new ResultSetTardisID(plugin);
+                                if (rsti.fromUUID(offlinePlayer.getUniqueId().toString()) && rsti.getTardis_id() == rsv.getTardis_id()) {
+                                    result = "true";
                                 }
                             }
                             break;
