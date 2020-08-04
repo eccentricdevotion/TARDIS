@@ -119,10 +119,12 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         default:
                             // user
                             if (split.length > 2) {
-                                OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(UUID.fromString(split[2]));
-                                rsti = new ResultSetTardisID(plugin);
-                                if (rsti.fromUUID(offlinePlayer.getUniqueId().toString()) && rsti.getTardis_id() == rsv.getTardis_id()) {
-                                    result = "true";
+                                OfflinePlayer offlinePlayer = plugin.getServer().getPlayer(split[2]);
+                                if(offlinePlayer != null) {
+                                    rsti = new ResultSetTardisID(plugin);
+                                    if (rsti.fromUUID(offlinePlayer.getUniqueId().toString()) && rsti.getTardis_id() == rsv.getTardis_id()) {
+                                        result = "true";
+                                    }
                                 }
                             }
                             break;
