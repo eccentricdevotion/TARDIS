@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.handles;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
 public class TARDISHandlesPlaceholder {
 
-    public static String getSubstituted(String s, Player player) {
+    public static String getSubstituted(String s, OfflinePlayer player) {
         return PlaceholderAPI.setPlaceholders(player, s);
     }
 }
