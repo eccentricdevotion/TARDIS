@@ -76,11 +76,13 @@ public class TARDISMinecartListener implements Listener {
                 switch (material) {
                     case ACACIA_DOOR: // is it a TARDIS door?
                     case BIRCH_DOOR:
+                    case CRIMSON_DOOR:
                     case DARK_OAK_DOOR:
                     case IRON_DOOR:
                     case JUNGLE_DOOR:
                     case OAK_DOOR:
                     case SPRUCE_DOOR:
+                    case WARPED_DOOR:
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("door_location", db_loc);
                         where.put("door_type", 0);

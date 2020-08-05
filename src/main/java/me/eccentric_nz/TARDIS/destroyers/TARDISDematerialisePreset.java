@@ -291,24 +291,30 @@ class TARDISDematerialisePreset implements Runnable {
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light);
                                 break;
                             case ACACIA_DOOR: // wood, iron & trap doors
+                            case ACACIA_TRAPDOOR:
+                            case ACACIA_WALL_SIGN:
                             case BIRCH_DOOR:
+                            case BIRCH_TRAPDOOR:
+                            case BIRCH_WALL_SIGN:
+                            case CRIMSON_DOOR:
+                            case CRIMSON_TRAPDOOR:
+                            case CRIMSON_WALL_SIGN:
                             case DARK_OAK_DOOR:
+                            case DARK_OAK_TRAPDOOR:
+                            case DARK_OAK_WALL_SIGN:
                             case IRON_DOOR:
                             case JUNGLE_DOOR:
-                            case OAK_DOOR:
-                            case SPRUCE_DOOR:
-                            case ACACIA_TRAPDOOR:
-                            case BIRCH_TRAPDOOR:
-                            case DARK_OAK_TRAPDOOR:
                             case JUNGLE_TRAPDOOR:
-                            case OAK_TRAPDOOR:
-                            case SPRUCE_TRAPDOOR:
-                            case ACACIA_WALL_SIGN:
-                            case BIRCH_WALL_SIGN:
-                            case DARK_OAK_WALL_SIGN:
                             case JUNGLE_WALL_SIGN:
+                            case OAK_DOOR:
+                            case OAK_TRAPDOOR:
                             case OAK_WALL_SIGN:
+                            case SPRUCE_DOOR:
+                            case SPRUCE_TRAPDOOR:
                             case SPRUCE_WALL_SIGN:
+                            case WARPED_DOOR:
+                            case WARPED_TRAPDOOR:
+                            case WARPED_WALL_SIGN:
                                 if (preset.equals(PRESET.SWAMP) || preset.equals(PRESET.TOPSYTURVEY) || preset.equals(PRESET.JAIL)) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.AIR);
                                 }

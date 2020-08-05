@@ -69,11 +69,13 @@ public class TARDISSonic {
                 switch (blockType) {
                     case ACACIA_DOOR:
                     case BIRCH_DOOR:
+                    case CRIMSON_DOOR:
                     case DARK_OAK_DOOR:
                     case IRON_DOOR:
                     case JUNGLE_DOOR:
                     case OAK_DOOR:
                     case SPRUCE_DOOR:
+                    case WARPED_DOOR:
                         Block lowerdoor;
                         Bisected bisected = (Bisected) targetBlock.getBlockData();
                         if (bisected.getHalf().equals(Bisected.Half.TOP)) {

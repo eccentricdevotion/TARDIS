@@ -318,13 +318,15 @@ public class TARDISChameleonPreset {
                         case WALL_TORCH:
                             data[col][block] = new TARDISTorchRecalculator().recalculate(data[col][block], d);
                             break;
-                        case IRON_DOOR:
-                        case OAK_DOOR:
-                        case BIRCH_DOOR:
-                        case SPRUCE_DOOR:
-                        case JUNGLE_DOOR:
                         case ACACIA_DOOR:
+                        case BIRCH_DOOR:
+                        case CRIMSON_DOOR:
                         case DARK_OAK_DOOR:
+                        case IRON_DOOR:
+                        case JUNGLE_DOOR:
+                        case OAK_DOOR:
+                        case SPRUCE_DOOR:
+                        case WARPED_DOOR:
                             Directional door = (Directional) data[col][block];
                             switch (d) {
                                 case SOUTH:
@@ -368,10 +370,12 @@ public class TARDISChameleonPreset {
                             break;
                         case ACACIA_SIGN:
                         case BIRCH_SIGN:
+                        case CRIMSON_SIGN:
                         case DARK_OAK_SIGN:
                         case JUNGLE_SIGN:
                         case OAK_SIGN:
                         case SPRUCE_SIGN:
+                        case WARPED_SIGN:
                             Rotatable sign = (Rotatable) data[col][block];
                             switch (d) {
                                 case SOUTH:
@@ -388,10 +392,12 @@ public class TARDISChameleonPreset {
                             break;
                         case ACACIA_WALL_SIGN:
                         case BIRCH_WALL_SIGN:
+                        case CRIMSON_WALL_SIGN:
                         case DARK_OAK_WALL_SIGN:
                         case JUNGLE_WALL_SIGN:
                         case OAK_WALL_SIGN:
                         case SPRUCE_WALL_SIGN:
+                        case WARPED_WALL_SIGN:
                             Directional wall_sign = (Directional) data[col][block];
                             switch (d) {
                                 case SOUTH:
@@ -440,13 +446,15 @@ public class TARDISChameleonPreset {
                         case NETHER_BRICK_FENCE:
                             data[col][block] = new TARDISFenceRecalculator().recalculate(data[col][block], d);
                             break;
-                        case OAK_TRAPDOOR:
-                        case BIRCH_TRAPDOOR:
-                        case SPRUCE_TRAPDOOR:
-                        case JUNGLE_TRAPDOOR:
                         case ACACIA_TRAPDOOR:
+                        case BIRCH_TRAPDOOR:
+                        case CRIMSON_TRAPDOOR:
                         case DARK_OAK_TRAPDOOR:
                         case IRON_TRAPDOOR:
+                        case JUNGLE_TRAPDOOR:
+                        case OAK_TRAPDOOR:
+                        case SPRUCE_TRAPDOOR:
+                        case WARPED_TRAPDOOR:
                             data[col][block] = new TARDISTrapdoorRecalculator().recalculate(data[col][block], d);
                             break;
                         case BROWN_MUSHROOM_BLOCK: // mushroom

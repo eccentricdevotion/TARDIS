@@ -283,18 +283,22 @@ public class TARDISInstantPreset {
                         break;
                     case IRON_DOOR: // wood, iron & trap doors, rails
                     case RAIL:
-                    case OAK_DOOR:
-                    case BIRCH_DOOR:
-                    case SPRUCE_DOOR:
-                    case JUNGLE_DOOR:
                     case ACACIA_DOOR:
-                    case DARK_OAK_DOOR:
-                    case OAK_TRAPDOOR:
-                    case BIRCH_TRAPDOOR:
-                    case SPRUCE_TRAPDOOR:
-                    case JUNGLE_TRAPDOOR:
                     case ACACIA_TRAPDOOR:
+                    case BIRCH_DOOR:
+                    case BIRCH_TRAPDOOR:
+                    case CRIMSON_DOOR:
+                    case CRIMSON_TRAPDOOR:
+                    case DARK_OAK_DOOR:
                     case DARK_OAK_TRAPDOOR:
+                    case JUNGLE_DOOR:
+                    case JUNGLE_TRAPDOOR:
+                    case OAK_DOOR:
+                    case OAK_TRAPDOOR:
+                    case SPRUCE_DOOR:
+                    case SPRUCE_TRAPDOOR:
+                    case WARPED_DOOR:
+                    case WARPED_TRAPDOOR:
                         boolean door = false;
                         if (Tag.DOORS.isTagged(mat)) {
                             Bisected bisected = (Bisected) colData[yy];
