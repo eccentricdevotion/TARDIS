@@ -62,7 +62,6 @@ public class TARDISBlockDamageListener implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onPoliceBoxDamage(BlockDamageEvent event) {
-        Player p = event.getPlayer();
         Block b = event.getBlock();
         String l = b.getLocation().toString();
         if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l)) {
@@ -70,6 +69,7 @@ public class TARDISBlockDamageListener implements Listener {
             where.put("location", l);
             ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, false);
             if (rsb.resultSet()) {
+                Player p = event.getPlayer();
                 ReplacedBlock rb = rsb.getReplacedBlock();
                 int id = rb.getTardis_id();
                 if (TARDISPermission.hasPermission(p, "tardis.sonic.admin")) {
