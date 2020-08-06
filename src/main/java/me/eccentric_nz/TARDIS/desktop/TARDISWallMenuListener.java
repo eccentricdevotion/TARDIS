@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.ChatColor;
@@ -76,51 +77,41 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
             UUID uuid = p.getUniqueId();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 54) {
+                event.setCancelled(true);
                 switch (slot) {
-                    case 17:
-                    case 26:
-                    case 44:
-                        event.setCancelled(true);
-                        break;
                     case 8:
                         // scroll up
-                        event.setCancelled(true);
                         if (!scrolling.contains(uuid)) {
                             scrolling.add(uuid);
                             scroll(view, scroll.get(uuid) + 1, true, uuid);
                         }
                         break;
-                    case 35:
+                    case 17:
                         // scroll down
-                        event.setCancelled(true);
                         if (!scrolling.contains(uuid)) {
                             scrolling.add(uuid);
                             scroll(view, scroll.get(uuid) - 1, false, uuid);
                         }
                         break;
+                    case 26:
+                        // default wall
+                        String wall = getWallFloor(uuid, true);
+                        setWallFloorBlock(p, uuid, wall, isWall);
+                        break;
+                    case 35:
+                        // default floor
+                        String floor = getWallFloor(uuid, false);
+                        setWallFloorBlock(p, uuid, floor, isWall);
+                        break;
                     case 53:
                         // close
-                        event.setCancelled(true);
                         close(p, true);
                         break;
                     default:
-                        event.setCancelled(true);
                         // get block type and data
                         ItemStack choice = view.getItem(slot);
                         // set the tardis wall/floor block
-                        String str = choice.getType().toString();
-                        TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
-                        if (isWall) {
-                            // open the floor block GUI
-                            tud.setWall(str);
-                            floor(p);
-                        } else {
-                            tud.setFloor(str);
-                            close(p, false);
-                            // start the upgrade
-                            new TARDISThemeProcessor(plugin, uuid).changeDesktop();
-                        }
-                        plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
+                        setWallFloorBlock(p, uuid, choice.getType().toString(), isWall);
                         break;
                 }
             } else {
@@ -129,6 +120,30 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
                     event.setCancelled(true);
                 }
             }
+        }
+    }
+
+    private void setWallFloorBlock(Player p, UUID uuid, String str, boolean isWall) {
+        TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+        if (isWall) {
+            // open the floor block GUI
+            tud.setWall(str);
+            floor(p);
+        } else {
+            tud.setFloor(str);
+            close(p, false);
+            // start the upgrade
+            new TARDISThemeProcessor(plugin, uuid).changeDesktop();
+        }
+        plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
+    }
+
+    private String getWallFloor(UUID uuid, boolean wall) {
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
+        if (rsp.resultSet()) {
+            return wall ? rsp.getWall() : rsp.getFloor();
+        } else {
+            return wall ? "ORANGE_WOOL" : "LIGHT_GRAY_WOOL";
         }
     }
 

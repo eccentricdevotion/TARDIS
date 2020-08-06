@@ -76,7 +76,21 @@ class TARDISWallsInventory {
         dim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_D"));
         dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.getCustomModelData());
         scroll_down.setItemMeta(dim);
-        stack[35] = scroll_down;
+        stack[17] = scroll_down;
+        // default wall
+        ItemStack wall = new ItemStack(Material.BOWL, 1);
+        ItemMeta wim = wall.getItemMeta();
+        wim.setDisplayName("Default Wall Block");
+        wim.setCustomModelData(GUIWallFloor.WALL.getCustomModelData());
+        wall.setItemMeta(wim);
+        stack[26] = wall;
+        // default floor
+        ItemStack floor = new ItemStack(Material.BOWL, 1);
+        ItemMeta fim = floor.getItemMeta();
+        fim.setDisplayName("Default Floor Block");
+        fim.setCustomModelData(GUIWallFloor.FLOOR.getCustomModelData());
+        floor.setItemMeta(fim);
+        stack[35] = floor;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
