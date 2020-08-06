@@ -16,12 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import com.google.common.collect.Sets;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.entity.EntityType;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author eccentric_nz
@@ -34,7 +37,7 @@ public class TARDISMaterials {
 
     public static final List<Material> dyes = Arrays.asList(Material.WHITE_DYE, Material.GREEN_DYE, Material.BROWN_DYE, Material.CYAN_DYE, Material.YELLOW_DYE, Material.GRAY_DYE, Material.BLACK_DYE, Material.BLUE_DYE, Material.LIGHT_BLUE_DYE, Material.LIGHT_GRAY_DYE, Material.LIME_DYE, Material.MAGENTA_DYE, Material.ORANGE_DYE, Material.PINK_DYE, Material.PURPLE_DYE, Material.RED_DYE);
 
-    public static final List<Material> doors = Arrays.asList(Material.IRON_DOOR, Material.IRON_TRAPDOOR, Material.OAK_DOOR, Material.BIRCH_DOOR, Material.JUNGLE_DOOR, Material.SPRUCE_DOOR, Material.ACACIA_DOOR, Material.DARK_OAK_DOOR, Material.OAK_TRAPDOOR, Material.BIRCH_TRAPDOOR, Material.JUNGLE_TRAPDOOR, Material.SPRUCE_TRAPDOOR, Material.ACACIA_TRAPDOOR, Material.DARK_OAK_TRAPDOOR);
+    public static final Set<Material> doors = Sets.union(Tag.DOORS.getValues(), Tag.TRAPDOORS.getValues());
 
     public static final List<Material> plants = Arrays.asList(Material.ALLIUM, Material.AZURE_BLUET, Material.BLUE_ORCHID, Material.CACTUS, Material.DANDELION, Material.DEAD_BUSH, Material.FERN, Material.GRASS, Material.LARGE_FERN, Material.LILAC, Material.ORANGE_TULIP, Material.OXEYE_DAISY, Material.PEONY, Material.PINK_TULIP, Material.POPPY, Material.RED_TULIP, Material.ROSE_BUSH, Material.SUNFLOWER, Material.TALL_GRASS, Material.WHITE_TULIP, Material.RED_MUSHROOM, Material.BROWN_MUSHROOM);
 
@@ -44,7 +47,7 @@ public class TARDISMaterials {
 
     public static final List<Material> infested = Arrays.asList(Material.INFESTED_CHISELED_STONE_BRICKS, Material.INFESTED_COBBLESTONE, Material.INFESTED_CRACKED_STONE_BRICKS, Material.INFESTED_MOSSY_STONE_BRICKS, Material.INFESTED_STONE, Material.INFESTED_STONE_BRICKS);
 
-    public static final List<Material> not_glass = Arrays.asList(Material.AIR, Material.GLASS, Material.TORCH, Material.WALL_TORCH, Material.OAK_SIGN, Material.DARK_OAK_SIGN, Material.SPRUCE_SIGN, Material.ACACIA_SIGN, Material.JUNGLE_SIGN, Material.BIRCH_SIGN, Material.OAK_DOOR, Material.BIRCH_DOOR, Material.SPRUCE_DOOR, Material.JUNGLE_DOOR, Material.ACACIA_DOOR, Material.DARK_OAK_DOOR, Material.OAK_WALL_SIGN, Material.DARK_OAK_WALL_SIGN, Material.SPRUCE_WALL_SIGN, Material.ACACIA_WALL_SIGN, Material.JUNGLE_WALL_SIGN, Material.BIRCH_WALL_SIGN, Material.IRON_DOOR, Material.REDSTONE_TORCH, Material.REDSTONE_WALL_TORCH, Material.OAK_TRAPDOOR, Material.BIRCH_TRAPDOOR, Material.SPRUCE_TRAPDOOR, Material.JUNGLE_TRAPDOOR, Material.ACACIA_TRAPDOOR, Material.DARK_OAK_TRAPDOOR, Material.VINE, Material.REDSTONE_LAMP);
+    public static final List<Material> not_glass = Arrays.asList(Material.AIR, Material.GLASS, Material.TORCH, Material.WALL_TORCH, Material.OAK_SIGN, Material.DARK_OAK_SIGN, Material.SPRUCE_SIGN, Material.ACACIA_SIGN, Material.JUNGLE_SIGN, Material.BIRCH_SIGN, Material.OAK_DOOR, Material.BIRCH_DOOR, Material.SPRUCE_DOOR, Material.JUNGLE_DOOR, Material.ACACIA_DOOR, Material.DARK_OAK_DOOR, Material.CRIMSON_DOOR, Material.WARPED_DOOR, Material.OAK_WALL_SIGN, Material.DARK_OAK_WALL_SIGN, Material.CRIMSON_WALL_SIGN, Material.WARPED_WALL_SIGN, Material.SPRUCE_WALL_SIGN, Material.ACACIA_WALL_SIGN, Material.JUNGLE_WALL_SIGN, Material.BIRCH_WALL_SIGN, Material.IRON_DOOR, Material.SOUL_TORCH, Material.SOUL_WALL_TORCH, Material.REDSTONE_TORCH, Material.REDSTONE_WALL_TORCH, Material.OAK_TRAPDOOR, Material.BIRCH_TRAPDOOR, Material.SPRUCE_TRAPDOOR, Material.JUNGLE_TRAPDOOR, Material.ACACIA_TRAPDOOR, Material.DARK_OAK_TRAPDOOR, Material.CRIMSON_TRAPDOOR, Material.WARPED_TRAPDOOR, Material.VINE, Material.REDSTONE_LAMP);
 
     public static final List<Material> precious = Arrays.asList(Material.BEDROCK, Material.COAL_ORE, Material.DIAMOND_BLOCK, Material.DIAMOND_ORE, Material.EMERALD_BLOCK, Material.EMERALD_ORE, Material.NETHER_QUARTZ_ORE, Material.GOLD_BLOCK, Material.GOLD_ORE, Material.IRON_BLOCK, Material.IRON_ORE, Material.LAPIS_BLOCK, Material.LAPIS_BLOCK, Material.OBSIDIAN, Material.REDSTONE_BLOCK, Material.REDSTONE_ORE);
 

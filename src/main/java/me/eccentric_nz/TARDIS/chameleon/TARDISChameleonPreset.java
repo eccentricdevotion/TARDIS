@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class TARDISChameleonPreset {
 
-    private static final List<Material> PROBLEM_BLOCKS = Arrays.asList(Material.WALL_TORCH, Material.OAK_STAIRS, Material.OAK_SIGN, Material.DARK_OAK_SIGN, Material.SPRUCE_SIGN, Material.BIRCH_SIGN, Material.JUNGLE_SIGN, Material.ACACIA_SIGN, Material.OAK_DOOR, Material.RAIL, Material.COBBLESTONE_STAIRS, Material.OAK_WALL_SIGN, Material.DARK_OAK_WALL_SIGN, Material.SPRUCE_WALL_SIGN, Material.BIRCH_WALL_SIGN, Material.JUNGLE_WALL_SIGN, Material.ACACIA_WALL_SIGN, Material.LEVER, Material.IRON_DOOR, Material.IRON_TRAPDOOR, Material.STONE_BUTTON, Material.JACK_O_LANTERN, Material.OAK_TRAPDOOR, Material.BIRCH_TRAPDOOR, Material.SPRUCE_TRAPDOOR, Material.JUNGLE_TRAPDOOR, Material.ACACIA_TRAPDOOR, Material.DARK_OAK_TRAPDOOR, Material.NETHER_BRICK_FENCE, Material.OAK_FENCE, Material.BIRCH_FENCE, Material.SPRUCE_FENCE, Material.JUNGLE_FENCE, Material.ACACIA_FENCE, Material.DARK_OAK_FENCE, Material.BROWN_MUSHROOM_BLOCK, Material.VINE, Material.BRICK_STAIRS, Material.STONE_BRICK_STAIRS, Material.NETHER_BRICK_STAIRS, Material.SANDSTONE_STAIRS, Material.SPRUCE_STAIRS, Material.JUNGLE_STAIRS, Material.ACACIA_STAIRS, Material.BIRCH_STAIRS, Material.DARK_OAK_STAIRS, Material.OAK_BUTTON, Material.ANVIL, Material.CHIPPED_ANVIL, Material.DAMAGED_ANVIL, Material.QUARTZ_STAIRS, Material.SPRUCE_DOOR, Material.BIRCH_DOOR, Material.ACACIA_DOOR, Material.JUNGLE_DOOR, Material.DARK_OAK_DOOR, Material.PURPUR_STAIRS, Material.RED_SANDSTONE_STAIRS, Material.WHITE_BED, Material.ORANGE_BED, Material.MAGENTA_BED, Material.YELLOW_BED, Material.LIME_BED, Material.PINK_BED, Material.GRAY_BED, Material.LIGHT_GRAY_BED, Material.PURPLE_BED, Material.CYAN_BED, Material.BLUE_BED, Material.GREEN_BED, Material.BROWN_BED, Material.RED_BED, Material.BLACK_BED, Material.LIGHT_BLUE_BED, Material.CARVED_PUMPKIN, Material.OBSERVER, Material.WHITE_GLAZED_TERRACOTTA, Material.ORANGE_GLAZED_TERRACOTTA, Material.MAGENTA_GLAZED_TERRACOTTA, Material.LIGHT_BLUE_GLAZED_TERRACOTTA, Material.YELLOW_GLAZED_TERRACOTTA, Material.LIME_GLAZED_TERRACOTTA, Material.PINK_GLAZED_TERRACOTTA, Material.GRAY_GLAZED_TERRACOTTA, Material.LIGHT_GRAY_GLAZED_TERRACOTTA, Material.CYAN_GLAZED_TERRACOTTA, Material.PURPLE_GLAZED_TERRACOTTA, Material.BLUE_GLAZED_TERRACOTTA, Material.BROWN_GLAZED_TERRACOTTA, Material.GREEN_GLAZED_TERRACOTTA, Material.RED_GLAZED_TERRACOTTA, Material.BLACK_GLAZED_TERRACOTTA);
+    private static final List<Material> PROBLEM_BLOCKS = Arrays.asList(Material.ACACIA_DOOR, Material.ACACIA_FENCE, Material.ACACIA_SIGN, Material.ACACIA_STAIRS, Material.ACACIA_TRAPDOOR, Material.ACACIA_WALL_SIGN, Material.ANDESITE_STAIRS, Material.ANVIL, Material.BIRCH_DOOR, Material.BIRCH_FENCE, Material.BIRCH_SIGN, Material.BIRCH_STAIRS, Material.BIRCH_TRAPDOOR, Material.BIRCH_WALL_SIGN, Material.BLACK_BED, Material.BLACK_GLAZED_TERRACOTTA, Material.BLACKSTONE_STAIRS, Material.BLUE_BED, Material.BLUE_GLAZED_TERRACOTTA, Material.BRICK_STAIRS, Material.BROWN_BED, Material.BROWN_GLAZED_TERRACOTTA, Material.BROWN_MUSHROOM_BLOCK, Material.CARVED_PUMPKIN, Material.CHIPPED_ANVIL, Material.COBBLESTONE_STAIRS, Material.CRIMSON_BUTTON, Material.CRIMSON_DOOR, Material.CRIMSON_FENCE, Material.CRIMSON_SIGN, Material.CRIMSON_STAIRS, Material.CRIMSON_TRAPDOOR, Material.CRIMSON_WALL_SIGN, Material.CYAN_BED, Material.CYAN_GLAZED_TERRACOTTA, Material.DAMAGED_ANVIL, Material.DARK_OAK_DOOR, Material.DARK_OAK_FENCE, Material.DARK_OAK_SIGN, Material.DARK_OAK_STAIRS, Material.DARK_OAK_TRAPDOOR, Material.DARK_OAK_WALL_SIGN, Material.DARK_PRISMARINE_STAIRS, Material.DIORITE_STAIRS, Material.END_STONE_BRICK_STAIRS, Material.GRANITE_STAIRS, Material.GRAY_BED, Material.GRAY_GLAZED_TERRACOTTA, Material.GREEN_BED, Material.GREEN_GLAZED_TERRACOTTA, Material.IRON_DOOR, Material.IRON_TRAPDOOR, Material.JACK_O_LANTERN, Material.JUNGLE_DOOR, Material.JUNGLE_FENCE, Material.JUNGLE_SIGN, Material.JUNGLE_STAIRS, Material.JUNGLE_TRAPDOOR, Material.JUNGLE_WALL_SIGN, Material.LEVER, Material.LIGHT_BLUE_BED, Material.LIGHT_BLUE_GLAZED_TERRACOTTA, Material.LIGHT_GRAY_BED, Material.LIGHT_GRAY_GLAZED_TERRACOTTA, Material.LIME_BED, Material.LIME_GLAZED_TERRACOTTA, Material.MAGENTA_BED, Material.MAGENTA_GLAZED_TERRACOTTA, Material.MOSSY_COBBLESTONE_STAIRS, Material.MOSSY_STONE_BRICK_STAIRS, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS, Material.OAK_BUTTON, Material.OAK_DOOR, Material.OAK_FENCE, Material.OAK_SIGN, Material.OAK_STAIRS, Material.OAK_TRAPDOOR, Material.OAK_WALL_SIGN, Material.OBSERVER, Material.ORANGE_BED, Material.ORANGE_GLAZED_TERRACOTTA, Material.PINK_BED, Material.PINK_GLAZED_TERRACOTTA, Material.POLISHED_ANDESITE_STAIRS, Material.POLISHED_BLACKSTONE_BUTTON, Material.POLISHED_BLACKSTONE_BRICK_STAIRS, Material.POLISHED_BLACKSTONE_STAIRS, Material.POLISHED_DIORITE_STAIRS, Material.POLISHED_GRANITE_STAIRS, Material.PRISMARINE_BRICK_STAIRS, Material.PRISMARINE_STAIRS, Material.PURPLE_BED, Material.PURPLE_GLAZED_TERRACOTTA, Material.PURPUR_STAIRS, Material.QUARTZ_STAIRS, Material.RAIL, Material.RED_BED, Material.RED_GLAZED_TERRACOTTA, Material.RED_NETHER_BRICK_STAIRS, Material.RED_SANDSTONE_STAIRS, Material.SANDSTONE_STAIRS, Material.SMOOTH_QUARTZ_STAIRS, Material.SMOOTH_RED_SANDSTONE_STAIRS, Material.SMOOTH_SANDSTONE_STAIRS, Material.SPRUCE_DOOR, Material.SPRUCE_FENCE, Material.SPRUCE_SIGN, Material.SPRUCE_STAIRS, Material.SPRUCE_TRAPDOOR, Material.SPRUCE_WALL_SIGN, Material.STONE_BRICK_STAIRS, Material.STONE_BUTTON, Material.STONE_STAIRS, Material.VINE, Material.WALL_TORCH, Material.REDSTONE_WALL_TORCH, Material.SOUL_WALL_TORCH, Material.WARPED_BUTTON, Material.WARPED_DOOR, Material.WARPED_FENCE, Material.WARPED_SIGN, Material.WARPED_STAIRS, Material.WARPED_TRAPDOOR, Material.WARPED_WALL_SIGN, Material.WHITE_BED, Material.WHITE_GLAZED_TERRACOTTA, Material.YELLOW_BED, Material.YELLOW_GLAZED_TERRACOTTA);
     public final TARDISCustomPreset custom;
     private final TARDISAndesitePreset andesite;
     private final TARDISAngelDownPreset angeld;
@@ -316,6 +316,8 @@ public class TARDISChameleonPreset {
                             data[col][block] = new TARDISBedRecalculator().recalculate(data[col][block], d);
                             break;
                         case WALL_TORCH:
+                        case REDSTONE_WALL_TORCH:
+                        case SOUL_WALL_TORCH:
                             data[col][block] = new TARDISTorchRecalculator().recalculate(data[col][block], d);
                             break;
                         case ACACIA_DOOR:
@@ -412,38 +414,65 @@ public class TARDISChameleonPreset {
                             }
                             data[col][block] = wall_sign;
                             break;
-                        case OAK_STAIRS:
-                        case COBBLESTONE_STAIRS:
-                        case BRICK_STAIRS:
-                        case STONE_BRICK_STAIRS:
-                        case NETHER_BRICK_STAIRS:
-                        case SANDSTONE_STAIRS:
-                        case SPRUCE_STAIRS:
-                        case BIRCH_STAIRS:
-                        case JUNGLE_STAIRS:
-                        case QUARTZ_STAIRS:
                         case ACACIA_STAIRS:
+                        case ANDESITE_STAIRS:
+                        case BIRCH_STAIRS:
+                        case BLACKSTONE_STAIRS:
+                        case BRICK_STAIRS:
+                        case COBBLESTONE_STAIRS:
+                        case CRIMSON_STAIRS:
                         case DARK_OAK_STAIRS:
+                        case DARK_PRISMARINE_STAIRS:
+                        case DIORITE_STAIRS:
+                        case END_STONE_BRICK_STAIRS:
+                        case GRANITE_STAIRS:
+                        case JUNGLE_STAIRS:
+                        case MOSSY_COBBLESTONE_STAIRS:
+                        case MOSSY_STONE_BRICK_STAIRS:
+                        case NETHER_BRICK_STAIRS:
+                        case OAK_STAIRS:
+                        case POLISHED_ANDESITE_STAIRS:
+                        case POLISHED_BLACKSTONE_BRICK_STAIRS:
+                        case POLISHED_BLACKSTONE_STAIRS:
+                        case POLISHED_DIORITE_STAIRS:
+                        case POLISHED_GRANITE_STAIRS:
+                        case PRISMARINE_BRICK_STAIRS:
+                        case PRISMARINE_STAIRS:
                         case PURPUR_STAIRS:
+                        case QUARTZ_STAIRS:
+                        case RED_NETHER_BRICK_STAIRS:
                         case RED_SANDSTONE_STAIRS:
+                        case SANDSTONE_STAIRS:
+                        case SMOOTH_QUARTZ_STAIRS:
+                        case SMOOTH_RED_SANDSTONE_STAIRS:
+                        case SMOOTH_SANDSTONE_STAIRS:
+                        case SPRUCE_STAIRS:
+                        case STONE_BRICK_STAIRS:
+                        case STONE_STAIRS:
+                        case WARPED_STAIRS:
                             data[col][block] = new TARDISStairRecalculator().recalculate(data[col][block], d, col, duck);
                             break;
-                        case STONE_BUTTON:
-                        case OAK_BUTTON:
-                        case SPRUCE_BUTTON:
-                        case BIRCH_BUTTON:
-                        case JUNGLE_BUTTON:
                         case ACACIA_BUTTON:
+                        case BIRCH_BUTTON:
+                        case CRIMSON_BUTTON:
                         case DARK_OAK_BUTTON:
+                        case JUNGLE_BUTTON:
+                        case OAK_BUTTON:
+                        case POLISHED_BLACKSTONE_BUTTON:
+                        case SPRUCE_BUTTON:
+                        case STONE_BUTTON:
+                        case WARPED_BUTTON:
                             data[col][block] = new TARDISButtonRecalculator().recalculate(data[col][block], d);
                             break;
+                        case ACACIA_FENCE:
+                        case BIRCH_FENCE:
+                        case CRIMSON_FENCE:
+                        case DARK_OAK_FENCE:
+                        case JUNGLE_FENCE:
+                        case NETHER_BRICK_FENCE:
                         case OAK_FENCE:
                         case SPRUCE_FENCE:
-                        case BIRCH_FENCE:
-                        case JUNGLE_FENCE:
-                        case ACACIA_FENCE:
-                        case DARK_OAK_FENCE:
-                        case NETHER_BRICK_FENCE:
+                        case WARPED_FENCE:
                             data[col][block] = new TARDISFenceRecalculator().recalculate(data[col][block], d);
                             break;
                         case ACACIA_TRAPDOOR:

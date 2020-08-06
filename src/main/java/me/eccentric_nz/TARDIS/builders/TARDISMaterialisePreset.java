@@ -380,20 +380,24 @@ class TARDISMaterialisePreset implements Runnable {
                                     break;
                                 case ACACIA_SIGN:
                                 case BIRCH_SIGN:
+                                case CRIMSON_SIGN:
                                 case DARK_OAK_SIGN:
                                 case JUNGLE_SIGN:
                                 case OAK_SIGN:
                                 case SPRUCE_SIGN:
+                                case WARPED_SIGN:
                                     if (preset.equals(PRESET.APPERTURE)) {
                                         TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                                     }
                                     break;
                                 case ACACIA_WALL_SIGN:
                                 case BIRCH_WALL_SIGN:
+                                case CRIMSON_WALL_SIGN:
                                 case DARK_OAK_WALL_SIGN:
                                 case JUNGLE_WALL_SIGN:
                                 case OAK_WALL_SIGN:
                                 case SPRUCE_WALL_SIGN:
+                                case WARPED_WALL_SIGN:
                                     // sign - if there is one
                                     if (preset.equals(PRESET.JUNK_MODE)) {
                                         // add a sign
@@ -687,18 +691,22 @@ class TARDISMaterialisePreset implements Runnable {
                                 }
                                 break;
                             case IRON_DOOR: // wood, iron & trap doors
-                            case OAK_DOOR:
-                            case BIRCH_DOOR:
-                            case SPRUCE_DOOR:
-                            case JUNGLE_DOOR:
                             case ACACIA_DOOR:
-                            case DARK_OAK_DOOR:
-                            case OAK_TRAPDOOR:
-                            case BIRCH_TRAPDOOR:
-                            case SPRUCE_TRAPDOOR:
-                            case JUNGLE_TRAPDOOR:
                             case ACACIA_TRAPDOOR:
+                            case BIRCH_DOOR:
+                            case BIRCH_TRAPDOOR:
+                            case CRIMSON_DOOR:
+                            case CRIMSON_TRAPDOOR:
+                            case DARK_OAK_DOOR:
                             case DARK_OAK_TRAPDOOR:
+                            case JUNGLE_DOOR:
+                            case JUNGLE_TRAPDOOR:
+                            case OAK_DOOR:
+                            case OAK_TRAPDOOR:
+                            case SPRUCE_DOOR:
+                            case SPRUCE_TRAPDOOR:
+                            case WARPED_DOOR:
+                            case WARPED_TRAPDOOR:
                                 if (preset.isColoured() || preset.equals(PRESET.PANDORICA)) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                     // remember the door location
