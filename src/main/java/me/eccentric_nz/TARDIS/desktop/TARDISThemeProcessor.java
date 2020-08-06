@@ -150,14 +150,14 @@ class TARDISThemeProcessor {
         String config_path = (archive_next != null) ? "upgrades.archive." + archive_next.getConsoleSize().getConfigPath() : "upgrades." + tud.getSchematic().getPermission().toLowerCase(Locale.ENGLISH);
         int amount = plugin.getArtronConfig().getInt(config_path);
         TARDISThemeRunnable ttr;
-        boolean master = tud.getPrevious().getPermission().equals("master");
+        boolean hasLava = tud.getPrevious().getPermission().equals("master") || tud.getPrevious().getPermission().equals("delta");
         if (tud.getPrevious().equals(tud.getSchematic()) && archive_next == null) {
             // reduce the cost of the theme change
             amount = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * amount);
             ttr = new TARDISWallFloorRunnable(plugin, uuid, tud);
         } else {
             // check for master
-            if (master) {
+            if (hasLava) {
                 // remove lava and water
                 new TARDISDelavafier(plugin, uuid).swap();
             }
@@ -165,7 +165,7 @@ class TARDISThemeProcessor {
         }
         plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, plugin.getServer().getPlayer(uuid));
         // start the rebuild
-        long initial_delay = (master) ? 45L : 5L;
+        long initial_delay = (hasLava) ? 45L : 5L;
         long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, initial_delay, delay);
         ttr.setTaskID(task);

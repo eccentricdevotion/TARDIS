@@ -65,8 +65,8 @@ public class TARDISRepair {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             String perm = tardis.getSchematic().getPermission();
-            boolean master = tud.getPrevious().getPermission().equals("master");
-            if (master) {
+            boolean hasLava = tud.getPrevious().getPermission().equals("master") || tud.getPrevious().getPermission().equals("delta");
+            if (hasLava) {
                 new TARDISDelavafier(plugin, uuid).swap();
             }
             String wall = "ORANGE_WOOL";
@@ -88,7 +88,7 @@ public class TARDISRepair {
             plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
             TARDISThemeRunnable ttr = new TARDISThemeRepairRunnable(plugin, uuid, tud, clean);
             // start the rebuild
-            long initial_delay = (master) ? 45L : 5L;
+            long initial_delay = (hasLava) ? 45L : 5L;
             long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, initial_delay, delay);
             ttr.setTaskID(task);

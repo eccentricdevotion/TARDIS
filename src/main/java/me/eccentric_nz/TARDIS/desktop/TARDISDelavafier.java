@@ -38,7 +38,7 @@ class TARDISDelavafier {
     private final TARDIS plugin;
     private final UUID uuid;
     private final BlockData ORANGE = Material.ORANGE_TERRACOTTA.createBlockData();
-    public static final BlockData GLASS = Material.LIGHT_BLUE_STAINED_GLASS.createBlockData();
+    private final BlockData GLASS = Material.LIGHT_BLUE_STAINED_GLASS.createBlockData();
 
     TARDISDelavafier(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
