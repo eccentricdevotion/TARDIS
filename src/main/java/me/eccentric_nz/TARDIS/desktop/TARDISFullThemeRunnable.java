@@ -623,9 +623,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     postDoorBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.LEVER)) {
                     postLeverBlocks.put(world.getBlockAt(x, y, z), data);
-                } else if (type.equals(Material.REDSTONE_TORCH)) {
+                } else if (type.equals(Material.REDSTONE_TORCH) || type.equals(Material.REDSTONE_WALL_TORCH)) {
                     postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
-                } else if (type.equals(Material.TORCH)) {
+                } else if (type.equals(Material.TORCH) || type.equals(Material.WALL_TORCH) || type.equals(Material.SOUL_TORCH) || type.equals(Material.SOUL_WALL_TORCH)) {
                     postTorchBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.STICKY_PISTON)) {
                     postStickyPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);

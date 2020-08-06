@@ -17,7 +17,10 @@ public class FractalFence {
     public static void grow(Block start, int i) {
         Material material = start.getType();
         for (Location location : getPoints(start.getLocation(), i)) {
-            location.getBlock().setType(material, true);
+            Block block = location.getBlock();
+            if (block.getType().isAir()) {
+                block.setType(material, true);
+            }
         }
     }
 
