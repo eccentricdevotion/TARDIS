@@ -104,11 +104,11 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockPlaceListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
+            plugin.getPM().registerEvents(new TARDISPoliceBoxDoorListener(plugin), plugin);
             if (plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                 plugin.getPM().registerEvents(new TARDISAnyoneDoorListener(plugin), plugin);
                 plugin.getPM().registerEvents(new TARDISAnyoneMoveListener(plugin), plugin);
             } else {
-                plugin.getPM().registerEvents(new TARDISPoliceBoxDoorListener(plugin), plugin);
                 plugin.getPM().registerEvents(new TARDISDoorWalkListener(plugin), plugin);
                 plugin.getPM().registerEvents(new TARDISMoveListener(plugin), plugin);
             }
