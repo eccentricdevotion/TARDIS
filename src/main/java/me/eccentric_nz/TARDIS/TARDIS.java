@@ -296,7 +296,7 @@ public class TARDIS extends JavaPlugin {
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         Version serverVersion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.16.1");
+        Version minversion = new Version("1.16.2");
         // check server version
         if (serverVersion.compareTo(minversion) >= 0) {
             if (getServer().getBukkitVersion().startsWith("git-Bukkit-")) {
