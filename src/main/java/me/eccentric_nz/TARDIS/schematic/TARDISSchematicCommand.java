@@ -74,6 +74,18 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 paster.setTask(task);
                 return true;
             }
+            if (args.length == 1 && args[0].equalsIgnoreCase("pastecsv")) {
+                Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
+                String path = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + "legacy_budget.csv";
+                File csv = new File(path);
+                if (csv.exists()) {
+                    TARDISCSVPaster paster = new TARDISCSVPaster(plugin);
+                    paster.buildLegacy(paster.arrayFromCSV(csv), eyeLocation);
+                } else {
+                    TARDISMessage.message(player, "Nice try, but it looks like you don't know what this command is for...");
+                }
+                return true;
+            }
             if (args[0].equalsIgnoreCase("clear")) {
                 // check they have selected start and end blocks
                 if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {

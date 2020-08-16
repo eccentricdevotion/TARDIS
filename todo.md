@@ -11,6 +11,7 @@
 7. More sudo commands - [#307](https://github.com/eccentricdevotion/TARDIS/issues/307)
 8. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
 9. TCG API - use Police Box location instead of player location?
+10. Redo Whovian worlds with new 1.16.2 customised worlds, most probably by adding to the TARDIS datapack - [#336](https://github.com/eccentricdevotion/TARDIS/issues/336)
 
 ## Resource Pack / TARDISWeepingAngels
 1. Re-skin mobs for Resource pack, and add new mob sounds
