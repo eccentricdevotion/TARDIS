@@ -33,8 +33,22 @@ public class CompoundBuilder {
             case Charcoal:
                 is = new ItemStack(Material.CHARCOAL, 1);
                 break;
+            case Rust:
+                is = new ItemStack(Material.LAVA_BUCKET, 1);
+                ItemMeta rm = is.getItemMeta();
+                rm.setDisplayName("Rust Bucket");
+                rm.setCustomModelData(1);
+                is.setItemMeta(rm);
+                break;
             case Sugar:
                 is = new ItemStack(Material.SUGAR, 1);
+                break;
+            case Sulphuric_Acid:
+                is = new ItemStack(Material.WATER_BUCKET, 1);
+                ItemMeta am = is.getItemMeta();
+                am.setDisplayName("Acid Bucket");
+                am.setCustomModelData(1);
+                is.setItemMeta(am);
                 break;
             default:
                 is = new ItemStack(Material.GLASS_BOTTLE, 1);

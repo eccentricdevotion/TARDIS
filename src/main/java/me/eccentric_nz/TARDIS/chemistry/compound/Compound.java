@@ -42,6 +42,7 @@ public enum Compound {
     Polyethylene("Carbon:10-Hydrogen:20", "(C2H4)5"),
     Potassium_Chloride("Potassium:1-Chlorine:1", "KCl"),
     Potassium_Iodide("Potassium:1-Iodine:1", "KI"),
+    Rust("Iron:2-Oxygen:3-Hydrogen:2-Oxygen:1", "Fe2O3(H2O)"),
     Salt("Sodium:1-Chlorine:1", "NaCl"),
     Soap("Carbon:18-Hydrogen:35-Sodium:1-Oxygen:2", "C18H35NaO2"),
     Sodium_Acetate("Carbon:2-Hydrogen:3-Sodium:1-Oxygen:2", "C2H3NaO2"),
@@ -51,6 +52,7 @@ public enum Compound {
     Sodium_Oxide("Sodium:1-Oxygen:20", "Na2O"),
     Sugar("Carbon:6-Hydrogen:12-Oxygen:6", "C6H12O6"),
     Sulfate("Sulfur:1-Oxygen:4", "SO4"),
+    Sulphuric_Acid("Hydrogen:2-Sulfur:1-Oxygen:4", "H2SO4"),
     Tungsten_Chloride("Tungsten:1-Chlorine:6", "WCl6"),
     Water("Hydrogen:2-Oxygen:1", "H2O");
 
