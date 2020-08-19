@@ -235,7 +235,7 @@
         <dependency>
             <groupId>io.papermc</groupId>
             <artifactId>paperlib</artifactId>
-            <version>1.0.3</version>
+            <version>1.0.5</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -380,6 +380,7 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/LWCX.jar</systemPath>
         </dependency>
+        <!-- only need ProtocolLib to supprt LibsDisguises  -->
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
