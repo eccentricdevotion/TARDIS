@@ -84,7 +84,7 @@ Recipe command: `/tardischemistry forumla Sulphuric_Acid`
 
 Elements required to craft: 2 Hydrogen, 1 Sulphur, and 4 Oxygen
 
-Uses: Can be placed to match Skaro's acid ocean water.
+Uses: Used to craft Acid Batteries.
 
 ## Aluminium Oxide
 
@@ -284,7 +284,7 @@ Recipe command: `/tardischemistry formula Rust`
 
 Elements required to craft: 2 Iron, 3 Oxygen, 2 Hydrogen, and 1 Oxygen
 
-Uses: Can be placed to match Skaro's rust water.
+Uses: Used to craft Rust Plague Sword.
 
 ## Salt
 
