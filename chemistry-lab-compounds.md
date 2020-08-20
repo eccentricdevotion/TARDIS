@@ -24,6 +24,7 @@ All images use the TARDIS-Resource-Pack, and your experience will be much better
 <div class="row">
 <dl id="one">
 <dt>A</dt>
+<dd>{{ "[Acid Bucket](#acid-bucket)" | markdownify }}</dd>
 <dd>{{ "[Aluminium Oxide](#aluminium-oxide)" | markdownify }}</dd>
 <dd>{{ "[Ammonia](#ammonia)" | markdownify }}</dd>
 <dt>B</dt>
@@ -58,6 +59,8 @@ All images use the TARDIS-Resource-Pack, and your experience will be much better
 <dd>{{ "[Polyethylene](#polyethylene)" | markdownify }}</dd>
 <dd>{{ "[Potassium Chloride](#potassium-chloride)" | markdownify }}</dd>
 <dd>{{ "[Potassium Iodide](#potassium-iodide)" | markdownify }}</dd>
+<dt>R</dt>
+<dd>{{ "[Rust Bucket](#rust-bucket)" | markdownify }}</dd>
 <dt>S</dt>
 <dd>{{ "[Salt](#salt)" | markdownify }}</dd>
 <dd>{{ "[Soap](#soap)" | markdownify }}</dd>
@@ -75,6 +78,13 @@ All images use the TARDIS-Resource-Pack, and your experience will be much better
 </dl>
 </div>
 
+## Acid Bucket
+
+Recipe command: `/tardischemistry forumla Sulphuric_Acid`
+
+Elements required to craft: 2 Hydrogen, 1 Sulphur, and 4 Oxygen
+
+Uses: Can be placed to match Skaro's acid ocean water.
 
 ## Aluminium Oxide
 
@@ -267,6 +277,14 @@ Recipe command: `/tardischemistry formula Potassium_Iodide`
 Elements required to craft: 1 Potassium and 1 Iodide
 
 Uses: None known
+
+## Rust Bucket
+
+Recipe command: `/tardischemistry formula Rust`
+
+Elements required to craft: 2 Iron, 3 Oxygen, 2 Hydrogen, and 1 Oxygen
+
+Uses: Can be placed to match Skaro's rust water.
 
 ## Salt
 
