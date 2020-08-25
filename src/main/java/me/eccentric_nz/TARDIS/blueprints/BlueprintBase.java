@@ -4,6 +4,7 @@ public enum BlueprintBase {
 
     ADD("tardis.add"),
     BOOK("tardis.book"),
+    CREATE("tardis.create"),
     DELETE("tardis.delete"), // don't really need this - just use "tardis.exterminate"?
     ENTER("tardis.enter"),
     EXTERMINATE("tardis.exterminate"), // don't really need this - just use "tardis.delete"?
