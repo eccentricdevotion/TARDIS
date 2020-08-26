@@ -35,6 +35,14 @@ To add a time rotor to an existing console:
 4. Run the command `/tardis update rotor`
 5. Click the time rotor item frame
 
+### To change a Time Rotor
+
+Time rotors are locked (and the item frame made invisible) when you update them. In order to make changes to the time rotor you need to unlock it.
+
+1. Run the command `/tardis update rotor unlock`
+2. Make changes to the item frame and rotor
+3. Re-update the rotor with the command `/tardis update rotor`
+
 ### Recipes
 
 The crafting recipes for the four time rotors are:
