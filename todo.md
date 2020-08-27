@@ -1,6 +1,6 @@
 # TODO
 
-## Next version `4.4.5`
+## Next version `4.5`
 1. Update documentation...
 2. 13th Doctor's and Factory TARDIS console
    * Add advanced console and disk storage to schematics
@@ -25,8 +25,9 @@
    * Stray -> Scarecrows
 2. Use custom model data to make carved pumpkin head into gas mask when player is killed by an Empty Child
 3. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
+4. Use ArmorStand locking API
 
-## Minecraft Bedrock Edition
+## Minecraft Bedrock Edition?
 1. Recreate everything :)
 2. Create custom blocks for the TARDIS and console
 3. Custom TARDIS items and crafting recipes for the same

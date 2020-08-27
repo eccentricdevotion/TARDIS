@@ -77,6 +77,7 @@ public class TARDISTimeTravel {
      * @param d      the direction the Police Box is facing.
      * @return the number of unsafe blocks
      */
+    // TODO check item frame police boxes
     public static int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
         int level, row, col, rowcount, colcount, count = 0;
         switch (d) {

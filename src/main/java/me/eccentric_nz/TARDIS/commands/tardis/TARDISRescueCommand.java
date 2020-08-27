@@ -44,7 +44,7 @@ class TARDISRescueCommand {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
             return true;
         }
-        if (TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
+        if (TARDISPermission.hasPermission(player, "tardis.timetravel.rescue")) {
             ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 TARDISMessage.send(player, "NOT_A_TIMELORD");
