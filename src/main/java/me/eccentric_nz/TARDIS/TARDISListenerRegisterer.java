@@ -72,6 +72,8 @@ import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
 import me.eccentric_nz.TARDIS.listeners.*;
 import me.eccentric_nz.TARDIS.move.*;
 import me.eccentric_nz.TARDIS.planets.*;
+import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryListener;
+import me.eccentric_nz.TARDIS.recipes.TARDISRecipeInventoryListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicListener;
@@ -201,6 +203,8 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISPresetListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISQuitListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRecipeListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISRecipeInventoryListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISRecipeCategoryListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRegulatorListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRemoteKeyListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRedstoneListener(plugin), plugin);

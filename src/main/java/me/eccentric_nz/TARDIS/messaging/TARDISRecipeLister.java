@@ -71,7 +71,6 @@ public class TARDISRecipeLister {
         tg.addRow();
         tg.addRow("Item Circuits", "");
         tg.addRow(ChatColor.RED + "l-circuit", ChatColor.DARK_RED + "Locator Circuit");
-        tg.addRow(ChatColor.RED + "m-circuit", ChatColor.DARK_RED + "Materialisation Circuit");
         tg.addRow(ChatColor.RED + "generator", ChatColor.DARK_RED + "Sonic Generator");
         tg.addRow(ChatColor.RED + "oscillator", ChatColor.DARK_RED + "Sonic Oscillator");
         tg.addRow(ChatColor.RED + "p-circuit", ChatColor.DARK_RED + "Perception Circuit");
@@ -107,6 +106,7 @@ public class TARDISRecipeLister {
         tg.addRow(ChatColor.AQUA + "player-disk", ChatColor.DARK_AQUA + "Player Storage Disk");
         tg.addRow(ChatColor.AQUA + "preset-disk", ChatColor.DARK_AQUA + "Preset Storage Disk");
         tg.addRow(ChatColor.AQUA + "save-disk", ChatColor.DARK_AQUA + "Save Storage Disk");
+        tg.addRow(ChatColor.AQUA + "control", ChatColor.DARK_AQUA + "Authorised Control Disk");
         tg.addRow();
         tg.addRow("Food", "");
         tg.addRow(ChatColor.GRAY + "custard", ChatColor.DARK_GRAY + "Bowl of Custard");
