@@ -36,6 +36,8 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.MultipleFacing;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -53,7 +55,6 @@ import java.util.Set;
  */
 public class TARDISTimeTravel {
 
-    private static final int[] START_LOC = new int[6];
     private final TARDIS plugin;
     private final int attempts;
     private Location dest;
@@ -77,7 +78,6 @@ public class TARDISTimeTravel {
      * @param d      the direction the Police Box is facing.
      * @return the number of unsafe blocks
      */
-    // TODO check item frame police boxes
     public static int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
         int level, row, col, rowcount, colcount, count = 0;
         switch (d) {
@@ -95,6 +95,15 @@ public class TARDISTimeTravel {
             for (row = 0; row < rowcount; row++) {
                 for (col = 0; col < colcount; col++) {
                     Block block = w.getBlockAt(startx, starty, startz);
+                    if (level == 0) {
+                        // check for item frame
+                        for (Entity e : w.getNearbyEntities(block.getLocation(), 1.5d, 1.5d, 1.5d)) {
+                            if (e instanceof ItemFrame) {
+                                count++;
+                                break;
+                            }
+                        }
+                    }
                     Material mat = block.getType();
                     if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
                         // check for siege cube
@@ -129,27 +138,28 @@ public class TARDISTimeTravel {
      * @return an array containing x and z coordinates
      */
     public static int[] getStartLocation(Location loc, COMPASS d) {
+        int[] startLocation = new int[4];
         switch (d) {
             case EAST:
-                START_LOC[0] = loc.getBlockX() - 2;
-                START_LOC[1] = START_LOC[0];
-                START_LOC[2] = loc.getBlockZ() - 1;
-                START_LOC[3] = START_LOC[2];
+                startLocation[0] = loc.getBlockX() - 2;
+                startLocation[1] = startLocation[0];
+                startLocation[2] = loc.getBlockZ() - 1;
+                startLocation[3] = startLocation[2];
                 break;
             case SOUTH:
-                START_LOC[0] = loc.getBlockX() - 1;
-                START_LOC[1] = START_LOC[0];
-                START_LOC[2] = loc.getBlockZ() - 2;
-                START_LOC[3] = START_LOC[2];
+                startLocation[0] = loc.getBlockX() - 1;
+                startLocation[1] = startLocation[0];
+                startLocation[2] = loc.getBlockZ() - 2;
+                startLocation[3] = startLocation[2];
                 break;
             default:
-                START_LOC[0] = loc.getBlockX() - 1;
-                START_LOC[1] = START_LOC[0];
-                START_LOC[2] = loc.getBlockZ() - 1;
-                START_LOC[3] = START_LOC[2];
+                startLocation[0] = loc.getBlockX() - 1;
+                startLocation[1] = startLocation[0];
+                startLocation[2] = loc.getBlockZ() - 1;
+                startLocation[3] = startLocation[2];
                 break;
         }
-        return START_LOC;
+        return startLocation;
     }
 
     /**

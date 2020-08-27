@@ -41,12 +41,9 @@ import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -65,8 +62,6 @@ public class TARDISTravelCommands implements CommandExecutor {
     private final List<String> BIOME_SUBS = new ArrayList<>();
     private final List<String> mustUseAdvanced = Arrays.asList("area", "biome", "dest");
     private final List<String> costs = Arrays.asList("random", "random_circuit", "travel", "comehere", "hide", "rebuild", "autonomous", "backdoor");
-    private final long timeout;
-    private final FileConfiguration spigot = YamlConfiguration.loadConfiguration(new File("spigot.yml"));
 
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -75,7 +70,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                 BIOME_SUBS.add(bi.toString());
             }
         }
-        timeout = (spigot != null) ? (spigot.getLong("settings.timeout-time") * 1000) - 2000 : 58000;
     }
 
     private static boolean isNumber(String str) {
