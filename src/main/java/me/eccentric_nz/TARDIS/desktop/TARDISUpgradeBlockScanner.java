@@ -146,6 +146,9 @@ public class TARDISUpgradeBlockScanner {
                         if (type.equals(Material.COMMAND_BLOCK)) {
                             type = Material.STONE_BRICKS;
                         }
+                        if (type.equals(Material.JUKEBOX) || type.equals(Material.NOTE_BLOCK)) {
+                            type = Material.MUSHROOM_STEM;
+                        }
                         if (Tag.WOOL.isTagged(type)) {
                             // determine 'use_clay' material
                             UseClay use_clay;
@@ -204,6 +207,9 @@ public class TARDISUpgradeBlockScanner {
                                         type = Material.getMaterial(m);
                                     }
                                     break;
+                                case BLUE_WOOL:
+                                    type = Material.MUSHROOM_STEM;
+                                    break;
                                 default:
                                     String[] tsplit = type.toString().split("_");
                                     String m;
@@ -218,7 +224,8 @@ public class TARDISUpgradeBlockScanner {
                         if (type.isAir()) {
                             v--;
                         }
-                        if (!b.getType().equals(type)) {
+                        Material material = b.getType();
+                        if (!material.equals(type) && !(material.isAir() && type.isAir())) {
                             count++;
                         }
                     }
