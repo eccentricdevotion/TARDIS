@@ -111,6 +111,15 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.TARDIS_Zero_Room.gamerules.announceAdvancements", false);
             save++;
         }
+        if (!planets_config.contains("planets.Skaro.gamerules.doTraderSpawning")) {
+            planets_config.set("planets.Gallifrey.gamerules.doTraderSpawning", false);
+            planets_config.set("planets.Gallifrey.gamerules.doPatrolSpawning", false);
+            planets_config.set("planets.Siluria.gamerules.doTraderSpawning", false);
+            planets_config.set("planets.Siluria.gamerules.doPatrolSpawning", false);
+            planets_config.set("planets.Skaro.gamerules.doTraderSpawning", false);
+            planets_config.set("planets.Skaro.gamerules.doPatrolSpawning", false);
+            save++;
+        }
         if (!planets_config.contains("planets.Skaro.generator")) {
             for (String w : planets_config.getConfigurationSection("planets").getKeys(false)) {
                 if (w.startsWith("TARDIS_") || w.equals(plugin.getConfig().getString("creation.default_world_name"))) {

@@ -14,31 +14,40 @@ planets:
     flying_daleks: true
     gamemode: SURVIVAL
     time_travel: true
-    world_type: BUFFET
+    world_type: FIXED
     environment: NORMAL
     generator: DEFAULT
     keep_spawn_in_memory: false
     spawn_other_mobs: true
+    gamerules:
+      doTraderSpawning: false
+      doPatrolSpawning: false
   Siluria:
     enabled: false
     resource_pack: default
     gamemode: SURVIVAL
     time_travel: true
-    world_type: BUFFET
+    world_type: FIXED
     environment: NORMAL
     generator: DEFAULT
     keep_spawn_in_memory: false
     spawn_other_mobs: true
+    gamerules:
+      doTraderSpawning: false
+      doPatrolSpawning: false
   Gallifrey:
     enabled: false
     resource_pack: https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1
     gamemode: SURVIVAL
     time_travel: true
-    world_type: BUFFET
+    world_type: FIXED
     environment: NORMAL
     generator: DEFAULT
     keep_spawn_in_memory: false
     spawn_other_mobs: true
+    gamerules:
+      doTraderSpawning: false
+      doPatrolSpawning: false
   TARDIS_TimeVortex:
     enabled: true
     resource_pack: default
