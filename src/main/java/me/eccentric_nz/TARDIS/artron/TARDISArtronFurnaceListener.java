@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.artron;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -166,6 +167,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             ItemStack is = new ItemStack(Material.FURNACE, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("TARDIS Artron Furnace");
+            im.setCustomModelData(RecipeItem.TARDIS_ARTRON_FURNACE.getCustomModelData());
             is.setItemMeta(im);
             block.setBlockData(TARDISConstants.AIR);
             block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);
