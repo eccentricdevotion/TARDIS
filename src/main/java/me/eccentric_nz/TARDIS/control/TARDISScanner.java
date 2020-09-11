@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -37,16 +38,12 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
-import org.bukkit.block.Biome;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The Scanner consists of a collection of thousands of instruments designed to gather information about the environment
@@ -242,57 +239,59 @@ public class TARDISScanner {
         TARDISMessage.send(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_DIRECTION", tardisDirection.toString()), 20L);
         // get biome
-        Biome tmb;
+        TARDISBiome tmb;
         if (whereisit.equals(TARDIS.plugin.getLanguage().getString("SCAN_CURRENT"))) {
             // adjust for current location as it will always return DEEP_OCEAN if set_biome is true
             switch (tardisDirection) {
                 case NORTH:
-                    tmb = scan_loc.getBlock().getRelative(BlockFace.SOUTH, 6).getBiome();
+                    tmb = TARDISStaticUtils.getBiomeAt(scan_loc.getBlock().getRelative(BlockFace.SOUTH, 6).getLocation());
                     break;
                 case WEST:
-                    tmb = scan_loc.getBlock().getRelative(BlockFace.EAST, 6).getBiome();
+                    tmb = TARDISStaticUtils.getBiomeAt(scan_loc.getBlock().getRelative(BlockFace.EAST, 6).getLocation());
                     break;
                 case SOUTH:
-                    tmb = scan_loc.getBlock().getRelative(BlockFace.NORTH, 6).getBiome();
+                    tmb = TARDISStaticUtils.getBiomeAt(scan_loc.getBlock().getRelative(BlockFace.NORTH, 6).getLocation());
                     break;
                 default:
-                    tmb = scan_loc.getBlock().getRelative(BlockFace.WEST, 6).getBiome();
+                    tmb = TARDISStaticUtils.getBiomeAt(scan_loc.getBlock().getRelative(BlockFace.WEST, 6).getLocation());
                     break;
             }
         } else {
-            tmb = scan_loc.getBlock().getBiome();
+            tmb = TARDISStaticUtils.getBiomeAt(scan_loc);
         }
-        Biome biome = tmb;
+        String[] key = tmb.getKey().toString().split(":");
+        String biome = key[1].toUpperCase(Locale.ENGLISH);
         data.setBiome(biome);
-        bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome.toString()), 40L);
+        bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome), 40L);
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_TIME", daynight + " / " + time), 60L);
         // get weather
         String weather;
+        // TODO get biome temperature? and switch on that
         switch (biome) {
-            case DESERT:
-            case DESERT_HILLS:
-            case DESERT_LAKES:
-            case SAVANNA:
-            case SAVANNA_PLATEAU:
-            case SHATTERED_SAVANNA:
-            case SHATTERED_SAVANNA_PLATEAU:
-            case BADLANDS:
-            case BADLANDS_PLATEAU:
-            case ERODED_BADLANDS:
-            case MODIFIED_BADLANDS_PLATEAU:
-            case MODIFIED_WOODED_BADLANDS_PLATEAU:
-            case WOODED_BADLANDS_PLATEAU:
+            case "DESERT":
+            case "DESERT_HILLS":
+            case "DESERT_LAKES":
+            case "SAVANNA":
+            case "SAVANNA_PLATEAU":
+            case "SHATTERED_SAVANNA":
+            case "SHATTERED_SAVANNA_PLATEAU":
+            case "BADLANDS":
+            case "BADLANDS_PLATEAU":
+            case "ERODED_BADLANDS":
+            case "MODIFIED_BADLANDS_PLATEAU":
+            case "MODIFIED_WOODED_BADLANDS_PLATEAU":
+            case "WOODED_BADLANDS_PLATEAU":
                 weather = TARDIS.plugin.getLanguage().getString("WEATHER_DRY");
                 break;
-            case SNOWY_TUNDRA:
-            case ICE_SPIKES:
-            case FROZEN_OCEAN:
-            case FROZEN_RIVER:
-            case SNOWY_BEACH:
-            case SNOWY_TAIGA:
-            case SNOWY_MOUNTAINS:
-            case SNOWY_TAIGA_HILLS:
-            case SNOWY_TAIGA_MOUNTAINS:
+            case "SNOWY_TUNDRA":
+            case "ICE_SPIKES":
+            case "FROZEN_OCEAN":
+            case "FROZEN_RIVER":
+            case "SNOWY_BEACH":
+            case "SNOWY_TAIGA":
+            case "SNOWY_MOUNTAINS":
+            case "SNOWY_TAIGA_HILLS":
+            case "SNOWY_TAIGA_MOUNTAINS":
                 weather = (scan_loc.getWorld().hasStorm()) ? TARDIS.plugin.getLanguage().getString("WEATHER_SNOW") : TARDIS.plugin.getLanguage().getString("WEATHER_COLD");
                 break;
             default:

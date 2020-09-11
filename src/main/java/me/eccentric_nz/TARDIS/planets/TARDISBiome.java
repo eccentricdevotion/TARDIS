@@ -103,7 +103,7 @@ public final class TARDISBiome implements Keyed {
      * @param name the name of the biome
      */
     private TARDISBiome(String name) {
-        this(NamespacedKey.minecraft(name.toLowerCase(Locale.ENGLISH)));
+        this(NamespacedKey.minecraft(name.toLowerCase(Locale.ROOT)));
         BY_ENUM_NAME_LEGACY.put(name, this);
         BIOMES_LEGACY.add(this);
     }
@@ -188,7 +188,7 @@ public final class TARDISBiome implements Keyed {
      * @return biome name
      */
     public String name() {
-        return key.getKey().toUpperCase(Locale.ENGLISH);
+        return key.getKey().toUpperCase(Locale.ROOT);
     }
 
     /**

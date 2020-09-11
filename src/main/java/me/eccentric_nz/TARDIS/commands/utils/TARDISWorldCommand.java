@@ -135,7 +135,6 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     plugin.savePlanetsConfig();
                     TARDISMessage.send(sender, "WORLD_UNLOAD_SUCCESS", args[1]);
                 }
-                return true;
             } else {
                 if (args[0].toLowerCase().equals("rename")) {
                     if (args.length < 3) {
@@ -198,8 +197,8 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 } else {
                     TARDISMessage.send(sender, "WORLD_UNLOADED", args[1]);
                 }
-                return true;
             }
+            return true;
         }
         return false;
     }

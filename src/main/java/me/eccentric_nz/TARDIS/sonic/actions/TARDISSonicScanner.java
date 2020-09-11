@@ -20,9 +20,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
-import org.bukkit.block.Biome;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -33,6 +33,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import static me.eccentric_nz.TARDIS.control.TARDISScanner.getNearbyEntities;
 
@@ -143,36 +144,38 @@ public class TARDISSonicScanner {
             TARDISMessage.send(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         }, 20L);
         // get biome
-        Biome biome = scan_loc.getBlock().getBiome();
-        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome.toString()), 40L);
+        TARDISBiome tardisBiome = TARDISStaticUtils.getBiomeAt(scan_loc);
+        String[] key = tardisBiome.toString().split(":");
+        String biome = key[1].toUpperCase(Locale.ENGLISH);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome), 40L);
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_TIME", daynight + " / " + time), 60L);
         // get weather
         String weather;
         switch (biome) {
-            case BADLANDS:
-            case BADLANDS_PLATEAU:
-            case DESERT:
-            case DESERT_HILLS:
-            case DESERT_LAKES:
-            case ERODED_BADLANDS:
-            case MODIFIED_BADLANDS_PLATEAU:
-            case MODIFIED_WOODED_BADLANDS_PLATEAU:
-            case SAVANNA:
-            case SAVANNA_PLATEAU:
-            case SHATTERED_SAVANNA:
-            case SHATTERED_SAVANNA_PLATEAU:
-            case WOODED_BADLANDS_PLATEAU:
+            case "BADLANDS":
+            case "BADLANDS_PLATEAU":
+            case "DESERT":
+            case "DESERT_HILLS":
+            case "DESERT_LAKES":
+            case "ERODED_BADLANDS":
+            case "MODIFIED_BADLANDS_PLATEAU":
+            case "MODIFIED_WOODED_BADLANDS_PLATEAU":
+            case "SAVANNA":
+            case "SAVANNA_PLATEAU":
+            case "SHATTERED_SAVANNA":
+            case "SHATTERED_SAVANNA_PLATEAU":
+            case "WOODED_BADLANDS_PLATEAU":
                 weather = plugin.getLanguage().getString("WEATHER_DRY");
                 break;
-            case FROZEN_OCEAN:
-            case FROZEN_RIVER:
-            case ICE_SPIKES:
-            case SNOWY_BEACH:
-            case SNOWY_MOUNTAINS:
-            case SNOWY_TAIGA:
-            case SNOWY_TAIGA_HILLS:
-            case SNOWY_TAIGA_MOUNTAINS:
-            case SNOWY_TUNDRA:
+            case "FROZEN_OCEAN":
+            case "FROZEN_RIVER":
+            case "ICE_SPIKES":
+            case "SNOWY_BEACH":
+            case "SNOWY_MOUNTAINS":
+            case "SNOWY_TAIGA":
+            case "SNOWY_TAIGA_HILLS":
+            case "SNOWY_TAIGA_MOUNTAINS":
+            case "SNOWY_TUNDRA":
                 weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
                 break;
             default:
@@ -185,14 +188,14 @@ public class TARDISSonicScanner {
         bsched.scheduleSyncDelayedTask(plugin, () -> {
             TARDISMessage.send(player, "SCAN_ENTS");
             if (scannedentities.size() > 0) {
-                scannedentities.forEach((key, value) -> {
+                scannedentities.forEach((ent, value) -> {
                     String message = "";
                     StringBuilder buf = new StringBuilder();
-                    if (key.equals(EntityType.PLAYER) && playernames.size() > 0) {
+                    if (ent.equals(EntityType.PLAYER) && playernames.size() > 0) {
                         playernames.forEach((p) -> buf.append(", ").append(p));
                         message = " (" + buf.toString().substring(2) + ")";
                     }
-                    switch (key) {
+                    switch (ent) {
                         case AREA_EFFECT_CLOUD:
                             player.sendMessage("    Cyberman: " + value);
                             break;
@@ -239,8 +242,8 @@ public class TARDISSonicScanner {
                             player.sendMessage("    Zygon: " + value);
                             break;
                         default:
-                            if (key != EntityType.ARMOR_STAND) {
-                                player.sendMessage("    " + key.toString() + ": " + value + message);
+                            if (ent != EntityType.ARMOR_STAND) {
+                                player.sendMessage("    " + ent.toString() + ": " + value + message);
                             }
                             break;
                     }

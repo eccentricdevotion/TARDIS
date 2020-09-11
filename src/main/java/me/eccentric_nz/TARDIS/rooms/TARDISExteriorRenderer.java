@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISEntityTracker;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.*;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
@@ -46,7 +45,7 @@ public class TARDISExteriorRenderer {
         this.plugin = plugin;
     }
 
-    public void render(String interior, Location exterior, int id, Player p, COMPASS d, long time, Biome biome) {
+    public void render(String interior, Location exterior, int id, Player p, COMPASS d, long time, String biome) {
         // construct a string for comparison
         World ew = exterior.getWorld();
         int epbx = exterior.getBlockX();
@@ -167,16 +166,16 @@ public class TARDISExteriorRenderer {
             BlockData base;
             BlockData stone;
             switch (biome) {
-                case THE_END:
+                case "THE_END":
                     sky = TARDISConstants.BLACK;
                     base = Material.END_STONE.createBlockData();
                     stone = Material.OBSIDIAN.createBlockData();
                     break;
-                case NETHER_WASTES:
-                case SOUL_SAND_VALLEY:
-                case CRIMSON_FOREST:
-                case WARPED_FOREST:
-                case BASALT_DELTAS:
+                case "NETHER_WASTES":
+                case "SOUL_SAND_VALLEY":
+                case "CRIMSON_FOREST":
+                case "WARPED_FOREST":
+                case "BASALT_DELTAS":
                     sky = TARDISConstants.BLACK;
                     base = Material.NETHERRACK.createBlockData();
                     stone = Material.NETHER_QUARTZ_ORE.createBlockData();
