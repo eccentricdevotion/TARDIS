@@ -1262,3 +1262,8 @@ commands:
     description: Change the time in the world the player is in (or where their TARDIS is if they are inside it).
     permission: tardis.admin
     usage: /<command> [day|morning|noon|night|midnight|?AM|?PM|ticks]
+  tardisbiome:
+    aliases: [ tbiome ]
+    description: Get the biome the player is looking at.
+    permission: tardis.admin
+    usage: /<command>

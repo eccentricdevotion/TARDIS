@@ -18,8 +18,10 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -351,5 +353,20 @@ public class TARDISStaticUtils {
             }
         }
         return chunks;
+    }
+
+    /**
+     * Gets the TARDISBiome of a location
+     *
+     * @param location the location to get the biome of
+     * @return the biome at the location
+     */
+    public static TARDISBiome getBiomeAt(Location location) {
+        // get biome
+        String biomeKey = TARDIS.plugin.getTardisHelper().getBiomeKey(location);
+        // convert to TARDISBiome
+        String[] split = biomeKey.split(":");
+        NamespacedKey key = new NamespacedKey(split[0], split[1]);
+        return TARDISBiome.of(key);
     }
 }
