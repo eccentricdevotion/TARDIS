@@ -689,7 +689,6 @@ public class TARDII implements TardisAPI {
                 bd.setRebuild(true);
                 bd.setSubmarine(false);
                 bd.setTardisID(id);
-                bd.setBiome(rsc.getBiome());
                 bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 TARDIS.plugin.getPresetBuilder().buildPreset(bd);
                 TARDIS.plugin.getTrackerKeeper().getInVortex().add(id);

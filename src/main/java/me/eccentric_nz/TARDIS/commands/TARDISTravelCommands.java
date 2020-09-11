@@ -28,9 +28,11 @@ import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.travel.*;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -179,7 +181,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     setlocs.put("direction", rsh.getDirection().toString());
                     setlocs.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
                     Location l = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
-                    Biome biome = l.getBlock().getBiome();
+                    TARDISBiome biome = TARDISStaticUtils.getBiomeAt(l);
                     plugin.getQueryFactory().updateLocations(setlocs, biome.toString(), id);
                     // rebuild the exterior
                     BuildData bd = new BuildData(player.getUniqueId().toString());
@@ -191,7 +193,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     bd.setRebuild(true);
                     bd.setSubmarine(rsh.isSubmarine());
                     bd.setTardisID(id);
-                    bd.setBiome(biome);
+                    bd.setTardisBiome(biome);
                     bd.setThrottle(SpaceTimeThrottle.REBUILD);
                     if (!rsh.getPreset().isEmpty()) {
                         // set the chameleon preset

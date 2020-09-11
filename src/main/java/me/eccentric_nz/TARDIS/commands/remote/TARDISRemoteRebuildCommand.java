@@ -48,7 +48,6 @@ class TARDISRemoteRebuildCommand {
             TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
             return true;
         }
-        Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
         if (rs.fromID(id) && rs.getPreset().equals(PRESET.INVISIBLE)) {
             TARDISMessage.send(player.getPlayer(), "INVISIBILITY_ENGAGED");
@@ -56,14 +55,13 @@ class TARDISRemoteRebuildCommand {
         }
         BuildData bd = new BuildData(player.getUniqueId().toString());
         bd.setDirection(rsc.getDirection());
-        bd.setLocation(l);
+        bd.setLocation(new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()));
         bd.setMalfunction(false);
         bd.setOutside(false);
         bd.setPlayer(player);
         bd.setRebuild(true);
         bd.setSubmarine(rsc.isSubmarine());
         bd.setTardisID(id);
-        bd.setBiome(rsc.getBiome());
         bd.setThrottle(SpaceTimeThrottle.REBUILD);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
         TARDISMessage.send(sender, "TARDIS_REBUILT");

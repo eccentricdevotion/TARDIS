@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
-import org.bukkit.block.Biome;
 
 /**
  * @author eccentric_nz
@@ -28,7 +27,7 @@ public class TARDISScannerData {
     private Location scanLocation;
     private COMPASS tardisDirection;
     private long time;
-    private Biome biome;
+    private String biome;
 
     public Location getScanLocation() {
         return scanLocation;
@@ -54,11 +53,11 @@ public class TARDISScannerData {
         this.time = time;
     }
 
-    public Biome getBiome() {
+    public String getBiome() {
         return biome;
     }
 
-    public void setBiome(Biome biome) {
+    public void setBiome(String biome) {
         this.biome = biome;
     }
 }

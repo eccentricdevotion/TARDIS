@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -51,7 +52,7 @@ public class BiomeSetter {
             for (int r = -3; r < 4; r++) {
                 world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
                 // TODO check re-adding umbrella if rebuilding
-                if (umbrella && TARDISConstants.NO_RAIN.contains(bd.getBiome())) {
+                if (umbrella && TARDISConstants.NO_RAIN.contains(bd.getTardisBiome())) {
                     // add an invisible roof
                     if (loops == 3) {
                         TARDISBlockSetters.setBlock(world, x + c, 255, z + r, Material.BARRIER);
@@ -69,7 +70,15 @@ public class BiomeSetter {
         chunks.forEach((c) -> TARDIS.plugin.getTardisHelper().refreshChunk(c));
     }
 
-    public static boolean restoreBiome(Location l, Biome biome) {
+    public static boolean restoreBiome(Location l, TARDISBiome tardisBiome) {
+        Biome biome = null;
+        if (tardisBiome.getKey().getNamespace().equalsIgnoreCase("minecraft")) {
+            try {
+                biome = Biome.valueOf(tardisBiome.name());
+            } catch (IllegalArgumentException e) {
+                // ignore
+            }
+        }
         if (l != null && biome != null) {
             int sbx = l.getBlockX();
             int sbz = l.getBlockZ();
@@ -78,7 +87,7 @@ public class BiomeSetter {
             Chunk chunk = l.getChunk();
             chunks.add(chunk);
             // reset biome and it's not The End
-            if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN) || l.getBlock().getBiome().equals(Biome.THE_VOID) || (l.getBlock().getBiome().equals(Biome.THE_END) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END)) && biome != null) {
+            if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN) || l.getBlock().getBiome().equals(Biome.THE_VOID) || (l.getBlock().getBiome().equals(Biome.THE_END) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END))) {
                 // reset the biome
                 for (int c = -3; c < 4; c++) {
                     for (int r = -3; r < 4; r++) {

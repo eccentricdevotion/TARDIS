@@ -26,10 +26,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.*;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.Comparator;
@@ -99,13 +99,11 @@ public class TARDISJunkControlListener implements Listener {
                         if (plugin.getGeneralKeeper().getJunkDestination() != null) {
                             // get the current location
                             Location junkloc = null;
-                            Biome biome = null;
                             HashMap<String, Object> wherecl = new HashMap<>();
                             wherecl.put("tardis_id", id);
                             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                             if (rsc.resultSet()) {
                                 junkloc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                                biome = rsc.getBiome();
                             }
                             if (junkloc == null) {
                                 TARDISMessage.send(player, "JUNK_NOT_FOUND");
@@ -123,7 +121,7 @@ public class TARDISJunkControlListener implements Listener {
                             dd.setOutside(false);
                             dd.setSubmarine(rsc.isSubmarine());
                             dd.setTardisID(id);
-                            dd.setBiome(biome);
+                            dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
                             dd.setThrottle(SpaceTimeThrottle.JUNK);
                             plugin.getPresetDestroyer().destroyPreset(dd);
                             // fly my pretties

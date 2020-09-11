@@ -111,7 +111,7 @@ public class TARDISVortexPersister {
                                 dd.setDirection(rsb.getDirection());
                                 dd.setSubmarine(rsb.isSubmarine());
                                 dd.setTardisID(id);
-                                dd.setBiome(null);
+                                dd.setTardisBiome(null);
                                 dd.setSiege(false);
                                 dd.setThrottle(SpaceTimeThrottle.REBUILD);
                                 while (!location.getChunk().isLoaded()) {
@@ -134,7 +134,6 @@ public class TARDISVortexPersister {
                             OfflinePlayer olp = plugin.getServer().getOfflinePlayer(uuid);
                             bd.setPlayer(olp);
                             bd.setRebuild(false);
-                            bd.setBiome(rsc.getBiome());
                             bd.setDirection(rsc.getDirection());
                             bd.setSubmarine(rsc.isSubmarine());
                             bd.setMalfunction(false);

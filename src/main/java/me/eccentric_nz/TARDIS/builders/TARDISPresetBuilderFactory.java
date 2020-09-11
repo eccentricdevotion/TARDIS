@@ -28,10 +28,11 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkBuilder;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
@@ -86,23 +87,23 @@ public class TARDISPresetBuilderFactory {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             PRESET preset = tardis.getPreset();
-            Biome biome;
+            TARDISBiome biome;
             // keep the chunk this Police box is in loaded
             Chunk thisChunk = bd.getLocation().getChunk();
             while (!thisChunk.isLoaded()) {
                 thisChunk.load();
             }
             if (bd.isRebuild()) {
-                biome = bd.getLocation().getWorld().getBlockAt(bd.getLocation()).getRelative(getOppositeFace(bd.getDirection()), 2).getBiome();
+                biome = TARDISStaticUtils.getBiomeAt(bd.getLocation().getWorld().getBlockAt(bd.getLocation()).getRelative(getOppositeFace(bd.getDirection()), 2).getLocation());
             } else {
-                biome = bd.getLocation().getWorld().getBiome(bd.getLocation().getBlockX(), bd.getLocation().getBlockY(), bd.getLocation().getBlockZ());
+                biome = TARDISStaticUtils.getBiomeAt(bd.getLocation());
                 // disable force field
                 if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(tardis.getUuid())) {
                     plugin.getTrackerKeeper().getActiveForceFields().remove(tardis.getUuid());
                     TARDISMessage.send(bd.getPlayer().getPlayer(), "FORCE_FIELD", "OFF");
                 }
             }
-            bd.setBiome(biome);
+            bd.setTardisBiome(biome);
             if (plugin.getConfig().getBoolean("police_box.set_biome") && !bd.isRebuild()) {
                 // remember the current biome (unless rebuilding)
                 plugin.getQueryFactory().saveBiome(tardis.getTardis_id(), biome.toString());
@@ -196,100 +197,100 @@ public class TARDISPresetBuilderFactory {
         }
     }
 
-    private PRESET adapt(Biome biome, Adaption adaption) {
+    private PRESET adapt(TARDISBiome biome, Adaption adaption) {
         if (adaption.equals(Adaption.BLOCK)) {
             return PRESET.OLD;
         } else {
-            switch (biome) {
-                case BEACH:
-                case FROZEN_RIVER:
-                case RIVER:
-                case SNOWY_BEACH:
+            switch (biome.name()) {
+                case "BEACH":
+                case "FROZEN_RIVER":
+                case "RIVER":
+                case "SNOWY_BEACH":
                     return PRESET.BOAT;
-                case COLD_OCEAN:
-                case DEEP_COLD_OCEAN:
-                case DEEP_LUKEWARM_OCEAN:
-                case DEEP_OCEAN:
-                case DEEP_WARM_OCEAN:
-                case FROZEN_OCEAN:
-                case LUKEWARM_OCEAN:
-                case OCEAN:
-                case WARM_OCEAN:
+                case "COLD_OCEAN":
+                case "DEEP_COLD_OCEAN":
+                case "DEEP_LUKEWARM_OCEAN":
+                case "DEEP_OCEAN":
+                case "DEEP_WARM_OCEAN":
+                case "FROZEN_OCEAN":
+                case "LUKEWARM_OCEAN":
+                case "OCEAN":
+                case "WARM_OCEAN":
                     return PRESET.YELLOW;
-                case DESERT:
-                case DESERT_HILLS:
-                case DESERT_LAKES:
+                case "DESERT":
+                case "DESERT_HILLS":
+                case "DESERT_LAKES":
                     return PRESET.DESERT;
-                case GRAVELLY_MOUNTAINS:
-                case MODIFIED_GRAVELLY_MOUNTAINS:
-                case MOUNTAINS:
-                case SNOWY_MOUNTAINS:
-                case WOODED_MOUNTAINS:
+                case "GRAVELLY_MOUNTAINS":
+                case "MODIFIED_GRAVELLY_MOUNTAINS":
+                case "MOUNTAINS":
+                case "SNOWY_MOUNTAINS":
+                case "WOODED_MOUNTAINS":
                     return PRESET.EXTREME_HILLS;
-                case BIRCH_FOREST:
-                case BIRCH_FOREST_HILLS:
-                case FOREST:
-                case TALL_BIRCH_FOREST:
-                case TALL_BIRCH_HILLS:
+                case "BIRCH_FOREST":
+                case "BIRCH_FOREST_HILLS":
+                case "FOREST":
+                case "TALL_BIRCH_FOREST":
+                case "TALL_BIRCH_HILLS":
                     return PRESET.FOREST;
-                case NETHER_WASTES:
-                case SOUL_SAND_VALLEY:
-                case CRIMSON_FOREST:
-                case WARPED_FOREST:
-                case BASALT_DELTAS:
+                case "NETHER_WASTES":
+                case "SOUL_SAND_VALLEY":
+                case "CRIMSON_FOREST":
+                case "WARPED_FOREST":
+                case "BASALT_DELTAS":
                     return PRESET.NETHER;
-                case SNOWY_TUNDRA:
-                case DEEP_FROZEN_OCEAN:
+                case "SNOWY_TUNDRA":
+                case "DEEP_FROZEN_OCEAN":
                     return PRESET.ICE_FLATS;
-                case ICE_SPIKES:
+                case "ICE_SPIKES":
                     return PRESET.ICE_SPIKES;
-                case JUNGLE:
-                case JUNGLE_EDGE:
-                case JUNGLE_HILLS:
-                case MODIFIED_JUNGLE:
-                case MODIFIED_JUNGLE_EDGE:
+                case "JUNGLE":
+                case "JUNGLE_EDGE":
+                case "JUNGLE_HILLS":
+                case "MODIFIED_JUNGLE":
+                case "MODIFIED_JUNGLE_EDGE":
                     return PRESET.JUNGLE;
-                case BADLANDS:
-                case BADLANDS_PLATEAU:
-                case ERODED_BADLANDS:
-                case MODIFIED_BADLANDS_PLATEAU:
-                case MODIFIED_WOODED_BADLANDS_PLATEAU:
-                case WOODED_BADLANDS_PLATEAU:
+                case "BADLANDS":
+                case "BADLANDS_PLATEAU":
+                case "ERODED_BADLANDS":
+                case "MODIFIED_BADLANDS_PLATEAU":
+                case "MODIFIED_WOODED_BADLANDS_PLATEAU":
+                case "WOODED_BADLANDS_PLATEAU":
                     return PRESET.MESA;
-                case MUSHROOM_FIELDS:
-                case MUSHROOM_FIELD_SHORE:
+                case "MUSHROOM_FIELDS":
+                case "MUSHROOM_FIELD_SHORE":
                     return PRESET.SHROOM;
-                case PLAINS:
-                case SUNFLOWER_PLAINS:
+                case "PLAINS":
+                case "SUNFLOWER_PLAINS":
                     return PRESET.PLAINS;
-                case DARK_FOREST:
-                case DARK_FOREST_HILLS:
+                case "DARK_FOREST":
+                case "DARK_FOREST_HILLS":
                     return PRESET.ROOFED_FOREST;
-                case SAVANNA:
-                case SHATTERED_SAVANNA:
-                case SAVANNA_PLATEAU:
-                case SHATTERED_SAVANNA_PLATEAU:
+                case "SAVANNA":
+                case "SHATTERED_SAVANNA":
+                case "SAVANNA_PLATEAU":
+                case "SHATTERED_SAVANNA_PLATEAU":
                     return PRESET.SAVANNA;
-                case SWAMP:
-                case SWAMP_HILLS:
+                case "SWAMP":
+                case "SWAMP_HILLS":
                     return PRESET.SWAMP;
-                case END_BARRENS:
-                case END_HIGHLANDS:
-                case END_MIDLANDS:
-                case SMALL_END_ISLANDS:
-                case THE_END:
+                case "END_BARRENS":
+                case "END_HIGHLANDS":
+                case "END_MIDLANDS":
+                case "SMALL_END_ISLANDS":
+                case "THE_END":
                     return PRESET.THEEND;
-                case GIANT_SPRUCE_TAIGA:
-                case GIANT_SPRUCE_TAIGA_HILLS:
-                case GIANT_TREE_TAIGA:
-                case GIANT_TREE_TAIGA_HILLS:
-                case TAIGA:
-                case TAIGA_HILLS:
-                case TAIGA_MOUNTAINS:
+                case "GIANT_SPRUCE_TAIGA":
+                case "GIANT_SPRUCE_TAIGA_HILLS":
+                case "GIANT_TREE_TAIGA":
+                case "GIANT_TREE_TAIGA_HILLS":
+                case "TAIGA":
+                case "TAIGA_HILLS":
+                case "TAIGA_MOUNTAINS":
                     return PRESET.TAIGA;
-                case SNOWY_TAIGA:
-                case SNOWY_TAIGA_HILLS:
-                case SNOWY_TAIGA_MOUNTAINS:
+                case "SNOWY_TAIGA":
+                case "SNOWY_TAIGA_HILLS":
+                case "SNOWY_TAIGA_MOUNTAINS":
                     return PRESET.COLD_TAIGA;
                 default:
                     return PRESET.FACTORY;

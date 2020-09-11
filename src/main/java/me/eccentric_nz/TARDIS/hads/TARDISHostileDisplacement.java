@@ -24,8 +24,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
@@ -134,7 +136,8 @@ class TARDISHostileDisplacement {
                         dd.setOutside(true);
                         dd.setSubmarine(rsc.isSubmarine());
                         dd.setTardisID(id);
-                        dd.setBiome(rsc.getBiome());
+                        TARDISBiome biome = TARDISStaticUtils.getBiomeAt(current);
+                        dd.setTardisBiome(biome);
                         dd.setThrottle(SpaceTimeThrottle.NORMAL);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             plugin.getTrackerKeeper().getDematerialising().add(id);

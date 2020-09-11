@@ -139,7 +139,7 @@ public class TARDISSeedBlockProcessor {
                     cx = chunk.getX();
                     cz = chunk.getZ();
                 }
-                String biome = l.getBlock().getBiome().toString();
+                String biome = TARDISStaticUtils.getBiomeAt(l).name();
                 // get player direction
                 String d = TARDISStaticUtils.getPlayersDirection(player, false);
                 // save data to database (tardis table)
@@ -200,7 +200,6 @@ public class TARDISSeedBlockProcessor {
                 bd.setRebuild(false);
                 bd.setSubmarine(isSub(l));
                 bd.setTardisID(lastInsertId);
-                bd.setBiome(l.getBlock().getBiome());
                 bd.setThrottle(SpaceTimeThrottle.NORMAL);
                 // police box needs to use chameleon id/data
                 if (chunkworld != null) {

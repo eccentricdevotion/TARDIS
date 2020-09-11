@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
-import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -90,7 +89,6 @@ class TARDISDesiegeCommand {
                 bd.setRebuild(true);
                 bd.setSubmarine(rsh.isSubmarine());
                 bd.setTardisID(id);
-                bd.setBiome(Biome.PLAINS);
                 bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getPresetBuilder().buildPreset(bd);
                 TARDISMessage.send(sender, "SIEGE_REBUILT");

@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -99,7 +100,7 @@ public class TARDISExterminator {
                 dd.setOutside(false);
                 dd.setSubmarine(rsc.isSubmarine());
                 dd.setTardisID(id);
-                dd.setBiome(rsc.getBiome());
+                dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
                 dd.setThrottle(SpaceTimeThrottle.REBUILD);
                 if (!hid) {
                     plugin.getPresetDestroyer().destroyPreset(dd);
@@ -236,7 +237,8 @@ public class TARDISExterminator {
                 dd.setOutside(false);
                 dd.setSubmarine(rsc.isSubmarine());
                 dd.setTardisID(id);
-                dd.setBiome(rsc.getBiome());
+                TARDISBiome tardisBiome = TARDISBiome.get(rsc.getBiomeKey());
+                dd.setTardisBiome(tardisBiome);
                 dd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, owner));
                 if (!tardis.isHidden()) {
@@ -244,7 +246,7 @@ public class TARDISExterminator {
                     plugin.getPresetDestroyer().destroyPreset(dd);
                 } else {
                     // restore biome
-                    BiomeSetter.restoreBiome(bb_loc, rsc.getBiome());
+                    BiomeSetter.restoreBiome(bb_loc, tardisBiome);
                 }
                 World cw = TARDISStaticLocationGetters.getWorld(chunkLoc);
                 if (cw == null) {
@@ -260,12 +262,11 @@ public class TARDISExterminator {
                     cleanDatabase(id);
                     TARDISMessage.send(player, "TARDIS_EXTERMINATED");
                 }, 40L);
-                return false;
             } else {
                 // cancel the event because it's not the player's TARDIS
                 TARDISMessage.send(player, "NOT_OWNER");
-                return false;
             }
+            return false;
         } else {
             TARDISMessage.send(player, "NO_GRIEF");
             return false;

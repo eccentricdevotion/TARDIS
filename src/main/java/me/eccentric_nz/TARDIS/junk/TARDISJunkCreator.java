@@ -115,7 +115,6 @@ class TARDISJunkCreator {
         bd.setRebuild(false);
         bd.setSubmarine(false);
         bd.setTardisID(lastInsertId);
-        bd.setBiome(l.getBlock().getBiome());
         bd.setThrottle(SpaceTimeThrottle.JUNK);
         // build the TARDIS in the Vortex
         TARDISBuilderInner builder = new TARDISBuilderInner(plugin, Consoles.schematicFor("junk"), chunkworld, lastInsertId, p, wall_type, floor_type, true);

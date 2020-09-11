@@ -29,10 +29,10 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -90,7 +90,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
             }
             COMPASS cd = rscl.getDirection();
             boolean sub = rscl.isSubmarine();
-            Biome biome = rscl.getBiome();
+            TARDISBiome biome = TARDISBiome.get(rscl.getBiomeKey());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             boolean minecart = false;
             SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
@@ -106,7 +106,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
             dd.setOutside(false);
             dd.setSubmarine(sub);
             dd.setTardisID(id);
-            dd.setBiome(biome);
+            dd.setTardisBiome(biome);
             dd.setThrottle(spaceTimeThrottle);
             PRESET preset = tardis.getPreset();
             if (preset.equals(PRESET.JUNK_MODE)) {

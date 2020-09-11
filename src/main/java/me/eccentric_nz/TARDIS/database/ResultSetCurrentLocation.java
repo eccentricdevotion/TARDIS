@@ -18,15 +18,15 @@ package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.TardisOldBiomeLookup;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -50,7 +50,7 @@ public class ResultSetCurrentLocation {
     private int z;
     private COMPASS direction;
     private boolean submarine;
-    private Biome biome;
+    private NamespacedKey biomeKey;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
@@ -77,7 +77,7 @@ public class ResultSetCurrentLocation {
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
             where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
-            wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
+            wheres = " WHERE " + sbw.substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "current" + wheres;
         try {
@@ -106,12 +106,19 @@ public class ResultSetCurrentLocation {
                     z = rs.getInt("z");
                     direction = COMPASS.valueOf(rs.getString("direction"));
                     submarine = rs.getBoolean("submarine");
-                    try {
-                        biome = Biome.valueOf(rs.getString("biome"));
-                    } catch (IllegalArgumentException e) {
-                        // may have a pre-1.9 biome stored so do old biome lookup...
-                        biome = TardisOldBiomeLookup.OLD_BIOME_LOOKUP.getOrDefault(rs.getString("biome"), null);
+                    String key = rs.getString("biome");
+                    if (key.contains(":")) {
+                        String[] split = key.split(":");
+                        biomeKey = new NamespacedKey(split[0], split[1]);
+                    } else {
+                        biomeKey = NamespacedKey.minecraft(key.toLowerCase(Locale.ROOT));
                     }
+//                    try {
+//                        biomeKey = Biome.valueOf(rs.getString("biome"));
+//                    } catch (IllegalArgumentException e) {
+//                        // may have a pre-1.9 biome stored so do old biome lookup...
+//                        biomeKey = TardisOldBiomeLookup.OLD_BIOME_LOOKUP.getOrDefault(rs.getString("biome"), null);
+//                    }
                 }
             } else {
                 return false;
@@ -166,7 +173,7 @@ public class ResultSetCurrentLocation {
         return submarine;
     }
 
-    public Biome getBiome() {
-        return biome;
+    public NamespacedKey getBiomeKey() {
+        return biomeKey;
     }
 }

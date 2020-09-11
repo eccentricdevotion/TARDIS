@@ -51,7 +51,7 @@ class TARDISJunkReturn {
             dd.setOutside(false);
             dd.setSubmarine(false);
             dd.setTardisID(tjl.getId());
-            dd.setBiome(tjl.getBiome());
+            dd.setTardisBiome(tjl.getBiome());
             dd.setThrottle(SpaceTimeThrottle.JUNK);
             plugin.getPresetDestroyer().destroyPreset(dd);
             // fly my pretties

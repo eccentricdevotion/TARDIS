@@ -24,7 +24,6 @@ import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
 
@@ -230,7 +229,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             where.put("tardis_id", rsti.getTardis_id());
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
-                                result = rscl.getBiome().toString();
+                                result = rscl.getBiomeKey().toString();
                             }
                         }
                         break;

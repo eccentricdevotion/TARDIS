@@ -35,6 +35,7 @@ import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.move.TARDISDoorOpener;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeMode;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -478,7 +479,8 @@ public class TARDISHandlesProcessor {
                                                 dd.setOutside(false);
                                                 dd.setSubmarine(rsc.isSubmarine());
                                                 dd.setTardisID(id);
-                                                dd.setBiome(rsc.getBiome());
+                                                TARDISBiome biome = TARDISBiome.get(rsc.getBiomeKey());
+                                                dd.setTardisBiome(biome);
                                                 dd.setThrottle(SpaceTimeThrottle.NORMAL);
                                                 // set handbrake off
                                                 HashMap<String, Object> set = new HashMap<>();
@@ -495,7 +497,7 @@ public class TARDISHandlesProcessor {
                                                     plugin.getPresetDestroyer().removeBlockProtection(id);
                                                     set.put("hidden", 0);
                                                     // restore biome
-                                                    BiomeSetter.restoreBiome(current, rsc.getBiome());
+                                                    BiomeSetter.restoreBiome(current, biome);
                                                 }
                                                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
                                             }

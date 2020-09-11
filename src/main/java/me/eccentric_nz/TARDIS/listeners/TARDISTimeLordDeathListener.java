@@ -38,6 +38,7 @@ import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -185,7 +186,8 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             dd.setOutside(false);
                                             dd.setSubmarine(rsc.isSubmarine());
                                             dd.setTardisID(id);
-                                            dd.setBiome(rsc.getBiome());
+                                            TARDISBiome biome = TARDISBiome.get(rsc.getBiomeKey());
+                                            dd.setTardisBiome(biome);
                                             dd.setThrottle(spaceTimeThrottle);
                                             // set handbrake off
                                             HashMap<String, Object> set = new HashMap<>();
@@ -207,7 +209,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                                 plugin.getPresetDestroyer().removeBlockProtection(id);
                                                 set.put("hidden", 0);
                                                 // restore biome
-                                                BiomeSetter.restoreBiome(sl, rsc.getBiome());
+                                                BiomeSetter.restoreBiome(sl, biome);
                                             }
                                             plugin.getQueryFactory().doUpdate("tardis", set, tid);
                                         }
@@ -307,7 +309,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     dd.setOutside(false);
                                     dd.setSubmarine(rsc.isSubmarine());
                                     dd.setTardisID(id);
-                                    dd.setBiome(rsc.getBiome());
+                                    dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
                                     dd.setThrottle(spaceTimeThrottle);
                                     plugin.getPresetDestroyer().destroyPreset(dd);
                                     // sound the cloister bell at current location for siege mode

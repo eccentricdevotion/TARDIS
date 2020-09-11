@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.block.Biome;
 
 /**
  * Data class for building the TARDIS exterior.
@@ -29,7 +29,7 @@ import org.bukkit.block.Biome;
  */
 public class MaterialisationData {
 
-    private Biome biome;
+    private TARDISBiome tardisBiome;
     private COMPASS direction;
     private Location location;
     private OfflinePlayer player;
@@ -39,12 +39,12 @@ public class MaterialisationData {
     private int tardisID;
     private SpaceTimeThrottle throttle;
 
-    public Biome getBiome() {
-        return biome;
+    public TARDISBiome getTardisBiome() {
+        return tardisBiome;
     }
 
-    public void setBiome(Biome biome) {
-        this.biome = biome;
+    public void setTardisBiome(TARDISBiome tardisBiome) {
+        this.tardisBiome = tardisBiome;
     }
 
     public COMPASS getDirection() {

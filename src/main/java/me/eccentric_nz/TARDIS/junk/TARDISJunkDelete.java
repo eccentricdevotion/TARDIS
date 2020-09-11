@@ -25,9 +25,9 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
@@ -53,13 +53,11 @@ class TARDISJunkDelete {
             int id = rs.getTardis_id();
             // get the current location
             Location bb_loc = null;
-            Biome biome = null;
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (rsc.resultSet()) {
                 bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                biome = rsc.getBiome();
             }
             if (bb_loc == null) {
                 TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
@@ -73,7 +71,7 @@ class TARDISJunkDelete {
             dd.setOutside(false);
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisID(id);
-            dd.setBiome(biome);
+            dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
             dd.setThrottle(SpaceTimeThrottle.JUNK);
             plugin.getPresetDestroyer().destroyPreset(dd);
             // destroy the vortex TARDIS
