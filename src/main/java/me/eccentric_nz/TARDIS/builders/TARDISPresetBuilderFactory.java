@@ -106,7 +106,7 @@ public class TARDISPresetBuilderFactory {
             bd.setTardisBiome(biome);
             if (plugin.getConfig().getBoolean("police_box.set_biome") && !bd.isRebuild()) {
                 // remember the current biome (unless rebuilding)
-                plugin.getQueryFactory().saveBiome(tardis.getTardis_id(), biome.toString());
+                plugin.getQueryFactory().saveBiome(tardis.getTardis_id(), biome.getKey().toString());
             }
             if (tardis.getAdaption().equals(Adaption.BIOME)) {
                 preset = adapt(biome, tardis.getAdaption());

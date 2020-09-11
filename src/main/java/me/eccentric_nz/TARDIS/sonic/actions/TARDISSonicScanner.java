@@ -33,7 +33,6 @@ import org.bukkit.scheduler.BukkitScheduler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import static me.eccentric_nz.TARDIS.control.TARDISScanner.getNearbyEntities;
 
@@ -145,8 +144,7 @@ public class TARDISSonicScanner {
         }, 20L);
         // get biome
         TARDISBiome tardisBiome = TARDISStaticUtils.getBiomeAt(scan_loc);
-        String[] key = tardisBiome.toString().split(":");
-        String biome = key[1].toUpperCase(Locale.ENGLISH);
+        String biome = tardisBiome.name();
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome), 40L);
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_TIME", daynight + " / " + time), 60L);
         // get weather

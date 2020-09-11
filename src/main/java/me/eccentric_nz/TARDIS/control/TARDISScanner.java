@@ -43,7 +43,10 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Scanner consists of a collection of thousands of instruments designed to gather information about the environment
@@ -259,8 +262,7 @@ public class TARDISScanner {
         } else {
             tmb = TARDISStaticUtils.getBiomeAt(scan_loc);
         }
-        String[] key = tmb.getKey().toString().split(":");
-        String biome = key[1].toUpperCase(Locale.ENGLISH);
+        String biome = tmb.name();
         data.setScannedBiome(biome);
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome), 40L);
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_TIME", daynight + " / " + time), 60L);
