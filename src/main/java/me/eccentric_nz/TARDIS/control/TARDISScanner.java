@@ -261,7 +261,7 @@ public class TARDISScanner {
         }
         String[] key = tmb.getKey().toString().split(":");
         String biome = key[1].toUpperCase(Locale.ENGLISH);
-        data.setBiome(biome);
+        data.setScannedBiome(biome);
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome), 40L);
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_TIME", daynight + " / " + time), 60L);
         // get weather
@@ -414,7 +414,7 @@ public class TARDISScanner {
                         bsched.scheduleSyncDelayedTask(plugin, () -> {
                             if (player.isOnline() && plugin.getUtils().inTARDISWorld(player)) {
                                 TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
-                                ter.render(renderer, data.getScanLocation(), id, player, data.getTardisDirection(), data.getTime(), data.getBiome());
+                                ter.render(renderer, data.getScanLocation(), id, player, data.getTardisDirection(), data.getTime(), data.getScannedBiome());
                             }
                         }, 160L);
                     } else {

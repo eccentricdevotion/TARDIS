@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -165,7 +166,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 TARDISMessage.send(p, "TRAVEL_NO_PERM_BIOME");
                                                 continue;
                                             }
-                                            if (current.getBlock().getBiome().toString().equals(first)) {
+                                            if (TARDISStaticUtils.getBiomeAt(current).name().equals(first)) {
                                                 continue;
                                             }
                                             Biome biome;

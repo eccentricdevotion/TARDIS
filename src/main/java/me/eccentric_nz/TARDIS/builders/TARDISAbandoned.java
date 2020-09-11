@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -50,7 +51,6 @@ public class TARDISAbandoned {
         int cx = chunk.getX();
         int cz = chunk.getZ();
         // save data to database (tardis table)
-        String biome = l.getBlock().getBiome().toString();
         String chun = cw + ":" + cx + ":" + cz;
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", UUID.randomUUID().toString());
@@ -70,7 +70,7 @@ public class TARDISAbandoned {
         setlocs.put("y", l.getBlockY());
         setlocs.put("z", l.getBlockZ());
         setlocs.put("direction", d.toString());
-        plugin.getQueryFactory().insertLocations(setlocs, biome, lastInsertId);
+        plugin.getQueryFactory().insertLocations(setlocs, TARDISStaticUtils.getBiomeAt(l).getKey().toString(), lastInsertId);
         // turn the block stack into a TARDIS
         BuildData bd = new BuildData(null);
         bd.setDirection(d);

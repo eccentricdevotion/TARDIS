@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -104,7 +105,7 @@ class TARDISJunkCreator {
         setlocs.put("y", l.getBlockY());
         setlocs.put("z", l.getBlockZ());
         setlocs.put("direction", "SOUTH");
-        plugin.getQueryFactory().insertLocations(setlocs, l.getBlock().getBiome().toString(), lastInsertId);
+        plugin.getQueryFactory().insertLocations(setlocs, TARDISStaticUtils.getBiomeAt(l).getKey().toString(), lastInsertId);
         // build the TARDIS at the location
         BuildData bd = new BuildData(null);
         bd.setDirection(COMPASS.SOUTH);

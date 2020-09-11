@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.utility;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -80,7 +81,7 @@ public class TARDISVoidUpdate {
             int ex = sx + 16;
             int sz = (cz + SPIRAL.get(idx).y) * 16;
             int ez = sz + 16;
-            if (world.getBlockAt(sx, 64, sz).getBiome().equals(Biome.THE_END)) {
+            if (TARDISStaticUtils.getBiomeAt(world.getBlockAt(sx, 64, sz).getLocation()).equals(TARDISBiome.THE_END)) {
                 for (int x = sx; x < ex; x++) {
                     for (int z = sz; z < ez; z++) {
                         for (int y = 48; y < 81; y += 2) {

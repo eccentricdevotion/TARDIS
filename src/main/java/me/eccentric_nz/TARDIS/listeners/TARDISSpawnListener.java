@@ -19,9 +19,10 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 import org.bukkit.entity.Bee;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -41,7 +42,7 @@ public class TARDISSpawnListener implements Listener {
 
     private final TARDIS plugin;
     private final List<SpawnReason> good_spawns = new ArrayList<>();
-    private final List<Biome> biomes = new ArrayList<>();
+    private final List<TARDISBiome> biomes = new ArrayList<>();
 
     public TARDISSpawnListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -70,19 +71,19 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.SPAWNER_EGG);
         good_spawns.add(SpawnReason.VILLAGE_DEFENSE);
         good_spawns.add(SpawnReason.VILLAGE_INVASION);
-        biomes.add(Biome.DEEP_OCEAN);
-        biomes.add(Biome.END_BARRENS);
-        biomes.add(Biome.END_HIGHLANDS);
-        biomes.add(Biome.END_MIDLANDS);
-        biomes.add(Biome.MUSHROOM_FIELD_SHORE);
-        biomes.add(Biome.MUSHROOM_FIELDS);
-        biomes.add(Biome.NETHER_WASTES);
-        biomes.add(Biome.SOUL_SAND_VALLEY);
-        biomes.add(Biome.CRIMSON_FOREST);
-        biomes.add(Biome.WARPED_FOREST);
-        biomes.add(Biome.BASALT_DELTAS);
-        biomes.add(Biome.SMALL_END_ISLANDS);
-        biomes.add(Biome.THE_END);
+        biomes.add(TARDISBiome.DEEP_OCEAN);
+        biomes.add(TARDISBiome.END_BARRENS);
+        biomes.add(TARDISBiome.END_HIGHLANDS);
+        biomes.add(TARDISBiome.END_MIDLANDS);
+        biomes.add(TARDISBiome.MUSHROOM_FIELD_SHORE);
+        biomes.add(TARDISBiome.MUSHROOM_FIELDS);
+        biomes.add(TARDISBiome.NETHER_WASTES);
+        biomes.add(TARDISBiome.SOUL_SAND_VALLEY);
+        biomes.add(TARDISBiome.CRIMSON_FOREST);
+        biomes.add(TARDISBiome.WARPED_FOREST);
+        biomes.add(TARDISBiome.BASALT_DELTAS);
+        biomes.add(TARDISBiome.SMALL_END_ISLANDS);
+        biomes.add(TARDISBiome.THE_END);
     }
 
     /**
@@ -135,7 +136,7 @@ public class TARDISSpawnListener implements Listener {
                 return;
             }
             // only in DEEP_OCEAN, MUSHROOM_ISLAND, NETHER & THE END
-            if (!biomes.contains(l.getBlock().getBiome())) {
+            if (!biomes.contains(TARDISStaticUtils.getBiomeAt(l))) {
                 return;
             }
             // only monsters
@@ -143,25 +144,25 @@ public class TARDISSpawnListener implements Listener {
                 return;
             }
             // always deny MUSHROOM, HELL and SKY biomes
-            switch (l.getBlock().getBiome()) {
-                case MUSHROOM_FIELDS:
-                case NETHER_WASTES:
-                case SOUL_SAND_VALLEY:
-                case CRIMSON_FOREST:
-                case WARPED_FOREST:
-                case BASALT_DELTAS:
+            switch (TARDISStaticUtils.getBiomeAt(l).name()) {
+                case "MUSHROOM_FIELDS":
+                case "NETHER_WASTES":
+                case "SOUL_SAND_VALLEY":
+                case "CRIMSON_FOREST":
+                case "WARPED_FOREST":
+                case "BASALT_DELTAS":
                     if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
                         event.setCancelled(true);
                         return;
                     }
                     return;
-                case THE_END:
+                case "THE_END":
                     if (!event.getEntity().getType().equals(EntityType.ENDERMAN)) {
                         event.setCancelled(true);
                         return;
                     }
                     break;
-                case MUSHROOM_FIELD_SHORE:
+                case "MUSHROOM_FIELD_SHORE":
                     if (!event.getEntity().getType().equals(EntityType.SQUID)) {
                         event.setCancelled(true);
                         return;
@@ -195,15 +196,15 @@ public class TARDISSpawnListener implements Listener {
          */
         for (int col = -3; col < 4; col++) {
             for (int row = -3; row < 4; row++) {
-                Biome b = w.getBlockAt(x + col, 64, z + row).getBiome();
-                if (b.equals(Biome.DEEP_OCEAN)) {
+                TARDISBiome b = TARDISStaticUtils.getBiomeAt(w.getBlockAt(x + col, 64, z + row).getLocation());
+                if (b.equals(TARDISBiome.DEEP_OCEAN)) {
                     found++;
                 }
-                if (found < 3 && !b.equals(Biome.DEEP_OCEAN)) {
+                if (found < 3 && !b.equals(TARDISBiome.DEEP_OCEAN)) {
                     // reset count - not three in a row
                     found = 0;
                 }
-                if (found == 3 && !b.equals(Biome.DEEP_OCEAN)) {
+                if (found == 3 && !b.equals(TARDISBiome.DEEP_OCEAN)) {
                     // found 3 consecutive blocks in a row, increment 3x3 row count
                     three_by_three++;
                     // reset count

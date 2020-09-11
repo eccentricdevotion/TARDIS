@@ -27,7 +27,7 @@ public class TARDISScannerData {
     private Location scanLocation;
     private COMPASS tardisDirection;
     private long time;
-    private String biome;
+    private String scannedBiome;
 
     public Location getScanLocation() {
         return scanLocation;
@@ -53,11 +53,11 @@ public class TARDISScannerData {
         this.time = time;
     }
 
-    public String getBiome() {
-        return biome;
+    public String getScannedBiome() {
+        return scannedBiome;
     }
 
-    public void setBiome(String biome) {
-        this.biome = biome;
+    public void setScannedBiome(String scannedBiome) {
+        this.scannedBiome = scannedBiome;
     }
 }

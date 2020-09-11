@@ -69,7 +69,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
             // get the y coord
             if (param.spaceTardis()) {
                 if (safeOverworld(war.getW(), x, z, param.getCompass())) {
-                    if ((dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && TARDISStaticUtils.isOceanBiome(dest.getBlock().getBiome())) {
+                    if ((dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && TARDISStaticUtils.isOceanBiome(TARDISStaticUtils.getBiomeAt(dest))) {
                         if (safeSubmarine(dest, param.getCompass(), param.getPlayer())) {
                             break;
                         }

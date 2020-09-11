@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -87,7 +88,8 @@ public class BiomeSetter {
             Chunk chunk = l.getChunk();
             chunks.add(chunk);
             // reset biome and it's not The End
-            if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN) || l.getBlock().getBiome().equals(Biome.THE_VOID) || (l.getBlock().getBiome().equals(Biome.THE_END) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END))) {
+            TARDISBiome blockBiome = TARDISStaticUtils.getBiomeAt(l);
+            if (blockBiome.equals(TARDISBiome.DEEP_OCEAN) || blockBiome.equals(TARDISBiome.THE_VOID) || (blockBiome.equals(TARDISBiome.THE_END) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END))) {
                 // reset the biome
                 for (int c = -3; c < 4; c++) {
                     for (int r = -3; r < 4; r++) {

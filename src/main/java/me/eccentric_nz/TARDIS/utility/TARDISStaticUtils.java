@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import org.bukkit.*;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Openable;
@@ -77,18 +76,18 @@ public class TARDISStaticUtils {
      * @param b the biome to check
      * @return true if it is ocean
      */
-    public static boolean isOceanBiome(Biome b) {
-        switch (b) {
-            case OCEAN:
-            case COLD_OCEAN:
-            case DEEP_COLD_OCEAN:
-            case DEEP_FROZEN_OCEAN:
-            case DEEP_LUKEWARM_OCEAN:
-            case DEEP_OCEAN:
-            case DEEP_WARM_OCEAN:
-            case FROZEN_OCEAN:
-            case LUKEWARM_OCEAN:
-            case WARM_OCEAN:
+    public static boolean isOceanBiome(TARDISBiome b) {
+        switch (b.name()) {
+            case "OCEAN":
+            case "COLD_OCEAN":
+            case "DEEP_COLD_OCEAN":
+            case "DEEP_FROZEN_OCEAN":
+            case "DEEP_LUKEWARM_OCEAN":
+            case "DEEP_OCEAN":
+            case "DEEP_WARM_OCEAN":
+            case "FROZEN_OCEAN":
+            case "LUKEWARM_OCEAN":
+            case "WARM_OCEAN":
                 return true;
             default:
                 return false;

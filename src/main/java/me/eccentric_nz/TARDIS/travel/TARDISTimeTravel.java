@@ -316,7 +316,7 @@ public class TARDISTimeTravel {
                                     // check if submarine is on
                                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
                                     if (rsp.resultSet()) {
-                                        if (rsp.isSubmarineOn() && TARDISStaticUtils.isOceanBiome(currentBlock.getBiome())) {
+                                        if (rsp.isSubmarineOn() && TARDISStaticUtils.isOceanBiome(TARDISStaticUtils.getBiomeAt(currentBlock.getLocation()))) {
                                             // get submarine location
                                             TARDISMessage.send(p, "SUB_SEARCH");
                                             Location underwater = submarine(currentBlock, d);

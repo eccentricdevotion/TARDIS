@@ -139,7 +139,6 @@ public class TARDISSeedBlockProcessor {
                     cx = chunk.getX();
                     cz = chunk.getZ();
                 }
-                String biome = TARDISStaticUtils.getBiomeAt(l).name();
                 // get player direction
                 String d = TARDISStaticUtils.getPlayersDirection(player, false);
                 // save data to database (tardis table)
@@ -189,7 +188,7 @@ public class TARDISSeedBlockProcessor {
                 setlocs.put("y", l.getBlockY());
                 setlocs.put("z", l.getBlockZ());
                 setlocs.put("direction", d);
-                plugin.getQueryFactory().insertLocations(setlocs, biome, lastInsertId);
+                plugin.getQueryFactory().insertLocations(setlocs, TARDISStaticUtils.getBiomeAt(l).getKey().toString(), lastInsertId);
                 // turn the block stack into a TARDIS
                 BuildData bd = new BuildData(player.getUniqueId().toString());
                 bd.setDirection(COMPASS.valueOf(d));

@@ -21,8 +21,10 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -158,7 +160,6 @@ public class TARDISArtronFurnaceListener implements Listener {
         if (!block.getType().equals(Material.FURNACE)) {
             return;
         }
-        Furnace furnace = (Furnace) event.getBlock().getState();
         if (plugin.getTardisHelper().isArtronFurnace(event.getBlock())) {
             event.setCancelled(true);
             if (plugin.getArtronConfig().getBoolean("artron_furnace.particles")) {
@@ -173,18 +174,25 @@ public class TARDISArtronFurnaceListener implements Listener {
             block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);
             if (plugin.getArtronConfig().getBoolean("artron_furnace.set_biome")) {
                 // reset biome
-                Biome b = Biome.DEEP_OCEAN;
-                if (block.getBiome().equals(Biome.DEEP_OCEAN)) {
+                TARDISBiome b = TARDISBiome.DEEP_OCEAN;
+                if (TARDISStaticUtils.getBiomeAt(block.getLocation()).equals(TARDISBiome.DEEP_OCEAN)) {
                     for (BlockFace f : plugin.getGeneralKeeper().getSurrounding()) {
-                        b = block.getRelative(f).getBiome();
-                        if (!b.equals(Biome.DEEP_OCEAN)) {
+                        b = TARDISStaticUtils.getBiomeAt(block.getRelative(f).getLocation());
+                        if (!b.equals(TARDISBiome.DEEP_OCEAN)) {
                             break;
                         }
                     }
                     Location l = block.getLocation();
-                    l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), b);
-                    Chunk c = l.getChunk();
-                    plugin.getTardisHelper().refreshChunk(c);
+                    if (b.getKey().getNamespace().equalsIgnoreCase("minecraft")) {
+                        try {
+                            Biome biome = Biome.valueOf(b.name());
+                            l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), biome);
+                            Chunk c = l.getChunk();
+                            plugin.getTardisHelper().refreshChunk(c);
+                        } catch (IllegalArgumentException e) {
+                            plugin.debug("Could not get biome for post Artron Furnace breakage!");
+                        }
+                    }
                 }
             }
         }

@@ -34,7 +34,7 @@ class TARDISJunkLocation {
     private Location current;
     private Location home;
     private int id;
-    private TARDISBiome biome;
+    private TARDISBiome tardisBiome;
 
     TARDISJunkLocation(TARDIS plugin) {
         this.plugin = plugin;
@@ -50,7 +50,7 @@ class TARDISJunkLocation {
             wherec.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
             if (rsc.resultSet()) {
-                biome = TARDISBiome.get(rsc.getBiomeKey());
+                tardisBiome = TARDISBiome.get(rsc.getBiomeKey());
                 // get home location
                 HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
@@ -78,7 +78,7 @@ class TARDISJunkLocation {
         return id;
     }
 
-    public TARDISBiome getBiome() {
-        return biome;
+    public TARDISBiome getTardisBiome() {
+        return tardisBiome;
     }
 }
