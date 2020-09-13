@@ -17,18 +17,10 @@
 package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
-import org.bukkit.World.Environment;
-import org.bukkit.WorldCreator;
-import org.bukkit.command.CommandException;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISChecker;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
-import org.rauschig.jarchivelib.Archiver;
-import org.rauschig.jarchivelib.ArchiverFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
 
 /**
  * The Time Vortex is the dimension through which all time travellers pass. The Vortex was built by the Time Lords as a
@@ -44,32 +36,25 @@ public class TARDISSkaro {
         this.plugin = plugin;
     }
 
-    public void createDalekWorld() {
-        String container = plugin.getServer().getWorldContainer().getAbsolutePath() + File.separator;
-        try {
-            TARDISFileCopier.copy(container + "Skaro.tar.gz", plugin.getResource("Skaro.tar.gz"), true);
-            // decompress the archive
-            File archive = new File(container + "Skaro.tar.gz");
-            File destination = new File(container);
-            Archiver archiver = ArchiverFactory.createArchiver(archive);
-            archiver.extract(archive, destination);
-            // set a random seed
-            plugin.getTardisHelper().setRandomSeed("Skaro");
-            archive.delete();
-            // load world
-//            WorldCreator.name("Skaro").type(WorldType.BUFFET).environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
-            WorldCreator.name("Skaro").environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
+    public void loadDalekWorld() {
+        // copy datapack files
+        if (TARDISChecker.hasDimension("skaro")) {
+            plugin.getTardisHelper().loadTARDISDimension("skaro");
+        } else {
+            plugin.getServer().reloadData();
+            // message console to restart server
+            TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Skaro data pack has been installed, please restart the server to enable the world.");
             // add world to config
-            plugin.getPlanetsConfig().set("planets.Skaro.time_travel", true);
-            plugin.savePlanetsConfig();
-            // make sure TARDISWeepingAngels can re-disguise Daleks in the Skaro world
-            Plugin twa = plugin.getPM().getPlugin("TARDISWeepingAngels");
-            if (twa != null) {
-                twa.getConfig().set("daleks.worlds.Skaro", 500);
-                twa.saveConfig();
+            if (!plugin.getPlanetsConfig().getBoolean("planets.Skaro.time_travel")) {
+                plugin.getPlanetsConfig().set("planets.Skaro.time_travel", true);
+                plugin.savePlanetsConfig();
+                // make sure TARDISWeepingAngels can re-disguise Daleks in the Skaro world
+                Plugin twa = plugin.getPM().getPlugin("TARDISWeepingAngels");
+                if (twa != null) {
+                    twa.getConfig().set("daleks.worlds.Skaro", 500);
+                    twa.saveConfig();
+                }
             }
-        } catch (IOException | CommandException e) {
-            plugin.getServer().getLogger().log(Level.SEVERE, "Could not copy Skaro world files to " + container + " {0}", e.getMessage());
         }
     }
 }

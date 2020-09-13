@@ -474,7 +474,7 @@ public class TARDIS extends JavaPlugin {
             getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
                 if (!TARDISAchievementFactory.checkAdvancement("tardis")) {
                     getConsole().sendMessage(getPluginName() + getLanguage().getString("ADVANCEMENT_RELOAD"));
-                    getServer().dispatchCommand(getConsole(), "minecraft:reload");
+                    getServer().reloadData();
                 }
             }, 199L);
             // check TARDIS build
@@ -989,14 +989,14 @@ public class TARDIS extends JavaPlugin {
 
     private void setupPlanets() {
         // Skaro
-        if (getPlanetsConfig().getBoolean("planets.Skaro.enabled") && getServer().getWorld("Skaro") == null) {
-            new TARDISSkaro(this).createDalekWorld();
+        if (getPlanetsConfig().getBoolean("planets.Skaro.enabled")) {
+            new TARDISSkaro(this).loadDalekWorld();
         }
-        if (getPlanetsConfig().getBoolean("planets.Siluria.enabled") && getServer().getWorld("Siluria") == null) {
-            new TARDISSiluria(this).createSilurianUnderworld();
+        if (getPlanetsConfig().getBoolean("planets.Siluria.enabled")) {
+            new TARDISSiluria(this).loadSilurianUnderworld();
         }
-        if (getPlanetsConfig().getBoolean("planets.Gallifrey.enabled") && getServer().getWorld("Gallifrey") == null) {
-            new TARDISGallifrey(this).createTimeLordWorld();
+        if (getPlanetsConfig().getBoolean("planets.Gallifrey.enabled")) {
+            new TARDISGallifrey(this).loadTimeLordWorld();
         }
     }
 

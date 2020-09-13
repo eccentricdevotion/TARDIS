@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.*;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Player;
@@ -167,7 +168,7 @@ public class TARDISSeedBlockListener implements Listener {
                     key = plugin.getConfig().getString("preferences.key");
                 }
                 if (player.getInventory().getItemInMainHand().getType().equals(Material.valueOf(key))) {
-                    if (!plugin.getPlanetsConfig().getBoolean("planets." + l.getWorld().getName() + ".time_travel")) {
+                    if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(l.getWorld().getName()) + ".time_travel")) {
                         TARDISMessage.send(player, "WORLD_NO_TARDIS");
                         return;
                     }

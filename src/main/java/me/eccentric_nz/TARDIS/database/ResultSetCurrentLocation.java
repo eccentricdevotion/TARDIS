@@ -113,12 +113,6 @@ public class ResultSetCurrentLocation {
                     } else {
                         biomeKey = NamespacedKey.minecraft(key.toLowerCase(Locale.ROOT));
                     }
-//                    try {
-//                        biomeKey = Biome.valueOf(rs.getString("biome"));
-//                    } catch (IllegalArgumentException e) {
-//                        // may have a pre-1.9 biome stored so do old biome lookup...
-//                        biomeKey = TardisOldBiomeLookup.OLD_BIOME_LOOKUP.getOrDefault(rs.getString("biome"), null);
-//                    }
                 }
             } else {
                 return false;

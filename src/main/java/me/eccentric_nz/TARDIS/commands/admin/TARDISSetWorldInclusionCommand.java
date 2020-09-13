@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 
@@ -50,9 +51,9 @@ class TARDISSetWorldInclusionCommand {
             return false;
         }
         if (first.equals("include")) {
-            plugin.getPlanetsConfig().set("planets." + nodots + ".time_travel", true);
+            plugin.getPlanetsConfig().set("planets." + TARDISStringUtils.worldName(nodots) + ".time_travel", true);
         } else {
-            plugin.getPlanetsConfig().set("planets." + nodots + ".time_travel", false);
+            plugin.getPlanetsConfig().set("planets." + TARDISStringUtils.worldName(nodots) + ".time_travel", false);
         }
         plugin.savePlanetsConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");

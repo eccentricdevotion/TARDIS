@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -95,7 +96,7 @@ class TARDISHomeCommand {
                     eyeLocation.setY(yplusone + 1);
                 }
                 // check the world is not excluded
-                if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
+                if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(world) + ".time_travel")) {
                     TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                     return true;
                 }

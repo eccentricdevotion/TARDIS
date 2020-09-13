@@ -63,10 +63,45 @@ public class TARDISChecker {
         }
     }
 
-    private void copy(String filename, File file) {
+    public static boolean hasDimension(String dimension) {
+        boolean exists = true;
+        File container = TARDIS.plugin.getServer().getWorldContainer();
+        String s_world = TARDIS.plugin.getServer().getWorlds().get(0).getName();
+        String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator;
+        // check if directories exist
+        String dimensionRoot = dataPacksRoot + dimension + File.separator + "data" + File.separator + "tardis" + File.separator;
+        File dimensionDir = new File(dimensionRoot + "dimension");
+        File dimensionTypeDir = new File(dimensionRoot + "dimension_type");
+        if (!dimensionDir.exists()) {
+            dimensionDir.mkdirs();
+        }
+        if (!dimensionTypeDir.exists()) {
+            dimensionTypeDir.mkdirs();
+        }
+        // copy files to directory
+        File dimFile = new File(dimensionDir, dimension + ".json");
+        if (!dimFile.exists()) {
+            exists = false;
+            TARDISChecker.copy(dimension + "_d.json", dimFile);
+        }
+        File dimTypeFile = new File(dimensionTypeDir, dimension + ".json");
+        if (!dimTypeFile.exists()) {
+            exists = false;
+            TARDISChecker.copy(dimension + "_dt.json", dimTypeFile);
+        }
+        String dataPacksMeta = dataPacksRoot + dimension;
+        File mcmeta = new File(dataPacksMeta, "pack.mcmeta");
+        if (!mcmeta.exists()) {
+            exists = false;
+            copy("pack_" + dimension + ".mcmeta", mcmeta);
+        }
+        return exists;
+    }
+
+    public static void copy(String filename, File file) {
         InputStream in = null;
         try {
-            in = plugin.getResource(filename);
+            in = TARDIS.plugin.getResource(filename);
             OutputStream out = new FileOutputStream(file);
             byte[] buf = new byte[1024];
             int len;

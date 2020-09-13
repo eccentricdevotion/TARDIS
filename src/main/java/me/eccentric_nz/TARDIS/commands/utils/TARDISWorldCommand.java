@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISWorlds;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardischunkgenerator.TARDISPlanetData;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -130,8 +131,8 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 } else {
                     // try to unload the world
                     plugin.getServer().unloadWorld(world, true);
-                    plugin.getPlanetsConfig().set("planets." + args[1] + ".enabled", false);
-                    plugin.getPlanetsConfig().set("planets." + args[1] + ".time_travel", false);
+                    plugin.getPlanetsConfig().set("planets." + TARDISStringUtils.worldName(args[1]) + ".enabled", false);
+                    plugin.getPlanetsConfig().set("planets." + TARDISStringUtils.worldName(args[1]) + ".time_travel", false);
                     plugin.savePlanetsConfig();
                     TARDISMessage.send(sender, "WORLD_UNLOAD_SUCCESS", args[1]);
                 }
@@ -150,10 +151,15 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     return true;
                 }
                 if (args[0].toLowerCase().equals("load")) {
+                    String name = args[1];
+                    if (name.equals("gallifrey") || name.equals("siluria") || name.equals("skaro")) {
+                        TARDISMessage.send(sender, "DATA_PACK");
+                        return true;
+                    }
                     // try to load the world
                     WorldType worldType = WorldType.NORMAL;
                     World.Environment environment = World.Environment.NORMAL;
-                    WorldCreator creator = new WorldCreator(args[1]);
+                    WorldCreator creator = new WorldCreator(name);
                     if (args.length > 2) {
                         try {
                             worldType = WorldType.valueOf(args[2].toUpperCase(Locale.ENGLISH));
@@ -186,13 +192,13 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         TARDISMessage.send(sender, "WORLD_NOT_FOUND");
                         return true;
                     }
-                    plugin.getPlanetsConfig().set("planets." + args[1] + ".enabled", true);
-                    plugin.getPlanetsConfig().set("planets." + args[1] + ".time_travel", false);
-                    plugin.getPlanetsConfig().set("planets." + args[1] + ".resource_pack", "default");
-                    plugin.getPlanetsConfig().set("planets." + args[1] + ".gamemode", "SURVIVAL");
-                    plugin.getPlanetsConfig().set("planets." + args[1] + ".world_type", worldType.toString());
-                    plugin.getPlanetsConfig().set("planets." + args[1] + ".environment", environment.toString());
-                    plugin.getPlanetsConfig().set("planets." + args[1] + ".generator", args.length > 4 ? args[4] : "DEFAULT");
+                    plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
+                    plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
+                    plugin.getPlanetsConfig().set("planets." + name + ".resource_pack", "default");
+                    plugin.getPlanetsConfig().set("planets." + name + ".gamemode", "SURVIVAL");
+                    plugin.getPlanetsConfig().set("planets." + name + ".world_type", worldType.toString());
+                    plugin.getPlanetsConfig().set("planets." + name + ".environment", environment.toString());
+                    plugin.getPlanetsConfig().set("planets." + name + ".generator", args.length > 4 ? args[4] : "DEFAULT");
                     plugin.savePlanetsConfig();
                 } else {
                     TARDISMessage.send(sender, "WORLD_UNLOADED", args[1]);

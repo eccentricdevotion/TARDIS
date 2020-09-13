@@ -35,6 +35,7 @@ import me.eccentric_nz.TARDIS.enumeration.Remote;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -274,7 +275,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                             TARDISMessage.send(sender, "WORLD_NOT_FOUND");
                                             return true;
                                         }
-                                        if (!plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".time_travel")) {
+                                        if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(w.getName()) + ".time_travel")) {
                                             TARDISMessage.send(sender, "NO_WORLD_TRAVEL");
                                             return true;
                                         }

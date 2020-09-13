@@ -26,10 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -190,7 +187,7 @@ public class TARDISTimeTravel {
         Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         List<World> allowedWorlds = new ArrayList<>();
 
-        if (e.equals("THIS") && plugin.getPlanetsConfig().getBoolean("planets." + this_world.getName() + ".time_travel")) {
+        if (e.equals("THIS") && plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(this_world.getName()) + ".time_travel")) {
             allowedWorlds.add(this_world);
         } else {
             worldlist.forEach((o) -> {
@@ -216,7 +213,7 @@ public class TARDISTimeTravel {
                         }
                     }
                     // remove the world the Police Box is in
-                    if (this_world != null && (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + this_world.getName() + ".time_travel"))) {
+                    if (this_world != null && (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(this_world.getName()) + ".time_travel"))) {
                         allowedWorlds.remove(this_world);
                     }
                     // remove the world if the player doesn't have permission

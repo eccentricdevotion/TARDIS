@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -74,7 +75,7 @@ public class TARDISRescue {
         if (!request && !plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, Flag.getDefaultFlags()))) {
             return false;
         }
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + player_loc.getWorld().getName() + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(player_loc.getWorld().getName()) + ".time_travel")) {
             TARDISMessage.send(player, "NO_WORLD_TRAVEL");
             return false;
         }

@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
 import multiworld.api.MultiWorldWorldData;
@@ -138,24 +139,25 @@ public class TARDISDoorListener {
     /**
      * Checks if the world the player is teleporting to is a SURVIVAL world.
      *
-     * @param w the world to check
+     * @param world the world to check
      * @return true if the world is a SURVIVAL world, otherwise false
      */
-    public boolean checkSurvival(World w) {
+    public boolean checkSurvival(World world) {
         boolean bool = false;
         switch (plugin.getWorldManager()) {
             case MULTIVERSE:
-                bool = plugin.getMVHelper().isWorldSurvival(w);
+                bool = plugin.getMVHelper().isWorldSurvival(world);
                 break;
             case MULTIWORLD:
                 MultiWorldAPI mw = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
-                MultiWorldWorldData mww = mw.getWorld(w.getName());
+                MultiWorldWorldData mww = mw.getWorld(world.getName());
                 if (!mww.isOptionSet(FlagName.CREATIVEWORLD)) {
                     bool = true;
                 }
                 break;
             case NONE:
-                bool = plugin.getPlanetsConfig().getString("planets." + w.getName() + ".gamemode").equalsIgnoreCase("SURVIVAL");
+                String name = TARDISStringUtils.worldName(world.getName());
+                bool = plugin.getPlanetsConfig().getString("planets." + name + ".gamemode").equalsIgnoreCase("SURVIVAL");
                 break;
         }
         return bool;

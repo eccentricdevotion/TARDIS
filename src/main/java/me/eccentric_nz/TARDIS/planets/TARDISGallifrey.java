@@ -17,17 +17,9 @@
 package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
-import org.bukkit.World.Environment;
-import org.bukkit.WorldCreator;
-import org.bukkit.command.CommandException;
-import org.rauschig.jarchivelib.Archiver;
-import org.rauschig.jarchivelib.ArchiverFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISChecker;
+import org.bukkit.ChatColor;
 
 /**
  * @author eccentric_nz
@@ -44,26 +36,18 @@ public class TARDISGallifrey {
         this.plugin = plugin;
     }
 
-    public void createTimeLordWorld() {
-        String container = plugin.getServer().getWorldContainer().getAbsolutePath() + File.separator;
-        try {
-            TARDISFileCopier.copy(container + "Gallifrey.tar.gz", plugin.getResource("Gallifrey.tar.gz"), true);
-            // decompress the archive
-            File archive = new File(container + "Gallifrey.tar.gz");
-            File destination = new File(container);
-            Archiver archiver = ArchiverFactory.createArchiver(archive);
-            archiver.extract(archive, destination);
-            // set a random seed
-            plugin.getTardisHelper().setRandomSeed("Gallifrey");
-            archive.delete();
-            // load world
-//            WorldCreator.name("Gallifrey").type(WorldType.BUFFET).environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
-            WorldCreator.name("Gallifrey").environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
+    public void loadTimeLordWorld() {
+        if (TARDISChecker.hasDimension("gallifrey")) {
+            plugin.getTardisHelper().loadTARDISDimension("gallifrey");
+        } else {
+            plugin.getServer().reloadData();
+            // message console to restart server
+            TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Gallifrey data pack has been installed, please restart the server to enable the world.");
             // add world to config
-            plugin.getPlanetsConfig().set("planets.Gallifrey.time_travel", true);
-            plugin.savePlanetsConfig();
-        } catch (IOException | CommandException e) {
-            plugin.getServer().getLogger().log(Level.SEVERE, "Could not copy Gallifrey world files to " + container + " {0}", e.getMessage());
+            if (!plugin.getPlanetsConfig().getBoolean("planets.Gallifrey.time_travel")) {
+                plugin.getPlanetsConfig().set("planets.Gallifrey.time_travel", true);
+                plugin.savePlanetsConfig();
+            }
         }
     }
 }

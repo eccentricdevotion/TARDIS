@@ -30,10 +30,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.travel.*;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
+import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -731,7 +728,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         return true;
                                     }
                                     // check world is enabled for travel
-                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + world.getName() + ".time_travel")) {
+                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(world.getName()) + ".time_travel")) {
                                         TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                                         return true;
                                     }
@@ -777,7 +774,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         TARDISMessage.send(player, "CURRENT_NOT_FOUND");
                                         return true;
                                     }
-                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".time_travel")) {
+                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(rsc.getWorld().getName()) + ".time_travel")) {
                                         TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                                         return true;
                                     }
@@ -938,7 +935,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             TARDISMessage.send(player, "WORLD_NOT_FOUND");
             return null;
         }
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(w.getName()) + ".time_travel")) {
             TARDISMessage.send(player, "NO_WORLD_TRAVEL");
             return null;
         }

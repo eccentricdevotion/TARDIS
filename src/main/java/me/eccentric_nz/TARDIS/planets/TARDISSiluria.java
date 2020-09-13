@@ -17,17 +17,9 @@
 package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
-import org.bukkit.World.Environment;
-import org.bukkit.WorldCreator;
-import org.bukkit.command.CommandException;
-import org.rauschig.jarchivelib.Archiver;
-import org.rauschig.jarchivelib.ArchiverFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISChecker;
+import org.bukkit.ChatColor;
 
 /**
  * @author eccentric_nz
@@ -40,26 +32,18 @@ public class TARDISSiluria {
         this.plugin = plugin;
     }
 
-    public void createSilurianUnderworld() {
-        String container = plugin.getServer().getWorldContainer().getAbsolutePath() + File.separator;
-        try {
-            TARDISFileCopier.copy(container + "Siluria.tar.gz", plugin.getResource("Siluria.tar.gz"), true);
-            // decompress the archive
-            File archive = new File(container + "Siluria.tar.gz");
-            File destination = new File(container);
-            Archiver archiver = ArchiverFactory.createArchiver(archive);
-            archiver.extract(archive, destination);
-            // set a random seed
-            plugin.getTardisHelper().setRandomSeed("Siluria");
-            archive.delete();
-            // load world
-//            WorldCreator.name("Siluria").type(WorldType.BUFFET).environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
-            WorldCreator.name("Siluria").environment(Environment.NORMAL).seed(TARDISConstants.RANDOM.nextLong()).createWorld();
+    public void loadSilurianUnderworld() {
+        if (TARDISChecker.hasDimension("siluria")) {
+            plugin.getTardisHelper().loadTARDISDimension("siluria");
+        } else {
+            plugin.getServer().reloadData();
+            // message console to restart server
+            TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Siluria data pack has been installed, please restart the server to enable the world.");
             // add world to config
-            plugin.getPlanetsConfig().set("planets.Siluria.time_travel", true);
-            plugin.savePlanetsConfig();
-        } catch (IOException | CommandException e) {
-            plugin.getServer().getLogger().log(Level.SEVERE, "Could not copy Siluria world files to " + container + " {0}", e.getMessage());
+            if (!plugin.getPlanetsConfig().getBoolean("planets.Siluria.time_travel")) {
+                plugin.getPlanetsConfig().set("planets.Siluria.time_travel", true);
+                plugin.savePlanetsConfig();
+            }
         }
     }
 }

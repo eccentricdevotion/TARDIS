@@ -1,0 +1,87 @@
+{
+  "type": {
+    "name": "tardis:skaro",
+    "ultrawarm": false,
+    "natural": true,
+    "piglin_safe": false,
+    "respawn_anchor_works": false,
+    "bed_works": true,
+    "has_raids": false,
+    "has_skylight": true,
+    "has_ceiling": false,
+    "coordinate_scale": 1,
+    "ambient_light": 0,
+    "logical_height": 256,
+    "infiniburn": "minecraft:infiniburn_overworld"
+  },
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": -274503980,
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "seed": -274503980,
+      "altitude_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1,
+          1
+        ]
+      },
+      "temperature_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1,
+          1
+        ]
+      },
+      "humidity_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1,
+          1
+        ]
+      },
+      "weirdness_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1,
+          1
+        ]
+      },
+      "biomes": [
+        {
+          "biome": "minecraft:desert",
+          "parameters": {
+            "altitude": 0.2,
+            "temperature": 0.8,
+            "humidity": -0.5,
+            "weirdness": 0.3,
+            "offset": 0
+          }
+        },
+        {
+          "biome": "minecraft:desert_hills",
+          "parameters": {
+            "altitude": 0.5,
+            "temperature": 0.7,
+            "humidity": -0.6,
+            "weirdness": 0.2,
+            "offset": 0.1
+          }
+        },
+        {
+          "biome": "minecraft:desert_lakes",
+          "parameters": {
+            "altitude": 0.1,
+            "temperature": 0.6,
+            "humidity": -0.1,
+            "weirdness": 0.5,
+            "offset": 0.1
+          }
+        }
+      ],
+      "biome": "minecraft:desert"
+    },
+    "settings": "minecraft:overworld"
+  }
+}

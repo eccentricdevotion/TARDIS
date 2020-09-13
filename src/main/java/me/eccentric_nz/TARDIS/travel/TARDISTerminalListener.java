@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -338,7 +339,7 @@ public class TARDISTerminalListener implements Listener {
     }
 
     private void setCurrent(InventoryView view, Player p, int slot) {
-        String current = terminalUsers.get(p.getUniqueId()).getWorld().getName();
+        String current = TARDISStringUtils.worldName(terminalUsers.get(p.getUniqueId()).getWorld().getName());
         if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
             current = plugin.getMVHelper().getAlias(current);
         }
@@ -398,7 +399,7 @@ public class TARDISTerminalListener implements Listener {
 
     private String getWorld(String e, String this_world, Player p) {
         List<String> allowedWorlds = new ArrayList<>();
-        String world = "";
+        String world;
         Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         worldlist.forEach((o) -> {
             World ww = plugin.getServer().getWorld(o);

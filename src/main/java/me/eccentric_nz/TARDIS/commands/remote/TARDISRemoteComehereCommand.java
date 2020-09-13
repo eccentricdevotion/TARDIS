@@ -36,6 +36,7 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -79,7 +80,7 @@ class TARDISRemoteComehereCommand {
         }
         // check the world is not excluded
         String world = eyeLocation.getWorld().getName();
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(world) + ".time_travel")) {
             TARDISMessage.send(player, "NO_PB_IN_WORLD");
             return true;
         }
