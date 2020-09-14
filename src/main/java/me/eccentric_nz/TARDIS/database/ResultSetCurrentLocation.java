@@ -109,7 +109,12 @@ public class ResultSetCurrentLocation {
                     String key = rs.getString("biome");
                     if (key.contains(":")) {
                         String[] split = key.split(":");
-                        biomeKey = new NamespacedKey(split[0], split[1]);
+                        if (key.contains("{")) {
+                            String fixed = split[1].substring(0, split[1].length() - 1);
+                            biomeKey = NamespacedKey.minecraft(fixed);
+                        } else {
+                            biomeKey = new NamespacedKey(split[0], split[1]);
+                        }
                     } else {
                         biomeKey = NamespacedKey.minecraft(key.toLowerCase(Locale.ROOT));
                     }

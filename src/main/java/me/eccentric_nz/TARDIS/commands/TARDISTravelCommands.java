@@ -179,7 +179,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     setlocs.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
                     Location l = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
                     TARDISBiome biome = TARDISStaticUtils.getBiomeAt(l);
-                    plugin.getQueryFactory().updateLocations(setlocs, biome.toString(), id);
+                    plugin.getQueryFactory().updateLocations(setlocs, biome.getKey().toString(), id);
                     // rebuild the exterior
                     BuildData bd = new BuildData(player.getUniqueId().toString());
                     bd.setDirection(rsh.getDirection());
