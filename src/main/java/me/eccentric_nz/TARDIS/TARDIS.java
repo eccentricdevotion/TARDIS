@@ -54,9 +54,6 @@ import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
 import me.eccentric_nz.TARDIS.move.TARDISSpectaclesRunnable;
 import me.eccentric_nz.TARDIS.placeholders.TARDISPlaceholderExpansion;
-import me.eccentric_nz.TARDIS.planets.TARDISGallifrey;
-import me.eccentric_nz.TARDIS.planets.TARDISSiluria;
-import me.eccentric_nz.TARDIS.planets.TARDISSkaro;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.recipes.*;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomPersister;
@@ -181,7 +178,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("MultiInv", "3.3.6");
         versions.put("My_Worlds", "1.16.1");
         versions.put("PerWorldInventory", "2.3.0");
-        versions.put("TARDISChunkGenerator", "4.5.2");
+        versions.put("TARDISChunkGenerator", "4.5.3");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.0");
@@ -356,7 +353,6 @@ public class TARDIS extends JavaPlugin {
             loadInventoryManager();
             checkTCG();
             checkDefaultWorld();
-            setupPlanets();
             cleanUpWorlds();
             utils = new TARDISUtils(this);
             locationUtils = new TARDISLocationGetters(this);
@@ -984,19 +980,6 @@ public class TARDIS extends JavaPlugin {
         if (getServer().getWorld(defWorld) == null) {
             console.sendMessage(pluginName + "Default world specified, but it doesn't exist! Trying to create it now...");
             new TARDISSpace(this).createDefaultWorld(defWorld);
-        }
-    }
-
-    private void setupPlanets() {
-        // Skaro
-        if (getPlanetsConfig().getBoolean("planets.Skaro.enabled")) {
-            new TARDISSkaro(this).loadDalekWorld();
-        }
-        if (getPlanetsConfig().getBoolean("planets.Siluria.enabled")) {
-            new TARDISSiluria(this).loadSilurianUnderworld();
-        }
-        if (getPlanetsConfig().getBoolean("planets.Gallifrey.enabled")) {
-            new TARDISGallifrey(this).loadTimeLordWorld();
         }
     }
 
