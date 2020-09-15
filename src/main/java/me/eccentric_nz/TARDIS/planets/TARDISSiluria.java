@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISChecker;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 
 /**
  * @author eccentric_nz
@@ -32,9 +33,9 @@ public class TARDISSiluria {
         this.plugin = plugin;
     }
 
-    public void loadSilurianUnderworld() {
+    public World loadSilurianUnderworld() {
         if (TARDISChecker.hasDimension("siluria")) {
-            plugin.getTardisHelper().loadTARDISDimension("siluria");
+            return plugin.getTardisHelper().loadTARDISDimension("siluria");
         } else {
             plugin.getServer().reloadData();
             // message console to restart server
@@ -44,6 +45,7 @@ public class TARDISSiluria {
                 plugin.getPlanetsConfig().set("planets.Siluria.time_travel", true);
                 plugin.savePlanetsConfig();
             }
+            return null;
         }
     }
 }

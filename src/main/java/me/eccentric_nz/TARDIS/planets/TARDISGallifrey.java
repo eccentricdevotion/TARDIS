@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISChecker;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 
 /**
  * @author eccentric_nz
@@ -36,9 +37,9 @@ public class TARDISGallifrey {
         this.plugin = plugin;
     }
 
-    public void loadTimeLordWorld() {
+    public World loadTimeLordWorld() {
         if (TARDISChecker.hasDimension("gallifrey")) {
-            plugin.getTardisHelper().loadTARDISDimension("gallifrey");
+            return plugin.getTardisHelper().loadTARDISDimension("gallifrey");
         } else {
             plugin.getServer().reloadData();
             // message console to restart server
@@ -48,6 +49,7 @@ public class TARDISGallifrey {
                 plugin.getPlanetsConfig().set("planets.Gallifrey.time_travel", true);
                 plugin.savePlanetsConfig();
             }
+            return null;
         }
     }
 }

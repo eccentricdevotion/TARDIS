@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISChecker;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -36,10 +37,10 @@ public class TARDISSkaro {
         this.plugin = plugin;
     }
 
-    public void loadDalekWorld() {
+    public World loadDalekWorld() {
         // copy datapack files
         if (TARDISChecker.hasDimension("skaro")) {
-            plugin.getTardisHelper().loadTARDISDimension("skaro");
+            return plugin.getTardisHelper().loadTARDISDimension("skaro");
         } else {
             plugin.getServer().reloadData();
             // message console to restart server
@@ -55,6 +56,7 @@ public class TARDISSkaro {
                     twa.saveConfig();
                 }
             }
+            return null;
         }
     }
 }
