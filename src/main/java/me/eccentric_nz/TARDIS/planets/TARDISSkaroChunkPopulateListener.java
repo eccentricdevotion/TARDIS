@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.planets;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkPopulateEvent;
@@ -42,7 +43,7 @@ public class TARDISSkaroChunkPopulateListener implements Listener {
 
     public TARDISSkaroChunkPopulateListener(TARDIS plugin) {
         this.plugin = plugin;
-        timeCheck = System.currentTimeMillis() + 2000;
+        timeCheck = System.currentTimeMillis() + 3000;
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -56,12 +57,13 @@ public class TARDISSkaroChunkPopulateListener implements Listener {
         if (chunks.contains(chunkInfo)) {
             return;
         }
-        // scan chunk for _ORE between y = 50 , 70
+        // scan chunk for COAL_ORE between y = 50 , 70
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 for (int y = 45; y < 66; y++) {
-                    if (chunk.getBlock(x, y, z).getType().equals(Material.COAL_ORE)) {
-                        int hy = chunk.getWorld().getHighestBlockYAt(x, z) + 1;
+                    Block block = chunk.getBlock(x, y, z);
+                    if (block.getType().equals(Material.COAL_ORE)) {
+                        int hy = chunk.getWorld().getHighestBlockYAt(block.getLocation()) + 1;
                         if (System.currentTimeMillis() < timeCheck) {
                             return;
                         }

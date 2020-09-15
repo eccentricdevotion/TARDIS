@@ -11,7 +11,6 @@
 7. More sudo commands - [#307](https://github.com/eccentricdevotion/TARDIS/issues/307)
 8. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
 9. TCG API - use Police Box location instead of player location?
-10. Fix structure spawning in TARDIS dimensions (Skaro & Gallifrey)
 
 ## Resource Pack / TARDISWeepingAngels
 0. Check paper bag, bowl of custard, artron furnace, telepathic circuit, keyboard editor
