@@ -1,0 +1,35 @@
+{
+    "config": {
+        "feature": {
+            "config": {
+                "hat_state": {
+                    "Name": "minecraft:cobweb"
+                },
+                "decor_state": {
+                    "Name": "minecraft:red_wool"
+                },
+                "planted": false,
+                "valid_base_block": {
+                    "Name": "minecraft:red_sand"
+                },
+                "stem_state": {
+                    "Properties": {
+                        "axis": "y"
+                    },
+                    "Name": "minecraft:stripped_birch_wood"
+                }
+            },
+            "type": "minecraft:huge_fungus"
+        },
+        "decorator": {
+            "config": {
+                "count": {
+                    "base": 0,
+                    "spread": 4
+                }
+            },
+            "type": "minecraft:count_multilayer"
+        }
+    },
+    "type": "minecraft:decorated"
+}

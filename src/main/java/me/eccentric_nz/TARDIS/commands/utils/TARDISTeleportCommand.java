@@ -74,6 +74,9 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
             World world = plugin.getServer().getWorld(args[0]);
             if (world != null) {
                 Location spawn = world.getSpawnLocation();
+                if (args[0].equalsIgnoreCase("gallifrey") || args[0].equalsIgnoreCase("skaro")) {
+                    spawn.add(400.0d, 0.0d, 400.0d);
+                }
                 while (!world.getChunkAt(spawn).isLoaded()) {
                     world.getChunkAt(spawn).load();
                 }

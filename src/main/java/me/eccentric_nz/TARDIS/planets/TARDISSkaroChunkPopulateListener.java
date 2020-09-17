@@ -67,7 +67,11 @@ public class TARDISSkaroChunkPopulateListener implements Listener {
                         if (System.currentTimeMillis() < timeCheck) {
                             return;
                         }
-                        buildStructure(chunk, chunkInfo, x, hy, z);
+                        // don't build structures on top of trees
+                        Block sand = chunk.getBlock(x, hy - 1, z);
+                        if (sand.getType().equals(Material.SAND)) {
+                            buildStructure(chunk, chunkInfo, x, hy, z);
+                        }
                         return;
                     }
                 }

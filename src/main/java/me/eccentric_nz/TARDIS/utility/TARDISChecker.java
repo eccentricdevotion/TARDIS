@@ -72,11 +72,23 @@ public class TARDISChecker {
         String dimensionRoot = dataPacksRoot + dimension + File.separator + "data" + File.separator + "tardis" + File.separator;
         File dimensionDir = new File(dimensionRoot + "dimension");
         File dimensionTypeDir = new File(dimensionRoot + "dimension_type");
+        File worldGenDir = new File(dimensionRoot + "worldgen");
+        File biomeDir = new File(dimensionRoot + "worldgen" + File.separator + "biome");
+        File featureDir = new File(dimensionRoot + "worldgen" + File.separator + "configured_feature");
         if (!dimensionDir.exists()) {
             dimensionDir.mkdirs();
         }
         if (!dimensionTypeDir.exists()) {
             dimensionTypeDir.mkdirs();
+        }
+        if (!worldGenDir.exists()) {
+            worldGenDir.mkdirs();
+        }
+        if (!biomeDir.exists()) {
+            biomeDir.mkdirs();
+        }
+        if (!featureDir.exists()) {
+            featureDir.mkdirs();
         }
         // copy files to directory
         File dimFile = new File(dimensionDir, dimension + ".json");
@@ -88,6 +100,37 @@ public class TARDISChecker {
         if (!dimTypeFile.exists()) {
             exists = false;
             TARDISChecker.copy(dimension + "_dt.json", dimTypeFile);
+        }
+        switch (dimension) {
+            case "skaro":
+                File tree = new File(featureDir, "skaro_tree.json");
+                File desert = new File(biomeDir, "skaro_desert.json");
+                File hills = new File(biomeDir, "skaro_hills.json");
+                File lakes = new File(biomeDir, "skaro_lakes.json");
+                if (!tree.exists()) {
+                    exists = false;
+                    TARDISChecker.copy("skaro_tree.json", tree);
+                    TARDISChecker.copy("skaro_desert.json", desert);
+                    TARDISChecker.copy("skaro_hills.json", hills);
+                    TARDISChecker.copy("skaro_lakes.json", lakes);
+                }
+                break;
+            case "gallifrey":
+                File plant = new File(featureDir, "gallifrey_tree.json");
+                File badlands = new File(biomeDir, "gallifrey_badlands.json");
+                File plateau = new File(biomeDir, "gallifrey_plateau.json");
+                File eroded = new File(biomeDir, "gallifrey_eroded.json");
+                if (!plant.exists()) {
+                    exists = false;
+                    TARDISChecker.copy("gallifrey_tree.json", plant);
+                    TARDISChecker.copy("gallifrey_badlands.json", badlands);
+                    TARDISChecker.copy("gallifrey_plateau.json", plateau);
+                    TARDISChecker.copy("gallifrey_eroded.json", eroded);
+                }
+                break;
+            default:
+                // nothing to do
+                break;
         }
         String dataPacksMeta = dataPacksRoot + dimension;
         File mcmeta = new File(dataPacksMeta, "pack.mcmeta");
