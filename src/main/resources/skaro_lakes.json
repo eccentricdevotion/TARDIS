@@ -10,7 +10,17 @@
         "sky_color": 10648063,
         "fog_color": 13615871,
         "water_color": 4187262,
-        "water_fog_color": 340757
+        "water_fog_color": 340757,
+        "particle": {
+            "probability": 0.005,
+            "options": {
+                "type": "minecraft:dust",
+                "r": 0.4,
+                "g": 0.3,
+                "b": 0.6,
+                "scale": 0.66
+            }
+        }
     },
     "surface_builder": "minecraft:desert",
     "carvers": {
