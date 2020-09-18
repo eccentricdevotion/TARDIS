@@ -90,7 +90,7 @@ class TARDISBuildGallifreyanStructure implements Runnable {
             d = dimensions.get("length").getAsInt() - 1;
             // submerge the structure
             starty = y - 5;
-            plugin.debug("Building Gallifreyan structure @ " + startx + ", " + starty + ", " + startz);
+//            plugin.debug("Building Gallifreyan structure @ " + startx + ", " + starty + ", " + startz);
             // get input array
             arr = obj.get("input").getAsJsonArray();
             running = true;

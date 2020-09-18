@@ -64,7 +64,7 @@ public class TARDISSilurianStructureRunnable implements Runnable {
                 task = -1;
                 return;
             }
-            plugin.debug("Building Silurian structure @ " + startx + ", " + starty + ", " + startz);
+//            plugin.debug("Building Silurian structure @ " + startx + ", " + starty + ", " + startz);
             world = plugin.getServer().getWorld("Siluria");
             obj = TARDISSchematicGZip.unzip(path);
             // get dimensions

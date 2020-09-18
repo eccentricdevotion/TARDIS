@@ -97,7 +97,7 @@ class TARDISBuildSkaroStructure implements Runnable {
                 }
                 starty = sand.getLocation().getBlockY() - 1;
             }
-            plugin.debug("Building Skaro structure @ " + startx + ", " + starty + ", " + startz);
+//            plugin.debug("Building Skaro structure @ " + startx + ", " + starty + ", " + startz);
             // get input array
             arr = obj.get("input").getAsJsonArray();
             running = true;

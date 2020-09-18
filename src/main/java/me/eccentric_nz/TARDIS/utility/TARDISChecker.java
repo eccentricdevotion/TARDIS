@@ -117,12 +117,14 @@ public class TARDISChecker {
                 break;
             case "gallifrey":
                 File plant = new File(featureDir, "gallifrey_tree.json");
+                File grass = new File(featureDir, "gallifrey_grass.json");
                 File badlands = new File(biomeDir, "gallifrey_badlands.json");
                 File plateau = new File(biomeDir, "gallifrey_plateau.json");
                 File eroded = new File(biomeDir, "gallifrey_eroded.json");
                 if (!plant.exists()) {
                     exists = false;
                     TARDISChecker.copy("gallifrey_tree.json", plant);
+                    TARDISChecker.copy("gallifrey_grass.json", grass);
                     TARDISChecker.copy("gallifrey_badlands.json", badlands);
                     TARDISChecker.copy("gallifrey_plateau.json", plateau);
                     TARDISChecker.copy("gallifrey_eroded.json", eroded);

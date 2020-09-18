@@ -52,6 +52,7 @@
         ],
         [],
         [
+            "tardis:gallifrey_grass",
             "tardis:gallifrey_tree",
             "minecraft:patch_grass_badlands",
             "minecraft:patch_dead_bush_badlands",
