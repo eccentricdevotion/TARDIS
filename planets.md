@@ -5,7 +5,10 @@ title: Planets
 
 # Planets
 
-The TARDIS plugin has 3 built-in planets from the Whoniverse. They are listed and described below!
+The TARDIS plugin has 3 built-in planets from the Whoniverse.
+The planets are created by installing custom datapacks on the server. When the planets are enabled in _planets.yml_, the server will install the datapack on the next server restart. Due to the current Minecraft server mechanics, a second restart is required for the server to pick up the new datapacks and create the world.
+
+The planets are listed and described below!
 
 ## Note
 
@@ -18,7 +21,7 @@ To get the best experience on these planets, it's recommended to download the ac
 
 ![planet skaro](images/docs/skaro.jpg)
 
-- This world is limited to the Desert biome.
+- This world is limited to the customised Desert, Desert Lakes and Desert Hills biomes.
 - If configured, all water is acid and will harm / kill the player (wearing armour reduces the effect). Use a boat!
 - Dalek structures will generate automatically as you explore the world — there are currently two building types, a big main building and a smaller corridor type one.
 - Daleks will spawn in the big main buildings. There is a 10% chance that a Dalek will spawn flying in the air, but this can be disabled in the config described below.
@@ -29,7 +32,7 @@ To get the best experience on these planets, it's recommended to download the ac
 
 ![planet gallifrey](images/docs/gallifrey.jpg)
 
-- This world is limited to the Badlands biome.
+- This world is limited to customised Badlands, Badlands Plateau and Eroded Badlands biomes.
 - Time Lord structures will generate automatically as you explore the world — there is currently one building type.
 - Time Lords will spawn in these structures.
 - A random loot chest is also located in the structures.
@@ -38,7 +41,7 @@ To get the best experience on these planets, it's recommended to download the ac
 
 ![planet siluria](images/docs/siluria.jpg)
 
-- This world is limited to the Bamboo Jungle biome.
+- This world is limited to the Bamboo Jungle and Bamboo Jungle Hills biomes.
 - Structures will generate automatically as you explore the jungles.
 - Silurians will spawn in these structures.
 - A random loot chest is also located in the structures.
@@ -56,10 +59,6 @@ Skaro:
   # Whether this world should be created and managed by TARDIS.
   # This must be enabled to load the world and requires a restart.
   enabled: false
-  # This is where you specify the URL to the resource pack you want to switch to when entering the world.
-  # Set to default to use the default pack specified earlier in the config.
-  # Host your own, or use the one provided.
-  resource_pack: https://www.dropbox.com/s/nr93rhbiyw2s5d0/Skaro.zip?dl=1
 
   #### The following are exclusive to Skaro. ###
   # Whether all the water in the world is acid (and harms the player).
@@ -84,5 +83,5 @@ Skaro:
 ```
 tl;dr:
 
-1. Set, at a minimum, `planets: [planet name]: enabled: true`, to use resource pack switching set `switch_resource_packs: true`
-2. (Re)start the server
+1. Set, at a minimum, `planets: [planet name]: enabled: true`
+2. (Re)start the server _twice_
