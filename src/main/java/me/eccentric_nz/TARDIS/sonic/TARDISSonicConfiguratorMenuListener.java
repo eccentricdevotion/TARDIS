@@ -213,70 +213,72 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
         upgrades.add("Upgrades:");
         //update configured sonic
         ConfiguredSonic configuredSonic = sonics.get(player.getUniqueId());
-        int bio = getSonicConfig(9, view);
-        if (bio == 1) {
-            upgrades.add("Bio-scanner Upgrade");
-        }
-        configuredSonic.setBio(SonicConfig.values()[bio]);
-        int dia = getSonicConfig(10, view);
-        if (dia == 1) {
-            upgrades.add("Diamond Upgrade");
-        }
-        configuredSonic.setBio(SonicConfig.values()[dia]);
-        int eme = getSonicConfig(11, view);
-        if (eme == 1) {
-            upgrades.add("Emerald Upgrade");
-        }
-        configuredSonic.setBio(SonicConfig.values()[eme]);
-        int red = getSonicConfig(12, view);
-        if (red == 1) {
-            upgrades.add("Redstone Upgrade");
-        }
-        configuredSonic.setBio(SonicConfig.values()[red]);
-        int pai = getSonicConfig(13, view);
-        if (pai == 1) {
-            upgrades.add("Painter Upgrade");
-        }
-        configuredSonic.setBio(SonicConfig.values()[pai]);
-        int ign = getSonicConfig(14, view);
-        if (ign == 1) {
-            upgrades.add("Ignite Upgrade");
-        }
-        configuredSonic.setBio(SonicConfig.values()[ign]);
-        int arr = getSonicConfig(15, view);
-        if (arr == 1) {
-            upgrades.add("Pickup Arrows Upgrade");
-        }
-        configuredSonic.setBio(SonicConfig.values()[arr]);
-        int kno = getSonicConfig(16, view);
-        if (kno == 1) {
-            upgrades.add("Knockback Upgrade");
-        }
-        configuredSonic.setBio(SonicConfig.values()[kno]);
-        sonics.put(player.getUniqueId(), configuredSonic);
-        // prepare data for database insertion
-        HashMap<String, Object> set = new HashMap<>();
-        set.put("bio", bio);
-        set.put("diamond", dia);
-        set.put("emerald", eme);
-        set.put("redstone", red);
-        set.put("painter", pai);
-        set.put("ignite", ign);
-        set.put("arrow", arr);
-        set.put("knockback", kno);
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("sonic_id", configuredSonic.getSonic_id());
-        plugin.getQueryFactory().doUpdate("sonic", set, where);
-        // set sonic lore
-        ItemStack sonic = view.getItem(18);
-        if (isSonic(sonic)) {
-            ItemMeta im = sonic.getItemMeta();
-            if (upgrades.size() > 1) {
-                im.setLore(upgrades);
-            } else {
-                im.setLore(null);
+        if (configuredSonic != null) {
+            int bio = getSonicConfig(9, view);
+            if (bio == 1) {
+                upgrades.add("Bio-scanner Upgrade");
             }
-            sonic.setItemMeta(im);
+            configuredSonic.setBio(SonicConfig.values()[bio]);
+            int dia = getSonicConfig(10, view);
+            if (dia == 1) {
+                upgrades.add("Diamond Upgrade");
+            }
+            configuredSonic.setBio(SonicConfig.values()[dia]);
+            int eme = getSonicConfig(11, view);
+            if (eme == 1) {
+                upgrades.add("Emerald Upgrade");
+            }
+            configuredSonic.setBio(SonicConfig.values()[eme]);
+            int red = getSonicConfig(12, view);
+            if (red == 1) {
+                upgrades.add("Redstone Upgrade");
+            }
+            configuredSonic.setBio(SonicConfig.values()[red]);
+            int pai = getSonicConfig(13, view);
+            if (pai == 1) {
+                upgrades.add("Painter Upgrade");
+            }
+            configuredSonic.setBio(SonicConfig.values()[pai]);
+            int ign = getSonicConfig(14, view);
+            if (ign == 1) {
+                upgrades.add("Ignite Upgrade");
+            }
+            configuredSonic.setBio(SonicConfig.values()[ign]);
+            int arr = getSonicConfig(15, view);
+            if (arr == 1) {
+                upgrades.add("Pickup Arrows Upgrade");
+            }
+            configuredSonic.setBio(SonicConfig.values()[arr]);
+            int kno = getSonicConfig(16, view);
+            if (kno == 1) {
+                upgrades.add("Knockback Upgrade");
+            }
+            configuredSonic.setBio(SonicConfig.values()[kno]);
+            sonics.put(player.getUniqueId(), configuredSonic);
+            // prepare data for database insertion
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("bio", bio);
+            set.put("diamond", dia);
+            set.put("emerald", eme);
+            set.put("redstone", red);
+            set.put("painter", pai);
+            set.put("ignite", ign);
+            set.put("arrow", arr);
+            set.put("knockback", kno);
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("sonic_id", configuredSonic.getSonic_id());
+            plugin.getQueryFactory().doUpdate("sonic", set, where);
+            // set sonic lore
+            ItemStack sonic = view.getItem(18);
+            if (isSonic(sonic)) {
+                ItemMeta im = sonic.getItemMeta();
+                if (upgrades.size() > 1) {
+                    im.setLore(upgrades);
+                } else {
+                    im.setLore(null);
+                }
+                sonic.setItemMeta(im);
+            }
         }
     }
 
