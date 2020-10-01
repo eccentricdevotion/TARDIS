@@ -255,7 +255,7 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version>7.0.4</version>
+            <version>7.0.5</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/WorldGuard.jar</systemPath>
