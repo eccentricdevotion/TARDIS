@@ -423,8 +423,21 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 int x = startx + row;
                 int y = starty + level;
                 int z = startz + col;
-                BlockData data = plugin.getServer().createBlockData(bb.get("data").getAsString());
-                Material type = data.getMaterial();
+                BlockData data;
+                Material type;
+                try {
+                    data = plugin.getServer().createBlockData(bb.get("data").getAsString());
+                    type = data.getMaterial();
+                } catch (IllegalArgumentException e) {
+                    // probably an archived console with legacy block data for wall blocks
+                    // eg.
+                    // minecraft:cobblestone_wall[east=false,north=false,south=false,up=true,waterlogged=false,west=false]
+                    String[] split1 = bb.get("data").getAsString().split("\\[");
+                    String[] split2 = split1[0].split(":");
+                    String upper = split2[1].toUpperCase();
+                    type = Material.valueOf(upper);
+                    data = plugin.getServer().createBlockData(type);
+                }
                 if (type.equals(Material.BEDROCK)) {
                     // remember bedrock location to block off the beacon light
                     String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + z;
