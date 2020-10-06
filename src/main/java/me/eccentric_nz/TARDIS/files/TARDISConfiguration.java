@@ -76,6 +76,7 @@ public class TARDISConfiguration {
         booleanOptions.put("archive.enabled", true);
         booleanOptions.put("blueprints.enabled", false);
         booleanOptions.put("circuits.damage", false);
+        booleanOptions.put("conversions.archive_wall_data", false);
         booleanOptions.put("conversions.ars_materials", false);
         booleanOptions.put("conversions.condenser_materials", false);
         booleanOptions.put("conversions.player_prefs_materials", false);

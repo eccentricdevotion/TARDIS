@@ -186,9 +186,10 @@ archive:
   limit: 3
 blueprints:
   enabled: false
-rechargers: {}
+rechargers: { }
 # don't touch
 conversions:
+  archive_wall_data: true
   ars_materials: true
   condenser_materials: true
   player_prefs_materials: true
