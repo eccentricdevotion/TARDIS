@@ -11,11 +11,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WallConverter {
 
     private final String[] find = new String[]{"east=false", "east=true", "north=false", "north=true", "south=false", "south=true", "west=false", "west=true"};
     private final String[] repl = new String[]{"east=none", "east=low", "north=none", "north=low", "south=none", "south=low", "west=none", "west=low"};
+    private final List<String> walls = new ArrayList<>();
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
@@ -24,6 +27,24 @@ public class WallConverter {
     public WallConverter(TARDIS plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
+        walls.add("cobblestone_wall");
+        walls.add("mossy_cobblestone_wall");
+        walls.add("stone_brick_wall");
+        walls.add("mossy_stone_brick_wall");
+        walls.add("andesite_wall");
+        walls.add("diorite_wall");
+        walls.add("granite_wall");
+        walls.add("sandstone_wall");
+        walls.add("red_sandstone_wall");
+        walls.add("brick_wall");
+        walls.add("prismarine_wall");
+        walls.add("nether_brick_wall");
+        walls.add("red_nether_brick_wall");
+        walls.add("end_stone_brick_wall");
+    }
+
+    private boolean isWall(String inputStr) {
+        return walls.stream().anyMatch(inputStr::contains);
     }
 
     private String fixWallData(String text) {
@@ -64,7 +85,7 @@ public class WallConverter {
                             for (int col = 0; col < c; col++) {
                                 JsonObject block = r.get(col).getAsJsonObject();
                                 String data = block.get("data").getAsString();
-                                if (data.contains("cobblestone_wall")) {
+                                if (isWall(data)) {
                                     String fixed = fixWallData(data);
                                     block.remove("data");
                                     block.addProperty("data", fixed);
