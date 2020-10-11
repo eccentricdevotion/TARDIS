@@ -35,7 +35,7 @@ import me.eccentric_nz.TARDIS.chemistry.lab.HeatBlockRunnable;
 import me.eccentric_nz.TARDIS.chemistry.product.GlowStickRunnable;
 import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
 import me.eccentric_nz.TARDIS.database.*;
-import me.eccentric_nz.TARDIS.database.tool.WallConverter;
+import me.eccentric_nz.TARDIS.database.converters.*;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
@@ -351,7 +351,7 @@ public class TARDIS extends JavaPlugin {
                 getConfig().set("conversions.bind", true);
             }
             if (!getConfig().getBoolean("conversions.archive_wall_data")) {
-                new WallConverter(this).processArchives();
+                new TARDISWallConverter(this).processArchives();
                 getConfig().set("conversions.archive_wall_data", true);
             }
             loadMultiverse();

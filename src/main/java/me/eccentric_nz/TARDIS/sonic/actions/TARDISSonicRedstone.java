@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.sonic.actions;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlock;
-import me.eccentric_nz.TARDIS.database.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;

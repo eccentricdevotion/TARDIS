@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisChunk;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisChunk;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 

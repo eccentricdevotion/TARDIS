@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.forcefield;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetForcefield;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisCompanions;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetForcefield;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;

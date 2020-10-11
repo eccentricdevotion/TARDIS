@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetSmelter;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetSmelter;
 import me.eccentric_nz.TARDIS.rooms.smelter.TARDISSmelterDrop;
 import me.eccentric_nz.TARDIS.rooms.smelter.TARDISSmelterFuel;
 import me.eccentric_nz.TARDIS.rooms.smelter.TARDISSmelterOre;

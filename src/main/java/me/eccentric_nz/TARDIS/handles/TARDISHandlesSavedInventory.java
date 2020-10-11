@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISavedPrograms;
-import me.eccentric_nz.TARDIS.database.ResultSetPrograms;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetPrograms;
 import me.eccentric_nz.TARDIS.database.data.Program;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

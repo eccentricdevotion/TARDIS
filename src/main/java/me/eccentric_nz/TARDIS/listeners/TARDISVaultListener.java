@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetVault;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetVault;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
 import org.bukkit.Location;
 import org.bukkit.Material;

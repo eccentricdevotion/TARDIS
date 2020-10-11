@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetProgram;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetProgram;
 import me.eccentric_nz.TARDIS.database.data.Program;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetConsole;
-import me.eccentric_nz.TARDIS.database.ResultSetOccupied;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetConsole;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetOccupied;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Tag;

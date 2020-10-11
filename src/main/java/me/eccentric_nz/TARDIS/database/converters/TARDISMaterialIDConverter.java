@@ -1,0 +1,1000 @@
+/*
+ * Copyright (C) 2020 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package me.eccentric_nz.TARDIS.database.converters;
+
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import org.bukkit.Material;
+
+import java.sql.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+/**
+ * @author eccentric_nz
+ */
+public class TARDISMaterialIDConverter {
+
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final String prefix;
+    public final HashMap<Integer, Material> LEGACY_ID_LOOKUP = new HashMap<>();
+    private final HashMap<String, String> LEGACY_TYPE_LOOKUP = new HashMap<>();
+    private final List<Integer> COLOURED = Arrays.asList(35, 95, 159, 160, 171, 251, 252);
+    public final HashMap<Integer, String> COLOUR_LOOKUP = new HashMap<>();
+
+    public TARDISMaterialIDConverter(TARDIS plugin) {
+        this.plugin = plugin;
+        prefix = this.plugin.getPrefix();
+        LEGACY_ID_LOOKUP.put(0, Material.AIR);
+        LEGACY_ID_LOOKUP.put(1, Material.STONE);
+        LEGACY_ID_LOOKUP.put(2, Material.GRASS_BLOCK);
+        LEGACY_ID_LOOKUP.put(3, Material.DIRT);
+        LEGACY_ID_LOOKUP.put(4, Material.COBBLESTONE);
+        LEGACY_ID_LOOKUP.put(5, Material.OAK_PLANKS);
+        LEGACY_ID_LOOKUP.put(6, Material.OAK_SAPLING);
+        LEGACY_ID_LOOKUP.put(7, Material.BEDROCK);
+        LEGACY_ID_LOOKUP.put(8, Material.WATER);
+        LEGACY_ID_LOOKUP.put(9, Material.WATER);
+        LEGACY_ID_LOOKUP.put(10, Material.LAVA);
+        LEGACY_ID_LOOKUP.put(11, Material.LAVA);
+        LEGACY_ID_LOOKUP.put(12, Material.SAND);
+        LEGACY_ID_LOOKUP.put(13, Material.GRAVEL);
+        LEGACY_ID_LOOKUP.put(14, Material.GOLD_ORE);
+        LEGACY_ID_LOOKUP.put(15, Material.IRON_ORE);
+        LEGACY_ID_LOOKUP.put(16, Material.COAL_ORE);
+        LEGACY_ID_LOOKUP.put(17, Material.OAK_LOG);
+        LEGACY_ID_LOOKUP.put(18, Material.OAK_LEAVES);
+        LEGACY_ID_LOOKUP.put(19, Material.SPONGE);
+        LEGACY_ID_LOOKUP.put(20, Material.GLASS);
+        LEGACY_ID_LOOKUP.put(21, Material.LAPIS_ORE);
+        LEGACY_ID_LOOKUP.put(22, Material.LAPIS_BLOCK);
+        LEGACY_ID_LOOKUP.put(23, Material.DISPENSER);
+        LEGACY_ID_LOOKUP.put(24, Material.SANDSTONE);
+        LEGACY_ID_LOOKUP.put(25, Material.NOTE_BLOCK);
+        LEGACY_ID_LOOKUP.put(26, Material.RED_BED);
+        LEGACY_ID_LOOKUP.put(27, Material.POWERED_RAIL);
+        LEGACY_ID_LOOKUP.put(28, Material.DETECTOR_RAIL);
+        LEGACY_ID_LOOKUP.put(29, Material.STICKY_PISTON);
+        LEGACY_ID_LOOKUP.put(30, Material.COBWEB);
+        LEGACY_ID_LOOKUP.put(31, Material.GRASS);
+        LEGACY_ID_LOOKUP.put(32, Material.DEAD_BUSH);
+        LEGACY_ID_LOOKUP.put(33, Material.PISTON);
+        LEGACY_ID_LOOKUP.put(34, Material.PISTON_HEAD);
+        LEGACY_ID_LOOKUP.put(35, Material.WHITE_WOOL);
+        LEGACY_ID_LOOKUP.put(36, Material.PISTON_HEAD);
+        LEGACY_ID_LOOKUP.put(37, Material.DANDELION);
+        LEGACY_ID_LOOKUP.put(38, Material.POPPY);
+        LEGACY_ID_LOOKUP.put(39, Material.BROWN_MUSHROOM);
+        LEGACY_ID_LOOKUP.put(40, Material.RED_MUSHROOM);
+        LEGACY_ID_LOOKUP.put(41, Material.GOLD_BLOCK);
+        LEGACY_ID_LOOKUP.put(42, Material.IRON_BLOCK);
+        LEGACY_ID_LOOKUP.put(43, Material.STONE_SLAB);
+        LEGACY_ID_LOOKUP.put(44, Material.STONE_SLAB);
+        LEGACY_ID_LOOKUP.put(45, Material.BRICKS);
+        LEGACY_ID_LOOKUP.put(46, Material.TNT);
+        LEGACY_ID_LOOKUP.put(47, Material.BOOKSHELF);
+        LEGACY_ID_LOOKUP.put(48, Material.MOSSY_COBBLESTONE);
+        LEGACY_ID_LOOKUP.put(49, Material.OBSIDIAN);
+        LEGACY_ID_LOOKUP.put(50, Material.TORCH);
+        LEGACY_ID_LOOKUP.put(51, Material.FIRE);
+        LEGACY_ID_LOOKUP.put(52, Material.SPAWNER);
+        LEGACY_ID_LOOKUP.put(53, Material.OAK_STAIRS);
+        LEGACY_ID_LOOKUP.put(54, Material.CHEST);
+        LEGACY_ID_LOOKUP.put(55, Material.REDSTONE_WIRE);
+        LEGACY_ID_LOOKUP.put(56, Material.DIAMOND_ORE);
+        LEGACY_ID_LOOKUP.put(57, Material.DIAMOND_BLOCK);
+        LEGACY_ID_LOOKUP.put(58, Material.CRAFTING_TABLE);
+        LEGACY_ID_LOOKUP.put(59, Material.WHEAT);
+        LEGACY_ID_LOOKUP.put(60, Material.FARMLAND);
+        LEGACY_ID_LOOKUP.put(61, Material.FURNACE);
+        LEGACY_ID_LOOKUP.put(62, Material.FURNACE);
+        LEGACY_ID_LOOKUP.put(63, Material.OAK_SIGN);
+        LEGACY_ID_LOOKUP.put(64, Material.OAK_DOOR);
+        LEGACY_ID_LOOKUP.put(65, Material.LADDER);
+        LEGACY_ID_LOOKUP.put(66, Material.RAIL);
+        LEGACY_ID_LOOKUP.put(67, Material.COBBLESTONE_STAIRS);
+        LEGACY_ID_LOOKUP.put(68, Material.OAK_WALL_SIGN);
+        LEGACY_ID_LOOKUP.put(69, Material.LEVER);
+        LEGACY_ID_LOOKUP.put(70, Material.STONE_PRESSURE_PLATE);
+        LEGACY_ID_LOOKUP.put(71, Material.IRON_DOOR);
+        LEGACY_ID_LOOKUP.put(72, Material.OAK_PRESSURE_PLATE);
+        LEGACY_ID_LOOKUP.put(73, Material.REDSTONE_ORE);
+        LEGACY_ID_LOOKUP.put(74, Material.REDSTONE_ORE);
+        LEGACY_ID_LOOKUP.put(75, Material.REDSTONE_TORCH);
+        LEGACY_ID_LOOKUP.put(76, Material.REDSTONE_TORCH);
+        LEGACY_ID_LOOKUP.put(77, Material.STONE_BUTTON);
+        LEGACY_ID_LOOKUP.put(78, Material.SNOW);
+        LEGACY_ID_LOOKUP.put(79, Material.ICE);
+        LEGACY_ID_LOOKUP.put(80, Material.SNOW_BLOCK);
+        LEGACY_ID_LOOKUP.put(81, Material.CACTUS);
+        LEGACY_ID_LOOKUP.put(82, Material.CLAY);
+        LEGACY_ID_LOOKUP.put(83, Material.SUGAR_CANE);
+        LEGACY_ID_LOOKUP.put(84, Material.JUKEBOX);
+        LEGACY_ID_LOOKUP.put(85, Material.OAK_FENCE);
+        LEGACY_ID_LOOKUP.put(86, Material.PUMPKIN);
+        LEGACY_ID_LOOKUP.put(87, Material.NETHERRACK);
+        LEGACY_ID_LOOKUP.put(88, Material.SOUL_SAND);
+        LEGACY_ID_LOOKUP.put(89, Material.GLOWSTONE);
+        LEGACY_ID_LOOKUP.put(90, Material.NETHER_PORTAL);
+        LEGACY_ID_LOOKUP.put(91, Material.JACK_O_LANTERN);
+        LEGACY_ID_LOOKUP.put(92, Material.CAKE);
+        LEGACY_ID_LOOKUP.put(93, Material.REPEATER);
+        LEGACY_ID_LOOKUP.put(94, Material.REPEATER);
+        LEGACY_ID_LOOKUP.put(95, Material.WHITE_STAINED_GLASS);
+        LEGACY_ID_LOOKUP.put(96, Material.OAK_TRAPDOOR);
+        LEGACY_ID_LOOKUP.put(97, Material.INFESTED_STONE);
+        LEGACY_ID_LOOKUP.put(98, Material.STONE_BRICKS);
+        LEGACY_ID_LOOKUP.put(99, Material.BROWN_MUSHROOM_BLOCK);
+        LEGACY_ID_LOOKUP.put(100, Material.RED_MUSHROOM_BLOCK);
+        LEGACY_ID_LOOKUP.put(101, Material.IRON_BARS);
+        LEGACY_ID_LOOKUP.put(102, Material.GLASS_PANE);
+        LEGACY_ID_LOOKUP.put(103, Material.MELON);
+        LEGACY_ID_LOOKUP.put(104, Material.PUMPKIN_STEM);
+        LEGACY_ID_LOOKUP.put(105, Material.MELON_STEM);
+        LEGACY_ID_LOOKUP.put(106, Material.VINE);
+        LEGACY_ID_LOOKUP.put(107, Material.OAK_FENCE_GATE);
+        LEGACY_ID_LOOKUP.put(108, Material.BRICK_STAIRS);
+        LEGACY_ID_LOOKUP.put(109, Material.STONE_BRICK_STAIRS);
+        LEGACY_ID_LOOKUP.put(110, Material.MYCELIUM);
+        LEGACY_ID_LOOKUP.put(111, Material.LILY_PAD);
+        LEGACY_ID_LOOKUP.put(112, Material.NETHER_BRICKS);
+        LEGACY_ID_LOOKUP.put(113, Material.NETHER_BRICK_FENCE);
+        LEGACY_ID_LOOKUP.put(114, Material.NETHER_BRICK_STAIRS);
+        LEGACY_ID_LOOKUP.put(115, Material.NETHER_WART);
+        LEGACY_ID_LOOKUP.put(116, Material.ENCHANTING_TABLE);
+        LEGACY_ID_LOOKUP.put(117, Material.BREWING_STAND);
+        LEGACY_ID_LOOKUP.put(118, Material.CAULDRON);
+        LEGACY_ID_LOOKUP.put(119, Material.END_PORTAL);
+        LEGACY_ID_LOOKUP.put(120, Material.END_PORTAL_FRAME);
+        LEGACY_ID_LOOKUP.put(121, Material.END_STONE);
+        LEGACY_ID_LOOKUP.put(122, Material.DRAGON_EGG);
+        LEGACY_ID_LOOKUP.put(123, Material.REDSTONE_LAMP);
+        LEGACY_ID_LOOKUP.put(124, Material.REDSTONE_LAMP);
+        LEGACY_ID_LOOKUP.put(125, Material.OAK_SLAB);
+        LEGACY_ID_LOOKUP.put(126, Material.OAK_SLAB);
+        LEGACY_ID_LOOKUP.put(127, Material.COCOA);
+        LEGACY_ID_LOOKUP.put(128, Material.SANDSTONE_STAIRS);
+        LEGACY_ID_LOOKUP.put(129, Material.EMERALD_ORE);
+        LEGACY_ID_LOOKUP.put(130, Material.ENDER_CHEST);
+        LEGACY_ID_LOOKUP.put(131, Material.TRIPWIRE_HOOK);
+        LEGACY_ID_LOOKUP.put(132, Material.TRIPWIRE);
+        LEGACY_ID_LOOKUP.put(133, Material.EMERALD_BLOCK);
+        LEGACY_ID_LOOKUP.put(134, Material.SPRUCE_STAIRS);
+        LEGACY_ID_LOOKUP.put(135, Material.BIRCH_STAIRS);
+        LEGACY_ID_LOOKUP.put(136, Material.JUNGLE_STAIRS);
+        LEGACY_ID_LOOKUP.put(137, Material.COMMAND_BLOCK);
+        LEGACY_ID_LOOKUP.put(138, Material.BEACON);
+        LEGACY_ID_LOOKUP.put(139, Material.COBBLESTONE_WALL);
+        LEGACY_ID_LOOKUP.put(140, Material.FLOWER_POT);
+        LEGACY_ID_LOOKUP.put(141, Material.CARROT);
+        LEGACY_ID_LOOKUP.put(142, Material.POTATO);
+        LEGACY_ID_LOOKUP.put(143, Material.OAK_BUTTON);
+        LEGACY_ID_LOOKUP.put(144, Material.PLAYER_HEAD);
+        LEGACY_ID_LOOKUP.put(145, Material.ANVIL);
+        LEGACY_ID_LOOKUP.put(146, Material.TRAPPED_CHEST);
+        LEGACY_ID_LOOKUP.put(147, Material.LIGHT_WEIGHTED_PRESSURE_PLATE);
+        LEGACY_ID_LOOKUP.put(148, Material.HEAVY_WEIGHTED_PRESSURE_PLATE);
+        LEGACY_ID_LOOKUP.put(149, Material.COMPARATOR);
+        LEGACY_ID_LOOKUP.put(150, Material.COMPARATOR);
+        LEGACY_ID_LOOKUP.put(151, Material.DAYLIGHT_DETECTOR);
+        LEGACY_ID_LOOKUP.put(152, Material.REDSTONE_BLOCK);
+        LEGACY_ID_LOOKUP.put(153, Material.NETHER_QUARTZ_ORE);
+        LEGACY_ID_LOOKUP.put(154, Material.HOPPER);
+        LEGACY_ID_LOOKUP.put(155, Material.QUARTZ_BLOCK);
+        LEGACY_ID_LOOKUP.put(156, Material.QUARTZ_STAIRS);
+        LEGACY_ID_LOOKUP.put(157, Material.ACTIVATOR_RAIL);
+        LEGACY_ID_LOOKUP.put(158, Material.DROPPER);
+        LEGACY_ID_LOOKUP.put(159, Material.GREEN_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(160, Material.WHITE_STAINED_GLASS_PANE);
+        LEGACY_ID_LOOKUP.put(161, Material.ACACIA_LEAVES);
+        LEGACY_ID_LOOKUP.put(162, Material.ACACIA_LOG);
+        LEGACY_ID_LOOKUP.put(163, Material.ACACIA_STAIRS);
+        LEGACY_ID_LOOKUP.put(164, Material.DARK_OAK_STAIRS);
+        LEGACY_ID_LOOKUP.put(165, Material.SLIME_BLOCK);
+        LEGACY_ID_LOOKUP.put(166, Material.BARRIER);
+        LEGACY_ID_LOOKUP.put(167, Material.IRON_TRAPDOOR);
+        LEGACY_ID_LOOKUP.put(168, Material.PRISMARINE);
+        LEGACY_ID_LOOKUP.put(169, Material.SEA_LANTERN);
+        LEGACY_ID_LOOKUP.put(170, Material.HAY_BLOCK);
+        LEGACY_ID_LOOKUP.put(171, Material.WHITE_CARPET);
+        LEGACY_ID_LOOKUP.put(172, Material.TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(173, Material.COAL_BLOCK);
+        LEGACY_ID_LOOKUP.put(174, Material.PACKED_ICE);
+        LEGACY_ID_LOOKUP.put(175, Material.ROSE_BUSH);
+        LEGACY_ID_LOOKUP.put(176, Material.WHITE_BANNER);
+        LEGACY_ID_LOOKUP.put(177, Material.WHITE_WALL_BANNER);
+        LEGACY_ID_LOOKUP.put(178, Material.DAYLIGHT_DETECTOR);
+        LEGACY_ID_LOOKUP.put(179, Material.RED_SANDSTONE);
+        LEGACY_ID_LOOKUP.put(180, Material.RED_SANDSTONE_STAIRS);
+        LEGACY_ID_LOOKUP.put(181, Material.RED_SANDSTONE_SLAB);
+        LEGACY_ID_LOOKUP.put(182, Material.RED_SANDSTONE_SLAB);
+        LEGACY_ID_LOOKUP.put(183, Material.SPRUCE_FENCE_GATE);
+        LEGACY_ID_LOOKUP.put(184, Material.BIRCH_FENCE_GATE);
+        LEGACY_ID_LOOKUP.put(185, Material.JUNGLE_FENCE_GATE);
+        LEGACY_ID_LOOKUP.put(186, Material.DARK_OAK_FENCE_GATE);
+        LEGACY_ID_LOOKUP.put(187, Material.ACACIA_FENCE_GATE);
+        LEGACY_ID_LOOKUP.put(188, Material.SPRUCE_FENCE);
+        LEGACY_ID_LOOKUP.put(189, Material.BIRCH_FENCE);
+        LEGACY_ID_LOOKUP.put(190, Material.JUNGLE_FENCE);
+        LEGACY_ID_LOOKUP.put(191, Material.DARK_OAK_FENCE);
+        LEGACY_ID_LOOKUP.put(192, Material.ACACIA_FENCE);
+        LEGACY_ID_LOOKUP.put(193, Material.SPRUCE_DOOR);
+        LEGACY_ID_LOOKUP.put(194, Material.BIRCH_DOOR);
+        LEGACY_ID_LOOKUP.put(195, Material.JUNGLE_DOOR);
+        LEGACY_ID_LOOKUP.put(196, Material.ACACIA_DOOR);
+        LEGACY_ID_LOOKUP.put(197, Material.DARK_OAK_DOOR);
+        LEGACY_ID_LOOKUP.put(198, Material.END_ROD);
+        LEGACY_ID_LOOKUP.put(199, Material.CHORUS_PLANT);
+        LEGACY_ID_LOOKUP.put(200, Material.CHORUS_FLOWER);
+        LEGACY_ID_LOOKUP.put(201, Material.PURPUR_BLOCK);
+        LEGACY_ID_LOOKUP.put(202, Material.PURPUR_PILLAR);
+        LEGACY_ID_LOOKUP.put(203, Material.PURPUR_STAIRS);
+        LEGACY_ID_LOOKUP.put(204, Material.PURPUR_SLAB);
+        LEGACY_ID_LOOKUP.put(205, Material.PURPUR_SLAB);
+        LEGACY_ID_LOOKUP.put(206, Material.END_STONE_BRICKS);
+        LEGACY_ID_LOOKUP.put(207, Material.BEETROOTS);
+        LEGACY_ID_LOOKUP.put(208, Material.GRASS_PATH);
+        LEGACY_ID_LOOKUP.put(209, Material.END_GATEWAY);
+        LEGACY_ID_LOOKUP.put(210, Material.REPEATING_COMMAND_BLOCK);
+        LEGACY_ID_LOOKUP.put(211, Material.CHAIN_COMMAND_BLOCK);
+        LEGACY_ID_LOOKUP.put(212, Material.FROSTED_ICE);
+        LEGACY_ID_LOOKUP.put(213, Material.MAGMA_BLOCK);
+        LEGACY_ID_LOOKUP.put(214, Material.NETHER_WART_BLOCK);
+        LEGACY_ID_LOOKUP.put(215, Material.RED_NETHER_BRICKS);
+        LEGACY_ID_LOOKUP.put(216, Material.BONE_BLOCK);
+        LEGACY_ID_LOOKUP.put(217, Material.STRUCTURE_VOID);
+        LEGACY_ID_LOOKUP.put(218, Material.OBSERVER);
+        LEGACY_ID_LOOKUP.put(219, Material.WHITE_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(220, Material.ORANGE_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(221, Material.MAGENTA_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(222, Material.LIGHT_BLUE_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(223, Material.YELLOW_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(224, Material.LIME_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(225, Material.PINK_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(226, Material.GRAY_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(227, Material.LIGHT_GRAY_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(228, Material.CYAN_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(229, Material.PURPLE_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(230, Material.BLUE_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(231, Material.BROWN_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(232, Material.GREEN_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(233, Material.RED_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(234, Material.BLACK_SHULKER_BOX);
+        LEGACY_ID_LOOKUP.put(235, Material.WHITE_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(236, Material.ORANGE_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(237, Material.MAGENTA_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(238, Material.LIGHT_BLUE_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(239, Material.YELLOW_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(240, Material.LIME_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(241, Material.PINK_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(242, Material.GRAY_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(243, Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(244, Material.CYAN_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(245, Material.PURPLE_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(246, Material.BLUE_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(247, Material.BROWN_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(248, Material.GREEN_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(249, Material.RED_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(250, Material.BLACK_GLAZED_TERRACOTTA);
+        LEGACY_ID_LOOKUP.put(251, Material.WHITE_CONCRETE);
+        LEGACY_ID_LOOKUP.put(252, Material.WHITE_CONCRETE_POWDER);
+        LEGACY_ID_LOOKUP.put(255, Material.STRUCTURE_BLOCK);
+        LEGACY_ID_LOOKUP.put(256, Material.IRON_SHOVEL);
+        LEGACY_ID_LOOKUP.put(257, Material.IRON_PICKAXE);
+        LEGACY_ID_LOOKUP.put(258, Material.IRON_AXE);
+        LEGACY_ID_LOOKUP.put(259, Material.FLINT_AND_STEEL);
+        LEGACY_ID_LOOKUP.put(260, Material.APPLE);
+        LEGACY_ID_LOOKUP.put(261, Material.BOW);
+        LEGACY_ID_LOOKUP.put(262, Material.ARROW);
+        LEGACY_ID_LOOKUP.put(263, Material.COAL);
+        LEGACY_ID_LOOKUP.put(264, Material.DIAMOND);
+        LEGACY_ID_LOOKUP.put(265, Material.IRON_INGOT);
+        LEGACY_ID_LOOKUP.put(266, Material.GOLD_INGOT);
+        LEGACY_ID_LOOKUP.put(267, Material.IRON_SWORD);
+        LEGACY_ID_LOOKUP.put(268, Material.WOODEN_SWORD);
+        LEGACY_ID_LOOKUP.put(269, Material.WOODEN_SHOVEL);
+        LEGACY_ID_LOOKUP.put(270, Material.WOODEN_PICKAXE);
+        LEGACY_ID_LOOKUP.put(271, Material.WOODEN_AXE);
+        LEGACY_ID_LOOKUP.put(272, Material.STONE_SWORD);
+        LEGACY_ID_LOOKUP.put(273, Material.STONE_SHOVEL);
+        LEGACY_ID_LOOKUP.put(274, Material.STONE_PICKAXE);
+        LEGACY_ID_LOOKUP.put(275, Material.STONE_AXE);
+        LEGACY_ID_LOOKUP.put(276, Material.DIAMOND_SWORD);
+        LEGACY_ID_LOOKUP.put(277, Material.DIAMOND_SHOVEL);
+        LEGACY_ID_LOOKUP.put(278, Material.DIAMOND_PICKAXE);
+        LEGACY_ID_LOOKUP.put(279, Material.DIAMOND_AXE);
+        LEGACY_ID_LOOKUP.put(280, Material.STICK);
+        LEGACY_ID_LOOKUP.put(281, Material.BOWL);
+        LEGACY_ID_LOOKUP.put(282, Material.MUSHROOM_STEW);
+        LEGACY_ID_LOOKUP.put(283, Material.GOLDEN_SWORD);
+        LEGACY_ID_LOOKUP.put(284, Material.GOLDEN_SHOVEL);
+        LEGACY_ID_LOOKUP.put(285, Material.GOLDEN_PICKAXE);
+        LEGACY_ID_LOOKUP.put(286, Material.GOLDEN_AXE);
+        LEGACY_ID_LOOKUP.put(287, Material.STRING);
+        LEGACY_ID_LOOKUP.put(288, Material.FEATHER);
+        LEGACY_ID_LOOKUP.put(289, Material.GUNPOWDER);
+        LEGACY_ID_LOOKUP.put(290, Material.WOODEN_HOE);
+        LEGACY_ID_LOOKUP.put(291, Material.STONE_HOE);
+        LEGACY_ID_LOOKUP.put(292, Material.IRON_HOE);
+        LEGACY_ID_LOOKUP.put(293, Material.DIAMOND_HOE);
+        LEGACY_ID_LOOKUP.put(294, Material.GOLDEN_HOE);
+        LEGACY_ID_LOOKUP.put(295, Material.WHEAT_SEEDS);
+        LEGACY_ID_LOOKUP.put(296, Material.WHEAT);
+        LEGACY_ID_LOOKUP.put(297, Material.BREAD);
+        LEGACY_ID_LOOKUP.put(298, Material.LEATHER_HELMET);
+        LEGACY_ID_LOOKUP.put(299, Material.LEATHER_CHESTPLATE);
+        LEGACY_ID_LOOKUP.put(300, Material.LEATHER_LEGGINGS);
+        LEGACY_ID_LOOKUP.put(301, Material.LEATHER_BOOTS);
+        LEGACY_ID_LOOKUP.put(302, Material.CHAINMAIL_HELMET);
+        LEGACY_ID_LOOKUP.put(303, Material.CHAINMAIL_CHESTPLATE);
+        LEGACY_ID_LOOKUP.put(304, Material.CHAINMAIL_LEGGINGS);
+        LEGACY_ID_LOOKUP.put(305, Material.CHAINMAIL_BOOTS);
+        LEGACY_ID_LOOKUP.put(306, Material.IRON_HELMET);
+        LEGACY_ID_LOOKUP.put(307, Material.IRON_CHESTPLATE);
+        LEGACY_ID_LOOKUP.put(308, Material.IRON_LEGGINGS);
+        LEGACY_ID_LOOKUP.put(309, Material.IRON_BOOTS);
+        LEGACY_ID_LOOKUP.put(310, Material.DIAMOND_HELMET);
+        LEGACY_ID_LOOKUP.put(311, Material.DIAMOND_CHESTPLATE);
+        LEGACY_ID_LOOKUP.put(312, Material.DIAMOND_LEGGINGS);
+        LEGACY_ID_LOOKUP.put(313, Material.DIAMOND_BOOTS);
+        LEGACY_ID_LOOKUP.put(314, Material.GOLDEN_HELMET);
+        LEGACY_ID_LOOKUP.put(315, Material.GOLDEN_CHESTPLATE);
+        LEGACY_ID_LOOKUP.put(316, Material.GOLDEN_LEGGINGS);
+        LEGACY_ID_LOOKUP.put(317, Material.GOLDEN_BOOTS);
+        LEGACY_ID_LOOKUP.put(318, Material.FLINT);
+        LEGACY_ID_LOOKUP.put(319, Material.PORKCHOP);
+        LEGACY_ID_LOOKUP.put(320, Material.COOKED_PORKCHOP);
+        LEGACY_ID_LOOKUP.put(321, Material.PAINTING);
+        LEGACY_ID_LOOKUP.put(322, Material.GOLDEN_APPLE);
+        LEGACY_ID_LOOKUP.put(323, Material.OAK_SIGN);
+        LEGACY_ID_LOOKUP.put(324, Material.OAK_DOOR);
+        LEGACY_ID_LOOKUP.put(325, Material.BUCKET);
+        LEGACY_ID_LOOKUP.put(326, Material.WATER_BUCKET);
+        LEGACY_ID_LOOKUP.put(327, Material.LAVA_BUCKET);
+        LEGACY_ID_LOOKUP.put(328, Material.MINECART);
+        LEGACY_ID_LOOKUP.put(329, Material.SADDLE);
+        LEGACY_ID_LOOKUP.put(330, Material.IRON_DOOR);
+        LEGACY_ID_LOOKUP.put(331, Material.REDSTONE);
+        LEGACY_ID_LOOKUP.put(332, Material.SNOWBALL);
+        LEGACY_ID_LOOKUP.put(333, Material.OAK_BOAT);
+        LEGACY_ID_LOOKUP.put(334, Material.LEATHER);
+        LEGACY_ID_LOOKUP.put(335, Material.MILK_BUCKET);
+        LEGACY_ID_LOOKUP.put(336, Material.BRICK);
+        LEGACY_ID_LOOKUP.put(337, Material.CLAY_BALL);
+        LEGACY_ID_LOOKUP.put(338, Material.SUGAR_CANE);
+        LEGACY_ID_LOOKUP.put(339, Material.PAPER);
+        LEGACY_ID_LOOKUP.put(340, Material.BOOK);
+        LEGACY_ID_LOOKUP.put(341, Material.SLIME_BALL);
+        LEGACY_ID_LOOKUP.put(342, Material.CHEST_MINECART);
+        LEGACY_ID_LOOKUP.put(343, Material.FURNACE_MINECART);
+        LEGACY_ID_LOOKUP.put(344, Material.EGG);
+        LEGACY_ID_LOOKUP.put(345, Material.COMPASS);
+        LEGACY_ID_LOOKUP.put(346, Material.FISHING_ROD);
+        LEGACY_ID_LOOKUP.put(347, Material.CLOCK);
+        LEGACY_ID_LOOKUP.put(348, Material.GLOWSTONE_DUST);
+        LEGACY_ID_LOOKUP.put(349, Material.COD);
+        LEGACY_ID_LOOKUP.put(350, Material.COOKED_COD);
+        LEGACY_ID_LOOKUP.put(351, Material.INK_SAC);
+        LEGACY_ID_LOOKUP.put(352, Material.BONE);
+        LEGACY_ID_LOOKUP.put(353, Material.SUGAR);
+        LEGACY_ID_LOOKUP.put(354, Material.CAKE);
+        LEGACY_ID_LOOKUP.put(355, Material.RED_BED);
+        LEGACY_ID_LOOKUP.put(356, Material.REPEATER);
+        LEGACY_ID_LOOKUP.put(357, Material.COOKIE);
+        LEGACY_ID_LOOKUP.put(358, Material.FILLED_MAP);
+        LEGACY_ID_LOOKUP.put(359, Material.SHEARS);
+        LEGACY_ID_LOOKUP.put(360, Material.MELON);
+        LEGACY_ID_LOOKUP.put(361, Material.PUMPKIN_SEEDS);
+        LEGACY_ID_LOOKUP.put(362, Material.MELON_SEEDS);
+        LEGACY_ID_LOOKUP.put(363, Material.BEEF);
+        LEGACY_ID_LOOKUP.put(364, Material.COOKED_BEEF);
+        LEGACY_ID_LOOKUP.put(365, Material.CHICKEN);
+        LEGACY_ID_LOOKUP.put(366, Material.COOKED_CHICKEN);
+        LEGACY_ID_LOOKUP.put(367, Material.ROTTEN_FLESH);
+        LEGACY_ID_LOOKUP.put(368, Material.ENDER_PEARL);
+        LEGACY_ID_LOOKUP.put(369, Material.BLAZE_ROD);
+        LEGACY_ID_LOOKUP.put(370, Material.GHAST_TEAR);
+        LEGACY_ID_LOOKUP.put(371, Material.GOLD_NUGGET);
+        LEGACY_ID_LOOKUP.put(372, Material.NETHER_WART);
+        LEGACY_ID_LOOKUP.put(373, Material.POTION);
+        LEGACY_ID_LOOKUP.put(374, Material.GLASS_BOTTLE);
+        LEGACY_ID_LOOKUP.put(375, Material.SPIDER_EYE);
+        LEGACY_ID_LOOKUP.put(376, Material.FERMENTED_SPIDER_EYE);
+        LEGACY_ID_LOOKUP.put(377, Material.BLAZE_POWDER);
+        LEGACY_ID_LOOKUP.put(378, Material.MAGMA_CREAM);
+        LEGACY_ID_LOOKUP.put(379, Material.BREWING_STAND);
+        LEGACY_ID_LOOKUP.put(380, Material.CAULDRON);
+        LEGACY_ID_LOOKUP.put(381, Material.ENDER_EYE);
+        LEGACY_ID_LOOKUP.put(382, Material.GLISTERING_MELON_SLICE);
+        LEGACY_ID_LOOKUP.put(383, Material.INFESTED_STONE);
+        LEGACY_ID_LOOKUP.put(384, Material.EXPERIENCE_BOTTLE);
+        LEGACY_ID_LOOKUP.put(385, Material.FIRE_CHARGE);
+        LEGACY_ID_LOOKUP.put(386, Material.WRITABLE_BOOK);
+        LEGACY_ID_LOOKUP.put(387, Material.WRITTEN_BOOK);
+        LEGACY_ID_LOOKUP.put(388, Material.EMERALD);
+        LEGACY_ID_LOOKUP.put(389, Material.ITEM_FRAME);
+        LEGACY_ID_LOOKUP.put(390, Material.FLOWER_POT);
+        LEGACY_ID_LOOKUP.put(391, Material.CARROT);
+        LEGACY_ID_LOOKUP.put(392, Material.POTATO);
+        LEGACY_ID_LOOKUP.put(393, Material.BAKED_POTATO);
+        LEGACY_ID_LOOKUP.put(394, Material.POISONOUS_POTATO);
+        LEGACY_ID_LOOKUP.put(395, Material.MAP);
+        LEGACY_ID_LOOKUP.put(396, Material.GOLDEN_CARROT);
+        LEGACY_ID_LOOKUP.put(397, Material.PLAYER_HEAD);
+        LEGACY_ID_LOOKUP.put(398, Material.CARROT_ON_A_STICK);
+        LEGACY_ID_LOOKUP.put(399, Material.NETHER_STAR);
+        LEGACY_ID_LOOKUP.put(400, Material.PUMPKIN_PIE);
+        LEGACY_ID_LOOKUP.put(401, Material.FIREWORK_ROCKET);
+        LEGACY_ID_LOOKUP.put(402, Material.FIREWORK_STAR);
+        LEGACY_ID_LOOKUP.put(403, Material.ENCHANTED_BOOK);
+        LEGACY_ID_LOOKUP.put(404, Material.COMPARATOR);
+        LEGACY_ID_LOOKUP.put(405, Material.NETHER_BRICK);
+        LEGACY_ID_LOOKUP.put(406, Material.QUARTZ);
+        LEGACY_ID_LOOKUP.put(407, Material.TNT_MINECART);
+        LEGACY_ID_LOOKUP.put(408, Material.HOPPER_MINECART);
+        LEGACY_ID_LOOKUP.put(409, Material.PRISMARINE_SHARD);
+        LEGACY_ID_LOOKUP.put(410, Material.PRISMARINE_CRYSTALS);
+        LEGACY_ID_LOOKUP.put(411, Material.RABBIT);
+        LEGACY_ID_LOOKUP.put(412, Material.COOKED_RABBIT);
+        LEGACY_ID_LOOKUP.put(413, Material.RABBIT_STEW);
+        LEGACY_ID_LOOKUP.put(414, Material.RABBIT_FOOT);
+        LEGACY_ID_LOOKUP.put(415, Material.RABBIT_HIDE);
+        LEGACY_ID_LOOKUP.put(416, Material.ARMOR_STAND);
+        LEGACY_ID_LOOKUP.put(417, Material.IRON_HORSE_ARMOR);
+        LEGACY_ID_LOOKUP.put(418, Material.GOLDEN_HORSE_ARMOR);
+        LEGACY_ID_LOOKUP.put(419, Material.DIAMOND_HORSE_ARMOR);
+        LEGACY_ID_LOOKUP.put(420, Material.LEAD);
+        LEGACY_ID_LOOKUP.put(421, Material.NAME_TAG);
+        LEGACY_ID_LOOKUP.put(422, Material.COMMAND_BLOCK_MINECART);
+        LEGACY_ID_LOOKUP.put(423, Material.MUTTON);
+        LEGACY_ID_LOOKUP.put(424, Material.COOKED_MUTTON);
+        LEGACY_ID_LOOKUP.put(425, Material.WHITE_BANNER);
+        LEGACY_ID_LOOKUP.put(426, Material.END_CRYSTAL);
+        LEGACY_ID_LOOKUP.put(427, Material.SPRUCE_DOOR);
+        LEGACY_ID_LOOKUP.put(428, Material.BIRCH_DOOR);
+        LEGACY_ID_LOOKUP.put(429, Material.JUNGLE_DOOR);
+        LEGACY_ID_LOOKUP.put(430, Material.ACACIA_DOOR);
+        LEGACY_ID_LOOKUP.put(431, Material.DARK_OAK_DOOR);
+        LEGACY_ID_LOOKUP.put(432, Material.CHORUS_FRUIT);
+        LEGACY_ID_LOOKUP.put(433, Material.POPPED_CHORUS_FRUIT);
+        LEGACY_ID_LOOKUP.put(434, Material.BEETROOT);
+        LEGACY_ID_LOOKUP.put(435, Material.BEETROOT_SEEDS);
+        LEGACY_ID_LOOKUP.put(436, Material.BEETROOT_SOUP);
+        LEGACY_ID_LOOKUP.put(437, Material.DRAGON_BREATH);
+        LEGACY_ID_LOOKUP.put(438, Material.SPLASH_POTION);
+        LEGACY_ID_LOOKUP.put(439, Material.SPECTRAL_ARROW);
+        LEGACY_ID_LOOKUP.put(440, Material.TIPPED_ARROW);
+        LEGACY_ID_LOOKUP.put(441, Material.LINGERING_POTION);
+        LEGACY_ID_LOOKUP.put(442, Material.SHIELD);
+        LEGACY_ID_LOOKUP.put(443, Material.ELYTRA);
+        LEGACY_ID_LOOKUP.put(444, Material.SPRUCE_BOAT);
+        LEGACY_ID_LOOKUP.put(445, Material.BIRCH_BOAT);
+        LEGACY_ID_LOOKUP.put(446, Material.JUNGLE_BOAT);
+        LEGACY_ID_LOOKUP.put(447, Material.ACACIA_BOAT);
+        LEGACY_ID_LOOKUP.put(448, Material.DARK_OAK_BOAT);
+        LEGACY_ID_LOOKUP.put(449, Material.TOTEM_OF_UNDYING);
+        LEGACY_ID_LOOKUP.put(450, Material.SHULKER_SHELL);
+        LEGACY_ID_LOOKUP.put(452, Material.IRON_NUGGET);
+        LEGACY_ID_LOOKUP.put(453, Material.KNOWLEDGE_BOOK);
+        LEGACY_ID_LOOKUP.put(2256, Material.MUSIC_DISC_13);
+        LEGACY_ID_LOOKUP.put(2257, Material.MUSIC_DISC_CAT);
+        LEGACY_ID_LOOKUP.put(2258, Material.MUSIC_DISC_BLOCKS);
+        LEGACY_ID_LOOKUP.put(2259, Material.MUSIC_DISC_CHIRP);
+        LEGACY_ID_LOOKUP.put(2260, Material.MUSIC_DISC_FAR);
+        LEGACY_ID_LOOKUP.put(2261, Material.MUSIC_DISC_MALL);
+        LEGACY_ID_LOOKUP.put(2262, Material.MUSIC_DISC_MELLOHI);
+        LEGACY_ID_LOOKUP.put(2263, Material.MUSIC_DISC_STAL);
+        LEGACY_ID_LOOKUP.put(2264, Material.MUSIC_DISC_STRAD);
+        LEGACY_ID_LOOKUP.put(2265, Material.MUSIC_DISC_WARD);
+        LEGACY_ID_LOOKUP.put(2266, Material.MUSIC_DISC_11);
+        LEGACY_ID_LOOKUP.put(2267, Material.MUSIC_DISC_WAIT);
+        //
+        LEGACY_TYPE_LOOKUP.put("ACACIA_DOOR_ITEM", "ACACIA_DOOR");
+        LEGACY_TYPE_LOOKUP.put("BANNER", "WHITE_BANNER");
+        LEGACY_TYPE_LOOKUP.put("BED", "RED_BED");
+        LEGACY_TYPE_LOOKUP.put("BED_BLOCK", "RED_BED");
+        LEGACY_TYPE_LOOKUP.put("BEETROOT_BLOCK", "BEETROOTS");
+        LEGACY_TYPE_LOOKUP.put("BIRCH_DOOR_ITEM", "BIRCH_DOOR");
+        LEGACY_TYPE_LOOKUP.put("BIRCH_WOOD_STAIRS", "BIRCH_STAIRS");
+        LEGACY_TYPE_LOOKUP.put("BOAT", "OAK_BOAT");
+        LEGACY_TYPE_LOOKUP.put("BOAT_ACACIA", "ACACIA_BOAT");
+        LEGACY_TYPE_LOOKUP.put("BOAT_BIRCH", "BIRCH_BOAT");
+        LEGACY_TYPE_LOOKUP.put("BOAT_DARK_OAK", "DARK_OAK_BOAT");
+        LEGACY_TYPE_LOOKUP.put("BOAT_JUNGLE", "JUNGLE_BOAT");
+        LEGACY_TYPE_LOOKUP.put("BOAT_SPRUCE", "SPRUCE_BOAT");
+        LEGACY_TYPE_LOOKUP.put("BOOK_AND_QUILL", "WRITABLE_BOOK");
+        LEGACY_TYPE_LOOKUP.put("BREWING_STAND_ITEM", "BREWING_STAND");
+        LEGACY_TYPE_LOOKUP.put("BURNING_FURNACE", "FURNACE");
+        LEGACY_TYPE_LOOKUP.put("CAKE_BLOCK", "CAKE");
+        LEGACY_TYPE_LOOKUP.put("CARPET", "WHITE_CARPET");
+        LEGACY_TYPE_LOOKUP.put("CARROT_ITEM", "CARROT");
+        LEGACY_TYPE_LOOKUP.put("CARROT_STICK", "CARROT_ON_A_STICK");
+        LEGACY_TYPE_LOOKUP.put("CAULDRON_ITEM", "CAULDRON");
+        LEGACY_TYPE_LOOKUP.put("CLAY_BRICK", "BRICK");
+        LEGACY_TYPE_LOOKUP.put("COBBLE_WALL", "COBBLESTONE_WALL");
+        LEGACY_TYPE_LOOKUP.put("COMMAND", "COMMAND_BLOCK");
+        LEGACY_TYPE_LOOKUP.put("COMMAND_CHAIN", "CHAIN_COMMAND_BLOCK");
+        LEGACY_TYPE_LOOKUP.put("COMMAND_MINECART", "COMMAND_BLOCK_MINECART");
+        LEGACY_TYPE_LOOKUP.put("COMMAND_REPEATING", "REPEATING_COMMAND_BLOCK");
+        LEGACY_TYPE_LOOKUP.put("CONCRETE", "WHITE_CONCRETE");
+        LEGACY_TYPE_LOOKUP.put("CONCRETE_POWDER", "WHITE_CONCRETE_POWDER");
+        LEGACY_TYPE_LOOKUP.put("COOKED_FISH", "COOKED_COD");
+        LEGACY_TYPE_LOOKUP.put("CROPS", "WHEAT");
+        LEGACY_TYPE_LOOKUP.put("DARK_OAK_DOOR_ITEM", "DARK_OAK_DOOR");
+        LEGACY_TYPE_LOOKUP.put("DAYLIGHT_DETECTOR_INVERTED", "DAYLIGHT_DETECTOR");
+        LEGACY_TYPE_LOOKUP.put("DIAMOND_BARDING", "DIAMOND_HORSE_ARMOR");
+        LEGACY_TYPE_LOOKUP.put("DIAMOND_SPADE", "DIAMOND_SHOVEL");
+        LEGACY_TYPE_LOOKUP.put("DIODE", "REPEATER");
+        LEGACY_TYPE_LOOKUP.put("DIODE_BLOCK_OFF", "REPEATER");
+        LEGACY_TYPE_LOOKUP.put("DIODE_BLOCK_ON", "REPEATER");
+        LEGACY_TYPE_LOOKUP.put("DOUBLE_PLANT", "ROSE_BUSH");
+        LEGACY_TYPE_LOOKUP.put("DOUBLE_STEP", "STONE_SLAB");
+        LEGACY_TYPE_LOOKUP.put("DOUBLE_STONE_SLAB", "RED_SANDSTONE_SLAB");
+        LEGACY_TYPE_LOOKUP.put("DRAGONS_BREATH", "DRAGON_BREATH");
+        LEGACY_TYPE_LOOKUP.put("EMPTY_MAP", "MAP");
+        LEGACY_TYPE_LOOKUP.put("ENCHANTMENT_TABLE", "ENCHANTING_TABLE");
+        LEGACY_TYPE_LOOKUP.put("ENDER_PORTAL", "END_PORTAL");
+        LEGACY_TYPE_LOOKUP.put("ENDER_PORTAL_FRAME", "END_PORTAL_FRAME");
+        LEGACY_TYPE_LOOKUP.put("ENDER_STONE", "END_STONE");
+        LEGACY_TYPE_LOOKUP.put("END_BRICKS", "END_STONE_BRICKS");
+        LEGACY_TYPE_LOOKUP.put("EXPLOSIVE_MINECART", "TNT_MINECART");
+        LEGACY_TYPE_LOOKUP.put("EXP_BOTTLE", "EXPERIENCE_BOTTLE");
+        LEGACY_TYPE_LOOKUP.put("EYE_OF_ENDER", "ENDER_EYE");
+        LEGACY_TYPE_LOOKUP.put("FENCE", "OAK_FENCE");
+        LEGACY_TYPE_LOOKUP.put("FENCE_GATE", "OAK_FENCE_GATE");
+        LEGACY_TYPE_LOOKUP.put("FIREBALL", "FIRE_CHARGE");
+        LEGACY_TYPE_LOOKUP.put("FIREWORK", "FIREWORK_ROCKET");
+        LEGACY_TYPE_LOOKUP.put("FIREWORK_CHARGE", "FIREWORK_STAR");
+        LEGACY_TYPE_LOOKUP.put("FLOWER_POT_ITEM", "FLOWER_POT");
+        LEGACY_TYPE_LOOKUP.put("GLOWING_REDSTONE_ORE", "REDSTONE_ORE");
+        LEGACY_TYPE_LOOKUP.put("GOLD_AXE", "GOLDEN_AXE");
+        LEGACY_TYPE_LOOKUP.put("GOLD_BARDING", "GOLDEN_HORSE_ARMOR");
+        LEGACY_TYPE_LOOKUP.put("GOLD_BOOTS", "GOLDEN_BOOTS");
+        LEGACY_TYPE_LOOKUP.put("GOLD_CHESTPLATE", "GOLDEN_CHESTPLATE");
+        LEGACY_TYPE_LOOKUP.put("GOLD_HELMET", "GOLDEN_HELMET");
+        LEGACY_TYPE_LOOKUP.put("GOLD_HOE", "GOLDEN_HOE");
+        LEGACY_TYPE_LOOKUP.put("GOLD_LEGGINGS", "GOLDEN_LEGGINGS");
+        LEGACY_TYPE_LOOKUP.put("GOLD_PICKAXE", "GOLDEN_PICKAXE");
+        LEGACY_TYPE_LOOKUP.put("GOLD_PLATE", "LIGHT_WEIGHTED_PRESSURE_PLATE");
+        LEGACY_TYPE_LOOKUP.put("GOLD_RECORD", "MUSIC_DISC_13");
+        LEGACY_TYPE_LOOKUP.put("GOLD_SPADE", "GOLDEN_SHOVEL");
+        LEGACY_TYPE_LOOKUP.put("GOLD_SWORD", "GOLDEN_SWORD");
+        LEGACY_TYPE_LOOKUP.put("GREEN_RECORD", "MUSIC_DISC_CAT");
+        LEGACY_TYPE_LOOKUP.put("GRILLED_PORK", "COOKED_PORKCHOP");
+        LEGACY_TYPE_LOOKUP.put("HARD_CLAY", "TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("HUGE_MUSHROOM_1", "BROWN_MUSHROOM_BLOCK");
+        LEGACY_TYPE_LOOKUP.put("HUGE_MUSHROOM_2", "RED_MUSHROOM_BLOCK");
+        LEGACY_TYPE_LOOKUP.put("INK_SACK", "INK_SAC");
+        LEGACY_TYPE_LOOKUP.put("IRON_BARDING", "IRON_HORSE_ARMOR");
+        LEGACY_TYPE_LOOKUP.put("IRON_DOOR_BLOCK", "IRON_DOOR");
+        LEGACY_TYPE_LOOKUP.put("IRON_FENCE", "IRON_BARS");
+        LEGACY_TYPE_LOOKUP.put("IRON_PLATE", "HEAVY_WEIGHTED_PRESSURE_PLATE");
+        LEGACY_TYPE_LOOKUP.put("IRON_SPADE", "IRON_SHOVEL");
+        LEGACY_TYPE_LOOKUP.put("JUNGLE_DOOR_ITEM", "JUNGLE_DOOR");
+        LEGACY_TYPE_LOOKUP.put("JUNGLE_WOOD_STAIRS", "JUNGLE_STAIRS");
+        LEGACY_TYPE_LOOKUP.put("LEASH", "LEAD");
+        LEGACY_TYPE_LOOKUP.put("LEAVES", "OAK_LEAVES");
+        LEGACY_TYPE_LOOKUP.put("LEAVES_2", "ACACIA_LEAVES");
+        LEGACY_TYPE_LOOKUP.put("LIGHT_GRAY_GLAZED_TERRACOTTA", "LIGHT_GRAY_GLAZED_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("LOG", "OAK_LOG");
+        LEGACY_TYPE_LOOKUP.put("LOG_2", "ACACIA_LOG");
+        LEGACY_TYPE_LOOKUP.put("LONG_GRASS", "TALL_GRASS");
+        LEGACY_TYPE_LOOKUP.put("MAGMA", "MAGMA_BLOCK");
+        LEGACY_TYPE_LOOKUP.put("MONSTER_EGG", "INFESTED_STONE");
+        LEGACY_TYPE_LOOKUP.put("MONSTER_EGGS", "INFESTED_STONE");
+        LEGACY_TYPE_LOOKUP.put("MUSHROOM_SOUP", "MUSHROOM_STEW");
+        LEGACY_TYPE_LOOKUP.put("MYCEL", "MYCELIUM");
+        LEGACY_TYPE_LOOKUP.put("NETHER_BRICK_ITEM", "NETHER_BRICK");
+        LEGACY_TYPE_LOOKUP.put("NETHER_FENCE", "NETHER_BRICK_FENCE");
+        LEGACY_TYPE_LOOKUP.put("NETHER_STALK", "NETHER_WART");
+        LEGACY_TYPE_LOOKUP.put("NETHER_WARTS", "NETHER_WART");
+        LEGACY_TYPE_LOOKUP.put("PISTON_BASE", "PISTON");
+        LEGACY_TYPE_LOOKUP.put("PISTON_EXTENSION", "PISTON_HEAD");
+        LEGACY_TYPE_LOOKUP.put("PISTON_MOVING_PIECE", "PISTON_HEAD");
+        LEGACY_TYPE_LOOKUP.put("PISTON_STICKY_BASE", "STICKY_PISTON");
+        LEGACY_TYPE_LOOKUP.put("PORK", "PORKCHOP");
+        LEGACY_TYPE_LOOKUP.put("POTATO_ITEM", "POTATO");
+        LEGACY_TYPE_LOOKUP.put("POWERED_MINECART", "FURNACE_MINECART");
+        LEGACY_TYPE_LOOKUP.put("PURPUR_DOUBLE_SLAB", "PURPUR_SLAB");
+        LEGACY_TYPE_LOOKUP.put("QUARTZ_ORE", "NETHER_QUARTZ_ORE");
+        LEGACY_TYPE_LOOKUP.put("RAILS", "RAIL");
+        LEGACY_TYPE_LOOKUP.put("RAW_BEEF", "BEEF");
+        LEGACY_TYPE_LOOKUP.put("RAW_CHICKEN", "CHICKEN");
+        LEGACY_TYPE_LOOKUP.put("RAW_FISH", "COD");
+        LEGACY_TYPE_LOOKUP.put("RECORD_10", "MUSIC_DISC_WARD");
+        LEGACY_TYPE_LOOKUP.put("RECORD_11", "MUSIC_DISC_11");
+        LEGACY_TYPE_LOOKUP.put("RECORD_12", "MUSIC_DISC_WAIT");
+        LEGACY_TYPE_LOOKUP.put("RECORD_3", "MUSIC_DISC_BLOCKS");
+        LEGACY_TYPE_LOOKUP.put("RECORD_4", "MUSIC_DISC_CHIRP");
+        LEGACY_TYPE_LOOKUP.put("RECORD_5", "MUSIC_DISC_FAR");
+        LEGACY_TYPE_LOOKUP.put("RECORD_6", "MUSIC_DISC_MALL");
+        LEGACY_TYPE_LOOKUP.put("RECORD_7", "MUSIC_DISC_MELLOHI");
+        LEGACY_TYPE_LOOKUP.put("RECORD_8", "MUSIC_DISC_STAL");
+        LEGACY_TYPE_LOOKUP.put("RECORD_9", "MUSIC_DISC_STRAD");
+        LEGACY_TYPE_LOOKUP.put("REDSTONE_COMPARATOR", "COMPARATOR");
+        LEGACY_TYPE_LOOKUP.put("REDSTONE_COMPARATOR_OFF", "COMPARATOR");
+        LEGACY_TYPE_LOOKUP.put("REDSTONE_COMPARATOR_ON", "COMPARATOR");
+        LEGACY_TYPE_LOOKUP.put("REDSTONE_LAMP_OFF", "REDSTONE_LAMP");
+        LEGACY_TYPE_LOOKUP.put("REDSTONE_LAMP_ON", "REDSTONE_LAMP");
+        LEGACY_TYPE_LOOKUP.put("REDSTONE_TORCH_OFF", "REDSTONE_TORCH");
+        LEGACY_TYPE_LOOKUP.put("REDSTONE_TORCH_ON", "REDSTONE_TORCH");
+        LEGACY_TYPE_LOOKUP.put("RED_NETHER_BRICK", "RED_NETHER_BRICKS");
+        LEGACY_TYPE_LOOKUP.put("RED_ROSE", "POPPY");
+        LEGACY_TYPE_LOOKUP.put("SAPLING", "OAK_SAPLING");
+        LEGACY_TYPE_LOOKUP.put("SEEDS", "WHEAT_SEEDS");
+        LEGACY_TYPE_LOOKUP.put("SIGN_POST", "OAK_SIGN");
+        LEGACY_TYPE_LOOKUP.put("SILVER_SHULKER_BOX", "LIGHT_GRAY_SHULKER_BOX");
+        LEGACY_TYPE_LOOKUP.put("SKULL", "PLAYER_HEAD");
+        LEGACY_TYPE_LOOKUP.put("SKULL_ITEM", "PLAYER_HEAD");
+        LEGACY_TYPE_LOOKUP.put("SMOOTH_BRICK", "STONE_BRICKS");
+        LEGACY_TYPE_LOOKUP.put("SMOOTH_STAIRS", "STONE_BRICK_STAIRS");
+        LEGACY_TYPE_LOOKUP.put("SNOW_BALL", "SNOWBALL");
+        LEGACY_TYPE_LOOKUP.put("SOIL", "FARMLAND");
+        LEGACY_TYPE_LOOKUP.put("SPRUCE_DOOR_ITEM", "SPRUCE_DOOR");
+        LEGACY_TYPE_LOOKUP.put("SPRUCE_WOOD_STAIRS", "SPRUCE_STAIRS");
+        LEGACY_TYPE_LOOKUP.put("STAINED_CLAY", "RED_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("STAINED_GLASS", "WHITE_STAINED_GLASS");
+        LEGACY_TYPE_LOOKUP.put("STAINED_GLASS_PANE", "WHITE_STAINED_GLASS_PANE");
+        LEGACY_TYPE_LOOKUP.put("STANDING_BANNER", "WHITE_BANNER");
+        LEGACY_TYPE_LOOKUP.put("STATIONARY_LAVA", "LAVA");
+        LEGACY_TYPE_LOOKUP.put("STATIONARY_WATER", "WATER");
+        LEGACY_TYPE_LOOKUP.put("STEP", "STONE_SLAB");
+        LEGACY_TYPE_LOOKUP.put("STONE_BRICK", "STONE_BRICKS");
+        LEGACY_TYPE_LOOKUP.put("STONE_PLATE", "STONE_PRESSURE_PLATE");
+        LEGACY_TYPE_LOOKUP.put("STONE_SLAB2", "RED_SANDSTONE_SLAB");
+        LEGACY_TYPE_LOOKUP.put("STONE_SPADE", "STONE_SHOVEL");
+        LEGACY_TYPE_LOOKUP.put("STORAGE_MINECART", "CHEST_MINECART");
+        LEGACY_TYPE_LOOKUP.put("SUGAR_CANE_BLOCK", "SUGAR_CANE");
+        LEGACY_TYPE_LOOKUP.put("SULPHUR", "GUNPOWDER");
+        LEGACY_TYPE_LOOKUP.put("THIN_GLASS", "GLASS_PANE");
+        LEGACY_TYPE_LOOKUP.put("TOTEM", "TOTEM_OF_UNDYING");
+        LEGACY_TYPE_LOOKUP.put("TRAP_DOOR", "OAK_TRAPDOOR");
+        LEGACY_TYPE_LOOKUP.put("WALL_BANNER", "WHITE_WALL_BANNER");
+        LEGACY_TYPE_LOOKUP.put("WATCH", "CLOCK");
+        LEGACY_TYPE_LOOKUP.put("WATER_LILY", "LILY_PAD");
+        LEGACY_TYPE_LOOKUP.put("WEB", "COBWEB");
+        LEGACY_TYPE_LOOKUP.put("WOOD", "OAK_PLANKS");
+        LEGACY_TYPE_LOOKUP.put("WOODEN_DOOR", "OAK_DOOR");
+        LEGACY_TYPE_LOOKUP.put("WOOD_AXE", "WOODEN_AXE");
+        LEGACY_TYPE_LOOKUP.put("WOOD_BUTTON", "OAK_BUTTON");
+        LEGACY_TYPE_LOOKUP.put("WOOD_DOOR", "OAK_DOOR");
+        LEGACY_TYPE_LOOKUP.put("WOOD_DOUBLE_STEP", "OAK_SLAB");
+        LEGACY_TYPE_LOOKUP.put("WOOD_HOE", "WOODEN_HOE");
+        LEGACY_TYPE_LOOKUP.put("WOOD_PICKAXE", "WOODEN_PICKAXE");
+        LEGACY_TYPE_LOOKUP.put("WOOD_PLATE", "OAK_PRESSURE_PLATE");
+        LEGACY_TYPE_LOOKUP.put("WOOD_SPADE", "WOODEN_SHOVEL");
+        LEGACY_TYPE_LOOKUP.put("WOOD_STAIRS", "OAK_STAIRS");
+        LEGACY_TYPE_LOOKUP.put("WOOD_STEP", "OAK_SLAB");
+        LEGACY_TYPE_LOOKUP.put("WOOD_SWORD", "WOODEN_SWORD");
+        LEGACY_TYPE_LOOKUP.put("WOOL", "ORANGE_WOOL");
+        LEGACY_TYPE_LOOKUP.put("WORKBENCH", "CRAFTING_TABLE");
+        LEGACY_TYPE_LOOKUP.put("YELLOW_FLOWER", "DANDELION");
+        // LEGACY TARDIS Wall descriptors
+        LEGACY_TYPE_LOOKUP.put("ACACIA_WOOD", "ACACIA_PLANKS");
+        LEGACY_TYPE_LOOKUP.put("BIRCH_WOOD", "BIRCH_PLANKS");
+        LEGACY_TYPE_LOOKUP.put("BLACK_CLAY", "BLACK_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("BLUE_CLAY", "BLUE_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("BRICK", "BRICKS");
+        LEGACY_TYPE_LOOKUP.put("BROWN_CLAY", "BROWN_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("CHISELED_BRICK", "CHISELED_STONE_BRICKS");
+        LEGACY_TYPE_LOOKUP.put("CHISELED_QUARTZ", "CHISELED_QUARTZ_BLOCK");
+        LEGACY_TYPE_LOOKUP.put("CHISELED_STONE", "CHISELED_STONE_BRICKS");
+        LEGACY_TYPE_LOOKUP.put("CRACKED_BRICK", "CRACKED_STONE_BRICKS");
+        LEGACY_TYPE_LOOKUP.put("CYAN_CLAY", "CYAN_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("DARK_OAK_WOOD", "DARK_OAK_PLANKS");
+        LEGACY_TYPE_LOOKUP.put("END_STONE_BRICK", "END_STONE_BRICKS");
+        LEGACY_TYPE_LOOKUP.put("GRAY_CLAY", "GRAY_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("GREEN_CLAY", "GREEN_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("GREY_CLAY", "GRAY_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("GREY_CONCRETE", "GRAY_CONCRETE");
+        LEGACY_TYPE_LOOKUP.put("GREY_GLAZED_TERRACOTTA", "GRAY_GLAZED_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("GREY_WOOL", "GRAY_WOOL");
+        LEGACY_TYPE_LOOKUP.put("HUGE_MUSHROOM_STEM", "MUSHROOM_STEM");
+        LEGACY_TYPE_LOOKUP.put("JUNGLE_WOOD", "JUNGLE_PLANKS");
+        LEGACY_TYPE_LOOKUP.put("LAPIS_LAZULI", "LAPIS_BLOCK");
+        LEGACY_TYPE_LOOKUP.put("LIGHT_BLUE_CLAY", "LIGHT_BLUE_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("LIGHT_GRAY_CLAY", "LIGHT_GRAY_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("LIGHT_GREEN_CLAY", "LIME_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("LIGHT_GREEN_CONCRETE", "LIME_CONCRETE");
+        LEGACY_TYPE_LOOKUP.put("LIGHT_GREEN_GLAZED_TERRACOTTA", "LIME_GLAZED_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("LIGHT_GREEN_WOOL", "LIME_WOOL");
+        LEGACY_TYPE_LOOKUP.put("LIGHT_GREY_CLAY", "LIGHT_GRAY_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("LIGHT_GREY_CONCRETE", "LIGHT_GRAY_CONCRETE");
+        LEGACY_TYPE_LOOKUP.put("LIGHT_GREY_GLAZED_TERRACOTTA", "LIGHT_GRAY_GLAZED_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("LIGHT_GREY_WOOL", "LIGHT_GRAY_WOOL");
+        LEGACY_TYPE_LOOKUP.put("LIME_CLAY", "LIME_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("MAGENTA_CLAY", "MAGENTA_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("MOSSY_BRICK", "MOSSY_STONE_BRICKS ");
+        LEGACY_TYPE_LOOKUP.put("NETHER_BRICK", "NETHER_BRICKS");
+        LEGACY_TYPE_LOOKUP.put("OAK_WOOD", "OAK_PLANKS");
+        LEGACY_TYPE_LOOKUP.put("ORANGE_CLAY", "ORANGE_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("PINE_LOG", "SPRUCE_LOG");
+        LEGACY_TYPE_LOOKUP.put("PINE_WOOD", "SPRUCE_PLANKS");
+        LEGACY_TYPE_LOOKUP.put("PINK_CLAY", "PINK_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("PURPLE_CLAY", "PURPLE_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("QUARTZ", "QUARTZ_BLOCK");
+        LEGACY_TYPE_LOOKUP.put("RED_CLAY", "RED_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("SPRUCE_WOOD", "SPRUCE_PLANKS");
+        LEGACY_TYPE_LOOKUP.put("WHITE_CLAY", "WHITE_TERRACOTTA");
+        LEGACY_TYPE_LOOKUP.put("YELLOW_CLAY", "YELLOW_TERRACOTTA");
+
+        COLOUR_LOOKUP.put(0, "WHITE");
+        COLOUR_LOOKUP.put(1, "ORANGE");
+        COLOUR_LOOKUP.put(2, "MAGENTA");
+        COLOUR_LOOKUP.put(3, "LIGHT_BLUE");
+        COLOUR_LOOKUP.put(4, "YELLOW");
+        COLOUR_LOOKUP.put(5, "LIME");
+        COLOUR_LOOKUP.put(6, "PINK");
+        COLOUR_LOOKUP.put(7, "GRAY");
+        COLOUR_LOOKUP.put(8, "LIGHT_GRAY");
+        COLOUR_LOOKUP.put(9, "CYAN");
+        COLOUR_LOOKUP.put(10, "PURPLE");
+        COLOUR_LOOKUP.put(11, "BLUE");
+        COLOUR_LOOKUP.put(12, "BROWN");
+        COLOUR_LOOKUP.put(13, "GREEN");
+        COLOUR_LOOKUP.put(14, "RED");
+        COLOUR_LOOKUP.put(15, "BLACK");
+    }
+
+    public void checkCondenserData() {
+        PreparedStatement statement = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT c_id, block_data FROM " + prefix + "condenser";
+        String update = "UPDATE " + prefix + "condenser SET block_data = ? WHERE c_id = ?";
+        int i = 0;
+        try {
+            service.testConnection(connection);
+            connection.setAutoCommit(false);
+            // do condenser data
+            statement = connection.prepareStatement(query);
+            ps = connection.prepareStatement(update);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    int c_id = rs.getInt("c_id");
+                    String blockData = rs.getString("block_data");
+                    try {
+                        Material material = Material.valueOf(blockData);
+                        // if it's a valid material skip it
+                        continue;
+                    } catch (IllegalArgumentException e) {
+                        plugin.debug("Condenser data was not a valid Material");
+                        // look up blockData to get the correct material...
+                        String mat = LEGACY_TYPE_LOOKUP.get(blockData);
+                        if (mat != null) {
+                            // update the record
+                            ps.setString(1, mat);
+                            ps.setInt(2, c_id);
+                            ps.addBatch();
+                        }
+                    }
+                    i++;
+                }
+                if (i > 0) {
+                    ps.executeBatch();
+                    connection.commit();
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " condenser IDs to material names");
+                }
+            }
+            plugin.getConfig().set("conversions.condenser_materials", true);
+            plugin.saveConfig();
+        } catch (SQLException e) {
+            plugin.debug("Conversion error for condenser materials! " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                // reset auto commit
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                plugin.debug("Error closing condenser table (converting IDs)! " + e.getMessage());
+            }
+        }
+    }
+
+    public void checkPlayerPrefsData() {
+        PreparedStatement statement = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT pp_id, wall, floor, siege_wall, siege_floor FROM " + prefix + "player_prefs";
+        String update = "UPDATE " + prefix + "player_prefs SET wall = ?, floor = ?, siege_wall = ?, siege_floor = ? WHERE pp_id = ?";
+        int i = 0;
+        try {
+            service.testConnection(connection);
+            connection.setAutoCommit(false);
+            // do condenser data
+            statement = connection.prepareStatement(query);
+            ps = connection.prepareStatement(update);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    String wall = rs.getString("wall");
+                    String floor = rs.getString("floor");
+                    String siegeWall = rs.getString("siege_wall");
+                    String siegeFloor = rs.getString("siege_floor");
+                    String newWall = rs.getString("wall");
+                    String newFloor = rs.getString("floor");
+                    String newSiegeWall = rs.getString("siege_wall");
+                    String newSiegeFloor = rs.getString("siege_floor");
+                    Material material;
+                    try {
+                        material = Material.valueOf(wall);
+                    } catch (IllegalArgumentException e) {
+                        // look up blockData to get the correct material...
+                        String mat = LEGACY_TYPE_LOOKUP.get(wall);
+                        if (mat != null) {
+                            newWall = mat;
+                        }
+                    }
+                    try {
+                        material = Material.valueOf(floor);
+                    } catch (IllegalArgumentException e) {
+                        // look up blockData to get the correct material...
+                        String mat = LEGACY_TYPE_LOOKUP.get(floor);
+                        if (mat != null) {
+                            newFloor = mat;
+                        }
+                    }
+                    try {
+                        material = Material.valueOf(siegeWall);
+                    } catch (IllegalArgumentException e) {
+                        // look up blockData to get the correct material...
+                        String mat = LEGACY_TYPE_LOOKUP.get(siegeWall);
+                        if (mat != null) {
+                            newSiegeWall = mat;
+                        }
+                    }
+                    try {
+                        material = Material.valueOf(siegeFloor);
+                    } catch (IllegalArgumentException e) {
+                        // look up blockData to get the correct material...
+                        String mat = LEGACY_TYPE_LOOKUP.get(siegeFloor);
+                        if (mat != null) {
+                            newSiegeFloor = mat;
+                        }
+                    }
+                    if (!wall.equals(newWall) || !floor.equals(newFloor) || !siegeWall.equals(newSiegeWall) || !siegeFloor.equals(newSiegeFloor)) {
+                        int pp_id = rs.getInt("pp_id");
+                        // update the record
+                        ps.setString(1, newWall);
+                        ps.setString(2, newFloor);
+                        ps.setString(3, newSiegeWall);
+                        ps.setString(4, newSiegeFloor);
+                        ps.setInt(5, pp_id);
+                        ps.addBatch();
+                        i++;
+                    }
+                }
+                if (i > 0) {
+                    ps.executeBatch();
+                    connection.commit();
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " player_prefs IDs to material names");
+                }
+            }
+            plugin.getConfig().set("conversions.player_prefs_materials", true);
+            plugin.saveConfig();
+        } catch (SQLException e) {
+            plugin.debug("Conversion error for player_prefs materials! " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                // reset auto commit
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                plugin.debug("Error closing player_prefs table (converting IDs)! " + e.getMessage());
+            }
+        }
+    }
+
+    public void checkBlockData() {
+        Statement checker = null;
+        PreparedStatement statement = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String check = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "blocks' AND sql LIKE '%block INTEGER DEFAULT 0%'" : "SHOW COLUMNS FROM " + prefix + "blocks LIKE 'block'";
+        String query = "SELECT b_id, block, data FROM " + prefix + "blocks";
+        String update = "UPDATE " + prefix + "blocks SET data = ? WHERE b_id = ?";
+        int i = 0;
+        try {
+            service.testConnection(connection);
+            connection.setAutoCommit(false);
+            checker = connection.createStatement();
+            ResultSet rsfc = checker.executeQuery(check);
+            if (rsfc.next()) {
+                // do blocks data
+                statement = connection.prepareStatement(query);
+                ps = connection.prepareStatement(update);
+                rs = statement.executeQuery();
+                if (rs.isBeforeFirst()) {
+                    while (rs.next()) {
+                        int b_id = rs.getInt("b_id");
+                        int block = rs.getInt("block");
+                        int data = rs.getInt("data");
+                        Material material = LEGACY_ID_LOOKUP.get(block);
+                        if (material != null) {
+                            if (data != 0) {
+                                if (COLOURED.contains(block)) {
+                                    String white = material.toString();
+                                    String[] tmp = white.split("_");
+                                    String colour = white.replace(tmp[0], COLOUR_LOOKUP.get(data));
+                                    material = Material.valueOf(colour);
+                                }
+                            }
+                            // update the record
+                            ps.setString(1, material.createBlockData().getAsString());
+                        } else {
+                            plugin.debug("Could not convert legacy material, defaulting to AIR!");
+                            // update the record
+                            ps.setString(1, TARDISConstants.AIR.getAsString());
+                        }
+                        ps.setInt(2, b_id);
+                        ps.addBatch();
+                        i++;
+                    }
+                    if (i > 0) {
+                        ps.executeBatch();
+                        connection.commit();
+                        plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " blocks IDs to material names");
+                    }
+                }
+            }
+            plugin.getConfig().set("conversions.block_materials", true);
+            plugin.saveConfig();
+        } catch (SQLException e) {
+            plugin.debug("Conversion error for blocks materials! " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (checker != null) {
+                    checker.close();
+                }
+                // reset auto commit
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                plugin.debug("Error closing blocks table (converting ID & data)! " + e.getMessage());
+            }
+        }
+    }
+}

@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetTardisTimeLord;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisTimeLord;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;

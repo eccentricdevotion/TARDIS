@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.chameleon;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetChameleon;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 
 import java.util.HashMap;

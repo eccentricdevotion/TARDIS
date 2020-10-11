@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.*;
-import me.eccentric_nz.TARDIS.database.ResultSetProgramFromEvent;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetProgramFromEvent;
 import me.eccentric_nz.TARDIS.database.data.Program;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

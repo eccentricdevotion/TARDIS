@@ -22,7 +22,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.TARDISMaterialIDConverter;
+import me.eccentric_nz.TARDIS.database.converters.TARDISMaterialIDConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

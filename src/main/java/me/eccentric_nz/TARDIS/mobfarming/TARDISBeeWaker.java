@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.mobfarming;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.ResultSetApiaries;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetApiaries;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
