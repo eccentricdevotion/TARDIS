@@ -157,14 +157,22 @@ public class TARDISWorlds {
     }
 
     private boolean worldFolderExists(String world) {
+        String worldZero = plugin.getServer().getWorlds().get(0).getName();
         File container = plugin.getServer().getWorldContainer();
         File[] dirs = container.listFiles();
         if (dirs != null) {
             for (File dir : dirs) {
-                if (dir.isDirectory() && dir.getName().equals(world)) {
-                    File level = new File(dir, "level.dat");
-                    if (level.exists()) {
+                if (dir.isDirectory()) {
+                    String name = dir.getName();
+                    if (name.startsWith(worldZero)) {
+                        // only check worlds that aren't default dimensions
                         return true;
+                    }
+                    if (name.equals(world)) {
+                        File level = new File(dir, "level.dat");
+                        if (level.exists()) {
+                            return true;
+                        }
                     }
                 }
             }
