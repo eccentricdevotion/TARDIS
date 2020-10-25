@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIPlayerPreferences;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.FlightMode;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -61,7 +61,7 @@ public class TARDISPrefsMenuInventory {
             // make a new record
             HashMap<String, Object> set = new HashMap<>();
             set.put("uuid", uuid.toString());
-            plugin.getQueryFactory().doInsert("player_prefs", set);
+            plugin.getQueryFactory().doSyncInsert("player_prefs", set);
             // get the new record
             rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             rsp.resultSet();
