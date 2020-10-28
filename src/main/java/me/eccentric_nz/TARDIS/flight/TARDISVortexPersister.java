@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISInstantPoliceBox;
 import me.eccentric_nz.TARDIS.builders.TARDISInstantPreset;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -118,6 +119,7 @@ public class TARDISVortexPersister {
                                 dd.setTardisBiome(null);
                                 dd.setSiege(false);
                                 dd.setThrottle(SpaceTimeThrottle.REBUILD);
+                                dd.setPlayer(Bukkit.getOfflinePlayer(uuid));
                                 while (!location.getChunk().isLoaded()) {
                                     location.getChunk().load();
                                 }
