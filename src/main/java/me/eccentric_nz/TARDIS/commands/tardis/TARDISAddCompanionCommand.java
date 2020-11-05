@@ -20,8 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -81,7 +81,7 @@ class TARDISAddCompanionCommand {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
-            if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
+            if (!args[1].matches("[A-Za-z0-9_*]{2,16}")) {
                 TARDISMessage.send(player, "PLAYER_NOT_VALID");
             } else {
                 boolean addAll = (args[1].equalsIgnoreCase("everyone") || args[1].equalsIgnoreCase("all"));
