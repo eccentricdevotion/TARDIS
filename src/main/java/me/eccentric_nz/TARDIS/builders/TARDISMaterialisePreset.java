@@ -526,13 +526,6 @@ class TARDISMaterialisePreset implements Runnable {
                                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisID());
                                     }
                                     break;
-//                                case REDSTONE_BLOCK:
-//                                    if (isPoliceBox) {
-//                                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, Material.BLUE_WOOL, bd.getTardisID());
-//                                    } else {
-//                                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
-//                                    }
-//                                    break;
                                 case LIGHT_GRAY_TERRACOTTA:
                                     BlockData chai = isAdaptiveFactory ? data : colData[yy];
                                     TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, chai, bd.getTardisID());
@@ -629,24 +622,46 @@ class TARDISMaterialisePreset implements Runnable {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                 }
                                 break;
+                            case ACACIA_SAPLING:
                             case ALLIUM:
                             case AZURE_BLUET:
+                            case BAMBOO_SAPLING:
+                            case BEETROOTS:
+                            case BIRCH_SAPLING:
                             case BLUE_ORCHID:
+                            case CARROTS:
+                            case CORNFLOWER:
+                            case CRIMSON_FUNGUS:
+                            case CRIMSON_ROOTS:
+                            case DANDELION:
+                            case DARK_OAK_SAPLING:
                             case DEAD_BUSH:
                             case FERN:
+                            case GRASS:
+                            case JUNGLE_SAPLING:
                             case LARGE_FERN:
                             case LILAC:
+                            case LILY_OF_THE_VALLEY:
+                            case OAK_SAPLING:
                             case ORANGE_TULIP:
                             case OXEYE_DAISY:
                             case PEONY:
                             case PINK_TULIP:
                             case POPPY:
+                            case POTATOES:
                             case RED_TULIP:
                             case ROSE_BUSH:
+                            case SPRUCE_SAPLING:
+                            case SUGAR_CANE:
                             case SUNFLOWER:
+                            case SWEET_BERRY_BUSH:
                             case TALL_GRASS:
+                            case WARPED_FUNGUS:
+                            case WARPED_ROOTS:
+                            case WHEAT:
                             case WHITE_TULIP:
-                                if (i == loops && (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.MESA) || preset.equals(PRESET.PLAINS) || preset.equals(PRESET.TAIGA))) {
+                            case WITHER_ROSE:
+                                if (i == loops && (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.MESA) || preset.equals(PRESET.PLAINS) || preset.equals(PRESET.TAIGA) || preset.equals(PRESET.CONSTRUCT) || preset.equals(PRESET.CUSTOM))) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                 } else {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.AIR);
@@ -756,13 +771,6 @@ class TARDISMaterialisePreset implements Runnable {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, rotatable);
                                 }
                                 break;
-//                            case REDSTONE_BLOCK:
-//                                if (!bd.getLamp().equals(Material.REDSTONE_LAMP) && isPoliceBox) {
-//                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.BLUE_WOOL);
-//                                } else {
-//                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
-//                                }
-//                                break;
                             case LIGHT_GRAY_TERRACOTTA:
                                 BlockData chai = (preset.equals(PRESET.FACTORY)) ? data : coldatas[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chai);

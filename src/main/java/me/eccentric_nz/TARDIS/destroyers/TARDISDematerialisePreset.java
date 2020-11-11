@@ -261,23 +261,45 @@ class TARDISDematerialisePreset implements Runnable {
                                 BlockData chaw = (preset.equals(PRESET.FLOWER)) ? the_colour : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chaw);
                                 break;
+                            case ACACIA_SAPLING:
                             case ALLIUM:
                             case AZURE_BLUET:
+                            case BAMBOO_SAPLING:
+                            case BEETROOTS:
+                            case BIRCH_SAPLING:
                             case BLUE_ORCHID:
+                            case CARROTS:
+                            case CORNFLOWER:
+                            case CRIMSON_FUNGUS:
+                            case CRIMSON_ROOTS:
+                            case DANDELION:
+                            case DARK_OAK_SAPLING:
                             case DEAD_BUSH:
                             case FERN:
+                            case GRASS:
+                            case JUNGLE_SAPLING:
                             case LARGE_FERN:
                             case LILAC:
+                            case LILY_OF_THE_VALLEY:
+                            case OAK_SAPLING:
                             case ORANGE_TULIP:
                             case OXEYE_DAISY:
                             case PEONY:
                             case PINK_TULIP:
                             case POPPY:
+                            case POTATOES:
                             case RED_TULIP:
                             case ROSE_BUSH:
+                            case SPRUCE_SAPLING:
+                            case SUGAR_CANE:
                             case SUNFLOWER:
+                            case SWEET_BERRY_BUSH:
                             case TALL_GRASS:
+                            case WARPED_FUNGUS:
+                            case WARPED_ROOTS:
+                            case WHEAT:
                             case WHITE_TULIP:
+                            case WITHER_ROSE:
                                 break;
                             case TORCH: // lamps, glowstone and torches
                             case GLOWSTONE:
