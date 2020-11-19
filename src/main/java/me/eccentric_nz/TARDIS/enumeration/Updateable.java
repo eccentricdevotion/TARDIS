@@ -28,7 +28,7 @@ public enum Updateable {
     ARTRON(true, true),
     BACK(true, true),
     BACKDOOR(false, false, new RecipeChoice.MaterialChoice(Material.IRON_DOOR)),
-    BEACON(false, false, new RecipeChoice.MaterialChoice(Material.BEACON)),
+    BEACON(false, false, true),
     BELL(true, true),
     BUTTON(true, true),
     CHAMELEON(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS)),
