@@ -235,7 +235,7 @@
         <dependency>
             <groupId>io.papermc</groupId>
             <artifactId>paperlib</artifactId>
-            <version>1.0.5</version>
+            <version>1.0.6</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -287,7 +287,7 @@
         <dependency>
             <groupId>com.onarandombox.multiversecore</groupId>
             <artifactId>Multiverse-Core</artifactId>
-            <version>4.1.1-SNAPSHOT</version>
+            <version>4.2.3-SNAPSHOT</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/Multiverse-Core.jar</systemPath>
@@ -295,7 +295,7 @@
         <dependency>
             <groupId>com.onarandombox.multiverseinventories</groupId>
             <artifactId>Multiverse-Inventories</artifactId>
-            <version>4.0.0-SNAPSHOT</version>
+            <version>4.2.2-SNAPSHOT</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/Multiverse-Inventories.jar</systemPath>
@@ -367,7 +367,7 @@
         <dependency>
             <groupId>nl.rutgerkok</groupId>
             <artifactId>blocklocker</artifactId>
-            <version>1.8.1</version>
+            <version>1.9</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/BlockLocker.jar</systemPath>
@@ -392,7 +392,7 @@
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>10.0.18</version>
+            <version>10.0.20</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/LibsDisguises.jar</systemPath>
