@@ -161,6 +161,42 @@ class TARDISDematerialisePreset implements Runnable {
                     case TOPSYTURVEY:
                         // destroy door
                         plugin.getPresetDestroyer().destroyDoor(dd.getTardisID());
+                    case MESA:
+                        // remove dead bushes
+                        int deadx;
+                        int bushx;
+                        int bushy = (dd.getLocation().getBlockY() + 3);
+                        int deadz;
+                        int bushz;
+                        switch (dd.getDirection()) {
+                            case NORTH:
+                                deadx = dd.getLocation().getBlockX() + 1;
+                                deadz = dd.getLocation().getBlockZ() + 1;
+                                bushx = dd.getLocation().getBlockX() - 1;
+                                bushz = dd.getLocation().getBlockZ();
+                                break;
+                            case WEST:
+                                deadx = dd.getLocation().getBlockX() + 1;
+                                deadz = dd.getLocation().getBlockZ() - 1;
+                                bushx = dd.getLocation().getBlockX();
+                                bushz = dd.getLocation().getBlockZ() + 1;
+                                break;
+                            case SOUTH:
+                                deadx = dd.getLocation().getBlockX() - 1;
+                                deadz = dd.getLocation().getBlockZ() - 1;
+                                bushx = dd.getLocation().getBlockX() + 1;
+                                bushz = dd.getLocation().getBlockZ();
+                                break;
+                            default:
+                                deadx = dd.getLocation().getBlockX() - 1;
+                                deadz = dd.getLocation().getBlockZ() + 1;
+                                bushx = dd.getLocation().getBlockX();
+                                bushz = dd.getLocation().getBlockZ() - 1;
+                                break;
+                        }
+                        TARDISBlockSetters.setBlock(world, deadx, bushy, deadz, Material.AIR);
+                        TARDISBlockSetters.setBlock(world, bushx, bushy, bushz, Material.AIR);
+                        break;
                     default:
                         break;
                 }

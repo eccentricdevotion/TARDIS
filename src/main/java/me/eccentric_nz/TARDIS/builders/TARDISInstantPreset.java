@@ -23,11 +23,11 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConstructSign;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
@@ -106,7 +106,8 @@ public class TARDISInstantPreset {
         World world = bd.getLocation().getWorld();
         int signx = 0, signz = 0;
         // if configured and it's a Whovian preset set biome
-        if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && bd.useTexture()) {
+        boolean isPoliceBox = preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD);
+        if (plugin.getConfig().getBoolean("police_box.set_biome") && isPoliceBox && bd.useTexture()) {
             BiomeSetter.setBiome(bd, true, 1);
         }
         // rescue player?
@@ -216,7 +217,6 @@ public class TARDISInstantPreset {
                     // if tardis is in the air add under door
                     TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
                 }
-                boolean isPoliceBox = preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD);
                 switch (mat) {
                     case GRASS_BLOCK:
                     case DIRT:
