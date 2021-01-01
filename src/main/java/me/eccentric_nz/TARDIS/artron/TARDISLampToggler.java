@@ -21,6 +21,8 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisTimeLord;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -52,8 +54,23 @@ public class TARDISLampToggler {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             boolean use_wool = false;
             if (rsp.resultSet()) {
-                use_wool = rsp.isWoolLightsOn();
-                lantern = rsp.isLanternsOn();
+                // only use player preference if the tardis id of the timelord/companion is the same as the tardis id they are in
+                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                if (rs.fromUUID(uuid.toString()) && rs.getTardis_id() == id) {
+                    lantern = rsp.isLanternsOn();
+                    use_wool = rsp.isWoolLightsOn();
+                } else {
+                    // also force the use of lanterns if that is the tardis owner's preference
+                    ResultSetTardisTimeLord rstl = new ResultSetTardisTimeLord(plugin);
+                    if (rstl.fromID(id) && rstl.getUuid() != uuid) {
+                        // get tardis owner's preference
+                        ResultSetPlayerPrefs rsptl = new ResultSetPlayerPrefs(plugin, rstl.getUuid().toString());
+                        if (rsptl.resultSet()) {
+                            lantern = rsptl.isLanternsOn();
+                            use_wool = rsptl.isWoolLightsOn();
+                        }
+                    }
+                }
             }
             BlockData onlamp = (lantern) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
             for (Block b : rsl.getData()) {
