@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.siegemode;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetSiege;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetSiege;
 import org.bukkit.Chunk;
 
 import java.sql.Connection;
@@ -78,7 +78,9 @@ public class TARDISSiegePersister {
                     }
                 }
             }
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " TARDISes in Siege Mode.");
+            if (count > 0) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " TARDISes in Siege Mode.");
+            }
         } catch (SQLException ex) {
             plugin.debug("ResultSet error for tardis table: " + ex.getMessage());
         } finally {

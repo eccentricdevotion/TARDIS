@@ -69,7 +69,9 @@ public class TARDISVortexPersister {
                 ps.setInt(2, map.getValue());
                 count += ps.executeUpdate();
             }
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " TARDISes floating around in the time vortex.");
+            if (count > 0) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " TARDISes floating around in the time vortex.");
+            }
         } catch (SQLException ex) {
             plugin.debug("Insert error for vortex table: " + ex.getMessage());
         } finally {

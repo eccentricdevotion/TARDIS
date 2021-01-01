@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.hads;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -65,7 +65,9 @@ public class TARDISHadsPersister {
                 ps.setInt(6, rst.getTardis_id());
                 count += ps.executeUpdate();
             }
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " dispersed TARDISes.");
+            if (count > 0) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " dispersed TARDISes.");
+            }
         } catch (SQLException ex) {
             plugin.debug("Insert error for dispersed table: " + ex.getMessage());
         } finally {
@@ -96,7 +98,9 @@ public class TARDISHadsPersister {
                     count++;
                 }
             }
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " dispersed Police Boxes.");
+            if (count > 0) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " dispersed Police Boxes.");
+            }
             ps = connection.prepareStatement("DELETE FROM " + prefix + "dispersed");
             ps.executeUpdate();
         } catch (SQLException ex) {
