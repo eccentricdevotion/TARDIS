@@ -22,11 +22,13 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
+import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -160,26 +162,6 @@ public class TARDISInteriorPostioning {
         return usedSlots;
     }
 
-    @Deprecated
-    public void reclaimChunks(World w, TARDISTIPSData data) {
-        // get starting chunk
-        Location l = new Location(w, data.getMinX(), 0, data.getMinZ());
-        Chunk chunk = w.getChunkAt(l);
-        int sx = chunk.getX();
-        int sz = chunk.getZ();
-        for (int x = 0; x < 64; x++) {
-            for (int z = 0; z < 64; z++) {
-                int cx = sx + x;
-                int cz = sz + z;
-                for (Entity e : w.getChunkAt(cx, cz).getEntities()) {
-                    e.remove();
-                }
-                w.regenerateChunk(cx, cz);
-                w.unloadChunk(cx, cz, true);
-            }
-        }
-    }
-
     // won't remove manually grown rooms...
     public void reclaimChunks(World w, int id) {
         // get ARS data
@@ -205,7 +187,19 @@ public class TARDISInteriorPostioning {
                             Chunk tipsChunk = w.getBlockAt(slot.getX(), slot.getY(), slot.getZ()).getChunk();
                             // remove mobs
                             for (Entity e : tipsChunk.getEntities()) {
-                                e.remove();
+                                if (e instanceof Player) {
+                                    Player p = (Player) e;
+                                    // get the exit location
+                                    TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
+                                    Location location = dl.getL();
+                                    // teleport player and remove from travellers table
+                                    plugin.getGeneralKeeper().getDoorListener().movePlayer(p, location, true, p.getWorld(), false, 0, true);
+                                    HashMap<String, Object> wheret = new HashMap<>();
+                                    wheret.put("uuid", p.getUniqueId().toString());
+                                    plugin.getQueryFactory().doDelete("travellers", wheret);
+                                } else {
+                                    e.remove();
+                                }
                             }
                             for (int y = 0; y < 16; y++) {
                                 for (int col = 0; col < 16; col++) {
