@@ -28,9 +28,7 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Lightable;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.block.data.Openable;
-import org.bukkit.block.data.type.Piston;
-import org.bukkit.block.data.type.RedstoneRail;
-import org.bukkit.block.data.type.RedstoneWire;
+import org.bukkit.block.data.type.*;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -99,8 +97,7 @@ public class TARDISSonicRedstone {
                                 break;
                             }
                         }
-                    } else if (setExtension(block)) {
-                        plugin.getGeneralKeeper().getSonicPistons().add(block.getLocation().toString());
+                    } else if (setExtension(plugin, block)) {
                         piston.setExtended(true);
                         block.setBlockData(piston, true);
                         player.playSound(block.getLocation(), Sound.BLOCK_PISTON_EXTEND, 1.0f, 1.0f);
@@ -136,7 +133,6 @@ public class TARDISSonicRedstone {
                                 wire.setPower(0);
                             }
                         });
-                        block.setBlockData(wire, true);
                     } else {
                         plugin.getGeneralKeeper().getSonicWires().add(block.getLocation().toString());
                         wire.setPower(15);
@@ -145,8 +141,8 @@ public class TARDISSonicRedstone {
                                 wire.setPower(13);
                             }
                         });
-                        block.setBlockData(wire, true);
                     }
+                    block.setBlockData(wire, true);
                     break;
                 case MUSHROOM_STEM:
                     // check the block is a chemistry lamp block
@@ -168,21 +164,21 @@ public class TARDISSonicRedstone {
         }
     }
 
-    public static boolean setExtension(Block b) {
+    public static boolean setExtension(TARDIS plugin, Block b) {
         BlockFace face = ((Piston) b.getBlockData()).getFacing();
         Block l = b.getRelative(face);
         Material mat = l.getType();
         // check if there is a block there
         if (!mat.equals(Material.PISTON_HEAD)) {
             if (mat.isAir()) {
-                extend(b, l);
+                extend(plugin, b, l);
                 return true;
             } else {
                 // check the block further on for AIR
                 Block two = b.getRelative(face, 2);
                 if (two.getType().isAir()) {
                     two.setBlockData(mat.createBlockData());
-                    extend(b, l);
+                    extend(plugin, b, l);
                     return true;
                 }
             }
@@ -190,10 +186,18 @@ public class TARDISSonicRedstone {
         return false;
     }
 
-    private static void extend(Block b, Block l) {
-        l.setBlockData(Material.PISTON_HEAD.createBlockData());
-        Piston piston = (Piston) b.getBlockData();
-        piston.setExtended(true);
-        b.setBlockData(piston, true);
+    private static void extend(TARDIS plugin, Block b, Block l) {
+        plugin.getGeneralKeeper().getSonicPistons().add(b.getLocation().toString());
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            PistonHead pistonHead = (PistonHead) Material.PISTON_HEAD.createBlockData();
+            if (b.getType().equals(Material.STICKY_PISTON)) {
+                pistonHead.setType(TechnicalPiston.Type.STICKY);
+            }
+            Piston piston = (Piston) b.getBlockData();
+            pistonHead.setFacing(piston.getFacing());
+            l.setBlockData(pistonHead);
+            piston.setExtended(true);
+            b.setBlockData(piston, true);
+        }, 3L);
     }
 }
