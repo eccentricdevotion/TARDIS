@@ -49,12 +49,12 @@ public class TARDISDestroyerInner {
     /**
      * Destroys the inside of the TARDIS.
      *
-     * @param schm the name of the schematic file to use can be DEFAULT, BIGGER or DELUXE.
-     * @param id   the unique key of the record for this TARDIS in the database.
-     * @param w    the world where the TARDIS is to be built.
-     * @param slot the TIPS slot number
+     * @param schematic the name of the schematic file to use can be DEFAULT, BIGGER or DELUXE.
+     * @param id        the unique key of the record for this TARDIS in the database.
+     * @param w         the world where the TARDIS is to be built.
+     * @param slot      the TIPS slot number
      */
-    public void destroyInner(Schematic schm, int id, World w, int slot) {
+    public void destroyInner(Schematic schematic, int id, World w, int slot) {
         // destroy TARDIS
         if (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
             plugin.debug(TARDIS.plugin.getLanguage().getString("CONFIG_CREATION_WORLD"));
@@ -63,7 +63,7 @@ public class TARDISDestroyerInner {
         Location wgl;
         TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
         TARDISTIPSData coords;
-        if (schm.getPermission().equals("junk")) {
+        if (schematic.getPermission().equals("junk")) {
             coords = tips.getTIPSJunkData();
         } else {
             coords = tips.getTIPSData(slot);

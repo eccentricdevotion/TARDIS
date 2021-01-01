@@ -20,8 +20,8 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -134,7 +134,6 @@ public class TARDISInteriorPostioning {
         Statement statement = null;
         ResultSet rs = null;
         String query = "SELECT tips FROM " + prefix + "tardis";
-        int i = 0;
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
@@ -142,7 +141,6 @@ public class TARDISInteriorPostioning {
                 while (rs.next()) {
                     int s = rs.getInt("tips");
                     usedSlots.add(s);
-                    i++;
                 }
             }
         } catch (SQLException e) {

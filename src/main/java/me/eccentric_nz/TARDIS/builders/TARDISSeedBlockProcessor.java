@@ -167,7 +167,7 @@ public class TARDISSeedBlockProcessor {
                 setpp.put("floor", floor_type.toString());
                 setpp.put("lanterns_on", (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? 1 : 0);
                 int lastInsertId = plugin.getQueryFactory().doSyncInsert("tardis", set);
-                // insert/update  player prefs
+                // insert/update player prefs
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
                 if (!rsp.resultSet()) {
                     setpp.put("uuid", player.getUniqueId().toString());
