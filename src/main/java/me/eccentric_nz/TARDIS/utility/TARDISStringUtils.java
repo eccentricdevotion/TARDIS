@@ -89,4 +89,16 @@ public class TARDISStringUtils {
             return name;
         }
     }
+
+    /**
+     * Determines the Material type of the block. Values are calculated by converting the string values stored in a
+     * TARDIS Seed block.
+     *
+     * @param str the lore stored in the TARDIS Seed block's Item Meta
+     * @return an String representing the Material
+     */
+    public static String getValuesFromWallString(String str) {
+        String[] split = str.split(": ");
+        return split[1];
+    }
 }

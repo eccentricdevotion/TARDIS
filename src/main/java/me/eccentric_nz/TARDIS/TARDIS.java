@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
 import me.eccentric_nz.TARDIS.builders.TARDISConsoleLoader;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
+import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockPersister;
 import me.eccentric_nz.TARDIS.chameleon.ConstructsConverter;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
@@ -269,6 +270,7 @@ public class TARDIS extends JavaPlugin {
             if (getConfig().getInt("allow.force_field") > 0) {
                 new TARDISForceFieldPersister(this).save();
             }
+            new TARDISSeedBlockPersister(this).save();
             updateTagStats();
             debug("Updated Tag stats");
             getServer().getScheduler().cancelTasks(this);
@@ -452,6 +454,7 @@ public class TARDIS extends JavaPlugin {
             }
             new TARDISVortexPersister(this).load();
             new TARDISJunkPlayerPersister(this).load();
+            new TARDISSeedBlockPersister(this).load();
             setDates();
             startStandBy();
             if (getConfig().getBoolean("allow.perception_filter")) {

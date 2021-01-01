@@ -42,7 +42,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,7 +51,6 @@ import java.util.Locale;
 public class TARDISSeedBlockListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<>();
 
     public TARDISSeedBlockListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -88,14 +86,14 @@ public class TARDISSeedBlockListener implements Listener {
             }
             List<String> lore = im.getLore();
             Schematic schm = Consoles.getBY_NAMES().get(lore.get(0));
-            Material wall = Material.valueOf(getValuesFromWallString(lore.get(1)));
-            Material floor = Material.valueOf(getValuesFromWallString(lore.get(2)));
+            Material wall = Material.valueOf(TARDISStringUtils.getValuesFromWallString(lore.get(1)));
+            Material floor = Material.valueOf(TARDISStringUtils.getValuesFromWallString(lore.get(2)));
             TARDISBuildData seed = new TARDISBuildData();
             seed.setSchematic(schm);
             seed.setWallType(wall);
             seed.setFloorType(floor);
             Location l = event.getBlockPlaced().getLocation();
-            trackTARDISSeed.put(l, seed);
+            plugin.getBuildKeeper().getTrackTARDISSeed().put(l, seed);
             TARDISMessage.send(player, "SEED_PLACE");
             // now the player has to click the block with the TARDIS key
         }
@@ -111,10 +109,10 @@ public class TARDISSeedBlockListener implements Listener {
     public void onSeedBlockBreak(BlockBreakEvent event) {
         Location l = event.getBlock().getLocation();
         Player p = event.getPlayer();
-        if (trackTARDISSeed.containsKey(l)) {
+        if (plugin.getBuildKeeper().getTrackTARDISSeed().containsKey(l)) {
             if (!p.getGameMode().equals(GameMode.CREATIVE)) {
                 // get the Seed block data
-                TARDISBuildData data = trackTARDISSeed.get(l);
+                TARDISBuildData data = plugin.getBuildKeeper().getTrackTARDISSeed().get(l);
                 // drop a TARDIS Seed Block
                 World w = l.getWorld();
                 ItemStack is = new ItemStack(event.getBlock().getType(), 1);
@@ -142,7 +140,7 @@ public class TARDISSeedBlockListener implements Listener {
                 event.getBlock().setBlockData(TARDISConstants.AIR);
                 w.dropItemNaturally(l, is);
             }
-            trackTARDISSeed.remove(l);
+            plugin.getBuildKeeper().getTrackTARDISSeed().remove(l);
         }
     }
 
@@ -158,7 +156,7 @@ public class TARDISSeedBlockListener implements Listener {
         }
         if (event.getClickedBlock() != null) {
             Location l = event.getClickedBlock().getLocation();
-            if (trackTARDISSeed.containsKey(l)) {
+            if (plugin.getBuildKeeper().getTrackTARDISSeed().containsKey(l)) {
                 Player player = event.getPlayer();
                 String key;
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
@@ -180,11 +178,11 @@ public class TARDISSeedBlockListener implements Listener {
                         }
                     }
                     // grow a TARDIS
-                    TARDISBuildData seed = trackTARDISSeed.get(l);
+                    TARDISBuildData seed = plugin.getBuildKeeper().getTrackTARDISSeed().get(l);
                     // process seed data
                     if (new TARDISSeedBlockProcessor(plugin).processBlock(seed, l, player)) {
                         // remove seed data
-                        trackTARDISSeed.remove(l);
+                        plugin.getBuildKeeper().getTrackTARDISSeed().remove(l);
                         // replace seed block with animated grow block
                         MultipleFacing multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(55));
                         event.getClickedBlock().setBlockData(multipleFacing);
@@ -192,17 +190,5 @@ public class TARDISSeedBlockListener implements Listener {
                 }
             }
         }
-    }
-
-    /**
-     * Determines the Material type of the block. Values are calculated by converting the string values stored in a
-     * TARDIS Seed block.
-     *
-     * @param str the lore stored in the TARDIS Seed block's Item Meta
-     * @return an String representing the Material
-     */
-    private String getValuesFromWallString(String str) {
-        String[] split = str.split(": ");
-        return split[1];
     }
 }

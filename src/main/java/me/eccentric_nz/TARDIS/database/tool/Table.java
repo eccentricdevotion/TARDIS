@@ -34,6 +34,7 @@ public enum Table {
     programs,
     reminders,
     room_progress,
+    seeds,
     siege,
     sonic,
     storage,

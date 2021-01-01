@@ -17,7 +17,9 @@
 package me.eccentric_nz.TARDIS;
 
 import com.google.common.collect.Sets;
+import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
+import org.bukkit.Location;
 import org.bukkit.Material;
 
 import java.util.HashMap;
@@ -107,6 +109,7 @@ public class TARDISBuilderInstanceKeeper {
         PRECIOUS.add(Material.BEDROCK);
     }
 
+    private final HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<>();
     private final HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<>();
     private final TARDISStainedGlassLookup stainedGlassLookup = new TARDISStainedGlassLookup();
     private final HashMap<UUID, Integer> roomProgress = new HashMap<>();
@@ -114,6 +117,10 @@ public class TARDISBuilderInstanceKeeper {
 
     public static Set<Material> getPrecious() {
         return PRECIOUS;
+    }
+
+    public HashMap<Location, TARDISBuildData> getTrackTARDISSeed() {
+        return trackTARDISSeed;
     }
 
     public HashMap<String, HashMap<String, Integer>> getRoomBlockCounts() {
