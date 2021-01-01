@@ -77,6 +77,7 @@ public class TARDISInstantPoliceBox {
             if (e instanceof ItemFrame) {
                 frame = (ItemFrame) e;
                 found = true;
+                break;
             }
         }
         if (!found) {
@@ -92,7 +93,7 @@ public class TARDISInstantPoliceBox {
         Material dye = TARDISBuilderUtility.getDyeMaterial(preset);
         ItemStack is = new ItemStack(dye, 1);
         ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(10001);
+        im.setCustomModelData(1001);
         if (bd.shouldAddSign()) {
             im.setDisplayName(bd.getPlayer().getName() + "'s Police Box");
         }

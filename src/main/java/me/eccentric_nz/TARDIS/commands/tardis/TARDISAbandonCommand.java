@@ -19,23 +19,29 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISAbandonEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAbandonLister;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
+import me.eccentric_nz.TARDIS.database.converters.TARDISAbandonUpdate;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisAbandoned;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.converters.TARDISAbandonUpdate;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 
@@ -258,8 +264,29 @@ public class TARDISAbandonCommand {
                     if (rsc.resultSet()) {
                         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                         plugin.getPM().callEvent(new TARDISAbandonEvent(player, id, current));
-                        // clear sign
-                        if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
+                        // always clear sign
+                        if (preset.isColoured()) {
+                            World world = rsc.getWorld();
+                            // remove name from the item frame item
+                            ItemFrame frame = null;
+                            boolean found = false;
+                            for (Entity e : world.getNearbyEntities(current, 1.0d, 1.0d, 1.0d)) {
+                                if (e instanceof ItemFrame) {
+                                    frame = (ItemFrame) e;
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (found) {
+                                Material dye = TARDISBuilderUtility.getDyeMaterial(preset);
+                                ItemStack is = new ItemStack(dye, 1);
+                                ItemMeta im = is.getItemMeta();
+                                im.setCustomModelData(1001);
+                                im.setDisplayName("");
+                                is.setItemMeta(im);
+                                frame.setItem(is, false);
+                            }
+                        } else {
                             Sign sign = getSign(current, rsc.getDirection(), preset);
                             if (sign != null) {
                                 switch (preset) {
