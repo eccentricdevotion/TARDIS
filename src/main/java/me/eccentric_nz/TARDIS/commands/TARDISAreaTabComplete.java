@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -30,14 +31,18 @@ import java.util.List;
  */
 public class TARDISAreaTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("start", "end", "parking", "remove", "show", "yard", "invisibility");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("start", "end", "parking", "remove", "show", "yard", "invisibility", "direction");
     private final List<String> INVISIBILTY_SUBS = new ArrayList<>();
+    private final List<String> DIRECTION_SUBS = new ArrayList<>();
 
     public TARDISAreaTabComplete() {
         INVISIBILTY_SUBS.add("ALLOW");
         INVISIBILTY_SUBS.add("DENY");
         for (PRESET preset : PRESET.values()) {
             INVISIBILTY_SUBS.add(preset.toString());
+        }
+        for (COMPASS compass : COMPASS.values()) {
+            DIRECTION_SUBS.add(compass.toString());
         }
     }
 
@@ -50,6 +55,9 @@ public class TARDISAreaTabComplete extends TARDISCompleter implements TabComplet
             String sub = args[0];
             if (sub.equals("invisibility")) {
                 return partial(lastArg, INVISIBILTY_SUBS);
+            }
+            if (sub.equals("direction")) {
+                return partial(lastArg, DIRECTION_SUBS);
             }
         }
         return ImmutableList.of();

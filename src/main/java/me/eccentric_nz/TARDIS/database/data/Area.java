@@ -30,8 +30,9 @@ public class Area {
     private final int y;
     private final int parkingDistance;
     private final String invisibility;
+    private final String direction;
 
-    public Area(String areaName, String world, int minX, int minZ, int maxX, int maxZ, int y, int parkingDistance, String invisibility) {
+    public Area(String areaName, String world, int minX, int minZ, int maxX, int maxZ, int y, int parkingDistance, String invisibility, String direction) {
         this.areaName = areaName;
         this.world = world;
         this.minX = minX;
@@ -41,6 +42,7 @@ public class Area {
         this.y = y;
         this.parkingDistance = parkingDistance;
         this.invisibility = invisibility;
+        this.direction = direction;
     }
 
     public String getAreaName() {
@@ -77,5 +79,9 @@ public class Area {
 
     public String getInvisibility() {
         return invisibility;
+    }
+
+    public String getDirection() {
+        return direction;
     }
 }

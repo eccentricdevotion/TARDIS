@@ -63,6 +63,7 @@ class TARDISMySQLDatabaseUpdater {
         uuidUpdates.put("travellers", "tardis_id");
         areaupdates.add("parking_distance int(2) DEFAULT '2'");
         areaupdates.add("invisibility varchar(32) DEFAULT 'ALLOW'");
+        areaupdates.add("direction varchar(5) DEFAULT ''");
         tardisupdates.add("last_known_name varchar(32) DEFAULT ''");
         tardisupdates.add("lights_on int(1) DEFAULT '1'");
         tardisupdates.add("monsters int(2) DEFAULT '0'");

@@ -707,6 +707,20 @@ public class TARDISTravelCommands implements CommandExecutor {
                         set.put("x", l.getBlockX());
                         set.put("y", l.getBlockY());
                         set.put("z", l.getBlockZ());
+                        // should be setting direction of TARDIS
+                        if (!rsa.getArea().getDirection().isEmpty()) {
+                            set.put("direction", rsa.getArea().getDirection());
+                        } else {
+                            // get current direction
+                            HashMap<String, Object> wherecl = new HashMap<>();
+                            wherecl.put("tardis_id", id);
+                            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                            if (!rsc.resultSet()) {
+                                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                                return true;
+                            }
+                            set.put("direction", rsc.getDirection().toString());
+                        }
                         set.put("submarine", 0);
                         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
                         TARDISMessage.send(player, "TRAVEL_APPROVED", args[1]);

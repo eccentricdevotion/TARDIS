@@ -77,7 +77,7 @@ public class ResultSetAreas {
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
             where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
-            wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
+            wheres = " WHERE " + sbw.substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "areas" + wheres;
         try {
@@ -99,17 +99,7 @@ public class ResultSetAreas {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     if (!onlynames) {
-                        area = new Area(
-                                rs.getString("area_name"),
-                                rs.getString("world"),
-                                rs.getInt("minx"),
-                                rs.getInt("minz"),
-                                rs.getInt("maxx"),
-                                rs.getInt("maxz"),
-                                rs.getInt("y"),
-                                rs.getInt("parking_distance"),
-                                rs.getString("invisibility")
-                        );
+                        area = new Area(rs.getString("area_name"), rs.getString("world"), rs.getInt("minx"), rs.getInt("minz"), rs.getInt("maxx"), rs.getInt("maxz"), rs.getInt("y"), rs.getInt("parking_distance"), rs.getString("invisibility"), rs.getString("direction"));
                         if (multiple) {
                             data.add(area);
                         }

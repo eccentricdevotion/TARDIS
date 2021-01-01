@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -240,6 +241,40 @@ public class TARDISAreaCommands implements CommandExecutor {
                     whereInvis.put("area_name", args[1]);
                     plugin.getQueryFactory().doUpdate("areas", invisSet, whereInvis);
                     TARDISMessage.send(player, "AREA_INVISIBILITY_SET", args[1]);
+                    return true;
+                case "direction":
+                    if (args.length < 2) {
+                        TARDISMessage.send(player, "AREA_NEED");
+                        return false;
+                    }
+                    if (args.length < 3) {
+                        TARDISMessage.send(player, "AREA_DIRECTION_ARG");
+                        return false;
+                    }
+                    HashMap<String, Object> dirWhere = new HashMap<>();
+                    dirWhere.put("area_name", args[1]);
+                    ResultSetAreas rsaDir = new ResultSetAreas(plugin, dirWhere, false, false);
+                    if (!rsaDir.resultSet()) {
+                        TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                        return false;
+                    }
+                    String dir = args[2].toUpperCase(Locale.ENGLISH);
+                    try {
+                        COMPASS compass = COMPASS.valueOf(dir);
+                    } catch (IllegalArgumentException e) {
+                        if (dir.equals("NONE")) {
+                            dir = "";
+                        } else {
+                            TARDISMessage.send(player, "ARG_DIRECTION");
+                            return false;
+                        }
+                    }
+                    HashMap<String, Object> dirSet = new HashMap<>();
+                    dirSet.put("direction", dir);
+                    HashMap<String, Object> whereDir = new HashMap<>();
+                    whereDir.put("area_name", args[1]);
+                    plugin.getQueryFactory().doUpdate("areas", dirSet, dirWhere);
+                    TARDISMessage.send(player, "AREA_DIRECTION_SET", args[1]);
                     return true;
                 default:
                     return false;
