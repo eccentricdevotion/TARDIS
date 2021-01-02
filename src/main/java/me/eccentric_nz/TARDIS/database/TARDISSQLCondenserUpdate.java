@@ -64,7 +64,7 @@ class TARDISSQLCondenserUpdate implements Runnable {
             }
         });
         where.clear();
-        wheres = sbw.toString().substring(0, sbw.length() - 5);
+        wheres = sbw.substring(0, sbw.length() - 5);
         String query = "UPDATE " + prefix + "condenser SET block_count = block_count - " + amount + " WHERE " + wheres;
         try {
             service.testConnection(connection);

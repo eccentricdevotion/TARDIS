@@ -54,7 +54,7 @@ public class ResultSetArchive {
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
             where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
-            wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
+            wheres = " WHERE " + sbw.substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "archive" + wheres;
         try {

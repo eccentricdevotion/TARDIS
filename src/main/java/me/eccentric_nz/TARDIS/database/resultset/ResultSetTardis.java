@@ -82,7 +82,7 @@ public class ResultSetTardis {
             if (abandoned < 2) {
                 wheres = " WHERE " + sbw.toString() + "abandoned = " + abandoned;
             } else {
-                wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
+                wheres = " WHERE " + sbw.substring(0, sbw.length() - 5);
             }
         }
         if (!limit.isEmpty()) {
