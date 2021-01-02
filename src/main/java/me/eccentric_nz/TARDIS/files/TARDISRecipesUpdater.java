@@ -369,18 +369,6 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Handles.lore", "Cyberhead from the~Maldovar Market");
             i++;
         }
-        if (!recipes_config.contains("shaped.TARDIS Keyboard Editor")) {
-            recipes_config.set("shaped.TARDIS Keyboard Editor.easy_shape", "---,RSR,-R-");
-            recipes_config.set("shaped.TARDIS Keyboard Editor.easy_ingredients.R", "REDSTONE");
-            recipes_config.set("shaped.TARDIS Keyboard Editor.easy_ingredients.S", "OAK_SIGN");
-            recipes_config.set("shaped.TARDIS Keyboard Editor.hard_shape", "---,RSR,-R-");
-            recipes_config.set("shaped.TARDIS Keyboard Editor.hard_ingredients.R", "REDSTONE");
-            recipes_config.set("shaped.TARDIS Keyboard Editor.hard_ingredients.S", "OAK_SIGN");
-            recipes_config.set("shaped.TARDIS Keyboard Editor.result", "OAK_SIGN");
-            recipes_config.set("shaped.TARDIS Keyboard Editor.amount", 1);
-            recipes_config.set("shaped.TARDIS Keyboard Editor.lore", "");
-            i++;
-        }
         if (recipes_config.contains("shaped.Time Rotor")) {
             // remove old recipe
             recipes_config.set("shaped.Time Rotor", null);

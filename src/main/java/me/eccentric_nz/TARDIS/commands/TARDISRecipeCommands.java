@@ -82,7 +82,6 @@ public class TARDISRecipeCommands implements CommandExecutor {
         recipeItems.put("jelly-baby", "Orange Jelly Baby");
         recipeItems.put("k-circuit", "Knockback Circuit");
         recipeItems.put("key", "TARDIS Key");
-        recipeItems.put("keyboard", "TARDIS Keyboard Editor");
         recipeItems.put("l-circuit", "TARDIS Locator Circuit");
         recipeItems.put("locator", "TARDIS Locator");
         recipeItems.put("m-circuit", "TARDIS Materialisation Circuit");

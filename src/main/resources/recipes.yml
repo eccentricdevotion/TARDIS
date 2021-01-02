@@ -875,18 +875,6 @@ shaped:
     result: PAPER
     amount: 1
     lore: Smaller on the outside
-  TARDIS Keyboard Editor:
-    easy_shape: '---,RSR,-R-'
-    easy_ingredients:
-      R: REDSTONE
-      S: OAK_SIGN
-    hard_shape: '---,RSR,-R-'
-    hard_ingredients:
-      R: REDSTONE
-      S: OAK_SIGN
-    result: OAK_SIGN
-    amount: 1
-    lore: ''
   Time Rotor Early:
     easy_shape: 'CRC,GWG,GRG'
     easy_ingredients:

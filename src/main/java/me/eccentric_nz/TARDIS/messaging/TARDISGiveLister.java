@@ -142,7 +142,6 @@ public class TARDISGiveLister {
         }
         tg.addRow(ChatColor.GREEN + "wand", ChatColor.DARK_GREEN + "TARDIS Schematic Wand");
         tg.addRow(ChatColor.GREEN + "watch", ChatColor.DARK_GREEN + "Chameleon Arch Fob Watch");
-        tg.addRow(ChatColor.GREEN + "keyboard", ChatColor.DARK_GREEN + "TARDIS Keyboard Editor");
         return tg.generate(sender instanceof Player ? TableGeneratorSmallChar.Receiver.CLIENT : TableGeneratorSmallChar.Receiver.CONSOLE, true, true);
     }
 }

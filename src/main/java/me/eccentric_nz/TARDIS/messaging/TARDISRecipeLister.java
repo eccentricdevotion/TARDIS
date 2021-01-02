@@ -133,7 +133,6 @@ public class TARDISRecipeLister {
         }
         tg.addRow(ChatColor.GREEN + "wand", ChatColor.DARK_GREEN + "TARDIS Schematic Wand");
         tg.addRow(ChatColor.GREEN + "watch", ChatColor.DARK_GREEN + "Chameleon Arch Fob Watch");
-        tg.addRow(ChatColor.GREEN + "keyboard", ChatColor.DARK_GREEN + "TARDIS Keyboard Editor");
         return tg.generate(TableGeneratorSmallChar.Receiver.CLIENT, true, true);
     }
 }
