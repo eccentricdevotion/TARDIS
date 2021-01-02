@@ -22,7 +22,7 @@ To use it:
 
 1. Place a sign in the TARDIS control room
 2. Use the command `/tardis update keyboard`, then click the sign
-3. Right-click the ‘keyboard’ with another sign, OR (if [ProtocolLib](http://dev.bukkit.org/bukkit-plugins/protocollib/) is installed), just right-click the sign
+3. Right-click the sign
 4. Enter a save/area/player/biome on the first line or coordinates (world,x,y,z) on four lines
 5. Click done and the destination will be set
 

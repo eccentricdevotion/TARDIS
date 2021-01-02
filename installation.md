@@ -45,9 +45,8 @@ While not essential to make the TARDIS plugin work, the following plugins will m
 1. Install [WorldGuard](http://dev.bukkit.org/bukkit-plugins/worldguard) to automatically protect your TARDIS from griefing.
 2. Install a permissions plugin, so that you can restrict or grant players the rights to use TARDIS’ different features. We like [PermissionsBukkit](http://dev.bukkit.org/bukkit-plugins/permbukkit/).
 3. Install [TARDISWeepingAngels](weeping-angels.html) for a more Who-like experience!
-4. Install [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) so that the TARDIS Zero Room is completely dettached from the universe. Also required by LibsDisguises below.
-5. (Optional **§**) Install [LibsDisguises](https://www.spigotmc.org/resources/libs-disguises-free.81/) so that you can use the Genetic Manipulator / Immortality Gate. **§ Note** _TARDIS can now create its own disguises, but LibsDisguises does a much better job of it_.
-6. Install [Dynmap-TARDIS](http://dev.bukkit.org/bukkit-plugins/dynmap-tardis/) so that you show real-time TARDIS locations on the Dynmap plugin map.
+4. (Optional **§**) Install [LibsDisguises](https://www.spigotmc.org/resources/libs-disguises-free.81/) so that you can use the Genetic Manipulator / Immortality Gate. **§ Note** _TARDIS can now create its own disguises, but LibsDisguises does a much better job of it_.
+5. Install [Dynmap-TARDIS](http://dev.bukkit.org/bukkit-plugins/dynmap-tardis/) so that you show real-time TARDIS locations on the Dynmap plugin map.
 
 ### Video
 <iframe src="https://player.vimeo.com/video/58356201" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
