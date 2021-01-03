@@ -108,6 +108,20 @@ public class TARDISInteriorPostioning {
     }
 
     /**
+     * Get the TIPS slot from a player location
+     *
+     * @param location the player's current location in the TARDIS world
+     * @return the TIPS slot number
+     */
+    public static int getTIPSSlot(Location location) {
+        int px = location.getBlockX();
+        int pz = location.getBlockZ();
+        int row = px / 1024;
+        int col = pz / 1024;
+        return (col * 20) + row + 1;
+    }
+
+    /**
      * Calculate the position data for the Junk TARDIS TIPS slot.
      *
      * @return a TIPS Data container

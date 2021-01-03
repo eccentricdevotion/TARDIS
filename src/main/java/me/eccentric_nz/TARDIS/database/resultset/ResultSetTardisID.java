@@ -86,6 +86,45 @@ public class ResultSetTardisID {
         }
     }
 
+    /**
+     * Attempts to see whether the supplied TARDIS id is in the tardis table. This method builds an SQL query string
+     * from the parameters supplied and then executes the query.
+     *
+     * @param slot the TIPS slot number to check
+     * @return true or false depending on whether the TARDIS id exists in the table
+     */
+    public boolean fromTIPSSlot(int slot) {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT tardis_id FROM " + prefix + "tardis WHERE tips = ?";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, slot);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                tardis_id = rs.getInt("tardis_id");
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for tardis [tardis_id fromTIPSSlot] table! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing tardis [tardis_id fromTIPSSlot] table! " + e.getMessage());
+            }
+        }
+    }
+
     public int getTardis_id() {
         return tardis_id;
     }

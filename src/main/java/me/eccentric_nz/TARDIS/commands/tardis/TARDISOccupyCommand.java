@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -55,12 +56,19 @@ class TARDISOccupyCommand {
                     return true;
                 }
             } else if (plugin.getUtils().inTARDISWorld(player)) {
-                ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                if (!rs.fromUUID(player.getUniqueId().toString())) {
+                ResultSetTardisID rsid = new ResultSetTardisID(plugin);
+                // if TIPS determine tardis_id from player location
+                if (plugin.getConfig().getBoolean("creation.default_world") && !player.hasPermission("tardis.create_world")) {
+                    int slot = TARDISInteriorPostioning.getTIPSSlot(player.getLocation());
+                    if (!rsid.fromTIPSSlot(slot)) {
+                        TARDISMessage.send(player, "OCCUPY_MUST_BE_IN");
+                        return false;
+                    }
+                } else if (!rsid.fromUUID(player.getUniqueId().toString())) {
                     TARDISMessage.send(player, "NOT_A_TIMELORD");
                     return false;
                 }
-                int id = rs.getTardis_id();
+                int id = rsid.getTardis_id();
                 HashMap<String, Object> wherei = new HashMap<>();
                 wherei.put("tardis_id", id);
                 wherei.put("uuid", player.getUniqueId().toString());
