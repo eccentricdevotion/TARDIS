@@ -16,21 +16,23 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.data.Archive;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.data.Archive;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
@@ -43,7 +45,12 @@ class TARDISThemeProcessor {
     private final TARDIS plugin;
     private final UUID uuid;
     private Archive archive_next;
-    private Archive archive_prev;
+    private int w;
+    private int h;
+    private int pw;
+    private int ph;
+    private ConsoleSize size_next;
+    private ConsoleSize size_prev;
 
     TARDISThemeProcessor(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
@@ -78,12 +85,31 @@ class TARDISThemeProcessor {
             ResultSetArchive rs = new ResultSetArchive(plugin, where);
             if (rs.resultSet()) {
                 archive_next = rs.getArchive();
+                JsonObject dimensions = archive_next.getJSON().get("dimensions").getAsJsonObject();
+                h = dimensions.get("height").getAsInt();
+                w = dimensions.get("width").getAsInt();
+                size_next = archive_next.getConsoleSize();
             } else {
                 // abort
                 Player cp = plugin.getServer().getPlayer(uuid);
                 TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
                 return;
             }
+        } else {
+            String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
+            String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
+            File file = new File(path);
+            if (!file.exists()) {
+                plugin.debug("Could not find a schematic with that name!");
+                return;
+            }
+            // get JSON
+            JsonObject obj = TARDISSchematicGZip.unzip(path);
+            // get dimensions
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            h = dimensions.get("height").getAsInt();
+            w = dimensions.get("width").getAsInt();
+            size_next = tud.getSchematic().getConsoleSize();
         }
         if (tud.getPrevious().getPermission().equals("archive")) {
             HashMap<String, Object> where = new HashMap<>();
@@ -91,13 +117,31 @@ class TARDISThemeProcessor {
             where.put("use", 2);
             ResultSetArchive rs = new ResultSetArchive(plugin, where);
             if (rs.resultSet()) {
-                archive_prev = rs.getArchive();
+                JsonObject dimensions = rs.getArchive().getJSON().get("dimensions").getAsJsonObject();
+                ph = dimensions.get("height").getAsInt();
+                pw = dimensions.get("width").getAsInt();
+                size_prev = rs.getArchive().getConsoleSize();
             } else {
                 // abort
                 Player cp = plugin.getServer().getPlayer(uuid);
                 TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
                 return;
             }
+        } else {
+            String directory = (tud.getPrevious().isCustom()) ? "user_schematics" : "schematics";
+            String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getPrevious().getPermission() + ".tschm";
+            File file = new File(path);
+            if (!file.exists()) {
+                plugin.debug("Could not find a schematic with that name!");
+                return;
+            }
+            // get JSON
+            JsonObject obj = TARDISSchematicGZip.unzip(path);
+            // get dimensions
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            ph = dimensions.get("height").getAsInt();
+            pw = dimensions.get("width").getAsInt();
+            size_prev = tud.getSchematic().getConsoleSize();
         }
         // if configured check whether there are still any blocks left
         if (plugin.getConfig().getBoolean("desktop.check_blocks_before_upgrade")) {
@@ -118,9 +162,9 @@ class TARDISThemeProcessor {
             }
         }
         // check if there are any rooms that need to be jettisoned
-        if (compare(tud.getPrevious(), tud.getSchematic())) {
+        if (w < pw || h < ph) {
             // we need more space!
-            if (checkARSGrid(tud.getPrevious(), tud.getSchematic(), uuid)) {
+            if (checkARSGrid(size_prev, size_next, uuid)) {
                 TARDISMessage.send(plugin.getServer().getPlayer(uuid), "UPGRADE_ABORT_SPACE");
                 plugin.getTrackerKeeper().getUpgrades().remove(uuid);
                 if (tud.getPrevious().getPermission().equals("archive")) {
@@ -171,20 +215,7 @@ class TARDISThemeProcessor {
         ttr.setTaskID(task);
     }
 
-    private boolean compare(Schematic prev, Schematic next) {
-        // special case for archives
-        if (archive_next != null && archive_prev == null) {
-            return (!prev.getPermission().equals(archive_next.getName()) && ((prev.getConsoleSize().equals(ConsoleSize.SMALL) && !archive_next.getConsoleSize().equals(ConsoleSize.SMALL)) || (!prev.getConsoleSize().equals(ConsoleSize.TALL) && archive_next.getConsoleSize().equals(ConsoleSize.TALL))));
-        } else if (archive_next == null && archive_prev != null) {
-            return (!archive_prev.getName().equals(next.getPermission()) && ((archive_prev.getConsoleSize().equals(ConsoleSize.SMALL) && !next.getConsoleSize().equals(ConsoleSize.SMALL)) || (!archive_prev.getConsoleSize().equals(ConsoleSize.TALL) && next.getConsoleSize().equals(ConsoleSize.TALL))));
-        } else if (archive_next != null && archive_prev != null) {
-            return (!archive_prev.getName().equals(archive_next.getName()) && ((archive_prev.getConsoleSize().equals(ConsoleSize.SMALL) && !archive_next.getConsoleSize().equals(ConsoleSize.SMALL)) || (!archive_prev.getConsoleSize().equals(ConsoleSize.TALL) && archive_next.getConsoleSize().equals(ConsoleSize.TALL))));
-        } else {
-            return (!prev.equals(next) && ((prev.getConsoleSize().equals(ConsoleSize.SMALL) && !next.getConsoleSize().equals(ConsoleSize.SMALL)) || (!prev.getConsoleSize().equals(ConsoleSize.TALL) && next.getConsoleSize().equals(ConsoleSize.TALL))));
-        }
-    }
-
-    private boolean checkARSGrid(Schematic prev, Schematic next, UUID uuid) {
+    private boolean checkARSGrid(ConsoleSize prev, ConsoleSize next, UUID uuid) {
         // get ARS
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
@@ -192,22 +223,40 @@ class TARDISThemeProcessor {
         if (rs.resultSet()) {
             String json = rs.getJson();
             String[][][] grid = TARDISARSMethods.getGridFromJSON(json);
-            if (prev.getConsoleSize().equals(ConsoleSize.SMALL) || (archive_prev != null && archive_prev.getConsoleSize().equals(ConsoleSize.SMALL))) {
-                if (next.getConsoleSize().equals(ConsoleSize.MEDIUM) || (archive_next != null && archive_next.getConsoleSize().equals(ConsoleSize.MEDIUM))) {
-                    return (!grid[1][4][5].equals("STONE") || !grid[1][5][4].equals("STONE") || !grid[1][5][5].equals("STONE"));
-                } else if (next.getConsoleSize().equals(ConsoleSize.TALL) || (archive_next != null && archive_next.getConsoleSize().equals(ConsoleSize.TALL))) {
-                    return (!grid[1][4][5].equals("STONE") || !grid[1][5][4].equals("STONE") || !grid[1][5][5].equals("STONE") || !grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE"));
-                } else {
-                    return false;
-                }
-            } else if (prev.getConsoleSize().equals(ConsoleSize.MEDIUM) || (archive_prev != null && archive_next.getConsoleSize().equals(ConsoleSize.MEDIUM))) {
-                if (next.getConsoleSize().equals(ConsoleSize.TALL) || (archive_next != null && archive_next.getConsoleSize().equals(ConsoleSize.TALL))) {
-                    return (!grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE"));
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
+            switch (prev) {
+                case SMALL:
+                    switch (next) {
+                        case MEDIUM:
+                            return (!grid[1][4][5].equals("STONE") || !grid[1][5][4].equals("STONE") || !grid[1][5][5].equals("STONE"));
+                        case TALL:
+                            return (!grid[1][4][5].equals("STONE") || !grid[1][5][4].equals("STONE") || !grid[1][5][5].equals("STONE") || !grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE"));
+                        case MASSIVE:
+                            return (!grid[1][4][5].equals("STONE") || !grid[1][4][6].equals("STONE") || !grid[1][5][4].equals("STONE") || !grid[1][5][5].equals("STONE") || !grid[1][5][6].equals("STONE") || !grid[1][6][4].equals("STONE") || !grid[1][6][5].equals("STONE") || !grid[1][6][6].equals("STONE") || !grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][4][6].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE") || !grid[2][5][6].equals("STONE") || !grid[2][6][4].equals("STONE") || !grid[2][6][5].equals("STONE") || !grid[2][6][6].equals("STONE"));
+                        default:
+                            // same size do nothing
+                    }
+                    break;
+                case MEDIUM:
+                    switch (next) {
+                        case TALL:
+                            return (!grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE"));
+                        case MASSIVE:
+                            return (!grid[1][4][6].equals("STONE") || !grid[1][5][6].equals("STONE") || !grid[1][6][4].equals("STONE") || !grid[1][6][5].equals("STONE") || !grid[1][6][6].equals("STONE") || !grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][4][6].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE") || !grid[2][5][6].equals("STONE") || !grid[2][6][4].equals("STONE") || !grid[2][6][5].equals("STONE") || !grid[2][6][6].equals("STONE"));
+                        default:
+                            // same or smaller size do nothing
+                    }
+                    break;
+                case TALL:
+                    switch (next) {
+                        case MASSIVE:
+                            return (!grid[1][4][6].equals("STONE") || !grid[1][5][6].equals("STONE") || !grid[1][6][4].equals("STONE") || !grid[1][6][5].equals("STONE") || !grid[1][6][6].equals("STONE") || !grid[2][4][6].equals("STONE") || !grid[2][5][6].equals("STONE") || !grid[2][6][4].equals("STONE") || !grid[2][6][5].equals("STONE") || !grid[2][6][6].equals("STONE"));
+                        default:
+                            // same or smaller size do nothing
+                    }
+                    break;
+                default:
+                    // MASSIVE size do nothing
+                    break;
             }
         }
         return false;

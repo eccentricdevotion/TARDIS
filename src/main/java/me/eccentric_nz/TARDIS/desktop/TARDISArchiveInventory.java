@@ -107,14 +107,16 @@ class TARDISArchiveInventory {
         // templates
         int t = 22;
         for (ConsoleSize c : ConsoleSize.values()) {
-            ItemStack temp = new ItemStack(Material.BOWL, 1);
-            ItemMeta late = temp.getItemMeta();
-            late.setDisplayName(c.toString());
-            late.setCustomModelData(GUIArchive.valueOf(c.toString()).getCustomModelData());
-            late.setLore(Arrays.asList("Cobblestone template", c.getBlocks()));
-            temp.setItemMeta(late);
-            stack[t] = temp;
-            t++;
+            if (!c.equals(ConsoleSize.MASSIVE)) {
+                ItemStack temp = new ItemStack(Material.BOWL, 1);
+                ItemMeta late = temp.getItemMeta();
+                late.setDisplayName(c.toString());
+                late.setCustomModelData(GUIArchive.valueOf(c.toString()).getCustomModelData());
+                late.setLore(Arrays.asList("Cobblestone template", c.getBlocks()));
+                temp.setItemMeta(late);
+                stack[t] = temp;
+                t++;
+            }
         }
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);

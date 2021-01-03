@@ -23,7 +23,8 @@ public enum ConsoleSize {
 
     SMALL("small", "16 x 16 x 16 blocks", 600l),
     MEDIUM("medium", "32 x 16 x 32 blocks", 1460l),
-    TALL("tall", "32 x 32 x 32 blocks", 3072l);
+    TALL("tall", "32 x 32 x 32 blocks", 3072l),
+    MASSIVE("massive", "48 x 32 x 48 blocks", 8560l);
 
     private final String configPath;
     private final String blocks;
@@ -52,8 +53,10 @@ public enum ConsoleSize {
             return SMALL;
         } else if (w > 16 && h < 17) {
             return MEDIUM;
-        } else {
+        } else if (w < 48) {
             return TALL;
+        } else {
+            return MASSIVE;
         }
     }
 }

@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
@@ -573,7 +572,7 @@ class TARDISBuildAbandoned implements Runnable {
                 level++;
                 if (player != null) {
                     // set progress bar title
-                    if (!schm.getConsoleSize().equals(ConsoleSize.TALL) && level == h) {
+                    if (level == h) {
                         bb.setTitle(TARDISConstants.GROWTH_STATES.get(31));
                     } else {
                         bb.setTitle(TARDISConstants.GROWTH_STATES.get(level));

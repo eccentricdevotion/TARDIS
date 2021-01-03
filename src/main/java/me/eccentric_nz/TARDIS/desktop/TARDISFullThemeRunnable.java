@@ -28,11 +28,11 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.database.data.Archive;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.data.Archive;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -86,6 +86,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private int h;
     private int w;
     private int c;
+    private int ph;
+    private int pw;
     private int startx;
     private int starty;
     private int startz;
@@ -107,6 +109,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private Location ender = null;
     private Archive archive_next;
     private Archive archive_prev;
+    private ConsoleSize size_next;
+    private ConsoleSize size_prev;
 
     public TARDISFullThemeRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud) {
         this.plugin = plugin;
@@ -167,8 +171,33 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
                 // get JSON
                 obj = TARDISSchematicGZip.unzip(path);
+                size_next = tud.getSchematic().getConsoleSize();
             } else {
                 obj = archive_next.getJSON();
+                size_next = archive_next.getConsoleSize();
+            }
+            // get previous schematic dimensions
+            if (archive_prev == null) {
+                String prevDirirectory = (tud.getPrevious().isCustom()) ? "user_schematics" : "schematics";
+                String prevPath = plugin.getDataFolder() + File.separator + prevDirirectory + File.separator + tud.getPrevious().getPermission() + ".tschm";
+                File prevFile = new File(prevPath);
+                if (!prevFile.exists()) {
+                    plugin.debug("Could not find a schematic with that name!");
+                    // cancel task
+                    plugin.getServer().getScheduler().cancelTask(taskID);
+                    return;
+                }
+                // get JSON
+                JsonObject prevObj = TARDISSchematicGZip.unzip(prevPath);
+                JsonObject prevDimensions = prevObj.get("dimensions").getAsJsonObject();
+                ph = prevDimensions.get("height").getAsInt();
+                pw = prevDimensions.get("width").getAsInt();
+                size_prev = tud.getPrevious().getConsoleSize();
+            } else {
+                JsonObject dimensions = archive_next.getJSON().get("dimensions").getAsJsonObject();
+                ph = dimensions.get("height").getAsInt();
+                pw = dimensions.get("width").getAsInt();
+                size_prev = archive_prev.getConsoleSize();
             }
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
@@ -235,7 +264,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             } else {
                 starty = TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
             }
-            downgrade = compare(tud.getPrevious(), tud.getSchematic());
+            downgrade = (h < ph || w < pw);
             world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
             wg1 = new Location(world, startx, starty, startz);
@@ -368,7 +397,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             // jettison blocks if downgrading to smaller size
             if (downgrade) {
-                List<TARDISARSJettison> jettisons = getJettisons(tud.getPrevious(), tud.getSchematic(), chunk);
+                List<TARDISARSJettison> jettisons = getJettisons(size_next, size_prev, chunk);
                 jettisons.forEach((jet) -> {
                     // remove the room
                     setAir(jet.getX(), jet.getY(), jet.getZ(), jet.getChunk().getWorld(), 16);
@@ -530,32 +559,97 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     ResultSetARS rsa = new ResultSetARS(plugin, wherer);
                     if (rsa.resultSet()) {
                         String[][][] existing = TARDISARSMethods.getGridFromJSON(rsa.getJson());
-                        String control = tud.getSchematic().getSeedMaterial().toString();
-                        existing[1][4][4] = control;
                         if (downgrade) {
                             // reset slots to stone
-                            existing[2][4][4] = "STONE";
-                            existing[2][4][5] = "STONE";
-                            existing[2][5][4] = "STONE";
-                            existing[2][5][5] = "STONE";
-                            if (w <= 16) {
-                                existing[1][4][5] = "STONE";
-                                existing[1][5][4] = "STONE";
-                                existing[1][5][5] = "STONE";
+                            switch (size_prev) {
+                                case MASSIVE:
+                                    // the 8 slots on the same level &
+                                    existing[1][4][5] = "STONE";
+                                    existing[1][4][6] = "STONE";
+                                    existing[1][5][4] = "STONE";
+                                    existing[1][5][5] = "STONE";
+                                    existing[1][5][6] = "STONE";
+                                    existing[1][6][4] = "STONE";
+                                    existing[1][6][5] = "STONE";
+                                    existing[1][6][6] = "STONE";
+                                    // the 9 slots on the level above
+                                    existing[2][4][4] = "STONE";
+                                    existing[2][4][5] = "STONE";
+                                    existing[2][4][6] = "STONE";
+                                    existing[2][5][4] = "STONE";
+                                    existing[2][5][5] = "STONE";
+                                    existing[2][5][6] = "STONE";
+                                    existing[2][6][4] = "STONE";
+                                    existing[2][6][5] = "STONE";
+                                    existing[2][6][6] = "STONE";
+                                    break;
+                                case TALL:
+                                    // the 3 slots on the same level &
+                                    existing[1][4][5] = "STONE";
+                                    existing[1][5][4] = "STONE";
+                                    existing[1][5][5] = "STONE";
+                                    // the 4 slots on the level above
+                                    existing[2][4][4] = "STONE";
+                                    existing[2][4][5] = "STONE";
+                                    existing[2][5][4] = "STONE";
+                                    existing[2][5][5] = "STONE";
+                                    break;
+                                case MEDIUM:
+                                    // the 3 slots on the same level
+                                    existing[1][4][5] = "STONE";
+                                    existing[1][5][4] = "STONE";
+                                    existing[1][5][5] = "STONE";
+                                    break;
+                                default:
+                                    // SMALL size do nothing
+                                    break;
                             }
                         }
-                        if (w > 16) {
-                            existing[1][4][5] = control;
-                            existing[1][5][4] = control;
-                            existing[1][5][5] = control;
-                            if (h > 16) {
+                        // add control blocks
+                        String control = tud.getSchematic().getSeedMaterial().toString();
+                        existing[1][4][4] = control;
+                        switch (size_next) {
+                            case MASSIVE:
+                                // the 8 slots on the same level &
+                                existing[1][4][5] = control;
+                                existing[1][4][6] = control;
+                                existing[1][5][4] = control;
+                                existing[1][5][5] = control;
+                                existing[1][5][6] = control;
+                                existing[1][6][4] = control;
+                                existing[1][6][5] = control;
+                                existing[1][6][6] = control;
+                                // the 9 slots on the level above
+                                existing[2][4][4] = control;
+                                existing[2][4][5] = control;
+                                existing[2][4][6] = control;
+                                existing[2][5][4] = control;
+                                existing[2][5][5] = control;
+                                existing[2][5][6] = control;
+                                existing[2][6][4] = control;
+                                existing[2][6][5] = control;
+                                existing[2][6][6] = control;
+                                break;
+                            case TALL:
+                                // the 3 slots on the same level &
+                                existing[1][4][5] = control;
+                                existing[1][5][4] = control;
+                                existing[1][5][5] = control;
+                                // the 4 slots on the level above
                                 existing[2][4][4] = control;
                                 existing[2][4][5] = control;
                                 existing[2][5][4] = control;
                                 existing[2][5][5] = control;
-                            }
-                        } else if (h > 16) {
-                            existing[2][4][4] = control;
+                                break;
+                            case MEDIUM:
+                                // the 3 slots on the same level
+                                existing[1][4][5] = control;
+                                existing[1][5][4] = control;
+                                existing[1][5][5] = control;
+                                break;
+                            default:
+                                // SMALL size do nothing
+                                break;
                         }
                         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                         JsonArray json = new JsonParser().parse(gson.toJson(existing)).getAsJsonArray();
@@ -722,44 +816,110 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
         }
     }
 
-    private boolean compare(Schematic prev, Schematic next) {
-        // special case for archives
-        if (archive_next != null && archive_prev == null) {
-            return (!prev.getPermission().equals(archive_next.getName()) && ((!prev.getConsoleSize().equals(ConsoleSize.SMALL) && archive_next.getConsoleSize().equals(ConsoleSize.SMALL)) || (prev.getConsoleSize().equals(ConsoleSize.TALL) && !archive_next.getConsoleSize().equals(ConsoleSize.TALL))));
-        } else if (archive_next == null && archive_prev != null) {
-            return (!archive_prev.getName().equals(next.getPermission()) && ((!archive_prev.getConsoleSize().equals(ConsoleSize.SMALL) && next.getConsoleSize().equals(ConsoleSize.SMALL)) || (archive_prev.getConsoleSize().equals(ConsoleSize.TALL) && !next.getConsoleSize().equals(ConsoleSize.TALL))));
-        } else if (archive_next != null && archive_prev != null) {
-            return (!archive_prev.getName().equals(archive_next.getName()) && ((!archive_prev.getConsoleSize().equals(ConsoleSize.SMALL) && archive_next.getConsoleSize().equals(ConsoleSize.SMALL)) || (archive_prev.getConsoleSize().equals(ConsoleSize.TALL) && !archive_next.getConsoleSize().equals(ConsoleSize.TALL))));
-        } else {
-            return (!prev.equals(next) && ((!prev.getConsoleSize().equals(ConsoleSize.SMALL) && next.getConsoleSize().equals(ConsoleSize.SMALL)) || (prev.getConsoleSize().equals(ConsoleSize.TALL) && !next.getConsoleSize().equals(ConsoleSize.TALL))));
-        }
-    }
-
-    private List<TARDISARSJettison> getJettisons(Schematic prev, Schematic next, Chunk chunk) {
+    private List<TARDISARSJettison> getJettisons(ConsoleSize next, ConsoleSize prev, Chunk chunk) {
         List<TARDISARSJettison> list = new ArrayList<>();
-        if (prev.getConsoleSize().equals(ConsoleSize.MEDIUM) || (archive_prev != null && archive_prev.getConsoleSize().equals(ConsoleSize.MEDIUM))) {
-            // the 3 chunks on the same level
-            list.add(new TARDISARSJettison(chunk, 1, 4, 5));
-            list.add(new TARDISARSJettison(chunk, 1, 5, 4));
-            list.add(new TARDISARSJettison(chunk, 1, 5, 5));
-        } else if (prev.getConsoleSize().equals(ConsoleSize.TALL) || (archive_prev != null && archive_prev.getConsoleSize().equals(ConsoleSize.TALL))) {
-            if (next.getConsoleSize().equals(ConsoleSize.MEDIUM) || (archive_next != null && archive_next.getConsoleSize().equals(ConsoleSize.MEDIUM))) {
-                // the 4 chunks on the level above
-                list.add(new TARDISARSJettison(chunk, 2, 4, 4));
-                list.add(new TARDISARSJettison(chunk, 2, 4, 5));
-                list.add(new TARDISARSJettison(chunk, 2, 5, 4));
-                list.add(new TARDISARSJettison(chunk, 2, 5, 5));
-            } else {
-                // the 3 chunks on the same level &
-                // the 4 chunks on the level above
-                list.add(new TARDISARSJettison(chunk, 1, 4, 5));
-                list.add(new TARDISARSJettison(chunk, 1, 5, 4));
-                list.add(new TARDISARSJettison(chunk, 1, 5, 5));
-                list.add(new TARDISARSJettison(chunk, 2, 4, 4));
-                list.add(new TARDISARSJettison(chunk, 2, 4, 5));
-                list.add(new TARDISARSJettison(chunk, 2, 5, 4));
-                list.add(new TARDISARSJettison(chunk, 2, 5, 5));
-            }
+        switch (prev) {
+            case MASSIVE:
+                switch (next) {
+                    case TALL:
+                        // the 5 chunks on the same level &
+                        list.add(new TARDISARSJettison(chunk, 1, 4, 6));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 6));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 4));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 5));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 6));
+                        // the 5 chunks on the level above
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 6));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 6));
+                        list.add(new TARDISARSJettison(chunk, 2, 6, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 6, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 6, 6));
+
+                        break;
+                    case MEDIUM:
+                        // the 5 chunks on the same level &
+                        list.add(new TARDISARSJettison(chunk, 1, 4, 6));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 6));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 4));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 5));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 6));
+                        // the 9 chunks on the level above
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 6));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 6));
+                        list.add(new TARDISARSJettison(chunk, 2, 6, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 6, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 6, 6));
+                        break;
+                    case SMALL:
+                        // the 8 chunks on the same level &
+                        list.add(new TARDISARSJettison(chunk, 1, 4, 5));
+                        list.add(new TARDISARSJettison(chunk, 1, 4, 6));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 4));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 5));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 6));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 4));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 5));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 6));
+                        // the 9 chunks on the level above
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 6));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 6));
+                        list.add(new TARDISARSJettison(chunk, 2, 6, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 6, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 6, 6));
+                        break;
+                    default:
+                        // same size do nothing
+                        break;
+                }
+                break;
+            case TALL:
+                switch (next) {
+                    case MEDIUM:
+                        // the 4 chunks on the level above
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
+                        break;
+                    case SMALL:
+                        // the 3 chunks on the same level &
+                        list.add(new TARDISARSJettison(chunk, 1, 4, 5));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 4));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 5));
+                        // the 4 chunks on the level above
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
+                        break;
+                    default:
+                        // same size or bigger do nothing
+                        break;
+                }
+                break;
+            case MEDIUM:
+                switch (next) {
+                    case SMALL:
+                        // the 3 chunks on the same level
+                        list.add(new TARDISARSJettison(chunk, 1, 4, 5));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 4));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 5));
+                        break;
+                    default:
+                        // same size or bigger do nothing
+                        break;
+                }
+                break;
+            default: // SMALL size do nothing
+                break;
         }
         return list;
     }

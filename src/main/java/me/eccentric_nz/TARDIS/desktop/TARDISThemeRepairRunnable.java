@@ -27,9 +27,9 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -626,6 +626,13 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private List<Chunk> getChunks(Chunk c, Schematic s) {
         List<Chunk> chinks = new ArrayList<>();
         chinks.add(c);
+        if (s.getConsoleSize().equals(ConsoleSize.MASSIVE)) {
+            chinks.add(c.getWorld().getChunkAt(c.getX() + 2, c.getZ()));
+            chinks.add(c.getWorld().getChunkAt(c.getX(), c.getZ() + 2));
+            chinks.add(c.getWorld().getChunkAt(c.getX() + 2, c.getZ() + 2));
+            chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ() + 2));
+            chinks.add(c.getWorld().getChunkAt(c.getX() + 2, c.getZ() + 1));
+        }
         if (!s.getConsoleSize().equals(ConsoleSize.SMALL)) {
             chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ()));
             chinks.add(c.getWorld().getChunkAt(c.getX(), c.getZ() + 1));

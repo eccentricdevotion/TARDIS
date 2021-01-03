@@ -22,11 +22,11 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.database.data.Archive;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.data.Archive;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -168,6 +168,11 @@ class TARDISArchiveCommand {
                                 String size = (args[1].equalsIgnoreCase("scan")) ? args[2] : args[3];
                                 console_size = ConsoleSize.valueOf(size.toUpperCase(Locale.ENGLISH));
                                 switch (console_size) {
+                                    case MASSIVE:
+                                        h = 31;
+                                        w = 47;
+                                        c = 47;
+                                        break;
                                     case TALL:
                                         h = 31;
                                         w = 31;

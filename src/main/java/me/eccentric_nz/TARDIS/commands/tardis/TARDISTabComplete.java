@@ -44,7 +44,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");
     private final List<String> ARCHIVE_SUBS = ImmutableList.of("add", "description", "remove", "scan", "update", "y");
     private final List<String> Y_SUBS = ImmutableList.of("64", "65");
-    private final List<String> CONSOLE_SIZE_SUBS = ImmutableList.of("SMALL", "MEDIUM", "TALL");
+    private final List<String> CONSOLE_SIZE_SUBS = ImmutableList.of("SMALL", "MEDIUM", "TALL", "MASSIVE");
     private final List<String> TRANSMAT_SUBS = ImmutableList.of("tp", "add", "remove", "update", "list");
     private final List<String> UPD_SUBS = new ArrayList<>();
     private final List<String> SEC_SUBS = new ArrayList<>();
