@@ -311,7 +311,7 @@ public class TARDISScanner {
                     StringBuilder buf = new StringBuilder();
                     if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
                         playernames.forEach((p) -> buf.append(", ").append(p));
-                        message = " (" + buf.toString().substring(2) + ")";
+                        message = " (" + buf.substring(2) + ")";
                     }
                     switch (entry.getKey()) {
                         case AREA_EFFECT_CLOUD:

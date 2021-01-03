@@ -503,7 +503,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         if (upper.equals("LIST")) {
                             StringBuilder buf = new StringBuilder();
                             BIOME_SUBS.forEach((bi) -> buf.append(bi).append(", "));
-                            String b = buf.toString().substring(0, buf.length() - 2);
+                            String b = buf.substring(0, buf.length() - 2);
                             TARDISMessage.send(player, "BIOMES", b);
                         } else {
                             try {

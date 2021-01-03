@@ -99,7 +99,7 @@ public class CompoundGUIListener implements Listener {
                 }
             }
         }
-        String f = (formula.length() > 1) ? formula.toString().substring(0, formula.length() - 1) : "";
+        String f = (formula.length() > 1) ? formula.substring(0, formula.length() - 1) : "";
         if (!f.isEmpty()) {
             for (Compound compound : Compound.values()) {
                 if (compound.getFormula().equals(f)) {

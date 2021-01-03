@@ -105,7 +105,7 @@ public class ProductGUIListener implements Listener {
                 builder.append("-").append(pipe.contains(slot) ? "|" : ",");
             }
         }
-        String recipe = builder.toString().substring(0, builder.length() - 1);
+        String recipe = builder.substring(0, builder.length() - 1);
         for (Product product : Product.values()) {
             if (product.getRecipe().equals(recipe)) {
                 craft(product, inventory, player);

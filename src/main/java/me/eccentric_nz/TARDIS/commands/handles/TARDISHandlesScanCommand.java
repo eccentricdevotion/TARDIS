@@ -265,7 +265,7 @@ class TARDISHandlesScanCommand {
                     StringBuilder buf = new StringBuilder();
                     if (entry.getKey().equals(EntityType.PLAYER) && playerNames.size() > 0) {
                         playerNames.forEach((p) -> buf.append(", ").append(p));
-                        message = " (" + buf.toString().substring(2) + ")";
+                        message = " (" + buf.substring(2) + ")";
                     }
                     // delay
                     String m = message;

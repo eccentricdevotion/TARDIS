@@ -72,7 +72,7 @@ class TARDISSQLUpdate implements Runnable {
             }
         });
         where.clear();
-        updates = sbu.toString().substring(0, sbu.length() - 1);
+        updates = sbu.substring(0, sbu.length() - 1);
         wheres = sbw.substring(0, sbw.length() - 5);
         String query = "UPDATE " + prefix + table + " SET " + updates + " WHERE " + wheres;
 //        plugin.debug(query);

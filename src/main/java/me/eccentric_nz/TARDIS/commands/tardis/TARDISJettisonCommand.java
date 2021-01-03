@@ -51,7 +51,7 @@ class TARDISJettisonCommand {
             if (!plugin.getGeneralKeeper().getRoomArgs().contains(room)) {
                 StringBuilder buf = new StringBuilder(args[1]);
                 plugin.getGeneralKeeper().getRoomArgs().forEach((rl) -> buf.append(rl).append(", "));
-                String roomlist = buf.toString().substring(0, buf.length() - 2);
+                String roomlist = buf.substring(0, buf.length() - 2);
                 TARDISMessage.send(player, "ROOM_NOT_VALID", roomlist);
                 return true;
             }

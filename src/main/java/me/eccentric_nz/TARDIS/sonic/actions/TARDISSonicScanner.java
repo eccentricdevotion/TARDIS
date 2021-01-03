@@ -191,7 +191,7 @@ public class TARDISSonicScanner {
                     StringBuilder buf = new StringBuilder();
                     if (ent.equals(EntityType.PLAYER) && playernames.size() > 0) {
                         playernames.forEach((p) -> buf.append(", ").append(p));
-                        message = " (" + buf.toString().substring(2) + ")";
+                        message = " (" + buf.substring(2) + ")";
                     }
                     switch (ent) {
                         case AREA_EFFECT_CLOUD:

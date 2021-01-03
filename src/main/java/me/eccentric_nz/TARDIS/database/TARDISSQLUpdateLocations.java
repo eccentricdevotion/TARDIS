@@ -59,7 +59,7 @@ class TARDISSQLUpdateLocations implements Runnable {
         PreparedStatement ps = null;
         StringBuilder sbu = new StringBuilder();
         data.forEach((key, value) -> sbu.append(key).append(" = ?,"));
-        String updates = sbu.toString().substring(0, sbu.length() - 1);
+        String updates = sbu.substring(0, sbu.length() - 1);
         try {
             service.testConnection(connection);
             for (String s : tables) {

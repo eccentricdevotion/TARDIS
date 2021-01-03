@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.companionGUI;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -129,7 +129,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
                 }
                 // remove trailing colon
                 if (buf.length() > 0) {
-                    newList = buf.toString().substring(0, buf.length() - 1);
+                    newList = buf.substring(0, buf.length() - 1);
                 }
                 set.put("companions", newList);
             } else {

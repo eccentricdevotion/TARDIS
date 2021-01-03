@@ -99,7 +99,7 @@ public class LabGUIListener implements Listener {
                 }
             }
         }
-        String recipe = builder.toString().substring(0, builder.length() - 1);
+        String recipe = builder.substring(0, builder.length() - 1);
         for (Lab lab : Lab.values()) {
             if (lab.getRecipe().equals(recipe)) {
                 craft(lab, inventory, player);

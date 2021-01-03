@@ -87,7 +87,7 @@ class TARDISRemoveCompanionCommand {
                             }
                             // remove trailing colon
                             if (sb.length() > 0) {
-                                newList = sb.toString().substring(0, sb.length() - 1);
+                                newList = sb.substring(0, sb.length() - 1);
                             }
                         }
                         message = "COMPANIONS_REMOVE_ONE";

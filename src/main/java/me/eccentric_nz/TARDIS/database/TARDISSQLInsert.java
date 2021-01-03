@@ -63,8 +63,8 @@ class TARDISSQLInsert implements Runnable {
             sbf.append(key).append(",");
             sbq.append("?,");
         });
-        fields = sbf.toString().substring(0, sbf.length() - 1);
-        questions = sbq.toString().substring(0, sbq.length() - 1);
+        fields = sbf.substring(0, sbf.length() - 1);
+        questions = sbq.substring(0, sbq.length() - 1);
         try {
             service.testConnection(connection);
             ps = connection.prepareStatement("INSERT INTO " + prefix + table + " (" + fields + ") VALUES (" + questions + ")");
