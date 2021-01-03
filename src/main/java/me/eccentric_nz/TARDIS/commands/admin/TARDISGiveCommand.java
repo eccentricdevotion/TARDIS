@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.messaging.TARDISGiveLister;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -463,7 +463,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                 int model = TARDISSeedModel.modelByString(type);
                 if (Consoles.getBY_NAMES().get(type).isCustom()) {
                     is = new ItemStack(Material.MUSHROOM_STEM, 1);
-                } else if (type.equalsIgnoreCase("DELTA") || type.equalsIgnoreCase("ROTOR")) {
+                } else if (type.equalsIgnoreCase("DELTA") || type.equalsIgnoreCase("ROTOR") || type.equalsIgnoreCase("COPPER")) {
                     is = new ItemStack(Material.MUSHROOM_STEM, 1);
                 } else {
                     is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);

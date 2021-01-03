@@ -72,6 +72,8 @@ public class TARDISSeedModel {
             put(Material.NETHER_BRICKS, 39);
             // delta
             put(Material.CRYING_OBSIDIAN, 43);
+            // copper
+            put(Material.WARPED_PLANKS, 42);
 //            // custom
 //            put(Material.MUSHROOM_STEM, 45);
 //            // templates
@@ -101,10 +103,7 @@ public class TARDISSeedModel {
             put("WAR", 29);
             put("DELTA", 43);
             put("ROTOR", 44);
-            put("LEGACY_BIGGER", 33);
-            put("LEGACY_BUDGET", 34);
-            put("LEGACY_DELUXE", 35);
-            put("LEGACY_ELEVENTH", 36);
+            put("COPPER", 42);
             put("LEGACY_REDSTONE", 37);
             put("MASTER", 39);
             put("CUSTOM", 45);

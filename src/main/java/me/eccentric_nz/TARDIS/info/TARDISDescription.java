@@ -107,6 +107,7 @@ public enum TARDISDescription {
     PYRAMID("A sandstone pyramid TARDIS - console design by airomis."),
     MASTER("The Master's TARDIS - console design by ShadowAssociate."),
     ENDER("An End Stone and Purpur TARDIS - console design by ToppanaFIN."),
+    COPPER_11TH("The 11th Doctor's Copper TARDIS - console design by vistaero."),
     CORAL("The 10th Doctor's TARDIS - console design by vistaero."),
     CUSTOM("A custom designed server TARDIS"),
     ANTIGRAVITY("Going up..."),

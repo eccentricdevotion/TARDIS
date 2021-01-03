@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISAbandoned;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
-import me.eccentric_nz.TARDIS.database.*;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -474,7 +474,7 @@ public class TARDII implements TardisAPI {
             int model = TARDISSeedModel.modelByString(schematic);
             if (Consoles.getBY_NAMES().get(schematic).isCustom()) {
                 is = new ItemStack(Material.MUSHROOM_STEM, 1);
-            } else if (schematic.equalsIgnoreCase("DELTA") || schematic.equalsIgnoreCase("ROTOR")) {
+            } else if (schematic.equalsIgnoreCase("DELTA") || schematic.equalsIgnoreCase("ROTOR") || schematic.equalsIgnoreCase("COPPER")) {
                 is = new ItemStack(Material.MUSHROOM_STEM, 1);
             } else {
                 is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);

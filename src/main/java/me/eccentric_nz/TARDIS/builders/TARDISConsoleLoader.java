@@ -46,7 +46,8 @@ public class TARDISConsoleLoader {
         Consoles.getBY_NAMES().put("ARS", new Schematic("QUARTZ_BLOCK", "ars", "ARS Console", ConsoleSize.SMALL, true, false, false));
         Consoles.getBY_NAMES().put("BIGGER", new Schematic("GOLD_BLOCK", "bigger", "A Bigger Console", ConsoleSize.MEDIUM, true, false, false));
         Consoles.getBY_NAMES().put("BUDGET", new Schematic("IRON_BLOCK", "budget", "Default Console", ConsoleSize.SMALL, true, false, false));
-        // CORAL schematic designed by vistaero
+        // COPPER & CORAL schematics designed by vistaero
+        Consoles.getBY_NAMES().put("COPPER", new Schematic("WARPED_PLANKS", "copper", "11th Doctor's Copper Console", ConsoleSize.MASSIVE, true, false, false));
         Consoles.getBY_NAMES().put("CORAL", new Schematic("NETHER_WART_BLOCK", "coral", "10th Doctor's Console", ConsoleSize.TALL, true, false, false));
         Consoles.getBY_NAMES().put("DELTA", new Schematic("CRYING_OBSIDIAN", "delta", "Nether Delta Console", ConsoleSize.MEDIUM, false, false, false));
         Consoles.getBY_NAMES().put("DELUXE", new Schematic("DIAMOND_BLOCK", "deluxe", "Supersized Deluxe Console", ConsoleSize.TALL, true, false, false));

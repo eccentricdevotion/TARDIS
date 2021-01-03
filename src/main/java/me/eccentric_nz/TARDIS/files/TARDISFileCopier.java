@@ -105,7 +105,7 @@ public class TARDISFileCopier {
         }
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
         // THIRTEENTH schematic designed by Razihel
-        // The CORAL schematic designed by vistaero
+        // The COPPER & CORAL schematic designed by vistaero
         // The PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
         // The ENDER schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         // The MASTER's schematic designed by ShadowAssociate

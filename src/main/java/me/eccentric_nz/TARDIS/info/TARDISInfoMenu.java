@@ -179,6 +179,7 @@ public enum TARDISInfoMenu {
     MASTER("TIS|TARDIS Types|Master", "TYPES", "M"),
     ENDER("TIS|TARDIS Types|Ender", "TYPES", "d"),
     CORAL("TIS|TARDIS Types|Coral", "TYPES", "o"),
+    COPPER_11TH("TIS|TARDIS Types|Copper", "TYPES", "1"),
     CUSTOM("TIS|TARDIS Types|Custom", "TYPES", "C"),
     ROOMS("TIS|Rooms", "TIS", "R"),
     ANTIGRAVITY("TIS|Rooms|Anti-gravity", "ROOMS", "A"),

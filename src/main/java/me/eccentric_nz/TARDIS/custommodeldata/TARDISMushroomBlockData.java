@@ -123,6 +123,10 @@ public class TARDISMushroomBlockData {
             put(3, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=false]");
             // red_lamp
             put(2, "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=true]");
+            // copper seed block
+            put(42, "minecraft:mushroom_stem[down=false,east=false,north=false,south=true,up=false,west=false]");
+            // delta seed block
+            put(43, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=true,west=true]");
             // rotor seed block
             put(44, "minecraft:mushroom_stem[down=false,east=false,north=true,south=true,up=false,west=true]");
             // custom seed block
