@@ -273,7 +273,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     dirSet.put("direction", dir);
                     HashMap<String, Object> whereDir = new HashMap<>();
                     whereDir.put("area_name", args[1]);
-                    plugin.getQueryFactory().doUpdate("areas", dirSet, dirWhere);
+                    plugin.getQueryFactory().doUpdate("areas", dirSet, whereDir);
                     TARDISMessage.send(player, "AREA_DIRECTION_SET", args[1]);
                     return true;
                 default:
