@@ -350,9 +350,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             });
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
-                if (s == 0) {
-                    Block psb = entry.getKey();
-                    psb.setBlockData(entry.getValue());
+                Block psb = entry.getKey();
+                psb.setBlockData(entry.getValue());
+                // always make the control centre the first oak wall sign
+                if (s == 0 && psb.getType().equals(Material.OAK_WALL_SIGN)) {
                     if (Tag.WALL_SIGNS.isTagged(psb.getType())) {
                         Sign cs = (Sign) psb.getState();
                         cs.setLine(0, "");
@@ -363,8 +364,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         String controlloc = psb.getLocation().toString();
                         plugin.getQueryFactory().insertSyncControl(id, 22, controlloc, 0);
                     }
+                    s++;
                 }
-                s++;
             }
             lampBlocks.forEach((lamp) -> {
                 BlockData l = (tud.getSchematic().hasLanterns() || (archive_next != null && archive_next.isLanterns())) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;

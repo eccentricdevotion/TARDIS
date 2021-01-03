@@ -273,21 +273,20 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             });
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
-                if (s == 0) {
-                    Block psb = entry.getKey();
-                    psb.setBlockData(entry.getValue());
-                    if (Tag.WALL_SIGNS.isTagged(psb.getType())) {
-                        Sign cs = (Sign) psb.getState();
-                        cs.setLine(0, "");
-                        cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
-                        cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
-                        cs.setLine(3, "");
-                        cs.update();
-                        String controlloc = psb.getLocation().toString();
-                        plugin.getQueryFactory().insertSyncControl(id, 22, controlloc, 0);
-                    }
+                Block psb = entry.getKey();
+                psb.setBlockData(entry.getValue());
+                // always make the control centre the first oak wall sign
+                if (s == 0 && psb.getType().equals(Material.OAK_WALL_SIGN)) {
+                    Sign cs = (Sign) psb.getState();
+                    cs.setLine(0, "");
+                    cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
+                    cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
+                    cs.setLine(3, "");
+                    cs.update();
+                    String controlloc = psb.getLocation().toString();
+                    plugin.getQueryFactory().insertSyncControl(id, 22, controlloc, 0);
+                    s++;
                 }
-                s++;
             }
             lampblocks.forEach((lamp) -> {
                 BlockData l = (tud.getSchematic().hasLanterns() || (archive != null && archive.isLanterns())) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
