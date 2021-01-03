@@ -28,6 +28,8 @@ import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
+import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
+import me.eccentric_nz.TARDIS.travel.TARDISSaveSignPageTwo;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -70,7 +72,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
     public void onSaveTerminalClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "TARDIS saves")) {
+        if (name.startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             // get the TARDIS the player is in
@@ -94,13 +96,13 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
             } else {
                 int slot = event.getRawSlot();
                 if (plugin.getTrackerKeeper().getArrangers().contains(uuid)) {
-                    if ((slot >= 1 && slot < 45) || slot == 53) {
+                    if ((slot >= 1 && slot < 45) || slot == 47) {
                         if (event.getClick().equals(ClickType.SHIFT_LEFT) || event.getClick().equals(ClickType.SHIFT_RIGHT)) {
                             event.setCancelled(true);
                             return;
                         }
                         // allow
-                        if (slot == 53) {
+                        if (slot == 47) {
                             // get item on cursor
                             ItemStack cursor = player.getItemOnCursor();
                             if (cursor.getType().isAir()) {
@@ -258,7 +260,27 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                         TARDISMessage.send(player, "NOT_OWNER");
                     }
                 }
-                if (slot == 49) {
+                if (slot == 51) {
+                    // load page 2
+                    close(player);
+                    int finalId = id;
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        Inventory inv;
+                        ItemStack[] items;
+                        if (name.equals(ChatColor.DARK_RED + "TARDIS saves 2")) {
+                            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, finalId);
+                            items = sst.getTerminal();
+                            inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
+                        } else {
+                            TARDISSaveSignPageTwo sst = new TARDISSaveSignPageTwo(plugin, finalId);
+                            items = sst.getPageTwo();
+                            inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves 2");
+                        }
+                        inv.setContents(items);
+                        player.openInventory(inv);
+                    }, 2L);
+                }
+                if (slot == 53) {
                     // load TARDIS areas
                     close(player);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -276,7 +298,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
     @EventHandler(ignoreCancelled = true)
     public void onSaveSignClose(InventoryCloseEvent event) {
         String inv_name = event.getView().getTitle();
-        if (inv_name.equals(ChatColor.DARK_RED + "TARDIS saves")) {
+        if (inv_name.startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
             UUID uuid = event.getPlayer().getUniqueId();
             // get the TARDIS the player is in
             HashMap<String, Object> wheres = new HashMap<>();

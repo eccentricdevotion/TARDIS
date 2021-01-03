@@ -23,8 +23,10 @@ public enum GUISaves {
 
     // TARDIS saves
     REARRANGE_SAVES(5, 45, Material.ARROW),
-    LOAD_TARDIS_AREAS(1, 49, Material.MAP),
-    DELETE_SAVE(1, 53, Material.BUCKET);
+    LOAD_TARDIS_AREAS(1, 53, Material.MAP),
+    DELETE_SAVE(1, 47, Material.BUCKET),
+    GO_TO_PAGE_1(11, 51, Material.ARROW),
+    GO_TO_PAGE_2(12, 51, Material.ARROW);
 
     private final int customModelData;
     private final int slot;
