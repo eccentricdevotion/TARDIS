@@ -157,6 +157,12 @@ public class TARDISConsoleCloseListener implements Listener {
                                             set_next.put("y", l.getBlockY());
                                             set_next.put("z", l.getBlockZ());
                                             set_next.put("submarine", 0);
+                                            // should be setting direction of TARDIS
+                                            if (!rsa.getArea().getDirection().isEmpty()) {
+                                                set_next.put("direction", rsa.getArea().getDirection());
+                                            } else {
+                                                set_next.put("direction", rsc.getDirection().toString());
+                                            }
                                             TARDISMessage.send(p, "TRAVEL_APPROVED", first);
                                             plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
                                             break;
