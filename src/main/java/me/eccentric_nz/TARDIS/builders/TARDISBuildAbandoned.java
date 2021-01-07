@@ -398,18 +398,48 @@ class TARDISBuildAbandoned implements Runnable {
                 }
                 String control = schm.getSeedMaterial().toString();
                 empty[1][4][4] = control;
-                if (w > 16) {
-                    empty[1][4][5] = control;
-                    empty[1][5][4] = control;
-                    empty[1][5][5] = control;
-                    if (h > 16) {
+                switch (schm.getConsoleSize()) {
+                    case MASSIVE:
+                        // the 8 slots on the same level &
+                        empty[1][4][5] = control;
+                        empty[1][4][6] = control;
+                        empty[1][5][4] = control;
+                        empty[1][5][5] = control;
+                        empty[1][5][6] = control;
+                        empty[1][6][4] = control;
+                        empty[1][6][5] = control;
+                        empty[1][6][6] = control;
+                        // the 9 slots on the level above
+                        empty[2][4][4] = control;
+                        empty[2][4][5] = control;
+                        empty[2][4][6] = control;
+                        empty[2][5][4] = control;
+                        empty[2][5][5] = control;
+                        empty[2][5][6] = control;
+                        empty[2][6][4] = control;
+                        empty[2][6][5] = control;
+                        empty[2][6][6] = control;
+                        break;
+                    case TALL:
+                        // the 3 slots on the same level &
+                        empty[1][4][5] = control;
+                        empty[1][5][4] = control;
+                        empty[1][5][5] = control;
+                        // the 4 slots on the level above
                         empty[2][4][4] = control;
                         empty[2][4][5] = control;
                         empty[2][5][4] = control;
                         empty[2][5][5] = control;
-                    }
-                } else if (h > 16) {
-                    empty[2][4][4] = control;
+                        break;
+                    case MEDIUM:
+                        // the 3 slots on the same level
+                        empty[1][4][5] = control;
+                        empty[1][5][4] = control;
+                        empty[1][5][5] = control;
+                        break;
+                    default:
+                        // SMALL size do nothing
+                        break;
                 }
                 Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                 JsonArray json = new JsonParser().parse(gson.toJson(empty)).getAsJsonArray();
