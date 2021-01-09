@@ -70,7 +70,7 @@ public class TARDISAccessoryListener implements Listener {
                             bim.setDisplayName(im.getDisplayName());
                             bim.setCustomModelData(cmd);
                             bim.addItemFlags(ItemFlag.values());
-                            Damageable damageable = (Damageable) im;
+                            Damageable damageable = (Damageable) bim;
                             damageable.setDamage(50);
                             accessory.setItemMeta(bim);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
