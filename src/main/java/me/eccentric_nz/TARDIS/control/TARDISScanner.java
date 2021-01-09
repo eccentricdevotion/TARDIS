@@ -268,7 +268,6 @@ public class TARDISScanner {
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_TIME", daynight + " / " + time), 60L);
         // get weather
         String weather;
-        // TODO get biome temperature? and switch on that
         switch (biome) {
             case "DESERT":
             case "DESERT_HILLS":

@@ -260,7 +260,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                         TARDISMessage.send(player, "NOT_OWNER");
                     }
                 }
-                if (slot == 51) {
+                if (slot == 51 && event.getClickedInventory().getItem(51) != null) {
                     // load page 2
                     close(player);
                     int finalId = id;
