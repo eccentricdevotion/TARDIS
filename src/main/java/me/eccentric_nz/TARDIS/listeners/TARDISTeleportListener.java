@@ -68,10 +68,16 @@ public class TARDISTeleportListener implements Listener {
             } else if (world_to.contains("TARDIS") && !cause.equals(TeleportCause.PLUGIN)) {
                 ResultSetTardisID rsid = new ResultSetTardisID(plugin);
                 // if TIPS determine tardis_id from player location
-                if (plugin.getConfig().getBoolean("creation.default_world") && !p.hasPermission("tardis.create_world")) {
-                    int slot = TARDISInteriorPostioning.getTIPSSlot(p.getLocation());
-                    if (!rsid.fromTIPSSlot(slot)) {
-                        return;
+                if (plugin.getConfig().getBoolean("creation.default_world")) {
+                    if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && p.hasPermission("tardis.create_world")) {
+                        if (!rsid.fromUUID(p.getUniqueId().toString())) {
+                            return;
+                        }
+                    } else {
+                        int slot = TARDISInteriorPostioning.getTIPSSlot(p.getLocation());
+                        if (!rsid.fromTIPSSlot(slot)) {
+                            return;
+                        }
                     }
                 } else if (!rsid.fromUUID(p.getUniqueId().toString())) {
                     return;
