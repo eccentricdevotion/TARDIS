@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
+import com.google.common.collect.Sets;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlock;
@@ -32,6 +33,7 @@ import org.bukkit.block.data.type.*;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class TARDISSonicRedstone {
 
@@ -164,12 +166,14 @@ public class TARDISSonicRedstone {
         }
     }
 
+    private static final Set<Material> PISTON_NO_MOVE = Sets.newHashSet(Material.PISTON_HEAD, Material.ACACIA_SIGN, Material.ACACIA_WALL_SIGN, Material.ANVIL, Material.BARREL, Material.BARRIER, Material.BEACON, Material.BEDROCK, Material.BEDROCK, Material.BEE_NEST, Material.BEEHIVE, Material.BIRCH_SIGN, Material.BIRCH_WALL_SIGN, Material.BLACK_BANNER, Material.BLACK_WALL_BANNER, Material.BLAST_FURNACE, Material.BLUE_BANNER, Material.BLUE_WALL_BANNER, Material.BREWING_STAND, Material.BROWN_BANNER, Material.BROWN_WALL_BANNER, Material.CAMPFIRE, Material.CHEST, Material.CHIPPED_ANVIL, Material.COMMAND_BLOCK, Material.CRYING_OBSIDIAN, Material.CYAN_BANNER, Material.CYAN_WALL_BANNER, Material.DAMAGED_ANVIL, Material.DARK_OAK_SIGN, Material.DARK_OAK_WALL_SIGN, Material.DAYLIGHT_DETECTOR, Material.DISPENSER, Material.DROPPER, Material.ENCHANTING_TABLE, Material.END_GATEWAY, Material.END_PORTAL, Material.END_PORTAL_FRAME, Material.ENDER_CHEST, Material.FURNACE, Material.GRAY_BANNER, Material.GRAY_WALL_BANNER, Material.GREEN_BANNER, Material.GREEN_WALL_BANNER, Material.HOPPER, Material.JIGSAW, Material.JUKEBOX, Material.JUNGLE_SIGN, Material.JUNGLE_WALL_SIGN, Material.LECTERN, Material.LIGHT_BLUE_BANNER, Material.LIGHT_BLUE_WALL_BANNER, Material.LIGHT_GRAY_BANNER, Material.LIGHT_GRAY_WALL_BANNER, Material.LIME_BANNER, Material.LIME_WALL_BANNER, Material.LODESTONE, Material.MAGENTA_BANNER, Material.MAGENTA_WALL_BANNER, Material.NETHER_PORTAL, Material.OAK_SIGN, Material.OAK_WALL_SIGN, Material.OBSIDIAN, Material.ORANGE_BANNER, Material.ORANGE_WALL_BANNER, Material.PINK_BANNER, Material.PINK_WALL_BANNER, Material.PURPLE_BANNER, Material.PURPLE_WALL_BANNER, Material.RED_BANNER, Material.RED_WALL_BANNER, Material.SMOKER, Material.SOUL_CAMPFIRE, Material.SPAWNER, Material.SPRUCE_SIGN, Material.SPRUCE_WALL_SIGN, Material.TRAPPED_CHEST, Material.WHITE_BANNER, Material.WHITE_WALL_BANNER, Material.YELLOW_BANNER, Material.YELLOW_WALL_BANNER);
+
     public static boolean setExtension(TARDIS plugin, Block b) {
         BlockFace face = ((Piston) b.getBlockData()).getFacing();
         Block l = b.getRelative(face);
         Material mat = l.getType();
         // check if there is a block there
-        if (!mat.equals(Material.PISTON_HEAD)) {
+        if (!PISTON_NO_MOVE.contains(mat)) {
             if (mat.isAir()) {
                 extend(plugin, b, l);
                 return true;
