@@ -77,15 +77,16 @@ public class TARDISSaveSignInventory {
         }
         him.setLore(hlore);
         his.setItemMeta(him);
-        dests.put(0, his);
+        ItemStack[] stack = new ItemStack[54];
+        stack[0] = his;
         // saved destinations
         HashMap<String, Object> did = new HashMap<>();
         did.put("tardis_id", id);
         ResultSetDestinations rsd = new ResultSetDestinations(plugin, did, true);
         int i = 1;
-        ItemStack[] stack = new ItemStack[54];
+        ArrayList<HashMap<String, String>> data = null;
         if (rsd.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rsd.getData();
+            data = rsd.getData();
             // cycle through saves
             for (HashMap<String, String> map : data) {
                 if (map.get("type").equals("0")) {
@@ -120,54 +121,54 @@ public class TARDISSaveSignInventory {
                 }
             }
 
-            for (Integer s = 0; s < 45; s++) {
+            for (Integer s = 1; s < 45; s++) {
                 stack[s] = dests.getOrDefault(s, null);
             }
-            // add button to allow rearranging saves
-            ItemStack tool = new ItemStack(Material.ARROW, 1);
-            ItemMeta rearrange = tool.getItemMeta();
-            rearrange.setDisplayName("Rearrange saves");
-            rearrange.setCustomModelData(GUISaves.REARRANGE_SAVES.getCustomModelData());
-            tool.setItemMeta(rearrange);
-            // add button to allow deleting saves
-            ItemStack bucket = new ItemStack(Material.BUCKET, 1);
-            ItemMeta delete = bucket.getItemMeta();
-            delete.setDisplayName("Delete save");
-            delete.setCustomModelData(GUISaves.DELETE_SAVE.getCustomModelData());
-            bucket.setItemMeta(delete);
-            ItemStack next = null;
-            if (data.size() > 45) {
-                // add button to go to next page
-                next = new ItemStack(GUISaves.GO_TO_PAGE_2.getMaterial(), 1);
-                ItemMeta page = next.getItemMeta();
-                page.setDisplayName(GUISaves.GO_TO_PAGE_2.getName());
-                page.setCustomModelData(GUISaves.GO_TO_PAGE_2.getCustomModelData());
-                next.setItemMeta(page);
-            }
-            // add button to load TARDIS areas
-            ItemStack map = new ItemStack(Material.MAP, 1);
-            ItemMeta switchto = map.getItemMeta();
-            switchto.setDisplayName("Load TARDIS areas");
-            switchto.setCustomModelData(GUISaves.LOAD_TARDIS_AREAS.getCustomModelData());
-            map.setItemMeta(switchto);
-            for (int m = 45; m < 54; m++) {
-                switch (m) {
-                    case 45:
-                        stack[m] = tool;
-                        break;
-                    case 47:
-                        stack[m] = bucket;
-                        break;
-                    case 51:
-                        stack[m] = next;
-                        break;
-                    case 53:
-                        stack[m] = map;
-                        break;
-                    default:
-                        stack[m] = null;
-                        break;
-                }
+        }
+        // add button to allow rearranging saves
+        ItemStack tool = new ItemStack(Material.ARROW, 1);
+        ItemMeta rearrange = tool.getItemMeta();
+        rearrange.setDisplayName("Rearrange saves");
+        rearrange.setCustomModelData(GUISaves.REARRANGE_SAVES.getCustomModelData());
+        tool.setItemMeta(rearrange);
+        // add button to allow deleting saves
+        ItemStack bucket = new ItemStack(Material.BUCKET, 1);
+        ItemMeta delete = bucket.getItemMeta();
+        delete.setDisplayName("Delete save");
+        delete.setCustomModelData(GUISaves.DELETE_SAVE.getCustomModelData());
+        bucket.setItemMeta(delete);
+        ItemStack next = null;
+        if (data != null && data.size() > 44) {
+            // add button to go to next page
+            next = new ItemStack(GUISaves.GO_TO_PAGE_2.getMaterial(), 1);
+            ItemMeta page = next.getItemMeta();
+            page.setDisplayName(GUISaves.GO_TO_PAGE_2.getName());
+            page.setCustomModelData(GUISaves.GO_TO_PAGE_2.getCustomModelData());
+            next.setItemMeta(page);
+        }
+        // add button to load TARDIS areas
+        ItemStack map = new ItemStack(Material.MAP, 1);
+        ItemMeta switchto = map.getItemMeta();
+        switchto.setDisplayName("Load TARDIS areas");
+        switchto.setCustomModelData(GUISaves.LOAD_TARDIS_AREAS.getCustomModelData());
+        map.setItemMeta(switchto);
+        for (int m = 45; m < 54; m++) {
+            switch (m) {
+                case 45:
+                    stack[m] = tool;
+                    break;
+                case 47:
+                    stack[m] = bucket;
+                    break;
+                case 51:
+                    stack[m] = next;
+                    break;
+                case 53:
+                    stack[m] = map;
+                    break;
+                default:
+                    stack[m] = null;
+                    break;
             }
         }
         return stack;
