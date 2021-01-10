@@ -3,7 +3,6 @@ name: Bug report
 about: Report a TARDIS error
 title: ''
 labels: bug
-assignees: eccentricdevotion
 
 ---
 
