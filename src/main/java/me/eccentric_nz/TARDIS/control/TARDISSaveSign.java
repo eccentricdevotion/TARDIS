@@ -74,14 +74,14 @@ public class TARDISSaveSign {
                     plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
                 }
             } else {
-                TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id);
+                TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, player);
                 ItemStack[] items = sst.getTerminal();
                 Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
                 inv.setContents(items);
                 player.openInventory(inv);
             }
         } else {
-            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id);
+            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, player);
             ItemStack[] items = sst.getTerminal();
             Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
             inv.setContents(items);

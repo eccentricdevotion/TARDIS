@@ -20,13 +20,13 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.control.TARDISScanner;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -107,7 +107,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                                         case 10001975: // Memory circuit (saves/areas)
                                         case 20001975:
                                             new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS saves");
-                                            stack = new TARDISSaveSignInventory(plugin, tardis.getTardis_id()).getTerminal();
+                                            stack = new TARDISSaveSignInventory(plugin, tardis.getTardis_id(), p).getTerminal();
                                             break;
                                         case 10001976: // Input circuit (terminal)
                                         case 20001976:

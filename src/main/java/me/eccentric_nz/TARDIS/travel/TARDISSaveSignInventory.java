@@ -18,11 +18,14 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISaves;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -40,10 +43,12 @@ public class TARDISSaveSignInventory {
     private final ItemStack[] terminal;
     private final List<Integer> slots = new LinkedList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44));
     private final int id;
+    private final Player player;
 
-    public TARDISSaveSignInventory(TARDIS plugin, int id) {
+    public TARDISSaveSignInventory(TARDIS plugin, int id, Player player) {
         this.plugin = plugin;
         this.id = id;
+        this.player = player;
         terminal = getItemStack();
     }
 
@@ -121,7 +126,7 @@ public class TARDISSaveSignInventory {
                 }
             }
 
-            for (Integer s = 1; s < 45; s++) {
+            for (int s = 1; s < 45; s++) {
                 stack[s] = dests.getOrDefault(s, null);
             }
         }
@@ -146,6 +151,29 @@ public class TARDISSaveSignInventory {
             page.setCustomModelData(GUISaves.GO_TO_PAGE_2.getCustomModelData());
             next.setItemMeta(page);
         }
+        ItemStack own = null;
+        // is it this player's TARDIS?
+        ResultSetTardisID rstid = new ResultSetTardisID(plugin);
+        if (rstid.fromUUID(player.getUniqueId().toString())) {
+            // add button to view own saves (if in another player's TARDIS)
+            if (rstid.getTardis_id() != id) {
+                own = new ItemStack(GUISaves.LOAD_MY_SAVES.getMaterial(), 1);
+                ItemMeta saves = own.getItemMeta();
+                saves.setDisplayName(GUISaves.LOAD_MY_SAVES.getName());
+                saves.setCustomModelData(GUISaves.LOAD_MY_SAVES.getCustomModelData());
+                own.setItemMeta(saves);
+            } else {
+                // get TARDIS id of TARDIS player is in as they may have switched using the 'load my saves' button
+                int tid = TARDISInteriorPostioning.getTARDISIdFromLocation(player.getLocation());
+                if (tid != id) {
+                    own = new ItemStack(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getMaterial(), 1);
+                    ItemMeta saves = own.getItemMeta();
+                    saves.setDisplayName(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getName());
+                    saves.setCustomModelData(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getCustomModelData());
+                    own.setItemMeta(saves);
+                }
+            }
+        }
         // add button to load TARDIS areas
         ItemStack map = new ItemStack(Material.MAP, 1);
         ItemMeta switchto = map.getItemMeta();
@@ -159,6 +187,9 @@ public class TARDISSaveSignInventory {
                     break;
                 case 47:
                     stack[m] = bucket;
+                    break;
+                case 49:
+                    stack[m] = own;
                     break;
                 case 51:
                     stack[m] = next;
