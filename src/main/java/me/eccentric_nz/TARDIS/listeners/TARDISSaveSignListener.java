@@ -73,6 +73,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
         InventoryView view = event.getView();
         String name = view.getTitle();
         if (name.startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
+            boolean isSecondPage = name.equals(ChatColor.DARK_RED + "TARDIS saves 2");
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             // get the TARDIS the player is in
@@ -96,7 +97,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
             } else {
                 int slot = event.getRawSlot();
                 if (plugin.getTrackerKeeper().getArrangers().contains(uuid)) {
-                    if ((slot >= 1 && slot < 45) || slot == 47) {
+                    if (((slot >= 1 || (slot == 0 && isSecondPage)) && slot < 45) || slot == 47) {
                         if (event.getClick().equals(ClickType.SHIFT_LEFT) || event.getClick().equals(ClickType.SHIFT_RIGHT)) {
                             event.setCancelled(true);
                             return;
@@ -267,7 +268,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         Inventory inv;
                         ItemStack[] items;
-                        if (name.equals(ChatColor.DARK_RED + "TARDIS saves 2")) {
+                        if (isSecondPage) {
                             TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, finalId);
                             items = sst.getTerminal();
                             inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
