@@ -46,7 +46,7 @@ public class TARDISConstants {
     public static final ImmutableMap<String, String> REVERT_LEVELS = ImmutableMap.of("gallifrey", "Gallifrey", "siluria", "Siluria", "skaro", "Skaro", "tardis_time_vortex", "TARDIS_TimeVortex", "tardis_zero_room", "TARDIS_Zero_Room");
 
     // consoles which need to be higher
-    public static final List<String> HIGHER = Arrays.asList("redstone", "thirteenth", "factory");
+    public static final List<String> HIGHER = Arrays.asList("redstone", "thirteenth", "factory", "copper");
 
     // Nether biomes
     public static final List<Biome> NETHER_BIOMES = Arrays.asList(Biome.NETHER_WASTES, Biome.SOUL_SAND_VALLEY, Biome.CRIMSON_FOREST, Biome.WARPED_FOREST, Biome.BASALT_DELTAS);
