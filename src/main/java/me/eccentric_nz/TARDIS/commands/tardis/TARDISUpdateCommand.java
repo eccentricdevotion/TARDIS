@@ -42,6 +42,7 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -62,6 +63,20 @@ class TARDISUpdateCommand {
             } else if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
+            }
+            if (args[1].equalsIgnoreCase("list")) {
+                for (Updateable u : Updateable.values()) {
+                    System.out.println(u.getName()+ " valid blocks:");
+                    for (Material m : u.getMaterialChoice().getChoices() ){
+                        String s = m.toString();
+                        if (s.equals("SPAWNER")) {
+                            System.out.println("   ANY BLOCK");
+                        } else {
+                            System.out.println("   " + s);
+                        }
+                    }
+                }
+                return true;
             }
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
