@@ -196,7 +196,7 @@ _If you have created a TARDIS with an older version of the plugin, you can also 
 
 If you run the command `/tardis update` without any further arguments, an interactive clickable chat GUI will be displayed — just click the item in chat that you want to update, and avoid having to run the command multiple times (requires TARDIS v 3.1-beta-1 or higher).
 
-To see which kind of blocks are updateable for each control, visit the [Update blocks page](update_blocks.html)
+To see which kind of blocks are updateable for each control, visit the [Update blocks page](update-blocks.html)
 
 ### /tardis secondary
 
