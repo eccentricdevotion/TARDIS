@@ -133,15 +133,15 @@ Type:
 
 ### /tardis update
 
-If you want to modify the interior of the TARDIS you will need to use this command. The TARDIS plugin needs to know the location of the IRON DOOR, STONE BUTTON, handbrake LEVER, the Artron Energy BUTTON, the Chameleon Circuit SIGN, and the 4 REPEATERS. First move the blocks to their new position then, type one of:
+If you want to modify the interior of the TARDIS you will need to use this command. The TARDIS plugin needs to know the location of the IRON DOOR, STONE BUTTON, handbrake LEVER, the Artron Energy BUTTON, the Chameleon Circuit SIGN, the 4 REPEATERS and various other controls. First move the blocks to their new position then, type one of:
 
-    /tardis update advanced
     /tardis update advanced
     /tardis update ars
     /tardis update artron
     /tardis update back
     /tardis update backdoor
     /tardis update beacon
+    /tardis update bell
     /tardis update button
     /tardis update chameleon
     /tardis update condenser
@@ -152,23 +152,30 @@ If you want to modify the interior of the TARDIS you will need to use this comma
     /tardis update door
     /tardis update eps
     /tardis update farm
+    /tardis update flight
+    /tardis update forcefield
     /tardis update frame
+    /tardis update fuel
     /tardis update generator
     /tardis update handbrake
     /tardis update igloo
     /tardis update info
     /tardis update keyboard
     /tardis update light
-    /tardis update rail
+    /tardis update map
+    /tardis update rail [unlock]
+    /tardis update rotor
     /tardis update save-sign
     /tardis update scanner
     /tardis update siege
+    /tardis update smelt
     /tardis update stable
     /tardis update stall
     /tardis update storage
     /tardis update telepathic
     /tardis update temporal
     /tardis update terminal
+    /tardis update throttle
     /tardis update toggle_wool
     /tardis update vault
     /tardis update village
@@ -188,6 +195,8 @@ After executing the command, click on the block to update the TARDIS settings.
 _If you have created a TARDIS with an older version of the plugin, you can also use this command to add any missing controls._
 
 If you run the command `/tardis update` without any further arguments, an interactive clickable chat GUI will be displayed — just click the item in chat that you want to update, and avoid having to run the command multiple times (requires TARDIS v 3.1-beta-1 or higher).
+
+To see which kind of blocks are updateable for each control, visit the [Update blocks page](update_blocks.html)
 
 ### /tardis secondary
 
