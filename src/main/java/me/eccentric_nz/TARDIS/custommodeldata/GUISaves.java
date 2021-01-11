@@ -25,6 +25,8 @@ public enum GUISaves {
     REARRANGE_SAVES(5, 45, Material.ARROW),
     LOAD_TARDIS_AREAS(1, 53, Material.MAP),
     DELETE_SAVE(1, 47, Material.BUCKET),
+    LOAD_MY_SAVES(138, 49, Material.BOWL),
+    LOAD_SAVES_FROM_THIS_TARDIS(139, 49, Material.BOWL),
     GO_TO_PAGE_1(11, 51, Material.ARROW),
     GO_TO_PAGE_2(12, 51, Material.ARROW);
 

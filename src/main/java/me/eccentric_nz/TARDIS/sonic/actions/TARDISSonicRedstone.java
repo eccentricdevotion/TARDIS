@@ -85,6 +85,11 @@ public class TARDISSonicRedstone {
                         }, 60L);
                     }
                     break;
+                case IRON_TRAPDOOR:
+                    TrapDoor trapDoor = (TrapDoor) block.getBlockData();
+                    trapDoor.setOpen(!trapDoor.isOpen());
+                    block.setBlockData(trapDoor, true);
+                    break;
                 case PISTON:
                 case STICKY_PISTON:
                     Piston piston = (Piston) block.getBlockData();

@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -116,9 +117,25 @@ public class TARDISInteriorPostioning {
     public static int getTIPSSlot(Location location) {
         int px = location.getBlockX();
         int pz = location.getBlockZ();
-        int row = px / 1024;
-        int col = pz / 1024;
-        return (col * 20) + row + 1;
+        int col = px / 1024;
+        int row = pz / 1024;
+        return (col * 20) + row;
+    }
+
+    /**
+     * Get the TARDIS id from a player location
+     *
+     * @param location the player's current location in the TARDIS world
+     * @return the TARDIS id
+     */
+    public static int getTARDISIdFromLocation(Location location) {
+        int tips = getTIPSSlot(location);
+        ResultSetTardisID rs = new ResultSetTardisID(TARDIS.plugin);
+        if (rs.fromTIPSSlot(tips)) {
+            return rs.getTardis_id();
+        } else {
+            return -1;
+        }
     }
 
     /**

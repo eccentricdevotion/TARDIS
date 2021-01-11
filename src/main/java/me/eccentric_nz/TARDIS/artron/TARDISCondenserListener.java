@@ -19,10 +19,10 @@ package me.eccentric_nz.TARDIS.artron;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintProcessor;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import multiworld.MultiWorldPlugin;
@@ -122,7 +122,7 @@ public class TARDISCondenserListener implements Listener {
                     isCondenser = (plugin.getArtronConfig().contains("condenser") && plugin.getArtronConfig().getString("condenser").equals(chest_loc) && rs.resultSet());
                 }
                 if (isCondenser) {
-                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
+                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 0.5f, 1);
                     int amount = 0;
                     // get the stacks in the inventory
                     HashMap<String, Integer> item_counts = new HashMap<>();
@@ -275,7 +275,7 @@ public class TARDISCondenserListener implements Listener {
         Inventory aec = plugin.getServer().createInventory(holder, inv_size, ChatColor.DARK_RED + "" + title);
         // set the contents to what was in the chest
         aec.setContents(is);
-        p.playSound(p.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
+        p.playSound(p.getLocation(), Sound.BLOCK_CHEST_OPEN, 0.5f, 1);
         p.openInventory(aec);
     }
 

@@ -24,7 +24,7 @@ public enum ConsoleSize {
     SMALL("small", "16 x 16 x 16 blocks", 600l),
     MEDIUM("medium", "32 x 16 x 32 blocks", 1460l),
     TALL("tall", "32 x 32 x 32 blocks", 3072l),
-    MASSIVE("massive", "48 x 32 x 48 blocks", 8560l);
+    MASSIVE("massive", "48 x 32 x 48 blocks", 3760l);
 
     private final String configPath;
     private final String blocks;

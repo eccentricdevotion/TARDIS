@@ -18,10 +18,8 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
@@ -73,6 +71,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
         InventoryView view = event.getView();
         String name = view.getTitle();
         if (name.startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
+            boolean isSecondPage = name.equals(ChatColor.DARK_RED + "TARDIS saves 2");
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             // get the TARDIS the player is in
@@ -83,7 +82,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                 id = plugin.getTrackerKeeper().getJunkPlayers().get(uuid);
             } else {
                 HashMap<String, Object> wheres = new HashMap<>();
-                wheres.put("uuid", player.getUniqueId().toString());
+                wheres.put("uuid", uuid.toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                 if (rst.resultSet()) {
                     allow = true;
@@ -96,7 +95,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
             } else {
                 int slot = event.getRawSlot();
                 if (plugin.getTrackerKeeper().getArrangers().contains(uuid)) {
-                    if ((slot >= 1 && slot < 45) || slot == 47) {
+                    if (((slot >= 1 || (slot == 0 && isSecondPage)) && slot < 45) || slot == 47) {
                         if (event.getClick().equals(ClickType.SHIFT_LEFT) || event.getClick().equals(ClickType.SHIFT_RIGHT)) {
                             event.setCancelled(true);
                             return;
@@ -248,7 +247,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                     // check it is this player's TARDIS
                     HashMap<String, Object> wherez = new HashMap<>();
                     wherez.put("tardis_id", id);
-                    wherez.put("uuid", player.getUniqueId().toString());
+                    wherez.put("uuid", uuid.toString());
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false, 0);
                     if (rs.resultSet()) {
                         if (!plugin.getTrackerKeeper().getArrangers().contains(uuid)) {
@@ -260,6 +259,43 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                         TARDISMessage.send(player, "NOT_OWNER");
                     }
                 }
+                ItemStack own = event.getClickedInventory().getItem(49);
+                if (slot == 49 && own != null) {
+                    // custom model data of item
+                    int cmd = own.getItemMeta().getCustomModelData();
+                    int ownId = -1;
+                    if (cmd == 138) {
+                        // get player's TARDIS id
+                        ResultSetTardisID rstid = new ResultSetTardisID(plugin);
+                        if (rstid.fromUUID(uuid.toString())) {
+                            ownId = rstid.getTardis_id();
+                        }
+                    } else {
+                        // get id of TARDIS player is in
+                        ownId = TARDISInteriorPostioning.getTARDISIdFromLocation(player.getLocation());
+                    }
+                    plugin.debug("ownId: " + ownId);
+                    if (ownId != -1) {
+                        int saveId = ownId;
+                        // load own/tardis saves
+                        close(player);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            Inventory inv;
+                            ItemStack[] items;
+                            if (isSecondPage) {
+                                TARDISSaveSignPageTwo sst = new TARDISSaveSignPageTwo(plugin, saveId, player);
+                                items = sst.getPageTwo();
+                                inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves 2");
+                            } else {
+                                TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, saveId, player);
+                                items = sst.getTerminal();
+                                inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
+                            }
+                            inv.setContents(items);
+                            player.openInventory(inv);
+                        }, 2L);
+                    }
+                }
                 if (slot == 51 && event.getClickedInventory().getItem(51) != null) {
                     // load page 2
                     close(player);
@@ -267,12 +303,12 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         Inventory inv;
                         ItemStack[] items;
-                        if (name.equals(ChatColor.DARK_RED + "TARDIS saves 2")) {
-                            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, finalId);
+                        if (isSecondPage) {
+                            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, finalId, player);
                             items = sst.getTerminal();
                             inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
                         } else {
-                            TARDISSaveSignPageTwo sst = new TARDISSaveSignPageTwo(plugin, finalId);
+                            TARDISSaveSignPageTwo sst = new TARDISSaveSignPageTwo(plugin, finalId, player);
                             items = sst.getPageTwo();
                             inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves 2");
                         }

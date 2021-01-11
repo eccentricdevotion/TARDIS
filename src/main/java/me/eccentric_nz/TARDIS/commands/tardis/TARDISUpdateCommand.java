@@ -22,12 +22,12 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.database.data.Farm;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.data.Farm;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.messaging.TARDISUpdateLister;
@@ -63,6 +63,20 @@ class TARDISUpdateCommand {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
+            if (args[1].equalsIgnoreCase("list")) {
+                for (Updateable u : Updateable.values()) {
+                    System.out.println(u.getName() + " valid blocks:");
+                    for (Material m : u.getMaterialChoice().getChoices()) {
+                        String s = m.toString();
+                        if (s.equals("SPAWNER")) {
+                            System.out.println("   ANY BLOCK");
+                        } else {
+                            System.out.println("   " + s);
+                        }
+                    }
+                }
+                return true;
+            }
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -78,6 +92,10 @@ class TARDISUpdateCommand {
                 updateable = Updateable.valueOf(tardis_block);
             } catch (IllegalArgumentException e) {
                 new TARDISUpdateLister(player).list();
+                return true;
+            }
+            if (args.length == 3 && args[2].equalsIgnoreCase("blocks")) {
+                TARDISUpdateBlocks.showOptions(player, updateable);
                 return true;
             }
             if (updateable.equals(Updateable.SIEGE) && !plugin.getConfig().getBoolean("siege.enabled")) {

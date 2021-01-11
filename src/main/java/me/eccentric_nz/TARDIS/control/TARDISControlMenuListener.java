@@ -28,10 +28,10 @@ import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -229,7 +229,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         TARDISMessage.send(player, "NO_MEM_CIRCUIT");
                                         return;
                                     }
-                                    TARDISSaveSignInventory tssi = new TARDISSaveSignInventory(plugin, tardis.getTardis_id());
+                                    TARDISSaveSignInventory tssi = new TARDISSaveSignInventory(plugin, tardis.getTardis_id(), player);
                                     ItemStack[] saves = tssi.getTerminal();
                                     Inventory saved = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
                                     saved.setContents(saves);
