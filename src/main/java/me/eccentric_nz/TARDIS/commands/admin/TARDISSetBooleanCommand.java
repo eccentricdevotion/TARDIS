@@ -33,24 +33,10 @@ import java.util.Locale;
 class TARDISSetBooleanCommand {
 
     private final TARDIS plugin;
-    //    private final HashMap<String, String> require_restart = new HashMap<>();
     private final List<String> require_restart = Arrays.asList("use_worldguard", "wg_flag_set", "walk_in_tardis", "zero_room", "open_door_policy", "particles", "switch_resource_packs", "handles");
 
     TARDISSetBooleanCommand(TARDIS plugin) {
         this.plugin = plugin;
-//        require_restart.put("allow_end_after_visit", "");
-//        require_restart.put("allow_nether_after_visit", "");
-//        require_restart.put("chemistry", "");
-//        require_restart.put("use_worldguard", "");
-//        require_restart.put("weather_set", "");
-//        require_restart.put("wg_flag_set", "TARDISAntiBuildListener");
-//        require_restart.put("walk_in_tardis", "");
-//        require_restart.put("zero_room", "TARDISZeroRoomChatListener");
-//        require_restart.put("open_door_policy", "");
-//        require_restart.put("particles", "");
-//        require_restart.put("perception_filter", "TARDISPerceptionFilterListener");
-//        require_restart.put("switch_resource_packs", "TARDISResourcePackSwitcher");
-//        require_restart.put("handles", "");
     }
 
     boolean setConfigBool(CommandSender sender, String[] args, String section) {
@@ -93,22 +79,8 @@ class TARDISSetBooleanCommand {
             plugin.saveConfig();
         }
         TARDISMessage.send(sender, "CONFIG_UPDATED");
-//        if (require_restart.containsKey(tolower)) {
         if (require_restart.contains(tolower)) {
             TARDISMessage.send(sender, "RESTART");
-//            if (tf.equals("true")) {
-//
-//            } else {
-//                // false
-//                String listener = require_restart.get(tolower);
-//                if (!listener.isEmpty()) {
-//                    for (RegisteredListener rl : HandlerList.getRegisteredListeners(plugin)) {
-//                        if (rl.getListener().getClass().getSimpleName().equalsIgnoreCase(listener)) {
-//                            HandlerList.unregisterAll(rl.getListener());
-//                        }
-//                    }
-//                }
-//            }
         }
         return true;
     }

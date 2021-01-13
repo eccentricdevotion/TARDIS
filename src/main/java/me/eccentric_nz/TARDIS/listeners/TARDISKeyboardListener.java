@@ -53,7 +53,7 @@ public class TARDISKeyboardListener implements Listener {
     public TARDISKeyboardListener(TARDIS plugin) {
         this.plugin = plugin;
     }
-    
+
     @EventHandler(ignoreCancelled = true)
     public void onKeyboardInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
@@ -93,38 +93,6 @@ public class TARDISKeyboardListener implements Listener {
         }
         return false;
     }
-
-//    @EventHandler(ignoreCancelled = true)
-//    public void onBlockPlace(BlockPlaceEvent event) {
-//        if (!isKeyboardEditor(event.getItemInHand())) {
-//            return;
-//        }
-//        Block block = event.getBlockPlaced();
-//        if (!Tag.SIGNS.isTagged(block.getType()) || !plugin.getUtils().inTARDISWorld(event.getPlayer())) {
-//            return;
-//        }
-//        Block against = event.getBlockAgainst();
-//        if (!Tag.SIGNS.isTagged(against.getType())) {
-//            return;
-//        }
-//        String loc_str = against.getLocation().toString();
-//        ResultSetKeyboard rsk = new ResultSetKeyboard(plugin, loc_str);
-//        if (rsk.resultSet()) {
-//            TARDISCircuitChecker tcc = null;
-//            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
-//                tcc = new TARDISCircuitChecker(plugin, rsk.getTardis_id());
-//                tcc.getCircuits();
-//            }
-//            if (tcc != null && !tcc.hasInput()) {
-//                TARDISMessage.send(event.getPlayer(), "INPUT_MISSING");
-//                return;
-//            }
-//            Sign keyboard = (Sign) against.getState();
-//            plugin.getTrackerKeeper().getSign().put(block.getLocation().toString(), keyboard);
-//        } else {
-//            event.setCancelled(true);
-//        }
-//    }
 
     @EventHandler(ignoreCancelled = true)
     public void onSignChange(SignChangeEvent event) {

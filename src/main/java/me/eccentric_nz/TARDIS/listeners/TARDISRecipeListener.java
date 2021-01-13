@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-//import java.util.HashMap;
-//import java.util.List;
-
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,8 +26,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 
 import java.util.UUID;
-//import org.bukkit.inventory.ItemStack;
-//import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author eccentric_nz
