@@ -514,8 +514,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 }
                                 TARDISMessage.send(player, "BIOME_SEARCH");
                                 World w;
-                                int x;
-                                int z;
                                 HashMap<String, Object> wherecl = new HashMap<>();
                                 wherecl.put("tardis_id", id);
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -540,16 +538,12 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         TARDISMessage.send(player, "WORLD_DELETED", args[2]);
                                         return true;
                                     }
-                                    x = 0;
-                                    z = 0;
                                 } else {
                                     if (rsc.getWorld().getName().equalsIgnoreCase("Gallifrey") || rsc.getWorld().getName().equalsIgnoreCase("Siluria") || rsc.getWorld().getName().equalsIgnoreCase("Skaro")) {
                                         TARDISMessage.send(player, "BIOME_NOT_PLANET", rsc.getWorld().getName());
                                         return true;
                                     }
                                     w = rsc.getWorld();
-                                    x = rsc.getX() + 128;
-                                    z = rsc.getZ() + 128;
                                 }
                                 new TARDISBiomeFinder(plugin).run(w, biome, player, id, rsc.getDirection());
                             } catch (IllegalArgumentException iae) {
