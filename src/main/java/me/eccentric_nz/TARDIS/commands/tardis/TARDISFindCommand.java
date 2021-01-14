@@ -39,7 +39,7 @@ class TARDISFindCommand {
         this.plugin = plugin;
     }
 
-    boolean findTARDIS(Player player, String[] args) {
+    boolean findTARDIS(Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.find")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {

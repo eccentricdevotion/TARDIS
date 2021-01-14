@@ -105,11 +105,11 @@ public class UserInterface extends javax.swing.JFrame {
 
         titleLabel.setText("TARDIS SQLite -> MySQL Database Converter");
 
-        inputFile.addActionListener(evt -> inputFileActionPerformed(evt));
+        inputFile.addActionListener(this::inputFileActionPerformed);
 
         jLabel1.setText("Prefix");
 
-        prefix.addActionListener(evt -> prefixActionPerformed(evt));
+        prefix.addActionListener(this::prefixActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

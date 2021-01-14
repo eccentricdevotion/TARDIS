@@ -277,7 +277,7 @@ public class TARDISHandlesProgramListener implements Listener {
         // there should be a minimum size for a valid program e.g. selector + command
         if (pid > 1) {
             // validate the program
-            TARDISHandlesValidator validator = new TARDISHandlesValidator(plugin, stack, player);
+            TARDISHandlesValidator validator = new TARDISHandlesValidator(stack, player);
             if (validator.validateDisk()) {
                 String serialized = TARDISSerializeInventory.itemStacksToString(stack);
                 HashMap<String, Object> set = new HashMap<>();

@@ -19,8 +19,8 @@ package me.eccentric_nz.TARDIS.commands;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.files.TARDISRoomMap;
-import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -204,7 +204,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                             TARDISMessage.send(sender, "ROOM_NO_ENABLE");
                             return true;
                         }
-                        boolean bool = Boolean.valueOf(args[1]);
+                        boolean bool = Boolean.parseBoolean(args[1]);
                         plugin.getRoomsConfig().set("rooms." + name + ".enabled", bool);
                         try {
                             plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
@@ -241,7 +241,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                             // string seed
                             String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
                             try {
-                                Material go = Material.valueOf(setMaterial);
+                                Material.valueOf(setMaterial);
                             } catch (IllegalArgumentException e) {
                                 TARDISMessage.send(sender, "MATERIAL_NOT_VALID");
                                 return false;

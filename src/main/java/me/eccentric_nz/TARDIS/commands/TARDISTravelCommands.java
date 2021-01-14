@@ -1088,13 +1088,4 @@ public class TARDISTravelCommands implements CommandExecutor {
         }
         return Integer.MAX_VALUE;
     }
-
-    private boolean containsIgnoreCase(String str, List<String> list) {
-        for (String s : list) {
-            if (s.equalsIgnoreCase(str)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

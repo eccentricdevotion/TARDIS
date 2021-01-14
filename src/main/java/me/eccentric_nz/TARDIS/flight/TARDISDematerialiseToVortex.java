@@ -19,11 +19,11 @@ package me.eccentric_nz.TARDIS.flight;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDematerialisationEvent;
 import me.eccentric_nz.TARDIS.builders.BiomeSetter;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -96,7 +96,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
             SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
             if (rsp.resultSet()) {
                 minecart = rsp.isMinecartOn();
-                spaceTimeThrottle = spaceTimeThrottle.getByDelay().get(rsp.getThrottle());
+                spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
             }
             DestroyData dd = new DestroyData();
             dd.setDirection(cd);

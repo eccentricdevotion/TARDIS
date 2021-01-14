@@ -17,10 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -106,16 +103,6 @@ public class TARDISCraftListener implements Listener {
                 }
             }), 1L);
             crafters.remove(uuid);
-        }
-    }
-
-    private boolean checkPerms(Player p, Material m) {
-        Schematic schm = Consoles.getBY_MATERIALS().get(m.toString());
-        if (schm != null) {
-            String perm = schm.getPermission();
-            return (perm.equals("budget")) || TARDISPermission.hasPermission(p, "tardis." + perm);
-        } else {
-            return false;
         }
     }
 

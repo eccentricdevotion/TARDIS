@@ -29,12 +29,12 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
  */
 public class TARDISJunkPreset extends TARDISPreset {
 
-    String[][] blueprintData = new String[10][4];
-    String[][] stainedData = new String[10][4];
-    String[][] glassData = new String[10][4];
-    String[][] blueprintWest = new String[10][4];
-    String[][] stainedWest = new String[10][4];
-    String[][] glassWest = new String[10][4];
+    final String[][] blueprintData = new String[10][4];
+    final String[][] stainedData = new String[10][4];
+    final String[][] glassData = new String[10][4];
+    final String[][] blueprintWest = new String[10][4];
+    final String[][] stainedWest = new String[10][4];
+    final String[][] glassWest = new String[10][4];
 
     public TARDISJunkPreset() {
         // set blueprint data strings

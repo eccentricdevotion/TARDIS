@@ -47,7 +47,7 @@ public class TARDISResourcePackChanger {
     public void changeRP(Player p, String str) {
         // check the URL
         try {
-            URL url = new URL(str);
+            new URL(str);
             if (p.isOnline()) {
                 UUID uuid = p.getUniqueId();
                 plugin.getServer().getPlayer(uuid).setResourcePack(str);

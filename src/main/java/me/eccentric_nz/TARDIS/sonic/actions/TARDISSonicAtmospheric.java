@@ -70,7 +70,6 @@ public class TARDISSonicAtmospheric {
                     if (rsc.resultSet() && !plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
                         new TARDISAtmosphericExcitation(plugin).excite(tid, player);
                         plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
-                        return;
                     }
                 }
             }

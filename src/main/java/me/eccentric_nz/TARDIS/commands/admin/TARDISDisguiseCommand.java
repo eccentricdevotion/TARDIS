@@ -25,8 +25,6 @@ import org.bukkit.entity.Player;
 public class TARDISDisguiseCommand {
 
     private final TARDIS plugin;
-    private int task;
-    private int i;
 
     public TARDISDisguiseCommand(TARDIS plugin) {
         this.plugin = plugin;

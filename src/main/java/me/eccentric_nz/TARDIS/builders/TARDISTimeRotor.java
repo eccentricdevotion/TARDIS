@@ -84,8 +84,7 @@ public class TARDISTimeRotor {
     }
 
     public static ItemFrame getItemFrame(UUID uuid) {
-        ItemFrame itemFrame = (ItemFrame) Bukkit.getEntity(uuid);
-        return itemFrame;
+        return (ItemFrame) Bukkit.getEntity(uuid);
     }
 
     public static int getRotorModelData(ItemFrame itemFrame) {

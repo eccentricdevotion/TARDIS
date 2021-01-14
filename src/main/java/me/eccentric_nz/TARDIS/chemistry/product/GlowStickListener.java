@@ -31,12 +31,10 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class GlowStickListener implements Listener {
 
-    private final TARDIS plugin;
     private final NamespacedKey namespacedKey;
 
     public GlowStickListener(TARDIS plugin) {
-        this.plugin = plugin;
-        namespacedKey = new NamespacedKey(this.plugin, "glow_stick_time");
+        namespacedKey = new NamespacedKey(plugin, "glow_stick_time");
     }
 
     @EventHandler

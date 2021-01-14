@@ -210,8 +210,8 @@ public class TARDISJunkBuilder implements Runnable {
                     });
                 }
             } else {
-                plugin.getTrackerKeeper().getMaterialising().remove(Integer.valueOf(bd.getTardisID()));
-                plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(bd.getTardisID()));
+                plugin.getTrackerKeeper().getMaterialising().remove(bd.getTardisID());
+                plugin.getTrackerKeeper().getInVortex().remove(bd.getTardisID());
                 plugin.getServer().getScheduler().cancelTask(fryTask);
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;

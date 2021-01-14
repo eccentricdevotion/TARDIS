@@ -52,8 +52,6 @@ public class TARDISMaterialisePoliceBox implements Runnable {
     private int i;
     private ItemFrame frame;
     private ItemStack is;
-    private ItemMeta im;
-    private Material dye;
 
     public TARDISMaterialisePoliceBox(TARDIS plugin, BuildData bd, PRESET preset) {
         this.plugin = plugin;
@@ -103,7 +101,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     }
                     frame.setFacingDirection(BlockFace.UP);
                     frame.setRotation(bd.getDirection().getRotation());
-                    dye = TARDISBuilderUtility.getDyeMaterial(preset);
+                    Material dye = TARDISBuilderUtility.getDyeMaterial(preset);
                     is = new ItemStack(dye, 1);
                     if (bd.isOutside()) {
                         if (!bd.useMinecartSounds()) {
@@ -128,7 +126,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                         }
                     }
                 }
-                im = is.getItemMeta();
+                ItemMeta im = is.getItemMeta();
                 im.setCustomModelData(cmd);
                 if (bd.shouldAddSign()) {
                     im.setDisplayName(bd.getPlayer().getName() + "'s Police Box");

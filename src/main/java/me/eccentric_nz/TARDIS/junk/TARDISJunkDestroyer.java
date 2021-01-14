@@ -130,7 +130,7 @@ public class TARDISJunkDestroyer implements Runnable {
                                     world.setBiome(row, col, b);
                                 } catch (NullPointerException e) {
                                     // remove TARDIS from tracker
-                                    plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(pdd.getTardisID()));
+                                    plugin.getTrackerKeeper().getDematerialising().remove(pdd.getTardisID());
                                 }
                             }
                         }
@@ -139,8 +139,8 @@ public class TARDISJunkDestroyer implements Runnable {
                         chunks.clear();
                     }
                 }
-                plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(pdd.getTardisID()));
-                plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(pdd.getTardisID()));
+                plugin.getTrackerKeeper().getDematerialising().remove(pdd.getTardisID());
+                plugin.getTrackerKeeper().getInVortex().remove(pdd.getTardisID());
                 // check protected blocks if has block id and data stored then put the block back!
                 HashMap<String, Object> tid = new HashMap<>();
                 tid.put("tardis_id", pdd.getTardisID());

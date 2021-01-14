@@ -52,9 +52,7 @@ public class TARDISRecipeInventoryListener extends TARDISMenuListener implements
                         default:
                             String command = ChatColor.stripColor(is.getItemMeta().getLore().get(0)).substring(1);
                             close(player);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                player.performCommand(command);
-                            }, 2L);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand(command), 2L);
                             break;
                     }
                 }

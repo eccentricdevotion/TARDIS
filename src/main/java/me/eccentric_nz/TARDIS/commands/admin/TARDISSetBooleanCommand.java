@@ -48,7 +48,7 @@ class TARDISSetBooleanCommand {
             TARDISMessage.send(sender, "TRUE_FALSE");
             return false;
         }
-        boolean bool = Boolean.valueOf(tf);
+        boolean bool = Boolean.parseBoolean(tf);
         if (first.equals("switch_resource_packs")) {
             plugin.getPlanetsConfig().set("switch_resource_packs", bool);
             try {

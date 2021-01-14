@@ -22,9 +22,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
@@ -159,42 +159,38 @@ public class TARDISUpgradeBlockScanner {
                             }
                             switch (type) {
                                 case ORANGE_WOOL:
-                                    switch (wall_type) {
-                                        case LAPIS_BLOCK: // if using the default Lapis Block - then use Orange Wool / Terracotta
-                                            switch (use_clay) {
-                                                case TERRACOTTA:
-                                                    type = Material.ORANGE_TERRACOTTA;
-                                                    break;
-                                                case CONCRETE:
-                                                    type = Material.ORANGE_CONCRETE;
-                                                    break;
-                                                default:
-                                                    type = Material.ORANGE_WOOL;
-                                                    break;
-                                            }
-                                            break;
-                                        default:
-                                            type = wall_type;
+                                    if (wall_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Orange Wool / Terracotta
+                                        switch (use_clay) {
+                                            case TERRACOTTA:
+                                                type = Material.ORANGE_TERRACOTTA;
+                                                break;
+                                            case CONCRETE:
+                                                type = Material.ORANGE_CONCRETE;
+                                                break;
+                                            default:
+                                                type = Material.ORANGE_WOOL;
+                                                break;
+                                        }
+                                    } else {
+                                        type = wall_type;
                                     }
                                     break;
                                 case LIGHT_GRAY_WOOL:
                                     if (!tud.getSchematic().getPermission().equals("eleventh")) {
-                                        switch (floor_type) {
-                                            case LAPIS_BLOCK: // if using the default Lapis Block - then use Light Grey Wool / Terracotta
-                                                switch (use_clay) {
-                                                    case TERRACOTTA:
-                                                        type = Material.LIGHT_GRAY_TERRACOTTA;
-                                                        break;
-                                                    case CONCRETE:
-                                                        type = Material.LIGHT_GRAY_CONCRETE;
-                                                        break;
-                                                    default:
-                                                        type = Material.LIGHT_GRAY_WOOL;
-                                                        break;
-                                                }
-                                                break;
-                                            default:
-                                                type = floor_type;
+                                        if (floor_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Light Grey Wool / Terracotta
+                                            switch (use_clay) {
+                                                case TERRACOTTA:
+                                                    type = Material.LIGHT_GRAY_TERRACOTTA;
+                                                    break;
+                                                case CONCRETE:
+                                                    type = Material.LIGHT_GRAY_CONCRETE;
+                                                    break;
+                                                default:
+                                                    type = Material.LIGHT_GRAY_WOOL;
+                                                    break;
+                                            }
+                                        } else {
+                                            type = floor_type;
                                         }
                                     } else {
                                         String[] tsplit = type.toString().split("_");

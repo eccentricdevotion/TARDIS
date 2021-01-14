@@ -81,7 +81,7 @@ public class TARDISHandlesCommand implements CommandExecutor {
                 return new TARDISHandlesLandCommand(plugin).exitVortex(player, TARDISNumberParsers.parseInt(args[2]), args[1]);
             case "lock":
             case "unlock":
-                return new TARDISHandlesLockUnlockCommand(plugin).toggleLock(player, TARDISNumberParsers.parseInt(args[2]), Boolean.valueOf(args[3]));
+                return new TARDISHandlesLockUnlockCommand(plugin).toggleLock(player, TARDISNumberParsers.parseInt(args[2]), Boolean.parseBoolean(args[3]));
             case "name":
                 TARDISMessage.handlesSend(player, "HANDLES_NAME", player.getName());
                 return true;

@@ -21,12 +21,6 @@ import org.bukkit.World;
 
 public class TARDISForceFieldLocation {
 
-    private final double minX;
-    private final double minY;
-    private final double minZ;
-    private final double maxX;
-    private final double maxY;
-    private final double maxZ;
     private final Location topFrontLeft;
     private final Location topFrontRight;
     private final Location topBacktLeft;
@@ -37,12 +31,12 @@ public class TARDISForceFieldLocation {
     private final Location bottomBackRight;
 
     public TARDISForceFieldLocation(Location location, double range) {
-        minX = location.getX() - range;
-        minY = location.getY();
-        minZ = location.getZ() - range;
-        maxX = location.getX() + range;
-        maxY = location.getY() + 1;
-        maxZ = location.getZ() + range;
+        double minX = location.getX() - range;
+        double minY = location.getY();
+        double minZ = location.getZ() - range;
+        double maxX = location.getX() + range;
+        double maxY = location.getY() + 1;
+        double maxZ = location.getZ() + range;
         World world = location.getWorld();
         topFrontLeft = new Location(world, minX, maxY, minZ);
         topFrontRight = new Location(world, maxX, maxY, minZ);

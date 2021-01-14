@@ -52,11 +52,7 @@ class TARDISJunkItsDangerousRunnable implements Runnable {
 
     @Override
     public void run() {
-        if (c % 5 < 3) {
-            lightable.setLit(false);
-        } else {
-            lightable.setLit(true);
-        }
+        lightable.setLit(c % 5 >= 3);
         t.setBlockData(lightable);
         // check if player is in Junk TARDIS effects zone
         List<UUID> remove = new ArrayList<>();

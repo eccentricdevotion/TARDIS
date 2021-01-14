@@ -60,7 +60,7 @@ public class TARDISCircuitRepairListener implements Listener {
         }
         // which slot?
         int slot = event.getRawSlot();
-        if (slot >= 0 && slot == 2) {
+        if (slot == 2) {
             // they clicked the output slot
             AnvilInventory anvil = (AnvilInventory) event.getInventory();
             ItemStack[] items = anvil.getContents();

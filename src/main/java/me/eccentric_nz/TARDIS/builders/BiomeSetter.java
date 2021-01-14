@@ -106,9 +106,7 @@ public class BiomeSetter {
                     }
                 }
                 // refresh the chunks
-                chunks.forEach((c) -> {
-                    TARDIS.plugin.getTardisHelper().refreshChunk(c);
-                });
+                chunks.forEach((c) -> TARDIS.plugin.getTardisHelper().refreshChunk(c));
             }
             return true;
         }

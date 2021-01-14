@@ -21,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
@@ -58,7 +59,7 @@ class TARDISKeyMenuInventory {
                     String[] split = key.getLore().split("~");
                     im.setLore(Arrays.asList(split));
                 } else {
-                    im.setLore(Arrays.asList(key.getLore()));
+                    im.setLore(Collections.singletonList(key.getLore()));
                 }
             }
             im.setCustomModelData(key.getCustomModelData());

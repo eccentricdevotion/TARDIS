@@ -48,7 +48,6 @@ public class TARDISTimeRotorLoader {
             rs = ps.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    int id = rs.getInt("tardis_id");
                     String u = rs.getString("rotor");
                     // check for empty uuid
                     if (!u.isEmpty()) {

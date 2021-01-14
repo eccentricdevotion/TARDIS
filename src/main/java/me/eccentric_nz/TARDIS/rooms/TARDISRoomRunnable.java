@@ -423,9 +423,7 @@ public class TARDISRoomRunnable implements Runnable {
                     caneblocks.forEach((cane) -> cane.setBlockData(Material.SUGAR_CANE.createBlockData()));
                     caneblocks.clear();
                     // attach the cocoa
-                    cocoablocks.forEach((key, value) -> {
-                        key.setBlockData(value, true);
-                    });
+                    cocoablocks.forEach((key, value) -> key.setBlockData(value, true));
                     cocoablocks.clear();
                     // plant the melon
                     melonblocks.forEach((melon) -> melon.setBlockData(Material.MELON_STEM.createBlockData()));
@@ -447,9 +445,7 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 if (room.equals("VILLAGE") || room.equals("SHELL")) {
                     // put doors on
-                    doorblocks.forEach((key, value) -> {
-                        key.setBlockData(value, true);
-                    });
+                    doorblocks.forEach((key, value) -> key.setBlockData(value, true));
                     doorblocks.clear();
                 }
                 // water farmland
@@ -478,9 +474,7 @@ public class TARDISRoomRunnable implements Runnable {
                 setBanners(bannerblocks);
                 // remove the chunks, so they can unload as normal again
                 if (chunkList.size() > 0) {
-                    chunkList.forEach((ch) -> {
-                        ch.setForceLoaded(false);
-                    });
+                    chunkList.forEach((ch) -> ch.setForceLoaded(false));
                 }
                 plugin.getTrackerKeeper().getRoomTasks().remove(task);
                 // cancel the task

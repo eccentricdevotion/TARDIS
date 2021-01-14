@@ -37,7 +37,7 @@ class TARDISInsideCommand {
         this.plugin = plugin;
     }
 
-    boolean whosInside(Player player, String[] args) {
+    boolean whosInside(Player player) {
         // check they are a timelord
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {

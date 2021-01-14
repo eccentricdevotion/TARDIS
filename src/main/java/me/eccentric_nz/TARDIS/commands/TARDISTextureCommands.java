@@ -95,7 +95,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                         upd.put("texture_out", "default");
                     } else {
                         try {
-                            URL url = new URL(args[1]);
+                            new URL(args[1]);
                             if (pref.equals("in")) {
                                 upd.put("texture_in", args[1]);
                             }

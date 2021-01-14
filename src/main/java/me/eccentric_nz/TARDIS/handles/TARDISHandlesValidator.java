@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,14 +30,12 @@ import org.bukkit.inventory.ItemStack;
  */
 class TARDISHandlesValidator {
 
-    private final TARDIS plugin;
     private final ItemStack[] program;
     private final Player player;
     private int endCount = 1;
     private int eventCount = 0;
 
-    TARDISHandlesValidator(TARDIS plugin, ItemStack[] program, Player player) {
-        this.plugin = plugin;
+    TARDISHandlesValidator(ItemStack[] program, Player player) {
         this.program = program;
         this.player = player;
     }

@@ -96,7 +96,7 @@ public class TARDISLanguageUpdater {
                 }
                 Collections.sort(lineList);
                 try (FileWriter fileWriter = new FileWriter(lang_path); PrintWriter out = new PrintWriter(fileWriter, false)) {
-                    lineList.forEach((outputLine) -> out.println(outputLine));
+                    lineList.forEach(out::println);
                     out.flush();
                 }
             } catch (IOException ex) {

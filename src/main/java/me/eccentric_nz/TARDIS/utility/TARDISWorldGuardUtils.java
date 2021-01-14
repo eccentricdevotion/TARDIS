@@ -298,7 +298,7 @@ public class TARDISWorldGuardUtils {
                     parent = parent.getParent();
                 }
             }
-            parentNames.forEach((name) -> regions.remove(name));
+            parentNames.forEach(regions::remove);
             rm.removeRegion(regions.getFirst());
             try {
                 rm.save();
@@ -435,7 +435,7 @@ public class TARDISWorldGuardUtils {
                     parent = parent.getParent();
                 }
             }
-            parentNames.forEach((name) -> regions.remove(name));
+            parentNames.forEach(regions::remove);
             String region = regions.getFirst();
             ProtectedRegion pr = rm.getRegion(region);
             pr.setFlag(Flags.ENTRY, State.DENY);

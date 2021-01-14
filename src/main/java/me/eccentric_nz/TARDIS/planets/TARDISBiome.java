@@ -111,7 +111,7 @@ public final class TARDISBiome implements Keyed {
     /**
      * The constructor
      *
-     * @param namespacedKey
+     * @param namespacedKey the biome's name spaced key
      */
     private TARDISBiome(NamespacedKey namespacedKey) {
         key = namespacedKey;

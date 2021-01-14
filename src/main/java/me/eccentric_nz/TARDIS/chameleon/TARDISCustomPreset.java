@@ -78,7 +78,7 @@ public class TARDISCustomPreset {
         }
         boolean asymmetric;
         if (custom_data[5] != null && !custom_data[5].isEmpty()) {
-            asymmetric = Boolean.valueOf(custom_data[5]);
+            asymmetric = Boolean.parseBoolean(custom_data[5]);
         } else {
             // assume true if not set
             asymmetric = true;

@@ -504,7 +504,7 @@ public class TARDISTimeTravel {
         wherex += (quarter * rx);
         // add chance of negative values
         if (TARDISConstants.RANDOM.nextInt(2) == 1) {
-            wherex = 0 - wherex;
+            wherex = -wherex;
         }
         // use multiplier based on position of third (y) repeater
         wherex *= ry;
@@ -529,7 +529,7 @@ public class TARDISTimeTravel {
         wherez += (quarter * rz);
         // add chance of negative values
         if (TARDISConstants.RANDOM.nextInt(2) == 1) {
-            wherez = 0 - wherez;
+            wherez = -wherez;
         }
         // use multiplier based on position of third (y) repeater
         wherez *= ry;

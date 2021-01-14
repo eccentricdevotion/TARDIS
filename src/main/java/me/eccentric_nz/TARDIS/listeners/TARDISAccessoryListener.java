@@ -73,9 +73,7 @@ public class TARDISAccessoryListener implements Listener {
                             Damageable damageable = (Damageable) bim;
                             damageable.setDamage(50);
                             accessory.setItemMeta(bim);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                event.getWhoClicked().setItemOnCursor(accessory);
-                            }, 1L);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> event.getWhoClicked().setItemOnCursor(accessory), 1L);
                             event.setCurrentItem(null);
                         }
                     }

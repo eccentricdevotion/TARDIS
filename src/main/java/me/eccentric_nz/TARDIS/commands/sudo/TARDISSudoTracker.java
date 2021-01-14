@@ -24,8 +24,8 @@ import java.util.UUID;
 
 public class TARDISSudoTracker {
 
-    public static HashMap<UUID, UUID> SUDOERS = new HashMap<>();
-    public static UUID CONSOLE_UUID = UUID.randomUUID();
+    public static final HashMap<UUID, UUID> SUDOERS = new HashMap<>();
+    public static final UUID CONSOLE_UUID = UUID.randomUUID();
 
     public static boolean isSudo(CommandSender sender) {
         return SUDOERS.containsKey(getSudo(sender));

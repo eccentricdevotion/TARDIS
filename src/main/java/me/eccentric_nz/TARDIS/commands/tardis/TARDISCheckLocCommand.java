@@ -39,7 +39,7 @@ class TARDISCheckLocCommand {
         this.plugin = plugin;
     }
 
-    boolean doACheckLocation(Player player, String[] args) {
+    boolean doACheckLocation(Player player) {
         Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
         Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();
         if (m != Material.SNOW) {

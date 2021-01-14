@@ -73,8 +73,7 @@ public class TARDISSpigotChecker implements Runnable {
             URLConnection request = url.openConnection();
             request.connect();
             JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-            JsonObject rootobj = root.getAsJsonObject();
-            return rootobj;
+            return root.getAsJsonObject();
         } catch (Exception ex) {
             plugin.debug("Failed to check for the latest build info from Spigot.");
         }

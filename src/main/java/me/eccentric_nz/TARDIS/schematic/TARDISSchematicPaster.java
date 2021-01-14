@@ -99,7 +99,7 @@ class TARDISSchematicPaster implements Runnable {
             running = true;
         }
         if (l == h && r == w - 1) {
-            postRedstoneTorches.forEach((prtb, ptdata) -> prtb.setBlockData(ptdata));
+            postRedstoneTorches.forEach(Block::setBlockData);
             setBanners(postBanners);
             // paintings
             if (obj.has("paintings")) {

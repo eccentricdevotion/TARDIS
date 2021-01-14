@@ -337,7 +337,7 @@ public interface TardisAPI {
      * @param player the player who will be receiving the item
      * @return an ItemStack of the TARDIS item ot null if an invalid item was specified
      */
-    public ItemStack getTARDISShapeItem(String item, Player player);
+    ItemStack getTARDISShapeItem(String item, Player player);
 
     /**
      * Get the TARDIS seed recipes.

@@ -116,12 +116,11 @@ public abstract class YandexTranslatorAPI {
      */
     static String retrievePropArrString(URL url, String jsonValProperty) throws Exception {
         String response = retrieveResponse(url);
-        String translationArr = jsonObjValToStringArr(response, jsonValProperty);
-        return translationArr;
+        return jsonObjValToStringArr(response, jsonValProperty);
     }
 
     // Helper method to parse a JsonObject containing an array of Strings with the given label.
-    private static String jsonObjValToStringArr(String inputString, String subObjPropertyName) throws Exception {
+    private static String jsonObjValToStringArr(String inputString, String subObjPropertyName) {
         JsonObject jsonObj = new JsonParser().parse(inputString).getAsJsonObject();
         JsonArray jsonArr = jsonObj.get(subObjPropertyName).getAsJsonArray();
         return jsonArr.getAsString();
@@ -154,7 +153,7 @@ public abstract class YandexTranslatorAPI {
     }
 
     //Check if ready to make request, if not, throw a RuntimeException
-    static void validateServiceState() throws Exception {
+    static void validateServiceState() {
         if (apiKey == null || apiKey.length() < 27) {
             throw new RuntimeException("INVALID_API_KEY - Please set the API Key with your Yandex API Key");
         }

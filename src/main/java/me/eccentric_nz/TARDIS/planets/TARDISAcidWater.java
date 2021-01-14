@@ -187,13 +187,13 @@ public class TARDISAcidWater implements Listener {
                     red += 0.04;
                     break;
                 case GOLDEN_HELMET:
-                    red += 0.08;
+                    red += 0.06;
                     break;
                 case CHAINMAIL_HELMET:
                     red += 0.08;
                     break;
                 case IRON_HELMET:
-                    red += 0.08;
+                    red += 0.10;
                     break;
                 case DIAMOND_HELMET:
                     red += 0.12;
@@ -208,13 +208,13 @@ public class TARDISAcidWater implements Listener {
                     red += 0.04;
                     break;
                 case GOLDEN_BOOTS:
-                    red += 0.04;
+                    red += 0.06;
                     break;
                 case CHAINMAIL_BOOTS:
-                    red += 0.04;
+                    red += 0.08;
                     break;
                 case IRON_BOOTS:
-                    red += 0.08;
+                    red += 0.10;
                     break;
                 case DIAMOND_BOOTS:
                     red += 0.12;
@@ -255,7 +255,7 @@ public class TARDISAcidWater implements Listener {
                     red += 0.20;
                     break;
                 case CHAINMAIL_CHESTPLATE:
-                    red += 0.20;
+                    red += 0.22;
                     break;
                 case IRON_CHESTPLATE:
                     red += 0.24;

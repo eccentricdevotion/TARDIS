@@ -20,7 +20,7 @@ public class TARDISRecipesLister {
         this.plugin = plugin;
     }
 
-    public boolean listRecipes(CommandSender sender) {
+    public void listRecipes(CommandSender sender) {
         for (Map.Entry<String, ShapedRecipe> shaped : plugin.getFigura().getShapedRecipes().entrySet()) {
             sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shaped.getKey()) + "(\"" + shaped.getKey() + "\", Material." + shaped.getValue().getResult().getType().toString() + ", " + RecipeItem.getByName(shaped.getKey()).getCustomModelData() + "),");
         }
@@ -48,6 +48,5 @@ public class TARDISRecipesLister {
                 sender.sendMessage(m.toString() + "_HEAD(\"" + m.getName() + " Head\", Material." + m.getMaterial().toString() + ", " + m.getCustomModelData() + "),");
             }
         }
-        return true;
     }
 }

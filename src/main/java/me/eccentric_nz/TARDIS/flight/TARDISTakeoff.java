@@ -46,7 +46,7 @@ public class TARDISTakeoff {
         // set the handbrake
         TARDISHandbrake.setLevers(block, false, true, handbrake.toString(), id, plugin);
         if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
-            plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(Integer.valueOf(id));
+            plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
         }
         TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
         if (!beac_on && !beacon.isEmpty()) {
@@ -98,7 +98,7 @@ public class TARDISTakeoff {
             // set the handbrake
             TARDISHandbrake.setLevers(handbrake.getBlock(), false, true, rs.getLocation(), rs.getTardis_id(), plugin);
             if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
-                plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(Integer.valueOf(id));
+                plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
             }
             TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
             if (!beac_on && !beacon.isEmpty()) {

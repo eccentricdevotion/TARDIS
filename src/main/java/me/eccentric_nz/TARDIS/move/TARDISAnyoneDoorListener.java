@@ -522,7 +522,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         plugin.getQueryFactory().doSyncInsert("travellers", set);
                                         HashMap<String, Object> wheree = new HashMap<>();
                                         wheree.put("tardis_id", id);
-                                        int cost = (0 - plugin.getArtronConfig().getInt("backdoor"));
+                                        int cost = (-plugin.getArtronConfig().getInt("backdoor"));
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", cost, wheree, player);
                                         break;
                                     case 3:
@@ -593,7 +593,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         // take energy
                                         HashMap<String, Object> wherea = new HashMap<>();
                                         wherea.put("tardis_id", id);
-                                        int costa = (0 - plugin.getArtronConfig().getInt("backdoor"));
+                                        int costa = (-plugin.getArtronConfig().getInt("backdoor"));
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", costa, wherea, player);
                                         break;
                                     default:

@@ -87,9 +87,7 @@ public class TARDISKeyboardListener implements Listener {
     public static boolean isKeyboardEditor(ItemStack is) {
         if (is != null && is.getType().equals(Material.OAK_SIGN) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Keyboard Editor") && im.hasCustomModelData()) {
-                return true;
-            }
+            return im.hasDisplayName() && im.getDisplayName().equals("TARDIS Keyboard Editor") && im.hasCustomModelData();
         }
         return false;
     }
@@ -166,7 +164,7 @@ public class TARDISKeyboardListener implements Listener {
             // biome ?
             try {
                 String upper = event.getLine(0).toUpperCase(Locale.ENGLISH);
-                Biome biome = Biome.valueOf(upper);
+                Biome.valueOf(upper);
                 if (!upper.equals("HELL") && !upper.equals("SKY") && !upper.equals("VOID")) {
                     p.performCommand("tardistravel biome " + upper);
                     plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel biome " + upper);

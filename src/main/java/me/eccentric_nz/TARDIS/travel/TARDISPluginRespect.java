@@ -231,10 +231,6 @@ public class TARDISPluginRespect {
         }
     }
 
-    public TARDIS getPlugin() {
-        return plugin;
-    }
-
     TARDISTownyChecker getTychk() {
         return tychk;
     }

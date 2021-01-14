@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.siegemode;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Creeper;
@@ -40,7 +40,7 @@ public class TARDISSiegeRunnable implements Runnable {
 
     public TARDISSiegeRunnable(TARDIS plugin) {
         this.plugin = plugin;
-        deplete = 0 - this.plugin.getArtronConfig().getInt("siege_deplete");
+        deplete = -this.plugin.getArtronConfig().getInt("siege_deplete");
     }
 
     @Override

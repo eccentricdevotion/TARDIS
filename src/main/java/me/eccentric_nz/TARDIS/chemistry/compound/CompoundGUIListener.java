@@ -94,7 +94,7 @@ public class CompoundGUIListener implements Listener {
                         int amount = is.getAmount();
                         formula.append(element.toString()).append(":").append(amount).append("-");
                     } catch (IllegalArgumentException e) {
-
+                        // ignore
                     }
                 }
             }

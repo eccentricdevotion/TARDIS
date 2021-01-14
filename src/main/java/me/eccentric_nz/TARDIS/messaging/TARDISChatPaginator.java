@@ -105,31 +105,6 @@ public class TARDISChatPaginator {
         return lines.toArray(new String[lines.size()]);
     }
 
-    public static class ChatPage {
-
-        private final String[] lines;
-        private final int pageNumber;
-        private final int totalPages;
-
-        ChatPage(String[] lines, int pageNumber, int totalPages) {
-            this.lines = lines;
-            this.pageNumber = pageNumber;
-            this.totalPages = totalPages;
-        }
-
-        public int getPageNumber() {
-            return pageNumber;
-        }
-
-        public int getTotalPages() {
-            return totalPages;
-        }
-
-        public String[] getLines() {
-            return lines;
-        }
-    }
-
     public static void setGuaranteedNoWrapChatPageWidth(int guaranteedNoWrapChatPageWidth) {
         GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH = guaranteedNoWrapChatPageWidth;
     }

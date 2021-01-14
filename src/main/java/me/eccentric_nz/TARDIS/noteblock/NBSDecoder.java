@@ -18,7 +18,6 @@
 package me.eccentric_nz.TARDIS.noteblock;
 
 import java.io.DataInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -26,10 +25,6 @@ import java.util.HashMap;
 class NBSDecoder {
 
     static Song parse(InputStream inputStream) {
-        return parse(inputStream, null); // Source is unknown -> no file
-    }
-
-    private static Song parse(InputStream inputStream, File decodeFile) {
         HashMap<Integer, Layer> layerHashMap = new HashMap<>();
         try {
             DataInputStream dis = new DataInputStream(inputStream);

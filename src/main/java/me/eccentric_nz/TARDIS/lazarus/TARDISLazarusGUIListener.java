@@ -68,7 +68,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final List<Integer> pufferStates = Arrays.asList(0, 1, 2);
     private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "DALEK", "EMPTY CHILD", "ICE WARRIOR", "JUDOON", "K9", "OOD", "SILENT", "SILURIAN", "SONTARAN", "STRAX", "TOCLAFANE", "VASHTA NERADA", "ZYGON");
     private final List<String> twaHelmets = Arrays.asList("Weeping Angel Head", "Cyberman Head", "Dalek Head", "Empty Child Head", "Ice Warrior Head", "Judoon Head", "K9 Head", "Ood Head", "Silent Head", "Silurian Head", "Sontaran Head", "Strax Head", "Toclafane", "Vashta Nerada Head", "Zygon Head");
-    private final int max_slot = 45;
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
         super(plugin);
@@ -94,6 +93,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             if (b == null) {
                 return;
             }
+            int max_slot = 45;
             if (slot >= 0 && slot < max_slot) {
                 // get selection
                 ItemStack is = view.getItem(slot);
