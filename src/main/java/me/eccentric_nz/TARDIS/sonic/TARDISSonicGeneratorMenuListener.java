@@ -243,6 +243,9 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
         if (im.hasLore()) {
             List<String> lore = im.getLore();
             fields.forEach((key, value) -> set.put(value, (lore.contains(key)) ? 1 : 0));
+        } else {
+            // has been reset to standard sonic
+            fields.forEach((key, value) -> set.put(value, 0));
         }
         plugin.getQueryFactory().doUpdate("sonic", set, where);
         plugin.getTrackerKeeper().getSonicGenerators().remove(p.getUniqueId());
