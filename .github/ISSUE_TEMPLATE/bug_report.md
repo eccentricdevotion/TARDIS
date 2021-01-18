@@ -3,6 +3,7 @@ name: Bug report
 about: Report a TARDIS error
 title: ''
 labels: bug
+assignees: ''
 
 ---
 
@@ -20,7 +21,7 @@ Steps to reproduce the behaviour:
 If applicable, add screenshots to help explain your problem.
 
 **Log files**
-If applicable, paste your server log (_showing the whole server startup to when the error occurs_) on a website like pastebin.com, and post a link here.
+Paste your server log (_showing the whole server startup to when the error occurs_) on a website like pastebin.com, and post a link here. Even if there are no errors in the log, it still contains useful information for troubleshooting.
 
 **`/tardis version` output**
 Please include an output of your `/tardis version`.
