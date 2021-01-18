@@ -25,10 +25,6 @@ package me.eccentric_nz.TARDIS.chameleon;
  */
 public class TARDISGranitePreset extends TARDISPreset {
 
-//    private final String blueprint_id = "[[1,1,1,44],[1,1,1,44],[1,1,1,44],[1,1,1,44],[1,1,1,44],[1,1,1,44],[1,1,1,44],[71,71,1,44],[0,0,152,124],[0,0,68,0]]";
-//    private final String stained_id = "[[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[71,71,95,95],[0,0,95,124],[0,0,68,0]]";
-//    private final String glass_id = "[[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[71,71,20,20],[0,0,20,124],[0,0,68,0]]";
-
     public TARDISGranitePreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];

@@ -124,9 +124,7 @@ public class TARDISForceField implements Runnable {
                     return true;
                 } else {
                     comps = Arrays.asList(rs.getCompanions().split(":"));
-                    if (comps.contains(other.getUniqueId().toString())) {
-                        return true;
-                    }
+                    return comps.contains(other.getUniqueId().toString());
                 }
             }
         }

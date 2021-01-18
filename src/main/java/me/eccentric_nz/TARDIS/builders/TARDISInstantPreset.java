@@ -465,13 +465,6 @@ public class TARDISInstantPreset {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisID());
                         }
                         break;
-//                    case REDSTONE_BLOCK:
-//                        if (isPoliceBox) {
-//                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, Material.BLUE_WOOL, bd.getTardisID());
-//                        } else {
-//                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
-//                        }
-//                        break;
                     case WHITE_TERRACOTTA:
                     case ORANGE_TERRACOTTA:
                     case MAGENTA_TERRACOTTA:

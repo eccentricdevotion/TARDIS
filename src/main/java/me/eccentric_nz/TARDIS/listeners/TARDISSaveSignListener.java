@@ -91,7 +91,6 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
             }
             if (!allow) {
                 event.setCancelled(true);
-                return;
             } else {
                 int slot = event.getRawSlot();
                 if (plugin.getTrackerKeeper().getArrangers().contains(uuid)) {

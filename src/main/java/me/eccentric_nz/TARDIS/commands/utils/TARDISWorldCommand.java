@@ -79,7 +79,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
             }
             World world = plugin.getServer().getWorld(args[1]);
             if (world != null) {
-                if (args[0].toLowerCase().equals("rename")) {
+                if (args[0].equalsIgnoreCase("rename")) {
                     if (args.length < 3) {
                         TARDISMessage.send(sender, "ARG_WORLD_RENAME");
                         return true;
@@ -107,7 +107,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     TARDISMessage.send(sender, "WORLD_RENAME_SUCCESS", args[2]);
                     return true;
                 }
-                if (args[0].toLowerCase().equals("gm")) {
+                if (args[0].equalsIgnoreCase("gm")) {
                     if (args.length == 3) {
                         try {
                             GameMode gm = GameMode.valueOf(args[2]);
@@ -126,7 +126,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         return true;
                     }
                 }
-                if (args[0].toLowerCase().equals("load")) {
+                if (args[0].equalsIgnoreCase("load")) {
                     TARDISMessage.send(sender, "WORLD_LOADED", args[1]);
                 } else {
                     // try to unload the world
@@ -137,7 +137,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     TARDISMessage.send(sender, "WORLD_UNLOAD_SUCCESS", args[1]);
                 }
             } else {
-                if (args[0].toLowerCase().equals("rename")) {
+                if (args[0].equalsIgnoreCase("rename")) {
                     if (args.length < 3) {
                         TARDISMessage.send(sender, "ARG_WORLD_RENAME");
                         return true;
@@ -146,11 +146,11 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     TARDISMessage.send(sender, "WORLD_RENAME_SUCCESS", args[2]);
                     return true;
                 }
-                if (args[0].toLowerCase().equals("gm")) {
+                if (args[0].equalsIgnoreCase("gm")) {
                     TARDISMessage.send(sender, "WORLD_NOT_FOUND");
                     return true;
                 }
-                if (args[0].toLowerCase().equals("load")) {
+                if (args[0].equalsIgnoreCase("load")) {
                     String name = args[1];
                     if (name.equals("gallifrey") || name.equals("siluria") || name.equals("skaro")) {
                         TARDISMessage.send(sender, "DATA_PACK");
@@ -220,7 +220,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
         } else if (args.length == 2) {
             return partial(lastArg, WORLD_SUBS);
         } else if (args.length == 3) {
-            if (args[0].toLowerCase().equals("gm")) {
+            if (args[0].equalsIgnoreCase("gm")) {
                 return partial(lastArg, GM_SUBS);
             } else {
                 return partial(lastArg, TYPE_SUBS);

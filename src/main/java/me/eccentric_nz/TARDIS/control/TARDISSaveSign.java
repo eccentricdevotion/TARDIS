@@ -64,7 +64,7 @@ public class TARDISSaveSign {
                     set_next.put("y", y);
                     set_next.put("z", z);
                     set_next.put("direction", lore.get(6));
-                    boolean sub = Boolean.valueOf(lore.get(7));
+                    boolean sub = Boolean.parseBoolean(lore.get(7));
                     set_next.put("submarine", (sub) ? 1 : 0);
                     TARDISMessage.send(player, "LOC_SET", true);
                     // update next

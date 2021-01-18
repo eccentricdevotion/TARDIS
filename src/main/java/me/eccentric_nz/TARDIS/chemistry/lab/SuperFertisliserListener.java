@@ -93,9 +93,7 @@ public class SuperFertisliserListener implements Listener {
                     case SWEET_BERRY_BUSH:
                         Ageable ageable = (Ageable) block.getBlockData();
                         ageable.setAge(ageable.getMaximumAge());
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            block.setBlockData(ageable);
-                        }, 3L);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> block.setBlockData(ageable), 3L);
                         removeItem = true;
                         break;
                     case BAMBOO_SAPLING:

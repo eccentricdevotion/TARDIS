@@ -31,9 +31,6 @@ public class TARDISPermissionLister {
     }
 
     private boolean notThese(String perm) {
-        if (perm.contains("children") || perm.contains("description") || perm.contains("default") || perm.contains("*")) {
-            return false;
-        }
-        return true;
+        return !perm.contains("children") && !perm.contains("description") && !perm.contains("default") && !perm.contains("*");
     }
 }

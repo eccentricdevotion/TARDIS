@@ -235,6 +235,10 @@ class TARDISSonicGeneratorInventory {
             upgrades.add("Pickup Arrows Upgrade");
             artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full);
         }
+        if (data.hasKnockback()) {
+            upgrades.add("Knockback Upgrade");
+            artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full);
+        }
         // cost
         ItemStack cost = new ItemStack(Material.BOWL, 1);
         ItemMeta cost_im = cost.getItemMeta();

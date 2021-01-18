@@ -40,10 +40,6 @@ public class ResultSetForcefield {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String where;
-    private World world;
-    private int x;
-    private int y;
-    private int z;
     private UUID uuid;
     private Location location;
     private final String prefix;
@@ -72,6 +68,7 @@ public class ResultSetForcefield {
         String currentTable = prefix + "current";
         String tardisTable = prefix + "tardis";
         String query = String.format("SELECT %s.uuid, %s.* FROM %s, %s WHERE %s.uuid = ? AND %s.tardis_id = %s.tardis_id", tardisTable, currentTable, tardisTable, currentTable, tardisTable, tardisTable, currentTable);
+        World world;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -81,9 +78,9 @@ public class ResultSetForcefield {
                 rs.next();
                 uuid = UUID.fromString(rs.getString("uuid"));
                 world = plugin.getServer().getWorld(rs.getString("world"));
-                x = rs.getInt("x");
-                y = rs.getInt("y");
-                z = rs.getInt("z");
+                int x = rs.getInt("x");
+                int y = rs.getInt("y");
+                int z = rs.getInt("z");
                 location = new Location(world, x, y, z);
                 // check location is not in a TARDIS area
                 if (!plugin.getTardisArea().areaCheckInExisting(location)) {

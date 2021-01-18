@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.planets;
 import com.onarandombox.multiverseinventories.MultiverseInventories;
 import com.onarandombox.multiverseinventories.WorldGroup;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
 import me.eccentric_nz.TARDIS.perms.TARDISGroupManagerHandler;
 import me.eccentric_nz.TARDIS.perms.TARDISPermissionsExHandler;
 import me.eccentric_nz.TARDIS.perms.TARDISbPermissionsHandler;
@@ -71,27 +72,23 @@ public class TARDISSpace {
             plugin.savePlanetsConfig();
             String inventory_group = plugin.getConfig().getString("creation.inventory_group");
             if (!inventory_group.equals("0")) {
-                switch (plugin.getInvManager()) {
-//                    case MULTI:
-//                        // No API to add world to group
-//                        HashMap<String, String> migroups = MIYamlFiles.getGroups();
-//                        migroups.put(name, inventory_group);
-//                        // save YAML file and reload
-//                        break;
-                    case MULTIVERSE:
-                        MultiverseInventories mi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
-                        WorldGroup wgp = mi.getGroupManager().getGroup(inventory_group);
-                        wgp.addWorld(name);
-                        break;
-//                    case PER_WORLD:
+                //                    case MULTI:
+                //                        // No API to add world to group
+                //                        HashMap<String, String> migroups = MIYamlFiles.getGroups();
+                //                        migroups.put(name, inventory_group);
+                //                        // save YAML file and reload
+                //                        break;
+                if (plugin.getInvManager() == InventoryManager.MULTIVERSE) {
+                    MultiverseInventories mi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
+                    WorldGroup wgp = mi.getGroupManager().getGroup(inventory_group);
+                    wgp.addWorld(name);
+                    //                    case PER_WORLD:
 //                        // No API to add world to group
 //                        PerWorldInventory pwi = (PerWorldInventory) plugin.getPM().getPlugin("PerWorldInventory");
 //                        GroupManager pwigm = pwi.getGroupManager();
 //                        Group gf = pwigm.getGroup(inventory_group);
 //                        gf.getWorlds().add(name);
 //                        break;
-                    default:
-                        break;
                 }
             }
             if (plugin.getPM().isPluginEnabled("WorldBorder")) {
@@ -129,9 +126,9 @@ public class TARDISSpace {
         List<World> serverWorlds = plugin.getServer().getWorlds();
         serverWorlds.forEach((w) -> {
             if (w.getName().contains("TARDIS_") && w.getEnvironment().equals(Environment.NORMAL)) {
-                Long now = w.getTime();
-                Long dawn = 14000L;
-                Long dusk = 21000L;
+                long now = w.getTime();
+                long dawn = 14000L;
+                long dusk = 21000L;
                 if (now < dawn || now > dusk) {
                     // set the time to dawn
                     w.setTime(dawn);

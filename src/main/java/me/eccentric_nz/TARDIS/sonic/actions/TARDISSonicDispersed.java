@@ -37,7 +37,7 @@ public class TARDISSonicDispersed {
             if (rs.fromUUID(uuid.toString())) {
                 // rebuild
                 plugin.getTrackerKeeper().getDispersed().remove(uuid);
-                plugin.getTrackerKeeper().getDispersedTARDII().remove(Integer.valueOf(rs.getTardis_id()));
+                plugin.getTrackerKeeper().getDispersedTARDII().remove(rs.getTardis_id());
                 player.performCommand("tardis rebuild");
             }
         }

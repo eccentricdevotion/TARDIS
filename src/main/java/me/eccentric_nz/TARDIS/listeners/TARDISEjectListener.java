@@ -335,7 +335,7 @@ public class TARDISEjectListener implements Listener {
                     }
                     wolf.setSitting(w.isSitting());
                     wolf.setCollarColor(w.getCollarColor());
-                    double health = (w.getHealth() > 8D) ? 8D : w.getHealth();
+                    double health = Math.min(w.getHealth(), 8D);
                     wolf.setHealth(health);
                     ent.remove();
                 }
@@ -356,7 +356,7 @@ public class TARDISEjectListener implements Listener {
                     cat.setSitting(o.isSitting());
                     cat.setCatType(o.getCatType());
                     cat.setCollarColor(o.getCollarColor());
-                    double health = (o.getHealth() > 8D) ? 8D : o.getHealth();
+                    double health = Math.min(o.getHealth(), 8D);
                     cat.setHealth(health);
                     ent.remove();
                 }

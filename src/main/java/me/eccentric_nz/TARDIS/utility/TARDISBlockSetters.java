@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -34,40 +33,6 @@ import java.util.List;
  * @author eccentric_nz
  */
 public class TARDISBlockSetters {
-
-    /**
-     * Sets a block to the specified block data.
-     *
-     * @param l the location of the block.
-     * @param d the block data to set the block to.
-     */
-    public static void setBlock(Location l, String d) {
-        Block b = l.getBlock();
-        if (b != null) {
-            BlockData blockData = Bukkit.createBlockData(d);
-            switch (blockData.getMaterial()) {
-                case CAKE:
-                    // cake -> handbrake
-                    blockData = Material.LEVER.createBlockData();
-                    Switch lever = (Switch) blockData;
-                    lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
-                    lever.setFacing(BlockFace.SOUTH);
-                    b.setBlockData(lever);
-                    break;
-                case SPAWNER:
-                    // mob spawner -> scanner button
-                    blockData = Material.OAK_BUTTON.createBlockData();
-                    Switch button = (Switch) blockData;
-                    button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
-                    button.setFacing(BlockFace.SOUTH);
-                    b.setBlockData(button);
-                    break;
-                default:
-                    b.setBlockData(blockData);
-                    break;
-            }
-        }
-    }
 
     /**
      * Sets a block to the specified block data.
@@ -104,40 +69,6 @@ public class TARDISBlockSetters {
     }
 
     /**
-     * Sets a block to the specified block data.
-     *
-     * @param l        the location of the block.
-     * @param material the block type to set the block to.
-     */
-    public static void setBlock(Location l, Material material) {
-        Block b = l.getBlock();
-        BlockData blockData = material.createBlockData();
-        if (b != null) {
-            switch (material) {
-                case CAKE:
-                    // cake -> handbrake
-                    blockData = Material.LEVER.createBlockData();
-                    Switch lever = (Switch) blockData;
-                    lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
-                    lever.setFacing(BlockFace.SOUTH);
-                    b.setBlockData(lever);
-                    break;
-                case SPAWNER:
-                    // mob spawner -> scanner button
-                    blockData = Material.OAK_BUTTON.createBlockData();
-                    Switch button = (Switch) blockData;
-                    button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
-                    button.setFacing(BlockFace.SOUTH);
-                    b.setBlockData(button);
-                    break;
-                default:
-                    b.setBlockData(blockData, true);
-                    break;
-            }
-        }
-    }
-
-    /**
      * Sets a block to the specified typeId and data.
      *
      * @param w    the world the block is in.
@@ -168,43 +99,6 @@ public class TARDISBlockSetters {
                     break;
                 default:
                     b.setBlockData(data);
-                    break;
-            }
-        }
-    }
-
-    /**
-     * Sets a block to the specified block data.
-     *
-     * @param w    the world the block is in.
-     * @param x    the x co-ordinate of the block.
-     * @param y    the y co-ordinate of the block.
-     * @param z    the z co-ordinate of the block.
-     * @param data the block data to apply to the block.
-     */
-    public static void setBlock(World w, int x, int y, int z, String data) {
-        Block b = w.getBlockAt(x, y, z);
-        if (b != null) {
-            BlockData blockData = Bukkit.createBlockData(data);
-            switch (blockData.getMaterial()) {
-                case CAKE:
-                    // cake -> handbrake
-                    blockData = Material.LEVER.createBlockData();
-                    Switch lever = (Switch) blockData;
-                    lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
-                    lever.setFacing(BlockFace.SOUTH);
-                    b.setBlockData(lever);
-                    break;
-                case SPAWNER:
-                    // mob spawner -> scanner button
-                    blockData = Material.OAK_BUTTON.createBlockData();
-                    Switch button = (Switch) blockData;
-                    button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
-                    button.setFacing(BlockFace.SOUTH);
-                    b.setBlockData(button);
-                    break;
-                default:
-                    b.setBlockData(blockData);
                     break;
             }
         }

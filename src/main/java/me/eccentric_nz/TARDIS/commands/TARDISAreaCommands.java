@@ -229,7 +229,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     String value = args[2].toUpperCase(Locale.ENGLISH);
                     if (!value.equals("ALLOW") && !value.equals("DENY")) {
                         try {
-                            PRESET preset = PRESET.valueOf(value);
+                            PRESET.valueOf(value);
                         } catch (IllegalArgumentException e) {
                             TARDISMessage.send(player, "ARG_PRESET");
                             return false;
@@ -260,7 +260,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     }
                     String dir = args[2].toUpperCase(Locale.ENGLISH);
                     try {
-                        COMPASS compass = COMPASS.valueOf(dir);
+                        COMPASS.valueOf(dir);
                     } catch (IllegalArgumentException e) {
                         if (dir.equals("NONE")) {
                             dir = "";

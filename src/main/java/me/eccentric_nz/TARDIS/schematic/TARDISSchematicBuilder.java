@@ -81,16 +81,10 @@ public class TARDISSchematicBuilder {
                 switch (c) {
                     case 2:
                         // world repeater
-                        map.put(c, location);
-                        break;
                     case 3:
                         // x repeater
-                        map.put(c, location);
-                        break;
                     case 4:
                         // z repeater
-                        map.put(c, location);
-                        break;
                     case 5:
                         // distance multiplier
                         map.put(c, location);

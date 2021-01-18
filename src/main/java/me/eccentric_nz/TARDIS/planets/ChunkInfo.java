@@ -20,9 +20,9 @@ import java.util.Objects;
 
 public class ChunkInfo {
 
-    String world;
-    int x;
-    int z;
+    final String world;
+    final int x;
+    final int z;
 
     public ChunkInfo(String world, int x, int z) {
         this.world = world;

@@ -449,7 +449,7 @@ public class TARDISHandlesProcessor {
                                                     TARDISMessage.handlesSend(player, "LOC_SET");
                                                     goto_loc = new Location(plugin.getServer().getWorld(lore.get(1)), sx, sy, sz);
                                                     nextDirection = COMPASS.valueOf(lore.get(6));
-                                                    sub = Boolean.valueOf(lore.get(7));
+                                                    sub = Boolean.parseBoolean(lore.get(7));
                                                 } else {
                                                     TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_SAVE");
                                                     continue;

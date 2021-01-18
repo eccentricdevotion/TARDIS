@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISFirework;
 import org.bukkit.Location;
 
@@ -42,7 +42,6 @@ public class TARDISMalfunctionExplosion implements Runnable {
     private final int id;
     private final long end;
     private boolean started = false;
-    private Location l;
     private List<Location> locations;
     private int task;
 
@@ -60,7 +59,6 @@ public class TARDISMalfunctionExplosion implements Runnable {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
-                HashMap<String, Object> wherer = new HashMap<>();
                 ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, tardis.getTardis_id(), 0);
                 if (rsr.resultSet()) {
                     locations = rsr.getLocations();
@@ -72,7 +70,7 @@ public class TARDISMalfunctionExplosion implements Runnable {
         if (time > end) {
             plugin.getServer().getScheduler().cancelTask(task);
         } else {
-            l = locations.get(TARDISConstants.RANDOM.nextInt(4));
+            Location l = locations.get(TARDISConstants.RANDOM.nextInt(4));
             TARDISFirework.randomize().displayEffects(plugin, l.add(0.5, 0.5, 0.5));
         }
     }

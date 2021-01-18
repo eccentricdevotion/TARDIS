@@ -56,7 +56,7 @@ public class TARDISAnvilListener implements Listener {
             Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             // slot 2 = result item slot
-            if (slot >= 0 && slot == 2) {
+            if (slot == 2) {
                 ItemStack is = event.getCurrentItem();
                 if (is != null && is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();

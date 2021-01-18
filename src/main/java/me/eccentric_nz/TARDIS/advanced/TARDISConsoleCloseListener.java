@@ -267,7 +267,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 set_next.put("y", y);
                                                 set_next.put("z", z);
                                                 set_next.put("direction", lore.get(6));
-                                                boolean sub = Boolean.valueOf(lore.get(7));
+                                                boolean sub = Boolean.parseBoolean(lore.get(7));
                                                 set_next.put("submarine", (sub) ? 1 : 0);
                                                 try {
                                                     PRESET.valueOf(lore.get(5));
@@ -327,7 +327,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                 boolean sub = plugin.getTrackerKeeper().getSubmarine().contains(id);
                                 set_next.put("submarine", (sub) ? 1 : 0);
                                 if (plugin.getTrackerKeeper().getSubmarine().contains(id)) {
-                                    plugin.getTrackerKeeper().getSubmarine().remove(Integer.valueOf(id));
+                                    plugin.getTrackerKeeper().getSubmarine().remove(id);
                                 }
                                 where_next.put("tardis_id", id);
                                 plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);

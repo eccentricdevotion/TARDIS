@@ -45,12 +45,6 @@ class TARDISThemeProcessor {
     private final TARDIS plugin;
     private final UUID uuid;
     private Archive archive_next;
-    private int w;
-    private int h;
-    private int pw;
-    private int ph;
-    private ConsoleSize size_next;
-    private ConsoleSize size_prev;
 
     TARDISThemeProcessor(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
@@ -78,6 +72,9 @@ class TARDISThemeProcessor {
             }
         }
         // get Archive if necessary
+        ConsoleSize size_next;
+        int h;
+        int w;
         if (tud.getSchematic().getPermission().equals("archive")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
@@ -111,6 +108,9 @@ class TARDISThemeProcessor {
             w = dimensions.get("width").getAsInt();
             size_next = tud.getSchematic().getConsoleSize();
         }
+        ConsoleSize size_prev;
+        int ph;
+        int pw;
         if (tud.getPrevious().getPermission().equals("archive")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
@@ -247,11 +247,9 @@ class TARDISThemeProcessor {
                     }
                     break;
                 case TALL:
-                    switch (next) {
-                        case MASSIVE:
-                            return (!grid[1][4][6].equals("STONE") || !grid[1][5][6].equals("STONE") || !grid[1][6][4].equals("STONE") || !grid[1][6][5].equals("STONE") || !grid[1][6][6].equals("STONE") || !grid[2][4][6].equals("STONE") || !grid[2][5][6].equals("STONE") || !grid[2][6][4].equals("STONE") || !grid[2][6][5].equals("STONE") || !grid[2][6][6].equals("STONE"));
-                        default:
-                            // same or smaller size do nothing
+                    // same or smaller size do nothing
+                    if (next == ConsoleSize.MASSIVE) {
+                        return (!grid[1][4][6].equals("STONE") || !grid[1][5][6].equals("STONE") || !grid[1][6][4].equals("STONE") || !grid[1][6][5].equals("STONE") || !grid[1][6][6].equals("STONE") || !grid[2][4][6].equals("STONE") || !grid[2][5][6].equals("STONE") || !grid[2][6][4].equals("STONE") || !grid[2][6][5].equals("STONE") || !grid[2][6][6].equals("STONE"));
                     }
                     break;
                 default:

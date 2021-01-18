@@ -19,8 +19,8 @@ package me.eccentric_nz.TARDIS.ARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -269,8 +269,6 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
         map_data.remove(uuid);
         ids.remove(uuid);
         selectedLocation.remove(uuid);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-        }, 1L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
     }
 }

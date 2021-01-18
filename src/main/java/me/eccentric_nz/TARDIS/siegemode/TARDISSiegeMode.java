@@ -21,10 +21,10 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeOffEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -106,7 +106,7 @@ public class TARDISSiegeMode {
             set.put("siege_on", 0);
             // remove trackers
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                plugin.getTrackerKeeper().getInSiegeMode().remove(Integer.valueOf(id));
+                plugin.getTrackerKeeper().getInSiegeMode().remove(id);
             }
             if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
                 String[] chu = tardis.getChunk().split(":");

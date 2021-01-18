@@ -21,11 +21,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.Chest;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -79,24 +75,5 @@ public class TARDISDestroyerInner {
         if (plugin.isWorldGuardOnServer()) {
             plugin.getWorldGuardUtils().removeRegion(wgl);
         }
-    }
-
-    // Originally stolen from Babarix. Thank you :)
-    private Chest getDoubleChest(Block block) {
-        Chest chest = null;
-        if (block.getRelative(BlockFace.NORTH).getType().equals(Material.CHEST)) {
-            chest = (Chest) block.getRelative(BlockFace.NORTH).getState();
-            return chest;
-        } else if (block.getRelative(BlockFace.EAST).getType().equals(Material.CHEST)) {
-            chest = (Chest) block.getRelative(BlockFace.EAST).getState();
-            return chest;
-        } else if (block.getRelative(BlockFace.SOUTH).getType().equals(Material.CHEST)) {
-            chest = (Chest) block.getRelative(BlockFace.SOUTH).getState();
-            return chest;
-        } else if (block.getRelative(BlockFace.WEST).getType().equals(Material.CHEST)) {
-            chest = (Chest) block.getRelative(BlockFace.WEST).getState();
-            return chest;
-        }
-        return null;
     }
 }

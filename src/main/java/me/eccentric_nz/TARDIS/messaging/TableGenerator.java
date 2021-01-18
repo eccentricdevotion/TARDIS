@@ -190,14 +190,14 @@ public class TableGenerator {
     }
 
     protected String concatChars(char c, int length) {
-        String s = "";
         if (length < 1) {
-            return s;
+            return "";
         }
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            s += Character.toString(c);
+            s.append(c);
         }
-        return s;
+        return s.toString();
     }
 
     public void addRow(String... texts) {
@@ -225,7 +225,7 @@ public class TableGenerator {
 
     public class Row {
 
-        public List<String> texts = new ArrayList<>();
+        public final List<String> texts = new ArrayList<>();
         public boolean empty = true;
 
         public Row(String... texts) {

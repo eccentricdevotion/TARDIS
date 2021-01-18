@@ -402,9 +402,7 @@ public class TARDISItemFrameListener implements Listener {
     private boolean isHandles(ItemStack is) {
         if (is != null && is.getType().equals(Material.BIRCH_BUTTON) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName() && im.getDisplayName().equals("Handles")) {
-                return true;
-            }
+            return im.hasDisplayName() && im.getDisplayName().equals("Handles");
         }
         return false;
     }

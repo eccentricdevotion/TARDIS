@@ -357,13 +357,10 @@ public class TARDISChameleonPreset {
                             break;
                         case RAIL:
                             Rail rail = (Rail) data[col][block];
-                            switch (d) {
-                                case WEST:
-                                    rail.setShape(Rail.Shape.EAST_WEST);
-                                    break;
-                                default:
-                                    rail.setShape(Rail.Shape.NORTH_SOUTH);
-                                    break;
+                            if (d == COMPASS.WEST) {
+                                rail.setShape(Rail.Shape.EAST_WEST);
+                            } else {
+                                rail.setShape(Rail.Shape.NORTH_SOUTH);
                             }
                             data[col][block] = rail;
                             break;
@@ -493,17 +490,13 @@ public class TARDISChameleonPreset {
                         case CHIPPED_ANVIL:
                         case DAMAGED_ANVIL:
                             Directional anvil = (Directional) data[col][block];
-                            switch (d) {
-                                case WEST:
-                                    break;
-                                default:
-                                    switch (anvil.getFacing()) {
-                                        case SOUTH:
-                                            anvil.setFacing(BlockFace.WEST);
-                                            break;
-                                        default:
-                                            anvil.setFacing(BlockFace.EAST);
-                                    }
+                            if (d == COMPASS.WEST) {
+                            } else {
+                                if (anvil.getFacing() == BlockFace.SOUTH) {
+                                    anvil.setFacing(BlockFace.WEST);
+                                } else {
+                                    anvil.setFacing(BlockFace.EAST);
+                                }
                             }
                             data[col][block] = anvil;
                             break;

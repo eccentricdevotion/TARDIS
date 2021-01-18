@@ -178,12 +178,10 @@ class TARDISBuildAbandoned implements Runnable {
         }
         if (level == h && row == w - 1) {
             // put on the door, redstone torches, signs, and the repeaters
-            postDoorBlocks.forEach((pdb, value) -> pdb.setBlockData(value));
-            postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setBlockData(value));
-            postTorchBlocks.forEach((ptb, value) -> ptb.setBlockData(value));
-            postRepeaterBlocks.forEach((prb, value) -> {
-                prb.setBlockData(value);
-            });
+            postDoorBlocks.forEach(Block::setBlockData);
+            postRedstoneTorchBlocks.forEach(Block::setBlockData);
+            postTorchBlocks.forEach(Block::setBlockData);
+            postRepeaterBlocks.forEach(Block::setBlockData);
             postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
                 pspb.setBlockData(value);
@@ -192,12 +190,8 @@ class TARDISBuildAbandoned implements Runnable {
                 plugin.getGeneralKeeper().getDoorPistons().add(ppb);
                 ppb.setBlockData(value);
             });
-            postPistonExtensionBlocks.forEach((ppeb, value) -> {
-                ppeb.setBlockData(value);
-            });
-            postLeverBlocks.forEach((plb, value) -> {
-                plb.setBlockData(value);
-            });
+            postPistonExtensionBlocks.forEach(Block::setBlockData);
+            postLeverBlocks.forEach(Block::setBlockData);
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 if (s == 0) {
@@ -264,42 +258,38 @@ class TARDISBuildAbandoned implements Runnable {
             if (Tag.WOOL.isTagged(type)) {
                 switch (type) {
                     case ORANGE_WOOL:
-                        switch (wall_type) {
-                            case LAPIS_BLOCK: // if using the default Lapis Block - then use Orange Wool / Terracotta
-                                switch (use_clay) {
-                                    case TERRACOTTA:
-                                        data = Material.ORANGE_TERRACOTTA.createBlockData();
-                                        break;
-                                    case CONCRETE:
-                                        data = Material.ORANGE_CONCRETE.createBlockData();
-                                        break;
-                                    default:
-                                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
-                                        break;
-                                }
-                                break;
-                            default:
-                                data = wall_type.createBlockData();
+                        if (wall_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Orange Wool / Terracotta
+                            switch (use_clay) {
+                                case TERRACOTTA:
+                                    data = Material.ORANGE_TERRACOTTA.createBlockData();
+                                    break;
+                                case CONCRETE:
+                                    data = Material.ORANGE_CONCRETE.createBlockData();
+                                    break;
+                                default:
+                                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                                    break;
+                            }
+                        } else {
+                            data = wall_type.createBlockData();
                         }
                         break;
                     case LIGHT_GRAY_WOOL:
                         if (!schm.getPermission().equals("eleventh")) {
-                            switch (floor_type) {
-                                case LAPIS_BLOCK: // if using the default Lapis Block - then use Light Grey Wool / Terracotta
-                                    switch (use_clay) {
-                                        case TERRACOTTA:
-                                            data = Material.LIGHT_GRAY_TERRACOTTA.createBlockData();
-                                            break;
-                                        case CONCRETE:
-                                            data = Material.LIGHT_GRAY_CONCRETE.createBlockData();
-                                            break;
-                                        default:
-                                            data = Material.LIGHT_GRAY_WOOL.createBlockData();
-                                            break;
-                                    }
-                                    break;
-                                default:
-                                    data = floor_type.createBlockData();
+                            if (floor_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Light Grey Wool / Terracotta
+                                switch (use_clay) {
+                                    case TERRACOTTA:
+                                        data = Material.LIGHT_GRAY_TERRACOTTA.createBlockData();
+                                        break;
+                                    case CONCRETE:
+                                        data = Material.LIGHT_GRAY_CONCRETE.createBlockData();
+                                        break;
+                                    default:
+                                        data = Material.LIGHT_GRAY_WOOL.createBlockData();
+                                        break;
+                                }
+                            } else {
+                                data = floor_type.createBlockData();
                             }
                         } else {
                             String[] split = type.toString().split("_");

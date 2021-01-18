@@ -170,63 +170,33 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
             }
             switch (store) {
                 case BIOME_1:
-                    switch (slot) {
-                        case 26:
-                            // switch to biome 2
-                            loadInventory(rs.getBiomesTwo(), player, Storage.BIOME_2);
-                            break;
-                        default:
-                            break;
+                    if (slot == 26) {// switch to biome 2
+                        loadInventory(rs.getBiomesTwo(), player, Storage.BIOME_2);
                     }
                     break;
                 case BIOME_2:
-                    switch (slot) {
-                        case 18:
-                            // switch to biome 1
-                            loadInventory(rs.getBiomesOne(), player, Storage.BIOME_1);
-                            break;
-                        default:
-                            break;
+                    if (slot == 18) {// switch to biome 1
+                        loadInventory(rs.getBiomesOne(), player, Storage.BIOME_1);
                     }
                     break;
                 case PRESET_1:
-                    switch (slot) {
-                        case 26:
-                            // switch to preset 2
-                            loadInventory(rs.getPresetsTwo(), player, Storage.PRESET_2);
-                            break;
-                        default:
-                            break;
+                    if (slot == 26) {// switch to preset 2
+                        loadInventory(rs.getPresetsTwo(), player, Storage.PRESET_2);
                     }
                     break;
                 case PRESET_2:
-                    switch (slot) {
-                        case 18:
-                            // switch to preset 1
-                            loadInventory(rs.getPresetsOne(), player, Storage.PRESET_1);
-                            break;
-                        default:
-                            break;
+                    if (slot == 18) {// switch to preset 1
+                        loadInventory(rs.getPresetsOne(), player, Storage.PRESET_1);
                     }
                     break;
                 case SAVE_1:
-                    switch (slot) {
-                        case 26:
-                            // switch to save 2
-                            loadInventory(rs.getSavesTwo(), player, Storage.SAVE_2);
-                            break;
-                        default:
-                            break;
+                    if (slot == 26) {// switch to save 2
+                        loadInventory(rs.getSavesTwo(), player, Storage.SAVE_2);
                     }
                     break;
                 case SAVE_2:
-                    switch (slot) {
-                        case 18:
-                            // switch to save 1
-                            loadInventory(rs.getSavesOne(), player, Storage.SAVE_1);
-                            break;
-                        default:
-                            break;
+                    if (slot == 18) {// switch to save 1
+                        loadInventory(rs.getSavesOne(), player, Storage.SAVE_1);
                     }
                     break;
                 default: // no extra pages

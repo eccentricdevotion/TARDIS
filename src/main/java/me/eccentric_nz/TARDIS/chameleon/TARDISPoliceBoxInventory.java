@@ -39,7 +39,7 @@ class TARDISPoliceBoxInventory {
     private final ItemStack[] boxes;
     private final TARDIS plugin;
     private final Player player;
-    List<String> colours = Arrays.asList("Blue", "White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Brown", "Green", "Red", "Black");
+    final List<String> colours = Arrays.asList("Blue", "White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Brown", "Green", "Red", "Black");
 
     public TARDISPoliceBoxInventory(TARDIS plugin, Player player) {
         this.plugin = plugin;

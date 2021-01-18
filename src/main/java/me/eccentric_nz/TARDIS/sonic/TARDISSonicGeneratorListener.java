@@ -18,11 +18,11 @@ package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.data.Sonic;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSonic;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.data.Sonic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -156,6 +156,8 @@ public class TARDISSonicGeneratorListener implements Listener {
                 finalUps.addAll(upgrades);
                 screw.setLore(finalUps);
             }
+            // set custom model data
+            screw.setCustomModelData(s.getCustomModelData());
             sonic.setItemMeta(screw);
             if (cost < level) {
                 Location loc = location.clone().add(0.5d, 0.75d, 0.5d);

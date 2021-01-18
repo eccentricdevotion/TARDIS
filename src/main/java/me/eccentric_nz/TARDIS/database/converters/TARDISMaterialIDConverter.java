@@ -773,7 +773,7 @@ public class TARDISMaterialIDConverter {
                     int c_id = rs.getInt("c_id");
                     String blockData = rs.getString("block_data");
                     try {
-                        Material material = Material.valueOf(blockData);
+                        Material.valueOf(blockData);
                         // if it's a valid material skip it
                         continue;
                     } catch (IllegalArgumentException e) {

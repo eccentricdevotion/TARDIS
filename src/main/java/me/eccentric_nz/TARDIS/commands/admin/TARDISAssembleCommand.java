@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -59,7 +59,7 @@ class TARDISAssembleCommand {
                 if (rs.resultSet()) {
                     Tardis tardis = rs.getTardis();
                     while (plugin.getTrackerKeeper().getDispersedTARDII().contains(tardis.getTardis_id())) {
-                        plugin.getTrackerKeeper().getDispersedTARDII().remove(Integer.valueOf(tardis.getTardis_id()));
+                        plugin.getTrackerKeeper().getDispersedTARDII().remove(tardis.getTardis_id());
                     }
                     TARDISMessage.send(sender, "ASSEMBLE_PLAYER", player);
                 }

@@ -36,7 +36,7 @@ import java.util.UUID;
 public class TARDISCompanionAddInventory {
 
     private final TARDIS plugin;
-    Player player;
+    final Player player;
     private final UUID uuid;
     private final ItemStack[] players;
 

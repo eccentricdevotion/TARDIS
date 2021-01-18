@@ -104,7 +104,7 @@ class TARDISHostileDispersal {
         // reset biome and it's not The End
         if (!BiomeSetter.restoreBiome(l, TARDISBiome.get(rsc.getBiomeKey()))) {
             // remove TARDIS from tracker
-            plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(id));
+            plugin.getTrackerKeeper().getDematerialising().remove(id);
         }
         // remove problem blocks first
         switch (preset) {
@@ -145,7 +145,7 @@ class TARDISHostileDispersal {
             default:
                 break;
         }
-        plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(id));
+        plugin.getTrackerKeeper().getDematerialising().remove(id);
         l.getChunk().setForceLoaded(false);
         // remove door
         plugin.getPresetDestroyer().destroyDoor(id);

@@ -96,8 +96,6 @@ public class TARDISBuilderInner implements Runnable {
     private String playerUUID;
     private boolean running = false;
     private Location ender = null;
-    private Material type;
-    private BlockData data;
     private UseClay use_clay;
     private int counter = 0;
     private double div = 1.0d;
@@ -231,12 +229,10 @@ public class TARDISBuilderInner implements Runnable {
         }
         if (level == h && row == w - 1) {
             // put on the door, redstone torches, signs, and the repeaters
-            postDoorBlocks.forEach((pdb, value) -> pdb.setBlockData(value));
-            postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setBlockData(value));
-            postTorchBlocks.forEach((ptb, value) -> ptb.setBlockData(value));
-            postRepeaterBlocks.forEach((prb, value) -> {
-                prb.setBlockData(value);
-            });
+            postDoorBlocks.forEach(Block::setBlockData);
+            postRedstoneTorchBlocks.forEach(Block::setBlockData);
+            postTorchBlocks.forEach(Block::setBlockData);
+            postRepeaterBlocks.forEach(Block::setBlockData);
             postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
                 pspb.setBlockData(value);
@@ -245,12 +241,8 @@ public class TARDISBuilderInner implements Runnable {
                 plugin.getGeneralKeeper().getDoorPistons().add(ppb);
                 ppb.setBlockData(value);
             });
-            postPistonExtensionBlocks.forEach((ppeb, value) -> {
-                ppeb.setBlockData(value);
-            });
-            postLeverBlocks.forEach((plb, value) -> {
-                plb.setBlockData(value);
-            });
+            postPistonExtensionBlocks.forEach(Block::setBlockData);
+            postLeverBlocks.forEach(Block::setBlockData);
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 Block psb = entry.getKey();
@@ -372,8 +364,8 @@ public class TARDISBuilderInner implements Runnable {
             int x = startx + row;
             int y = starty + level;
             int z = startz + col;
-            data = plugin.getServer().createBlockData(c.get("data").getAsString());
-            type = data.getMaterial();
+            BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
+            Material type = data.getMaterial();
             if (type.equals(Material.NOTE_BLOCK)) {
                 // remember the location of this Disk Storage
                 String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);

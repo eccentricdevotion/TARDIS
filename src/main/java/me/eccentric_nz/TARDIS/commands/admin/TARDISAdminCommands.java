@@ -425,7 +425,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("default_preset")) {
                     try {
-                        PRESET preset = PRESET.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+                        PRESET.valueOf(args[1].toUpperCase(Locale.ENGLISH));
                     } catch (IllegalArgumentException e) {
                         TARDISMessage.send(sender, "ARG_PRESET");
                         return true;
@@ -434,7 +434,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("use_clay")) {
                     try {
-                        UseClay use_clay = UseClay.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+                        UseClay.valueOf(args[1].toUpperCase(Locale.ENGLISH));
                     } catch (IllegalArgumentException e) {
                         TARDISMessage.send(sender, "ARG_USE_CLAY");
                         return true;

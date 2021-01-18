@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISThemeButton;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -180,7 +180,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
     @Override
     public void close(Player p) {
         plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.closeInventory(), 1L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
     }
 
     /**

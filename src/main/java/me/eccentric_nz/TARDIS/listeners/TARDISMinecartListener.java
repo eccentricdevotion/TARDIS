@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
@@ -132,7 +132,7 @@ public class TARDISMinecartListener implements Listener {
                             if (rspb.resultSet()) {
                                 data = rspb.getDoor_location().split(":");
                                 d = switchDirection(rspb.getDoor_direction());
-                                plugin.getTrackerKeeper().getMinecart().remove(Integer.valueOf(id));
+                                plugin.getTrackerKeeper().getMinecart().remove(id);
                             }
                         }
                         break;
@@ -158,7 +158,7 @@ public class TARDISMinecartListener implements Listener {
                         if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
                             TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
                         }
-                        plugin.getTrackerKeeper().getMinecart().remove(Integer.valueOf(id));
+                        plugin.getTrackerKeeper().getMinecart().remove(id);
                     } else {
                         World w = plugin.getServer().getWorld(data[0]);
                         int x = TARDISNumberParsers.parseInt(data[1]);

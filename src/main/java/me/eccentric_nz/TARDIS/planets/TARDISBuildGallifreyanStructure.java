@@ -97,7 +97,7 @@ class TARDISBuildGallifreyanStructure implements Runnable {
         }
         if (level == h && row == w - 1) {
             // finished
-            postLadderBlocks.forEach((pldb, value) -> pldb.setBlockData(value));
+            postLadderBlocks.forEach(Block::setBlockData);
             plugin.getServer().getScheduler().cancelTask(task);
             task = -1;
         } else {

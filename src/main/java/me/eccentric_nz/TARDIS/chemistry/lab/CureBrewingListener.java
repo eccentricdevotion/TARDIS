@@ -173,12 +173,12 @@ public class CureBrewingListener implements Listener {
                                     } else {
                                         is = new ItemStack(Material.POTION);
                                     }
-                                    boolean extend = (isLonger && potionType.isExtendable()) ? true : false;
+                                    boolean extend = isLonger && potionType.isExtendable();
                                     if (isLonger && !extend) {
                                         // give back the redstone
                                         location.getWorld().dropItem(location.add(0, 1.0d, 0), new ItemStack(Material.REDSTONE, 1));
                                     }
-                                    boolean upgrade = (isStronger && potionType.isUpgradeable()) ? true : false;
+                                    boolean upgrade = isStronger && potionType.isUpgradeable();
                                     if (isStronger && !upgrade) {
                                         // give back the glowstone dust
                                         location.getWorld().dropItem(location.add(0, 1.0d, 0), new ItemStack(Material.GLOWSTONE_DUST, 1));

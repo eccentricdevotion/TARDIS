@@ -69,9 +69,9 @@ class TARDISRandomLocation {
         // set default by using config values
         int cx = plugin.getConfig().getInt("travel.random_circuit.x");
         int cz = plugin.getConfig().getInt("travel.random_circuit.z");
-        minX = 0 - cx;
+        minX = -cx;
         maxX = cx;
-        minZ = 0 - cz;
+        minZ = -cz;
         maxZ = cz;
         // get the limits of the world
         // is WorldBorder enabled, and is there a border set for this world?

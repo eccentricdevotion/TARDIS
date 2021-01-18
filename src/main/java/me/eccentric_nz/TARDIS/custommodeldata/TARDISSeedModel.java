@@ -101,11 +101,15 @@ public class TARDISSeedModel {
             put("TOM", 27);
             put("TWELFTH", 28);
             put("WAR", 29);
-            put("DELTA", 43);
-            put("ROTOR", 44);
-            put("COPPER", 42);
+            put("LEGACY_BIGGER", 33);
+            put("LEGACY_BUDGET", 34);
+            put("LEGACY_DELUXE", 35);
+            put("LEGACY_ELEVENTH", 36);
             put("LEGACY_REDSTONE", 37);
             put("MASTER", 39);
+            put("COPPER", 42);
+            put("DELTA", 43);
+            put("ROTOR", 44);
             put("CUSTOM", 45);
         }
     };

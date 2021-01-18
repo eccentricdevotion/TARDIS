@@ -167,7 +167,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         case ZOMBIE:
                         case ZOMBIE_VILLAGER:
                             Zombie zombie = (Zombie) e;
-                            tm.setBaby(zombie.isBaby());
+                            tm.setBaby(!zombie.isAdult());
                             tm.setEquipment(zombie.getEquipment());
                             if (twa && zombie.getEquipment().getHelmet() != null && zombie.getEquipment().getHelmet().hasItemMeta() && zombie.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
                                 String name = zombie.getEquipment().getHelmet().getItemMeta().getDisplayName();
@@ -384,7 +384,9 @@ public class TARDISMonsterRunnable implements Runnable {
                 case HUSK:
                 case ZOMBIE:
                     Zombie zombie = (Zombie) ent;
-                    zombie.setBaby(m.isBaby());
+                    if (!m.isBaby()) {
+                        zombie.setAdult();
+                    }
                     EntityEquipment ez = zombie.getEquipment();
                     if (m.getEquipment() != null) {
                         ez.setArmorContents(m.getEquipment().getArmorContents());
@@ -393,7 +395,9 @@ public class TARDISMonsterRunnable implements Runnable {
                     break;
                 case ZOMBIE_VILLAGER:
                     ZombieVillager zombie_villager = (ZombieVillager) ent;
-                    zombie_villager.setBaby(m.isBaby());
+                    if (!m.isBaby()) {
+                        zombie_villager.setAdult();
+                    }
                     if (m.getProfession() != null) {
                         zombie_villager.setVillagerProfession(m.getProfession());
                     }

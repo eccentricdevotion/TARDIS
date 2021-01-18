@@ -103,7 +103,7 @@ public class TARDISDeinstantPreset {
             // reset biome and it's not The End
             if (!BiomeSetter.restoreBiome(l, biome)) {
                 // remove TARDIS from tracker
-                plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(id));
+                plugin.getTrackerKeeper().getDematerialising().remove(id);
             }
             // remove problem blocks first
             switch (preset) {

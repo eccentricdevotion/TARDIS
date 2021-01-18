@@ -46,12 +46,8 @@ class TARDISBuildSkaroStructure implements Runnable {
     private final int startx, y, startz;
     private int task, starty, h, w, d, level = 0, row = 0;
     boolean running = false;
-    private JsonObject obj;
     private JsonArray arr;
     private World world;
-    private Block chest;
-    private Material type;
-    private BlockData data;
 
     /**
      * Builds a Skaro structure.
@@ -60,7 +56,6 @@ class TARDISBuildSkaroStructure implements Runnable {
      * @param startx the start coordinate on the x-axis
      * @param y      the start coordinate on the y-axis
      * @param startz the start coordinate on the z-axis
-     * @return false when the build task has finished
      */
     public TARDISBuildSkaroStructure(TARDIS plugin, int startx, int y, int startz) {
         this.plugin = plugin;
@@ -83,7 +78,7 @@ class TARDISBuildSkaroStructure implements Runnable {
                 return;
             }
             // get JSON
-            obj = TARDISSchematicGZip.unzip(path);
+            JsonObject obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             h = dimensions.get("height").getAsInt() - 1;
@@ -115,12 +110,12 @@ class TARDISBuildSkaroStructure implements Runnable {
                 int x = startx + row;
                 int y = starty + level;
                 int z = startz + col;
-                data = plugin.getServer().createBlockData(c.get("data").getAsString());
-                type = data.getMaterial();
+                BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
+                Material type = data.getMaterial();
                 switch (type) {
                     case CHEST:
                         TARDISBlockSetters.setBlock(world, x, y, z, data);
-                        chest = world.getBlockAt(x, y, z);
+                        Block chest = world.getBlockAt(x, y, z);
                         if (chest != null && chest.getType().equals(Material.CHEST)) {
                             try {
                                 // set chest contents
@@ -145,7 +140,7 @@ class TARDISBuildSkaroStructure implements Runnable {
                             CreatureSpawner cs = (CreatureSpawner) spawner.getState();
                             cs.setSpawnedType(EntityType.SKELETON);
                             cs.update();
-                        }, 2l);
+                        }, 2L);
                         break;
                     default:
                         TARDISBlockSetters.setBlock(world, x, y, z, data);

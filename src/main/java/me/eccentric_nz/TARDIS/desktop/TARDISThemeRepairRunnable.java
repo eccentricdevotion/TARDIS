@@ -249,17 +249,11 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 }
             });
             // put on the door, redstone torches, signs, and the repeaters
-            postDoorBlocks.forEach((pdb, value) -> {
-                pdb.setBlockData(value);
-            });
-            postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setBlockData(value));
-            postLeverBlocks.forEach((plb, value) -> {
-                plb.setBlockData(value);
-            });
-            postTorchBlocks.forEach((ptb, value) -> ptb.setBlockData(value));
-            postRepeaterBlocks.forEach((prb, value) -> {
-                prb.setBlockData(value);
-            });
+            postDoorBlocks.forEach(Block::setBlockData);
+            postRedstoneTorchBlocks.forEach(Block::setBlockData);
+            postLeverBlocks.forEach(Block::setBlockData);
+            postTorchBlocks.forEach(Block::setBlockData);
+            postRepeaterBlocks.forEach(Block::setBlockData);
             postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
                 pspb.setBlockData(value);
@@ -268,9 +262,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 plugin.getGeneralKeeper().getDoorPistons().add(ppb);
                 ppb.setBlockData(value);
             });
-            postPistonExtensionBlocks.forEach((ppeb, value) -> {
-                ppeb.setBlockData(value);
-            });
+            postPistonExtensionBlocks.forEach(Block::setBlockData);
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 Block psb = entry.getKey();

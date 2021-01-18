@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.mobfarming;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.data.Farm;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -209,11 +209,7 @@ public class TARDISFarmer {
                                 tmhor.setHorseStyle(pony.getStyle());
                             }
                             tmhor.setHorseVariant(entity.getType());
-                            if (brokenin.isTamed()) {
-                                tmhor.setTamed(true);
-                            } else {
-                                tmhor.setTamed(false);
-                            }
+                            tmhor.setTamed(brokenin.isTamed());
                             if (entity.getType().equals(EntityType.DONKEY) || entity.getType().equals(EntityType.MULE)) {
                                 ChestedHorse ch = (ChestedHorse) horse;
                                 if (ch.isCarryingChest()) {
@@ -263,11 +259,7 @@ public class TARDISFarmer {
                             tmlla.setLlamacolor(llama.getColor());
                             tmlla.setStrength(llama.getStrength());
                             tmlla.setHorseVariant(EntityType.HORSE);
-                            if (ll_brokenin.isTamed()) {
-                                tmlla.setTamed(true);
-                            } else {
-                                tmlla.setTamed(false);
-                            }
+                            tmlla.setTamed(ll_brokenin.isTamed());
                             if (llama.isCarryingChest()) {
                                 tmlla.setHasChest(true);
                             }
@@ -315,7 +307,7 @@ public class TARDISFarmer {
                             tmpet.setBaby(!((Parrot) entity).isAdult());
                             tmpet.setName(entity.getCustomName());
                             tmpet.setSitting(((Sittable) entity).isSitting());
-                            double phealth = (((Parrot) entity).getHealth() > 8D) ? 8D : ((Parrot) entity).getHealth();
+                            double phealth = Math.min(((Parrot) entity).getHealth(), 8D);
                             tmpet.setHealth(phealth);
                             if (timeLordIsOwner || polly.isTamed()) {
                                 pets.add(tmpet);
@@ -451,7 +443,7 @@ public class TARDISFarmer {
                                     pet.setAge(((Wolf) entity).getAge());
                                     pet.setSitting(((Sittable) entity).isSitting());
                                     pet.setColour(((Wolf) entity).getCollarColor());
-                                    health = (((Wolf) entity).getHealth() > 8D) ? 8D : ((Wolf) entity).getHealth();
+                                    health = Math.min(((Wolf) entity).getHealth(), 8D);
                                     pet.setHealth(health);
                                     pet.setBaby(!((Wolf) entity).isAdult());
                                 } else {
@@ -459,7 +451,7 @@ public class TARDISFarmer {
                                     pet.setSitting(((Sittable) entity).isSitting());
                                     pet.setCatType(((Cat) entity).getCatType());
                                     pet.setColour(((Cat) entity).getCollarColor());
-                                    health = (((Cat) entity).getHealth() > 8D) ? 8D : ((Cat) entity).getHealth();
+                                    health = Math.min(((Cat) entity).getHealth(), 8D);
                                     pet.setHealth(health);
                                     pet.setBaby(!((Cat) entity).isAdult());
                                 }
@@ -997,7 +989,7 @@ public class TARDISFarmer {
                             pet.setAge(((Wolf) entity).getAge());
                             pet.setSitting(((Wolf) entity).isSitting());
                             pet.setColour(((Wolf) entity).getCollarColor());
-                            health = (((Wolf) entity).getHealth() > 8D) ? 8D : ((Wolf) entity).getHealth();
+                            health = Math.min(((Wolf) entity).getHealth(), 8D);
                             pet.setHealth(health);
                             pet.setBaby(!((Wolf) entity).isAdult());
                             break;
@@ -1006,7 +998,7 @@ public class TARDISFarmer {
                             pet.setSitting(((Cat) entity).isSitting());
                             pet.setCatType(((Cat) entity).getCatType());
                             pet.setColour(((Cat) entity).getCollarColor());
-                            health = (((Cat) entity).getHealth() > 8D) ? 8D : ((Cat) entity).getHealth();
+                            health = Math.min(((Cat) entity).getHealth(), 8D);
                             pet.setHealth(health);
                             pet.setBaby(!((Cat) entity).isAdult());
                             break;
@@ -1014,7 +1006,7 @@ public class TARDISFarmer {
                             pet.setAge(((Parrot) entity).getAge());
                             pet.setSitting(((Parrot) entity).isSitting());
                             pet.setVariant(((Parrot) entity).getVariant());
-                            health = (((Parrot) entity).getHealth() > 8D) ? 8D : ((Parrot) entity).getHealth();
+                            health = Math.min(((Parrot) entity).getHealth(), 8D);
                             pet.setHealth(health);
                             pet.setBaby(!((Parrot) entity).isAdult());
                             pet.setOnLeftShoulder(player.getShoulderEntityLeft() != null);

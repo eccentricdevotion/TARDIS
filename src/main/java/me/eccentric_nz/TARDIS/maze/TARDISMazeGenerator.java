@@ -169,7 +169,7 @@ public class TARDISMazeGenerator {
         int nxt_row = current[0] - 2;
         int nxt_col = current[1];
         // if next location is in the array and not already cut, can cut it
-        if (nxt_row < 0 || field[nxt_row][nxt_col] == false) {
+        if (nxt_row < 0 || !field[nxt_row][nxt_col]) {
             return 0;
         } else {
             // 1 corresponds to up
@@ -184,7 +184,7 @@ public class TARDISMazeGenerator {
         int nxt_row = current[0] + 2;
         int nxt_col = current[1];
         // if the next location is in the array and not already cut, can cut it
-        if (nxt_row > rows - 1 || field[nxt_row][nxt_col] == false) {
+        if (nxt_row > rows - 1 || !field[nxt_row][nxt_col]) {
             return 0;
         } else {
             // 3 corresponds to down
@@ -199,7 +199,7 @@ public class TARDISMazeGenerator {
         int nxt_row = current[0];
         int nxt_col = current[1] + 2;
         // if the next location is in the array and not already cut, can cut it
-        if (nxt_col > cols - 1 || field[nxt_row][nxt_col] == false) {
+        if (nxt_col > cols - 1 || !field[nxt_row][nxt_col]) {
             return 0;
         } else {
             // 2 corresponds to right
@@ -214,7 +214,7 @@ public class TARDISMazeGenerator {
         int nxt_row = current[0];
         int nxt_col = current[1] - 2;
         // if next location is in the array and not already cut, can cut it
-        if (nxt_col < 0 || field[nxt_row][nxt_col] == false) {
+        if (nxt_col < 0 || !field[nxt_row][nxt_col]) {
             return 0;
         } else {
             // 4 corresponds to left

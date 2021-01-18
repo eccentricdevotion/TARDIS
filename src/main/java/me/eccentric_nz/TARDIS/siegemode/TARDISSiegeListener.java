@@ -20,11 +20,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -208,7 +208,7 @@ public class TARDISSiegeListener implements Listener {
             Block siege = loc.getBlock();
             siege.setBlockData(plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2)));
             // remove trackers
-            plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
+            plugin.getTrackerKeeper().getIsSiegeCube().remove(id);
             plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);
             // update the current location
             HashMap<String, Object> where = new HashMap<>();
@@ -268,7 +268,7 @@ public class TARDISSiegeListener implements Listener {
         set.put("direction", d.toString());
         plugin.getQueryFactory().doUpdate("current", set, where);
         // remove trackers
-        plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
+        plugin.getTrackerKeeper().getIsSiegeCube().remove(id);
         plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);
     }
 
@@ -374,7 +374,7 @@ public class TARDISSiegeListener implements Listener {
             // update the database
             plugin.getQueryFactory().doUpdate("tardis", set, wheres);
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                plugin.getTrackerKeeper().getInSiegeMode().remove(Integer.valueOf(id));
+                plugin.getTrackerKeeper().getInSiegeMode().remove(id);
             }
             if (plugin.getConfig().getBoolean("siege.texture")) {
                 new TARDISSiegeMode(plugin).changeTextures(tardis.getUuid().toString(), tardis.getSchematic(), p, false);

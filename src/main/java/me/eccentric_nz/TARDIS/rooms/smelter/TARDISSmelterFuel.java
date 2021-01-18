@@ -29,7 +29,6 @@ public class TARDISSmelterFuel {
     public void processItems(Inventory inv, List<Chest> fuelChests) {
         // process fuel chest contents
         HashMap<Material, Integer> fuels = new HashMap<>();
-        HashMap<Material, Integer> ores = new HashMap<>();
         HashMap<Material, Integer> remainders = new HashMap<>();
         for (ItemStack is : inv.getContents()) {
             if (is != null) {

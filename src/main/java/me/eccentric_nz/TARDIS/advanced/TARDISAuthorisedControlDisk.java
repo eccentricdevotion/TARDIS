@@ -141,7 +141,7 @@ public class TARDISAuthorisedControlDisk {
                 Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                 TARDISHandbrake.setLevers(handbrake.getBlock(), false, true, handbrake.toString(), id, plugin);
                 if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
-                    plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(Integer.valueOf(id));
+                    plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
                 }
                 TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
                 HashMap<String, Object> set = new HashMap<>();

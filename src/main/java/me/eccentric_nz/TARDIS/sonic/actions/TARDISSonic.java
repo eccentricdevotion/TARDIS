@@ -23,7 +23,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Openable;
-import org.bukkit.block.data.Powerable;
 import org.bukkit.block.data.type.Gate;
 import org.bukkit.entity.Player;
 
@@ -42,6 +41,9 @@ public class TARDISSonic {
         distance.add(Material.BIRCH_BUTTON);
         distance.add(Material.BIRCH_DOOR);
         distance.add(Material.BIRCH_FENCE_GATE);
+        distance.add(Material.CRIMSON_BUTTON);
+        distance.add(Material.CRIMSON_DOOR);
+        distance.add(Material.CRIMSON_FENCE_GATE);
         distance.add(Material.DARK_OAK_BUTTON);
         distance.add(Material.DARK_OAK_DOOR);
         distance.add(Material.DARK_OAK_FENCE_GATE);
@@ -53,10 +55,15 @@ public class TARDISSonic {
         distance.add(Material.OAK_BUTTON);
         distance.add(Material.OAK_DOOR);
         distance.add(Material.OAK_FENCE_GATE);
+        distance.add(Material.OAK_FENCE_GATE);
+        distance.add(Material.POLISHED_BLACKSTONE_BUTTON);
         distance.add(Material.SPRUCE_BUTTON);
         distance.add(Material.SPRUCE_DOOR);
         distance.add(Material.SPRUCE_FENCE_GATE);
         distance.add(Material.STONE_BUTTON);
+        distance.add(Material.WARPED_BUTTON);
+        distance.add(Material.WARPED_DOOR);
+        distance.add(Material.WARPED_FENCE_GATE);
     }
 
     public static void standardSonic(TARDIS plugin, Player player, long now) {
@@ -108,10 +115,6 @@ public class TARDISSonic {
                         }
                         break;
                     case LEVER:
-                        Powerable lever = (Powerable) targetBlock.getBlockData();
-                        lever.setPowered(!lever.isPowered());
-                        targetBlock.setBlockData(lever, true);
-                        break;
                     case ACACIA_BUTTON:
                     case BIRCH_BUTTON:
                     case DARK_OAK_BUTTON:
@@ -119,14 +122,10 @@ public class TARDISSonic {
                     case OAK_BUTTON:
                     case SPRUCE_BUTTON:
                     case STONE_BUTTON:
-                        Powerable button = (Powerable) targetBlock.getBlockData();
-                        button.setPowered(true);
-                        targetBlock.setBlockData(button, true);
-                        long delay = (blockType.equals(Material.STONE_BUTTON)) ? 20L : 30L;
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            button.setPowered(false);
-                            targetBlock.setBlockData(button);
-                        }, delay);
+                    case CRIMSON_BUTTON:
+                    case POLISHED_BLACKSTONE_BUTTON:
+                    case WARPED_BUTTON:
+                        powerSurroundingBlock(targetBlock);
                         break;
                     case ACACIA_FENCE_GATE:
                     case BIRCH_FENCE_GATE:
@@ -145,5 +144,9 @@ public class TARDISSonic {
         } else {
             TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
         }
+    }
+
+    private static void powerSurroundingBlock(Block block) {
+        TARDIS.plugin.getTardisHelper().setPowerableBlockInteract(block);
     }
 }

@@ -1,8 +1,8 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetConfiguredSonic;
 import me.eccentric_nz.TARDIS.database.data.ConfiguredSonic;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetConfiguredSonic;
 import me.eccentric_nz.TARDIS.enumeration.SonicConfig;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryView;
@@ -69,6 +70,11 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
                     default:
                         event.setCancelled(true);
                 }
+            } else {
+                ClickType click = event.getClick();
+                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+                    event.setCancelled(true);
+                }
             }
         }
     }
@@ -80,7 +86,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
         ItemMeta im = sonic.getItemMeta();
         ConfiguredSonic configuredSonic;
         if (im.getPersistentDataContainer().has(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID())) {
-            configuredSonic = getConfiguredSonic(im.getPersistentDataContainer().get(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID()), sonic, im);
+            configuredSonic = getConfiguredSonic(im.getPersistentDataContainer().get(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID()), im);
         } else {
             configuredSonic = createConfiguredSonic(player, view);
         }
@@ -164,7 +170,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
         option.setItemMeta(im);
     }
 
-    private ConfiguredSonic getConfiguredSonic(UUID sonic_uuid, ItemStack sonic, ItemMeta im) {
+    private ConfiguredSonic getConfiguredSonic(UUID sonic_uuid, ItemMeta im) {
         ResultSetConfiguredSonic rscs = new ResultSetConfiguredSonic(plugin, sonic_uuid);
         if (rscs.resultSet()) {
             ConfiguredSonic configuredSonic = rscs.getConfiguredSonic();

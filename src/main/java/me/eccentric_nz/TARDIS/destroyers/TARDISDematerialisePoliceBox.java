@@ -41,8 +41,6 @@ public class TARDISDematerialisePoliceBox implements Runnable {
     private int i;
     private ItemFrame frame;
     private ItemStack is;
-    private ItemMeta im;
-    private Material dye;
 
     public TARDISDematerialisePoliceBox(TARDIS plugin, DestroyData dd, PRESET preset) {
         this.plugin = plugin;
@@ -83,7 +81,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                 }
                 frame.setFacingDirection(BlockFace.UP);
                 frame.setRotation(dd.getDirection().getRotation());
-                dye = getDyeMaterial(preset);
+                Material dye = getDyeMaterial(preset);
                 is = new ItemStack(dye, 1);
                 // only play the sound if the player is outside the TARDIS
                 if (dd.isOutside()) {
@@ -112,7 +110,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                     }
                 }
             }
-            im = is.getItemMeta();
+            ItemMeta im = is.getItemMeta();
             im.setCustomModelData(cmd);
             is.setItemMeta(im);
             frame.setItem(is, false);

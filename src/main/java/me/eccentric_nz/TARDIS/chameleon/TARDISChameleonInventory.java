@@ -115,9 +115,10 @@ public class TARDISChameleonInventory {
         truct.setCustomModelData(GUIChameleon.BUTTON_CONSTRUCT.getCustomModelData());
         cons.setItemMeta(truct);
         // Disabled radio button
-        ItemStack fac = (preset.equals(PRESET.FACTORY) && adapt.equals(Adaption.OFF)) ? on.clone() : off.clone();
+        boolean isFactoryOff = preset.equals(PRESET.FACTORY) && adapt.equals(Adaption.OFF);
+        ItemStack fac = isFactoryOff ? on.clone() : off.clone();
         ItemMeta tory = fac.getItemMeta();
-        String donoff = (preset.equals(PRESET.FACTORY) && adapt.equals(Adaption.OFF)) ? ChatColor.RED + plugin.getLanguage().getString("DISABLED") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
+        String donoff = isFactoryOff ? ChatColor.RED + plugin.getLanguage().getString("DISABLED") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
         tory.setDisplayName(donoff);
         fac.setItemMeta(tory);
         // Adaptive radio button
@@ -137,9 +138,10 @@ public class TARDISChameleonInventory {
             not = null;
         }
         // Shorted out radio button
-        ItemStack pre = (!preset.equals(PRESET.INVISIBLE) && !preset.equals(PRESET.FACTORY) && !preset.equals(PRESET.CONSTRUCT)) ? on.clone() : off.clone();
+        boolean isNotFactoryInvisibleOrConstruct = !preset.equals(PRESET.INVISIBLE) && !preset.equals(PRESET.FACTORY) && !preset.equals(PRESET.CONSTRUCT);
+        ItemStack pre = isNotFactoryInvisibleOrConstruct ? on.clone() : off.clone();
         ItemMeta set = pre.getItemMeta();
-        String sonoff = (!preset.equals(PRESET.INVISIBLE) && !preset.equals(PRESET.FACTORY) && !preset.equals(PRESET.CONSTRUCT)) ? ChatColor.GREEN + preset.toString() : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+        String sonoff = isNotFactoryInvisibleOrConstruct ? ChatColor.GREEN + preset.toString() : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
         set.setDisplayName(sonoff);
         pre.setItemMeta(set);
         // Construct radio button

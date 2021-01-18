@@ -22,7 +22,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -93,12 +96,12 @@ public class TARDISBlocksUpdater {
             blocks.add("WARPED_WART_BLOCK");
             // tardis blocks
             tbs.addAll(blocks);
-            Collections.sort(tbs, Comparator.naturalOrder());
+            tbs.sort(Comparator.naturalOrder());
             blocks_config.set("tardis_blocks", tbs);
             // chameleon blocks
             List<String> chameleon = blocks_config.getStringList("chameleon_blocks");
             chameleon.addAll(blocks);
-            Collections.sort(chameleon, Comparator.naturalOrder());
+            chameleon.sort(Comparator.naturalOrder());
             blocks_config.set("chameleon_blocks", chameleon);
             // lamp blocks
             List<String> lamps = blocks_config.getStringList("lamp_blocks");
@@ -167,7 +170,7 @@ public class TARDISBlocksUpdater {
             under.add("WARPED_TRAPDOOR");
             under.add("WARPED_WALL_SIGN");
             under.add("WEEPING_VINES");
-            Collections.sort(under, Comparator.naturalOrder());
+            under.sort(Comparator.naturalOrder());
             blocks_config.set("under_door_blocks", under);
             blocks_config.set("version", 9);
             i += 4;

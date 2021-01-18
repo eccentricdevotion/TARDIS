@@ -21,11 +21,11 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -89,7 +89,7 @@ class TARDISHandlesLandCommand {
                     boolean sub = plugin.getTrackerKeeper().getSubmarine().contains(id);
                     set_next.put("submarine", (sub) ? 1 : 0);
                     if (plugin.getTrackerKeeper().getSubmarine().contains(id)) {
-                        plugin.getTrackerKeeper().getSubmarine().remove(Integer.valueOf(id));
+                        plugin.getTrackerKeeper().getSubmarine().remove(id);
                     }
                     where_next.put("tardis_id", id);
                     plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);

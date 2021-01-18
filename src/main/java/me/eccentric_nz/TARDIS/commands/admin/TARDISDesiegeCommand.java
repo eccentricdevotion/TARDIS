@@ -60,8 +60,8 @@ class TARDISDesiegeCommand {
             sets.put("siege_on", 0);
             plugin.getQueryFactory().doUpdate("tardis", sets, wheres);
             // clear trackers
-            plugin.getTrackerKeeper().getInSiegeMode().remove(Integer.valueOf(id));
-            plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
+            plugin.getTrackerKeeper().getInSiegeMode().remove(id);
+            plugin.getTrackerKeeper().getIsSiegeCube().remove(id);
             plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);
             // get home location
             HashMap<String, Object> whereh = new HashMap<>();

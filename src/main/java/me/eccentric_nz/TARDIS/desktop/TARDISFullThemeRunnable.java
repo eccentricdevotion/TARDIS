@@ -326,17 +326,11 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
             });
             // put on the door, redstone torches, signs, and the repeaters
-            postDoorBlocks.forEach((pdb, value) -> {
-                pdb.setBlockData(value);
-            });
-            postRedstoneTorchBlocks.forEach((prtb, value) -> prtb.setBlockData(value));
-            postLeverBlocks.forEach((plb, value) -> {
-                plb.setBlockData(value);
-            });
-            postTorchBlocks.forEach((ptb, value) -> ptb.setBlockData(value));
-            postRepeaterBlocks.forEach((prb, value) -> {
-                prb.setBlockData(value);
-            });
+            postDoorBlocks.forEach(Block::setBlockData);
+            postRedstoneTorchBlocks.forEach(Block::setBlockData);
+            postLeverBlocks.forEach(Block::setBlockData);
+            postTorchBlocks.forEach(Block::setBlockData);
+            postRepeaterBlocks.forEach(Block::setBlockData);
             postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
                 pspb.setBlockData(value);
@@ -345,9 +339,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 plugin.getGeneralKeeper().getDoorPistons().add(ppb);
                 ppb.setBlockData(value);
             });
-            postPistonExtensionBlocks.forEach((ppeb, value) -> {
-                ppeb.setBlockData(value);
-            });
+            postPistonExtensionBlocks.forEach(Block::setBlockData);
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 Block psb = entry.getKey();
@@ -907,16 +899,11 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
                 break;
             case MEDIUM:
-                switch (next) {
-                    case SMALL:
-                        // the 3 chunks on the same level
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 5));
-                        break;
-                    default:
-                        // same size or bigger do nothing
-                        break;
+                // same size or bigger do nothing
+                if (next == ConsoleSize.SMALL) {// the 3 chunks on the same level
+                    list.add(new TARDISARSJettison(chunk, 1, 4, 5));
+                    list.add(new TARDISARSJettison(chunk, 1, 5, 4));
+                    list.add(new TARDISARSJettison(chunk, 1, 5, 5));
                 }
                 break;
             default: // SMALL size do nothing

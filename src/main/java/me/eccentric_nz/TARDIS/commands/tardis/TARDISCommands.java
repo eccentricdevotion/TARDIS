@@ -113,7 +113,7 @@ public class TARDISCommands implements CommandExecutor {
                 case bell:
                     return new TARDISBellCommand(plugin).toggle(rs.getTardis_id(), player, args);
                 case check_loc:
-                    return new TARDISCheckLocCommand(plugin).doACheckLocation(player, args);
+                    return new TARDISCheckLocCommand(plugin).doACheckLocation(player);
                 case colourise:
                 case colorize:
                     new TARDISColouriseCommand(plugin).updateBeaconGlass(player);
@@ -147,7 +147,7 @@ public class TARDISCommands implements CommandExecutor {
                 case erase:
                     return new TARDISDiskWriterCommand(plugin).eraseDisk(player);
                 case find:
-                    return new TARDISFindCommand(plugin).findTARDIS(player, args);
+                    return new TARDISFindCommand(plugin).findTARDIS(player);
                 case handbrake:
                     return new TARDISHandbrakeCommand(plugin).toggle(player, rs.getTardis_id(), args, false);
                 case hide:
@@ -156,7 +156,7 @@ public class TARDISCommands implements CommandExecutor {
                 case sethome:
                     return new TARDISHomeCommand(plugin).setHome(player, args);
                 case inside:
-                    return new TARDISInsideCommand(plugin).whosInside(player, args);
+                    return new TARDISInsideCommand(plugin).whosInside(player);
                 case item:
                     return new TARDISItemCommand().update(player, args);
                 case jettison:
