@@ -128,6 +128,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             }
                             break;
                     }
+                } else {
+                    result = "Not in any TARDIS";
                 }
             } else {
                 switch (identifier) {
@@ -135,18 +137,24 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         Integer percent = plugin.getBuildKeeper().getRoomProgress().get(player.getUniqueId());
                         if (percent != null) {
                             result = Integer.toString(percent);
+                        } else {
+                            result = "ARS not in use";
                         }
                         break;
                     case "artron_amount":
                         rsl = new ResultSetArtronLevel(plugin, uuid);
                         if (rsl.resultset()) {
                             result = Integer.toString(rsl.getArtronLevel());
+                        } else {
+                            result = "0";
                         }
                         break;
                     case "artron_percent":
                         rsl = new ResultSetArtronLevel(plugin, uuid);
                         if (rsl.resultset()) {
                             result = String.format("%s%%", Math.round(rsl.getArtronLevel() * 100.0d / plugin.getArtronConfig().getDouble("full_charge")));
+                        } else {
+                            result = "0%";
                         }
                         break;
                     case "console":
@@ -154,6 +162,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         rst = new ResultSetTardis(plugin, where, "", false, 2);
                         if (rst.resultSet()) {
                             result = TARDISStringUtils.uppercaseFirst(rst.getTardis().getSchematic().getPermission());
+                        } else {
+                            result = "";
                         }
                         break;
                     case "preset":
@@ -161,6 +171,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         rst = new ResultSetTardis(plugin, where, "", false, 2);
                         if (rst.resultSet()) {
                             result = rst.getTardis().getPreset().toString();
+                        } else {
+                            result = "";
                         }
                         break;
                     case "current_location":
@@ -170,6 +182,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
                                 result = "TARDIS was left at " + rscl.getWorld().getName() + " at " + "x: " + rscl.getX() + " y: " + rscl.getY() + " z: " + rscl.getZ();
+                            } else {
+                                result = "";
                             }
                         }
                         break;
@@ -180,6 +194,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
                                 result = Integer.toString(rscl.getX());
+                            } else {
+                                result = "";
                             }
                         }
                         break;
@@ -190,6 +206,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
                                 result = Integer.toString(rscl.getY());
+                            } else {
+                                result = "";
                             }
                         }
                         break;
@@ -200,6 +218,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
                                 result = Integer.toString(rscl.getZ());
+                            } else {
+                                result = "";
                             }
                         }
                         break;
@@ -210,6 +230,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
                                 result = rscl.getWorld().getName();
+                            } else {
+                                result = "";
                             }
                         }
                         break;
@@ -220,6 +242,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
                                 result = rscl.getDirection().toString();
+                            } else {
+                                result = "";
                             }
                         }
                         break;
@@ -231,12 +255,16 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             if (rscl.resultSet()) {
                                 result = rscl.getBiomeKey().toString();
                             }
+                        } else {
+                            result = "";
                         }
                         break;
                     case "timelord_artron_amount":
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                         if (rsp.resultSet()) {
                             result = Integer.toString(rsp.getArtronLevel());
+                        } else {
+                            result = "0";
                         }
                         break;
                     default:
