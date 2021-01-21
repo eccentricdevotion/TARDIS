@@ -185,6 +185,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             } else {
                                 result = "";
                             }
+                        } else {
+                            result = "";
                         }
                         break;
                     case "current_location_x":
@@ -197,6 +199,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             } else {
                                 result = "";
                             }
+                        } else {
+                            result = "";
                         }
                         break;
                     case "current_location_y":
@@ -209,6 +213,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             } else {
                                 result = "";
                             }
+                        } else {
+                            result = "";
                         }
                         break;
                     case "current_location_z":
@@ -221,6 +227,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             } else {
                                 result = "";
                             }
+                        } else {
+                            result = "";
                         }
                         break;
                     case "current_location_world":
@@ -233,6 +241,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             } else {
                                 result = "";
                             }
+                        } else {
+                            result = "";
                         }
                         break;
                     case "current_location_direction":
@@ -245,6 +255,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             } else {
                                 result = "";
                             }
+                        } else {
+                            result = "";
                         }
                         break;
                     case "current_location_biome":
@@ -254,6 +266,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
                                 result = rscl.getBiomeKey().toString();
+                            } else {
+                                result = "";
                             }
                         } else {
                             result = "";
