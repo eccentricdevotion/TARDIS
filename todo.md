@@ -1,5 +1,9 @@
 # TODO
 
+## Current version `4.5.6`
+
+1. Prevent portal formation in TARDIS worlds - but also configurable per world
+
 ## Next version `4.6`
 1. Update documentation...
 2. 13th Doctor's and Factory TARDIS console
