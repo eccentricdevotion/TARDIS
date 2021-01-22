@@ -199,6 +199,7 @@ class TARDISListenerRegisterer {
         }
         plugin.getPM().registerEvents(new TARDISPaperBagListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPistonListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISPortalListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPrefsMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPresetListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISQuitListener(plugin), plugin);

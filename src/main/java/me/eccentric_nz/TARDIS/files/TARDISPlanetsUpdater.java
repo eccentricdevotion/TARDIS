@@ -175,6 +175,14 @@ public class TARDISPlanetsUpdater {
                 planets_config.set("planets." + p + ".keep_spawn_in_memory", false);
                 save++;
             }
+            if (!planets_config.contains("planets." + p + ".allow_portals")) {
+                if (isTARDISPlanet(p)) {
+                    planets_config.set("planets." + p + ".allow_portals", false);
+                } else {
+                    planets_config.set("planets." + p + ".allow_portals", true);
+                }
+                save++;
+            }
         }
         if (save > 0) {
             try {
@@ -185,5 +193,9 @@ public class TARDISPlanetsUpdater {
                 plugin.debug("Could not save planets.yml, " + io.getMessage());
             }
         }
+    }
+
+    private boolean isTARDISPlanet(String p) {
+        return (p.startsWith("TARDIS_") || p.equals("Gallifrey") || p.equals("Siluria") || p.equals("Skaro"));
     }
 }
