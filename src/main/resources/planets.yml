@@ -22,6 +22,7 @@ planets:
     gamerules:
       doTraderSpawning: false
       doPatrolSpawning: false
+    allow_portals: false
   Siluria:
     enabled: false
     resource_pack: default
@@ -35,6 +36,7 @@ planets:
     gamerules:
       doTraderSpawning: false
       doPatrolSpawning: false
+    allow_portals: false
   Gallifrey:
     enabled: false
     resource_pack: https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1
@@ -48,6 +50,7 @@ planets:
     gamerules:
       doTraderSpawning: false
       doPatrolSpawning: false
+    allow_portals: false
   TARDIS_TimeVortex:
     enabled: true
     resource_pack: default
@@ -61,6 +64,7 @@ planets:
       doWeatherCycle: false
       doDaylightCycle: false
     keep_spawn_in_memory: false
+    allow_portals: false
   TARDIS_Zero_Room:
     enabled: false
     resource_pack: default
@@ -75,3 +79,4 @@ planets:
       doDaylightCycle: false
       announceAdvancements: false
     keep_spawn_in_memory: false
+    allow_portals: false

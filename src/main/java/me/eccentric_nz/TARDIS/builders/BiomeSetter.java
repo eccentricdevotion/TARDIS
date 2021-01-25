@@ -73,7 +73,7 @@ public class BiomeSetter {
 
     public static boolean restoreBiome(Location l, TARDISBiome tardisBiome) {
         Biome biome = null;
-        if (tardisBiome.getKey().getNamespace().equalsIgnoreCase("minecraft")) {
+        if (tardisBiome != null && tardisBiome.getKey().getNamespace().equalsIgnoreCase("minecraft")) {
             try {
                 biome = Biome.valueOf(tardisBiome.name());
             } catch (IllegalArgumentException e) {
