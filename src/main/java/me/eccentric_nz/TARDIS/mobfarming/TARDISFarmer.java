@@ -423,9 +423,7 @@ public class TARDISFarmer {
                             tv.setLevel(v.getVillagerLevel());
                             tv.setVillagerType(v.getVillagerType());
                             tv.setExperience(v.getVillagerExperience());
-                            if (plugin.isHelperOnServer()) {
-                                tv.setWilling(plugin.getTardisHelper().getVillagerWilling(v));
-                            }
+                            tv.setWilling(plugin.getTardisHelper().getVillagerWilling(v));
                             villagers.add(tv);
                             if (!village.isEmpty() || (village.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 entity.remove();
@@ -888,9 +886,7 @@ public class TARDISFarmer {
                         if (name != null && !name.isEmpty()) {
                             npc.setCustomName(name);
                         }
-                        if (plugin.isHelperOnServer()) {
-                            plugin.getTardisHelper().setVillagerWilling(npc, e.isWilling());
-                        }
+                        plugin.getTardisHelper().setVillagerWilling(npc, e.isWilling());
                         npc.setRemoveWhenFarAway(false);
                     });
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && villagers.size() > 0) {
