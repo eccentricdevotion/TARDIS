@@ -26,13 +26,17 @@ public class TARDISBiomeFinder {
     public void run(World w, Biome biome, Player player, int id, COMPASS direction) {
         Location tb = plugin.getTardisHelper().searchBiome(w, biome, player);
         // cancel biome finder
+        if (tb == null) {
+            TARDISMessage.send(player, "BIOME_NOT_FOUND");
+            return;
+        }
         if (!plugin.getPluginRespect().getRespect(tb, new Parameters(player, Flag.getDefaultFlags()))) {
             if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                 plugin.getTrackerKeeper().getMalfunction().put(id, true);
             } else {
                 // cancel
                 TARDISMessage.send(player, "PROTECTED");
-                player.resetTitle();
+                return;
             }
         }
         World bw = tb.getWorld();
