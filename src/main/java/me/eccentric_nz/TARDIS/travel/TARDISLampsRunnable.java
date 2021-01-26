@@ -24,6 +24,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Lightable;
 
 import java.util.List;
 
@@ -50,6 +51,10 @@ class TARDISLampsRunnable implements Runnable {
         this.lamps = lamps;
         this.end = end;
         this.light = light.createBlockData();
+        if (light.equals(Material.REDSTONE_LAMP)) {
+            Lightable lit = (Lightable) this.light;
+            lit.setLit(true);
+        }
         this.use_wool = use_wool;
         MUSHROOM = (this.light.equals(Material.REDSTONE_LAMP)) ? this.plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(52)) : this.plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
         lights_on = (lamps.get(0).getType().equals(this.light.getMaterial()));

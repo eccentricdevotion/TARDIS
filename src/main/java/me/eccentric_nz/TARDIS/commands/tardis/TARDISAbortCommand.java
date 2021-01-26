@@ -42,6 +42,9 @@ class TARDISAbortCommand {
             if (plugin.getTrackerKeeper().getRoomTasks().containsKey(task)) {
                 plugin.getTrackerKeeper().getRoomTasks().remove(task);
             }
+            if (plugin.getBuildKeeper().getRoomProgress().containsKey(player.getUniqueId())) {
+                plugin.getBuildKeeper().getRoomProgress().remove(player.getUniqueId());
+            }
             TARDISMessage.send(player, "TASK_ABORT");
             return true;
         } catch (NumberFormatException nfe) {

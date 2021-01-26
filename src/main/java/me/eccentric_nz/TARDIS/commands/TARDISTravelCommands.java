@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -65,7 +64,7 @@ public class TARDISTravelCommands implements CommandExecutor {
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;
         for (Biome bi : Biome.values()) {
-            if (!TARDISConstants.NETHER_BIOMES.contains(bi) && !bi.equals(Biome.THE_END) && !bi.equals(Biome.THE_VOID)) {
+            if (!bi.equals(Biome.THE_VOID)) {
                 BIOME_SUBS.add(bi.toString());
             }
         }
@@ -391,40 +390,12 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 new TARDISLand(plugin, id, player).exitVortex();
                             }
                             return true;
-                        } else if (TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
-                            if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
-                                TARDISMessage.send(player, "ADV_PLAYER");
-                                return true;
-                            }
-                            if (player.getName().equalsIgnoreCase(args[0])) {
-                                TARDISMessage.send(player, "TRAVEL_NO_SELF");
-                                return true;
-                            }
-                            HashMap<String, Object> wherecl = new HashMap<>();
-                            wherecl.put("tardis_id", id);
-                            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                            if (!rsc.resultSet()) {
-                                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
-                                return true;
-                            }
-                            // check the player
-                            Player saved = plugin.getServer().getPlayer(args[0]);
-                            if (saved == null) {
-                                TARDISMessage.send(player, "NOT_ONLINE");
-                                return true;
-                            }
-                            // check the to player's DND status
-                            ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, saved.getUniqueId().toString());
-                            if (rspp.resultSet() && rspp.isDND()) {
-                                TARDISMessage.send(player, "DND", args[0]);
-                                return true;
-                            }
-                            new TARDISRescue(plugin).rescue(player, saved.getUniqueId(), id, rsc.getDirection(), false, false);
-                            return true;
                         } else {
-                            TARDISMessage.send(player, "NO_PERM_PLAYER");
-                            return true;
+                            return travelPlayer(player, args[0], id);
                         }
+                    }
+                    if (args.length == 2 && args[0].equalsIgnoreCase("player")) {
+                        return travelPlayer(player, args[1], id);
                     }
                     if (args.length == 2 && (args[1].equals("?") || args[1].equalsIgnoreCase("tpa"))) {
                         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
@@ -508,7 +479,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         } else {
                             try {
                                 Biome biome = Biome.valueOf(upper);
-                                if (TARDISConstants.ILLEGAL_BIOMES.contains(biome)) {
+                                if (biome.equals(Biome.THE_VOID)) {
                                     TARDISMessage.send(player, "BIOME_TRAVEL_NOT_VALID");
                                     return true;
                                 }
@@ -553,7 +524,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                         return true;
                     }
-                    if (args.length == 2 && args[0].equalsIgnoreCase("dest")) {
+                    if (args.length == 2 && (args[0].equalsIgnoreCase("dest") || args[0].equalsIgnoreCase("save"))) {
                         // we're thinking this is a saved destination name
                         if (TARDISPermission.hasPermission(player, "tardis.save")) {
                             HashMap<String, Object> whered = new HashMap<>();
@@ -883,6 +854,42 @@ public class TARDISTravelCommands implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    private boolean travelPlayer(Player player, String p, int id) {
+        if (TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
+            if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
+                TARDISMessage.send(player, "ADV_PLAYER");
+                return true;
+            }
+            if (player.getName().equalsIgnoreCase(p)) {
+                TARDISMessage.send(player, "TRAVEL_NO_SELF");
+                return true;
+            }
+            HashMap<String, Object> wherecl = new HashMap<>();
+            wherecl.put("tardis_id", id);
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            if (!rsc.resultSet()) {
+                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                return true;
+            }
+            // check the player
+            Player saved = plugin.getServer().getPlayer(p);
+            if (saved == null) {
+                TARDISMessage.send(player, "NOT_ONLINE");
+                return true;
+            }
+            // check the to player's DND status
+            ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, saved.getUniqueId().toString());
+            if (rspp.resultSet() && rspp.isDND()) {
+                TARDISMessage.send(player, "DND", p);
+                return true;
+            }
+            new TARDISRescue(plugin).rescue(player, saved.getUniqueId(), id, rsc.getDirection(), false, false);
+        } else {
+            TARDISMessage.send(player, "NO_PERM_PLAYER");
+        }
+        return true;
     }
 
     private String getQuotedString(String[] args) {

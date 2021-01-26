@@ -2,12 +2,13 @@
 
 ## Current version `4.5.6`
 
-1. Prevent portal formation in TARDIS worlds - but also configurable per world
+1. Check Biome Reader in data pack worlds with custom biomes
 
 ## Next version `4.6`
+
 1. Update documentation...
 2. 13th Doctor's and Factory TARDIS console
-   * Add advanced console and disk storage to schematics
+    * Add advanced console and disk storage to schematics
 3. Set Master button to ON (In Lazarus GUI) when it is in use
 4. Use the Vortex Manipulator to teleport past force fields
 5. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
@@ -17,20 +18,22 @@
 9. TCG API - use Police Box location instead of player location?
 
 ## Resource Pack / TARDISWeepingAngels
+
 0. Check paper bag, bowl of custard, artron furnace, telepathic circuit, keyboard editor
 1. Re-skin mobs for Resource pack, and add new mob sounds
-   * Clockwork Droid
-   * Hath _started_
-   * Endermites -> Cybermats
-   * Iron Golem -> Gunslinger
-   * Witches -> Slitheen / Whispermen?
-   * Slimes -> Adipose
-   * Husk -> Sycorax
-   * Stray -> Scarecrows
+    * Clockwork Droid
+    * Hath _started_
+    * Endermites -> Cybermats
+    * Iron Golem -> Gunslinger
+    * Witches -> Slitheen / Whispermen?
+    * Slimes -> Adipose
+    * Husk -> Sycorax
+    * Stray -> Scarecrows
 2. Custom GUI textures for TARDIS GUIs - _now possible with Optifine, but don't get applied to Spigot generated GUIs :(_
 3. Use ArmorStand locking API?
 
 ## Minecraft Bedrock Edition?
+
 1. Recreate everything :)
 2. Create custom blocks for the TARDIS and console
 3. Custom TARDIS items and crafting recipes for the same

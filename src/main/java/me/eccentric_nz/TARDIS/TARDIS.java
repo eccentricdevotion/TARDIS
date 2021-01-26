@@ -144,7 +144,6 @@ public class TARDIS extends JavaPlugin {
     private boolean hasVersion = false;
     private boolean tardisSpawn = false;
     private boolean worldGuardOnServer;
-    private boolean helperOnServer;
     private boolean disguisesOnServer;
     private InventoryManager invManager;
     private PluginManager pm;
@@ -168,7 +167,6 @@ public class TARDIS extends JavaPlugin {
 
     public TARDIS() {
         worldGuardOnServer = false;
-        helperOnServer = false;
         invManager = InventoryManager.NONE;
         versions.put("GriefPrevention", "16.13");
         versions.put("LibsDisguises", "10.0.14");
@@ -775,7 +773,6 @@ public class TARDIS extends JavaPlugin {
         Plugin tcg = pm.getPlugin("TARDISChunkGenerator");
         if (tcg != null && tcg.isEnabled()) {
             debug("Hooking into TARDISChunkGenerator!");
-            helperOnServer = true;
             tardisHelper = (TARDISHelper) getPM().getPlugin("TARDISChunkGenerator");
             return true;
         }
@@ -1185,10 +1182,6 @@ public class TARDIS extends JavaPlugin {
 
     public boolean isWorldGuardOnServer() {
         return worldGuardOnServer;
-    }
-
-    public boolean isHelperOnServer() {
-        return helperOnServer;
     }
 
     public boolean isDisguisesOnServer() {

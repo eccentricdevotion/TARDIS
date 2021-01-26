@@ -9,6 +9,8 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -24,13 +26,17 @@ public class TARDISBiomeFinder {
     public void run(World w, Biome biome, Player player, int id, COMPASS direction) {
         Location tb = plugin.getTardisHelper().searchBiome(w, biome, player);
         // cancel biome finder
+        if (tb == null) {
+            TARDISMessage.send(player, "BIOME_NOT_FOUND");
+            return;
+        }
         if (!plugin.getPluginRespect().getRespect(tb, new Parameters(player, Flag.getDefaultFlags()))) {
             if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                 plugin.getTrackerKeeper().getMalfunction().put(id, true);
             } else {
                 // cancel
                 TARDISMessage.send(player, "PROTECTED");
-                player.resetTitle();
+                return;
             }
         }
         World bw = tb.getWorld();
@@ -39,6 +45,9 @@ public class TARDISBiomeFinder {
             bw.getChunkAt(tb).load();
         }
         int highest = tb.getWorld().getHighestBlockYAt(tb);
+        if (tb.getWorld().getEnvironment().equals(World.Environment.NETHER)) {
+            highest = getNetherHighest(tb);
+        }
         tb.setY(highest + 1);
         int[] start_loc = TARDISTimeTravel.getStartLocation(tb, direction);
         int tmp_y = tb.getBlockY();
@@ -65,5 +74,16 @@ public class TARDISBiomeFinder {
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             new TARDISLand(plugin, id, player).exitVortex();
         }
+    }
+
+    private int getNetherHighest(Location location) {
+        Block startBlock = location.getBlock();
+        while (!startBlock.getType().isAir()) {
+            startBlock = startBlock.getRelative(BlockFace.DOWN);
+        }
+        while (startBlock.getType().isAir() && startBlock.getLocation().getBlockY() > 30) {
+            startBlock = startBlock.getRelative(BlockFace.DOWN);
+        }
+        return startBlock.getY() + 1;
     }
 }

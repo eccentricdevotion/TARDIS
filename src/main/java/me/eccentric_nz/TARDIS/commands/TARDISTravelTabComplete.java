@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
@@ -40,11 +39,11 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
 
     public TARDISTravelTabComplete(TARDIS plugin) {
         for (Biome bi : org.bukkit.block.Biome.values()) {
-            if (!TARDISConstants.NETHER_BIOMES.contains(bi) && !bi.equals(Biome.THE_END) && !bi.equals(Biome.THE_VOID)) {
+            if (!bi.equals(Biome.THE_VOID)) {
                 BIOME_SUBS.add(bi.toString());
             }
         }
-        ROOT_SUBS.addAll(Arrays.asList("home", "biome", "dest", "area", "back", "cave", "village", "random", "cancel", "costs", "stop"));
+        ROOT_SUBS.addAll(Arrays.asList("home", "biome", "save", "dest", "area", "back", "player", "cave", "village", "random", "cancel", "costs", "stop"));
         ROOT_SUBS.addAll(plugin.getTardisAPI().getWorlds());
         ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
         if (rsa.resultSet()) {
@@ -66,6 +65,9 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
             }
             if (sub.equals("biome")) {
                 return partial(lastArg, BIOME_SUBS);
+            }
+            if (sub.equals("player")) {
+                return null;
             }
         }
         return ImmutableList.of();

@@ -131,7 +131,7 @@ public class TARDISPluginRespect {
             bool = false;
         }
         if (flag.repectWorldBorder()) {
-            if (plugin.isHelperOnServer()) {
+            if (!borderOnServer) {
                 WorldBorder wb = location.getWorld().getWorldBorder();
                 if (!wb.isInside(location)) {
                     if (flag.messagePlayer()) {

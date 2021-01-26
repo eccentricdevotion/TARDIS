@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.bind;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
@@ -107,7 +106,7 @@ public class BindAdd {
                 Biome biome;
                 try {
                     biome = Biome.valueOf(which.toUpperCase(Locale.ENGLISH));
-                    if (!TARDISConstants.ILLEGAL_BIOMES.contains(biome)) {
+                    if (!biome.equals(Biome.THE_VOID)) {
                         set.put("type", 4);
                         set.put("name", biome.toString());
                         bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
