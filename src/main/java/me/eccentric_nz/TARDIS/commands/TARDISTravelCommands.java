@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -65,7 +64,7 @@ public class TARDISTravelCommands implements CommandExecutor {
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;
         for (Biome bi : Biome.values()) {
-            if (!TARDISConstants.NETHER_BIOMES.contains(bi) && !bi.equals(Biome.THE_END) && !bi.equals(Biome.THE_VOID)) {
+            if (!bi.equals(Biome.THE_VOID)) {
                 BIOME_SUBS.add(bi.toString());
             }
         }
@@ -508,7 +507,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         } else {
                             try {
                                 Biome biome = Biome.valueOf(upper);
-                                if (TARDISConstants.ILLEGAL_BIOMES.contains(biome)) {
+                                if (biome.equals(Biome.THE_VOID)) {
                                     TARDISMessage.send(player, "BIOME_TRAVEL_NOT_VALID");
                                     return true;
                                 }
