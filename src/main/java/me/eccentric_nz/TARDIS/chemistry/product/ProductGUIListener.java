@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chemistry.product;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -33,13 +34,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 import java.util.List;
 
-public class ProductGUIListener implements Listener {
+public class ProductGUIListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Integer> slots = Arrays.asList(0, 1, 2, 9, 10, 11, 18, 19, 20);
     private final List<Integer> pipe = Arrays.asList(2, 11, 20);
 
     public ProductGUIListener(TARDIS plugin) {
+        super(plugin);
         this.plugin = plugin;
     }
 
@@ -124,14 +126,5 @@ public class ProductGUIListener implements Listener {
         for (int i : slots) {
             inventory.setItem(i, null);
         }
-    }
-
-    /**
-     * Closes the inventory.
-     *
-     * @param p the player using the GUI
-     */
-    private void close(Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
     }
 }
