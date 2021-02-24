@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chemistry.compound.Compound;
 import me.eccentric_nz.TARDIS.chemistry.element.Element;
 import me.eccentric_nz.TARDIS.chemistry.element.ElementBuilder;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -33,11 +34,12 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class ReducerGUIListener implements Listener {
+public class ReducerGUIListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
 
     public ReducerGUIListener(TARDIS plugin) {
+        super(plugin);
         this.plugin = plugin;
     }
 
@@ -130,14 +132,5 @@ public class ReducerGUIListener implements Listener {
             // remove the reduced item stack
             inventory.setItem(0, null);
         }
-    }
-
-    /**
-     * Closes the inventory.
-     *
-     * @param p the player using the GUI
-     */
-    private void close(Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
     }
 }

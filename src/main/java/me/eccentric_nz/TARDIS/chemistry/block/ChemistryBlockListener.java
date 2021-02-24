@@ -38,6 +38,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -83,7 +84,7 @@ public class ChemistryBlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChemistryBlockInteract(PlayerInteractEvent event) {
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getHand().equals(EquipmentSlot.HAND)) {
             Block block = event.getClickedBlock();
             Material material = block.getType();
             if (!material.equals(Material.RED_MUSHROOM_BLOCK)) {
