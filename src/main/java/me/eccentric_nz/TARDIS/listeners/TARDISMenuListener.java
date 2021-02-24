@@ -78,6 +78,11 @@ public class TARDISMenuListener implements Listener {
         map.put(ChatColor.DARK_RED + "Chameleon Template", 54);
         map.put(ChatColor.DARK_RED + "Companions", 54);
         map.put(ChatColor.DARK_RED + "Destination Terminal", 54);
+        map.put(ChatColor.DARK_RED + "Chemical compounds", 27);
+        map.put(ChatColor.DARK_RED + "Element constructor", 27);
+        map.put(ChatColor.DARK_RED + "Material reducer", 27);
+        map.put(ChatColor.DARK_RED + "Product crafting", 27);
+        map.put(ChatColor.DARK_RED + "Lab table", 27);
         map.put(ChatColor.DARK_RED + "Genetic Manipulator", 54);
         // TODO should Handles Program GUI be in here?
 //        map.put(ChatColor.DARK_RED + "Handles Program", 54);

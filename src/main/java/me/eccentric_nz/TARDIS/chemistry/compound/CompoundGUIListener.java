@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.chemistry.compound;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chemistry.element.Element;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -31,11 +32,12 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class CompoundGUIListener implements Listener {
+public class CompoundGUIListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
 
     public CompoundGUIListener(TARDIS plugin) {
+        super(plugin);
         this.plugin = plugin;
     }
 
@@ -116,14 +118,5 @@ public class CompoundGUIListener implements Listener {
             }
         }
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 1.0f);
-    }
-
-    /**
-     * Closes the inventory.
-     *
-     * @param player the player using the GUI
-     */
-    private void close(Player player) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, player::closeInventory, 1L);
     }
 }
