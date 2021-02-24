@@ -180,6 +180,12 @@ public class TARDISSeedBlockProcessor {
                     wherepp.put("uuid", player.getUniqueId().toString());
                     plugin.getQueryFactory().doUpdate("player_prefs", setpp, wherepp);
                 }
+                if (plugin.getConfig().getBoolean("allow.mob_farming")) {
+                    // insert farming record
+                    HashMap<String, Object> setf = new HashMap<>();
+                    setf.put("tardis_id", lastInsertId);
+                    plugin.getQueryFactory().doInsert("farming", setf);
+                }
                 // populate home, current, next and back tables
                 HashMap<String, Object> setlocs = new HashMap<>();
                 setlocs.put("tardis_id", lastInsertId);
