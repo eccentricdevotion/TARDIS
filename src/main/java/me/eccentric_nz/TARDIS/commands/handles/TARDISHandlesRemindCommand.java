@@ -48,7 +48,7 @@ class TARDISHandlesRemindCommand {
             return true;
         }
         TARDISMessage.handlesSend(player, "HANDLES_OK", "" + when);
-        TARDISSounds.playTARDISSound(player, "handles_confirmed");
+        TARDISSounds.playTARDISSound(player, "handles_confirmed", 5L);
         // convert minutes to milliseconds
         when *= 60000;
         // add the current time in milliseconds

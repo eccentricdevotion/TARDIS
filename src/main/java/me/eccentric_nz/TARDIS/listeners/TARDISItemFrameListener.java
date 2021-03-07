@@ -255,7 +255,7 @@ public class TARDISItemFrameListener implements Listener {
                 ItemStack is = frame.getItem();
                 if (isHandles(is)) {
                     // play sound
-                    TARDISSounds.playTARDISSound(player, "handles");
+                    TARDISSounds.playTARDISSound(player, "handles", 5L);
                     ItemMeta im = is.getItemMeta();
                     im.setCustomModelData(10000002);
                     is.setItemMeta(im);
@@ -358,7 +358,7 @@ public class TARDISItemFrameListener implements Listener {
                 if (player != null) {
                     if (player.isSneaking()) {
                         event.setCancelled(true);
-                        TARDISSounds.playTARDISSound(player, "handles");
+                        TARDISSounds.playTARDISSound(player, "handles", 5L);
                         ItemMeta im = is.getItemMeta();
                         im.setCustomModelData(10000002);
                         is.setItemMeta(im);
