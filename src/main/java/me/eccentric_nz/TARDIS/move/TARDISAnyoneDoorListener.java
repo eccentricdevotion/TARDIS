@@ -296,6 +296,10 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                             ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                             if (rs.resultSet()) {
                                 Tardis tardis = rs.getTardis();
+                                if (!tardis.isHandbrake_on()) {
+                                    TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
+                                    return;
+                                }
                                 int artron = tardis.getArtron_level();
                                 int required = plugin.getArtronConfig().getInt("backdoor");
                                 UUID tlUUID = tardis.getUuid();
