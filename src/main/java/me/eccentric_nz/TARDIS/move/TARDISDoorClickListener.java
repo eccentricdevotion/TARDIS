@@ -230,6 +230,8 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                         } else {
                                             TARDISMessage.send(player, "DOOR_UNLOCK");
                                         }
+                                    } else {
+                                        TARDISMessage.send(player, "SIEGE_COMPANION");
                                     }
                                 }
                             } else if (action == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
@@ -437,6 +439,8 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 set.put("tardis_id", id);
                                                 set.put("uuid", playerUUID.toString());
                                                 plugin.getQueryFactory().doSyncInsert("travellers", set);
+                                            } else {
+                                                TARDISMessage.send(player, "SIEGE_COMPANION");
                                             }
                                             break;
                                         case 2:

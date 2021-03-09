@@ -265,6 +265,8 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                         new TARDISInnerDoorOpener(plugin, playerUUID, id).openDoor();
                                                     }
                                                 }
+                                            } else {
+                                                TARDISMessage.send(player, "SIEGE_COMPANION");
                                             }
                                         }
                                     } else if (Tag.TRAPDOORS.isTagged(blockType)) {
@@ -486,6 +488,8 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             set.put("tardis_id", id);
                                             set.put("uuid", playerUUID.toString());
                                             plugin.getQueryFactory().doSyncInsert("travellers", set);
+                                        } else {
+                                            TARDISMessage.send(player, "SIEGE_COMPANION");
                                         }
                                         break;
                                     case 2:
