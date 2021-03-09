@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.database.converters;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
