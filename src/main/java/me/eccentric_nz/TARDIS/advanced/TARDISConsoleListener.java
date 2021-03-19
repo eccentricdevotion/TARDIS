@@ -67,7 +67,11 @@ public class TARDISConsoleListener implements Listener {
             return;
         }
         Player p = event.getPlayer();
+        UUID uuid = p.getUniqueId();
         if (!TARDISPermission.hasPermission(p, "tardis.advanced")) {
+            return;
+        }
+        if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {
             return;
         }
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
@@ -87,7 +91,7 @@ public class TARDISConsoleListener implements Listener {
                     }
                     int id = rsc.getTardis_id();
                     // determine key item
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                     String key;
                     if (rsp.resultSet()) {
                         key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
@@ -99,7 +103,7 @@ public class TARDISConsoleListener implements Listener {
                     if ((disk != null && onlythese.contains(disk.getType()) && disk.hasItemMeta()) || key.equals("AIR")) {
                         // only the time lord of this tardis
                         ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
-                        if (!rs.fromBoth(id, p.getUniqueId().toString())) {
+                        if (!rs.fromBoth(id, uuid.toString())) {
                             TARDISMessage.send(p, "NOT_OWNER");
                             return;
                         }
@@ -109,7 +113,7 @@ public class TARDISConsoleListener implements Listener {
                         }
                         Inventory inv = plugin.getServer().createInventory(p, 9, ChatColor.DARK_RED + "TARDIS Console");
                         HashMap<String, Object> where = new HashMap<>();
-                        where.put("uuid", p.getUniqueId().toString());
+                        where.put("uuid", uuid.toString());
                         ResultSetDiskStorage rsds = new ResultSetDiskStorage(plugin, where);
                         if (rsds.resultSet()) {
                             String console = rsds.getConsole();
@@ -140,7 +144,7 @@ public class TARDISConsoleListener implements Listener {
                         } else {
                             // create new storage record
                             HashMap<String, Object> setstore = new HashMap<>();
-                            setstore.put("uuid", p.getUniqueId().toString());
+                            setstore.put("uuid", uuid.toString());
                             setstore.put("tardis_id", id);
                             plugin.getQueryFactory().doInsert("storage", setstore);
                         }
@@ -157,7 +161,7 @@ public class TARDISConsoleListener implements Listener {
                                 where.put("tardis_id", id);
                                 ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 2);
                                 if (rst.resultSet() && rst.getTardis().getUuid() == diskUuid) {
-                                    if (p.getUniqueId() == rst.getTardis().getUuid()) {
+                                    if (uuid == rst.getTardis().getUuid()) {
                                         // time lords can't use their own disks!
                                         TARDISMessage.send(p, "SECURITY_TIMELORD");
                                         return;

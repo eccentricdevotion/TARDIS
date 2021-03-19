@@ -267,6 +267,9 @@ public class TARDISControlListener implements Listener {
                                     break;
                                 case 14: // Disk Storage
                                     UUID playerUUID = player.getUniqueId();
+                                    if (plugin.getTrackerKeeper().getPlayers().containsKey(playerUUID)) {
+                                        return;
+                                    }
                                     // only the time lord of this tardis
                                     if (!ownerUUID.equals(playerUUID)) {
                                         TARDISMessage.send(player, "NOT_OWNER");
