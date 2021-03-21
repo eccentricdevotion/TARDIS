@@ -73,7 +73,6 @@ public class TARDISChameleonHelpListener extends TARDISMenuListener implements L
                             switch (slot) {
                                 case 0:
                                     // back
-                                    close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
                                         ItemStack[] items = tci.getConstruct();
@@ -84,7 +83,6 @@ public class TARDISChameleonHelpListener extends TARDISMenuListener implements L
                                     break;
                                 case 40:
                                     // next
-                                    close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISChameleonTemplateGUI tci = new TARDISChameleonTemplateGUI(plugin);
                                         ItemStack[] items = tci.getTemplate();

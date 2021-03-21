@@ -89,7 +89,6 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
             }
             if (slot == 49) {
                 // load TARDIS saves
-                close(player);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     // get the TARDIS the player is in
                     HashMap<String, Object> wheres = new HashMap<>();

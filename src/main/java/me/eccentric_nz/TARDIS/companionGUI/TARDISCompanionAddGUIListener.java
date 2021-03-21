@@ -116,7 +116,6 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
     }
 
     private void list(Player player) {
-        close(player);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
             if (rs.fromUUID(player.getUniqueId().toString())) {

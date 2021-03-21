@@ -34,7 +34,6 @@ public class TARDISRecipeInventoryListener extends TARDISMenuListener implements
                     switch (slot) {
                         case 0:
                             // back
-                            close(player);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 ItemStack[] emenu = new TARDISRecipeCategoryInventory().getMenu();
                                 Inventory categories = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Recipe Categories");
@@ -51,7 +50,6 @@ public class TARDISRecipeInventoryListener extends TARDISMenuListener implements
                             break;
                         default:
                             String command = ChatColor.stripColor(is.getItemMeta().getLore().get(0)).substring(1);
-                            close(player);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand(command), 2L);
                             break;
                     }

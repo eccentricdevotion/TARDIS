@@ -243,7 +243,6 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     break;
                                 case 24:
                                     // go to page one (regular presets)
-                                    close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
                                         ItemStack[] items = tpi.getPresets();
@@ -254,7 +253,6 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     break;
                                 case 25:
                                     // return to Chameleon Circuit GUI
-                                    close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
                                         Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");

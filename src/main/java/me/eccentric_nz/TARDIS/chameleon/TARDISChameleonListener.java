@@ -193,7 +193,6 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     break;
                                 case 14:
                                     // presets
-                                    close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
                                         ItemStack[] items = tpi.getPresets();
@@ -204,7 +203,6 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     break;
                                 case 15:
                                     // constructor GUI
-                                    close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
                                         ItemStack[] items = tci.getConstruct();

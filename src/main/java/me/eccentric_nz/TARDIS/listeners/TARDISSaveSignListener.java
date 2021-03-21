@@ -277,7 +277,6 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                     if (ownId != -1) {
                         int saveId = ownId;
                         // load own/tardis saves
-                        close(player);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             Inventory inv;
                             ItemStack[] items;
@@ -297,7 +296,6 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                 }
                 if (slot == 51 && event.getClickedInventory().getItem(51) != null) {
                     // load page 2
-                    close(player);
                     int finalId = id;
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         Inventory inv;
@@ -317,7 +315,6 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                 }
                 if (slot == 53) {
                     // load TARDIS areas
-                    close(player);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISAreasInventory sst = new TARDISAreasInventory(plugin, player);
                         ItemStack[] items = sst.getTerminal();
