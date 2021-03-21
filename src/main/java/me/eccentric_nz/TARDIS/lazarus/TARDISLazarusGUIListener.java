@@ -201,7 +201,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                         } else {
                             TARDISLazarusDisguise.runImmortalityGate(player);
                         }
-                        plugin.getServer().broadcastMessage(plugin.getPluginName() + "The Master has cloned his genetic template to all players. Behold the Master Race!");
+                        plugin.getServer().broadcastMessage(plugin.getPluginName() + "The Master (aka " + player.getName() + ") has cloned his genetic template to all players. Behold the Master Race!");
                         plugin.getPM().callEvent(new TARDISGeneticManipulatorDisguiseEvent(player, player.getName()));
                         // schedule a delayed task to remove the disguise
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
