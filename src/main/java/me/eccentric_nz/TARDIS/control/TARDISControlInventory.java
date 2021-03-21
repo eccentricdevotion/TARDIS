@@ -64,11 +64,12 @@ public class TARDISControlInventory {
         String direction = "";
         String off = plugin.getLanguage().getString("SET_OFF");
         String on = plugin.getLanguage().getString("SET_ON");
+        boolean open = false;
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             siege_onoff = (tardis.isSiege_on()) ? on : off;
             lights_onoff = (tardis.isLights_on()) ? on : off;
-            boolean open = new TARDISBlackWoolToggler(plugin).isOpen(tardis.getTardis_id());
+            open = new TARDISBlackWoolToggler(plugin).isOpen(tardis.getTardis_id());
             toggle_openclosed = (open) ? plugin.getLanguage().getString("SET_OPEN") : plugin.getLanguage().getString("SET_CLOSED");
             power_onoff = (tardis.isPowered_on()) ? on : off;
             HashMap<String, Object> wheret = new HashMap<>();
@@ -154,7 +155,7 @@ public class TARDISControlInventory {
         gle.setDisplayName(plugin.getLanguage().getString("BUTTON_TOGGLE"));
         gle.setLore(Collections.singletonList(toggle_openclosed));
         int tcmd = GUIControlCentre.BUTTON_TOGGLE.getCustomModelData();
-        if (toggle_openclosed.equals(on)) {
+        if (!open) {
             tcmd += 100;
         }
         gle.setCustomModelData(tcmd);
@@ -265,14 +266,7 @@ public class TARDISControlInventory {
         can.setCustomModelData(GUIControlCentre.BUTTON_CLOSE.getCustomModelData());
         close.setItemMeta(can);
 
-        return new ItemStack[]{
-                ran, null, ars, null, cham, null, art, null, zero,
-                save, null, upg, null, siege, null, scan, null, player,
-                fast, null, pow, null, hide, null, info, null, companion,
-                area, null, lig, null, reb, null, tran, null, null,
-                ter, null, tog, null, dir, null, null, null, null,
-                null, null, map, null, temp, null, null, null, close
-        };
+        return new ItemStack[]{ran, null, ars, null, cham, null, art, null, zero, save, null, upg, null, siege, null, scan, null, player, fast, null, pow, null, hide, null, info, null, companion, area, null, lig, null, reb, null, tran, null, null, ter, null, tog, null, dir, null, null, null, null, null, null, map, null, temp, null, null, null, close};
     }
 
     public ItemStack[] getControls() {
