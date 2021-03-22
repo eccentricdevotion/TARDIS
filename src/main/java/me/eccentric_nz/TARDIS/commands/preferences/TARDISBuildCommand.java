@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 

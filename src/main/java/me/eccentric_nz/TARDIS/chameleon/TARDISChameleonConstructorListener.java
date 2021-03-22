@@ -22,11 +22,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -120,7 +120,6 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                             switch (slot) {
                                 case 0:
                                     // back
-                                    close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISChameleonInventory tci = new TARDISChameleonInventory(plugin, adapt, preset);
                                         ItemStack[] items = tci.getMenu();
@@ -131,7 +130,6 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     break;
                                 case 2:
                                     // help
-                                    close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISChameleonHelpGUI tci = new TARDISChameleonHelpGUI(plugin);
                                         ItemStack[] items = tci.getHelp();

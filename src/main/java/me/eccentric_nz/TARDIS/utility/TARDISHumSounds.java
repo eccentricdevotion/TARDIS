@@ -74,7 +74,7 @@ public class TARDISHumSounds {
         });
     };
 
-    private final Callback<HumPrefs> prefs = (HumPrefs pref) -> TARDISSounds.playTARDISSound(pref.getPlayer().getLocation(), pref.getHum());
+    private final Callback<HumPrefs> prefs = (HumPrefs pref) -> TARDISSounds.playTARDISSound(pref.getPlayer(), pref.getHum());
 
     /**
      * Plays an interior hum sound to players who are inside the TARDIS and don't have SFX set to false.

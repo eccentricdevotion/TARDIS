@@ -19,10 +19,10 @@ package me.eccentric_nz.TARDIS.chameleon;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -193,7 +193,6 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     break;
                                 case 14:
                                     // presets
-                                    close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
                                         ItemStack[] items = tpi.getPresets();
@@ -204,7 +203,6 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     break;
                                 case 15:
                                     // constructor GUI
-                                    close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
                                         ItemStack[] items = tci.getConstruct();

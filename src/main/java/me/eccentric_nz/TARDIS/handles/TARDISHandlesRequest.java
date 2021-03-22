@@ -375,7 +375,7 @@ public class TARDISHandlesRequest {
                         break;
                 }
                 if (key.equals("remind")) {
-                    TARDISSounds.playTARDISSound(player, "handles_confirmed");
+                    TARDISSounds.playTARDISSound(player, "handles_confirmed", 5L);
                 }
             } else {
                 // try custom-commands
@@ -418,7 +418,7 @@ public class TARDISHandlesRequest {
                             }
                         }
                     }
-                    TARDISSounds.playTARDISSound(player, "handles_confirmed");
+                    TARDISSounds.playTARDISSound(player, "handles_confirmed", 5L);
                 } else {
                     // don't understand
                     TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");

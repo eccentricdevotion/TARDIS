@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -243,7 +243,6 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     break;
                                 case 24:
                                     // go to page one (regular presets)
-                                    close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
                                         ItemStack[] items = tpi.getPresets();
@@ -254,7 +253,6 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                     break;
                                 case 25:
                                     // return to Chameleon Circuit GUI
-                                    close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
                                         Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");

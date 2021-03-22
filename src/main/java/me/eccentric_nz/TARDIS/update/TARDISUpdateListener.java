@@ -20,10 +20,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -283,12 +283,10 @@ public class TARDISUpdateListener implements Listener {
                     plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
                     // check if player has storage record, and update the tardis_id field
                     plugin.getUtils().updateStorageId(playerUUID, id);
-                    // check the block type
-                    if (!blockType.equals(Material.MUSHROOM_STEM)) {
-                        int bd = (updateable.equals(Updateable.ADVANCED)) ? 50 : 51;
-                        BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(bd));
-                        block.setBlockData(mushroom, true);
-                    }
+                    // always set the block type
+                    int bd = (updateable.equals(Updateable.ADVANCED)) ? 50 : 51;
+                    BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(bd));
+                    block.setBlockData(mushroom, true);
                     break;
                 case INFO:
                     plugin.getQueryFactory().insertControl(id, 13, blockLocStr, secondary ? 1 : 0);

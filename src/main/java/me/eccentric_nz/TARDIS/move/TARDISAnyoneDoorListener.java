@@ -74,7 +74,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
      */
     @EventHandler(ignoreCancelled = true)
     public void onDoorInteract(PlayerInteractEvent event) {
-        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+        if (event.getHand() == null) {
             return;
         }
         Block block = event.getClickedBlock();
@@ -107,6 +107,9 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                         event.setUseInteractedBlock(Event.Result.DENY);
                         event.setUseItemInHand(Event.Result.DENY);
                         event.setCancelled(true);
+                        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+                            return;
+                        }
                         int id = rsd.getTardis_id();
                         if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                             TARDISMessage.send(player, "NOT_WHILE_MAT");
@@ -262,6 +265,8 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                         new TARDISInnerDoorOpener(plugin, playerUUID, id).openDoor();
                                                     }
                                                 }
+                                            } else {
+                                                TARDISMessage.send(player, "SIEGE_COMPANION");
                                             }
                                         }
                                     } else if (Tag.TRAPDOORS.isTagged(blockType)) {
@@ -293,6 +298,10 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                             ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                             if (rs.resultSet()) {
                                 Tardis tardis = rs.getTardis();
+                                if (!tardis.isHandbrake_on()) {
+                                    TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
+                                    return;
+                                }
                                 int artron = tardis.getArtron_level();
                                 int required = plugin.getArtronConfig().getInt("backdoor");
                                 UUID tlUUID = tardis.getUuid();
@@ -479,6 +488,8 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             set.put("tardis_id", id);
                                             set.put("uuid", playerUUID.toString());
                                             plugin.getQueryFactory().doSyncInsert("travellers", set);
+                                        } else {
+                                            TARDISMessage.send(player, "SIEGE_COMPANION");
                                         }
                                         break;
                                     case 2:

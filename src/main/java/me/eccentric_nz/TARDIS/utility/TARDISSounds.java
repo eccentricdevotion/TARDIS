@@ -81,10 +81,21 @@ public class TARDISSounds {
      * @param s The sound to play
      */
     public static void playTARDISSound(Player p, String s) {
-        TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> p.playSound(p.getLocation(), s, VOLUME, 1.0f), 5L);
+        p.playSound(p.getLocation(), s, VOLUME, 1.0f);
     }
 
-    public static void setVolume(float VOLUME) {
-        TARDISSounds.VOLUME = VOLUME;
+    /**
+     * Plays a TARDIS sound for the specified player after a delay.
+     *
+     * @param p The player
+     * @param s The sound to play
+     * @param d The delay time
+     */
+    public static void playTARDISSound(Player p, String s, long d) {
+        TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> p.playSound(p.getLocation(), s, VOLUME, 1.0f), d);
+    }
+
+    public static void setVolume(float v) {
+        TARDISSounds.VOLUME = v;
     }
 }

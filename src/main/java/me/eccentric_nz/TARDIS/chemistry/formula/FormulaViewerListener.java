@@ -69,7 +69,6 @@ public class FormulaViewerListener implements Listener {
                         // is it a compound?
                         try {
                             Compound compound = Compound.valueOf(is.getItemMeta().getDisplayName().replace(" ", "_"));
-                            close(player);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new FormulaViewer(plugin, player).getCompoundFormula(compound), 2L);
                         } catch (IllegalArgumentException e) {
                             // don't know what it is

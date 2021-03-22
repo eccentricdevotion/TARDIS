@@ -94,7 +94,6 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
             }
             if (slot == 45) {
                 // back to editor
-                close(player);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     TARDISHandlesProgramInventory thi = new TARDISHandlesProgramInventory(plugin, 0);
                     ItemStack[] items = thi.getHandles();
@@ -109,7 +108,6 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                     ItemStack is = view.getItem(selectedSlot.get(uuid));
                     int pid = TARDISNumberParsers.parseInt(is.getItemMeta().getLore().get(1));
                     selectedSlot.put(uuid, null);
-                    close(player);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISHandlesProgramInventory thi = new TARDISHandlesProgramInventory(plugin, pid);
                         ItemStack[] items = thi.getHandles();

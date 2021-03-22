@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.companionGUI;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -116,7 +116,6 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
     }
 
     private void list(Player player) {
-        close(player);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
             if (rs.fromUUID(player.getUniqueId().toString())) {

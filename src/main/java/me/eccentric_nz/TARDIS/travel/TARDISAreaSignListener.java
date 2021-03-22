@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -90,10 +89,12 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
             }
             if (slot == 49) {
                 // load TARDIS saves
-                close(player);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                    if (rs.fromUUID(player.getUniqueId().toString())) {
+                    // get the TARDIS the player is in
+                    HashMap<String, Object> wheres = new HashMap<>();
+                    wheres.put("uuid", player.getUniqueId().toString());
+                    ResultSetTravellers rs = new ResultSetTravellers(plugin, wheres, false);
+                    if (rs.resultSet()) {
                         TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id(), player);
                         ItemStack[] items = sst.getTerminal();
                         Inventory saveinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");

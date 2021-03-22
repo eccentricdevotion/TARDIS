@@ -73,7 +73,6 @@ public class TARDISChameleonTemplateListener extends TARDISMenuListener implemen
                             switch (slot) {
                                 case 0:
                                     // back
-                                    close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISChameleonHelpGUI tci = new TARDISChameleonHelpGUI(plugin);
                                         ItemStack[] items = tci.getHelp();
@@ -84,7 +83,6 @@ public class TARDISChameleonTemplateListener extends TARDISMenuListener implemen
                                     break;
                                 case 8:
                                     // construct
-                                    close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
                                         ItemStack[] items = tci.getConstruct();

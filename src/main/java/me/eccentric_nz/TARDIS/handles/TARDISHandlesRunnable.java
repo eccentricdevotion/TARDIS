@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetReminders;
 import me.eccentric_nz.TARDIS.database.data.Reminder;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetReminders;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.entity.Player;

@@ -125,7 +125,6 @@ public class TARDISHandlesProgramListener implements Listener {
                     break;
                 case 43:
                     // go to saved disks
-                    close(player);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISHandlesSavedInventory thsi = new TARDISHandlesSavedInventory(plugin, uuid.toString());
                         ItemStack[] items = thsi.getPrograms();
