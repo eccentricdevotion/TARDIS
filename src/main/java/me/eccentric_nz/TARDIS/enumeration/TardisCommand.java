@@ -59,6 +59,8 @@ public enum TardisCommand {
     rebuild,
     remove,
     removesave,
+    renamesave,
+    reordersave,
     rescue,
     room,
     save,

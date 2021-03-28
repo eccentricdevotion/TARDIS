@@ -523,6 +523,16 @@ commands:
       usage: /<command> removesave [name]
       permission: tardis.save
       permission-message: You don't have the permission <permission> to use this command
+    renamesave:
+      description: Rename a saved destination.
+      usage: /<command> renamesave [old name] [new name]
+      permission: tardis.save
+      permission-message: You don't have the permission <permission> to use this command
+    reordersave:
+      description: Reorder a saved destination in the TARDIS Saves GUI.
+      usage: /<command> reordersave [name] [slot number]
+      permission: tardis.save
+      permission-message: You don't have the permission <permission> to use this command
     home:
       description: Save a time travel location as home.
       usage: /<command> home

@@ -167,6 +167,8 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISListCommand(plugin).doList(player, args);
                 case make_her_blue:
                     return new TARDISMakeHerBlueCommand(plugin).show(player);
+                case reordersave:
+                    return new TARDISReorderSavedLocationCommand(plugin).doReorderSave(player, args);
                 case namekey:
                     return new TARDISNameKeyCommand(plugin).nameKey(player, args);
                 case occupy:
@@ -177,6 +179,8 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISRemoveCompanionCommand(plugin).doRemoveCompanion(player, args);
                 case removesave:
                     return new TARDISRemoveSavedLocationCommand(plugin).doRemoveSave(player, args);
+                case renamesave:
+                    return new TARDISRenameSavedLocationCommand(plugin).doRenameSave(player, args);
                 case rescue:
                     return new TARDISRescueCommand(plugin).startRescue(player, args);
                 case room:

@@ -273,7 +273,6 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                         // get id of TARDIS player is in
                         ownId = TARDISInteriorPostioning.getTARDISIdFromLocation(player.getLocation());
                     }
-                    plugin.debug("ownId: " + ownId);
                     if (ownId != -1) {
                         int saveId = ownId;
                         // load own/tardis saves
@@ -331,6 +330,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
     public void onSaveSignClose(InventoryCloseEvent event) {
         String inv_name = event.getView().getTitle();
         if (inv_name.startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
+            boolean isPageTwo = inv_name.equals(ChatColor.DARK_RED + "TARDIS saves 2");
             UUID uuid = event.getPlayer().getUniqueId();
             // get the TARDIS the player is in
             HashMap<String, Object> wheres = new HashMap<>();
@@ -339,12 +339,14 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
                 ItemStack[] stack = event.getInventory().getContents();
-                for (int i = 1; i < 45; i++) {
+                int start = (isPageTwo) ? 0 : 1;
+                for (int i = start; i < 45; i++) {
                     if (stack[i] != null) {
                         ItemMeta im = stack[i].getItemMeta();
                         String save = im.getDisplayName();
                         HashMap<String, Object> set = new HashMap<>();
-                        set.put("slot", i);
+                        int slot = (isPageTwo) ? 45 + i : i;
+                        set.put("slot", slot);
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("tardis_id", id);
                         where.put("dest_name", save);
