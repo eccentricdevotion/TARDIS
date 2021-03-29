@@ -347,6 +347,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                         HashMap<String, Object> set = new HashMap<>();
                         int slot = (isPageTwo) ? 45 + i : i;
                         set.put("slot", slot);
+                        set.put("icon", stack[i].getType().toString());
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("tardis_id", id);
                         where.put("dest_name", save);

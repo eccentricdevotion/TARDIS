@@ -533,6 +533,11 @@ commands:
       usage: /<command> reordersave [name] [slot number]
       permission: tardis.save
       permission-message: You don't have the permission <permission> to use this command
+    saveicon:
+      description: Change a saved destinations icon in the TARDIS Saves GUI.
+      usage: /<command> saveicon [save] [material]
+      permission: tardis.save
+      permission-message: You don't have the permission <permission> to use this command
     home:
       description: Save a time travel location as home.
       usage: /<command> home

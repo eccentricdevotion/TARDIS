@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -50,6 +51,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> UPD_SUBS = new ArrayList<>();
     private final List<String> SEC_SUBS = new ArrayList<>();
     private final List<String> RECHARGER_SUBS;
+    private final List<String> MAT_SUBS = new ArrayList<>();
     private final List<String> PRESET_SUBS = new ArrayList<>();
 
     public TARDISTabComplete(TARDIS plugin) {
@@ -68,6 +70,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             }
         }
         SEC_SUBS.add("remove");
+        TARDISWalls.BLOCKS.forEach((m) -> MAT_SUBS.add(m.toString()));
     }
 
     @Override
@@ -123,6 +126,9 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             }
             if (args[0].equals("update")) {
                 return partial(lastArg, EXTRA_SUBS);
+            }
+            if (args[0].equals("saveicon")) {
+                return partial(lastArg, MAT_SUBS);
             }
         } else if (args.length == 4) {
             String sub = args[1].toLowerCase();

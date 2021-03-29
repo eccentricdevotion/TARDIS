@@ -199,3 +199,4 @@ conversions:
   constructs: true
   controls: true
   bind: true
+  icons: true

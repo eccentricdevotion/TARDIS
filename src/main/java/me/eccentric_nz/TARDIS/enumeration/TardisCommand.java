@@ -64,6 +64,7 @@ public enum TardisCommand {
     rescue,
     room,
     save,
+    saveicon,
     save_player,
     secondary,
     section,

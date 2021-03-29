@@ -80,7 +80,17 @@ public class TARDISSaveSignPageTwo {
                     }
                     slots.remove(Integer.valueOf(slot));
                     if (slot > 44) {
-                        ItemStack is = new ItemStack(TARDISConstants.GUI_IDS.get(i), 1);
+                        Material material;
+                        if (map.get("icon").isEmpty()) {
+                            material = TARDISConstants.GUI_IDS.get(i);
+                        } else {
+                            try {
+                                material = Material.valueOf(map.get("icon"));
+                            } catch (IllegalArgumentException e) {
+                                material = TARDISConstants.GUI_IDS.get(i);
+                            }
+                        }
+                        ItemStack is = new ItemStack(material, 1);
                         ItemMeta im = is.getItemMeta();
                         im.setDisplayName(map.get("dest_name"));
                         List<String> lore = new ArrayList<>();
