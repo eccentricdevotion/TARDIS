@@ -349,6 +349,10 @@ public class TARDIS extends JavaPlugin {
                 new TARDISBindConverter(this).update();
                 getConfig().set("conversions.bind", true);
             }
+            if (!getConfig().getBoolean("conversions.icons")) {
+                new TARDISSaveIconUpdate(this).addIcons();
+                getConfig().set("conversions.icons", true);
+            }
             if (!getConfig().getBoolean("conversions.archive_wall_data")) {
                 new TARDISWallConverter(this).processArchives();
                 getConfig().set("conversions.archive_wall_data", true);

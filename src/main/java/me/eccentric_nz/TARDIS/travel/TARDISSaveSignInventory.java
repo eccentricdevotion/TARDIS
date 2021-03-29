@@ -41,7 +41,7 @@ public class TARDISSaveSignInventory {
 
     private final TARDIS plugin;
     private final ItemStack[] terminal;
-    private final List<Integer> slots = new LinkedList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44));
+    private final List<Integer> slots = new LinkedList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90));
     private final int id;
     private final Player player;
 
@@ -88,15 +88,37 @@ public class TARDISSaveSignInventory {
         HashMap<String, Object> did = new HashMap<>();
         did.put("tardis_id", id);
         ResultSetDestinations rsd = new ResultSetDestinations(plugin, did, true);
+        boolean hasSecondPage = false;
         int i = 1;
-        ArrayList<HashMap<String, String>> data = null;
+        int highest = -1;
+        ArrayList<HashMap<String, String>> data;
         if (rsd.resultSet()) {
             data = rsd.getData();
             // cycle through saves
             for (HashMap<String, String> map : data) {
                 if (map.get("type").equals("0")) {
-                    if (i < 45) {
-                        ItemStack is = new ItemStack(TARDISConstants.GUI_IDS.get(i), 1);
+                    int slot;
+                    if (!map.get("slot").equals("-1")) {
+                        slot = TARDISNumberParsers.parseInt(map.get("slot"));
+                        if (slot > highest) {
+                            highest = slot;
+                        }
+                    } else {
+                        slot = slots.get(0);
+                    }
+                    slots.remove(Integer.valueOf(slot));
+                    if (slot < 45) {
+                        Material material;
+                        if (map.get("icon").isEmpty()) {
+                            material = TARDISConstants.GUI_IDS.get(i);
+                        } else {
+                            try {
+                                material = Material.valueOf(map.get("icon"));
+                            } catch (IllegalArgumentException e) {
+                                material = TARDISConstants.GUI_IDS.get(i);
+                            }
+                        }
+                        ItemStack is = new ItemStack(material, 1);
                         ItemMeta im = is.getItemMeta();
                         im.setDisplayName(map.get("dest_name"));
                         List<String> lore = new ArrayList<>();
@@ -111,21 +133,12 @@ public class TARDISSaveSignInventory {
                         }
                         im.setLore(lore);
                         is.setItemMeta(im);
-                        int slot;
-                        if (!map.get("slot").equals("-1")) {
-                            slot = TARDISNumberParsers.parseInt(map.get("slot"));
-                        } else {
-                            slot = slots.get(0);
-                        }
                         dests.put(slot, is);
-                        slots.remove(Integer.valueOf(slot));
                         i++;
-                    } else {
-                        break;
                     }
                 }
             }
-
+            hasSecondPage = (data != null && data.size() > 44) || highest > 44;
             for (int s = 1; s < 45; s++) {
                 stack[s] = dests.getOrDefault(s, null);
             }
@@ -143,7 +156,7 @@ public class TARDISSaveSignInventory {
         delete.setCustomModelData(GUISaves.DELETE_SAVE.getCustomModelData());
         bucket.setItemMeta(delete);
         ItemStack next = null;
-        if (data != null && data.size() > 44) {
+        if (hasSecondPage) {
             // add button to go to next page
             next = new ItemStack(GUISaves.GO_TO_PAGE_2.getMaterial(), 1);
             ItemMeta page = next.getItemMeta();

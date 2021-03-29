@@ -177,6 +177,10 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISRemoveCompanionCommand(plugin).doRemoveCompanion(player, args);
                 case removesave:
                     return new TARDISRemoveSavedLocationCommand(plugin).doRemoveSave(player, args);
+                case renamesave:
+                    return new TARDISRenameSavedLocationCommand(plugin).doRenameSave(player, args);
+                case reordersave:
+                    return new TARDISReorderSavedLocationCommand(plugin).doReorderSave(player, args);
                 case rescue:
                     return new TARDISRescueCommand(plugin).startRescue(player, args);
                 case room:
@@ -219,6 +223,8 @@ public class TARDISCommands implements CommandExecutor {
                             return new TARDISSaveLocationCommand(plugin).doSave(player, args);
                         }
                     }
+                case saveicon:
+                    return new TARDISSaveIconCommand(plugin).changeIcon(player, args);
             }
         }
         // If the above has happened the function will break and return true. If this hasn't happened then value of false will be returned.

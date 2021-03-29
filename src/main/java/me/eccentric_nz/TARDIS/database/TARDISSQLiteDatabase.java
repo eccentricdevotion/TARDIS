@@ -109,7 +109,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryCurrents);
 
             // Table structure for table 'destinations'
-            String queryDestinations = "CREATE TABLE IF NOT EXISTS " + prefix + "destinations (dest_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, dest_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, direction TEXT DEFAULT '', preset TEXT DEFAULT '', bind TEXT DEFAULT '', type INTEGER DEFAULT 0, submarine INTEGER DEFAULT 0, slot INTEGER DEFAULT '-1')";
+            String queryDestinations = "CREATE TABLE IF NOT EXISTS " + prefix + "destinations (dest_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, dest_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, direction TEXT DEFAULT '', preset TEXT DEFAULT '', bind TEXT DEFAULT '', type INTEGER DEFAULT 0, submarine INTEGER DEFAULT 0, slot INTEGER DEFAULT '-1', icon TEXT DEFAULT '')";
             statement.executeUpdate(queryDestinations);
 
             // Table structure for table 'dispersed'
