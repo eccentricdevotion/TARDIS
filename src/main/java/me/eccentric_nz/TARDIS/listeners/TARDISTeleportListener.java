@@ -56,9 +56,10 @@ public class TARDISTeleportListener implements Listener {
             String world_from = event.getFrom().getWorld().getName();
             String world_to = event.getTo().getWorld().getName();
             Player p = event.getPlayer();
+            String uuid = p.getUniqueId().toString();
             if (world_from.contains("TARDIS") && !world_to.contains("TARDIS")) {
                 HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", p.getUniqueId().toString());
+                where.put("uuid", uuid);
                 plugin.getQueryFactory().doDelete("travellers", where);
                 if (!cause.equals(TeleportCause.PLUGIN)) {
                     TARDISMessage.send(p, "OCCUPY_AUTO");
@@ -70,7 +71,7 @@ public class TARDISTeleportListener implements Listener {
                 // if TIPS determine tardis_id from player location
                 if (plugin.getConfig().getBoolean("creation.default_world")) {
                     if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && p.hasPermission("tardis.create_world")) {
-                        if (!rsid.fromUUID(p.getUniqueId().toString())) {
+                        if (!rsid.fromUUID(uuid)) {
                             return;
                         }
                     } else {
@@ -79,14 +80,19 @@ public class TARDISTeleportListener implements Listener {
                             return;
                         }
                     }
-                } else if (!rsid.fromUUID(p.getUniqueId().toString())) {
+                } else if (!rsid.fromUUID(uuid)) {
                     return;
                 }
-                int id = rsid.getTardis_id();
-                HashMap<String, Object> wherei = new HashMap<>();
-                wherei.put("tardis_id", id);
-                wherei.put("uuid", p.getUniqueId().toString());
-                plugin.getQueryFactory().doInsert("travellers", wherei);
+                // remove potential existing records from travellers first
+                HashMap<String, Object> wherer = new HashMap<>();
+                wherer.put("uuid", uuid);
+                plugin.getQueryFactory().doDelete("travellers", wherer);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    HashMap<String, Object> wherei = new HashMap<>();
+                    wherei.put("tardis_id", rsid.getTardis_id());
+                    wherei.put("uuid", uuid);
+                    plugin.getQueryFactory().doInsert("travellers", wherei);
+                }, 2L);
             }
         }
     }
