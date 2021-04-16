@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import me.eccentric_nz.tardischunkgenerator.TARDISPlanetData;
+import me.eccentric_nz.tardischunkgenerator.dimensions.TARDISPlanetData;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 
