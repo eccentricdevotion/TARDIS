@@ -1,73 +1,26 @@
 {
+    "surface_builder": "minecraft:eroded_badlands",
+    "depth": 0.1,
     "scale": 0.2,
+    "temperature": 2,
+    "downfall": 0,
+    "precipitation": "none",
+    "category": "mesa",
+    "player_spawn_friendly": false,
     "effects": {
-        "mood_sound": {
-            "sound": "minecraft:ambient.cave",
-            "tick_delay": 6000,
-            "block_search_extent": 8,
-            "offset": 2.0
-        },
         "sky_color": 16763002,
         "fog_color": 16771522,
         "water_color": 4184548,
         "water_fog_color": 340786,
         "grass_color": 16714324,
-        "foliage_color": 16309733
+        "foliage_color": 16309733,
+        "mood_sound": {
+            "sound": "minecraft:ambient.cave",
+            "tick_delay": 6000,
+            "block_search_extent": 8,
+            "offset": 2
+        }
     },
-    "surface_builder": "minecraft:eroded_badlands",
-    "carvers": {
-        "air": [
-            "minecraft:cave",
-            "minecraft:canyon"
-        ]
-    },
-    "features": [
-        [],
-        [
-            "minecraft:lake_water",
-            "minecraft:lake_lava"
-        ],
-        [],
-        [
-            "minecraft:monster_room"
-        ],
-        [],
-        [],
-        [
-            "minecraft:ore_dirt",
-            "minecraft:ore_gravel",
-            "minecraft:ore_granite",
-            "minecraft:ore_diorite",
-            "minecraft:ore_andesite",
-            "minecraft:ore_coal",
-            "minecraft:ore_iron",
-            "minecraft:ore_gold",
-            "minecraft:ore_redstone",
-            "minecraft:ore_diamond",
-            "minecraft:ore_lapis",
-            "minecraft:ore_gold_extra",
-            "minecraft:disk_sand",
-            "minecraft:disk_clay",
-            "minecraft:disk_gravel"
-        ],
-        [],
-        [
-            "tardis:gallifrey_grass",
-            "tardis:gallifrey_tree",
-            "minecraft:patch_grass_badlands",
-            "minecraft:patch_dead_bush_badlands",
-            "minecraft:brown_mushroom_normal",
-            "minecraft:red_mushroom_normal",
-            "minecraft:patch_sugar_cane_badlands",
-            "minecraft:patch_pumpkin",
-            "minecraft:patch_cactus_decorated",
-            "minecraft:spring_water",
-            "minecraft:spring_lava"
-        ],
-        [
-            "minecraft:freeze_top_layer"
-        ]
-    ],
     "starts": [
         "minecraft:mineshaft_mesa",
         "minecraft:stronghold",
@@ -138,10 +91,57 @@
         "misc": []
     },
     "spawn_costs": {},
-    "player_spawn_friendly": false,
-    "precipitation": "none",
-    "temperature": 2.0,
-    "downfall": 0.0,
-    "category": "mesa",
-    "depth": 0.1
+    "carvers": {
+        "air": [
+            "minecraft:cave",
+            "minecraft:canyon"
+        ]
+    },
+    "features": [
+        [],
+        [
+            "minecraft:lake_water",
+            "minecraft:lake_lava"
+        ],
+        [],
+        [
+            "minecraft:monster_room"
+        ],
+        [],
+        [],
+        [
+            "minecraft:ore_dirt",
+            "minecraft:ore_gravel",
+            "minecraft:ore_granite",
+            "minecraft:ore_diorite",
+            "minecraft:ore_andesite",
+            "minecraft:ore_coal",
+            "minecraft:ore_iron",
+            "minecraft:ore_gold",
+            "minecraft:ore_redstone",
+            "minecraft:ore_diamond",
+            "minecraft:ore_lapis",
+            "minecraft:ore_gold_extra",
+            "minecraft:disk_sand",
+            "minecraft:disk_clay",
+            "minecraft:disk_gravel"
+        ],
+        [],
+        [
+            "tardis:gallifrey_grass",
+            "tardis:gallifrey_tree",
+            "minecraft:patch_grass_badlands",
+            "minecraft:patch_dead_bush_badlands",
+            "minecraft:brown_mushroom_normal",
+            "minecraft:red_mushroom_normal",
+            "minecraft:patch_sugar_cane_badlands",
+            "minecraft:patch_pumpkin",
+            "minecraft:patch_cactus_decorated",
+            "minecraft:spring_water",
+            "minecraft:spring_lava"
+        ],
+        [
+            "minecraft:freeze_top_layer"
+        ]
+    ]
 }

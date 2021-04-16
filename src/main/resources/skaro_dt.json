@@ -1,4 +1,5 @@
 {
+    "name": "tardis:skaro",
     "ultrawarm": false,
     "natural": true,
     "piglin_safe": false,
@@ -12,4 +13,3 @@
     "logical_height": 256,
     "infiniburn": "minecraft:infiniburn_overworld"
 }
-
