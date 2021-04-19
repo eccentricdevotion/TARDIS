@@ -17,7 +17,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
@@ -26,7 +26,7 @@
     <orderEntry type="library" name="Maven: net.md-5:bungeecord-chat:1.16-R0.4" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.27" level="project" />
     <orderEntry type="library" name="Maven: io.papermc:paperlib:1.0.6" level="project" />
-    <orderEntry type="library" name="Maven: me.eccentric_nz.tardischunkgenerator:TARDISChunkGenerator:4.5.6" level="project" />
+    <orderEntry type="library" name="Maven: me.eccentric_nz.tardischunkgenerator:TARDISChunkGenerator:4.6.0" level="project" />
     <orderEntry type="library" name="Maven: me.eccentric_nz.tardisweepingangels:TARDISWeepingAngels:3.3.3" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: com.sk89q:worldguard:7.0.5">
@@ -182,7 +182,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: LibsDisguises:LibsDisguises:10.0.21">
+      <library name="Maven: LibsDisguises:LibsDisguises:10.0.24">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/LibsDisguises.jar!/" />
         </CLASSES>

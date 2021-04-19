@@ -1,6 +1,17 @@
 {
+    "type": "minecraft:decorated",
     "config": {
+        "decorator": {
+            "type": "minecraft:count_multilayer",
+            "config": {
+                "count": {
+                    "base": -4,
+                    "spread": 6
+                }
+            }
+        },
         "feature": {
+            "type": "minecraft:huge_fungus",
             "config": {
                 "hat_state": {
                     "Name": "minecraft:slime_block"
@@ -8,28 +19,17 @@
                 "decor_state": {
                     "Name": "minecraft:honey_block"
                 },
-                "planted": false,
+                "stem_state": {
+                    "Name": "minecraft:stripped_acacia_wood",
+                    "Properties": {
+                        "axis": "y"
+                    }
+                },
                 "valid_base_block": {
                     "Name": "minecraft:sand"
                 },
-                "stem_state": {
-                    "Properties": {
-                        "axis": "y"
-                    },
-                    "Name": "minecraft:stripped_acacia_wood"
-                }
-            },
-            "type": "minecraft:huge_fungus"
-        },
-        "decorator": {
-            "config": {
-                "count": {
-                    "base": -4,
-                    "spread": 6
-                }
-            },
-            "type": "minecraft:count_multilayer"
+                "planted": false
+            }
         }
-    },
-    "type": "minecraft:decorated"
+    }
 }

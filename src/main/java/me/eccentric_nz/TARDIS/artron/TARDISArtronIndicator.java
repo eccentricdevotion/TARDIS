@@ -52,7 +52,7 @@ public class TARDISArtronIndicator {
                 isFiltered = true;
             }
         }
-        Scoreboard currentScoreboard = (p.getScoreboard().getObjective("TARDIS") != null) ? manager.getMainScoreboard() : p.getScoreboard();
+        Scoreboard currentScoreboard = p.getScoreboard();
         // get Artron level
         ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
         if (rs.fromID(id)) {
@@ -84,8 +84,10 @@ public class TARDISArtronIndicator {
                 percentage.setScore(percent);
                 p.setScoreboard(board);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    if (p.isOnline()) {
-                        p.setScoreboard(currentScoreboard);
+                    if (p.isOnline() && p.isValid()) {
+                        if (manager != null) {
+                            p.setScoreboard(currentScoreboard);
+                        }
                     }
                 }, 150L);
             } else if (used > 0) {

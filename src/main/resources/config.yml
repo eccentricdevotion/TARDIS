@@ -200,3 +200,4 @@ conversions:
   controls: true
   bind: true
   icons: true
+  datapacks: true

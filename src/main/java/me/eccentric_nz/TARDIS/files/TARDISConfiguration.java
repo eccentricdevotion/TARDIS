@@ -86,6 +86,7 @@ public class TARDISConfiguration {
         booleanOptions.put("conversions.controls", false);
         booleanOptions.put("conversions.bind", false);
         booleanOptions.put("conversions.icons", false);
+        booleanOptions.put("conversions.datapacks", false);
         booleanOptions.put("conversions.custom_preset", false);
         booleanOptions.put("creation.add_perms", true);
         booleanOptions.put("creation.create_worlds_with_perms", false);

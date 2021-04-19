@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import me.eccentric_nz.tardischunkgenerator.TARDISPlanetData;
+import me.eccentric_nz.tardischunkgenerator.dimensions.TARDISPlanetData;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -79,7 +79,7 @@ public class TARDISWorlds {
             if (!plugin.getPlanetsConfig().contains("planets." + worldname) && !worldname.equals(defWorld)) {
                 TARDISPlanetData data = plugin.getTardisHelper().getLevelData(w.getName());
                 plugin.getPlanetsConfig().set("planets." + worldname + ".enabled", false);
-                plugin.getPlanetsConfig().set("planets." + worldname + ".time_travel", true);
+                plugin.getPlanetsConfig().set("planets." + worldname + ".time_travel", !isTARDISDatapackWorld(worldname));
                 plugin.getPlanetsConfig().set("planets." + worldname + ".resource_pack", "default");
                 plugin.getPlanetsConfig().set("planets." + worldname + ".gamemode", data.getGameMode().toString());
                 plugin.getPlanetsConfig().set("planets." + worldname + ".world_type", data.getWorldType().toString());
@@ -178,5 +178,9 @@ public class TARDISWorlds {
             }
         }
         return false;
+    }
+
+    private boolean isTARDISDatapackWorld(String p) {
+        return (p.endsWith("tardis_gallifrey") || p.endsWith("tardis_siluria") || p.endsWith("tardis_skaro"));
     }
 }

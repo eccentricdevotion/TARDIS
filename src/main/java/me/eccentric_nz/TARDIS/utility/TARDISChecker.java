@@ -143,6 +143,52 @@ public class TARDISChecker {
         return exists;
     }
 
+    public static void updateDimension(String dimension) {
+        File container = TARDIS.plugin.getServer().getWorldContainer();
+        String s_world = TARDIS.plugin.getServer().getWorlds().get(0).getName();
+        String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator;
+        // check if directories exist
+        String dimensionRoot = dataPacksRoot + dimension + File.separator + "data" + File.separator + "tardis" + File.separator;
+        File dimensionDir = new File(dimensionRoot + "dimension");
+        if (dimensionDir.exists()) {
+            File dimensionTypeDir = new File(dimensionRoot + "dimension_type");
+            File biomeDir = new File(dimensionRoot + "worldgen" + File.separator + "biome");
+            File featureDir = new File(dimensionRoot + "worldgen" + File.separator + "configured_feature");
+            // overwrite files
+            File dimFile = new File(dimensionDir, dimension + ".json");
+            TARDISChecker.copy(dimension + "_d.json", dimFile);
+            File dimTypeFile = new File(dimensionTypeDir, dimension + ".json");
+            TARDISChecker.copy(dimension + "_dt.json", dimTypeFile);
+            switch (dimension) {
+                case "skaro":
+                    File tree = new File(featureDir, "skaro_tree.json");
+                    File desert = new File(biomeDir, "skaro_desert.json");
+                    File hills = new File(biomeDir, "skaro_hills.json");
+                    File lakes = new File(biomeDir, "skaro_lakes.json");
+                    TARDISChecker.copy("skaro_tree.json", tree);
+                    TARDISChecker.copy("skaro_desert.json", desert);
+                    TARDISChecker.copy("skaro_hills.json", hills);
+                    TARDISChecker.copy("skaro_lakes.json", lakes);
+                    break;
+                case "gallifrey":
+                    File plant = new File(featureDir, "gallifrey_tree.json");
+                    File grass = new File(featureDir, "gallifrey_grass.json");
+                    File badlands = new File(biomeDir, "gallifrey_badlands.json");
+                    File plateau = new File(biomeDir, "gallifrey_plateau.json");
+                    File eroded = new File(biomeDir, "gallifrey_eroded.json");
+                    TARDISChecker.copy("gallifrey_tree.json", plant);
+                    TARDISChecker.copy("gallifrey_grass.json", grass);
+                    TARDISChecker.copy("gallifrey_badlands.json", badlands);
+                    TARDISChecker.copy("gallifrey_plateau.json", plateau);
+                    TARDISChecker.copy("gallifrey_eroded.json", eroded);
+                    break;
+                default:
+                    // nothing to do
+                    break;
+            }
+        }
+    }
+
     public static void copy(String filename, File file) {
         InputStream in = null;
         try {
@@ -155,7 +201,7 @@ public class TARDISChecker {
                     out.write(buf, 0, len);
                 }
             } catch (IOException io) {
-                System.err.println("[TARDIS] Checker: Could not save the file (" + file.toString() + ").");
+                System.err.println("[TARDIS] Checker: Could not save the file (" + file + ").");
             } finally {
                 try {
                     out.close();

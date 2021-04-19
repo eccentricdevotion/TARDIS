@@ -177,7 +177,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("MultiInv", "3.3.6");
         versions.put("My_Worlds", "1.16.1");
         versions.put("PerWorldInventory", "2.3.0");
-        versions.put("TARDISChunkGenerator", "4.5.6");
+        versions.put("TARDISChunkGenerator", "4.6.0");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.0");
@@ -273,7 +273,7 @@ public class TARDIS extends JavaPlugin {
             getServer().getScheduler().cancelTasks(this);
             debug("Cancelling all scheduled tasks");
             resetTime();
-            debug("Reseting player time(s)");
+            debug("Resetting player time(s)");
             closeDatabase();
             debug("Closing database");
             debug("TARDIS disabled successfully!");
@@ -327,35 +327,53 @@ public class TARDIS extends JavaPlugin {
             prefix = getConfig().getString("storage.mysql.prefix");
             loadDatabase();
             queryFactory = new QueryFactory(this);
+            int conversions = 0;
             // update world names
             if (!getConfig().getBoolean("conversions.lowercase_world_names")) {
                 new TARDISWorldNameUpdate(this).replaceNames();
                 getConfig().set("conversions.lowercase_world_names", true);
+                conversions++;
             }
             // update database materials
             if (!getConfig().getBoolean("conversions.ars_materials")) {
                 new ARSConverter(this).convertARS();
                 getConfig().set("conversions.ars_materials", true);
+                conversions++;
             }
             if (!getConfig().getBoolean("conversions.constructs")) {
                 new ConstructsConverter(this).convertConstructs();
                 getConfig().set("conversions.constructs", true);
+                conversions++;
             }
             if (!getConfig().getBoolean("conversions.controls")) {
                 new TARDISControlsConverter(this).update();
                 getConfig().set("conversions.controls", true);
+                conversions++;
             }
             if (!getConfig().getBoolean("conversions.bind")) {
                 new TARDISBindConverter(this).update();
                 getConfig().set("conversions.bind", true);
+                conversions++;
             }
             if (!getConfig().getBoolean("conversions.icons")) {
                 new TARDISSaveIconUpdate(this).addIcons();
                 getConfig().set("conversions.icons", true);
+                conversions++;
+            }
+            if (!getConfig().getBoolean("conversions.datapacks")) {
+                TARDISChecker.updateDimension("gallifrey");
+                TARDISChecker.updateDimension("siluria");
+                TARDISChecker.updateDimension("skaro");
+                getConfig().set("conversions.datapacks", true);
+                conversions++;
             }
             if (!getConfig().getBoolean("conversions.archive_wall_data")) {
                 new TARDISWallConverter(this).processArchives();
                 getConfig().set("conversions.archive_wall_data", true);
+                conversions++;
+            }
+            if (conversions > 0) {
+                saveConfig();
             }
             loadMultiverse();
             loadInventoryManager();
