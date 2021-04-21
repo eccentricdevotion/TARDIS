@@ -44,11 +44,11 @@ class TARDISBuildGallifreyanStructure implements Runnable {
 
     private final TARDIS plugin;
     private final int startx, y, startz;
+    private final HashMap<Block, BlockData> postLadderBlocks = new HashMap<>();
+    private boolean running = false;
     private int task, starty, h, w, d, level = 0, row = 0;
-    boolean running = false;
     private JsonObject obj;
     private JsonArray arr;
-    private final HashMap<Block, BlockData> postLadderBlocks = new HashMap<>();
     private World world;
     private Block chest;
     private Material type;
@@ -62,7 +62,7 @@ class TARDISBuildGallifreyanStructure implements Runnable {
      * @param y      the start coordinate on the y-axis
      * @param startz the start coordinate on the z-axis
      */
-    public TARDISBuildGallifreyanStructure(TARDIS plugin, int startx, int y, int startz) {
+    TARDISBuildGallifreyanStructure(TARDIS plugin, int startx, int y, int startz) {
         this.plugin = plugin;
         this.startx = startx;
         this.y = y;
@@ -80,7 +80,9 @@ class TARDISBuildGallifreyanStructure implements Runnable {
                 task = -1;
                 return;
             }
-            world = plugin.getServer().getWorld("Gallifrey");
+            // get default server world
+            String s_world = plugin.getServer().getWorlds().get(0).getName();
+            world = plugin.getServer().getWorld(s_world + "_tardis_gallifrey");
             // get JSON
             obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
@@ -90,7 +92,6 @@ class TARDISBuildGallifreyanStructure implements Runnable {
             d = dimensions.get("length").getAsInt() - 1;
             // submerge the structure
             starty = y - 5;
-//            plugin.debug("Building Gallifreyan structure @ " + startx + ", " + starty + ", " + startz);
             // get input array
             arr = obj.get("input").getAsJsonArray();
             running = true;

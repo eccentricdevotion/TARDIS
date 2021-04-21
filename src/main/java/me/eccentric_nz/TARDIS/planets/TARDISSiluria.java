@@ -34,18 +34,21 @@ public class TARDISSiluria {
     }
 
     public World loadSilurianUnderworld() {
-        if (TARDISChecker.hasDimension("siluria")) {
-            return plugin.getTardisHelper().loadTARDISDimension("siluria");
-        } else {
+        String s_world = plugin.getServer().getWorlds().get(0).getName();
+        // copy datapack files
+        if (!TARDISChecker.hasDimension("siluria")) {
             plugin.getServer().reloadData();
             // message console to restart server
             TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Siluria data pack has been installed, please restart the server to enable the world.");
+            // get default server world
             // add world to config
-            if (!plugin.getPlanetsConfig().getBoolean("planets.Siluria.time_travel")) {
-                plugin.getPlanetsConfig().set("planets.Siluria.time_travel", true);
+            if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.time_travel")) {
+                plugin.getPlanetsConfig().set("planets." + s_world + "_tardis_siluria.time_travel", true);
                 plugin.savePlanetsConfig();
             }
             return null;
+        } else {
+            return plugin.getServer().getWorld(s_world + "_tardis_siluriao");
         }
     }
 }

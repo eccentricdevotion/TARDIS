@@ -51,10 +51,10 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
     public void gallifreyOnChunkPopulate(ChunkPopulateEvent event) {
         Chunk chunk = event.getChunk();
         // check world
-        if (!chunk.getWorld().getName().equalsIgnoreCase("Gallifrey")) {
+        if (!chunk.getWorld().getName().endsWith("gallifrey")) {
             return;
         }
-        ChunkInfo chunkInfo = new ChunkInfo("Gallifrey", chunk.getX(), chunk.getZ());
+        ChunkInfo chunkInfo = new ChunkInfo(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
         if (chunks.contains(chunkInfo)) {
             return;
         }

@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import me.eccentric_nz.tardischunkgenerator.dimensions.TARDISPlanetData;
+import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -105,6 +105,8 @@ public class TARDISWorlds {
             plugin.getConfig().set("conversions.level_names", null);
             plugin.saveConfig();
         }
+        // get default server world
+        String s_world = plugin.getServer().getWorlds().get(0).getName();
         // now load TARDIS worlds / remove worlds that may have been deleted
         Set<String> cWorlds = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         cWorlds.forEach((cw) -> {
@@ -116,30 +118,30 @@ public class TARDISWorlds {
             } else if (TARDISConstants.PLANETS.contains(cw)) {
                 if (plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
                     // create world
-                    if (cw.equalsIgnoreCase("Skaro")) {
+                    if (cw.equalsIgnoreCase(s_world + "_tardis_skaro")) {
                         World skaro = new TARDISSkaro(plugin).loadDalekWorld();
                         if (skaro != null) {
-                            for (String rule : plugin.getPlanetsConfig().getConfigurationSection("planets.Skaro.gamerules").getKeys(false)) {
+                            for (String rule : plugin.getPlanetsConfig().getConfigurationSection("planets." + s_world + "_tardis_skaro.gamerules").getKeys(false)) {
                                 GameRule gameRule = GameRule.getByName(rule);
-                                skaro.setGameRule(gameRule, plugin.getPlanetsConfig().getBoolean("planets.Skaro.gamerules." + rule));
+                                skaro.setGameRule(gameRule, plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.gamerules." + rule));
                             }
                         }
                     }
-                    if (cw.equalsIgnoreCase("Siluria")) {
+                    if (cw.equalsIgnoreCase(s_world + "_tardis_siluria")) {
                         World siluria = new TARDISSiluria(plugin).loadSilurianUnderworld();
                         if (siluria != null) {
-                            for (String rule : plugin.getPlanetsConfig().getConfigurationSection("planets.Siluria.gamerules").getKeys(false)) {
+                            for (String rule : plugin.getPlanetsConfig().getConfigurationSection("planets." + s_world + "_tardis_siluria.gamerules").getKeys(false)) {
                                 GameRule gameRule = GameRule.getByName(rule);
-                                siluria.setGameRule(gameRule, plugin.getPlanetsConfig().getBoolean("planets.Siluria.gamerules." + rule));
+                                siluria.setGameRule(gameRule, plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.gamerules." + rule));
                             }
                         }
                     }
-                    if (cw.equalsIgnoreCase("Gallifrey")) {
+                    if (cw.equalsIgnoreCase(s_world + "_tardis_gallifrey")) {
                         World gallifrey = new TARDISGallifrey(plugin).loadTimeLordWorld();
                         if (gallifrey != null) {
-                            for (String rule : plugin.getPlanetsConfig().getConfigurationSection("planets.Gallifrey.gamerules").getKeys(false)) {
+                            for (String rule : plugin.getPlanetsConfig().getConfigurationSection("planets." + s_world + "_tardis_gallifrey.gamerules").getKeys(false)) {
                                 GameRule gameRule = GameRule.getByName(rule);
-                                gallifrey.setGameRule(gameRule, plugin.getPlanetsConfig().getBoolean("planets.Gallifrey.gamerules." + rule));
+                                gallifrey.setGameRule(gameRule, plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_gallifrey.gamerules." + rule));
                             }
                         }
                     }

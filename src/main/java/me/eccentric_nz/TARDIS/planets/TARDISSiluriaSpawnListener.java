@@ -41,16 +41,19 @@ public final class TARDISSiluriaSpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSilurianSpawn(CreatureSpawnEvent event) {
+        if (!event.getLocation().getWorld().getName().endsWith("siluria")) {
+            return;
+        }
         CreatureSpawnEvent.SpawnReason spawnReason = event.getSpawnReason();
+        // get default server world
+        String s_world = plugin.getServer().getWorlds().get(0).getName();
         // if configured prevent spawns (unless from spawners and plugins)
-        if (!plugin.getPlanetsConfig().getBoolean("planets.Siluria.spawn_other_mobs") && spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.spawn_other_mobs") && spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
             event.setCancelled(true);
             return;
         }
         if (spawnReason == SpawnReason.SPAWNER) {
-            if (!event.getLocation().getWorld().getName().equalsIgnoreCase("Siluria")) {
-                return;
-            }
+
             if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
                 return;
             }

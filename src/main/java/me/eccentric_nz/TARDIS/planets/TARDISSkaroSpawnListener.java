@@ -45,23 +45,25 @@ public class TARDISSkaroSpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onDalekSpawn(CreatureSpawnEvent event) {
+        if (!event.getLocation().getWorld().getName().endsWith("skaro")) {
+            return;
+        }
         SpawnReason spawnReason = event.getSpawnReason();
+        // get default server world
+        String s_world = plugin.getServer().getWorlds().get(0).getName();
         // if configured prevent spawns (unless from spawners and plugins)
-        if (!plugin.getPlanetsConfig().getBoolean("planets.Skaro.spawn_other_mobs") && spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.spawn_other_mobs") && spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
             event.setCancelled(true);
             return;
         }
         if (spawnReason == SpawnReason.SPAWNER) {
-            if (!event.getLocation().getWorld().getName().equalsIgnoreCase("Skaro")) {
-                return;
-            }
             if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
                 return;
             }
             LivingEntity le = event.getEntity();
             // it's a Dalek - disguise it!
             twaAPI.setDalekEquipment(le, false);
-            if (plugin.getPlanetsConfig().getBoolean("planets.Skaro.flying_daleks") && TARDISConstants.RANDOM.nextInt(100) < 10) {
+            if (plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.flying_daleks") && TARDISConstants.RANDOM.nextInt(100) < 10) {
                 // make the Dalek fly
                 EntityEquipment ee = le.getEquipment();
                 ee.setChestplate(new ItemStack(Material.ELYTRA, 1));
