@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.files;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardischunkgenerator.dimensions.TARDISPlanetData;
+import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 

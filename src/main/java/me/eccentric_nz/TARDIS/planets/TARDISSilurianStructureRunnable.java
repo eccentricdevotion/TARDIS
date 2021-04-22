@@ -37,8 +37,8 @@ public class TARDISSilurianStructureRunnable implements Runnable {
     private final TARDIS plugin;
     private final int startx, starty, startz;
     private final String path;
+    private boolean running = false;
     private int task, h, w, d, level = 0, row = 0;
-    boolean running = false;
     private JsonObject obj;
     private JsonArray arr;
     private World world;
@@ -46,7 +46,7 @@ public class TARDISSilurianStructureRunnable implements Runnable {
     private Material type;
     private BlockData data;
 
-    public TARDISSilurianStructureRunnable(TARDIS plugin, int startx, int starty, int startz, String path) {
+    TARDISSilurianStructureRunnable(TARDIS plugin, int startx, int starty, int startz, String path) {
         this.plugin = plugin;
         this.startx = startx;
         this.starty = starty;
@@ -64,8 +64,9 @@ public class TARDISSilurianStructureRunnable implements Runnable {
                 task = -1;
                 return;
             }
-//            plugin.debug("Building Silurian structure @ " + startx + ", " + starty + ", " + startz);
-            world = plugin.getServer().getWorld("Siluria");
+            // get default server world
+            String s_world = plugin.getServer().getWorlds().get(0).getName();
+            world = plugin.getServer().getWorld(s_world + "_tardis_siluria");
             obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();

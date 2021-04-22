@@ -50,10 +50,10 @@ public class TARDISSiluriaChunkPopulateListener implements Listener {
     public void siluriaOnChunkPopulate(ChunkPopulateEvent event) {
         Chunk chunk = event.getChunk();
         // check world
-        if (!chunk.getWorld().getName().equalsIgnoreCase("Siluria")) {
+        if (!chunk.getWorld().getName().endsWith("siluria")) {
             return;
         }
-        ChunkInfo chunkInfo = new ChunkInfo("Siluria", chunk.getX(), chunk.getZ());
+        ChunkInfo chunkInfo = new ChunkInfo(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
         if (chunks.contains(chunkInfo) || isBuilding) {
             return;
         }

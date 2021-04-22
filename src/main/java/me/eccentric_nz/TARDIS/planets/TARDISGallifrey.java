@@ -38,18 +38,21 @@ public class TARDISGallifrey {
     }
 
     public World loadTimeLordWorld() {
-        if (TARDISChecker.hasDimension("gallifrey")) {
-            return plugin.getTardisHelper().loadTARDISDimension("gallifrey");
-        } else {
+        String s_world = plugin.getServer().getWorlds().get(0).getName();
+        // copy datapack files
+        if (!TARDISChecker.hasDimension("gallifrey")) {
             plugin.getServer().reloadData();
             // message console to restart server
             TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Gallifrey data pack has been installed, please restart the server to enable the world.");
+            // get default server world
             // add world to config
-            if (!plugin.getPlanetsConfig().getBoolean("planets.Gallifrey.time_travel")) {
-                plugin.getPlanetsConfig().set("planets.Gallifrey.time_travel", true);
+            if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_gallifrey.time_travel")) {
+                plugin.getPlanetsConfig().set("planets." + s_world + "_tardis_gallifrey.time_travel", true);
                 plugin.savePlanetsConfig();
             }
             return null;
+        } else {
+            return plugin.getServer().getWorld(s_world + "_tardis_gallifrey");
         }
     }
 }

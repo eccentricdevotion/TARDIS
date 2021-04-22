@@ -50,10 +50,10 @@ public class TARDISSkaroChunkPopulateListener implements Listener {
     public void skaroOnChunkPopulate(ChunkPopulateEvent event) {
         Chunk chunk = event.getChunk();
         // check world
-        if (!chunk.getWorld().getName().equalsIgnoreCase("Skaro")) {
+        if (!chunk.getWorld().getName().endsWith("skaro")) {
             return;
         }
-        ChunkInfo chunkInfo = new ChunkInfo("Skaro", chunk.getX(), chunk.getZ());
+        ChunkInfo chunkInfo = new ChunkInfo(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
         if (chunks.contains(chunkInfo)) {
             return;
         }

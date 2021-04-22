@@ -44,8 +44,8 @@ class TARDISBuildSkaroStructure implements Runnable {
 
     private final TARDIS plugin;
     private final int startx, y, startz;
+    private boolean running = false;
     private int task, starty, h, w, d, level = 0, row = 0;
-    boolean running = false;
     private JsonArray arr;
     private World world;
 
@@ -57,7 +57,7 @@ class TARDISBuildSkaroStructure implements Runnable {
      * @param y      the start coordinate on the y-axis
      * @param startz the start coordinate on the z-axis
      */
-    public TARDISBuildSkaroStructure(TARDIS plugin, int startx, int y, int startz) {
+    TARDISBuildSkaroStructure(TARDIS plugin, int startx, int y, int startz) {
         this.plugin = plugin;
         this.startx = startx;
         this.y = y;
@@ -67,7 +67,9 @@ class TARDISBuildSkaroStructure implements Runnable {
     @Override
     public void run() {
         if (!running) {
-            world = plugin.getServer().getWorld("Skaro");
+            // get default server world
+            String s_world = plugin.getServer().getWorlds().get(0).getName();
+            world = plugin.getServer().getWorld(s_world + "_tardis_skaro");
             String path = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
             path += (TARDISConstants.RANDOM.nextInt(100) > 25) ? "dalek_small.tschm" : "dalek_large.tschm";
             File file = new File(path);
@@ -92,7 +94,6 @@ class TARDISBuildSkaroStructure implements Runnable {
                 }
                 starty = sand.getLocation().getBlockY() - 1;
             }
-//            plugin.debug("Building Skaro structure @ " + startx + ", " + starty + ", " + startz);
             // get input array
             arr = obj.get("input").getAsJsonArray();
             running = true;
