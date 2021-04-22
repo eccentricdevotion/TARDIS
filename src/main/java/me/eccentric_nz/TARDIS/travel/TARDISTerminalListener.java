@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -342,6 +343,8 @@ public class TARDISTerminalListener implements Listener {
         String current = TARDISStringUtils.worldName(terminalUsers.get(p.getUniqueId()).getWorld().getName());
         if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
             current = plugin.getMVHelper().getAlias(current);
+        } else {
+            current = TARDISAliasResolver.getWorldAlias(current);
         }
         int[] slots = new int[]{36, 38, 40, 42};
         for (int i : slots) {
@@ -402,7 +405,7 @@ public class TARDISTerminalListener implements Listener {
         String world;
         Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         worldlist.forEach((o) -> {
-            World ww = plugin.getServer().getWorld(o);
+            World ww = TARDISAliasResolver.getWorldFromAlias(o);
             if (ww != null) {
                 String env = ww.getEnvironment().toString();
                 if (e.equalsIgnoreCase(env)) {
@@ -438,7 +441,7 @@ public class TARDISTerminalListener implements Listener {
             // if all else fails return the current world
             world = this_world;
         }
-        return (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(world) : world;
+        return (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(world) : TARDISAliasResolver.getWorldAlias(world);
     }
 
     private void checkSettings(InventoryView view, Player p) {
@@ -458,7 +461,7 @@ public class TARDISTerminalListener implements Listener {
                 String world = view.getItem(i).getItemMeta().getLore().get(0);
                 if (!world.equals("No permission")) {
                     found = true;
-                    World w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(world) : plugin.getServer().getWorld(world);
+                    World w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(world) : TARDISAliasResolver.getWorldFromAlias(world);
                     e = w.getEnvironment();
                     if (plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".false_nether")) {
                         e = Environment.NETHER;

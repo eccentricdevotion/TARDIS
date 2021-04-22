@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -60,7 +61,7 @@ public class TARDISScanner {
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<>();
 
-    public TARDISScanner(TARDIS plugin) {
+    TARDISScanner(TARDIS plugin) {
         this.plugin = plugin;
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.COMPARATOR);
@@ -236,7 +237,7 @@ public class TARDISScanner {
         if (TARDIS.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
             worldname = TARDIS.plugin.getMVHelper().getAlias(scan_loc.getWorld());
         } else {
-            worldname = scan_loc.getWorld().getName();
+            worldname = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());
         }
         TARDISMessage.send(player, "SCAN_WORLD", worldname);
         TARDISMessage.send(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());

@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Biome;
@@ -54,6 +55,14 @@ public class TARDISKeyboardListener implements Listener {
         this.plugin = plugin;
     }
 
+    public static boolean isKeyboardEditor(ItemStack is) {
+        if (is != null && is.getType().equals(Material.OAK_SIGN) && is.hasItemMeta()) {
+            ItemMeta im = is.getItemMeta();
+            return im.hasDisplayName() && im.getDisplayName().equals("TARDIS Keyboard Editor") && im.hasCustomModelData();
+        }
+        return false;
+    }
+
     @EventHandler(ignoreCancelled = true)
     public void onKeyboardInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
@@ -84,14 +93,6 @@ public class TARDISKeyboardListener implements Listener {
         }
     }
 
-    public static boolean isKeyboardEditor(ItemStack is) {
-        if (is != null && is.getType().equals(Material.OAK_SIGN) && is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            return im.hasDisplayName() && im.getDisplayName().equals("TARDIS Keyboard Editor") && im.hasCustomModelData();
-        }
-        return false;
-    }
-
     @EventHandler(ignoreCancelled = true)
     public void onSignChange(SignChangeEvent event) {
         String loc = event.getBlock().getLocation().toString();
@@ -115,7 +116,7 @@ public class TARDISKeyboardListener implements Listener {
                 return;
             }
             // location?
-            if (plugin.getServer().getWorld(event.getLine(0)) != null) {
+            if (TARDISAliasResolver.getWorldFromAlias(event.getLine(0)) != null) {
                 // set location to coords
                 String command = event.getLine(0) + " " + event.getLine(1) + " " + event.getLine(2) + " " + event.getLine(3);
                 p.performCommand("tardistravel " + command);

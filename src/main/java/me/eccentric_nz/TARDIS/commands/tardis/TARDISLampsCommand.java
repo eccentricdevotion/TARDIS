@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
@@ -107,7 +108,7 @@ class TARDISLampsCommand {
                 // loop through the chunks
                 for (HashMap<String, String> map : data) {
                     String w = map.get("world");
-                    World world = plugin.getServer().getWorld(w);
+                    World world = TARDISAliasResolver.getWorldFromAlias(w);
                     int x = TARDISNumberParsers.parseInt(map.get("x"));
                     int z = TARDISNumberParsers.parseInt(map.get("z"));
                     Chunk chunk = world.getChunkAt(x, z);

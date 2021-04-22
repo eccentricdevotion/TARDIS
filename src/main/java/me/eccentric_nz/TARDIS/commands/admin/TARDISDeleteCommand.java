@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -115,7 +116,7 @@ public class TARDISDeleteCommand {
             } else {
                 wname = cdata[0];
             }
-            World cw = plugin.getServer().getWorld(wname);
+            World cw = TARDISAliasResolver.getWorldFromAlias(wname);
             if (cw == null) {
                 TARDISMessage.send(sender, "WORLD_DELETED");
                 return true;

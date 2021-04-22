@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -191,7 +192,7 @@ public class TARDISTimeTravel {
             allowedWorlds.add(this_world);
         } else {
             worldlist.forEach((o) -> {
-                World ww = plugin.getServer().getWorld(o);
+                World ww = TARDISAliasResolver.getWorldFromAlias(o);
                 if (ww != null) {
                     String env = ww.getEnvironment().toString();
                     // Catch all non-nether and non-end ENVIRONMENT types and assume they're normal

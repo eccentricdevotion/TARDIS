@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -152,7 +153,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     int miz = a.getMinZ();
                     int max = a.getMaxX();
                     int maz = a.getMaxZ();
-                    World w = plugin.getServer().getWorld(a.getWorld());
+                    World w = TARDISAliasResolver.getWorldFromAlias(a.getWorld());
                     Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
                     b1.setBlockData(SNOW);
                     Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
@@ -198,7 +199,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     int yardMinZ = yardArea.getMinZ();
                     int yardMaxX = yardArea.getMaxX();
                     int yardMaxZ = yardArea.getMaxZ();
-                    World yardWorld = plugin.getServer().getWorld(yardArea.getWorld());
+                    World yardWorld = TARDISAliasResolver.getWorldFromAlias(yardArea.getWorld());
                     for (int x = yardMinX; x <= yardMaxX; x++) {
                         for (int z = yardMinZ; z <= yardMaxZ; z++) {
                             int y = yardWorld.getHighestBlockYAt(x, z);

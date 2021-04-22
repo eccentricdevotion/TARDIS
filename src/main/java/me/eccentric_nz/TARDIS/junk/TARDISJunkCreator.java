@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -96,7 +97,7 @@ class TARDISJunkCreator {
             setpp.put("floor", "LIGHT_GRAY_WOOL");
             plugin.getQueryFactory().doInsert("player_prefs", setpp);
         }
-        World chunkworld = plugin.getServer().getWorld(cw);
+        World chunkworld = TARDISAliasResolver.getWorldFromAlias(cw);
         // populate home, current, next and back tables
         HashMap<String, Object> setlocs = new HashMap<>();
         setlocs.put("tardis_id", lastInsertId);

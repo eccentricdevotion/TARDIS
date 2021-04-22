@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.flight.TARDISDematerialiseToVortex;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
 import me.eccentric_nz.TARDIS.flight.TARDISMaterialseFromVortex;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -60,7 +61,7 @@ public class TARDISAuthorisedControlDisk {
     private final String eps;
     private final String creeper;
 
-    public TARDISAuthorisedControlDisk(TARDIS plugin, UUID uuid, List<String> lore, int id, Player player, String eps, String creeper) {
+    TARDISAuthorisedControlDisk(TARDIS plugin, UUID uuid, List<String> lore, int id, Player player, String eps, String creeper) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.lore = lore;
@@ -97,7 +98,7 @@ public class TARDISAuthorisedControlDisk {
                 // get save location
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, where, false);
                 if (rsd.resultSet()) {
-                    World w = plugin.getServer().getWorld(rsd.getWorld());
+                    World w = TARDISAliasResolver.getWorldFromAlias(rsd.getWorld());
                     if (w != null) {
                         location = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
                         direction = COMPASS.valueOf(rsd.getDirection());

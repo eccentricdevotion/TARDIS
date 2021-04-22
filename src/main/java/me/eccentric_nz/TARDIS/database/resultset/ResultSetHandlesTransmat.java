@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 
 import java.sql.Connection;
@@ -52,7 +53,7 @@ public class ResultSetHandlesTransmat {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     if (chat.equalsIgnoreCase(rs.getString("name"))) {
-                        location = new Location(plugin.getServer().getWorld(rs.getString("world")), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"));
+                        location = new Location(TARDISAliasResolver.getWorldFromAlias(rs.getString("world")), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"));
                         location.setYaw(rs.getFloat("yaw"));
                         return true;
                     }

@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
@@ -161,7 +162,7 @@ public class TARDISRandomButton {
                     if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                         worldname = plugin.getMVHelper().getAlias(rand.getWorld());
                     } else {
-                        worldname = rand.getWorld().getName();
+                        worldname = TARDISAliasResolver.getWorldAlias(rand.getWorld());
                     }
                     String dchat = worldname + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
                     boolean isTL = true;

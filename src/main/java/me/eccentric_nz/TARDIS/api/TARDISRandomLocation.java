@@ -20,7 +20,7 @@ import com.wimbli.WorldBorder.BorderData;
 import com.wimbli.WorldBorder.Config;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import org.bukkit.Bukkit;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
@@ -46,7 +46,7 @@ class TARDISRandomLocation {
     final List<World> getWorlds(List<String> list) {
         List<World> worlds = new ArrayList<>();
         list.forEach((s) -> {
-            World o = Bukkit.getServer().getWorld(s);
+            World o = TARDISAliasResolver.getWorldFromAlias(s);
             if (o != null) {
                 worlds.add(o);
             }

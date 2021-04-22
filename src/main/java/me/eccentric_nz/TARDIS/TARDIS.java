@@ -56,6 +56,7 @@ import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
 import me.eccentric_nz.TARDIS.move.TARDISSpectaclesRunnable;
 import me.eccentric_nz.TARDIS.placeholders.TARDISPlaceholderExpansion;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.recipes.*;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomPersister;
@@ -380,6 +381,7 @@ public class TARDIS extends JavaPlugin {
             checkTCG();
             checkDefaultWorld();
             cleanUpWorlds();
+            TARDISAliasResolver.createAliasMap();
             utils = new TARDISUtils(this);
             locationUtils = new TARDISLocationGetters(this);
             buildKeeper.setSeeds(getSeeds());

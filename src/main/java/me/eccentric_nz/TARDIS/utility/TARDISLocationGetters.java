@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisChunk;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 
@@ -43,7 +44,7 @@ public class TARDISLocationGetters {
         if (rs.fromID(id)) {
             String c = rs.getChunk();
             String[] data = c.split(":");
-            World w = plugin.getServer().getWorld(data[0]);
+            World w = TARDISAliasResolver.getWorldFromAlias(data[0]);
             int cx = TARDISNumberParsers.parseInt(data[1]);
             int cz = TARDISNumberParsers.parseInt(data[2]);
             return w.getChunkAt(cx, cz);
@@ -64,7 +65,7 @@ public class TARDISLocationGetters {
         if (rs.fromID(id)) {
             String chunkstr = rs.getChunk();
             String[] split = chunkstr.split(":");
-            World w = plugin.getServer().getWorld(split[0]);
+            World w = TARDISAliasResolver.getWorldFromAlias(split[0]);
             cx = TARDISNumberParsers.parseInt(split[1]);
             cz = TARDISNumberParsers.parseInt(split[2]);
             Chunk chunk = w.getChunkAt(cx, cz);

@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
@@ -51,7 +52,7 @@ class TARDISJunkFind {
             wherec.put("tardis_id", rs.getTardis_id());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
             if (rsc.resultSet()) {
-                String world = rsc.getWorld().getName();
+                String world = TARDISAliasResolver.getWorldAlias(rsc.getWorld());
                 if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                     world = plugin.getMVHelper().getAlias(rsc.getWorld());
                 }

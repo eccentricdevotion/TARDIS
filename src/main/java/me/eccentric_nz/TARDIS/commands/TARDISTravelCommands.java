@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.travel.*;
 import me.eccentric_nz.TARDIS.utility.*;
@@ -504,7 +505,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         return true;
                                     }
                                     // get the world
-                                    w = plugin.getServer().getWorld(args[2]);
+                                    w = TARDISAliasResolver.getWorldFromAlias(args[2]);
                                     if (w == null) {
                                         TARDISMessage.send(player, "WORLD_DELETED", args[2]);
                                         return true;
@@ -535,7 +536,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 TARDISMessage.send(player, "SAVE_NOT_FOUND");
                                 return true;
                             }
-                            World w = plugin.getServer().getWorld(rsd.getWorld());
+                            World w = TARDISAliasResolver.getWorldFromAlias(rsd.getWorld());
                             if (w != null) {
                                 if (w.getName().startsWith("TARDIS_")) {
                                     TARDISMessage.send(player, "SAVE_NO_TARDIS");
@@ -695,7 +696,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             case 2:
                                 if (args[0].equalsIgnoreCase("random")) {
                                     // check world is an actual world
-                                    World world = plugin.getServer().getWorld(args[1]);
+                                    World world = TARDISAliasResolver.getWorldFromAlias(args[1]);
                                     if (world == null) {
                                         TARDISMessage.send(player, "COULD_NOT_FIND_WORLD");
                                         return true;
@@ -937,7 +938,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                 w = plugin.getMVHelper().getWorld(w_str);
             } else {
-                w = plugin.getServer().getWorld(w_str);
+                w = TARDISAliasResolver.getWorldFromAlias(w_str);
             }
         }
         if (w == null) {
