@@ -6,7 +6,7 @@ title: Planets
 # Planets
 
 The TARDIS plugin has 3 built-in planets from the Whoniverse.
-The planets are created by installing custom datapacks on the server. When the planets are enabled in _planets.yml_, the server will install the datapack on the next server restart. Due to the current Minecraft server mechanics, a second restart is required for the server to pick up the new datapacks and create the world.
+The planets are created by installing custom datapacks on the server. To enable the planets on the server use the command `/tardisworld load [gallifrey|siluria|skaro]` - this will install the appropriate custom dimension datapack on the next server, and the world will be generated on the next server restart. The worlds will be named according to vanilla Minecraft conventions using the default world name as specified in `server.properties` e.g. _world_tardis_gallifrey_, _world_tardis_siluria_, and _world_tardis_skaro_
 
 The planets are listed and described below!
 
@@ -48,14 +48,14 @@ To get the best experience on these planets, it's recommended to download the ac
 
 ## Enabling Planets
 
-All planets must be enabled in the [planets.yml configuration file](configuration-planets). Below is a sample code, and it is commented to describe each line.
+All planets must be enabled using the `/tardisworld load` command. There are some world specific options in the [planets.yml configuration file](configuration-planets). Below is a sample code, and it is commented to describe each line.
 
 For acid potion effects, see the [Bukkit PotionType Enum](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/potion/PotionType.html).
 
 ```yaml
 # other config #
 # Planet name
-Skaro:
+world_tardis_skaro:
   # Whether this world should be created and managed by TARDIS.
   # This must be enabled to load the world and requires a restart.
   enabled: false
@@ -83,5 +83,5 @@ Skaro:
 ```
 tl;dr:
 
-1. Set, at a minimum, `planets: [planet name]: enabled: true`
-2. (Re)start the server _twice_
+1. Use the command `/tardisworld load [gallifrey|siluria|skaro]`
+2. (Re)start the server
