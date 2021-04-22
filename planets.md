@@ -6,7 +6,7 @@ title: Planets
 # Planets
 
 The TARDIS plugin has 3 built-in planets from the Whoniverse.
-The planets are created by installing custom datapacks on the server. To enable the planets on the server use the command `/tardisworld load [gallifrey|siluria|skaro]` - this will install the appropriate custom dimension datapack on the next server, and the world will be generated on the next server restart. The worlds will be named according to vanilla Minecraft conventions using the default world name as specified in `server.properties` e.g. _world_tardis_gallifrey_, _world_tardis_siluria_, and _world_tardis_skaro_
+The planets are created by installing custom datapacks on the server. To enable the planets on the server use the command `/tardisworld load [gallifrey|siluria|skaro]` - this will install the appropriate custom dimension datapack on the server, and the world will be generated on the next server restart. The worlds will be named according to vanilla Minecraft conventions using the default world name as specified in `server.properties` e.g. _world_tardis_gallifrey_, _world_tardis_siluria_, and _world_tardis_skaro_
 
 The planets are listed and described below!
 
@@ -81,7 +81,7 @@ world_tardis_skaro:
   spawn_other_mobs: true
 # other config #
 ```
-tl;dr:
+**tl;dr:**
 
 1. Use the command `/tardisworld load [gallifrey|siluria|skaro]`
 2. (Re)start the server
