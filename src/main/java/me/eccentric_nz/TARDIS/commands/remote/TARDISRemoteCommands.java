@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.Remote;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -270,7 +271,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                             }
                                         }
                                         int x, y, z;
-                                        World w = plugin.getServer().getWorld(args[2]);
+                                        World w = TARDISAliasResolver.getWorldFromAlias(args[2]);
                                         if (w == null) {
                                             TARDISMessage.send(sender, "WORLD_NOT_FOUND");
                                             return true;

@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -140,7 +141,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
     }
 
     private void removeFromRegion(String world, String owner, String player) {
-        World w = plugin.getServer().getWorld(world);
+        World w = TARDISAliasResolver.getWorldFromAlias(world);
         if (w != null) {
             plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, player);
         }

@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISEntityTracker;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -53,7 +54,7 @@ public class TARDISExteriorRenderer {
         int epbz = exterior.getBlockZ();
         String isRendered = ew.getName() + ":" + epbx + ":" + epby + ":" + epbz;
         String[] idata = interior.split(":");
-        World iw = plugin.getServer().getWorld(idata[0]);
+        World iw = TARDISAliasResolver.getWorldFromAlias(idata[0]);
         int ipbx = TARDISNumberParsers.parseInt(idata[1]);
         int ipby = TARDISNumberParsers.parseInt(idata[2]) + 2;
         int ipbz = TARDISNumberParsers.parseInt(idata[3]);

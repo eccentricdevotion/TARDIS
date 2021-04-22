@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.utility;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -51,7 +52,7 @@ public class TARDISVoidUpdate {
             Tardis tardis = rs.getTardis();
             // get start chunk for this TARDIS
             String[] cstr = tardis.getChunk().split(":");
-            World w = plugin.getServer().getWorld(cstr[0]);
+            World w = TARDISAliasResolver.getWorldFromAlias(cstr[0]);
             int cx = TARDISNumberParsers.parseInt(cstr[1]);
             int cz = TARDISNumberParsers.parseInt(cstr[2]);
             taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Updater(w, cx, cz), 1L, 20L);

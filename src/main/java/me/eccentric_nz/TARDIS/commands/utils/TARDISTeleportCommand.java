@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
@@ -45,7 +46,7 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
     public TARDISTeleportCommand(TARDIS plugin) {
         this.plugin = plugin;
         for (World w : plugin.getServer().getWorlds()) {
-            ROOT_SUBS.add(w.getName());
+            ROOT_SUBS.add(TARDISAliasResolver.getWorldAlias(w));
         }
     }
 
@@ -71,7 +72,7 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
                 TARDISMessage.send(player, "ARG_TP");
                 return false;
             }
-            World world = plugin.getServer().getWorld(args[0]);
+            World world = TARDISAliasResolver.getWorldFromAlias(args[0]);
             if (world != null) {
                 Location spawn = world.getSpawnLocation();
                 if (args[0].equalsIgnoreCase("gallifrey") || args[0].equalsIgnoreCase("skaro")) {

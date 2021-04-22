@@ -20,10 +20,7 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISGallifrey;
-import me.eccentric_nz.TARDIS.planets.TARDISSiluria;
-import me.eccentric_nz.TARDIS.planets.TARDISSkaro;
-import me.eccentric_nz.TARDIS.planets.TARDISWorlds;
+import me.eccentric_nz.TARDIS.planets.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.*;
@@ -35,6 +32,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -80,7 +78,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 TARDISMessage.send(sender, "ARG_LOAD_UNLOAD");
                 return false;
             }
-            World world = plugin.getServer().getWorld(args[1]);
+            World world = TARDISAliasResolver.getWorldFromAlias(args[1]);
             if (world != null) {
                 if (args[0].equalsIgnoreCase("rename")) {
                     if (args.length < 3) {
@@ -169,8 +167,9 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                                 new TARDISSkaro(plugin).loadDalekWorld();
                                 break;
                         }
-                        ConfigurationSection section = plugin.getPlanetsConfig().getConfigurationSection("planets." + TARDISStringUtils.uppercaseFirst(name));
-                        ConfigurationSection rules = plugin.getPlanetsConfig().getConfigurationSection("planets." + TARDISStringUtils.uppercaseFirst(name) + ".gamerules");
+                        FileConfiguration pConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "planets_template.yml"));
+                        ConfigurationSection section = pConfig.getConfigurationSection("planets." + TARDISStringUtils.uppercaseFirst(name));
+                        ConfigurationSection rules = pConfig.getConfigurationSection("planets." + TARDISStringUtils.uppercaseFirst(name) + ".gamerules");
                         String s_world = plugin.getServer().getWorlds().get(0).getName();
                         name = s_world + "_tardis_" + name;
                         plugin.getPlanetsConfig().createSection("planets." + name, section.getValues(true));

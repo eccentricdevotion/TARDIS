@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.database.resultset;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 
@@ -101,7 +102,7 @@ public class ResultSetCurrentLocation {
                 while (rs.next()) {
                     current_id = rs.getInt("current_id");
                     tardis_id = rs.getInt("tardis_id");
-                    world = plugin.getServer().getWorld(rs.getString("world"));
+                    world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
                     x = rs.getInt("x");
                     y = rs.getInt("y");
                     z = rs.getInt("z");

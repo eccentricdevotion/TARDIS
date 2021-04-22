@@ -2,58 +2,6 @@ switch_resource_packs: false
 set_pack_on_join: true
 default_resource_pack: 'https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1'
 planets:
-  # not used anymore, configuration section will be copied to a new planet name (such as "world_tardis_skaro")
-  Skaro:
-    enabled: false
-    resource_pack: 'https://www.dropbox.com/s/nr93rhbiyw2s5d0/Skaro.zip?dl=1'
-    acid: true
-    acid_damage: 5
-    acid_potions:
-      - WEAKNESS
-      - POISON
-    rust: true
-    flying_daleks: true
-    gamemode: SURVIVAL
-    time_travel: true
-    world_type: FIXED
-    environment: NORMAL
-    generator: DEFAULT
-    keep_spawn_in_memory: false
-    spawn_other_mobs: true
-    gamerules:
-      doTraderSpawning: false
-      doPatrolSpawning: false
-    allow_portals: false
-  # not used anymore, configuration section will be copied to a new planet name (such as "world_tardis_siluria")
-  Siluria:
-    enabled: false
-    resource_pack: default
-    gamemode: SURVIVAL
-    time_travel: true
-    world_type: FIXED
-    environment: NORMAL
-    generator: DEFAULT
-    keep_spawn_in_memory: false
-    spawn_other_mobs: true
-    gamerules:
-      doTraderSpawning: false
-      doPatrolSpawning: false
-    allow_portals: false
-  # not used anymore, configuration section will be copied to a new planet name (such as "world_tardis_gallifrey")
-  Gallifrey:
-    enabled: false
-    resource_pack: 'https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1'
-    gamemode: SURVIVAL
-    time_travel: true
-    world_type: FIXED
-    environment: NORMAL
-    generator: DEFAULT
-    keep_spawn_in_memory: false
-    spawn_other_mobs: true
-    gamerules:
-      doTraderSpawning: false
-      doPatrolSpawning: false
-    allow_portals: false
   TARDIS_TimeVortex:
     enabled: true
     resource_pack: default
@@ -68,6 +16,7 @@ planets:
       doDaylightCycle: false
     keep_spawn_in_memory: false
     allow_portals: false
+    alias: TimeVortex
   TARDIS_Zero_Room:
     enabled: false
     resource_pack: default
@@ -83,3 +32,4 @@ planets:
       announceAdvancements: false
     keep_spawn_in_memory: false
     allow_portals: false
+    alias: ZeroRoom

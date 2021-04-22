@@ -34,6 +34,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.util.SpongeUtil;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -316,7 +317,7 @@ public class TARDISWorldGuardUtils {
      * @param name the name of the recharger to remove
      */
     public void removeRechargerRegion(String name) {
-        World w = plugin.getServer().getWorld(plugin.getConfig().getString("rechargers." + name + ".world"));
+        World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + name + ".world"));
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
         rm.removeRegion("tardis_recharger_" + name);
         try {
@@ -489,7 +490,7 @@ public class TARDISWorldGuardUtils {
      * @return the protected region
      */
     public ProtectedRegion getRegion(String world, String p) {
-        World w = plugin.getServer().getWorld(world);
+        World w = TARDISAliasResolver.getWorldFromAlias(world);
         if (w == null) {
             return null;
         }
@@ -535,7 +536,7 @@ public class TARDISWorldGuardUtils {
      * @param allow whether the flag state should be set to allow or deny
      */
     public void setEntryExitFlags(String world, String owner, boolean allow) {
-        World w = plugin.getServer().getWorld(world);
+        World w = TARDISAliasResolver.getWorldFromAlias(world);
         if (w != null) {
             RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
             ProtectedRegion region = rm.getRegion("TARDIS_" + owner);

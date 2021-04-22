@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
@@ -231,7 +232,7 @@ public class TARDII implements TardisAPI {
                 if (TARDIS.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                     worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
                 } else {
-                    worlds.add(name);
+                    worlds.add(TARDISAliasResolver.getWorldAlias(name));
                 }
             }
         });
@@ -247,7 +248,7 @@ public class TARDII implements TardisAPI {
                 if (TARDIS.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                     worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
                 } else {
-                    worlds.add(name);
+                    worlds.add(TARDISAliasResolver.getWorldAlias(name));
                 }
             }
         });

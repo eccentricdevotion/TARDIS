@@ -1,0 +1,56 @@
+planets:
+  # not used anymore, configuration section will be copied to a new planet name (such as "world_tardis_skaro")
+  Skaro:
+    enabled: false
+    resource_pack: 'https://www.dropbox.com/s/nr93rhbiyw2s5d0/Skaro.zip?dl=1'
+    acid: true
+    acid_damage: 5
+    acid_potions:
+      - WEAKNESS
+      - POISON
+    rust: true
+    flying_daleks: true
+    gamemode: SURVIVAL
+    time_travel: true
+    world_type: FIXED
+    environment: NORMAL
+    generator: DEFAULT
+    keep_spawn_in_memory: false
+    spawn_other_mobs: true
+    gamerules:
+      doTraderSpawning: false
+      doPatrolSpawning: false
+    allow_portals: false
+    alias: Skaro
+  # not used anymore, configuration section will be copied to a new planet name (such as "world_tardis_siluria")
+  Siluria:
+    enabled: false
+    resource_pack: default
+    gamemode: SURVIVAL
+    time_travel: true
+    world_type: FIXED
+    environment: NORMAL
+    generator: DEFAULT
+    keep_spawn_in_memory: false
+    spawn_other_mobs: true
+    gamerules:
+      doTraderSpawning: false
+      doPatrolSpawning: false
+    allow_portals: false
+    alias: Siluria
+  # not used anymore, configuration section will be copied to a new planet name (such as "world_tardis_gallifrey")
+  Gallifrey:
+    enabled: false
+    resource_pack: 'https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1'
+    gamemode: SURVIVAL
+    time_travel: true
+    world_type: FIXED
+    environment: NORMAL
+    generator: DEFAULT
+    keep_spawn_in_memory: false
+    spawn_other_mobs: true
+    gamerules:
+      doTraderSpawning: false
+      doPatrolSpawning: false
+    allow_portals: false
+    alias: Gallifrey

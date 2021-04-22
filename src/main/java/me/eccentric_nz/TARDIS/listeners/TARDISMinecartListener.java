@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -160,7 +161,7 @@ public class TARDISMinecartListener implements Listener {
                         }
                         plugin.getTrackerKeeper().getMinecart().remove(id);
                     } else {
-                        World w = plugin.getServer().getWorld(data[0]);
+                        World w = TARDISAliasResolver.getWorldFromAlias(data[0]);
                         int x = TARDISNumberParsers.parseInt(data[1]);
                         int y = TARDISNumberParsers.parseInt(data[2]);
                         int z = TARDISNumberParsers.parseInt(data[3]);

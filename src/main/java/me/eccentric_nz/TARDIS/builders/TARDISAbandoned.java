@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.builders;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
@@ -47,7 +48,7 @@ public class TARDISAbandoned {
         Chunk chunk = l.getChunk();
         // get this chunk's co-ords
         String cw = plugin.getConfig().getString("creation.default_world_name");
-        World chunkworld = plugin.getServer().getWorld(cw);
+        World chunkworld = TARDISAliasResolver.getWorldFromAlias(cw);
         int cx = chunk.getX();
         int cz = chunk.getZ();
         // save data to database (tardis table)

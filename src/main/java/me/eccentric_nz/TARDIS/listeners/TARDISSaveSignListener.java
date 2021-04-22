@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
@@ -369,7 +370,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
      * @return a Location
      */
     private Location getLocation(List<String> lore) {
-        World w = plugin.getServer().getWorld(lore.get(0));
+        World w = TARDISAliasResolver.getWorldFromAlias(lore.get(0));
         if (w == null) {
             return null;
         }

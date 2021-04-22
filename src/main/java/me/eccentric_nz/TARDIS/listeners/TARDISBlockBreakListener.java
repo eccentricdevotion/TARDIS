@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -127,7 +128,7 @@ public class TARDISBlockBreakListener implements Listener {
             for (String r : plugin.getConfig().getConfigurationSection("rechargers").getKeys(false)) {
                 if (r.startsWith("rift")) {
                     // get the location
-                    World w = plugin.getServer().getWorld(plugin.getConfig().getString("rechargers." + r + ".world"));
+                    World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + r + ".world"));
                     int x = plugin.getConfig().getInt("rechargers." + r + ".x");
                     int y = plugin.getConfig().getInt("rechargers." + r + ".y");
                     int z = plugin.getConfig().getInt("rechargers." + r + ".z");

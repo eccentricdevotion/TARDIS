@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConsole;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetOccupied;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.ChatColor;
 import org.bukkit.Tag;
 import org.bukkit.block.Sign;
@@ -55,7 +56,7 @@ public class TARDISControlRunnable implements Runnable {
                                 sign.setLine(1, ChatColor.DARK_PURPLE + "time vortex...");
                                 sign.setLine(2, "");
                             } else {
-                                String worldname = (rsc.getWorld() != null) ? rsc.getWorld() : "";
+                                String worldname = (rsc.getWorld() != null) ? TARDISAliasResolver.getWorldAlias(rsc.getWorld()) : "";
                                 if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldname.equals("")) {
                                     worldname = plugin.getMVHelper().getAlias(worldname);
                                 }

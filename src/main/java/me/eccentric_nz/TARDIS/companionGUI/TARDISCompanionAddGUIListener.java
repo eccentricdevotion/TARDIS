@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -77,7 +78,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
                                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                                     // remove all members
                                     String[] data = tardis.getChunk().split(":");
-                                    plugin.getWorldGuardUtils().removeAllMembersFromRegion(plugin.getServer().getWorld(data[0]), player.getName());
+                                    plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISAliasResolver.getWorldFromAlias(data[0]), player.getName());
                                     // set entry and exit flags to allow
                                     plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), true);
                                 }
@@ -150,7 +151,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
 
     private void addToRegion(String world, String owner, String player) {
         // if using WorldGuard, add them to the region membership
-        World w = plugin.getServer().getWorld(world);
+        World w = TARDISAliasResolver.getWorldFromAlias(world);
         if (w != null) {
             plugin.getWorldGuardUtils().addMemberToRegion(w, owner, player);
         }

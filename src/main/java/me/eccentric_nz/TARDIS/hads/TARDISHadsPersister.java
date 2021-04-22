@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.hads;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -37,10 +38,10 @@ public class TARDISHadsPersister {
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
+    private final String prefix;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
-    private final String prefix;
 
     public TARDISHadsPersister(TARDIS plugin) {
         this.plugin = plugin;
@@ -89,7 +90,7 @@ public class TARDISHadsPersister {
             ps = connection.prepareStatement("SELECT * FROM " + prefix + "dispersed");
             rs = ps.executeQuery();
             while (rs.next()) {
-                World world = plugin.getServer().getWorld(rs.getString("world"));
+                World world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
                 if (world != null) {
                     UUID uuid = UUID.fromString(rs.getString("uuid"));
                     Location l = new Location(world, rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));

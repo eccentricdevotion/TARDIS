@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -89,7 +90,7 @@ class TARDISAbandonedCommand {
 
                 return true;
             }
-            World w = plugin.getServer().getWorld(args[4]);
+            World w = TARDISAliasResolver.getWorldFromAlias(args[4]);
             if (w == null) {
                 TARDISMessage.send(sender, "WORLD_NOT_FOUND");
                 return true;

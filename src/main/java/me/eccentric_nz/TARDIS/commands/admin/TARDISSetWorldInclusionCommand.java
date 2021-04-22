@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
@@ -46,7 +47,7 @@ class TARDISSetWorldInclusionCommand {
         // need to make there are no periods(.) in the text
         String nodots = StringUtils.replace(t, ".", "_");
         // check the world actually exists!
-        if (plugin.getServer().getWorld(nodots) == null) {
+        if (TARDISAliasResolver.getWorldFromAlias(nodots) == null) {
             TARDISMessage.send(sender, "WORLD_NOT_FOUND");
             return false;
         }

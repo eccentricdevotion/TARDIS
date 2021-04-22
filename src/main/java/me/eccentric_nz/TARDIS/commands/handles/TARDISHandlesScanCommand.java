@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -60,7 +61,7 @@ class TARDISHandlesScanCommand {
         inTARDIS = plugin.getUtils().inTARDISWorld(this.player);
     }
 
-    public boolean sayScan() {
+    boolean sayScan() {
         TARDISSounds.playTARDISSound(player.getLocation(), "handles_scanner");
         Location scan_loc;
         String whereIsIt;
@@ -191,7 +192,7 @@ class TARDISHandlesScanCommand {
         if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
             worldname = plugin.getMVHelper().getAlias(scan_loc.getWorld());
         } else {
-            worldname = scan_loc.getWorld().getName();
+            worldname = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());
         }
         TARDISMessage.handlesSend(player, "SCAN_WORLD", worldname);
         TARDISMessage.handlesSend(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.database.resultset;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -40,9 +41,9 @@ public class ResultSetForcefield {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String where;
+    private final String prefix;
     private UUID uuid;
     private Location location;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
@@ -77,7 +78,7 @@ public class ResultSetForcefield {
             if (rs.isBeforeFirst()) {
                 rs.next();
                 uuid = UUID.fromString(rs.getString("uuid"));
-                world = plugin.getServer().getWorld(rs.getString("world"));
+                world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
                 int x = rs.getInt("x");
                 int y = rs.getInt("y");
                 int z = rs.getInt("z");

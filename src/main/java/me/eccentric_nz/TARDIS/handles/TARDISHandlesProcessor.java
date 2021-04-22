@@ -35,6 +35,7 @@ import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.move.TARDISDoorOpener;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeMode;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
@@ -447,7 +448,7 @@ public class TARDISHandlesProcessor {
                                                         continue;
                                                     }
                                                     TARDISMessage.handlesSend(player, "LOC_SET");
-                                                    goto_loc = new Location(plugin.getServer().getWorld(lore.get(1)), sx, sy, sz);
+                                                    goto_loc = new Location(TARDISAliasResolver.getWorldFromAlias(lore.get(1)), sx, sy, sz);
                                                     nextDirection = COMPASS.valueOf(lore.get(6));
                                                     sub = Boolean.parseBoolean(lore.get(7));
                                                 } else {
