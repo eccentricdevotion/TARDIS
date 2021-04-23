@@ -24,6 +24,7 @@ public class TARDISAliasResolver {
             return world;
         } else {
             for (TARDISPlanet planet : planets.values()) {
+                TARDIS.plugin.debug("Alias for " + planet.getName() + " is: " + planet.getAlias());
                 if (planet.getAlias().equalsIgnoreCase(alias)) {
                     return planet.getWorld();
                 }
@@ -48,19 +49,17 @@ public class TARDISAliasResolver {
 
     public static void createAliasMap() {
         for (String s : TARDIS.plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false)) {
-            if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + s + ".enabled")) {
-                World world = Bukkit.getServer().getWorld(s);
-                if (world != null) {
-                    String alias = TARDIS.plugin.getPlanetsConfig().getString("planets." + s + ".alias", s);
-                    TARDISPlanet tp = new TARDISPlanet();
-                    tp.setAlias(!alias.isEmpty() ? alias : s);
-                    tp.setName(s);
-                    tp.setWorld(world);
-                    if (!alias.isEmpty()) {
-                        planets.put(alias, tp);
-                    } else {
-                        planets.put(s, tp);
-                    }
+            World world = Bukkit.getServer().getWorld(s);
+            if (world != null) {
+                String alias = TARDIS.plugin.getPlanetsConfig().getString("planets." + s + ".alias", s);
+                TARDISPlanet tp = new TARDISPlanet();
+                tp.setAlias(!alias.isEmpty() ? alias : s);
+                tp.setName(s);
+                tp.setWorld(world);
+                if (!alias.isEmpty()) {
+                    planets.put(alias, tp);
+                } else {
+                    planets.put(s, tp);
                 }
             }
         }

@@ -58,7 +58,7 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
                 player = (Player) sender;
             }
             if (args.length == 2) {
-                // get for player from argument
+                // get player from argument
                 player = plugin.getServer().getPlayer(args[1]);
                 if (player == null || !player.isOnline()) {
                     TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
@@ -75,9 +75,6 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
             World world = TARDISAliasResolver.getWorldFromAlias(args[0]);
             if (world != null) {
                 Location spawn = world.getSpawnLocation();
-                if (args[0].equalsIgnoreCase("gallifrey") || args[0].equalsIgnoreCase("skaro")) {
-                    spawn.add(400.0d, 0.0d, 400.0d);
-                }
                 while (!world.getChunkAt(spawn).isLoaded()) {
                     world.getChunkAt(spawn).load();
                 }
