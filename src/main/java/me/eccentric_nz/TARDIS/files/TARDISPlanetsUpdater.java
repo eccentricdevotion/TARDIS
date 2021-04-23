@@ -23,7 +23,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.Set;
 
@@ -64,21 +63,6 @@ public class TARDISPlanetsUpdater {
             }
             plugin.getConfig().set("worlds", null);
             plugin.saveConfig();
-            planets_config.set("planets.Skaro.gamemode", "SURVIVAL");
-            planets_config.set("planets.Skaro.time_travel", true);
-            planets_config.set("planets.Skaro.world_type", "BUFFET");
-            planets_config.set("planets.Skaro.environment", "NORMAL");
-            planets_config.set("planets.Skaro.keep_spawn_in_memory", false);
-            planets_config.set("planets.Siluria.gamemode", "SURVIVAL");
-            planets_config.set("planets.Siluria.time_travel", true);
-            planets_config.set("planets.Siluria.world_type", "BUFFET");
-            planets_config.set("planets.Siluria.environment", "NORMAL");
-            planets_config.set("planets.Siluria.keep_spawn_in_memory", false);
-            planets_config.set("planets.Gallifrey.gamemode", "SURVIVAL");
-            planets_config.set("planets.Gallifrey.time_travel", true);
-            planets_config.set("planets.Gallifrey.world_type", "BUFFET");
-            planets_config.set("planets.Gallifrey.environment", "NORMAL");
-            planets_config.set("planets.Gallifrey.keep_spawn_in_memory", false);
             if (planets_config.contains("planets.TARDIS_Zero_Room")) {
                 planets_config.set("planets.TARDIS_Zero_Room.enabled", false);
                 planets_config.set("planets.TARDIS_Zero_Room.time_travel", false);
@@ -103,6 +87,31 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets." + dn + ".keep_spawn_in_memory", false);
             save++;
         }
+        if (!planets_config.contains("planets.TARDIS_Zero_Room.alias")) {
+            Set<String> worlds = planets_config.getConfigurationSection("planets").getKeys(false);
+            for (String w : worlds) {
+                if (w.equals("TARDIS_TimeVortex")) {
+                    planets_config.set("planets." + w + ".alias", "TimeVortex");
+                } else if (w.endsWith("TARDIS_Zero_Room")) {
+                    planets_config.set("planets." + w + ".alias", "ZeroRoom");
+                } else if (w.endsWith("gallifrey")) {
+                    planets_config.set("planets." + w + ".alias", "Gallifrey");
+                } else if (w.endsWith("siluria")) {
+                    planets_config.set("planets." + w + ".alias", "Siluria");
+                } else if (w.endsWith("skaro")) {
+                    planets_config.set("planets." + w + ".alias", "Skaro");
+                } else if (w.endsWith("_the_end")) {
+                    planets_config.set("planets." + w + ".alias", "TheEnd");
+                } else if (w.endsWith("_nether")) {
+                    planets_config.set("planets." + w + ".alias", "TheNether");
+                } else {
+                    planets_config.set("planets." + w + ".alias", w);
+                }
+            }
+            plugin.getPlanetsConfig().set("planets.Gallifrey", null);
+            plugin.getPlanetsConfig().set("planets.Siluria", null);
+            plugin.getPlanetsConfig().set("planets.Skaro", null);
+        }
         if (!planets_config.contains("planets.TARDIS_Zero_Room.gamerules.doWeatherCycle")) {
             planets_config.set("planets." + dn + ".gamerules.doWeatherCycle", false);
             planets_config.set("planets." + dn + ".gamerules.doDaylightCycle", false);
@@ -111,63 +120,8 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.TARDIS_Zero_Room.gamerules.announceAdvancements", false);
             save++;
         }
-        if (!planets_config.contains("planets.Skaro.gamerules.doTraderSpawning")) {
-            planets_config.set("planets.Gallifrey.gamerules.doTraderSpawning", false);
-            planets_config.set("planets.Gallifrey.gamerules.doPatrolSpawning", false);
-            planets_config.set("planets.Siluria.gamerules.doTraderSpawning", false);
-            planets_config.set("planets.Siluria.gamerules.doPatrolSpawning", false);
-            planets_config.set("planets.Skaro.gamerules.doTraderSpawning", false);
-            planets_config.set("planets.Skaro.gamerules.doPatrolSpawning", false);
-            save++;
-        }
-        if (!planets_config.contains("planets.Skaro.generator")) {
-            for (String w : planets_config.getConfigurationSection("planets").getKeys(false)) {
-                if (w.startsWith("TARDIS_") || w.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                    planets_config.set("planets." + w + ".generator", "TARDISChunkGenerator");
-                } else {
-                    planets_config.set("planets." + w + ".generator", "DEFAULT");
-                }
-            }
-            save++;
-        }
-        if (planets_config.contains("planets.Siluria.false_nether")) {
-            planets_config.set("planets.Siluria.false_nether", null);
-            save++;
-        }
-        if (!planets_config.contains("planets.Skaro.flying_daleks") || !planets_config.contains("planets.Skaro.acid")) {
-            planets_config.set("planets.Skaro.flying_daleks", true);
-            planets_config.set("planets.Skaro.acid", true);
-            planets_config.set("planets.Skaro.acid_damage", 5);
-            planets_config.set("planets.Skaro.acid_potions", Arrays.asList("WEAKNESS", "POISON"));
-            planets_config.set("planets.Skaro.rust", true);
-            save++;
-        }
         if (planets_config.contains("default_resource_pack") && planets_config.getString("default_resource_pack").equalsIgnoreCase("https://dl.dropboxusercontent.com/u/53758864/rp/Default.zip")) {
             planets_config.set("default_resource_pack", "https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1");
-            save++;
-        }
-        if (planets_config.contains("planets.Skaro.resource_pack") && (planets_config.getString("planets.Skaro.resource_pack").equalsIgnoreCase("https://dl.dropboxusercontent.com/u/53758864/rp/Skaro.zip") || planets_config.getString("planets.Skaro.resource_pack").equalsIgnoreCase("default"))) {
-            planets_config.set("planets.Skaro.resource_pack", "https://www.dropbox.com/s/nr93rhbiyw2s5d0/Skaro.zip?dl=1");
-            save++;
-        }
-        if (!planets_config.contains("planets.Siluria.enabled")) {
-            planets_config.set("planets.Siluria.enabled", false);
-            planets_config.set("planets.Siluria.resource_pack", "default");
-            save++;
-        }
-        if (!planets_config.contains("planets.Gallifrey.enabled")) {
-            planets_config.set("planets.Gallifrey.enabled", false);
-            planets_config.set("planets.Gallifrey.resource_pack", "https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1");
-            save++;
-        }
-        if (!planets_config.contains("planets.Skaro.spawn_other_mobs")) {
-            planets_config.set("planets.Skaro.spawn_other_mobs", true);
-            planets_config.set("planets.Siluria.spawn_other_mobs", true);
-            planets_config.set("planets.Gallifrey.spawn_other_mobs", true);
-            save++;
-        }
-        if (planets_config.contains("planets.Gallifrey.resource_pack") && planets_config.getString("planets.Gallifrey.resource_pack").equalsIgnoreCase("default")) {
-            planets_config.set("planets.Gallifrey.resource_pack", "https://www.dropbox.com/s/i7bpjju9jrgclq7/Gallifrey.zip?dl=1");
             save++;
         }
         for (String p : planets_config.getConfigurationSection("planets").getKeys(false)) {
@@ -176,11 +130,7 @@ public class TARDISPlanetsUpdater {
                 save++;
             }
             if (!planets_config.contains("planets." + p + ".allow_portals")) {
-                if (isTARDISPlanet(p)) {
-                    planets_config.set("planets." + p + ".allow_portals", false);
-                } else {
-                    planets_config.set("planets." + p + ".allow_portals", true);
-                }
+                planets_config.set("planets." + p + ".allow_portals", true);
                 save++;
             }
         }
@@ -193,9 +143,5 @@ public class TARDISPlanetsUpdater {
                 plugin.debug("Could not save planets.yml, " + io.getMessage());
             }
         }
-    }
-
-    private boolean isTARDISPlanet(String p) {
-        return (p.startsWith("TARDIS_") || p.equals("Gallifrey") || p.equals("Siluria") || p.equals("Skaro"));
     }
 }
