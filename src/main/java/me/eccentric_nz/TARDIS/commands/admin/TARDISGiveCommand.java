@@ -105,6 +105,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("r-key", "TARDIS Remote Key");
         items.put("randomiser-circuit", "TARDIS Randomiser Circuit");
         items.put("reader", "TARDIS Biome Reader");
+        items.put("recipes", "TARDIS Recipes");
         items.put("remote", "Stattenheim Remote");
         items.put("rift-circuit", "Rift Circuit");
         items.put("rift-manipulator", "Rift Manipulator");
@@ -166,6 +167,13 @@ public class TARDISGiveCommand implements CommandExecutor {
                     } else {
                         TARDISMessage.send(sender, "ARG_BLUEPRINT");
                         return true;
+                    }
+                }
+                if (item.equals("recipes")) {
+                    if (args[2].equalsIgnoreCase("all")) {
+                        return grantRecipes(sender, args);
+                    } else {
+                        grantRecipe(sender, args);
                     }
                 }
                 if (item.equals("seed")) {
@@ -255,7 +263,11 @@ public class TARDISGiveCommand implements CommandExecutor {
                     if (args[1].equalsIgnoreCase("cell") && args.length == 4 && args[3].equalsIgnoreCase("full")) {
                         return giveFullCell(sender, amount, player);
                     } else if (args[2].equals("knowledge")) {
-                        return giveKnowledgeBook(sender, item, player);
+                        if (item.equalsIgnoreCase("all")) {
+                            return giveAllKnowledge(sender, player);
+                        } else {
+                            return giveKnowledgeBook(sender, item, player);
+                        }
                     } else if (!args[2].endsWith("_seed")) {
                         return giveItem(sender, item, amount, player);
                     }
@@ -530,6 +542,39 @@ public class TARDISGiveCommand implements CommandExecutor {
         return true;
     }
 
+    private boolean giveAllKnowledge(CommandSender sender, Player player) {
+        ItemStack book = new ItemStack(Material.KNOWLEDGE_BOOK, 1);
+        KnowledgeBookMeta kbm = (KnowledgeBookMeta) book.getItemMeta();
+        for (Map.Entry<String, String> map : items.entrySet()) {
+            if (!map.getValue().isEmpty()) {
+                switch (map.getKey()) {
+                    case "bow-tie":
+                        List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
+                        colours.forEach((bt) -> {
+                            NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
+                            kbm.addRecipe(nsk);
+                        });
+                        break;
+                    case "jelly-baby":
+                        List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
+                        flavours.forEach((jelly) -> {
+                            NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
+                            kbm.addRecipe(nsk);
+                        });
+                        break;
+                    default:
+                        NamespacedKey nsk = new NamespacedKey(plugin, map.getValue().replace(" ", "_").toLowerCase(Locale.ENGLISH));
+                        kbm.addRecipe(nsk);
+                }
+            }
+        }
+        book.setItemMeta(kbm);
+        player.getInventory().addItem(book);
+        player.updateInventory();
+        TARDISMessage.send(player, "GIVE_KNOWLEDGE", sender.getName(), "all TARDIS recipes");
+        return true;
+    }
+
     private boolean giveKnowledgeBook(CommandSender sender, String item, Player player) {
         String item_to_give = (item.endsWith("_seed")) ? item : items.get(item);
         ItemStack book = new ItemStack(Material.KNOWLEDGE_BOOK, 1);
@@ -560,6 +605,75 @@ public class TARDISGiveCommand implements CommandExecutor {
         player.getInventory().addItem(book);
         player.updateInventory();
         TARDISMessage.send(player, "GIVE_KNOWLEDGE", sender.getName(), message);
+        return true;
+    }
+
+    private boolean grantRecipes(CommandSender sender, String[] args) {
+        Player player = plugin.getServer().getPlayer(args[0]);
+        if (player == null) { // player must be online
+            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            return true;
+        }
+        Set<NamespacedKey> keys = new HashSet<>();
+        for (Map.Entry<String, String> map : items.entrySet()) {
+            if (!map.getValue().isEmpty()) {
+                switch (map.getKey()) {
+                    case "bow-tie":
+                        List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
+                        colours.forEach((bt) -> {
+                            NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
+                            keys.add(nsk);
+                        });
+                        break;
+                    case "jelly-baby":
+                        List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
+                        flavours.forEach((jelly) -> {
+                            NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
+                            keys.add(nsk);
+                        });
+                        break;
+                    default:
+                        NamespacedKey nsk = new NamespacedKey(plugin, map.getValue().replace(" ", "_").toLowerCase(Locale.ENGLISH));
+                        keys.add(nsk);
+                }
+            }
+        }
+        player.discoverRecipes(keys);
+        return true;
+    }
+
+    private boolean grantRecipe(CommandSender sender, String[] args) {
+        Player player = plugin.getServer().getPlayer(args[0]);
+        if (player == null) { // player must be online
+            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            return true;
+        }
+        String item = args[2].toLowerCase(Locale.ROOT);
+        if (!items.containsKey(item)) {
+            new TARDISGiveLister(plugin, sender).list();
+            return true;
+        }
+        Set<NamespacedKey> keys = new HashSet<>();
+        switch (item) {
+            case "bow-tie":
+                List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
+                colours.forEach((bt) -> {
+                    NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
+                    keys.add(nsk);
+                });
+                break;
+            case "jelly-baby":
+                List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
+                flavours.forEach((jelly) -> {
+                    NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
+                    keys.add(nsk);
+                });
+                break;
+            default:
+                NamespacedKey nsk = new NamespacedKey(plugin, items.get(item).replace(" ", "_").toLowerCase(Locale.ENGLISH));
+                keys.add(nsk);
+        }
+        player.discoverRecipes(keys);
         return true;
     }
 }
