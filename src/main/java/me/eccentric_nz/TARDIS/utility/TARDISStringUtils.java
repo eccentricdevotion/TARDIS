@@ -82,14 +82,6 @@ public class TARDISStringUtils {
         return s.replace(" ", "_").replace("-", "_").replace("3", "THREE").toUpperCase(Locale.ENGLISH);
     }
 
-    public static String worldName(String name) {
-        if (name.equalsIgnoreCase("gallifrey") || name.equalsIgnoreCase("siluria") || name.equalsIgnoreCase("skaro")) {
-            return TARDISStringUtils.uppercaseFirst(name);
-        } else {
-            return name;
-        }
-    }
-
     /**
      * Determines the Material type of the block. Values are calculated by converting the string values stored in a
      * TARDIS Seed block.

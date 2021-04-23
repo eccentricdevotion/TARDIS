@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.planets;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
@@ -75,7 +74,7 @@ public class TARDISWorlds {
         List<World> worlds = plugin.getServer().getWorlds();
         String defWorld = plugin.getConfig().getString("creation.default_world_name");
         worlds.forEach((w) -> {
-            String worldname = TARDISStringUtils.worldName(w.getName());
+            String worldname = w.getName();
             if (!plugin.getPlanetsConfig().contains("planets." + worldname) && !worldname.equals(defWorld)) {
                 TARDISPlanetData data = plugin.getTardisHelper().getLevelData(w.getName());
                 plugin.getPlanetsConfig().set("planets." + worldname + ".enabled", false);
@@ -114,37 +113,6 @@ public class TARDISWorlds {
                 if ((plugin.getWorldManager().equals(WorldManager.NONE) || plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false).contains(cw)) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
                     plugin.getConsole().sendMessage(plugin.getPluginName() + "Attempting to load world: '" + cw + "'");
                     loadWorld(cw);
-                }
-            } else if (TARDISConstants.PLANETS.contains(cw)) {
-                if (plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
-                    // create world
-                    if (cw.equalsIgnoreCase(s_world + "_tardis_skaro")) {
-                        World skaro = new TARDISSkaro(plugin).loadDalekWorld();
-                        if (skaro != null) {
-                            for (String rule : plugin.getPlanetsConfig().getConfigurationSection("planets." + s_world + "_tardis_skaro.gamerules").getKeys(false)) {
-                                GameRule gameRule = GameRule.getByName(rule);
-                                skaro.setGameRule(gameRule, plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.gamerules." + rule));
-                            }
-                        }
-                    }
-                    if (cw.equalsIgnoreCase(s_world + "_tardis_siluria")) {
-                        World siluria = new TARDISSiluria(plugin).loadSilurianUnderworld();
-                        if (siluria != null) {
-                            for (String rule : plugin.getPlanetsConfig().getConfigurationSection("planets." + s_world + "_tardis_siluria.gamerules").getKeys(false)) {
-                                GameRule gameRule = GameRule.getByName(rule);
-                                siluria.setGameRule(gameRule, plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.gamerules." + rule));
-                            }
-                        }
-                    }
-                    if (cw.equalsIgnoreCase(s_world + "_tardis_gallifrey")) {
-                        World gallifrey = new TARDISGallifrey(plugin).loadTimeLordWorld();
-                        if (gallifrey != null) {
-                            for (String rule : plugin.getPlanetsConfig().getConfigurationSection("planets." + s_world + "_tardis_gallifrey.gamerules").getKeys(false)) {
-                                GameRule gameRule = GameRule.getByName(rule);
-                                gallifrey.setGameRule(gameRule, plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_gallifrey.gamerules." + rule));
-                            }
-                        }
-                    }
                 }
             } else {
                 if (!TARDISConstants.PLANETS.contains(cw) && !cw.equals("TARDIS_Zero_Room") && !cw.equals("TARDIS_TimeVortex") && !worldFolderExists(cw)) {

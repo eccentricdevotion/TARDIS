@@ -276,7 +276,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                             TARDISMessage.send(sender, "WORLD_NOT_FOUND");
                                             return true;
                                         }
-                                        if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(w.getName()) + ".time_travel")) {
+                                        if (!plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".time_travel")) {
                                             TARDISMessage.send(sender, "NO_WORLD_TRAVEL");
                                             return true;
                                         }

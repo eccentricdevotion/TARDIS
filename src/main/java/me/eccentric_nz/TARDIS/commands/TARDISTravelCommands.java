@@ -30,7 +30,10 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.travel.*;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -500,7 +503,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         TARDISMessage.send(player, "BIOME_FROM_VORTEX");
                                         return true;
                                     }
-                                    if (args[2].equalsIgnoreCase("Gallifrey") || args[2].equalsIgnoreCase("Siluria") || args[2].equalsIgnoreCase("Skaro")) {
+                                    String planet = args[2].toLowerCase(Locale.ROOT);
+                                    if (planet.endsWith("gallifrey") || planet.endsWith("siluria") || planet.endsWith("skaro")) {
                                         TARDISMessage.send(player, "BIOME_NOT_PLANET", args[2]);
                                         return true;
                                     }
@@ -511,7 +515,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         return true;
                                     }
                                 } else {
-                                    if (rsc.getWorld().getName().equalsIgnoreCase("Gallifrey") || rsc.getWorld().getName().equalsIgnoreCase("Siluria") || rsc.getWorld().getName().equalsIgnoreCase("Skaro")) {
+                                    String planet = rsc.getWorld().getName().toLowerCase(Locale.ROOT);
+                                    if (planet.endsWith("gallifrey") || planet.endsWith("siluria") || planet.endsWith("skaro")) {
                                         TARDISMessage.send(player, "BIOME_NOT_PLANET", rsc.getWorld().getName());
                                         return true;
                                     }
@@ -702,7 +707,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         return true;
                                     }
                                     // check world is enabled for travel
-                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(world.getName()) + ".time_travel")) {
+                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + world.getName() + ".time_travel")) {
                                         TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                                         return true;
                                     }
@@ -748,7 +753,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         TARDISMessage.send(player, "CURRENT_NOT_FOUND");
                                         return true;
                                     }
-                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(rsc.getWorld().getName()) + ".time_travel")) {
+                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".time_travel")) {
                                         TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                                         return true;
                                     }
@@ -945,7 +950,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             TARDISMessage.send(player, "WORLD_NOT_FOUND");
             return null;
         }
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(w.getName()) + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".time_travel")) {
             TARDISMessage.send(player, "NO_WORLD_TRAVEL");
             return null;
         }

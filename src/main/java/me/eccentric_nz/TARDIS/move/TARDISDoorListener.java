@@ -30,7 +30,6 @@ import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
 import multiworld.api.MultiWorldWorldData;
@@ -156,8 +155,7 @@ public class TARDISDoorListener {
                 }
                 break;
             case NONE:
-                String name = TARDISStringUtils.worldName(world.getName());
-                bool = plugin.getPlanetsConfig().getString("planets." + name + ".gamemode").equalsIgnoreCase("SURVIVAL");
+                bool = plugin.getPlanetsConfig().getString("planets." + world.getName() + ".gamemode").equalsIgnoreCase("SURVIVAL");
                 break;
         }
         return bool;

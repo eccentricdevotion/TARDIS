@@ -329,12 +329,6 @@ public class TARDIS extends JavaPlugin {
             loadDatabase();
             queryFactory = new QueryFactory(this);
             int conversions = 0;
-            // update world names
-            if (!getConfig().getBoolean("conversions.lowercase_world_names")) {
-                new TARDISWorldNameUpdate(this).replaceNames();
-                getConfig().set("conversions.lowercase_world_names", true);
-                conversions++;
-            }
             // update database materials
             if (!getConfig().getBoolean("conversions.ars_materials")) {
                 new ARSConverter(this).convertARS();

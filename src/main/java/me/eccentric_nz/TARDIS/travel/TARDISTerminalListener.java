@@ -31,7 +31,6 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -340,7 +339,7 @@ public class TARDISTerminalListener implements Listener {
     }
 
     private void setCurrent(InventoryView view, Player p, int slot) {
-        String current = TARDISStringUtils.worldName(terminalUsers.get(p.getUniqueId()).getWorld().getName());
+        String current = terminalUsers.get(p.getUniqueId()).getWorld().getName();
         if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
             current = plugin.getMVHelper().getAlias(current);
         } else {

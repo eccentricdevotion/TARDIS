@@ -134,8 +134,8 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 } else {
                     // try to unload the world
                     plugin.getServer().unloadWorld(world, true);
-                    plugin.getPlanetsConfig().set("planets." + TARDISStringUtils.worldName(args[1]) + ".enabled", false);
-                    plugin.getPlanetsConfig().set("planets." + TARDISStringUtils.worldName(args[1]) + ".time_travel", false);
+                    plugin.getPlanetsConfig().set("planets." + args[1] + ".enabled", false);
+                    plugin.getPlanetsConfig().set("planets." + args[1] + ".time_travel", false);
                     plugin.savePlanetsConfig();
                     TARDISMessage.send(sender, "WORLD_UNLOAD_SUCCESS", args[1]);
                 }

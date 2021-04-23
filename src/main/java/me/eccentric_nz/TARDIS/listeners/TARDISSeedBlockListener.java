@@ -166,7 +166,7 @@ public class TARDISSeedBlockListener implements Listener {
                     key = plugin.getConfig().getString("preferences.key");
                 }
                 if (player.getInventory().getItemInMainHand().getType().equals(Material.valueOf(key))) {
-                    if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(l.getWorld().getName()) + ".time_travel")) {
+                    if (!plugin.getPlanetsConfig().getBoolean("planets." + l.getWorld().getName() + ".time_travel")) {
                         TARDISMessage.send(player, "WORLD_NO_TARDIS");
                         return;
                     }

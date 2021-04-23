@@ -29,7 +29,6 @@ import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -106,7 +105,7 @@ public class TARDISRandomButton {
                 if (repeaters[0] == 1) { // first position
                     environment = "THIS";
                     // check TARDIS travel is allowed in this world
-                    if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(rscl.getWorld().getName()) + ".time_travel")) {
+                    if (!plugin.getPlanetsConfig().getBoolean("planets." + rscl.getWorld().getName() + ".time_travel")) {
                         TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                         return;
                     }
@@ -147,7 +146,7 @@ public class TARDISRandomButton {
                 Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, rscl.getWorld(), false, cl);
                 if (rand != null) {
                     // double check TARDIS travel is allowed in this world
-                    if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(rand.getWorld().getName()) + ".time_travel")) {
+                    if (!plugin.getPlanetsConfig().getBoolean("planets." + rand.getWorld().getName() + ".time_travel")) {
                         TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                         return;
                     }

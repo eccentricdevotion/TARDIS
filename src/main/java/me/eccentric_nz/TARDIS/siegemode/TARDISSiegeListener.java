@@ -31,7 +31,6 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -179,8 +178,7 @@ public class TARDISSiegeListener implements Listener {
             TARDISMessage.send(p, "SIEGE_NO_TARDIS");
             return;
         }
-        String w = p.getLocation().getWorld().getName();
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(w) + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + p.getLocation().getWorld().getName() + ".time_travel")) {
             event.setCancelled(true);
             TARDISMessage.send(p, "SIEGE_NO_WORLD");
             return;
@@ -242,7 +240,7 @@ public class TARDISSiegeListener implements Listener {
             return;
         }
         String w = p.getLocation().getWorld().getName();
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + TARDISStringUtils.worldName(w) + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + w + ".time_travel")) {
             event.setCancelled(true);
             TARDISMessage.send(p, "SIEGE_NO_WORLD");
             return;
