@@ -51,7 +51,7 @@ public class TARDISAliasResolver {
             if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + s + ".enabled")) {
                 World world = Bukkit.getServer().getWorld(s);
                 if (world != null) {
-                    String alias = TARDIS.plugin.getPlanetsConfig().getString("planets." + s + ".alias");
+                    String alias = TARDIS.plugin.getPlanetsConfig().getString("planets." + s + ".alias", s);
                     TARDISPlanet tp = new TARDISPlanet();
                     tp.setAlias(!alias.isEmpty() ? alias : s);
                     tp.setName(s);
