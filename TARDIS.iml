@@ -74,7 +74,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: com.onarandombox.multiverseinventories:Multiverse-Inventories:4.2.2-SNAPSHOT">
+      <library name="Maven: com.onarandombox.multiverseinventories:Multiverse-Inventories:4.2.3-SNAPSHOT">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/Multiverse-Inventories.jar!/" />
         </CLASSES>
@@ -146,7 +146,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: me.ryanhamshire:GriefPrevention:16.16.0">
+      <library name="Maven: me.ryanhamshire:GriefPrevention:16.17.1">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/GriefPrevention.jar!/" />
         </CLASSES>
@@ -155,7 +155,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: nl.rutgerkok:blocklocker:1.9.2">
+      <library name="Maven: nl.rutgerkok:blocklocker:1.9.3">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/BlockLocker.jar!/" />
         </CLASSES>
@@ -173,7 +173,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: com.comphenix.protocol:ProtocolLib:4.6.0">
+      <library name="Maven: com.comphenix.protocol:ProtocolLib:4.6.1">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/ProtocolLib.jar!/" />
         </CLASSES>

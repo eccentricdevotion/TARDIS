@@ -295,7 +295,7 @@
         <dependency>
             <groupId>com.onarandombox.multiverseinventories</groupId>
             <artifactId>Multiverse-Inventories</artifactId>
-            <version>4.2.2-SNAPSHOT</version>
+            <version>4.2.3-SNAPSHOT</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/Multiverse-Inventories.jar</systemPath>
@@ -359,7 +359,7 @@
         <dependency>
             <groupId>me.ryanhamshire</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>16.16.0</version>
+            <version>16.17.1</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/GriefPrevention.jar</systemPath>
@@ -367,7 +367,7 @@
         <dependency>
             <groupId>nl.rutgerkok</groupId>
             <artifactId>blocklocker</artifactId>
-            <version>1.9.2</version>
+            <version>1.9.3</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/BlockLocker.jar</systemPath>
@@ -384,7 +384,7 @@
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <version>4.6.0</version>
+            <version>4.6.1</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/ProtocolLib.jar</systemPath>

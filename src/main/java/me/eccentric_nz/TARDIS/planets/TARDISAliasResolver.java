@@ -24,7 +24,6 @@ public class TARDISAliasResolver {
             return world;
         } else {
             for (TARDISPlanet planet : planets.values()) {
-                TARDIS.plugin.debug("Alias for " + planet.getName() + " is: " + planet.getAlias());
                 if (planet.getAlias().equalsIgnoreCase(alias)) {
                     return planet.getWorld();
                 }
