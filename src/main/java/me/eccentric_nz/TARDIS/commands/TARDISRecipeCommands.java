@@ -318,7 +318,6 @@ public class TARDISRecipeCommands implements CommandExecutor {
         player.openInventory(inv);
     }
 
-    // Maps still seem to use numeric values
     private void showShapelessRecipe(Player player, String str) {
         ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(str);
         player.discoverRecipe(recipe.getKey());
