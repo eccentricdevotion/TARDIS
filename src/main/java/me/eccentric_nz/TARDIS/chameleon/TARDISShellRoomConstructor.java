@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -196,6 +197,7 @@ public class TARDISShellRoomConstructor {
                 TARDISStaticUtils.setSign(map.get("location"), 3, "CONSTRUCT", player);
             }
         }
+        new TARDISChameleonFrame(plugin).updateChameleonFrame(id, PRESET.CONSTRUCT);
         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Construct");
         // rebuild
         player.performCommand("tardis rebuild");
