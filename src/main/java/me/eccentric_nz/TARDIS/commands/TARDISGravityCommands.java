@@ -25,10 +25,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Command /tardisgravity [arguments].
@@ -121,9 +118,13 @@ public class TARDISGravityCommands implements CommandExecutor {
                 } else {
                     values[2] = 0.5D;
                 }
-                plugin.getTrackerKeeper().getGravity().put(player.getUniqueId(), values);
+                UUID uuid = player.getUniqueId();
+                plugin.getTrackerKeeper().getGravity().put(uuid, values);
                 String message = (dir.equals("remove")) ? "GRAVITY_CLICK_REMOVE" : "GRAVITY_CLICK_SAVE";
                 TARDISMessage.send(player, message);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    plugin.getTrackerKeeper().getGravity().remove(uuid);
+                }, 1200L);
                 return true;
             }
         }

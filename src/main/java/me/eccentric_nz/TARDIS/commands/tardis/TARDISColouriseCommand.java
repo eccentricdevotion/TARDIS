@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * As with the rest of the Doctor's TARDIS, the aesthetic design of the time rotor occasionally changed throughout the
@@ -84,7 +85,13 @@ class TARDISColouriseCommand {
             TARDISMessage.send(player, "CMD_ONLY_TL");
             return;
         }
-        // track the player
-        plugin.getTrackerKeeper().getBeaconColouring().add(player.getUniqueId());
+        // track the player for 60 seconds
+        UUID uuid = player.getUniqueId();
+        plugin.getTrackerKeeper().getBeaconColouring().add(uuid);
+        // message player
+        TARDISMessage.send(player, "COLOUR_TIME");
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            plugin.getTrackerKeeper().getBeaconColouring().remove(uuid);
+        }, 1200L);
     }
 }
