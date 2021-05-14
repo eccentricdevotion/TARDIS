@@ -496,7 +496,7 @@ permissions:
     default: op
 commands:
   tardis:
-    aliases: [ tt, ttardis, /tardis, timelord ]
+    aliases: tt
     description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, etc).
     bell:
       description: Toggle the TARDIS Cloister Bell on and off.
@@ -1013,7 +1013,7 @@ commands:
       permission: tardis.admin
       permission-message: You don't have the permission <permission> to use this command
   tardisartron:
-    aliases: [ tartron, artron ]
+    aliases: tartron
     description: Transfer Artron Energy to an Artron Storage Cell
     permission: tardis.store
     permission-message: You don't have the permission <permission> to use this command
@@ -1078,7 +1078,7 @@ commands:
     permission: tardis.book
     permission-message: You don't have the permission <permission> to use this command
   tardistexture:
-    aliases: [ tardisresource, tresource, ttexture, trp ]
+    aliases: ttexture
     description: Set texure pack preferences.
     usage: /<command> [on|off|in|out] [url]
     permission: tardis.texture
@@ -1096,19 +1096,19 @@ commands:
       description: Set resource pack that is switched to in the outside world.
       usage: /<command> out [url]
   tardisrecipe:
-    aliases: [ trecipe, trep ]
+    aliases: trecipe
     description: View TARDIS item recipes.
     usage: /<command> [item] - use /<command> list - to see all the items
     permission: tardis.help
     permission-message: You don't have the permission <permission> to use this command
   tardissay:
-    aliases: [ tsay, translate ]
+    aliases: tsay
     description: Say something in a different language via the TARDIS Universal Translator.
     usage: /<command> [language] [message]
     permission: tardis.translate
     permission-message: You don't have the permission <permission> to use this command
   tardisremote:
-    aliases: [ tremote, trem ]
+    aliases: tremote
     description: Remote control a TARDIS.
     usage: /<command> [player] [travel|comehere|chameleon|hide|rebuild] [home|area|coords]
     permission: tardis.remote
@@ -1116,7 +1116,7 @@ commands:
   tardisschematic:
     aliases: [ tschematic, ts ]
     description: Save, load or paste a TARDIS schematic.
-    usage: /<command> [save|load|paste] [name]
+    usage: /<command> [save|load|paste|clear] [name]
     save:
       description: Save a TARDIS schematic.
       usage: /<command> save [name]
@@ -1129,13 +1129,13 @@ commands:
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisnetherportal:
-    aliases: [ tnp, tnether, o2n, n2o ]
+    aliases: [ tnetherportal, tnp ]
     description: Get coordinates for linking Nether Portals.
     usage: /<command>
     permission: tardis.help
     permission-message: You don't have the permission <permission> to use this command
   tardisjunk:
-    aliases: [ tjunk, junk, tj ]
+    aliases: tjunk
     description: Create, find, return and delete the Junk TARDIS.
     usage: /<command> [create|find|return|delete]
     create:
@@ -1164,7 +1164,7 @@ commands:
     description: Get help with TARDIS commands.
     usage: /<command> [command] [argument]
   handles:
-    aliases: [ tardishandles, th ]
+    aliases: [ tardishandles, thandles ]
     description: These commands are used by the console to enable the Handles companion.
     usage: /<command> disk [disk name]
     takeoff:
@@ -1208,7 +1208,7 @@ commands:
     usage: /<command> [world]
     permission: tardis.admin
   tardisworld:
-    aliases: [ tardisw, tw ]
+    aliases: tworld
     description: Load or unload TARDIS worlds
     usage: /<command> [load|unload|gm] [world] <WorldType> <Environment> <generator>
     permission: tardis.admin
@@ -1218,7 +1218,7 @@ commands:
     usage: /<command> [GameMode] <player>
     permission: tardis.admin
   tardischemistry:
-    aliases: [ chemistry, chem, tchemistry, tchem ]
+    aliases: tchemistry
     description: Open a Chemistry creative GUI or show a chemical formula.
     usage: /<command> [gui|formula] [which]
     gui:
@@ -1263,22 +1263,22 @@ commands:
     usage: /<command> [letter]
     permission: tardis.help
   tardissudo:
-    aliases: [ tsudo, tadminsudo, tardisadminsudo ]
+    aliases: [ tsudo ]
     description: Used by TARDIS admins to run commands as another Time Lord. Currently only works for the /tardis theme [clean|repair] command.
     permission: tardis.admin
     usage: /<command> [player|off]
   tardisweather:
-    aliases: [ /tw, tweather ]
+    aliases: tweather
     description: Change the weather in the world the player is in (or where their TARDIS is if they are inside it).
     permission: tardis.use
     usage: /<command> [clear|rain|thunder]
   tardistime:
-    aliases: [ ttime ]
+    aliases: ttime
     description: Change the time in the world the player is in (or where their TARDIS is if they are inside it).
     permission: tardis.admin
     usage: /<command> [day|morning|noon|night|midnight|?AM|?PM|ticks]
   tardisbiome:
-    aliases: [ tbiome ]
+    aliases: tbiome
     description: Get the biome the player is looking at.
     permission: tardis.admin
     usage: /<command>
