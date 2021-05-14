@@ -137,6 +137,9 @@ class TARDISSchematicPaster implements Runnable {
             JsonObject col = row.get(c).getAsJsonObject();
             BlockData data = plugin.getServer().createBlockData(col.get("data").getAsString());
             Block block = world.getBlockAt(x + r, y + l, z + c);
+            if (!block.getType().isAir() && plugin.getBlockLogger().isLogging()) {
+                plugin.getBlockLogger().logRemoval(block);
+            }
             switch (data.getMaterial()) {
                 case REDSTONE_TORCH:
                     postRedstoneTorches.put(block, data);
@@ -181,6 +184,9 @@ class TARDISSchematicPaster implements Runnable {
                     break;
                 default:
                     block.setBlockData(data, true);
+                    if (plugin.getBlockLogger().isLogging()) {
+                        plugin.getBlockLogger().logPlacement(block);
+                    }
                     break;
             }
             double progress = counter / div;

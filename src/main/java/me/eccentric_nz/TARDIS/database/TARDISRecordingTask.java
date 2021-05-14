@@ -47,7 +47,6 @@ public class TARDISRecordingTask implements Runnable {
         try {
             int perBatch = 100;
             if (!TARDISRecordingQueue.getQUEUE().isEmpty()) {
-                //plugin.debug("Beginning batch insert from queue. " + System.currentTimeMillis());
                 TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
                 connection = service.getConnection();
                 // Handle dead connections

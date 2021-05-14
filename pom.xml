@@ -420,6 +420,14 @@
             <systemPath>${basedir}/lib/RedProtect.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>net.coreprotect</groupId>
+            <artifactId>CoreProtect</artifactId>
+            <version>19.5</version>
+            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/CoreProtect.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.rauschig</groupId>
             <artifactId>jarchivelib</artifactId>
             <version>0.7.1</version>

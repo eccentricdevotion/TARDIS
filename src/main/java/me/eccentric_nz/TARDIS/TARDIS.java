@@ -66,6 +66,7 @@ import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeRunnable;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.logging.TARDISBlockLogger;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -165,6 +166,7 @@ public class TARDIS extends JavaPlugin {
     private boolean updateFound = false;
     private int buildNumber = 0;
     private int updateNumber = 0;
+    private TARDISBlockLogger blockLogger;
 
     public TARDIS() {
         worldGuardOnServer = false;
@@ -511,6 +513,12 @@ public class TARDIS extends JavaPlugin {
             if (pm.getPlugin("PlaceholderAPI") != null) {
                 debug("Registering expansion with PlaceholderAPI.");
                 new TARDISPlaceholderExpansion(this).register();
+            }
+            // hook CoreProtectAPI
+            if (pm.getPlugin("CoreProtect") != null) {
+                debug("Logging block changes with CoreProtect.");
+                blockLogger = new TARDISBlockLogger(this);
+                blockLogger.enableLogger();
             }
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion.get() + " or higher, disabling...");
@@ -1299,6 +1307,10 @@ public class TARDIS extends JavaPlugin {
 
     public void setUpdateNumber(int updateNumber) {
         this.updateNumber = updateNumber;
+    }
+
+    public TARDISBlockLogger getBlockLogger() {
+        return blockLogger;
     }
 
     public void savePlanetsConfig() {
