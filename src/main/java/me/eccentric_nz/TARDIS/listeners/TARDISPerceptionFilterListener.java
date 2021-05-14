@@ -61,8 +61,8 @@ public class TARDISPerceptionFilterListener implements Listener {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
                     if (TARDISPermission.hasPermission(player, "tardis.filter")) {
-                        ItemStack chestplate = player.getInventory().getChestplate();
-                        if (chestplate == null) {
+                        ItemStack chestPlate = player.getInventory().getChestplate();
+                        if (chestPlate == null) {
                             // equip the chest slot with the perception filter
                             player.getInventory().setChestplate(is);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -92,7 +92,7 @@ public class TARDISPerceptionFilterListener implements Listener {
                     if (is.hasItemMeta()) {
                         ItemMeta im = is.getItemMeta();
                         if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
-                            if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
+                            if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.PLACE_ALL)) {
                                 plugin.getFilter().removePerceptionFilter((Player) event.getWhoClicked());
                             }
                         }
