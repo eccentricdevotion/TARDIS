@@ -41,6 +41,10 @@ class TARDISConstructCommand {
     }
 
     public boolean setLine(Player player, String[] args) {
+        if (args.length < 2) {
+            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            return true;
+        }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
             TARDISMessage.send(player, "NO_TARDIS");
@@ -53,8 +57,8 @@ class TARDISConstructCommand {
             TARDISMessage.send(player, "NO_CONSTRUCT");
             return true;
         }
-        boolean isAsym = args[1].equalsIgnoreCase("asymmetric");
-        if (!isAsym && args.length < 3) {
+        boolean isAsymmetric = args[1].equalsIgnoreCase("asymmetric");
+        if (!isAsymmetric && args.length < 3) {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
             return true;
         }
@@ -66,7 +70,7 @@ class TARDISConstructCommand {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
-        if (isAsym) {
+        if (isAsymmetric) {
             set.put("asymmetric", rscs.isAsymmetric() ? 0 : 1);
         } else {
             int l = TARDISNumberParsers.parseInt(args[1]);
@@ -89,7 +93,7 @@ class TARDISConstructCommand {
         }
         // save it
         plugin.getQueryFactory().doUpdate("chameleon", set, where);
-        String message = (isAsym) ? "CONSTRUCT_ASYMMETRIC" : "CONSTRUCT_LINE_SAVED";
+        String message = (isAsymmetric) ? "CONSTRUCT_ASYMMETRIC" : "CONSTRUCT_LINE_SAVED";
         TARDISMessage.send(player, message);
         return true;
     }

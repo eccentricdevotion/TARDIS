@@ -40,6 +40,10 @@ public class TARDISSudoCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardissudo")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
+                if (args.length < 1) {
+                    TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                    return true;
+                }
                 Player player;
                 UUID uuid;
                 if (sender instanceof Player) {

@@ -61,6 +61,10 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
     }
 
     private boolean setPlayerGameMode(CommandSender sender, String[] args, GameMode gm) {
+        if (gm == null && args.length < 1) {
+            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            return true;
+        }
         Player player = null;
         boolean thirdperson = false;
         if (sender instanceof ConsoleCommandSender) {

@@ -36,7 +36,6 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -207,6 +206,10 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                         }
                                         break;
                                     case "area":
+                                        if (args.length < 4) {
+                                            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                                            return true;
+                                        }
                                         // check area name
                                         HashMap<String, Object> wherea = new HashMap<>();
                                         wherea.put("area_name", args[3]);

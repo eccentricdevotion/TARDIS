@@ -55,6 +55,10 @@ public class TARDISSchematicCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisschematic")) {
+            if (args.length < 1) {
+                TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                return true;
+            }
             Player player = null;
             if (sender instanceof Player) {
                 player = (Player) sender;
@@ -130,11 +134,11 @@ public class TARDISSchematicCommand implements CommandExecutor {
             }
             if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
+                TARDISMessage.send(player, "SCHM_NAME");
                 return true;
             }
             if (!args[0].equalsIgnoreCase("load") && !args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("replace")) {
-                TARDISMessage.send(player, "SCHM_NAME");
-                return true;
+                return false;
             }
             if (args[0].equalsIgnoreCase("save")) {
                 // check they have selected start and end blocks
