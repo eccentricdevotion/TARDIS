@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetGravity;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.rooms.TARDISGravityWellRunnable;
@@ -241,8 +242,13 @@ public class TARDISGravityWellListener implements Listener {
                                     plugin.getGeneralKeeper().getGravityDownList().remove(loc);
                                     break;
                             }
-                            // set the block to light grey wool
-                            b.setBlockData(Material.LIGHT_GRAY_WOOL.createBlockData(), true);
+                            // set the floor block to the player's preferred floor block
+                            Material floor = Material.LIGHT_GRAY_WOOL;
+                            ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, uuid.toString());
+                            if (rspp.resultSet()) {
+                                floor = Material.valueOf(rspp.getFloor());
+                            }
+                            b.setBlockData(floor.createBlockData(), true);
                             TARDISMessage.send(player, "GRAVITY_REMOVED");
                         }
                     } else {
