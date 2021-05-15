@@ -1126,12 +1126,18 @@ commands:
     paste:
       description: Paste a loaded TARDIS schematic.
       usage: /<command> paste
+    clear:
+      description: Clears an area selected with the TARDIS schematic wand.
+      usage: /<command> clear
+    replace:
+      description: Replaces the specified block type within an area selected with the TARDIS schematic wand with the second block type.
+      usage: /<command> replace [material] [material]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisnetherportal:
     aliases: [ tnetherportal, tnp ]
     description: Get coordinates for linking Nether Portals.
-    usage: /<command>
+    usage: /<command> <[x] [y] [z] [overworld|nether]>
     permission: tardis.help
     permission-message: You don't have the permission <permission> to use this command
   tardisjunk:

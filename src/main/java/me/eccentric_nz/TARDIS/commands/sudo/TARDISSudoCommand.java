@@ -17,18 +17,18 @@
 package me.eccentric_nz.TARDIS.commands.sudo;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-public class TARDISSudoCommand implements CommandExecutor {
+public class TARDISSudoCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
 
@@ -77,5 +77,18 @@ public class TARDISSudoCommand implements CommandExecutor {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 1) {
+            List<String> SUBS = new ArrayList<>();
+            SUBS.add("off");
+            for (Player p : plugin.getServer().getOnlinePlayers()) {
+                SUBS.add(p.getName());
+            }
+            return partial(args[0], SUBS);
+        }
+        return null;
     }
 }

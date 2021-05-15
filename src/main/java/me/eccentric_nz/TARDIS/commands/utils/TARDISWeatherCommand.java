@@ -83,6 +83,9 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
                 TARDISWeather.setWeather(world, weather);
                 TARDISMessage.send(player, "WEATHER_SET", perm);
                 return true;
+            } else {
+                TARDISMessage.send(sender, "CMD_PLAYER");
+                return true;
             }
         }
         return false;
@@ -90,7 +93,7 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length <= 1) {
+        if (args.length == 1) {
             return partial(args[0], ROOT_SUBS);
         }
         return ImmutableList.of();

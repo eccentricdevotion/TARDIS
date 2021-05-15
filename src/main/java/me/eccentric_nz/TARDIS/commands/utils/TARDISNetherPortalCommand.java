@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands.utils;
 
+import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
+import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -26,7 +28,10 @@ import org.bukkit.World.Environment;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 /**
  * Inspired by Nether Portal Calculator v1.0 by D3Phoenix http://ilurker.rooms.cwal.net/portal.html
@@ -46,9 +51,10 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISNetherPortalCommand implements CommandExecutor {
+public class TARDISNetherPortalCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
+    private final ImmutableList<String> ENVIRON_SUBS = ImmutableList.of("overworld", "nether");
 
     public TARDISNetherPortalCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -125,5 +131,13 @@ public class TARDISNetherPortalCommand implements CommandExecutor {
         String coords = "X: " + dx + ", " + "Y: " + y + ", " + "Z: " + dz;
         TARDISMessage.send(sender, message, coords);
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 4) {
+            return partial(args[3], ENVIRON_SUBS);
+        }
+        return ImmutableList.of();
     }
 }

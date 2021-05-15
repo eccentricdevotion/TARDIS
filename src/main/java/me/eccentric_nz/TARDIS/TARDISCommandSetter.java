@@ -108,9 +108,15 @@ class TARDISCommandSetter {
         plugin.getCommand("tardistravel").setTabCompleter(new TARDISTravelTabComplete(plugin));
         plugin.getCommand("tardissay").setExecutor(new TARDISSayCommand(plugin));
         plugin.getCommand("tardissay").setTabCompleter(new TARDISSayTabComplete());
-        plugin.getCommand("tardissudo").setExecutor(new TARDISSudoCommand(plugin));
-        plugin.getCommand("tardisremote").setExecutor(new TARDISRemoteCommands(plugin));
-        plugin.getCommand("tardisnetherportal").setExecutor(new TARDISNetherPortalCommand(plugin));
+        TARDISSudoCommand tardisSudoCommand = new TARDISSudoCommand(plugin);
+        plugin.getCommand("tardissudo").setExecutor(tardisSudoCommand);
+        plugin.getCommand("tardissudo").setTabCompleter(tardisSudoCommand);
+        TARDISRemoteCommands tardisRemoteCommands = new TARDISRemoteCommands(plugin);
+        plugin.getCommand("tardisremote").setExecutor(tardisRemoteCommands);
+        plugin.getCommand("tardisremote").setTabCompleter(tardisRemoteCommands);
+        TARDISNetherPortalCommand tardisNetherPortalCommand = new TARDISNetherPortalCommand(plugin);
+        plugin.getCommand("tardisnetherportal").setExecutor(tardisNetherPortalCommand);
+        plugin.getCommand("tardisnetherportal").setTabCompleter(tardisNetherPortalCommand);
         plugin.getCommand("tardis?").setExecutor(new TARDISQuestionMarkCommand(plugin));
         plugin.getCommand("tardis?").setTabCompleter(new TARDISQuestionTabComplete(plugin));
         plugin.getCommand("tardisinfo").setExecutor(info);
