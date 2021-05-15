@@ -21,6 +21,8 @@ import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.messaging.TARDISGiveLister;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Bukkit;
@@ -56,75 +58,18 @@ public class TARDISGiveCommand implements CommandExecutor {
     public TARDISGiveCommand(TARDIS plugin) {
         this.plugin = plugin;
         full = this.plugin.getArtronConfig().getInt("full_charge");
-        items.put("a-circuit", "Server Admin Circuit");
-        items.put("acid-battery", "Acid Battery");
-        items.put("arrow-circuit", "Pickup Arrows Circuit");
-        items.put("ars-circuit", "TARDIS ARS Circuit");
         items.put("artron", "");
-        items.put("battery", "Blaster Battery");
-        items.put("bio-circuit", "Bio-scanner Circuit");
-        items.put("biome-disk", "Biome Storage Disk");
-        items.put("blank", "Blank Storage Disk");
-        items.put("blaster", "Sonic Blaster");
         items.put("blueprint", "");
-        items.put("bow-tie", "Red Bow Tie");
-        items.put("c-circuit", "TARDIS Chameleon Circuit");
-        items.put("cell", "Artron Storage Cell");
-        items.put("communicator", "TARDIS Communicator");
-        items.put("control", "Authorised Control Disk");
-        items.put("custard", "Bowl of Custard");
-        items.put("d-circuit", "Diamond Disruptor Circuit");
-        items.put("e-circuit", "Emerald Environment Circuit");
-        items.put("filter", "Perception Filter");
-        items.put("fish-finger", "Fish Finger");
-        items.put("furnace", "TARDIS Artron Furnace");
-        items.put("generator", "Sonic Generator");
-        items.put("glasses", "3-D Glasses");
-        items.put("handles", "Handles");
-        items.put("i-circuit", "TARDIS Input Circuit");
-        items.put("ignite-circuit", "Ignite Circuit");
-        items.put("invisible", "TARDIS Invisibility Circuit");
-        items.put("jammy-dodger", "Jammy Dodger");
-        items.put("jelly-baby", "Orange Jelly Baby");
-        items.put("k-circuit", "Knockback Circuit");
-        items.put("key", "TARDIS Key");
-        items.put("kit", "TARDIS Item Kit");
-        items.put("l-circuit", "TARDIS Locator Circuit");
-        items.put("locator", "TARDIS Locator");
-        items.put("m-circuit", "TARDIS Materialisation Circuit");
-        items.put("memory-circuit", "TARDIS Memory Circuit");
+        items.put("kit", "");
         items.put("mushroom", "");
-        items.put("oscillator", "Sonic Oscillator");
-        items.put("p-circuit", "Perception Circuit");
-        items.put("pad", "Landing Pad");
-        items.put("painter", "Painter Circuit");
-        items.put("paper-bag", "Paper Bag");
-        items.put("player-disk", "Player Storage Disk");
-        items.put("preset-disk", "Preset Storage Disk");
-        items.put("r-circuit", "Redstone Activator Circuit");
-        items.put("r-key", "TARDIS Remote Key");
-        items.put("randomiser-circuit", "TARDIS Randomiser Circuit");
-        items.put("reader", "TARDIS Biome Reader");
-        items.put("recipes", "TARDIS Recipes");
-        items.put("remote", "Stattenheim Remote");
-        items.put("rift-circuit", "Rift Circuit");
-        items.put("rift-manipulator", "Rift Manipulator");
-        items.put("rust", "Rust Plague Sword");
-        items.put("rotor_early", "Time Rotor Early");
-        items.put("rotor_tenth", "Time Rotor Tenth");
-        items.put("rotor_eleventh", "Time Rotor Eleventh");
-        items.put("rotor_twelfth", "Time Rotor Twelfth");
-        items.put("s-circuit", "TARDIS Stattenheim Circuit");
-        items.put("save-disk", "Save Storage Disk");
-        items.put("scanner-circuit", "TARDIS Scanner Circuit");
+        items.put("recipes", "");
         items.put("seed", "");
-        items.put("sonic", "Sonic Screwdriver");
-        items.put("t-circuit", "TARDIS Temporal Circuit");
         items.put("tachyon", "");
-        items.put("telepathic", "TARDIS Telepathic Circuit");
-        items.put("vortex", "Vortex Manipulator");
-        items.put("wand", "TARDIS Schematic Wand");
-        items.put("watch", "Fob Watch");
+        for (RecipeItem recipeItem : RecipeItem.values()) {
+            if (recipeItem.getCategory() != RecipeCategory.SONIC_UPGRADES && recipeItem.getCategory() != RecipeCategory.UNUSED) {
+                items.put(recipeItem.toTabCompletionString(), recipeItem.toRecipeString());
+            }
+        }
     }
 
     @Override
@@ -285,20 +230,9 @@ public class TARDISGiveCommand implements CommandExecutor {
             TARDISMessage.send(sender, "ARG_MAX");
             return true;
         }
-        if ((item.equals("battery") || item.equals("blaster") || item.equals("pad")) && !plugin.getPM().isPluginEnabled("TARDISSonicBlaster")) {
-            TARDISMessage.send(sender, "RECIPE_BLASTER");
-            return true;
-        }
-        if (item.equals("vortex") && !plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
-            TARDISMessage.send(sender, "RECIPE_VORTEX");
-            return true;
-        }
-        if (item.equals("vortex")) {
-            TARDISMessage.send(sender, "VORTEX_CMD");
-        }
         String item_to_give = items.get(item);
         ItemStack result;
-        if (item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("custard") || item.equals("jelly-baby") || item.equals("wand")) {
+        if (item.equals("save-storage-disk") || item.equals("preset-storage-disk") || item.equals("biome-storage-disk") || item.equals("player-storage-disk") || item.equals("bowl-of-custard") || item.equals("jelly-baby") || item.equals("schematic-wand")) {
             ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(item_to_give);
             result = recipe.getResult();
         } else {

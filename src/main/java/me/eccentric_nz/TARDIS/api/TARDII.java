@@ -441,7 +441,7 @@ public class TARDII implements TardisAPI {
             im.setLore(lore);
             result.setItemMeta(im);
         }
-        if (item.equals("Blank Storage Disk") || item.equals("Save Storage Disk") || item.equals("Preset Storage Disk") || item.equals("Biome Storage Disk") || item.equals("Player Storage Disk") || item.equals("Sonic Blaster") || item.equals("Authorised Control Disk")) {
+        if (item.equals("Blank Storage Disk") || item.equals("Save Storage Disk") || item.equals("Preset Storage Disk") || item.equals("Biome Storage Disk") || item.equals("Player Storage Disk") || item.equals("Authorised Control Disk")) {
             ItemMeta im = result.getItemMeta();
             im.addItemFlags(ItemFlag.values());
             result.setItemMeta(im);

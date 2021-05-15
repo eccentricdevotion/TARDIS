@@ -21,12 +21,14 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -36,7 +38,7 @@ import java.util.Set;
 public class TARDISGiveTabComplete extends TARDISCompleter implements TabCompleter {
 
     private static final List<String> BLUEPRINT_SUBS = new ArrayList<>();
-    private final ImmutableList<String> GIVE_SUBS = ImmutableList.of("artron", "kit", "a-circuit", "acid-battery", "arrow-circuit", "ars-circuit", "battery", "blaster", "blueprint", "bow-tie", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "communicator", "control", "custard", "d-circuit", "e-circuit", "filter", "fish-finger", "furnace", "generator", "glasses", "handles", "i-circuit", "ignite-circuit", "invisible", "jammy-dodger", "jelly-baby", "k-circuit", "key", "keyboard", "l-circuit", "locator", "m-circuit", "memory-circuit", "mushroom", "oscillator", "pad", "painter", "paper-bag", "player-disk", "preset-disk", "p-circuit", "r-circuit", "r-key", "randomiser-circuit", "reader", "remote", "rift-circuit", "rift-manipulator", "rust", "rotor_early", "rotor_tenth", "rotor_eleventh", "rotor_twelfth", "s-circuit", "save-disk", "scanner-circuit", "seed", "sonic", "t-circuit", "telepathic", "tachyon", "vortex", "wand", "watch");
+    private final Set<String> GIVE_SUBS = new HashSet<>();
     private final ImmutableList<String> GIVE_KNOWLEDGE = ImmutableList.of("knowledge", "1", "2", "64");
     private final ImmutableList<String> KIT_SUBS;
     private final List<String> SEED_SUBS = new ArrayList<>();
@@ -44,6 +46,16 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
     private final List<String> MAT_SUBS = new ArrayList<>();
 
     public TARDISGiveTabComplete(TARDIS plugin) {
+        GIVE_SUBS.add("artron");
+        GIVE_SUBS.add("blueprint");
+        GIVE_SUBS.add("kit");
+        GIVE_SUBS.add("mushroom");
+        GIVE_SUBS.add("recipes");
+        GIVE_SUBS.add("seed");
+        GIVE_SUBS.add("tachyon");
+        for (RecipeItem recipeItem : RecipeItem.values()) {
+            GIVE_SUBS.add(recipeItem.toTabCompletionString());
+        }
         Set<String> kits = plugin.getKitsConfig().getConfigurationSection("kits").getKeys(false);
         KIT_SUBS = ImmutableList.copyOf(kits);
         for (BlueprintBase base : BlueprintBase.values()) {

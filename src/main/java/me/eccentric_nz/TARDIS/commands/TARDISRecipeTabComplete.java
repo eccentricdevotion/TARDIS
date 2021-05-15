@@ -17,21 +17,31 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * TabCompleter for /tardisrecipe command
  */
 public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompleter {
 
-    public static final List<String> ROOT_SUBS = ImmutableList.of("a-circuit", "acid-battery", "arrow-circuit", "ars-circuit", "battery", "blaster", "bow-tie", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "communicator", "control", "custard", "d-circuit", "e-circuit", "filter", "fish-finger", "furnace", "generator", "glasses", "handles", "i-circuit", "ignite-circuit", "invisible", "jammy-dodger", "jelly-baby", "k-circuit", "key", "keyboard", "l-circuit", "locator", "m-circuit", "memory-circuit", "oscillator", "pad", "painter", "paper-bag", "player-disk", "preset-disk", "p-circuit", "r-circuit", "r-key", "randomiser-circuit", "reader", "remote", "rift-circuit", "rift-manipulator", "rotor_early", "rotor_tenth", "rotor_eleventh", "rotor_twelfth", "rust", "s-circuit", "save-disk", "scanner-circuit", "seed", "sonic", "t-circuit", "tardis", "telepathic", "vortex", "wand", "watch");
+    public static final Set<String> ROOT_SUBS = new HashSet<>();
     public static final List<String> TARDIS_TYPES = ImmutableList.of("ars", "bigger", "budget", "coral", "custom", "deluxe", "eleventh", "ender", "master", "pyramid", "redstone", "rotor", "steampunk", "thirteenth", "tom", "twelfth", "war", "wood", "legacy_budget", "legacy_bigger", "legacy_deluxe", "legacy_eleventh", "legacy_redstone");
+    private final boolean jelly = false;
+    private final boolean bowtie = false;
 
     public TARDISRecipeTabComplete() {
+        ROOT_SUBS.add("seed");
+        ROOT_SUBS.add("tardis");
+        for (RecipeItem recipeItem : RecipeItem.values()) {
+            ROOT_SUBS.add(recipeItem.toTabCompletionString());
+        }
     }
 
     @Override

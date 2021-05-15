@@ -52,80 +52,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
 
     public TARDISRecipeCommands(TARDIS plugin) {
         this.plugin = plugin;
-        recipeItems.put("a-circuit", "Server Admin Circuit");
-        recipeItems.put("acid-battery", "Acid Battery");
-        recipeItems.put("arrow-circuit", "Pickup Arrows Circuit");
-        recipeItems.put("ars-circuit", "TARDIS ARS Circuit");
-        recipeItems.put("battery", "Blaster Battery");
-        recipeItems.put("bio-circuit", "Bio-scanner Circuit");
-        recipeItems.put("biome-disk", "Biome Storage Disk");
-        recipeItems.put("blank", "Blank Storage Disk");
-        recipeItems.put("blaster", "Sonic Blaster");
-        recipeItems.put("bow-tie", "Red Bow Tie");
-        recipeItems.put("c-circuit", "TARDIS Chameleon Circuit");
-        recipeItems.put("cell", "Artron Storage Cell");
-        recipeItems.put("communicator", "TARDIS Communicator");
-        recipeItems.put("control", "Authorised Control Disk");
-        recipeItems.put("custard", "Bowl of Custard");
-        recipeItems.put("d-circuit", "Diamond Disruptor Circuit");
-        recipeItems.put("e-circuit", "Emerald Environment Circuit");
-        recipeItems.put("filter", "Perception Filter");
-        recipeItems.put("fish-finger", "Fish Finger");
-        recipeItems.put("furnace", "TARDIS Artron Furnace");
-        recipeItems.put("generator", "Sonic Generator");
-        recipeItems.put("glasses", "3-D Glasses");
-        recipeItems.put("handles", "Handles");
-        recipeItems.put("i-circuit", "TARDIS Input Circuit");
-        recipeItems.put("ignite-circuit", "Ignite Circuit");
-        recipeItems.put("invisible", "TARDIS Invisibility Circuit");
-        recipeItems.put("jammy-dodger", "Jammy Dodger");
-        recipeItems.put("jelly-baby", "Orange Jelly Baby");
-        recipeItems.put("k-circuit", "Knockback Circuit");
-        recipeItems.put("key", "TARDIS Key");
-        recipeItems.put("l-circuit", "TARDIS Locator Circuit");
-        recipeItems.put("locator", "TARDIS Locator");
-        recipeItems.put("m-circuit", "TARDIS Materialisation Circuit");
-        recipeItems.put("memory-circuit", "TARDIS Memory Circuit");
-        recipeItems.put("oscillator", "Sonic Oscillator");
-        recipeItems.put("p-circuit", "Perception Circuit");
-        recipeItems.put("pad", "Landing Pad");
-        recipeItems.put("painter", "Painter Circuit");
-        recipeItems.put("paper-bag", "Paper Bag");
-        recipeItems.put("player-disk", "Player Storage Disk");
-        recipeItems.put("preset-disk", "Preset Storage Disk");
-        recipeItems.put("r-circuit", "Redstone Activator Circuit");
-        recipeItems.put("r-key", "TARDIS Remote Key");
-        recipeItems.put("randomiser-circuit", "TARDIS Randomiser Circuit");
-        recipeItems.put("reader", "TARDIS Biome Reader");
-        recipeItems.put("remote", "Stattenheim Remote");
-        recipeItems.put("rift-circuit", "Rift Circuit");
-        recipeItems.put("rift-manipulator", "Rift Manipulator");
-        recipeItems.put("rust", "Rust Plague Sword");
-        recipeItems.put("rotor_early", "Time Rotor Early");
-        recipeItems.put("rotor_tenth", "Time Rotor Tenth");
-        recipeItems.put("rotor_eleventh", "Time Rotor Eleventh");
-        recipeItems.put("rotor_twelfth", "Time Rotor Twelfth");
-        recipeItems.put("s-circuit", "TARDIS Stattenheim Circuit");
-        recipeItems.put("save-disk", "Save Storage Disk");
-        recipeItems.put("scanner-circuit", "TARDIS Scanner Circuit");
         recipeItems.put("seed", "");
-        recipeItems.put("sonic", "Sonic Screwdriver");
-        recipeItems.put("t-circuit", "TARDIS Temporal Circuit");
         recipeItems.put("tardis", "");
-        recipeItems.put("telepathic", "TARDIS Telepathic Circuit");
-        recipeItems.put("vortex", "Vortex Manipulator");
-        recipeItems.put("wand", "TARDIS Schematic Wand");
-        recipeItems.put("watch", "Fob Watch");
-        // sonic upgrades
-        recipeItems.put("a-upgrade", "Admin Upgrade");
-        recipeItems.put("b-upgrade", "Bio-scanner Upgrade");
-        recipeItems.put("d-upgrade", "Diamond Upgrade");
-        recipeItems.put("e-upgrade", "Emerald Upgrade");
-        recipeItems.put("i-upgrade", "Ignite Upgrade");
-        recipeItems.put("k-upgrade", "Knockback Upgrade");
-        recipeItems.put("p-upgrade", "Painter Upgrade");
-        recipeItems.put("pu-upgrade", "Pickup Arrows Upgrade");
-        recipeItems.put("r-upgrade", "Redstone Upgrade");
+        for (RecipeItem recipeItem : RecipeItem.values()) {
+            recipeItems.put(recipeItem.toTabCompletionString(), recipeItem.toRecipeString());
+        }
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
         t.put("ARS", Material.QUARTZ_BLOCK); // ARS
         t.put("BIGGER", Material.GOLD_BLOCK); // bigger
@@ -173,7 +104,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                TARDISMessage.send(sender, "CMD_PLAYER");
+                if (args.length == 0) {
+                    new TARDISRecipeLister(plugin, sender).list();
+                } else {
+                    TARDISMessage.send(sender, "CMD_PLAYER");
+                }
                 return true;
             }
             if (args.length == 0) {
@@ -206,38 +141,22 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             String which = args[0].toLowerCase();
             switch (which) {
-                case "vortex":
-                    if (!plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
-                        TARDISMessage.send(sender, "RECIPE_VORTEX");
-                        return true;
-                    }
-                    showShapedRecipe(player, "Vortex Manipulator");
-                    return true;
-                case "battery":
-                case "blaster":
-                case "pad":
-                    if (!plugin.getPM().isPluginEnabled("TARDISSonicBlaster")) {
-                        TARDISMessage.send(sender, "RECIPE_BLASTER");
-                        return true;
-                    }
-                    showShapedRecipe(player, recipeItems.get(which));
-                    return true;
-                case "biome-disk":
-                case "custard":
+                case "bowl-of-custard":
                 case "jelly-baby":
-                case "player-disk":
-                case "preset-disk":
-                case "save-disk":
-                case "wand":
-                case "a-upgrade":
-                case "b-upgrade":
-                case "d-upgrade":
-                case "e-upgrade":
-                case "i-upgrade":
-                case "k-upgrade":
-                case "p-upgrade":
-                case "pu-upgrade":
-                case "r-upgrade":
+                case "biome-storage-disk":
+                case "player-storage-disk":
+                case "preset-storage-disk":
+                case "save-storage-disk":
+                case "schematic-wand":
+                case "admin-upgrade":
+                case "bio-scanner-upgrade":
+                case "redstone-upgrade":
+                case "diamond-upgrade":
+                case "emerald-upgrade":
+                case "painter-upgrade":
+                case "ignite-upgrade":
+                case "pickup-arrows-upgrade":
+                case "knockback-upgrade":
                     showShapelessRecipe(player, recipeItems.get(which));
                     return true;
                 default:
@@ -275,10 +194,6 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     im.setDisplayName("TARDIS Key");
                     im.setCustomModelData(1);
                 }
-                if (str.equals("Sonic Blaster") && item.getType().equals(Material.BUCKET)) {
-                    im.setDisplayName("Blaster Battery");
-                    im.setCustomModelData(10000002);
-                }
                 if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
                     im.setDisplayName("Acid Bucket");
                     im.setCustomModelData(1);
@@ -309,7 +224,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             lore.set(1, uses);
             im.setLore(lore);
         }
-        if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk") || str.equals("Sonic Blaster")) {
+        if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
             im.addItemFlags(ItemFlag.values());
         }
         result.setAmount(1);
@@ -336,6 +251,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             if (ingredients.get(i).getType().equals(Material.MUSIC_DISC_STRAD)) {
                 im.setDisplayName("Blank Storage Disk");
                 im.setCustomModelData(10000001);
+                im.addItemFlags(ItemFlag.values());
             }
             if (ingredients.get(i).getType().equals(Material.BLAZE_ROD)) {
                 im.setDisplayName("Sonic Screwdriver");
@@ -347,7 +263,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
         im.setDisplayName(str);
-        if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk") || str.equals("Sonic Blaster")) {
+        if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
             im.addItemFlags(ItemFlag.values());
         }
         RecipeItem recipeItem = RecipeItem.getByName(str);

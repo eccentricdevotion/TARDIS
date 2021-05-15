@@ -15,7 +15,7 @@ public class TARDISPermissionLister {
         this.plugin = plugin;
     }
 
-    public void listPerms(CommandSender sender) {
+    void listPerms(CommandSender sender) {
         List<String> perms = new ArrayList(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("permissions").getKeys(true));
         perms.sort(Comparator.naturalOrder());
         String lastPerm = "";

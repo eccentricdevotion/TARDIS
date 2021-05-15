@@ -25,18 +25,18 @@ public enum RecipeItem {
     AUTHORISED_CONTROL_DISK(10000001, RecipeCategory.STORAGE_DISKS),
     BIO_SCANNER_CIRCUIT(10001969, RecipeCategory.SONIC_CIRCUITS),
     BLANK_STORAGE_DISK(10000001, RecipeCategory.STORAGE_DISKS),
-    BLASTER_BATTERY(10000002),
+    //    BLASTER_BATTERY(10000002),
     CUSTARD_CREAM(10000002, RecipeCategory.FOOD),
     DIAMOND_DISRUPTOR_CIRCUIT(10001971, RecipeCategory.SONIC_CIRCUITS),
     EMERALD_ENVIRONMENT_CIRCUIT(10001972, RecipeCategory.SONIC_CIRCUITS),
     FISH_FINGER(10000001, RecipeCategory.FOOD),
     FOB_WATCH(10000001, RecipeCategory.ACCESSORIES),
     HANDLES(10000001, RecipeCategory.ACCESSORIES),
-    HANDLES_DISK(10000001),
+    //    HANDLES_DISK(10000001),
     IGNITE_CIRCUIT(10001982, RecipeCategory.SONIC_CIRCUITS),
     JAMMY_DODGER(10000001, RecipeCategory.FOOD),
     KNOCKBACK_CIRCUIT(10001986, RecipeCategory.SONIC_CIRCUITS),
-    LANDING_PAD(10000002),
+    //    LANDING_PAD(10000002),
     PAINTER_CIRCUIT(10001979, RecipeCategory.SONIC_CIRCUITS),
     PAPER_BAG(10000001, RecipeCategory.FOOD),
     PERCEPTION_CIRCUIT(10001978, RecipeCategory.ITEM_CIRCUITS),
@@ -47,7 +47,7 @@ public enum RecipeItem {
     RIFT_MANIPULATOR(10000001, RecipeCategory.ACCESSORIES),
     RUST_PLAGUE_SWORD(10000001, RecipeCategory.MISC),
     SERVER_ADMIN_CIRCUIT(10001968, RecipeCategory.SONIC_CIRCUITS),
-    SONIC_BLASTER(10000002),
+    //    SONIC_BLASTER(10000002),
     SONIC_GENERATOR(10000001, RecipeCategory.ITEM_CIRCUITS),
     SONIC_OSCILLATOR(10001967, RecipeCategory.ITEM_CIRCUITS),
     SONIC_SCREWDRIVER(10000011, RecipeCategory.ITEMS),
@@ -176,6 +176,21 @@ public enum RecipeItem {
                 return "TARDIS ARS Circuit";
             default:
                 return TARDISStringUtils.capitalise(toString()).replace("Tardis", "TARDIS");
+        }
+    }
+
+    public String toTabCompletionString() {
+        String recipe = toRecipeString();
+        if (this == THREE_D_GLASSES) {
+            return "3-d-glasses";
+        } else if (recipe.startsWith("TARDIS")) {
+            return TARDISStringUtils.toLowercaseDashed(recipe).replace("tardis-", "");
+        } else if (recipe.endsWith("Baby")) {
+            return "jelly-baby";
+        } else if (recipe.endsWith("Tie")) {
+            return "bow-tie";
+        } else {
+            return TARDISStringUtils.toLowercaseDashed(recipe);
         }
     }
 }

@@ -12,15 +12,15 @@ import org.bukkit.inventory.ShapelessRecipe;
 
 import java.util.Map;
 
-public class TARDISRecipesLister {
+class TARDISRecipesLister {
 
     private final TARDIS plugin;
 
-    public TARDISRecipesLister(TARDIS plugin) {
+    TARDISRecipesLister(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public void listRecipes(CommandSender sender) {
+    void listRecipes(CommandSender sender) {
         for (Map.Entry<String, ShapedRecipe> shaped : plugin.getFigura().getShapedRecipes().entrySet()) {
             sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shaped.getKey()) + "(\"" + shaped.getKey() + "\", Material." + shaped.getValue().getResult().getType().toString() + ", " + RecipeItem.getByName(shaped.getKey()).getCustomModelData() + "),");
         }

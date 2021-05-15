@@ -70,6 +70,10 @@ public class TARDISStringUtils {
         return s.toLowerCase().replace("_", "-");
     }
 
+    public static String toLowercaseDashed(String s) {
+        return s.toLowerCase().replace(" ", "-");
+    }
+
     public static String toScoredUppercase(String s) {
         return s.toUpperCase().replace("-", "_");
     }
