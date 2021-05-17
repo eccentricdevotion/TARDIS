@@ -39,7 +39,7 @@ class TARDISCSVPaster {
         this.plugin = plugin;
     }
 
-    public String[][][] arrayFromCSV(File file) {
+    String[][][] arrayFromCSV(File file) {
         String[][][] blocks = new String[8][11][11];
         try {
             BufferedReader bufRdr = new BufferedReader(new FileReader(file));
@@ -53,11 +53,10 @@ class TARDISCSVPaster {
         } catch (IOException io) {
             plugin.debug("Could not read csv file" + io.getMessage());
         }
-//        Material.NOTE_BLOCK;
         return blocks;
     }
 
-    public void buildLegacy(String[][][] s, Location location) {
+    void buildLegacy(String[][][] s, Location location) {
         World world = location.getWorld();
         int startx = location.getBlockX();
         int resetx = location.getBlockX();

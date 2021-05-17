@@ -65,6 +65,9 @@ public class TARDISBlockSetters {
                     b.setBlockData(bd);
                     break;
             }
+            if (TARDIS.plugin.getBlockLogger().isLogging()) {
+                TARDIS.plugin.getBlockLogger().logPlacement(b);
+            }
         }
     }
 
@@ -100,6 +103,9 @@ public class TARDISBlockSetters {
                 default:
                     b.setBlockData(data);
                     break;
+            }
+            if (TARDIS.plugin.getBlockLogger().isLogging()) {
+                TARDIS.plugin.getBlockLogger().logPlacement(b);
             }
         }
     }
@@ -137,6 +143,9 @@ public class TARDISBlockSetters {
                 default:
                     b.setBlockData(blockData);
                     break;
+            }
+            if (TARDIS.plugin.getBlockLogger().isLogging()) {
+                TARDIS.plugin.getBlockLogger().logPlacement(b);
             }
         }
     }

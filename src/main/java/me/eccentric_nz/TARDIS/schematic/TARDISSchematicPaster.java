@@ -34,6 +34,7 @@ import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
@@ -99,7 +100,12 @@ class TARDISSchematicPaster implements Runnable {
             running = true;
         }
         if (l == h && r == w - 1) {
-            postRedstoneTorches.forEach(Block::setBlockData);
+            for (Map.Entry<Block, BlockData> map : postRedstoneTorches.entrySet()) {
+                map.getKey().setBlockData(map.getValue());
+                if (TARDIS.plugin.getBlockLogger().isLogging()) {
+                    TARDIS.plugin.getBlockLogger().logPlacement(map.getKey());
+                }
+            }
             setBanners(postBanners);
             // paintings
             if (obj.has("paintings")) {
