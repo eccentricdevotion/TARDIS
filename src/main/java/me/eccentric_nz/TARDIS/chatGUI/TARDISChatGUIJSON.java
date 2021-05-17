@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.chatGUI;
 
+import me.eccentric_nz.TARDIS.enumeration.Updateable;
+import me.eccentric_nz.TARDIS.update.TARDISUpdatableCategory;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,6 +27,9 @@ import java.util.List;
  * @author eccentric_nz
  */
 public class TARDISChatGUIJSON {
+
+    // counter, updateable.getDescription(), updateable.getName()
+    private final String REPLACEMENT_STRING = "{\"text\":\"%s. %s\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update %s\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}";
 
     private final String EGG = "{\"text\":\"[TARDIS] \",\"color\":\"gold\",\"extra\":[{\"text\":\"Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis egg\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}]}";
 
@@ -35,65 +42,35 @@ public class TARDISChatGUIJSON {
             "{\"text\":\"4. Others\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section others\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
     );
 
-    private final List<String> controls = Arrays.asList(
-            "{\"text\":\"1. Artron Energy Capacitor button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update artron\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"2. Previous Location button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update back\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"3. Random Location button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update button\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"4. Handbrake\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update handbrake\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"5. World Type selector\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update world-repeater\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"6. Random x coordinate setter\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update x-repeater\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"7. Distance multipler\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update y-repeater\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"8. Random z coordinate setter\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update z-repeater\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"9. TARDIS Control Menu\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update control\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"10. Flight Mode button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update flight\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"11. Space Time Throttle\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update throttle\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
-    );
+    private final List<String> controls = new ArrayList<>();
+    private final List<String> interfaces = new ArrayList<>();
+    private final List<String> locations = new ArrayList<>();
+    private final List<String> others = new ArrayList<>();
 
-    private final List<String> interfaces = Arrays.asList(
-            "{\"text\":\"1. TARDIS Advanced Console\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update advanced\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"2. Architectural Reconfiguration System\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update ars\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"3. Chameleon Circuit\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update chameleon\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"4. Direction Item Frame\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update direction\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"5. TARDIS Information System\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update info\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"6. Saved locations and TARDIS areas\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update save-sign\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"7. Disk Storage Container\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update storage\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"8. Temporal Relocator\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update temporal\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"9. Telepathic Circuit\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update telepathic\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"10. Siege Mode button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update siege\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"11. Destination Terminal\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update terminal\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"12. Sonic Generator\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update generator\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"13. TARDIS Weather Menu\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update weather\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
-    );
-
-    private final List<String> locations = Arrays.asList(
-            "{\"text\":\"1. Artron Charged Creeper\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update creeper\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"2. Emergency Programme One\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update eps\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"3. Farm room\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update farm\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"4. Rail room\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update rail\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"5. Horse Stable room\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update stable\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"6. Llama Stall room\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update stall\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"7. Vault room drop chest\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update vault\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"8. Village room\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update village\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"9. Igloo room\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update igloo\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"10. Beacon toggle block\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update beacon\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
-    );
-
-    private final List<String> others = Arrays.asList(
-            "{\"text\":\"1. Artron Energy Condenser\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update condenser\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"2. TARDIS Interior Door\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update door\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"3. TARDIS back doors\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update backdoor\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"4. Keyboard Input sign\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update keyboard\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"5. Exterior Scanner button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update scanner\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"6. TARDIS Scanner Map\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update map\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"7. Console Light switch\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update light\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"8. Toggle Black Wool behind door\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update toggle_wool\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"9. Chameleon Item Frame\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update frame\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"10. Zero room transmat button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update zero\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"11. Custard Cream dispenser\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update dispenser\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"12. TARDIS Force Field button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update forcefield\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"13. TARDIS Cloister bell button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update bell\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"14. Time Rotor item frame\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update rotor\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
-    );
+    public TARDISChatGUIJSON() {
+        int c = 1;
+        int i = 1;
+        int l = 1;
+        int o = 1;
+        for (Updateable updateable : Updateable.values()) {
+            if (updateable.getCategory() == TARDISUpdatableCategory.CONTROLS) {
+                controls.add(String.format(REPLACEMENT_STRING, c, updateable.getDescription(), updateable.getName()));
+                c++;
+            }
+            if (updateable.getCategory() == TARDISUpdatableCategory.INTERFACES) {
+                interfaces.add(String.format(REPLACEMENT_STRING, i, updateable.getDescription(), updateable.getName()));
+                i++;
+            }
+            if (updateable.getCategory() == TARDISUpdatableCategory.LOCATIONS) {
+                locations.add(String.format(REPLACEMENT_STRING, l, updateable.getDescription(), updateable.getName()));
+                l++;
+            }
+            if (updateable.getCategory() == TARDISUpdatableCategory.OTHERS) {
+                others.add(String.format(REPLACEMENT_STRING, o, updateable.getDescription(), updateable.getName()));
+                o++;
+            }
+        }
+    }
 
     public List<String> getSections() {
         return sections;
