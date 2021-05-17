@@ -45,7 +45,8 @@ public class TARDISChatGUIJSON {
             "{\"text\":\"7. Distance multipler\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update y-repeater\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"8. Random z coordinate setter\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update z-repeater\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"9. TARDIS Control Menu\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update control\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"10. Flight Mode button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update flight\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
+            "{\"text\":\"10. Flight Mode button\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update flight\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
+            "{\"text\":\"11. Space Time Throttle\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update throttle\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
     );
 
     private final List<String> interfaces = Arrays.asList(
@@ -102,7 +103,7 @@ public class TARDISChatGUIJSON {
         return controls;
     }
 
-    public List<String> getInterfaces() {
+    List<String> getInterfaces() {
         return interfaces;
     }
 
