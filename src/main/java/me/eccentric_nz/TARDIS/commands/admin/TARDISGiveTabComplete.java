@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.command.Command;
@@ -54,7 +55,9 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
         GIVE_SUBS.add("seed");
         GIVE_SUBS.add("tachyon");
         for (RecipeItem recipeItem : RecipeItem.values()) {
-            GIVE_SUBS.add(recipeItem.toTabCompletionString());
+            if (recipeItem.getCategory() != RecipeCategory.SONIC_UPGRADES && recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE) {
+                GIVE_SUBS.add(recipeItem.toTabCompletionString());
+            }
         }
         Set<String> kits = plugin.getKitsConfig().getConfigurationSection("kits").getKeys(false);
         KIT_SUBS = ImmutableList.copyOf(kits);

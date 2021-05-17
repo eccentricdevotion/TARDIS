@@ -28,7 +28,7 @@ public class TARDISRecipeCategoryInventory {
         info.setItemMeta(info_im);
         stack[4] = info;
         for (RecipeCategory category : RecipeCategory.values()) {
-            if (!category.equals(RecipeCategory.UNUSED)) {
+            if (!category.equals(RecipeCategory.UNUSED) && category != RecipeCategory.UNCRAFTABLE) {
                 ItemStack cat = new ItemStack(category.getMaterial(), 1);
                 ItemMeta egory = cat.getItemMeta();
                 egory.setDisplayName(category.getName());

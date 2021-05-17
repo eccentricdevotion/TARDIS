@@ -54,7 +54,7 @@ public class TARDISRecipeLister {
         tg.addRow(ChatColor.GRAY + "" + ChatColor.UNDERLINE + "Command argument", ChatColor.DARK_GRAY + "" + ChatColor.UNDERLINE + "Recipe Result");
         tg.addRow();
         for (RecipeCategory category : RecipeCategory.values()) {
-            if (category != RecipeCategory.UNUSED) {
+            if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE) {
                 tg.addRow(category.getName(), "");
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {

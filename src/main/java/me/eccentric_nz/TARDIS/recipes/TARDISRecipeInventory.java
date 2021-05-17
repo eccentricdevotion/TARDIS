@@ -26,7 +26,7 @@ public class TARDISRecipeInventory {
     TARDISRecipeInventory(TARDIS plugin, RecipeCategory category) {
 
         for (RecipeItem recipeItem : RecipeItem.values()) {
-            if (recipeItem.getCategory() != RecipeCategory.UNUSED) {
+            if (recipeItem.getCategory() != RecipeCategory.UNUSED && recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE) {
                 recipeItems.put(recipeItem.toString(), recipeItem.toTabCompletionString());
             }
         }
@@ -92,6 +92,6 @@ public class TARDISRecipeInventory {
     }
 
     private boolean isShapeless(String s) {
-        return !s.contains("Blank") && !s.contains("Authorised") && (s.contains("Jelly") || s.contains("Disk") || s.contains("Custard") || s.contains("Wand") || s.contains("Upgrade"));
+        return !s.equals("Blank Storage Disk") && !s.equals("Authorised Control Disk") && (s.contains("Jelly") || s.contains("Disk") || s.equals("Bowl of Custard") || s.equals("TARDIS Schematic Wand") || s.contains("Upgrade"));
     }
 }

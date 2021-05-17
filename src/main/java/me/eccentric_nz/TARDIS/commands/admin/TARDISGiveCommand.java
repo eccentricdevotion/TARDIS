@@ -66,7 +66,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("seed", "");
         items.put("tachyon", "");
         for (RecipeItem recipeItem : RecipeItem.values()) {
-            if (recipeItem.getCategory() != RecipeCategory.SONIC_UPGRADES && recipeItem.getCategory() != RecipeCategory.UNUSED) {
+            if (recipeItem.getCategory() != RecipeCategory.SONIC_UPGRADES && recipeItem.getCategory() != RecipeCategory.UNUSED && recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE) {
                 items.put(recipeItem.toTabCompletionString(), recipeItem.toRecipeString());
             }
         }

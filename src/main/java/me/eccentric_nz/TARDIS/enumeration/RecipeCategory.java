@@ -16,6 +16,7 @@ public enum RecipeCategory {
     SONIC_UPGRADES(Material.BLAZE_ROD, 10000009, 22, ChatColor.LIGHT_PURPLE, ChatColor.DARK_PURPLE),
     STORAGE_DISKS(Material.MUSIC_DISC_STRAD, 10000001, 24, ChatColor.AQUA, ChatColor.DARK_AQUA),
     MISC(Material.WATER_BUCKET, 1, 26, ChatColor.GRAY, ChatColor.DARK_GRAY),
+    UNCRAFTABLE(Material.CRAFTING_TABLE, 1, -1, ChatColor.GRAY, ChatColor.DARK_GRAY),
     UNUSED(Material.STONE, 1, -1, ChatColor.RED, ChatColor.DARK_RED);
 
     private final Material material;

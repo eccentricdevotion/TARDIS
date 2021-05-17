@@ -63,7 +63,7 @@ public class TARDISGiveLister {
         tg.addRow(ChatColor.YELLOW + "mushroom", ChatColor.GOLD + "Textured mushroom blocks");
         tg.addRow();
         for (RecipeCategory category : RecipeCategory.values()) {
-            if (category != RecipeCategory.UNUSED) {
+            if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE) {
                 tg.addRow(category.getName(), "");
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {
