@@ -254,7 +254,7 @@
 			<version>7.0.5</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/WorldGuard.jar</systemPath>
+			<systemPath>${project.basedir}/lib/WorldGuard.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.sk89q</groupId>
@@ -262,7 +262,7 @@
 			<version>7.3.0</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/WorldEdit.jar</systemPath>
+			<systemPath>${project.basedir}/lib/WorldEdit.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.palmergames.bukkit</groupId>
@@ -270,7 +270,7 @@
 			<version>0.96.6.0</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/Towny.jar</systemPath>
+			<systemPath>${project.basedir}/lib/Towny.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.wimbli.WorldBorder</groupId>
@@ -278,7 +278,7 @@
 			<version>2.1.0</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/WorldBorder.jar</systemPath>
+			<systemPath>${project.basedir}/lib/WorldBorder.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.onarandombox.multiversecore</groupId>
@@ -286,7 +286,7 @@
 			<version>4.2.3-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/Multiverse-Core.jar</systemPath>
+			<systemPath>${project.basedir}/lib/Multiverse-Core.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.onarandombox.multiverseinventories</groupId>
@@ -294,7 +294,7 @@
 			<version>4.2.3-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/Multiverse-Inventories.jar</systemPath>
+			<systemPath>${project.basedir}/lib/Multiverse-Inventories.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.onarandombox.multiverseadventure</groupId>
@@ -302,7 +302,7 @@
 			<version>2.5</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/Multiverse-Adventure.jar</systemPath>
+			<systemPath>${project.basedir}/lib/Multiverse-Adventure.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>uk.co.tggl.pluckerpluck</groupId>
@@ -310,7 +310,7 @@
 			<version>3.3.10</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/MultiInv.jar</systemPath>
+			<systemPath>${project.basedir}/lib/MultiInv.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>me.ebonjaeger</groupId>
@@ -318,7 +318,7 @@
 			<version>2.3.2</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/PerWorldInventory.jar</systemPath>
+			<systemPath>${project.basedir}/lib/PerWorldInventory.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>multiworld</groupId>
@@ -326,7 +326,7 @@
 			<version>5.2.8</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/MultiWorld.jar</systemPath>
+			<systemPath>${project.basedir}/lib/MultiWorld.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.massivecraft</groupId>
@@ -334,7 +334,7 @@
 			<version>1.6.9.5</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/Factions.jar</systemPath>
+			<systemPath>${project.basedir}/lib/Factions.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.yi.acru.bukkit</groupId>
@@ -342,7 +342,7 @@
 			<version>1.8.36</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/Lockette.jar</systemPath>
+			<systemPath>${project.basedir}/lib/Lockette.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>me.crafter.mc</groupId>
@@ -350,7 +350,7 @@
 			<version>2.9.5</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/LockettePro.jar</systemPath>
+			<systemPath>${project.basedir}/lib/LockettePro.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>me.ryanhamshire</groupId>
@@ -358,7 +358,7 @@
 			<version>16.17.1</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/GriefPrevention.jar</systemPath>
+			<systemPath>${project.basedir}/lib/GriefPrevention.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>nl.rutgerkok</groupId>
@@ -366,7 +366,7 @@
 			<version>1.9.3</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/BlockLocker.jar</systemPath>
+			<systemPath>${project.basedir}/lib/BlockLocker.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.griefcraft.lwc</groupId>
@@ -374,7 +374,7 @@
 			<version>2.2.6</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/LWCX.jar</systemPath>
+			<systemPath>${project.basedir}/lib/LWCX.jar</systemPath>
 		</dependency>
 		<!-- only need ProtocolLib to support LibsDisguises -->
 		<dependency>
@@ -383,7 +383,7 @@
 			<version>4.6.1</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/ProtocolLib.jar</systemPath>
+			<systemPath>${project.basedir}/lib/ProtocolLib.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>LibsDisguises</groupId>
@@ -391,7 +391,7 @@
 			<version>10.0.24</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/LibsDisguises.jar</systemPath>
+			<systemPath>${project.basedir}/lib/LibsDisguises.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>net.ess3</groupId>
@@ -399,7 +399,7 @@
 			<version>2.18.1.32</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/EssentialsX.jar</systemPath>
+			<systemPath>${project.basedir}/lib/EssentialsX.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>me.clip</groupId>
@@ -413,7 +413,7 @@
 			<version>7.7.2</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/RedProtect.jar</systemPath>
+			<systemPath>${project.basedir}/lib/RedProtect.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>net.coreprotect</groupId>
@@ -421,7 +421,7 @@
 			<version>19.5</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/CoreProtect.jar</systemPath>
+			<systemPath>${project.basedir}/lib/CoreProtect.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.rauschig</groupId>
