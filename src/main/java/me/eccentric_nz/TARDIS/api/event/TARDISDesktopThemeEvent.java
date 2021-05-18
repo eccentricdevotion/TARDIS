@@ -25,21 +25,21 @@ import org.bukkit.entity.Player;
  */
 public final class TARDISDesktopThemeEvent extends TARDISEvent {
 
-    private final TARDISUpgradeData upgradeData;
+	private final TARDISUpgradeData upgradeData;
 
-    public TARDISDesktopThemeEvent(Player player, Tardis tardis, TARDISUpgradeData upgradeData) {
-        super(player, tardis);
-        this.upgradeData = upgradeData;
-    }
+	public TARDISDesktopThemeEvent(Player player, Tardis tardis, TARDISUpgradeData upgradeData) {
+		super(player, tardis);
+		this.upgradeData = upgradeData;
+	}
 
-    /**
-     * Returns a desktop theme data object. You can use the {@link me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData
-     * TARDISUpgradeData} to determine the previous theme, the theme that the TARDIS is changing to, the wall and floor
-     * block types using the object's getter methods.
-     *
-     * @return the desktop theme data object
-     */
-    public TARDISUpgradeData getUpgradeData() {
-        return upgradeData;
-    }
+	/**
+	 * Returns a desktop theme data object. You can use the {@link me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData
+	 * TARDISUpgradeData} to determine the previous theme, the theme that the TARDIS is changing to, the wall and floor
+	 * block types using the object's getter methods.
+	 *
+	 * @return the desktop theme data object
+	 */
+	public TARDISUpgradeData getUpgradeData() {
+		return upgradeData;
+	}
 }

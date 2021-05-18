@@ -32,121 +32,121 @@ import java.util.List;
 
 public class TARDISSonic {
 
-    private static final List<Material> distance = new ArrayList<>();
+	private static final List<Material> distance = new ArrayList<>();
 
-    static {
-        distance.add(Material.ACACIA_BUTTON);
-        distance.add(Material.ACACIA_DOOR);
-        distance.add(Material.ACACIA_FENCE_GATE);
-        distance.add(Material.BIRCH_BUTTON);
-        distance.add(Material.BIRCH_DOOR);
-        distance.add(Material.BIRCH_FENCE_GATE);
-        distance.add(Material.CRIMSON_BUTTON);
-        distance.add(Material.CRIMSON_DOOR);
-        distance.add(Material.CRIMSON_FENCE_GATE);
-        distance.add(Material.DARK_OAK_BUTTON);
-        distance.add(Material.DARK_OAK_DOOR);
-        distance.add(Material.DARK_OAK_FENCE_GATE);
-        distance.add(Material.IRON_DOOR);
-        distance.add(Material.JUNGLE_BUTTON);
-        distance.add(Material.JUNGLE_DOOR);
-        distance.add(Material.JUNGLE_FENCE_GATE);
-        distance.add(Material.LEVER);
-        distance.add(Material.OAK_BUTTON);
-        distance.add(Material.OAK_DOOR);
-        distance.add(Material.OAK_FENCE_GATE);
-        distance.add(Material.OAK_FENCE_GATE);
-        distance.add(Material.POLISHED_BLACKSTONE_BUTTON);
-        distance.add(Material.SPRUCE_BUTTON);
-        distance.add(Material.SPRUCE_DOOR);
-        distance.add(Material.SPRUCE_FENCE_GATE);
-        distance.add(Material.STONE_BUTTON);
-        distance.add(Material.WARPED_BUTTON);
-        distance.add(Material.WARPED_DOOR);
-        distance.add(Material.WARPED_FENCE_GATE);
-    }
+	static {
+		distance.add(Material.ACACIA_BUTTON);
+		distance.add(Material.ACACIA_DOOR);
+		distance.add(Material.ACACIA_FENCE_GATE);
+		distance.add(Material.BIRCH_BUTTON);
+		distance.add(Material.BIRCH_DOOR);
+		distance.add(Material.BIRCH_FENCE_GATE);
+		distance.add(Material.CRIMSON_BUTTON);
+		distance.add(Material.CRIMSON_DOOR);
+		distance.add(Material.CRIMSON_FENCE_GATE);
+		distance.add(Material.DARK_OAK_BUTTON);
+		distance.add(Material.DARK_OAK_DOOR);
+		distance.add(Material.DARK_OAK_FENCE_GATE);
+		distance.add(Material.IRON_DOOR);
+		distance.add(Material.JUNGLE_BUTTON);
+		distance.add(Material.JUNGLE_DOOR);
+		distance.add(Material.JUNGLE_FENCE_GATE);
+		distance.add(Material.LEVER);
+		distance.add(Material.OAK_BUTTON);
+		distance.add(Material.OAK_DOOR);
+		distance.add(Material.OAK_FENCE_GATE);
+		distance.add(Material.OAK_FENCE_GATE);
+		distance.add(Material.POLISHED_BLACKSTONE_BUTTON);
+		distance.add(Material.SPRUCE_BUTTON);
+		distance.add(Material.SPRUCE_DOOR);
+		distance.add(Material.SPRUCE_FENCE_GATE);
+		distance.add(Material.STONE_BUTTON);
+		distance.add(Material.WARPED_BUTTON);
+		distance.add(Material.WARPED_DOOR);
+		distance.add(Material.WARPED_FENCE_GATE);
+	}
 
-    public static void standardSonic(TARDIS plugin, Player player, long now) {
-        Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
-        Material blockType = targetBlock.getType();
-        if (distance.contains(blockType)) {
-            TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
-            // not protected doors - WorldGuard / GriefPrevention / Lockette / Towny
-            if (TARDISSonicRespect.checkBlockRespect(plugin, player, targetBlock)) {
-                switch (blockType) {
-                    case ACACIA_DOOR:
-                    case BIRCH_DOOR:
-                    case CRIMSON_DOOR:
-                    case DARK_OAK_DOOR:
-                    case IRON_DOOR:
-                    case JUNGLE_DOOR:
-                    case OAK_DOOR:
-                    case SPRUCE_DOOR:
-                    case WARPED_DOOR:
-                        Block lowerdoor;
-                        Bisected bisected = (Bisected) targetBlock.getBlockData();
-                        if (bisected.getHalf().equals(Bisected.Half.TOP)) {
-                            lowerdoor = targetBlock.getRelative(BlockFace.DOWN);
-                        } else {
-                            lowerdoor = targetBlock;
-                        }
-                        // is it a TARDIS door?
-                        HashMap<String, Object> where = new HashMap<>();
-                        String doorloc = lowerdoor.getLocation().getWorld().getName() + ":" + lowerdoor.getLocation().getBlockX() + ":" + lowerdoor.getLocation().getBlockY() + ":" + lowerdoor.getLocation().getBlockZ();
-                        where.put("door_location", doorloc);
-                        ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
-                        if (rs.resultSet()) {
-                            return;
-                        }
-                        if (!plugin.getTrackerKeeper().getSonicDoors().contains(player.getUniqueId())) {
-                            Openable openable = (Openable) lowerdoor.getBlockData();
-                            boolean open = !openable.isOpen();
-                            openable.setOpen(open);
-                            lowerdoor.setBlockData(openable, true);
-                            if (blockType.equals(Material.IRON_DOOR)) {
-                                plugin.getTrackerKeeper().getSonicDoors().add(player.getUniqueId());
-                                // return the door to its previous state after 3 seconds
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                    openable.setOpen(!open);
-                                    lowerdoor.setBlockData(openable, true);
-                                    plugin.getTrackerKeeper().getSonicDoors().remove(player.getUniqueId());
-                                }, 60L);
-                            }
-                        }
-                        break;
-                    case LEVER:
-                    case ACACIA_BUTTON:
-                    case BIRCH_BUTTON:
-                    case DARK_OAK_BUTTON:
-                    case JUNGLE_BUTTON:
-                    case OAK_BUTTON:
-                    case SPRUCE_BUTTON:
-                    case STONE_BUTTON:
-                    case CRIMSON_BUTTON:
-                    case POLISHED_BLACKSTONE_BUTTON:
-                    case WARPED_BUTTON:
-                        powerSurroundingBlock(targetBlock);
-                        break;
-                    case ACACIA_FENCE_GATE:
-                    case BIRCH_FENCE_GATE:
-                    case DARK_OAK_FENCE_GATE:
-                    case JUNGLE_FENCE_GATE:
-                    case OAK_FENCE_GATE:
-                    case SPRUCE_FENCE_GATE:
-                        Gate gate = (Gate) targetBlock.getBlockData();
-                        gate.setOpen(!gate.isOpen());
-                        targetBlock.setBlockData(gate, true);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        } else {
-            TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
-        }
-    }
+	public static void standardSonic(TARDIS plugin, Player player, long now) {
+		Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
+		Material blockType = targetBlock.getType();
+		if (distance.contains(blockType)) {
+			TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+			// not protected doors - WorldGuard / GriefPrevention / Lockette / Towny
+			if (TARDISSonicRespect.checkBlockRespect(plugin, player, targetBlock)) {
+				switch (blockType) {
+					case ACACIA_DOOR:
+					case BIRCH_DOOR:
+					case CRIMSON_DOOR:
+					case DARK_OAK_DOOR:
+					case IRON_DOOR:
+					case JUNGLE_DOOR:
+					case OAK_DOOR:
+					case SPRUCE_DOOR:
+					case WARPED_DOOR:
+						Block lowerdoor;
+						Bisected bisected = (Bisected) targetBlock.getBlockData();
+						if (bisected.getHalf().equals(Bisected.Half.TOP)) {
+							lowerdoor = targetBlock.getRelative(BlockFace.DOWN);
+						} else {
+							lowerdoor = targetBlock;
+						}
+						// is it a TARDIS door?
+						HashMap<String, Object> where = new HashMap<>();
+						String doorloc = lowerdoor.getLocation().getWorld().getName() + ":" + lowerdoor.getLocation().getBlockX() + ":" + lowerdoor.getLocation().getBlockY() + ":" + lowerdoor.getLocation().getBlockZ();
+						where.put("door_location", doorloc);
+						ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
+						if (rs.resultSet()) {
+							return;
+						}
+						if (!plugin.getTrackerKeeper().getSonicDoors().contains(player.getUniqueId())) {
+							Openable openable = (Openable) lowerdoor.getBlockData();
+							boolean open = !openable.isOpen();
+							openable.setOpen(open);
+							lowerdoor.setBlockData(openable, true);
+							if (blockType.equals(Material.IRON_DOOR)) {
+								plugin.getTrackerKeeper().getSonicDoors().add(player.getUniqueId());
+								// return the door to its previous state after 3 seconds
+								plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+									openable.setOpen(!open);
+									lowerdoor.setBlockData(openable, true);
+									plugin.getTrackerKeeper().getSonicDoors().remove(player.getUniqueId());
+								}, 60L);
+							}
+						}
+						break;
+					case LEVER:
+					case ACACIA_BUTTON:
+					case BIRCH_BUTTON:
+					case DARK_OAK_BUTTON:
+					case JUNGLE_BUTTON:
+					case OAK_BUTTON:
+					case SPRUCE_BUTTON:
+					case STONE_BUTTON:
+					case CRIMSON_BUTTON:
+					case POLISHED_BLACKSTONE_BUTTON:
+					case WARPED_BUTTON:
+						powerSurroundingBlock(targetBlock);
+						break;
+					case ACACIA_FENCE_GATE:
+					case BIRCH_FENCE_GATE:
+					case DARK_OAK_FENCE_GATE:
+					case JUNGLE_FENCE_GATE:
+					case OAK_FENCE_GATE:
+					case SPRUCE_FENCE_GATE:
+						Gate gate = (Gate) targetBlock.getBlockData();
+						gate.setOpen(!gate.isOpen());
+						targetBlock.setBlockData(gate, true);
+						break;
+					default:
+						break;
+				}
+			}
+		} else {
+			TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
+		}
+	}
 
-    private static void powerSurroundingBlock(Block block) {
-        TARDIS.plugin.getTardisHelper().setPowerableBlockInteract(block);
-    }
+	private static void powerSurroundingBlock(Block block) {
+		TARDIS.plugin.getTardisHelper().setPowerableBlockInteract(block);
+	}
 }

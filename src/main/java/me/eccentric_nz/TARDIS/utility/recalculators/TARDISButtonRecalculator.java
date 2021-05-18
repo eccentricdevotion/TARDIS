@@ -26,65 +26,65 @@ import org.bukkit.block.data.Directional;
  */
 public class TARDISButtonRecalculator {
 
-    /**
-     * Recalculate the data for directional block (BUTTON) when the TARDIS preset changes direction.
-     *
-     * @param b the block data stored in the preset data
-     * @param d the new direction of the TARDIS
-     * @return the recalculated block data
-     */
-    public BlockData recalculate(BlockData b, COMPASS d) {
-        Directional button = (Directional) b;
-        switch (d) {
-            case SOUTH:
-                switch (button.getFacing()) {
-                    case EAST:
-                        button.setFacing(BlockFace.SOUTH); // 3
-                        break;
-                    case WEST:
-                        button.setFacing(BlockFace.NORTH); // 4
-                        break;
-                    case SOUTH:
-                        button.setFacing(BlockFace.WEST); // 2
-                        break;
-                    case NORTH:
-                        button.setFacing(BlockFace.EAST); // 1
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case WEST:
-                switch (button.getFacing()) {
-                    case EAST:
-                        button.setFacing(BlockFace.WEST); // 2
-                        break;
-                    case WEST:
-                        button.setFacing(BlockFace.EAST); // 1
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            default:
-                switch (button.getFacing()) {
-                    case EAST:
-                        button.setFacing(BlockFace.NORTH); // 4
-                        break;
-                    case WEST:
-                        button.setFacing(BlockFace.SOUTH); // 3
-                        break;
-                    case SOUTH:
-                        button.setFacing(BlockFace.EAST); // 1
-                        break;
-                    case NORTH:
-                        button.setFacing(BlockFace.WEST); // 2
-                        break;
-                    default:
-                        break;
-                }
-                break;
-        }
-        return button;
-    }
+	/**
+	 * Recalculate the data for directional block (BUTTON) when the TARDIS preset changes direction.
+	 *
+	 * @param b the block data stored in the preset data
+	 * @param d the new direction of the TARDIS
+	 * @return the recalculated block data
+	 */
+	public BlockData recalculate(BlockData b, COMPASS d) {
+		Directional button = (Directional) b;
+		switch (d) {
+			case SOUTH:
+				switch (button.getFacing()) {
+					case EAST:
+						button.setFacing(BlockFace.SOUTH); // 3
+						break;
+					case WEST:
+						button.setFacing(BlockFace.NORTH); // 4
+						break;
+					case SOUTH:
+						button.setFacing(BlockFace.WEST); // 2
+						break;
+					case NORTH:
+						button.setFacing(BlockFace.EAST); // 1
+						break;
+					default:
+						break;
+				}
+				break;
+			case WEST:
+				switch (button.getFacing()) {
+					case EAST:
+						button.setFacing(BlockFace.WEST); // 2
+						break;
+					case WEST:
+						button.setFacing(BlockFace.EAST); // 1
+						break;
+					default:
+						break;
+				}
+				break;
+			default:
+				switch (button.getFacing()) {
+					case EAST:
+						button.setFacing(BlockFace.NORTH); // 4
+						break;
+					case WEST:
+						button.setFacing(BlockFace.SOUTH); // 3
+						break;
+					case SOUTH:
+						button.setFacing(BlockFace.EAST); // 1
+						break;
+					case NORTH:
+						button.setFacing(BlockFace.WEST); // 2
+						break;
+					default:
+						break;
+				}
+				break;
+		}
+		return button;
+	}
 }

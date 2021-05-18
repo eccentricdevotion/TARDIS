@@ -36,84 +36,84 @@ import java.util.Locale;
  */
 public class TARDISCircuitDamager {
 
-    private final TARDIS plugin;
-    private final DiskCircuit circuit;
-    private final int id;
-    private final Player p;
-    private int uses_left;
+	private final TARDIS plugin;
+	private final DiskCircuit circuit;
+	private final int id;
+	private final Player p;
+	private int uses_left;
 
-    public TARDISCircuitDamager(TARDIS plugin, DiskCircuit circuit, int uses_left, int id, Player p) {
-        this.plugin = plugin;
-        this.circuit = circuit;
-        this.uses_left = uses_left;
-        this.id = id;
-        this.p = p;
-    }
+	public TARDISCircuitDamager(TARDIS plugin, DiskCircuit circuit, int uses_left, int id, Player p) {
+		this.plugin = plugin;
+		this.circuit = circuit;
+		this.uses_left = uses_left;
+		this.id = id;
+		this.p = p;
+	}
 
-    public void damage() {
-        if (uses_left == 0) {
-            uses_left = plugin.getConfig().getInt("circuits.uses." + circuit.toString().toLowerCase(Locale.ENGLISH));
-        }
-        if ((uses_left - 1) <= 0) {
-            // destroy
-            setCircuitDamage(circuit.getName(), 0, true);
-            TARDISMessage.send(p, "CIRCUIT_VAPOUR", circuit.getName());
-        } else {
-            // decrement
-            int decremented = uses_left - 1;
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                setCircuitDamage(circuit.getName(), decremented, false);
-                TARDISMessage.send(p, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));
-            }, 5L);
-        }
-    }
+	public void damage() {
+		if (uses_left == 0) {
+			uses_left = plugin.getConfig().getInt("circuits.uses." + circuit.toString().toLowerCase(Locale.ENGLISH));
+		}
+		if ((uses_left - 1) <= 0) {
+			// destroy
+			setCircuitDamage(circuit.getName(), 0, true);
+			TARDISMessage.send(p, "CIRCUIT_VAPOUR", circuit.getName());
+		} else {
+			// decrement
+			int decremented = uses_left - 1;
+			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+				setCircuitDamage(circuit.getName(), decremented, false);
+				TARDISMessage.send(p, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));
+			}, 5L);
+		}
+	}
 
-    private void setCircuitDamage(String c, int decremented, boolean destroy) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
-        if (rs.resultSet()) {
-            ItemStack[] items;
-            ItemStack[] clone = new ItemStack[9];
-            int i = 0;
-            try {
-                items = TARDISSerializeInventory.itemStacksFromString(rs.getConsole());
-                for (ItemStack is : items) {
-                    if (is != null && is.hasItemMeta()) {
-                        ItemMeta im = is.getItemMeta();
-                        if (im.hasDisplayName()) {
-                            String dn = im.getDisplayName();
-                            if (dn.equals(c)) {
-                                if (destroy) {
-                                    clone[i] = null;
-                                } else {
-                                    // set uses
-                                    List<String> lore = im.getLore();
-                                    if (lore == null) {
-                                        lore = Arrays.asList("Uses left", "");
-                                    }
-                                    String stripped = ChatColor.YELLOW + "" + decremented;
-                                    lore.set(1, stripped);
-                                    im.setLore(lore);
-                                    is.setItemMeta(im);
-                                    clone[i] = is;
-                                }
-                            } else {
-                                clone[i] = is;
-                            }
-                        }
-                    }
-                    i++;
-                }
-                String serialized = TARDISSerializeInventory.itemStacksToString(clone);
-                HashMap<String, Object> set = new HashMap<>();
-                set.put("console", serialized);
-                HashMap<String, Object> wheret = new HashMap<>();
-                wheret.put("tardis_id", id);
-                plugin.getQueryFactory().doUpdate("storage", set, wheret);
-            } catch (IOException ex) {
-                plugin.debug("Could not get console items: " + ex);
-            }
-        }
-    }
+	private void setCircuitDamage(String c, int decremented, boolean destroy) {
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("tardis_id", id);
+		ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
+		if (rs.resultSet()) {
+			ItemStack[] items;
+			ItemStack[] clone = new ItemStack[9];
+			int i = 0;
+			try {
+				items = TARDISSerializeInventory.itemStacksFromString(rs.getConsole());
+				for (ItemStack is : items) {
+					if (is != null && is.hasItemMeta()) {
+						ItemMeta im = is.getItemMeta();
+						if (im.hasDisplayName()) {
+							String dn = im.getDisplayName();
+							if (dn.equals(c)) {
+								if (destroy) {
+									clone[i] = null;
+								} else {
+									// set uses
+									List<String> lore = im.getLore();
+									if (lore == null) {
+										lore = Arrays.asList("Uses left", "");
+									}
+									String stripped = ChatColor.YELLOW + "" + decremented;
+									lore.set(1, stripped);
+									im.setLore(lore);
+									is.setItemMeta(im);
+									clone[i] = is;
+								}
+							} else {
+								clone[i] = is;
+							}
+						}
+					}
+					i++;
+				}
+				String serialized = TARDISSerializeInventory.itemStacksToString(clone);
+				HashMap<String, Object> set = new HashMap<>();
+				set.put("console", serialized);
+				HashMap<String, Object> wheret = new HashMap<>();
+				wheret.put("tardis_id", id);
+				plugin.getQueryFactory().doUpdate("storage", set, wheret);
+			} catch (IOException ex) {
+				plugin.debug("Could not get console items: " + ex);
+			}
+		}
+	}
 }

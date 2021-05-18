@@ -26,90 +26,90 @@ import org.bukkit.block.data.Directional;
  */
 public class TARDISStairRecalculator {
 
-    /**
-     * Recalculate the data for directional block (STAIR) when the TARDIS preset changes direction.
-     *
-     * @param b    the block data stored in the preset data
-     * @param d    the new direction of the TARDIS
-     * @param col  the preset column that is being calculated
-     * @param duck whether this is the Rubber Duck preset
-     * @return the recalculated block data
-     */
-    public BlockData recalculate(BlockData b, COMPASS d, int col, boolean duck) {
-        Directional stair = (Directional) b;
-        switch (d) {
-            case SOUTH:
-                switch (stair.getFacing()) {
-                    case EAST: // 0
-                        stair.setFacing(BlockFace.SOUTH); // 2
-                        break;
-                    case WEST: // 1
-                        stair.setFacing(BlockFace.NORTH); // 3
-                        break;
-                    case SOUTH: // 2
-                        stair.setFacing(BlockFace.WEST); // 1
-                        break;
-                    case NORTH: // 3
-                        stair.setFacing(BlockFace.EAST); // 0
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case WEST:
-                if (duck) {
-                    switch (stair.getFacing()) {
-                        case EAST:
-                            stair.setFacing(BlockFace.WEST); // 1
-                            break;
-                        case WEST:
-                            stair.setFacing(BlockFace.EAST); // 0
-                            break;
-                        case SOUTH:
-                            stair.setFacing(BlockFace.NORTH); // 3
-                            break;
-                        case NORTH:
-                            stair.setFacing(BlockFace.SOUTH); // 2
-                            break;
-                        default:
-                            break;
-                    }
-                } else {
-                    if (col == 3 || col == 7) {
-                        switch (stair.getFacing()) {
-                            case EAST:
-                                stair.setFacing(BlockFace.WEST); // 1
-                                break;
-                            case WEST:
-                                stair.setFacing(BlockFace.EAST); // 0
-                                break;
-                            default:
-                                break;
-                        }
-                    } else {
-                        break;
-                    }
-                }
-                break;
-            default:
-                switch (stair.getFacing()) {
-                    case EAST:
-                        stair.setFacing(BlockFace.NORTH); // 3
-                        break;
-                    case WEST:
-                        stair.setFacing(BlockFace.SOUTH); // 2
-                        break;
-                    case SOUTH:
-                        stair.setFacing(BlockFace.EAST); // 0
-                        break;
-                    case NORTH:
-                        stair.setFacing(BlockFace.WEST); // 1
-                        break;
-                    default:
-                        break;
-                }
-                break;
-        }
-        return stair;
-    }
+	/**
+	 * Recalculate the data for directional block (STAIR) when the TARDIS preset changes direction.
+	 *
+	 * @param b    the block data stored in the preset data
+	 * @param d    the new direction of the TARDIS
+	 * @param col  the preset column that is being calculated
+	 * @param duck whether this is the Rubber Duck preset
+	 * @return the recalculated block data
+	 */
+	public BlockData recalculate(BlockData b, COMPASS d, int col, boolean duck) {
+		Directional stair = (Directional) b;
+		switch (d) {
+			case SOUTH:
+				switch (stair.getFacing()) {
+					case EAST: // 0
+						stair.setFacing(BlockFace.SOUTH); // 2
+						break;
+					case WEST: // 1
+						stair.setFacing(BlockFace.NORTH); // 3
+						break;
+					case SOUTH: // 2
+						stair.setFacing(BlockFace.WEST); // 1
+						break;
+					case NORTH: // 3
+						stair.setFacing(BlockFace.EAST); // 0
+						break;
+					default:
+						break;
+				}
+				break;
+			case WEST:
+				if (duck) {
+					switch (stair.getFacing()) {
+						case EAST:
+							stair.setFacing(BlockFace.WEST); // 1
+							break;
+						case WEST:
+							stair.setFacing(BlockFace.EAST); // 0
+							break;
+						case SOUTH:
+							stair.setFacing(BlockFace.NORTH); // 3
+							break;
+						case NORTH:
+							stair.setFacing(BlockFace.SOUTH); // 2
+							break;
+						default:
+							break;
+					}
+				} else {
+					if (col == 3 || col == 7) {
+						switch (stair.getFacing()) {
+							case EAST:
+								stair.setFacing(BlockFace.WEST); // 1
+								break;
+							case WEST:
+								stair.setFacing(BlockFace.EAST); // 0
+								break;
+							default:
+								break;
+						}
+					} else {
+						break;
+					}
+				}
+				break;
+			default:
+				switch (stair.getFacing()) {
+					case EAST:
+						stair.setFacing(BlockFace.NORTH); // 3
+						break;
+					case WEST:
+						stair.setFacing(BlockFace.SOUTH); // 2
+						break;
+					case SOUTH:
+						stair.setFacing(BlockFace.EAST); // 0
+						break;
+					case NORTH:
+						stair.setFacing(BlockFace.WEST); // 1
+						break;
+					default:
+						break;
+				}
+				break;
+		}
+		return stair;
+	}
 }

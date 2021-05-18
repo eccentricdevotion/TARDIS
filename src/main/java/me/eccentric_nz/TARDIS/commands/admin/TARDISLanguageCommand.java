@@ -31,32 +31,32 @@ import java.util.List;
  */
 class TARDISLanguageCommand {
 
-    private final TARDIS plugin;
-    private final List<String> codes = Arrays.asList("ar", "bg", "ca", "zh", "cs", "da", "nl", "en", "et", "fi", "fr", "de", "el", "ht", "he", "hi", "mww", "hu", "id", "it", "ja", "ko", "lv", "lt", "ms", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sl", "es", "sv", "th", "tr", "uk", "ur", "vi");
+	private final TARDIS plugin;
+	private final List<String> codes = Arrays.asList("ar", "bg", "ca", "zh", "cs", "da", "nl", "en", "et", "fi", "fr", "de", "el", "ht", "he", "hi", "mww", "hu", "id", "it", "ja", "ko", "lv", "lt", "ms", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sl", "es", "sv", "th", "tr", "uk", "ur", "vi");
 
-    TARDISLanguageCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISLanguageCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean setLanguage(CommandSender sender, String[] args) {
-        if (!codes.contains(args[1])) {
-            TARDISMessage.send(sender, "LANG_NOT_VALID");
-            return true;
-        }
-        // check file exists
-        File file;
-        file = new File(plugin.getDataFolder() + File.separator + "language" + File.separator + args[1] + ".yml");
-        if (!file.isFile()) {
-            // file not found
-            TARDISMessage.send(sender, "LANG_NOT_FOUND", args[1]);
-            return true;
-        }
-        // load the language
-        plugin.setLanguage(YamlConfiguration.loadConfiguration(file));
-        TARDISMessage.send(sender, "LANG_SET", Language.valueOf(args[1]).getLang());
-        // set and save the config
-        plugin.getConfig().set("preferences.language", args[1]);
-        plugin.saveConfig();
-        return true;
-    }
+	boolean setLanguage(CommandSender sender, String[] args) {
+		if (!codes.contains(args[1])) {
+			TARDISMessage.send(sender, "LANG_NOT_VALID");
+			return true;
+		}
+		// check file exists
+		File file;
+		file = new File(plugin.getDataFolder() + File.separator + "language" + File.separator + args[1] + ".yml");
+		if (!file.isFile()) {
+			// file not found
+			TARDISMessage.send(sender, "LANG_NOT_FOUND", args[1]);
+			return true;
+		}
+		// load the language
+		plugin.setLanguage(YamlConfiguration.loadConfiguration(file));
+		TARDISMessage.send(sender, "LANG_SET", Language.valueOf(args[1]).getLang());
+		// set and save the config
+		plugin.getConfig().set("preferences.language", args[1]);
+		plugin.saveConfig();
+		return true;
+	}
 }

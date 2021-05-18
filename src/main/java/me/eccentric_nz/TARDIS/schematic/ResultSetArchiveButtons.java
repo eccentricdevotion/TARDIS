@@ -38,81 +38,81 @@ import java.util.regex.Pattern;
  */
 public class ResultSetArchiveButtons {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final String uuid;
-    private final ItemStack[] buttons;
-    private final String prefix;
-    private final Material[] terracotta = {Material.WHITE_TERRACOTTA, Material.ORANGE_TERRACOTTA, Material.MAGENTA_TERRACOTTA, Material.LIGHT_BLUE_TERRACOTTA, Material.YELLOW_TERRACOTTA, Material.LIME_TERRACOTTA, Material.PINK_TERRACOTTA, Material.GRAY_TERRACOTTA, Material.LIGHT_GRAY_TERRACOTTA, Material.CYAN_TERRACOTTA, Material.PURPLE_TERRACOTTA, Material.BLUE_TERRACOTTA, Material.BROWN_TERRACOTTA, Material.GREEN_TERRACOTTA, Material.RED_TERRACOTTA, Material.BLACK_TERRACOTTA};
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final String uuid;
+	private final ItemStack[] buttons;
+	private final String prefix;
+	private final Material[] terracotta = {Material.WHITE_TERRACOTTA, Material.ORANGE_TERRACOTTA, Material.MAGENTA_TERRACOTTA, Material.LIGHT_BLUE_TERRACOTTA, Material.YELLOW_TERRACOTTA, Material.LIME_TERRACOTTA, Material.PINK_TERRACOTTA, Material.GRAY_TERRACOTTA, Material.LIGHT_GRAY_TERRACOTTA, Material.CYAN_TERRACOTTA, Material.PURPLE_TERRACOTTA, Material.BLUE_TERRACOTTA, Material.BROWN_TERRACOTTA, Material.GREEN_TERRACOTTA, Material.RED_TERRACOTTA, Material.BLACK_TERRACOTTA};
 
-    public ResultSetArchiveButtons(TARDIS plugin, String uuid) {
-        this.plugin = plugin;
-        this.uuid = uuid;
-        prefix = this.plugin.getPrefix();
-        buttons = new ItemStack[this.plugin.getConfig().getInt("archive.limit")];
-    }
+	public ResultSetArchiveButtons(TARDIS plugin, String uuid) {
+		this.plugin = plugin;
+		this.uuid = uuid;
+		prefix = this.plugin.getPrefix();
+		buttons = new ItemStack[this.plugin.getConfig().getInt("archive.limit")];
+	}
 
-    public boolean resultSet() {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT * FROM " + prefix + "archive WHERE uuid = ?";
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            statement.setString(1, uuid);
-            rs = statement.executeQuery();
-            int i = 0;
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    ItemStack is = new ItemStack(terracotta[i], 1);
-                    ItemMeta im = is.getItemMeta();
-                    im.setDisplayName(rs.getString("name"));
-                    List<String> lore = new ArrayList<>();
-                    if (!rs.getString("description").isEmpty()) {
-                        Pattern p = Pattern.compile("\\G\\s*(.{1,25})(?=\\s|$)", Pattern.DOTALL);
-                        Matcher m = p.matcher(rs.getString("description"));
-                        while (m.find()) {
-                            lore.add(m.group(1));
-                        }
-                    }
-                    // add cost
-                    int cost = plugin.getArtronConfig().getInt("upgrades.archive." + rs.getString("console_size").toLowerCase(Locale.ENGLISH));
-                    lore.add("Cost: " + cost);
-                    // add current
-                    if (rs.getInt("use") == 1) {
-                        lore.add(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"));
-                    }
-                    im.setLore(lore);
-                    is.setItemMeta(im);
-                    buttons[i] = is;
-                    i++;
-                    if (i > 15) {
-                        break;
-                    }
-                }
-            } else {
-                return false;
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for archive buttons! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing archive buttons! " + e.getMessage());
-            }
-        }
-        return true;
-    }
+	public boolean resultSet() {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String query = "SELECT * FROM " + prefix + "archive WHERE uuid = ?";
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			statement.setString(1, uuid);
+			rs = statement.executeQuery();
+			int i = 0;
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					ItemStack is = new ItemStack(terracotta[i], 1);
+					ItemMeta im = is.getItemMeta();
+					im.setDisplayName(rs.getString("name"));
+					List<String> lore = new ArrayList<>();
+					if (!rs.getString("description").isEmpty()) {
+						Pattern p = Pattern.compile("\\G\\s*(.{1,25})(?=\\s|$)", Pattern.DOTALL);
+						Matcher m = p.matcher(rs.getString("description"));
+						while (m.find()) {
+							lore.add(m.group(1));
+						}
+					}
+					// add cost
+					int cost = plugin.getArtronConfig().getInt("upgrades.archive." + rs.getString("console_size").toLowerCase(Locale.ENGLISH));
+					lore.add("Cost: " + cost);
+					// add current
+					if (rs.getInt("use") == 1) {
+						lore.add(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"));
+					}
+					im.setLore(lore);
+					is.setItemMeta(im);
+					buttons[i] = is;
+					i++;
+					if (i > 15) {
+						break;
+					}
+				}
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for archive buttons! " + e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing archive buttons! " + e.getMessage());
+			}
+		}
+		return true;
+	}
 
-    public ItemStack[] getButtons() {
-        return buttons;
-    }
+	public ItemStack[] getButtons() {
+		return buttons;
+	}
 }

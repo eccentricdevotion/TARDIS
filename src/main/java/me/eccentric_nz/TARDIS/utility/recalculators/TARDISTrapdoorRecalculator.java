@@ -26,62 +26,62 @@ import org.bukkit.block.data.Directional;
  */
 public class TARDISTrapdoorRecalculator {
 
-    /**
-     * Recalculate the data for directional block (TRAPDOOR) when the TARDIS preset changes direction.
-     *
-     * @param b the block data to convert
-     * @param d the new direction of the TARDIS
-     * @return the recalculated byte
-     */
-    public BlockData recalculate(BlockData b, COMPASS d) {
-        Directional trap = (Directional) b;
-        switch (d) {
-            case SOUTH:
-                switch (trap.getFacing()) {
-                    case SOUTH:
-                        trap.setFacing(BlockFace.WEST); // 3
-                        break;
-                    case NORTH:
-                        trap.setFacing(BlockFace.EAST); // 2
-                        break;
-                    case EAST:
-                        trap.setFacing(BlockFace.SOUTH); // 0
-                        break;
-                    default: // WEST
-                        trap.setFacing(BlockFace.NORTH); // 1
-                }
-                break;
-            case WEST:
-                switch (trap.getFacing()) {
-                    case SOUTH:
-                        trap.setFacing(BlockFace.NORTH);
-                        break;
-                    case NORTH:
-                        trap.setFacing(BlockFace.SOUTH);
-                        break;
-                    case EAST:
-                        trap.setFacing(BlockFace.WEST);
-                        break;
-                    default: // WEST
-                        trap.setFacing(BlockFace.EAST);
-                }
-                break;
-            default:
-                switch (trap.getFacing()) {
-                    case SOUTH:
-                        trap.setFacing(BlockFace.EAST);
-                        break;
-                    case NORTH:
-                        trap.setFacing(BlockFace.WEST);
-                        break;
-                    case EAST:
-                        trap.setFacing(BlockFace.NORTH);
-                        break;
-                    default: // WEST
-                        trap.setFacing(BlockFace.SOUTH);
-                }
-                break;
-        }
-        return trap;
-    }
+	/**
+	 * Recalculate the data for directional block (TRAPDOOR) when the TARDIS preset changes direction.
+	 *
+	 * @param b the block data to convert
+	 * @param d the new direction of the TARDIS
+	 * @return the recalculated byte
+	 */
+	public BlockData recalculate(BlockData b, COMPASS d) {
+		Directional trap = (Directional) b;
+		switch (d) {
+			case SOUTH:
+				switch (trap.getFacing()) {
+					case SOUTH:
+						trap.setFacing(BlockFace.WEST); // 3
+						break;
+					case NORTH:
+						trap.setFacing(BlockFace.EAST); // 2
+						break;
+					case EAST:
+						trap.setFacing(BlockFace.SOUTH); // 0
+						break;
+					default: // WEST
+						trap.setFacing(BlockFace.NORTH); // 1
+				}
+				break;
+			case WEST:
+				switch (trap.getFacing()) {
+					case SOUTH:
+						trap.setFacing(BlockFace.NORTH);
+						break;
+					case NORTH:
+						trap.setFacing(BlockFace.SOUTH);
+						break;
+					case EAST:
+						trap.setFacing(BlockFace.WEST);
+						break;
+					default: // WEST
+						trap.setFacing(BlockFace.EAST);
+				}
+				break;
+			default:
+				switch (trap.getFacing()) {
+					case SOUTH:
+						trap.setFacing(BlockFace.EAST);
+						break;
+					case NORTH:
+						trap.setFacing(BlockFace.WEST);
+						break;
+					case EAST:
+						trap.setFacing(BlockFace.NORTH);
+						break;
+					default: // WEST
+						trap.setFacing(BlockFace.SOUTH);
+				}
+				break;
+		}
+		return trap;
+	}
 }

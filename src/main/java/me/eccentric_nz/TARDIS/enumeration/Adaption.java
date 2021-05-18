@@ -23,17 +23,17 @@ import org.bukkit.ChatColor;
  */
 public enum Adaption {
 
-    OFF(ChatColor.RED),
-    BIOME(ChatColor.GREEN),
-    BLOCK(ChatColor.AQUA);
+	OFF(ChatColor.RED),
+	BIOME(ChatColor.GREEN),
+	BLOCK(ChatColor.AQUA);
 
-    private final ChatColor colour;
+	private final ChatColor colour;
 
-    Adaption(ChatColor colour) {
-        this.colour = colour;
-    }
+	Adaption(ChatColor colour) {
+		this.colour = colour;
+	}
 
-    public ChatColor getColour() {
-        return colour;
-    }
+	public ChatColor getColour() {
+		return colour;
+	}
 }

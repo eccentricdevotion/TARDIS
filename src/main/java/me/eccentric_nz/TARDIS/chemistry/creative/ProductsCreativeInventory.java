@@ -28,66 +28,66 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ProductsCreativeInventory {
 
-    private final TARDIS plugin;
-    private final ItemStack[] menu;
+	private final TARDIS plugin;
+	private final ItemStack[] menu;
 
-    public ProductsCreativeInventory(TARDIS plugin) {
-        this.plugin = plugin;
-        menu = getItemStack();
-    }
+	public ProductsCreativeInventory(TARDIS plugin) {
+		this.plugin = plugin;
+		menu = getItemStack();
+	}
 
-    private ItemStack[] getItemStack() {
-        ItemStack[] stack = new ItemStack[54];
-        int i = 0;
-        for (Product entry : Product.values()) {
-            if (i > 52) {
-                break;
-            }
-            ItemStack is = ProductBuilder.getProduct(entry);
-            stack[i] = is;
-            if (i % 9 == 7) {
-                i += 2;
-            } else {
-                i++;
-            }
-        }
-        for (Lab entry : Lab.values()) {
-            if (i > 52) {
-                break;
-            }
-            ItemStack is = LabBuilder.getLabProduct(entry);
-            stack[i] = is;
-            if (i % 9 == 7) {
-                i += 2;
-            } else {
-                i++;
-            }
-        }
-        // elements
-        ItemStack elements = new ItemStack(GUIChemistry.ELEMENTS.getMaterial(), 1);
-        ItemMeta eim = elements.getItemMeta();
-        eim.setDisplayName("Elements");
-        eim.setCustomModelData(GUIChemistry.ELEMENTS.getCustomModelData());
-        elements.setItemMeta(eim);
-        stack[35] = elements;
-        // compounds
-        ItemStack compounds = new ItemStack(GUIChemistry.COMPOUNDS.getMaterial(), 1);
-        ItemMeta cim = compounds.getItemMeta();
-        cim.setDisplayName("Compounds");
-        cim.setCustomModelData(GUIChemistry.COMPOUNDS.getCustomModelData());
-        compounds.setItemMeta(cim);
-        stack[44] = compounds;
-        // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
-        close.setItemMeta(close_im);
-        stack[53] = close;
-        return stack;
-    }
+	private ItemStack[] getItemStack() {
+		ItemStack[] stack = new ItemStack[54];
+		int i = 0;
+		for (Product entry : Product.values()) {
+			if (i > 52) {
+				break;
+			}
+			ItemStack is = ProductBuilder.getProduct(entry);
+			stack[i] = is;
+			if (i % 9 == 7) {
+				i += 2;
+			} else {
+				i++;
+			}
+		}
+		for (Lab entry : Lab.values()) {
+			if (i > 52) {
+				break;
+			}
+			ItemStack is = LabBuilder.getLabProduct(entry);
+			stack[i] = is;
+			if (i % 9 == 7) {
+				i += 2;
+			} else {
+				i++;
+			}
+		}
+		// elements
+		ItemStack elements = new ItemStack(GUIChemistry.ELEMENTS.getMaterial(), 1);
+		ItemMeta eim = elements.getItemMeta();
+		eim.setDisplayName("Elements");
+		eim.setCustomModelData(GUIChemistry.ELEMENTS.getCustomModelData());
+		elements.setItemMeta(eim);
+		stack[35] = elements;
+		// compounds
+		ItemStack compounds = new ItemStack(GUIChemistry.COMPOUNDS.getMaterial(), 1);
+		ItemMeta cim = compounds.getItemMeta();
+		cim.setDisplayName("Compounds");
+		cim.setCustomModelData(GUIChemistry.COMPOUNDS.getCustomModelData());
+		compounds.setItemMeta(cim);
+		stack[44] = compounds;
+		// close
+		ItemStack close = new ItemStack(Material.BOWL, 1);
+		ItemMeta close_im = close.getItemMeta();
+		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+		close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
+		close.setItemMeta(close_im);
+		stack[53] = close;
+		return stack;
+	}
 
-    public ItemStack[] getMenu() {
-        return menu;
-    }
+	public ItemStack[] getMenu() {
+		return menu;
+	}
 }

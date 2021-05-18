@@ -23,11 +23,11 @@ package me.eccentric_nz.TARDIS.ARS;
  */
 public interface ARS {
 
-    String getMaterial();
+	String getMaterial();
 
-    String getDescriptiveName();
+	String getDescriptiveName();
 
-    String getConfigPath();
+	String getConfigPath();
 
-    int getOffset();
+	int getOffset();
 }

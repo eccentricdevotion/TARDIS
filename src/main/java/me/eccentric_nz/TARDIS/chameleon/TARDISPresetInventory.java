@@ -37,64 +37,64 @@ import java.util.List;
  */
 class TARDISPresetInventory {
 
-    private final ItemStack[] terminal;
-    private final TARDIS plugin;
-    private final Player player;
-    private final List<Material> notThese = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
+	private final ItemStack[] terminal;
+	private final TARDIS plugin;
+	private final Player player;
+	private final List<Material> notThese = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
 
-    public TARDISPresetInventory(TARDIS plugin, Player player) {
-        this.plugin = plugin;
-        this.player = player;
-        terminal = getItemStack();
-    }
+	public TARDISPresetInventory(TARDIS plugin, Player player) {
+		this.plugin = plugin;
+		this.player = player;
+		terminal = getItemStack();
+	}
 
-    /**
-     * Constructs an inventory for the Chameleon Circuit GUI.
-     *
-     * @return an Array of itemStacks (an inventory)
-     */
-    private ItemStack[] getItemStack() {
-        ItemStack[] stacks = new ItemStack[54];
+	/**
+	 * Constructs an inventory for the Chameleon Circuit GUI.
+	 *
+	 * @return an Array of itemStacks (an inventory)
+	 */
+	private ItemStack[] getItemStack() {
+		ItemStack[] stacks = new ItemStack[54];
 
-        int i = 0;
-        for (PRESET preset : PRESET.values()) {
-            if (!notThese.contains(preset.getCraftMaterial()) && !preset.isColoured()) {
-                if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
-                    ItemStack is = new ItemStack(preset.getGuiDisplay(), 1);
-                    ItemMeta im = is.getItemMeta();
-                    im.setDisplayName(preset.getDisplayName());
-                    is.setItemMeta(im);
-                    stacks[preset.getSlot()] = is;
-                }
-                i++;
-            }
-        }
-        // back
-        ItemStack back = new ItemStack(Material.BOWL, 1);
-        ItemMeta but = back.getItemMeta();
-        but.setDisplayName("Back");
-        but.setCustomModelData(GUIChameleonPresets.BACK.getCustomModelData());
-        back.setItemMeta(but);
-        stacks[51] = back;
-        // page two
-        ItemStack page = new ItemStack(Material.ARROW, 1);
-        ItemMeta two = page.getItemMeta();
-        two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-        two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData());
-        page.setItemMeta(two);
-        stacks[52] = page;
-        // Cancel / close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
-        ItemMeta can = close.getItemMeta();
-        can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
-        close.setItemMeta(can);
-        stacks[53] = close;
+		int i = 0;
+		for (PRESET preset : PRESET.values()) {
+			if (!notThese.contains(preset.getCraftMaterial()) && !preset.isColoured()) {
+				if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
+					ItemStack is = new ItemStack(preset.getGuiDisplay(), 1);
+					ItemMeta im = is.getItemMeta();
+					im.setDisplayName(preset.getDisplayName());
+					is.setItemMeta(im);
+					stacks[preset.getSlot()] = is;
+				}
+				i++;
+			}
+		}
+		// back
+		ItemStack back = new ItemStack(Material.BOWL, 1);
+		ItemMeta but = back.getItemMeta();
+		but.setDisplayName("Back");
+		but.setCustomModelData(GUIChameleonPresets.BACK.getCustomModelData());
+		back.setItemMeta(but);
+		stacks[51] = back;
+		// page two
+		ItemStack page = new ItemStack(Material.ARROW, 1);
+		ItemMeta two = page.getItemMeta();
+		two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
+		two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData());
+		page.setItemMeta(two);
+		stacks[52] = page;
+		// Cancel / close
+		ItemStack close = new ItemStack(Material.BOWL, 1);
+		ItemMeta can = close.getItemMeta();
+		can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+		can.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
+		close.setItemMeta(can);
+		stacks[53] = close;
 
-        return stacks;
-    }
+		return stacks;
+	}
 
-    public ItemStack[] getPresets() {
-        return terminal;
-    }
+	public ItemStack[] getPresets() {
+		return terminal;
+	}
 }

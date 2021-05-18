@@ -28,29 +28,29 @@ import java.util.Locale;
  */
 public class TARDISQuestionMarkCommand implements CommandExecutor {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISQuestionMarkCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISQuestionMarkCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("tardis?")) {
-            TARDISCommandHelper tch = new TARDISCommandHelper(plugin);
-            switch (args.length) {
-                case 2:
-                    String cmds = args[0].toLowerCase(Locale.ENGLISH) + " " + args[1].toLowerCase(Locale.ENGLISH);
-                    tch.getCommand(cmds, sender);
-                    return true;
-                case 1:
-                    tch.getCommand(args[0].toLowerCase(Locale.ENGLISH), sender);
-                    return true;
-                default:
-                    tch.getCommand("", sender);
-                    return true;
-            }
-        }
-        return false;
-    }
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("tardis?")) {
+			TARDISCommandHelper tch = new TARDISCommandHelper(plugin);
+			switch (args.length) {
+				case 2:
+					String cmds = args[0].toLowerCase(Locale.ENGLISH) + " " + args[1].toLowerCase(Locale.ENGLISH);
+					tch.getCommand(cmds, sender);
+					return true;
+				case 1:
+					tch.getCommand(args[0].toLowerCase(Locale.ENGLISH), sender);
+					return true;
+				default:
+					tch.getCommand("", sender);
+					return true;
+			}
+		}
+		return false;
+	}
 }

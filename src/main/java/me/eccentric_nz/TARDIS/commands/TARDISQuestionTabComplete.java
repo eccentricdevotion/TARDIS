@@ -33,33 +33,33 @@ import java.util.Set;
  */
 public class TARDISQuestionTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final TARDIS plugin;
-    private final ImmutableList<String> ROOT_SUBS;
-    private final List<String> notThese = Arrays.asList("aliases", "description", "usage", "permission", "permission-message");
+	private final TARDIS plugin;
+	private final ImmutableList<String> ROOT_SUBS;
+	private final List<String> notThese = Arrays.asList("aliases", "description", "usage", "permission", "permission-message");
 
-    public TARDISQuestionTabComplete(TARDIS plugin) {
-        this.plugin = plugin;
-        List<String> roots = new ArrayList<>();
-        for (ROOT_COMMAND rc : TARDISCommandHelper.ROOT_COMMAND.values()) {
-            roots.add(rc.toString());
-        }
-        ROOT_SUBS = ImmutableList.copyOf(roots);
-    }
+	public TARDISQuestionTabComplete(TARDIS plugin) {
+		this.plugin = plugin;
+		List<String> roots = new ArrayList<>();
+		for (ROOT_COMMAND rc : TARDISCommandHelper.ROOT_COMMAND.values()) {
+			roots.add(rc.toString());
+		}
+		ROOT_SUBS = ImmutableList.copyOf(roots);
+	}
 
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        String lastArg = args[args.length - 1];
-        if (args.length <= 1) {
-            return partial(args[0], ROOT_SUBS);
-        } else if (args.length == 2) {
-            String sub = args[0];
-            return partial(lastArg, removeUnwanted(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands." + sub).getKeys(false)));
-        }
-        return ImmutableList.of();
-    }
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+		String lastArg = args[args.length - 1];
+		if (args.length <= 1) {
+			return partial(args[0], ROOT_SUBS);
+		} else if (args.length == 2) {
+			String sub = args[0];
+			return partial(lastArg, removeUnwanted(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands." + sub).getKeys(false)));
+		}
+		return ImmutableList.of();
+	}
 
-    private ImmutableList<String> removeUnwanted(Set<String> set) {
-        set.removeAll(notThese);
-        return ImmutableList.copyOf(set);
-    }
+	private ImmutableList<String> removeUnwanted(Set<String> set) {
+		set.removeAll(notThese);
+		return ImmutableList.copyOf(set);
+	}
 }

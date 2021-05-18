@@ -31,35 +31,35 @@ import java.util.concurrent.TimeUnit;
  */
 class TARDISTagCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISTagCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISTagCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean getStats(Player player) {
-        ResultSetTag rs = new ResultSetTag(plugin);
-        player.sendMessage(plugin.getPluginName() + "Here are the stats:");
-        String who = (!plugin.getTagConfig().getString("it").equals("")) ? plugin.getTagConfig().getString("it") : "No one";
-        player.sendMessage(who + " is currently the " + ChatColor.RED + "'OOD'");
-        player.sendMessage("-----------");
-        player.sendMessage(ChatColor.GOLD + "Top 5 OODs");
-        player.sendMessage("-----------");
-        if (rs.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rs.getData();
-            data.forEach((map) -> {
-                String p = map.get("player");
-                long t = TARDISNumberParsers.parseLong(map.get("time"));
-                player.sendMessage(p + ": " + ChatColor.GREEN + getHoursMinutesSeconds(t));
-            });
-        } else {
-            player.sendMessage("The are no stats yet :(");
-        }
-        player.sendMessage("-----------");
-        return true;
-    }
+	boolean getStats(Player player) {
+		ResultSetTag rs = new ResultSetTag(plugin);
+		player.sendMessage(plugin.getPluginName() + "Here are the stats:");
+		String who = (!plugin.getTagConfig().getString("it").equals("")) ? plugin.getTagConfig().getString("it") : "No one";
+		player.sendMessage(who + " is currently the " + ChatColor.RED + "'OOD'");
+		player.sendMessage("-----------");
+		player.sendMessage(ChatColor.GOLD + "Top 5 OODs");
+		player.sendMessage("-----------");
+		if (rs.resultSet()) {
+			ArrayList<HashMap<String, String>> data = rs.getData();
+			data.forEach((map) -> {
+				String p = map.get("player");
+				long t = TARDISNumberParsers.parseLong(map.get("time"));
+				player.sendMessage(p + ": " + ChatColor.GREEN + getHoursMinutesSeconds(t));
+			});
+		} else {
+			player.sendMessage("The are no stats yet :(");
+		}
+		player.sendMessage("-----------");
+		return true;
+	}
 
-    private String getHoursMinutesSeconds(long millis) {
-        return String.format("%02dh:%02dm:%02ds", TimeUnit.MILLISECONDS.toHours(millis), TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
-    }
+	private String getHoursMinutesSeconds(long millis) {
+		return String.format("%02dh:%02dm:%02ds", TimeUnit.MILLISECONDS.toHours(millis), TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+	}
 }

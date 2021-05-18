@@ -35,56 +35,56 @@ import java.util.Map;
  */
 public class TARDISbPermissionsHandler {
 
-    private final TARDIS plugin;
-    private final File permissionsFile;
-    private final LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<>();
-    private String group;
+	private final TARDIS plugin;
+	private final File permissionsFile;
+	private final LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<>();
+	private String group;
 
-    public TARDISbPermissionsHandler(TARDIS plugin) {
-        this.plugin = plugin;
-        permissionsFile = new File(plugin.getDataFolder(), "permissions.txt");
-    }
+	public TARDISbPermissionsHandler(TARDIS plugin) {
+		this.plugin = plugin;
+		permissionsFile = new File(plugin.getDataFolder(), "permissions.txt");
+	}
 
-    public void addPerms(String player) {
-        BufferedReader bufRdr = null;
-        try {
-            bufRdr = new BufferedReader(new FileReader(permissionsFile));
-            String line;
-            //read each line of text file
-            while ((line = bufRdr.readLine()) != null) {
-                if (line.charAt(0) == '#') {
-                    group = line.substring(1).trim();
-                    permgroups.put(group, new ArrayList<>());
-                } else {
-                    List<String> perms = permgroups.get(group);
-                    perms.add(line.trim());
-                }
-            }
-        } catch (IOException io) {
-            plugin.debug("Could not read perms file. " + io.getMessage());
-        } finally {
-            if (bufRdr != null) {
-                try {
-                    bufRdr.close();
-                } catch (IOException e) {
-                    plugin.debug("Error closing perms reader! " + e.getMessage());
-                }
-            }
-        }
-        plugin.getServer().dispatchCommand(plugin.getConsole(), "world TARDIS_WORLD_" + player);
-        int i = 0;
-        for (Map.Entry<String, List<String>> entry : permgroups.entrySet()) {
-            String grpstr = entry.getKey();
-            List<String> perms = entry.getValue();
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "group " + grpstr);
-            perms.forEach((p) -> plugin.getServer().dispatchCommand(plugin.getConsole(), "group addperm " + p));
-            if (i == 0) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "user " + player);
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "user setgroup " + grpstr);
-            }
-            i++;
-        }
-        plugin.getServer().dispatchCommand(plugin.getConsole(), "permissions save");
-        plugin.getServer().dispatchCommand(plugin.getConsole(), "permissions reload");
-    }
+	public void addPerms(String player) {
+		BufferedReader bufRdr = null;
+		try {
+			bufRdr = new BufferedReader(new FileReader(permissionsFile));
+			String line;
+			//read each line of text file
+			while ((line = bufRdr.readLine()) != null) {
+				if (line.charAt(0) == '#') {
+					group = line.substring(1).trim();
+					permgroups.put(group, new ArrayList<>());
+				} else {
+					List<String> perms = permgroups.get(group);
+					perms.add(line.trim());
+				}
+			}
+		} catch (IOException io) {
+			plugin.debug("Could not read perms file. " + io.getMessage());
+		} finally {
+			if (bufRdr != null) {
+				try {
+					bufRdr.close();
+				} catch (IOException e) {
+					plugin.debug("Error closing perms reader! " + e.getMessage());
+				}
+			}
+		}
+		plugin.getServer().dispatchCommand(plugin.getConsole(), "world TARDIS_WORLD_" + player);
+		int i = 0;
+		for (Map.Entry<String, List<String>> entry : permgroups.entrySet()) {
+			String grpstr = entry.getKey();
+			List<String> perms = entry.getValue();
+			plugin.getServer().dispatchCommand(plugin.getConsole(), "group " + grpstr);
+			perms.forEach((p) -> plugin.getServer().dispatchCommand(plugin.getConsole(), "group addperm " + p));
+			if (i == 0) {
+				plugin.getServer().dispatchCommand(plugin.getConsole(), "user " + player);
+				plugin.getServer().dispatchCommand(plugin.getConsole(), "user setgroup " + grpstr);
+			}
+			i++;
+		}
+		plugin.getServer().dispatchCommand(plugin.getConsole(), "permissions save");
+		plugin.getServer().dispatchCommand(plugin.getConsole(), "permissions reload");
+	}
 }

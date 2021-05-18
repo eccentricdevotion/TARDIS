@@ -28,19 +28,19 @@ import org.bukkit.plugin.Plugin;
  */
 public class TARDISAngelsAPI {
 
-    /**
-     * Get TARDISWeepingAngelsAPI.
-     *
-     * @param plugin - a TARDIS plugin instance
-     * @return the TARDISWeepingAngelsAPI
-     */
-    public static TARDISWeepingAngelsAPI getAPI(TARDIS plugin) {
-        Plugin p = plugin.getPM().getPlugin("TARDISWeepingAngels");
-        TARDISWeepingAngels twa = (TARDISWeepingAngels) p;
-        return twa.getWeepingAngelsAPI();
-    }
+	/**
+	 * Get TARDISWeepingAngelsAPI.
+	 *
+	 * @param plugin - a TARDIS plugin instance
+	 * @return the TARDISWeepingAngelsAPI
+	 */
+	public static TARDISWeepingAngelsAPI getAPI(TARDIS plugin) {
+		Plugin p = plugin.getPM().getPlugin("TARDISWeepingAngels");
+		TARDISWeepingAngels twa = (TARDISWeepingAngels) p;
+		return twa.getWeepingAngelsAPI();
+	}
 
-    public static boolean isDalek(Skeleton skeleton) {
-        return skeleton.getPersistentDataContainer().has(TARDISWeepingAngels.DALEK, PersistentDataType.INTEGER);
-    }
+	public static boolean isDalek(Skeleton skeleton) {
+		return skeleton.getPersistentDataContainer().has(TARDISWeepingAngels.DALEK, PersistentDataType.INTEGER);
+	}
 }

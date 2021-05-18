@@ -42,87 +42,87 @@ import java.util.List;
  */
 public class TARDISAdminMenuListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISAdminMenuListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISAdminMenuListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler(ignoreCancelled = true)
-    public void onAdminMenuClick(InventoryClickEvent event) {
-        InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Admin Menu")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            if (slot < 54) {
-                String option = getDisplay(view, slot);
-                if (slot == 52) {
-                    Player p = (Player) event.getWhoClicked();
-                    // close this gui and load the previous / next page
-                    if (option.equals("Previous page")) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
-                            ppm.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
-                            p.openInventory(ppm);
-                        }, 1L);
-                    } else {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
-                            ppm.setContents(new TARDISAdminPageTwoInventory(plugin).getMenu());
-                            p.openInventory(ppm);
-                        }, 1L);
-                    }
-                    return;
-                }
-                if (slot == 53 && option.equals("Player Preferences")) {
-                    Player p = (Player) event.getWhoClicked();
-                    // close this gui and load the Player Prefs Menu
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        Inventory ppm = plugin.getServer().createInventory(p, 36, ChatColor.DARK_RED + "Player Prefs Menu");
-                        ppm.setContents(new TARDISPrefsMenuInventory(plugin, p.getUniqueId()).getMenu());
-                        p.openInventory(ppm);
-                    }, 1L);
-                    return;
-                }
-                if (!option.isEmpty()) {
-                    boolean bool = plugin.getConfig().getBoolean(option);
-                    if (option.equals("abandon.enabled") && !bool && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
-                        Player p = (Player) event.getWhoClicked();
-                        TARDISMessage.message(p, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
-                        return;
-                    }
-                    plugin.getConfig().set(option, !bool);
-                    String lore = (bool) ? "false" : "true";
-                    setLore(view, slot, lore);
-                    plugin.saveConfig();
-                }
-            }
-        }
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onAdminMenuClick(InventoryClickEvent event) {
+		InventoryView view = event.getView();
+		String name = view.getTitle();
+		if (name.equals(ChatColor.DARK_RED + "Admin Menu")) {
+			event.setCancelled(true);
+			int slot = event.getRawSlot();
+			if (slot < 54) {
+				String option = getDisplay(view, slot);
+				if (slot == 52) {
+					Player p = (Player) event.getWhoClicked();
+					// close this gui and load the previous / next page
+					if (option.equals("Previous page")) {
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+							Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
+							ppm.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
+							p.openInventory(ppm);
+						}, 1L);
+					} else {
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+							Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
+							ppm.setContents(new TARDISAdminPageTwoInventory(plugin).getMenu());
+							p.openInventory(ppm);
+						}, 1L);
+					}
+					return;
+				}
+				if (slot == 53 && option.equals("Player Preferences")) {
+					Player p = (Player) event.getWhoClicked();
+					// close this gui and load the Player Prefs Menu
+					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+						Inventory ppm = plugin.getServer().createInventory(p, 36, ChatColor.DARK_RED + "Player Prefs Menu");
+						ppm.setContents(new TARDISPrefsMenuInventory(plugin, p.getUniqueId()).getMenu());
+						p.openInventory(ppm);
+					}, 1L);
+					return;
+				}
+				if (!option.isEmpty()) {
+					boolean bool = plugin.getConfig().getBoolean(option);
+					if (option.equals("abandon.enabled") && !bool && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
+						Player p = (Player) event.getWhoClicked();
+						TARDISMessage.message(p, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
+						return;
+					}
+					plugin.getConfig().set(option, !bool);
+					String lore = (bool) ? "false" : "true";
+					setLore(view, slot, lore);
+					plugin.saveConfig();
+				}
+			}
+		}
+	}
 
-    private String getDisplay(InventoryView view, int slot) {
-        ItemStack is = view.getItem(slot);
-        if (is != null) {
-            ItemMeta im = is.getItemMeta();
-            return im.getDisplayName();
-        } else {
-            return "";
-        }
-    }
+	private String getDisplay(InventoryView view, int slot) {
+		ItemStack is = view.getItem(slot);
+		if (is != null) {
+			ItemMeta im = is.getItemMeta();
+			return im.getDisplayName();
+		} else {
+			return "";
+		}
+	}
 
-    private void setLore(InventoryView view, int slot, String str) {
-        List<String> lore = (str != null) ? Collections.singletonList(str) : null;
-        ItemStack is = view.getItem(slot);
-        ItemMeta im = is.getItemMeta();
-        im.setLore(lore);
-        int cmd = im.getCustomModelData();
-        if (cmd > 100) {
-            cmd -= 100;
-        } else {
-            cmd += 100;
-        }
-        im.setCustomModelData(cmd);
-        is.setItemMeta(im);
-    }
+	private void setLore(InventoryView view, int slot, String str) {
+		List<String> lore = (str != null) ? Collections.singletonList(str) : null;
+		ItemStack is = view.getItem(slot);
+		ItemMeta im = is.getItemMeta();
+		im.setLore(lore);
+		int cmd = im.getCustomModelData();
+		if (cmd > 100) {
+			cmd -= 100;
+		} else {
+			cmd += 100;
+		}
+		im.setCustomModelData(cmd);
+		is.setItemMeta(im);
+	}
 }

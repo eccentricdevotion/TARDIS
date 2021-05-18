@@ -26,53 +26,53 @@ import java.io.IOException;
  */
 public class Program {
 
-    private final int program_id;
-    private final String uuid;
-    private final String name;
-    private final ItemStack[] inventory;
-    private final String parsed;
-    private final boolean checkedOut;
+	private final int program_id;
+	private final String uuid;
+	private final String name;
+	private final ItemStack[] inventory;
+	private final String parsed;
+	private final boolean checkedOut;
 
-    public Program(int program_id, String uuid, String name, String inventory, String parsed, boolean checkedOut) {
-        this.program_id = program_id;
-        this.uuid = uuid;
-        this.name = name;
-        this.inventory = createInventory(inventory);
-        this.parsed = parsed;
-        this.checkedOut = checkedOut;
-    }
+	public Program(int program_id, String uuid, String name, String inventory, String parsed, boolean checkedOut) {
+		this.program_id = program_id;
+		this.uuid = uuid;
+		this.name = name;
+		this.inventory = createInventory(inventory);
+		this.parsed = parsed;
+		this.checkedOut = checkedOut;
+	}
 
-    private ItemStack[] createInventory(String inventory) {
-        ItemStack[] stack;
-        try {
-            stack = TARDISSerializeInventory.itemStacksFromString(inventory);
-        } catch (IOException ex) {
-            stack = new ItemStack[36];
-        }
-        return stack;
-    }
+	private ItemStack[] createInventory(String inventory) {
+		ItemStack[] stack;
+		try {
+			stack = TARDISSerializeInventory.itemStacksFromString(inventory);
+		} catch (IOException ex) {
+			stack = new ItemStack[36];
+		}
+		return stack;
+	}
 
-    public int getProgram_id() {
-        return program_id;
-    }
+	public int getProgram_id() {
+		return program_id;
+	}
 
-    public String getUuid() {
-        return uuid;
-    }
+	public String getUuid() {
+		return uuid;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public ItemStack[] getInventory() {
-        return inventory;
-    }
+	public ItemStack[] getInventory() {
+		return inventory;
+	}
 
-    public String getParsed() {
-        return parsed;
-    }
+	public String getParsed() {
+		return parsed;
+	}
 
-    public boolean isCheckedOut() {
-        return checkedOut;
-    }
+	public boolean isCheckedOut() {
+		return checkedOut;
+	}
 }

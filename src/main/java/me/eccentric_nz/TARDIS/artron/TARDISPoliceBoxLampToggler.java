@@ -31,31 +31,31 @@ import java.util.HashMap;
  */
 public class TARDISPoliceBoxLampToggler {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISPoliceBoxLampToggler(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISPoliceBoxLampToggler(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public void toggleLamp(int id, boolean on) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
-        if (rs.resultSet()) {
-            Block lamp = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ()).getBlock().getRelative(BlockFace.UP, 3);
-            Block redstone = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ()).getBlock().getRelative(BlockFace.UP, 2);
-            while (!lamp.getChunk().isLoaded()) {
-                lamp.getChunk().load();
-            }
-            if (lamp.getType().equals(Material.REDSTONE_LAMP)) {
-                if (on) {
-                    // turn on
-                    redstone.setBlockData(TARDISConstants.POWER);
-                } else {
-                    // turn off
-                    redstone.setBlockData(Material.BLUE_WOOL.createBlockData());
-                }
-            }
-        }
-    }
+	public void toggleLamp(int id, boolean on) {
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("tardis_id", id);
+		ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
+		if (rs.resultSet()) {
+			Block lamp = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ()).getBlock().getRelative(BlockFace.UP, 3);
+			Block redstone = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ()).getBlock().getRelative(BlockFace.UP, 2);
+			while (!lamp.getChunk().isLoaded()) {
+				lamp.getChunk().load();
+			}
+			if (lamp.getType().equals(Material.REDSTONE_LAMP)) {
+				if (on) {
+					// turn on
+					redstone.setBlockData(TARDISConstants.POWER);
+				} else {
+					// turn off
+					redstone.setBlockData(Material.BLUE_WOOL.createBlockData());
+				}
+			}
+		}
+	}
 }

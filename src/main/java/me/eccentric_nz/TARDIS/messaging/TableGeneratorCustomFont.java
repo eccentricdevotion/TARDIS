@@ -9,9 +9,9 @@ package me.eccentric_nz.TARDIS.messaging;
 
 public class TableGeneratorCustomFont extends TableGenerator {
 
-    private static final char char1 = '\uf821';
+	private static final char char1 = '\uf821';
 
-    public TableGeneratorCustomFont(Alignment... alignments) {
-        super(char1, alignments);
-    }
+	public TableGeneratorCustomFont(Alignment... alignments) {
+		super(char1, alignments);
+	}
 }

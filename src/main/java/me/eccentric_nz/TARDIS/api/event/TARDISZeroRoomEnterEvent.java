@@ -25,39 +25,39 @@ import org.bukkit.event.HandlerList;
  */
 public final class TARDISZeroRoomEnterEvent extends Event {
 
-    private static final HandlerList HANDLERS = new HandlerList();
-    private final Player player;
-    private final int tardis_id;
+	private static final HandlerList HANDLERS = new HandlerList();
+	private final Player player;
+	private final int tardis_id;
 
-    public TARDISZeroRoomEnterEvent(Player player, int tardis_id) {
-        this.player = player;
-        this.tardis_id = tardis_id;
-    }
+	public TARDISZeroRoomEnterEvent(Player player, int tardis_id) {
+		this.player = player;
+		this.tardis_id = tardis_id;
+	}
 
-    /**
-     * Returns the player involved in this event.
-     *
-     * @return the player
-     */
-    public Player getPlayer() {
-        return player;
-    }
+	public static HandlerList getHandlerList() {
+		return HANDLERS;
+	}
 
-    /**
-     * Returns the tardis_id of the Zero room the player is entering or exiting.
-     *
-     * @return the tardis_id
-     */
-    public int getTardis_id() {
-        return tardis_id;
-    }
+	/**
+	 * Returns the player involved in this event.
+	 *
+	 * @return the player
+	 */
+	public Player getPlayer() {
+		return player;
+	}
 
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLERS;
-    }
+	/**
+	 * Returns the tardis_id of the Zero room the player is entering or exiting.
+	 *
+	 * @return the tardis_id
+	 */
+	public int getTardis_id() {
+		return tardis_id;
+	}
 
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return HANDLERS;
+	}
 }

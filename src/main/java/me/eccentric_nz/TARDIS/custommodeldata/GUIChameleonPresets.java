@@ -21,35 +21,35 @@ import org.bukkit.Material;
 
 public enum GUIChameleonPresets {
 
-    // Chameleon Presets
-    GO_TO_PAGE_2(12, 51, Material.ARROW),
-    BACK(8, 52, Material.BOWL),
-    CLOSE(1, 53, Material.BOWL);
+	// Chameleon Presets
+	GO_TO_PAGE_2(12, 51, Material.ARROW),
+	BACK(8, 52, Material.BOWL),
+	CLOSE(1, 53, Material.BOWL);
 
-    private final int customModelData;
-    private final int slot;
-    private final Material material;
+	private final int customModelData;
+	private final int slot;
+	private final Material material;
 
-    GUIChameleonPresets(int customModelData, int slot, Material material) {
-        this.customModelData = customModelData;
-        this.slot = slot;
-        this.material = material;
-    }
+	GUIChameleonPresets(int customModelData, int slot, Material material) {
+		this.customModelData = customModelData;
+		this.slot = slot;
+		this.material = material;
+	}
 
-    public int getCustomModelData() {
-        return customModelData;
-    }
+	public int getCustomModelData() {
+		return customModelData;
+	}
 
-    public int getSlot() {
-        return slot;
-    }
+	public int getSlot() {
+		return slot;
+	}
 
-    public Material getMaterial() {
-        return material;
-    }
+	public Material getMaterial() {
+		return material;
+	}
 
-    public String getName() {
-        String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
-    }
+	public String getName() {
+		String s = toString();
+		return TARDISStringUtils.sentenceCase(s);
+	}
 }

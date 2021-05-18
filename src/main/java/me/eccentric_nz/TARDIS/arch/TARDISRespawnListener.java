@@ -32,26 +32,26 @@ import java.util.UUID;
  */
 public class TARDISRespawnListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISRespawnListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISRespawnListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onArchedRespawn(PlayerRespawnEvent event) {
-        Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
-        // check if we should re-arch this player
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISArchPersister(plugin).reArch(uuid), 5L);
-        // remove the player from the travellers table if they respawned in a non-TARDIS world
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", uuid.toString());
-        ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
-        if (rs.resultSet() && !plugin.getUtils().inTARDISWorld(player)) {
-            HashMap<String, Object> wheret = new HashMap<>();
-            wheret.put("uuid", uuid.toString());
-            plugin.getQueryFactory().doDelete("travellers", wheret);
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onArchedRespawn(PlayerRespawnEvent event) {
+		Player player = event.getPlayer();
+		UUID uuid = player.getUniqueId();
+		// check if we should re-arch this player
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISArchPersister(plugin).reArch(uuid), 5L);
+		// remove the player from the travellers table if they respawned in a non-TARDIS world
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("uuid", uuid.toString());
+		ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+		if (rs.resultSet() && !plugin.getUtils().inTARDISWorld(player)) {
+			HashMap<String, Object> wheret = new HashMap<>();
+			wheret.put("uuid", uuid.toString());
+			plugin.getQueryFactory().doDelete("travellers", wheret);
+		}
+	}
 }

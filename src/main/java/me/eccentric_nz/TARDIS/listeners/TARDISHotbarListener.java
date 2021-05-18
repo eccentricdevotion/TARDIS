@@ -38,48 +38,48 @@ import java.util.HashMap;
  */
 public class TARDISHotbarListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISHotbarListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISHotbarListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onSelectTARDISItem(PlayerItemHeldEvent event) {
-        Player player = event.getPlayer();
-        PlayerInventory inv = player.getInventory();
-        ItemStack is = inv.getItem(event.getNewSlot());
-        if (is != null) {
-            if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.getPersistentDataContainer().has(plugin.getOldBlockKey(), PersistentDataType.INTEGER)) {
-                    int which = im.getPersistentDataContainer().get(plugin.getOldBlockKey(), PersistentDataType.INTEGER);
-                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
-                    is.setItemMeta(im);
-                }
-                if (is.getType().equals(Material.COMPASS) && im.getDisplayName().equals("TARDIS Locator")) {
-                    // get TARDIS location
-                    ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                    if (rs.fromUUID(player.getUniqueId().toString())) {
-                        HashMap<String, Object> wherecl = new HashMap<>();
-                        wherecl.put("tardis_id", rs.getTardis_id());
-                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                        if (!rsc.resultSet()) {
-                            return;
-                        }
-                        Location pb = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                        player.setCompassTarget(pb);
-                    }
-                } else {
-                    Location bedspawn = player.getBedSpawnLocation();
-                    // if player has bed spawn set
-                    if (bedspawn != null) {
-                        player.setCompassTarget(bedspawn);
-                    } else {
-                        player.setCompassTarget(player.getWorld().getSpawnLocation());
-                    }
-                }
-            }
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onSelectTARDISItem(PlayerItemHeldEvent event) {
+		Player player = event.getPlayer();
+		PlayerInventory inv = player.getInventory();
+		ItemStack is = inv.getItem(event.getNewSlot());
+		if (is != null) {
+			if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
+				ItemMeta im = is.getItemMeta();
+				if (im.getPersistentDataContainer().has(plugin.getOldBlockKey(), PersistentDataType.INTEGER)) {
+					int which = im.getPersistentDataContainer().get(plugin.getOldBlockKey(), PersistentDataType.INTEGER);
+					im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
+					is.setItemMeta(im);
+				}
+				if (is.getType().equals(Material.COMPASS) && im.getDisplayName().equals("TARDIS Locator")) {
+					// get TARDIS location
+					ResultSetTardisID rs = new ResultSetTardisID(plugin);
+					if (rs.fromUUID(player.getUniqueId().toString())) {
+						HashMap<String, Object> wherecl = new HashMap<>();
+						wherecl.put("tardis_id", rs.getTardis_id());
+						ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+						if (!rsc.resultSet()) {
+							return;
+						}
+						Location pb = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+						player.setCompassTarget(pb);
+					}
+				} else {
+					Location bedspawn = player.getBedSpawnLocation();
+					// if player has bed spawn set
+					if (bedspawn != null) {
+						player.setCompassTarget(bedspawn);
+					} else {
+						player.setCompassTarget(player.getWorld().getSpawnLocation());
+					}
+				}
+			}
+		}
+	}
 }

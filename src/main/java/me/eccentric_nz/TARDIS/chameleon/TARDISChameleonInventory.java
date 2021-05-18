@@ -39,128 +39,128 @@ import java.util.List;
  */
 public class TARDISChameleonInventory {
 
-    private final ItemStack[] terminal;
-    private final TARDIS plugin;
-    private final Adaption adapt;
-    private final PRESET preset;
-    private final ItemStack on;
-    private final ItemStack off;
+	private final ItemStack[] terminal;
+	private final TARDIS plugin;
+	private final Adaption adapt;
+	private final PRESET preset;
+	private final ItemStack on;
+	private final ItemStack off;
 
-    public TARDISChameleonInventory(TARDIS plugin, Adaption adapt, PRESET preset) {
-        this.plugin = plugin;
-        this.adapt = adapt;
-        this.preset = preset;
-        on = new ItemStack(Material.LIME_WOOL, 1);
-        off = new ItemStack(Material.LIGHT_GRAY_CARPET, 1);
-        terminal = getItemStack();
-    }
+	public TARDISChameleonInventory(TARDIS plugin, Adaption adapt, PRESET preset) {
+		this.plugin = plugin;
+		this.adapt = adapt;
+		this.preset = preset;
+		on = new ItemStack(Material.LIME_WOOL, 1);
+		off = new ItemStack(Material.LIGHT_GRAY_CARPET, 1);
+		terminal = getItemStack();
+	}
 
-    /**
-     * Constructs an inventory for the Chameleon Circuit GUI.
-     *
-     * @return an Array of itemStacks (an inventory)
-     */
-    private ItemStack[] getItemStack() {
+	/**
+	 * Constructs an inventory for the Chameleon Circuit GUI.
+	 *
+	 * @return an Array of itemStacks (an inventory)
+	 */
+	private ItemStack[] getItemStack() {
 
-        // Apply now
-        ItemStack apply = new ItemStack(Material.COMPARATOR, 1);
-        ItemMeta now = apply.getItemMeta();
-        now.setDisplayName(plugin.getChameleonGuis().getString("APPLY"));
-        now.setLore(plugin.getChameleonGuis().getStringList("APPLY_LORE"));
-        now.setCustomModelData(GUIChameleon.BUTTON_APPLY.getCustomModelData());
-        apply.setItemMeta(now);
-        // Disabled
-        ItemStack dis = new ItemStack(Material.BOWL, 1);
-        ItemMeta abled = dis.getItemMeta();
-        abled.setDisplayName("Chameleon Circuit");
-        abled.setLore(plugin.getChameleonGuis().getStringList("DISABLED_LORE"));
-        abled.setCustomModelData(GUIChameleon.BUTTON_CHAMELEON.getCustomModelData());
-        dis.setItemMeta(abled);
-        // Adaptive
-        ItemStack adap = new ItemStack(Material.BOWL, 1);
-        ItemMeta tive = adap.getItemMeta();
-        tive.setDisplayName(plugin.getChameleonGuis().getString("ADAPT"));
-        tive.setLore(plugin.getChameleonGuis().getStringList("ADAPT_LORE"));
-        tive.setCustomModelData(GUIChameleon.BUTTON_ADAPT.getCustomModelData());
-        adap.setItemMeta(tive);
-        // Invisible
-        ItemStack invis;
-        if (plugin.getConfig().getBoolean("allow.invisibility")) {
-            invis = new ItemStack(Material.BOWL, 1);
-            ItemMeta ible = invis.getItemMeta();
-            ible.setDisplayName(plugin.getChameleonGuis().getString("INVISIBLE"));
-            List<String> ilore = plugin.getChameleonGuis().getStringList("INVISIBLE_LORE");
-            if (plugin.getConfig().getBoolean("circuits.damage")) {
-                ilore.add(plugin.getLanguage().getString("INVISIBILITY_LORE_1"));
-                ilore.add(plugin.getLanguage().getString("INVISIBILITY_LORE_2"));
-            }
-            ible.setLore(ilore);
-            ible.setCustomModelData(GUIChameleon.BUTTON_INVISIBLE.getCustomModelData());
-            invis.setItemMeta(ible);
-        } else {
-            invis = null;
-        }
-        // Shorted out
-        ItemStack shor = new ItemStack(Material.BOWL, 1);
-        ItemMeta tout = shor.getItemMeta();
-        tout.setDisplayName(plugin.getChameleonGuis().getString("SHORT"));
-        tout.setLore(plugin.getChameleonGuis().getStringList("SHORT_LORE"));
-        tout.setCustomModelData(GUIChameleon.BUTTON_SHORT.getCustomModelData());
-        shor.setItemMeta(tout);
-        // construction GUI
-        ItemStack cons = new ItemStack(Material.BOWL, 1);
-        ItemMeta truct = cons.getItemMeta();
-        truct.setDisplayName(plugin.getChameleonGuis().getString("CONSTRUCT"));
-        truct.setLore(plugin.getChameleonGuis().getStringList("CONSTRUCT_LORE"));
-        truct.setCustomModelData(GUIChameleon.BUTTON_CONSTRUCT.getCustomModelData());
-        cons.setItemMeta(truct);
-        // Disabled radio button
-        boolean isFactoryOff = preset.equals(PRESET.FACTORY) && adapt.equals(Adaption.OFF);
-        ItemStack fac = isFactoryOff ? on.clone() : off.clone();
-        ItemMeta tory = fac.getItemMeta();
-        String donoff = isFactoryOff ? ChatColor.RED + plugin.getLanguage().getString("DISABLED") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
-        tory.setDisplayName(donoff);
-        fac.setItemMeta(tory);
-        // Adaptive radio button
-        ItemStack biome = (adapt.equals(Adaption.OFF)) ? off.clone() : on.clone();
-        ItemMeta block = biome.getItemMeta();
-        block.setDisplayName(adapt.getColour() + adapt.toString());
-        biome.setItemMeta(block);
-        // Invisible radio button
-        ItemStack not;
-        if (plugin.getConfig().getBoolean("allow.invisibility")) {
-            not = (preset.equals(PRESET.INVISIBLE)) ? on.clone() : off.clone();
-            ItemMeta blue = not.getItemMeta();
-            String ionoff = (preset.equals(PRESET.INVISIBLE)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
-            blue.setDisplayName(ionoff);
-            not.setItemMeta(blue);
-        } else {
-            not = null;
-        }
-        // Shorted out radio button
-        boolean isNotFactoryInvisibleOrConstruct = !preset.equals(PRESET.INVISIBLE) && !preset.equals(PRESET.FACTORY) && !preset.equals(PRESET.CONSTRUCT);
-        ItemStack pre = isNotFactoryInvisibleOrConstruct ? on.clone() : off.clone();
-        ItemMeta set = pre.getItemMeta();
-        String sonoff = isNotFactoryInvisibleOrConstruct ? ChatColor.GREEN + preset.toString() : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
-        set.setDisplayName(sonoff);
-        pre.setItemMeta(set);
-        // Construct radio button
-        ItemStack bui = (preset.equals(PRESET.CONSTRUCT)) ? on.clone() : off.clone();
-        ItemMeta lder = bui.getItemMeta();
-        String conoff = (preset.equals(PRESET.CONSTRUCT)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
-        lder.setDisplayName(conoff);
-        bui.setItemMeta(lder);
-        // Cancel / close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
-        ItemMeta can = close.getItemMeta();
-        can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleon.BUTTON_CLOSE.getCustomModelData());
-        close.setItemMeta(can);
+		// Apply now
+		ItemStack apply = new ItemStack(Material.COMPARATOR, 1);
+		ItemMeta now = apply.getItemMeta();
+		now.setDisplayName(plugin.getChameleonGuis().getString("APPLY"));
+		now.setLore(plugin.getChameleonGuis().getStringList("APPLY_LORE"));
+		now.setCustomModelData(GUIChameleon.BUTTON_APPLY.getCustomModelData());
+		apply.setItemMeta(now);
+		// Disabled
+		ItemStack dis = new ItemStack(Material.BOWL, 1);
+		ItemMeta abled = dis.getItemMeta();
+		abled.setDisplayName("Chameleon Circuit");
+		abled.setLore(plugin.getChameleonGuis().getStringList("DISABLED_LORE"));
+		abled.setCustomModelData(GUIChameleon.BUTTON_CHAMELEON.getCustomModelData());
+		dis.setItemMeta(abled);
+		// Adaptive
+		ItemStack adap = new ItemStack(Material.BOWL, 1);
+		ItemMeta tive = adap.getItemMeta();
+		tive.setDisplayName(plugin.getChameleonGuis().getString("ADAPT"));
+		tive.setLore(plugin.getChameleonGuis().getStringList("ADAPT_LORE"));
+		tive.setCustomModelData(GUIChameleon.BUTTON_ADAPT.getCustomModelData());
+		adap.setItemMeta(tive);
+		// Invisible
+		ItemStack invis;
+		if (plugin.getConfig().getBoolean("allow.invisibility")) {
+			invis = new ItemStack(Material.BOWL, 1);
+			ItemMeta ible = invis.getItemMeta();
+			ible.setDisplayName(plugin.getChameleonGuis().getString("INVISIBLE"));
+			List<String> ilore = plugin.getChameleonGuis().getStringList("INVISIBLE_LORE");
+			if (plugin.getConfig().getBoolean("circuits.damage")) {
+				ilore.add(plugin.getLanguage().getString("INVISIBILITY_LORE_1"));
+				ilore.add(plugin.getLanguage().getString("INVISIBILITY_LORE_2"));
+			}
+			ible.setLore(ilore);
+			ible.setCustomModelData(GUIChameleon.BUTTON_INVISIBLE.getCustomModelData());
+			invis.setItemMeta(ible);
+		} else {
+			invis = null;
+		}
+		// Shorted out
+		ItemStack shor = new ItemStack(Material.BOWL, 1);
+		ItemMeta tout = shor.getItemMeta();
+		tout.setDisplayName(plugin.getChameleonGuis().getString("SHORT"));
+		tout.setLore(plugin.getChameleonGuis().getStringList("SHORT_LORE"));
+		tout.setCustomModelData(GUIChameleon.BUTTON_SHORT.getCustomModelData());
+		shor.setItemMeta(tout);
+		// construction GUI
+		ItemStack cons = new ItemStack(Material.BOWL, 1);
+		ItemMeta truct = cons.getItemMeta();
+		truct.setDisplayName(plugin.getChameleonGuis().getString("CONSTRUCT"));
+		truct.setLore(plugin.getChameleonGuis().getStringList("CONSTRUCT_LORE"));
+		truct.setCustomModelData(GUIChameleon.BUTTON_CONSTRUCT.getCustomModelData());
+		cons.setItemMeta(truct);
+		// Disabled radio button
+		boolean isFactoryOff = preset.equals(PRESET.FACTORY) && adapt.equals(Adaption.OFF);
+		ItemStack fac = isFactoryOff ? on.clone() : off.clone();
+		ItemMeta tory = fac.getItemMeta();
+		String donoff = isFactoryOff ? ChatColor.RED + plugin.getLanguage().getString("DISABLED") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
+		tory.setDisplayName(donoff);
+		fac.setItemMeta(tory);
+		// Adaptive radio button
+		ItemStack biome = (adapt.equals(Adaption.OFF)) ? off.clone() : on.clone();
+		ItemMeta block = biome.getItemMeta();
+		block.setDisplayName(adapt.getColour() + adapt.toString());
+		biome.setItemMeta(block);
+		// Invisible radio button
+		ItemStack not;
+		if (plugin.getConfig().getBoolean("allow.invisibility")) {
+			not = (preset.equals(PRESET.INVISIBLE)) ? on.clone() : off.clone();
+			ItemMeta blue = not.getItemMeta();
+			String ionoff = (preset.equals(PRESET.INVISIBLE)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+			blue.setDisplayName(ionoff);
+			not.setItemMeta(blue);
+		} else {
+			not = null;
+		}
+		// Shorted out radio button
+		boolean isNotFactoryInvisibleOrConstruct = !preset.equals(PRESET.INVISIBLE) && !preset.equals(PRESET.FACTORY) && !preset.equals(PRESET.CONSTRUCT);
+		ItemStack pre = isNotFactoryInvisibleOrConstruct ? on.clone() : off.clone();
+		ItemMeta set = pre.getItemMeta();
+		String sonoff = isNotFactoryInvisibleOrConstruct ? ChatColor.GREEN + preset.toString() : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+		set.setDisplayName(sonoff);
+		pre.setItemMeta(set);
+		// Construct radio button
+		ItemStack bui = (preset.equals(PRESET.CONSTRUCT)) ? on.clone() : off.clone();
+		ItemMeta lder = bui.getItemMeta();
+		String conoff = (preset.equals(PRESET.CONSTRUCT)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+		lder.setDisplayName(conoff);
+		bui.setItemMeta(lder);
+		// Cancel / close
+		ItemStack close = new ItemStack(Material.BOWL, 1);
+		ItemMeta can = close.getItemMeta();
+		can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+		can.setCustomModelData(GUIChameleon.BUTTON_CLOSE.getCustomModelData());
+		close.setItemMeta(can);
 
-        return new ItemStack[]{apply, null, null, null, null, null, null, null, null, null, null, dis, adap, invis, shor, cons, null, null, null, null, fac, biome, not, pre, bui, null, close};
-    }
+		return new ItemStack[]{apply, null, null, null, null, null, null, null, null, null, null, dis, adap, invis, shor, cons, null, null, null, null, fac, biome, not, pre, bui, null, close};
+	}
 
-    public ItemStack[] getMenu() {
-        return terminal;
-    }
+	public ItemStack[] getMenu() {
+		return terminal;
+	}
 }

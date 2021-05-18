@@ -29,25 +29,25 @@ import java.util.Locale;
  */
 class TARDISHadsTypeCommand {
 
-    boolean setHadsPref(Player player, String[] args) {
-        if (args.length < 2) {
-            TARDISMessage.send(player, "HADS_NEED");
-            return false;
-        }
-        String hads_type = args[1].toUpperCase(Locale.ENGLISH);
-        HADS go;
-        try {
-            go = HADS.valueOf(hads_type);
-        } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, "HADS_NOT_VALID");
-            return false;
-        }
-        HashMap<String, Object> set = new HashMap<>();
-        set.put("hads_type", hads_type);
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
-        TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
-        TARDISMessage.send(player, "HADS_SAVED");
-        return true;
-    }
+	boolean setHadsPref(Player player, String[] args) {
+		if (args.length < 2) {
+			TARDISMessage.send(player, "HADS_NEED");
+			return false;
+		}
+		String hads_type = args[1].toUpperCase(Locale.ENGLISH);
+		HADS go;
+		try {
+			go = HADS.valueOf(hads_type);
+		} catch (IllegalArgumentException e) {
+			TARDISMessage.send(player, "HADS_NOT_VALID");
+			return false;
+		}
+		HashMap<String, Object> set = new HashMap<>();
+		set.put("hads_type", hads_type);
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("uuid", player.getUniqueId().toString());
+		TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
+		TARDISMessage.send(player, "HADS_SAVED");
+		return true;
+	}
 }

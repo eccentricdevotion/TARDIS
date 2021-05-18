@@ -29,36 +29,36 @@ import java.util.HashMap;
  */
 class TARDISHandlesRemindCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISHandlesRemindCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISHandlesRemindCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean doReminder(Player player, String[] args) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 2; i < args.length - 1; i++) {
-            sb.append(args[i]).append(" ");
-        }
-        String message = sb.toString();
-        // the last argument should be a number
-        long when = TARDISNumberParsers.parseLong(args[args.length - 1]);
-        if (when == 0) {
-            TARDISMessage.handlesMessage(player, "HANDLES_NUMBER");
-            return true;
-        }
-        TARDISMessage.handlesSend(player, "HANDLES_OK", "" + when);
-        TARDISSounds.playTARDISSound(player, "handles_confirmed", 5L);
-        // convert minutes to milliseconds
-        when *= 60000;
-        // add the current time in milliseconds
-        when = when + System.currentTimeMillis();
-        // create a reminder record
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("uuid", player.getUniqueId().toString());
-        data.put("reminder", message);
-        data.put("time", when);
-        plugin.getQueryFactory().doInsert("reminders", data);
-        return true;
-    }
+	boolean doReminder(Player player, String[] args) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 2; i < args.length - 1; i++) {
+			sb.append(args[i]).append(" ");
+		}
+		String message = sb.toString();
+		// the last argument should be a number
+		long when = TARDISNumberParsers.parseLong(args[args.length - 1]);
+		if (when == 0) {
+			TARDISMessage.handlesMessage(player, "HANDLES_NUMBER");
+			return true;
+		}
+		TARDISMessage.handlesSend(player, "HANDLES_OK", "" + when);
+		TARDISSounds.playTARDISSound(player, "handles_confirmed", 5L);
+		// convert minutes to milliseconds
+		when *= 60000;
+		// add the current time in milliseconds
+		when = when + System.currentTimeMillis();
+		// create a reminder record
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("uuid", player.getUniqueId().toString());
+		data.put("reminder", message);
+		data.put("time", when);
+		plugin.getQueryFactory().doInsert("reminders", data);
+		return true;
+	}
 }

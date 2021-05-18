@@ -31,78 +31,78 @@ import java.util.HashMap;
  */
 class TARDISSaveLocationCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISSaveLocationCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISSaveLocationCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean doSave(Player player, String[] args) {
-        if (TARDISPermission.hasPermission(player, "tardis.save")) {
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", player.getUniqueId().toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NO_TARDIS");
-                return false;
-            }
-            if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
-                return false;
-            }
-            if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
-                return false;
-            } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
-                TARDISMessage.send(player, "SAVE_RESERVED");
-                return false;
-            } else {
-                int id = rs.getTardis().getTardis_id();
-                // check has unique name
-                HashMap<String, Object> wherename = new HashMap<>();
-                wherename.put("tardis_id", id);
-                wherename.put("dest_name", args[1]);
-                wherename.put("type", 0);
-                ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
-                if (rsd.resultSet()) {
-                    TARDISMessage.send(player, "SAVE_EXISTS");
-                    return true;
-                }
-                // get current destination
-                HashMap<String, Object> wherecl = new HashMap<>();
-                wherecl.put("tardis_id", id);
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                if (!rsc.resultSet()) {
-                    TARDISMessage.send(player, "CURRENT_NOT_FOUND");
-                    return true;
-                }
-                String w = rsc.getWorld().getName();
-                if (w.startsWith("TARDIS_")) {
-                    TARDISMessage.send(player, "SAVE_NO_TARDIS");
-                    return true;
-                }
-                HashMap<String, Object> set = new HashMap<>();
-                set.put("tardis_id", id);
-                set.put("dest_name", args[1]);
-                set.put("world", w);
-                set.put("x", rsc.getX());
-                set.put("y", rsc.getY());
-                set.put("z", rsc.getZ());
-                set.put("direction", rsc.getDirection().toString());
-                set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
-                if (args.length > 2 && args[2].equalsIgnoreCase("true")) {
-                    set.put("preset", rs.getTardis().getPreset().toString());
-                }
-                if (plugin.getQueryFactory().doSyncInsert("destinations", set) < 0) {
-                    return false;
-                } else {
-                    TARDISMessage.send(player, "SAVE_SET", args[1]);
-                    return true;
-                }
-            }
-        } else {
-            TARDISMessage.send(player, "NO_PERMS");
-            return false;
-        }
-    }
+	boolean doSave(Player player, String[] args) {
+		if (TARDISPermission.hasPermission(player, "tardis.save")) {
+			HashMap<String, Object> where = new HashMap<>();
+			where.put("uuid", player.getUniqueId().toString());
+			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+			if (!rs.resultSet()) {
+				TARDISMessage.send(player, "NO_TARDIS");
+				return false;
+			}
+			if (args.length < 2) {
+				TARDISMessage.send(player, "TOO_FEW_ARGS");
+				return false;
+			}
+			if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
+				TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
+				return false;
+			} else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
+				TARDISMessage.send(player, "SAVE_RESERVED");
+				return false;
+			} else {
+				int id = rs.getTardis().getTardis_id();
+				// check has unique name
+				HashMap<String, Object> wherename = new HashMap<>();
+				wherename.put("tardis_id", id);
+				wherename.put("dest_name", args[1]);
+				wherename.put("type", 0);
+				ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
+				if (rsd.resultSet()) {
+					TARDISMessage.send(player, "SAVE_EXISTS");
+					return true;
+				}
+				// get current destination
+				HashMap<String, Object> wherecl = new HashMap<>();
+				wherecl.put("tardis_id", id);
+				ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+				if (!rsc.resultSet()) {
+					TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+					return true;
+				}
+				String w = rsc.getWorld().getName();
+				if (w.startsWith("TARDIS_")) {
+					TARDISMessage.send(player, "SAVE_NO_TARDIS");
+					return true;
+				}
+				HashMap<String, Object> set = new HashMap<>();
+				set.put("tardis_id", id);
+				set.put("dest_name", args[1]);
+				set.put("world", w);
+				set.put("x", rsc.getX());
+				set.put("y", rsc.getY());
+				set.put("z", rsc.getZ());
+				set.put("direction", rsc.getDirection().toString());
+				set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
+				if (args.length > 2 && args[2].equalsIgnoreCase("true")) {
+					set.put("preset", rs.getTardis().getPreset().toString());
+				}
+				if (plugin.getQueryFactory().doSyncInsert("destinations", set) < 0) {
+					return false;
+				} else {
+					TARDISMessage.send(player, "SAVE_SET", args[1]);
+					return true;
+				}
+			}
+		} else {
+			TARDISMessage.send(player, "NO_PERMS");
+			return false;
+		}
+	}
 }

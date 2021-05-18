@@ -1,15 +1,15 @@
 {
-    "display": {
-        "icon": {
-            "item": "minecraft:redstone_block"
-        },
-        "title": "Power hungry",
-        "description": "Overcharge the Artron Energy Capacitor"
-    },
-    "parent": "tardis:tardis",
-    "criteria": {
-        "overcharge": {
-            "trigger": "minecraft:impossible"
-        }
-    }
+	"display": {
+		"icon": {
+			"item": "minecraft:redstone_block"
+		},
+		"title": "Power hungry",
+		"description": "Overcharge the Artron Energy Capacitor"
+	},
+	"parent": "tardis:tardis",
+	"criteria": {
+		"overcharge": {
+			"trigger": "minecraft:impossible"
+		}
+	}
 }

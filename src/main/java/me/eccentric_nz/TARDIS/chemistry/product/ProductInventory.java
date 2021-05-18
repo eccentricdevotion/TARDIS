@@ -27,42 +27,42 @@ import java.util.Arrays;
 
 public class ProductInventory {
 
-    private final ItemStack[] menu;
-    private final TARDIS plugin;
+	private final ItemStack[] menu;
+	private final TARDIS plugin;
 
-    public ProductInventory(TARDIS plugin) {
-        this.plugin = plugin;
-        menu = getItemStack();
-    }
+	public ProductInventory(TARDIS plugin) {
+		this.plugin = plugin;
+		menu = getItemStack();
+	}
 
-    private ItemStack[] getItemStack() {
-        ItemStack[] stack = new ItemStack[27];
-        // info
-        ItemStack info = new ItemStack(Material.BOWL, 1);
-        ItemMeta info_im = info.getItemMeta();
-        info_im.setDisplayName("Info");
-        info_im.setLore(Arrays.asList("Combine elements and compounds", "to create sparklers, balloons,", "lamps, and glow sticks.", "To see a product formula", "use the " + ChatColor.GREEN + ChatColor.ITALIC + "/tardischemistry formula" + ChatColor.DARK_PURPLE + ChatColor.ITALIC + " command.", "Place items like you would", "in a crafting table", "in the 9 left slots."));
-        info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
-        info.setItemMeta(info_im);
-        stack[8] = info;
-        // craft recipe
-        ItemStack craft = new ItemStack(Material.BOWL, 1);
-        ItemMeta craft_im = craft.getItemMeta();
-        craft_im.setDisplayName("Craft");
-        craft_im.setCustomModelData(GUIChemistry.CRAFT.getCustomModelData());
-        craft.setItemMeta(craft_im);
-        stack[17] = craft;
-        // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
-        close.setItemMeta(close_im);
-        stack[26] = close;
-        return stack;
-    }
+	private ItemStack[] getItemStack() {
+		ItemStack[] stack = new ItemStack[27];
+		// info
+		ItemStack info = new ItemStack(Material.BOWL, 1);
+		ItemMeta info_im = info.getItemMeta();
+		info_im.setDisplayName("Info");
+		info_im.setLore(Arrays.asList("Combine elements and compounds", "to create sparklers, balloons,", "lamps, and glow sticks.", "To see a product formula", "use the " + ChatColor.GREEN + ChatColor.ITALIC + "/tardischemistry formula" + ChatColor.DARK_PURPLE + ChatColor.ITALIC + " command.", "Place items like you would", "in a crafting table", "in the 9 left slots."));
+		info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
+		info.setItemMeta(info_im);
+		stack[8] = info;
+		// craft recipe
+		ItemStack craft = new ItemStack(Material.BOWL, 1);
+		ItemMeta craft_im = craft.getItemMeta();
+		craft_im.setDisplayName("Craft");
+		craft_im.setCustomModelData(GUIChemistry.CRAFT.getCustomModelData());
+		craft.setItemMeta(craft_im);
+		stack[17] = craft;
+		// close
+		ItemStack close = new ItemStack(Material.BOWL, 1);
+		ItemMeta close_im = close.getItemMeta();
+		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+		close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
+		close.setItemMeta(close_im);
+		stack[26] = close;
+		return stack;
+	}
 
-    public ItemStack[] getMenu() {
-        return menu;
-    }
+	public ItemStack[] getMenu() {
+		return menu;
+	}
 }

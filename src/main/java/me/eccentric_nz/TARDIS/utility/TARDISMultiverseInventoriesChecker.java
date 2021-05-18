@@ -30,24 +30,24 @@ import java.util.List;
  */
 public class TARDISMultiverseInventoriesChecker {
 
-    public static boolean checkWorldsCanShare(String from, String to) {
-        MultiverseInventories mvi = (MultiverseInventories) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Inventories");
-        WorldGroupManager gm = mvi.getGroupManager();
-        if (gm.hasGroup(from)) {
-            List<WorldGroup> profiles = gm.getGroupsForWorld(from);
-            for (WorldGroup wgp : profiles) {
-                if (wgp.containsWorld(to)) {
-                    Shares shares = wgp.getShares();
-                    if (!shares.isSharing(Sharables.INVENTORY) && !shares.isSharing(Sharables.ALL_INVENTORY) && !shares.isSharing(Sharables.ALL_DEFAULT)) {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            }
-        } else {
-            return false;
-        }
-        return true;
-    }
+	public static boolean checkWorldsCanShare(String from, String to) {
+		MultiverseInventories mvi = (MultiverseInventories) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Inventories");
+		WorldGroupManager gm = mvi.getGroupManager();
+		if (gm.hasGroup(from)) {
+			List<WorldGroup> profiles = gm.getGroupsForWorld(from);
+			for (WorldGroup wgp : profiles) {
+				if (wgp.containsWorld(to)) {
+					Shares shares = wgp.getShares();
+					if (!shares.isSharing(Sharables.INVENTORY) && !shares.isSharing(Sharables.ALL_INVENTORY) && !shares.isSharing(Sharables.ALL_DEFAULT)) {
+						return false;
+					}
+				} else {
+					return false;
+				}
+			}
+		} else {
+			return false;
+		}
+		return true;
+	}
 }

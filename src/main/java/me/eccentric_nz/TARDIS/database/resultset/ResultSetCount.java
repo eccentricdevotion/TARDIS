@@ -34,90 +34,90 @@ import java.util.UUID;
  */
 public class ResultSetCount {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final String where;
-    private int id;
-    private UUID uuid;
-    private int count;
-    private int grace;
-    private int repair;
-    private final String prefix;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final String where;
+	private final String prefix;
+	private int id;
+	private UUID uuid;
+	private int count;
+	private int grace;
+	private int repair;
 
-    /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the count table.
-     *
-     * @param plugin an instance of the main class.
-     * @param where  a player's UUID.toString() to refine the search.
-     */
-    public ResultSetCount(TARDIS plugin, String where) {
-        this.plugin = plugin;
-        this.where = where;
-        prefix = this.plugin.getPrefix();
-    }
+	/**
+	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the count table.
+	 *
+	 * @param plugin an instance of the main class.
+	 * @param where  a player's UUID.toString() to refine the search.
+	 */
+	public ResultSetCount(TARDIS plugin, String where) {
+		this.plugin = plugin;
+		this.where = where;
+		prefix = this.plugin.getPrefix();
+	}
 
-    /**
-     * Retrieves an SQL ResultSet from the lamps table. This method builds an SQL query string from the parameters
-     * supplied and then executes the query. Use the getters to retrieve the results.
-     *
-     * @return true or false depending on whether any data matches the query
-     */
-    public boolean resultSet() {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT * FROM " + prefix + "t_count WHERE uuid = ?";
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            statement.setString(1, where);
-            rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    id = rs.getInt("t_id");
-                    uuid = UUID.fromString(rs.getString("uuid"));
-                    count = rs.getInt("count");
-                    grace = rs.getInt("grace");
-                    repair = rs.getInt("repair");
-                }
-            } else {
-                return false;
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for count table! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing count table! " + e.getMessage());
-            }
-        }
-        return true;
-    }
+	/**
+	 * Retrieves an SQL ResultSet from the lamps table. This method builds an SQL query string from the parameters
+	 * supplied and then executes the query. Use the getters to retrieve the results.
+	 *
+	 * @return true or false depending on whether any data matches the query
+	 */
+	public boolean resultSet() {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String query = "SELECT * FROM " + prefix + "t_count WHERE uuid = ?";
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			statement.setString(1, where);
+			rs = statement.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					id = rs.getInt("t_id");
+					uuid = UUID.fromString(rs.getString("uuid"));
+					count = rs.getInt("count");
+					grace = rs.getInt("grace");
+					repair = rs.getInt("repair");
+				}
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for count table! " + e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing count table! " + e.getMessage());
+			}
+		}
+		return true;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public UUID getUuid() {
-        return uuid;
-    }
+	public UUID getUuid() {
+		return uuid;
+	}
 
-    public int getCount() {
-        return count;
-    }
+	public int getCount() {
+		return count;
+	}
 
-    public int getGrace() {
-        return grace;
-    }
+	public int getGrace() {
+		return grace;
+	}
 
-    public int getRepair() {
-        return repair;
-    }
+	public int getRepair() {
+		return repair;
+	}
 }

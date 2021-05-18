@@ -31,35 +31,35 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISSelectWatchListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISSelectWatchListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISSelectWatchListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler
-    public void onTryToSelectWatch(PlayerItemHeldEvent event) {
-        Player player = event.getPlayer();
-        if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
-            return;
-        }
-        if (plugin.getTrackerKeeper().getJohnSmith().get(player.getUniqueId()).getTime() <= System.currentTimeMillis()) {
-            return;
-        }
-        int slot = event.getNewSlot();
-        PlayerInventory inv = player.getInventory();
-        ItemStack is = inv.getItem(slot);
-        if (is == null || !is.getType().equals(Material.CLOCK) || !is.hasItemMeta()) {
-            return;
-        }
-        ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.getDisplayName().equals("Fob Watch")) {
-            return;
-        }
-        // move the fob watch
-        int empty = inv.firstEmpty();
-        inv.setItem(slot, null);
-        inv.setItem(empty, is);
-        player.updateInventory();
-    }
+	@EventHandler
+	public void onTryToSelectWatch(PlayerItemHeldEvent event) {
+		Player player = event.getPlayer();
+		if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
+			return;
+		}
+		if (plugin.getTrackerKeeper().getJohnSmith().get(player.getUniqueId()).getTime() <= System.currentTimeMillis()) {
+			return;
+		}
+		int slot = event.getNewSlot();
+		PlayerInventory inv = player.getInventory();
+		ItemStack is = inv.getItem(slot);
+		if (is == null || !is.getType().equals(Material.CLOCK) || !is.hasItemMeta()) {
+			return;
+		}
+		ItemMeta im = is.getItemMeta();
+		if (!im.hasDisplayName() || !im.getDisplayName().equals("Fob Watch")) {
+			return;
+		}
+		// move the fob watch
+		int empty = inv.firstEmpty();
+		inv.setItem(slot, null);
+		inv.setItem(empty, is);
+		player.updateInventory();
+	}
 }

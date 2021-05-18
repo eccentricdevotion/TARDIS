@@ -29,110 +29,110 @@ import org.bukkit.entity.Player;
  */
 public class TARDISMessage {
 
-    public static final String JENKINS_UPDATE_READY = ChatColor.RED + "There is a new TARDIS build! You are using " + ChatColor.GOLD + "#%s" + ChatColor.RED + ", the latest build is " + ChatColor.GOLD + "#%s" + ChatColor.RED + "!";
-    public static final String UPDATE_COMMAND = ChatColor.GOLD + "Visit http://tardisjenkins.duckdns.org:8080/job/TARDIS/ or run the '/tardisadmin update_plugins' command";
-    private static final String HANDLES = ChatColor.BLUE + "[Handles] " + ChatColor.RESET;
+	public static final String JENKINS_UPDATE_READY = ChatColor.RED + "There is a new TARDIS build! You are using " + ChatColor.GOLD + "#%s" + ChatColor.RED + ", the latest build is " + ChatColor.GOLD + "#%s" + ChatColor.RED + "!";
+	public static final String UPDATE_COMMAND = ChatColor.GOLD + "Visit http://tardisjenkins.duckdns.org:8080/job/TARDIS/ or run the '/tardisadmin update_plugins' command";
+	private static final String HANDLES = ChatColor.BLUE + "[Handles] " + ChatColor.RESET;
 
-    /**
-     * Splits a message into multiple lines if it is longer than the guaranteed chat page width.
-     *
-     * @param p       the player to send the message
-     * @param message the message to send
-     */
-    public static void message(Player p, String message) {
-        if (p != null) {
-            if (message.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
-                String[] multiline = TARDISChatPaginator.wordWrap(message);
-                p.sendMessage(multiline);
-            } else {
-                p.sendMessage(message);
-            }
-        }
-    }
+	/**
+	 * Splits a message into multiple lines if it is longer than the guaranteed chat page width.
+	 *
+	 * @param p       the player to send the message
+	 * @param message the message to send
+	 */
+	public static void message(Player p, String message) {
+		if (p != null) {
+			if (message.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
+				String[] multiline = TARDISChatPaginator.wordWrap(message);
+				p.sendMessage(multiline);
+			} else {
+				p.sendMessage(message);
+			}
+		}
+	}
 
-    public static void message(CommandSender cs, String message) {
-        if (message.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
-            String[] multiline = TARDISChatPaginator.wordWrap(message);
-            cs.sendMessage(multiline);
-        } else {
-            cs.sendMessage(message);
-        }
-    }
+	public static void message(CommandSender cs, String message) {
+		if (message.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
+			String[] multiline = TARDISChatPaginator.wordWrap(message);
+			cs.sendMessage(multiline);
+		} else {
+			cs.sendMessage(message);
+		}
+	}
 
-    public static void send(Player p, String key) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        message(p, TARDIS.plugin.getPluginName() + local);
-    }
+	public static void send(Player p, String key) {
+		String local = TARDIS.plugin.getLanguage().getString(key);
+		message(p, TARDIS.plugin.getPluginName() + local);
+	}
 
-    public static void handlesMessage(Player p, String message) {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> message(p, HANDLES + message), 2L);
-    }
+	public static void handlesMessage(Player p, String message) {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> message(p, HANDLES + message), 2L);
+	}
 
-    public static void handlesSend(Player p, String key) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> message(p, HANDLES + local), 2L);
-    }
+	public static void handlesSend(Player p, String key) {
+		String local = TARDIS.plugin.getLanguage().getString(key);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> message(p, HANDLES + local), 2L);
+	}
 
-    public static void send(Player p, String key, String sub) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        message(p, TARDIS.plugin.getPluginName() + String.format(local, sub));
-    }
+	public static void send(Player p, String key, String sub) {
+		String local = TARDIS.plugin.getLanguage().getString(key);
+		message(p, TARDIS.plugin.getPluginName() + String.format(local, sub));
+	}
 
-    public static void handlesSend(Player p, String key, String sub) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> message(p, HANDLES + String.format(local, sub)), 2L);
-    }
+	public static void handlesSend(Player p, String key, String sub) {
+		String local = TARDIS.plugin.getLanguage().getString(key);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> message(p, HANDLES + String.format(local, sub)), 2L);
+	}
 
-    public static void send(CommandSender cs, String key) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        message(cs, TARDIS.plugin.getPluginName() + local);
-    }
+	public static void send(CommandSender cs, String key) {
+		String local = TARDIS.plugin.getLanguage().getString(key);
+		message(cs, TARDIS.plugin.getPluginName() + local);
+	}
 
-    public static void send(CommandSender cs, String key, String sub) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        message(cs, TARDIS.plugin.getPluginName() + String.format(local, sub));
-    }
+	public static void send(CommandSender cs, String key, String sub) {
+		String local = TARDIS.plugin.getLanguage().getString(key);
+		message(cs, TARDIS.plugin.getPluginName() + String.format(local, sub));
+	}
 
-    public static void send(Player p, String key, boolean handbrake) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        if (handbrake) {
-            message(p, TARDIS.plugin.getPluginName() + local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
-        } else {
-            message(p, TARDIS.plugin.getPluginName() + local + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
-        }
-    }
+	public static void send(Player p, String key, boolean handbrake) {
+		String local = TARDIS.plugin.getLanguage().getString(key);
+		if (handbrake) {
+			message(p, TARDIS.plugin.getPluginName() + local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+		} else {
+			message(p, TARDIS.plugin.getPluginName() + local + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
+		}
+	}
 
-    public static void send(Player p, String key, String sub, boolean handbrake) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        if (handbrake) {
-            message(p, TARDIS.plugin.getPluginName() + String.format(local, sub) + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
-        } else {
-            message(p, TARDIS.plugin.getPluginName() + String.format(local, sub) + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
-        }
-    }
+	public static void send(Player p, String key, String sub, boolean handbrake) {
+		String local = TARDIS.plugin.getLanguage().getString(key);
+		if (handbrake) {
+			message(p, TARDIS.plugin.getPluginName() + String.format(local, sub) + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+		} else {
+			message(p, TARDIS.plugin.getPluginName() + String.format(local, sub) + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
+		}
+	}
 
-    public static void send(Player p, String key, String one, String two) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        message(p, TARDIS.plugin.getPluginName() + String.format(local, one, two));
-    }
+	public static void send(Player p, String key, String one, String two) {
+		String local = TARDIS.plugin.getLanguage().getString(key);
+		message(p, TARDIS.plugin.getPluginName() + String.format(local, one, two));
+	}
 
-    public static void send(CommandSender cs, String key, String one, String two) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        message(cs, TARDIS.plugin.getPluginName() + String.format(local, one, two));
-    }
+	public static void send(CommandSender cs, String key, String one, String two) {
+		String local = TARDIS.plugin.getLanguage().getString(key);
+		message(cs, TARDIS.plugin.getPluginName() + String.format(local, one, two));
+	}
 
-    public static void send(Player p, String key, String one, String two, String three) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        message(p, TARDIS.plugin.getPluginName() + String.format(local, one, two, three));
-    }
+	public static void send(Player p, String key, String one, String two, String three) {
+		String local = TARDIS.plugin.getLanguage().getString(key);
+		message(p, TARDIS.plugin.getPluginName() + String.format(local, one, two, three));
+	}
 
-    public static void handlesSend(Player p, String key, long one, String two, String three) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        message(p, HANDLES + String.format(local, one, two, three));
-    }
+	public static void handlesSend(Player p, String key, long one, String two, String three) {
+		String local = TARDIS.plugin.getLanguage().getString(key);
+		message(p, HANDLES + String.format(local, one, two, three));
+	}
 
-    public static void send(CommandSender cs, String key, String one, int two, int three) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
-        message(cs, TARDIS.plugin.getPluginName() + String.format(local, one, two, three));
-    }
+	public static void send(CommandSender cs, String key, String one, int two, int three) {
+		String local = TARDIS.plugin.getLanguage().getString(key);
+		message(cs, TARDIS.plugin.getPluginName() + String.format(local, one, two, three));
+	}
 }

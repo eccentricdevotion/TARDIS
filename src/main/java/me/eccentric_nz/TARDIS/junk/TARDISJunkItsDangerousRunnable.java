@@ -32,44 +32,44 @@ import java.util.UUID;
  */
 class TARDISJunkItsDangerousRunnable implements Runnable {
 
-    private final TARDIS plugin;
-    private final Block t;
-    private final int minX;
-    private final int minZ;
-    private final int maxX;
-    private final int maxZ;
-    private int c = 0;
-    private final Lightable lightable = (Lightable) Material.REDSTONE_TORCH.createBlockData();
+	private final TARDIS plugin;
+	private final Block t;
+	private final int minX;
+	private final int minZ;
+	private final int maxX;
+	private final int maxZ;
+	private final Lightable lightable = (Lightable) Material.REDSTONE_TORCH.createBlockData();
+	private int c = 0;
 
-    TARDISJunkItsDangerousRunnable(TARDIS plugin, Location l) {
-        this.plugin = plugin;
-        t = l.clone().add(0.0d, 2.0d, -1.0d).getBlock();
-        minX = l.getBlockX() - 3;
-        minZ = l.getBlockZ() - 2;
-        maxX = l.getBlockX() + 3;
-        maxZ = l.getBlockZ() + 4;
-    }
+	TARDISJunkItsDangerousRunnable(TARDIS plugin, Location l) {
+		this.plugin = plugin;
+		t = l.clone().add(0.0d, 2.0d, -1.0d).getBlock();
+		minX = l.getBlockX() - 3;
+		minZ = l.getBlockZ() - 2;
+		maxX = l.getBlockX() + 3;
+		maxZ = l.getBlockZ() + 4;
+	}
 
-    @Override
-    public void run() {
-        lightable.setLit(c % 5 >= 3);
-        t.setBlockData(lightable);
-        // check if player is in Junk TARDIS effects zone
-        List<UUID> remove = new ArrayList<>();
-        plugin.getGeneralKeeper().getJunkTravellers().forEach((uuid) -> {
-            Player p = plugin.getServer().getPlayer(uuid);
-            if (p.isOnline() && !isInside(p.getLocation())) {
-                p.setHealth(0);
-                remove.add(uuid);
-            }
-        });
-        if (remove.size() > 0) {
-            plugin.getGeneralKeeper().getJunkTravellers().removeAll(remove);
-        }
-        c++;
-    }
+	@Override
+	public void run() {
+		lightable.setLit(c % 5 >= 3);
+		t.setBlockData(lightable);
+		// check if player is in Junk TARDIS effects zone
+		List<UUID> remove = new ArrayList<>();
+		plugin.getGeneralKeeper().getJunkTravellers().forEach((uuid) -> {
+			Player p = plugin.getServer().getPlayer(uuid);
+			if (p.isOnline() && !isInside(p.getLocation())) {
+				p.setHealth(0);
+				remove.add(uuid);
+			}
+		});
+		if (remove.size() > 0) {
+			plugin.getGeneralKeeper().getJunkTravellers().removeAll(remove);
+		}
+		c++;
+	}
 
-    private boolean isInside(Location loc) {
-        return loc.getX() >= minX && loc.getX() <= maxX && loc.getZ() >= minZ && loc.getZ() <= maxZ;
-    }
+	private boolean isInside(Location loc) {
+		return loc.getX() >= minX && loc.getX() <= maxX && loc.getZ() >= minZ && loc.getZ() <= maxZ;
+	}
 }

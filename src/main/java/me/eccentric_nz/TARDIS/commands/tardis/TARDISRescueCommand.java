@@ -33,68 +33,68 @@ import java.util.UUID;
  */
 class TARDISRescueCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISRescueCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISRescueCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean startRescue(Player player, String[] args) {
-        if (args.length < 2) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
-            return true;
-        }
-        if (TARDISPermission.hasPermission(player, "tardis.timetravel.rescue")) {
-            ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
-            if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
-                return true;
-            }
-            if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered()) {
-                TARDISMessage.send(player, "POWER_DOWN");
-                return true;
-            }
-            String saved = args[1];
-            if (!saved.equalsIgnoreCase("accept")) {
-                Player destPlayer = plugin.getServer().getPlayer(saved);
-                if (destPlayer == null) {
-                    TARDISMessage.send(player, "NOT_ONLINE");
-                    return true;
-                }
-                UUID savedUUID = destPlayer.getUniqueId();
-                String who = (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(savedUUID)) ? plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(savedUUID)).getName() : player.getName();
-                // get auto_rescue_on preference
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, destPlayer.getUniqueId().toString());
-                if (rsp.resultSet() && rsp.isAutoRescueOn()) {
-                    // go straight to rescue
-                    TARDISRescue res = new TARDISRescue(plugin);
-                    plugin.getTrackerKeeper().getChat().remove(savedUUID);
-                    // delay it so the chat appears before the message
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        TARDISRescue.RescueData rd = res.tryRescue(player, destPlayer.getUniqueId(), false);
-                        if (rd.success()) {
-                            if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
-                                new TARDISLand(plugin, rd.getTardis_id(), player).exitVortex();
-                            } else {
-                                TARDISMessage.send(player, "REQUEST_RELEASE", destPlayer.getName());
-                            }
-                        }
-                    }, 2L);
-                } else {
-                    TARDISMessage.send(destPlayer, "RESCUE_REQUEST", who, ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET);
-                    plugin.getTrackerKeeper().getChat().put(savedUUID, player.getUniqueId());
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        if (plugin.getTrackerKeeper().getChat().containsKey(savedUUID)) {
-                            plugin.getTrackerKeeper().getChat().remove(savedUUID);
-                            TARDISMessage.send(player, "RESCUE_NO_RESPONSE", saved);
-                        }
-                    }, 1200L);
-                }
-            }
-        } else {
-            TARDISMessage.send(player, "NO_PERM_PLAYER");
-            return true;
-        }
-        return false;
-    }
+	boolean startRescue(Player player, String[] args) {
+		if (args.length < 2) {
+			TARDISMessage.send(player, "TOO_FEW_ARGS");
+			return true;
+		}
+		if (TARDISPermission.hasPermission(player, "tardis.timetravel.rescue")) {
+			ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
+			if (!rs.fromUUID(player.getUniqueId().toString())) {
+				TARDISMessage.send(player, "NOT_A_TIMELORD");
+				return true;
+			}
+			if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered()) {
+				TARDISMessage.send(player, "POWER_DOWN");
+				return true;
+			}
+			String saved = args[1];
+			if (!saved.equalsIgnoreCase("accept")) {
+				Player destPlayer = plugin.getServer().getPlayer(saved);
+				if (destPlayer == null) {
+					TARDISMessage.send(player, "NOT_ONLINE");
+					return true;
+				}
+				UUID savedUUID = destPlayer.getUniqueId();
+				String who = (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(savedUUID)) ? plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(savedUUID)).getName() : player.getName();
+				// get auto_rescue_on preference
+				ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, destPlayer.getUniqueId().toString());
+				if (rsp.resultSet() && rsp.isAutoRescueOn()) {
+					// go straight to rescue
+					TARDISRescue res = new TARDISRescue(plugin);
+					plugin.getTrackerKeeper().getChat().remove(savedUUID);
+					// delay it so the chat appears before the message
+					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+						TARDISRescue.RescueData rd = res.tryRescue(player, destPlayer.getUniqueId(), false);
+						if (rd.success()) {
+							if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
+								new TARDISLand(plugin, rd.getTardis_id(), player).exitVortex();
+							} else {
+								TARDISMessage.send(player, "REQUEST_RELEASE", destPlayer.getName());
+							}
+						}
+					}, 2L);
+				} else {
+					TARDISMessage.send(destPlayer, "RESCUE_REQUEST", who, ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET);
+					plugin.getTrackerKeeper().getChat().put(savedUUID, player.getUniqueId());
+					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+						if (plugin.getTrackerKeeper().getChat().containsKey(savedUUID)) {
+							plugin.getTrackerKeeper().getChat().remove(savedUUID);
+							TARDISMessage.send(player, "RESCUE_NO_RESPONSE", saved);
+						}
+					}, 1200L);
+				}
+			}
+		} else {
+			TARDISMessage.send(player, "NO_PERM_PLAYER");
+			return true;
+		}
+		return false;
+	}
 }

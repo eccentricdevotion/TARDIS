@@ -34,69 +34,69 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 class TARDISHowtoWallsInventory {
 
-    private final ItemStack[] menu;
-    private final TARDIS plugin;
+	private final ItemStack[] menu;
+	private final TARDIS plugin;
 
-    public TARDISHowtoWallsInventory(TARDIS plugin) {
-        this.plugin = plugin;
-        menu = getItemStack();
-    }
+	public TARDISHowtoWallsInventory(TARDIS plugin) {
+		this.plugin = plugin;
+		menu = getItemStack();
+	}
 
-    /**
-     * Constructs an inventory for the Player Preferences Menu GUI.
-     *
-     * @return an Array of itemStacks (an inventory)
-     */
-    private ItemStack[] getItemStack() {
-        ItemStack[] stack = new ItemStack[54];
-        int i = 0;
-        // get BLOCKS
-        for (Material entry : TARDISWalls.BLOCKS) {
-            if (i > 52) {
-                break;
-            }
-            ItemStack is = new ItemStack(entry, 1);
-            stack[i] = is;
-            if (i % 9 == 7) {
-                i += 2;
-            } else {
-                i++;
-            }
-        }
+	/**
+	 * Constructs an inventory for the Player Preferences Menu GUI.
+	 *
+	 * @return an Array of itemStacks (an inventory)
+	 */
+	private ItemStack[] getItemStack() {
+		ItemStack[] stack = new ItemStack[54];
+		int i = 0;
+		// get BLOCKS
+		for (Material entry : TARDISWalls.BLOCKS) {
+			if (i > 52) {
+				break;
+			}
+			ItemStack is = new ItemStack(entry, 1);
+			stack[i] = is;
+			if (i % 9 == 7) {
+				i += 2;
+			} else {
+				i++;
+			}
+		}
 
-        // scroll up
-        ItemStack scroll_up = new ItemStack(Material.ARROW, 1);
-        ItemMeta uim = scroll_up.getItemMeta();
-        uim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_U"));
-        uim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_U.getCustomModelData());
-        scroll_up.setItemMeta(uim);
-        stack[8] = scroll_up;
-        // scroll down
-        ItemStack scroll_down = new ItemStack(Material.ARROW, 1);
-        ItemMeta dim = scroll_down.getItemMeta();
-        dim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_D"));
-        dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.getCustomModelData());
-        scroll_down.setItemMeta(dim);
-        stack[26] = scroll_down;
-        // back
-        ItemStack back = new ItemStack(Material.BOWL, 1);
-        ItemMeta back_im = back.getItemMeta();
-        back_im.setDisplayName("Back");
-        back_im.setCustomModelData(GUIChameleonPresets.BACK.getCustomModelData());
-        back.setItemMeta(back_im);
-        stack[44] = back;
-        // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
-        close.setItemMeta(close_im);
-        stack[53] = close;
+		// scroll up
+		ItemStack scroll_up = new ItemStack(Material.ARROW, 1);
+		ItemMeta uim = scroll_up.getItemMeta();
+		uim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_U"));
+		uim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_U.getCustomModelData());
+		scroll_up.setItemMeta(uim);
+		stack[8] = scroll_up;
+		// scroll down
+		ItemStack scroll_down = new ItemStack(Material.ARROW, 1);
+		ItemMeta dim = scroll_down.getItemMeta();
+		dim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_D"));
+		dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.getCustomModelData());
+		scroll_down.setItemMeta(dim);
+		stack[26] = scroll_down;
+		// back
+		ItemStack back = new ItemStack(Material.BOWL, 1);
+		ItemMeta back_im = back.getItemMeta();
+		back_im.setDisplayName("Back");
+		back_im.setCustomModelData(GUIChameleonPresets.BACK.getCustomModelData());
+		back.setItemMeta(back_im);
+		stack[44] = back;
+		// close
+		ItemStack close = new ItemStack(Material.BOWL, 1);
+		ItemMeta close_im = close.getItemMeta();
+		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+		close_im.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
+		close.setItemMeta(close_im);
+		stack[53] = close;
 
-        return stack;
-    }
+		return stack;
+	}
 
-    public ItemStack[] getMenu() {
-        return menu;
-    }
+	public ItemStack[] getMenu() {
+		return menu;
+	}
 }

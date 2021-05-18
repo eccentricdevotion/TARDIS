@@ -29,45 +29,45 @@ import java.util.EnumMap;
  */
 class TARDISPreset {
 
-    private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
-    private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<>(COMPASS.class);
-    private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<>(COMPASS.class);
-    private String[][] blueprintData;
-    private String[][] stainedData;
-    private String[][] glassData;
+	private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
+	private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<>(COMPASS.class);
+	private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<>(COMPASS.class);
+	private String[][] blueprintData;
+	private String[][] stainedData;
+	private String[][] glassData;
 
-    TARDISPreset() {
-    }
+	TARDISPreset() {
+	}
 
-    public void makePresets(boolean assymetric, boolean duck) {
-        for (COMPASS d : COMPASS.values()) {
-            blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, blueprintData, assymetric, duck));
-            stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, stainedData, assymetric, duck));
-            glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, glassData, assymetric, duck));
-        }
-    }
+	public void makePresets(boolean assymetric, boolean duck) {
+		for (COMPASS d : COMPASS.values()) {
+			blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, blueprintData, assymetric, duck));
+			stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, stainedData, assymetric, duck));
+			glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, glassData, assymetric, duck));
+		}
+	}
 
-    public EnumMap<COMPASS, TARDISChameleonColumn> getBlueprint() {
-        return blueprint;
-    }
+	public EnumMap<COMPASS, TARDISChameleonColumn> getBlueprint() {
+		return blueprint;
+	}
 
-    public EnumMap<COMPASS, TARDISChameleonColumn> getStained() {
-        return stained;
-    }
+	public EnumMap<COMPASS, TARDISChameleonColumn> getStained() {
+		return stained;
+	}
 
-    public EnumMap<COMPASS, TARDISChameleonColumn> getGlass() {
-        return glass;
-    }
+	public EnumMap<COMPASS, TARDISChameleonColumn> getGlass() {
+		return glass;
+	}
 
-    void setBlueprintData(String[][] blueprintData) {
-        this.blueprintData = blueprintData;
-    }
+	void setBlueprintData(String[][] blueprintData) {
+		this.blueprintData = blueprintData;
+	}
 
-    void setStainedData(String[][] stainedData) {
-        this.stainedData = stainedData;
-    }
+	void setStainedData(String[][] stainedData) {
+		this.stainedData = stainedData;
+	}
 
-    void setGlassData(String[][] glassData) {
-        this.glassData = glassData;
-    }
+	void setGlassData(String[][] glassData) {
+		this.glassData = glassData;
+	}
 }

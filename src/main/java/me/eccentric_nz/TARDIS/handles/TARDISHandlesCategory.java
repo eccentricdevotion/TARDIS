@@ -21,29 +21,29 @@ package me.eccentric_nz.TARDIS.handles;
  */
 public enum TARDISHandlesCategory {
 
-    BUTTON("Buttons", 11),
-    COMMAND("TARDIS commands and actions", 7),
-    CONTROL("Control and loop statements", 8),
-    DISK("TARDIS Storage Disks", 4),
-    EVENT("TARDIS events", 10),
-    NUMBER("Numbers", 12),
-    OPERATOR("Operators", 14),
-    SELECTOR("Selectors", 7),
-    VARIABLE("Variables", 14);
+	BUTTON("Buttons", 11),
+	COMMAND("TARDIS commands and actions", 7),
+	CONTROL("Control and loop statements", 8),
+	DISK("TARDIS Storage Disks", 4),
+	EVENT("TARDIS events", 10),
+	NUMBER("Numbers", 12),
+	OPERATOR("Operators", 14),
+	SELECTOR("Selectors", 7),
+	VARIABLE("Variables", 14);
 
-    private final String lore;
-    private final int size;
+	private final String lore;
+	private final int size;
 
-    TARDISHandlesCategory(String lore, int size) {
-        this.lore = lore;
-        this.size = size;
-    }
+	TARDISHandlesCategory(String lore, int size) {
+		this.lore = lore;
+		this.size = size;
+	}
 
-    public String getLore() {
-        return lore;
-    }
+	public String getLore() {
+		return lore;
+	}
 
-    public int getSize() {
-        return size;
-    }
+	public int getSize() {
+		return size;
+	}
 }

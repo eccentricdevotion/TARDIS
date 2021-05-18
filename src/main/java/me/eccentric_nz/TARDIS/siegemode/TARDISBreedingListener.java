@@ -32,35 +32,35 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
  */
 public class TARDISBreedingListener implements Listener {
 
-    private final TARDIS plugin;
-    private final int chance;
+	private final TARDIS plugin;
+	private final int chance;
 
-    public TARDISBreedingListener(TARDIS plugin) {
-        this.plugin = plugin;
-        chance = this.plugin.getConfig().getInt("siege.breeding");
-    }
+	public TARDISBreedingListener(TARDIS plugin) {
+		this.plugin = plugin;
+		chance = this.plugin.getConfig().getInt("siege.breeding");
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onInteract(CreatureSpawnEvent event) {
-        Entity ent = event.getEntity();
-        if (!(ent instanceof Ageable)) {
-            return;
-        }
-        if (!event.getSpawnReason().equals(SpawnReason.BREEDING)) {
-            return;
-        }
-        Location l = ent.getLocation();
-        String w = l.getWorld().getName();
-        if (!plugin.getTrackerKeeper().getSiegeBreedingAreas().containsKey(w)) {
-            return;
-        }
-        plugin.getTrackerKeeper().getSiegeBreedingAreas().get(w).forEach((area) -> {
-            if (area.isInSiegeArea(l) && TARDISConstants.RANDOM.nextInt(100) < chance) {
-                // make them twins
-                plugin.setTardisSpawn(true);
-                Ageable twin = (Ageable) l.getWorld().spawnEntity(l, ent.getType());
-                twin.setBaby();
-            }
-        });
-    }
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onInteract(CreatureSpawnEvent event) {
+		Entity ent = event.getEntity();
+		if (!(ent instanceof Ageable)) {
+			return;
+		}
+		if (!event.getSpawnReason().equals(SpawnReason.BREEDING)) {
+			return;
+		}
+		Location l = ent.getLocation();
+		String w = l.getWorld().getName();
+		if (!plugin.getTrackerKeeper().getSiegeBreedingAreas().containsKey(w)) {
+			return;
+		}
+		plugin.getTrackerKeeper().getSiegeBreedingAreas().get(w).forEach((area) -> {
+			if (area.isInSiegeArea(l) && TARDISConstants.RANDOM.nextInt(100) < chance) {
+				// make them twins
+				plugin.setTardisSpawn(true);
+				Ageable twin = (Ageable) l.getWorld().spawnEntity(l, ent.getType());
+				twin.setBaby();
+			}
+		});
+	}
 }

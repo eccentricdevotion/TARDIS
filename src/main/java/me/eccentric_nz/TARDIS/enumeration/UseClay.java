@@ -21,7 +21,7 @@ package me.eccentric_nz.TARDIS.enumeration;
  */
 public enum UseClay {
 
-    WOOL,
-    TERRACOTTA,
-    CONCRETE
+	WOOL,
+	TERRACOTTA,
+	CONCRETE
 }

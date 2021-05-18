@@ -21,35 +21,35 @@ import org.bukkit.Material;
 
 public enum GUITransmat {
 
-    INFO(57, 8, Material.BOWL),
-    TRANSMAT(133, 26, Material.BOWL),
-    DELETE(1, 35, Material.BUCKET),
-    CLOSE(1, 53, Material.BOWL);
+	INFO(57, 8, Material.BOWL),
+	TRANSMAT(133, 26, Material.BOWL),
+	DELETE(1, 35, Material.BUCKET),
+	CLOSE(1, 53, Material.BOWL);
 
-    private final int customModelData;
-    private final int slot;
-    private final Material material;
+	private final int customModelData;
+	private final int slot;
+	private final Material material;
 
-    GUITransmat(int customModelData, int slot, Material material) {
-        this.customModelData = customModelData;
-        this.slot = slot;
-        this.material = material;
-    }
+	GUITransmat(int customModelData, int slot, Material material) {
+		this.customModelData = customModelData;
+		this.slot = slot;
+		this.material = material;
+	}
 
-    public int getCustomModelData() {
-        return customModelData;
-    }
+	public int getCustomModelData() {
+		return customModelData;
+	}
 
-    public int getSlot() {
-        return slot;
-    }
+	public int getSlot() {
+		return slot;
+	}
 
-    public Material getMaterial() {
-        return material;
-    }
+	public Material getMaterial() {
+		return material;
+	}
 
-    public String getName() {
-        String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
-    }
+	public String getName() {
+		String s = toString();
+		return TARDISStringUtils.sentenceCase(s);
+	}
 }

@@ -27,42 +27,42 @@ import java.util.Arrays;
 
 public class CompoundInventory {
 
-    private final TARDIS plugin;
-    private final ItemStack[] menu;
+	private final TARDIS plugin;
+	private final ItemStack[] menu;
 
-    public CompoundInventory(TARDIS plugin) {
-        this.plugin = plugin;
-        menu = getItemStack();
-    }
+	public CompoundInventory(TARDIS plugin) {
+		this.plugin = plugin;
+		menu = getItemStack();
+	}
 
-    private ItemStack[] getItemStack() {
-        ItemStack[] stack = new ItemStack[27];
-        // info
-        ItemStack info = new ItemStack(Material.BOWL, 1);
-        ItemMeta info_im = info.getItemMeta();
-        info_im.setDisplayName("Info");
-        info_im.setLore(Arrays.asList("Combine elements to create", "chemical compounds.", "To see a compound formula", "use the " + ChatColor.GREEN + ChatColor.ITALIC + "/tardischemistry formula" + ChatColor.DARK_PURPLE + ChatColor.ITALIC + " command.", "Place items in the bottom", "row from left to right."));
-        info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
-        info.setItemMeta(info_im);
-        stack[8] = info;
-        // check formula
-        ItemStack check = new ItemStack(Material.BOWL, 1);
-        ItemMeta check_im = check.getItemMeta();
-        check_im.setDisplayName("Check formula");
-        check_im.setCustomModelData(GUIChemistry.CHECK.getCustomModelData());
-        check.setItemMeta(check_im);
-        stack[17] = check;
-        // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
-        close.setItemMeta(close_im);
-        stack[26] = close;
-        return stack;
-    }
+	private ItemStack[] getItemStack() {
+		ItemStack[] stack = new ItemStack[27];
+		// info
+		ItemStack info = new ItemStack(Material.BOWL, 1);
+		ItemMeta info_im = info.getItemMeta();
+		info_im.setDisplayName("Info");
+		info_im.setLore(Arrays.asList("Combine elements to create", "chemical compounds.", "To see a compound formula", "use the " + ChatColor.GREEN + ChatColor.ITALIC + "/tardischemistry formula" + ChatColor.DARK_PURPLE + ChatColor.ITALIC + " command.", "Place items in the bottom", "row from left to right."));
+		info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
+		info.setItemMeta(info_im);
+		stack[8] = info;
+		// check formula
+		ItemStack check = new ItemStack(Material.BOWL, 1);
+		ItemMeta check_im = check.getItemMeta();
+		check_im.setDisplayName("Check formula");
+		check_im.setCustomModelData(GUIChemistry.CHECK.getCustomModelData());
+		check.setItemMeta(check_im);
+		stack[17] = check;
+		// close
+		ItemStack close = new ItemStack(Material.BOWL, 1);
+		ItemMeta close_im = close.getItemMeta();
+		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+		close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
+		close.setItemMeta(close_im);
+		stack[26] = close;
+		return stack;
+	}
 
-    public ItemStack[] getMenu() {
-        return menu;
-    }
+	public ItemStack[] getMenu() {
+		return menu;
+	}
 }

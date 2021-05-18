@@ -33,44 +33,44 @@ import java.util.ArrayList;
  */
 public class TARDISItemRenamer {
 
-    private final TARDIS plugin;
-    private final Player player;
-    private final ItemStack itemStack;
+	private final TARDIS plugin;
+	private final Player player;
+	private final ItemStack itemStack;
 
-    public TARDISItemRenamer(TARDIS plugin, Player player, ItemStack itemStack) {
-        this.plugin = plugin;
-        this.player = player;
-        this.itemStack = itemStack;
-    }
+	public TARDISItemRenamer(TARDIS plugin, Player player, ItemStack itemStack) {
+		this.plugin = plugin;
+		this.player = player;
+		this.itemStack = itemStack;
+	}
 
-    /**
-     * Sets the name of the held item to the specified string. Also adds some lore.
-     *
-     * @param name    the name to give the item
-     * @param setlore whether to set lore on the item
-     */
-    public void setName(String name, boolean setlore) {
-        ItemMeta im = itemStack.getItemMeta();
-        if (im == null) {
-            TARDIS.plugin.debug("ItemMeta was null for ItemStack: " + itemStack.toString());
-        } else {
-            im.setDisplayName(name);
-            if (setlore) {
-                ArrayList<String> lore = new ArrayList<>();
-                lore.add("Enter and exit your TARDIS");
-                String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
-                lore.add(format + "This key belongs to");
-                lore.add(format + player.getName());
-                im.setLore(lore);
-                im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
-            }
-            try {
-                RecipeItem recipeItem = RecipeItem.valueOf(TARDISStringUtils.toScoredUppercase(name));
-                im.setCustomModelData(recipeItem.getCustomModelData());
-            } catch (IllegalArgumentException e) {
-                // do nothing
-            }
-            itemStack.setItemMeta(im);
-        }
-    }
+	/**
+	 * Sets the name of the held item to the specified string. Also adds some lore.
+	 *
+	 * @param name    the name to give the item
+	 * @param setlore whether to set lore on the item
+	 */
+	public void setName(String name, boolean setlore) {
+		ItemMeta im = itemStack.getItemMeta();
+		if (im == null) {
+			TARDIS.plugin.debug("ItemMeta was null for ItemStack: " + itemStack.toString());
+		} else {
+			im.setDisplayName(name);
+			if (setlore) {
+				ArrayList<String> lore = new ArrayList<>();
+				lore.add("Enter and exit your TARDIS");
+				String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+				lore.add(format + "This key belongs to");
+				lore.add(format + player.getName());
+				im.setLore(lore);
+				im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+			}
+			try {
+				RecipeItem recipeItem = RecipeItem.valueOf(TARDISStringUtils.toScoredUppercase(name));
+				im.setCustomModelData(recipeItem.getCustomModelData());
+			} catch (IllegalArgumentException e) {
+				// do nothing
+			}
+			itemStack.setItemMeta(im);
+		}
+	}
 }

@@ -29,39 +29,39 @@ import org.bukkit.command.CommandSender;
  */
 class TARDISJunkReturn {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISJunkReturn(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISJunkReturn(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean recall(CommandSender sender) {
-        if (!sender.hasPermission("tardis.admin")) {
-            TARDISMessage.send(sender, "CMD_ADMIN");
-            return true;
-        }
-        TARDISJunkLocation tjl = new TARDISJunkLocation(plugin);
-        if (tjl.isNotHome()) {
-            Location home = tjl.getHome();
-            // fly home
-            DestroyData dd = new DestroyData();
-            dd.setLocation(tjl.getCurrent());
-            dd.setDirection(COMPASS.SOUTH);
-            dd.setHide(false);
-            dd.setOutside(false);
-            dd.setSubmarine(false);
-            dd.setTardisID(tjl.getId());
-            dd.setTardisBiome(tjl.getTardisBiome());
-            dd.setThrottle(SpaceTimeThrottle.JUNK);
-            plugin.getPresetDestroyer().destroyPreset(dd);
-            // fly my pretties
-            plugin.getGeneralKeeper().setJunkTravelling(true);
-            plugin.getGeneralKeeper().setJunkDestination(home);
-            TARDISMessage.send(sender, "JUNK_RETURN");
-            return true;
-        } else {
-            TARDISMessage.send(sender, "JUNK_AT_HOME");
-            return true;
-        }
-    }
+	boolean recall(CommandSender sender) {
+		if (!sender.hasPermission("tardis.admin")) {
+			TARDISMessage.send(sender, "CMD_ADMIN");
+			return true;
+		}
+		TARDISJunkLocation tjl = new TARDISJunkLocation(plugin);
+		if (tjl.isNotHome()) {
+			Location home = tjl.getHome();
+			// fly home
+			DestroyData dd = new DestroyData();
+			dd.setLocation(tjl.getCurrent());
+			dd.setDirection(COMPASS.SOUTH);
+			dd.setHide(false);
+			dd.setOutside(false);
+			dd.setSubmarine(false);
+			dd.setTardisID(tjl.getId());
+			dd.setTardisBiome(tjl.getTardisBiome());
+			dd.setThrottle(SpaceTimeThrottle.JUNK);
+			plugin.getPresetDestroyer().destroyPreset(dd);
+			// fly my pretties
+			plugin.getGeneralKeeper().setJunkTravelling(true);
+			plugin.getGeneralKeeper().setJunkDestination(home);
+			TARDISMessage.send(sender, "JUNK_RETURN");
+			return true;
+		} else {
+			TARDISMessage.send(sender, "JUNK_AT_HOME");
+			return true;
+		}
+	}
 }

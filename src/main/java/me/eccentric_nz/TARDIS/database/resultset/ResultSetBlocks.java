@@ -38,99 +38,99 @@ import java.util.Map;
  */
 public class ResultSetBlocks {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final HashMap<String, Object> where;
-    private final boolean multiple;
-    private ReplacedBlock replacedBlock;
-    private final List<ReplacedBlock> data = new ArrayList<>();
-    private final String prefix;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final HashMap<String, Object> where;
+	private final boolean multiple;
+	private final List<ReplacedBlock> data = new ArrayList<>();
+	private final String prefix;
+	private ReplacedBlock replacedBlock;
 
-    /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the blocks table.
-     *
-     * @param plugin   an instance of the main class.
-     * @param where    a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
-     * @param multiple a boolean indicating whether multiple rows should be fetched
-     */
-    public ResultSetBlocks(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
-        this.plugin = plugin;
-        this.where = where;
-        this.multiple = multiple;
-        prefix = this.plugin.getPrefix();
-    }
+	/**
+	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the blocks table.
+	 *
+	 * @param plugin   an instance of the main class.
+	 * @param where    a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
+	 * @param multiple a boolean indicating whether multiple rows should be fetched
+	 */
+	public ResultSetBlocks(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+		this.plugin = plugin;
+		this.where = where;
+		this.multiple = multiple;
+		prefix = this.plugin.getPrefix();
+	}
 
-    /**
-     * Retrieves an SQL ResultSet from the blocks table. This method builds an SQL query string from the parameters
-     * supplied and then executes the query. Use the getters to retrieve the results.
-     *
-     * @return true or false depending on whether any data matches the query
-     */
-    public boolean resultSet() {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String wheres = "";
-        if (where != null) {
-            StringBuilder sbw = new StringBuilder();
-            where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
-            wheres = " WHERE " + sbw.substring(0, sbw.length() - 5);
-        }
-        String query = "SELECT * FROM " + prefix + "blocks" + wheres;
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            if (where != null) {
-                int s = 1;
-                for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue() instanceof String) {
-                        statement.setString(s, entry.getValue().toString());
-                    } else {
-                        statement.setInt(s, (Integer) entry.getValue());
-                    }
-                    s++;
-                }
-                where.clear();
-            }
-            rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    String str = rs.getString("location");
-                    String bd = rs.getString("data");
-                    if (rs.wasNull() || bd.equals("0")) {
-                        bd = "minecraft:air";
-                    }
-                    replacedBlock = new ReplacedBlock(rs.getInt("b_id"), rs.getInt("tardis_id"), TARDISStaticLocationGetters.getLocationFromBukkitString(str), str, plugin.getServer().createBlockData(bd), rs.getInt("police_box"));
-                    if (multiple) {
-                        data.add(replacedBlock);
-                    }
-                }
-            } else {
-                return false;
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for blocks table! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing blocks table! " + e.getMessage());
-            }
-        }
-        return true;
-    }
+	/**
+	 * Retrieves an SQL ResultSet from the blocks table. This method builds an SQL query string from the parameters
+	 * supplied and then executes the query. Use the getters to retrieve the results.
+	 *
+	 * @return true or false depending on whether any data matches the query
+	 */
+	public boolean resultSet() {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String wheres = "";
+		if (where != null) {
+			StringBuilder sbw = new StringBuilder();
+			where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
+			wheres = " WHERE " + sbw.substring(0, sbw.length() - 5);
+		}
+		String query = "SELECT * FROM " + prefix + "blocks" + wheres;
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			if (where != null) {
+				int s = 1;
+				for (Map.Entry<String, Object> entry : where.entrySet()) {
+					if (entry.getValue() instanceof String) {
+						statement.setString(s, entry.getValue().toString());
+					} else {
+						statement.setInt(s, (Integer) entry.getValue());
+					}
+					s++;
+				}
+				where.clear();
+			}
+			rs = statement.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					String str = rs.getString("location");
+					String bd = rs.getString("data");
+					if (rs.wasNull() || bd.equals("0")) {
+						bd = "minecraft:air";
+					}
+					replacedBlock = new ReplacedBlock(rs.getInt("b_id"), rs.getInt("tardis_id"), TARDISStaticLocationGetters.getLocationFromBukkitString(str), str, plugin.getServer().createBlockData(bd), rs.getInt("police_box"));
+					if (multiple) {
+						data.add(replacedBlock);
+					}
+				}
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for blocks table! " + e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing blocks table! " + e.getMessage());
+			}
+		}
+		return true;
+	}
 
-    public ReplacedBlock getReplacedBlock() {
-        return replacedBlock;
-    }
+	public ReplacedBlock getReplacedBlock() {
+		return replacedBlock;
+	}
 
-    public List<ReplacedBlock> getData() {
-        return data;
-    }
+	public List<ReplacedBlock> getData() {
+		return data;
+	}
 }

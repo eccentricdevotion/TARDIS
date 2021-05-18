@@ -34,41 +34,41 @@ import java.util.HashMap;
  */
 public class TARDISAbandonLister {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISAbandonLister(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISAbandonLister(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public void list(CommandSender sender) {
-        ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, new HashMap<>(), "", true, 1);
-        sender.sendMessage(ChatColor.GRAY + plugin.getLanguage().getString("ABANDONED_LIST"));
-        if (rst.resultSet()) {
-            boolean click = (sender instanceof Player);
-            if (click) {
-                sender.sendMessage(plugin.getLanguage().getString("ABANDONED_CLICK"));
-            }
-            int i = 1;
-            for (Tardis t : rst.getData()) {
-                String owner = (t.getOwner().equals("")) ? "TARDIS Admin" : t.getOwner();
-                // get current location
-                HashMap<String, Object> wherec = new HashMap<>();
-                wherec.put("tardis_id", t.getTardis_id());
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
-                if (rsc.resultSet()) {
-                    String w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
-                    String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
-                    if (click) {
-                        String json = "[{\"text\":\"" + i + ". Abandoned by: " + owner + ", " + l + "\"},{\"text\":\" < Enter > \",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin enter " + t.getTardis_id() + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to enter this TARDIS\"}]}}},{\"text\":\" < Delete >\",\"color\":\"red\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin delete " + t.getTardis_id() + " abandoned\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to delete this TARDIS\"}]}}}]";
-                        TARDISUpdateChatGUI.sendJSON(json, (Player) sender);
-                    } else {
-                        sender.sendMessage(i + ". Abandoned by: " + owner + ", location: " + l);
-                    }
-                    i++;
-                }
-            }
-        } else {
-            sender.sendMessage(plugin.getLanguage().getString("ABANDONED_NONE"));
-        }
-    }
+	public void list(CommandSender sender) {
+		ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, new HashMap<>(), "", true, 1);
+		sender.sendMessage(ChatColor.GRAY + plugin.getLanguage().getString("ABANDONED_LIST"));
+		if (rst.resultSet()) {
+			boolean click = (sender instanceof Player);
+			if (click) {
+				sender.sendMessage(plugin.getLanguage().getString("ABANDONED_CLICK"));
+			}
+			int i = 1;
+			for (Tardis t : rst.getData()) {
+				String owner = (t.getOwner().equals("")) ? "TARDIS Admin" : t.getOwner();
+				// get current location
+				HashMap<String, Object> wherec = new HashMap<>();
+				wherec.put("tardis_id", t.getTardis_id());
+				ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+				if (rsc.resultSet()) {
+					String w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
+					String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
+					if (click) {
+						String json = "[{\"text\":\"" + i + ". Abandoned by: " + owner + ", " + l + "\"},{\"text\":\" < Enter > \",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin enter " + t.getTardis_id() + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to enter this TARDIS\"}]}}},{\"text\":\" < Delete >\",\"color\":\"red\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin delete " + t.getTardis_id() + " abandoned\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to delete this TARDIS\"}]}}}]";
+						TARDISUpdateChatGUI.sendJSON(json, (Player) sender);
+					} else {
+						sender.sendMessage(i + ". Abandoned by: " + owner + ", location: " + l);
+					}
+					i++;
+				}
+			}
+		} else {
+			sender.sendMessage(plugin.getLanguage().getString("ABANDONED_NONE"));
+		}
+	}
 }

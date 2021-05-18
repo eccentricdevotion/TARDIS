@@ -27,28 +27,28 @@ import org.bukkit.World;
  */
 public class TARDISSiluria {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISSiluria(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISSiluria(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public World loadSilurianUnderworld() {
-        String s_world = plugin.getServer().getWorlds().get(0).getName();
-        // copy datapack files
-        if (!TARDISChecker.hasDimension("siluria")) {
-            plugin.getServer().reloadData();
-            // message console to restart server
-            TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Siluria data pack has been installed, please restart the server to enable the world.");
-            // get default server world
-            // add world to config
-            if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.time_travel")) {
-                plugin.getPlanetsConfig().set("planets." + s_world + "_tardis_siluria.time_travel", true);
-                plugin.savePlanetsConfig();
-            }
-            return null;
-        } else {
-            return plugin.getServer().getWorld(s_world + "_tardis_siluriao");
-        }
-    }
+	public World loadSilurianUnderworld() {
+		String s_world = plugin.getServer().getWorlds().get(0).getName();
+		// copy datapack files
+		if (!TARDISChecker.hasDimension("siluria")) {
+			plugin.getServer().reloadData();
+			// message console to restart server
+			TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Siluria data pack has been installed, please restart the server to enable the world.");
+			// get default server world
+			// add world to config
+			if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.time_travel")) {
+				plugin.getPlanetsConfig().set("planets." + s_world + "_tardis_siluria.time_travel", true);
+				plugin.savePlanetsConfig();
+			}
+			return null;
+		} else {
+			return plugin.getServer().getWorld(s_world + "_tardis_siluriao");
+		}
+	}
 }

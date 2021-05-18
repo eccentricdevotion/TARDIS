@@ -22,7 +22,7 @@ import org.bukkit.entity.Skeleton;
 
 public class TARDISDalekDisguiser {
 
-    public static void dalekanium(Skeleton skeleton) {
-        TARDISAngelsAPI.getAPI(TARDIS.plugin).setDalekEquipment(skeleton, false);
-    }
+	public static void dalekanium(Skeleton skeleton) {
+		TARDISAngelsAPI.getAPI(TARDIS.plugin).setDalekEquipment(skeleton, false);
+	}
 }

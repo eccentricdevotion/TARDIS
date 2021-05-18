@@ -40,158 +40,158 @@ import java.util.HashMap;
  */
 public class TARDISCloisterBell implements Runnable {
 
-    private final TARDIS plugin;
-    private final int loops;
-    private final int id;
-    private int i = 0;
-    private final Location centre;
-    private final Location current;
-    private final Player player;
-    private final boolean messageOn;
-    private final String reason;
-    private final boolean messageOff;
-    private int task;
+	private final TARDIS plugin;
+	private final int loops;
+	private final int id;
+	private final Location centre;
+	private final Location current;
+	private final Player player;
+	private final boolean messageOn;
+	private final String reason;
+	private final boolean messageOff;
+	private int i = 0;
+	private int task;
 
-    /**
-     * Runnable class to action a repeating cloister bell task. Each loop should take 70 ticks.
-     *
-     * @param plugin an instance of the TARDIS plugin
-     * @param loops  the number of times to ring the cloister bell
-     * @param id     the id of the TARDIS whose cloister bell we are ringing
-     */
-    public TARDISCloisterBell(TARDIS plugin, int loops, int id) {
-        this.plugin = plugin;
-        this.loops = loops;
-        this.id = id;
-        centre = getCentre(this.id);
-        current = getCurrent(this.id);
-        player = getPlayer(this.id);
-        messageOn = false;
-        messageOff = false;
-        reason = "";
-    }
+	/**
+	 * Runnable class to action a repeating cloister bell task. Each loop should take 70 ticks.
+	 *
+	 * @param plugin an instance of the TARDIS plugin
+	 * @param loops  the number of times to ring the cloister bell
+	 * @param id     the id of the TARDIS whose cloister bell we are ringing
+	 */
+	public TARDISCloisterBell(TARDIS plugin, int loops, int id) {
+		this.plugin = plugin;
+		this.loops = loops;
+		this.id = id;
+		centre = getCentre(this.id);
+		current = getCurrent(this.id);
+		player = getPlayer(this.id);
+		messageOn = false;
+		messageOff = false;
+		reason = "";
+	}
 
-    public TARDISCloisterBell(TARDIS plugin, int loops, int id, Player player) {
-        this.plugin = plugin;
-        this.loops = loops;
-        this.id = id;
-        centre = getCentre(this.id);
-        current = getCurrent(this.id);
-        this.player = player;
-        messageOn = false;
-        reason = "";
-        messageOff = false;
-    }
+	public TARDISCloisterBell(TARDIS plugin, int loops, int id, Player player) {
+		this.plugin = plugin;
+		this.loops = loops;
+		this.id = id;
+		centre = getCentre(this.id);
+		current = getCurrent(this.id);
+		this.player = player;
+		messageOn = false;
+		reason = "";
+		messageOff = false;
+	}
 
-    public TARDISCloisterBell(TARDIS plugin, int loops, int id, Location current, Player player, String reason) {
-        this.plugin = plugin;
-        this.loops = loops;
-        this.id = id;
-        centre = getCentre(this.id);
-        this.current = current;
-        this.player = player;
-        messageOn = true;
-        this.reason = reason;
-        messageOff = true;
-    }
+	public TARDISCloisterBell(TARDIS plugin, int loops, int id, Location current, Player player, String reason) {
+		this.plugin = plugin;
+		this.loops = loops;
+		this.id = id;
+		centre = getCentre(this.id);
+		this.current = current;
+		this.player = player;
+		messageOn = true;
+		this.reason = reason;
+		messageOff = true;
+	}
 
-    public TARDISCloisterBell(TARDIS plugin, int loops, int id, Location current, Player player, boolean messageOn, String reason, boolean messageOff) {
-        this.plugin = plugin;
-        this.loops = loops;
-        this.id = id;
-        centre = getCentre(this.id);
-        this.current = current;
-        this.player = player;
-        this.messageOn = messageOn;
-        this.reason = reason;
-        this.messageOff = messageOff;
-    }
+	public TARDISCloisterBell(TARDIS plugin, int loops, int id, Location current, Player player, boolean messageOn, String reason, boolean messageOff) {
+		this.plugin = plugin;
+		this.loops = loops;
+		this.id = id;
+		centre = getCentre(this.id);
+		this.current = current;
+		this.player = player;
+		this.messageOn = messageOn;
+		this.reason = reason;
+		this.messageOff = messageOff;
+	}
 
-    @Override
-    public void run() {
-        if (messageOn && i == 0 && player != null && player.isOnline()) {
-            TARDISMessage.send(player, "CLOISTER_BELL_ON", reason);
-        }
-        if (i < loops) {
-            if (centre != null) {
-                // play sound in TARDIS with range size of ARS grid
-                centre.getWorld().playSound(centre, "cloister_bell", 10.0f, 1.0f);
-            }
-            if (current != null) {
-                // play sound outside the TARDIS with a range of 32 blocks
-                current.getWorld().playSound(current, "cloister_bell", 2.0f, 1.0f);
-            }
-            if (player != null && player.isOnline()) {
-                // play sound at Time Lords location (if they are not in the TARDIS and not within range of the TARDIS exterior)
-                Location location = player.getLocation();
-                if (!plugin.getUtils().inTARDISWorld(player) && !isInPoliceBoxRange(current, location)) {
-                    location.getWorld().playSound(location, "cloister_bell", 1.0f, 1.0f);
-                }
-            }
-            i++;
-        } else {
-            plugin.getServer().getScheduler().cancelTask(plugin.getTrackerKeeper().getCloisterBells().get(id));
-            task = -1;
-            plugin.getTrackerKeeper().getCloisterBells().remove(id);
-            if (messageOff && player != null && player.isOnline()) {
-                TARDISMessage.send(player, "CLOISTER_BELL_OFF");
-            }
-        }
-    }
+	@Override
+	public void run() {
+		if (messageOn && i == 0 && player != null && player.isOnline()) {
+			TARDISMessage.send(player, "CLOISTER_BELL_ON", reason);
+		}
+		if (i < loops) {
+			if (centre != null) {
+				// play sound in TARDIS with range size of ARS grid
+				centre.getWorld().playSound(centre, "cloister_bell", 10.0f, 1.0f);
+			}
+			if (current != null) {
+				// play sound outside the TARDIS with a range of 32 blocks
+				current.getWorld().playSound(current, "cloister_bell", 2.0f, 1.0f);
+			}
+			if (player != null && player.isOnline()) {
+				// play sound at Time Lords location (if they are not in the TARDIS and not within range of the TARDIS exterior)
+				Location location = player.getLocation();
+				if (!plugin.getUtils().inTARDISWorld(player) && !isInPoliceBoxRange(current, location)) {
+					location.getWorld().playSound(location, "cloister_bell", 1.0f, 1.0f);
+				}
+			}
+			i++;
+		} else {
+			plugin.getServer().getScheduler().cancelTask(plugin.getTrackerKeeper().getCloisterBells().get(id));
+			task = -1;
+			plugin.getTrackerKeeper().getCloisterBells().remove(id);
+			if (messageOff && player != null && player.isOnline()) {
+				TARDISMessage.send(player, "CLOISTER_BELL_OFF");
+			}
+		}
+	}
 
-    public void setTask(int task) {
-        this.task = task;
-    }
+	public void setTask(int task) {
+		this.task = task;
+	}
 
-    private Location getCentre(int id) {
-        // get the location of the centre of the TARDIS
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-        if (rs.resultSet()) {
-            if (!rs.getTardis().getCreeper().isEmpty()) {
-                return TARDISStaticLocationGetters.getLocationFromDB(rs.getTardis().getCreeper());
-            } else if (!rs.getTardis().getBeacon().isEmpty()) {
-                return TARDISStaticLocationGetters.getLocationFromDB(rs.getTardis().getBeacon());
-            }
-        }
-        return null;
-    }
+	private Location getCentre(int id) {
+		// get the location of the centre of the TARDIS
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("tardis_id", id);
+		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+		if (rs.resultSet()) {
+			if (!rs.getTardis().getCreeper().isEmpty()) {
+				return TARDISStaticLocationGetters.getLocationFromDB(rs.getTardis().getCreeper());
+			} else if (!rs.getTardis().getBeacon().isEmpty()) {
+				return TARDISStaticLocationGetters.getLocationFromDB(rs.getTardis().getBeacon());
+			}
+		}
+		return null;
+	}
 
-    private Location getCurrent(int id) {
-        // get the location of the TARDIS Police Box
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
-        if (rs.resultSet()) {
-            return new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
-        }
-        return null;
-    }
+	private Location getCurrent(int id) {
+		// get the location of the TARDIS Police Box
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("tardis_id", id);
+		ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
+		if (rs.resultSet()) {
+			return new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
+		}
+		return null;
+	}
 
-    private Player getPlayer(int id) {
-        // get Time Lord of this TARDIS
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-        if (rs.resultSet()) {
-            return plugin.getServer().getPlayer(rs.getTardis().getUuid());
-        }
-        return null;
-    }
+	private Player getPlayer(int id) {
+		// get Time Lord of this TARDIS
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("tardis_id", id);
+		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+		if (rs.resultSet()) {
+			return plugin.getServer().getPlayer(rs.getTardis().getUuid());
+		}
+		return null;
+	}
 
-    private boolean isInPoliceBoxRange(Location current, Location location) {
-        // check locations are in the same world
-        if (current.getWorld() != location.getWorld()) {
-            return false;
-        }
-        // same world check the location is contained in a 32 block radius of Police Box
-        int x = location.getBlockX();
-        int z = location.getBlockZ();
-        int minX = current.getBlockX() - 32;
-        int maxX = current.getBlockX() + 32;
-        int minZ = current.getBlockZ() - 32;
-        int maxZ = current.getBlockZ() + 32;
-        return (x > minX && x < maxX && z > minZ && z < maxZ);
-    }
+	private boolean isInPoliceBoxRange(Location current, Location location) {
+		// check locations are in the same world
+		if (current.getWorld() != location.getWorld()) {
+			return false;
+		}
+		// same world check the location is contained in a 32 block radius of Police Box
+		int x = location.getBlockX();
+		int z = location.getBlockZ();
+		int minX = current.getBlockX() - 32;
+		int maxX = current.getBlockX() + 32;
+		int minZ = current.getBlockZ() - 32;
+		int maxZ = current.getBlockZ() + 32;
+		return (x > minX && x < maxX && z > minZ && z < maxZ);
+	}
 }

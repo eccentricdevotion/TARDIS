@@ -25,37 +25,37 @@ import org.bukkit.entity.Player;
 
 public class FormulaCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public FormulaCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public FormulaCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public boolean show(Player player, String[] args) {
-        if (args.length < 2) {
-            TARDISMessage.message(player, "You need to specify the compound or product you want the formula for! Try using tab complete...");
-            return false;
-        }
-        // do stuff
-        try {
-            Compound compound = Compound.valueOf(args[1]);
-            new FormulaViewer(plugin, player).getCompoundFormula(compound);
-            return true;
-        } catch (IllegalArgumentException ce) {
-            try {
-                Product product = Product.valueOf(args[1]);
-                new FormulaViewer(plugin, player).getProductFormula(product);
-                return true;
-            } catch (IllegalArgumentException pe) {
-                try {
-                    Lab lab = Lab.valueOf(args[1]);
-                    new FormulaViewer(plugin, player).getLabFormula(lab);
-                    return true;
-                } catch (IllegalArgumentException le) {
-                    TARDISMessage.message(player, "Could not find a formula for '" + args[1] + "' make sure you typed it correctly.");
-                    return true;
-                }
-            }
-        }
-    }
+	public boolean show(Player player, String[] args) {
+		if (args.length < 2) {
+			TARDISMessage.message(player, "You need to specify the compound or product you want the formula for! Try using tab complete...");
+			return false;
+		}
+		// do stuff
+		try {
+			Compound compound = Compound.valueOf(args[1]);
+			new FormulaViewer(plugin, player).getCompoundFormula(compound);
+			return true;
+		} catch (IllegalArgumentException ce) {
+			try {
+				Product product = Product.valueOf(args[1]);
+				new FormulaViewer(plugin, player).getProductFormula(product);
+				return true;
+			} catch (IllegalArgumentException pe) {
+				try {
+					Lab lab = Lab.valueOf(args[1]);
+					new FormulaViewer(plugin, player).getLabFormula(lab);
+					return true;
+				} catch (IllegalArgumentException le) {
+					TARDISMessage.message(player, "Could not find a formula for '" + args[1] + "' make sure you typed it correctly.");
+					return true;
+				}
+			}
+		}
+	}
 }

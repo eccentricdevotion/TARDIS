@@ -1,62 +1,62 @@
 {
-    "type": "tardis:siluria",
-    "generator": {
-        "type": "minecraft:noise",
-        "seed": -670078524,
-        "biome_source": {
-            "type": "minecraft:multi_noise",
-            "seed": -670078524,
-            "altitude_noise": {
-                "firstOctave": -7,
-                "amplitudes": [
-                    1,
-                    1
-                ]
-            },
-            "temperature_noise": {
-                "firstOctave": -7,
-                "amplitudes": [
-                    1,
-                    1
-                ]
-            },
-            "humidity_noise": {
-                "firstOctave": -7,
-                "amplitudes": [
-                    1,
-                    1
-                ]
-            },
-            "weirdness_noise": {
-                "firstOctave": -7,
-                "amplitudes": [
-                    1,
-                    1
-                ]
-            },
-            "biomes": [
-                {
-                    "biome": "minecraft:bamboo_jungle",
-                    "parameters": {
-                        "altitude": 0,
-                        "temperature": 0.3,
-                        "humidity": 0.3,
-                        "weirdness": 0.3,
-                        "offset": 0.3
-                    }
-                },
-                {
-                    "biome": "minecraft:bamboo_jungle_hills",
-                    "parameters": {
-                        "altitude": 0.3,
-                        "temperature": 0.2,
-                        "humidity": 0.2,
-                        "weirdness": 0.2,
-                        "offset": 0.2
-                    }
-                }
-            ]
-        },
-        "settings": "minecraft:overworld"
-    }
+	"type": "tardis:siluria",
+	"generator": {
+		"type": "minecraft:noise",
+		"seed": -670078524,
+		"biome_source": {
+			"type": "minecraft:multi_noise",
+			"seed": -670078524,
+			"altitude_noise": {
+				"firstOctave": -7,
+				"amplitudes": [
+					1,
+					1
+				]
+			},
+			"temperature_noise": {
+				"firstOctave": -7,
+				"amplitudes": [
+					1,
+					1
+				]
+			},
+			"humidity_noise": {
+				"firstOctave": -7,
+				"amplitudes": [
+					1,
+					1
+				]
+			},
+			"weirdness_noise": {
+				"firstOctave": -7,
+				"amplitudes": [
+					1,
+					1
+				]
+			},
+			"biomes": [
+				{
+					"biome": "minecraft:bamboo_jungle",
+					"parameters": {
+						"altitude": 0,
+						"temperature": 0.3,
+						"humidity": 0.3,
+						"weirdness": 0.3,
+						"offset": 0.3
+					}
+				},
+				{
+					"biome": "minecraft:bamboo_jungle_hills",
+					"parameters": {
+						"altitude": 0.3,
+						"temperature": 0.2,
+						"humidity": 0.2,
+						"weirdness": 0.2,
+						"offset": 0.2
+					}
+				}
+			]
+		},
+		"settings": "minecraft:overworld"
+	}
 }

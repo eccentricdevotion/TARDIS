@@ -27,18 +27,18 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
  */
 public class TARDISPistonListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISPistonListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISPistonListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler(ignoreCancelled = true)
-    public void onPistonExtend(BlockPistonExtendEvent event) {
-        Block b = event.getBlock();
-        if (plugin.getGeneralKeeper().getDoorPistons().contains(b)) {
-            event.setCancelled(true);
-            plugin.getGeneralKeeper().getDoorPistons().remove(b);
-        }
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onPistonExtend(BlockPistonExtendEvent event) {
+		Block b = event.getBlock();
+		if (plugin.getGeneralKeeper().getDoorPistons().contains(b)) {
+			event.setCancelled(true);
+			plugin.getGeneralKeeper().getDoorPistons().remove(b);
+		}
+	}
 }

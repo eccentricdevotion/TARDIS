@@ -34,101 +34,101 @@ import java.sql.SQLException;
  */
 public class ResultSetTardisArtron {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final String prefix;
-    private int artronLevel;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final String prefix;
+	private int artronLevel;
 
-    /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
-     *
-     * @param plugin an instance of the main class.
-     */
-    public ResultSetTardisArtron(TARDIS plugin) {
-        this.plugin = plugin;
-        prefix = this.plugin.getPrefix();
-    }
+	/**
+	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
+	 *
+	 * @param plugin an instance of the main class.
+	 */
+	public ResultSetTardisArtron(TARDIS plugin) {
+		this.plugin = plugin;
+		prefix = this.plugin.getPrefix();
+	}
 
-    /**
-     * Gets to the Artron energy level of a TARDIS. This method builds an SQL query string from the parameters supplied
-     * and then executes the query.
-     *
-     * @param uuid the Time Lord uuid to check
-     * @return true or false depending on whether the TARDIS is powered on
-     */
-    public boolean fromUUID(String uuid) {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT artron_level FROM " + prefix + "tardis WHERE uuid = ? AND abandoned = 0";
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            statement.setString(1, uuid);
-            rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                rs.next();
-                artronLevel = rs.getInt("artron_level");
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis [artron_level fromUUID] table! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing tardis [artron_level fromUUID] table! " + e.getMessage());
-            }
-        }
-    }
+	/**
+	 * Gets to the Artron energy level of a TARDIS. This method builds an SQL query string from the parameters supplied
+	 * and then executes the query.
+	 *
+	 * @param uuid the Time Lord uuid to check
+	 * @return true or false depending on whether the TARDIS is powered on
+	 */
+	public boolean fromUUID(String uuid) {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String query = "SELECT artron_level FROM " + prefix + "tardis WHERE uuid = ? AND abandoned = 0";
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			statement.setString(1, uuid);
+			rs = statement.executeQuery();
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				artronLevel = rs.getInt("artron_level");
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for tardis [artron_level fromUUID] table! " + e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing tardis [artron_level fromUUID] table! " + e.getMessage());
+			}
+		}
+	}
 
-    /**
-     * Gets to the Artron energy level of a TARDIS. This method builds an SQL query string from the parameters supplied
-     * and then executes the query.
-     *
-     * @param id the Tardis ID to check
-     * @return true or false depending on whether the TARDIS is powered on
-     */
-    public boolean fromID(int id) {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT artron_level FROM " + prefix + "tardis WHERE tardis_id = ?";
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            statement.setInt(1, id);
-            rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                rs.next();
-                artronLevel = rs.getInt("artron_level");
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis [artron_level fromID] table! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing tardis [artron_level fromID] table! " + e.getMessage());
-            }
-        }
-    }
+	/**
+	 * Gets to the Artron energy level of a TARDIS. This method builds an SQL query string from the parameters supplied
+	 * and then executes the query.
+	 *
+	 * @param id the Tardis ID to check
+	 * @return true or false depending on whether the TARDIS is powered on
+	 */
+	public boolean fromID(int id) {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String query = "SELECT artron_level FROM " + prefix + "tardis WHERE tardis_id = ?";
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			statement.setInt(1, id);
+			rs = statement.executeQuery();
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				artronLevel = rs.getInt("artron_level");
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for tardis [artron_level fromID] table! " + e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing tardis [artron_level fromID] table! " + e.getMessage());
+			}
+		}
+	}
 
-    public int getArtronLevel() {
-        return artronLevel;
-    }
+	public int getArtronLevel() {
+		return artronLevel;
+	}
 }

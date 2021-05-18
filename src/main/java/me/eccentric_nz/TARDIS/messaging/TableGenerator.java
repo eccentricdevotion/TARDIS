@@ -21,245 +21,245 @@ import java.util.regex.Pattern;
 
 public class TableGenerator {
 
-    private static final String delimiter = "   ";
-    private static final List<Character> char7 = Arrays.asList('°', '~', '@');
-    private static final List<Character> char5 = Arrays.asList('"', '{', '}', '(', ')', '*', 'f', 'k', '<', '>');
-    private static final List<Character> char4 = Arrays.asList('I', 't', ' ', '[', ']', '€');
-    private static final List<Character> char3 = Arrays.asList('l', '`', '³', '\'');
-    private static final List<Character> char2 = Arrays.asList(',', '.', '!', 'i', '´', ':', ';', '|');
-    private static char char1;
-    private static Pattern regex;
-    private static final String colors = "[&§][0-9a-fA-Fk-oK-OrR]";
-    private final Alignment[] alignments;
-    private final List<Row> table = new ArrayList<>();
-    private final int columns;
+	private static final String delimiter = "   ";
+	private static final List<Character> char7 = Arrays.asList('°', '~', '@');
+	private static final List<Character> char5 = Arrays.asList('"', '{', '}', '(', ')', '*', 'f', 'k', '<', '>');
+	private static final List<Character> char4 = Arrays.asList('I', 't', ' ', '[', ']', '€');
+	private static final List<Character> char3 = Arrays.asList('l', '`', '³', '\'');
+	private static final List<Character> char2 = Arrays.asList(',', '.', '!', 'i', '´', ':', ';', '|');
+	private static final String colors = "[&§][0-9a-fA-Fk-oK-OrR]";
+	private static char char1;
+	private static Pattern regex;
+	private final Alignment[] alignments;
+	private final List<Row> table = new ArrayList<>();
+	private final int columns;
 
-    public TableGenerator(char char1, Alignment... alignments) {
-        if (alignments == null || alignments.length < 1) {
-            throw new IllegalArgumentException("Must at least provide 1 alignment.");
-        }
-        this.char1 = char1;
-        regex = Pattern.compile(char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1);
-        columns = alignments.length;
-        this.alignments = alignments;
-    }
+	public TableGenerator(char char1, Alignment... alignments) {
+		if (alignments == null || alignments.length < 1) {
+			throw new IllegalArgumentException("Must at least provide 1 alignment.");
+		}
+		this.char1 = char1;
+		regex = Pattern.compile(char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1);
+		columns = alignments.length;
+		this.alignments = alignments;
+	}
 
-    public List<String> generate(Receiver receiver, boolean ignoreColors, boolean coloredDistances) {
-        if (receiver == null) {
-            throw new IllegalArgumentException("Receiver must not be null.");
-        }
-        Integer[] columWidths = new Integer[columns];
-        for (Row r : table) {
-            for (int i = 0; i < columns; i++) {
-                String text = r.texts.get(i);
-                int length;
+	protected static int getCustomLength(String text, Receiver receiver) {
+		if (text == null) {
+			throw new IllegalArgumentException("Text must not be null.");
+		}
+		if (receiver == null) {
+			throw new IllegalArgumentException("Receiver must not be null.");
+		}
+		if (receiver == Receiver.CONSOLE) {
+			return text.length();
+		}
+		int length = 0;
+		for (char c : text.toCharArray()) {
+			length += getCustomCharLength(c);
+		}
+		return length;
+	}
 
-                if (ignoreColors) {
-                    length = getCustomLength(text.replaceAll(colors, ""), receiver);
-                } else {
-                    length = getCustomLength(text, receiver);
-                }
+	protected static int getCustomCharLength(char c) {
+		if (char1 == c) {
+			return 1;
+		}
+		if (char2.contains(c)) {
+			return 2;
+		}
+		if (char3.contains(c)) {
+			return 3;
+		}
+		if (char4.contains(c)) {
+			return 4;
+		}
+		if (char5.contains(c)) {
+			return 5;
+		}
+		if (char7.contains(c)) {
+			return 7;
+		}
+		return 6;
+	}
 
-                if (columWidths[i] == null) {
-                    columWidths[i] = length;
-                } else if (length > columWidths[i]) {
-                    columWidths[i] = length;
-                }
-            }
-        }
-        List<String> lines = new ArrayList<>();
-        for (Row r : table) {
-            StringBuilder sb = new StringBuilder();
-            if (r.empty) {
-                lines.add("");
-                continue;
-            }
-            for (int i = 0; i < columns; i++) {
-                Alignment agn = alignments[i];
-                String text = r.texts.get(i);
-                int length;
-                if (ignoreColors) {
-                    length = getCustomLength(text.replaceAll(colors, ""), receiver);
-                } else {
-                    length = getCustomLength(text, receiver);
-                }
-                int empty = columWidths[i] - length;
-                int spacesAmount = empty;
-                if (receiver == Receiver.CLIENT) {
-                    spacesAmount = (int) Math.floor(empty / 4d);
-                }
-                int char1Amount = 0;
-                if (receiver == Receiver.CLIENT) {
-                    char1Amount = empty - 4 * spacesAmount;
-                }
-                String spaces = concatChars(' ', spacesAmount);
-                String char1s = concatChars(char1, char1Amount);
-                if (coloredDistances) {
-                    char1s = "§r§8" + char1s + "§r";
-                }
-                if (agn == Alignment.LEFT) {
-                    sb.append(text);
-                    if (i < columns - 1) {
-                        sb.append(char1s).append(spaces);
-                    }
-                }
-                if (agn == Alignment.RIGHT) {
-                    sb.append(spaces).append(char1s).append(text);
-                }
-                if (agn == Alignment.CENTER) {
-                    int leftAmount = empty / 2;
-                    int rightAmount = empty - leftAmount;
-                    int spacesLeftAmount = leftAmount;
-                    int spacesRightAmount = rightAmount;
-                    if (receiver == Receiver.CLIENT) {
-                        spacesLeftAmount = (int) Math.floor(spacesLeftAmount / 4d);
-                        spacesRightAmount = (int) Math.floor(spacesRightAmount / 4d);
-                    }
-                    int char1LeftAmount = 0;
-                    int char1RightAmount = 0;
-                    if (receiver == Receiver.CLIENT) {
-                        char1LeftAmount = leftAmount - 4 * spacesLeftAmount;
-                        char1RightAmount = rightAmount - 4 * spacesRightAmount;
-                    }
-                    String spacesLeft = concatChars(' ', spacesLeftAmount);
-                    String spacesRight = concatChars(' ', spacesRightAmount);
-                    String char1Left = concatChars(char1, char1LeftAmount);
-                    String char1Right = concatChars(char1, char1RightAmount);
-                    if (coloredDistances) {
-                        char1Left = "§r§8" + char1Left + "§r";
-                        char1Right = "§r§8" + char1Right + "§r";
-                    }
-                    sb.append(spacesLeft).append(char1Left).append(text);
-                    if (i < columns - 1) {
-                        sb.append(char1Right).append(spacesRight);
-                    }
-                }
-                if (i < columns - 1) {
-                    sb.append("§r" + delimiter);
-                }
-            }
-            String line = sb.toString();
-            if (receiver == Receiver.CLIENT) {
-                for (int i = 0; i < 2; i++) {
-                    Matcher matcher = regex.matcher(line);
-                    line = matcher.replaceAll("$1$2$3 ").replace("§r§8§r", "§r").replaceAll("§r(\\s*)§r", "§r$1");
-                }
-            }
-            lines.add(line);
-        }
-        return lines;
-    }
+	public static boolean getSenderPrefs(CommandSender sender) {
+		if (sender instanceof ConsoleCommandSender) {
+			return true;
+		} else if (sender instanceof Player) {
+			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, ((Player) sender).getUniqueId().toString());
+			if (rsp.resultSet()) {
+				return rsp.useCustomFont();
+			}
+		}
+		return false;
+	}
 
-    protected static int getCustomLength(String text, Receiver receiver) {
-        if (text == null) {
-            throw new IllegalArgumentException("Text must not be null.");
-        }
-        if (receiver == null) {
-            throw new IllegalArgumentException("Receiver must not be null.");
-        }
-        if (receiver == Receiver.CONSOLE) {
-            return text.length();
-        }
-        int length = 0;
-        for (char c : text.toCharArray()) {
-            length += getCustomCharLength(c);
-        }
-        return length;
-    }
+	public List<String> generate(Receiver receiver, boolean ignoreColors, boolean coloredDistances) {
+		if (receiver == null) {
+			throw new IllegalArgumentException("Receiver must not be null.");
+		}
+		Integer[] columWidths = new Integer[columns];
+		for (Row r : table) {
+			for (int i = 0; i < columns; i++) {
+				String text = r.texts.get(i);
+				int length;
 
-    protected static int getCustomCharLength(char c) {
-        if (char1 == c) {
-            return 1;
-        }
-        if (char2.contains(c)) {
-            return 2;
-        }
-        if (char3.contains(c)) {
-            return 3;
-        }
-        if (char4.contains(c)) {
-            return 4;
-        }
-        if (char5.contains(c)) {
-            return 5;
-        }
-        if (char7.contains(c)) {
-            return 7;
-        }
-        return 6;
-    }
+				if (ignoreColors) {
+					length = getCustomLength(text.replaceAll(colors, ""), receiver);
+				} else {
+					length = getCustomLength(text, receiver);
+				}
 
-    protected String concatChars(char c, int length) {
-        if (length < 1) {
-            return "";
-        }
-        StringBuilder s = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            s.append(c);
-        }
-        return s.toString();
-    }
+				if (columWidths[i] == null) {
+					columWidths[i] = length;
+				} else if (length > columWidths[i]) {
+					columWidths[i] = length;
+				}
+			}
+		}
+		List<String> lines = new ArrayList<>();
+		for (Row r : table) {
+			StringBuilder sb = new StringBuilder();
+			if (r.empty) {
+				lines.add("");
+				continue;
+			}
+			for (int i = 0; i < columns; i++) {
+				Alignment agn = alignments[i];
+				String text = r.texts.get(i);
+				int length;
+				if (ignoreColors) {
+					length = getCustomLength(text.replaceAll(colors, ""), receiver);
+				} else {
+					length = getCustomLength(text, receiver);
+				}
+				int empty = columWidths[i] - length;
+				int spacesAmount = empty;
+				if (receiver == Receiver.CLIENT) {
+					spacesAmount = (int) Math.floor(empty / 4d);
+				}
+				int char1Amount = 0;
+				if (receiver == Receiver.CLIENT) {
+					char1Amount = empty - 4 * spacesAmount;
+				}
+				String spaces = concatChars(' ', spacesAmount);
+				String char1s = concatChars(char1, char1Amount);
+				if (coloredDistances) {
+					char1s = "§r§8" + char1s + "§r";
+				}
+				if (agn == Alignment.LEFT) {
+					sb.append(text);
+					if (i < columns - 1) {
+						sb.append(char1s).append(spaces);
+					}
+				}
+				if (agn == Alignment.RIGHT) {
+					sb.append(spaces).append(char1s).append(text);
+				}
+				if (agn == Alignment.CENTER) {
+					int leftAmount = empty / 2;
+					int rightAmount = empty - leftAmount;
+					int spacesLeftAmount = leftAmount;
+					int spacesRightAmount = rightAmount;
+					if (receiver == Receiver.CLIENT) {
+						spacesLeftAmount = (int) Math.floor(spacesLeftAmount / 4d);
+						spacesRightAmount = (int) Math.floor(spacesRightAmount / 4d);
+					}
+					int char1LeftAmount = 0;
+					int char1RightAmount = 0;
+					if (receiver == Receiver.CLIENT) {
+						char1LeftAmount = leftAmount - 4 * spacesLeftAmount;
+						char1RightAmount = rightAmount - 4 * spacesRightAmount;
+					}
+					String spacesLeft = concatChars(' ', spacesLeftAmount);
+					String spacesRight = concatChars(' ', spacesRightAmount);
+					String char1Left = concatChars(char1, char1LeftAmount);
+					String char1Right = concatChars(char1, char1RightAmount);
+					if (coloredDistances) {
+						char1Left = "§r§8" + char1Left + "§r";
+						char1Right = "§r§8" + char1Right + "§r";
+					}
+					sb.append(spacesLeft).append(char1Left).append(text);
+					if (i < columns - 1) {
+						sb.append(char1Right).append(spacesRight);
+					}
+				}
+				if (i < columns - 1) {
+					sb.append("§r" + delimiter);
+				}
+			}
+			String line = sb.toString();
+			if (receiver == Receiver.CLIENT) {
+				for (int i = 0; i < 2; i++) {
+					Matcher matcher = regex.matcher(line);
+					line = matcher.replaceAll("$1$2$3 ").replace("§r§8§r", "§r").replaceAll("§r(\\s*)§r", "§r$1");
+				}
+			}
+			lines.add(line);
+		}
+		return lines;
+	}
 
-    public void addRow(String... texts) {
-        if (texts == null) {
-            throw new IllegalArgumentException("Texts must not be null.");
-        }
-        if (texts != null && texts.length > columns) {
-            throw new IllegalArgumentException("Too big for the table.");
-        }
-        Row r = new Row(texts);
-        table.add(r);
-    }
+	protected String concatChars(char c, int length) {
+		if (length < 1) {
+			return "";
+		}
+		StringBuilder s = new StringBuilder();
+		for (int i = 0; i < length; i++) {
+			s.append(c);
+		}
+		return s.toString();
+	}
 
-    public static boolean getSenderPrefs(CommandSender sender) {
-        if (sender instanceof ConsoleCommandSender) {
-            return true;
-        } else if (sender instanceof Player) {
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, ((Player) sender).getUniqueId().toString());
-            if (rsp.resultSet()) {
-                return rsp.useCustomFont();
-            }
-        }
-        return false;
-    }
+	public void addRow(String... texts) {
+		if (texts == null) {
+			throw new IllegalArgumentException("Texts must not be null.");
+		}
+		if (texts != null && texts.length > columns) {
+			throw new IllegalArgumentException("Too big for the table.");
+		}
+		Row r = new Row(texts);
+		table.add(r);
+	}
 
-    public class Row {
+	public enum Receiver {
 
-        public final List<String> texts = new ArrayList<>();
-        public boolean empty = true;
+		CONSOLE,
+		CLIENT
+	}
 
-        public Row(String... texts) {
-            if (texts == null) {
-                for (int i = 0; i < columns; i++) {
-                    this.texts.add("");
-                }
-                return;
-            }
-            for (String text : texts) {
-                if (text != null && !text.isEmpty()) {
-                    empty = false;
-                }
+	public enum Alignment {
 
-                this.texts.add(text);
-            }
-            for (int i = 0; i < columns; i++) {
-                if (i >= texts.length) {
-                    this.texts.add("");
-                }
-            }
-        }
-    }
+		CENTER,
+		LEFT,
+		RIGHT
+	}
 
-    public enum Receiver {
+	public class Row {
 
-        CONSOLE,
-        CLIENT
-    }
+		public final List<String> texts = new ArrayList<>();
+		public boolean empty = true;
 
-    public enum Alignment {
+		public Row(String... texts) {
+			if (texts == null) {
+				for (int i = 0; i < columns; i++) {
+					this.texts.add("");
+				}
+				return;
+			}
+			for (String text : texts) {
+				if (text != null && !text.isEmpty()) {
+					empty = false;
+				}
 
-        CENTER,
-        LEFT,
-        RIGHT
-    }
+				this.texts.add(text);
+			}
+			for (int i = 0; i < columns; i++) {
+				if (i >= texts.length) {
+					this.texts.add("");
+				}
+			}
+		}
+	}
 }

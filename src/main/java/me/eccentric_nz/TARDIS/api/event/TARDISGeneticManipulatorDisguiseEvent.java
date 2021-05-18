@@ -25,39 +25,39 @@ import org.bukkit.event.HandlerList;
  */
 public final class TARDISGeneticManipulatorDisguiseEvent extends Event {
 
-    private static final HandlerList HANDLERS = new HandlerList();
-    private final Player player;
-    private final String disguise;
+	private static final HandlerList HANDLERS = new HandlerList();
+	private final Player player;
+	private final String disguise;
 
-    public TARDISGeneticManipulatorDisguiseEvent(Player player, String disguise) {
-        this.player = player;
-        this.disguise = disguise;
-    }
+	public TARDISGeneticManipulatorDisguiseEvent(Player player, String disguise) {
+		this.player = player;
+		this.disguise = disguise;
+	}
 
-    /**
-     * Returns the player involved in this event.
-     *
-     * @return the player
-     */
-    public Player getPlayer() {
-        return player;
-    }
+	public static HandlerList getHandlerList() {
+		return HANDLERS;
+	}
 
-    /**
-     * Returns the name of the disguise the player used.
-     *
-     * @return the disguise name
-     */
-    public String getDisguise() {
-        return disguise;
-    }
+	/**
+	 * Returns the player involved in this event.
+	 *
+	 * @return the player
+	 */
+	public Player getPlayer() {
+		return player;
+	}
 
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLERS;
-    }
+	/**
+	 * Returns the name of the disguise the player used.
+	 *
+	 * @return the disguise name
+	 */
+	public String getDisguise() {
+		return disguise;
+	}
 
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return HANDLERS;
+	}
 }

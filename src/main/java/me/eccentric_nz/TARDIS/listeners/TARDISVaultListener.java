@@ -38,119 +38,119 @@ import java.util.List;
 
 public class TARDISVaultListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISVaultListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISVaultListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.NORMAL)
 
-    public void onVaultDropChestClose(InventoryCloseEvent event) {
-        Inventory inv = event.getInventory();
-        InventoryHolder holder = inv.getHolder();
-        if (holder instanceof org.bukkit.block.Chest) {
-            org.bukkit.block.Chest chest = (org.bukkit.block.Chest) holder;
-            Location l = chest.getLocation();
-            if (plugin.getUtils().inTARDISWorld(l)) {
-                String loc = l.toString();
-                // check is drop chest
-                ResultSetVault rs = new ResultSetVault(plugin, loc);
-                if (!rs.resultSet()) {
-                    return;
-                }
-                // make a list of chest locations
-                List<String> chestLocations = new ArrayList<>();
-                chestLocations.add(loc);
-                // sort contents
-                TARDISSonicSorterListener.sortInventory(inv);
-                World w = chest.getWorld();
-                // get vault dimensions
-                int sx = rs.getX();
-                int sy = rs.getY();
-                int sz = rs.getZ();
-                // loop through vault blocks
-                for (int y = sy; y < (sy + 16); y++) {
-                    for (int x = sx; x < (sx + 16); x++) {
-                        for (int z = sz; z < (sz + 16); z++) {
-                            // get the block
-                            Block b = w.getBlockAt(x, y, z);
-                            String blocation = b.getLocation().toString();
-                            // check if it is a chest (but not the drop chest)
-                            if ((b.getType().equals(Material.CHEST) || b.getType().equals(Material.TRAPPED_CHEST)) && !chestLocations.contains(blocation)) {
-                                org.bukkit.block.Chest c = (org.bukkit.block.Chest) b.getState();
-                                Chest chestdata = (Chest) c.getBlockData();
-                                Chest.Type chestType = chestdata.getType();
-                                // is it a double chest
-                                if (chestType.equals(Chest.Type.LEFT)) {
-                                    switch (chestdata.getFacing()) {
-                                        case WEST:
-                                            chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
-                                            break;
-                                        case SOUTH:
-                                            chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
-                                            break;
-                                        case EAST:
-                                            chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
-                                            break;
-                                        default: // NORTH
-                                            chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
-                                            break;
-                                    }
-                                } else if (chestType.equals(Chest.Type.RIGHT)) {
-                                    switch (chestdata.getFacing()) {
-                                        case WEST:
-                                            chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
-                                            break;
-                                        case SOUTH:
-                                            chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
-                                            break;
-                                        case EAST:
-                                            chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
-                                            break;
-                                        default: // NORTH
-                                            chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
-                                            break;
-                                    }
-                                }
-                                chestLocations.add(blocation);
-                                // get chest contents
-                                Inventory cinv = c.getInventory();
-                                // make sure there is a free slot
-                                if (cinv.firstEmpty() != -1) {
-                                    ItemStack[] cc = cinv.getContents();
-                                    List<Material> mats = new ArrayList<>();
-                                    // find unique item stack materials
-                                    for (ItemStack is : cc) {
-                                        if (is != null) {
-                                            Material m = is.getType();
-                                            if (!mats.contains(m)) {
-                                                mats.add(m);
-                                            }
-                                        }
-                                    }
-                                    // for each material found, see if there are any stacks of it in the drop chest
-                                    mats.forEach((m) -> {
-                                        int slot = inv.first(m);
-                                        while (slot != -1 && cinv.firstEmpty() != -1) {
-                                            // get the item stack
-                                            ItemStack get = inv.getItem(slot);
-                                            // remove the stack from the drop chest
-                                            inv.setItem(slot, null);
-                                            // put it in the chest
-                                            cinv.setItem(cinv.firstEmpty(), get);
-                                            // sort the chest
-                                            TARDISSonicSorterListener.sortInventory(cinv);
-                                            // get any other stacks
-                                            slot = inv.first(m);
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+	public void onVaultDropChestClose(InventoryCloseEvent event) {
+		Inventory inv = event.getInventory();
+		InventoryHolder holder = inv.getHolder();
+		if (holder instanceof org.bukkit.block.Chest) {
+			org.bukkit.block.Chest chest = (org.bukkit.block.Chest) holder;
+			Location l = chest.getLocation();
+			if (plugin.getUtils().inTARDISWorld(l)) {
+				String loc = l.toString();
+				// check is drop chest
+				ResultSetVault rs = new ResultSetVault(plugin, loc);
+				if (!rs.resultSet()) {
+					return;
+				}
+				// make a list of chest locations
+				List<String> chestLocations = new ArrayList<>();
+				chestLocations.add(loc);
+				// sort contents
+				TARDISSonicSorterListener.sortInventory(inv);
+				World w = chest.getWorld();
+				// get vault dimensions
+				int sx = rs.getX();
+				int sy = rs.getY();
+				int sz = rs.getZ();
+				// loop through vault blocks
+				for (int y = sy; y < (sy + 16); y++) {
+					for (int x = sx; x < (sx + 16); x++) {
+						for (int z = sz; z < (sz + 16); z++) {
+							// get the block
+							Block b = w.getBlockAt(x, y, z);
+							String blocation = b.getLocation().toString();
+							// check if it is a chest (but not the drop chest)
+							if ((b.getType().equals(Material.CHEST) || b.getType().equals(Material.TRAPPED_CHEST)) && !chestLocations.contains(blocation)) {
+								org.bukkit.block.Chest c = (org.bukkit.block.Chest) b.getState();
+								Chest chestdata = (Chest) c.getBlockData();
+								Chest.Type chestType = chestdata.getType();
+								// is it a double chest
+								if (chestType.equals(Chest.Type.LEFT)) {
+									switch (chestdata.getFacing()) {
+										case WEST:
+											chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
+											break;
+										case SOUTH:
+											chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
+											break;
+										case EAST:
+											chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
+											break;
+										default: // NORTH
+											chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
+											break;
+									}
+								} else if (chestType.equals(Chest.Type.RIGHT)) {
+									switch (chestdata.getFacing()) {
+										case WEST:
+											chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
+											break;
+										case SOUTH:
+											chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
+											break;
+										case EAST:
+											chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
+											break;
+										default: // NORTH
+											chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
+											break;
+									}
+								}
+								chestLocations.add(blocation);
+								// get chest contents
+								Inventory cinv = c.getInventory();
+								// make sure there is a free slot
+								if (cinv.firstEmpty() != -1) {
+									ItemStack[] cc = cinv.getContents();
+									List<Material> mats = new ArrayList<>();
+									// find unique item stack materials
+									for (ItemStack is : cc) {
+										if (is != null) {
+											Material m = is.getType();
+											if (!mats.contains(m)) {
+												mats.add(m);
+											}
+										}
+									}
+									// for each material found, see if there are any stacks of it in the drop chest
+									mats.forEach((m) -> {
+										int slot = inv.first(m);
+										while (slot != -1 && cinv.firstEmpty() != -1) {
+											// get the item stack
+											ItemStack get = inv.getItem(slot);
+											// remove the stack from the drop chest
+											inv.setItem(slot, null);
+											// put it in the chest
+											cinv.setItem(cinv.firstEmpty(), get);
+											// sort the chest
+											TARDISSonicSorterListener.sortInventory(cinv);
+											// get any other stacks
+											slot = inv.first(m);
+										}
+									});
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

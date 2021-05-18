@@ -35,59 +35,59 @@ import java.util.UUID;
 
 public class TARDISSchematicListener implements Listener {
 
-    private final TARDIS plugin;
-    private final Material wand;
+	private final TARDIS plugin;
+	private final Material wand;
 
-    public TARDISSchematicListener(TARDIS plugin) {
-        this.plugin = plugin;
-        wand = getWand();
-    }
+	public TARDISSchematicListener(TARDIS plugin) {
+		this.plugin = plugin;
+		wand = getWand();
+	}
 
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onInteract(PlayerInteractEvent event) {
-        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
-            return;
-        }
-        Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
-        ItemStack itemStack = player.getInventory().getItemInMainHand();
-        if (itemStack == null || !itemStack.getType().equals(wand) || !player.hasPermission("tardis.admin") || !isWand(itemStack)) {
-            return;
-        }
-        Block b = event.getClickedBlock();
-        if (b == null) {
-            return;
-        }
-        Location l = b.getLocation();
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            plugin.getTrackerKeeper().getStartLocation().put(uuid, l);
-            TARDISMessage.send(player, "SCHM_START");
-        }
-        if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-            plugin.getTrackerKeeper().getEndLocation().put(uuid, l);
-            TARDISMessage.send(player, "SCHM_END");
-        }
-        event.setCancelled(true);
-    }
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onInteract(PlayerInteractEvent event) {
+		if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+			return;
+		}
+		Player player = event.getPlayer();
+		UUID uuid = player.getUniqueId();
+		ItemStack itemStack = player.getInventory().getItemInMainHand();
+		if (itemStack == null || !itemStack.getType().equals(wand) || !player.hasPermission("tardis.admin") || !isWand(itemStack)) {
+			return;
+		}
+		Block b = event.getClickedBlock();
+		if (b == null) {
+			return;
+		}
+		Location l = b.getLocation();
+		if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+			plugin.getTrackerKeeper().getStartLocation().put(uuid, l);
+			TARDISMessage.send(player, "SCHM_START");
+		}
+		if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+			plugin.getTrackerKeeper().getEndLocation().put(uuid, l);
+			TARDISMessage.send(player, "SCHM_END");
+		}
+		event.setCancelled(true);
+	}
 
-    private Material getWand() {
-        Material mat;
-        try {
-            mat = Material.valueOf(plugin.getRecipesConfig().getString("shapeless.TARDIS Schematic Wand.result"));
-        } catch (IllegalArgumentException e) {
-            mat = Material.BONE;
-        }
-        return mat;
-    }
+	private Material getWand() {
+		Material mat;
+		try {
+			mat = Material.valueOf(plugin.getRecipesConfig().getString("shapeless.TARDIS Schematic Wand.result"));
+		} catch (IllegalArgumentException e) {
+			mat = Material.BONE;
+		}
+		return mat;
+	}
 
-    private boolean isWand(ItemStack is) {
-        if (!is.hasItemMeta()) {
-            return false;
-        }
-        ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName()) {
-            return false;
-        }
-        return im.getDisplayName().equals("TARDIS Schematic Wand");
-    }
+	private boolean isWand(ItemStack is) {
+		if (!is.hasItemMeta()) {
+			return false;
+		}
+		ItemMeta im = is.getItemMeta();
+		if (!im.hasDisplayName()) {
+			return false;
+		}
+		return im.getDisplayName().equals("TARDIS Schematic Wand");
+	}
 }

@@ -24,7 +24,7 @@ import org.bukkit.entity.Player;
  */
 public final class TARDISSiegeEvent extends TARDISEvent {
 
-    public TARDISSiegeEvent(Player player, Tardis tardis) {
-        super(player, tardis);
-    }
+	public TARDISSiegeEvent(Player player, Tardis tardis) {
+		super(player, tardis);
+	}
 }

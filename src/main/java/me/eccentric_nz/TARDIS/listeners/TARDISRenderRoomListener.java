@@ -39,79 +39,79 @@ import java.util.HashMap;
  */
 public class TARDISRenderRoomListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISRenderRoomListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISRenderRoomListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler
-    public void onInteract(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        if (plugin.getTrackerKeeper().getRenderRoomOccupants().contains(player.getUniqueId())) {
-            event.setCancelled(true);
-            if (event.getHand().equals(EquipmentSlot.HAND) && (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR))) {
-                // tp the player back to the TARDIS console
-                transmat(player);
-                player.updateInventory();
-            }
-        }
-    }
+	@EventHandler
+	public void onInteract(PlayerInteractEvent event) {
+		Player player = event.getPlayer();
+		if (plugin.getTrackerKeeper().getRenderRoomOccupants().contains(player.getUniqueId())) {
+			event.setCancelled(true);
+			if (event.getHand().equals(EquipmentSlot.HAND) && (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR))) {
+				// tp the player back to the TARDIS console
+				transmat(player);
+				player.updateInventory();
+			}
+		}
+	}
 
-    public void transmat(Player p) {
-        TARDISMessage.send(p, "TRANSMAT");
-        // get the TARDIS the player is in
-        HashMap<String, Object> wherep = new HashMap<>();
-        wherep.put("uuid", p.getUniqueId().toString());
-        ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
-        if (rst.resultSet()) {
-            int id = rst.getTardis_id();
-            HashMap<String, Object> whered = new HashMap<>();
-            whered.put("tardis_id", id);
-            whered.put("door_type", 1);
-            ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-            if (rsd.resultSet()) {
-                COMPASS d = rsd.getDoor_direction();
-                Location tp_loc = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location());
-                int getx = tp_loc.getBlockX();
-                int getz = tp_loc.getBlockZ();
-                switch (d) {
-                    case NORTH:
-                        // z -ve
-                        tp_loc.setX(getx + 0.5);
-                        tp_loc.setZ(getz - 0.5);
-                        break;
-                    case EAST:
-                        // x +ve
-                        tp_loc.setX(getx + 1.5);
-                        tp_loc.setZ(getz + 0.5);
-                        break;
-                    case SOUTH:
-                        // z +ve
-                        tp_loc.setX(getx + 0.5);
-                        tp_loc.setZ(getz + 1.5);
-                        break;
-                    case WEST:
-                        // x -ve
-                        tp_loc.setX(getx - 0.5);
-                        tp_loc.setZ(getz + 0.5);
-                        break;
-                }
-                tp_loc.setPitch(p.getLocation().getPitch());
-                tp_loc.setYaw(p.getLocation().getYaw());
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    p.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
-                    p.teleport(tp_loc);
-                    plugin.getTrackerKeeper().getRenderRoomOccupants().remove(p.getUniqueId());
-                    if (plugin.getTrackerKeeper().getRenderedNPCs().containsKey(p.getUniqueId())) {
-                        new TARDISEntityTracker(plugin).removeNPCs(p.getUniqueId());
-                    }
-                }, 10L);
-            } else {
-                TARDISMessage.send(p, "TRANSMAT_NO_CONSOLE");
-            }
-        } else {
-            TARDISMessage.send(p, "TRANSMAT_NO_TARDIS");
-        }
-    }
+	public void transmat(Player p) {
+		TARDISMessage.send(p, "TRANSMAT");
+		// get the TARDIS the player is in
+		HashMap<String, Object> wherep = new HashMap<>();
+		wherep.put("uuid", p.getUniqueId().toString());
+		ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
+		if (rst.resultSet()) {
+			int id = rst.getTardis_id();
+			HashMap<String, Object> whered = new HashMap<>();
+			whered.put("tardis_id", id);
+			whered.put("door_type", 1);
+			ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+			if (rsd.resultSet()) {
+				COMPASS d = rsd.getDoor_direction();
+				Location tp_loc = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location());
+				int getx = tp_loc.getBlockX();
+				int getz = tp_loc.getBlockZ();
+				switch (d) {
+					case NORTH:
+						// z -ve
+						tp_loc.setX(getx + 0.5);
+						tp_loc.setZ(getz - 0.5);
+						break;
+					case EAST:
+						// x +ve
+						tp_loc.setX(getx + 1.5);
+						tp_loc.setZ(getz + 0.5);
+						break;
+					case SOUTH:
+						// z +ve
+						tp_loc.setX(getx + 0.5);
+						tp_loc.setZ(getz + 1.5);
+						break;
+					case WEST:
+						// x -ve
+						tp_loc.setX(getx - 0.5);
+						tp_loc.setZ(getz + 0.5);
+						break;
+				}
+				tp_loc.setPitch(p.getLocation().getPitch());
+				tp_loc.setYaw(p.getLocation().getYaw());
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+					p.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
+					p.teleport(tp_loc);
+					plugin.getTrackerKeeper().getRenderRoomOccupants().remove(p.getUniqueId());
+					if (plugin.getTrackerKeeper().getRenderedNPCs().containsKey(p.getUniqueId())) {
+						new TARDISEntityTracker(plugin).removeNPCs(p.getUniqueId());
+					}
+				}, 10L);
+			} else {
+				TARDISMessage.send(p, "TRANSMAT_NO_CONSOLE");
+			}
+		} else {
+			TARDISMessage.send(p, "TRANSMAT_NO_TARDIS");
+		}
+	}
 }

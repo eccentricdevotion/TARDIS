@@ -38,38 +38,38 @@ import java.util.Set;
  */
 public class TARDISRandomiserCircuit {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISRandomiserCircuit(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISRandomiserCircuit(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public Location getRandomlocation(Player p, COMPASS d) {
-        // get a random world
-        Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
-        List<String> allowedWorlds = new ArrayList<>();
-        worldlist.forEach((o) -> {
-            World ww = TARDISAliasResolver.getWorldFromAlias(o);
-            if (ww != null) {
-                if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
-                    if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
-                        allowedWorlds.add(o);
-                    }
-                } else {
-                    if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                        if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
-                            allowedWorlds.add(o);
-                        }
-                    }
-                }
-                // remove the world if the player doesn't have permission
-                if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !TARDISPermission.hasPermission(p, "tardis.travel." + o)) {
-                    allowedWorlds.remove(o);
-                }
-            }
-        });
-        Parameters params = new Parameters(p, Flag.getDefaultFlags());
-        params.setCompass(d);
-        return plugin.getTardisAPI().getRandomLocation(allowedWorlds, null, params);
-    }
+	public Location getRandomlocation(Player p, COMPASS d) {
+		// get a random world
+		Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
+		List<String> allowedWorlds = new ArrayList<>();
+		worldlist.forEach((o) -> {
+			World ww = TARDISAliasResolver.getWorldFromAlias(o);
+			if (ww != null) {
+				if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
+					if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
+						allowedWorlds.add(o);
+					}
+				} else {
+					if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+						if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
+							allowedWorlds.add(o);
+						}
+					}
+				}
+				// remove the world if the player doesn't have permission
+				if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !TARDISPermission.hasPermission(p, "tardis.travel." + o)) {
+					allowedWorlds.remove(o);
+				}
+			}
+		});
+		Parameters params = new Parameters(p, Flag.getDefaultFlags());
+		params.setCompass(d);
+		return plugin.getTardisAPI().getRandomLocation(allowedWorlds, null, params);
+	}
 }

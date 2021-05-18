@@ -42,95 +42,95 @@ import java.util.List;
  */
 public class TARDISKeyMenuListener extends TARDISMenuListener implements Listener {
 
-    public TARDISKeyMenuListener(TARDIS plugin) {
-        super(plugin);
-    }
+	public TARDISKeyMenuListener(TARDIS plugin) {
+		super(plugin);
+	}
 
-    @EventHandler(ignoreCancelled = true)
-    public void onPrefsMenuClick(InventoryClickEvent event) {
-        InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
-            Player player = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 27) {
-                switch (slot) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                    case 10:
-                    case 12:
-                    case 14:
-                    case 16:
-                        event.setCancelled(true);
-                        // set display name of key in slot 18
-                        ItemStack key = view.getItem(18);
-                        if (key == null || !key.getType().equals(Material.GOLD_NUGGET) || !key.hasItemMeta()) {
-                            return;
-                        }
-                        // get display name of selected key
-                        ItemStack choice = view.getItem(slot);
-                        ItemMeta choiceMeta = choice.getItemMeta();
-                        String displayName = choiceMeta.getDisplayName();
-                        ItemMeta keyMeta = key.getItemMeta();
-                        keyMeta.setDisplayName(displayName);
-                        keyMeta.setCustomModelData(choiceMeta.getCustomModelData());
-                        // personalise
-                        keyMeta.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
-                        // set lore
-                        List<String> lore;
-                        if (keyMeta.hasLore()) {
-                            lore = keyMeta.getLore();
-                        } else {
-                            lore = new ArrayList<>();
-                        }
-                        String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
-                        if (!lore.contains(format + "This key belongs to")) {
-                            lore.add(format + "This key belongs to");
-                            lore.add(format + player.getName());
-                            keyMeta.setLore(lore);
-                        }
-                        key.setItemMeta(keyMeta);
-                        break;
-                    case 18:
-                        break;
-                    case 26:
-                        // close
-                        event.setCancelled(true);
-                        close(player);
-                        break;
-                    default:
-                        event.setCancelled(true);
-                        break;
-                }
-            } else {
-                ClickType click = event.getClick();
-                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                    event.setCancelled(true);
-                }
-            }
-        }
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onPrefsMenuClick(InventoryClickEvent event) {
+		InventoryView view = event.getView();
+		String name = view.getTitle();
+		if (name.equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
+			Player player = (Player) event.getWhoClicked();
+			int slot = event.getRawSlot();
+			if (slot >= 0 && slot < 27) {
+				switch (slot) {
+					case 0:
+					case 1:
+					case 2:
+					case 3:
+					case 4:
+					case 5:
+					case 6:
+					case 7:
+					case 8:
+					case 10:
+					case 12:
+					case 14:
+					case 16:
+						event.setCancelled(true);
+						// set display name of key in slot 18
+						ItemStack key = view.getItem(18);
+						if (key == null || !key.getType().equals(Material.GOLD_NUGGET) || !key.hasItemMeta()) {
+							return;
+						}
+						// get display name of selected key
+						ItemStack choice = view.getItem(slot);
+						ItemMeta choiceMeta = choice.getItemMeta();
+						String displayName = choiceMeta.getDisplayName();
+						ItemMeta keyMeta = key.getItemMeta();
+						keyMeta.setDisplayName(displayName);
+						keyMeta.setCustomModelData(choiceMeta.getCustomModelData());
+						// personalise
+						keyMeta.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+						// set lore
+						List<String> lore;
+						if (keyMeta.hasLore()) {
+							lore = keyMeta.getLore();
+						} else {
+							lore = new ArrayList<>();
+						}
+						String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+						if (!lore.contains(format + "This key belongs to")) {
+							lore.add(format + "This key belongs to");
+							lore.add(format + player.getName());
+							keyMeta.setLore(lore);
+						}
+						key.setItemMeta(keyMeta);
+						break;
+					case 18:
+						break;
+					case 26:
+						// close
+						event.setCancelled(true);
+						close(player);
+						break;
+					default:
+						event.setCancelled(true);
+						break;
+				}
+			} else {
+				ClickType click = event.getClick();
+				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+					event.setCancelled(true);
+				}
+			}
+		}
+	}
 
-    @EventHandler(ignoreCancelled = true)
-    public void onKeyMenuClose(InventoryCloseEvent event) {
-        InventoryView view = event.getView();
-        String title = view.getTitle();
-        if (!title.equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
-            return;
-        }
-        ItemStack key = view.getItem(18);
-        if (key != null) {
-            Player p = (Player) event.getPlayer();
-            Location loc = p.getLocation();
-            loc.getWorld().dropItemNaturally(loc, key);
-            view.setItem(18, new ItemStack(Material.AIR));
-        }
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onKeyMenuClose(InventoryCloseEvent event) {
+		InventoryView view = event.getView();
+		String title = view.getTitle();
+		if (!title.equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
+			return;
+		}
+		ItemStack key = view.getItem(18);
+		if (key != null) {
+			Player p = (Player) event.getPlayer();
+			Location loc = p.getLocation();
+			loc.getWorld().dropItemNaturally(loc, key);
+			view.setItem(18, new ItemStack(Material.AIR));
+		}
+	}
 }

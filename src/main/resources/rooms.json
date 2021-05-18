@@ -1,15 +1,15 @@
 {
-    "display": {
-        "icon": {
-            "item": "minecraft:bookshelf"
-        },
-        "title": "Room freak",
-        "description": "Grow all room types"
-    },
-    "parent": "tardis:tardis",
-    "criteria": {
-        "grow_rooms": {
-            "trigger": "minecraft:impossible"
-        }
-    }
+	"display": {
+		"icon": {
+			"item": "minecraft:bookshelf"
+		},
+		"title": "Room freak",
+		"description": "Grow all room types"
+	},
+	"parent": "tardis:tardis",
+	"criteria": {
+		"grow_rooms": {
+			"trigger": "minecraft:impossible"
+		}
+	}
 }

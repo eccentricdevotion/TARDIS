@@ -27,43 +27,43 @@ import java.sql.Statement;
  */
 public class TARDISWorldRemover {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private Statement statement;
-    private final TARDIS plugin;
-    private final String prefix;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final String prefix;
+	private Statement statement;
 
-    public TARDISWorldRemover(TARDIS plugin) {
-        this.plugin = plugin;
-        prefix = this.plugin.getPrefix();
-    }
+	public TARDISWorldRemover(TARDIS plugin) {
+		this.plugin = plugin;
+		prefix = this.plugin.getPrefix();
+	}
 
-    public void cleanWorld(String w) {
-        try {
-            service.testConnection(connection);
-            statement = connection.createStatement();
-            // blocks
-            String blocksQuery = "DELETE FROM " + prefix + "blocks WHERE location LIKE 'Location{world=CraftWorld{name=" + w + "}%'";
-            int numBlocks = statement.executeUpdate(blocksQuery);
-            if (numBlocks > 0) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed " + numBlocks + " block record for non-existent world ->" + w);
-            }
-            // portals
-            String portalsQuery = "DELETE FROM " + prefix + "portals WHERE portal LIKE 'Location{world=CraftWorld{name=" + w + "}%' OR teleport LIKE 'Location{world=CraftWorld{name=" + w + "}%'";
-            int numPortals = statement.executeUpdate(portalsQuery);
-            if (numPortals > 0) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed " + numPortals + " portal record for non-existent world ->" + w);
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for blocks/portals table! " + e.getMessage());
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing statement! " + e.getMessage());
-            }
-        }
-    }
+	public void cleanWorld(String w) {
+		try {
+			service.testConnection(connection);
+			statement = connection.createStatement();
+			// blocks
+			String blocksQuery = "DELETE FROM " + prefix + "blocks WHERE location LIKE 'Location{world=CraftWorld{name=" + w + "}%'";
+			int numBlocks = statement.executeUpdate(blocksQuery);
+			if (numBlocks > 0) {
+				plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed " + numBlocks + " block record for non-existent world ->" + w);
+			}
+			// portals
+			String portalsQuery = "DELETE FROM " + prefix + "portals WHERE portal LIKE 'Location{world=CraftWorld{name=" + w + "}%' OR teleport LIKE 'Location{world=CraftWorld{name=" + w + "}%'";
+			int numPortals = statement.executeUpdate(portalsQuery);
+			if (numPortals > 0) {
+				plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed " + numPortals + " portal record for non-existent world ->" + w);
+			}
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for blocks/portals table! " + e.getMessage());
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing statement! " + e.getMessage());
+			}
+		}
+	}
 }

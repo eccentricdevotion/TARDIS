@@ -1,53 +1,53 @@
 {
-    "type": "minecraft:decorated",
-    "config": {
-        "decorator": {
-            "type": "minecraft:count",
-            "config": {
-                "count": 3
-            }
-        },
-        "feature": {
-            "type": "minecraft:decorated",
-            "config": {
-                "decorator": {
-                    "type": "minecraft:decorated",
-                    "config": {
-                        "outer": {
-                            "type": "minecraft:square",
-                            "config": {}
-                        },
-                        "inner": {
-                            "type": "minecraft:top_solid_heightmap",
-                            "config": {}
-                        }
-                    }
-                },
-                "feature": {
-                    "type": "minecraft:disk",
-                    "config": {
-                        "state": {
-                            "Name": "minecraft:grass_block",
-                            "Properties": {
-                                "snowy": "false"
-                            }
-                        },
-                        "radius": {
-                            "base": 2,
-                            "spread": 4
-                        },
-                        "half_height": 2,
-                        "targets": [
-                            {
-                                "Name": "minecraft:red_sand"
-                            },
-                            {
-                                "Name": "minecraft:terracotta"
-                            }
-                        ]
-                    }
-                }
-            }
-        }
-    }
+	"type": "minecraft:decorated",
+	"config": {
+		"decorator": {
+			"type": "minecraft:count",
+			"config": {
+				"count": 3
+			}
+		},
+		"feature": {
+			"type": "minecraft:decorated",
+			"config": {
+				"decorator": {
+					"type": "minecraft:decorated",
+					"config": {
+						"outer": {
+							"type": "minecraft:square",
+							"config": {}
+						},
+						"inner": {
+							"type": "minecraft:top_solid_heightmap",
+							"config": {}
+						}
+					}
+				},
+				"feature": {
+					"type": "minecraft:disk",
+					"config": {
+						"state": {
+							"Name": "minecraft:grass_block",
+							"Properties": {
+								"snowy": "false"
+							}
+						},
+						"radius": {
+							"base": 2,
+							"spread": 4
+						},
+						"half_height": 2,
+						"targets": [
+							{
+								"Name": "minecraft:red_sand"
+							},
+							{
+								"Name": "minecraft:terracotta"
+							}
+						]
+					}
+				}
+			}
+		}
+	}
 }

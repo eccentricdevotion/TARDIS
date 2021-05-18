@@ -24,100 +24,100 @@ import java.sql.*;
 
 public class TARDISControlsConverter {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final String prefix;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final String prefix;
 
-    public TARDISControlsConverter(TARDIS plugin) {
-        this.plugin = plugin;
-        prefix = this.plugin.getPrefix();
-    }
+	public TARDISControlsConverter(TARDIS plugin) {
+		this.plugin = plugin;
+		prefix = this.plugin.getPrefix();
+	}
 
-    public void update() {
-        Statement statement = null;
-        PreparedStatement ps = null;
-        int i = 0;
-        try {
-            service.testConnection(connection);
-            connection.setAutoCommit(false);
-            statement = connection.createStatement();
-            // transfer chameleon (31), save-sign (32) & scanner (33) locations from `tardis` table to `controls` table
-            String tardisQuery = "SELECT tardis_id, chameleon, condenser, save_sign, scanner FROM " + prefix + "tardis";
-            String controlsInsert = "INSERT INTO " + prefix + "controls (tardis_id, type, location) VALUES (?, ?, ?)";
-            ps = connection.prepareStatement(controlsInsert);
-            connection.setAutoCommit(false);
-            // get TARDIS records
-            ResultSet rst = statement.executeQuery(tardisQuery);
-            String location;
-            if (rst.isBeforeFirst()) {
-                while (rst.next()) {
-                    // if there is a chameleon record
-                    if (!rst.getString("chameleon").isEmpty()) {
-                        ps.setInt(1, rst.getInt("tardis_id"));
-                        ps.setInt(2, 31);
-                        // convert world:x:y:z to Bukkit Location.toString()
-                        location = getLocationFromString(rst.getString("chameleon"));
-                        ps.setString(3, location);
-                        ps.addBatch();
-                        i++;
-                    }
-                    // if there is a save_sign record
-                    if (!rst.getString("save_sign").isEmpty()) {
-                        ps.setInt(1, rst.getInt("tardis_id"));
-                        ps.setInt(2, 32);
-                        location = getLocationFromString(rst.getString("save_sign"));
-                        ps.setString(3, location);
-                        ps.addBatch();
-                        i++;
-                    }
-                    // if there is a scanner record
-                    if (!rst.getString("scanner").isEmpty()) {
-                        ps.setInt(1, rst.getInt("tardis_id"));
-                        ps.setInt(2, 33);
-                        location = getLocationFromString(rst.getString("scanner"));
-                        ps.setString(3, location);
-                        ps.addBatch();
-                        i++;
-                    }
-                    // if there is a condenser record
-                    if (!rst.getString("condenser").isEmpty()) {
-                        ps.setInt(1, rst.getInt("tardis_id"));
-                        ps.setInt(2, 34);
-                        location = getLocationFromString(rst.getString("condenser"));
-                        ps.setString(3, location);
-                        ps.addBatch();
-                        i++;
-                    }
-                }
-                if (i > 0) {
-                    ps.executeBatch();
-                    connection.commit();
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " old TARDIS control records");
-                }
-                connection.setAutoCommit(true);
-            }
-        } catch (SQLException e) {
-            plugin.debug("Conversion error for tardis/controls tables (converting old TARDIS controls)! " + e.getMessage());
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                // reset auto commit
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                plugin.debug("Error closing tardis/controls tables (converting old TARDIS controls)! " + e.getMessage());
-            }
-        }
-    }
+	public void update() {
+		Statement statement = null;
+		PreparedStatement ps = null;
+		int i = 0;
+		try {
+			service.testConnection(connection);
+			connection.setAutoCommit(false);
+			statement = connection.createStatement();
+			// transfer chameleon (31), save-sign (32) & scanner (33) locations from `tardis` table to `controls` table
+			String tardisQuery = "SELECT tardis_id, chameleon, condenser, save_sign, scanner FROM " + prefix + "tardis";
+			String controlsInsert = "INSERT INTO " + prefix + "controls (tardis_id, type, location) VALUES (?, ?, ?)";
+			ps = connection.prepareStatement(controlsInsert);
+			connection.setAutoCommit(false);
+			// get TARDIS records
+			ResultSet rst = statement.executeQuery(tardisQuery);
+			String location;
+			if (rst.isBeforeFirst()) {
+				while (rst.next()) {
+					// if there is a chameleon record
+					if (!rst.getString("chameleon").isEmpty()) {
+						ps.setInt(1, rst.getInt("tardis_id"));
+						ps.setInt(2, 31);
+						// convert world:x:y:z to Bukkit Location.toString()
+						location = getLocationFromString(rst.getString("chameleon"));
+						ps.setString(3, location);
+						ps.addBatch();
+						i++;
+					}
+					// if there is a save_sign record
+					if (!rst.getString("save_sign").isEmpty()) {
+						ps.setInt(1, rst.getInt("tardis_id"));
+						ps.setInt(2, 32);
+						location = getLocationFromString(rst.getString("save_sign"));
+						ps.setString(3, location);
+						ps.addBatch();
+						i++;
+					}
+					// if there is a scanner record
+					if (!rst.getString("scanner").isEmpty()) {
+						ps.setInt(1, rst.getInt("tardis_id"));
+						ps.setInt(2, 33);
+						location = getLocationFromString(rst.getString("scanner"));
+						ps.setString(3, location);
+						ps.addBatch();
+						i++;
+					}
+					// if there is a condenser record
+					if (!rst.getString("condenser").isEmpty()) {
+						ps.setInt(1, rst.getInt("tardis_id"));
+						ps.setInt(2, 34);
+						location = getLocationFromString(rst.getString("condenser"));
+						ps.setString(3, location);
+						ps.addBatch();
+						i++;
+					}
+				}
+				if (i > 0) {
+					ps.executeBatch();
+					connection.commit();
+					plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " old TARDIS control records");
+				}
+				connection.setAutoCommit(true);
+			}
+		} catch (SQLException e) {
+			plugin.debug("Conversion error for tardis/controls tables (converting old TARDIS controls)! " + e.getMessage());
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+				// reset auto commit
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				plugin.debug("Error closing tardis/controls tables (converting old TARDIS controls)! " + e.getMessage());
+			}
+		}
+	}
 
-    private String getLocationFromString(String s) {
-        String[] split = s.split(":");
-        return TARDISStaticLocationGetters.makeLocationStr(split[0], split[1], split[2], split[3]);
-    }
+	private String getLocationFromString(String s) {
+		String[] split = s.split(":");
+		return TARDISStaticLocationGetters.makeLocationStr(split[0], split[1], split[2], split[3]);
+	}
 }
 

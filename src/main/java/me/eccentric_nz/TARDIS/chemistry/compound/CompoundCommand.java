@@ -26,22 +26,22 @@ import org.bukkit.inventory.ItemStack;
 
 public class CompoundCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public CompoundCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public CompoundCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public boolean create(Player player) {
-        if (!TARDISPermission.hasPermission(player, "tardis.compound.create")) {
-            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Compound");
-            return true;
-        }
-        // do stuff
-        ItemStack[] menu = new CompoundInventory(plugin).getMenu();
-        Inventory compounds = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chemical compounds");
-        compounds.setContents(menu);
-        player.openInventory(compounds);
-        return true;
-    }
+	public boolean create(Player player) {
+		if (!TARDISPermission.hasPermission(player, "tardis.compound.create")) {
+			TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Compound");
+			return true;
+		}
+		// do stuff
+		ItemStack[] menu = new CompoundInventory(plugin).getMenu();
+		Inventory compounds = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chemical compounds");
+		compounds.setContents(menu);
+		player.openInventory(compounds);
+		return true;
+	}
 }

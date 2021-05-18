@@ -35,68 +35,67 @@ import java.util.UUID;
  */
 public class TARDISHumSounds {
 
-    /**
-     * Callback to get data asynchronously from the database.
-     *
-     * @param <T> The Object type we want to return
-     */
-    interface Callback<T> {
+	private final Callback<HumPrefs> prefs = (HumPrefs pref) -> TARDISSounds.playTARDISSound(pref.getPlayer(), pref.getHum());
+	private final Callback<List<UUID>> callback = (List<UUID> data) -> {
+		// Do whatever with the data
+		data.forEach((u) -> {
+			Player player = Bukkit.getServer().getPlayer(u);
+			if (player != null) {
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						HumPrefs p = new HumPrefs(player, true, "tardis_hum");
+						// All the MySQL stuff and what not
+						ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, u.toString());
+						if (rsp.resultSet()) {
+							p.setSfx(rsp.isSfxOn());
+							p.setHum((rsp.getHum().isEmpty()) ? "tardis_hum" : "tardis_hum_" + rsp.getHum());
+						}
+						if (p.getSfx()) {
+							new BukkitRunnable() {
+								@Override
+								public void run() {
+									prefs.execute(p);
+								}
+							}.runTask(TARDIS.plugin);
+						}
+					}
+				}.runTaskAsynchronously(TARDIS.plugin);
+			}
+		});
+	};
 
-        void execute(T response);
-    }
+	/**
+	 * Plays an interior hum sound to players who are inside the TARDIS and don't have SFX set to false.
+	 */
+	public void playTARDISHum() {
+		if (TARDIS.plugin.getConfig().getBoolean("allow.sfx")) {
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					// All the MySQL stuff and what not
+					ResultSetSounds rs = new ResultSetSounds(TARDIS.plugin);
+					if (rs.resultSet()) {
+						List<UUID> data = rs.getData();
+						new BukkitRunnable() {
+							@Override
+							public void run() {
+								callback.execute(data);
+							}
+						}.runTask(TARDIS.plugin);
+					}
+				}
+			}.runTaskAsynchronously(TARDIS.plugin);
+		}
+	}
 
-    private final Callback<List<UUID>> callback = (List<UUID> data) -> {
-        // Do whatever with the data
-        data.forEach((u) -> {
-            Player player = Bukkit.getServer().getPlayer(u);
-            if (player != null) {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        HumPrefs p = new HumPrefs(player, true, "tardis_hum");
-                        // All the MySQL stuff and what not
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, u.toString());
-                        if (rsp.resultSet()) {
-                            p.setSfx(rsp.isSfxOn());
-                            p.setHum((rsp.getHum().isEmpty()) ? "tardis_hum" : "tardis_hum_" + rsp.getHum());
-                        }
-                        if (p.getSfx()) {
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    prefs.execute(p);
-                                }
-                            }.runTask(TARDIS.plugin);
-                        }
-                    }
-                }.runTaskAsynchronously(TARDIS.plugin);
-            }
-        });
-    };
+	/**
+	 * Callback to get data asynchronously from the database.
+	 *
+	 * @param <T> The Object type we want to return
+	 */
+	interface Callback<T> {
 
-    private final Callback<HumPrefs> prefs = (HumPrefs pref) -> TARDISSounds.playTARDISSound(pref.getPlayer(), pref.getHum());
-
-    /**
-     * Plays an interior hum sound to players who are inside the TARDIS and don't have SFX set to false.
-     */
-    public void playTARDISHum() {
-        if (TARDIS.plugin.getConfig().getBoolean("allow.sfx")) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    // All the MySQL stuff and what not
-                    ResultSetSounds rs = new ResultSetSounds(TARDIS.plugin);
-                    if (rs.resultSet()) {
-                        List<UUID> data = rs.getData();
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                callback.execute(data);
-                            }
-                        }.runTask(TARDIS.plugin);
-                    }
-                }
-            }.runTaskAsynchronously(TARDIS.plugin);
-        }
-    }
+		void execute(T response);
+	}
 }

@@ -32,54 +32,54 @@ import java.sql.SQLException;
  */
 public class ResultSetCreeper {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final String location;
-    private final String prefix;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final String location;
+	private final String prefix;
 
-    /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
-     *
-     * @param plugin   an instance of the main class.
-     * @param location the location to check for.
-     */
-    public ResultSetCreeper(TARDIS plugin, String location) {
-        this.plugin = plugin;
-        this.location = location;
-        prefix = this.plugin.getPrefix();
-    }
+	/**
+	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
+	 *
+	 * @param plugin   an instance of the main class.
+	 * @param location the location to check for.
+	 */
+	public ResultSetCreeper(TARDIS plugin, String location) {
+		this.plugin = plugin;
+		this.location = location;
+		prefix = this.plugin.getPrefix();
+	}
 
-    /**
-     * Retrieves an SQL ResultSet from the tardis table. This method builds an SQL query string from the parameters
-     * supplied and then executes the query. Use the getters to retrieve the results.
-     *
-     * @return true or false depending on whether any data matches the query
-     */
-    public boolean resultSet() {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT creeper FROM " + prefix + "tardis WHERE creeper = '" + location + "'";
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            rs = statement.executeQuery();
-            // reverse it as we don't want an Artron Creeper
-            return !rs.isBeforeFirst();
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for creeper! " + e.getMessage());
-            return true;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing creeper! " + e.getMessage());
-            }
-        }
-    }
+	/**
+	 * Retrieves an SQL ResultSet from the tardis table. This method builds an SQL query string from the parameters
+	 * supplied and then executes the query. Use the getters to retrieve the results.
+	 *
+	 * @return true or false depending on whether any data matches the query
+	 */
+	public boolean resultSet() {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String query = "SELECT creeper FROM " + prefix + "tardis WHERE creeper = '" + location + "'";
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			rs = statement.executeQuery();
+			// reverse it as we don't want an Artron Creeper
+			return !rs.isBeforeFirst();
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for creeper! " + e.getMessage());
+			return true;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing creeper! " + e.getMessage());
+			}
+		}
+	}
 }

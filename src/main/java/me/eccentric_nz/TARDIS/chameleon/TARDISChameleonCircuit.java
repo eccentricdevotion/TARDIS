@@ -33,68 +33,68 @@ import org.bukkit.block.BlockFace;
  */
 public class TARDISChameleonCircuit {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISChameleonCircuit(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISChameleonCircuit(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public Material getChameleonBlock(Block b, OfflinePlayer p) {
-        Material chameleonType = b.getType();
-        Material wall_block = Material.LIGHT_GRAY_TERRACOTTA;
-        // determine wall_block
-        if (plugin.getBlocksConfig().getStringList("chameleon_blocks").contains(chameleonType.toString())) {
-            wall_block = chameleonType;
-        }
-        if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains(chameleonType)) {
-            TARDISMessage.send(p.getPlayer(), "CHAM_NOT_ENGAGE");
-        }
-        if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains(chameleonType)) {
-            wall_block = swapMaterial(chameleonType);
-        }
-        if (TARDISConstants.CHAMELEON_BLOCKS_NEXT.contains(chameleonType)) {
-            // try the surrounding blocks
-            for (BlockFace bf : plugin.getGeneralKeeper().getSurrounding()) {
-                Block surroundblock = b.getRelative(bf);
-                Material emat = surroundblock.getType();
-                if (TARDISConstants.CHAMELEON_BLOCKS_VALID.contains(emat)) {
-                    wall_block = emat;
-                    break;
-                }
-                if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains(emat)) {
-                    wall_block = swapMaterial(emat);
-                    break;
-                }
-            }
-        }
-        // if it's a precious block or TNT and all_blocks is false, then switch it to wool of similar colour
-        if (TARDISConstants.CHAMELEON_BLOCKS_PRECIOUS.contains(chameleonType) && !plugin.getConfig().getBoolean("allow.all_blocks")) {
-            switch (chameleonType) {
-                case IRON_BLOCK:
-                    wall_block = Material.YELLOW_WOOL;
-                    break;
-                case DIAMOND_BLOCK:
-                    wall_block = Material.LIGHT_BLUE_WOOL;
-                    break;
-                case EMERALD_BLOCK:
-                    wall_block = Material.LIME_WOOL;
-                    break;
-                case REDSTONE_BLOCK:
-                case TNT:
-                    wall_block = Material.RED_WOOL;
-                    break;
-                case COAL_BLOCK:
-                    wall_block = Material.BLACK_WOOL;
-                    break;
-                default: // GOLD_BLOCK and any others
-                    wall_block = Material.BLUE_WOOL;
-                    break;
-            }
-        }
-        return wall_block;
-    }
+	public Material getChameleonBlock(Block b, OfflinePlayer p) {
+		Material chameleonType = b.getType();
+		Material wall_block = Material.LIGHT_GRAY_TERRACOTTA;
+		// determine wall_block
+		if (plugin.getBlocksConfig().getStringList("chameleon_blocks").contains(chameleonType.toString())) {
+			wall_block = chameleonType;
+		}
+		if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains(chameleonType)) {
+			TARDISMessage.send(p.getPlayer(), "CHAM_NOT_ENGAGE");
+		}
+		if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains(chameleonType)) {
+			wall_block = swapMaterial(chameleonType);
+		}
+		if (TARDISConstants.CHAMELEON_BLOCKS_NEXT.contains(chameleonType)) {
+			// try the surrounding blocks
+			for (BlockFace bf : plugin.getGeneralKeeper().getSurrounding()) {
+				Block surroundblock = b.getRelative(bf);
+				Material emat = surroundblock.getType();
+				if (TARDISConstants.CHAMELEON_BLOCKS_VALID.contains(emat)) {
+					wall_block = emat;
+					break;
+				}
+				if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains(emat)) {
+					wall_block = swapMaterial(emat);
+					break;
+				}
+			}
+		}
+		// if it's a precious block or TNT and all_blocks is false, then switch it to wool of similar colour
+		if (TARDISConstants.CHAMELEON_BLOCKS_PRECIOUS.contains(chameleonType) && !plugin.getConfig().getBoolean("allow.all_blocks")) {
+			switch (chameleonType) {
+				case IRON_BLOCK:
+					wall_block = Material.YELLOW_WOOL;
+					break;
+				case DIAMOND_BLOCK:
+					wall_block = Material.LIGHT_BLUE_WOOL;
+					break;
+				case EMERALD_BLOCK:
+					wall_block = Material.LIME_WOOL;
+					break;
+				case REDSTONE_BLOCK:
+				case TNT:
+					wall_block = Material.RED_WOOL;
+					break;
+				case COAL_BLOCK:
+					wall_block = Material.BLACK_WOOL;
+					break;
+				default: // GOLD_BLOCK and any others
+					wall_block = Material.BLUE_WOOL;
+					break;
+			}
+		}
+		return wall_block;
+	}
 
-    private Material swapMaterial(Material material) {
-        return TARDISConstants.CHAMELEON_BLOCKS_CHANGE_HASH.get(material);
-    }
+	private Material swapMaterial(Material material) {
+		return TARDISConstants.CHAMELEON_BLOCKS_CHANGE_HASH.get(material);
+	}
 }

@@ -1,15 +1,15 @@
 {
-    "display": {
-        "icon": {
-            "item": "minecraft:red_tulip"
-        },
-        "title": "The host with the most",
-        "description": "Add companions to your TARDIS"
-    },
-    "parent": "tardis:tardis",
-    "criteria": {
-        "make_friends": {
-            "trigger": "minecraft:impossible"
-        }
-    }
+	"display": {
+		"icon": {
+			"item": "minecraft:red_tulip"
+		},
+		"title": "The host with the most",
+		"description": "Add companions to your TARDIS"
+	},
+	"parent": "tardis:tardis",
+	"criteria": {
+		"make_friends": {
+			"trigger": "minecraft:impossible"
+		}
+	}
 }

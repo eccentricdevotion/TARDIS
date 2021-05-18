@@ -25,19 +25,19 @@ import org.bukkit.entity.Player;
  */
 public final class TARDISHADSEvent extends TARDISLocationEvent {
 
-    private final HADS hadsType;
+	private final HADS hadsType;
 
-    public TARDISHADSEvent(Player player, int tardis_id, Location location, HADS hadsType) {
-        super(player, tardis_id, location);
-        this.hadsType = hadsType;
-    }
+	public TARDISHADSEvent(Player player, int tardis_id, Location location, HADS hadsType) {
+		super(player, tardis_id, location);
+		this.hadsType = hadsType;
+	}
 
-    /**
-     * Returns the type of HADS that was performed.
-     *
-     * @return the HADS type
-     */
-    public HADS getHADSType() {
-        return hadsType;
-    }
+	/**
+	 * Returns the type of HADS that was performed.
+	 *
+	 * @return the HADS type
+	 */
+	public HADS getHADSType() {
+		return hadsType;
+	}
 }

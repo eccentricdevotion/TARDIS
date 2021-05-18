@@ -33,54 +33,54 @@ import java.io.IOException;
  */
 class TARDISCSVPaster {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISCSVPaster(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISCSVPaster(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    String[][][] arrayFromCSV(File file) {
-        String[][][] blocks = new String[8][11][11];
-        try {
-            BufferedReader bufRdr = new BufferedReader(new FileReader(file));
-            for (int level = 0; level < 8; level++) {
-                for (int row = 0; row < 11; row++) {
-                    String line = bufRdr.readLine();
-                    String[] strArr = line.split(",");
-                    System.arraycopy(strArr, 0, blocks[level][row], 0, 11);
-                }
-            }
-        } catch (IOException io) {
-            plugin.debug("Could not read csv file" + io.getMessage());
-        }
-        return blocks;
-    }
+	String[][][] arrayFromCSV(File file) {
+		String[][][] blocks = new String[8][11][11];
+		try {
+			BufferedReader bufRdr = new BufferedReader(new FileReader(file));
+			for (int level = 0; level < 8; level++) {
+				for (int row = 0; row < 11; row++) {
+					String line = bufRdr.readLine();
+					String[] strArr = line.split(",");
+					System.arraycopy(strArr, 0, blocks[level][row], 0, 11);
+				}
+			}
+		} catch (IOException io) {
+			plugin.debug("Could not read csv file" + io.getMessage());
+		}
+		return blocks;
+	}
 
-    void buildLegacy(String[][][] s, Location location) {
-        World world = location.getWorld();
-        int startx = location.getBlockX();
-        int resetx = location.getBlockX();
-        int startz = location.getBlockZ();
-        int resetz = location.getBlockZ();
-        int level;
-        int starty = location.getBlockY();
-        for (level = 0; level < 8; level++) {
-            for (int row = 0; row < 11; row++) {
-                for (int col = 0; col < 11; col++) {
-                    String tmp = s[level][row][col];
-                    if (!tmp.equals("-")) {
-                        Material material = Material.valueOf(tmp);
-                        BlockData id = material.createBlockData();
-                        TARDISBlockSetters.setBlock(world, startx, starty, startz, id);
-                    }
-                    startx += 1;
-                }
+	void buildLegacy(String[][][] s, Location location) {
+		World world = location.getWorld();
+		int startx = location.getBlockX();
+		int resetx = location.getBlockX();
+		int startz = location.getBlockZ();
+		int resetz = location.getBlockZ();
+		int level;
+		int starty = location.getBlockY();
+		for (level = 0; level < 8; level++) {
+			for (int row = 0; row < 11; row++) {
+				for (int col = 0; col < 11; col++) {
+					String tmp = s[level][row][col];
+					if (!tmp.equals("-")) {
+						Material material = Material.valueOf(tmp);
+						BlockData id = material.createBlockData();
+						TARDISBlockSetters.setBlock(world, startx, starty, startz, id);
+					}
+					startx += 1;
+				}
 
-                startx = resetx;
-                startz += 1;
-            }
-            startz = resetz;
-            starty++;
-        }
-    }
+				startx = resetx;
+				startz += 1;
+			}
+			startz = resetz;
+			starty++;
+		}
+	}
 }

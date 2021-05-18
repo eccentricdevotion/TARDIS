@@ -29,13 +29,13 @@ import org.bukkit.entity.Rabbit;
  */
 class TARDISRabbit extends TARDISMob {
 
-    private Rabbit.Type bunnyType;
+	private Rabbit.Type bunnyType;
 
-    Rabbit.Type getBunnyType() {
-        return bunnyType;
-    }
+	Rabbit.Type getBunnyType() {
+		return bunnyType;
+	}
 
-    void setBunnyType(Rabbit.Type bunnyType) {
-        this.bunnyType = bunnyType;
-    }
+	void setBunnyType(Rabbit.Type bunnyType) {
+		this.bunnyType = bunnyType;
+	}
 }

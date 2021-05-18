@@ -37,105 +37,105 @@ import java.util.Locale;
  */
 public class TARDISRoomMap {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISRoomMap(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISRoomMap(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    /**
-     * Loads schematic data into a Map. This allows the rooms_require_blocks option to check the room block counts.
-     */
-    public void load() {
-        String defaultbasepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
-        String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
-        plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((r) -> {
-            if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
-                boolean user = plugin.getRoomsConfig().getBoolean("rooms." + r + ".user");
-                String basepath = (user) ? userbasepath : defaultbasepath;
-                String lower = r.toLowerCase(Locale.ENGLISH);
-                File sch = new File(basepath + lower + ".tschm");
-                if (sch.exists()) {
-                    makeRoomMap(basepath + lower, r);
-                } else {
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + lower + ".tschm was not found in '" + basepath + "' and was disabled!");
-                    plugin.getRoomsConfig().set("rooms." + r + ".enabled", false);
-                    try {
-                        plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
-                    } catch (IOException ignored) {
-                    }
-                }
-            }
-        });
-    }
+	/**
+	 * Loads schematic data into a Map. This allows the rooms_require_blocks option to check the room block counts.
+	 */
+	public void load() {
+		String defaultbasepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
+		String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
+		plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((r) -> {
+			if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
+				boolean user = plugin.getRoomsConfig().getBoolean("rooms." + r + ".user");
+				String basepath = (user) ? userbasepath : defaultbasepath;
+				String lower = r.toLowerCase(Locale.ENGLISH);
+				File sch = new File(basepath + lower + ".tschm");
+				if (sch.exists()) {
+					makeRoomMap(basepath + lower, r);
+				} else {
+					plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + lower + ".tschm was not found in '" + basepath + "' and was disabled!");
+					plugin.getRoomsConfig().set("rooms." + r + ".enabled", false);
+					try {
+						plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
+					} catch (IOException ignored) {
+					}
+				}
+			}
+		});
+	}
 
-    /**
-     * Reads a TARDIS schematic file and maps the data for rooms_require_blocks.
-     *
-     * @param fileStr the schematic file to read
-     * @param s       the schematic name
-     * @return true if the schematic was loaded successfully
-     */
-    public boolean makeRoomMap(String fileStr, String s) {
-        HashMap<String, Integer> blockTypes = new HashMap<>();
-        File f = new File(fileStr + ".tschm");
-        if (!f.exists()) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "Could not find a schematic with that name!");
-            return false;
-        }
-        // get JSON
-        JsonObject obj = TARDISSchematicGZip.unzip(fileStr + ".tschm");
-        if (obj == null) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] is not a TARDIS JSON schematic!");
-            return false;
-        } else {
-            // get dimensions
-            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-            int h = dimensions.get("height").getAsInt();
-            int w = dimensions.get("width").getAsInt();
-            int l = dimensions.get("length").getAsInt();
-            // get input array
-            JsonArray arr = obj.get("input").getAsJsonArray();
-            // loop like crazy
-            for (int level = 0; level < h; level++) {
-                JsonArray floor = arr.get(level).getAsJsonArray();
-                for (int row = 0; row < w; row++) {
-                    JsonArray r = floor.get(row).getAsJsonArray();
-                    for (int col = 0; col < l; col++) {
-                        JsonObject c = r.get(col).getAsJsonObject();
-                        if (!(c.get("data").getAsString().contains("minecraft"))) {
-                            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] needs updating to a TARDIS v4 schematic and was disabled!");
-                            plugin.getRoomsConfig().set("rooms." + s + ".enabled", false);
-                            try {
-                                plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
-                            } catch (IOException ignored) {
-                            }
-                            return false;
-                        }
-                        String bid = getMaterialAsString(c.get("data").getAsString());
-                        if (plugin.getBuildKeeper().getIgnoreBlocks().contains(bid)) {
-                            continue;
-                        }
-                        if (plugin.getBuildKeeper().getBlockConversion().containsKey(bid)) {
-                            bid = plugin.getBuildKeeper().getBlockConversion().get(bid);
-                        }
-                        if (blockTypes.containsKey(bid)) {
-                            Integer count = blockTypes.get(bid) + 1;
-                            blockTypes.put(bid, count);
-                        } else {
-                            blockTypes.put(bid, 1);
-                        }
-                    }
-                    plugin.getBuildKeeper().getRoomBlockCounts().put(s, blockTypes);
-                }
-            }
-            return true;
-        }
-    }
+	/**
+	 * Reads a TARDIS schematic file and maps the data for rooms_require_blocks.
+	 *
+	 * @param fileStr the schematic file to read
+	 * @param s       the schematic name
+	 * @return true if the schematic was loaded successfully
+	 */
+	public boolean makeRoomMap(String fileStr, String s) {
+		HashMap<String, Integer> blockTypes = new HashMap<>();
+		File f = new File(fileStr + ".tschm");
+		if (!f.exists()) {
+			plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "Could not find a schematic with that name!");
+			return false;
+		}
+		// get JSON
+		JsonObject obj = TARDISSchematicGZip.unzip(fileStr + ".tschm");
+		if (obj == null) {
+			plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] is not a TARDIS JSON schematic!");
+			return false;
+		} else {
+			// get dimensions
+			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+			int h = dimensions.get("height").getAsInt();
+			int w = dimensions.get("width").getAsInt();
+			int l = dimensions.get("length").getAsInt();
+			// get input array
+			JsonArray arr = obj.get("input").getAsJsonArray();
+			// loop like crazy
+			for (int level = 0; level < h; level++) {
+				JsonArray floor = arr.get(level).getAsJsonArray();
+				for (int row = 0; row < w; row++) {
+					JsonArray r = floor.get(row).getAsJsonArray();
+					for (int col = 0; col < l; col++) {
+						JsonObject c = r.get(col).getAsJsonObject();
+						if (!(c.get("data").getAsString().contains("minecraft"))) {
+							plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] needs updating to a TARDIS v4 schematic and was disabled!");
+							plugin.getRoomsConfig().set("rooms." + s + ".enabled", false);
+							try {
+								plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
+							} catch (IOException ignored) {
+							}
+							return false;
+						}
+						String bid = getMaterialAsString(c.get("data").getAsString());
+						if (plugin.getBuildKeeper().getIgnoreBlocks().contains(bid)) {
+							continue;
+						}
+						if (plugin.getBuildKeeper().getBlockConversion().containsKey(bid)) {
+							bid = plugin.getBuildKeeper().getBlockConversion().get(bid);
+						}
+						if (blockTypes.containsKey(bid)) {
+							Integer count = blockTypes.get(bid) + 1;
+							blockTypes.put(bid, count);
+						} else {
+							blockTypes.put(bid, 1);
+						}
+					}
+					plugin.getBuildKeeper().getRoomBlockCounts().put(s, blockTypes);
+				}
+			}
+			return true;
+		}
+	}
 
-    private String getMaterialAsString(String data) {
-        String[] square = data.split("\\[");
-        String[] keyed = square[0].split(":");
-        return keyed[1].toUpperCase();
-    }
+	private String getMaterialAsString(String data) {
+		String[] square = data.split("\\[");
+		String[] keyed = square[0].split(":");
+		return keyed[1].toUpperCase();
+	}
 }

@@ -21,21 +21,21 @@ package me.eccentric_nz.TARDIS.api;
  */
 public class TARDISException extends Exception {
 
-    private static final long serialVersionUID = -5152771166812835530L;
+	private static final long serialVersionUID = -5152771166812835530L;
 
-    public TARDISException() {
+	public TARDISException() {
 
-    }
+	}
 
-    public TARDISException(String message) {
-        super(message);
-    }
+	public TARDISException(String message) {
+		super(message);
+	}
 
-    public TARDISException(Throwable cause) {
-        super(cause);
-    }
+	public TARDISException(Throwable cause) {
+		super(cause);
+	}
 
-    public TARDISException(String message, Throwable cause) {
-        super(message, cause);
-    }
+	public TARDISException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }

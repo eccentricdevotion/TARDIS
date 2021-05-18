@@ -44,114 +44,114 @@ import java.util.List;
  */
 public class ResultSetSmelter {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final String where;
-    private int smelter_id;
-    private int tardis_id;
-    private String location;
-    private SmelterChest type;
-    private List<Chest> fuelChests;
-    private List<Chest> oreChests;
-    private final String prefix;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final String where;
+	private final String prefix;
+	private int smelter_id;
+	private int tardis_id;
+	private String location;
+	private SmelterChest type;
+	private List<Chest> fuelChests;
+	private List<Chest> oreChests;
 
-    /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
-     *
-     * @param plugin an instance of the main class.
-     * @param where  the location of the smelter chest.
-     */
-    public ResultSetSmelter(TARDIS plugin, String where) {
-        this.plugin = plugin;
-        this.where = where;
-        prefix = this.plugin.getPrefix();
-    }
+	/**
+	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
+	 *
+	 * @param plugin an instance of the main class.
+	 * @param where  the location of the smelter chest.
+	 */
+	public ResultSetSmelter(TARDIS plugin, String where) {
+		this.plugin = plugin;
+		this.where = where;
+		prefix = this.plugin.getPrefix();
+	}
 
-    /**
-     * Retrieves an SQL ResultSet from the vaults table. This method builds an SQL query string from the parameters
-     * supplied and then executes the query. Use the getters to retrieve the results.
-     *
-     * @return true or false depending on whether any data matches the query
-     */
-    public boolean resultSet() {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT * FROM " + prefix + "vaults WHERE location = ? AND x = 0 AND y = 0 AND z = 0";
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            statement.setString(1, where);
-            rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    smelter_id = rs.getInt("v_id");
-                    tardis_id = rs.getInt("tardis_id");
-                    location = rs.getString("location");
-                    type = SmelterChest.valueOf(rs.getString("chest_type"));
-                    fuelChests = getChests(location, true);
-                    oreChests = getChests(location, false);
-                }
-            } else {
-                return false;
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for smelter table! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing smelter table! " + e.getMessage());
-            }
-        }
-        return true;
-    }
+	/**
+	 * Retrieves an SQL ResultSet from the vaults table. This method builds an SQL query string from the parameters
+	 * supplied and then executes the query. Use the getters to retrieve the results.
+	 *
+	 * @return true or false depending on whether any data matches the query
+	 */
+	public boolean resultSet() {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String query = "SELECT * FROM " + prefix + "vaults WHERE location = ? AND x = 0 AND y = 0 AND z = 0";
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			statement.setString(1, where);
+			rs = statement.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					smelter_id = rs.getInt("v_id");
+					tardis_id = rs.getInt("tardis_id");
+					location = rs.getString("location");
+					type = SmelterChest.valueOf(rs.getString("chest_type"));
+					fuelChests = getChests(location, true);
+					oreChests = getChests(location, false);
+				}
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for smelter table! " + e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing smelter table! " + e.getMessage());
+			}
+		}
+		return true;
+	}
 
-    public int getSmelter_id() {
-        return smelter_id;
-    }
+	public int getSmelter_id() {
+		return smelter_id;
+	}
 
-    public int getTardis_id() {
-        return tardis_id;
-    }
+	public int getTardis_id() {
+		return tardis_id;
+	}
 
-    public String getLocation() {
-        return location;
-    }
+	public String getLocation() {
+		return location;
+	}
 
-    public SmelterChest getType() {
-        return type;
-    }
+	public SmelterChest getType() {
+		return type;
+	}
 
-    public List<Chest> getFuelChests() {
-        return fuelChests;
-    }
+	public List<Chest> getFuelChests() {
+		return fuelChests;
+	}
 
-    public List<Chest> getOreChests() {
-        return oreChests;
-    }
+	public List<Chest> getOreChests() {
+		return oreChests;
+	}
 
-    private List<Chest> getChests(String location, boolean fuel) {
-        Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(location);
-        int offset = l.getBlockY() - 68;
-        List<Chest> chests = new ArrayList<>();
-        List<Vector> vectors = (fuel) ? Smelter.getFuelVectors() : Smelter.getOreVectors();
-        vectors.forEach((v) -> {
-            if (offset > 0) {
-                v.setY(4.0d - offset);
-            }
-            Block b = l.clone().add(v).getBlock();
-            if (b.getType().equals(Material.CHEST) || b.getType().equals(Material.TRAPPED_CHEST)) {
-                Chest chest = (Chest) b.getState();
-                chests.add(chest);
-            }
-        });
-        return chests;
-    }
+	private List<Chest> getChests(String location, boolean fuel) {
+		Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(location);
+		int offset = l.getBlockY() - 68;
+		List<Chest> chests = new ArrayList<>();
+		List<Vector> vectors = (fuel) ? Smelter.getFuelVectors() : Smelter.getOreVectors();
+		vectors.forEach((v) -> {
+			if (offset > 0) {
+				v.setY(4.0d - offset);
+			}
+			Block b = l.clone().add(v).getBlock();
+			if (b.getType().equals(Material.CHEST) || b.getType().equals(Material.TRAPPED_CHEST)) {
+				Chest chest = (Chest) b.getState();
+				chests.add(chest);
+			}
+		});
+		return chests;
+	}
 }

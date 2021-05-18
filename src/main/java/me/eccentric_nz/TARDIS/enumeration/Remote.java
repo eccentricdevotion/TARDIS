@@ -21,9 +21,9 @@ package me.eccentric_nz.TARDIS.enumeration;
  */
 public enum Remote {
 
-    TRAVEL,
-    COMEHERE,
-    HIDE,
-    REBUILD,
-    BACK
+	TRAVEL,
+	COMEHERE,
+	HIDE,
+	REBUILD,
+	BACK
 }

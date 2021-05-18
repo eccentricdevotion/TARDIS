@@ -23,13 +23,13 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class LabBuilder {
 
-    public static ItemStack getLabProduct(Lab lab) {
-        ItemStack is = new ItemStack(lab.getItemMaterial(), 1);
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName(lab.toString().replace("_", " "));
-        im.setCustomModelData(10000000 + lab.getCustomModelData());
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, lab.getCustomModelData());
-        is.setItemMeta(im);
-        return is;
-    }
+	public static ItemStack getLabProduct(Lab lab) {
+		ItemStack is = new ItemStack(lab.getItemMaterial(), 1);
+		ItemMeta im = is.getItemMeta();
+		im.setDisplayName(lab.toString().replace("_", " "));
+		im.setCustomModelData(10000000 + lab.getCustomModelData());
+		im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, lab.getCustomModelData());
+		is.setItemMeta(im);
+		return is;
+	}
 }

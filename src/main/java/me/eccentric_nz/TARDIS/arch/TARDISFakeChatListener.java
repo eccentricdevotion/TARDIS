@@ -28,20 +28,20 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
  */
 public class TARDISFakeChatListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISFakeChatListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISFakeChatListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onJohnSmithChat(AsyncPlayerChatEvent event) {
-        Player player = event.getPlayer();
-        if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
-            return;
-        }
-        String currentDisplayName = player.getDisplayName();
-        String newDisplayName = currentDisplayName.replace(player.getName(), plugin.getTrackerKeeper().getJohnSmith().get(player.getUniqueId()).getName());
-        player.setDisplayName(newDisplayName);
-    }
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onJohnSmithChat(AsyncPlayerChatEvent event) {
+		Player player = event.getPlayer();
+		if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
+			return;
+		}
+		String currentDisplayName = player.getDisplayName();
+		String newDisplayName = currentDisplayName.replace(player.getName(), plugin.getTrackerKeeper().getJohnSmith().get(player.getUniqueId()).getName());
+		player.setDisplayName(newDisplayName);
+	}
 }

@@ -37,85 +37,85 @@ import java.util.List;
  */
 public class TARDISCircuitRepairListener implements Listener {
 
-    private final TARDIS plugin;
-    private final HashMap<Integer, String> circuits = new HashMap<>();
+	private final TARDIS plugin;
+	private final HashMap<Integer, String> circuits = new HashMap<>();
 
-    public TARDISCircuitRepairListener(TARDIS plugin) {
-        this.plugin = plugin;
-        circuits.put(10001973, "ars");
-        circuits.put(10001966, "chameleon");
-        circuits.put(10001976, "input");
-        circuits.put(10001981, "invisibility");
-        circuits.put(10001964, "materialisation");
-        circuits.put(10001975, "memory");
-        circuits.put(10001980, "randomiser");
-        circuits.put(10001977, "scanner");
-        circuits.put(10001974, "temporal");
-    }
+	public TARDISCircuitRepairListener(TARDIS plugin) {
+		this.plugin = plugin;
+		circuits.put(10001973, "ars");
+		circuits.put(10001966, "chameleon");
+		circuits.put(10001976, "input");
+		circuits.put(10001981, "invisibility");
+		circuits.put(10001964, "materialisation");
+		circuits.put(10001975, "memory");
+		circuits.put(10001980, "randomiser");
+		circuits.put(10001977, "scanner");
+		circuits.put(10001974, "temporal");
+	}
 
-    @EventHandler(ignoreCancelled = true)
-    public void onInteract(InventoryClickEvent event) {
-        if (!event.getInventory().getType().equals(InventoryType.ANVIL)) {
-            return;
-        }
-        // which slot?
-        int slot = event.getRawSlot();
-        if (slot == 2) {
-            // they clicked the output slot
-            AnvilInventory anvil = (AnvilInventory) event.getInventory();
-            ItemStack[] items = anvil.getContents();
-            ItemStack first = items[0];
-            // is it a redstone with item meta?
-            if (first != null && first.getType().equals(Material.GLOWSTONE_DUST) && first.hasItemMeta() && first.getAmount() == 1) {
-                // get the item meta
-                ItemMeta fim = first.getItemMeta();
-                if (fim.hasDisplayName() && fim.hasCustomModelData()) {
-                    // get the display name
-                    String dnf = fim.getDisplayName();
-                    if (dnf.startsWith("TARDIS") && dnf.endsWith("Circuit")) {
-                        if (fim.hasLore()) {
-                            // get the lore
-                            List<String> flore = fim.getLore();
-                            String stripped = ChatColor.stripColor(flore.get(1));
-                            if (!stripped.equals("unlimited")) {
-                                // get the uses left
-                                int left = TARDISNumberParsers.parseInt(stripped);
-                                // get max uses for this circuit
-                                int ctm = (fim.hasCustomModelData()) ? fim.getCustomModelData() : 10001963;
-                                int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(ctm));
-                                // is it used?
-                                if (left < uses) {
-                                    ItemStack two = items[1];
-                                    // is it redstone?
-                                    if (two != null && two.getType().equals(Material.GLOWSTONE_DUST)) {
-                                        // how many in the stack?
-                                        int amount = two.getAmount();
-                                        int repair_max = uses - left;
-                                        int repair_to = (amount > repair_max) ? uses : left + amount;
-                                        int remaining = (amount > repair_max) ? amount - repair_max : 0;
-                                        // clone the map
-                                        ItemStack clone = first.clone();
-                                        ItemMeta cim = clone.getItemMeta();
-                                        List<String> clore = new ArrayList<>();
-                                        clore.add("Uses left");
-                                        clore.add(ChatColor.YELLOW + "" + repair_to);
-                                        cim.setLore(clore);
-                                        clone.setItemMeta(cim);
-                                        // set the item in slot 0 to the new repaired map
-                                        anvil.setItem(0, clone);
-                                        // set the amount in slot 1
-                                        if (remaining > 0) {
-                                            anvil.setItem(1, new ItemStack(Material.REDSTONE, remaining));
-                                        } else {
-                                            anvil.setItem(1, new ItemStack(Material.AIR));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onInteract(InventoryClickEvent event) {
+		if (!event.getInventory().getType().equals(InventoryType.ANVIL)) {
+			return;
+		}
+		// which slot?
+		int slot = event.getRawSlot();
+		if (slot == 2) {
+			// they clicked the output slot
+			AnvilInventory anvil = (AnvilInventory) event.getInventory();
+			ItemStack[] items = anvil.getContents();
+			ItemStack first = items[0];
+			// is it a redstone with item meta?
+			if (first != null && first.getType().equals(Material.GLOWSTONE_DUST) && first.hasItemMeta() && first.getAmount() == 1) {
+				// get the item meta
+				ItemMeta fim = first.getItemMeta();
+				if (fim.hasDisplayName() && fim.hasCustomModelData()) {
+					// get the display name
+					String dnf = fim.getDisplayName();
+					if (dnf.startsWith("TARDIS") && dnf.endsWith("Circuit")) {
+						if (fim.hasLore()) {
+							// get the lore
+							List<String> flore = fim.getLore();
+							String stripped = ChatColor.stripColor(flore.get(1));
+							if (!stripped.equals("unlimited")) {
+								// get the uses left
+								int left = TARDISNumberParsers.parseInt(stripped);
+								// get max uses for this circuit
+								int ctm = (fim.hasCustomModelData()) ? fim.getCustomModelData() : 10001963;
+								int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(ctm));
+								// is it used?
+								if (left < uses) {
+									ItemStack two = items[1];
+									// is it redstone?
+									if (two != null && two.getType().equals(Material.GLOWSTONE_DUST)) {
+										// how many in the stack?
+										int amount = two.getAmount();
+										int repair_max = uses - left;
+										int repair_to = (amount > repair_max) ? uses : left + amount;
+										int remaining = (amount > repair_max) ? amount - repair_max : 0;
+										// clone the map
+										ItemStack clone = first.clone();
+										ItemMeta cim = clone.getItemMeta();
+										List<String> clore = new ArrayList<>();
+										clore.add("Uses left");
+										clore.add(ChatColor.YELLOW + "" + repair_to);
+										cim.setLore(clore);
+										clone.setItemMeta(cim);
+										// set the item in slot 0 to the new repaired map
+										anvil.setItem(0, clone);
+										// set the amount in slot 1
+										if (remaining > 0) {
+											anvil.setItem(1, new ItemStack(Material.REDSTONE, remaining));
+										} else {
+											anvil.setItem(1, new ItemStack(Material.AIR));
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

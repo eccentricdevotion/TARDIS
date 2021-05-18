@@ -31,35 +31,35 @@ import java.util.UUID;
  */
 class TARDISInsideCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISInsideCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISInsideCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean whosInside(Player player) {
-        // check they are a timelord
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (!rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "NOT_A_TIMELORD");
-            return true;
-        }
-        int id = rs.getTardis_id();
-        HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("tardis_id", id);
-        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
-        if (rst.resultSet()) {
-            List<UUID> data = rst.getData();
-            TARDISMessage.send(player, "INSIDE_PLAYERS");
-            data.forEach((s) -> {
-                Player p = plugin.getServer().getPlayer(s);
-                if (p != null) {
-                    player.sendMessage(p.getDisplayName());
-                }
-            });
-        } else {
-            TARDISMessage.send(player, "INSIDE");
-        }
-        return true;
-    }
+	boolean whosInside(Player player) {
+		// check they are a timelord
+		ResultSetTardisID rs = new ResultSetTardisID(plugin);
+		if (!rs.fromUUID(player.getUniqueId().toString())) {
+			TARDISMessage.send(player, "NOT_A_TIMELORD");
+			return true;
+		}
+		int id = rs.getTardis_id();
+		HashMap<String, Object> wheret = new HashMap<>();
+		wheret.put("tardis_id", id);
+		ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
+		if (rst.resultSet()) {
+			List<UUID> data = rst.getData();
+			TARDISMessage.send(player, "INSIDE_PLAYERS");
+			data.forEach((s) -> {
+				Player p = plugin.getServer().getPlayer(s);
+				if (p != null) {
+					player.sendMessage(p.getDisplayName());
+				}
+			});
+		} else {
+			TARDISMessage.send(player, "INSIDE");
+		}
+		return true;
+	}
 }

@@ -45,175 +45,175 @@ import java.util.UUID;
  */
 public class TARDISMalfunction {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISMalfunction(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISMalfunction(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public boolean isMalfunction() {
-        boolean mal = false;
-        if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
-            int chance = 100 - plugin.getConfig().getInt("preferences.malfunction");
-            if (TARDISConstants.RANDOM.nextInt(100) > chance) {
-                mal = true;
-            }
-        }
-        return mal;
-    }
+	public boolean isMalfunction() {
+		boolean mal = false;
+		if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
+			int chance = 100 - plugin.getConfig().getInt("preferences.malfunction");
+			if (TARDISConstants.RANDOM.nextInt(100) > chance) {
+				mal = true;
+			}
+		}
+		return mal;
+	}
 
-    public Location getMalfunction(int id, Player p, COMPASS dir, Location handbrake_loc, String eps, String creeper) {
-        Location l;
-        // get current TARDIS preset location
-        HashMap<String, Object> wherecl = new HashMap<>();
-        wherecl.put("tardis_id", id);
-        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
-        if (rscl.resultSet()) {
-            Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-            int end = 100 - plugin.getConfig().getInt("preferences.malfunction_end");
-            int nether = end - plugin.getConfig().getInt("preferences.malfunction_nether");
-            int r = TARDISConstants.RANDOM.nextInt(100);
-            TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-            int x = TARDISConstants.RANDOM.nextInt(4) + 1;
-            int z = TARDISConstants.RANDOM.nextInt(4) + 1;
-            int y = TARDISConstants.RANDOM.nextInt(4) + 1;
-            if (r > end) {
-                // get random the_end location
-                l = tt.randomDestination(p, x, z, y, dir, "THE_END", null, true, cl);
-            } else if (r > nether) {
-                // get random nether location
-                l = tt.randomDestination(p, x, z, y, dir, "NETHER", null, true, cl);
-            } else {
-                // get random normal location
-                l = tt.randomDestination(p, x, z, y, dir, "NORMAL", null, false, cl);
-            }
-        } else {
-            l = null;
-        }
-        if (l != null) {
-            doMalfunction(id, p, eps, creeper, handbrake_loc);
-        }
-        return l;
-    }
+	public Location getMalfunction(int id, Player p, COMPASS dir, Location handbrake_loc, String eps, String creeper) {
+		Location l;
+		// get current TARDIS preset location
+		HashMap<String, Object> wherecl = new HashMap<>();
+		wherecl.put("tardis_id", id);
+		ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+		if (rscl.resultSet()) {
+			Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
+			int end = 100 - plugin.getConfig().getInt("preferences.malfunction_end");
+			int nether = end - plugin.getConfig().getInt("preferences.malfunction_nether");
+			int r = TARDISConstants.RANDOM.nextInt(100);
+			TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
+			int x = TARDISConstants.RANDOM.nextInt(4) + 1;
+			int z = TARDISConstants.RANDOM.nextInt(4) + 1;
+			int y = TARDISConstants.RANDOM.nextInt(4) + 1;
+			if (r > end) {
+				// get random the_end location
+				l = tt.randomDestination(p, x, z, y, dir, "THE_END", null, true, cl);
+			} else if (r > nether) {
+				// get random nether location
+				l = tt.randomDestination(p, x, z, y, dir, "NETHER", null, true, cl);
+			} else {
+				// get random normal location
+				l = tt.randomDestination(p, x, z, y, dir, "NORMAL", null, false, cl);
+			}
+		} else {
+			l = null;
+		}
+		if (l != null) {
+			doMalfunction(id, p, eps, creeper, handbrake_loc);
+		}
+		return l;
+	}
 
-    private void doMalfunction(int id, Player p, String eps, String creeper, Location handbrake) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetLamps rsl = new ResultSetLamps(plugin, where, true);
-        if (rsl.resultSet()) {
-            // should we damage circuits?
-            int malfunctionDamage = plugin.getConfig().getInt("circuits.malfunction_damage");
-            if (plugin.getConfig().getBoolean("circuits.damage") && malfunctionDamage > 0 && !plugin.getDifficulty().equals(Difficulty.EASY)) {
-                // choose a random circuit
-                DiskCircuit circuit = DiskCircuit.getTardisCircuits().get(TARDISConstants.RANDOM.nextInt(DiskCircuit.getTardisCircuits().size()));
-                // is the circuit in the advanced console?
-                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-                tcc.getCircuits();
-                int damage;
-                int usesLeft;
-                double percent = malfunctionDamage / 100.0d;
-                switch (circuit) {
-                    case ARS:
-                        if (tcc.hasARS()) {
-                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.ars") * percent);
-                            usesLeft = tcc.getArsUses() - damage;
-                            damage(circuit, usesLeft, id, p);
-                        }
-                        break;
-                    case CHAMELEON:
-                        if (tcc.hasChameleon()) {
-                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.chameleon") * percent);
-                            usesLeft = tcc.getChameleonUses() - damage;
-                            damage(circuit, usesLeft, id, p);
-                        }
-                        break;
-                    case INPUT:
-                        if (tcc.hasInput()) {
-                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.input") * percent);
-                            usesLeft = tcc.getInputUses() - damage;
-                            damage(circuit, usesLeft, id, p);
-                        }
-                        break;
-                    case INVISIBILITY:
-                        if (tcc.hasInvisibility()) {
-                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.invisibility") * percent);
-                            usesLeft = tcc.getInvisibilityUses() - damage;
-                            damage(circuit, usesLeft, id, p);
-                        }
-                        break;
-                    case MATERIALISATION:
-                        if (tcc.hasMaterialisation()) {
-                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.materialisation") * percent);
-                            usesLeft = tcc.getMaterialisationUses() - damage;
-                            damage(circuit, usesLeft, id, p);
-                        }
-                        break;
-                    case MEMORY:
-                        if (tcc.hasMemory()) {
-                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.memory") * percent);
-                            usesLeft = tcc.getMemoryUses() - damage;
-                            damage(circuit, usesLeft, id, p);
-                        }
-                        break;
-                    case RANDOMISER:
-                        if (tcc.hasRandomiser()) {
-                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.randomiser") * percent);
-                            usesLeft = tcc.getRandomiserUses() - damage;
-                            damage(circuit, usesLeft, id, p);
-                        }
-                        break;
-                    case SCANNER:
-                        if (tcc.hasScanner()) {
-                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.scanner") * percent);
-                            usesLeft = tcc.getScannerUses() - damage;
-                            damage(circuit, usesLeft, id, p);
-                        }
-                        break;
-                    case TEMPORAL:
-                        if (tcc.hasTemporal()) {
-                            damage = (int) (plugin.getConfig().getDouble("circuits.uses.temporal") * percent);
-                            usesLeft = tcc.getTemporalUses() - damage;
-                            damage(circuit, usesLeft, id, p);
-                        }
-                        break;
-                }
-            }
-            // get player prefs
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
-            if (rsp.resultSet()) {
-                if (plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
-                    // schedule the NPC to appear
-                    String message = "This is Emergency Programme One. Now listen, this is important. If this message is activated, then it can only mean one thing: we must be in danger, and I mean fatal. You're about to die any second with no chance of escape.";
-                    HashMap<String, Object> wherev = new HashMap<>();
-                    wherev.put("tardis_id", id);
-                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
-                    List<UUID> playerUUIDs;
-                    if (rst.resultSet()) {
-                        playerUUIDs = rst.getData();
-                    } else {
-                        playerUUIDs = new ArrayList<>();
-                        playerUUIDs.add(p.getUniqueId());
-                    }
-                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
-                }
-                Material light = (rsp.isLanternsOn()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
-                // flicker lights
-                long end = System.currentTimeMillis() + 10000;
-                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), end, light, rsp.isWoolLightsOn());
-                runnable.setHandbrake(handbrake);
-                int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
-                runnable.setTask(taskID);
-                // add fireworks
-                TARDISMalfunctionExplosion explodeable = new TARDISMalfunctionExplosion(plugin, id, end);
-                int taskEx = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, explodeable, 10L, 30L);
-                explodeable.setTask(taskEx);
-            }
-        }
-    }
+	private void doMalfunction(int id, Player p, String eps, String creeper, Location handbrake) {
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("tardis_id", id);
+		ResultSetLamps rsl = new ResultSetLamps(plugin, where, true);
+		if (rsl.resultSet()) {
+			// should we damage circuits?
+			int malfunctionDamage = plugin.getConfig().getInt("circuits.malfunction_damage");
+			if (plugin.getConfig().getBoolean("circuits.damage") && malfunctionDamage > 0 && !plugin.getDifficulty().equals(Difficulty.EASY)) {
+				// choose a random circuit
+				DiskCircuit circuit = DiskCircuit.getTardisCircuits().get(TARDISConstants.RANDOM.nextInt(DiskCircuit.getTardisCircuits().size()));
+				// is the circuit in the advanced console?
+				TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+				tcc.getCircuits();
+				int damage;
+				int usesLeft;
+				double percent = malfunctionDamage / 100.0d;
+				switch (circuit) {
+					case ARS:
+						if (tcc.hasARS()) {
+							damage = (int) (plugin.getConfig().getDouble("circuits.uses.ars") * percent);
+							usesLeft = tcc.getArsUses() - damage;
+							damage(circuit, usesLeft, id, p);
+						}
+						break;
+					case CHAMELEON:
+						if (tcc.hasChameleon()) {
+							damage = (int) (plugin.getConfig().getDouble("circuits.uses.chameleon") * percent);
+							usesLeft = tcc.getChameleonUses() - damage;
+							damage(circuit, usesLeft, id, p);
+						}
+						break;
+					case INPUT:
+						if (tcc.hasInput()) {
+							damage = (int) (plugin.getConfig().getDouble("circuits.uses.input") * percent);
+							usesLeft = tcc.getInputUses() - damage;
+							damage(circuit, usesLeft, id, p);
+						}
+						break;
+					case INVISIBILITY:
+						if (tcc.hasInvisibility()) {
+							damage = (int) (plugin.getConfig().getDouble("circuits.uses.invisibility") * percent);
+							usesLeft = tcc.getInvisibilityUses() - damage;
+							damage(circuit, usesLeft, id, p);
+						}
+						break;
+					case MATERIALISATION:
+						if (tcc.hasMaterialisation()) {
+							damage = (int) (plugin.getConfig().getDouble("circuits.uses.materialisation") * percent);
+							usesLeft = tcc.getMaterialisationUses() - damage;
+							damage(circuit, usesLeft, id, p);
+						}
+						break;
+					case MEMORY:
+						if (tcc.hasMemory()) {
+							damage = (int) (plugin.getConfig().getDouble("circuits.uses.memory") * percent);
+							usesLeft = tcc.getMemoryUses() - damage;
+							damage(circuit, usesLeft, id, p);
+						}
+						break;
+					case RANDOMISER:
+						if (tcc.hasRandomiser()) {
+							damage = (int) (plugin.getConfig().getDouble("circuits.uses.randomiser") * percent);
+							usesLeft = tcc.getRandomiserUses() - damage;
+							damage(circuit, usesLeft, id, p);
+						}
+						break;
+					case SCANNER:
+						if (tcc.hasScanner()) {
+							damage = (int) (plugin.getConfig().getDouble("circuits.uses.scanner") * percent);
+							usesLeft = tcc.getScannerUses() - damage;
+							damage(circuit, usesLeft, id, p);
+						}
+						break;
+					case TEMPORAL:
+						if (tcc.hasTemporal()) {
+							damage = (int) (plugin.getConfig().getDouble("circuits.uses.temporal") * percent);
+							usesLeft = tcc.getTemporalUses() - damage;
+							damage(circuit, usesLeft, id, p);
+						}
+						break;
+				}
+			}
+			// get player prefs
+			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
+			if (rsp.resultSet()) {
+				if (plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
+					// schedule the NPC to appear
+					String message = "This is Emergency Programme One. Now listen, this is important. If this message is activated, then it can only mean one thing: we must be in danger, and I mean fatal. You're about to die any second with no chance of escape.";
+					HashMap<String, Object> wherev = new HashMap<>();
+					wherev.put("tardis_id", id);
+					ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
+					List<UUID> playerUUIDs;
+					if (rst.resultSet()) {
+						playerUUIDs = rst.getData();
+					} else {
+						playerUUIDs = new ArrayList<>();
+						playerUUIDs.add(p.getUniqueId());
+					}
+					TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
+					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
+				}
+				Material light = (rsp.isLanternsOn()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
+				// flicker lights
+				long end = System.currentTimeMillis() + 10000;
+				TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), end, light, rsp.isWoolLightsOn());
+				runnable.setHandbrake(handbrake);
+				int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
+				runnable.setTask(taskID);
+				// add fireworks
+				TARDISMalfunctionExplosion explodeable = new TARDISMalfunctionExplosion(plugin, id, end);
+				int taskEx = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, explodeable, 10L, 30L);
+				explodeable.setTask(taskEx);
+			}
+		}
+	}
 
-    private void damage(DiskCircuit circuit, int uses_left, int id, Player p) {
-        TARDISCircuitDamager tcd = new TARDISCircuitDamager(plugin, circuit, uses_left, id, p);
-        tcd.damage();
-    }
+	private void damage(DiskCircuit circuit, int uses_left, int id, Player p) {
+		TARDISCircuitDamager tcd = new TARDISCircuitDamager(plugin, circuit, uses_left, id, p);
+		tcd.damage();
+	}
 }

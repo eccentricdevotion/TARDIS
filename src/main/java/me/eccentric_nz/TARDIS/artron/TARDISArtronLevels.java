@@ -32,48 +32,48 @@ import java.util.HashMap;
  */
 public class TARDISArtronLevels {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISArtronLevels(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISArtronLevels(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    /**
-     * Starts a repeating task to recharge the TARDIS. The task is started each time the player exits the TARDIS after
-     * travelling. If the TARDIS moves away from the recharge location the task is cancelled.
-     *
-     * @param id the unique TARDIS database key
-     */
-    public void recharge(int id) {
-        HashMap<String, Object> set = new HashMap<>();
-        set.put("recharging", 1);
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        plugin.getQueryFactory().doUpdate("tardis", set, where);
-        TARDISArtronRunnable runnable = new TARDISArtronRunnable(plugin, id);
-        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 480L, 480L);
-        runnable.setTask(taskID);
-    }
+	/**
+	 * Starts a repeating task to recharge the TARDIS. The task is started each time the player exits the TARDIS after
+	 * travelling. If the TARDIS moves away from the recharge location the task is cancelled.
+	 *
+	 * @param id the unique TARDIS database key
+	 */
+	public void recharge(int id) {
+		HashMap<String, Object> set = new HashMap<>();
+		set.put("recharging", 1);
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("tardis_id", id);
+		plugin.getQueryFactory().doUpdate("tardis", set, where);
+		TARDISArtronRunnable runnable = new TARDISArtronRunnable(plugin, id);
+		int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 480L, 480L);
+		runnable.setTask(taskID);
+	}
 
-    /**
-     * Checks whether the TARDIS has sufficient Artron Energy levels. If the energy level will drop below 100, then the
-     * player is warned.
-     *
-     * @param id       the unique TARDIS database key
-     * @param required the amount of Artron energy needed
-     * @param p        the player to message
-     * @return a boolean - true if the TARDIS has sufficient energy
-     */
-    public boolean checkLevel(int id, int required, Player p) {
-        ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
-        if (!rs.fromID(id)) {
-            return false;
-        }
-        int level = rs.getArtronLevel();
-        if (level - required <= 100) {
-            TARDISMessage.send(p, "ENERGY_LOW");
-            return false;
-        }
-        return (level > required);
-    }
+	/**
+	 * Checks whether the TARDIS has sufficient Artron Energy levels. If the energy level will drop below 100, then the
+	 * player is warned.
+	 *
+	 * @param id       the unique TARDIS database key
+	 * @param required the amount of Artron energy needed
+	 * @param p        the player to message
+	 * @return a boolean - true if the TARDIS has sufficient energy
+	 */
+	public boolean checkLevel(int id, int required, Player p) {
+		ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
+		if (!rs.fromID(id)) {
+			return false;
+		}
+		int level = rs.getArtronLevel();
+		if (level - required <= 100) {
+			TARDISMessage.send(p, "ENERGY_LOW");
+			return false;
+		}
+		return (level > required);
+	}
 }

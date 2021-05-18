@@ -34,77 +34,77 @@ import java.util.List;
  */
 public class TARDISLanguageUpdater {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISLanguageUpdater(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISLanguageUpdater(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public void update() {
-        // get currently configured language
-        String lang = plugin.getConfig().getString("preferences.language");
-        if (lang.equals("en")) {
-            return;
-        }
-        // get the English language config
-        String en_path = plugin.getDataFolder() + File.separator + "language" + File.separator + "en.yml";
-        File en_file = new File(en_path);
-        FileConfiguration en = YamlConfiguration.loadConfiguration(en_file);
-        // loop through the keys and set values that are missing
-        int i = 0;
-        for (String key : en.getKeys(false)) {
-            if (!plugin.getLanguage().contains(key)) {
-                plugin.getLanguage().set(key, en.getString(key));
-                i++;
-            }
-        }
-        try {
-            // save the config
-            String lang_path = plugin.getDataFolder() + File.separator + "language" + File.separator + lang + ".yml";
-            plugin.getLanguage().save(new File(lang_path));
-        } catch (IOException ex) {
-            plugin.debug("Could not save language config file after adding entries! " + ex.getMessage());
-        }
-        // loop through the keys and remove values that are no longer in en.yml
-        int j = 0;
-        for (String key : plugin.getLanguage().getKeys(false)) {
-            if (!en.contains(key)) {
-                plugin.getLanguage().set(key, null);
-                j++;
-            }
-        }
-        // resave file
-        String lang_path = plugin.getDataFolder() + File.separator + "language" + File.separator + lang + ".yml";
-        try {
-            // save the config
-            plugin.getLanguage().save(new File(lang_path));
-        } catch (IOException ex) {
-            plugin.debug("Could not save language config file after removing entries! " + ex.getMessage());
-        }
-        if (i > 0) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new messages to " + lang + ".yml");
-            // sort language file alphabetically if additions were made
-            try {
-                List<String> lineList;
-                try (FileReader fileReader = new FileReader(lang_path)) {
-                    BufferedReader bufferedReader = new BufferedReader(fileReader);
-                    String inputLine;
-                    lineList = new ArrayList<>();
-                    while ((inputLine = bufferedReader.readLine()) != null) {
-                        lineList.add(inputLine);
-                    }
-                }
-                Collections.sort(lineList);
-                try (FileWriter fileWriter = new FileWriter(lang_path); PrintWriter out = new PrintWriter(fileWriter, false)) {
-                    lineList.forEach(out::println);
-                    out.flush();
-                }
-            } catch (IOException ex) {
-                plugin.debug("Could not alphabetize language config file! " + ex.getMessage());
-            }
-        }
-        if (j > 0) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed " + ChatColor.AQUA + j + ChatColor.RESET + " redundant messages from " + lang + ".yml");
-        }
-    }
+	public void update() {
+		// get currently configured language
+		String lang = plugin.getConfig().getString("preferences.language");
+		if (lang.equals("en")) {
+			return;
+		}
+		// get the English language config
+		String en_path = plugin.getDataFolder() + File.separator + "language" + File.separator + "en.yml";
+		File en_file = new File(en_path);
+		FileConfiguration en = YamlConfiguration.loadConfiguration(en_file);
+		// loop through the keys and set values that are missing
+		int i = 0;
+		for (String key : en.getKeys(false)) {
+			if (!plugin.getLanguage().contains(key)) {
+				plugin.getLanguage().set(key, en.getString(key));
+				i++;
+			}
+		}
+		try {
+			// save the config
+			String lang_path = plugin.getDataFolder() + File.separator + "language" + File.separator + lang + ".yml";
+			plugin.getLanguage().save(new File(lang_path));
+		} catch (IOException ex) {
+			plugin.debug("Could not save language config file after adding entries! " + ex.getMessage());
+		}
+		// loop through the keys and remove values that are no longer in en.yml
+		int j = 0;
+		for (String key : plugin.getLanguage().getKeys(false)) {
+			if (!en.contains(key)) {
+				plugin.getLanguage().set(key, null);
+				j++;
+			}
+		}
+		// resave file
+		String lang_path = plugin.getDataFolder() + File.separator + "language" + File.separator + lang + ".yml";
+		try {
+			// save the config
+			plugin.getLanguage().save(new File(lang_path));
+		} catch (IOException ex) {
+			plugin.debug("Could not save language config file after removing entries! " + ex.getMessage());
+		}
+		if (i > 0) {
+			plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new messages to " + lang + ".yml");
+			// sort language file alphabetically if additions were made
+			try {
+				List<String> lineList;
+				try (FileReader fileReader = new FileReader(lang_path)) {
+					BufferedReader bufferedReader = new BufferedReader(fileReader);
+					String inputLine;
+					lineList = new ArrayList<>();
+					while ((inputLine = bufferedReader.readLine()) != null) {
+						lineList.add(inputLine);
+					}
+				}
+				Collections.sort(lineList);
+				try (FileWriter fileWriter = new FileWriter(lang_path); PrintWriter out = new PrintWriter(fileWriter, false)) {
+					lineList.forEach(out::println);
+					out.flush();
+				}
+			} catch (IOException ex) {
+				plugin.debug("Could not alphabetize language config file! " + ex.getMessage());
+			}
+		}
+		if (j > 0) {
+			plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed " + ChatColor.AQUA + j + ChatColor.RESET + " redundant messages from " + lang + ".yml");
+		}
+	}
 }

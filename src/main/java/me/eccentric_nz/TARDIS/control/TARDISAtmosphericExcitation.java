@@ -40,43 +40,43 @@ import java.util.HashMap;
  */
 public class TARDISAtmosphericExcitation {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISAtmosphericExcitation(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISAtmosphericExcitation(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public void excite(int tid, Player p) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", tid);
-        ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
-        if (rs.resultSet()) {
-            // not if underwater
-            if (rs.isSubmarine()) {
-                return;
-            }
-            // get TARDIS location
-            Location l = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
-            // get lamp block location
-            l.add(0, 18, 0);
-            // construct a firework effect and shoot it from lamp block location
-            Firework firework = (Firework) l.getWorld().spawnEntity(l, EntityType.FIREWORK);
-            FireworkMeta fireworkMeta = firework.getFireworkMeta();
-            fireworkMeta.addEffect(FireworkEffect.builder()
-                    .flicker(false)
-                    .withColor(Color.SILVER)
-                    .withFade(Color.WHITE)
-                    .with(Type.BURST)
-                    .withTrail()
-                    .build());
-            fireworkMeta.setPower(3);
-            firework.setFireworkMeta(fireworkMeta);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                firework.detonate();
-                // after x ticks, start snow particles and place snow on ground
-                TARDISExcitationRunnable runnable = new TARDISExcitationRunnable(plugin, l, p);
-                runnable.task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 35L, 10L);
-            }, 2L);
-        }
-    }
+	public void excite(int tid, Player p) {
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("tardis_id", tid);
+		ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
+		if (rs.resultSet()) {
+			// not if underwater
+			if (rs.isSubmarine()) {
+				return;
+			}
+			// get TARDIS location
+			Location l = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
+			// get lamp block location
+			l.add(0, 18, 0);
+			// construct a firework effect and shoot it from lamp block location
+			Firework firework = (Firework) l.getWorld().spawnEntity(l, EntityType.FIREWORK);
+			FireworkMeta fireworkMeta = firework.getFireworkMeta();
+			fireworkMeta.addEffect(FireworkEffect.builder()
+					.flicker(false)
+					.withColor(Color.SILVER)
+					.withFade(Color.WHITE)
+					.with(Type.BURST)
+					.withTrail()
+					.build());
+			fireworkMeta.setPower(3);
+			firework.setFireworkMeta(fireworkMeta);
+			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+				firework.detonate();
+				// after x ticks, start snow particles and place snow on ground
+				TARDISExcitationRunnable runnable = new TARDISExcitationRunnable(plugin, l, p);
+				runnable.task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 35L, 10L);
+			}, 2L);
+		}
+	}
 }

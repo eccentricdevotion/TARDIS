@@ -37,61 +37,61 @@ import java.util.UUID;
  */
 public class TARDISBeaconToggler {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISBeaconToggler(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISBeaconToggler(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public void flickSwitch(UUID uuid, int id, boolean on) {
-        HashMap<String, Object> whereb = new HashMap<>();
-        whereb.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false, 2);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
-            Schematic schm = tardis.getSchematic();
-            if (Consoles.getNO_BEACON().contains(schm)) {
-                // doesn't have a beacon!
-                return;
-            }
-            // toggle beacon
-            String beacon = tardis.getBeacon();
-            if (!beacon.isEmpty()) {
-                String[] beaconData = beacon.split(":");
-                if (beaconData.length > 1) {
-                    Location bl = TARDISStaticLocationGetters.getLocationFromDB(beacon);
-                    Block b = bl.getBlock();
-                    while (!b.getChunk().isLoaded()) {
-                        b.getChunk().load();
-                    }
-                    b.setBlockData((on) ? TARDISConstants.GLASS : TARDISConstants.POWER);
-                    if (!plugin.getGeneralKeeper().getProtectBlockMap().containsKey(bl.toString())) {
-                        plugin.getGeneralKeeper().getProtectBlockMap().put(bl.toString(), tardis.getTardis_id());
-                    }
-                } else {
-                    updateBeacon(schm, uuid);
-                }
-            } else {
-                updateBeacon(schm, uuid);
-            }
-        }
-    }
+	public void flickSwitch(UUID uuid, int id, boolean on) {
+		HashMap<String, Object> whereb = new HashMap<>();
+		whereb.put("tardis_id", id);
+		ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false, 2);
+		if (rs.resultSet()) {
+			Tardis tardis = rs.getTardis();
+			Schematic schm = tardis.getSchematic();
+			if (Consoles.getNO_BEACON().contains(schm)) {
+				// doesn't have a beacon!
+				return;
+			}
+			// toggle beacon
+			String beacon = tardis.getBeacon();
+			if (!beacon.isEmpty()) {
+				String[] beaconData = beacon.split(":");
+				if (beaconData.length > 1) {
+					Location bl = TARDISStaticLocationGetters.getLocationFromDB(beacon);
+					Block b = bl.getBlock();
+					while (!b.getChunk().isLoaded()) {
+						b.getChunk().load();
+					}
+					b.setBlockData((on) ? TARDISConstants.GLASS : TARDISConstants.POWER);
+					if (!plugin.getGeneralKeeper().getProtectBlockMap().containsKey(bl.toString())) {
+						plugin.getGeneralKeeper().getProtectBlockMap().put(bl.toString(), tardis.getTardis_id());
+					}
+				} else {
+					updateBeacon(schm, uuid);
+				}
+			} else {
+				updateBeacon(schm, uuid);
+			}
+		}
+	}
 
-    private void updateBeacon(Schematic schm, UUID uuid) {
-        // determine beacon location and update the tardis table so we don't have to do this again
-        TARDISUpgradeData tud = new TARDISUpgradeData();
-        tud.setSchematic(schm);
-        tud.setPrevious(schm);
-        tud.setWall("ORANGE_WOOL");
-        tud.setFloor("LIGHT_GRAY_WOOL");
-        TARDISUpgradeBlockScanner scanner = new TARDISUpgradeBlockScanner(plugin, tud, uuid);
-        TARDISBlockScannerData check = scanner.check();
-        if (!check.getBeacon().isEmpty()) {
-            HashMap<String, Object> set = new HashMap<>();
-            set.put("beacon", check.getBeacon());
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid.toString());
-            plugin.getQueryFactory().doUpdate("tardis", set, where);
-        }
-    }
+	private void updateBeacon(Schematic schm, UUID uuid) {
+		// determine beacon location and update the tardis table so we don't have to do this again
+		TARDISUpgradeData tud = new TARDISUpgradeData();
+		tud.setSchematic(schm);
+		tud.setPrevious(schm);
+		tud.setWall("ORANGE_WOOL");
+		tud.setFloor("LIGHT_GRAY_WOOL");
+		TARDISUpgradeBlockScanner scanner = new TARDISUpgradeBlockScanner(plugin, tud, uuid);
+		TARDISBlockScannerData check = scanner.check();
+		if (!check.getBeacon().isEmpty()) {
+			HashMap<String, Object> set = new HashMap<>();
+			set.put("beacon", check.getBeacon());
+			HashMap<String, Object> where = new HashMap<>();
+			where.put("uuid", uuid.toString());
+			plugin.getQueryFactory().doUpdate("tardis", set, where);
+		}
+	}
 }

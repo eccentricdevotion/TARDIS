@@ -30,44 +30,44 @@ import java.util.HashMap;
  */
 class TARDISEjectCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISEjectCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISEjectCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean eject(Player player) {
-        if (!TARDISPermission.hasPermission(player, "tardis.eject")) {
-            TARDISMessage.send(player, "NO_PERMS");
-            return true;
-        }
-        // check they are still in the TARDIS world
-        if (!plugin.getUtils().inTARDISWorld(player)) {
-            TARDISMessage.send(player, "CMD_IN_WORLD");
-            return true;
-        }
-        // must have a TARDIS
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (!rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "NOT_A_TIMELORD");
-            return false;
-        }
-        int ownerid = rs.getTardis_id();
-        HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("uuid", player.getUniqueId().toString());
-        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-        if (!rst.resultSet()) {
-            TARDISMessage.send(player, "NOT_IN_TARDIS");
-            return false;
-        }
-        int thisid = rst.getTardis_id();
-        // must be timelord of the TARDIS
-        if (thisid != ownerid) {
-            TARDISMessage.send(player, "CMD_ONLY_TL");
-            return false;
-        }
-        // track the player
-        plugin.getTrackerKeeper().getEjecting().put(player.getUniqueId(), thisid);
-        return true;
-    }
+	boolean eject(Player player) {
+		if (!TARDISPermission.hasPermission(player, "tardis.eject")) {
+			TARDISMessage.send(player, "NO_PERMS");
+			return true;
+		}
+		// check they are still in the TARDIS world
+		if (!plugin.getUtils().inTARDISWorld(player)) {
+			TARDISMessage.send(player, "CMD_IN_WORLD");
+			return true;
+		}
+		// must have a TARDIS
+		ResultSetTardisID rs = new ResultSetTardisID(plugin);
+		if (!rs.fromUUID(player.getUniqueId().toString())) {
+			TARDISMessage.send(player, "NOT_A_TIMELORD");
+			return false;
+		}
+		int ownerid = rs.getTardis_id();
+		HashMap<String, Object> wheret = new HashMap<>();
+		wheret.put("uuid", player.getUniqueId().toString());
+		ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+		if (!rst.resultSet()) {
+			TARDISMessage.send(player, "NOT_IN_TARDIS");
+			return false;
+		}
+		int thisid = rst.getTardis_id();
+		// must be timelord of the TARDIS
+		if (thisid != ownerid) {
+			TARDISMessage.send(player, "CMD_ONLY_TL");
+			return false;
+		}
+		// track the player
+		plugin.getTrackerKeeper().getEjecting().put(player.getUniqueId(), thisid);
+		return true;
+	}
 }

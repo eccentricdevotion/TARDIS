@@ -34,69 +34,69 @@ import static me.eccentric_nz.TARDIS.utility.TARDISSpiral.SPIRAL;
  */
 public class TARDISVoidUpdate {
 
-    private final TARDIS plugin;
-    private final int id;
-    private int taskID;
+	private final TARDIS plugin;
+	private final int id;
+	private int taskID;
 
-    public TARDISVoidUpdate(TARDIS plugin, int id) {
-        this.plugin = plugin;
-        this.id = id;
-    }
+	public TARDISVoidUpdate(TARDIS plugin, int id) {
+		this.plugin = plugin;
+		this.id = id;
+	}
 
-    public void updateBiome() {
-        // get TIPS slot
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
-            // get start chunk for this TARDIS
-            String[] cstr = tardis.getChunk().split(":");
-            World w = TARDISAliasResolver.getWorldFromAlias(cstr[0]);
-            int cx = TARDISNumberParsers.parseInt(cstr[1]);
-            int cz = TARDISNumberParsers.parseInt(cstr[2]);
-            taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Updater(w, cx, cz), 1L, 20L);
-        }
-    }
+	public void updateBiome() {
+		// get TIPS slot
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("tardis_id", id);
+		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+		if (rs.resultSet()) {
+			Tardis tardis = rs.getTardis();
+			// get start chunk for this TARDIS
+			String[] cstr = tardis.getChunk().split(":");
+			World w = TARDISAliasResolver.getWorldFromAlias(cstr[0]);
+			int cx = TARDISNumberParsers.parseInt(cstr[1]);
+			int cz = TARDISNumberParsers.parseInt(cstr[2]);
+			taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Updater(w, cx, cz), 1L, 20L);
+		}
+	}
 
-    class Updater implements Runnable {
+	class Updater implements Runnable {
 
-        private final World world;
-        private final int cx;
-        private final int cz;
-        private int idx = 0;
+		private final World world;
+		private final int cx;
+		private final int cz;
+		private int idx = 0;
 
-        Updater(World world, int cx, int cz) {
-            this.world = world;
-            this.cx = cx;
-            this.cz = cz;
-        }
+		Updater(World world, int cx, int cz) {
+			this.world = world;
+			this.cx = cx;
+			this.cz = cz;
+		}
 
-        @Override
-        public void run() {
-            Chunk chunk = world.getChunkAt(cx, cz);
-            if (!chunk.isLoaded()) {
-                chunk.load();
-            }
-            int sx = (cx + SPIRAL.get(idx).x) * 16;
-            int ex = sx + 16;
-            int sz = (cz + SPIRAL.get(idx).y) * 16;
-            int ez = sz + 16;
-            if (TARDISStaticUtils.getBiomeAt(world.getBlockAt(sx, 64, sz).getLocation()).equals(TARDISBiome.THE_END)) {
-                for (int x = sx; x < ex; x++) {
-                    for (int z = sz; z < ez; z++) {
-                        for (int y = 48; y < 81; y += 2) {
-                            world.setBiome(x, y, z, Biome.THE_VOID);
-                        }
-                    }
-                }
-            }
-            plugin.getTardisHelper().refreshChunk(chunk);
-            idx++;
-            if (idx == 81) {
-                plugin.getServer().getScheduler().cancelTask(taskID);
-                taskID = 0;
-            }
-        }
-    }
+		@Override
+		public void run() {
+			Chunk chunk = world.getChunkAt(cx, cz);
+			if (!chunk.isLoaded()) {
+				chunk.load();
+			}
+			int sx = (cx + SPIRAL.get(idx).x) * 16;
+			int ex = sx + 16;
+			int sz = (cz + SPIRAL.get(idx).y) * 16;
+			int ez = sz + 16;
+			if (TARDISStaticUtils.getBiomeAt(world.getBlockAt(sx, 64, sz).getLocation()).equals(TARDISBiome.THE_END)) {
+				for (int x = sx; x < ex; x++) {
+					for (int z = sz; z < ez; z++) {
+						for (int y = 48; y < 81; y += 2) {
+							world.setBiome(x, y, z, Biome.THE_VOID);
+						}
+					}
+				}
+			}
+			plugin.getTardisHelper().refreshChunk(chunk);
+			idx++;
+			if (idx == 81) {
+				plugin.getServer().getScheduler().cancelTask(taskID);
+				taskID = 0;
+			}
+		}
+	}
 }

@@ -26,50 +26,50 @@ import org.bukkit.event.HandlerList;
  */
 public class TARDISLocationEvent extends Event {
 
-    private static final HandlerList HANDLERS = new HandlerList();
-    private final Player player;
-    private final int tardis_id;
-    private final Location location;
+	private static final HandlerList HANDLERS = new HandlerList();
+	private final Player player;
+	private final int tardis_id;
+	private final Location location;
 
-    TARDISLocationEvent(Player player, int tardisid, Location location) {
-        this.player = player;
-        tardis_id = tardisid;
-        this.location = location;
-    }
+	TARDISLocationEvent(Player player, int tardisid, Location location) {
+		this.player = player;
+		tardis_id = tardisid;
+		this.location = location;
+	}
 
-    /**
-     * Returns the player involved in this event.
-     *
-     * @return the player
-     */
-    public Player getPlayer() {
-        return player;
-    }
+	public static HandlerList getHandlerList() {
+		return HANDLERS;
+	}
 
-    /**
-     * Returns the tardis_id of the TARDIS in the database.
-     *
-     * @return the TARDIS location
-     */
-    public int getTardis_id() {
-        return tardis_id;
-    }
+	/**
+	 * Returns the player involved in this event.
+	 *
+	 * @return the player
+	 */
+	public Player getPlayer() {
+		return player;
+	}
 
-    /**
-     * Returns the exterior location of the TARDIS.
-     *
-     * @return the TARDIS location
-     */
-    public Location getLocation() {
-        return location;
-    }
+	/**
+	 * Returns the tardis_id of the TARDIS in the database.
+	 *
+	 * @return the TARDIS location
+	 */
+	public int getTardis_id() {
+		return tardis_id;
+	}
 
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLERS;
-    }
+	/**
+	 * Returns the exterior location of the TARDIS.
+	 *
+	 * @return the TARDIS location
+	 */
+	public Location getLocation() {
+		return location;
+	}
 
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return HANDLERS;
+	}
 }

@@ -31,46 +31,46 @@ import java.util.Collections;
  */
 class TARDISKeyMenuInventory {
 
-    private final ItemStack[] menu;
+	private final ItemStack[] menu;
 
-    TARDISKeyMenuInventory() {
-        menu = getItemStack();
-    }
+	TARDISKeyMenuInventory() {
+		menu = getItemStack();
+	}
 
-    /**
-     * Constructs an inventory for the Player Preferences Menu GUI.
-     *
-     * @return an Array of itemStacks (an inventory)
-     */
-    private ItemStack[] getItemStack() {
+	/**
+	 * Constructs an inventory for the Player Preferences Menu GUI.
+	 *
+	 * @return an Array of itemStacks (an inventory)
+	 */
+	private ItemStack[] getItemStack() {
 
-        ItemStack[] itemStacks = new ItemStack[27];
+		ItemStack[] itemStacks = new ItemStack[27];
 
-        for (GUIKeyPreferences key : GUIKeyPreferences.values()) {
-            ItemStack is = new ItemStack(key.getMaterial(), 1);
-            ItemMeta im = is.getItemMeta();
-            if (key == GUIKeyPreferences.CLOSE || key == GUIKeyPreferences.INSTRUCTIONS) {
-                im.setDisplayName(key.getName());
-            } else {
-                im.setDisplayName(key.getChatColor() + "TARDIS Key");
-            }
-            if (!key.getLore().isEmpty()) {
-                if (key.getLore().contains("~")) {
-                    String[] split = key.getLore().split("~");
-                    im.setLore(Arrays.asList(split));
-                } else {
-                    im.setLore(Collections.singletonList(key.getLore()));
-                }
-            }
-            im.setCustomModelData(key.getCustomModelData());
-            is.setItemMeta(im);
-            itemStacks[key.getSlot()] = is;
-        }
+		for (GUIKeyPreferences key : GUIKeyPreferences.values()) {
+			ItemStack is = new ItemStack(key.getMaterial(), 1);
+			ItemMeta im = is.getItemMeta();
+			if (key == GUIKeyPreferences.CLOSE || key == GUIKeyPreferences.INSTRUCTIONS) {
+				im.setDisplayName(key.getName());
+			} else {
+				im.setDisplayName(key.getChatColor() + "TARDIS Key");
+			}
+			if (!key.getLore().isEmpty()) {
+				if (key.getLore().contains("~")) {
+					String[] split = key.getLore().split("~");
+					im.setLore(Arrays.asList(split));
+				} else {
+					im.setLore(Collections.singletonList(key.getLore()));
+				}
+			}
+			im.setCustomModelData(key.getCustomModelData());
+			is.setItemMeta(im);
+			itemStacks[key.getSlot()] = is;
+		}
 
-        return itemStacks;
-    }
+		return itemStacks;
+	}
 
-    public ItemStack[] getMenu() {
-        return menu;
-    }
+	public ItemStack[] getMenu() {
+		return menu;
+	}
 }

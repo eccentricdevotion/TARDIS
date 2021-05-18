@@ -36,62 +36,62 @@ import java.util.UUID;
  */
 class TARDISManualFlightRunnable implements Runnable {
 
-    private final TARDIS plugin;
-    private final List<Location> target;
-    private final List<String> controls = Arrays.asList("Helmic Regulator", "Astrosextant Rectifier", "Gravitic Anomaliser", "Absolute Tesseractulator");
-    private int taskID;
-    private static final int LOOPS = 10;
-    private int i = 0;
-    private final Player player;
-    private final UUID uuid;
+	private static final int LOOPS = 10;
+	private final TARDIS plugin;
+	private final List<Location> target;
+	private final List<String> controls = Arrays.asList("Helmic Regulator", "Astrosextant Rectifier", "Gravitic Anomaliser", "Absolute Tesseractulator");
+	private final Player player;
+	private final UUID uuid;
+	private int taskID;
+	private int i = 0;
 
-    TARDISManualFlightRunnable(TARDIS plugin, Player player, int id) {
-        this.plugin = plugin;
-        this.player = player;
-        target = getRepeaterList(id);
-        uuid = player.getUniqueId();
-        plugin.getTrackerKeeper().getRepeaters().put(uuid, target);
-    }
+	TARDISManualFlightRunnable(TARDIS plugin, Player player, int id) {
+		this.plugin = plugin;
+		this.player = player;
+		target = getRepeaterList(id);
+		uuid = player.getUniqueId();
+		plugin.getTrackerKeeper().getRepeaters().put(uuid, target);
+	}
 
-    @Override
-    public void run() {
-        // always add them to the tracker, in case they sit there and do nothing...
-        plugin.getTrackerKeeper().getCount().put(uuid, 0);
-        if (i < LOOPS) {
-            i++;
-            if (target.size() < 4) {
-                TARDISMessage.send(player, "FLIGHT_BAD");
-                return;
-            }
-            int r = TARDISConstants.RANDOM.nextInt(4);
-            Location loc = target.get(r);
-            TARDISMessage.send(player, "FLIGHT_CLICK", controls.get(r));
-            loc.getWorld().playEffect(loc, Effect.STEP_SOUND, 152);
-            plugin.getTrackerKeeper().getFlight().put(player.getUniqueId(), loc.toString());
-        } else {
-            int blocks = 10 - plugin.getTrackerKeeper().getCount().get(player.getUniqueId());
-            plugin.getServer().getScheduler().cancelTask(taskID);
-            taskID = 0;
-            plugin.getTrackerKeeper().getCount().remove(player.getUniqueId());
-            plugin.getTrackerKeeper().getFlight().remove(uuid);
-            // adjust location
-            if (blocks != 0) {
-                Location adjusted = new TARDISFlightAdjustment(plugin).getLocation(plugin.getTrackerKeeper().getFlightData().get(uuid), blocks);
-                plugin.getTrackerKeeper().getFlightData().get(uuid).setLocation(adjusted);
-            }
-            plugin.getTrackerKeeper().getRepeaters().remove(uuid);
-        }
-    }
+	@Override
+	public void run() {
+		// always add them to the tracker, in case they sit there and do nothing...
+		plugin.getTrackerKeeper().getCount().put(uuid, 0);
+		if (i < LOOPS) {
+			i++;
+			if (target.size() < 4) {
+				TARDISMessage.send(player, "FLIGHT_BAD");
+				return;
+			}
+			int r = TARDISConstants.RANDOM.nextInt(4);
+			Location loc = target.get(r);
+			TARDISMessage.send(player, "FLIGHT_CLICK", controls.get(r));
+			loc.getWorld().playEffect(loc, Effect.STEP_SOUND, 152);
+			plugin.getTrackerKeeper().getFlight().put(player.getUniqueId(), loc.toString());
+		} else {
+			int blocks = 10 - plugin.getTrackerKeeper().getCount().get(player.getUniqueId());
+			plugin.getServer().getScheduler().cancelTask(taskID);
+			taskID = 0;
+			plugin.getTrackerKeeper().getCount().remove(player.getUniqueId());
+			plugin.getTrackerKeeper().getFlight().remove(uuid);
+			// adjust location
+			if (blocks != 0) {
+				Location adjusted = new TARDISFlightAdjustment(plugin).getLocation(plugin.getTrackerKeeper().getFlightData().get(uuid), blocks);
+				plugin.getTrackerKeeper().getFlightData().get(uuid).setLocation(adjusted);
+			}
+			plugin.getTrackerKeeper().getRepeaters().remove(uuid);
+		}
+	}
 
-    private List<Location> getRepeaterList(int id) {
-        ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, id, 0);
-        if (rsr.resultSet()) {
-            return rsr.getLocations();
-        }
-        return null;
-    }
+	private List<Location> getRepeaterList(int id) {
+		ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, id, 0);
+		if (rsr.resultSet()) {
+			return rsr.getLocations();
+		}
+		return null;
+	}
 
-    public void setTaskID(int taskID) {
-        this.taskID = taskID;
-    }
+	public void setTaskID(int taskID) {
+		this.taskID = taskID;
+	}
 }

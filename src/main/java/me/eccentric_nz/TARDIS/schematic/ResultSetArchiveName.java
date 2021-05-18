@@ -29,42 +29,42 @@ import java.sql.SQLException;
  */
 public class ResultSetArchiveName {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final String name;
-    private final String prefix;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final String name;
+	private final String prefix;
 
-    public ResultSetArchiveName(TARDIS plugin, String name) {
-        this.plugin = plugin;
-        this.name = name;
-        prefix = this.plugin.getPrefix();
-    }
+	public ResultSetArchiveName(TARDIS plugin, String name) {
+		this.plugin = plugin;
+		this.name = name;
+		prefix = this.plugin.getPrefix();
+	}
 
-    public boolean exists() {
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String query = "SELECT name FROM " + prefix + "archive WHERE name = ?";
-        try {
-            service.testConnection(connection);
-            ps = connection.prepareStatement(query);
-            ps.setString(1, name);
-            rs = ps.executeQuery();
-            return rs.isBeforeFirst();
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for archive name! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing archive name! " + e.getMessage());
-            }
-        }
-    }
+	public boolean exists() {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String query = "SELECT name FROM " + prefix + "archive WHERE name = ?";
+		try {
+			service.testConnection(connection);
+			ps = connection.prepareStatement(query);
+			ps.setString(1, name);
+			rs = ps.executeQuery();
+			return rs.isBeforeFirst();
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for archive name! " + e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing archive name! " + e.getMessage());
+			}
+		}
+	}
 }

@@ -29,84 +29,84 @@ import java.util.List;
 
 public class TARDISTransmatInventory {
 
-    private final ItemStack[] menu;
-    private final TARDIS plugin;
-    private final int id;
+	private final ItemStack[] menu;
+	private final TARDIS plugin;
+	private final int id;
 
-    public TARDISTransmatInventory(TARDIS plugin, int id) {
-        this.plugin = plugin;
-        this.id = id;
-        menu = getItemStack();
-    }
+	public TARDISTransmatInventory(TARDIS plugin, int id) {
+		this.plugin = plugin;
+		this.id = id;
+		menu = getItemStack();
+	}
 
-    /**
-     * Constructs an inventory for the Player Preferences Menu GUI.
-     *
-     * @return an Array of itemStacks (an inventory)
-     */
-    private ItemStack[] getItemStack() {
-        ItemStack[] stack = new ItemStack[54];
-        int i = 0;
-        // get transmat locations
-        ResultSetTransmatList rslist = new ResultSetTransmatList(plugin, id);
-        if (rslist.resultSet()) {
-            for (Transmat t : rslist.getData()) {
-                if (i > 52) {
-                    break;
-                }
-                ItemStack is = new ItemStack(Material.MAP, 1);
-                ItemMeta im = is.getItemMeta();
-                im.setCustomModelData(4);
-                im.setDisplayName(t.getName());
-                List<String> lore = new ArrayList<>();
-                lore.add(String.format("X: %.2f", t.getX()));
-                lore.add(String.format("Y: %.2f", t.getY()));
-                lore.add(String.format("Z: %.2f", t.getZ()));
-                lore.add(String.format("Yaw: %.2f", t.getYaw()));
-                im.setLore(lore);
-                is.setItemMeta(im);
-                stack[i] = is;
-                if (i % 9 == 7) {
-                    i += 2;
-                } else {
-                    i++;
-                }
-            }
-            // info
-            ItemStack info = new ItemStack(GUITransmat.INFO.getMaterial(), 1);
-            ItemMeta meta = info.getItemMeta();
-            meta.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
-            meta.setCustomModelData(GUITransmat.INFO.getCustomModelData());
-            meta.setLore(plugin.getChameleonGuis().getStringList("INFO_TRANSMAT"));
-            info.setItemMeta(meta);
-            stack[17] = info;
-            // teleport
-            ItemStack tele = new ItemStack(GUITransmat.TRANSMAT.getMaterial(), 1);
-            ItemMeta port = tele.getItemMeta();
-            port.setDisplayName(plugin.getLanguage().getString("BUTTON_TRANSMAT"));
-            port.setCustomModelData(GUITransmat.TRANSMAT.getCustomModelData());
-            tele.setItemMeta(port);
-            stack[17] = tele;
-            // delete
-            ItemStack delete = new ItemStack(GUITransmat.DELETE.getMaterial(), 1);
-            ItemMeta dim = delete.getItemMeta();
-            dim.setDisplayName(plugin.getLanguage().getString("BUTTON_DELETE"));
-            dim.setCustomModelData(GUITransmat.DELETE.getCustomModelData());
-            delete.setItemMeta(dim);
-            stack[35] = delete;
-        }
-        // close
-        ItemStack close = new ItemStack(GUITransmat.CLOSE.getMaterial(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUITransmat.CLOSE.getCustomModelData());
-        close.setItemMeta(close_im);
-        stack[53] = close;
+	/**
+	 * Constructs an inventory for the Player Preferences Menu GUI.
+	 *
+	 * @return an Array of itemStacks (an inventory)
+	 */
+	private ItemStack[] getItemStack() {
+		ItemStack[] stack = new ItemStack[54];
+		int i = 0;
+		// get transmat locations
+		ResultSetTransmatList rslist = new ResultSetTransmatList(plugin, id);
+		if (rslist.resultSet()) {
+			for (Transmat t : rslist.getData()) {
+				if (i > 52) {
+					break;
+				}
+				ItemStack is = new ItemStack(Material.MAP, 1);
+				ItemMeta im = is.getItemMeta();
+				im.setCustomModelData(4);
+				im.setDisplayName(t.getName());
+				List<String> lore = new ArrayList<>();
+				lore.add(String.format("X: %.2f", t.getX()));
+				lore.add(String.format("Y: %.2f", t.getY()));
+				lore.add(String.format("Z: %.2f", t.getZ()));
+				lore.add(String.format("Yaw: %.2f", t.getYaw()));
+				im.setLore(lore);
+				is.setItemMeta(im);
+				stack[i] = is;
+				if (i % 9 == 7) {
+					i += 2;
+				} else {
+					i++;
+				}
+			}
+			// info
+			ItemStack info = new ItemStack(GUITransmat.INFO.getMaterial(), 1);
+			ItemMeta meta = info.getItemMeta();
+			meta.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
+			meta.setCustomModelData(GUITransmat.INFO.getCustomModelData());
+			meta.setLore(plugin.getChameleonGuis().getStringList("INFO_TRANSMAT"));
+			info.setItemMeta(meta);
+			stack[17] = info;
+			// teleport
+			ItemStack tele = new ItemStack(GUITransmat.TRANSMAT.getMaterial(), 1);
+			ItemMeta port = tele.getItemMeta();
+			port.setDisplayName(plugin.getLanguage().getString("BUTTON_TRANSMAT"));
+			port.setCustomModelData(GUITransmat.TRANSMAT.getCustomModelData());
+			tele.setItemMeta(port);
+			stack[17] = tele;
+			// delete
+			ItemStack delete = new ItemStack(GUITransmat.DELETE.getMaterial(), 1);
+			ItemMeta dim = delete.getItemMeta();
+			dim.setDisplayName(plugin.getLanguage().getString("BUTTON_DELETE"));
+			dim.setCustomModelData(GUITransmat.DELETE.getCustomModelData());
+			delete.setItemMeta(dim);
+			stack[35] = delete;
+		}
+		// close
+		ItemStack close = new ItemStack(GUITransmat.CLOSE.getMaterial(), 1);
+		ItemMeta close_im = close.getItemMeta();
+		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+		close_im.setCustomModelData(GUITransmat.CLOSE.getCustomModelData());
+		close.setItemMeta(close_im);
+		stack[53] = close;
 
-        return stack;
-    }
+		return stack;
+	}
 
-    public ItemStack[] getMenu() {
-        return menu;
-    }
+	public ItemStack[] getMenu() {
+		return menu;
+	}
 }

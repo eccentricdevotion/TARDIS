@@ -30,35 +30,35 @@ import java.util.UUID;
 
 public class SudoRepair {
 
-    private final TARDIS plugin;
-    private final UUID uuid;
-    private final boolean clean;
+	private final TARDIS plugin;
+	private final UUID uuid;
+	private final boolean clean;
 
-    public SudoRepair(TARDIS plugin, UUID uuid, boolean clean) {
-        this.plugin = plugin;
-        this.uuid = uuid;
-        this.clean = clean;
-    }
+	public SudoRepair(TARDIS plugin, UUID uuid, boolean clean) {
+		this.plugin = plugin;
+		this.uuid = uuid;
+		this.clean = clean;
+	}
 
-    public boolean repair() {
-        Player player = plugin.getServer().getPlayer(uuid);
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (!rs.resultSet()) {
-            TARDISMessage.send(player, "NO_TARDIS");
-            return false;
-        }
-        Tardis tardis = rs.getTardis();
-        // get player's current console
-        Schematic current_console = tardis.getSchematic();
-        int level = tardis.getArtron_level();
-        TARDISUpgradeData tud = new TARDISUpgradeData();
-        tud.setPrevious(current_console);
-        tud.setLevel(level);
-        plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
-        TARDISRepair tr = new TARDISRepair(plugin, player);
-        tr.restore(clean);
-        return true;
-    }
+	public boolean repair() {
+		Player player = plugin.getServer().getPlayer(uuid);
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("uuid", player.getUniqueId().toString());
+		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+		if (!rs.resultSet()) {
+			TARDISMessage.send(player, "NO_TARDIS");
+			return false;
+		}
+		Tardis tardis = rs.getTardis();
+		// get player's current console
+		Schematic current_console = tardis.getSchematic();
+		int level = tardis.getArtron_level();
+		TARDISUpgradeData tud = new TARDISUpgradeData();
+		tud.setPrevious(current_console);
+		tud.setLevel(level);
+		plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
+		TARDISRepair tr = new TARDISRepair(plugin, player);
+		tr.restore(clean);
+		return true;
+	}
 }

@@ -31,21 +31,21 @@ import org.bukkit.event.Listener;
  */
 public class TARDISWorldResetListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISWorldResetListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISWorldResetListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onMVAReset(MVAResetEvent event) {
-        String world = event.getWorld();
-        plugin.getTrackerKeeper().getReset().add(world);
-    }
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onMVAReset(MVAResetEvent event) {
+		String world = event.getWorld();
+		plugin.getTrackerKeeper().getReset().add(world);
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onMVAResetFinished(MVAResetFinishedEvent event) {
-        String world = event.getWorld();
-        plugin.getTrackerKeeper().getReset().remove(world);
-    }
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onMVAResetFinished(MVAResetFinishedEvent event) {
+		String world = event.getWorld();
+		plugin.getTrackerKeeper().getReset().remove(world);
+	}
 }

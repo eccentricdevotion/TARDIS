@@ -36,44 +36,44 @@ import java.util.HashMap;
  */
 public class TARDISDestroyerInner {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISDestroyerInner(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISDestroyerInner(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    /**
-     * Destroys the inside of the TARDIS.
-     *
-     * @param schematic the name of the schematic file to use can be DEFAULT, BIGGER or DELUXE.
-     * @param id        the unique key of the record for this TARDIS in the database.
-     * @param w         the world where the TARDIS is to be built.
-     * @param slot      the TIPS slot number
-     */
-    public void destroyInner(Schematic schematic, int id, World w, int slot) {
-        // destroy TARDIS
-        if (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
-            plugin.debug(TARDIS.plugin.getLanguage().getString("CONFIG_CREATION_WORLD"));
-            return;
-        }
-        Location wgl;
-        TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
-        TARDISTIPSData coords;
-        if (schematic.getPermission().equals("junk")) {
-            coords = tips.getTIPSJunkData();
-        } else {
-            coords = tips.getTIPSData(slot);
-        }
-        tips.reclaimChunks(w, id);
-        wgl = new Location(w, coords.getMinX(), 64, coords.getMinZ());
-        // remove blocks saved to blocks table (iron/gold/diamond/emerald)
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        plugin.getQueryFactory().doDelete("blocks", where);
-        // remove from protectBlockMap - remove(id) would only remove the first one
-        plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));
-        if (plugin.isWorldGuardOnServer()) {
-            plugin.getWorldGuardUtils().removeRegion(wgl);
-        }
-    }
+	/**
+	 * Destroys the inside of the TARDIS.
+	 *
+	 * @param schematic the name of the schematic file to use can be DEFAULT, BIGGER or DELUXE.
+	 * @param id        the unique key of the record for this TARDIS in the database.
+	 * @param w         the world where the TARDIS is to be built.
+	 * @param slot      the TIPS slot number
+	 */
+	public void destroyInner(Schematic schematic, int id, World w, int slot) {
+		// destroy TARDIS
+		if (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
+			plugin.debug(TARDIS.plugin.getLanguage().getString("CONFIG_CREATION_WORLD"));
+			return;
+		}
+		Location wgl;
+		TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
+		TARDISTIPSData coords;
+		if (schematic.getPermission().equals("junk")) {
+			coords = tips.getTIPSJunkData();
+		} else {
+			coords = tips.getTIPSData(slot);
+		}
+		tips.reclaimChunks(w, id);
+		wgl = new Location(w, coords.getMinX(), 64, coords.getMinZ());
+		// remove blocks saved to blocks table (iron/gold/diamond/emerald)
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("tardis_id", id);
+		plugin.getQueryFactory().doDelete("blocks", where);
+		// remove from protectBlockMap - remove(id) would only remove the first one
+		plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));
+		if (plugin.isWorldGuardOnServer()) {
+			plugin.getWorldGuardUtils().removeRegion(wgl);
+		}
+	}
 }

@@ -30,37 +30,37 @@ import java.util.Locale;
  */
 class TARDISRegionFlagCommand {
 
-    private final TARDIS plugin;
-    private final List<String> which = Arrays.asList("entry", "exit");
+	private final TARDIS plugin;
+	private final List<String> which = Arrays.asList("entry", "exit");
 
-    TARDISRegionFlagCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISRegionFlagCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean toggleEntryExit(CommandSender sender, String[] args) {
-        String flag = args[1].toLowerCase(Locale.ENGLISH);
-        if (!which.contains(flag)) {
-            TARDISMessage.message(sender, "You need to specify which flag type you want to change to - entry or exit.");
-            return true;
-        }
-        if (!plugin.getConfig().getBoolean("creation.default_world")) {
-            TARDISMessage.message(sender, "This command only works if you are using a default world for TARDISes.");
-            return true;
-        }
-        String world_name = plugin.getConfig().getString("creation.default_world_name");
-        // get all regions for the default world
-        List<String> world_regions = plugin.getWorldGuardUtils().getTARDISRegions(TARDISAliasResolver.getWorldFromAlias(world_name));
-        world_regions.forEach((region_id) -> {
-            if (flag.endsWith("entry")) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world_name);
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " entry -w " + world_name + " -g nonmembers deny");
-            } else {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " entry -w " + world_name);
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world_name + " -g everyone deny");
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " use -w " + world_name + " allow");
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " chest-access -w " + world_name);
-            }
-        });
-        return true;
-    }
+	boolean toggleEntryExit(CommandSender sender, String[] args) {
+		String flag = args[1].toLowerCase(Locale.ENGLISH);
+		if (!which.contains(flag)) {
+			TARDISMessage.message(sender, "You need to specify which flag type you want to change to - entry or exit.");
+			return true;
+		}
+		if (!plugin.getConfig().getBoolean("creation.default_world")) {
+			TARDISMessage.message(sender, "This command only works if you are using a default world for TARDISes.");
+			return true;
+		}
+		String world_name = plugin.getConfig().getString("creation.default_world_name");
+		// get all regions for the default world
+		List<String> world_regions = plugin.getWorldGuardUtils().getTARDISRegions(TARDISAliasResolver.getWorldFromAlias(world_name));
+		world_regions.forEach((region_id) -> {
+			if (flag.endsWith("entry")) {
+				plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world_name);
+				plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " entry -w " + world_name + " -g nonmembers deny");
+			} else {
+				plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " entry -w " + world_name);
+				plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world_name + " -g everyone deny");
+				plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " use -w " + world_name + " allow");
+				plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " chest-access -w " + world_name);
+			}
+		});
+		return true;
+	}
 }

@@ -31,49 +31,49 @@ import java.util.List;
 
 class TARDISHandlesDiskCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISHandlesDiskCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISHandlesDiskCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean renameDisk(Player player, String[] args) {
-        // check perms
-        if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
-            TARDISMessage.send(player, "NO_PERMS");
-            return true;
-        }
-        // check if item in hand is a Handles program disk
-        ItemStack disk = player.getInventory().getItemInMainHand();
-        if (disk != null && disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
-            ItemMeta dim = disk.getItemMeta();
-            if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
-                // get the program_id from the disk
-                int pid = TARDISNumberParsers.parseInt(dim.getLore().get(1));
-                // get the name - must be 32 chars or less
-                StringBuilder sb = new StringBuilder();
-                for (int s = 1; s < args.length; s++) {
-                    sb.append(args[s]).append(" ");
-                }
-                String name = sb.toString().trim();
-                if (name.length() < 3 || name.length() > 32) {
-                    TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
-                    return true;
-                }
-                // rename the disk
-                HashMap<String, Object> set = new HashMap<>();
-                set.put("name", name);
-                HashMap<String, Object> wherep = new HashMap<>();
-                wherep.put("program_id", pid);
-                plugin.getQueryFactory().doUpdate("programs", set, wherep);
-                List<String> lore = dim.getLore();
-                lore.set(0, name);
-                dim.setLore(lore);
-                disk.setItemMeta(dim);
-            }
-        } else {
-            TARDISMessage.send(player, "HANDLES_DISK");
-        }
-        return true;
-    }
+	boolean renameDisk(Player player, String[] args) {
+		// check perms
+		if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
+			TARDISMessage.send(player, "NO_PERMS");
+			return true;
+		}
+		// check if item in hand is a Handles program disk
+		ItemStack disk = player.getInventory().getItemInMainHand();
+		if (disk != null && disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
+			ItemMeta dim = disk.getItemMeta();
+			if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
+				// get the program_id from the disk
+				int pid = TARDISNumberParsers.parseInt(dim.getLore().get(1));
+				// get the name - must be 32 chars or less
+				StringBuilder sb = new StringBuilder();
+				for (int s = 1; s < args.length; s++) {
+					sb.append(args[s]).append(" ");
+				}
+				String name = sb.toString().trim();
+				if (name.length() < 3 || name.length() > 32) {
+					TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
+					return true;
+				}
+				// rename the disk
+				HashMap<String, Object> set = new HashMap<>();
+				set.put("name", name);
+				HashMap<String, Object> wherep = new HashMap<>();
+				wherep.put("program_id", pid);
+				plugin.getQueryFactory().doUpdate("programs", set, wherep);
+				List<String> lore = dim.getLore();
+				lore.set(0, name);
+				dim.setLore(lore);
+				disk.setItemMeta(dim);
+			}
+		} else {
+			TARDISMessage.send(player, "HANDLES_DISK");
+		}
+		return true;
+	}
 }

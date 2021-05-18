@@ -29,74 +29,74 @@ import java.util.Map;
  */
 class TARDISSQLUpdateLocations implements Runnable {
 
-    private final TARDIS plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final HashMap<String, Object> data;
-    private final String biome;
-    private final int id;
-    private final String prefix;
+	private final TARDIS plugin;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final HashMap<String, Object> data;
+	private final String biome;
+	private final int id;
+	private final String prefix;
 
-    /**
-     * Updates data in an SQLite database table. This method builds a prepared SQL statement from the parameters
-     * supplied and then executes the insert.
-     *
-     * @param plugin an instance of the main plugin class
-     * @param data   a HashMap<String, Object> of table fields and values to insert.
-     * @param id     the tardis_id
-     */
-    TARDISSQLUpdateLocations(TARDIS plugin, HashMap<String, Object> data, String biome, int id) {
-        this.plugin = plugin;
-        this.data = data;
-        this.biome = biome;
-        this.id = id;
-        prefix = this.plugin.getPrefix();
-    }
+	/**
+	 * Updates data in an SQLite database table. This method builds a prepared SQL statement from the parameters
+	 * supplied and then executes the insert.
+	 *
+	 * @param plugin an instance of the main plugin class
+	 * @param data   a HashMap<String, Object> of table fields and values to insert.
+	 * @param id     the tardis_id
+	 */
+	TARDISSQLUpdateLocations(TARDIS plugin, HashMap<String, Object> data, String biome, int id) {
+		this.plugin = plugin;
+		this.data = data;
+		this.biome = biome;
+		this.id = id;
+		prefix = this.plugin.getPrefix();
+	}
 
-    @Override
-    public void run() {
-        String[] tables = {"current", "next", "back"};
-        PreparedStatement ps = null;
-        StringBuilder sbu = new StringBuilder();
-        data.forEach((key, value) -> sbu.append(key).append(" = ?,"));
-        String updates = sbu.substring(0, sbu.length() - 1);
-        try {
-            service.testConnection(connection);
-            for (String s : tables) {
-                ps = connection.prepareStatement("UPDATE " + prefix + s + " SET " + updates + " WHERE tardis_id = ?");
-                int i = 1;
-                for (Map.Entry<String, Object> entry : data.entrySet()) {
-                    if (entry.getValue() instanceof String) {
-                        ps.setString(i, entry.getValue().toString());
-                    } else {
-                        ps.setInt(i, (Integer) entry.getValue());
-                    }
-                    i++;
-                }
-                ps.setInt(7, id);
-                ps.executeUpdate();
-            }
-            // set the biome if necessary
-            if (plugin.getConfig().getBoolean("police_box.set_biome")) {
-                // remember the current biome
-                String query = "UPDATE " + prefix + "current SET biome = ? WHERE tardis_id = ?";
-                service.testConnection(connection);
-                ps = connection.prepareStatement(query);
-                ps.setString(1, biome);
-                ps.setInt(2, id);
-                ps.executeUpdate();
-            }
-            data.clear();
-        } catch (SQLException e) {
-            plugin.debug("Update error for travel stop locations! " + e.getMessage());
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing travel stop location tables! " + e.getMessage());
-            }
-        }
-    }
+	@Override
+	public void run() {
+		String[] tables = {"current", "next", "back"};
+		PreparedStatement ps = null;
+		StringBuilder sbu = new StringBuilder();
+		data.forEach((key, value) -> sbu.append(key).append(" = ?,"));
+		String updates = sbu.substring(0, sbu.length() - 1);
+		try {
+			service.testConnection(connection);
+			for (String s : tables) {
+				ps = connection.prepareStatement("UPDATE " + prefix + s + " SET " + updates + " WHERE tardis_id = ?");
+				int i = 1;
+				for (Map.Entry<String, Object> entry : data.entrySet()) {
+					if (entry.getValue() instanceof String) {
+						ps.setString(i, entry.getValue().toString());
+					} else {
+						ps.setInt(i, (Integer) entry.getValue());
+					}
+					i++;
+				}
+				ps.setInt(7, id);
+				ps.executeUpdate();
+			}
+			// set the biome if necessary
+			if (plugin.getConfig().getBoolean("police_box.set_biome")) {
+				// remember the current biome
+				String query = "UPDATE " + prefix + "current SET biome = ? WHERE tardis_id = ?";
+				service.testConnection(connection);
+				ps = connection.prepareStatement(query);
+				ps.setString(1, biome);
+				ps.setInt(2, id);
+				ps.executeUpdate();
+			}
+			data.clear();
+		} catch (SQLException e) {
+			plugin.debug("Update error for travel stop locations! " + e.getMessage());
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing travel stop location tables! " + e.getMessage());
+			}
+		}
+	}
 }

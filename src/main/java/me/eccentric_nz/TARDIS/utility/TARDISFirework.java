@@ -32,82 +32,83 @@ import java.util.Random;
 
 public class TARDISFirework {
 
-    private static final Random RANDOM = new Random();
-    private static final Color[] COLORS;
-    private final FireworkMeta meta;
+	private static final Random RANDOM = new Random();
+	private static final Color[] COLORS;
 
-    static {
-        DyeColor[] values = DyeColor.values();
-        COLORS = new Color[values.length];
-        for (int i = 0; i < values.length; i++) {
-            COLORS[i] = values[i].getFireworkColor();
-        }
-    }
+	static {
+		DyeColor[] values = DyeColor.values();
+		COLORS = new Color[values.length];
+		for (int i = 0; i < values.length; i++) {
+			COLORS[i] = values[i].getFireworkColor();
+		}
+	}
 
-    private TARDISFirework(FireworkMeta meta, boolean isClean) {
-        if (isClean) {
-            this.meta = meta;
-        } else {
-            this.meta = getCleanMeta();
-            this.meta.setPower(meta.getPower());
-            this.meta.addEffects(meta.getEffects());
-        }
-    }
+	private final FireworkMeta meta;
 
-    public static TARDISFirework randomize() {
-        FireworkMeta meta = getCleanMeta();
-        meta.setPower(RANDOM.nextInt(3) + 1);
-        meta.addEffects(randomizeEffects(1, 2, 1, 2));
-        return new TARDISFirework(meta, true);
-    }
+	private TARDISFirework(FireworkMeta meta, boolean isClean) {
+		if (isClean) {
+			this.meta = meta;
+		} else {
+			this.meta = getCleanMeta();
+			this.meta.setPower(meta.getPower());
+			this.meta.addEffects(meta.getEffects());
+		}
+	}
 
-    private static int calculateRandom(int min, int max) throws IllegalArgumentException {
-        if (min < 0) {
-            throw new IllegalArgumentException("Min value can not be lower than 0");
-        } else if (max < 1) {
-            throw new IllegalArgumentException("Min value can not be lower than 1");
-        } else if (max < min) {
-            throw new IllegalArgumentException("Max value can not be lower than min value");
-        }
-        return min == max ? min : RANDOM.nextInt((max - min) + 1) + min;
-    }
+	public static TARDISFirework randomize() {
+		FireworkMeta meta = getCleanMeta();
+		meta.setPower(RANDOM.nextInt(3) + 1);
+		meta.addEffects(randomizeEffects(1, 2, 1, 2));
+		return new TARDISFirework(meta, true);
+	}
 
-    private static List<Color> randomizeColors(int min, int max) {
-        List<Color> colors = new ArrayList<>();
-        for (int a = 1; a <= calculateRandom(min, max); a++) {
-            Color c = COLORS[RANDOM.nextInt(COLORS.length)];
-            if (!colors.contains(c)) {
-                colors.add(c);
-            }
-        }
-        return colors;
-    }
+	private static int calculateRandom(int min, int max) throws IllegalArgumentException {
+		if (min < 0) {
+			throw new IllegalArgumentException("Min value can not be lower than 0");
+		} else if (max < 1) {
+			throw new IllegalArgumentException("Min value can not be lower than 1");
+		} else if (max < min) {
+			throw new IllegalArgumentException("Max value can not be lower than min value");
+		}
+		return min == max ? min : RANDOM.nextInt((max - min) + 1) + min;
+	}
 
-    private static List<FireworkEffect> randomizeEffects(int min, int max, int minColors, int maxColors) {
-        List<FireworkEffect> effects = new ArrayList<>();
-        for (int a = 1; a <= calculateRandom(min, max); a++) {
-            effects.add(FireworkEffect.builder().flicker(RANDOM.nextBoolean()).with(Type.values()[RANDOM.nextInt(Type.values().length)]).trail(RANDOM.nextBoolean()).withColor(randomizeColors(minColors, maxColors)).withFade(randomizeColors(minColors, maxColors)).build());
-        }
-        return effects;
-    }
+	private static List<Color> randomizeColors(int min, int max) {
+		List<Color> colors = new ArrayList<>();
+		for (int a = 1; a <= calculateRandom(min, max); a++) {
+			Color c = COLORS[RANDOM.nextInt(COLORS.length)];
+			if (!colors.contains(c)) {
+				colors.add(c);
+			}
+		}
+		return colors;
+	}
 
-    private Firework launch(Location l) {
-        Firework f = l.getWorld().spawn(l, Firework.class);
-        f.setFireworkMeta(meta);
-        return f;
-    }
+	private static List<FireworkEffect> randomizeEffects(int min, int max, int minColors, int maxColors) {
+		List<FireworkEffect> effects = new ArrayList<>();
+		for (int a = 1; a <= calculateRandom(min, max); a++) {
+			effects.add(FireworkEffect.builder().flicker(RANDOM.nextBoolean()).with(Type.values()[RANDOM.nextInt(Type.values().length)]).trail(RANDOM.nextBoolean()).withColor(randomizeColors(minColors, maxColors)).withFade(randomizeColors(minColors, maxColors)).build());
+		}
+		return effects;
+	}
 
-    public void displayEffects(TARDIS plugin, Location l) {
-        Firework f = launch(l);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                f.detonate();
-            }
-        }.runTaskLater(plugin, 1);
-    }
+	private static FireworkMeta getCleanMeta() {
+		return (FireworkMeta) new ItemStack(Material.FIREWORK_ROCKET).getItemMeta();
+	}
 
-    private static FireworkMeta getCleanMeta() {
-        return (FireworkMeta) new ItemStack(Material.FIREWORK_ROCKET).getItemMeta();
-    }
+	private Firework launch(Location l) {
+		Firework f = l.getWorld().spawn(l, Firework.class);
+		f.setFireworkMeta(meta);
+		return f;
+	}
+
+	public void displayEffects(TARDIS plugin, Location l) {
+		Firework f = launch(l);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				f.detonate();
+			}
+		}.runTaskLater(plugin, 1);
+	}
 }

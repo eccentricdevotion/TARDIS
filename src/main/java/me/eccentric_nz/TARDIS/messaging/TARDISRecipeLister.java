@@ -29,41 +29,41 @@ import java.util.List;
  */
 public class TARDISRecipeLister {
 
-    private final TARDIS plugin;
-    private final CommandSender sender;
-    private final TableGenerator tg;
+	private final TARDIS plugin;
+	private final CommandSender sender;
+	private final TableGenerator tg;
 
-    public TARDISRecipeLister(TARDIS plugin, CommandSender sender) {
-        this.plugin = plugin;
-        this.sender = sender;
-        if (TableGenerator.getSenderPrefs(sender)) {
-            tg = new TableGeneratorCustomFont(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
-        } else {
-            tg = new TableGeneratorSmallChar(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
-        }
-    }
+	public TARDISRecipeLister(TARDIS plugin, CommandSender sender) {
+		this.plugin = plugin;
+		this.sender = sender;
+		if (TableGenerator.getSenderPrefs(sender)) {
+			tg = new TableGeneratorCustomFont(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
+		} else {
+			tg = new TableGeneratorSmallChar(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
+		}
+	}
 
-    public void list() {
-        TARDISMessage.send(sender, "RECIPE_VIEW");
-        for (String line : createRecipeOptions()) {
-            sender.sendMessage(line);
-        }
-    }
+	public void list() {
+		TARDISMessage.send(sender, "RECIPE_VIEW");
+		for (String line : createRecipeOptions()) {
+			sender.sendMessage(line);
+		}
+	}
 
-    private List<String> createRecipeOptions() {
-        tg.addRow(ChatColor.GRAY + "" + ChatColor.UNDERLINE + "Command argument", ChatColor.DARK_GRAY + "" + ChatColor.UNDERLINE + "Recipe Result");
-        tg.addRow();
-        for (RecipeCategory category : RecipeCategory.values()) {
-            if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE) {
-                tg.addRow(category.getName(), "");
-                for (RecipeItem item : RecipeItem.values()) {
-                    if (item.getCategory() == category) {
-                        tg.addRow(category.getKeyColour() + item.toTabCompletionString(), category.getValueColour() + item.toRecipeString());
-                    }
-                }
-                tg.addRow();
-            }
-        }
-        return tg.generate(TableGeneratorSmallChar.Receiver.CLIENT, true, true);
-    }
+	private List<String> createRecipeOptions() {
+		tg.addRow(ChatColor.GRAY + "" + ChatColor.UNDERLINE + "Command argument", ChatColor.DARK_GRAY + "" + ChatColor.UNDERLINE + "Recipe Result");
+		tg.addRow();
+		for (RecipeCategory category : RecipeCategory.values()) {
+			if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE) {
+				tg.addRow(category.getName(), "");
+				for (RecipeItem item : RecipeItem.values()) {
+					if (item.getCategory() == category) {
+						tg.addRow(category.getKeyColour() + item.toTabCompletionString(), category.getValueColour() + item.toRecipeString());
+					}
+				}
+				tg.addRow();
+			}
+		}
+		return tg.generate(TableGeneratorSmallChar.Receiver.CLIENT, true, true);
+	}
 }

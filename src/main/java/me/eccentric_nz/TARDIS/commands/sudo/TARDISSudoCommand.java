@@ -30,65 +30,65 @@ import java.util.UUID;
 
 public class TARDISSudoCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISSudoCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISSudoCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("tardissudo")) {
-            if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
-                if (args.length < 1) {
-                    TARDISMessage.send(sender, "TOO_FEW_ARGS");
-                    return true;
-                }
-                Player player;
-                UUID uuid;
-                if (sender instanceof Player) {
-                    player = (Player) sender;
-                    uuid = player.getUniqueId();
-                } else {
-                    uuid = TARDISSudoTracker.CONSOLE_UUID;
-                }
-                String first = args[0];
-                if (first.equalsIgnoreCase("off")) {
-                    TARDISSudoTracker.SUDOERS.remove(uuid);
-                    TARDISMessage.send(sender, "SUDO_OFF");
-                } else {
-                    // must be a player name
-                    OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(args[0]);
-                    if (offlinePlayer == null) {
-                        TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-                        return true;
-                    }
-                    ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                    if (!rs.fromUUID(offlinePlayer.getUniqueId().toString())) {
-                        TARDISMessage.send(sender, "PLAYER_NO_TARDIS");
-                        return true;
-                    }
-                    TARDISSudoTracker.SUDOERS.put(uuid, offlinePlayer.getUniqueId());
-                    TARDISMessage.send(sender, "SUDO_ON", offlinePlayer.getName());
-                }
-            } else {
-                TARDISMessage.send(sender, "CMD_ADMIN");
-            }
-            return true;
-        }
-        return false;
-    }
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("tardissudo")) {
+			if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
+				if (args.length < 1) {
+					TARDISMessage.send(sender, "TOO_FEW_ARGS");
+					return true;
+				}
+				Player player;
+				UUID uuid;
+				if (sender instanceof Player) {
+					player = (Player) sender;
+					uuid = player.getUniqueId();
+				} else {
+					uuid = TARDISSudoTracker.CONSOLE_UUID;
+				}
+				String first = args[0];
+				if (first.equalsIgnoreCase("off")) {
+					TARDISSudoTracker.SUDOERS.remove(uuid);
+					TARDISMessage.send(sender, "SUDO_OFF");
+				} else {
+					// must be a player name
+					OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(args[0]);
+					if (offlinePlayer == null) {
+						TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+						return true;
+					}
+					ResultSetTardisID rs = new ResultSetTardisID(plugin);
+					if (!rs.fromUUID(offlinePlayer.getUniqueId().toString())) {
+						TARDISMessage.send(sender, "PLAYER_NO_TARDIS");
+						return true;
+					}
+					TARDISSudoTracker.SUDOERS.put(uuid, offlinePlayer.getUniqueId());
+					TARDISMessage.send(sender, "SUDO_ON", offlinePlayer.getName());
+				}
+			} else {
+				TARDISMessage.send(sender, "CMD_ADMIN");
+			}
+			return true;
+		}
+		return false;
+	}
 
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 1) {
-            List<String> SUBS = new ArrayList<>();
-            SUBS.add("off");
-            for (Player p : plugin.getServer().getOnlinePlayers()) {
-                SUBS.add(p.getName());
-            }
-            return partial(args[0], SUBS);
-        }
-        return null;
-    }
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+		if (args.length == 1) {
+			List<String> SUBS = new ArrayList<>();
+			SUBS.add("off");
+			for (Player p : plugin.getServer().getOnlinePlayers()) {
+				SUBS.add(p.getName());
+			}
+			return partial(args[0], SUBS);
+		}
+		return null;
+	}
 }

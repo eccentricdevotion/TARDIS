@@ -28,13 +28,13 @@ import java.util.List;
  */
 public class TARDISGravityTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("down", "up", "north", "west", "south", "east", "remove");
+	private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("down", "up", "north", "west", "south", "east", "remove");
 
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length <= 1) {
-            return partial(args[0], ROOT_SUBS);
-        }
-        return ImmutableList.of();
-    }
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+		if (args.length <= 1) {
+			return partial(args[0], ROOT_SUBS);
+		}
+		return ImmutableList.of();
+	}
 }

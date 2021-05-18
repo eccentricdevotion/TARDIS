@@ -35,76 +35,76 @@ import java.sql.SQLException;
  */
 public class ResultSetProgram {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final int pid;
-    private final String prefix;
-    private Program program;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final int pid;
+	private final String prefix;
+	private Program program;
 
-    /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
-     *
-     * @param plugin an instance of the main class.
-     * @param pid    a program_id to refine the search.
-     */
-    public ResultSetProgram(TARDIS plugin, int pid) {
-        this.plugin = plugin;
-        this.pid = pid;
-        prefix = this.plugin.getPrefix();
-    }
+	/**
+	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
+	 *
+	 * @param plugin an instance of the main class.
+	 * @param pid    a program_id to refine the search.
+	 */
+	public ResultSetProgram(TARDIS plugin, int pid) {
+		this.plugin = plugin;
+		this.pid = pid;
+		prefix = this.plugin.getPrefix();
+	}
 
-    /**
-     * Retrieves an SQL ResultSet from the programs table. This method builds an SQL query string from the parameters
-     * supplied and then executes the query. Use the getters to retrieve the results.
-     *
-     * @return true or false depending on whether any data matches the query
-     */
-    public boolean resultSet() {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT * FROM " + prefix + "programs WHERE program_id = ?";
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            statement.setInt(1, pid);
-            rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                rs.next();
-                String parsed = rs.getString("parsed");
-                if (rs.wasNull()) {
-                    parsed = "";
-                }
-                program = new Program(
-                        rs.getInt("program_id"),
-                        rs.getString("uuid"),
-                        rs.getString("name"),
-                        rs.getString("inventory"),
-                        parsed,
-                        rs.getBoolean("checked")
-                );
-            } else {
-                return false;
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for programs table! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing programs table! " + e.getMessage());
-            }
-        }
-        return true;
-    }
+	/**
+	 * Retrieves an SQL ResultSet from the programs table. This method builds an SQL query string from the parameters
+	 * supplied and then executes the query. Use the getters to retrieve the results.
+	 *
+	 * @return true or false depending on whether any data matches the query
+	 */
+	public boolean resultSet() {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String query = "SELECT * FROM " + prefix + "programs WHERE program_id = ?";
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			statement.setInt(1, pid);
+			rs = statement.executeQuery();
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				String parsed = rs.getString("parsed");
+				if (rs.wasNull()) {
+					parsed = "";
+				}
+				program = new Program(
+						rs.getInt("program_id"),
+						rs.getString("uuid"),
+						rs.getString("name"),
+						rs.getString("inventory"),
+						parsed,
+						rs.getBoolean("checked")
+				);
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for programs table! " + e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing programs table! " + e.getMessage());
+			}
+		}
+		return true;
+	}
 
-    public Program getProgram() {
-        return program;
-    }
+	public Program getProgram() {
+		return program;
+	}
 }

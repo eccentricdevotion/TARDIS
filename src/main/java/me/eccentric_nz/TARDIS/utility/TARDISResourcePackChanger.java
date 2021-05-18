@@ -32,28 +32,28 @@ import java.util.UUID;
  */
 public class TARDISResourcePackChanger {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISResourcePackChanger(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISResourcePackChanger(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    /**
-     * Sets a player's texture pack.
-     *
-     * @param p   The player
-     * @param str The URL of the texture pack file
-     */
-    public void changeRP(Player p, String str) {
-        // check the URL
-        try {
-            new URL(str);
-            if (p.isOnline()) {
-                UUID uuid = p.getUniqueId();
-                plugin.getServer().getPlayer(uuid).setResourcePack(str);
-            }
-        } catch (MalformedURLException e) {
-            TARDISMessage.send(p, "URL", e.getMessage());
-        }
-    }
+	/**
+	 * Sets a player's texture pack.
+	 *
+	 * @param p   The player
+	 * @param str The URL of the texture pack file
+	 */
+	public void changeRP(Player p, String str) {
+		// check the URL
+		try {
+			new URL(str);
+			if (p.isOnline()) {
+				UUID uuid = p.getUniqueId();
+				plugin.getServer().getPlayer(uuid).setResourcePack(str);
+			}
+		} catch (MalformedURLException e) {
+			TARDISMessage.send(p, "URL", e.getMessage());
+		}
+	}
 }

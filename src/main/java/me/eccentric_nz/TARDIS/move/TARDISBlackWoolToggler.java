@@ -31,39 +31,39 @@ import org.bukkit.entity.Player;
  */
 public class TARDISBlackWoolToggler {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISBlackWoolToggler(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISBlackWoolToggler(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public void toggleBlocks(int id, Player player) {
-        ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);
-        if (rsd.resultSet()) {
-            Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
-            BlockData mat;
-            if (b.getType().isAir()) {
-                mat = TARDISConstants.BLACK;
-            } else {
-                mat = TARDISConstants.AIR;
-            }
-            b.setBlockData(mat);
-            b.getRelative(BlockFace.UP).setBlockData(mat);
-            Block door = b.getRelative(BlockFace.SOUTH);
-            if (Tag.DOORS.isTagged(door.getType()) && TARDISStaticUtils.isDoorOpen(door)) {
-                // toggle doors shut
-                new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), player, false, true, id).toggleDoors();
-            }
-        }
-    }
+	public void toggleBlocks(int id, Player player) {
+		ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);
+		if (rsd.resultSet()) {
+			Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
+			BlockData mat;
+			if (b.getType().isAir()) {
+				mat = TARDISConstants.BLACK;
+			} else {
+				mat = TARDISConstants.AIR;
+			}
+			b.setBlockData(mat);
+			b.getRelative(BlockFace.UP).setBlockData(mat);
+			Block door = b.getRelative(BlockFace.SOUTH);
+			if (Tag.DOORS.isTagged(door.getType()) && TARDISStaticUtils.isDoorOpen(door)) {
+				// toggle doors shut
+				new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), player, false, true, id).toggleDoors();
+			}
+		}
+	}
 
-    public boolean isOpen(int id) {
-        ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);
-        if (rsd.resultSet()) {
-            Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
-            return b.getType().isAir();
-        } else {
-            return false;
-        }
-    }
+	public boolean isOpen(int id) {
+		ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);
+		if (rsd.resultSet()) {
+			Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
+			return b.getType().isAir();
+		} else {
+			return false;
+		}
+	}
 }

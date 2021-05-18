@@ -34,54 +34,54 @@ import org.bukkit.scoreboard.Team;
  */
 public class TARDISPerceptionFilter {
 
-    private final TARDIS plugin;
-    private Team perceptionFilter;
+	private final TARDIS plugin;
+	private Team perceptionFilter;
 
-    public TARDISPerceptionFilter(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISPerceptionFilter(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public void createPerceptionFilter() {
-        Scoreboard board = plugin.getServer().getScoreboardManager().getMainScoreboard();
-        perceptionFilter = board.getTeam("PerceptionFilter");
-        if (perceptionFilter == null) {
-            perceptionFilter = board.registerNewTeam("PerceptionFilter");
-            perceptionFilter.setCanSeeFriendlyInvisibles(true);
-            plugin.getServer().getOnlinePlayers().forEach((olp) -> perceptionFilter.addEntry(olp.getName()));
-        }
-    }
+	public static void removePerceptionFilter() {
+		Scoreboard board = Bukkit.getServer().getScoreboardManager().getMainScoreboard();
+		Team perceptionFilter = board.getTeam("PerceptionFilter");
+		if (perceptionFilter != null) {
+			for (OfflinePlayer olp : Bukkit.getServer().getOfflinePlayers()) {
+				if (olp != null) {
+					String entry = olp.getName();
+					if (perceptionFilter.hasEntry(entry)) {
+						perceptionFilter.removeEntry(entry);
+					}
+				}
+			}
+			perceptionFilter.unregister();
+		}
+	}
 
-    public static void removePerceptionFilter() {
-        Scoreboard board = Bukkit.getServer().getScoreboardManager().getMainScoreboard();
-        Team perceptionFilter = board.getTeam("PerceptionFilter");
-        if (perceptionFilter != null) {
-            for (OfflinePlayer olp : Bukkit.getServer().getOfflinePlayers()) {
-                if (olp != null) {
-                    String entry = olp.getName();
-                    if (perceptionFilter.hasEntry(entry)) {
-                        perceptionFilter.removeEntry(entry);
-                    }
-                }
-            }
-            perceptionFilter.unregister();
-        }
-    }
+	public void createPerceptionFilter() {
+		Scoreboard board = plugin.getServer().getScoreboardManager().getMainScoreboard();
+		perceptionFilter = board.getTeam("PerceptionFilter");
+		if (perceptionFilter == null) {
+			perceptionFilter = board.registerNewTeam("PerceptionFilter");
+			perceptionFilter.setCanSeeFriendlyInvisibles(true);
+			plugin.getServer().getOnlinePlayers().forEach((olp) -> perceptionFilter.addEntry(olp.getName()));
+		}
+	}
 
-    public void addPerceptionFilter(Player player) {
-        perceptionFilter.addEntry(player.getName());
-        plugin.getServer().getOnlinePlayers().forEach(this::addPlayer);
-        player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
-    }
+	public void addPerceptionFilter(Player player) {
+		perceptionFilter.addEntry(player.getName());
+		plugin.getServer().getOnlinePlayers().forEach(this::addPlayer);
+		player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
+	}
 
-    public void addPlayer(Player player) {
-        if (!perceptionFilter.hasEntry(player.getName())) {
-            perceptionFilter.addEntry(player.getName());
-        }
-    }
+	public void addPlayer(Player player) {
+		if (!perceptionFilter.hasEntry(player.getName())) {
+			perceptionFilter.addEntry(player.getName());
+		}
+	}
 
-    public void removePerceptionFilter(Player player) {
-        if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
-            player.removePotionEffect(PotionEffectType.INVISIBILITY);
-        }
-    }
+	public void removePerceptionFilter(Player player) {
+		if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+			player.removePotionEffect(PotionEffectType.INVISIBILITY);
+		}
+	}
 }

@@ -24,70 +24,70 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
  */
 public class TARDISSeedData {
 
-    private int id;
-    private Schematic schematic;
-    private String room;
-    private int minx;
-    private int maxx;
-    private int minz;
-    private int maxz;
-    private boolean ARS;
+	private int id;
+	private Schematic schematic;
+	private String room;
+	private int minx;
+	private int maxx;
+	private int minz;
+	private int maxz;
+	private boolean ARS;
 
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public Schematic getSchematic() {
-        return schematic;
-    }
+	public Schematic getSchematic() {
+		return schematic;
+	}
 
-    public void setSchematic(Schematic schematic) {
-        this.schematic = schematic;
-    }
+	public void setSchematic(Schematic schematic) {
+		this.schematic = schematic;
+	}
 
-    public String getRoom() {
-        return room;
-    }
+	public String getRoom() {
+		return room;
+	}
 
-    public void setRoom(String room) {
-        this.room = room;
-    }
+	public void setRoom(String room) {
+		this.room = room;
+	}
 
-    public int getMinx() {
-        return minx;
-    }
+	public int getMinx() {
+		return minx;
+	}
 
-    public int getMaxx() {
-        return maxx;
-    }
+	public int getMaxx() {
+		return maxx;
+	}
 
-    public int getMinz() {
-        return minz;
-    }
+	public int getMinz() {
+		return minz;
+	}
 
-    public int getMaxz() {
-        return maxz;
-    }
+	public int getMaxz() {
+		return maxz;
+	}
 
-    public void setChunkMinMax(String s) {
-        String[] data = s.split(":");
-        int x = TARDISNumberParsers.parseInt(data[1]);
-        int z = TARDISNumberParsers.parseInt(data[2]);
-        minx = x - 4;
-        maxx = x + 4;
-        minz = z - 4;
-        maxz = z + 4;
-    }
+	public void setChunkMinMax(String s) {
+		String[] data = s.split(":");
+		int x = TARDISNumberParsers.parseInt(data[1]);
+		int z = TARDISNumberParsers.parseInt(data[2]);
+		minx = x - 4;
+		maxx = x + 4;
+		minz = z - 4;
+		maxz = z + 4;
+	}
 
-    boolean hasARS() {
-        return ARS;
-    }
+	boolean hasARS() {
+		return ARS;
+	}
 
-    public void setARS(boolean ARS) {
-        this.ARS = ARS;
-    }
+	public void setARS(boolean ARS) {
+		this.ARS = ARS;
+	}
 }

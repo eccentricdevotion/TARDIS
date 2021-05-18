@@ -24,13 +24,13 @@ import org.bukkit.entity.Player;
  */
 class TARDISHandlesSayCommand {
 
-    boolean say(Player player, String[] args) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 2; i < args.length; i++) {
-            sb.append(args[i]).append(" ");
-        }
-        String message = sb.toString();
-        TARDISMessage.handlesMessage(player, message);
-        return true;
-    }
+	boolean say(Player player, String[] args) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 2; i < args.length; i++) {
+			sb.append(args[i]).append(" ");
+		}
+		String message = sb.toString();
+		TARDISMessage.handlesMessage(player, message);
+		return true;
+	}
 }

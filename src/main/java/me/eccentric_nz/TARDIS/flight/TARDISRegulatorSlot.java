@@ -31,37 +31,37 @@ import java.util.List;
  */
 class TARDISRegulatorSlot {
 
-    final List<Integer> bounds = Arrays.asList(
-            0, 1, 2, 3, 4,
-            9, 10, 11, 12, 13,
-            18, 19, 20, 21, 22,
-            27, 28, 29, 30, 31,
-            36, 37, 38, 39, 40
-    );
-    final ItemStack box;
-    final ItemStack vortex;
+	final List<Integer> bounds = Arrays.asList(
+			0, 1, 2, 3, 4,
+			9, 10, 11, 12, 13,
+			18, 19, 20, 21, 22,
+			27, 28, 29, 30, 31,
+			36, 37, 38, 39, 40
+	);
+	final ItemStack box;
+	final ItemStack vortex;
 
-    TARDISRegulatorSlot() {
-        box = new ItemStack(Material.BLUE_WOOL, 1);
-        ItemMeta ler = box.getItemMeta();
-        ler.setDisplayName("Regulator");
-        box.setItemMeta(ler);
-        vortex = new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1);
-    }
+	TARDISRegulatorSlot() {
+		box = new ItemStack(Material.BLUE_WOOL, 1);
+		ItemMeta ler = box.getItemMeta();
+		ler.setDisplayName("Regulator");
+		box.setItemMeta(ler);
+		vortex = new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1);
+	}
 
-    int upSlot(int current_slot) {
-        return current_slot - 9;
-    }
+	int upSlot(int current_slot) {
+		return current_slot - 9;
+	}
 
-    int leftSlot(int current_slot) {
-        return current_slot - 1;
-    }
+	int leftSlot(int current_slot) {
+		return current_slot - 1;
+	}
 
-    int rightSlot(int current_slot) {
-        return current_slot + 1;
-    }
+	int rightSlot(int current_slot) {
+		return current_slot + 1;
+	}
 
-    int downSlot(int current_slot) {
-        return current_slot + 9;
-    }
+	int downSlot(int current_slot) {
+		return current_slot + 9;
+	}
 }

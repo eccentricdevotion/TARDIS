@@ -23,5 +23,5 @@ import java.util.UUID;
 
 class NoteBlockPlayer {
 
-    static final HashMap<UUID, List<SongPlayer>> PLAYING_SONGS = new HashMap<>();
+	static final HashMap<UUID, List<SongPlayer>> PLAYING_SONGS = new HashMap<>();
 }

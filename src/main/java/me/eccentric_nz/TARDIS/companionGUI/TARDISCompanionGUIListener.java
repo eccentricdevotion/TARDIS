@@ -43,107 +43,107 @@ import java.util.UUID;
  */
 public class TARDISCompanionGUIListener extends TARDISMenuListener implements Listener {
 
-    private final TARDIS plugin;
-    private final HashMap<UUID, Integer> selected_head = new HashMap<>();
+	private final TARDIS plugin;
+	private final HashMap<UUID, Integer> selected_head = new HashMap<>();
 
-    public TARDISCompanionGUIListener(TARDIS plugin) {
-        super(plugin);
-        this.plugin = plugin;
-    }
+	public TARDISCompanionGUIListener(TARDIS plugin) {
+		super(plugin);
+		this.plugin = plugin;
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onCompanionGUIClick(InventoryClickEvent event) {
-        InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Companions")) {
-            event.setCancelled(true);
-            int slot = event.getRawSlot();
-            Player player = (Player) event.getWhoClicked();
-            UUID uuid = player.getUniqueId();
-            if (slot >= 0 && slot < 54) {
-                ItemStack is = view.getItem(slot);
-                if (is != null) {
-                    switch (slot) {
-                        case 45: // info
-                            break;
-                        case 48: // add
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                ItemStack[] items = new TARDISCompanionAddInventory(plugin, player).getPlayers();
-                                Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
-                                presetinv.setContents(items);
-                                player.openInventory(presetinv);
-                            }, 2L);
-                            break;
-                        case 51: // delete
-                            if (selected_head.containsKey(uuid)) {
-                                HashMap<String, Object> where = new HashMap<>();
-                                where.put("uuid", uuid.toString());
-                                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                                if (rs.resultSet()) {
-                                    Tardis tardis = rs.getTardis();
-                                    int id = tardis.getTardis_id();
-                                    String comps = tardis.getCompanions();
-                                    ItemStack h = view.getItem(selected_head.get(uuid));
-                                    ItemMeta m = h.getItemMeta();
-                                    List<String> l = m.getLore();
-                                    String u = l.get(0);
-                                    removeCompanion(id, comps, u, player);
-                                    if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                                        if (!comps.equalsIgnoreCase("everyone")) {
-                                            String[] data = tardis.getChunk().split(":");
-                                            removeFromRegion(data[0], tardis.getOwner(), m.getDisplayName());
-                                        }
-                                    }
-                                    close(player);
-                                }
-                            }
-                            break;
-                        case 53: // close
-                            close(player);
-                            break;
-                        default:
-                            selected_head.put(uuid, slot);
-                            break;
-                    }
-                }
-            }
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onCompanionGUIClick(InventoryClickEvent event) {
+		InventoryView view = event.getView();
+		String name = view.getTitle();
+		if (name.equals(ChatColor.DARK_RED + "Companions")) {
+			event.setCancelled(true);
+			int slot = event.getRawSlot();
+			Player player = (Player) event.getWhoClicked();
+			UUID uuid = player.getUniqueId();
+			if (slot >= 0 && slot < 54) {
+				ItemStack is = view.getItem(slot);
+				if (is != null) {
+					switch (slot) {
+						case 45: // info
+							break;
+						case 48: // add
+							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+								ItemStack[] items = new TARDISCompanionAddInventory(plugin, player).getPlayers();
+								Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
+								presetinv.setContents(items);
+								player.openInventory(presetinv);
+							}, 2L);
+							break;
+						case 51: // delete
+							if (selected_head.containsKey(uuid)) {
+								HashMap<String, Object> where = new HashMap<>();
+								where.put("uuid", uuid.toString());
+								ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+								if (rs.resultSet()) {
+									Tardis tardis = rs.getTardis();
+									int id = tardis.getTardis_id();
+									String comps = tardis.getCompanions();
+									ItemStack h = view.getItem(selected_head.get(uuid));
+									ItemMeta m = h.getItemMeta();
+									List<String> l = m.getLore();
+									String u = l.get(0);
+									removeCompanion(id, comps, u, player);
+									if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+										if (!comps.equalsIgnoreCase("everyone")) {
+											String[] data = tardis.getChunk().split(":");
+											removeFromRegion(data[0], tardis.getOwner(), m.getDisplayName());
+										}
+									}
+									close(player);
+								}
+							}
+							break;
+						case 53: // close
+							close(player);
+							break;
+						default:
+							selected_head.put(uuid, slot);
+							break;
+					}
+				}
+			}
+		}
+	}
 
-    private void removeCompanion(int id, String comps, String uuid, Player player) {
-        if (comps.equalsIgnoreCase("everyone")) {
-            TARDISMessage.send(player, "COMPANIONS_ALL");
-        } else {
-            HashMap<String, Object> tid = new HashMap<>();
-            HashMap<String, Object> set = new HashMap<>();
-            String newList = "";
-            String[] split = comps.split(":");
-            StringBuilder buf = new StringBuilder();
-            if (split.length > 1) {
-                // recompile string without the specified player
-                for (String c : split) {
-                    if (!c.equals(uuid)) {
-                        // add to new string
-                        buf.append(c).append(":");
-                    }
-                }
-                // remove trailing colon
-                if (buf.length() > 0) {
-                    newList = buf.substring(0, buf.length() - 1);
-                }
-                set.put("companions", newList);
-            } else {
-                set.put("companions", "");
-            }
-            tid.put("tardis_id", id);
-            plugin.getQueryFactory().doUpdate("tardis", set, tid);
-        }
-    }
+	private void removeCompanion(int id, String comps, String uuid, Player player) {
+		if (comps.equalsIgnoreCase("everyone")) {
+			TARDISMessage.send(player, "COMPANIONS_ALL");
+		} else {
+			HashMap<String, Object> tid = new HashMap<>();
+			HashMap<String, Object> set = new HashMap<>();
+			String newList = "";
+			String[] split = comps.split(":");
+			StringBuilder buf = new StringBuilder();
+			if (split.length > 1) {
+				// recompile string without the specified player
+				for (String c : split) {
+					if (!c.equals(uuid)) {
+						// add to new string
+						buf.append(c).append(":");
+					}
+				}
+				// remove trailing colon
+				if (buf.length() > 0) {
+					newList = buf.substring(0, buf.length() - 1);
+				}
+				set.put("companions", newList);
+			} else {
+				set.put("companions", "");
+			}
+			tid.put("tardis_id", id);
+			plugin.getQueryFactory().doUpdate("tardis", set, tid);
+		}
+	}
 
-    private void removeFromRegion(String world, String owner, String player) {
-        World w = TARDISAliasResolver.getWorldFromAlias(world);
-        if (w != null) {
-            plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, player);
-        }
-    }
+	private void removeFromRegion(String world, String owner, String player) {
+		World w = TARDISAliasResolver.getWorldFromAlias(world);
+		if (w != null) {
+			plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, player);
+		}
+	}
 }

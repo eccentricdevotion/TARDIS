@@ -32,55 +32,55 @@ import java.sql.SQLException;
  */
 public class ResultSetTravelledTo {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final String prefix;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final String prefix;
 
-    /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the traveled_to table.
-     *
-     * @param plugin an instance of the main class.
-     */
-    public ResultSetTravelledTo(TARDIS plugin) {
-        this.plugin = plugin;
-        prefix = this.plugin.getPrefix();
-    }
+	/**
+	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the traveled_to table.
+	 *
+	 * @param plugin an instance of the main class.
+	 */
+	public ResultSetTravelledTo(TARDIS plugin) {
+		this.plugin = plugin;
+		prefix = this.plugin.getPrefix();
+	}
 
-    /**
-     * Retrieves an SQL ResultSet from the traveled_to table. This is used to determine if players have traveled to a
-     * dimension
-     *
-     * @param uuid        the player to check travel status for
-     * @param environment the environment to check
-     * @return true or false depending on whether the player has traveled to the environment
-     */
-    public boolean resultSet(String uuid, String environment) {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT * FROM " + prefix + "traveled_to WHERE uuid = ? AND environment = ?";
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            statement.setString(1, uuid);
-            statement.setString(2, environment);
-            rs = statement.executeQuery();
-            // if row exists, player has visited environment
-            return rs.isBeforeFirst();
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for traveled_to table! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing traveled_to table! " + e.getMessage());
-            }
-        }
-    }
+	/**
+	 * Retrieves an SQL ResultSet from the traveled_to table. This is used to determine if players have traveled to a
+	 * dimension
+	 *
+	 * @param uuid        the player to check travel status for
+	 * @param environment the environment to check
+	 * @return true or false depending on whether the player has traveled to the environment
+	 */
+	public boolean resultSet(String uuid, String environment) {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String query = "SELECT * FROM " + prefix + "traveled_to WHERE uuid = ? AND environment = ?";
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			statement.setString(1, uuid);
+			statement.setString(2, environment);
+			rs = statement.executeQuery();
+			// if row exists, player has visited environment
+			return rs.isBeforeFirst();
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for traveled_to table! " + e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing traveled_to table! " + e.getMessage());
+			}
+		}
+	}
 }

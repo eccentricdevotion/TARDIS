@@ -26,61 +26,61 @@ import java.util.UUID;
  */
 public class Archive {
 
-    private final UUID uuid;
-    private final String name;
-    private final ConsoleSize consoleSize;
-    private final boolean beacon;
-    private final boolean lanterns;
-    private final int use;
-    private final int y;
-    private final JsonObject JSON;
-    private final String description;
+	private final UUID uuid;
+	private final String name;
+	private final ConsoleSize consoleSize;
+	private final boolean beacon;
+	private final boolean lanterns;
+	private final int use;
+	private final int y;
+	private final JsonObject JSON;
+	private final String description;
 
-    public Archive(UUID uuid, String name, String consoleSize, boolean beacon, boolean lanterns, int use, int y, JsonObject JSON, String description) {
-        this.uuid = uuid;
-        this.name = name;
-        this.consoleSize = ConsoleSize.valueOf(consoleSize);
-        this.beacon = beacon;
-        this.lanterns = lanterns;
-        this.use = use;
-        this.y = y;
-        this.JSON = JSON;
-        this.description = description;
-    }
+	public Archive(UUID uuid, String name, String consoleSize, boolean beacon, boolean lanterns, int use, int y, JsonObject JSON, String description) {
+		this.uuid = uuid;
+		this.name = name;
+		this.consoleSize = ConsoleSize.valueOf(consoleSize);
+		this.beacon = beacon;
+		this.lanterns = lanterns;
+		this.use = use;
+		this.y = y;
+		this.JSON = JSON;
+		this.description = description;
+	}
 
-    public UUID getUuid() {
-        return uuid;
-    }
+	public UUID getUuid() {
+		return uuid;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public ConsoleSize getConsoleSize() {
-        return consoleSize;
-    }
+	public ConsoleSize getConsoleSize() {
+		return consoleSize;
+	}
 
-    public boolean isBeacon() {
-        return beacon;
-    }
+	public boolean isBeacon() {
+		return beacon;
+	}
 
-    public boolean isLanterns() {
-        return lanterns;
-    }
+	public boolean isLanterns() {
+		return lanterns;
+	}
 
-    public int getUse() {
-        return use;
-    }
+	public int getUse() {
+		return use;
+	}
 
-    public int getY() {
-        return y;
-    }
+	public int getY() {
+		return y;
+	}
 
-    public JsonObject getJSON() {
-        return JSON;
-    }
+	public JsonObject getJSON() {
+		return JSON;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 }

@@ -34,60 +34,60 @@ import java.util.List;
  */
 class TARDISHumInventory {
 
-    private final TARDIS plugin;
-    private final ItemStack[] sounds;
+	private final TARDIS plugin;
+	private final ItemStack[] sounds;
 
-    TARDISHumInventory(TARDIS plugin) {
-        this.plugin = plugin;
-        sounds = getItemStack();
-    }
+	TARDISHumInventory(TARDIS plugin) {
+		this.plugin = plugin;
+		sounds = getItemStack();
+	}
 
-    /**
-     * Constructs an inventory for the Player Preferences Menu GUI.
-     *
-     * @return an Array of itemStacks (an inventory)
-     */
+	/**
+	 * Constructs an inventory for the Player Preferences Menu GUI.
+	 *
+	 * @return an Array of itemStacks (an inventory)
+	 */
 
-    private ItemStack[] getItemStack() {
-        List<ItemStack> options = new ArrayList<>();
-        // get HUM sounds
-        for (Hum hum : Hum.values()) {
-            ItemStack is = new ItemStack(Material.BOWL, 1);
-            ItemMeta im = is.getItemMeta();
-            im.setDisplayName(hum.toString());
-            im.setCustomModelData(GUIInteriorSounds.valueOf(hum.toString()).getCustomModelData());
-            is.setItemMeta(im);
-            options.add(is);
-        }
-        // add to stack
-        ItemStack[] stack = new ItemStack[18];
-        for (int s = 0; s < 17; s++) {
-            if (s < options.size()) {
-                stack[s] = options.get(s);
-            } else {
-                stack[s] = null;
-            }
-        }
-        // play / save
-        ItemStack play = new ItemStack(Material.BOWL, 1);
-        ItemMeta save = play.getItemMeta();
-        save.setDisplayName("Action");
-        save.setLore(Collections.singletonList("PLAY"));
-        save.setCustomModelData(GUIInteriorSounds.ACTION.getCustomModelData());
-        play.setItemMeta(save);
-        stack[15] = play;
-        // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
-        ItemMeta c_im = close.getItemMeta();
-        c_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        c_im.setCustomModelData(GUIInteriorSounds.CLOSE.getCustomModelData());
-        close.setItemMeta(c_im);
-        stack[17] = close;
+	private ItemStack[] getItemStack() {
+		List<ItemStack> options = new ArrayList<>();
+		// get HUM sounds
+		for (Hum hum : Hum.values()) {
+			ItemStack is = new ItemStack(Material.BOWL, 1);
+			ItemMeta im = is.getItemMeta();
+			im.setDisplayName(hum.toString());
+			im.setCustomModelData(GUIInteriorSounds.valueOf(hum.toString()).getCustomModelData());
+			is.setItemMeta(im);
+			options.add(is);
+		}
+		// add to stack
+		ItemStack[] stack = new ItemStack[18];
+		for (int s = 0; s < 17; s++) {
+			if (s < options.size()) {
+				stack[s] = options.get(s);
+			} else {
+				stack[s] = null;
+			}
+		}
+		// play / save
+		ItemStack play = new ItemStack(Material.BOWL, 1);
+		ItemMeta save = play.getItemMeta();
+		save.setDisplayName("Action");
+		save.setLore(Collections.singletonList("PLAY"));
+		save.setCustomModelData(GUIInteriorSounds.ACTION.getCustomModelData());
+		play.setItemMeta(save);
+		stack[15] = play;
+		// close
+		ItemStack close = new ItemStack(Material.BOWL, 1);
+		ItemMeta c_im = close.getItemMeta();
+		c_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+		c_im.setCustomModelData(GUIInteriorSounds.CLOSE.getCustomModelData());
+		close.setItemMeta(c_im);
+		stack[17] = close;
 
-        return stack;
-    }
+		return stack;
+	}
 
-    public ItemStack[] getSounds() {
-        return sounds;
-    }
+	public ItemStack[] getSounds() {
+		return sounds;
+	}
 }

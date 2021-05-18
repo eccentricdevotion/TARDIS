@@ -34,41 +34,41 @@ import java.util.HashMap;
  */
 class TARDISFindCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISFindCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISFindCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean findTARDIS(Player player) {
-        if (TARDISPermission.hasPermission(player, "tardis.find")) {
-            ResultSetTardisID rs = new ResultSetTardisID(plugin);
-            if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NO_TARDIS");
-                return true;
-            }
-            if (plugin.getDifficulty().equals(Difficulty.EASY) || plugin.getUtils().inGracePeriod(player, true)) {
-                HashMap<String, Object> wherecl = new HashMap<>();
-                wherecl.put("tardis_id", rs.getTardis_id());
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                if (rsc.resultSet()) {
-                    String world = TARDISAliasResolver.getWorldAlias(rsc.getWorld());
-                    if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                        world = plugin.getMVHelper().getAlias(rsc.getWorld());
-                    }
-                    TARDISMessage.send(player, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
-                    return true;
-                } else {
-                    TARDISMessage.send(player, "CURRENT_NOT_FOUND");
-                    return true;
-                }
-            } else {
-                TARDISMessage.send(player, "DIFF_HARD_FIND", ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET);
-                return true;
-            }
-        } else {
-            TARDISMessage.send(player, "NO_PERMS");
-            return false;
-        }
-    }
+	boolean findTARDIS(Player player) {
+		if (TARDISPermission.hasPermission(player, "tardis.find")) {
+			ResultSetTardisID rs = new ResultSetTardisID(plugin);
+			if (!rs.fromUUID(player.getUniqueId().toString())) {
+				TARDISMessage.send(player, "NO_TARDIS");
+				return true;
+			}
+			if (plugin.getDifficulty().equals(Difficulty.EASY) || plugin.getUtils().inGracePeriod(player, true)) {
+				HashMap<String, Object> wherecl = new HashMap<>();
+				wherecl.put("tardis_id", rs.getTardis_id());
+				ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+				if (rsc.resultSet()) {
+					String world = TARDISAliasResolver.getWorldAlias(rsc.getWorld());
+					if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+						world = plugin.getMVHelper().getAlias(rsc.getWorld());
+					}
+					TARDISMessage.send(player, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
+					return true;
+				} else {
+					TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+					return true;
+				}
+			} else {
+				TARDISMessage.send(player, "DIFF_HARD_FIND", ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET);
+				return true;
+			}
+		} else {
+			TARDISMessage.send(player, "NO_PERMS");
+			return false;
+		}
+	}
 }

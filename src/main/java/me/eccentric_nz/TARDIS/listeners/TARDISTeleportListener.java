@@ -39,61 +39,61 @@ import java.util.List;
  */
 public class TARDISTeleportListener implements Listener {
 
-    private final TARDIS plugin;
-    private final List<TeleportCause> causes = new ArrayList<>();
+	private final TARDIS plugin;
+	private final List<TeleportCause> causes = new ArrayList<>();
 
-    public TARDISTeleportListener(TARDIS plugin) {
-        this.plugin = plugin;
-        causes.add(TeleportCause.PLUGIN);
-        causes.add(TeleportCause.COMMAND);
-        causes.add(TeleportCause.UNKNOWN);
-    }
+	public TARDISTeleportListener(TARDIS plugin) {
+		this.plugin = plugin;
+		causes.add(TeleportCause.PLUGIN);
+		causes.add(TeleportCause.COMMAND);
+		causes.add(TeleportCause.UNKNOWN);
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onTeleport(PlayerTeleportEvent event) {
-        TeleportCause cause = event.getCause();
-        if (causes.contains(cause)) {
-            String world_from = event.getFrom().getWorld().getName();
-            String world_to = event.getTo().getWorld().getName();
-            Player p = event.getPlayer();
-            String uuid = p.getUniqueId().toString();
-            if (world_from.contains("TARDIS") && !world_to.contains("TARDIS")) {
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", uuid);
-                plugin.getQueryFactory().doDelete("travellers", where);
-                if (!cause.equals(TeleportCause.PLUGIN)) {
-                    TARDISMessage.send(p, "OCCUPY_AUTO");
-                }
-                // stop tracking telepaths
-                plugin.getTrackerKeeper().getTelepaths().remove(p.getUniqueId());
-            } else if (world_to.contains("TARDIS") && !cause.equals(TeleportCause.PLUGIN)) {
-                ResultSetTardisID rsid = new ResultSetTardisID(plugin);
-                // if TIPS determine tardis_id from player location
-                if (plugin.getConfig().getBoolean("creation.default_world")) {
-                    if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && p.hasPermission("tardis.create_world")) {
-                        if (!rsid.fromUUID(uuid)) {
-                            return;
-                        }
-                    } else {
-                        int slot = TARDISInteriorPostioning.getTIPSSlot(p.getLocation());
-                        if (!rsid.fromTIPSSlot(slot)) {
-                            return;
-                        }
-                    }
-                } else if (!rsid.fromUUID(uuid)) {
-                    return;
-                }
-                // remove potential existing records from travellers first
-                HashMap<String, Object> wherer = new HashMap<>();
-                wherer.put("uuid", uuid);
-                plugin.getQueryFactory().doDelete("travellers", wherer);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    HashMap<String, Object> wherei = new HashMap<>();
-                    wherei.put("tardis_id", rsid.getTardis_id());
-                    wherei.put("uuid", uuid);
-                    plugin.getQueryFactory().doInsert("travellers", wherei);
-                }, 2L);
-            }
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onTeleport(PlayerTeleportEvent event) {
+		TeleportCause cause = event.getCause();
+		if (causes.contains(cause)) {
+			String world_from = event.getFrom().getWorld().getName();
+			String world_to = event.getTo().getWorld().getName();
+			Player p = event.getPlayer();
+			String uuid = p.getUniqueId().toString();
+			if (world_from.contains("TARDIS") && !world_to.contains("TARDIS")) {
+				HashMap<String, Object> where = new HashMap<>();
+				where.put("uuid", uuid);
+				plugin.getQueryFactory().doDelete("travellers", where);
+				if (!cause.equals(TeleportCause.PLUGIN)) {
+					TARDISMessage.send(p, "OCCUPY_AUTO");
+				}
+				// stop tracking telepaths
+				plugin.getTrackerKeeper().getTelepaths().remove(p.getUniqueId());
+			} else if (world_to.contains("TARDIS") && !cause.equals(TeleportCause.PLUGIN)) {
+				ResultSetTardisID rsid = new ResultSetTardisID(plugin);
+				// if TIPS determine tardis_id from player location
+				if (plugin.getConfig().getBoolean("creation.default_world")) {
+					if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && p.hasPermission("tardis.create_world")) {
+						if (!rsid.fromUUID(uuid)) {
+							return;
+						}
+					} else {
+						int slot = TARDISInteriorPostioning.getTIPSSlot(p.getLocation());
+						if (!rsid.fromTIPSSlot(slot)) {
+							return;
+						}
+					}
+				} else if (!rsid.fromUUID(uuid)) {
+					return;
+				}
+				// remove potential existing records from travellers first
+				HashMap<String, Object> wherer = new HashMap<>();
+				wherer.put("uuid", uuid);
+				plugin.getQueryFactory().doDelete("travellers", wherer);
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+					HashMap<String, Object> wherei = new HashMap<>();
+					wherei.put("tardis_id", rsid.getTardis_id());
+					wherei.put("uuid", uuid);
+					plugin.getQueryFactory().doInsert("travellers", wherei);
+				}, 2L);
+			}
+		}
+	}
 }

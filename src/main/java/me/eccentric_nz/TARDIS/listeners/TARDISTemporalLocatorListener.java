@@ -39,58 +39,58 @@ import java.util.List;
  */
 public class TARDISTemporalLocatorListener extends TARDISMenuListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISTemporalLocatorListener(TARDIS plugin) {
-        super(plugin);
-        this.plugin = plugin;
-    }
+	public TARDISTemporalLocatorListener(TARDIS plugin) {
+		super(plugin);
+		this.plugin = plugin;
+	}
 
-    /**
-     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
-     * accordingly.
-     *
-     * @param event a player clicking an inventory slot
-     */
-    @EventHandler(ignoreCancelled = true)
-    public void onTemporalTerminalClick(InventoryClickEvent event) {
-        InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Temporal Locator")) {
-            event.setCancelled(true);
-            Player player = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 27) {
-                ItemStack is = view.getItem(slot);
-                if (is.hasItemMeta()) {
-                    ItemMeta im = is.getItemMeta();
-                    List<String> lore = im.getLore();
-                    long time = getTime(lore);
-                    plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), time);
-                    TARDISMessage.send(player, "TEMPORAL_SET", String.format("%d", time));
-                    // damage the circuit if configured
-                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
-                        int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId());
-                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-                        tcc.getCircuits();
-                        // decrement uses
-                        int uses_left = tcc.getTemporalUses();
-                        new TARDISCircuitDamager(plugin, DiskCircuit.TEMPORAL, uses_left, id, player).damage();
-                    }
-                }
-                close(player);
-            }
-        }
-    }
+	/**
+	 * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+	 * accordingly.
+	 *
+	 * @param event a player clicking an inventory slot
+	 */
+	@EventHandler(ignoreCancelled = true)
+	public void onTemporalTerminalClick(InventoryClickEvent event) {
+		InventoryView view = event.getView();
+		String name = view.getTitle();
+		if (name.equals(ChatColor.DARK_RED + "Temporal Locator")) {
+			event.setCancelled(true);
+			Player player = (Player) event.getWhoClicked();
+			int slot = event.getRawSlot();
+			if (slot >= 0 && slot < 27) {
+				ItemStack is = view.getItem(slot);
+				if (is.hasItemMeta()) {
+					ItemMeta im = is.getItemMeta();
+					List<String> lore = im.getLore();
+					long time = getTime(lore);
+					plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), time);
+					TARDISMessage.send(player, "TEMPORAL_SET", String.format("%d", time));
+					// damage the circuit if configured
+					if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
+						int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId());
+						TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+						tcc.getCircuits();
+						// decrement uses
+						int uses_left = tcc.getTemporalUses();
+						new TARDISCircuitDamager(plugin, DiskCircuit.TEMPORAL, uses_left, id, player).damage();
+					}
+				}
+				close(player);
+			}
+		}
+	}
 
-    /**
-     * Converts an Item Stacks lore to a destination string in the correct format for entry into the database.
-     *
-     * @param lore the lore to read
-     * @return the destination string
-     */
-    private long getTime(List<String> lore) {
-        String[] data = lore.get(0).split(" ");
-        return TARDISNumberParsers.parseLong(data[0]);
-    }
+	/**
+	 * Converts an Item Stacks lore to a destination string in the correct format for entry into the database.
+	 *
+	 * @param lore the lore to read
+	 * @return the destination string
+	 */
+	private long getTime(List<String> lore) {
+		String[] data = lore.get(0).split(" ");
+		return TARDISNumberParsers.parseLong(data[0]);
+	}
 }

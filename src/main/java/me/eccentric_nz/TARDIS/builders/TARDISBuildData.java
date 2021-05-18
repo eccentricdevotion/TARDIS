@@ -24,40 +24,40 @@ import org.bukkit.Material;
  */
 public class TARDISBuildData {
 
-    private Schematic schematic;
-    private Material wallType;
-    private Material floorType;
-    private int lamp;
+	private Schematic schematic;
+	private Material wallType;
+	private Material floorType;
+	private int lamp;
 
-    public Schematic getSchematic() {
-        return schematic;
-    }
+	public Schematic getSchematic() {
+		return schematic;
+	}
 
-    public void setSchematic(Schematic schematic) {
-        this.schematic = schematic;
-    }
+	public void setSchematic(Schematic schematic) {
+		this.schematic = schematic;
+	}
 
-    public Material getWallType() {
-        return wallType;
-    }
+	public Material getWallType() {
+		return wallType;
+	}
 
-    public void setWallType(Material wallType) {
-        this.wallType = wallType;
-    }
+	public void setWallType(Material wallType) {
+		this.wallType = wallType;
+	}
 
-    public Material getFloorType() {
-        return floorType;
-    }
+	public Material getFloorType() {
+		return floorType;
+	}
 
-    public void setFloorType(Material floorType) {
-        this.floorType = floorType;
-    }
+	public void setFloorType(Material floorType) {
+		this.floorType = floorType;
+	}
 
-    public int getLamp() {
-        return lamp;
-    }
+	public int getLamp() {
+		return lamp;
+	}
 
-    public void setLamp(int lamp) {
-        this.lamp = lamp;
-    }
+	public void setLamp(int lamp) {
+		this.lamp = lamp;
+	}
 }

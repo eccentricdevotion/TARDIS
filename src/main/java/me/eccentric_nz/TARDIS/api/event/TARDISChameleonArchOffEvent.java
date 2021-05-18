@@ -25,28 +25,28 @@ import org.bukkit.event.HandlerList;
  */
 public final class TARDISChameleonArchOffEvent extends Event {
 
-    private static final HandlerList HANDLERS = new HandlerList();
-    private final Player player;
+	private static final HandlerList HANDLERS = new HandlerList();
+	private final Player player;
 
-    public TARDISChameleonArchOffEvent(Player player) {
-        this.player = player;
-    }
+	public TARDISChameleonArchOffEvent(Player player) {
+		this.player = player;
+	}
 
-    /**
-     * Returns the player involved in this event.
-     *
-     * @return the player
-     */
-    public Player getPlayer() {
-        return player;
-    }
+	public static HandlerList getHandlerList() {
+		return HANDLERS;
+	}
 
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLERS;
-    }
+	/**
+	 * Returns the player involved in this event.
+	 *
+	 * @return the player
+	 */
+	public Player getPlayer() {
+		return player;
+	}
 
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return HANDLERS;
+	}
 }

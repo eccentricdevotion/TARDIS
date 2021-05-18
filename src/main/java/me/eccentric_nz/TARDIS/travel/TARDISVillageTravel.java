@@ -36,57 +36,57 @@ import java.util.HashMap;
  */
 public class TARDISVillageTravel {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISVillageTravel(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISVillageTravel(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public Location getRandomVillage(Player p, int id) {
-        // get world the Police Box is in
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
-        if (rs.resultSet()) {
-            World world = rs.getWorld();
-            Location location = new Location(world, rs.getX(), rs.getY(), rs.getZ());
-            Environment env = world.getEnvironment();
-            Location loc;
-            switch (env) {
-                case NETHER:
-                    loc = world.locateNearestStructure(location, StructureType.NETHER_FORTRESS, 64, false);
-                    break;
-                case THE_END:
-                    loc = world.locateNearestStructure(location, StructureType.END_CITY, 64, false);
-                    int highesty = TARDISStaticLocationGetters.getHighestYin3x3(world, rs.getX(), rs.getZ());
-                    loc.setY(highesty);
-                    break;
-                default: // NORMAL
-                    loc = world.locateNearestStructure(location, StructureType.VILLAGE, 64, false);
-                    break;
-            }
-            if (loc == null) {
-                return null;
-            }
-            // check for space
-            Block b = loc.getBlock();
-            boolean unsafe = true;
-            while (unsafe) {
-                boolean clear = true;
-                for (BlockFace f : plugin.getGeneralKeeper().getSurrounding()) {
-                    if (!TARDISConstants.GOOD_MATERIALS.contains(b.getRelative(f).getType())) {
-                        b = b.getRelative(BlockFace.UP);
-                        clear = false;
-                        break;
-                    }
-                }
-                unsafe = !clear;
-            }
-            loc.setY(b.getY());
-            return loc;
-        } else {
-            TARDISMessage.send(p, "CURRENT_NOT_FOUND");
-            return null;
-        }
-    }
+	public Location getRandomVillage(Player p, int id) {
+		// get world the Police Box is in
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("tardis_id", id);
+		ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
+		if (rs.resultSet()) {
+			World world = rs.getWorld();
+			Location location = new Location(world, rs.getX(), rs.getY(), rs.getZ());
+			Environment env = world.getEnvironment();
+			Location loc;
+			switch (env) {
+				case NETHER:
+					loc = world.locateNearestStructure(location, StructureType.NETHER_FORTRESS, 64, false);
+					break;
+				case THE_END:
+					loc = world.locateNearestStructure(location, StructureType.END_CITY, 64, false);
+					int highesty = TARDISStaticLocationGetters.getHighestYin3x3(world, rs.getX(), rs.getZ());
+					loc.setY(highesty);
+					break;
+				default: // NORMAL
+					loc = world.locateNearestStructure(location, StructureType.VILLAGE, 64, false);
+					break;
+			}
+			if (loc == null) {
+				return null;
+			}
+			// check for space
+			Block b = loc.getBlock();
+			boolean unsafe = true;
+			while (unsafe) {
+				boolean clear = true;
+				for (BlockFace f : plugin.getGeneralKeeper().getSurrounding()) {
+					if (!TARDISConstants.GOOD_MATERIALS.contains(b.getRelative(f).getType())) {
+						b = b.getRelative(BlockFace.UP);
+						clear = false;
+						break;
+					}
+				}
+				unsafe = !clear;
+			}
+			loc.setY(b.getY());
+			return loc;
+		} else {
+			TARDISMessage.send(p, "CURRENT_NOT_FOUND");
+			return null;
+		}
+	}
 }

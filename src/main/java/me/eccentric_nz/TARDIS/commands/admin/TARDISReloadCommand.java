@@ -31,66 +31,66 @@ import java.io.IOException;
  */
 class TARDISReloadCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISReloadCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISReloadCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean reloadConfig(CommandSender sender) {
-        plugin.reloadConfig();
-        // check worlds
-        TARDISWorlds tc = new TARDISWorlds(plugin);
-        tc.doWorlds();
-        plugin.saveConfig();
-        TARDISMessage.send(sender, "RELOADED");
-        return true;
-    }
+	boolean reloadConfig(CommandSender sender) {
+		plugin.reloadConfig();
+		// check worlds
+		TARDISWorlds tc = new TARDISWorlds(plugin);
+		tc.doWorlds();
+		plugin.saveConfig();
+		TARDISMessage.send(sender, "RELOADED");
+		return true;
+	}
 
-    boolean reloadOtherConfig(CommandSender sender, String[] args) {
-        try {
-            Config config = Config.valueOf(args[1].toLowerCase());
-            File file = new File(plugin.getDataFolder(), config.toString() + ".yml");
-            switch (config) {
-                case achievements:
-                    plugin.getAchievementConfig().load(file);
-                    break;
-                case artron:
-                    plugin.getArtronConfig().load(file);
-                    break;
-                case blocks:
-                    plugin.getBlocksConfig().load(file);
-                    break;
-                case chameleon_guis:
-                    plugin.getChameleonGuis().load(file);
-                    break;
-                case condensables:
-                    plugin.getCondensablesConfig().load(file);
-                    break;
-                case handles:
-                    plugin.getHandlesConfig().load(file);
-                    break;
-                case kits:
-                    plugin.getKitsConfig().load(file);
-                    break;
-                case rooms:
-                    plugin.getRoomsConfig().load(file);
-                    break;
-                case signs:
-                    plugin.getSigns().load(file);
-                    break;
-                default:
-                    TARDISMessage.send(sender, "RELOAD_NOT_THESE", args[1]);
-                    return true;
-            }
-            TARDISMessage.send(sender, "RELOAD_SUCCESS", config.toString());
-        } catch (IllegalArgumentException e) {
-            TARDISMessage.send(sender, "RELOAD_FILE_BAD", args[1]);
-            return true;
-        } catch (InvalidConfigurationException | IOException e) {
-            TARDISMessage.send(sender, "RELOAD_FAIL", args[1]);
-            return true;
-        }
-        return true;
-    }
+	boolean reloadOtherConfig(CommandSender sender, String[] args) {
+		try {
+			Config config = Config.valueOf(args[1].toLowerCase());
+			File file = new File(plugin.getDataFolder(), config.toString() + ".yml");
+			switch (config) {
+				case achievements:
+					plugin.getAchievementConfig().load(file);
+					break;
+				case artron:
+					plugin.getArtronConfig().load(file);
+					break;
+				case blocks:
+					plugin.getBlocksConfig().load(file);
+					break;
+				case chameleon_guis:
+					plugin.getChameleonGuis().load(file);
+					break;
+				case condensables:
+					plugin.getCondensablesConfig().load(file);
+					break;
+				case handles:
+					plugin.getHandlesConfig().load(file);
+					break;
+				case kits:
+					plugin.getKitsConfig().load(file);
+					break;
+				case rooms:
+					plugin.getRoomsConfig().load(file);
+					break;
+				case signs:
+					plugin.getSigns().load(file);
+					break;
+				default:
+					TARDISMessage.send(sender, "RELOAD_NOT_THESE", args[1]);
+					return true;
+			}
+			TARDISMessage.send(sender, "RELOAD_SUCCESS", config.toString());
+		} catch (IllegalArgumentException e) {
+			TARDISMessage.send(sender, "RELOAD_FILE_BAD", args[1]);
+			return true;
+		} catch (InvalidConfigurationException | IOException e) {
+			TARDISMessage.send(sender, "RELOAD_FAIL", args[1]);
+			return true;
+		}
+		return true;
+	}
 }

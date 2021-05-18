@@ -34,41 +34,41 @@ import java.util.List;
 
 public class TARDISSmelterListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISSmelterListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISSmelterListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onSmelterDropChestClose(InventoryCloseEvent event) {
-        Inventory inv = event.getInventory();
-        InventoryHolder holder = inv.getHolder();
-        if (holder instanceof Chest) {
-            Chest chest = (Chest) holder;
-            String loc = chest.getLocation().toString();
-            // check is drop chest
-            ResultSetSmelter rs = new ResultSetSmelter(plugin, loc);
-            if (!rs.resultSet()) {
-                return;
-            }
-            // sort contents
-            TARDISSonicSorterListener.sortInventory(inv);
-            // get fuel chests
-            List<Chest> fuelChests = rs.getFuelChests();
-            List<Chest> oreChests = rs.getOreChests();
-            // process chest contents
-            switch (rs.getType()) {
-                case FUEL:
-                    new TARDISSmelterFuel().processItems(inv, fuelChests);
-                    break;
-                case SMELT:
-                    new TARDISSmelterOre().processItems(inv, oreChests);
-                    break;
-                default: // DROP
-                    new TARDISSmelterDrop().processItems(inv, fuelChests, oreChests);
-                    break;
-            }
-        }
-    }
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onSmelterDropChestClose(InventoryCloseEvent event) {
+		Inventory inv = event.getInventory();
+		InventoryHolder holder = inv.getHolder();
+		if (holder instanceof Chest) {
+			Chest chest = (Chest) holder;
+			String loc = chest.getLocation().toString();
+			// check is drop chest
+			ResultSetSmelter rs = new ResultSetSmelter(plugin, loc);
+			if (!rs.resultSet()) {
+				return;
+			}
+			// sort contents
+			TARDISSonicSorterListener.sortInventory(inv);
+			// get fuel chests
+			List<Chest> fuelChests = rs.getFuelChests();
+			List<Chest> oreChests = rs.getOreChests();
+			// process chest contents
+			switch (rs.getType()) {
+				case FUEL:
+					new TARDISSmelterFuel().processItems(inv, fuelChests);
+					break;
+				case SMELT:
+					new TARDISSmelterOre().processItems(inv, oreChests);
+					break;
+				default: // DROP
+					new TARDISSmelterDrop().processItems(inv, fuelChests, oreChests);
+					break;
+			}
+		}
+	}
 }

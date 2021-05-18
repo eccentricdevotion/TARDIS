@@ -31,85 +31,85 @@ import org.bukkit.entity.EntityType;
  */
 public class TARDISMob {
 
-    private EntityType type;
-    private Type catType;
-    private int age;
-    private double health;
-    private boolean sitting;
-    private boolean baby;
-    private boolean tamed;
-    private DyeColor colour;
-    private String name;
+	private EntityType type;
+	private Type catType;
+	private int age;
+	private double health;
+	private boolean sitting;
+	private boolean baby;
+	private boolean tamed;
+	private DyeColor colour;
+	private String name;
 
-    public EntityType getType() {
-        return type;
-    }
+	public EntityType getType() {
+		return type;
+	}
 
-    public void setType(EntityType type) {
-        this.type = type;
-    }
+	public void setType(EntityType type) {
+		this.type = type;
+	}
 
-    public Type getCatType() {
-        return catType;
-    }
+	public Type getCatType() {
+		return catType;
+	}
 
-    void setCatType(Type catType) {
-        this.catType = catType;
-    }
+	void setCatType(Type catType) {
+		this.catType = catType;
+	}
 
-    public int getAge() {
-        return age;
-    }
+	public int getAge() {
+		return age;
+	}
 
-    public void setAge(int age) {
-        this.age = age;
-    }
+	public void setAge(int age) {
+		this.age = age;
+	}
 
-    public double getHealth() {
-        return health;
-    }
+	public double getHealth() {
+		return health;
+	}
 
-    public void setHealth(double health) {
-        this.health = health;
-    }
+	public void setHealth(double health) {
+		this.health = health;
+	}
 
-    public boolean getSitting() {
-        return sitting;
-    }
+	public boolean getSitting() {
+		return sitting;
+	}
 
-    void setSitting(boolean sitting) {
-        this.sitting = sitting;
-    }
+	void setSitting(boolean sitting) {
+		this.sitting = sitting;
+	}
 
-    public boolean isBaby() {
-        return baby;
-    }
+	public boolean isBaby() {
+		return baby;
+	}
 
-    public void setBaby(boolean baby) {
-        this.baby = baby;
-    }
+	public void setBaby(boolean baby) {
+		this.baby = baby;
+	}
 
-    public boolean isTamed() {
-        return tamed;
-    }
+	public boolean isTamed() {
+		return tamed;
+	}
 
-    public void setTamed(boolean tamed) {
-        this.tamed = tamed;
-    }
+	public void setTamed(boolean tamed) {
+		this.tamed = tamed;
+	}
 
-    public DyeColor getColour() {
-        return colour;
-    }
+	public DyeColor getColour() {
+		return colour;
+	}
 
-    public void setColour(DyeColor collar) {
-        colour = collar;
-    }
+	public void setColour(DyeColor collar) {
+		colour = collar;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 }

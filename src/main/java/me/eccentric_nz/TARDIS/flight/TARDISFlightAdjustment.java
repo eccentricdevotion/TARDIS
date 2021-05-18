@@ -38,54 +38,54 @@ import java.util.List;
  */
 class TARDISFlightAdjustment {
 
-    private final TARDIS plugin;
-    private final List<Integer> angles;
+	private final TARDIS plugin;
+	private final List<Integer> angles;
 
-    TARDISFlightAdjustment(TARDIS plugin) {
-        this.plugin = plugin;
-        angles = Arrays.asList(0, 45, 90, 135, 180, 225, 270, 315);
-    }
+	TARDISFlightAdjustment(TARDIS plugin) {
+		this.plugin = plugin;
+		angles = Arrays.asList(0, 45, 90, 135, 180, 225, 270, 315);
+	}
 
-    public Location getLocation(BuildData bd, int r) {
-        Location final_location;
-        TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-        Location adjusted_location = bd.getLocation().clone();
-        // randomise the direction
-        Collections.shuffle(angles);
-        for (Integer a : angles) {
-            int wx = (int) (adjusted_location.getX() + r * Math.cos(a)); // x = cx + r * cos(a)
-            int wz = (int) (adjusted_location.getZ() + r * Math.sin(a)); // z = cz + r * sin(a)
-            adjusted_location.setX(wx);
-            adjusted_location.setZ(wz);
-            boolean bool = true;
-            int y;
-            if (adjusted_location.getWorld().getEnvironment().equals(World.Environment.NETHER)) {
-                y = plugin.getUtils().getHighestNetherBlock(adjusted_location.getWorld(), wx, wz);
-            } else {
-                y = adjusted_location.getWorld().getHighestBlockAt(adjusted_location).getY();
-            }
-            adjusted_location.setY(y);
-            if (adjusted_location.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !bd.isSubmarine()) {
-                bool = false;
-            }
-            if (bool) {
-                Location sub = null;
-                boolean safe;
-                if (bd.isSubmarine()) {
-                    sub = tt.submarine(adjusted_location.getBlock(), bd.getDirection());
-                    safe = (sub != null);
-                } else {
-                    int[] start = TARDISTimeTravel.getStartLocation(adjusted_location, bd.getDirection());
-                    safe = (TARDISTimeTravel.safeLocation(start[0], y, start[2], start[1], start[3], adjusted_location.getWorld(), bd.getDirection()) < 1);
-                }
-                if (safe) {
-                    final_location = (bd.isSubmarine()) ? sub : adjusted_location;
-                    if (plugin.getPluginRespect().getRespect(final_location, new Parameters(bd.getPlayer().getPlayer(), Flag.getNoMessageFlags()))) {
-                        return final_location;
-                    }
-                }
-            }
-        }
-        return bd.getLocation();
-    }
+	public Location getLocation(BuildData bd, int r) {
+		Location final_location;
+		TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
+		Location adjusted_location = bd.getLocation().clone();
+		// randomise the direction
+		Collections.shuffle(angles);
+		for (Integer a : angles) {
+			int wx = (int) (adjusted_location.getX() + r * Math.cos(a)); // x = cx + r * cos(a)
+			int wz = (int) (adjusted_location.getZ() + r * Math.sin(a)); // z = cz + r * sin(a)
+			adjusted_location.setX(wx);
+			adjusted_location.setZ(wz);
+			boolean bool = true;
+			int y;
+			if (adjusted_location.getWorld().getEnvironment().equals(World.Environment.NETHER)) {
+				y = plugin.getUtils().getHighestNetherBlock(adjusted_location.getWorld(), wx, wz);
+			} else {
+				y = adjusted_location.getWorld().getHighestBlockAt(adjusted_location).getY();
+			}
+			adjusted_location.setY(y);
+			if (adjusted_location.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !bd.isSubmarine()) {
+				bool = false;
+			}
+			if (bool) {
+				Location sub = null;
+				boolean safe;
+				if (bd.isSubmarine()) {
+					sub = tt.submarine(adjusted_location.getBlock(), bd.getDirection());
+					safe = (sub != null);
+				} else {
+					int[] start = TARDISTimeTravel.getStartLocation(adjusted_location, bd.getDirection());
+					safe = (TARDISTimeTravel.safeLocation(start[0], y, start[2], start[1], start[3], adjusted_location.getWorld(), bd.getDirection()) < 1);
+				}
+				if (safe) {
+					final_location = (bd.isSubmarine()) ? sub : adjusted_location;
+					if (plugin.getPluginRespect().getRespect(final_location, new Parameters(bd.getPlayer().getPlayer(), Flag.getNoMessageFlags()))) {
+						return final_location;
+					}
+				}
+			}
+		}
+		return bd.getLocation();
+	}
 }

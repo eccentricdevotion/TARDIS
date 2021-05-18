@@ -24,40 +24,40 @@ import org.bukkit.Location;
  */
 public class TARDISTeleportLocation {
 
-    private Location location;
-    private int tardisId;
-    private COMPASS direction;
-    private boolean abandoned;
+	private Location location;
+	private int tardisId;
+	private COMPASS direction;
+	private boolean abandoned;
 
-    public Location getLocation() {
-        return location;
-    }
+	public Location getLocation() {
+		return location;
+	}
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
+	public void setLocation(Location location) {
+		this.location = location;
+	}
 
-    public int getTardisId() {
-        return tardisId;
-    }
+	public int getTardisId() {
+		return tardisId;
+	}
 
-    void setTardisId(int tardisId) {
-        this.tardisId = tardisId;
-    }
+	void setTardisId(int tardisId) {
+		this.tardisId = tardisId;
+	}
 
-    public COMPASS getDirection() {
-        return direction;
-    }
+	public COMPASS getDirection() {
+		return direction;
+	}
 
-    public void setDirection(COMPASS direction) {
-        this.direction = direction;
-    }
+	public void setDirection(COMPASS direction) {
+		this.direction = direction;
+	}
 
-    public boolean isAbandoned() {
-        return abandoned;
-    }
+	public boolean isAbandoned() {
+		return abandoned;
+	}
 
-    public void setAbandoned(boolean abandoned) {
-        this.abandoned = abandoned;
-    }
+	public void setAbandoned(boolean abandoned) {
+		this.abandoned = abandoned;
+	}
 }

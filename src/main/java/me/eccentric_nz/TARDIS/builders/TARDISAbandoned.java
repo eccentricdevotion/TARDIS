@@ -38,69 +38,69 @@ import java.util.UUID;
  */
 public class TARDISAbandoned {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISAbandoned(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISAbandoned(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public void spawn(Location l, Schematic schm, PRESET preset, COMPASS d, Player player) {
-        Chunk chunk = l.getChunk();
-        // get this chunk's co-ords
-        String cw = plugin.getConfig().getString("creation.default_world_name");
-        World chunkworld = TARDISAliasResolver.getWorldFromAlias(cw);
-        int cx = chunk.getX();
-        int cz = chunk.getZ();
-        // save data to database (tardis table)
-        String chun = cw + ":" + cx + ":" + cz;
-        HashMap<String, Object> set = new HashMap<>();
-        set.put("uuid", UUID.randomUUID().toString());
-        set.put("owner", "");
-        set.put("chunk", chun);
-        set.put("size", schm.getPermission().toUpperCase(Locale.ENGLISH));
-        set.put("abandoned", 1);
-        set.put("lastuse", Long.MAX_VALUE);
-        set.put("chameleon_preset", preset.toString());
-        set.put("chameleon_demat", preset.toString());
-        int lastInsertId = plugin.getQueryFactory().doSyncInsert("tardis", set);
-        // populate home, current, next and back tables
-        HashMap<String, Object> setlocs = new HashMap<>();
-        setlocs.put("tardis_id", lastInsertId);
-        setlocs.put("world", l.getWorld().getName());
-        setlocs.put("x", l.getBlockX());
-        setlocs.put("y", l.getBlockY());
-        setlocs.put("z", l.getBlockZ());
-        setlocs.put("direction", d.toString());
-        plugin.getQueryFactory().insertLocations(setlocs, TARDISStaticUtils.getBiomeAt(l).getKey().toString(), lastInsertId);
-        // turn the block stack into a TARDIS
-        BuildData bd = new BuildData(null);
-        bd.setDirection(d);
-        bd.setLocation(l);
-        bd.setMalfunction(false);
-        bd.setOutside(true);
-        bd.setRebuild(false);
-        bd.setSubmarine(l.getBlock().getType().equals(Material.WATER));
-        bd.setTardisID(lastInsertId);
-        bd.setPlayer(player);
-        bd.setThrottle(SpaceTimeThrottle.REBUILD);
-        plugin.getPM().callEvent(new TARDISCreationEvent(null, lastInsertId, l));
-        TARDISBuildAbandoned builder = new TARDISBuildAbandoned(plugin, schm, chunkworld, lastInsertId, player);
-        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
-        builder.setTask(task);
-        // delay building exterior
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
-            if (preset.isColoured()) {
-                TARDISMaterialisePoliceBox runnable = new TARDISMaterialisePoliceBox(plugin, bd, preset);
-                int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-                runnable.setTask(taskID);
-            } else {
-                BlockData data = (preset.equals(PRESET.FACTORY)) ? Material.LIGHT_GRAY_TERRACOTTA.createBlockData() : Material.BLUE_WOOL.createBlockData();
-                TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, data, Adaption.OFF);
-                int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-                runnable.setTask(taskID);
-            }
-            TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");
-        }, schm.getConsoleSize().getDelay());
-    }
+	public void spawn(Location l, Schematic schm, PRESET preset, COMPASS d, Player player) {
+		Chunk chunk = l.getChunk();
+		// get this chunk's co-ords
+		String cw = plugin.getConfig().getString("creation.default_world_name");
+		World chunkworld = TARDISAliasResolver.getWorldFromAlias(cw);
+		int cx = chunk.getX();
+		int cz = chunk.getZ();
+		// save data to database (tardis table)
+		String chun = cw + ":" + cx + ":" + cz;
+		HashMap<String, Object> set = new HashMap<>();
+		set.put("uuid", UUID.randomUUID().toString());
+		set.put("owner", "");
+		set.put("chunk", chun);
+		set.put("size", schm.getPermission().toUpperCase(Locale.ENGLISH));
+		set.put("abandoned", 1);
+		set.put("lastuse", Long.MAX_VALUE);
+		set.put("chameleon_preset", preset.toString());
+		set.put("chameleon_demat", preset.toString());
+		int lastInsertId = plugin.getQueryFactory().doSyncInsert("tardis", set);
+		// populate home, current, next and back tables
+		HashMap<String, Object> setlocs = new HashMap<>();
+		setlocs.put("tardis_id", lastInsertId);
+		setlocs.put("world", l.getWorld().getName());
+		setlocs.put("x", l.getBlockX());
+		setlocs.put("y", l.getBlockY());
+		setlocs.put("z", l.getBlockZ());
+		setlocs.put("direction", d.toString());
+		plugin.getQueryFactory().insertLocations(setlocs, TARDISStaticUtils.getBiomeAt(l).getKey().toString(), lastInsertId);
+		// turn the block stack into a TARDIS
+		BuildData bd = new BuildData(null);
+		bd.setDirection(d);
+		bd.setLocation(l);
+		bd.setMalfunction(false);
+		bd.setOutside(true);
+		bd.setRebuild(false);
+		bd.setSubmarine(l.getBlock().getType().equals(Material.WATER));
+		bd.setTardisID(lastInsertId);
+		bd.setPlayer(player);
+		bd.setThrottle(SpaceTimeThrottle.REBUILD);
+		plugin.getPM().callEvent(new TARDISCreationEvent(null, lastInsertId, l));
+		TARDISBuildAbandoned builder = new TARDISBuildAbandoned(plugin, schm, chunkworld, lastInsertId, player);
+		int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
+		builder.setTask(task);
+		// delay building exterior
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+			plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
+			if (preset.isColoured()) {
+				TARDISMaterialisePoliceBox runnable = new TARDISMaterialisePoliceBox(plugin, bd, preset);
+				int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+				runnable.setTask(taskID);
+			} else {
+				BlockData data = (preset.equals(PRESET.FACTORY)) ? Material.LIGHT_GRAY_TERRACOTTA.createBlockData() : Material.BLUE_WOOL.createBlockData();
+				TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, data, Adaption.OFF);
+				int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+				runnable.setTask(taskID);
+			}
+			TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");
+		}, schm.getConsoleSize().getDelay());
+	}
 }

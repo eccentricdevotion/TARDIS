@@ -25,31 +25,31 @@ import org.bukkit.command.CommandSender;
  */
 class TARDISJunkTime {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISJunkTime(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISJunkTime(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean elapsed(CommandSender sender) {
-        // check the Junk TARDIS is not home already
-        if (new TARDISJunkLocation(plugin).isNotHome()) {
-            long conf = plugin.getConfig().getLong("junk.return");
-            if (conf > 0) {
-                long waitTime = conf * 1000;
-                long lastUsed = plugin.getGeneralKeeper().getJunkTime();
-                long now = System.currentTimeMillis();
-                long returnTime = (waitTime - (now - lastUsed)) / 1000;
-                long mins = returnTime / 60;
-                long secs = returnTime - (mins * 60);
-                String sub = String.format("%d minutes %d seconds", mins, secs);
-                TARDISMessage.send(sender, "JUNK_RETURN_TIME", sub);
-            } else {
-                TARDISMessage.send(sender, "JUNK_NO_RETURN");
-            }
-        } else {
-            TARDISMessage.send(sender, "JUNK_AT_HOME");
-        }
-        return true;
-    }
+	boolean elapsed(CommandSender sender) {
+		// check the Junk TARDIS is not home already
+		if (new TARDISJunkLocation(plugin).isNotHome()) {
+			long conf = plugin.getConfig().getLong("junk.return");
+			if (conf > 0) {
+				long waitTime = conf * 1000;
+				long lastUsed = plugin.getGeneralKeeper().getJunkTime();
+				long now = System.currentTimeMillis();
+				long returnTime = (waitTime - (now - lastUsed)) / 1000;
+				long mins = returnTime / 60;
+				long secs = returnTime - (mins * 60);
+				String sub = String.format("%d minutes %d seconds", mins, secs);
+				TARDISMessage.send(sender, "JUNK_RETURN_TIME", sub);
+			} else {
+				TARDISMessage.send(sender, "JUNK_NO_RETURN");
+			}
+		} else {
+			TARDISMessage.send(sender, "JUNK_AT_HOME");
+		}
+		return true;
+	}
 }

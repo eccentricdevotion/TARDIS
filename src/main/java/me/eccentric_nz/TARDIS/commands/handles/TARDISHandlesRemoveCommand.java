@@ -25,23 +25,23 @@ import java.util.HashMap;
 
 public class TARDISHandlesRemoveCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISHandlesRemoveCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISHandlesRemoveCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public boolean purge(Player player) {
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (rs.fromUUID(player.getUniqueId().toString())) {
-            HashMap<String, Object> whereh = new HashMap<>();
-            whereh.put("tardis_id", rs.getTardis_id());
-            whereh.put("type", 26);
-            plugin.getQueryFactory().doDelete("controls", whereh);
-            TARDISMessage.send(player, "HANDLES_DELETED");
-        } else {
-            TARDISMessage.send(player, "NOT_A_TIMELORD");
-        }
-        return true;
-    }
+	public boolean purge(Player player) {
+		ResultSetTardisID rs = new ResultSetTardisID(plugin);
+		if (rs.fromUUID(player.getUniqueId().toString())) {
+			HashMap<String, Object> whereh = new HashMap<>();
+			whereh.put("tardis_id", rs.getTardis_id());
+			whereh.put("type", 26);
+			plugin.getQueryFactory().doDelete("controls", whereh);
+			TARDISMessage.send(player, "HANDLES_DELETED");
+		} else {
+			TARDISMessage.send(player, "NOT_A_TIMELORD");
+		}
+		return true;
+	}
 }

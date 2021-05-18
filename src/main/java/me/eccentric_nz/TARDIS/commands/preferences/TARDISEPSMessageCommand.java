@@ -31,34 +31,34 @@ import java.util.List;
  */
 class TARDISEPSMessageCommand {
 
-    boolean setMessage(Player player, String[] args) {
-        String message;
-        int count = args.length;
-        ItemStack bq = player.getInventory().getItemInMainHand();
-        if (bq != null && (bq.getType().equals(Material.WRITABLE_BOOK) || bq.getType().equals(Material.WRITTEN_BOOK))) {
-            BookMeta bm = (BookMeta) bq.getItemMeta();
-            List<String> pages = bm.getPages();
-            StringBuilder sb = new StringBuilder();
-            pages.forEach((s) -> sb.append(s).append(" "));
-            message = sb.toString();
-        } else {
-            if (count < 2) {
-                TARDISMessage.send(player, "EP1_NEED");
-                return false;
-            }
-            StringBuilder buf = new StringBuilder();
-            for (int i = 1; i < count; i++) {
-                buf.append(args[i]).append(" ");
-            }
-            String tmp = buf.toString();
-            message = tmp.substring(0, tmp.length() - 1);
-        }
-        HashMap<String, Object> sete = new HashMap<>();
-        sete.put("eps_message", message);
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
-        TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", sete, where);
-        TARDISMessage.send(player, "EP1_SET");
-        return true;
-    }
+	boolean setMessage(Player player, String[] args) {
+		String message;
+		int count = args.length;
+		ItemStack bq = player.getInventory().getItemInMainHand();
+		if (bq != null && (bq.getType().equals(Material.WRITABLE_BOOK) || bq.getType().equals(Material.WRITTEN_BOOK))) {
+			BookMeta bm = (BookMeta) bq.getItemMeta();
+			List<String> pages = bm.getPages();
+			StringBuilder sb = new StringBuilder();
+			pages.forEach((s) -> sb.append(s).append(" "));
+			message = sb.toString();
+		} else {
+			if (count < 2) {
+				TARDISMessage.send(player, "EP1_NEED");
+				return false;
+			}
+			StringBuilder buf = new StringBuilder();
+			for (int i = 1; i < count; i++) {
+				buf.append(args[i]).append(" ");
+			}
+			String tmp = buf.toString();
+			message = tmp.substring(0, tmp.length() - 1);
+		}
+		HashMap<String, Object> sete = new HashMap<>();
+		sete.put("eps_message", message);
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("uuid", player.getUniqueId().toString());
+		TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", sete, where);
+		TARDISMessage.send(player, "EP1_SET");
+		return true;
+	}
 }

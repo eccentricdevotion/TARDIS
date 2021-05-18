@@ -29,50 +29,50 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
  */
 public class TARDISPistonHarvesterListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISPistonHarvesterListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISPistonHarvesterListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler(ignoreCancelled = true)
-    public void onHarvestPistonRetract(BlockPistonRetractEvent event) {
-        if (!event.isSticky()) {
-            return;
-        }
-        if (plugin.getConfig().getBoolean("preferences.nerf_pistons.only_tardis_worlds") && !event.getBlock().getWorld().getName().contains("TARDIS")) {
-            return;
-        }
-        String block = event.getBlock().getRelative(getOppositeDirection(event.getDirection()), 2).getLocation().toString();
-        if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(block)) {
-            event.setCancelled(true);
-        }
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onHarvestPistonRetract(BlockPistonRetractEvent event) {
+		if (!event.isSticky()) {
+			return;
+		}
+		if (plugin.getConfig().getBoolean("preferences.nerf_pistons.only_tardis_worlds") && !event.getBlock().getWorld().getName().contains("TARDIS")) {
+			return;
+		}
+		String block = event.getBlock().getRelative(getOppositeDirection(event.getDirection()), 2).getLocation().toString();
+		if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(block)) {
+			event.setCancelled(true);
+		}
+	}
 
-    @EventHandler(ignoreCancelled = true)
-    public void onHarvestPistonExtend(BlockPistonExtendEvent event) {
-        if (plugin.getConfig().getBoolean("preferences.nerf_pistons.only_tardis_worlds") && !event.getBlock().getWorld().getName().contains("TARDIS")) {
-            return;
-        }
-        for (Block b : event.getBlocks()) {
-            String block = b.getLocation().toString();
-            if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(block)) {
-                event.setCancelled(true);
-                return;
-            }
-        }
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onHarvestPistonExtend(BlockPistonExtendEvent event) {
+		if (plugin.getConfig().getBoolean("preferences.nerf_pistons.only_tardis_worlds") && !event.getBlock().getWorld().getName().contains("TARDIS")) {
+			return;
+		}
+		for (Block b : event.getBlocks()) {
+			String block = b.getLocation().toString();
+			if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(block)) {
+				event.setCancelled(true);
+				return;
+			}
+		}
+	}
 
-    private BlockFace getOppositeDirection(BlockFace bf) {
-        switch (bf) {
-            case NORTH:
-                return BlockFace.SOUTH;
-            case EAST:
-                return BlockFace.WEST;
-            case SOUTH:
-                return BlockFace.NORTH;
-            default:
-                return BlockFace.EAST;
-        }
-    }
+	private BlockFace getOppositeDirection(BlockFace bf) {
+		switch (bf) {
+			case NORTH:
+				return BlockFace.SOUTH;
+			case EAST:
+				return BlockFace.WEST;
+			case SOUTH:
+				return BlockFace.NORTH;
+			default:
+				return BlockFace.EAST;
+		}
+	}
 }

@@ -37,71 +37,71 @@ import java.util.UUID;
  */
 public class ResultSetCompanions {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final int id;
-    private final List<UUID> companions = new ArrayList<>();
-    private final String prefix;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final int id;
+	private final List<UUID> companions = new ArrayList<>();
+	private final String prefix;
 
-    /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
-     *
-     * @param plugin an instance of the main class.
-     * @param id     the TARDIS id to get the companions for.
-     */
-    public ResultSetCompanions(TARDIS plugin, int id) {
-        this.plugin = plugin;
-        this.id = id;
-        prefix = this.plugin.getPrefix();
-    }
+	/**
+	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
+	 *
+	 * @param plugin an instance of the main class.
+	 * @param id     the TARDIS id to get the companions for.
+	 */
+	public ResultSetCompanions(TARDIS plugin, int id) {
+		this.plugin = plugin;
+		this.id = id;
+		prefix = this.plugin.getPrefix();
+	}
 
-    /**
-     * Retrieves list of companion UUIDs from the tardis table.
-     *
-     * @return a list of companion UUIDs or if none an empty list.
-     */
-    public List<UUID> getCompanions() {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT uuid, companions FROM " + prefix + "tardis WHERE tardis_id =" + id;
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                rs.next();
-                // always add the Time Lord of the TARDIS
-                companions.add(UUID.fromString(rs.getString("uuid")));
-                String comps = rs.getString("companions");
-                if (!rs.wasNull() && !comps.isEmpty()) {
-                    // add companions
-                    String compStr = rs.getString("companions");
-                    if (compStr.equalsIgnoreCase("everyone")) {
-                        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-                            companions.add(p.getUniqueId());
-                        }
-                    } else {
-                        for (String c : rs.getString("companions").split(":")) {
-                            companions.add(UUID.fromString(c));
-                        }
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for companions! " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing companions! " + e.getMessage());
-            }
-        }
-        return companions;
-    }
+	/**
+	 * Retrieves list of companion UUIDs from the tardis table.
+	 *
+	 * @return a list of companion UUIDs or if none an empty list.
+	 */
+	public List<UUID> getCompanions() {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String query = "SELECT uuid, companions FROM " + prefix + "tardis WHERE tardis_id =" + id;
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			rs = statement.executeQuery();
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				// always add the Time Lord of the TARDIS
+				companions.add(UUID.fromString(rs.getString("uuid")));
+				String comps = rs.getString("companions");
+				if (!rs.wasNull() && !comps.isEmpty()) {
+					// add companions
+					String compStr = rs.getString("companions");
+					if (compStr.equalsIgnoreCase("everyone")) {
+						for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+							companions.add(p.getUniqueId());
+						}
+					} else {
+						for (String c : rs.getString("companions").split(":")) {
+							companions.add(UUID.fromString(c));
+						}
+					}
+				}
+			}
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for companions! " + e.getMessage());
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing companions! " + e.getMessage());
+			}
+		}
+		return companions;
+	}
 }

@@ -29,24 +29,24 @@ import org.bukkit.event.player.PlayerKickEvent;
  */
 public class TARDISPlayerKickListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISPlayerKickListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISPlayerKickListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler(ignoreCancelled = true)
-    public void onFallOutOfTARDIS(PlayerKickEvent event) {
-        Player player = event.getPlayer();
-        Location location = player.getLocation();
-        if (location.getBlockY() < 1 && plugin.getUtils().inTARDISWorld(player)) {
-            event.setReason(player.getName() + " fell out of their TARDIS!");
-            event.setCancelled(true);
-            if (plugin.getConfig().getString("preferences.vortex_fall").equals("kill")) {
-                player.setHealth(0);
-            } else {
-                new TARDISVoidFall(plugin).teleport(player);
-            }
-        }
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onFallOutOfTARDIS(PlayerKickEvent event) {
+		Player player = event.getPlayer();
+		Location location = player.getLocation();
+		if (location.getBlockY() < 1 && plugin.getUtils().inTARDISWorld(player)) {
+			event.setReason(player.getName() + " fell out of their TARDIS!");
+			event.setCancelled(true);
+			if (plugin.getConfig().getString("preferences.vortex_fall").equals("kill")) {
+				player.setHealth(0);
+			} else {
+				new TARDISVoidFall(plugin).teleport(player);
+			}
+		}
+	}
 }

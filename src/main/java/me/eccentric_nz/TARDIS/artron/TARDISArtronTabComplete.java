@@ -29,16 +29,16 @@ import java.util.List;
  */
 public class TARDISArtronTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("tardis", "timelord");
+	private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("tardis", "timelord");
 
-    public TARDISArtronTabComplete() {
-    }
+	public TARDISArtronTabComplete() {
+	}
 
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length <= 1) {
-            return partial(args[0], ROOT_SUBS);
-        }
-        return ImmutableList.of();
-    }
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+		if (args.length <= 1) {
+			return partial(args[0], ROOT_SUBS);
+		}
+		return ImmutableList.of();
+	}
 }

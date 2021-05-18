@@ -26,67 +26,67 @@ package me.eccentric_nz.TARDIS.builders;
  */
 public class TARDISTIPSData {
 
-    private int slot;
-    private int minX;
-    private int centreX;
-    private int maxX;
-    private int minZ;
-    private int centreZ;
-    private int maxZ;
+	private int slot;
+	private int minX;
+	private int centreX;
+	private int maxX;
+	private int minZ;
+	private int centreZ;
+	private int maxZ;
 
-    public int getSlot() {
-        return slot;
-    }
+	public int getSlot() {
+		return slot;
+	}
 
-    public void setSlot(int slot) {
-        this.slot = slot;
-    }
+	public void setSlot(int slot) {
+		this.slot = slot;
+	}
 
-    public int getMinX() {
-        return minX;
-    }
+	public int getMinX() {
+		return minX;
+	}
 
-    void setMinX(int minX) {
-        this.minX = minX;
-    }
+	void setMinX(int minX) {
+		this.minX = minX;
+	}
 
-    public int getCentreX() {
-        return centreX;
-    }
+	public int getCentreX() {
+		return centreX;
+	}
 
-    void setCentreX(int centreX) {
-        this.centreX = centreX;
-    }
+	void setCentreX(int centreX) {
+		this.centreX = centreX;
+	}
 
-    public int getMaxX() {
-        return maxX;
-    }
+	public int getMaxX() {
+		return maxX;
+	}
 
-    void setMaxX(int maxX) {
-        this.maxX = maxX;
-    }
+	void setMaxX(int maxX) {
+		this.maxX = maxX;
+	}
 
-    public int getMinZ() {
-        return minZ;
-    }
+	public int getMinZ() {
+		return minZ;
+	}
 
-    void setMinZ(int minZ) {
-        this.minZ = minZ;
-    }
+	void setMinZ(int minZ) {
+		this.minZ = minZ;
+	}
 
-    public int getCentreZ() {
-        return centreZ;
-    }
+	public int getCentreZ() {
+		return centreZ;
+	}
 
-    void setCentreZ(int centreZ) {
-        this.centreZ = centreZ;
-    }
+	void setCentreZ(int centreZ) {
+		this.centreZ = centreZ;
+	}
 
-    public int getMaxZ() {
-        return maxZ;
-    }
+	public int getMaxZ() {
+		return maxZ;
+	}
 
-    void setMaxZ(int maxZ) {
-        this.maxZ = maxZ;
-    }
+	void setMaxZ(int maxZ) {
+		this.maxZ = maxZ;
+	}
 }

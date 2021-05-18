@@ -53,91 +53,91 @@ import java.util.List;
  */
 public class TARDISNetherPortalCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-    private final TARDIS plugin;
-    private final ImmutableList<String> ENVIRON_SUBS = ImmutableList.of("overworld", "nether");
+	private final TARDIS plugin;
+	private final ImmutableList<String> ENVIRON_SUBS = ImmutableList.of("overworld", "nether");
 
-    public TARDISNetherPortalCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISNetherPortalCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("tardisnetherportal")) {
-            Player player = null;
-            if (sender instanceof Player) {
-                player = (Player) sender;
-            }
-            if (player == null) {
-                // must provide coords
-                if (args.length < 4) {
-                    new TARDISCommandHelper(plugin).getCommand("tardisnetherportal", sender);
-                    return true;
-                }
-                int x = TARDISNumberParsers.parseInt(args[0]);
-                int y = TARDISNumberParsers.parseInt(args[1]);
-                int z = TARDISNumberParsers.parseInt(args[2]);
-                return o2n(sender, x, y, z, args[3].equalsIgnoreCase("overworld"));
-            } else {
-                // get player's coords and environment
-                return o2n(player);
-            }
-        }
-        return false;
-    }
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("tardisnetherportal")) {
+			Player player = null;
+			if (sender instanceof Player) {
+				player = (Player) sender;
+			}
+			if (player == null) {
+				// must provide coords
+				if (args.length < 4) {
+					new TARDISCommandHelper(plugin).getCommand("tardisnetherportal", sender);
+					return true;
+				}
+				int x = TARDISNumberParsers.parseInt(args[0]);
+				int y = TARDISNumberParsers.parseInt(args[1]);
+				int z = TARDISNumberParsers.parseInt(args[2]);
+				return o2n(sender, x, y, z, args[3].equalsIgnoreCase("overworld"));
+			} else {
+				// get player's coords and environment
+				return o2n(player);
+			}
+		}
+		return false;
+	}
 
-    private boolean o2n(Player player) {
-        int x, y, z, dx, dz;
-        // get player coords
-        Location l = player.getLocation();
-        boolean overworld = !(l.getWorld().getEnvironment().equals(Environment.NETHER));
-        x = l.getBlockX();
-        y = l.getBlockY();
-        z = l.getBlockZ();
-        if ((y > 123) || (y < 1)) {
-            TARDISMessage.send(player, "O2N_Y");
-            return false;
-        }
-        // get player direction
-        String d = TARDISStaticUtils.getPlayersDirection(player, false);
-        String message = (overworld) ? "O2N_COORDS_N" : "O2N_COORDS_O";
-        // get destination coords
-        if (overworld) {
-            dx = x / 8;
-            dz = z / 8;
-        } else {
-            dx = x * 8;
-            dz = z * 8;
-        }
-        String coords = "X: " + dx + ", " + "Y: " + y + ", " + "Z: " + dz + ", facing " + d;
-        TARDISMessage.send(player, message, coords);
-        return true;
-    }
+	private boolean o2n(Player player) {
+		int x, y, z, dx, dz;
+		// get player coords
+		Location l = player.getLocation();
+		boolean overworld = !(l.getWorld().getEnvironment().equals(Environment.NETHER));
+		x = l.getBlockX();
+		y = l.getBlockY();
+		z = l.getBlockZ();
+		if ((y > 123) || (y < 1)) {
+			TARDISMessage.send(player, "O2N_Y");
+			return false;
+		}
+		// get player direction
+		String d = TARDISStaticUtils.getPlayersDirection(player, false);
+		String message = (overworld) ? "O2N_COORDS_N" : "O2N_COORDS_O";
+		// get destination coords
+		if (overworld) {
+			dx = x / 8;
+			dz = z / 8;
+		} else {
+			dx = x * 8;
+			dz = z * 8;
+		}
+		String coords = "X: " + dx + ", " + "Y: " + y + ", " + "Z: " + dz + ", facing " + d;
+		TARDISMessage.send(player, message, coords);
+		return true;
+	}
 
-    private boolean o2n(CommandSender sender, int x, int y, int z, boolean overworld) {
-        int dx, dz;
-        if ((y > 123) || (y < 1)) {
-            TARDISMessage.send(sender, "O2N_Y");
-            return false;
-        }
-        String message = (overworld) ? "O2N_COORDS_N" : "O2N_COORDS_O";
-        // get destination coords
-        if (overworld) {
-            dx = x / 8;
-            dz = z / 8;
-        } else {
-            dx = x * 8;
-            dz = z * 8;
-        }
-        String coords = "X: " + dx + ", " + "Y: " + y + ", " + "Z: " + dz;
-        TARDISMessage.send(sender, message, coords);
-        return true;
-    }
+	private boolean o2n(CommandSender sender, int x, int y, int z, boolean overworld) {
+		int dx, dz;
+		if ((y > 123) || (y < 1)) {
+			TARDISMessage.send(sender, "O2N_Y");
+			return false;
+		}
+		String message = (overworld) ? "O2N_COORDS_N" : "O2N_COORDS_O";
+		// get destination coords
+		if (overworld) {
+			dx = x / 8;
+			dz = z / 8;
+		} else {
+			dx = x * 8;
+			dz = z * 8;
+		}
+		String coords = "X: " + dx + ", " + "Y: " + y + ", " + "Z: " + dz;
+		TARDISMessage.send(sender, message, coords);
+		return true;
+	}
 
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 4) {
-            return partial(args[3], ENVIRON_SUBS);
-        }
-        return ImmutableList.of();
-    }
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+		if (args.length == 4) {
+			return partial(args[3], ENVIRON_SUBS);
+		}
+		return ImmutableList.of();
+	}
 }

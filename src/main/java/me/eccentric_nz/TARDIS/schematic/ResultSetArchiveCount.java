@@ -29,46 +29,46 @@ import java.sql.SQLException;
  */
 public class ResultSetArchiveCount {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final String uuid;
-    private final String prefix;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final String uuid;
+	private final String prefix;
 
-    public ResultSetArchiveCount(TARDIS plugin, String uuid) {
-        this.plugin = plugin;
-        this.uuid = uuid;
-        prefix = this.plugin.getPrefix();
-    }
+	public ResultSetArchiveCount(TARDIS plugin, String uuid) {
+		this.plugin = plugin;
+		this.uuid = uuid;
+		prefix = this.plugin.getPrefix();
+	}
 
-    public int count() {
-        int count = 0;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String query = "SELECT COUNT(*) FROM " + prefix + "archive WHERE uuid = ?";
-        try {
-            service.testConnection(connection);
-            ps = connection.prepareStatement(query);
-            ps.setString(1, uuid);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                count = rs.getInt(1);
-            }
-            return count;
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for archive count! " + e.getMessage());
-            return 0;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing archive count! " + e.getMessage());
-            }
-        }
-    }
+	public int count() {
+		int count = 0;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String query = "SELECT COUNT(*) FROM " + prefix + "archive WHERE uuid = ?";
+		try {
+			service.testConnection(connection);
+			ps = connection.prepareStatement(query);
+			ps.setString(1, uuid);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+			return count;
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for archive count! " + e.getMessage());
+			return 0;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing archive count! " + e.getMessage());
+			}
+		}
+	}
 }

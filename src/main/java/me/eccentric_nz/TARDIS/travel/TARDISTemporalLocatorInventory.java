@@ -33,42 +33,42 @@ import java.util.Collections;
  */
 public class TARDISTemporalLocatorInventory {
 
-    private final ItemStack[] temporal;
-    private final TARDIS plugin;
+	private final ItemStack[] temporal;
+	private final TARDIS plugin;
 
-    public TARDISTemporalLocatorInventory(TARDIS plugin) {
-        this.plugin = plugin;
-        temporal = getItemStack();
-    }
+	public TARDISTemporalLocatorInventory(TARDIS plugin) {
+		this.plugin = plugin;
+		temporal = getItemStack();
+	}
 
-    /**
-     * Constructs an inventory for the Temporal Locator GUI.
-     *
-     * @return an Array of itemStacks (an inventory)
-     */
-    private ItemStack[] getItemStack() {
-        ItemStack[] clocks = new ItemStack[27];
-        for (GUITemporalLocator clock : GUITemporalLocator.values()) {
-            ItemStack is = new ItemStack(clock.getMaterial(), 1);
-            ItemMeta im = is.getItemMeta();
-            if (clock.ordinal() < 4) {
-                im.setDisplayName(plugin.getLanguage().getString(clock.toString()));
-            } else {
-                im.setDisplayName(clock.getName());
-            }
-            if (clock.getLore().contains("~")) {
-                im.setLore(Arrays.asList(clock.getLore().split("~")));
-            } else {
-                im.setLore(Collections.singletonList(clock.getLore()));
-            }
-            im.setCustomModelData(clock.getCustomModelData());
-            is.setItemMeta(im);
-            clocks[clock.getSlot()] = is;
-        }
-        return clocks;
-    }
+	/**
+	 * Constructs an inventory for the Temporal Locator GUI.
+	 *
+	 * @return an Array of itemStacks (an inventory)
+	 */
+	private ItemStack[] getItemStack() {
+		ItemStack[] clocks = new ItemStack[27];
+		for (GUITemporalLocator clock : GUITemporalLocator.values()) {
+			ItemStack is = new ItemStack(clock.getMaterial(), 1);
+			ItemMeta im = is.getItemMeta();
+			if (clock.ordinal() < 4) {
+				im.setDisplayName(plugin.getLanguage().getString(clock.toString()));
+			} else {
+				im.setDisplayName(clock.getName());
+			}
+			if (clock.getLore().contains("~")) {
+				im.setLore(Arrays.asList(clock.getLore().split("~")));
+			} else {
+				im.setLore(Collections.singletonList(clock.getLore()));
+			}
+			im.setCustomModelData(clock.getCustomModelData());
+			is.setItemMeta(im);
+			clocks[clock.getSlot()] = is;
+		}
+		return clocks;
+	}
 
-    public ItemStack[] getTemporal() {
-        return temporal;
-    }
+	public ItemStack[] getTemporal() {
+		return temporal;
+	}
 }

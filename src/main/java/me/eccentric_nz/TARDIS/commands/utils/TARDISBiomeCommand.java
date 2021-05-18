@@ -12,29 +12,29 @@ import org.bukkit.entity.Player;
 
 public class TARDISBiomeCommand implements CommandExecutor {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISBiomeCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISBiomeCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("tardisbiome")) {
-            Player player;
-            if (sender instanceof Player) {
-                player = (Player) sender;
-            } else {
-                TARDISMessage.send(sender, "CMD_PLAYER");
-                return true;
-            }
-            // get location
-            Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 20).getLocation();
-            // get biome
-            TARDISBiome biome = TARDISStaticUtils.getBiomeAt(eyeLocation);
-            TARDISMessage.message(player, "The TARDISBiome is: " + biome.getKey().toString());
-            return true;
-        }
-        return false;
-    }
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("tardisbiome")) {
+			Player player;
+			if (sender instanceof Player) {
+				player = (Player) sender;
+			} else {
+				TARDISMessage.send(sender, "CMD_PLAYER");
+				return true;
+			}
+			// get location
+			Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 20).getLocation();
+			// get biome
+			TARDISBiome biome = TARDISStaticUtils.getBiomeAt(eyeLocation);
+			TARDISMessage.message(player, "The TARDISBiome is: " + biome.getKey().toString());
+			return true;
+		}
+		return false;
+	}
 }

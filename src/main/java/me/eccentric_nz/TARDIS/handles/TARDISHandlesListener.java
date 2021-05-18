@@ -38,55 +38,55 @@ import java.util.HashMap;
  */
 public class TARDISHandlesListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISHandlesListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISHandlesListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler(ignoreCancelled = true)
-    public void onHandlesBreak(BlockBreakEvent event) {
-        Block b = event.getBlock();
-        if (!b.getType().equals(Material.BIRCH_BUTTON)) {
-            return;
-        }
-        // check location
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("type", 26);
-        where.put("location", b.getLocation().toString());
-        ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-        if (!rsc.resultSet()) {
-            return;
-        }
-        event.setCancelled(true);
-        // set block to AIR
-        b.setBlockData(TARDISConstants.AIR);
-        // drop a custom BIRCH_BUTTON
-        ItemStack is = new ItemStack(Material.BIRCH_BUTTON, 1);
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Handles");
-        im.setLore(Arrays.asList("Cyberhead from the", "Maldovar Market"));
-        im.setCustomModelData(10000001);
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
-        is.setItemMeta(im);
-        b.getWorld().dropItemNaturally(b.getLocation(), is);
-        // remove control record
-        HashMap<String, Object> wherec = new HashMap<>();
-        wherec.put("c_id", rsc.getC_id());
-        plugin.getQueryFactory().doDelete("controls", wherec);
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onHandlesBreak(BlockBreakEvent event) {
+		Block b = event.getBlock();
+		if (!b.getType().equals(Material.BIRCH_BUTTON)) {
+			return;
+		}
+		// check location
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("type", 26);
+		where.put("location", b.getLocation().toString());
+		ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+		if (!rsc.resultSet()) {
+			return;
+		}
+		event.setCancelled(true);
+		// set block to AIR
+		b.setBlockData(TARDISConstants.AIR);
+		// drop a custom BIRCH_BUTTON
+		ItemStack is = new ItemStack(Material.BIRCH_BUTTON, 1);
+		ItemMeta im = is.getItemMeta();
+		im.setDisplayName("Handles");
+		im.setLore(Arrays.asList("Cyberhead from the", "Maldovar Market"));
+		im.setCustomModelData(10000001);
+		im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
+		is.setItemMeta(im);
+		b.getWorld().dropItemNaturally(b.getLocation(), is);
+		// remove control record
+		HashMap<String, Object> wherec = new HashMap<>();
+		wherec.put("c_id", rsc.getC_id());
+		plugin.getQueryFactory().doDelete("controls", wherec);
+	}
 
-    @EventHandler(ignoreCancelled = true)
-    public void onHandlesPlace(BlockPlaceEvent event) {
-        ItemStack is = event.getItemInHand();
-        if (!is.getType().equals(Material.BIRCH_BUTTON) || !is.hasItemMeta()) {
-            return;
-        }
-        ItemMeta im = is.getItemMeta();
-        if (im.hasDisplayName() && im.getDisplayName().equals("Handles")) {
-            // can only be placed in an item frame
-            event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), "HANDLES_FRAME");
-        }
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onHandlesPlace(BlockPlaceEvent event) {
+		ItemStack is = event.getItemInHand();
+		if (!is.getType().equals(Material.BIRCH_BUTTON) || !is.hasItemMeta()) {
+			return;
+		}
+		ItemMeta im = is.getItemMeta();
+		if (im.hasDisplayName() && im.getDisplayName().equals("Handles")) {
+			// can only be placed in an item frame
+			event.setCancelled(true);
+			TARDISMessage.send(event.getPlayer(), "HANDLES_FRAME");
+		}
+	}
 }

@@ -26,68 +26,68 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
  */
 public final class BuildData extends MaterialisationData {
 
-    private boolean CTM = true;
-    private boolean addSign = true;
-    private boolean malfunction;
-    private boolean minecartSounds = false;
-    private boolean rebuild;
-    private boolean texture = true;
+	private boolean CTM = true;
+	private boolean addSign = true;
+	private boolean malfunction;
+	private boolean minecartSounds = false;
+	private boolean rebuild;
+	private boolean texture = true;
 
-    public BuildData(String uuid) {
-        setPlayerDefaults(uuid);
-    }
+	public BuildData(String uuid) {
+		setPlayerDefaults(uuid);
+	}
 
-    boolean shouldUseCTM() {
-        return CTM;
-    }
+	boolean shouldUseCTM() {
+		return CTM;
+	}
 
-    boolean shouldAddSign() {
-        return addSign;
-    }
+	boolean shouldAddSign() {
+		return addSign;
+	}
 
-    public boolean isMalfunction() {
-        return malfunction;
-    }
+	public boolean isMalfunction() {
+		return malfunction;
+	}
 
-    public void setMalfunction(boolean malfunction) {
-        this.malfunction = malfunction;
-    }
+	public void setMalfunction(boolean malfunction) {
+		this.malfunction = malfunction;
+	}
 
-    boolean useMinecartSounds() {
-        return minecartSounds;
-    }
+	boolean useMinecartSounds() {
+		return minecartSounds;
+	}
 
-    public boolean isRebuild() {
-        return rebuild;
-    }
+	public boolean isRebuild() {
+		return rebuild;
+	}
 
-    public void setRebuild(boolean rebuild) {
-        this.rebuild = rebuild;
-    }
+	public void setRebuild(boolean rebuild) {
+		this.rebuild = rebuild;
+	}
 
-    boolean useTexture() {
-        return texture;
-    }
+	boolean useTexture() {
+		return texture;
+	}
 
-    public void setTexture(boolean texture) {
-        this.texture = texture;
-    }
+	public void setTexture(boolean texture) {
+		this.texture = texture;
+	}
 
-    public void setPlayerDefaults(String uuid) {
-        if (uuid == null) {
-            // sane defaults
-            texture = TARDIS.plugin.getConfig().getBoolean("police_box.set_biome");
-            addSign = true;
-            CTM = true;
-            minecartSounds = false;
-        } else {
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, uuid);
-            if (rsp.resultSet()) {
-                texture = rsp.isPoliceboxTexturesOn();
-                addSign = rsp.isSignOn();
-                CTM = rsp.isCtmOn();
-                minecartSounds = rsp.isMinecartOn();
-            }
-        }
-    }
+	public void setPlayerDefaults(String uuid) {
+		if (uuid == null) {
+			// sane defaults
+			texture = TARDIS.plugin.getConfig().getBoolean("police_box.set_biome");
+			addSign = true;
+			CTM = true;
+			minecartSounds = false;
+		} else {
+			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, uuid);
+			if (rsp.resultSet()) {
+				texture = rsp.isPoliceboxTexturesOn();
+				addSign = rsp.isSignOn();
+				CTM = rsp.isCtmOn();
+				minecartSounds = rsp.isMinecartOn();
+			}
+		}
+	}
 }

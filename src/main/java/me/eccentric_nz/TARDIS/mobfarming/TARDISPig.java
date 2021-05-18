@@ -27,13 +27,13 @@ package me.eccentric_nz.TARDIS.mobfarming;
  */
 class TARDISPig extends TARDISMob {
 
-    private boolean saddled;
+	private boolean saddled;
 
-    boolean isSaddled() {
-        return saddled;
-    }
+	boolean isSaddled() {
+		return saddled;
+	}
 
-    void setSaddled(boolean saddled) {
-        this.saddled = saddled;
-    }
+	void setSaddled(boolean saddled) {
+		this.saddled = saddled;
+	}
 }

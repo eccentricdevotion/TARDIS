@@ -33,37 +33,37 @@ import org.bukkit.event.block.BlockIgniteEvent;
  */
 public class TARDISFireListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISFireListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISFireListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    /**
-     * Listens for block burn and ignite events around the TARDIS. If the affected block is part of the TARDIS, then the
-     * event is canceled there by providing protection for the TARDIS blocks
-     *
-     * @param event a block catching fire
-     */
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onBlockIgnite(BlockIgniteEvent event) {
-        Block b = event.getBlock();
-        for (BlockFace bf : plugin.getGeneralKeeper().getBlockFaces()) {
-            Block chkBlock = b.getRelative(bf);
-            String l = chkBlock.getLocation().toString();
-            if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l) && !chkBlock.getType().equals(Material.BEDROCK)) {
-                event.setCancelled(true);
-                break;
-            }
-        }
-    }
+	/**
+	 * Listens for block burn and ignite events around the TARDIS. If the affected block is part of the TARDIS, then the
+	 * event is canceled there by providing protection for the TARDIS blocks
+	 *
+	 * @param event a block catching fire
+	 */
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	public void onBlockIgnite(BlockIgniteEvent event) {
+		Block b = event.getBlock();
+		for (BlockFace bf : plugin.getGeneralKeeper().getBlockFaces()) {
+			Block chkBlock = b.getRelative(bf);
+			String l = chkBlock.getLocation().toString();
+			if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l) && !chkBlock.getType().equals(Material.BEDROCK)) {
+				event.setCancelled(true);
+				break;
+			}
+		}
+	}
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onBlockBurn(BlockBurnEvent event) {
-        Block b = event.getBlock();
-        String l = b.getLocation().toString();
-        if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l)) {
-            event.setCancelled(true);
-        }
-    }
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	public void onBlockBurn(BlockBurnEvent event) {
+		Block b = event.getBlock();
+		String l = b.getLocation().toString();
+		if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l)) {
+			event.setCancelled(true);
+		}
+	}
 }

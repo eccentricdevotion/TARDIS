@@ -25,55 +25,55 @@ import java.util.List;
  */
 public class TARDISData {
 
-    private final Location location;
-    private final String console;
-    private final String chameleon;
-    private final String door;
-    private final String powered;
-    private final String siege;
-    private final String abandoned;
-    private final List<String> occupants;
+	private final Location location;
+	private final String console;
+	private final String chameleon;
+	private final String door;
+	private final String powered;
+	private final String siege;
+	private final String abandoned;
+	private final List<String> occupants;
 
-    TARDISData(Location location, String console, String chameleon, String door, String powered, String siege, String abandoned, List<String> occupants) {
-        this.location = location;
-        this.console = console;
-        this.chameleon = chameleon;
-        this.door = door;
-        this.powered = powered;
-        this.siege = siege;
-        this.abandoned = abandoned;
-        this.occupants = occupants;
-    }
+	TARDISData(Location location, String console, String chameleon, String door, String powered, String siege, String abandoned, List<String> occupants) {
+		this.location = location;
+		this.console = console;
+		this.chameleon = chameleon;
+		this.door = door;
+		this.powered = powered;
+		this.siege = siege;
+		this.abandoned = abandoned;
+		this.occupants = occupants;
+	}
 
-    public Location getLocation() {
-        return location;
-    }
+	public Location getLocation() {
+		return location;
+	}
 
-    public String getConsole() {
-        return console;
-    }
+	public String getConsole() {
+		return console;
+	}
 
-    public String getChameleon() {
-        return chameleon;
-    }
+	public String getChameleon() {
+		return chameleon;
+	}
 
-    public String getDoor() {
-        return door;
-    }
+	public String getDoor() {
+		return door;
+	}
 
-    public String getPowered() {
-        return powered;
-    }
+	public String getPowered() {
+		return powered;
+	}
 
-    public String getSiege() {
-        return siege;
-    }
+	public String getSiege() {
+		return siege;
+	}
 
-    public String getAbandoned() {
-        return abandoned;
-    }
+	public String getAbandoned() {
+		return abandoned;
+	}
 
-    public List<String> getOccupants() {
-        return occupants;
-    }
+	public List<String> getOccupants() {
+		return occupants;
+	}
 }

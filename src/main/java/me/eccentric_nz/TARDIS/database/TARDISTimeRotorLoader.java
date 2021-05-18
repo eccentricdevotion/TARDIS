@@ -29,54 +29,54 @@ import java.util.UUID;
  */
 public class TARDISTimeRotorLoader {
 
-    private final TARDIS plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final String prefix;
-    private PreparedStatement ps = null;
-    private ResultSet rs = null;
-    private int count = 0;
+	private final TARDIS plugin;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final String prefix;
+	private PreparedStatement ps = null;
+	private ResultSet rs = null;
+	private int count = 0;
 
-    public TARDISTimeRotorLoader(TARDIS plugin) {
-        this.plugin = plugin;
-        prefix = this.plugin.getPrefix();
-    }
+	public TARDISTimeRotorLoader(TARDIS plugin) {
+		this.plugin = plugin;
+		prefix = this.plugin.getPrefix();
+	}
 
-    public void load() {
-        try {
-            ps = connection.prepareStatement("SELECT tardis_id, rotor FROM " + prefix + "tardis");
-            rs = ps.executeQuery();
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    String u = rs.getString("rotor");
-                    // check for empty uuid
-                    if (!u.isEmpty()) {
-                        try {
-                            UUID uuid = UUID.fromString(u);
-                            plugin.getGeneralKeeper().getTimeRotors().add(uuid);
-                            count++;
-                        } catch (IllegalArgumentException e) {
-                            plugin.debug("Invalid Time Rotor UUID: " + e.getMessage());
-                        }
-                    }
-                }
-            }
-            if (count > 0) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " portals.");
-            }
-        } catch (SQLException ex) {
-            plugin.debug("ResultSet error for time rotor loading: " + ex.getMessage());
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (SQLException ex) {
-                plugin.debug("Error closing time rotor statement or resultset: " + ex.getMessage());
-            }
-        }
-    }
+	public void load() {
+		try {
+			ps = connection.prepareStatement("SELECT tardis_id, rotor FROM " + prefix + "tardis");
+			rs = ps.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					String u = rs.getString("rotor");
+					// check for empty uuid
+					if (!u.isEmpty()) {
+						try {
+							UUID uuid = UUID.fromString(u);
+							plugin.getGeneralKeeper().getTimeRotors().add(uuid);
+							count++;
+						} catch (IllegalArgumentException e) {
+							plugin.debug("Invalid Time Rotor UUID: " + e.getMessage());
+						}
+					}
+				}
+			}
+			if (count > 0) {
+				plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " portals.");
+			}
+		} catch (SQLException ex) {
+			plugin.debug("ResultSet error for time rotor loading: " + ex.getMessage());
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException ex) {
+				plugin.debug("Error closing time rotor statement or resultset: " + ex.getMessage());
+			}
+		}
+	}
 }

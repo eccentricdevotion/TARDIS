@@ -35,198 +35,198 @@ import java.util.List;
  */
 public class TARDISCircuitChecker {
 
-    private final TARDIS plugin;
-    private final int id;
-    private boolean ars;
-    private boolean chameleon;
-    private boolean input;
-    private boolean invisibility;
-    private boolean materialisation;
-    private boolean memory;
-    private boolean randomiser;
-    private boolean scanner;
-    private boolean temporal;
-    private int arsUses;
-    private int chameleonUses;
-    private int inputUses;
-    private int invisibilityUses;
-    private int materialisationUses;
-    private int memoryUses;
-    private int randomiserUses;
-    private int scannerUses;
-    private int temporalUses;
+	private final TARDIS plugin;
+	private final int id;
+	private boolean ars;
+	private boolean chameleon;
+	private boolean input;
+	private boolean invisibility;
+	private boolean materialisation;
+	private boolean memory;
+	private boolean randomiser;
+	private boolean scanner;
+	private boolean temporal;
+	private int arsUses;
+	private int chameleonUses;
+	private int inputUses;
+	private int invisibilityUses;
+	private int materialisationUses;
+	private int memoryUses;
+	private int randomiserUses;
+	private int scannerUses;
+	private int temporalUses;
 
-    public TARDISCircuitChecker(TARDIS plugin, int id) {
-        this.plugin = plugin;
-        this.id = id;
-        ars = false;
-        chameleon = false;
-        input = false;
-        invisibility = false;
-        materialisation = false;
-        memory = false;
-        randomiser = false;
-        scanner = false;
-        temporal = false;
-        arsUses = 0;
-        chameleonUses = 0;
-        inputUses = 0;
-        invisibilityUses = 0;
-        materialisationUses = 0;
-        memoryUses = 0;
-        randomiserUses = 0;
-        scannerUses = 0;
-        temporalUses = 0;
-    }
+	public TARDISCircuitChecker(TARDIS plugin, int id) {
+		this.plugin = plugin;
+		this.id = id;
+		ars = false;
+		chameleon = false;
+		input = false;
+		invisibility = false;
+		materialisation = false;
+		memory = false;
+		randomiser = false;
+		scanner = false;
+		temporal = false;
+		arsUses = 0;
+		chameleonUses = 0;
+		inputUses = 0;
+		invisibilityUses = 0;
+		materialisationUses = 0;
+		memoryUses = 0;
+		randomiserUses = 0;
+		scannerUses = 0;
+		temporalUses = 0;
+	}
 
-    /**
-     * Checks the TARDIS's Advanced Console inventory to see which circuits are installed.
-     */
-    public void getCircuits() {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
-        if (rs.resultSet()) {
-            ItemStack[] items;
-            try {
-                items = TARDISSerializeInventory.itemStacksFromString(rs.getConsole());
-                for (ItemStack is : items) {
-                    if (is != null && is.hasItemMeta()) {
-                        ItemMeta im = is.getItemMeta();
-                        if (im.hasDisplayName()) {
-                            String dn = im.getDisplayName();
-                            if (dn.equals("TARDIS ARS Circuit")) {
-                                ars = true;
-                                arsUses = getUses(im);
-                            }
-                            if (dn.equals("TARDIS Chameleon Circuit")) {
-                                chameleon = true;
-                                chameleonUses = getUses(im);
-                            }
-                            if (dn.equals("TARDIS Input Circuit")) {
-                                input = true;
-                                inputUses = getUses(im);
-                            }
-                            if (dn.equals("TARDIS Invisibility Circuit")) {
-                                invisibility = true;
-                                invisibilityUses = getUses(im);
-                            }
-                            if (dn.equals("TARDIS Materialisation Circuit")) {
-                                materialisation = true;
-                                materialisationUses = getUses(im);
-                            }
-                            if (dn.equals("TARDIS Memory Circuit")) {
-                                memory = true;
-                                memoryUses = getUses(im);
-                            }
-                            if (dn.equals("TARDIS Randomiser Circuit")) {
-                                randomiser = true;
-                                randomiserUses = getUses(im);
-                            }
-                            if (dn.equals("TARDIS Scanner Circuit")) {
-                                scanner = true;
-                                scannerUses = getUses(im);
-                            }
-                            if (dn.equals("TARDIS Temporal Circuit")) {
-                                temporal = true;
-                                temporalUses = getUses(im);
-                            }
-                        }
-                    }
-                }
-            } catch (IOException ex) {
-                plugin.debug("Could not get console items: " + ex);
-            }
-        }
-    }
+	/**
+	 * Checks the TARDIS's Advanced Console inventory to see which circuits are installed.
+	 */
+	public void getCircuits() {
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("tardis_id", id);
+		ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
+		if (rs.resultSet()) {
+			ItemStack[] items;
+			try {
+				items = TARDISSerializeInventory.itemStacksFromString(rs.getConsole());
+				for (ItemStack is : items) {
+					if (is != null && is.hasItemMeta()) {
+						ItemMeta im = is.getItemMeta();
+						if (im.hasDisplayName()) {
+							String dn = im.getDisplayName();
+							if (dn.equals("TARDIS ARS Circuit")) {
+								ars = true;
+								arsUses = getUses(im);
+							}
+							if (dn.equals("TARDIS Chameleon Circuit")) {
+								chameleon = true;
+								chameleonUses = getUses(im);
+							}
+							if (dn.equals("TARDIS Input Circuit")) {
+								input = true;
+								inputUses = getUses(im);
+							}
+							if (dn.equals("TARDIS Invisibility Circuit")) {
+								invisibility = true;
+								invisibilityUses = getUses(im);
+							}
+							if (dn.equals("TARDIS Materialisation Circuit")) {
+								materialisation = true;
+								materialisationUses = getUses(im);
+							}
+							if (dn.equals("TARDIS Memory Circuit")) {
+								memory = true;
+								memoryUses = getUses(im);
+							}
+							if (dn.equals("TARDIS Randomiser Circuit")) {
+								randomiser = true;
+								randomiserUses = getUses(im);
+							}
+							if (dn.equals("TARDIS Scanner Circuit")) {
+								scanner = true;
+								scannerUses = getUses(im);
+							}
+							if (dn.equals("TARDIS Temporal Circuit")) {
+								temporal = true;
+								temporalUses = getUses(im);
+							}
+						}
+					}
+				}
+			} catch (IOException ex) {
+				plugin.debug("Could not get console items: " + ex);
+			}
+		}
+	}
 
-    public boolean hasARS() {
-        return ars;
-    }
+	public boolean hasARS() {
+		return ars;
+	}
 
-    public boolean hasChameleon() {
-        return chameleon;
-    }
+	public boolean hasChameleon() {
+		return chameleon;
+	}
 
-    public boolean hasInput() {
-        return input;
-    }
+	public boolean hasInput() {
+		return input;
+	}
 
-    public boolean hasInvisibility() {
-        return invisibility;
-    }
+	public boolean hasInvisibility() {
+		return invisibility;
+	}
 
-    public boolean hasMaterialisation() {
-        return materialisation;
-    }
+	public boolean hasMaterialisation() {
+		return materialisation;
+	}
 
-    public boolean hasMemory() {
-        return memory;
-    }
+	public boolean hasMemory() {
+		return memory;
+	}
 
-    public boolean hasRandomiser() {
-        return randomiser;
-    }
+	public boolean hasRandomiser() {
+		return randomiser;
+	}
 
-    public boolean hasScanner() {
-        return scanner;
-    }
+	public boolean hasScanner() {
+		return scanner;
+	}
 
-    public boolean hasTemporal() {
-        return temporal;
-    }
+	public boolean hasTemporal() {
+		return temporal;
+	}
 
-    public int getArsUses() {
-        return arsUses;
-    }
+	public int getArsUses() {
+		return arsUses;
+	}
 
-    public int getChameleonUses() {
-        return chameleonUses;
-    }
+	public int getChameleonUses() {
+		return chameleonUses;
+	}
 
-    public int getInputUses() {
-        return inputUses;
-    }
+	public int getInputUses() {
+		return inputUses;
+	}
 
-    public int getInvisibilityUses() {
-        return invisibilityUses;
-    }
+	public int getInvisibilityUses() {
+		return invisibilityUses;
+	}
 
-    public int getMaterialisationUses() {
-        return materialisationUses;
-    }
+	public int getMaterialisationUses() {
+		return materialisationUses;
+	}
 
-    public int getMemoryUses() {
-        return memoryUses;
-    }
+	public int getMemoryUses() {
+		return memoryUses;
+	}
 
-    public int getRandomiserUses() {
-        return randomiserUses;
-    }
+	public int getRandomiserUses() {
+		return randomiserUses;
+	}
 
-    public int getScannerUses() {
-        return scannerUses;
-    }
+	public int getScannerUses() {
+		return scannerUses;
+	}
 
-    public int getTemporalUses() {
-        return temporalUses;
-    }
+	public int getTemporalUses() {
+		return temporalUses;
+	}
 
-    /**
-     * Get the number of uses this circuit has left.
-     *
-     * @param im the ItemMeta to check
-     * @return the number of uses
-     */
-    private int getUses(ItemMeta im) {
-        int uses = 0;
-        if (im.hasLore()) {
-            List<String> lore = im.getLore();
-            String stripped = ChatColor.stripColor(lore.get(1));
-            if (!stripped.equals("unlimited")) {
-                uses = TARDISNumberParsers.parseInt(stripped);
-            }
-        }
-        return uses;
-    }
+	/**
+	 * Get the number of uses this circuit has left.
+	 *
+	 * @param im the ItemMeta to check
+	 * @return the number of uses
+	 */
+	private int getUses(ItemMeta im) {
+		int uses = 0;
+		if (im.hasLore()) {
+			List<String> lore = im.getLore();
+			String stripped = ChatColor.stripColor(lore.get(1));
+			if (!stripped.equals("unlimited")) {
+				uses = TARDISNumberParsers.parseInt(stripped);
+			}
+		}
+		return uses;
+	}
 }

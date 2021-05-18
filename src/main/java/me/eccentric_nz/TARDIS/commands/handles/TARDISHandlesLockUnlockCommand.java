@@ -31,36 +31,36 @@ import java.util.HashMap;
  */
 class TARDISHandlesLockUnlockCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISHandlesLockUnlockCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISHandlesLockUnlockCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean toggleLock(Player player, int id, boolean lock) {
-        // get the TARDIS current location
-        HashMap<String, Object> wherec = new HashMap<>();
-        wherec.put("tardis_id", id);
-        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
-        if (rsc.resultSet()) {
-            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            HashMap<String, Object> whered = new HashMap<>();
-            whered.put("tardis_id", id);
-            ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-            if (rsd.resultSet()) {
-                // toggle door lock
-                int locked = (!lock) ? 0 : 1;
-                HashMap<String, Object> setl = new HashMap<>();
-                setl.put("locked", locked);
-                HashMap<String, Object> wherel = new HashMap<>();
-                wherel.put("tardis_id", id);
-                // always lock / unlock both doors
-                plugin.getQueryFactory().doUpdate("doors", setl, wherel);
-                String message = (!lock) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
-                TARDISMessage.handlesSend(player, "DOOR_LOCK", message);
-                TARDISSounds.playTARDISSound(l, "tardis_lock");
-            }
-        }
-        return true;
-    }
+	boolean toggleLock(Player player, int id, boolean lock) {
+		// get the TARDIS current location
+		HashMap<String, Object> wherec = new HashMap<>();
+		wherec.put("tardis_id", id);
+		ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+		if (rsc.resultSet()) {
+			Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+			HashMap<String, Object> whered = new HashMap<>();
+			whered.put("tardis_id", id);
+			ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+			if (rsd.resultSet()) {
+				// toggle door lock
+				int locked = (!lock) ? 0 : 1;
+				HashMap<String, Object> setl = new HashMap<>();
+				setl.put("locked", locked);
+				HashMap<String, Object> wherel = new HashMap<>();
+				wherel.put("tardis_id", id);
+				// always lock / unlock both doors
+				plugin.getQueryFactory().doUpdate("doors", setl, wherel);
+				String message = (!lock) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
+				TARDISMessage.handlesSend(player, "DOOR_LOCK", message);
+				TARDISSounds.playTARDISSound(l, "tardis_lock");
+			}
+		}
+		return true;
+	}
 }

@@ -23,79 +23,79 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class TARDISNumberParsers {
 
-    /**
-     * Parses a string for an integer.
-     *
-     * @param i the string to convert to an int.
-     * @return a number
-     */
-    public static int parseInt(String i) {
-        int num = 0;
-        try {
-            num = Integer.parseInt(i);
-        } catch (NumberFormatException n) {
-            TARDIS.plugin.debug("Could not convert to int, the string was: " + i);
+	/**
+	 * Parses a string for an integer.
+	 *
+	 * @param i the string to convert to an int.
+	 * @return a number
+	 */
+	public static int parseInt(String i) {
+		int num = 0;
+		try {
+			num = Integer.parseInt(i);
+		} catch (NumberFormatException n) {
+			TARDIS.plugin.debug("Could not convert to int, the string was: " + i);
 //            n.printStackTrace();
-        }
-        return num;
-    }
+		}
+		return num;
+	}
 
-    /**
-     * Parses a string for a float.
-     *
-     * @param i the string to convert to an float.
-     * @return a floating point number
-     */
-    public static float parseFloat(String i) {
-        float num = 0.0f;
-        try {
-            num = Float.parseFloat(i);
-        } catch (NumberFormatException n) {
-            TARDIS.plugin.debug("Could not convert to float, the string was: " + i);
-        }
-        return num;
-    }
+	/**
+	 * Parses a string for a float.
+	 *
+	 * @param i the string to convert to an float.
+	 * @return a floating point number
+	 */
+	public static float parseFloat(String i) {
+		float num = 0.0f;
+		try {
+			num = Float.parseFloat(i);
+		} catch (NumberFormatException n) {
+			TARDIS.plugin.debug("Could not convert to float, the string was: " + i);
+		}
+		return num;
+	}
 
-    /**
-     * Parses a string for a double.
-     *
-     * @param i the string to convert to an double.
-     * @return a floating point number
-     */
-    public static double parseDouble(String i) {
-        double num = 0.0d;
-        try {
-            num = Double.parseDouble(i);
-        } catch (NumberFormatException n) {
-            TARDIS.plugin.debug("Could not convert to double, the string was: " + i);
-        }
-        return num;
-    }
+	/**
+	 * Parses a string for a double.
+	 *
+	 * @param i the string to convert to an double.
+	 * @return a floating point number
+	 */
+	public static double parseDouble(String i) {
+		double num = 0.0d;
+		try {
+			num = Double.parseDouble(i);
+		} catch (NumberFormatException n) {
+			TARDIS.plugin.debug("Could not convert to double, the string was: " + i);
+		}
+		return num;
+	}
 
-    /**
-     * Parses a string for a double.
-     *
-     * @param i the string to convert to an double.
-     * @return a floating point number
-     */
-    public static long parseLong(String i) {
-        long num = 0L;
-        try {
-            num = Long.parseLong(i);
-        } catch (NumberFormatException n) {
-            TARDIS.plugin.debug("Could not convert to double, the string was: " + i);
-        }
-        return num;
-    }
+	/**
+	 * Parses a string for a double.
+	 *
+	 * @param i the string to convert to an double.
+	 * @return a floating point number
+	 */
+	public static long parseLong(String i) {
+		long num = 0L;
+		try {
+			num = Long.parseLong(i);
+		} catch (NumberFormatException n) {
+			TARDIS.plugin.debug("Could not convert to double, the string was: " + i);
+		}
+		return num;
+	}
 
-    /**
-     * Returns a rounded integer after division.
-     *
-     * @param num     the number being divided.
-     * @param divisor the number to divide by.
-     * @return a rounded number.
-     */
-    public static int roundUp(int num, int divisor) {
-        return (num + divisor - 1) / divisor;
-    }
+	/**
+	 * Returns a rounded integer after division.
+	 *
+	 * @param num     the number being divided.
+	 * @param divisor the number to divide by.
+	 * @return a rounded number.
+	 */
+	public static int roundUp(int num, int divisor) {
+		return (num + divisor - 1) / divisor;
+	}
 }

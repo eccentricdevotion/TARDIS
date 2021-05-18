@@ -28,75 +28,75 @@ import java.util.List;
  */
 public class TARDISChatGUIJSON {
 
-    // counter, updateable.getDescription(), updateable.getName()
-    private final String REPLACEMENT_STRING = "{\"text\":\"%s. %s\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update %s\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}";
+	// counter, updateable.getDescription(), updateable.getName()
+	private final String REPLACEMENT_STRING = "{\"text\":\"%s. %s\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update %s\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}";
 
-    private final String EGG = "{\"text\":\"[TARDIS] \",\"color\":\"gold\",\"extra\":[{\"text\":\"Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis egg\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}]}";
+	private final String EGG = "{\"text\":\"[TARDIS] \",\"color\":\"gold\",\"extra\":[{\"text\":\"Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis egg\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}]}";
 
-    private final String TRANSMAT_LOCATION = "{\"text\":\"%s \",\"color\":\"green\",\"extra\":[{\"text\":\"X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis transmat tp %s\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Transmat to this location\"}}}]}";
+	private final String TRANSMAT_LOCATION = "{\"text\":\"%s \",\"color\":\"green\",\"extra\":[{\"text\":\"X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis transmat tp %s\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Transmat to this location\"}}}]}";
 
-    private final List<String> sections = Arrays.asList(
-            "{\"text\":\"1. TARDIS Controls\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section controls\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"2. TARDIS User Interfaces\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section interfaces\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"3. TARDIS Internal Spawn Locations\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section locations\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"4. Others\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section others\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
-    );
+	private final List<String> sections = Arrays.asList(
+			"{\"text\":\"1. TARDIS Controls\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section controls\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
+			"{\"text\":\"2. TARDIS User Interfaces\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section interfaces\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
+			"{\"text\":\"3. TARDIS Internal Spawn Locations\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section locations\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
+			"{\"text\":\"4. Others\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section others\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
+	);
 
-    private final List<String> controls = new ArrayList<>();
-    private final List<String> interfaces = new ArrayList<>();
-    private final List<String> locations = new ArrayList<>();
-    private final List<String> others = new ArrayList<>();
+	private final List<String> controls = new ArrayList<>();
+	private final List<String> interfaces = new ArrayList<>();
+	private final List<String> locations = new ArrayList<>();
+	private final List<String> others = new ArrayList<>();
 
-    public TARDISChatGUIJSON() {
-        int c = 1;
-        int i = 1;
-        int l = 1;
-        int o = 1;
-        for (Updateable updateable : Updateable.values()) {
-            if (updateable.getCategory() == TARDISUpdatableCategory.CONTROLS) {
-                controls.add(String.format(REPLACEMENT_STRING, c, updateable.getDescription(), updateable.getName()));
-                c++;
-            }
-            if (updateable.getCategory() == TARDISUpdatableCategory.INTERFACES) {
-                interfaces.add(String.format(REPLACEMENT_STRING, i, updateable.getDescription(), updateable.getName()));
-                i++;
-            }
-            if (updateable.getCategory() == TARDISUpdatableCategory.LOCATIONS) {
-                locations.add(String.format(REPLACEMENT_STRING, l, updateable.getDescription(), updateable.getName()));
-                l++;
-            }
-            if (updateable.getCategory() == TARDISUpdatableCategory.OTHERS) {
-                others.add(String.format(REPLACEMENT_STRING, o, updateable.getDescription(), updateable.getName()));
-                o++;
-            }
-        }
-    }
+	public TARDISChatGUIJSON() {
+		int c = 1;
+		int i = 1;
+		int l = 1;
+		int o = 1;
+		for (Updateable updateable : Updateable.values()) {
+			if (updateable.getCategory() == TARDISUpdatableCategory.CONTROLS) {
+				controls.add(String.format(REPLACEMENT_STRING, c, updateable.getDescription(), updateable.getName()));
+				c++;
+			}
+			if (updateable.getCategory() == TARDISUpdatableCategory.INTERFACES) {
+				interfaces.add(String.format(REPLACEMENT_STRING, i, updateable.getDescription(), updateable.getName()));
+				i++;
+			}
+			if (updateable.getCategory() == TARDISUpdatableCategory.LOCATIONS) {
+				locations.add(String.format(REPLACEMENT_STRING, l, updateable.getDescription(), updateable.getName()));
+				l++;
+			}
+			if (updateable.getCategory() == TARDISUpdatableCategory.OTHERS) {
+				others.add(String.format(REPLACEMENT_STRING, o, updateable.getDescription(), updateable.getName()));
+				o++;
+			}
+		}
+	}
 
-    public List<String> getSections() {
-        return sections;
-    }
+	public List<String> getSections() {
+		return sections;
+	}
 
-    public List<String> getControls() {
-        return controls;
-    }
+	public List<String> getControls() {
+		return controls;
+	}
 
-    List<String> getInterfaces() {
-        return interfaces;
-    }
+	List<String> getInterfaces() {
+		return interfaces;
+	}
 
-    public List<String> getLocations() {
-        return locations;
-    }
+	public List<String> getLocations() {
+		return locations;
+	}
 
-    public List<String> getOthers() {
-        return others;
-    }
+	public List<String> getOthers() {
+		return others;
+	}
 
-    public String getEgg() {
-        return EGG;
-    }
+	public String getEgg() {
+		return EGG;
+	}
 
-    public String getTransmatLocation() {
-        return TRANSMAT_LOCATION;
-    }
+	public String getTransmatLocation() {
+		return TRANSMAT_LOCATION;
+	}
 }

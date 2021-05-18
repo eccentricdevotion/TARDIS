@@ -29,62 +29,62 @@ import java.util.List;
  */
 class TARDISVillager extends TARDISMob {
 
-    private Profession profession;
-    private List<MerchantRecipe> trades;
-    private int level;
-    private Villager.Type villagerType;
-    private boolean willing;
-    private int experience;
+	private Profession profession;
+	private List<MerchantRecipe> trades;
+	private int level;
+	private Villager.Type villagerType;
+	private boolean willing;
+	private int experience;
 
-    /**
-     * Data storage class for TARDIS villagers.
-     */
+	/**
+	 * Data storage class for TARDIS villagers.
+	 */
 
-    Profession getProfession() {
-        return profession;
-    }
+	Profession getProfession() {
+		return profession;
+	}
 
-    void setProfession(Profession profession) {
-        this.profession = profession;
-    }
+	void setProfession(Profession profession) {
+		this.profession = profession;
+	}
 
-    List<MerchantRecipe> getTrades() {
-        return trades;
-    }
+	List<MerchantRecipe> getTrades() {
+		return trades;
+	}
 
-    void setTrades(List<MerchantRecipe> trades) {
-        this.trades = trades;
-    }
+	void setTrades(List<MerchantRecipe> trades) {
+		this.trades = trades;
+	}
 
-    int getLevel() {
-        return level;
-    }
+	int getLevel() {
+		return level;
+	}
 
-    void setLevel(int level) {
-        this.level = level;
-    }
+	void setLevel(int level) {
+		this.level = level;
+	}
 
-    public Villager.Type getVillagerType() {
-        return villagerType;
-    }
+	public Villager.Type getVillagerType() {
+		return villagerType;
+	}
 
-    public void setVillagerType(Villager.Type villagerType) {
-        this.villagerType = villagerType;
-    }
+	public void setVillagerType(Villager.Type villagerType) {
+		this.villagerType = villagerType;
+	}
 
-    boolean isWilling() {
-        return willing;
-    }
+	boolean isWilling() {
+		return willing;
+	}
 
-    void setWilling(boolean willing) {
-        this.willing = willing;
-    }
+	void setWilling(boolean willing) {
+		this.willing = willing;
+	}
 
-    public int getExperience() {
-        return experience;
-    }
+	public int getExperience() {
+		return experience;
+	}
 
-    public void setExperience(int experience) {
-        this.experience = experience;
-    }
+	public void setExperience(int experience) {
+		this.experience = experience;
+	}
 }

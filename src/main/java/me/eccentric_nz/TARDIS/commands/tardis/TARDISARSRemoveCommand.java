@@ -34,46 +34,46 @@ import java.util.HashMap;
  */
 class TARDISARSRemoveCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISARSRemoveCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISARSRemoveCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean resetARS(Player player) {
-        // check they are a timelord
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (!rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "NOT_A_TIMELORD");
-            return true;
-        }
-        int id = rs.getTardis_id();
-        // get the sign location so we can reset the sign text
-        HashMap<String, Object> wheres = new HashMap<>();
-        wheres.put("tardis_id", id);
-        wheres.put("type", 10);
-        ResultSetControls rsc = new ResultSetControls(plugin, wheres, false);
-        if (rsc.resultSet()) {
-            Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
-            if (l != null) {
-                Block b = l.getBlock();
-                if (Tag.SIGNS.isTagged(b.getType())) {
-                    Sign sign = (Sign) b.getState();
-                    for (int i = 0; i < 4; i++) {
-                        sign.setLine(i, "");
-                    }
-                    sign.update();
-                }
-                HashMap<String, Object> del = new HashMap<>();
-                del.put("tardis_id", id);
-                del.put("type", 10);
-                plugin.getQueryFactory().doDelete("controls", del);
-                TARDISMessage.send(player, "ARS_REMOVED");
-            }
-            return true;
-        } else {
-            TARDISMessage.send(player, "NO_ARS");
-            return true;
-        }
-    }
+	boolean resetARS(Player player) {
+		// check they are a timelord
+		ResultSetTardisID rs = new ResultSetTardisID(plugin);
+		if (!rs.fromUUID(player.getUniqueId().toString())) {
+			TARDISMessage.send(player, "NOT_A_TIMELORD");
+			return true;
+		}
+		int id = rs.getTardis_id();
+		// get the sign location so we can reset the sign text
+		HashMap<String, Object> wheres = new HashMap<>();
+		wheres.put("tardis_id", id);
+		wheres.put("type", 10);
+		ResultSetControls rsc = new ResultSetControls(plugin, wheres, false);
+		if (rsc.resultSet()) {
+			Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+			if (l != null) {
+				Block b = l.getBlock();
+				if (Tag.SIGNS.isTagged(b.getType())) {
+					Sign sign = (Sign) b.getState();
+					for (int i = 0; i < 4; i++) {
+						sign.setLine(i, "");
+					}
+					sign.update();
+				}
+				HashMap<String, Object> del = new HashMap<>();
+				del.put("tardis_id", id);
+				del.put("type", 10);
+				plugin.getQueryFactory().doDelete("controls", del);
+				TARDISMessage.send(player, "ARS_REMOVED");
+			}
+			return true;
+		} else {
+			TARDISMessage.send(player, "NO_ARS");
+			return true;
+		}
+	}
 }

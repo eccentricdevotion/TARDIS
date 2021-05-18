@@ -32,55 +32,55 @@ import java.sql.SQLException;
  */
 public class ResultSetHidden {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final int id;
-    private final String prefix;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final int id;
+	private final String prefix;
 
-    /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
-     *
-     * @param plugin an instance of the main class.
-     * @param id     the TARDIS id to get the hidden status for.
-     */
-    public ResultSetHidden(TARDIS plugin, int id) {
-        this.plugin = plugin;
-        this.id = id;
-        prefix = this.plugin.getPrefix();
-    }
+	/**
+	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
+	 *
+	 * @param plugin an instance of the main class.
+	 * @param id     the TARDIS id to get the hidden status for.
+	 */
+	public ResultSetHidden(TARDIS plugin, int id) {
+		this.plugin = plugin;
+		this.id = id;
+		prefix = this.plugin.getPrefix();
+	}
 
-    /**
-     * Retrieves the visibility for the specified TARDIS.
-     *
-     * @return true if visible, false if hidden.
-     */
-    public boolean isVisible() {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT hidden, chameleon_preset FROM " + prefix + "tardis WHERE tardis_id =" + id;
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                rs.next();
-                return rs.getBoolean("hidden") || rs.getString("chameleon_preset").equals("INVISIBLE");
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for hidden! " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing hidden! " + e.getMessage());
-            }
-        }
-        return true;
-    }
+	/**
+	 * Retrieves the visibility for the specified TARDIS.
+	 *
+	 * @return true if visible, false if hidden.
+	 */
+	public boolean isVisible() {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String query = "SELECT hidden, chameleon_preset FROM " + prefix + "tardis WHERE tardis_id =" + id;
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			rs = statement.executeQuery();
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				return rs.getBoolean("hidden") || rs.getString("chameleon_preset").equals("INVISIBLE");
+			}
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for hidden! " + e.getMessage());
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing hidden! " + e.getMessage());
+			}
+		}
+		return true;
+	}
 }

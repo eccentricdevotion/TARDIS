@@ -29,32 +29,32 @@ import java.util.HashMap;
  */
 class TARDISIsomorphicCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISIsomorphicCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISIsomorphicCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean toggleIsomorphicControls(Player player) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        // does the player have a TARDIS
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
-            int iso = (tardis.isIso_on()) ? 0 : 1;
-            String onoff = (tardis.isIso_on()) ? "ISO_OFF" : "ISO_ON";
-            int id = tardis.getTardis_id();
-            HashMap<String, Object> seti = new HashMap<>();
-            seti.put("iso_on", iso);
-            HashMap<String, Object> wheret = new HashMap<>();
-            wheret.put("tardis_id", id);
-            plugin.getQueryFactory().doUpdate("tardis", seti, wheret);
-            TARDISMessage.send(player, onoff);
-            return true;
-        } else {
-            TARDISMessage.send(player, "NO_TARDIS");
-            return true;
-        }
-    }
+	boolean toggleIsomorphicControls(Player player) {
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("uuid", player.getUniqueId().toString());
+		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+		// does the player have a TARDIS
+		if (rs.resultSet()) {
+			Tardis tardis = rs.getTardis();
+			int iso = (tardis.isIso_on()) ? 0 : 1;
+			String onoff = (tardis.isIso_on()) ? "ISO_OFF" : "ISO_ON";
+			int id = tardis.getTardis_id();
+			HashMap<String, Object> seti = new HashMap<>();
+			seti.put("iso_on", iso);
+			HashMap<String, Object> wheret = new HashMap<>();
+			wheret.put("tardis_id", id);
+			plugin.getQueryFactory().doUpdate("tardis", seti, wheret);
+			TARDISMessage.send(player, onoff);
+			return true;
+		} else {
+			TARDISMessage.send(player, "NO_TARDIS");
+			return true;
+		}
+	}
 }

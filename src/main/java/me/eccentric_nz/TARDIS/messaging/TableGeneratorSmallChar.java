@@ -9,9 +9,9 @@ package me.eccentric_nz.TARDIS.messaging;
 
 public class TableGeneratorSmallChar extends TableGenerator {
 
-    private static final char char1 = '\u17f2';
+	private static final char char1 = '\u17f2';
 
-    public TableGeneratorSmallChar(Alignment... alignments) {
-        super(char1, alignments);
-    }
+	public TableGeneratorSmallChar(Alignment... alignments) {
+		super(char1, alignments);
+	}
 }

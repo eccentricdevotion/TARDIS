@@ -39,51 +39,51 @@ import java.util.List;
  */
 public class TARDISSeedsInventory {
 
-    private final ItemStack[] menu;
-    private final TARDIS plugin;
-    private final Player player;
+	private final ItemStack[] menu;
+	private final TARDIS plugin;
+	private final Player player;
 
-    public TARDISSeedsInventory(TARDIS plugin, Player player) {
-        this.plugin = plugin;
-        this.player = player;
-        menu = getItemStack();
-    }
+	public TARDISSeedsInventory(TARDIS plugin, Player player) {
+		this.plugin = plugin;
+		this.player = player;
+		menu = getItemStack();
+	}
 
-    /**
-     * Constructs an inventory for the Player Preferences Menu GUI.
-     *
-     * @return an Array of itemStacks (an inventory)
-     */
-    private ItemStack[] getItemStack() {
-        ItemStack[] stack = new ItemStack[27];
-        int i = 0;
-        // get consoles
-        for (Schematic a : Consoles.getBY_NAMES().values()) {
-            if (TARDISPermission.hasPermission(player, "tardis." + a.getPermission()) && !a.getSeedMaterial().equals(Material.COBBLESTONE)) {
-                Material m = Material.getMaterial(a.getSeed());
-                ItemStack is = new ItemStack(m, 1);
-                ItemMeta im = is.getItemMeta();
-                im.setDisplayName(a.getDescription());
-                List<String> lore = new ArrayList<>();
-                lore.add("Click to see recipe...");
-                im.setLore(lore);
-                im.setCustomModelData((m.equals(Material.NETHER_WART_BLOCK)) ? 2 : 1);
-                is.setItemMeta(im);
-                stack[i] = is;
-                i++;
-            }
-        }
-        // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUISeeds.CLOSE.getCustomModelData());
-        close.setItemMeta(close_im);
-        stack[26] = close;
-        return stack;
-    }
+	/**
+	 * Constructs an inventory for the Player Preferences Menu GUI.
+	 *
+	 * @return an Array of itemStacks (an inventory)
+	 */
+	private ItemStack[] getItemStack() {
+		ItemStack[] stack = new ItemStack[27];
+		int i = 0;
+		// get consoles
+		for (Schematic a : Consoles.getBY_NAMES().values()) {
+			if (TARDISPermission.hasPermission(player, "tardis." + a.getPermission()) && !a.getSeedMaterial().equals(Material.COBBLESTONE)) {
+				Material m = Material.getMaterial(a.getSeed());
+				ItemStack is = new ItemStack(m, 1);
+				ItemMeta im = is.getItemMeta();
+				im.setDisplayName(a.getDescription());
+				List<String> lore = new ArrayList<>();
+				lore.add("Click to see recipe...");
+				im.setLore(lore);
+				im.setCustomModelData((m.equals(Material.NETHER_WART_BLOCK)) ? 2 : 1);
+				is.setItemMeta(im);
+				stack[i] = is;
+				i++;
+			}
+		}
+		// close
+		ItemStack close = new ItemStack(Material.BOWL, 1);
+		ItemMeta close_im = close.getItemMeta();
+		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+		close_im.setCustomModelData(GUISeeds.CLOSE.getCustomModelData());
+		close.setItemMeta(close_im);
+		stack[26] = close;
+		return stack;
+	}
 
-    public ItemStack[] getMenu() {
-        return menu;
-    }
+	public ItemStack[] getMenu() {
+		return menu;
+	}
 }

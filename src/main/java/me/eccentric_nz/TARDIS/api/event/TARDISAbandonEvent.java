@@ -24,7 +24,7 @@ import org.bukkit.entity.Player;
  */
 public final class TARDISAbandonEvent extends TARDISLocationEvent {
 
-    public TARDISAbandonEvent(Player player, int tardis_id, Location location) {
-        super(player, tardis_id, location);
-    }
+	public TARDISAbandonEvent(Player player, int tardis_id, Location location) {
+		super(player, tardis_id, location);
+	}
 }

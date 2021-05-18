@@ -30,96 +30,96 @@ import java.util.UUID;
  */
 public class TARDISArchCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISArchCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISArchCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public boolean getTime(Player player) {
-        UUID uuid = player.getUniqueId();
-        if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-            TARDISMessage.send(player, "ARCH_NOT_VALID");
-            return true;
-        }
-        long time = plugin.getTrackerKeeper().getJohnSmith().get(uuid).getTime();
-        long now = System.currentTimeMillis();
-        long diff = (time - now);
-        if (diff > 0) {
-            String sub0 = String.format("%d", (diff / (1000 * 60)) % 60);
-            String sub1 = String.format("%d", (diff / 1000) % 60);
-            TARDISMessage.send(player, "ARCH_TIME", sub0, sub1);
-        } else {
-            TARDISMessage.send(player, "ARCH_FREE");
-        }
-        return true;
-    }
+	public boolean getTime(Player player) {
+		UUID uuid = player.getUniqueId();
+		if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+			TARDISMessage.send(player, "ARCH_NOT_VALID");
+			return true;
+		}
+		long time = plugin.getTrackerKeeper().getJohnSmith().get(uuid).getTime();
+		long now = System.currentTimeMillis();
+		long diff = (time - now);
+		if (diff > 0) {
+			String sub0 = String.format("%d", (diff / (1000 * 60)) % 60);
+			String sub1 = String.format("%d", (diff / 1000) % 60);
+			TARDISMessage.send(player, "ARCH_TIME", sub0, sub1);
+		} else {
+			TARDISMessage.send(player, "ARCH_FREE");
+		}
+		return true;
+	}
 
-    public boolean whois(CommandSender sender, String[] args) {
-        for (Player p : plugin.getServer().getOnlinePlayers()) {
-            if (ChatColor.stripColor(p.getPlayerListName()).equalsIgnoreCase(args[1])) {
-                TARDISMessage.send(sender, "ARCH_PLAYER", p.getName());
-                return true;
-            }
-        }
-        TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-        return true;
-    }
+	public boolean whois(CommandSender sender, String[] args) {
+		for (Player p : plugin.getServer().getOnlinePlayers()) {
+			if (ChatColor.stripColor(p.getPlayerListName()).equalsIgnoreCase(args[1])) {
+				TARDISMessage.send(sender, "ARCH_PLAYER", p.getName());
+				return true;
+			}
+		}
+		TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+		return true;
+	}
 
-    public boolean force(CommandSender sender, String[] args) {
-        if (args[2].length() < 2) {
-            TARDISMessage.send(sender, "TOO_FEW_ARGS");
-            return true;
-        }
-        Player player = plugin.getServer().getPlayer(args[1]);
-        if (player == null) {
-            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-            return true;
-        }
-        UUID uuid = player.getUniqueId();
-        boolean inv = plugin.getConfig().getBoolean("arch.switch_inventory");
-        if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-            String name = TARDISRandomName.name();
-            long time = System.currentTimeMillis() + plugin.getConfig().getLong("arch.min_time") * 60000L;
-            TARDISWatchData twd = new TARDISWatchData(name, time);
-            plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);
-            if (plugin.isDisguisesOnServer()) {
-                TARDISArchLibsDisguise.undisguise(player);
-            } else {
-                TARDISArchDisguise.undisguise(player);
-            }
-            player.getWorld().strikeLightningEffect(player.getLocation());
-            double mh = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-            player.setHealth(mh / 10.0d);
-            if (inv) {
-                new TARDISArchInventory().switchInventories(player, 0);
-            }
-            if (plugin.isDisguisesOnServer()) {
-                TARDISArchLibsDisguise.disguise(player, name);
-            } else {
-                TARDISArchDisguise.disguise(player, name);
-            }
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                player.setDisplayName(name);
-                player.setPlayerListName(name);
-            }, 5L);
-        } else {
-            if (plugin.isDisguisesOnServer()) {
-                TARDISArchLibsDisguise.undisguise(player);
-            } else {
-                TARDISArchDisguise.undisguise(player);
-            }
-            if (inv) {
-                new TARDISArchInventory().switchInventories(player, 1);
-            }
-            player.getWorld().strikeLightningEffect(player.getLocation());
-            plugin.getTrackerKeeper().getJohnSmith().remove(uuid);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                player.setDisplayName(player.getName());
-                player.setPlayerListName(player.getName());
-            }, 5L);            // remove player from arched table
-            new TARDISArchPersister(plugin).removeArch(uuid);
-        }
-        return true;
-    }
+	public boolean force(CommandSender sender, String[] args) {
+		if (args[2].length() < 2) {
+			TARDISMessage.send(sender, "TOO_FEW_ARGS");
+			return true;
+		}
+		Player player = plugin.getServer().getPlayer(args[1]);
+		if (player == null) {
+			TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+			return true;
+		}
+		UUID uuid = player.getUniqueId();
+		boolean inv = plugin.getConfig().getBoolean("arch.switch_inventory");
+		if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+			String name = TARDISRandomName.name();
+			long time = System.currentTimeMillis() + plugin.getConfig().getLong("arch.min_time") * 60000L;
+			TARDISWatchData twd = new TARDISWatchData(name, time);
+			plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);
+			if (plugin.isDisguisesOnServer()) {
+				TARDISArchLibsDisguise.undisguise(player);
+			} else {
+				TARDISArchDisguise.undisguise(player);
+			}
+			player.getWorld().strikeLightningEffect(player.getLocation());
+			double mh = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+			player.setHealth(mh / 10.0d);
+			if (inv) {
+				new TARDISArchInventory().switchInventories(player, 0);
+			}
+			if (plugin.isDisguisesOnServer()) {
+				TARDISArchLibsDisguise.disguise(player, name);
+			} else {
+				TARDISArchDisguise.disguise(player, name);
+			}
+			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+				player.setDisplayName(name);
+				player.setPlayerListName(name);
+			}, 5L);
+		} else {
+			if (plugin.isDisguisesOnServer()) {
+				TARDISArchLibsDisguise.undisguise(player);
+			} else {
+				TARDISArchDisguise.undisguise(player);
+			}
+			if (inv) {
+				new TARDISArchInventory().switchInventories(player, 1);
+			}
+			player.getWorld().strikeLightningEffect(player.getLocation());
+			plugin.getTrackerKeeper().getJohnSmith().remove(uuid);
+			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+				player.setDisplayName(player.getName());
+				player.setPlayerListName(player.getName());
+			}, 5L);            // remove player from arched table
+			new TARDISArchPersister(plugin).removeArch(uuid);
+		}
+		return true;
+	}
 }

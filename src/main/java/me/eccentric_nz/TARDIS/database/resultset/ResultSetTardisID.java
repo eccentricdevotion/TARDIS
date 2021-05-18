@@ -31,101 +31,101 @@ import java.sql.SQLException;
  */
 public class ResultSetTardisID {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final String prefix;
-    private int tardis_id;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final String prefix;
+	private int tardis_id;
 
-    /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
-     *
-     * @param plugin an instance of the main class.
-     */
-    public ResultSetTardisID(TARDIS plugin) {
-        this.plugin = plugin;
-        prefix = this.plugin.getPrefix();
-    }
+	/**
+	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
+	 *
+	 * @param plugin an instance of the main class.
+	 */
+	public ResultSetTardisID(TARDIS plugin) {
+		this.plugin = plugin;
+		prefix = this.plugin.getPrefix();
+	}
 
-    /**
-     * Attempts to see whether the supplied TARDIS id is in the tardis table. This method builds an SQL query string
-     * from the parameters supplied and then executes the query.
-     *
-     * @param uuid the Time Lord uuid to check
-     * @return true or false depending on whether the TARDIS id exists in the table
-     */
-    public boolean fromUUID(String uuid) {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT tardis_id FROM " + prefix + "tardis WHERE uuid = ? AND abandoned = 0";
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            statement.setString(1, uuid);
-            rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                rs.next();
-                tardis_id = rs.getInt("tardis_id");
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis [tardis_id fromUUID] table! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing tardis [tardis_id fromUUID] table! " + e.getMessage());
-            }
-        }
-    }
+	/**
+	 * Attempts to see whether the supplied TARDIS id is in the tardis table. This method builds an SQL query string
+	 * from the parameters supplied and then executes the query.
+	 *
+	 * @param uuid the Time Lord uuid to check
+	 * @return true or false depending on whether the TARDIS id exists in the table
+	 */
+	public boolean fromUUID(String uuid) {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String query = "SELECT tardis_id FROM " + prefix + "tardis WHERE uuid = ? AND abandoned = 0";
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			statement.setString(1, uuid);
+			rs = statement.executeQuery();
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				tardis_id = rs.getInt("tardis_id");
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for tardis [tardis_id fromUUID] table! " + e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing tardis [tardis_id fromUUID] table! " + e.getMessage());
+			}
+		}
+	}
 
-    /**
-     * Attempts to see whether the supplied TARDIS id is in the tardis table. This method builds an SQL query string
-     * from the parameters supplied and then executes the query.
-     *
-     * @param slot the TIPS slot number to check
-     * @return true or false depending on whether the TARDIS id exists in the table
-     */
-    public boolean fromTIPSSlot(int slot) {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT tardis_id FROM " + prefix + "tardis WHERE tips = ?";
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            statement.setInt(1, slot);
-            rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                rs.next();
-                tardis_id = rs.getInt("tardis_id");
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis [tardis_id fromTIPSSlot] table! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing tardis [tardis_id fromTIPSSlot] table! " + e.getMessage());
-            }
-        }
-    }
+	/**
+	 * Attempts to see whether the supplied TARDIS id is in the tardis table. This method builds an SQL query string
+	 * from the parameters supplied and then executes the query.
+	 *
+	 * @param slot the TIPS slot number to check
+	 * @return true or false depending on whether the TARDIS id exists in the table
+	 */
+	public boolean fromTIPSSlot(int slot) {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String query = "SELECT tardis_id FROM " + prefix + "tardis WHERE tips = ?";
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			statement.setInt(1, slot);
+			rs = statement.executeQuery();
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				tardis_id = rs.getInt("tardis_id");
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for tardis [tardis_id fromTIPSSlot] table! " + e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing tardis [tardis_id fromTIPSSlot] table! " + e.getMessage());
+			}
+		}
+	}
 
-    public int getTardis_id() {
-        return tardis_id;
-    }
+	public int getTardis_id() {
+		return tardis_id;
+	}
 }

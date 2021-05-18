@@ -25,19 +25,19 @@ import org.bukkit.entity.Player;
  */
 public final class TARDISClaimEvent extends TARDISEvent {
 
-    private final Location location;
+	private final Location location;
 
-    public TARDISClaimEvent(Player player, Tardis tardis, Location location) {
-        super(player, tardis);
-        this.location = location;
-    }
+	public TARDISClaimEvent(Player player, Tardis tardis, Location location) {
+		super(player, tardis);
+		this.location = location;
+	}
 
-    /**
-     * Returns the exterior location of the TARDIS.
-     *
-     * @return the TARDIS location
-     */
-    public Location getLocation() {
-        return location;
-    }
+	/**
+	 * Returns the exterior location of the TARDIS.
+	 *
+	 * @return the TARDIS location
+	 */
+	public Location getLocation() {
+		return location;
+	}
 }

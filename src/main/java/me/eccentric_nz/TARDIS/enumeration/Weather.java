@@ -18,25 +18,25 @@ package me.eccentric_nz.TARDIS.enumeration;
 
 public enum Weather {
 
-    CLEAR,
-    RAIN,
-    THUNDER;
+	CLEAR,
+	RAIN,
+	THUNDER;
 
-    public static Weather fromString(String s) {
-        String lower = s.toLowerCase();
-        switch (lower) {
-            case "r":
-            case "rain":
-            case "w":
-            case "wet":
-                return RAIN;
-            case "t":
-            case "thunder":
-            case "l":
-            case "lightning":
-                return THUNDER;
-            default:
-                return CLEAR;
-        }
-    }
+	public static Weather fromString(String s) {
+		String lower = s.toLowerCase();
+		switch (lower) {
+			case "r":
+			case "rain":
+			case "w":
+			case "wet":
+				return RAIN;
+			case "t":
+			case "thunder":
+			case "l":
+			case "lightning":
+				return THUNDER;
+			default:
+				return CLEAR;
+		}
+	}
 }

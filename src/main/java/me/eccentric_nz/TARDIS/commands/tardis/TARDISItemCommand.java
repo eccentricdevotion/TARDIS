@@ -27,87 +27,87 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISItemCommand {
 
-    public boolean update(Player player, String[] args) {
-        if (args.length < 2) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
-            return true;
-        }
-        if (!args[1].equalsIgnoreCase("hand") && !args[1].equalsIgnoreCase("inventory")) {
-            TARDISMessage.send(player, "ARG_ITEM");
-            return true;
-        }
-        if (args[1].equalsIgnoreCase("hand")) {
-            ItemStack inHand = player.getInventory().getItemInMainHand();
-            if (inHand == null || !inHand.hasItemMeta()) {
-                TARDISMessage.send(player, "ITEM_IN_HAND");
-                return true;
-            }
-            ItemMeta im = inHand.getItemMeta();
-            if (!im.hasDisplayName()) {
-                TARDISMessage.send(player, "ITEM_IN_HAND");
-                return true;
-            }
-            // strip color codes
-            String stripped = ChatColor.stripColor(im.getDisplayName());
-            // look up display name
-            RecipeItem recipeItem = RecipeItem.getByName(stripped);
-            if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
-                int cmd = recipeItem.getCustomModelData();
-                im.setCustomModelData(cmd);
-                if (inHand.getType().equals(Material.FILLED_MAP)) {
-                    GlowstoneCircuit circuit = GlowstoneCircuit.getByName().get(stripped);
-                    if (circuit != null) {
-                        inHand.setType(Material.GLOWSTONE_DUST);
-                    }
-                } else {
-                    if (im.hasCustomModelData()) {
-                        TARDISMessage.send(player, "ITEM_HAS_DATA");
-                        return true;
-                    }
-                    inHand.setItemMeta(im);
-                }
-                player.updateInventory();
-                TARDISMessage.send(player, "ITEM_UPDATED");
-            }
-        } else {
-            int i = 0;
-            for (ItemStack is : player.getInventory()) {
-                if (is != null && is.hasItemMeta()) {
-                    TARDISMessage.message(player, is.getType().toString());
-                    ItemMeta im = is.getItemMeta();
-                    if (im.hasDisplayName()) {
-                        // strip color codes
-                        String stripped = ChatColor.stripColor(im.getDisplayName());
-                        TARDISMessage.message(player, stripped);
-                        // look up display name
-                        RecipeItem recipeItem = RecipeItem.getByName(stripped);
-                        TARDISMessage.message(player, recipeItem.toString());
-                        if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
-                            if (is.getType().equals(Material.FILLED_MAP)) {
-                                TARDISMessage.message(player, "Filled Map!");
-                                GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
-                                if (glowstone != null) {
-                                    TARDISMessage.message(player, "Found '" + glowstone.getDisplayName() + "' converting to GLOWSTONE_DUST");
-                                    is.setType(Material.GLOWSTONE_DUST);
-                                    i++;
-                                } else {
-                                    TARDISMessage.message(player, "IllegalArgumentException for " + stripped);
-                                }
-                            }
-                            if (!im.hasCustomModelData()) {
-                                im.setCustomModelData(recipeItem.getCustomModelData());
-                                is.setItemMeta(im);
-                                i++;
-                            }
-                        }
-                    }
-                }
-            }
-            if (i > 0) {
-                TARDISMessage.send(player, "ITEMS_UPDATED", "" + i);
-                player.updateInventory();
-            }
-        }
-        return true;
-    }
+	public boolean update(Player player, String[] args) {
+		if (args.length < 2) {
+			TARDISMessage.send(player, "TOO_FEW_ARGS");
+			return true;
+		}
+		if (!args[1].equalsIgnoreCase("hand") && !args[1].equalsIgnoreCase("inventory")) {
+			TARDISMessage.send(player, "ARG_ITEM");
+			return true;
+		}
+		if (args[1].equalsIgnoreCase("hand")) {
+			ItemStack inHand = player.getInventory().getItemInMainHand();
+			if (inHand == null || !inHand.hasItemMeta()) {
+				TARDISMessage.send(player, "ITEM_IN_HAND");
+				return true;
+			}
+			ItemMeta im = inHand.getItemMeta();
+			if (!im.hasDisplayName()) {
+				TARDISMessage.send(player, "ITEM_IN_HAND");
+				return true;
+			}
+			// strip color codes
+			String stripped = ChatColor.stripColor(im.getDisplayName());
+			// look up display name
+			RecipeItem recipeItem = RecipeItem.getByName(stripped);
+			if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
+				int cmd = recipeItem.getCustomModelData();
+				im.setCustomModelData(cmd);
+				if (inHand.getType().equals(Material.FILLED_MAP)) {
+					GlowstoneCircuit circuit = GlowstoneCircuit.getByName().get(stripped);
+					if (circuit != null) {
+						inHand.setType(Material.GLOWSTONE_DUST);
+					}
+				} else {
+					if (im.hasCustomModelData()) {
+						TARDISMessage.send(player, "ITEM_HAS_DATA");
+						return true;
+					}
+					inHand.setItemMeta(im);
+				}
+				player.updateInventory();
+				TARDISMessage.send(player, "ITEM_UPDATED");
+			}
+		} else {
+			int i = 0;
+			for (ItemStack is : player.getInventory()) {
+				if (is != null && is.hasItemMeta()) {
+					TARDISMessage.message(player, is.getType().toString());
+					ItemMeta im = is.getItemMeta();
+					if (im.hasDisplayName()) {
+						// strip color codes
+						String stripped = ChatColor.stripColor(im.getDisplayName());
+						TARDISMessage.message(player, stripped);
+						// look up display name
+						RecipeItem recipeItem = RecipeItem.getByName(stripped);
+						TARDISMessage.message(player, recipeItem.toString());
+						if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
+							if (is.getType().equals(Material.FILLED_MAP)) {
+								TARDISMessage.message(player, "Filled Map!");
+								GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
+								if (glowstone != null) {
+									TARDISMessage.message(player, "Found '" + glowstone.getDisplayName() + "' converting to GLOWSTONE_DUST");
+									is.setType(Material.GLOWSTONE_DUST);
+									i++;
+								} else {
+									TARDISMessage.message(player, "IllegalArgumentException for " + stripped);
+								}
+							}
+							if (!im.hasCustomModelData()) {
+								im.setCustomModelData(recipeItem.getCustomModelData());
+								is.setItemMeta(im);
+								i++;
+							}
+						}
+					}
+				}
+			}
+			if (i > 0) {
+				TARDISMessage.send(player, "ITEMS_UPDATED", "" + i);
+				player.updateInventory();
+			}
+		}
+		return true;
+	}
 }

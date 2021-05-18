@@ -32,69 +32,69 @@ import java.sql.SQLException;
  */
 public class TARDISDatabaseConnection {
 
-    private static final TARDISDatabaseConnection INSTANCE = new TARDISDatabaseConnection();
-    public Connection connection = null;
-    private boolean isMySQL;
+	private static final TARDISDatabaseConnection INSTANCE = new TARDISDatabaseConnection();
+	public Connection connection = null;
+	private boolean isMySQL;
 
-    public static synchronized TARDISDatabaseConnection getINSTANCE() {
-        return INSTANCE;
-    }
+	public static synchronized TARDISDatabaseConnection getINSTANCE() {
+		return INSTANCE;
+	}
 
-    void setIsMySQL(boolean isMySQL) {
-        this.isMySQL = isMySQL;
-    }
+	void setIsMySQL(boolean isMySQL) {
+		this.isMySQL = isMySQL;
+	}
 
-    public void setConnection() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Cannot find the driver in the classpath!", e);
-        }
-        String jdbc = "jdbc:mysql://" + TARDIS.plugin.getConfig().getString("storage.mysql.host") + ":" + TARDIS.plugin.getConfig().getString("storage.mysql.port") + "/" + TARDIS.plugin.getConfig().getString("storage.mysql.database") + "?autoReconnect=true";
-        if (!TARDIS.plugin.getConfig().getBoolean("storage.mysql.useSSL")) {
-            jdbc += "&useSSL=false";
-        }
-        String user = TARDIS.plugin.getConfig().getString("storage.mysql.user");
-        String pass = TARDIS.plugin.getConfig().getString("storage.mysql.password");
-        try {
-            connection = DriverManager.getConnection(jdbc, user, pass);
-            connection.setAutoCommit(true);
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect the database! ", e);
-        }
-    }
+	public void setConnection() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Cannot find the driver in the classpath!", e);
+		}
+		String jdbc = "jdbc:mysql://" + TARDIS.plugin.getConfig().getString("storage.mysql.host") + ":" + TARDIS.plugin.getConfig().getString("storage.mysql.port") + "/" + TARDIS.plugin.getConfig().getString("storage.mysql.database") + "?autoReconnect=true";
+		if (!TARDIS.plugin.getConfig().getBoolean("storage.mysql.useSSL")) {
+			jdbc += "&useSSL=false";
+		}
+		String user = TARDIS.plugin.getConfig().getString("storage.mysql.user");
+		String pass = TARDIS.plugin.getConfig().getString("storage.mysql.password");
+		try {
+			connection = DriverManager.getConnection(jdbc, user, pass);
+			connection.setAutoCommit(true);
+		} catch (SQLException e) {
+			throw new RuntimeException("Cannot connect the database! ", e);
+		}
+	}
 
-    public Connection getConnection() {
-        return connection;
-    }
+	public Connection getConnection() {
+		return connection;
+	}
 
-    public void setConnection(String path) throws Exception {
-        Class.forName("org.sqlite.JDBC");
-        connection = DriverManager.getConnection("jdbc:sqlite:" + path);
-        connection.setAutoCommit(true);
-    }
+	public void setConnection(String path) throws Exception {
+		Class.forName("org.sqlite.JDBC");
+		connection = DriverManager.getConnection("jdbc:sqlite:" + path);
+		connection.setAutoCommit(true);
+	}
 
-    /**
-     * @return an exception
-     * @throws CloneNotSupportedException No cloning allowed
-     */
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        throw new CloneNotSupportedException("Clone is not allowed.");
-    }
+	/**
+	 * @return an exception
+	 * @throws CloneNotSupportedException No cloning allowed
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		throw new CloneNotSupportedException("Clone is not allowed.");
+	}
 
-    /**
-     * Test the database connection
-     *
-     * @param connection the database connection to test
-     */
-    public void testConnection(Connection connection) {
-        try {
-            if (isMySQL && !connection.isValid(1)) {
-                setConnection();
-            }
-        } catch (SQLException ex) {
-            TARDIS.plugin.debug("Could not re-connect to database! " + ex.getMessage());
-        }
-    }
+	/**
+	 * Test the database connection
+	 *
+	 * @param connection the database connection to test
+	 */
+	public void testConnection(Connection connection) {
+		try {
+			if (isMySQL && !connection.isValid(1)) {
+				setConnection();
+			}
+		} catch (SQLException ex) {
+			TARDIS.plugin.debug("Could not re-connect to database! " + ex.getMessage());
+		}
+	}
 }

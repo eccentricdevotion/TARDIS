@@ -38,66 +38,66 @@ import java.util.UUID;
  */
 class TARDISRemoteHideCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISRemoteHideCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISRemoteHideCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean doRemoteHide(CommandSender sender, int id) {
-        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            TARDISMessage.send(sender, "NOT_IN_VORTEX");
-            return true;
-        }
-        HashMap<String, Object> wherecl = new HashMap<>();
-        wherecl.put("tardis_id", id);
-        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-        if (!rsc.resultSet()) {
-            TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
-            return true;
-        }
-        OfflinePlayer olp = null;
-        if (sender instanceof Player) {
-            olp = (OfflinePlayer) sender;
-        } else {
-            // get tardis owner
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-            if (rs.resultSet()) {
-                olp = plugin.getServer().getOfflinePlayer(rs.getTardis().getUuid());
-            }
-        }
-        Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-        ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-        if (rs.fromID(id) && rs.getPreset().equals(PRESET.INVISIBLE) && olp != null) {
-            TARDISMessage.send(olp.getPlayer(), "INVISIBILITY_ENGAGED");
-            return true;
-        }
-        UUID uuid = olp.getUniqueId();
-        DestroyData dd = new DestroyData();
-        dd.setDirection(rsc.getDirection());
-        dd.setLocation(l);
-        dd.setPlayer(olp);
-        dd.setHide(false);
-        dd.setOutside(false);
-        dd.setSubmarine(rsc.isSubmarine());
-        dd.setTardisID(id);
-        dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
-        dd.setThrottle(SpaceTimeThrottle.REBUILD);
-        plugin.getPresetDestroyer().destroyPreset(dd);
-        TARDISMessage.send(sender, "TARDIS_HIDDEN", "/tardisremote [player] rebuild");
-        // set hidden to true
-        HashMap<String, Object> whereh = new HashMap<>();
-        whereh.put("tardis_id", id);
-        HashMap<String, Object> seth = new HashMap<>();
-        seth.put("hidden", 1);
-        plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
-        // turn force field off
-        if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
-            plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
-            TARDISMessage.send(sender, "FORCE_FIELD", "OFF");
-        }
-        return true;
-    }
+	boolean doRemoteHide(CommandSender sender, int id) {
+		if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+			TARDISMessage.send(sender, "NOT_IN_VORTEX");
+			return true;
+		}
+		HashMap<String, Object> wherecl = new HashMap<>();
+		wherecl.put("tardis_id", id);
+		ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+		if (!rsc.resultSet()) {
+			TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
+			return true;
+		}
+		OfflinePlayer olp = null;
+		if (sender instanceof Player) {
+			olp = (OfflinePlayer) sender;
+		} else {
+			// get tardis owner
+			HashMap<String, Object> where = new HashMap<>();
+			where.put("tardis_id", id);
+			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+			if (rs.resultSet()) {
+				olp = plugin.getServer().getOfflinePlayer(rs.getTardis().getUuid());
+			}
+		}
+		Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+		ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
+		if (rs.fromID(id) && rs.getPreset().equals(PRESET.INVISIBLE) && olp != null) {
+			TARDISMessage.send(olp.getPlayer(), "INVISIBILITY_ENGAGED");
+			return true;
+		}
+		UUID uuid = olp.getUniqueId();
+		DestroyData dd = new DestroyData();
+		dd.setDirection(rsc.getDirection());
+		dd.setLocation(l);
+		dd.setPlayer(olp);
+		dd.setHide(false);
+		dd.setOutside(false);
+		dd.setSubmarine(rsc.isSubmarine());
+		dd.setTardisID(id);
+		dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
+		dd.setThrottle(SpaceTimeThrottle.REBUILD);
+		plugin.getPresetDestroyer().destroyPreset(dd);
+		TARDISMessage.send(sender, "TARDIS_HIDDEN", "/tardisremote [player] rebuild");
+		// set hidden to true
+		HashMap<String, Object> whereh = new HashMap<>();
+		whereh.put("tardis_id", id);
+		HashMap<String, Object> seth = new HashMap<>();
+		seth.put("hidden", 1);
+		plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
+		// turn force field off
+		if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
+			plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
+			TARDISMessage.send(sender, "FORCE_FIELD", "OFF");
+		}
+		return true;
+	}
 }

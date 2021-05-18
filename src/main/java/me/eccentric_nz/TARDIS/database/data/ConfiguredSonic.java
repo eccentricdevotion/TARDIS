@@ -25,105 +25,105 @@ import java.util.UUID;
  */
 public class ConfiguredSonic {
 
-    private final int sonic_id;
-    private final UUID uuid;
-    private SonicConfig bio;
-    private SonicConfig diamond;
-    private SonicConfig emerald;
-    private SonicConfig redstone;
-    private SonicConfig painter;
-    private SonicConfig ignite;
-    private SonicConfig arrow;
-    private SonicConfig knockback;
-    private final UUID sonic_uuid;
+	private final int sonic_id;
+	private final UUID uuid;
+	private final UUID sonic_uuid;
+	private SonicConfig bio;
+	private SonicConfig diamond;
+	private SonicConfig emerald;
+	private SonicConfig redstone;
+	private SonicConfig painter;
+	private SonicConfig ignite;
+	private SonicConfig arrow;
+	private SonicConfig knockback;
 
-    public ConfiguredSonic(int sonic_id, UUID uuid, int bio, int diamond, int emerald, int redstone, int painter, int ignite, int arrow, int knockback, UUID sonic_uuid) {
-        this.sonic_id = sonic_id;
-        this.uuid = uuid;
-        this.bio = SonicConfig.values()[bio];
-        this.diamond = SonicConfig.values()[diamond];
-        this.emerald = SonicConfig.values()[emerald];
-        this.redstone = SonicConfig.values()[redstone];
-        this.painter = SonicConfig.values()[painter];
-        this.ignite = SonicConfig.values()[ignite];
-        this.arrow = SonicConfig.values()[arrow];
-        this.knockback = SonicConfig.values()[knockback];
-        this.sonic_uuid = sonic_uuid;
-    }
+	public ConfiguredSonic(int sonic_id, UUID uuid, int bio, int diamond, int emerald, int redstone, int painter, int ignite, int arrow, int knockback, UUID sonic_uuid) {
+		this.sonic_id = sonic_id;
+		this.uuid = uuid;
+		this.bio = SonicConfig.values()[bio];
+		this.diamond = SonicConfig.values()[diamond];
+		this.emerald = SonicConfig.values()[emerald];
+		this.redstone = SonicConfig.values()[redstone];
+		this.painter = SonicConfig.values()[painter];
+		this.ignite = SonicConfig.values()[ignite];
+		this.arrow = SonicConfig.values()[arrow];
+		this.knockback = SonicConfig.values()[knockback];
+		this.sonic_uuid = sonic_uuid;
+	}
 
-    public int getSonic_id() {
-        return sonic_id;
-    }
+	public int getSonic_id() {
+		return sonic_id;
+	}
 
-    public UUID getUuid() {
-        return uuid;
-    }
+	public UUID getUuid() {
+		return uuid;
+	}
 
-    public SonicConfig getBio() {
-        return bio;
-    }
+	public SonicConfig getBio() {
+		return bio;
+	}
 
-    public void setBio(SonicConfig bio) {
-        this.bio = bio;
-    }
+	public void setBio(SonicConfig bio) {
+		this.bio = bio;
+	}
 
-    public SonicConfig getDiamond() {
-        return diamond;
-    }
+	public SonicConfig getDiamond() {
+		return diamond;
+	}
 
-    public void setDiamond(SonicConfig diamond) {
-        this.diamond = diamond;
-    }
+	public void setDiamond(SonicConfig diamond) {
+		this.diamond = diamond;
+	}
 
-    public SonicConfig getEmerald() {
-        return emerald;
-    }
+	public SonicConfig getEmerald() {
+		return emerald;
+	}
 
-    public void setEmerald(SonicConfig emerald) {
-        this.emerald = emerald;
-    }
+	public void setEmerald(SonicConfig emerald) {
+		this.emerald = emerald;
+	}
 
-    public SonicConfig getRedstone() {
-        return redstone;
-    }
+	public SonicConfig getRedstone() {
+		return redstone;
+	}
 
-    public void setRedstone(SonicConfig redstone) {
-        this.redstone = redstone;
-    }
+	public void setRedstone(SonicConfig redstone) {
+		this.redstone = redstone;
+	}
 
-    public SonicConfig getPainter() {
-        return painter;
-    }
+	public SonicConfig getPainter() {
+		return painter;
+	}
 
-    public void setPainter(SonicConfig painter) {
-        this.painter = painter;
-    }
+	public void setPainter(SonicConfig painter) {
+		this.painter = painter;
+	}
 
-    public SonicConfig getIgnite() {
-        return ignite;
-    }
+	public SonicConfig getIgnite() {
+		return ignite;
+	}
 
-    public void setIgnite(SonicConfig ignite) {
-        this.ignite = ignite;
-    }
+	public void setIgnite(SonicConfig ignite) {
+		this.ignite = ignite;
+	}
 
-    public SonicConfig getArrow() {
-        return arrow;
-    }
+	public SonicConfig getArrow() {
+		return arrow;
+	}
 
-    public void setArrow(SonicConfig arrow) {
-        this.arrow = arrow;
-    }
+	public void setArrow(SonicConfig arrow) {
+		this.arrow = arrow;
+	}
 
-    public SonicConfig getKnockback() {
-        return knockback;
-    }
+	public SonicConfig getKnockback() {
+		return knockback;
+	}
 
-    public void setKnockback(SonicConfig knockback) {
-        this.knockback = knockback;
-    }
+	public void setKnockback(SonicConfig knockback) {
+		this.knockback = knockback;
+	}
 
-    public UUID getSonic_uuid() {
-        return sonic_uuid;
-    }
+	public UUID getSonic_uuid() {
+		return sonic_uuid;
+	}
 }

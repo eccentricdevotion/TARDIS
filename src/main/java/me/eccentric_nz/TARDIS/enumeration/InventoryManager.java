@@ -21,9 +21,9 @@ package me.eccentric_nz.TARDIS.enumeration;
  */
 public enum InventoryManager {
 
-    MULTI,
-    PER_WORLD,
-    MULTIVERSE,
-    GAMEMODE,
-    NONE
+	MULTI,
+	PER_WORLD,
+	MULTIVERSE,
+	GAMEMODE,
+	NONE
 }

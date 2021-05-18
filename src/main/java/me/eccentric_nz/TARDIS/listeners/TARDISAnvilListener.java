@@ -36,55 +36,55 @@ import java.util.HashMap;
  */
 public class TARDISAnvilListener implements Listener {
 
-    private final HashMap<String, Material> disallow = new HashMap<>();
+	private final HashMap<String, Material> disallow = new HashMap<>();
 
-    public TARDISAnvilListener(TARDIS plugin) {
-        plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false).forEach((r) -> {
-            String[] result = plugin.getRecipesConfig().getString("shaped." + r + ".result").split(":");
-            disallow.put(r, Material.valueOf(result[0]));
-        });
-        plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false).forEach((q) -> {
-            String[] result = plugin.getRecipesConfig().getString("shapeless." + q + ".result").split(":");
-            disallow.put(q, Material.valueOf(result[0]));
-        });
-    }
+	public TARDISAnvilListener(TARDIS plugin) {
+		plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false).forEach((r) -> {
+			String[] result = plugin.getRecipesConfig().getString("shaped." + r + ".result").split(":");
+			disallow.put(r, Material.valueOf(result[0]));
+		});
+		plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false).forEach((q) -> {
+			String[] result = plugin.getRecipesConfig().getString("shapeless." + q + ".result").split(":");
+			disallow.put(q, Material.valueOf(result[0]));
+		});
+	}
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onInteract(InventoryClickEvent event) {
-        Inventory inv = event.getView().getTopInventory();
-        if (inv instanceof AnvilInventory) {
-            Player player = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            // slot 2 = result item slot
-            if (slot == 2) {
-                ItemStack is = event.getCurrentItem();
-                if (is != null && is.hasItemMeta()) {
-                    ItemMeta im = is.getItemMeta();
-                    ItemStack one = inv.getItem(0);
-                    ItemStack two = inv.getItem(1);
-                    if (checkRepair(one, two) && im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getType() == disallow.get(im.getDisplayName())) {
-                        TARDISMessage.send(player, "NO_RENAME");
-                        event.setCancelled(true);
-                    }
-                }
-            }
-        }
-    }
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onInteract(InventoryClickEvent event) {
+		Inventory inv = event.getView().getTopInventory();
+		if (inv instanceof AnvilInventory) {
+			Player player = (Player) event.getWhoClicked();
+			int slot = event.getRawSlot();
+			// slot 2 = result item slot
+			if (slot == 2) {
+				ItemStack is = event.getCurrentItem();
+				if (is != null && is.hasItemMeta()) {
+					ItemMeta im = is.getItemMeta();
+					ItemStack one = inv.getItem(0);
+					ItemStack two = inv.getItem(1);
+					if (checkRepair(one, two) && im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getType() == disallow.get(im.getDisplayName())) {
+						TARDISMessage.send(player, "NO_RENAME");
+						event.setCancelled(true);
+					}
+				}
+			}
+		}
+	}
 
-    private boolean checkRepair(ItemStack one, ItemStack two) {
-        if (two == null) {
-            return true;
-        }
-        if (!one.hasItemMeta() || !two.hasItemMeta()) {
-            return true;
-        }
-        ItemMeta im_one = one.getItemMeta();
-        ItemMeta im_two = two.getItemMeta();
-        if (!im_one.hasDisplayName() || !im_two.hasDisplayName()) {
-            return true;
-        }
-        String dn_one = im_one.getDisplayName();
-        String dn_two = im_two.getDisplayName();
-        return !dn_one.equals(dn_two);
-    }
+	private boolean checkRepair(ItemStack one, ItemStack two) {
+		if (two == null) {
+			return true;
+		}
+		if (!one.hasItemMeta() || !two.hasItemMeta()) {
+			return true;
+		}
+		ItemMeta im_one = one.getItemMeta();
+		ItemMeta im_two = two.getItemMeta();
+		if (!im_one.hasDisplayName() || !im_two.hasDisplayName()) {
+			return true;
+		}
+		String dn_one = im_one.getDisplayName();
+		String dn_two = im_two.getDisplayName();
+		return !dn_one.equals(dn_two);
+	}
 }

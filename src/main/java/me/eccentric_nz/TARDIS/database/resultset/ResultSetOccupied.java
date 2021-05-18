@@ -38,57 +38,57 @@ import java.util.List;
  */
 public class ResultSetOccupied {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final List<Integer> data = new ArrayList<>();
-    private final String prefix;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final List<Integer> data = new ArrayList<>();
+	private final String prefix;
 
-    /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the travellers table.
-     *
-     * @param plugin an instance of the main class.
-     */
-    public ResultSetOccupied(TARDIS plugin) {
-        this.plugin = plugin;
-        prefix = this.plugin.getPrefix();
-    }
+	/**
+	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the travellers table.
+	 *
+	 * @param plugin an instance of the main class.
+	 */
+	public ResultSetOccupied(TARDIS plugin) {
+		this.plugin = plugin;
+		prefix = this.plugin.getPrefix();
+	}
 
-    /**
-     * Retrieves an SQL ResultSet from the travellers table. This method builds an SQL query string from the parameters
-     * supplied and then executes the query. Use the getters to retrieve the results.
-     */
-    public void resultSet() {
-        Statement statement = null;
-        ResultSet rs = null;
-        long time = System.currentTimeMillis() - 86400000;
-        String query = "SELECT DISTINCT " + prefix + "travellers.tardis_id FROM " + prefix + "travellers, " + prefix + "tardis WHERE " + prefix + "tardis.lastuse > " + time + " AND " + prefix + "tardis.tardis_id = " + prefix + "travellers.tardis_id";
-        try {
-            service.testConnection(connection);
-            statement = connection.createStatement();
-            rs = statement.executeQuery(query);
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    data.add(rs.getInt("tardis_id"));
-                }
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for travellers table [Occupied]! " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing travellers table [Occupied]! " + e.getMessage());
-            }
-        }
-    }
+	/**
+	 * Retrieves an SQL ResultSet from the travellers table. This method builds an SQL query string from the parameters
+	 * supplied and then executes the query. Use the getters to retrieve the results.
+	 */
+	public void resultSet() {
+		Statement statement = null;
+		ResultSet rs = null;
+		long time = System.currentTimeMillis() - 86400000;
+		String query = "SELECT DISTINCT " + prefix + "travellers.tardis_id FROM " + prefix + "travellers, " + prefix + "tardis WHERE " + prefix + "tardis.lastuse > " + time + " AND " + prefix + "tardis.tardis_id = " + prefix + "travellers.tardis_id";
+		try {
+			service.testConnection(connection);
+			statement = connection.createStatement();
+			rs = statement.executeQuery(query);
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					data.add(rs.getInt("tardis_id"));
+				}
+			}
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for travellers table [Occupied]! " + e.getMessage());
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing travellers table [Occupied]! " + e.getMessage());
+			}
+		}
+	}
 
-    public List<Integer> getData() {
-        return Collections.unmodifiableList(data);
-    }
+	public List<Integer> getData() {
+		return Collections.unmodifiableList(data);
+	}
 }

@@ -30,39 +30,39 @@ import java.util.UUID;
  */
 class TARDISCubeCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISCubeCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISCubeCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean whoHasCube(Player player) {
-        // check they have TARDIS
-        if (TARDISPermission.hasPermission(player, "tardis.find")) {
-            ResultSetTardisID rs = new ResultSetTardisID(plugin);
-            if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NO_TARDIS");
-                return true;
-            }
-            int id = rs.getTardis_id();
-            if (!plugin.getTrackerKeeper().getIsSiegeCube().contains(id)) {
-                TARDISMessage.send(player, "SIEGE_NOT_SIEGED");
-                return true;
-            }
-            // get the player who is carrying the Siege cube
-            for (Map.Entry<UUID, Integer> map : plugin.getTrackerKeeper().getSiegeCarrying().entrySet()) {
-                if (map.getValue() == id) {
-                    String p = plugin.getServer().getPlayer(map.getKey()).getName();
-                    TARDISMessage.send(player, "SIEGE_CARRIER", p);
-                    return true;
-                }
-            }
-            // not found
-            TARDISMessage.send(player, "SIEGE_CARRIER", "no one!");
-            return true;
-        } else {
-            TARDISMessage.send(player, "NO_PERMS");
-            return false;
-        }
-    }
+	boolean whoHasCube(Player player) {
+		// check they have TARDIS
+		if (TARDISPermission.hasPermission(player, "tardis.find")) {
+			ResultSetTardisID rs = new ResultSetTardisID(plugin);
+			if (!rs.fromUUID(player.getUniqueId().toString())) {
+				TARDISMessage.send(player, "NO_TARDIS");
+				return true;
+			}
+			int id = rs.getTardis_id();
+			if (!plugin.getTrackerKeeper().getIsSiegeCube().contains(id)) {
+				TARDISMessage.send(player, "SIEGE_NOT_SIEGED");
+				return true;
+			}
+			// get the player who is carrying the Siege cube
+			for (Map.Entry<UUID, Integer> map : plugin.getTrackerKeeper().getSiegeCarrying().entrySet()) {
+				if (map.getValue() == id) {
+					String p = plugin.getServer().getPlayer(map.getKey()).getName();
+					TARDISMessage.send(player, "SIEGE_CARRIER", p);
+					return true;
+				}
+			}
+			// not found
+			TARDISMessage.send(player, "SIEGE_CARRIER", "no one!");
+			return true;
+		} else {
+			TARDISMessage.send(player, "NO_PERMS");
+			return false;
+		}
+	}
 }

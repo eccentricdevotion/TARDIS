@@ -1,15 +1,15 @@
 {
-    "display": {
-        "icon": {
-            "item": "minecraft:diamond"
-        },
-        "title": "Got the travel bug",
-        "description": "Travel in your TARDIS"
-    },
-    "parent": "tardis:tardis",
-    "criteria": {
-        "travel_in_tardis": {
-            "trigger": "minecraft:impossible"
-        }
-    }
+	"display": {
+		"icon": {
+			"item": "minecraft:diamond"
+		},
+		"title": "Got the travel bug",
+		"description": "Travel in your TARDIS"
+	},
+	"parent": "tardis:tardis",
+	"criteria": {
+		"travel_in_tardis": {
+			"trigger": "minecraft:impossible"
+		}
+	}
 }

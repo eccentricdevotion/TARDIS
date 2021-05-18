@@ -26,22 +26,22 @@ import org.bukkit.inventory.ItemStack;
 
 public class ProductCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public ProductCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public ProductCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    public boolean craft(Player player) {
-        if (!TARDISPermission.hasPermission(player, "tardis.product.craft")) {
-            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Product");
-            return true;
-        }
-        // do stuff
-        ItemStack[] menu = new ProductInventory(plugin).getMenu();
-        Inventory products = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Product crafting");
-        products.setContents(menu);
-        player.openInventory(products);
-        return true;
-    }
+	public boolean craft(Player player) {
+		if (!TARDISPermission.hasPermission(player, "tardis.product.craft")) {
+			TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Product");
+			return true;
+		}
+		// do stuff
+		ItemStack[] menu = new ProductInventory(plugin).getMenu();
+		Inventory products = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Product crafting");
+		products.setContents(menu);
+		player.openInventory(products);
+		return true;
+	}
 }

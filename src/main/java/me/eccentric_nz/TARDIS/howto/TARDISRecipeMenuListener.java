@@ -36,71 +36,71 @@ import org.bukkit.inventory.ItemStack;
  */
 public class TARDISRecipeMenuListener extends TARDISMenuListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISRecipeMenuListener(TARDIS plugin) {
-        super(plugin);
-        this.plugin = plugin;
-    }
+	public TARDISRecipeMenuListener(TARDIS plugin) {
+		super(plugin);
+		this.plugin = plugin;
+	}
 
-    @EventHandler(ignoreCancelled = true)
-    public void onSeedMenuClick(InventoryClickEvent event) {
-        InventoryView view = event.getView();
-        String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "TARDIS Seed Recipe")) {
-            Player p = (Player) event.getWhoClicked();
-            int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 27) {
-                ItemStack is = view.getItem(slot);
-                if (is != null) {
-                    event.setCancelled(true);
-                    switch (slot) {
-                        case 8:
-                            // back to seeds
-                            close(p);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
-                                Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seeds Menu");
-                                gui.setContents(seeds);
-                                p.openInventory(gui);
-                            }, 2L);
-                            break;
-                        case 11:
-                        case 20:
-                            // wall & floor
-                            close(p);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                ItemStack[] recipe = new TARDISHowtoWallsInventory(plugin).getMenu();
-                                Inventory gui = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Wall & Floor Menu");
-                                gui.setContents(recipe);
-                                p.openInventory(gui);
-                            }, 2L);
-                            break;
-                        case 26:
-                            // close
-                            close(p);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            } else {
-                ClickType click = event.getClick();
-                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                    event.setCancelled(true);
-                }
-            }
-        }
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onSeedMenuClick(InventoryClickEvent event) {
+		InventoryView view = event.getView();
+		String name = view.getTitle();
+		if (name.equals(ChatColor.DARK_RED + "TARDIS Seed Recipe")) {
+			Player p = (Player) event.getWhoClicked();
+			int slot = event.getRawSlot();
+			if (slot >= 0 && slot < 27) {
+				ItemStack is = view.getItem(slot);
+				if (is != null) {
+					event.setCancelled(true);
+					switch (slot) {
+						case 8:
+							// back to seeds
+							close(p);
+							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+								ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
+								Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seeds Menu");
+								gui.setContents(seeds);
+								p.openInventory(gui);
+							}, 2L);
+							break;
+						case 11:
+						case 20:
+							// wall & floor
+							close(p);
+							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+								ItemStack[] recipe = new TARDISHowtoWallsInventory(plugin).getMenu();
+								Inventory gui = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Wall & Floor Menu");
+								gui.setContents(recipe);
+								p.openInventory(gui);
+							}, 2L);
+							break;
+						case 26:
+							// close
+							close(p);
+							break;
+						default:
+							break;
+					}
+				}
+			} else {
+				ClickType click = event.getClick();
+				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+					event.setCancelled(true);
+				}
+			}
+		}
+	}
 
-    /**
-     * Closes the inventory.
-     *
-     * @param p the player using the GUI
-     */
-    @Override
-    public void close(Player p) {
-        plugin.getTrackerKeeper().getHowTo().remove(p.getUniqueId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
-    }
+	/**
+	 * Closes the inventory.
+	 *
+	 * @param p the player using the GUI
+	 */
+	@Override
+	public void close(Player p) {
+		plugin.getTrackerKeeper().getHowTo().remove(p.getUniqueId());
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
+	}
 }

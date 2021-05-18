@@ -26,29 +26,29 @@ import org.bukkit.event.HandlerList;
  */
 public final class TARDISExitEvent extends Event {
 
-    private static final HandlerList HANDLERS = new HandlerList();
-    private final Player player;
-    private final World to;
+	private static final HandlerList HANDLERS = new HandlerList();
+	private final Player player;
+	private final World to;
 
-    public TARDISExitEvent(Player player, World from) {
-        this.player = player;
-        to = from;
-    }
+	public TARDISExitEvent(Player player, World from) {
+		this.player = player;
+		to = from;
+	}
 
-    public Player getPlayer() {
-        return player;
-    }
+	public static HandlerList getHandlerList() {
+		return HANDLERS;
+	}
 
-    public World getTo() {
-        return to;
-    }
+	public Player getPlayer() {
+		return player;
+	}
 
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLERS;
-    }
+	public World getTo() {
+		return to;
+	}
 
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return HANDLERS;
+	}
 }

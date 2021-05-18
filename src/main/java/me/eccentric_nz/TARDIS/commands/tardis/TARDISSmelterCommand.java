@@ -34,81 +34,81 @@ import java.util.HashMap;
  */
 class TARDISSmelterCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISSmelterCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISSmelterCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean addDropChest(Player player, Updateable updateable) {
-        // check permission
-        if (!TARDISPermission.hasPermission(player, "tardis.room.smelter")) {
-            TARDISMessage.send(player, "UPDATE_NO_PERM", "Smelter room drop chest");
-            return true;
-        }
-        // player is a Time Lord
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (!rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "NOT_A_TIMELORD");
-            return false;
-        }
-        int id = rs.getTardis_id();
-        // get chest location
-        Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
-        if (!updateable.getMaterialChoice().getChoices().contains(b.getType())) {
-            TARDISMessage.send(player, "UPDATE_CONDENSER");
-            return true;
-        }
-        // player is in TARDIS
-        HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("uuid", player.getUniqueId().toString());
-        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-        if (!rst.resultSet()) {
-            TARDISMessage.send(player, "NOT_IN_TARDIS");
-            return false;
-        }
-        int thisid = rst.getTardis_id();
-        if (thisid != id) {
-            TARDISMessage.send(player, "CMD_ONLY_TL");
-            return false;
-        }
-        if (!plugin.getUtils().inTARDISWorld(player)) {
-            TARDISMessage.send(player, "UPDATE_IN_WORLD");
-            return true;
-        }
-        Location l = b.getLocation();
-        String pos = l.toString();
-        HashMap<String, Object> set = new HashMap<>();
-        set.put("tardis_id", id);
-        set.put("location", pos);
-        set.put("chest_type", updateable.toString());
-        set.put("x", 0);
-        set.put("y", 0);
-        set.put("z", 0);
-        // is there an existing DROP record?
-        HashMap<String, Object> wheres = new HashMap<>();
-        wheres.put("tardis_id", id);
-        wheres.put("chest_type", "DROP");
-        ResultSetSmelterCheck rssc = new ResultSetSmelterCheck(plugin, wheres);
-        if (rssc.resultSet()) {
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("v_id", rssc.getSmelter_id());
-            plugin.getQueryFactory().doUpdate("vaults", set, where);
-        } else {
-            // check if FUEL or SMELT exists
-            HashMap<String, Object> wherefs = new HashMap<>();
-            wherefs.put("tardis_id", id);
-            wherefs.put("chest_type", updateable.toString());
-            ResultSetSmelterCheck rsfs = new ResultSetSmelterCheck(plugin, wherefs);
-            if (rsfs.resultSet()) {
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("v_id", rsfs.getSmelter_id());
-                plugin.getQueryFactory().doUpdate("vaults", set, where);
-            } else {
-                plugin.getQueryFactory().doInsert("vaults", set);
-            }
-        }
-        TARDISMessage.send(player, "SMELTER_SET", updateable.toString(), (updateable.equals(Updateable.FUEL)) ? "SMELT" : "FUEL");
-        return true;
-    }
+	boolean addDropChest(Player player, Updateable updateable) {
+		// check permission
+		if (!TARDISPermission.hasPermission(player, "tardis.room.smelter")) {
+			TARDISMessage.send(player, "UPDATE_NO_PERM", "Smelter room drop chest");
+			return true;
+		}
+		// player is a Time Lord
+		ResultSetTardisID rs = new ResultSetTardisID(plugin);
+		if (!rs.fromUUID(player.getUniqueId().toString())) {
+			TARDISMessage.send(player, "NOT_A_TIMELORD");
+			return false;
+		}
+		int id = rs.getTardis_id();
+		// get chest location
+		Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
+		if (!updateable.getMaterialChoice().getChoices().contains(b.getType())) {
+			TARDISMessage.send(player, "UPDATE_CONDENSER");
+			return true;
+		}
+		// player is in TARDIS
+		HashMap<String, Object> wheret = new HashMap<>();
+		wheret.put("uuid", player.getUniqueId().toString());
+		ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+		if (!rst.resultSet()) {
+			TARDISMessage.send(player, "NOT_IN_TARDIS");
+			return false;
+		}
+		int thisid = rst.getTardis_id();
+		if (thisid != id) {
+			TARDISMessage.send(player, "CMD_ONLY_TL");
+			return false;
+		}
+		if (!plugin.getUtils().inTARDISWorld(player)) {
+			TARDISMessage.send(player, "UPDATE_IN_WORLD");
+			return true;
+		}
+		Location l = b.getLocation();
+		String pos = l.toString();
+		HashMap<String, Object> set = new HashMap<>();
+		set.put("tardis_id", id);
+		set.put("location", pos);
+		set.put("chest_type", updateable.toString());
+		set.put("x", 0);
+		set.put("y", 0);
+		set.put("z", 0);
+		// is there an existing DROP record?
+		HashMap<String, Object> wheres = new HashMap<>();
+		wheres.put("tardis_id", id);
+		wheres.put("chest_type", "DROP");
+		ResultSetSmelterCheck rssc = new ResultSetSmelterCheck(plugin, wheres);
+		if (rssc.resultSet()) {
+			HashMap<String, Object> where = new HashMap<>();
+			where.put("v_id", rssc.getSmelter_id());
+			plugin.getQueryFactory().doUpdate("vaults", set, where);
+		} else {
+			// check if FUEL or SMELT exists
+			HashMap<String, Object> wherefs = new HashMap<>();
+			wherefs.put("tardis_id", id);
+			wherefs.put("chest_type", updateable.toString());
+			ResultSetSmelterCheck rsfs = new ResultSetSmelterCheck(plugin, wherefs);
+			if (rsfs.resultSet()) {
+				HashMap<String, Object> where = new HashMap<>();
+				where.put("v_id", rsfs.getSmelter_id());
+				plugin.getQueryFactory().doUpdate("vaults", set, where);
+			} else {
+				plugin.getQueryFactory().doInsert("vaults", set);
+			}
+		}
+		TARDISMessage.send(player, "SMELTER_SET", updateable.toString(), (updateable.equals(Updateable.FUEL)) ? "SMELT" : "FUEL");
+		return true;
+	}
 }

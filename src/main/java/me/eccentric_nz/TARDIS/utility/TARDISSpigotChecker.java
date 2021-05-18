@@ -29,54 +29,54 @@ import java.net.URLConnection;
 
 public class TARDISSpigotChecker implements Runnable {
 
-    private final TARDIS plugin;
-    private final JsonParser jp;
+	private final TARDIS plugin;
+	private final JsonParser jp;
 
-    public TARDISSpigotChecker(TARDIS plugin) {
-        this.plugin = plugin;
-        jp = new JsonParser();
-    }
+	public TARDISSpigotChecker(TARDIS plugin) {
+		this.plugin = plugin;
+		jp = new JsonParser();
+	}
 
-    @Override
-    public void run() {
-        String spigotVersion = plugin.getServer().getVersion();
-        if (spigotVersion.contains("Spigot")) {
-            JsonObject spigotBuild = fetchLatestSpigotBuild();
-            if (spigotBuild == null || !spigotBuild.has("refs")) {
-                // couldn't get Spigot info
-                return;
-            }
-            int name = spigotBuild.getAsJsonPrimitive("name").getAsInt();
-            // 2855 is the latest 1.16.2 build (as of 11-08-2020)
-            if (name > 2855) {
-                JsonObject refs = spigotBuild.get("refs").getAsJsonObject();
-                if (refs.has("Spigot")) {
-                    String spigot = refs.get("Spigot").getAsString().substring(0, 7);
-                    String[] split = spigotVersion.split("-"); // something like 'git-Spigot-2f5d615-d07a78b'
-                    if (spigot.equals(split[2])) {
-                        // if new build number is same
-                        return;
-                    }
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "There is a new Spigot build! " + ChatColor.AQUA + "You should update so TARDIS doesn't bug out :)");
-                }
-            }
-        }
-    }
+	@Override
+	public void run() {
+		String spigotVersion = plugin.getServer().getVersion();
+		if (spigotVersion.contains("Spigot")) {
+			JsonObject spigotBuild = fetchLatestSpigotBuild();
+			if (spigotBuild == null || !spigotBuild.has("refs")) {
+				// couldn't get Spigot info
+				return;
+			}
+			int name = spigotBuild.getAsJsonPrimitive("name").getAsInt();
+			// 2855 is the latest 1.16.2 build (as of 11-08-2020)
+			if (name > 2855) {
+				JsonObject refs = spigotBuild.get("refs").getAsJsonObject();
+				if (refs.has("Spigot")) {
+					String spigot = refs.get("Spigot").getAsString().substring(0, 7);
+					String[] split = spigotVersion.split("-"); // something like 'git-Spigot-2f5d615-d07a78b'
+					if (spigot.equals(split[2])) {
+						// if new build number is same
+						return;
+					}
+					plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "There is a new Spigot build! " + ChatColor.AQUA + "You should update so TARDIS doesn't bug out :)");
+				}
+			}
+		}
+	}
 
-    /**
-     * Fetches the latest build information from hub.spigotmc.org
-     */
-    private JsonObject fetchLatestSpigotBuild() {
-        //
-        try {
-            URL url = new URL("https://hub.spigotmc.org/versions/latest.json");
-            URLConnection request = url.openConnection();
-            request.connect();
-            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-            return root.getAsJsonObject();
-        } catch (Exception ex) {
-            plugin.debug("Failed to check for the latest build info from Spigot.");
-        }
-        return null;
-    }
+	/**
+	 * Fetches the latest build information from hub.spigotmc.org
+	 */
+	private JsonObject fetchLatestSpigotBuild() {
+		//
+		try {
+			URL url = new URL("https://hub.spigotmc.org/versions/latest.json");
+			URLConnection request = url.openConnection();
+			request.connect();
+			JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+			return root.getAsJsonObject();
+		} catch (Exception ex) {
+			plugin.debug("Failed to check for the latest build info from Spigot.");
+		}
+		return null;
+	}
 }

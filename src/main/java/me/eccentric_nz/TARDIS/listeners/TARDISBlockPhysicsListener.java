@@ -36,71 +36,71 @@ import org.bukkit.event.block.BlockPhysicsEvent;
  */
 public class TARDISBlockPhysicsListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISBlockPhysicsListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISBlockPhysicsListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    // prevent hatches from breaking
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void onBlockPhysics(BlockPhysicsEvent event) {
-        Block block = event.getBlock();
-        if (block != null && block.getType().equals(Material.GRASS_PATH)) {
-            String loc = block.getRelative(BlockFace.UP).getLocation().toString();
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> TARDISRecordingQueue.addToQueue(loc), 7L);
-        }
-        if (plugin.getTrackerKeeper().getMaterialising().size() > 0) {
-            if (block != null) {
-                BlockData state = block.getBlockData();
-                if (state != null) {
-                    if (state instanceof TrapDoor) {
-                        Block blockBehind = getBlockBehindAttachable(block, ((TrapDoor) state).getFacing());
-                        if (blockBehind != null) {
-                            if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || TARDISMaterials.stained_glass.contains(blockBehind.getType())) {
-                                event.setCancelled(true);
-                            }
-                        }
-                    }
-                    if (state instanceof Door) {
-                        Block blockBelow = getBlockBelow(block);
-                        if (blockBelow != null) {
-                            if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || Tag.DOORS.isTagged(blockBelow.getType()) || TARDISMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().isAir() || blockBelow.getType().equals(Material.SEA_LANTERN)) {
-                                event.setCancelled(true);
-                            }
-                        }
-                    }
-                }
-                if (block.getType().equals(Material.VINE)) {
-                    event.setCancelled(true);
-                }
-            }
-        } else if (block.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || block.getType().equals(Material.RED_MUSHROOM_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
-            event.setCancelled(true);
-            event.getBlock().getState().update(true, false);
-        }
-    }
+	// prevent hatches from breaking
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+	public void onBlockPhysics(BlockPhysicsEvent event) {
+		Block block = event.getBlock();
+		if (block != null && block.getType().equals(Material.GRASS_PATH)) {
+			String loc = block.getRelative(BlockFace.UP).getLocation().toString();
+			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> TARDISRecordingQueue.addToQueue(loc), 7L);
+		}
+		if (plugin.getTrackerKeeper().getMaterialising().size() > 0) {
+			if (block != null) {
+				BlockData state = block.getBlockData();
+				if (state != null) {
+					if (state instanceof TrapDoor) {
+						Block blockBehind = getBlockBehindAttachable(block, ((TrapDoor) state).getFacing());
+						if (blockBehind != null) {
+							if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || TARDISMaterials.stained_glass.contains(blockBehind.getType())) {
+								event.setCancelled(true);
+							}
+						}
+					}
+					if (state instanceof Door) {
+						Block blockBelow = getBlockBelow(block);
+						if (blockBelow != null) {
+							if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || Tag.DOORS.isTagged(blockBelow.getType()) || TARDISMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().isAir() || blockBelow.getType().equals(Material.SEA_LANTERN)) {
+								event.setCancelled(true);
+							}
+						}
+					}
+				}
+				if (block.getType().equals(Material.VINE)) {
+					event.setCancelled(true);
+				}
+			}
+		} else if (block.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || block.getType().equals(Material.RED_MUSHROOM_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
+			event.setCancelled(true);
+			event.getBlock().getState().update(true, false);
+		}
+	}
 
-    private Block getBlockBehindAttachable(Block block, BlockFace face) {
-        Block ret;
-        switch (face) {
-            case NORTH:
-                ret = block.getRelative(BlockFace.SOUTH);
-                break;
-            case WEST:
-                ret = block.getRelative(BlockFace.EAST);
-                break;
-            case SOUTH:
-                ret = block.getRelative(BlockFace.NORTH);
-                break;
-            default:
-                ret = block.getRelative(BlockFace.WEST);
-                break;
-        }
-        return ret;
-    }
+	private Block getBlockBehindAttachable(Block block, BlockFace face) {
+		Block ret;
+		switch (face) {
+			case NORTH:
+				ret = block.getRelative(BlockFace.SOUTH);
+				break;
+			case WEST:
+				ret = block.getRelative(BlockFace.EAST);
+				break;
+			case SOUTH:
+				ret = block.getRelative(BlockFace.NORTH);
+				break;
+			default:
+				ret = block.getRelative(BlockFace.WEST);
+				break;
+		}
+		return ret;
+	}
 
-    private Block getBlockBelow(Block block) {
-        return block.getRelative(BlockFace.DOWN);
-    }
+	private Block getBlockBelow(Block block) {
+		return block.getRelative(BlockFace.DOWN);
+	}
 }

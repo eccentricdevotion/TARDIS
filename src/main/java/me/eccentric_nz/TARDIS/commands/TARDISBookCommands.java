@@ -42,119 +42,119 @@ import java.util.*;
  */
 public class TARDISBookCommands extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-    private final TARDIS plugin;
-    private final LinkedHashMap<String, String> books;
-    private final List<String> ROOT_SUBS;
-    private final List<String> DO_SUBS = ImmutableList.of("get", "start");
+	private final TARDIS plugin;
+	private final LinkedHashMap<String, String> books;
+	private final List<String> ROOT_SUBS;
+	private final List<String> DO_SUBS = ImmutableList.of("get", "start");
 
-    public TARDISBookCommands(TARDIS plugin) {
-        this.plugin = plugin;
-        books = getAchievements();
-        ROOT_SUBS = ImmutableList.copyOf(books.keySet());
-    }
+	public TARDISBookCommands(TARDIS plugin) {
+		this.plugin = plugin;
+		books = getAchievements();
+		ROOT_SUBS = ImmutableList.copyOf(books.keySet());
+	}
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        // If the player typed /tardisbook then do the following...
-        if (cmd.getName().equalsIgnoreCase("tardisbook")) {
-            if (args.length < 1) {
-                new TARDISCommandHelper(plugin).getCommand("tardisbook", sender);
-                return true;
-            }
-            if (TARDISPermission.hasPermission(sender, "tardis.book")) {
-                String first = args[0].toLowerCase(Locale.ENGLISH);
-                if (first.equals("list")) {
-                    int b = 1;
-                    TARDISMessage.send(sender, "BOOK_RASS");
-                    if (books.size() > 0) {
-                        for (Map.Entry<String, String> entry : books.entrySet()) {
-                            sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
-                            b++;
-                        }
-                    } else {
-                        sender.sendMessage(plugin.getLanguage().getString("BOOK_NONE"));
-                    }
-                    return true;
-                }
-                Player player = null;
-                if (sender instanceof Player) {
-                    player = (Player) sender;
-                }
-                if (player == null) {
-                    TARDISMessage.send(sender, "CMD_PLAYER");
-                    return true;
-                }
-                if (args.length < 2) {
-                    TARDISMessage.send(player, "BOOK_NEED");
-                    return false;
-                }
-                if (!books.containsKey(first)) {
-                    TARDISMessage.send(player, "BOOK_NOT_FOUND");
-                    return true;
-                }
-                String second = args[1].toLowerCase(Locale.ENGLISH);
-                if (second.equals("get")) {
-                    // need to check whether they already have been given the book
-                    TARDISBook book = new TARDISBook(plugin);
-                    // title, author, filename, player
-                    book.writeBook(books.get(first), "Rassilon", first, player);
-                    return true;
-                }
-                if (second.equals("start")) {
-                    if (plugin.getAchievementConfig().getBoolean(first + ".auto")) {
-                        TARDISMessage.send(player, "ACHIEVE_AUTO");
-                        return true;
-                    }
-                    // check they have not already started the achievement
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("uuid", player.getUniqueId().toString());
-                    where.put("name", first);
-                    ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
-                    if (rsa.resultSet()) {
-                        if (rsa.isCompleted()) {
-                            if (!plugin.getAchievementConfig().getBoolean(first + ".repeatable")) {
-                                TARDISMessage.send(player, "ACHIEVE_ONCE");
-                                return true;
-                            }
-                        } else {
-                            TARDISMessage.send(player, "ACHIEVE_ALREADY_STARTED");
-                            return true;
-                        }
-                    }
-                    HashMap<String, Object> set = new HashMap<>();
-                    set.put("uuid", player.getUniqueId().toString());
-                    set.put("name", first);
-                    plugin.getQueryFactory().doInsert("achievements", set);
-                    TARDISMessage.send(player, "ACHIEVE_STARTED", first);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		// If the player typed /tardisbook then do the following...
+		if (cmd.getName().equalsIgnoreCase("tardisbook")) {
+			if (args.length < 1) {
+				new TARDISCommandHelper(plugin).getCommand("tardisbook", sender);
+				return true;
+			}
+			if (TARDISPermission.hasPermission(sender, "tardis.book")) {
+				String first = args[0].toLowerCase(Locale.ENGLISH);
+				if (first.equals("list")) {
+					int b = 1;
+					TARDISMessage.send(sender, "BOOK_RASS");
+					if (books.size() > 0) {
+						for (Map.Entry<String, String> entry : books.entrySet()) {
+							sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
+							b++;
+						}
+					} else {
+						sender.sendMessage(plugin.getLanguage().getString("BOOK_NONE"));
+					}
+					return true;
+				}
+				Player player = null;
+				if (sender instanceof Player) {
+					player = (Player) sender;
+				}
+				if (player == null) {
+					TARDISMessage.send(sender, "CMD_PLAYER");
+					return true;
+				}
+				if (args.length < 2) {
+					TARDISMessage.send(player, "BOOK_NEED");
+					return false;
+				}
+				if (!books.containsKey(first)) {
+					TARDISMessage.send(player, "BOOK_NOT_FOUND");
+					return true;
+				}
+				String second = args[1].toLowerCase(Locale.ENGLISH);
+				if (second.equals("get")) {
+					// need to check whether they already have been given the book
+					TARDISBook book = new TARDISBook(plugin);
+					// title, author, filename, player
+					book.writeBook(books.get(first), "Rassilon", first, player);
+					return true;
+				}
+				if (second.equals("start")) {
+					if (plugin.getAchievementConfig().getBoolean(first + ".auto")) {
+						TARDISMessage.send(player, "ACHIEVE_AUTO");
+						return true;
+					}
+					// check they have not already started the achievement
+					HashMap<String, Object> where = new HashMap<>();
+					where.put("uuid", player.getUniqueId().toString());
+					where.put("name", first);
+					ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
+					if (rsa.resultSet()) {
+						if (rsa.isCompleted()) {
+							if (!plugin.getAchievementConfig().getBoolean(first + ".repeatable")) {
+								TARDISMessage.send(player, "ACHIEVE_ONCE");
+								return true;
+							}
+						} else {
+							TARDISMessage.send(player, "ACHIEVE_ALREADY_STARTED");
+							return true;
+						}
+					}
+					HashMap<String, Object> set = new HashMap<>();
+					set.put("uuid", player.getUniqueId().toString());
+					set.put("name", first);
+					plugin.getQueryFactory().doInsert("achievements", set);
+					TARDISMessage.send(player, "ACHIEVE_STARTED", first);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
-    private LinkedHashMap<String, String> getAchievements() {
-        LinkedHashMap<String, String> map = new LinkedHashMap<>();
-        Set<String> aset = plugin.getAchievementConfig().getRoot().getKeys(false);
-        aset.forEach((a) -> {
-            if (plugin.getAchievementConfig().getBoolean(a + ".enabled")) {
-                String title_reward = plugin.getAchievementConfig().getString(a + ".name") + " - " + plugin.getAchievementConfig().getString(a + ".reward_type") + ":" + plugin.getAchievementConfig().getString(a + ".reward_amount");
-                map.put(a, title_reward);
-            }
-        });
-        return map;
-    }
+	private LinkedHashMap<String, String> getAchievements() {
+		LinkedHashMap<String, String> map = new LinkedHashMap<>();
+		Set<String> aset = plugin.getAchievementConfig().getRoot().getKeys(false);
+		aset.forEach((a) -> {
+			if (plugin.getAchievementConfig().getBoolean(a + ".enabled")) {
+				String title_reward = plugin.getAchievementConfig().getString(a + ".name") + " - " + plugin.getAchievementConfig().getString(a + ".reward_type") + ":" + plugin.getAchievementConfig().getString(a + ".reward_amount");
+				map.put(a, title_reward);
+			}
+		});
+		return map;
+	}
 
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        // Remember that we can return null to default to online player name matching
-        String lastArg = args[args.length - 1];
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+		// Remember that we can return null to default to online player name matching
+		String lastArg = args[args.length - 1];
 
-        if (args.length <= 1) {
-            return partial(args[0], ROOT_SUBS);
-        } else if (args.length == 2) {
-            return partial(lastArg, DO_SUBS);
-        }
-        return ImmutableList.of();
-    }
+		if (args.length <= 1) {
+			return partial(args[0], ROOT_SUBS);
+		} else if (args.length == 2) {
+			return partial(lastArg, DO_SUBS);
+		}
+		return ImmutableList.of();
+	}
 }

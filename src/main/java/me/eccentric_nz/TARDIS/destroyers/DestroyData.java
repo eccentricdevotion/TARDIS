@@ -26,22 +26,22 @@ import org.bukkit.Location;
  */
 public final class DestroyData extends MaterialisationData {
 
-    private boolean hide;
-    private Location fromToLocation;
+	private boolean hide;
+	private Location fromToLocation;
 
-    public boolean isHide() {
-        return hide;
-    }
+	public boolean isHide() {
+		return hide;
+	}
 
-    public void setHide(boolean hide) {
-        this.hide = hide;
-    }
+	public void setHide(boolean hide) {
+		this.hide = hide;
+	}
 
-    Location getFromToLocation() {
-        return fromToLocation;
-    }
+	Location getFromToLocation() {
+		return fromToLocation;
+	}
 
-    public void setFromToLocation(Location fromToLocation) {
-        this.fromToLocation = fromToLocation;
-    }
+	public void setFromToLocation(Location fromToLocation) {
+		this.fromToLocation = fromToLocation;
+	}
 }

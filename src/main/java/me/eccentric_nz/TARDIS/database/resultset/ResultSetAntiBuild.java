@@ -33,67 +33,67 @@ import java.util.UUID;
  */
 public class ResultSetAntiBuild {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final String uuid;
-    private Integer tardis_id;
-    private final String prefix;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final String uuid;
+	private final String prefix;
+	private Integer tardis_id;
 
-    /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis &amp; travellers table.
-     *
-     * @param plugin an instance of the main class.
-     * @param uuid   the uuid who is trying to build.
-     */
-    public ResultSetAntiBuild(TARDIS plugin, UUID uuid) {
-        this.plugin = plugin;
-        this.uuid = uuid.toString();
-        prefix = this.plugin.getPrefix();
-    }
+	/**
+	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis &amp; travellers table.
+	 *
+	 * @param plugin an instance of the main class.
+	 * @param uuid   the uuid who is trying to build.
+	 */
+	public ResultSetAntiBuild(TARDIS plugin, UUID uuid) {
+		this.plugin = plugin;
+		this.uuid = uuid.toString();
+		prefix = this.plugin.getPrefix();
+	}
 
-    /**
-     * Retrieves an SQL ResultSet from the tardis &amp; travellers table. This method builds an SQL query string from
-     * the parameters supplied and then executes the query. Use the getters to retrieve the results.
-     *
-     * @return true or false depending on whether any data matches the query
-     */
-    public boolean resultSet() {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT " + prefix + "tardis.tardis_id FROM " + prefix + "tardis, " + prefix + "travellers, " + prefix + "player_prefs WHERE " + prefix + "travellers.uuid = ? AND " + prefix + "tardis.uuid != ? AND " + prefix + "player_prefs.build_on = 0 AND " + prefix + "tardis.tardis_id = " + prefix + "travellers.tardis_id AND " + prefix + "tardis.uuid = " + prefix + "player_prefs.uuid";
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            statement.setString(1, uuid);
-            statement.setString(2, uuid);
-            rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    tardis_id = rs.getInt("tardis_id");
-                }
-            } else {
-                return false;
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for antibuild tables! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing antibuild tables! " + e.getMessage());
-            }
-        }
-        return true;
-    }
+	/**
+	 * Retrieves an SQL ResultSet from the tardis &amp; travellers table. This method builds an SQL query string from
+	 * the parameters supplied and then executes the query. Use the getters to retrieve the results.
+	 *
+	 * @return true or false depending on whether any data matches the query
+	 */
+	public boolean resultSet() {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String query = "SELECT " + prefix + "tardis.tardis_id FROM " + prefix + "tardis, " + prefix + "travellers, " + prefix + "player_prefs WHERE " + prefix + "travellers.uuid = ? AND " + prefix + "tardis.uuid != ? AND " + prefix + "player_prefs.build_on = 0 AND " + prefix + "tardis.tardis_id = " + prefix + "travellers.tardis_id AND " + prefix + "tardis.uuid = " + prefix + "player_prefs.uuid";
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			statement.setString(1, uuid);
+			statement.setString(2, uuid);
+			rs = statement.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					tardis_id = rs.getInt("tardis_id");
+				}
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for antibuild tables! " + e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing antibuild tables! " + e.getMessage());
+			}
+		}
+		return true;
+	}
 
-    public Integer getTardis_id() {
-        return tardis_id;
-    }
+	public Integer getTardis_id() {
+		return tardis_id;
+	}
 }

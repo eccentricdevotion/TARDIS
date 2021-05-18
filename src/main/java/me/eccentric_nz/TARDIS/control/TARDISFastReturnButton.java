@@ -30,59 +30,59 @@ import java.util.HashMap;
  */
 public class TARDISFastReturnButton {
 
-    private final TARDIS plugin;
-    private final Player player;
-    private final int id;
-    private final int level;
+	private final TARDIS plugin;
+	private final Player player;
+	private final int id;
+	private final int level;
 
-    public TARDISFastReturnButton(TARDIS plugin, Player player, int id, int level) {
-        this.plugin = plugin;
-        this.player = player;
-        this.id = id;
-        this.level = level;
-    }
+	public TARDISFastReturnButton(TARDIS plugin, Player player, int id, int level) {
+		this.plugin = plugin;
+		this.player = player;
+		this.id = id;
+		this.level = level;
+	}
 
-    public void clickButton() {
-        int cost = plugin.getArtronConfig().getInt("travel");
-        if (level < cost) {
-            TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
-            return;
-        }
-        HashMap<String, Object> wherebl = new HashMap<>();
-        wherebl.put("tardis_id", id);
-        ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, wherebl);
-        if (rsb.resultSet()) {
-            HashMap<String, Object> wherecu = new HashMap<>();
-            wherecu.put("tardis_id", id);
-            ResultSetCurrentLocation rscu = new ResultSetCurrentLocation(plugin, wherecu);
-            if (rscu.resultSet()) {
-                if (!compareCurrentToBack(rscu, rsb)) {
-                    HashMap<String, Object> set = new HashMap<>();
-                    set.put("world", rsb.getWorld().getName());
-                    set.put("x", rsb.getX());
-                    set.put("y", rsb.getY());
-                    set.put("z", rsb.getZ());
-                    set.put("direction", rsb.getDirection().toString());
-                    set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
-                    HashMap<String, Object> wherel = new HashMap<>();
-                    wherel.put("tardis_id", id);
-                    plugin.getQueryFactory().doSyncUpdate("next", set, wherel);
-                    plugin.getTrackerKeeper().getHasDestination().put(id, cost);
-                    plugin.getTrackerKeeper().getRescue().remove(id);
-                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                        new TARDISLand(plugin, id, player).exitVortex();
-                    }
-                    TARDISMessage.send(player, "PREV_SET", rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
-                } else {
-                    TARDISMessage.send(player, "TRAVEL_NO_BACK");
-                }
-            }
-        } else {
-            TARDISMessage.send(player, "PREV_NOT_FOUND");
-        }
-    }
+	public void clickButton() {
+		int cost = plugin.getArtronConfig().getInt("travel");
+		if (level < cost) {
+			TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
+			return;
+		}
+		HashMap<String, Object> wherebl = new HashMap<>();
+		wherebl.put("tardis_id", id);
+		ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, wherebl);
+		if (rsb.resultSet()) {
+			HashMap<String, Object> wherecu = new HashMap<>();
+			wherecu.put("tardis_id", id);
+			ResultSetCurrentLocation rscu = new ResultSetCurrentLocation(plugin, wherecu);
+			if (rscu.resultSet()) {
+				if (!compareCurrentToBack(rscu, rsb)) {
+					HashMap<String, Object> set = new HashMap<>();
+					set.put("world", rsb.getWorld().getName());
+					set.put("x", rsb.getX());
+					set.put("y", rsb.getY());
+					set.put("z", rsb.getZ());
+					set.put("direction", rsb.getDirection().toString());
+					set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
+					HashMap<String, Object> wherel = new HashMap<>();
+					wherel.put("tardis_id", id);
+					plugin.getQueryFactory().doSyncUpdate("next", set, wherel);
+					plugin.getTrackerKeeper().getHasDestination().put(id, cost);
+					plugin.getTrackerKeeper().getRescue().remove(id);
+					if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+						new TARDISLand(plugin, id, player).exitVortex();
+					}
+					TARDISMessage.send(player, "PREV_SET", rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+				} else {
+					TARDISMessage.send(player, "TRAVEL_NO_BACK");
+				}
+			}
+		} else {
+			TARDISMessage.send(player, "PREV_NOT_FOUND");
+		}
+	}
 
-    private boolean compareCurrentToBack(ResultSetCurrentLocation c, ResultSetBackLocation b) {
-        return (c.getWorld().equals(b.getWorld()) && c.getX() == b.getX() && c.getY() == b.getY() && c.getZ() == b.getZ());
-    }
+	private boolean compareCurrentToBack(ResultSetCurrentLocation c, ResultSetBackLocation b) {
+		return (c.getWorld().equals(b.getWorld()) && c.getX() == b.getX() && c.getY() == b.getY() && c.getZ() == b.getZ());
+	}
 }

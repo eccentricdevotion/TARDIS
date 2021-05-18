@@ -27,24 +27,24 @@ import org.bukkit.entity.Player;
  */
 class TARDISExciteCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISExciteCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISExciteCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean excite(Player player) {
-        if (plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
-            TARDISMessage.send(player, "CMD_EXCITE");
-            return true;
-        }
-        // get TARDIS id
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (rs.fromUUID(player.getUniqueId().toString())) {
-            new TARDISAtmosphericExcitation(plugin).excite(rs.getTardis_id(), player);
-            plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
-            return true;
-        }
-        return true;
-    }
+	boolean excite(Player player) {
+		if (plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
+			TARDISMessage.send(player, "CMD_EXCITE");
+			return true;
+		}
+		// get TARDIS id
+		ResultSetTardisID rs = new ResultSetTardisID(plugin);
+		if (rs.fromUUID(player.getUniqueId().toString())) {
+			new TARDISAtmosphericExcitation(plugin).excite(rs.getTardis_id(), player);
+			plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
+			return true;
+		}
+		return true;
+	}
 }

@@ -35,88 +35,88 @@ import java.io.File;
  */
 class TARDISBuildSilurianStructure {
 
-    private final TARDIS plugin;
-    private final String[] paths;
+	private final TARDIS plugin;
+	private final String[] paths;
 
-    TARDISBuildSilurianStructure(TARDIS plugin) {
-        this.plugin = plugin;
-        paths = new String[]{plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_large.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_cross.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_north_south.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_east_west.tschm"};
-    }
+	TARDISBuildSilurianStructure(TARDIS plugin) {
+		this.plugin = plugin;
+		paths = new String[]{plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_large.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_cross.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_north_south.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_east_west.tschm"};
+	}
 
-    /**
-     * Builds a Siluria structure.
-     *
-     * @param startx the start coordinate on the x-axis
-     * @param starty the start coordinate on the y-axis
-     * @param startz the start coordinate on the z-axis
-     * @return false when the build task has finished
-     */
-    boolean buildCity(int startx, int starty, int startz) {
-        File file = new File(paths[0]);
-        if (!file.exists()) {
-            plugin.debug("Could not find the Silurian schematics!");
-            return false;
-        }
-        TARDISSilurianStructureRunnable tssr = new TARDISSilurianStructureRunnable(plugin, startx, starty, startz, paths[0]);
-        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tssr, 1L, 1L);
-        tssr.setTask(task);
-        // choose a random direction
-        COMPASS compass = COMPASS.values()[TARDISConstants.RANDOM.nextInt(4)];
-        // get default server world
-        String s_world = plugin.getServer().getWorlds().get(0).getName();
-        World world = plugin.getServer().getWorld(s_world + "_tardis_siluria");
-        // see if the chunk is loaded
-        Vector v1 = isChunkLoaded(compass, world.getBlockAt(startx, starty, startz));
-        if (v1 != null) {
-            startx += v1.getBlockX();
-            starty += v1.getBlockY();
-            startz += v1.getBlockZ();
-            String path;
-            if (TARDISConstants.RANDOM.nextBoolean()) {
-                // cross - paths[1]
-                path = paths[1];
-            } else {
-                // straight
-                if (compass.equals(COMPASS.NORTH) || compass.equals(COMPASS.SOUTH)) {
-                    // east west - paths[2]
-                    path = paths[2];
-                } else {
-                    // north south - paths[3]
-                    path = paths[3];
-                }
-            }
-            TARDISSilurianStructureRunnable secondary = new TARDISSilurianStructureRunnable(plugin, startx, starty, startz, path);
-            int secondaryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, secondary, 20L, 1L);
-            secondary.setTask(secondaryTask);
-        }
-        return false;
-    }
+	/**
+	 * Builds a Siluria structure.
+	 *
+	 * @param startx the start coordinate on the x-axis
+	 * @param starty the start coordinate on the y-axis
+	 * @param startz the start coordinate on the z-axis
+	 * @return false when the build task has finished
+	 */
+	boolean buildCity(int startx, int starty, int startz) {
+		File file = new File(paths[0]);
+		if (!file.exists()) {
+			plugin.debug("Could not find the Silurian schematics!");
+			return false;
+		}
+		TARDISSilurianStructureRunnable tssr = new TARDISSilurianStructureRunnable(plugin, startx, starty, startz, paths[0]);
+		int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tssr, 1L, 1L);
+		tssr.setTask(task);
+		// choose a random direction
+		COMPASS compass = COMPASS.values()[TARDISConstants.RANDOM.nextInt(4)];
+		// get default server world
+		String s_world = plugin.getServer().getWorlds().get(0).getName();
+		World world = plugin.getServer().getWorld(s_world + "_tardis_siluria");
+		// see if the chunk is loaded
+		Vector v1 = isChunkLoaded(compass, world.getBlockAt(startx, starty, startz));
+		if (v1 != null) {
+			startx += v1.getBlockX();
+			starty += v1.getBlockY();
+			startz += v1.getBlockZ();
+			String path;
+			if (TARDISConstants.RANDOM.nextBoolean()) {
+				// cross - paths[1]
+				path = paths[1];
+			} else {
+				// straight
+				if (compass.equals(COMPASS.NORTH) || compass.equals(COMPASS.SOUTH)) {
+					// east west - paths[2]
+					path = paths[2];
+				} else {
+					// north south - paths[3]
+					path = paths[3];
+				}
+			}
+			TARDISSilurianStructureRunnable secondary = new TARDISSilurianStructureRunnable(plugin, startx, starty, startz, path);
+			int secondaryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, secondary, 20L, 1L);
+			secondary.setTask(secondaryTask);
+		}
+		return false;
+	}
 
-    private Vector isChunkLoaded(COMPASS compass, Block block) {
-        Chunk chunk = block.getChunk();
-        int x = chunk.getX();
-        int z = chunk.getZ();
-        Vector vector;
-        switch (compass) {
-            case WEST:
-                vector = new Vector(-16, 17, 0);
-                x -= 1;
-                break;
-            case NORTH:
-                vector = new Vector(0, 17, -16);
-                z -= 1;
-                break;
-            case EAST:
-                vector = new Vector(16, 17, 0);
-                x += 1;
-                break;
-            default: //SOUTH
-                vector = new Vector(0, 17, 16);
-                z += 1;
-                break;
-        }
-        // see if the chunk is loaded
-        Chunk newChunk = chunk.getWorld().getChunkAt(x, z);
-        return newChunk.isLoaded() ? vector : null;
-    }
+	private Vector isChunkLoaded(COMPASS compass, Block block) {
+		Chunk chunk = block.getChunk();
+		int x = chunk.getX();
+		int z = chunk.getZ();
+		Vector vector;
+		switch (compass) {
+			case WEST:
+				vector = new Vector(-16, 17, 0);
+				x -= 1;
+				break;
+			case NORTH:
+				vector = new Vector(0, 17, -16);
+				z -= 1;
+				break;
+			case EAST:
+				vector = new Vector(16, 17, 0);
+				x += 1;
+				break;
+			default: //SOUTH
+				vector = new Vector(0, 17, 16);
+				z += 1;
+				break;
+		}
+		// see if the chunk is loaded
+		Chunk newChunk = chunk.getWorld().getChunkAt(x, z);
+		return newChunk.isLoaded() ? vector : null;
+	}
 }

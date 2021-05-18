@@ -25,19 +25,19 @@ import org.bukkit.entity.Player;
  */
 public final class TARDISMalfunctionEvent extends TARDISEvent {
 
-    private final Location location;
+	private final Location location;
 
-    public TARDISMalfunctionEvent(Player player, Tardis tardis, Location location) {
-        super(player, tardis);
-        this.location = location;
-    }
+	public TARDISMalfunctionEvent(Player player, Tardis tardis, Location location) {
+		super(player, tardis);
+		this.location = location;
+	}
 
-    /**
-     * Returns the Bukkit Location the TARDIS will travel to.
-     *
-     * @return the malfunction location
-     */
-    public Location getLocation() {
-        return location;
-    }
+	/**
+	 * Returns the Bukkit Location the TARDIS will travel to.
+	 *
+	 * @return the malfunction location
+	 */
+	public Location getLocation() {
+		return location;
+	}
 }

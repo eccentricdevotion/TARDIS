@@ -24,54 +24,54 @@ import org.bukkit.Location;
  */
 public class TARDISSiegeArea {
 
-    private final int id;
-    private static final int MIN_Y = 48;
-    private static final int MAX_Y = 80;
-    private int minX;
-    private int maxX;
-    private int minZ;
-    private int maxZ;
+	private static final int MIN_Y = 48;
+	private static final int MAX_Y = 80;
+	private final int id;
+	private int minX;
+	private int maxX;
+	private int minZ;
+	private int maxZ;
 
-    public TARDISSiegeArea(int id, Chunk chunk) {
-        this.id = id;
-        setMinMaxXZ(chunk);
-    }
+	public TARDISSiegeArea(int id, Chunk chunk) {
+		this.id = id;
+		setMinMaxXZ(chunk);
+	}
 
-    private void setMinMaxXZ(Chunk chunk) {
-        minX = getChunkX(true, chunk);
-        maxX = getChunkX(false, chunk);
-        minZ = getChunkZ(true, chunk);
-        maxZ = getChunkZ(false, chunk);
-    }
+	private void setMinMaxXZ(Chunk chunk) {
+		minX = getChunkX(true, chunk);
+		maxX = getChunkX(false, chunk);
+		minZ = getChunkZ(true, chunk);
+		maxZ = getChunkZ(false, chunk);
+	}
 
-    private int getChunkX(boolean min, Chunk c) {
-        int cx = c.getX();
-        int cz = c.getZ();
-        if (min) {
-            return c.getWorld().getChunkAt(cx - 4, cz).getBlock(0, 64, 0).getX();
-        } else {
-            return c.getWorld().getChunkAt(cx + 4, cz).getBlock(0, 64, 0).getX();
-        }
-    }
+	private int getChunkX(boolean min, Chunk c) {
+		int cx = c.getX();
+		int cz = c.getZ();
+		if (min) {
+			return c.getWorld().getChunkAt(cx - 4, cz).getBlock(0, 64, 0).getX();
+		} else {
+			return c.getWorld().getChunkAt(cx + 4, cz).getBlock(0, 64, 0).getX();
+		}
+	}
 
-    private int getChunkZ(boolean min, Chunk c) {
-        int cx = c.getX();
-        int cz = c.getZ();
-        if (min) {
-            return c.getWorld().getChunkAt(cx, cz - 4).getBlock(0, 64, 0).getZ();
-        } else {
-            return c.getWorld().getChunkAt(cx, cz + 4).getBlock(0, 64, 0).getZ();
-        }
-    }
+	private int getChunkZ(boolean min, Chunk c) {
+		int cx = c.getX();
+		int cz = c.getZ();
+		if (min) {
+			return c.getWorld().getChunkAt(cx, cz - 4).getBlock(0, 64, 0).getZ();
+		} else {
+			return c.getWorld().getChunkAt(cx, cz + 4).getBlock(0, 64, 0).getZ();
+		}
+	}
 
-    boolean isInSiegeArea(Location l) {
-        int x = l.getBlockX();
-        int y = l.getBlockY();
-        int z = l.getBlockZ();
-        return (x >= minX && x <= maxX && y >= MIN_Y && y <= MAX_Y && z >= minZ && z <= maxZ);
-    }
+	boolean isInSiegeArea(Location l) {
+		int x = l.getBlockX();
+		int y = l.getBlockY();
+		int z = l.getBlockZ();
+		return (x >= minX && x <= maxX && y >= MIN_Y && y <= MAX_Y && z >= minZ && z <= maxZ);
+	}
 
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 }

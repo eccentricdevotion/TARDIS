@@ -28,34 +28,34 @@ import org.bukkit.plugin.Plugin;
  */
 public class TARDISMultiverseHelper {
 
-    private final MultiverseCore mvc;
+	private final MultiverseCore mvc;
 
-    public TARDISMultiverseHelper(Plugin mvplugin) {
-        mvc = (MultiverseCore) mvplugin;
-    }
+	public TARDISMultiverseHelper(Plugin mvplugin) {
+		mvc = (MultiverseCore) mvplugin;
+	}
 
-    public String getAlias(World world) {
-        MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
-        return (mvw != null) ? mvw.getAlias() : world.getName();
-    }
+	public String getAlias(World world) {
+		MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
+		return (mvw != null) ? mvw.getAlias() : world.getName();
+	}
 
-    public String getAlias(String world) {
-        if (Bukkit.getWorld(world) != null) {
-            MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
-            return (mvw != null) ? mvw.getAlias() : world;
-        } else {
-            return world;
-        }
-    }
+	public String getAlias(String world) {
+		if (Bukkit.getWorld(world) != null) {
+			MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
+			return (mvw != null) ? mvw.getAlias() : world;
+		} else {
+			return world;
+		}
+	}
 
-    public boolean isWorldSurvival(World world) {
-        MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
-        GameMode gm = (mvw != null) ? mvw.getGameMode() : GameMode.SURVIVAL;
-        return (gm.equals(GameMode.SURVIVAL));
-    }
+	public boolean isWorldSurvival(World world) {
+		MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
+		GameMode gm = (mvw != null) ? mvw.getGameMode() : GameMode.SURVIVAL;
+		return (gm.equals(GameMode.SURVIVAL));
+	}
 
-    public World getWorld(String w) {
-        MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(w);
-        return (mvw != null) ? mvw.getCBWorld() : Bukkit.getServer().getWorld(w);
-    }
+	public World getWorld(String w) {
+		MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(w);
+		return (mvw != null) ? mvw.getCBWorld() : Bukkit.getServer().getWorld(w);
+	}
 }

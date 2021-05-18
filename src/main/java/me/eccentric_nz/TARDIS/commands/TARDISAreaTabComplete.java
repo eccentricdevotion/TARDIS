@@ -31,35 +31,35 @@ import java.util.List;
  */
 public class TARDISAreaTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("start", "end", "parking", "remove", "show", "yard", "invisibility", "direction");
-    private final List<String> INVISIBILTY_SUBS = new ArrayList<>();
-    private final List<String> DIRECTION_SUBS = new ArrayList<>();
+	private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("start", "end", "parking", "remove", "show", "yard", "invisibility", "direction");
+	private final List<String> INVISIBILTY_SUBS = new ArrayList<>();
+	private final List<String> DIRECTION_SUBS = new ArrayList<>();
 
-    public TARDISAreaTabComplete() {
-        INVISIBILTY_SUBS.add("ALLOW");
-        INVISIBILTY_SUBS.add("DENY");
-        for (PRESET preset : PRESET.values()) {
-            INVISIBILTY_SUBS.add(preset.toString());
-        }
-        for (COMPASS compass : COMPASS.values()) {
-            DIRECTION_SUBS.add(compass.toString());
-        }
-    }
+	public TARDISAreaTabComplete() {
+		INVISIBILTY_SUBS.add("ALLOW");
+		INVISIBILTY_SUBS.add("DENY");
+		for (PRESET preset : PRESET.values()) {
+			INVISIBILTY_SUBS.add(preset.toString());
+		}
+		for (COMPASS compass : COMPASS.values()) {
+			DIRECTION_SUBS.add(compass.toString());
+		}
+	}
 
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        String lastArg = args[args.length - 1];
-        if (args.length <= 1) {
-            return partial(args[0], ROOT_SUBS);
-        } else if (args.length == 3) {
-            String sub = args[0];
-            if (sub.equals("invisibility")) {
-                return partial(lastArg, INVISIBILTY_SUBS);
-            }
-            if (sub.equals("direction")) {
-                return partial(lastArg, DIRECTION_SUBS);
-            }
-        }
-        return ImmutableList.of();
-    }
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+		String lastArg = args[args.length - 1];
+		if (args.length <= 1) {
+			return partial(args[0], ROOT_SUBS);
+		} else if (args.length == 3) {
+			String sub = args[0];
+			if (sub.equals("invisibility")) {
+				return partial(lastArg, INVISIBILTY_SUBS);
+			}
+			if (sub.equals("direction")) {
+				return partial(lastArg, DIRECTION_SUBS);
+			}
+		}
+		return ImmutableList.of();
+	}
 }

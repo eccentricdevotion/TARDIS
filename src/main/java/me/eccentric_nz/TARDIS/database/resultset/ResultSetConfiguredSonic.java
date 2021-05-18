@@ -34,64 +34,64 @@ import java.util.UUID;
  */
 public class ResultSetConfiguredSonic {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
-    private final UUID where;
-    private ConfiguredSonic configuredSonic;
-    private final String prefix;
+	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+	private final Connection connection = service.getConnection();
+	private final TARDIS plugin;
+	private final UUID where;
+	private final String prefix;
+	private ConfiguredSonic configuredSonic;
 
-    /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
-     *
-     * @param plugin an instance of the main class.
-     * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
-     */
-    public ResultSetConfiguredSonic(TARDIS plugin, UUID where) {
-        this.plugin = plugin;
-        this.where = where;
-        prefix = this.plugin.getPrefix();
-    }
+	/**
+	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
+	 *
+	 * @param plugin an instance of the main class.
+	 * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
+	 */
+	public ResultSetConfiguredSonic(TARDIS plugin, UUID where) {
+		this.plugin = plugin;
+		this.where = where;
+		prefix = this.plugin.getPrefix();
+	}
 
-    /**
-     * Retrieves an SQL ResultSet from the sonic table. This method builds an SQL query string from the parameters
-     * supplied and then executes the query. Use the getters to retrieve the results.
-     *
-     * @return true or false depending on whether any data matches the query
-     */
-    public boolean resultSet() {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT * FROM " + prefix + "sonic WHERE sonic_uuid = '" + where.toString() + "'";
-        try {
-            service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                rs.next();
-                configuredSonic = new ConfiguredSonic(rs.getInt("sonic_id"), UUID.fromString(rs.getString("uuid")), rs.getInt("bio"), rs.getInt("diamond"), rs.getInt("emerald"), rs.getInt("redstone"), rs.getInt("painter"), rs.getInt("ignite"), rs.getInt("arrow"), rs.getInt("knockback"), UUID.fromString(rs.getString("sonic_uuid")));
-            } else {
-                return false;
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for sonic config table! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing sonic config table! " + e.getMessage());
-            }
-        }
-        return true;
-    }
+	/**
+	 * Retrieves an SQL ResultSet from the sonic table. This method builds an SQL query string from the parameters
+	 * supplied and then executes the query. Use the getters to retrieve the results.
+	 *
+	 * @return true or false depending on whether any data matches the query
+	 */
+	public boolean resultSet() {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String query = "SELECT * FROM " + prefix + "sonic WHERE sonic_uuid = '" + where.toString() + "'";
+		try {
+			service.testConnection(connection);
+			statement = connection.prepareStatement(query);
+			rs = statement.executeQuery();
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				configuredSonic = new ConfiguredSonic(rs.getInt("sonic_id"), UUID.fromString(rs.getString("uuid")), rs.getInt("bio"), rs.getInt("diamond"), rs.getInt("emerald"), rs.getInt("redstone"), rs.getInt("painter"), rs.getInt("ignite"), rs.getInt("arrow"), rs.getInt("knockback"), UUID.fromString(rs.getString("sonic_uuid")));
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			plugin.debug("ResultSet error for sonic config table! " + e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Error closing sonic config table! " + e.getMessage());
+			}
+		}
+		return true;
+	}
 
-    public ConfiguredSonic getConfiguredSonic() {
-        return configuredSonic;
-    }
+	public ConfiguredSonic getConfiguredSonic() {
+		return configuredSonic;
+	}
 }

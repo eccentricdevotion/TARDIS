@@ -29,17 +29,17 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
  */
 public class TARDISSleepListener implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISSleepListener(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISSleepListener(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onPlayerSleep(PlayerBedEnterEvent event) {
-        Location b = event.getBed().getLocation();
-        if (plugin.getUtils().inTARDISWorld(b) && b.getWorld().getEnvironment().equals(Environment.THE_END)) {
-            event.setCancelled(true);
-        }
-    }
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	public void onPlayerSleep(PlayerBedEnterEvent event) {
+		Location b = event.getBed().getLocation();
+		if (plugin.getUtils().inTARDISWorld(b) && b.getWorld().getEnvironment().equals(Environment.THE_END)) {
+			event.setCancelled(true);
+		}
+	}
 }

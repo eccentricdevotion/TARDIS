@@ -31,29 +31,29 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class GlowStickListener implements Listener {
 
-    private final NamespacedKey namespacedKey;
+	private final NamespacedKey namespacedKey;
 
-    public GlowStickListener(TARDIS plugin) {
-        namespacedKey = new NamespacedKey(plugin, "glow_stick_time");
-    }
+	public GlowStickListener(TARDIS plugin) {
+		namespacedKey = new NamespacedKey(plugin, "glow_stick_time");
+	}
 
-    @EventHandler
-    public void onGlowStickUse(PlayerInteractEvent event) {
-        if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-            Player player = event.getPlayer();
-            ItemStack is = event.getItem();
-            if (is != null && GlowStickMaterial.isCorrectMaterial(is.getType()) && is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName() && im.getDisplayName().endsWith("Glow Stick") && im.hasCustomModelData() && !im.hasEnchant(Enchantment.LOYALTY)) {
-                    player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_HIT, 1.0f, 1.0f);
-                    // switch custom data models e.g. 10000008 -> 12000008
-                    int cmd = im.getCustomModelData() + 2000000;
-                    im.setCustomModelData(cmd);
-                    im.addEnchant(Enchantment.LOYALTY, 1, true);
-                    im.getPersistentDataContainer().set(namespacedKey, PersistentDataType.INTEGER, 100);
-                    is.setItemMeta(im);
-                }
-            }
-        }
-    }
+	@EventHandler
+	public void onGlowStickUse(PlayerInteractEvent event) {
+		if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+			Player player = event.getPlayer();
+			ItemStack is = event.getItem();
+			if (is != null && GlowStickMaterial.isCorrectMaterial(is.getType()) && is.hasItemMeta()) {
+				ItemMeta im = is.getItemMeta();
+				if (im.hasDisplayName() && im.getDisplayName().endsWith("Glow Stick") && im.hasCustomModelData() && !im.hasEnchant(Enchantment.LOYALTY)) {
+					player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_HIT, 1.0f, 1.0f);
+					// switch custom data models e.g. 10000008 -> 12000008
+					int cmd = im.getCustomModelData() + 2000000;
+					im.setCustomModelData(cmd);
+					im.addEnchant(Enchantment.LOYALTY, 1, true);
+					im.getPersistentDataContainer().set(namespacedKey, PersistentDataType.INTEGER, 100);
+					is.setItemMeta(im);
+				}
+			}
+		}
+	}
 }

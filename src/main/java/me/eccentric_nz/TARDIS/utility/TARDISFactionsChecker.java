@@ -29,20 +29,20 @@ import org.bukkit.entity.Player;
  */
 public class TARDISFactionsChecker {
 
-    /**
-     * Checks whether a location is in the player's faction or 'wilderness'... ie NOT in a claimed faction that this
-     * player doesn't belong to.
-     *
-     * @param p a player
-     * @param l the location instance to check.
-     * @return true or false depending on whether the player belongs to the faction who controls the location
-     */
-    public static boolean isInFaction(Player p, Location l) {
-        try {
-            Class.forName("com.massivecraft.factions.entity.MPlayer");
-            return TARDIS.plugin.getTardisHelper().isInFaction(p, l);
-        } catch (Exception e) {
-            return new TARDISFactionsUUID().isInFaction(p, l);
-        }
-    }
+	/**
+	 * Checks whether a location is in the player's faction or 'wilderness'... ie NOT in a claimed faction that this
+	 * player doesn't belong to.
+	 *
+	 * @param p a player
+	 * @param l the location instance to check.
+	 * @return true or false depending on whether the player belongs to the faction who controls the location
+	 */
+	public static boolean isInFaction(Player p, Location l) {
+		try {
+			Class.forName("com.massivecraft.factions.entity.MPlayer");
+			return TARDIS.plugin.getTardisHelper().isInFaction(p, l);
+		} catch (Exception e) {
+			return new TARDISFactionsUUID().isInFaction(p, l);
+		}
+	}
 }

@@ -36,65 +36,65 @@ import java.util.List;
  */
 class TARDISPoliceBoxInventory {
 
-    private final ItemStack[] boxes;
-    private final TARDIS plugin;
-    private final Player player;
-    final List<String> colours = Arrays.asList("Blue", "White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Brown", "Green", "Red", "Black");
+	final List<String> colours = Arrays.asList("Blue", "White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Brown", "Green", "Red", "Black");
+	private final ItemStack[] boxes;
+	private final TARDIS plugin;
+	private final Player player;
 
-    public TARDISPoliceBoxInventory(TARDIS plugin, Player player) {
-        this.plugin = plugin;
-        this.player = player;
-        boxes = getItemStack();
-    }
+	public TARDISPoliceBoxInventory(TARDIS plugin, Player player) {
+		this.plugin = plugin;
+		this.player = player;
+		boxes = getItemStack();
+	}
 
-    /**
-     * Constructs an inventory for the Chameleon Circuit GUI.
-     *
-     * @return an Array of itemStacks (an inventory)
-     */
-    private ItemStack[] getItemStack() {
-        ItemStack[] boxes = new ItemStack[27];
-        int i = 0;
-        // coloured police boxes
-        for (String s : colours) {
-            String underscored = s.replace(" ", "_");
-            if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_" + underscored.toLowerCase())) {
-                String dye = underscored.toUpperCase() + "_DYE";
-                ItemStack is = new ItemStack(Material.valueOf(dye), 1);
-                ItemMeta im = is.getItemMeta();
-                im.setDisplayName(s + " Police Box");
-                im.setCustomModelData(1001);
-                is.setItemMeta(im);
-                boxes[i] = is;
-            }
-            i++;
-        }
-        // page one
-        ItemStack page = new ItemStack(Material.ARROW, 1);
-        ItemMeta one = page.getItemMeta();
-        one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
-        one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.getCustomModelData());
-        page.setItemMeta(one);
-        boxes[24] = page;
-        // back
-        ItemStack back = new ItemStack(Material.BOWL, 1);
-        ItemMeta but = back.getItemMeta();
-        but.setDisplayName("Back");
-        but.setCustomModelData(GUIChameleonPoliceBoxes.BACK.getCustomModelData());
-        back.setItemMeta(but);
-        boxes[25] = back;
-        // Cancel / close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
-        ItemMeta can = close.getItemMeta();
-        can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.getCustomModelData());
-        close.setItemMeta(can);
-        boxes[26] = close;
+	/**
+	 * Constructs an inventory for the Chameleon Circuit GUI.
+	 *
+	 * @return an Array of itemStacks (an inventory)
+	 */
+	private ItemStack[] getItemStack() {
+		ItemStack[] boxes = new ItemStack[27];
+		int i = 0;
+		// coloured police boxes
+		for (String s : colours) {
+			String underscored = s.replace(" ", "_");
+			if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_" + underscored.toLowerCase())) {
+				String dye = underscored.toUpperCase() + "_DYE";
+				ItemStack is = new ItemStack(Material.valueOf(dye), 1);
+				ItemMeta im = is.getItemMeta();
+				im.setDisplayName(s + " Police Box");
+				im.setCustomModelData(1001);
+				is.setItemMeta(im);
+				boxes[i] = is;
+			}
+			i++;
+		}
+		// page one
+		ItemStack page = new ItemStack(Material.ARROW, 1);
+		ItemMeta one = page.getItemMeta();
+		one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
+		one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.getCustomModelData());
+		page.setItemMeta(one);
+		boxes[24] = page;
+		// back
+		ItemStack back = new ItemStack(Material.BOWL, 1);
+		ItemMeta but = back.getItemMeta();
+		but.setDisplayName("Back");
+		but.setCustomModelData(GUIChameleonPoliceBoxes.BACK.getCustomModelData());
+		back.setItemMeta(but);
+		boxes[25] = back;
+		// Cancel / close
+		ItemStack close = new ItemStack(Material.BOWL, 1);
+		ItemMeta can = close.getItemMeta();
+		can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+		can.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.getCustomModelData());
+		close.setItemMeta(can);
+		boxes[26] = close;
 
-        return boxes;
-    }
+		return boxes;
+	}
 
-    public ItemStack[] getBoxes() {
-        return boxes;
-    }
+	public ItemStack[] getBoxes() {
+		return boxes;
+	}
 }

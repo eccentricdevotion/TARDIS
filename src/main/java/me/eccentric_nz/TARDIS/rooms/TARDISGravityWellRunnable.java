@@ -28,70 +28,70 @@ import org.bukkit.util.Vector;
  */
 public class TARDISGravityWellRunnable implements Runnable {
 
-    private final TARDIS plugin;
-    private final Player p;
-    private final double up;
-    private final double end;
-    private int task;
-    private final int x;
-    private final int z;
-    private final int dir;
+	private final TARDIS plugin;
+	private final Player p;
+	private final double up;
+	private final double end;
+	private final int x;
+	private final int z;
+	private final int dir;
+	private int task;
 
-    public TARDISGravityWellRunnable(TARDIS plugin, Player p, double up, double end, int x, int z, int dir) {
-        this.plugin = plugin;
-        this.p = p;
-        this.up = up;
-        this.end = end;
-        this.x = x;
-        this.z = z;
-        this.dir = dir;
-    }
+	public TARDISGravityWellRunnable(TARDIS plugin, Player p, double up, double end, int x, int z, int dir) {
+		this.plugin = plugin;
+		this.p = p;
+		this.up = up;
+		this.end = end;
+		this.x = x;
+		this.z = z;
+		this.dir = dir;
+	}
 
-    @Override
-    public void run() {
-        switch (dir) {
-            case 1:
-                if (p.getLocation().getY() < end && p.getLocation().getBlockX() == x && p.getLocation().getBlockZ() == z) {
-                    p.setVelocity(new Vector(0.0D, up, 0.0D));
-                } else {
-                    p.setFallDistance(0.0F);
-                    plugin.getServer().getScheduler().cancelTask(task);
-                }
-                break;
-            case 2:
-                if (p.getLocation().getZ() > end && p.getLocation().getBlockX() == x) {
-                    p.setVelocity(new Vector(0.0D, 0.0D, -up));
-                } else {
-                    plugin.getServer().getScheduler().cancelTask(task);
-                }
-                break;
-            case 3:
-                if (p.getLocation().getX() > end && p.getLocation().getBlockZ() == z) {
-                    p.setVelocity(new Vector(-up, 0.0D, 0.0D));
-                } else {
-                    plugin.getServer().getScheduler().cancelTask(task);
-                }
-                break;
-            case 4:
-                if (p.getLocation().getZ() < end && p.getLocation().getBlockX() == x) {
-                    p.setVelocity(new Vector(0.0D, 0.0D, up));
-                } else {
-                    plugin.getServer().getScheduler().cancelTask(task);
-                }
-                break;
-            case 5:
-                if (p.getLocation().getX() < end && p.getLocation().getBlockZ() == z) {
-                    p.setVelocity(new Vector(up, 0.0D, 0.0D));
-                } else {
-                    plugin.getServer().getScheduler().cancelTask(task);
-                }
-                break;
-            default:
-                break;
-        }
-    }
+	@Override
+	public void run() {
+		switch (dir) {
+			case 1:
+				if (p.getLocation().getY() < end && p.getLocation().getBlockX() == x && p.getLocation().getBlockZ() == z) {
+					p.setVelocity(new Vector(0.0D, up, 0.0D));
+				} else {
+					p.setFallDistance(0.0F);
+					plugin.getServer().getScheduler().cancelTask(task);
+				}
+				break;
+			case 2:
+				if (p.getLocation().getZ() > end && p.getLocation().getBlockX() == x) {
+					p.setVelocity(new Vector(0.0D, 0.0D, -up));
+				} else {
+					plugin.getServer().getScheduler().cancelTask(task);
+				}
+				break;
+			case 3:
+				if (p.getLocation().getX() > end && p.getLocation().getBlockZ() == z) {
+					p.setVelocity(new Vector(-up, 0.0D, 0.0D));
+				} else {
+					plugin.getServer().getScheduler().cancelTask(task);
+				}
+				break;
+			case 4:
+				if (p.getLocation().getZ() < end && p.getLocation().getBlockX() == x) {
+					p.setVelocity(new Vector(0.0D, 0.0D, up));
+				} else {
+					plugin.getServer().getScheduler().cancelTask(task);
+				}
+				break;
+			case 5:
+				if (p.getLocation().getX() < end && p.getLocation().getBlockZ() == z) {
+					p.setVelocity(new Vector(up, 0.0D, 0.0D));
+				} else {
+					plugin.getServer().getScheduler().cancelTask(task);
+				}
+				break;
+			default:
+				break;
+		}
+	}
 
-    public void setTask(int task) {
-        this.task = task;
-    }
+	public void setTask(int task) {
+		this.task = task;
+	}
 }

@@ -35,55 +35,55 @@ import java.util.UUID;
  */
 class TARDISDelavafier {
 
-    private final TARDIS plugin;
-    private final UUID uuid;
-    private final BlockData ORANGE = Material.ORANGE_TERRACOTTA.createBlockData();
-    private final BlockData GLASS = Material.LIGHT_BLUE_STAINED_GLASS.createBlockData();
+	private final TARDIS plugin;
+	private final UUID uuid;
+	private final BlockData ORANGE = Material.ORANGE_TERRACOTTA.createBlockData();
+	private final BlockData GLASS = Material.LIGHT_BLUE_STAINED_GLASS.createBlockData();
 
-    TARDISDelavafier(TARDIS plugin, UUID uuid) {
-        this.plugin = plugin;
-        this.uuid = uuid;
-    }
+	TARDISDelavafier(TARDIS plugin, UUID uuid) {
+		this.plugin = plugin;
+		this.uuid = uuid;
+	}
 
-    void swap() {
-        // calculate startx, starty, startz
-        HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
-            int slot = tardis.getTIPS();
-            int startx;
-            int startz;
-            if (slot != -1) { // default world - use TIPS
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                TARDISTIPSData pos = tintpos.getTIPSData(slot);
-                startx = pos.getCentreX();
-                startz = pos.getCentreZ();
-            } else {
-                int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
-                startx = gsl[0];
-                startz = gsl[2];
-            }
-            World world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
-            for (int level = 2; level < 6; level++) {
-                for (int row = 0; row < 32; row++) {
-                    for (int col = 0; col < 32; col++) {
-                        int x = startx + row;
-                        int starty = 64;
-                        int y = starty + level;
-                        int z = startz + col;
-                        Block b = world.getBlockAt(x, y, z);
-                        Material type = b.getType();
-                        if (type.equals(Material.LAVA)) {
-                            b.setBlockData(ORANGE);
-                        }
-                        if (type.equals(Material.WATER)) {
-                            b.setBlockData(GLASS);
-                        }
-                    }
-                }
-            }
-        }
-    }
+	void swap() {
+		// calculate startx, starty, startz
+		HashMap<String, Object> wheret = new HashMap<>();
+		wheret.put("uuid", uuid.toString());
+		ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
+		if (rs.resultSet()) {
+			Tardis tardis = rs.getTardis();
+			int slot = tardis.getTIPS();
+			int startx;
+			int startz;
+			if (slot != -1) { // default world - use TIPS
+				TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+				TARDISTIPSData pos = tintpos.getTIPSData(slot);
+				startx = pos.getCentreX();
+				startz = pos.getCentreZ();
+			} else {
+				int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+				startx = gsl[0];
+				startz = gsl[2];
+			}
+			World world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+			for (int level = 2; level < 6; level++) {
+				for (int row = 0; row < 32; row++) {
+					for (int col = 0; col < 32; col++) {
+						int x = startx + row;
+						int starty = 64;
+						int y = starty + level;
+						int z = startz + col;
+						Block b = world.getBlockAt(x, y, z);
+						Material type = b.getType();
+						if (type.equals(Material.LAVA)) {
+							b.setBlockData(ORANGE);
+						}
+						if (type.equals(Material.WATER)) {
+							b.setBlockData(GLASS);
+						}
+					}
+				}
+			}
+		}
+	}
 }

@@ -31,33 +31,33 @@ import java.util.HashMap;
  */
 public class TARDISLand {
 
-    private final TARDIS plugin;
-    private final int id;
-    private final Player player;
-    private final SpaceTimeThrottle spaceTimeThrottle;
+	private final TARDIS plugin;
+	private final int id;
+	private final Player player;
+	private final SpaceTimeThrottle spaceTimeThrottle;
 
-    public TARDISLand(TARDIS plugin, int id, Player player) {
-        this.plugin = plugin;
-        this.id = id;
-        this.player = player;
-        spaceTimeThrottle = getThrottle(this.player);
-    }
+	public TARDISLand(TARDIS plugin, int id, Player player) {
+		this.plugin = plugin;
+		this.id = id;
+		this.player = player;
+		spaceTimeThrottle = getThrottle(this.player);
+	}
 
-    public void exitVortex() {
-        // get handbrake location
-        HashMap<String, Object> whereh = new HashMap<>();
-        whereh.put("tardis_id", id);
-        whereh.put("type", 0);
-        whereh.put("secondary", 0);
-        ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
-        if (rsh.resultSet()) {
-            Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
-            // materialise
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMaterialseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle), 10L);
-        }
-    }
+	public void exitVortex() {
+		// get handbrake location
+		HashMap<String, Object> whereh = new HashMap<>();
+		whereh.put("tardis_id", id);
+		whereh.put("type", 0);
+		whereh.put("secondary", 0);
+		ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
+		if (rsh.resultSet()) {
+			Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
+			// materialise
+			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMaterialseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle), 10L);
+		}
+	}
 
-    private SpaceTimeThrottle getThrottle(Player player) {
-        return new ResultSetThrottle(plugin).getSpeed(player.getUniqueId().toString());
-    }
+	private SpaceTimeThrottle getThrottle(Player player) {
+		return new ResultSetThrottle(plugin).getSpeed(player.getUniqueId().toString());
+	}
 }

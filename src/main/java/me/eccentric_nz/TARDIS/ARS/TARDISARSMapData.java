@@ -24,49 +24,49 @@ package me.eccentric_nz.TARDIS.ARS;
  */
 class TARDISARSMapData {
 
-    private String[][][] data;
-    private int e;
-    private int s;
-    private int y;
-    private int id;
+	private String[][][] data;
+	private int e;
+	private int s;
+	private int y;
+	private int id;
 
-    public String[][][] getData() {
-        return data;
-    }
+	public String[][][] getData() {
+		return data;
+	}
 
-    public void setData(String[][][] data) {
-        this.data = data;
-    }
+	public void setData(String[][][] data) {
+		this.data = data;
+	}
 
-    public int getE() {
-        return e;
-    }
+	public int getE() {
+		return e;
+	}
 
-    public void setE(int e) {
-        this.e = e;
-    }
+	public void setE(int e) {
+		this.e = e;
+	}
 
-    public int getS() {
-        return s;
-    }
+	public int getS() {
+		return s;
+	}
 
-    public void setS(int s) {
-        this.s = s;
-    }
+	public void setS(int s) {
+		this.s = s;
+	}
 
-    public int getY() {
-        return y;
-    }
+	public int getY() {
+		return y;
+	}
 
-    public void setY(int y) {
-        this.y = y;
-    }
+	public void setY(int y) {
+		this.y = y;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 }

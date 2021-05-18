@@ -32,47 +32,47 @@ import java.util.Set;
  */
 class TARDISSonicActivatorInventory {
 
-    private final TARDIS plugin;
-    private final ItemStack[] activator;
+	private final TARDIS plugin;
+	private final ItemStack[] activator;
 
-    TARDISSonicActivatorInventory(TARDIS plugin) {
-        this.plugin = plugin;
-        activator = getItemStack();
-    }
+	TARDISSonicActivatorInventory(TARDIS plugin) {
+		this.plugin = plugin;
+		activator = getItemStack();
+	}
 
-    /**
-     * Constructs an inventory for the Sonic Activator Menu GUI.
-     *
-     * @return an Array of itemStacks (an inventory)
-     */
+	/**
+	 * Constructs an inventory for the Sonic Activator Menu GUI.
+	 *
+	 * @return an Array of itemStacks (an inventory)
+	 */
 
-    private ItemStack[] getItemStack() {
-        List<String> lore = new ArrayList<>();
-        lore.add("To activate the generator");
-        lore.add("add 1 of each of the following");
-        lore.add("items to this inventory:");
-        // get the Sonic Generator recipe
-        String difficulty = (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("hard")) ? "hard" : "easy";
-        Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection("shaped.Sonic Generator." + difficulty + "_ingredients").getKeys(false);
-        ingredients.forEach((s) -> lore.add(ChatColor.AQUA + plugin.getRecipesConfig().getString("shaped.Sonic Generator." + difficulty + "_ingredients." + s)));
-        lore.add(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + "Then close the GUI.");
-        // info
-        ItemStack info = new ItemStack(Material.BOOK, 1);
-        ItemMeta info_im = info.getItemMeta();
-        info_im.setDisplayName("Instructions");
-        info_im.setLore(lore);
-        info.setItemMeta(info_im);
-        // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUISonicActivator.CLOSE.getCustomModelData());
-        close.setItemMeta(close_im);
+	private ItemStack[] getItemStack() {
+		List<String> lore = new ArrayList<>();
+		lore.add("To activate the generator");
+		lore.add("add 1 of each of the following");
+		lore.add("items to this inventory:");
+		// get the Sonic Generator recipe
+		String difficulty = (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("hard")) ? "hard" : "easy";
+		Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection("shaped.Sonic Generator." + difficulty + "_ingredients").getKeys(false);
+		ingredients.forEach((s) -> lore.add(ChatColor.AQUA + plugin.getRecipesConfig().getString("shaped.Sonic Generator." + difficulty + "_ingredients." + s)));
+		lore.add(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + "Then close the GUI.");
+		// info
+		ItemStack info = new ItemStack(Material.BOOK, 1);
+		ItemMeta info_im = info.getItemMeta();
+		info_im.setDisplayName("Instructions");
+		info_im.setLore(lore);
+		info.setItemMeta(info_im);
+		// close
+		ItemStack close = new ItemStack(Material.BOWL, 1);
+		ItemMeta close_im = close.getItemMeta();
+		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+		close_im.setCustomModelData(GUISonicActivator.CLOSE.getCustomModelData());
+		close.setItemMeta(close_im);
 
-        return new ItemStack[]{null, null, null, null, null, null, null, info, close};
-    }
+		return new ItemStack[]{null, null, null, null, null, null, null, info, close};
+	}
 
-    public ItemStack[] getActivator() {
-        return activator;
-    }
+	public ItemStack[] getActivator() {
+		return activator;
+	}
 }

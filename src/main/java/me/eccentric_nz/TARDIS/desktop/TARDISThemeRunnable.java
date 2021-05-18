@@ -21,17 +21,17 @@ package me.eccentric_nz.TARDIS.desktop;
  */
 public class TARDISThemeRunnable implements Runnable {
 
-    int taskID;
+	int taskID;
 
-    TARDISThemeRunnable() {
-    }
+	TARDISThemeRunnable() {
+	}
 
-    public void setTaskID(int taskID) {
-        this.taskID = taskID;
-    }
+	public void setTaskID(int taskID) {
+		this.taskID = taskID;
+	}
 
-    @Override
-    public void run() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public void run() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

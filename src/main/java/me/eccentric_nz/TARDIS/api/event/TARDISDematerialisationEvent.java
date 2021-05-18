@@ -25,19 +25,19 @@ import org.bukkit.entity.Player;
  */
 public final class TARDISDematerialisationEvent extends TARDISEvent {
 
-    private final Location location;
+	private final Location location;
 
-    public TARDISDematerialisationEvent(Player player, Tardis tardis, Location location) {
-        super(player, tardis);
-        this.location = location;
-    }
+	public TARDISDematerialisationEvent(Player player, Tardis tardis, Location location) {
+		super(player, tardis);
+		this.location = location;
+	}
 
-    /**
-     * Returns the Bukkit Location of the TARDIS exterior preset where it dematerialise from.
-     *
-     * @return the location of the dematerialisation event
-     */
-    public Location getLocation() {
-        return location;
-    }
+	/**
+	 * Returns the Bukkit Location of the TARDIS exterior preset where it dematerialise from.
+	 *
+	 * @return the location of the dematerialisation event
+	 */
+	public Location getLocation() {
+		return location;
+	}
 }

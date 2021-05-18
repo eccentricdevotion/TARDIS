@@ -21,19 +21,19 @@ import org.bukkit.block.data.BlockData;
 
 public class MushroomBlock {
 
-    private final Block block;
-    private final BlockData blockData;
+	private final Block block;
+	private final BlockData blockData;
 
-    public MushroomBlock(Block block, BlockData blockData) {
-        this.block = block;
-        this.blockData = blockData;
-    }
+	public MushroomBlock(Block block, BlockData blockData) {
+		this.block = block;
+		this.blockData = blockData;
+	}
 
-    public Block getBlock() {
-        return block;
-    }
+	public Block getBlock() {
+		return block;
+	}
 
-    public BlockData getBlockData() {
-        return blockData;
-    }
+	public BlockData getBlockData() {
+		return blockData;
+	}
 }

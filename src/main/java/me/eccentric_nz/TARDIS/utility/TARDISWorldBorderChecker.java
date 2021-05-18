@@ -30,47 +30,47 @@ import org.bukkit.Location;
  */
 public class TARDISWorldBorderChecker {
 
-    private final WorldBorder border;
+	private final WorldBorder border;
 
-    public TARDISWorldBorderChecker(TARDIS plugin) {
-        border = (WorldBorder) plugin.getPM().getPlugin("WorldBorder");
-    }
+	public TARDISWorldBorderChecker(TARDIS plugin) {
+		border = (WorldBorder) plugin.getPM().getPlugin("WorldBorder");
+	}
 
-    /**
-     * Checks to see whether the specified location is within a WorldBorder border.
-     *
-     * @param l the location to check.
-     * @return true or false depending on whether the location is within the border
-     */
-    public boolean isInBorder(Location l) {
-        boolean bool = true;
-        if (border != null) {
-            BorderData bd = border.getWorldBorder(l.getWorld().getName());
-            if (bd != null && !bd.insideBorder(l)) {
-                bool = false;
-            }
-        }
-        return bool;
-    }
+	/**
+	 * Checks to see whether the specified location is within a WorldBorder border.
+	 *
+	 * @param l the location to check.
+	 * @return true or false depending on whether the location is within the border
+	 */
+	public boolean isInBorder(Location l) {
+		boolean bool = true;
+		if (border != null) {
+			BorderData bd = border.getWorldBorder(l.getWorld().getName());
+			if (bd != null && !bd.insideBorder(l)) {
+				bool = false;
+			}
+		}
+		return bool;
+	}
 
-    /**
-     * Gets the border radius for a specified world.
-     *
-     * @param world the world to get the radius for
-     * @return the world radius
-     */
-    public int[] getBorderDistance(String world) {
-        int[] distance = new int[2];
-        if (border != null) {
-            BorderData bd = Config.Border(world);
-            if (bd != null) {
-                distance[0] = bd.getRadiusX();
-                distance[1] = bd.getRadiusZ();
-            } else {
-                distance[0] = 30000;
-                distance[1] = 30000;
-            }
-        }
-        return distance;
-    }
+	/**
+	 * Gets the border radius for a specified world.
+	 *
+	 * @param world the world to get the radius for
+	 * @return the world radius
+	 */
+	public int[] getBorderDistance(String world) {
+		int[] distance = new int[2];
+		if (border != null) {
+			BorderData bd = Config.Border(world);
+			if (bd != null) {
+				distance[0] = bd.getRadiusX();
+				distance[1] = bd.getRadiusZ();
+			} else {
+				distance[0] = 30000;
+				distance[1] = 30000;
+			}
+		}
+		return distance;
+	}
 }

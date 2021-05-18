@@ -29,32 +29,32 @@ import java.util.Set;
  */
 public class TARDISFenceRecalculator {
 
-    private final Set<BlockFace> eastwest = Sets.newHashSet(BlockFace.WEST, BlockFace.EAST);
-    private final Set<BlockFace> northsouth = Sets.newHashSet(BlockFace.SOUTH, BlockFace.NORTH);
+	private final Set<BlockFace> eastwest = Sets.newHashSet(BlockFace.WEST, BlockFace.EAST);
+	private final Set<BlockFace> northsouth = Sets.newHashSet(BlockFace.SOUTH, BlockFace.NORTH);
 
-    /**
-     * Recalculate the data for multiple facing block (FENCE) when the TARDIS preset changes direction.
-     *
-     * @param b the block data stored in the preset data
-     * @param d the new direction of the TARDIS
-     * @return the recalculated block data
-     */
-    public BlockData recalculate(BlockData b, COMPASS d) {
-        MultipleFacing fence = (MultipleFacing) b;
-        // get all set faces
-        Set<BlockFace> has = fence.getFaces();
-        Set<BlockFace> set = null;
-        if (d.equals(COMPASS.NORTH) || d.equals(COMPASS.SOUTH)) {
-            if (has.equals(eastwest)) {
-                set = northsouth;
-            } else if (has.equals(northsouth)) {
-                set = eastwest;
-            }
-        }
-        if (set != null) {
-            has.forEach((f) -> fence.setFace(f, false));
-            set.forEach((f) -> fence.setFace(f, true));
-        }
-        return fence;
-    }
+	/**
+	 * Recalculate the data for multiple facing block (FENCE) when the TARDIS preset changes direction.
+	 *
+	 * @param b the block data stored in the preset data
+	 * @param d the new direction of the TARDIS
+	 * @return the recalculated block data
+	 */
+	public BlockData recalculate(BlockData b, COMPASS d) {
+		MultipleFacing fence = (MultipleFacing) b;
+		// get all set faces
+		Set<BlockFace> has = fence.getFaces();
+		Set<BlockFace> set = null;
+		if (d.equals(COMPASS.NORTH) || d.equals(COMPASS.SOUTH)) {
+			if (has.equals(eastwest)) {
+				set = northsouth;
+			} else if (has.equals(northsouth)) {
+				set = eastwest;
+			}
+		}
+		if (set != null) {
+			has.forEach((f) -> fence.setFace(f, false));
+			set.forEach((f) -> fence.setFace(f, true));
+		}
+		return fence;
+	}
 }

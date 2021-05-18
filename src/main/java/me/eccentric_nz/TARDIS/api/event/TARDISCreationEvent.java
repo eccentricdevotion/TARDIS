@@ -24,7 +24,7 @@ import org.bukkit.entity.Player;
  */
 public final class TARDISCreationEvent extends TARDISLocationEvent {
 
-    public TARDISCreationEvent(Player player, int tardis_id, Location location) {
-        super(player, tardis_id, location);
-    }
+	public TARDISCreationEvent(Player player, int tardis_id, Location location) {
+		super(player, tardis_id, location);
+	}
 }

@@ -30,30 +30,30 @@ import java.util.HashMap;
  */
 class TARDISListCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISListCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISListCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean doList(Player player, String[] args) {
-        if (TARDISPermission.hasPermission(player, "tardis.list")) {
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", player.getUniqueId().toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NO_TARDIS");
-                return false;
-            }
-            if (args.length < 2 || (!args[1].equalsIgnoreCase("saves") && !args[1].equalsIgnoreCase("companions") && !args[1].equalsIgnoreCase("areas") && !args[1].equalsIgnoreCase("rechargers"))) {
-                TARDISMessage.send(player, "LIST_NEED");
-                return false;
-            }
-            new TARDISLister(plugin).list(player, args[1]);
-            return true;
-        } else {
-            TARDISMessage.send(player, "NO_PERMS");
-            return false;
-        }
-    }
+	boolean doList(Player player, String[] args) {
+		if (TARDISPermission.hasPermission(player, "tardis.list")) {
+			HashMap<String, Object> where = new HashMap<>();
+			where.put("uuid", player.getUniqueId().toString());
+			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+			if (!rs.resultSet()) {
+				TARDISMessage.send(player, "NO_TARDIS");
+				return false;
+			}
+			if (args.length < 2 || (!args[1].equalsIgnoreCase("saves") && !args[1].equalsIgnoreCase("companions") && !args[1].equalsIgnoreCase("areas") && !args[1].equalsIgnoreCase("rechargers"))) {
+				TARDISMessage.send(player, "LIST_NEED");
+				return false;
+			}
+			new TARDISLister(plugin).list(player, args[1]);
+			return true;
+		} else {
+			TARDISMessage.send(player, "NO_PERMS");
+			return false;
+		}
+	}
 }

@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.planets;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,38 +32,38 @@ import org.bukkit.event.player.PlayerJoinEvent;
  */
 public class TARDISGameModeSwitcher implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISGameModeSwitcher(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISGameModeSwitcher(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onGameModeWorldChange(PlayerChangedWorldEvent event) {
-        Player player = event.getPlayer();
-        String world = player.getWorld().getName();
-        if (plugin.getWorldManager().equals(WorldManager.NONE) && !TARDISPermission.hasPermission(player, "tardis.gamemode.bypass")) {
-            // TARDIS is managing worlds so switch player GameMode if necessary
-            try {
-                GameMode gm = GameMode.valueOf(plugin.getPlanetsConfig().getString("planets." + world + ".gamemode"));
-                player.setGameMode(gm);
-            } catch (IllegalArgumentException e) {
-                plugin.debug("Could not get GameMode for world change: '" + world + "'");
-            }
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onGameModeWorldChange(PlayerChangedWorldEvent event) {
+		Player player = event.getPlayer();
+		String world = player.getWorld().getName();
+		if (plugin.getWorldManager().equals(WorldManager.NONE) && !TARDISPermission.hasPermission(player, "tardis.gamemode.bypass")) {
+			// TARDIS is managing worlds so switch player GameMode if necessary
+			try {
+				GameMode gm = GameMode.valueOf(plugin.getPlanetsConfig().getString("planets." + world + ".gamemode"));
+				player.setGameMode(gm);
+			} catch (IllegalArgumentException e) {
+				plugin.debug("Could not get GameMode for world change: '" + world + "'");
+			}
+		}
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onGameModeJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        String world = player.getWorld().getName();
-        if (plugin.getWorldManager().equals(WorldManager.NONE) && !TARDISPermission.hasPermission(player, "tardis.gamemode.bypass")) {
-            try {
-                GameMode gm = GameMode.valueOf(plugin.getPlanetsConfig().getString("planets." + world + ".gamemode"));
-                player.setGameMode(gm);
-            } catch (IllegalArgumentException e) {
-                plugin.debug("Could not get GameMode for world join: '" + world + "'");
-            }
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onGameModeJoin(PlayerJoinEvent event) {
+		Player player = event.getPlayer();
+		String world = player.getWorld().getName();
+		if (plugin.getWorldManager().equals(WorldManager.NONE) && !TARDISPermission.hasPermission(player, "tardis.gamemode.bypass")) {
+			try {
+				GameMode gm = GameMode.valueOf(plugin.getPlanetsConfig().getString("planets." + world + ".gamemode"));
+				player.setGameMode(gm);
+			} catch (IllegalArgumentException e) {
+				plugin.debug("Could not get GameMode for world join: '" + world + "'");
+			}
+		}
+	}
 }

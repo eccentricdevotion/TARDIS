@@ -22,37 +22,37 @@ import java.util.List;
 
 public class RecipeData {
 
-    private final String displayName;
-    private final String nameSpacedKey;
-    private final List<String> lore;
-    private final Material craftMaterial;
-    private final int customModelData;
+	private final String displayName;
+	private final String nameSpacedKey;
+	private final List<String> lore;
+	private final Material craftMaterial;
+	private final int customModelData;
 
-    public RecipeData(String displayName, String nameSpacedKey, List<String> lore, Material craftMaterial, int customModelData) {
-        this.displayName = displayName;
-        this.nameSpacedKey = nameSpacedKey;
-        this.lore = lore;
-        this.craftMaterial = craftMaterial;
-        this.customModelData = customModelData;
-    }
+	public RecipeData(String displayName, String nameSpacedKey, List<String> lore, Material craftMaterial, int customModelData) {
+		this.displayName = displayName;
+		this.nameSpacedKey = nameSpacedKey;
+		this.lore = lore;
+		this.craftMaterial = craftMaterial;
+		this.customModelData = customModelData;
+	}
 
-    public String getDisplayName() {
-        return displayName;
-    }
+	public String getDisplayName() {
+		return displayName;
+	}
 
-    public String getNameSpacedKey() {
-        return nameSpacedKey;
-    }
+	public String getNameSpacedKey() {
+		return nameSpacedKey;
+	}
 
-    public List<String> getLore() {
-        return lore;
-    }
+	public List<String> getLore() {
+		return lore;
+	}
 
-    public Material getCraftMaterial() {
-        return craftMaterial;
-    }
+	public Material getCraftMaterial() {
+		return craftMaterial;
+	}
 
-    public int getCustomModelData() {
-        return customModelData;
-    }
+	public int getCustomModelData() {
+		return customModelData;
+	}
 }

@@ -32,41 +32,41 @@ import java.util.List;
  */
 public class TARDISBindTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final List<String> ROOT_SUBS = ImmutableList.of("add", "remove");
-    private final ImmutableList<String> FIRST_SUBS = ImmutableList.of("save", "player", "area", "biome", "hide", "rebuild", "home", "cave", "make_her_blue", "occupy", "chameleon", "transmat");
-    private final List<String> CHAM_SUBS = new ArrayList<>();
-    private final List<String> BIOME_SUBS = new ArrayList<>();
+	private final List<String> ROOT_SUBS = ImmutableList.of("add", "remove");
+	private final ImmutableList<String> FIRST_SUBS = ImmutableList.of("save", "player", "area", "biome", "hide", "rebuild", "home", "cave", "make_her_blue", "occupy", "chameleon", "transmat");
+	private final List<String> CHAM_SUBS = new ArrayList<>();
+	private final List<String> BIOME_SUBS = new ArrayList<>();
 
-    public TARDISBindTabComplete() {
-        CHAM_SUBS.add("OFF");
-        CHAM_SUBS.add("ADAPT");
-        for (PRESET p : PRESET.values()) {
-            CHAM_SUBS.add(p.toString());
-        }
-        for (Biome b : Biome.values()) {
-            BIOME_SUBS.add(b.toString());
-        }
-    }
+	public TARDISBindTabComplete() {
+		CHAM_SUBS.add("OFF");
+		CHAM_SUBS.add("ADAPT");
+		for (PRESET p : PRESET.values()) {
+			CHAM_SUBS.add(p.toString());
+		}
+		for (Biome b : Biome.values()) {
+			BIOME_SUBS.add(b.toString());
+		}
+	}
 
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        // Remember that we can return null to default to online player name matching
-        String lastArg = args[args.length - 1];
-        if (args.length <= 1) {
-            return partial(args[0], ROOT_SUBS);
-        } else if (args.length == 2) {
-            return partial(args[1], FIRST_SUBS);
-        } else if (args.length == 3) {
-            String sub = args[1];
-            switch (sub) {
-                case "player":
-                    return null;
-                case "chameleon":
-                    return partial(lastArg, CHAM_SUBS);
-                case "biome":
-                    return partial(lastArg, BIOME_SUBS);
-            }
-        }
-        return ImmutableList.of();
-    }
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+		// Remember that we can return null to default to online player name matching
+		String lastArg = args[args.length - 1];
+		if (args.length <= 1) {
+			return partial(args[0], ROOT_SUBS);
+		} else if (args.length == 2) {
+			return partial(args[1], FIRST_SUBS);
+		} else if (args.length == 3) {
+			String sub = args[1];
+			switch (sub) {
+				case "player":
+					return null;
+				case "chameleon":
+					return partial(lastArg, CHAM_SUBS);
+				case "biome":
+					return partial(lastArg, BIOME_SUBS);
+			}
+		}
+		return ImmutableList.of();
+	}
 }

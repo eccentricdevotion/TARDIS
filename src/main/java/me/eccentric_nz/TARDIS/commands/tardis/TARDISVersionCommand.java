@@ -31,36 +31,36 @@ import java.util.List;
  */
 class TARDISVersionCommand {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    TARDISVersionCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	TARDISVersionCommand(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    boolean displayVersion(CommandSender sender) {
-        String pluginName = plugin.getPluginName();
-        List<String> hooks = plugin.getDescription().getSoftDepend();
-        String tardisversion = plugin.getDescription().getVersion();
-        String chunkversion = plugin.getPM().getPlugin("TARDISChunkGenerator").getDescription().getVersion();
-        String cb = Bukkit.getVersion();
-        // send server and TARDIS versions
-        sender.sendMessage(pluginName + "Server version: " + ChatColor.AQUA + cb);
-        sender.sendMessage(pluginName + "TARDIS version: " + ChatColor.AQUA + tardisversion);
-        sender.sendMessage(pluginName + "TARDISChunkGenerator version: " + ChatColor.AQUA + chunkversion);
-        // send dependent plugin versions
-        for (Plugin hook : plugin.getPM().getPlugins()) {
-            PluginDescriptionFile desc = hook.getDescription();
-            String name = desc.getName();
-            String version = desc.getVersion();
-            if (hooks.contains(name)) {
-                sender.sendMessage(pluginName + name + " version: " + ChatColor.AQUA + version);
-            }
-        }
-        // check for new TARDIS build
-        if (sender.isOp()) {
-            sender.sendMessage(pluginName + "Checking for new TARDIS builds...");
-            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new TARDISUpdateChecker(plugin, sender));
-        }
-        return true;
-    }
+	boolean displayVersion(CommandSender sender) {
+		String pluginName = plugin.getPluginName();
+		List<String> hooks = plugin.getDescription().getSoftDepend();
+		String tardisversion = plugin.getDescription().getVersion();
+		String chunkversion = plugin.getPM().getPlugin("TARDISChunkGenerator").getDescription().getVersion();
+		String cb = Bukkit.getVersion();
+		// send server and TARDIS versions
+		sender.sendMessage(pluginName + "Server version: " + ChatColor.AQUA + cb);
+		sender.sendMessage(pluginName + "TARDIS version: " + ChatColor.AQUA + tardisversion);
+		sender.sendMessage(pluginName + "TARDISChunkGenerator version: " + ChatColor.AQUA + chunkversion);
+		// send dependent plugin versions
+		for (Plugin hook : plugin.getPM().getPlugins()) {
+			PluginDescriptionFile desc = hook.getDescription();
+			String name = desc.getName();
+			String version = desc.getVersion();
+			if (hooks.contains(name)) {
+				sender.sendMessage(pluginName + name + " version: " + ChatColor.AQUA + version);
+			}
+		}
+		// check for new TARDIS build
+		if (sender.isOp()) {
+			sender.sendMessage(pluginName + "Checking for new TARDIS builds...");
+			plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new TARDISUpdateChecker(plugin, sender));
+		}
+		return true;
+	}
 }

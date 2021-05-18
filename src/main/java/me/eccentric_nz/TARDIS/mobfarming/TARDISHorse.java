@@ -30,100 +30,100 @@ import org.bukkit.inventory.ItemStack;
  */
 public class TARDISHorse extends TARDISMob {
 
-    private Color horsecolor;
-    private Style horsestyle;
-    private EntityType horsevariant;
-    private ItemStack[] horseinventory;
-    private boolean haschest;
-    private boolean leashed;
-    private int domesticity;
-    private double jumpstrength;
-    private double speed;
-    private double horseHealth;
+	private Color horsecolor;
+	private Style horsestyle;
+	private EntityType horsevariant;
+	private ItemStack[] horseinventory;
+	private boolean haschest;
+	private boolean leashed;
+	private int domesticity;
+	private double jumpstrength;
+	private double speed;
+	private double horseHealth;
 
-    /**
-     * Data storage class for TARDIS mobs.
-     */
-    public TARDISHorse() {
-    }
+	/**
+	 * Data storage class for TARDIS mobs.
+	 */
+	public TARDISHorse() {
+	}
 
-    public Color getHorseColour() {
-        return horsecolor;
-    }
+	public Color getHorseColour() {
+		return horsecolor;
+	}
 
-    public void setHorseColour(Color horsecolor) {
-        this.horsecolor = horsecolor;
-    }
+	public void setHorseColour(Color horsecolor) {
+		this.horsecolor = horsecolor;
+	}
 
-    public Style getHorseStyle() {
-        return horsestyle;
-    }
+	public Style getHorseStyle() {
+		return horsestyle;
+	}
 
-    public void setHorseStyle(Style horsestyle) {
-        this.horsestyle = horsestyle;
-    }
+	public void setHorseStyle(Style horsestyle) {
+		this.horsestyle = horsestyle;
+	}
 
-    public EntityType getHorseVariant() {
-        return horsevariant;
-    }
+	public EntityType getHorseVariant() {
+		return horsevariant;
+	}
 
-    public void setHorseVariant(EntityType horsevariant) {
-        this.horsevariant = horsevariant;
-    }
+	public void setHorseVariant(EntityType horsevariant) {
+		this.horsevariant = horsevariant;
+	}
 
-    public ItemStack[] getHorseinventory() {
-        return horseinventory;
-    }
+	public ItemStack[] getHorseinventory() {
+		return horseinventory;
+	}
 
-    public void setHorseInventory(ItemStack[] horseinventory) {
-        this.horseinventory = horseinventory;
-    }
+	public void setHorseInventory(ItemStack[] horseinventory) {
+		this.horseinventory = horseinventory;
+	}
 
-    public boolean hasChest() {
-        return haschest;
-    }
+	public boolean hasChest() {
+		return haschest;
+	}
 
-    public void setHasChest(boolean haschest) {
-        this.haschest = haschest;
-    }
+	public void setHasChest(boolean haschest) {
+		this.haschest = haschest;
+	}
 
-    public boolean isLeashed() {
-        return leashed;
-    }
+	public boolean isLeashed() {
+		return leashed;
+	}
 
-    public void setLeashed(boolean leashed) {
-        this.leashed = leashed;
-    }
+	public void setLeashed(boolean leashed) {
+		this.leashed = leashed;
+	}
 
-    public int getDomesticity() {
-        return domesticity;
-    }
+	public int getDomesticity() {
+		return domesticity;
+	}
 
-    public void setDomesticity(int domesticity) {
-        this.domesticity = domesticity;
-    }
+	public void setDomesticity(int domesticity) {
+		this.domesticity = domesticity;
+	}
 
-    public double getJumpStrength() {
-        return jumpstrength;
-    }
+	public double getJumpStrength() {
+		return jumpstrength;
+	}
 
-    public void setJumpStrength(double jumpstrength) {
-        this.jumpstrength = jumpstrength;
-    }
+	public void setJumpStrength(double jumpstrength) {
+		this.jumpstrength = jumpstrength;
+	}
 
-    public double getSpeed() {
-        return speed;
-    }
+	public double getSpeed() {
+		return speed;
+	}
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
 
-    public double getHorseHealth() {
-        return horseHealth;
-    }
+	public double getHorseHealth() {
+		return horseHealth;
+	}
 
-    public void setHorseHealth(double horseHealth) {
-        this.horseHealth = horseHealth;
-    }
+	public void setHorseHealth(double horseHealth) {
+		this.horseHealth = horseHealth;
+	}
 }

@@ -29,46 +29,46 @@ import org.bukkit.event.player.PlayerJoinEvent;
  */
 public class TARDISResourcePackSwitcher implements Listener {
 
-    private final TARDIS plugin;
+	private final TARDIS plugin;
 
-    public TARDISResourcePackSwitcher(TARDIS plugin) {
-        this.plugin = plugin;
-    }
+	public TARDISResourcePackSwitcher(TARDIS plugin) {
+		this.plugin = plugin;
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onResourcePackWorldChange(PlayerChangedWorldEvent event) {
-        Player player = event.getPlayer();
-        String world = player.getWorld().getName();
-        String from = plugin.getPlanetsConfig().getString("planets." + event.getFrom().getName() + ".resource_pack");
-        if (from == null) {
-            from = "default";
-        }
-        String path = plugin.getPlanetsConfig().getString("planets." + world + ".resource_pack");
-        if (path == null) {
-            path = "default";
-        }
-        // check to see whether the resource pack URL is actually different
-        if (!from.equals(path)) {
-            setResourcePack(player, path);
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onResourcePackWorldChange(PlayerChangedWorldEvent event) {
+		Player player = event.getPlayer();
+		String world = player.getWorld().getName();
+		String from = plugin.getPlanetsConfig().getString("planets." + event.getFrom().getName() + ".resource_pack");
+		if (from == null) {
+			from = "default";
+		}
+		String path = plugin.getPlanetsConfig().getString("planets." + world + ".resource_pack");
+		if (path == null) {
+			path = "default";
+		}
+		// check to see whether the resource pack URL is actually different
+		if (!from.equals(path)) {
+			setResourcePack(player, path);
+		}
+	}
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        if (plugin.getPlanetsConfig().getBoolean("set_pack_on_join")) {
-            Player player = event.getPlayer();
-            String world = player.getWorld().getName();
-            String path = plugin.getPlanetsConfig().getString("planets." + world + ".resource_pack");
-            setResourcePack(player, path);
-        }
-    }
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onPlayerJoin(PlayerJoinEvent event) {
+		if (plugin.getPlanetsConfig().getBoolean("set_pack_on_join")) {
+			Player player = event.getPlayer();
+			String world = player.getWorld().getName();
+			String path = plugin.getPlanetsConfig().getString("planets." + world + ".resource_pack");
+			setResourcePack(player, path);
+		}
+	}
 
-    private void setResourcePack(Player player, String path) {
-        if (path == null || path.equalsIgnoreCase("default")) {
-            path = plugin.getPlanetsConfig().getString("default_resource_pack");
-        }
-        if (player.isOnline()) {
-            player.setResourcePack(path);
-        }
-    }
+	private void setResourcePack(Player player, String path) {
+		if (path == null || path.equalsIgnoreCase("default")) {
+			path = plugin.getPlanetsConfig().getString("default_resource_pack");
+		}
+		if (player.isOnline()) {
+			player.setResourcePack(path);
+		}
+	}
 }

@@ -38,52 +38,52 @@ import java.util.List;
  */
 class TARDISExcitationRunnable implements Runnable {
 
-    private final TARDIS plugin;
-    private final Location location;
-    private final Player player;
-    public int task;
-    private int i = 0;
-    private final List<Block> snow = new ArrayList<>();
+	private final TARDIS plugin;
+	private final Location location;
+	private final Player player;
+	private final List<Block> snow = new ArrayList<>();
+	public int task;
+	private int i = 0;
 
-    TARDISExcitationRunnable(TARDIS plugin, Location l, Player player) {
-        this.plugin = plugin;
-        location = l;
-        this.player = player;
-    }
+	TARDISExcitationRunnable(TARDIS plugin, Location l, Player player) {
+		this.plugin = plugin;
+		location = l;
+		this.player = player;
+	}
 
-    @Override
-    public void run() {
-        if (i < 100) {
-            TARDISParticles.sendSnowParticles(location, player);
-            player.getNearbyEntities(16.0, 16.0, 16.0).forEach((e) -> {
-                if (e instanceof Player) {
-                    Player p = (Player) e;
-                    TARDISParticles.sendSnowParticles(location, p);
-                }
-            });
-            if (i % 5 == 0) {
-                Location s = calculateLocationInCircle(location);
-                s.setY(location.getWorld().getHighestBlockYAt(s) + 1);
-                Block b = s.getBlock();
-                if (b.isEmpty() && b.getRelative(BlockFace.DOWN).getType().isOccluding()) {
-                    b.setBlockData(TARDISConstants.SNOW);
-                    snow.add(b);
-                }
-            }
-            i++;
-        } else {
-            plugin.getServer().getScheduler().cancelTask(task);
-            task = 0;
-            plugin.getTrackerKeeper().getExcitation().remove(player.getUniqueId());
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> snow.forEach((block) -> block.setBlockData(TARDISConstants.AIR)), 40L);
-        }
-    }
+	@Override
+	public void run() {
+		if (i < 100) {
+			TARDISParticles.sendSnowParticles(location, player);
+			player.getNearbyEntities(16.0, 16.0, 16.0).forEach((e) -> {
+				if (e instanceof Player) {
+					Player p = (Player) e;
+					TARDISParticles.sendSnowParticles(location, p);
+				}
+			});
+			if (i % 5 == 0) {
+				Location s = calculateLocationInCircle(location);
+				s.setY(location.getWorld().getHighestBlockYAt(s) + 1);
+				Block b = s.getBlock();
+				if (b.isEmpty() && b.getRelative(BlockFace.DOWN).getType().isOccluding()) {
+					b.setBlockData(TARDISConstants.SNOW);
+					snow.add(b);
+				}
+			}
+			i++;
+		} else {
+			plugin.getServer().getScheduler().cancelTask(task);
+			task = 0;
+			plugin.getTrackerKeeper().getExcitation().remove(player.getUniqueId());
+			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> snow.forEach((block) -> block.setBlockData(TARDISConstants.AIR)), 40L);
+		}
+	}
 
-    private Location calculateLocationInCircle(Location location) {
-        double angle = TARDISConstants.RANDOM.nextDouble() * Math.PI * 2;
-        double radius = TARDISConstants.RANDOM.nextDouble() * 6;
-        double x = radius * Math.cos(angle);
-        double z = radius * Math.sin(angle);
-        return location.clone().add(x, 0, z);
-    }
+	private Location calculateLocationInCircle(Location location) {
+		double angle = TARDISConstants.RANDOM.nextDouble() * Math.PI * 2;
+		double radius = TARDISConstants.RANDOM.nextDouble() * 6;
+		double x = radius * Math.cos(angle);
+		double z = radius * Math.sin(angle);
+		return location.clone().add(x, 0, z);
+	}
 }

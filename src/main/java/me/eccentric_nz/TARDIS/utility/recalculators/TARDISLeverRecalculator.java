@@ -26,70 +26,70 @@ import org.bukkit.block.data.Directional;
  */
 public class TARDISLeverRecalculator {
 
-    /**
-     * Recalculate the data for directional block (LEVER) when the TARDIS preset changes direction.
-     *
-     * @param b the block data stored in the preset data
-     * @param d the new direction of the TARDIS
-     * @return the recalculated block data
-     */
-    public BlockData recalculate(BlockData b, COMPASS d) {
-        Directional lever = (Directional) b;
-        switch (d) {
-            case SOUTH:
-                switch (lever.getFacing()) {
-                    case EAST:
-                        lever.setFacing(BlockFace.SOUTH); // 3
-                        break;
-                    case WEST:
-                        lever.setFacing(BlockFace.NORTH); // 4
-                        break;
-                    case SOUTH:
-                        lever.setFacing(BlockFace.WEST); // 2
-                        break;
-                    case NORTH:
-                        lever.setFacing(BlockFace.EAST); // 1
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case WEST:
-                switch (lever.getFacing()) {
-                    case EAST:
-                        lever.setFacing(BlockFace.WEST); // 2
-                        break;
-                    case WEST:
-                        lever.setFacing(BlockFace.EAST); // 1
-                        break;
-                    case SOUTH:
-                        lever.setFacing(BlockFace.NORTH); // 4
-                        break;
-                    case NORTH:
-                        lever.setFacing(BlockFace.SOUTH); // 3
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            default:
-                switch (lever.getFacing()) {
-                    case EAST:
-                        lever.setFacing(BlockFace.NORTH); // 4
-                        break;
-                    case WEST:
-                        lever.setFacing(BlockFace.SOUTH); // 3
-                        break;
-                    case SOUTH:
-                        lever.setFacing(BlockFace.EAST); // 1
-                        break;
-                    case NORTH:
-                        lever.setFacing(BlockFace.WEST); // 2
-                        break;
-                    default:
-                        break;
-                }
-        }
-        return lever;
-    }
+	/**
+	 * Recalculate the data for directional block (LEVER) when the TARDIS preset changes direction.
+	 *
+	 * @param b the block data stored in the preset data
+	 * @param d the new direction of the TARDIS
+	 * @return the recalculated block data
+	 */
+	public BlockData recalculate(BlockData b, COMPASS d) {
+		Directional lever = (Directional) b;
+		switch (d) {
+			case SOUTH:
+				switch (lever.getFacing()) {
+					case EAST:
+						lever.setFacing(BlockFace.SOUTH); // 3
+						break;
+					case WEST:
+						lever.setFacing(BlockFace.NORTH); // 4
+						break;
+					case SOUTH:
+						lever.setFacing(BlockFace.WEST); // 2
+						break;
+					case NORTH:
+						lever.setFacing(BlockFace.EAST); // 1
+						break;
+					default:
+						break;
+				}
+				break;
+			case WEST:
+				switch (lever.getFacing()) {
+					case EAST:
+						lever.setFacing(BlockFace.WEST); // 2
+						break;
+					case WEST:
+						lever.setFacing(BlockFace.EAST); // 1
+						break;
+					case SOUTH:
+						lever.setFacing(BlockFace.NORTH); // 4
+						break;
+					case NORTH:
+						lever.setFacing(BlockFace.SOUTH); // 3
+						break;
+					default:
+						break;
+				}
+				break;
+			default:
+				switch (lever.getFacing()) {
+					case EAST:
+						lever.setFacing(BlockFace.NORTH); // 4
+						break;
+					case WEST:
+						lever.setFacing(BlockFace.SOUTH); // 3
+						break;
+					case SOUTH:
+						lever.setFacing(BlockFace.EAST); // 1
+						break;
+					case NORTH:
+						lever.setFacing(BlockFace.WEST); // 2
+						break;
+					default:
+						break;
+				}
+		}
+		return lever;
+	}
 }
