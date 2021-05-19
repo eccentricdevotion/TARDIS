@@ -48,5 +48,6 @@
     <orderEntry type="library" name="perworldinventory-kt-2.3.2" level="project" />
     <orderEntry type="library" name="RedProtect-7.7.2-b357-Universal" level="project" />
     <orderEntry type="library" name="ProtocolLib-4.6.0" level="project" />
+    <orderEntry type="library" name="massivecore-3.3.2" level="project" />
   </component>
 </module>

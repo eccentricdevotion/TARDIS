@@ -1,13 +1,17 @@
 ---
-name: Bug report about: Report a TARDIS error title: ''
-labels: bug assignees: ''
-
+name: 'Bug report'
+about: 'Report a TARDIS error'
+title: ''
+labels: 'bug'
+assignees: ''
 ---
 
 **Describe the bug**
+
 A clear and concise description of what the bug is.
 
 **To Reproduce**
+
 Steps to reproduce the behaviour:
 
 1. Install '...'
@@ -16,11 +20,14 @@ Steps to reproduce the behaviour:
 4. See error
 
 **Screenshots**
+
 If applicable, add screenshots to help explain your problem.
 
 **Log files**
+
 Paste your server log (_showing the whole server startup to when the error occurs_) on a website like pastebin.com, and
 post a link here. Even if there are no errors in the log, it still contains useful information for troubleshooting.
 
 **`/tardis version` output**
+
 Please include an output of your `/tardis version`.

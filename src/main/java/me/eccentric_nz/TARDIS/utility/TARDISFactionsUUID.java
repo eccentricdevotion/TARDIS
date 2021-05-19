@@ -16,7 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import com.massivecraft.factions.*;
+import com.massivecraft.factions.entity.BoardColl;
+import com.massivecraft.factions.entity.Faction;
+import com.massivecraft.factions.entity.MPlayer;
+import com.massivecraft.massivecore.ps.PS;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -39,11 +42,11 @@ public class TARDISFactionsUUID {
 	 */
 	public boolean isInFaction(Player p, Location l) {
 		boolean bool = true;
-		FPlayer uplayer = FPlayers.getInstance().getByPlayer(p);
-		Faction ufac = uplayer.getFaction();
-		FLocation flocation = new FLocation(l);
-		Faction lfac = Board.getInstance().getFactionAt(flocation);
-		if (!ufac.equals(lfac) && !lfac.isWilderness()) {
+		MPlayer mPlayer = MPlayer.get(p);
+		Faction mPlayerFaction = mPlayer.getFaction();
+		Location factionLocation = l.clone();
+		Faction locationFaction = BoardColl.get().getFactionAt(PS.valueOf(factionLocation));
+		if (!mPlayerFaction.equals(locationFaction) && !locationFaction.isNone()) {
 			bool = false;
 		}
 		return bool;
