@@ -26,5 +26,27 @@
     <orderEntry type="library" name="Maven: org.swinglabs:swing-layout:1.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.27" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson.gson-2.8.0" level="project" />
+    <orderEntry type="library" name="TARDISWeepingAngels-3.3.3" level="project" />
+    <orderEntry type="library" name="LockettePro-2.10.10" level="project" />
+    <orderEntry type="library" name="worldedit-bukkit-7.2.5-dist" level="project" />
+    <orderEntry type="library" name="worldguard-bukkit-7.0.4" level="project" />
+    <orderEntry type="library" name="Multiverse-Core-4.2.2" level="project" />
+    <orderEntry type="library" name="CoreProtect-19.5" level="project" />
+    <orderEntry type="library" name="Towny-0.97.0.0" level="project" />
+    <orderEntry type="library" name="MultiWorld-5.2.8" level="project" />
+    <orderEntry type="library" name="WorldBorder-2.1.2" level="project" />
+    <orderEntry type="library" name="GriefPrevention-16.17.1" level="project" />
+    <orderEntry type="library" name="LibsDisguises-10.0.24" level="project" />
+    <orderEntry type="library" name="EssentialsX-2.18.2.0" level="project" />
+    <orderEntry type="library" name="LWCX-2.2.7" level="project" />
+    <orderEntry type="library" name="BlockLocker-1.9.3" level="project" />
+    <orderEntry type="library" name="Lockette-1.8.33" level="project" />
+    <orderEntry type="library" name="Multiverse-Adventure-2.5.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Multiverse-Inventories-4.2.3-SNAPSHOT-javadoc" level="project" />
+    <orderEntry type="library" name="factions-3.3.0" level="project" />
+    <orderEntry type="library" name="MultiInv-3.3.10" level="project" />
+    <orderEntry type="library" name="perworldinventory-kt-2.3.2" level="project" />
+    <orderEntry type="library" name="RedProtect-7.7.2-b357-Universal" level="project" />
+    <orderEntry type="library" name="ProtocolLib-4.6.0" level="project" />
   </component>
 </module>

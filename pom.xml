@@ -38,12 +38,12 @@
 			<id>local</id>
 			<activation>
 				<property>
-					<name>!env.BUILD_NUMBER</name>
+					<name>env.BUILD_NUMBER</name>
 				</property>
 			</activation>
 			<properties>
 				<!-- Set the build number to the date and time of the build -->
-				<project.build.number>${myBuildNumber}</project.build.number>
+				<project.build.number>${env.BUILD_NUMBER}</project.build.number>
 			</properties>
 			<build>
 				<plugins>
@@ -124,8 +124,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>16</source>
+					<target>16</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
@@ -283,7 +283,7 @@
 		<dependency>
 			<groupId>com.onarandombox.multiversecore</groupId>
 			<artifactId>Multiverse-Core</artifactId>
-			<version>4.2.3-SNAPSHOT</version>
+			<version>4.2.4</version>
 			<type>jar</type>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/Multiverse-Core.jar</systemPath>
@@ -299,7 +299,7 @@
 		<dependency>
 			<groupId>com.onarandombox.multiverseadventure</groupId>
 			<artifactId>Multiverse-Adventure</artifactId>
-			<version>2.5</version>
+			<version>2.5.0-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/Multiverse-Adventure.jar</systemPath>
@@ -331,15 +331,15 @@
 		<dependency>
 			<groupId>com.massivecraft</groupId>
 			<artifactId>factions</artifactId>
-			<version>1.6.9.5</version>
+			<version>3.3.0</version>
 			<type>jar</type>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/Factions.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>org.yi.acru.bukkit</groupId>
-			<artifactId>lockette</artifactId>
-			<version>1.8.36</version>
+			<groupId>org.yi.acru.bukkit.lockette</groupId>
+			<artifactId>Lockette</artifactId>
+			<version>1.8.33</version>
 			<type>jar</type>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/Lockette.jar</systemPath>
@@ -347,7 +347,7 @@
 		<dependency>
 			<groupId>me.crafter.mc</groupId>
 			<artifactId>lockettepro</artifactId>
-			<version>2.9.5</version>
+			<version>2.10.10</version>
 			<type>jar</type>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/LockettePro.jar</systemPath>
@@ -361,8 +361,8 @@
 			<systemPath>${project.basedir}/lib/GriefPrevention.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>nl.rutgerkok</groupId>
-			<artifactId>blocklocker</artifactId>
+			<groupId>nl.rutgerkok.blocklocker</groupId>
+			<artifactId>BlockLocker</artifactId>
 			<version>1.9.3</version>
 			<type>jar</type>
 			<scope>system</scope>
@@ -371,7 +371,7 @@
 		<dependency>
 			<groupId>com.griefcraft.lwc</groupId>
 			<artifactId>LWCX</artifactId>
-			<version>2.2.6</version>
+			<version>2.2.7</version>
 			<type>jar</type>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/LWCX.jar</systemPath>
@@ -380,13 +380,13 @@
 		<dependency>
 			<groupId>com.comphenix.protocol</groupId>
 			<artifactId>ProtocolLib</artifactId>
-			<version>4.6.1</version>
+			<version>4.6.0</version>
 			<type>jar</type>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/ProtocolLib.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>LibsDisguises</groupId>
+			<groupId>me.libraryaddict.disguise</groupId>
 			<artifactId>LibsDisguises</artifactId>
 			<version>10.0.24</version>
 			<type>jar</type>
@@ -394,9 +394,9 @@
 			<systemPath>${project.basedir}/lib/LibsDisguises.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>net.ess3</groupId>
+			<groupId>com.earth2me.essentials</groupId>
 			<artifactId>EssentialsX</artifactId>
-			<version>2.18.1.32</version>
+			<version>2.18.2.0</version>
 			<type>jar</type>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/EssentialsX.jar</systemPath>
@@ -410,7 +410,7 @@
 		<dependency>
 			<groupId>br.net.fabiozumbi12.RedProtect</groupId>
 			<artifactId>RedProtect</artifactId>
-			<version>7.7.2</version>
+			<version>7.7.2-b357-Universal</version>
 			<type>jar</type>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/RedProtect.jar</systemPath>
