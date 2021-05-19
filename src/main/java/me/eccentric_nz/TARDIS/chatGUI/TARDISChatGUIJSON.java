@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.chatGUI;
 
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.update.TARDISUpdatableCategory;
+import me.eccentric_nz.TARDIS.update.TARDISUpdateableCategory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,19 +53,19 @@ public class TARDISChatGUIJSON {
 		int l = 1;
 		int o = 1;
 		for (Updateable updateable : Updateable.values()) {
-			if (updateable.getCategory() == TARDISUpdatableCategory.CONTROLS) {
+			if (updateable.getCategory() == TARDISUpdateableCategory.CONTROLS) {
 				controls.add(String.format(REPLACEMENT_STRING, c, updateable.getDescription(), updateable.getName()));
 				c++;
 			}
-			if (updateable.getCategory() == TARDISUpdatableCategory.INTERFACES) {
+			if (updateable.getCategory() == TARDISUpdateableCategory.INTERFACES) {
 				interfaces.add(String.format(REPLACEMENT_STRING, i, updateable.getDescription(), updateable.getName()));
 				i++;
 			}
-			if (updateable.getCategory() == TARDISUpdatableCategory.LOCATIONS) {
+			if (updateable.getCategory() == TARDISUpdateableCategory.LOCATIONS) {
 				locations.add(String.format(REPLACEMENT_STRING, l, updateable.getDescription(), updateable.getName()));
 				l++;
 			}
-			if (updateable.getCategory() == TARDISUpdatableCategory.OTHERS) {
+			if (updateable.getCategory() == TARDISUpdateableCategory.OTHERS) {
 				others.add(String.format(REPLACEMENT_STRING, o, updateable.getDescription(), updateable.getName()));
 				o++;
 			}

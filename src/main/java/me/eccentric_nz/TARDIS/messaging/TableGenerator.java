@@ -44,7 +44,7 @@ public class TableGenerator {
 		this.alignments = alignments;
 	}
 
-	protected static int getCustomLength(String text, Receiver receiver) {
+	private static int getCustomLength(String text, Receiver receiver) {
 		if (text == null) {
 			throw new IllegalArgumentException("Text must not be null.");
 		}
@@ -61,7 +61,7 @@ public class TableGenerator {
 		return length;
 	}
 
-	protected static int getCustomCharLength(char c) {
+	private static int getCustomCharLength(char c) {
 		if (char1 == c) {
 			return 1;
 		}
@@ -99,7 +99,7 @@ public class TableGenerator {
 		if (receiver == null) {
 			throw new IllegalArgumentException("Receiver must not be null.");
 		}
-		Integer[] columWidths = new Integer[columns];
+		Integer[] columnWidths = new Integer[columns];
 		for (Row r : table) {
 			for (int i = 0; i < columns; i++) {
 				String text = r.texts.get(i);
@@ -111,10 +111,10 @@ public class TableGenerator {
 					length = getCustomLength(text, receiver);
 				}
 
-				if (columWidths[i] == null) {
-					columWidths[i] = length;
-				} else if (length > columWidths[i]) {
-					columWidths[i] = length;
+				if (columnWidths[i] == null) {
+					columnWidths[i] = length;
+				} else if (length > columnWidths[i]) {
+					columnWidths[i] = length;
 				}
 			}
 		}
@@ -134,7 +134,7 @@ public class TableGenerator {
 				} else {
 					length = getCustomLength(text, receiver);
 				}
-				int empty = columWidths[i] - length;
+				int empty = columnWidths[i] - length;
 				int spacesAmount = empty;
 				if (receiver == Receiver.CLIENT) {
 					spacesAmount = (int) Math.floor(empty / 4d);
@@ -201,7 +201,7 @@ public class TableGenerator {
 		return lines;
 	}
 
-	protected String concatChars(char c, int length) {
+	private String concatChars(char c, int length) {
 		if (length < 1) {
 			return "";
 		}
@@ -238,10 +238,10 @@ public class TableGenerator {
 
 	public class Row {
 
-		public final List<String> texts = new ArrayList<>();
+		final List<String> texts = new ArrayList<>();
 		public boolean empty = true;
 
-		public Row(String... texts) {
+		Row(String... texts) {
 			if (texts == null) {
 				for (int i = 0; i < columns; i++) {
 					this.texts.add("");
