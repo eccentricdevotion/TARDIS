@@ -514,10 +514,10 @@ public class TARDIS extends JavaPlugin {
                 debug("Registering expansion with PlaceholderAPI.");
                 new TARDISPlaceholderExpansion(this).register();
             }
+            blockLogger = new TARDISBlockLogger(this);
             // hook CoreProtectAPI
             if (pm.getPlugin("CoreProtect") != null) {
                 debug("Logging block changes with CoreProtect.");
-                blockLogger = new TARDISBlockLogger(this);
                 blockLogger.enableLogger();
             }
         } else {
