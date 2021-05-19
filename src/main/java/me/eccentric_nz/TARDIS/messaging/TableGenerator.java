@@ -27,9 +27,9 @@ public class TableGenerator {
     private static final List<Character> char4 = Arrays.asList('I', 't', ' ', '[', ']', '€');
     private static final List<Character> char3 = Arrays.asList('l', '`', '³', '\'');
     private static final List<Character> char2 = Arrays.asList(',', '.', '!', 'i', '´', ':', ';', '|');
+    private static final String colors = "[&§][0-9a-fA-Fk-oK-OrR]";
     private static char char1;
     private static Pattern regex;
-    private static final String colors = "[&§][0-9a-fA-Fk-oK-OrR]";
     private final Alignment[] alignments;
     private final List<Row> table = new ArrayList<>();
     private final int columns;
@@ -44,11 +44,62 @@ public class TableGenerator {
         this.alignments = alignments;
     }
 
+    private static int getCustomLength(String text, Receiver receiver) {
+        if (text == null) {
+            throw new IllegalArgumentException("Text must not be null.");
+        }
+        if (receiver == null) {
+            throw new IllegalArgumentException("Receiver must not be null.");
+        }
+        if (receiver == Receiver.CONSOLE) {
+            return text.length();
+        }
+        int length = 0;
+        for (char c : text.toCharArray()) {
+            length += getCustomCharLength(c);
+        }
+        return length;
+    }
+
+    private static int getCustomCharLength(char c) {
+        if (char1 == c) {
+            return 1;
+        }
+        if (char2.contains(c)) {
+            return 2;
+        }
+        if (char3.contains(c)) {
+            return 3;
+        }
+        if (char4.contains(c)) {
+            return 4;
+        }
+        if (char5.contains(c)) {
+            return 5;
+        }
+        if (char7.contains(c)) {
+            return 7;
+        }
+        return 6;
+    }
+
+    public static boolean getSenderPrefs(CommandSender sender) {
+        if (sender instanceof ConsoleCommandSender) {
+            return true;
+        } else if (sender instanceof Player) {
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, ((Player) sender).getUniqueId().toString());
+            if (rsp.resultSet()) {
+                return rsp.useCustomFont();
+            }
+        }
+        return false;
+    }
+
     public List<String> generate(Receiver receiver, boolean ignoreColors, boolean coloredDistances) {
         if (receiver == null) {
             throw new IllegalArgumentException("Receiver must not be null.");
         }
-        Integer[] columWidths = new Integer[columns];
+        Integer[] columnWidths = new Integer[columns];
         for (Row r : table) {
             for (int i = 0; i < columns; i++) {
                 String text = r.texts.get(i);
@@ -60,10 +111,10 @@ public class TableGenerator {
                     length = getCustomLength(text, receiver);
                 }
 
-                if (columWidths[i] == null) {
-                    columWidths[i] = length;
-                } else if (length > columWidths[i]) {
-                    columWidths[i] = length;
+                if (columnWidths[i] == null) {
+                    columnWidths[i] = length;
+                } else if (length > columnWidths[i]) {
+                    columnWidths[i] = length;
                 }
             }
         }
@@ -83,7 +134,7 @@ public class TableGenerator {
                 } else {
                     length = getCustomLength(text, receiver);
                 }
-                int empty = columWidths[i] - length;
+                int empty = columnWidths[i] - length;
                 int spacesAmount = empty;
                 if (receiver == Receiver.CLIENT) {
                     spacesAmount = (int) Math.floor(empty / 4d);
@@ -150,46 +201,7 @@ public class TableGenerator {
         return lines;
     }
 
-    protected static int getCustomLength(String text, Receiver receiver) {
-        if (text == null) {
-            throw new IllegalArgumentException("Text must not be null.");
-        }
-        if (receiver == null) {
-            throw new IllegalArgumentException("Receiver must not be null.");
-        }
-        if (receiver == Receiver.CONSOLE) {
-            return text.length();
-        }
-        int length = 0;
-        for (char c : text.toCharArray()) {
-            length += getCustomCharLength(c);
-        }
-        return length;
-    }
-
-    protected static int getCustomCharLength(char c) {
-        if (char1 == c) {
-            return 1;
-        }
-        if (char2.contains(c)) {
-            return 2;
-        }
-        if (char3.contains(c)) {
-            return 3;
-        }
-        if (char4.contains(c)) {
-            return 4;
-        }
-        if (char5.contains(c)) {
-            return 5;
-        }
-        if (char7.contains(c)) {
-            return 7;
-        }
-        return 6;
-    }
-
-    protected String concatChars(char c, int length) {
+    private String concatChars(char c, int length) {
         if (length < 1) {
             return "";
         }
@@ -211,24 +223,25 @@ public class TableGenerator {
         table.add(r);
     }
 
-    public static boolean getSenderPrefs(CommandSender sender) {
-        if (sender instanceof ConsoleCommandSender) {
-            return true;
-        } else if (sender instanceof Player) {
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, ((Player) sender).getUniqueId().toString());
-            if (rsp.resultSet()) {
-                return rsp.useCustomFont();
-            }
-        }
-        return false;
+    public enum Receiver {
+
+        CONSOLE,
+        CLIENT
+    }
+
+    public enum Alignment {
+
+        CENTER,
+        LEFT,
+        RIGHT
     }
 
     public class Row {
 
-        public final List<String> texts = new ArrayList<>();
+        final List<String> texts = new ArrayList<>();
         public boolean empty = true;
 
-        public Row(String... texts) {
+        Row(String... texts) {
             if (texts == null) {
                 for (int i = 0; i < columns; i++) {
                     this.texts.add("");
@@ -248,18 +261,5 @@ public class TableGenerator {
                 }
             }
         }
-    }
-
-    public enum Receiver {
-
-        CONSOLE,
-        CLIENT
-    }
-
-    public enum Alignment {
-
-        CENTER,
-        LEFT,
-        RIGHT
     }
 }
