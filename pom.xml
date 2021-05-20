@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -7,21 +8,38 @@
 	<name>TARDIS</name>
 	<description>A Doctor Who plugin</description>
 	<url>https://github.com/eccentricdevotion/TARDIS</url>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 	<repositories>
 		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
 		</repository>
 		<repository>
-			<id>papermc</id>
+			<id>paper-repo</id>
 			<url>https://papermc.io/repo/repository/maven-public/</url>
 		</repository>
 		<repository>
-			<id>placeholderapi</id>
+			<id>placeholderapi-repo</id>
 			<url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+		</repository>
+		<repository>
+			<id>tardis-repo</id>
+			<url>http://tardisjenkins.duckdns.org:8080/plugin/repository/everything/</url>
+		</repository>
+		<repository>
+			<id>worldedit-repo</id>
+			<url>https://maven.sk89q.com/repo</url>
+		</repository>
+		<repository>
+			<id>townyadvanced-repo</id>
+			<url>https://jitpack.io</url>
+		</repository>
+		<repository>
+			<id>multiverse-repo</id>
+			<url>http://repo.onarandombox.com/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>dynmap-repo</id>
+			<url>https://repo.mikeprimm.com/</url>
 		</repository>
 	</repositories>
 	<scm>
@@ -38,12 +56,12 @@
 			<id>local</id>
 			<activation>
 				<property>
-					<name>env.BUILD_NUMBER</name>
+					<name>!env.BUILD_NUMBER</name>
 				</property>
 			</activation>
 			<properties>
 				<!-- Set the build number to the date and time of the build -->
-				<project.build.number>${env.BUILD_NUMBER}</project.build.number>
+				<project.build.number>${myBuildNumber}</project.build.number>
 			</properties>
 			<build>
 				<plugins>
@@ -84,12 +102,6 @@
 				<project.build.number>${env.BUILD_NUMBER}</project.build.number>
 				<javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
 			</properties>
-			<repositories>
-				<repository>
-					<id>Bromley Massive</id>
-					<url>http://tardisjenkins.duckdns.org:8080/plugin/repository/everything/</url>
-				</repository>
-			</repositories>
 			<build>
 				<plugins>
 					<plugin>
@@ -117,7 +129,6 @@
 	</profiles>
 	<build>
 		<defaultGoal>clean package</defaultGoal>
-		<finalName>${project.name}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -126,7 +137,6 @@
 				<configuration>
 					<source>16</source>
 					<target>16</target>
-					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
 			<!-- Insert the build number into plugin.yml -->
@@ -226,20 +236,21 @@
 			<artifactId>spigot-api</artifactId>
 			<version>1.16.5-R0.1-SNAPSHOT</version>
 			<type>jar</type>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.papermc</groupId>
 			<artifactId>paperlib</artifactId>
 			<version>1.0.6</version>
+			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>me.eccentric_nz.tardischunkgenerator</groupId>
 			<artifactId>TARDISChunkGenerator</artifactId>
-			<version>4.6.1</version>
+			<version>${project.version}</version>
 			<type>jar</type>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>me.eccentric_nz.tardisweepingangels</groupId>
@@ -249,132 +260,123 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.sk89q</groupId>
-			<artifactId>worldguard</artifactId>
-			<version>7.0.5</version>
+			<groupId>com.sk89q.worldedit</groupId>
+			<artifactId>worldedit-bukkit</artifactId>
+			<version>7.2.5</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/WorldGuard.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.sk89q</groupId>
-			<artifactId>worldedit</artifactId>
-			<version>7.3.0</version>
+			<groupId>com.sk89q.worldguard</groupId>
+			<artifactId>worldguard-bukkit</artifactId>
+			<version>7.0.5-SNAPSHOT</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/WorldEdit.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.palmergames.bukkit</groupId>
+			<groupId>com.github.TownyAdvanced</groupId>
 			<artifactId>Towny</artifactId>
-			<version>0.96.6.0</version>
+			<version>0.97.0.0</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/Towny.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.wimbli.WorldBorder</groupId>
 			<artifactId>WorldBorder</artifactId>
-			<version>2.1.0</version>
+			<version>2.1.2</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/WorldBorder.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.onarandombox.multiversecore</groupId>
 			<artifactId>Multiverse-Core</artifactId>
-			<version>4.2.4</version>
+			<version>4.2.3-SNAPSHOT</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/Multiverse-Core.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.onarandombox.multiverseinventories</groupId>
 			<artifactId>Multiverse-Inventories</artifactId>
 			<version>4.2.3-SNAPSHOT</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/Multiverse-Inventories.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.onarandombox.multiverseadventure</groupId>
 			<artifactId>Multiverse-Adventure</artifactId>
 			<version>2.5.0-SNAPSHOT</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/Multiverse-Adventure.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>uk.co.tggl.pluckerpluck</groupId>
 			<artifactId>MultiInv</artifactId>
 			<version>3.3.10</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/MultiInv.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>me.ebonjaeger</groupId>
 			<artifactId>perworldinventory-kt</artifactId>
 			<version>2.3.2</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/PerWorldInventory.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>multiworld</groupId>
 			<artifactId>MultiWorld</artifactId>
 			<version>5.2.8</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/MultiWorld.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.massivecraft</groupId>
-			<artifactId>factions</artifactId>
+			<groupId>com.massivecraft.factions</groupId>
+			<artifactId>Factions</artifactId>
 			<version>3.3.0</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/Factions.jar</systemPath>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.massivecraft.massivecore</groupId>
+			<artifactId>MassiveCore</artifactId>
+			<version>3.3.2</version>
+			<type>jar</type>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.yi.acru.bukkit.lockette</groupId>
 			<artifactId>Lockette</artifactId>
 			<version>1.8.33</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/Lockette.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>me.crafter.mc</groupId>
 			<artifactId>lockettepro</artifactId>
 			<version>2.10.10</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/LockettePro.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>me.ryanhamshire</groupId>
 			<artifactId>GriefPrevention</artifactId>
 			<version>16.17.1</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/GriefPrevention.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>nl.rutgerkok.blocklocker</groupId>
 			<artifactId>BlockLocker</artifactId>
 			<version>1.9.3</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/BlockLocker.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.griefcraft.lwc</groupId>
 			<artifactId>LWCX</artifactId>
 			<version>2.2.7</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/LWCX.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<!-- only need ProtocolLib to support LibsDisguises -->
 		<dependency>
@@ -382,24 +384,21 @@
 			<artifactId>ProtocolLib</artifactId>
 			<version>4.6.0</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/ProtocolLib.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>me.libraryaddict.disguise</groupId>
 			<artifactId>LibsDisguises</artifactId>
 			<version>10.0.24</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/LibsDisguises.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.earth2me.essentials</groupId>
+			<groupId>net.ess3.essentials</groupId>
 			<artifactId>EssentialsX</artifactId>
 			<version>2.18.2.0</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/EssentialsX.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>me.clip</groupId>
@@ -412,31 +411,35 @@
 			<artifactId>RedProtect</artifactId>
 			<version>7.7.2-b357-Universal</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/RedProtect.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.coreprotect</groupId>
 			<artifactId>CoreProtect</artifactId>
 			<version>19.5</version>
 			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/CoreProtect.jar</systemPath>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.rauschig</groupId>
 			<artifactId>jarchivelib</artifactId>
-			<version>0.7.1</version>
+			<version>1.2.0-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-compress</artifactId>
 			<version>1.20</version>
+			<type>jar</type>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.swinglabs</groupId>
 			<artifactId>swing-layout</artifactId>
 			<version>1.0.3</version>
+			<type>jar</type>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>
