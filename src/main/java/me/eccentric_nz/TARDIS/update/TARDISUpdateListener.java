@@ -311,11 +311,20 @@ public class TARDISUpdateListener implements Listener {
                         rblock.setBlockData(repeater);
                     }, 2L);
                     break;
+                case SMELT:
+                case FUEL:
+                    new TARDISSmelterCommand(plugin).addDropChest(player, updateable, id, block);
+                    break;
+                case VAULT:
+                    new TARDISVaultCommand(plugin).addDropChest(player, id, block);
+                    break;
                 default:
                     plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
                     break;
             }
-            TARDISMessage.send(player, "UPDATE_SET", updateable.getName());
+            if (!updateable.equals(Updateable.FUEL) && !updateable.equals(Updateable.SMELT)) {
+                TARDISMessage.send(player, "UPDATE_SET", updateable.getName());
+            }
         }
     }
 }

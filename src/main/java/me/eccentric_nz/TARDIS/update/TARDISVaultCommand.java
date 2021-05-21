@@ -14,16 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.TARDIS.update;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetVault;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -40,40 +37,13 @@ class TARDISVaultCommand {
         this.plugin = plugin;
     }
 
-    boolean addDropChest(Player player) {
-        // check permission
-        if (!TARDISPermission.hasPermission(player, "tardis.vault")) {
-            TARDISMessage.send(player, "UPDATE_NO_PERM", "Vault room drop chest");
-            return true;
-        }
-        // player is a Time Lord
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (!rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "NOT_A_TIMELORD");
-            return false;
-        }
-        int id = rs.getTardis_id();
-        // get chest location
-        Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
-        if (!b.getType().equals(Material.CHEST) && !b.getType().equals(Material.TRAPPED_CHEST)) {
-            TARDISMessage.send(player, "UPDATE_CONDENSER");
-            return true;
-        }
-        // player is in TARDIS
-        HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("uuid", player.getUniqueId().toString());
-        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-        if (!rst.resultSet()) {
-            TARDISMessage.send(player, "NOT_IN_TARDIS");
-            return false;
-        }
-        int thisid = rst.getTardis_id();
-        if (thisid != id) {
+    boolean addDropChest(Player player, int id, Block b) {
+        // player is in their own TARDIS
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", player.getUniqueId().toString());
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+        if (rst.resultSet() && rst.getTardis_id() != id) {
             TARDISMessage.send(player, "CMD_ONLY_TL");
-            return false;
-        }
-        if (!plugin.getUtils().inTARDISWorld(player)) {
-            TARDISMessage.send(player, "UPDATE_IN_WORLD");
             return true;
         }
         Location l = b.getLocation();
@@ -99,13 +69,12 @@ class TARDISVaultCommand {
         // is there an existing drop chest record?
         ResultSetVault rsv = new ResultSetVault(plugin, id);
         if (rsv.resultSet()) {
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("v_id", rsv.getVault_id());
-            plugin.getQueryFactory().doUpdate("vaults", set, where);
+            HashMap<String, Object> whereVault = new HashMap<>();
+            whereVault.put("v_id", rsv.getVault_id());
+            plugin.getQueryFactory().doUpdate("vaults", set, whereVault);
         } else {
             plugin.getQueryFactory().doInsert("vaults", set);
         }
-        TARDISMessage.send(player, "VAULT_SORTER_SET");
         return true;
     }
 }
