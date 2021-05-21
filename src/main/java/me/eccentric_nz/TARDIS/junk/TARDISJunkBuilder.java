@@ -47,13 +47,13 @@ public class TARDISJunkBuilder implements Runnable {
 
     private final TARDIS plugin;
     private final BuildData bd;
-    private int task;
-    private int fryTask;
-    private int i = 0;
     private final int sx, sy, sz;
     private final Location loc;
     private final Location effectsLoc;
     private final World world;
+    private int task;
+    private int fryTask;
+    private int i = 0;
 
     public TARDISJunkBuilder(TARDIS plugin, BuildData bd) {
         this.plugin = plugin;

@@ -39,12 +39,12 @@ public class TARDISMoveSession {
         setLocation(p.getLocation());
     }
 
-    private void setStaleLocation(boolean active) {
-        staleLocation = active;
-    }
-
     public boolean isStaleLocation() {
         return staleLocation;
+    }
+
+    private void setStaleLocation(boolean active) {
+        staleLocation = active;
     }
 
     void setStaleLocation(Location loc) {
@@ -60,11 +60,11 @@ public class TARDISMoveSession {
         }
     }
 
-    private void setLocation(Location loc) {
-        this.loc = loc;
-    }
-
     private Location getLocation() {
         return loc;
+    }
+
+    private void setLocation(Location loc) {
+        this.loc = loc;
     }
 }

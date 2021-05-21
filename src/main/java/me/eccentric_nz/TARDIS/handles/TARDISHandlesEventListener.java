@@ -32,6 +32,33 @@ import java.util.UUID;
 
 public class TARDISHandlesEventListener implements Listener {
 
+    /**
+     * Process the program
+     */
+    private final Callback<Program> programCallback = (Program program) -> {
+        Player player = Bukkit.getPlayer(UUID.fromString(program.getUuid()));
+        if (player != null && player.isOnline()) {
+            ItemStack[] stack = program.getInventory();
+            int i = 0;
+            for (ItemStack is : stack) {
+                // find the ARTRON / DO
+                if (is != null) {
+                    TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
+                    TARDISHandlesProcessor processor = new TARDISHandlesProcessor(TARDIS.plugin, program, player, program.getProgram_id());
+                    switch (thb) {
+                        case ARTRON:
+                            processor.processArtronCommand(i + 1);
+                            return;
+                        case DO:
+                            processor.processCommand(i + 1);
+                            return;
+                    }
+                }
+                i++;
+            }
+        }
+    };
+
     public void onHandlesArtron(TARDISArtronEvent event) {
         getProgram(event.getPlayer().getUniqueId().toString(), "ARTRON");
     }
@@ -73,43 +100,6 @@ public class TARDISHandlesEventListener implements Listener {
     }
 
     /**
-     * Callback to get data asynchronously from the database.
-     *
-     * @param <T> The Object type we want to return
-     */
-    interface Callback<T> {
-
-        void execute(T response);
-    }
-
-    /**
-     * Process the program
-     */
-    private final Callback<Program> programCallback = (Program program) -> {
-        Player player = Bukkit.getPlayer(UUID.fromString(program.getUuid()));
-        if (player != null && player.isOnline()) {
-            ItemStack[] stack = program.getInventory();
-            int i = 0;
-            for (ItemStack is : stack) {
-                // find the ARTRON / DO
-                if (is != null) {
-                    TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
-                    TARDISHandlesProcessor processor = new TARDISHandlesProcessor(TARDIS.plugin, program, player, program.getProgram_id());
-                    switch (thb) {
-                        case ARTRON:
-                            processor.processArtronCommand(i + 1);
-                            return;
-                        case DO:
-                            processor.processCommand(i + 1);
-                            return;
-                    }
-                }
-                i++;
-            }
-        }
-    };
-
-    /**
      * Retrieve a Program asynchronously from the database
      */
     private void getProgram(String uuid, String event) {
@@ -124,5 +114,15 @@ public class TARDISHandlesEventListener implements Listener {
                 }
             }.runTaskAsynchronously(TARDIS.plugin);
         }
+    }
+
+    /**
+     * Callback to get data asynchronously from the database.
+     *
+     * @param <T> The Object type we want to return
+     */
+    interface Callback<T> {
+
+        void execute(T response);
     }
 }

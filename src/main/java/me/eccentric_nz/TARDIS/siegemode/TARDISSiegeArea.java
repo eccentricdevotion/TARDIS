@@ -24,9 +24,9 @@ import org.bukkit.Location;
  */
 public class TARDISSiegeArea {
 
-    private final int id;
     private static final int MIN_Y = 48;
     private static final int MAX_Y = 80;
+    private final int id;
     private int minX;
     private int maxX;
     private int minZ;

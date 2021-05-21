@@ -50,7 +50,7 @@ class TARDISReloadCommand {
     boolean reloadOtherConfig(CommandSender sender, String[] args) {
         try {
             Config config = Config.valueOf(args[1].toLowerCase());
-            File file = new File(plugin.getDataFolder(), config.toString() + ".yml");
+            File file = new File(plugin.getDataFolder(), config + ".yml");
             switch (config) {
                 case achievements:
                     plugin.getAchievementConfig().load(file);

@@ -43,13 +43,13 @@ public class TARDISCloisterBell implements Runnable {
     private final TARDIS plugin;
     private final int loops;
     private final int id;
-    private int i = 0;
     private final Location centre;
     private final Location current;
     private final Player player;
     private final boolean messageOn;
     private final String reason;
     private final boolean messageOff;
+    private int i = 0;
     private int task;
 
     /**
@@ -83,7 +83,7 @@ public class TARDISCloisterBell implements Runnable {
         messageOff = false;
     }
 
-    public TARDISCloisterBell(TARDIS plugin, int loops, int id, Location current, Player player, String reason) {
+    TARDISCloisterBell(TARDIS plugin, int loops, int id, Location current, Player player, String reason) {
         this.plugin = plugin;
         this.loops = loops;
         this.id = id;

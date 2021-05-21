@@ -34,6 +34,38 @@ import java.util.List;
 
 public class HeatBlockRunnable implements Runnable {
 
+    private static final List<Vector> INNER_VECTORS = new ArrayList<>(
+            Arrays.asList(
+                    new Vector(-1.0, 0.0, 1.0),
+                    new Vector(0.0, 0.0, 1.0),
+                    new Vector(1.0, 0.0, 1.0),
+                    new Vector(-1.0, 0.0, 0.0),
+                    new Vector(1.0, 0.0, 0.0),
+                    new Vector(-1.0, 0.0, -1.0),
+                    new Vector(0.0, 0.0, -1.0),
+                    new Vector(1.0, 0.0, -1.0)
+            )
+    );
+    private static final List<Vector> OUTER_VECTORS = new ArrayList<>(
+            Arrays.asList(
+                    new Vector(-2.0, 0.0, 2.0),
+                    new Vector(-1.0, 0.0, 2.0),
+                    new Vector(0.0, 0.0, 2.0),
+                    new Vector(1.0, 0.0, 2.0),
+                    new Vector(2.0, 0.0, 2.0),
+                    new Vector(-2.0, 0.0, 1.0),
+                    new Vector(2.0, 0.0, 1.0),
+                    new Vector(-2.0, 0.0, 0.0),
+                    new Vector(2.0, 0.0, 0.0),
+                    new Vector(-2.0, 0.0, -1.0),
+                    new Vector(2.0, 0.0, -1.0),
+                    new Vector(-2.0, 0.0, -2.0),
+                    new Vector(-1.0, 0.0, -2.0),
+                    new Vector(0.0, 0.0, -2.0),
+                    new Vector(1.0, 0.0, -2.0),
+                    new Vector(2.0, 0.0, -2.0)
+            )
+    );
     private final TARDIS plugin;
 
     public HeatBlockRunnable(TARDIS plugin) {
@@ -99,38 +131,4 @@ public class HeatBlockRunnable implements Runnable {
             }
         }
     }
-
-    private static final List<Vector> INNER_VECTORS = new ArrayList<>(
-        Arrays.asList(
-            new Vector(-1.0, 0.0, 1.0),
-            new Vector(0.0, 0.0, 1.0),
-            new Vector(1.0, 0.0, 1.0),
-            new Vector(-1.0, 0.0, 0.0),
-            new Vector(1.0, 0.0, 0.0),
-            new Vector(-1.0, 0.0, -1.0),
-            new Vector(0.0, 0.0, -1.0),
-            new Vector(1.0, 0.0, -1.0)
-        )
-    );
-
-    private static final List<Vector> OUTER_VECTORS = new ArrayList<>(
-        Arrays.asList(
-            new Vector(-2.0, 0.0, 2.0),
-            new Vector(-1.0, 0.0, 2.0),
-            new Vector(0.0, 0.0, 2.0),
-            new Vector(1.0, 0.0, 2.0),
-            new Vector(2.0, 0.0, 2.0),
-            new Vector(-2.0, 0.0, 1.0),
-            new Vector(2.0, 0.0, 1.0),
-            new Vector(-2.0, 0.0, 0.0),
-            new Vector(2.0, 0.0, 0.0),
-            new Vector(-2.0, 0.0, -1.0),
-            new Vector(2.0, 0.0, -1.0),
-            new Vector(-2.0, 0.0, -2.0),
-            new Vector(-1.0, 0.0, -2.0),
-            new Vector(0.0, 0.0, -2.0),
-            new Vector(1.0, 0.0, -2.0),
-            new Vector(2.0, 0.0, -2.0)
-        )
-    );
 }

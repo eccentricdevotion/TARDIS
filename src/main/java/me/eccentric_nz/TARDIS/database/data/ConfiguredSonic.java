@@ -27,6 +27,7 @@ public class ConfiguredSonic {
 
     private final int sonic_id;
     private final UUID uuid;
+    private final UUID sonic_uuid;
     private SonicConfig bio;
     private SonicConfig diamond;
     private SonicConfig emerald;
@@ -35,7 +36,6 @@ public class ConfiguredSonic {
     private SonicConfig ignite;
     private SonicConfig arrow;
     private SonicConfig knockback;
-    private final UUID sonic_uuid;
 
     public ConfiguredSonic(int sonic_id, UUID uuid, int bio, int diamond, int emerald, int redstone, int painter, int ignite, int arrow, int knockback, UUID sonic_uuid) {
         this.sonic_id = sonic_id;

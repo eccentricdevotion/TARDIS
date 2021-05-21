@@ -31,13 +31,13 @@ import java.util.Collections;
 @Deprecated
 public class TARDISBiomeFinderOld implements Runnable {
 
+    private final Integer[] directions = new Integer[]{0, 1, 2, 3};
     private final Player p;
     private final int startx;
     private final int startz;
     private final int step = 64;
     private final Biome b;
     private final World w;
-    final Integer[] directions = new Integer[]{0, 1, 2, 3};
     private int taskid, limite, limits, limitw, limitn, i = 0, plus = 0;
     private Location location = null;
 

@@ -41,9 +41,9 @@ class TARDISExcitationRunnable implements Runnable {
     private final TARDIS plugin;
     private final Location location;
     private final Player player;
+    private final List<Block> snow = new ArrayList<>();
     public int task;
     private int i = 0;
-    private final List<Block> snow = new ArrayList<>();
 
     TARDISExcitationRunnable(TARDIS plugin, Location l, Player player) {
         this.plugin = plugin;

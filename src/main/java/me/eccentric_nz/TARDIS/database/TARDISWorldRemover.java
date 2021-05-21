@@ -29,9 +29,9 @@ public class TARDISWorldRemover {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private Statement statement;
     private final TARDIS plugin;
     private final String prefix;
+    private Statement statement;
 
     public TARDISWorldRemover(TARDIS plugin) {
         this.plugin = plugin;

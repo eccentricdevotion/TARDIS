@@ -39,13 +39,13 @@ public class ResultSetVault {
     private final TARDIS plugin;
     private final String where;
     private final int id;
+    private final String prefix;
     private int vault_id;
     private int tardis_id;
     private String location;
     private int x;
     private int y;
     private int z;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.

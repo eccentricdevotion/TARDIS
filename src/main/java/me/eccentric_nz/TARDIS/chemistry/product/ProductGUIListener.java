@@ -101,7 +101,7 @@ public class ProductGUIListener extends TARDISMenuListener implements Listener {
                         builder.append(im.getDisplayName()).append(pipe.contains(slot) ? "|" : ",");
                     }
                 } else {
-                    builder.append(is.getType().toString()).append(pipe.contains(slot) ? "|" : ",");
+                    builder.append(is.getType()).append(pipe.contains(slot) ? "|" : ",");
                 }
             } else {
                 builder.append("-").append(pipe.contains(slot) ? "|" : ",");

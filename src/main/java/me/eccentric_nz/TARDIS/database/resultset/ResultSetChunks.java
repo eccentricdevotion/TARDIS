@@ -38,13 +38,13 @@ public class ResultSetChunks {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
+    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
+    private final String prefix;
     private int chunk_id;
     private int tardis_id;
     private String world;
     private int x;
     private int z;
-    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the chunks table.

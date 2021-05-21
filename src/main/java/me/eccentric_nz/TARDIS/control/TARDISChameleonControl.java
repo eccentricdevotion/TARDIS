@@ -28,15 +28,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class TARDISChameleonControl {
+class TARDISChameleonControl {
 
     private final TARDIS plugin;
 
-    public TARDISChameleonControl(TARDIS plugin) {
+    TARDISChameleonControl(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public void openGUI(Player player, int id, Adaption adapt, PRESET preset) {
+    void openGUI(Player player, int id, Adaption adapt, PRESET preset) {
         TARDISCircuitChecker tcc = null;
         if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
             tcc = new TARDISCircuitChecker(plugin, id);

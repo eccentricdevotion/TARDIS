@@ -34,7 +34,6 @@ public class TARDISFirework {
 
     private static final Random RANDOM = new Random();
     private static final Color[] COLORS;
-    private final FireworkMeta meta;
 
     static {
         DyeColor[] values = DyeColor.values();
@@ -43,6 +42,8 @@ public class TARDISFirework {
             COLORS[i] = values[i].getFireworkColor();
         }
     }
+
+    private final FireworkMeta meta;
 
     private TARDISFirework(FireworkMeta meta, boolean isClean) {
         if (isClean) {
@@ -91,6 +92,10 @@ public class TARDISFirework {
         return effects;
     }
 
+    private static FireworkMeta getCleanMeta() {
+        return (FireworkMeta) new ItemStack(Material.FIREWORK_ROCKET).getItemMeta();
+    }
+
     private Firework launch(Location l) {
         Firework f = l.getWorld().spawn(l, Firework.class);
         f.setFireworkMeta(meta);
@@ -105,9 +110,5 @@ public class TARDISFirework {
                 f.detonate();
             }
         }.runTaskLater(plugin, 1);
-    }
-
-    private static FireworkMeta getCleanMeta() {
-        return (FireworkMeta) new ItemStack(Material.FIREWORK_ROCKET).getItemMeta();
     }
 }

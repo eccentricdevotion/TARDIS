@@ -86,7 +86,7 @@ public class TARDISUpgradeBlockScanner {
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();
             } else {
-                int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+                int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
                 startx = gsl[0];
                 startz = gsl[2];
             }
@@ -196,9 +196,9 @@ public class TARDISUpgradeBlockScanner {
                                         String[] tsplit = type.toString().split("_");
                                         String m;
                                         if (tsplit.length > 2) {
-                                            m = tsplit[0] + "_" + tsplit[1] + "_" + use_clay.toString();
+                                            m = tsplit[0] + "_" + tsplit[1] + "_" + use_clay;
                                         } else {
-                                            m = tsplit[0] + "_" + use_clay.toString();
+                                            m = tsplit[0] + "_" + use_clay;
                                         }
                                         type = Material.getMaterial(m);
                                     }
@@ -210,9 +210,9 @@ public class TARDISUpgradeBlockScanner {
                                     String[] tsplit = type.toString().split("_");
                                     String m;
                                     if (tsplit.length > 2) {
-                                        m = tsplit[0] + "_" + tsplit[1] + "_" + use_clay.toString();
+                                        m = tsplit[0] + "_" + tsplit[1] + "_" + use_clay;
                                     } else {
-                                        m = tsplit[0] + "_" + use_clay.toString();
+                                        m = tsplit[0] + "_" + use_clay;
                                     }
                                     type = Material.getMaterial(m);
                             }

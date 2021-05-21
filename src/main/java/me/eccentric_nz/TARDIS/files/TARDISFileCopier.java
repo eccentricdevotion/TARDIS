@@ -57,7 +57,7 @@ public class TARDISFileCopier {
                         out.write(buf, 0, len);
                     }
                 } catch (IOException io) {
-                    System.err.println("[TARDIS] Copier: Could not save the file (" + file.toString() + ").");
+                    System.err.println("[TARDIS] Copier: Could not save the file (" + file + ").");
                 } finally {
                     try {
                         out.close();

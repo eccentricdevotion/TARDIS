@@ -47,8 +47,8 @@ import java.util.regex.Pattern;
 public class TARDISChatListener implements Listener {
 
     private final TARDIS plugin;
-    private Pattern howToPattern = null;
     private final Pattern handlesPattern = TARDISHandlesPattern.getPattern("prefix");
+    private Pattern howToPattern = null;
 
     public TARDISChatListener(TARDIS plugin) {
         this.plugin = plugin;

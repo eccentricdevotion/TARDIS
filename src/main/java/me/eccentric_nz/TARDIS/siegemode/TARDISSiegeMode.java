@@ -105,9 +105,7 @@ public class TARDISSiegeMode {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
             set.put("siege_on", 0);
             // remove trackers
-            if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                plugin.getTrackerKeeper().getInSiegeMode().remove(id);
-            }
+            plugin.getTrackerKeeper().getInSiegeMode().remove(id);
             if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
                 String[] chu = tardis.getChunk().split(":");
                 if (plugin.getConfig().getInt("siege.breeding") > 0) {
@@ -206,9 +204,7 @@ public class TARDISSiegeMode {
                 changeTextures(tardis.getUuid().toString(), tardis.getSchematic(), p, true);
             }
             // turn off force field
-            if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(p.getUniqueId())) {
-                plugin.getTrackerKeeper().getActiveForceFields().remove(p.getUniqueId());
-            }
+            plugin.getTrackerKeeper().getActiveForceFields().remove(p.getUniqueId());
         }
         // update the database
         plugin.getQueryFactory().doUpdate("tardis", set, wheres);

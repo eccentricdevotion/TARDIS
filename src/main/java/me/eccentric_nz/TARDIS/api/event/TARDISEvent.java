@@ -35,6 +35,10 @@ public class TARDISEvent extends Event {
         this.tardis = tardis;
     }
 
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     /**
      * Returns the player involved in this event.
      *
@@ -56,10 +60,6 @@ public class TARDISEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

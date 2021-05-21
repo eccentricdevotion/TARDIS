@@ -23,15 +23,15 @@ import org.bukkit.entity.Player;
  */
 class HumPrefs {
 
-    public HumPrefs(Player player, Boolean sfx, String hum) {
+    private final Player player;
+    private Boolean sfx;
+    private String hum;
+
+    HumPrefs(Player player, Boolean sfx, String hum) {
         this.player = player;
         this.sfx = sfx;
         this.hum = hum;
     }
-
-    private final Player player;
-    private Boolean sfx;
-    private String hum;
 
     public Player getPlayer() {
         return player;

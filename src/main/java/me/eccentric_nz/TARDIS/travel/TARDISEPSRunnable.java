@@ -57,6 +57,23 @@ public class TARDISEPSRunnable implements Runnable {
         this.creeper = creeper;
     }
 
+    /**
+     * Determines the angle of a straight line drawn between point one and two. The number returned, which is a double
+     * in degrees, tells us how much we have to rotate a horizontal line clockwise for it to match the line between the
+     * two points.
+     *
+     * @param px1 the x coordinate of the first point
+     * @param pz1 the z coordinate of the first point
+     * @param px2 the x coordinate of the second point
+     * @param pz2 the z coordinate of the second point
+     * @return the head angle of EP1
+     */
+    private static float getCorrectYaw(double px1, double pz1, double px2, double pz2) {
+        double xDiff = px2 - px1;
+        double zDiff = pz2 - pz1;
+        return (float) Math.toDegrees(Math.atan2(zDiff, xDiff)) + 90.0f;
+    }
+
     @Override
     public void run() {
         Location l = getSpawnLocation(id);
@@ -138,22 +155,5 @@ public class TARDISEPSRunnable implements Runnable {
                 return null;
             }
         }
-    }
-
-    /**
-     * Determines the angle of a straight line drawn between point one and two. The number returned, which is a double
-     * in degrees, tells us how much we have to rotate a horizontal line clockwise for it to match the line between the
-     * two points.
-     *
-     * @param px1 the x coordinate of the first point
-     * @param pz1 the z coordinate of the first point
-     * @param px2 the x coordinate of the second point
-     * @param pz2 the z coordinate of the second point
-     * @return the head angle of EP1
-     */
-    private static float getCorrectYaw(double px1, double pz1, double px2, double pz2) {
-        double xDiff = px2 - px1;
-        double zDiff = pz2 - pz1;
-        return (float) Math.toDegrees(Math.atan2(zDiff, xDiff)) + 90.0f;
     }
 }

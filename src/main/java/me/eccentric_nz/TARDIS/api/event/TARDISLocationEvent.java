@@ -37,6 +37,10 @@ public class TARDISLocationEvent extends Event {
         this.location = location;
     }
 
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     /**
      * Returns the player involved in this event.
      *
@@ -66,10 +70,6 @@ public class TARDISLocationEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

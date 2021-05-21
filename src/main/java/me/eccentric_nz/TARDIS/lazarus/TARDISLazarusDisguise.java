@@ -36,14 +36,6 @@ public class TARDISLazarusDisguise {
         this.options = options;
     }
 
-    public void createDisguise() {
-        if (entityType.equals(EntityType.PLAYER)) {
-            plugin.getTardisHelper().disguise(player, UUID.fromString("f84c6a79-0a4e-45e0-879b-cd49ebd4c4e2")); // or 91f25eb5-2b0e-46bc-8437-401c6017f369
-        } else {
-            plugin.getTardisHelper().disguise(entityType, player, options);
-        }
-    }
-
     public static void removeDisguise(Player player) {
         TARDIS.plugin.getTardisHelper().undisguise(player);
     }
@@ -54,5 +46,13 @@ public class TARDISLazarusDisguise {
                 TARDIS.plugin.getTardisHelper().disguise(p, player.getUniqueId());
             }
         });
+    }
+
+    public void createDisguise() {
+        if (entityType.equals(EntityType.PLAYER)) {
+            plugin.getTardisHelper().disguise(player, UUID.fromString("f84c6a79-0a4e-45e0-879b-cd49ebd4c4e2")); // or 91f25eb5-2b0e-46bc-8437-401c6017f369
+        } else {
+            plugin.getTardisHelper().disguise(entityType, player, options);
+        }
     }
 }

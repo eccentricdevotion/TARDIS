@@ -37,8 +37,8 @@ public class ResultSetAntiBuild {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String uuid;
-    private Integer tardis_id;
     private final String prefix;
+    private Integer tardis_id;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis &amp; travellers table.

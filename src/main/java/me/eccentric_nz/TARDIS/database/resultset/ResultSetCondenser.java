@@ -38,11 +38,11 @@ public class ResultSetCondenser {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
+    private final String prefix;
     private int c_id;
     private int tardis_id;
     private String block_data;
     private int block_count;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the condenser table.

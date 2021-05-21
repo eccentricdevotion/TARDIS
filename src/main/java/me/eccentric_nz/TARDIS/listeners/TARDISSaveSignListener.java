@@ -250,10 +250,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                     wherez.put("uuid", uuid.toString());
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false, 0);
                     if (rs.resultSet()) {
-                        if (!plugin.getTrackerKeeper().getArrangers().contains(uuid)) {
-                            // Only add one at a time
-                            plugin.getTrackerKeeper().getArrangers().add(uuid);
-                        }
+                        plugin.getTrackerKeeper().getArrangers().add(uuid);
                         TARDISMessage.send(player, "SAVE_ARRANGE");
                     } else {
                         TARDISMessage.send(player, "NOT_OWNER");

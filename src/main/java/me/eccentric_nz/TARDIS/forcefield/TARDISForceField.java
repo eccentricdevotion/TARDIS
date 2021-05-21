@@ -45,6 +45,29 @@ public class TARDISForceField implements Runnable {
         doubleRange = range * 2;
     }
 
+    public static Vector getTrajectory2d(Location from, Entity to) {
+        return to.getLocation().toVector().subtract(from.toVector()).setY(0).normalize();
+    }
+
+    public static void velocity(Entity ent, Vector vec, double strength) {
+        if (Double.isNaN(vec.getX()) || Double.isNaN(vec.getY()) || Double.isNaN(vec.getZ()) || vec.length() == 0.0D) {
+            return;
+        }
+        vec.normalize();
+        vec.multiply(strength);
+        ent.setFallDistance(0.0F);
+        ent.setVelocity(vec);
+    }
+
+    public static boolean addToTracker(Player player) {
+        ResultSetForcefield rsff = new ResultSetForcefield(TARDIS.plugin, player.getUniqueId().toString());
+        if (rsff.resultSet()) {
+            TARDIS.plugin.getTrackerKeeper().getActiveForceFields().put(rsff.getUuid(), rsff.getLocation());
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void run() {
         for (Map.Entry<UUID, Location> map : plugin.getTrackerKeeper().getActiveForceFields().entrySet()) {
@@ -90,29 +113,6 @@ public class TARDISForceField implements Runnable {
 
     private double offset(Entity entity, Location location) {
         return (entity.getWorld() != location.getWorld()) ? range + 999.0d : entity.getLocation().toVector().subtract(location.toVector()).length();
-    }
-
-    public static Vector getTrajectory2d(Location from, Entity to) {
-        return to.getLocation().toVector().subtract(from.toVector()).setY(0).normalize();
-    }
-
-    public static void velocity(Entity ent, Vector vec, double strength) {
-        if (Double.isNaN(vec.getX()) || Double.isNaN(vec.getY()) || Double.isNaN(vec.getZ()) || vec.length() == 0.0D) {
-            return;
-        }
-        vec.normalize();
-        vec.multiply(strength);
-        ent.setFallDistance(0.0F);
-        ent.setVelocity(vec);
-    }
-
-    public static boolean addToTracker(Player player) {
-        ResultSetForcefield rsff = new ResultSetForcefield(TARDIS.plugin, player.getUniqueId().toString());
-        if (rsff.resultSet()) {
-            TARDIS.plugin.getTrackerKeeper().getActiveForceFields().put(rsff.getUuid(), rsff.getLocation());
-            return true;
-        }
-        return false;
     }
 
     private boolean isCompanion(Player other, Player player) {

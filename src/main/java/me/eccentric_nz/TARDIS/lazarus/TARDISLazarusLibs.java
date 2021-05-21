@@ -44,6 +44,21 @@ public class TARDISLazarusLibs {
         this.isBaby = isBaby;
     }
 
+    public static void removeDisguise(Player player) {
+        if (DisguiseAPI.isDisguised(player)) {
+            DisguiseAPI.undisguiseToAll(player);
+        }
+    }
+
+    public static void runImmortalityGate(Player player) {
+        PlayerDisguise playerDisguise = new PlayerDisguise(player.getName());
+        TARDIS.plugin.getServer().getOnlinePlayers().forEach((p) -> {
+            if (!p.equals(player)) {
+                DisguiseAPI.disguiseToAll(p, playerDisguise);
+            }
+        });
+    }
+
     public void createDisguise() {
         DisguiseType dt = DisguiseType.valueOf(disguise);
         if (dt.equals(DisguiseType.PLAYER)) {
@@ -202,20 +217,5 @@ public class TARDISLazarusLibs {
             }
             DisguiseAPI.disguiseToAll(player, mobDisguise);
         }
-    }
-
-    public static void removeDisguise(Player player) {
-        if (DisguiseAPI.isDisguised(player)) {
-            DisguiseAPI.undisguiseToAll(player);
-        }
-    }
-
-    public static void runImmortalityGate(Player player) {
-        PlayerDisguise playerDisguise = new PlayerDisguise(player.getName());
-        TARDIS.plugin.getServer().getOnlinePlayers().forEach((p) -> {
-            if (!p.equals(player)) {
-                DisguiseAPI.disguiseToAll(p, playerDisguise);
-            }
-        });
     }
 }

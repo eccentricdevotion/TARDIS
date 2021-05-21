@@ -97,7 +97,7 @@ class TARDISAddCompanionCommand {
                         tid.put("tardis_id", id);
                         if (comps != null && !comps.isEmpty() && !comps.equalsIgnoreCase("everyone")) {
                             // add to the list
-                            String newList = comps + ":" + oluuid.toString();
+                            String newList = comps + ":" + oluuid;
                             set.put("companions", newList);
                         } else {
                             // make a list

@@ -109,7 +109,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();
             } else {
-                int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+                int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
                 startx = gsl[0];
                 startz = gsl[2];
             }

@@ -43,9 +43,9 @@ public class ResultSetBlocks {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
-    private ReplacedBlock replacedBlock;
     private final List<ReplacedBlock> data = new ArrayList<>();
     private final String prefix;
+    private ReplacedBlock replacedBlock;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the blocks table.

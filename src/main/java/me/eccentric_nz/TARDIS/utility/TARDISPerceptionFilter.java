@@ -41,16 +41,6 @@ public class TARDISPerceptionFilter {
         this.plugin = plugin;
     }
 
-    public void createPerceptionFilter() {
-        Scoreboard board = plugin.getServer().getScoreboardManager().getMainScoreboard();
-        perceptionFilter = board.getTeam("PerceptionFilter");
-        if (perceptionFilter == null) {
-            perceptionFilter = board.registerNewTeam("PerceptionFilter");
-            perceptionFilter.setCanSeeFriendlyInvisibles(true);
-            plugin.getServer().getOnlinePlayers().forEach((olp) -> perceptionFilter.addEntry(olp.getName()));
-        }
-    }
-
     public static void removePerceptionFilter() {
         Scoreboard board = Bukkit.getServer().getScoreboardManager().getMainScoreboard();
         Team perceptionFilter = board.getTeam("PerceptionFilter");
@@ -64,6 +54,16 @@ public class TARDISPerceptionFilter {
                 }
             }
             perceptionFilter.unregister();
+        }
+    }
+
+    public void createPerceptionFilter() {
+        Scoreboard board = plugin.getServer().getScoreboardManager().getMainScoreboard();
+        perceptionFilter = board.getTeam("PerceptionFilter");
+        if (perceptionFilter == null) {
+            perceptionFilter = board.registerNewTeam("PerceptionFilter");
+            perceptionFilter.setCanSeeFriendlyInvisibles(true);
+            plugin.getServer().getOnlinePlayers().forEach((olp) -> perceptionFilter.addEntry(olp.getName()));
         }
     }
 

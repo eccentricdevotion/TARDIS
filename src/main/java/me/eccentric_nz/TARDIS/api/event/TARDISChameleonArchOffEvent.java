@@ -32,6 +32,10 @@ public final class TARDISChameleonArchOffEvent extends Event {
         this.player = player;
     }
 
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     /**
      * Returns the player involved in this event.
      *
@@ -43,10 +47,6 @@ public final class TARDISChameleonArchOffEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

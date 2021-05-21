@@ -35,16 +35,7 @@ import java.util.UUID;
  */
 public class TARDISHumSounds {
 
-    /**
-     * Callback to get data asynchronously from the database.
-     *
-     * @param <T> The Object type we want to return
-     */
-    interface Callback<T> {
-
-        void execute(T response);
-    }
-
+    private final Callback<HumPrefs> prefs = (HumPrefs pref) -> TARDISSounds.playTARDISSound(pref.getPlayer(), pref.getHum());
     private final Callback<List<UUID>> callback = (List<UUID> data) -> {
         // Do whatever with the data
         data.forEach((u) -> {
@@ -74,8 +65,6 @@ public class TARDISHumSounds {
         });
     };
 
-    private final Callback<HumPrefs> prefs = (HumPrefs pref) -> TARDISSounds.playTARDISSound(pref.getPlayer(), pref.getHum());
-
     /**
      * Plays an interior hum sound to players who are inside the TARDIS and don't have SFX set to false.
      */
@@ -98,5 +87,15 @@ public class TARDISHumSounds {
                 }
             }.runTaskAsynchronously(TARDIS.plugin);
         }
+    }
+
+    /**
+     * Callback to get data asynchronously from the database.
+     *
+     * @param <T> The Object type we want to return
+     */
+    interface Callback<T> {
+
+        void execute(T response);
     }
 }

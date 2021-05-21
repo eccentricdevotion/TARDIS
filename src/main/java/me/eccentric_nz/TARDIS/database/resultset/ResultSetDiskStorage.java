@@ -43,6 +43,7 @@ public class ResultSetDiskStorage {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
+    private final String prefix;
     private int id;
     private int tardis_id;
     private UUID uuid;
@@ -56,7 +57,6 @@ public class ResultSetDiskStorage {
     private String presetsTwo;
     private String circuits;
     private String console;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the ars table.

@@ -86,7 +86,7 @@ class TARDISMaterialisePreset implements Runnable {
      * @param data   the chameleon block data for the police box
      * @param adapt  the chameleon circuit adaption setting
      */
-    public TARDISMaterialisePreset(TARDIS plugin, BuildData bd, PRESET preset, BlockData data, Adaption adapt) {
+    TARDISMaterialisePreset(TARDIS plugin, BuildData bd, PRESET preset, BlockData data, Adaption adapt) {
         this.plugin = plugin;
         this.bd = bd;
         loops = this.bd.getThrottle().getLoops();
@@ -818,7 +818,7 @@ class TARDISMaterialisePreset implements Runnable {
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
                 }
-                if (!bd.isRebuild() && bd.getPlayer() != null && plugin.getTrackerKeeper().getActiveForceFields().containsKey(bd.getPlayer().getPlayer().getUniqueId())) {
+                if (!bd.isRebuild() && bd.getPlayer() != null) {
                     plugin.getTrackerKeeper().getActiveForceFields().remove(bd.getPlayer().getPlayer().getUniqueId());
                 }
                 // message travellers in tardis
@@ -834,9 +834,7 @@ class TARDISMaterialisePreset implements Runnable {
                                 String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
                                 TARDISMessage.send(p, message);
                                 // TARDIS has travelled so add players to list so they can receive Artron on exit
-                                if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {
-                                    plugin.getTrackerKeeper().getHasTravelled().add(s);
-                                }
+                                plugin.getTrackerKeeper().getHasTravelled().add(s);
                             }
                         });
                     } else if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(bd.getPlayer().getUniqueId())) {

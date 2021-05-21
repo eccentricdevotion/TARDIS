@@ -27,9 +27,9 @@ import java.util.UUID;
 class SongPlayer {
 
     private final Song song;
+    private final ArrayList<UUID> playerList = new ArrayList<>();
     private boolean playing = false;
     private short tick = -1;
-    private final ArrayList<UUID> playerList = new ArrayList<>();
     private boolean destroyed = false;
 
     SongPlayer(Song song) {

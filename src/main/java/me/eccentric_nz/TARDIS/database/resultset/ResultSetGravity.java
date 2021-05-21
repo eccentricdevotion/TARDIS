@@ -38,14 +38,14 @@ public class ResultSetGravity {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
+    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
+    private final String prefix;
     private int gravity_id;
     private int tardis_id;
     private String location;
     private int direction;
     private double distance;
     private double velocity;
-    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the gravity_well table.

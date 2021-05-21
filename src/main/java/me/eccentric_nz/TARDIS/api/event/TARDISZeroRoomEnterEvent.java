@@ -34,6 +34,10 @@ public final class TARDISZeroRoomEnterEvent extends Event {
         this.tardis_id = tardis_id;
     }
 
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     /**
      * Returns the player involved in this event.
      *
@@ -54,10 +58,6 @@ public final class TARDISZeroRoomEnterEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

@@ -93,9 +93,7 @@ public class TARDISStandbyMode implements Runnable {
                     // update database
                     plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
                     // if force field is on, disable it
-                    if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(standbyData.getUuid())) {
-                        plugin.getTrackerKeeper().getActiveForceFields().remove(standbyData.getUuid());
-                    }
+                    plugin.getTrackerKeeper().getActiveForceFields().remove(standbyData.getUuid());
                 }, 1L);
             }
         });

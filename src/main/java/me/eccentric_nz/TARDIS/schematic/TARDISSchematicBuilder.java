@@ -44,8 +44,8 @@ public class TARDISSchematicBuilder {
     private final World w;
     private final int id, sx, ex, sy, ey, sz, ez;
     private final int[] controls = {0, 2, 3, 4, 5};
-    private Location h;
     private final HashMap<String, Material> mushroom_stem = new HashMap<>();
+    private Location h;
 
     public TARDISSchematicBuilder(TARDIS plugin, int id, World w, int sx, int ex, int sy, int ey, int sz, int ez) {
         this.plugin = plugin;

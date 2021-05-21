@@ -361,7 +361,7 @@ public class TARDISScanner {
                             break;
                         default:
                             if (entry.getKey() != EntityType.ARMOR_STAND) {
-                                player.sendMessage("    " + entry.getKey().toString() + ": " + entry.getValue() + message);
+                                player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
                             }
                             break;
                     }

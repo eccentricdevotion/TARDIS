@@ -97,7 +97,7 @@ public class LabGUIListener extends TARDISMenuListener implements Listener {
                         builder.append(im.getDisplayName()).append(",");
                     }
                 } else {
-                    builder.append(is.getType().toString()).append(",");
+                    builder.append(is.getType()).append(",");
                 }
             }
         }

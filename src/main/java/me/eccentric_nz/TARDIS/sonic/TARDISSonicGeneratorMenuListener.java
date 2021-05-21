@@ -49,9 +49,9 @@ import java.util.List;
 public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private Location location;
     private final HashMap<String, Integer> costs;
     private final HashMap<String, String> fields;
+    private Location location;
 
     public TARDISSonicGeneratorMenuListener(TARDIS plugin) {
         super(plugin);

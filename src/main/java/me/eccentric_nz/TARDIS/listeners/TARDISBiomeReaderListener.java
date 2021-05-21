@@ -50,6 +50,24 @@ public class TARDISBiomeReaderListener implements Listener {
         this.plugin = plugin;
     }
 
+    public static boolean hasBiomeDisk(ItemStack[] stack, String biome) {
+        boolean found = false;
+        for (int s = 27; s < stack.length; s++) {
+            ItemStack disk = stack[s];
+            if (disk != null && disk.hasItemMeta()) {
+                ItemMeta diskim = disk.getItemMeta();
+                if (diskim.hasLore()) {
+                    List<String> lore = diskim.getLore();
+                    if (lore.contains(biome)) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return found;
+    }
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
@@ -124,24 +142,6 @@ public class TARDISBiomeReaderListener implements Listener {
                 }
             }
         }
-    }
-
-    public static boolean hasBiomeDisk(ItemStack[] stack, String biome) {
-        boolean found = false;
-        for (int s = 27; s < stack.length; s++) {
-            ItemStack disk = stack[s];
-            if (disk != null && disk.hasItemMeta()) {
-                ItemMeta diskim = disk.getItemMeta();
-                if (diskim.hasLore()) {
-                    List<String> lore = diskim.getLore();
-                    if (lore.contains(biome)) {
-                        found = true;
-                        break;
-                    }
-                }
-            }
-        }
-        return found;
     }
 
     private int getNextFreeSlot(ItemStack[] stack) {

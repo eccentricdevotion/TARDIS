@@ -69,7 +69,7 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
                     }
                     if (param.spaceTardis()) {
                         // get start location for checking there is enough space
-                        int gsl[] = TARDISTimeTravel.getStartLocation(chunk_loc, param.getCompass());
+                        int[] gsl = TARDISTimeTravel.getStartLocation(chunk_loc, param.getCompass());
                         startx = gsl[0];
                         resetx = gsl[1];
                         starty = chunk_loc.getBlockY() + 1;

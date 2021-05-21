@@ -562,7 +562,7 @@ public class TARDISHandlesProcessor {
                                 player.performCommand("tardis rebuild");
                                 break;
                             case SCAN:
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid.toString() + " " + id);
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id);
                                 break;
                             case COMEHERE:
                                 new TARDISHandlesTeleportCommand(plugin).beamMeUp(player);
@@ -570,11 +570,11 @@ public class TARDISHandlesProcessor {
                             case TAKE_OFF:
                                 // player must be in TARDIS
                                 if (plugin.getUtils().inTARDISWorld(player.getLocation())) {
-                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid.toString() + " " + id);
+                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid + " " + id);
                                 }
                                 break;
                             case LAND:
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid.toString() + " " + id);
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid + " " + id);
                                 break;
                         }
                     }

@@ -201,7 +201,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();
             } else {
-                int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+                int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
                 startx = gsl[0];
                 startz = gsl[2];
             }
@@ -211,8 +211,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             wg1 = new Location(world, startx, starty, startz);
             wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (c - 1));
             // wall/floor block prefs
-            String wall[] = tud.getWall().split(":");
-            String floor[] = tud.getFloor().split(":");
+            String[] wall = tud.getWall().split(":");
+            String[] floor = tud.getFloor().split(":");
             wall_type = Material.valueOf(wall[0]);
             floor_type = Material.valueOf(floor[0]);
             // get input array

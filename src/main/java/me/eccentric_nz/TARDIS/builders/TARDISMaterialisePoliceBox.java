@@ -150,7 +150,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
                 }
-                if (!bd.isRebuild() && plugin.getTrackerKeeper().getActiveForceFields().containsKey(bd.getPlayer().getPlayer().getUniqueId())) {
+                if (!bd.isRebuild()) {
                     plugin.getTrackerKeeper().getActiveForceFields().remove(bd.getPlayer().getPlayer().getUniqueId());
                 }
                 // message travellers in tardis
@@ -166,9 +166,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                                 String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
                                 TARDISMessage.send(p, message);
                                 // TARDIS has travelled so add players to list so they can receive Artron on exit
-                                if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {
-                                    plugin.getTrackerKeeper().getHasTravelled().add(s);
-                                }
+                                plugin.getTrackerKeeper().getHasTravelled().add(s);
                             }
                         });
                     } else if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(bd.getPlayer().getUniqueId())) {

@@ -28,6 +28,10 @@ public class TARDISUpdateChatGUI {
         this.plugin = plugin;
     }
 
+    public static void sendJSON(String json, Player p) {
+        TARDIS.plugin.getTardisHelper().sendJson(p, json);
+    }
+
     public boolean showInterface(Player player, String[] args) {
         if (args.length == 1) {
             TARDISMessage.send(player, "UPDATE_SECTION");
@@ -65,9 +69,5 @@ public class TARDISUpdateChatGUI {
             return true;
         }
         return false;
-    }
-
-    public static void sendJSON(String json, Player p) {
-        TARDIS.plugin.getTardisHelper().sendJson(p, json);
     }
 }

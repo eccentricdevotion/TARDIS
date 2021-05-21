@@ -371,9 +371,7 @@ public class TARDISSiegeListener implements Listener {
             wheres.put("tardis_id", id);
             // update the database
             plugin.getQueryFactory().doUpdate("tardis", set, wheres);
-            if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                plugin.getTrackerKeeper().getInSiegeMode().remove(id);
-            }
+            plugin.getTrackerKeeper().getInSiegeMode().remove(id);
             if (plugin.getConfig().getBoolean("siege.texture")) {
                 new TARDISSiegeMode(plugin).changeTextures(tardis.getUuid().toString(), tardis.getSchematic(), p, false);
             }

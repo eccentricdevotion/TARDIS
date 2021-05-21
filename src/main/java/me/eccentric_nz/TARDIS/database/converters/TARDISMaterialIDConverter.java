@@ -31,14 +31,14 @@ import java.util.List;
  */
 public class TARDISMaterialIDConverter {
 
+    public final HashMap<Integer, Material> LEGACY_ID_LOOKUP = new HashMap<>();
+    public final HashMap<Integer, String> COLOUR_LOOKUP = new HashMap<>();
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
-    public final HashMap<Integer, Material> LEGACY_ID_LOOKUP = new HashMap<>();
     private final HashMap<String, String> LEGACY_TYPE_LOOKUP = new HashMap<>();
     private final List<Integer> COLOURED = Arrays.asList(35, 95, 159, 160, 171, 251, 252);
-    public final HashMap<Integer, String> COLOUR_LOOKUP = new HashMap<>();
 
     public TARDISMaterialIDConverter(TARDIS plugin) {
         this.plugin = plugin;

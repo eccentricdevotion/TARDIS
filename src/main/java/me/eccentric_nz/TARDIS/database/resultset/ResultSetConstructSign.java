@@ -36,12 +36,12 @@ public class ResultSetConstructSign {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final int id;
+    private final String prefix;
     private String line1;
     private String line2;
     private String line3;
     private String line4;
     private boolean asymmetric;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the gravity_well table.

@@ -32,7 +32,7 @@ public class TARDISBiomeCommand implements CommandExecutor {
             Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 20).getLocation();
             // get biome
             TARDISBiome biome = TARDISStaticUtils.getBiomeAt(eyeLocation);
-            TARDISMessage.message(player, "The TARDISBiome is: " + biome.getKey().toString());
+            TARDISMessage.message(player, "The TARDISBiome is: " + biome.getKey());
             return true;
         }
         return false;

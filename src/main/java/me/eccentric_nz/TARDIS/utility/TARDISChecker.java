@@ -33,36 +33,6 @@ public class TARDISChecker {
         this.plugin = plugin;
     }
 
-    public void checkAdvancements() {
-        // get server's main world folder
-        // is there a worlds container?
-        File container = plugin.getServer().getWorldContainer();
-        String s_world = plugin.getServer().getWorlds().get(0).getName();
-        // check if directories exist
-        String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "tardis" + File.separator + "advancements";
-        File tardisDir = new File(dataPacksRoot);
-        if (!tardisDir.exists()) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("ADVANCEMENT_DIRECTORIES"));
-            tardisDir.mkdirs();
-        }
-        for (Advancement advancement : Advancement.values()) {
-            String json = advancement.getConfigName() + ".json";
-            File jfile = new File(dataPacksRoot, json);
-            if (!jfile.exists() || (advancement == Advancement.DEFENDER && jfile.lastModified() < 1593067877851L)) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), json));
-                plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), json));
-                copy(json, jfile);
-            }
-        }
-        String dataPacksMeta = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis";
-        File mcmeta = new File(dataPacksMeta, "pack.mcmeta");
-        if (!mcmeta.exists()) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), "pack.mcmeta"));
-            plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), "pack.mcmeta"));
-            copy("pack.mcmeta", mcmeta);
-        }
-    }
-
     public static boolean hasDimension(String dimension) {
         boolean exists = true;
         File container = TARDIS.plugin.getServer().getWorldContainer();
@@ -219,6 +189,36 @@ public class TARDISChecker {
                     System.err.println("[TARDIS] Checker: Could not close the input stream.");
                 }
             }
+        }
+    }
+
+    public void checkAdvancements() {
+        // get server's main world folder
+        // is there a worlds container?
+        File container = plugin.getServer().getWorldContainer();
+        String s_world = plugin.getServer().getWorlds().get(0).getName();
+        // check if directories exist
+        String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "tardis" + File.separator + "advancements";
+        File tardisDir = new File(dataPacksRoot);
+        if (!tardisDir.exists()) {
+            plugin.getConsole().sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("ADVANCEMENT_DIRECTORIES"));
+            tardisDir.mkdirs();
+        }
+        for (Advancement advancement : Advancement.values()) {
+            String json = advancement.getConfigName() + ".json";
+            File jfile = new File(dataPacksRoot, json);
+            if (!jfile.exists() || (advancement == Advancement.DEFENDER && jfile.lastModified() < 1593067877851L)) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), json));
+                plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), json));
+                copy(json, jfile);
+            }
+        }
+        String dataPacksMeta = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis";
+        File mcmeta = new File(dataPacksMeta, "pack.mcmeta");
+        if (!mcmeta.exists()) {
+            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), "pack.mcmeta"));
+            plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), "pack.mcmeta"));
+            copy("pack.mcmeta", mcmeta);
         }
     }
 }

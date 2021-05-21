@@ -61,10 +61,7 @@ public class TARDISLightningListener implements Listener {
             ResultSetTardis rs = new ResultSetTardis(plugin, new HashMap<>(), "", true, 0);
             if (rs.resultSet()) {
                 for (Tardis t : rs.getData()) {
-                    boolean charging = true;
-                    if (t.isRecharging()) {
-                        charging = false;
-                    }
+                    boolean charging = !t.isRecharging();
                     int id = t.getTardis_id();
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         return;

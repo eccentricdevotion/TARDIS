@@ -36,18 +36,6 @@ public enum ConsoleSize {
         this.delay = delay;
     }
 
-    public String getConfigPath() {
-        return configPath;
-    }
-
-    public String getBlocks() {
-        return blocks;
-    }
-
-    public long getDelay() {
-        return delay;
-    }
-
     public static ConsoleSize getByWidthAndHeight(int w, int h) {
         if (w < 17 && h < 17) {
             return SMALL;
@@ -58,5 +46,17 @@ public enum ConsoleSize {
         } else {
             return MASSIVE;
         }
+    }
+
+    public String getConfigPath() {
+        return configPath;
+    }
+
+    public String getBlocks() {
+        return blocks;
+    }
+
+    public long getDelay() {
+        return delay;
     }
 }

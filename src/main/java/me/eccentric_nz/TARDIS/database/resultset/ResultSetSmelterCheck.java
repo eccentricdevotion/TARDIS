@@ -40,8 +40,8 @@ public class ResultSetSmelterCheck {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
-    private int smelter_id;
     private final String prefix;
+    private int smelter_id;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
@@ -68,7 +68,7 @@ public class ResultSetSmelterCheck {
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
             where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
-            wheres = " WHERE " + sbw.toString();
+            wheres = " WHERE " + sbw;
         }
         String query = "SELECT * FROM " + prefix + "vaults " + wheres + "x = 0 AND y = 0 AND z = 0";
         try {

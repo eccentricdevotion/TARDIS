@@ -77,7 +77,7 @@ public class TARDISRandomNether extends TARDISRandomLocation {
                 if (param.spaceTardis()) {
                     if (plugin.getPluginRespect().getRespect(dest, param)) {
                         // get start location for checking there is enough space
-                        int gsl[] = TARDISTimeTravel.getStartLocation(dest, param.getCompass());
+                        int[] gsl = TARDISTimeTravel.getStartLocation(dest, param.getCompass());
                         startx = gsl[0];
                         resetx = gsl[1];
                         starty = dest.getBlockY();

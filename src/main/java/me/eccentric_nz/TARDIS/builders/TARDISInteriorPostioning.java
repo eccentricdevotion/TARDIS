@@ -55,6 +55,36 @@ public class TARDISInteriorPostioning {
     }
 
     /**
+     * Get the TIPS slot from a player location
+     *
+     * @param location the player's current location in the TARDIS world
+     * @return the TIPS slot number
+     */
+    public static int getTIPSSlot(Location location) {
+        int px = location.getBlockX();
+        int pz = location.getBlockZ();
+        int col = px / 1024;
+        int row = pz / 1024;
+        return (col * 20) + row;
+    }
+
+    /**
+     * Get the TARDIS id from a player location
+     *
+     * @param location the player's current location in the TARDIS world
+     * @return the TARDIS id
+     */
+    public static int getTARDISIdFromLocation(Location location) {
+        int tips = getTIPSSlot(location);
+        ResultSetTardisID rs = new ResultSetTardisID(TARDIS.plugin);
+        if (rs.fromTIPSSlot(tips)) {
+            return rs.getTardis_id();
+        } else {
+            return -1;
+        }
+    }
+
+    /**
      * Gets the next unused TIPS slot in a 20 x 20 grid.
      *
      * @return the first vacant slot
@@ -106,36 +136,6 @@ public class TARDISInteriorPostioning {
         data.setMaxZ((col * 1024 + 1023) + factorZ);
         data.setSlot(slot);
         return data;
-    }
-
-    /**
-     * Get the TIPS slot from a player location
-     *
-     * @param location the player's current location in the TARDIS world
-     * @return the TIPS slot number
-     */
-    public static int getTIPSSlot(Location location) {
-        int px = location.getBlockX();
-        int pz = location.getBlockZ();
-        int col = px / 1024;
-        int row = pz / 1024;
-        return (col * 20) + row;
-    }
-
-    /**
-     * Get the TARDIS id from a player location
-     *
-     * @param location the player's current location in the TARDIS world
-     * @return the TARDIS id
-     */
-    public static int getTARDISIdFromLocation(Location location) {
-        int tips = getTIPSSlot(location);
-        ResultSetTardisID rs = new ResultSetTardisID(TARDIS.plugin);
-        if (rs.fromTIPSSlot(tips)) {
-            return rs.getTardis_id();
-        } else {
-            return -1;
-        }
     }
 
     /**

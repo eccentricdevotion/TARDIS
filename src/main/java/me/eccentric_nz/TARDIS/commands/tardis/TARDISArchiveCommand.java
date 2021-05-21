@@ -204,7 +204,7 @@ class TARDISArchiveCommand {
                             sx = pos.getCentreX();
                             sz = pos.getCentreZ();
                         } else {
-                            int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+                            int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
                             sx = gsl[0];
                             sz = gsl[2];
                         }

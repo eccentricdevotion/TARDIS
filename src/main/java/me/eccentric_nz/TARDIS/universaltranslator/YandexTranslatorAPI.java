@@ -34,13 +34,11 @@ public abstract class YandexTranslatorAPI {
     //Encoding type
 
     static final String ENCODING = "UTF-8";
-
-    static String apiKey;
-    private static String referrer;
-
     static final String PARAM_API_KEY = "key=";
     static final String PARAM_LANG_PAIR = "&lang=";
     static final String PARAM_TEXT = "&text=";
+    static String apiKey;
+    private static String referrer;
 
     /**
      * Sets the API key.

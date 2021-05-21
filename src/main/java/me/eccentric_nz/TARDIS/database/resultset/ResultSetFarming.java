@@ -37,8 +37,8 @@ public class ResultSetFarming {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final int tardis_id;
-    private Farm data;
     private final String prefix;
+    private Farm data;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the farming table.

@@ -26,10 +26,10 @@ import org.bukkit.event.HandlerList;
  */
 public final class TARDISDestructionEvent extends Event {
 
+    private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
     private final Location location;
     private final String owner;
-    private static final HandlerList HANDLERS = new HandlerList();
 
     /**
      * A TARDIS extermination event.
@@ -42,6 +42,10 @@ public final class TARDISDestructionEvent extends Event {
         this.player = player;
         this.location = location;
         this.owner = owner;
+    }
+
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
     }
 
     public Player getPlayer() {
@@ -69,10 +73,6 @@ public final class TARDISDestructionEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

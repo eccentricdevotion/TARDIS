@@ -37,7 +37,7 @@ class TARDISTransmatCommand {
         this.plugin = plugin;
     }
 
-    public boolean teleportOrProcess(Player player, String[] args) {
+    boolean teleportOrProcess(Player player, String[] args) {
         if (args.length < 2) {
             TARDISMessage.send(player, "TOO_FEW_ARGS");
             return false;

@@ -47,7 +47,7 @@ public class TARDISInnerDoorOpener {
     private final UUID uuid;
     private final int id;
 
-    public TARDISInnerDoorOpener(TARDIS plugin, UUID uuid, int id) {
+    TARDISInnerDoorOpener(TARDIS plugin, UUID uuid, int id) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.id = id;
@@ -176,10 +176,7 @@ public class TARDISInnerDoorOpener {
                     if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                         // players
                         uuids.forEach((u) -> {
-                            // only add them if they're not there already!
-                            if (!plugin.getTrackerKeeper().getMover().contains(u)) {
-                                plugin.getTrackerKeeper().getMover().add(u);
-                            }
+                            plugin.getTrackerKeeper().getMover().add(u);
                         });
                     }
                     // locations

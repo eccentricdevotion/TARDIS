@@ -44,14 +44,14 @@ public class TARDISJunkDestroyer implements Runnable {
 
     private final TARDIS plugin;
     private final DestroyData pdd;
-    private int task;
-    private int i = 0;
     private final int sx, ex, sy, ey, sz, ez;
     private final Location junkLoc;
     private final Location effectsLoc;
-    private Location vortexJunkLoc;
     private final World world;
     private final TARDISBiome biome;
+    private int task;
+    private int i = 0;
+    private Location vortexJunkLoc;
     private int fryTask;
 
     public TARDISJunkDestroyer(TARDIS plugin, DestroyData pdd) {

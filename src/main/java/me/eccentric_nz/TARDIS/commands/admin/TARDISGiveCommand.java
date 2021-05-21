@@ -342,7 +342,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         return true;
     }
 
-    private boolean giveBlueprint(CommandSender sender, String args[], String blueprint) {
+    private boolean giveBlueprint(CommandSender sender, String[] args, String blueprint) {
         Player player = null;
         if (args[0].equals("@s") && sender instanceof Player) {
             player = (Player) sender;
@@ -446,7 +446,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         // Look up this player's UUID
         UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
         if (uuid != null) {
-            plugin.getServer().dispatchCommand(sender, "vmg " + uuid.toString() + " " + amount);
+            plugin.getServer().dispatchCommand(sender, "vmg " + uuid + " " + amount);
         } else {
             TARDISMessage.send(sender, "UUID_NOT_FOUND", player);
         }

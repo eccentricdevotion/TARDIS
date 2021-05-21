@@ -80,7 +80,7 @@ public class ResultSetTardis {
             StringBuilder sbw = new StringBuilder();
             where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
             if (abandoned < 2) {
-                wheres = " WHERE " + sbw.toString() + "abandoned = " + abandoned;
+                wheres = " WHERE " + sbw + "abandoned = " + abandoned;
             } else {
                 wheres = " WHERE " + sbw.substring(0, sbw.length() - 5);
             }

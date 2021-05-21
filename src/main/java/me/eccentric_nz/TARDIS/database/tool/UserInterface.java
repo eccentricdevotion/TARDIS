@@ -33,7 +33,19 @@ public class UserInterface extends javax.swing.JFrame {
     private static final long serialVersionUID = 3259909191489626727L;
     private final PrintWriter consoleStream;
     private File lastDir = new File(".");
-
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton convertButton;
+    private javax.swing.JButton inputButton;
+    private javax.swing.JTextField inputFile;
+    private javax.swing.JLabel inputLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton outputButton;
+    private javax.swing.JTextArea outputConsole;
+    private javax.swing.JTextField outputFile;
+    private javax.swing.JLabel outputLabel;
+    private javax.swing.JTextField prefix;
+    private javax.swing.JLabel titleLabel;
     /**
      * Creates new form UserInterface
      */
@@ -47,6 +59,38 @@ public class UserInterface extends javax.swing.JFrame {
             }
         }, true);
         initComponents();
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        /*
+         * Set the Nimbus look and feel
+         */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the
+         * default look and feel. For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException ex) {
+            java.util.logging.Logger.getLogger(UserInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /*
+         * Create and display the form
+         */
+        java.awt.EventQueue.invokeLater(() -> new UserInterface().setVisible(true));
     }
 
     /**
@@ -170,51 +214,5 @@ public class UserInterface extends javax.swing.JFrame {
         String pre = prefix.getText();
         Main.process(consoleStream, new File(inputFile.getText()), new File(outputFile.getText()), pre);
     }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /*
-         * Set the Nimbus look and feel
-         */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the
-         * default look and feel. For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /*
-         * Create and display the form
-         */
-        java.awt.EventQueue.invokeLater(() -> new UserInterface().setVisible(true));
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton convertButton;
-    private javax.swing.JButton inputButton;
-    private javax.swing.JTextField inputFile;
-    private javax.swing.JLabel inputLabel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton outputButton;
-    private javax.swing.JTextArea outputConsole;
-    private javax.swing.JTextField outputFile;
-    private javax.swing.JLabel outputLabel;
-    private javax.swing.JTextField prefix;
-    private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }

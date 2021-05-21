@@ -179,7 +179,7 @@ public class TARDISJoinListener implements Listener {
         }
         // add to zero room occupants
         if (plugin.getConfig().getBoolean("allow.zero_room")) {
-            if (player.getLocation().getWorld().getName().equals("TARDIS_Zero_Room") && !plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
+            if (player.getLocation().getWorld().getName().equals("TARDIS_Zero_Room")) {
                 plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
             }
         }

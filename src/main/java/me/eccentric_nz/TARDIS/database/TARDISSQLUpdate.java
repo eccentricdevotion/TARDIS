@@ -66,7 +66,7 @@ class TARDISSQLUpdate implements Runnable {
         where.forEach((key, value) -> {
             sbw.append(key).append(" = ");
             if (value instanceof String || value instanceof UUID) {
-                sbw.append("'").append(value.toString()).append("' AND ");
+                sbw.append("'").append(value).append("' AND ");
             } else {
                 sbw.append(value).append(" AND ");
             }

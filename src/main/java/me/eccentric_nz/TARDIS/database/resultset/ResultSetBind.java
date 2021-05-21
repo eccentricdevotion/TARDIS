@@ -38,12 +38,12 @@ public class ResultSetBind {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
+    private final String prefix;
     private int bind_id;
     private int tardis_id;
     private int type;
     private String location;
     private String name;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the bind table.

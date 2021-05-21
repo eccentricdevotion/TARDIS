@@ -38,8 +38,8 @@ public class ResultSetConfiguredSonic {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final UUID where;
-    private ConfiguredSonic configuredSonic;
     private final String prefix;
+    private ConfiguredSonic configuredSonic;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.

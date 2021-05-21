@@ -33,7 +33,7 @@ public class UpdateDoor {
 
     private final TARDIS plugin;
 
-    public UpdateDoor(TARDIS plugin) {
+    UpdateDoor(TARDIS plugin) {
         this.plugin = plugin;
     }
 

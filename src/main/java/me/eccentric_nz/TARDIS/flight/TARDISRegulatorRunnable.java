@@ -32,9 +32,9 @@ import java.util.List;
 public class TARDISRegulatorRunnable extends TARDISRegulatorSlot implements Runnable {
 
     private final InventoryView view;
+    private final List<Integer> directions = Arrays.asList(0, 1, 2, 3);
     private int slot;
     private int taskId;
-    private final List<Integer> directions = Arrays.asList(0, 1, 2, 3);
 
     TARDISRegulatorRunnable(InventoryView view) {
         this.view = view;

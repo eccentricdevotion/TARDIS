@@ -33,8 +33,10 @@ public class ResultSetPaperBag {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private int paperBagID;
     private final UUID uuid;
+    private final List<Integer> flavours = Arrays.asList(1, 2, 3, 4);
+    private final String prefix;
+    private int paperBagID;
     private String flavour1;
     private int amount1;
     private String flavour2;
@@ -43,8 +45,6 @@ public class ResultSetPaperBag {
     private int amount3;
     private String flavour4;
     private int amount4;
-    private final List<Integer> flavours = Arrays.asList(1, 2, 3, 4);
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the count table.

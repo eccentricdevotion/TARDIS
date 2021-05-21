@@ -115,7 +115,7 @@ public class CureBrewingListener implements Listener {
                                         ItemMeta im = is.getItemMeta();
                                         if (im.hasDisplayName() && im.hasCustomModelData()) {
                                             String dn = im.getDisplayName();
-                                            items.add(type.toString() + (elements.contains(dn) ? ":" + dn : ""));
+                                            items.add(type + (elements.contains(dn) ? ":" + dn : ""));
                                         } else {
                                             items.add(type.toString());
                                         }

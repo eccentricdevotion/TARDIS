@@ -43,10 +43,10 @@ public class ResultSetAreas {
     private final HashMap<String, Object> where;
     private final boolean multiple;
     private final boolean onlynames;
-    private Area area;
     private final List<Area> data = new ArrayList<>();
     private final List<String> names = new ArrayList<>();
     private final String prefix;
+    private Area area;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the areas table.

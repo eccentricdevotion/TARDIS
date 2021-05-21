@@ -35,8 +35,8 @@ public class TARDISMySQLDatabase {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private Statement statement = null;
     private final TARDIS plugin;
+    private Statement statement = null;
 
     public TARDISMySQLDatabase(TARDIS plugin) {
         this.plugin = plugin;

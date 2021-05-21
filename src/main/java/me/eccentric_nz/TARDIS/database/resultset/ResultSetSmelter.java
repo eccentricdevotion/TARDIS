@@ -48,13 +48,13 @@ public class ResultSetSmelter {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String where;
+    private final String prefix;
     private int smelter_id;
     private int tardis_id;
     private String location;
     private SmelterChest type;
     private List<Chest> fuelChests;
     private List<Chest> oreChests;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.

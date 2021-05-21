@@ -189,7 +189,7 @@ public class TARDISBuilderInner implements Runnable {
                     set.put("creeper", cl.toString());
                 }
             } else {
-                int gsl[] = plugin.getLocationUtils().getStartLocation(dbID);
+                int[] gsl = plugin.getLocationUtils().getStartLocation(dbID);
                 startx = gsl[0];
                 resetx = gsl[1];
                 startz = gsl[2];

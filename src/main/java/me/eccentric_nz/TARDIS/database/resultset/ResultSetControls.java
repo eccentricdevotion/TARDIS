@@ -41,13 +41,13 @@ public class ResultSetControls {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
+    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
+    private final String prefix;
     private int c_id;
     private int tardis_id;
     private int type;
     private String location;
     private int secondary;
-    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the controls table.

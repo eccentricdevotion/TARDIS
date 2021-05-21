@@ -41,8 +41,8 @@ public class ResultSetSonic {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
-    private Sonic sonic;
     private final String prefix;
+    private Sonic sonic;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
@@ -69,7 +69,7 @@ public class ResultSetSonic {
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
             where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
-            wheres = " WHERE " + sbw.toString() + "sonic_uuid = ''";
+            wheres = " WHERE " + sbw + "sonic_uuid = ''";
         }
         String query = "SELECT * FROM " + prefix + "sonic" + wheres;
         try {

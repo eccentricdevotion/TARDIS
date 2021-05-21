@@ -36,14 +36,14 @@ import java.util.UUID;
  */
 class TARDISManualFlightRunnable implements Runnable {
 
+    private static final int LOOPS = 10;
     private final TARDIS plugin;
     private final List<Location> target;
     private final List<String> controls = Arrays.asList("Helmic Regulator", "Astrosextant Rectifier", "Gravitic Anomaliser", "Absolute Tesseractulator");
-    private int taskID;
-    private static final int LOOPS = 10;
-    private int i = 0;
     private final Player player;
     private final UUID uuid;
+    private int taskID;
+    private int i = 0;
 
     TARDISManualFlightRunnable(TARDIS plugin, Player player, int id) {
         this.plugin = plugin;

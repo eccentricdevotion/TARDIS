@@ -42,6 +42,7 @@ public class ResultSetARS {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
+    private final String prefix;
     private int id;
     private int tardis_id;
     private UUID uuid;
@@ -49,7 +50,6 @@ public class ResultSetARS {
     private int south;
     private int layer;
     private String json;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the ars table.

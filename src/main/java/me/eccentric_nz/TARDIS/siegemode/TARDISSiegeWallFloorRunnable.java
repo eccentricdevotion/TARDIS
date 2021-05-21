@@ -139,7 +139,7 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();
             } else {
-                int gsl[] = plugin.getLocationUtils().getStartLocation(id);
+                int[] gsl = plugin.getLocationUtils().getStartLocation(id);
                 startx = gsl[0];
                 startz = gsl[2];
             }

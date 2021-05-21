@@ -40,15 +40,16 @@ import java.util.Arrays;
 class TARDISXPRewarder {
 
     private static final int hardMaxLevel = 100000;
-    private static int xpTotalToReachLevel[];
-    private final WeakReference<Player> player;
-    private final String playerName;
+    private static int[] xpTotalToReachLevel;
 
     static {
         // 25 is an arbitrary value for the initial table size - the actual
         // value isn't critically important since the table is resized as needed.
         initLookupTables(25);
     }
+
+    private final WeakReference<Player> player;
+    private final String playerName;
 
     /**
      * Create a new XPKCalculator for the given player.

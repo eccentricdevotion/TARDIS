@@ -242,7 +242,7 @@ public class TARDISSonicScanner {
                             break;
                         default:
                             if (ent != EntityType.ARMOR_STAND) {
-                                player.sendMessage("    " + ent.toString() + ": " + value + message);
+                                player.sendMessage("    " + ent + ": " + value + message);
                             }
                             break;
                     }

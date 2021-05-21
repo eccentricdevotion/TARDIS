@@ -94,7 +94,7 @@ public class CompoundGUIListener extends TARDISMenuListener implements Listener 
                     try {
                         Element element = Element.valueOf(im.getDisplayName());
                         int amount = is.getAmount();
-                        formula.append(element.toString()).append(":").append(amount).append("-");
+                        formula.append(element).append(":").append(amount).append("-");
                     } catch (IllegalArgumentException e) {
                         // ignore
                     }

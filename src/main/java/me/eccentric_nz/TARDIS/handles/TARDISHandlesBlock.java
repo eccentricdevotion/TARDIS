@@ -122,10 +122,7 @@ public enum TARDISHandlesBlock {
     PLAYER_DISK(TARDISHandlesCategory.DISK, "Player Storage Disk", null, 10000001),
     SAVE_DISK(TARDISHandlesCategory.DISK, "Save Storage Disk", null, 10000001);
 
-    private final TARDISHandlesCategory category;
-    private final String displayName;
-    private final List<String> lore;
-    private final int customModelData;
+    public final static HashMap<String, TARDISHandlesBlock> BY_NAME = new HashMap<>();
     private final static List<TARDISHandlesBlock> commands = new ArrayList<>();
     private final static List<TARDISHandlesBlock> controls = new ArrayList<>();
     private final static List<TARDISHandlesBlock> events = new ArrayList<>();
@@ -134,14 +131,6 @@ public enum TARDISHandlesBlock {
     private final static List<TARDISHandlesBlock> selectors = new ArrayList<>();
     private final static List<TARDISHandlesBlock> variables = new ArrayList<>();
     private final static List<TARDISHandlesBlock> buttons = new ArrayList<>();
-    public final static HashMap<String, TARDISHandlesBlock> BY_NAME = new HashMap<>();
-
-    TARDISHandlesBlock(TARDISHandlesCategory category, String displayName, List<String> lore, int customModelData) {
-        this.category = category;
-        this.displayName = displayName;
-        this.lore = lore;
-        this.customModelData = customModelData;
-    }
 
     static {
         for (TARDISHandlesBlock block : values()) {
@@ -177,16 +166,16 @@ public enum TARDISHandlesBlock {
         }
     }
 
-    public TARDISHandlesCategory getCategory() {
-        return category;
-    }
+    private final TARDISHandlesCategory category;
+    private final String displayName;
+    private final List<String> lore;
+    private final int customModelData;
 
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public List<String> getLore() {
-        return lore;
+    TARDISHandlesBlock(TARDISHandlesCategory category, String displayName, List<String> lore, int customModelData) {
+        this.category = category;
+        this.displayName = displayName;
+        this.lore = lore;
+        this.customModelData = customModelData;
     }
 
     public static List<TARDISHandlesBlock> getCommands() {
@@ -219,6 +208,18 @@ public enum TARDISHandlesBlock {
 
     public static List<TARDISHandlesBlock> getButtons() {
         return buttons;
+    }
+
+    public TARDISHandlesCategory getCategory() {
+        return category;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public List<String> getLore() {
+        return lore;
     }
 
     public int getCustomModelData() {

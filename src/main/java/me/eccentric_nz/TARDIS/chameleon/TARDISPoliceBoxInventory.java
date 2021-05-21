@@ -36,12 +36,12 @@ import java.util.List;
  */
 class TARDISPoliceBoxInventory {
 
+    private final List<String> colours = Arrays.asList("Blue", "White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Brown", "Green", "Red", "Black");
     private final ItemStack[] boxes;
     private final TARDIS plugin;
     private final Player player;
-    final List<String> colours = Arrays.asList("Blue", "White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Brown", "Green", "Red", "Black");
 
-    public TARDISPoliceBoxInventory(TARDIS plugin, Player player) {
+    TARDISPoliceBoxInventory(TARDIS plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         boxes = getItemStack();
@@ -94,7 +94,7 @@ class TARDISPoliceBoxInventory {
         return boxes;
     }
 
-    public ItemStack[] getBoxes() {
+    ItemStack[] getBoxes() {
         return boxes;
     }
 }

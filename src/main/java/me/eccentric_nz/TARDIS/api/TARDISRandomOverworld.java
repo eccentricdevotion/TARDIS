@@ -103,7 +103,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
                     world.getChunkAt(overworld).load();
                 }
                 // get start location for checking there is enough space
-                int gsl[] = TARDISTimeTravel.getStartLocation(overworld, d);
+                int[] gsl = TARDISTimeTravel.getStartLocation(overworld, d);
                 int startx = gsl[0];
                 int resetx = gsl[1];
                 int starty = overworld.getBlockY() + 1;

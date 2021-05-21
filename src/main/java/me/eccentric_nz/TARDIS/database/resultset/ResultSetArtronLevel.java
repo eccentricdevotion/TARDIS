@@ -29,9 +29,9 @@ public class ResultSetArtronLevel {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private int artronLevel;
     private final String uuid;
     private final String prefix;
+    private int artronLevel;
 
     public ResultSetArtronLevel(TARDIS plugin, String uuid) {
         this.plugin = plugin;

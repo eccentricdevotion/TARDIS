@@ -32,10 +32,10 @@ public class TARDISGravityWellRunnable implements Runnable {
     private final Player p;
     private final double up;
     private final double end;
-    private int task;
     private final int x;
     private final int z;
     private final int dir;
+    private int task;
 
     public TARDISGravityWellRunnable(TARDIS plugin, Player p, double up, double end, int x, int z, int dir) {
         this.plugin = plugin;

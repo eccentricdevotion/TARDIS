@@ -91,9 +91,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         light = (which > 10000000 && which < 10000005);
                         if (plugin.getConfig().getBoolean("allow.chemistry") && which == 5) {
                             // remember heat block location
-                            if (!plugin.getTrackerKeeper().getHeatBlocks().contains(blockStr)) {
-                                plugin.getTrackerKeeper().getHeatBlocks().add(blockStr);
-                            }
+                            plugin.getTrackerKeeper().getHeatBlocks().add(blockStr);
                         }
                     }
                     event.getBlockPlaced().setBlockData(multipleFacing, light);

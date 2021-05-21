@@ -197,10 +197,7 @@ public class TARDISDoorOpener {
                     if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                         // players
                         uuids.forEach((u) -> {
-                            // only add them if they're not there already!
-                            if (!plugin.getTrackerKeeper().getMover().contains(u)) {
-                                plugin.getTrackerKeeper().getMover().add(u);
-                            }
+                            plugin.getTrackerKeeper().getMover().add(u);
                         });
                     }
                     // locations

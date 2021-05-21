@@ -96,9 +96,7 @@ public class TARDISQuitListener implements Listener {
                     // if beacon is on turn it off
                     new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);
                     // turn force field off
-                    if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
-                        plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
-                    }
+                    plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
                     // update database
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);

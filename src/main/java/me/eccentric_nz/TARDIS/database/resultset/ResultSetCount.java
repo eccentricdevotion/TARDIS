@@ -38,12 +38,12 @@ public class ResultSetCount {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String where;
+    private final String prefix;
     private int id;
     private UUID uuid;
     private int count;
     private int grace;
     private int repair;
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the count table.

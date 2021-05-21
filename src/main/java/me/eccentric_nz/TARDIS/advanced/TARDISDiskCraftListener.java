@@ -76,7 +76,7 @@ public class TARDISDiskCraftListener implements Listener {
                                     if (items.size() > 1 && ladder > 0) {
                                         // mega biome
                                         items.remove(inv.getItem(ladder));
-                                        String lookup = items.get(0).getType().toString() + "_B";
+                                        String lookup = items.get(0).getType() + "_B";
                                         try {
                                             String biome = BiomeLookup.valueOf(lookup).getUpper();
                                             disk_lore.add(biome);
@@ -85,7 +85,7 @@ public class TARDISDiskCraftListener implements Listener {
                                         }
                                     } else {
                                         // regular biome
-                                        String lookup = items.get(0).getType().toString() + "_B";
+                                        String lookup = items.get(0).getType() + "_B";
                                         try {
                                             String biome = BiomeLookup.valueOf(lookup).getRegular();
                                             disk_lore.add(biome);

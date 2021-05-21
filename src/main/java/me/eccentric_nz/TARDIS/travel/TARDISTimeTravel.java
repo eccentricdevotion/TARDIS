@@ -265,7 +265,7 @@ public class TARDISTimeTravel {
                                 randworld.getChunkAt(chunk_loc).load();
                             }
                             // get start location for checking there is enough space
-                            int gsl[] = getStartLocation(chunk_loc, d);
+                            int[] gsl = getStartLocation(chunk_loc, d);
                             startx = gsl[0];
                             resetx = gsl[1];
                             starty = chunk_loc.getBlockY() + 1;
@@ -349,7 +349,7 @@ public class TARDISTimeTravel {
                                             randworld.getChunkAt(chunk_loc).load();
                                         }
                                         // get start location for checking there is enough space
-                                        int gsl[] = getStartLocation(chunk_loc, d);
+                                        int[] gsl = getStartLocation(chunk_loc, d);
                                         startx = gsl[0];
                                         resetx = gsl[1];
                                         starty = chunk_loc.getBlockY() + 1;
@@ -472,7 +472,7 @@ public class TARDISTimeTravel {
             netherLocation.setY(netherLocation.getY() + 1);
             if (plugin.getPluginRespect().getRespect(netherLocation, new Parameters(p, Flag.getNoMessageFlags()))) {
                 // get start location for checking there is enough space
-                int gsl[] = getStartLocation(netherLocation, d);
+                int[] gsl = getStartLocation(netherLocation, d);
                 startx = gsl[0];
                 resetx = gsl[1];
                 starty = netherLocation.getBlockY();

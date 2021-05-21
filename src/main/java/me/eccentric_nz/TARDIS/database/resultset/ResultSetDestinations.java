@@ -38,6 +38,8 @@ public class ResultSetDestinations {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
+    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
+    private final String prefix;
     private int dest_id;
     private int tardis_id;
     private String dest_name;
@@ -49,8 +51,6 @@ public class ResultSetDestinations {
     private String preset;
     private boolean submarine;
     private int slot;
-    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
-    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the destinations table.

@@ -33,8 +33,8 @@ class TARDISPortalCommand {
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private Statement statement = null;
     private final String prefix;
+    private Statement statement = null;
 
     TARDISPortalCommand(TARDIS plugin) {
         this.plugin = plugin;

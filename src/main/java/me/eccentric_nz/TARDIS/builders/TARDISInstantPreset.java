@@ -510,9 +510,7 @@ public class TARDISInstantPreset {
                         String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
                         TARDISMessage.send(trav, message);
                         // TARDIS has travelled so add players to list so they can receive Artron on exit
-                        if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {
-                            plugin.getTrackerKeeper().getHasTravelled().add(s);
-                        }
+                        plugin.getTrackerKeeper().getHasTravelled().add(s);
                     }
                 }), 30L);
             }

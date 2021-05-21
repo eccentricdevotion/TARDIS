@@ -38,8 +38,8 @@ class TARDISJunkItsDangerousRunnable implements Runnable {
     private final int minZ;
     private final int maxX;
     private final int maxZ;
-    private int c = 0;
     private final Lightable lightable = (Lightable) Material.REDSTONE_TORCH.createBlockData();
+    private int c = 0;
 
     TARDISJunkItsDangerousRunnable(TARDIS plugin, Location l) {
         this.plugin = plugin;

@@ -30,15 +30,15 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.List;
 
-public class TARDISSaveSign {
+class TARDISSaveSign {
 
     private final TARDIS plugin;
 
-    public TARDISSaveSign(TARDIS plugin) {
+    TARDISSaveSign(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public void openGUI(Player player, int id) {
+    void openGUI(Player player, int id) {
         TARDISCircuitChecker tcc = null;
         if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
             tcc = new TARDISCircuitChecker(plugin, id);

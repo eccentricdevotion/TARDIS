@@ -34,6 +34,10 @@ public final class TARDISGeneticManipulatorDisguiseEvent extends Event {
         this.disguise = disguise;
     }
 
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     /**
      * Returns the player involved in this event.
      *
@@ -54,10 +58,6 @@ public final class TARDISGeneticManipulatorDisguiseEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }
