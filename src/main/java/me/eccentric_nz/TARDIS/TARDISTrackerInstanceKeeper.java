@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
+import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
 import me.eccentric_nz.TARDIS.enumeration.Bind;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorRunnable;
@@ -92,6 +93,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, String> players = new HashMap<>();
     private final HashMap<UUID, String> preset = new HashMap<>();
     private final HashMap<UUID, String> telepathicPlacements = new HashMap<>();
+    private final HashMap<UUID, TARDISDisplayType> display = new HashMap<>();
     private final HashMap<UUID, TARDISInfoMenu> infoMenu = new HashMap<>();
     private final HashMap<UUID, TARDISMoveSession> moveSessions = new HashMap<>();
     private final HashMap<UUID, TARDISRegulatorRunnable> regulating = new HashMap<>();
@@ -337,6 +339,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<UUID, String> getTelepathicPlacements() {
         return telepathicPlacements;
+    }
+
+    public HashMap<UUID, TARDISDisplayType> getDisplay() {
+        return display;
     }
 
     public HashMap<UUID, TARDISInfoMenu> getInfoMenu() {

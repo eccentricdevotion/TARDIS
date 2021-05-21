@@ -73,7 +73,7 @@ public class TARDISLanguageUpdater {
                 j++;
             }
         }
-        // resave file
+        // re-save file
         String lang_path = plugin.getDataFolder() + File.separator + "language" + File.separator + lang + ".yml";
         try {
             // save the config

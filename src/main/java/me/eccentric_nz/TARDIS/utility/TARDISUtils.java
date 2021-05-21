@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
@@ -212,5 +213,86 @@ public class TARDISUtils {
             }
         }
         return false;
+    }
+
+    private String getFacingXZ(Player player) {
+        if (player.getFacing() == BlockFace.NORTH) {
+            return "-Z";
+        }
+        if (player.getFacing() == BlockFace.SOUTH) {
+            return "+Z";
+        }
+        if (player.getFacing() == BlockFace.EAST) {
+            return "+X";
+        }
+        if (player.getFacing() == BlockFace.WEST) {
+            return "-X";
+        }
+        return "Error!";
+    }
+
+    public String getFacing(Player player) {
+        double yaw = player.getLocation().getYaw();
+        if (yaw >= 337.5 || (yaw <= 22.5 && yaw >= 0.0) || (yaw >= -22.5 && yaw <= 0.0) || (yaw <= -337.5 && yaw <= 0.0)) {
+            return "S";
+        }
+        if ((yaw >= 22.5 && yaw <= 67.5) || (yaw <= -292.5 && yaw >= -337.5)) {
+            return "SW";
+        }
+        if ((yaw >= 67.5 && yaw <= 112.5) || (yaw <= -247.5 && yaw >= -292.5)) {
+            return "W";
+        }
+        if ((yaw >= 112.5 && yaw <= 157.5) || (yaw <= -202.5 && yaw >= -247.5)) {
+            return "NW";
+        }
+        if ((yaw >= 157.5 && yaw <= 202.5) || (yaw <= -157.5 && yaw >= -202.5)) {
+            return "N";
+        }
+        if ((yaw >= 202.5 && yaw <= 247.5) || (yaw <= -112.5 && yaw >= -157.5)) {
+            return "NE";
+        }
+        if ((yaw >= 247.5 && yaw <= 292.5) || (yaw <= -67.5 && yaw >= -112.5)) {
+            return "E";
+        }
+        if ((yaw >= 292.5 && yaw <= 337.5) || (yaw <= -22.5 && yaw >= -67.5)) {
+            return "SE";
+        }
+        return "Error!";
+    }
+
+    public String actionBarFormat(Player player) {
+        TARDISDisplayType displayType = plugin.getTrackerKeeper().getDisplay().get(player.getUniqueId());
+        switch (displayType) {
+            case BIOME:
+                return ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
+                        .replace("%BIOME%", TARDISStaticUtils.getBiomeAt(player.getLocation()).name())
+                );
+            case COORDS:
+                return ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
+                        .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
+                        .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
+                        .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
+                );
+            case DIRECTION:
+                return ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
+                        .replace("%FACING%", getFacing(player))
+                        .replace("%FACING_XZ%", getFacingXZ(player))
+                );
+            case TARGET_BLOCK:
+                return ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
+                        .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
+            default: // ALL
+                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("display.all")
+                        .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
+                        .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
+                        .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
+                        .replace("%FACING%", getFacing(player))
+                        .replace("%FACING_XZ%", getFacingXZ(player))
+                        .replace("%YAW%", String.format("%.1f", player.getLocation().getYaw()))
+                        .replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch()))
+                        .replace("%BIOME%", TARDISStaticUtils.getBiomeAt(player.getLocation()).name())
+                        .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString())
+                );
+        }
     }
 }

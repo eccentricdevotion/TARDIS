@@ -53,6 +53,7 @@ import me.eccentric_nz.TARDIS.control.TARDISControlMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISArchiveMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallMenuListener;
+import me.eccentric_nz.TARDIS.display.TARDISDisplayListener;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
@@ -160,6 +161,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISCraftListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISCreeperDeathListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISDiskCraftListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISDisplayListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEjectListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEntityGriefListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISExplosionListener(plugin), plugin);
