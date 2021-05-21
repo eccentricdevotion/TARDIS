@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ public class TARDISControlInventory {
     private final UUID uuid;
     private final ItemStack[] controls;
 
-    public TARDISControlInventory(TARDIS plugin, UUID uuid) {
+    TARDISControlInventory(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
         controls = getItemStack();

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISFactionsUUID {
+class TARDISFactionsUUID {
 
     /**
      * Checks whether a location is in the player's faction or 'wilderness'... ie NOT in a claimed faction that this
@@ -37,7 +37,7 @@ public class TARDISFactionsUUID {
      * @param l the location instance to check.
      * @return true or false depending on whether the player belongs to the faction who controls the location
      */
-    public boolean isInFaction(Player p, Location l) {
+    boolean isInFaction(Player p, Location l) {
         boolean bool = true;
         FPlayer uplayer = FPlayers.getInstance().getByPlayer(p);
         Faction ufac = uplayer.getFaction();

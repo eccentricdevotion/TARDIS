@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -93,7 +93,7 @@ public class TARDISRoomLister {
         return room_options;
     }
 
-    int roundUpTo4(int num) {
+    private int roundUpTo4(int num) {
         return (int) (Math.ceil(num / 4d) * 4);
     }
 }

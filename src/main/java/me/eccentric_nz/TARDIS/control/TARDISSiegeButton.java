@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ public class TARDISSiegeButton {
     private final boolean powered;
     private final int id;
 
-    public TARDISSiegeButton(TARDIS plugin, Player player, boolean powered, int id) {
+    TARDISSiegeButton(TARDIS plugin, Player player, boolean powered, int id) {
         this.plugin = plugin;
         this.player = player;
         this.powered = powered;

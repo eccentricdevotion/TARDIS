@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -228,7 +228,7 @@ public class TARDISArchPersister {
         }, 30L);
     }
 
-    public void removeArch(UUID uuid) {
+    void removeArch(UUID uuid) {
         try {
             ps = connection.prepareStatement("DELETE FROM " + prefix + "arched WHERE uuid = ?");
             ps.setString(1, uuid.toString());

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,11 +64,11 @@ class TARDISVillager extends TARDISMob {
         this.level = level;
     }
 
-    public Villager.Type getVillagerType() {
+    Villager.Type getVillagerType() {
         return villagerType;
     }
 
-    public void setVillagerType(Villager.Type villagerType) {
+    void setVillagerType(Villager.Type villagerType) {
         this.villagerType = villagerType;
     }
 

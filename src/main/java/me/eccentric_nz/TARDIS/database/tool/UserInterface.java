@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,6 +46,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel outputLabel;
     private javax.swing.JTextField prefix;
     private javax.swing.JLabel titleLabel;
+
     /**
      * Creates new form UserInterface
      */

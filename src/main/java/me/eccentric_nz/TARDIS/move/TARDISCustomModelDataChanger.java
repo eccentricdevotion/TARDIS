@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2021 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -15,14 +31,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class TARDISCustomModelDataChanger {
+class TARDISCustomModelDataChanger {
 
     private final TARDIS plugin;
     private final Block block;
     private final Player player;
     private final int id;
 
-    public TARDISCustomModelDataChanger(TARDIS plugin, Block block, Player player, int id) {
+    TARDISCustomModelDataChanger(TARDIS plugin, Block block, Player player, int id) {
         this.plugin = plugin;
         this.block = block;
         this.player = player;
@@ -32,7 +48,7 @@ public class TARDISCustomModelDataChanger {
     /**
      * Toggle the door open and closed by setting the custom model data.
      */
-    public void toggleOuterDoor() {
+    void toggleOuterDoor() {
         UUID uuid = player.getUniqueId();
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);

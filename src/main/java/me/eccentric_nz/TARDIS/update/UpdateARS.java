@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ public class UpdateARS {
 
     private final TARDIS plugin;
 
-    public UpdateARS(TARDIS plugin) {
+    UpdateARS(TARDIS plugin) {
         this.plugin = plugin;
     }
 

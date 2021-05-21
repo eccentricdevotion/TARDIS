@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ public class TARDISSonicFreeze {
         }
     }
 
-    public static boolean hasIntersection(TARDISVector3D p1, TARDISVector3D p2, TARDISVector3D min, TARDISVector3D max) {
+    static boolean hasIntersection(TARDISVector3D p1, TARDISVector3D p2, TARDISVector3D min, TARDISVector3D max) {
         double epsilon = 0.0001f;
         TARDISVector3D d = p2.subtract(p1).multiply(0.5);
         TARDISVector3D e = max.subtract(min).multiply(0.5);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
      *
      * @return the TARDISRoomData object
      */
-    public TARDISRoomData getRoomData() {
+    private TARDISRoomData getRoomData() {
         return roomData;
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ class TARDISPresetInventory {
     private final Player player;
     private final List<Material> notThese = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
 
-    public TARDISPresetInventory(TARDIS plugin, Player player) {
+    TARDISPresetInventory(TARDIS plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         terminal = getItemStack();

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,15 +23,15 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-public class TARDISHandlesRemoveCommand {
+class TARDISHandlesRemoveCommand {
 
     private final TARDIS plugin;
 
-    public TARDISHandlesRemoveCommand(TARDIS plugin) {
+    TARDISHandlesRemoveCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean purge(Player player) {
+    boolean purge(Player player) {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {
             HashMap<String, Object> whereh = new HashMap<>();

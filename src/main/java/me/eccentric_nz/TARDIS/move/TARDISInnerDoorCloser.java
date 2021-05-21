@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,19 +35,19 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISInnerDoorCloser {
+class TARDISInnerDoorCloser {
 
     private final TARDIS plugin;
     private final UUID uuid;
     private final int id;
 
-    public TARDISInnerDoorCloser(TARDIS plugin, UUID uuid, int id) {
+    TARDISInnerDoorCloser(TARDIS plugin, UUID uuid, int id) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.id = id;
     }
 
-    public void closeDoor() {
+    void closeDoor() {
         // get inner door location
         ResultSetDoorBlocks rs = new ResultSetDoorBlocks(plugin, id);
         if (rs.resultSet()) {

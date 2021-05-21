@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ class TARDISSetRespectCommand {
         return true;
     }
 
-    public boolean setFlag(CommandSender sender, String[] args) {
+    boolean setFlag(CommandSender sender, String[] args) {
         String flag = args[1].toLowerCase(Locale.ENGLISH);
         if (!flags.contains(flag)) {
             TARDISMessage.send(sender, "ARG_FLAG");
