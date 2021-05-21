@@ -30,6 +30,7 @@ import org.bukkit.Sound;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -126,7 +127,7 @@ public class TARDISBindListener implements Listener {
                                     TARDISMessage.send(player, "POWER_DOWN");
                                     return;
                                 }
-                                if ((tardis.isIso_on() && !player.getUniqueId().equals(ownerUUID) && !event.isCancelled()) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
+                                if ((tardis.isIso_on() && !player.getUniqueId().equals(ownerUUID) && !event.useInteractedBlock().equals(Event.Result.DENY)) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
                                     TARDISMessage.send(player, "ISO_HANDS_OFF");
                                     return;
                                 }

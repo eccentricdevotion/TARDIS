@@ -1256,7 +1256,6 @@ public class TARDIS extends JavaPlugin {
         this.recordingTask = recordingTask;
     }
 
-    @Deprecated
     public NamespacedKey getOldBlockKey() {
         return oldBlockKey;
     }

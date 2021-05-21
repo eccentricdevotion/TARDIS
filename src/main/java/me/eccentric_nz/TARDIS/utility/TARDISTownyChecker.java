@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -105,15 +106,8 @@ public class TARDISTownyChecker {
             return td;
         }
         td.setTownBlock(tb);
-        Resident res;
-        try {
-            res = TownyAPI.getInstance().getDataSource().getResident(p.getName());
-            td.setResident(res);
-        } catch (NotRegisteredException ex) {
-            // deny, player is not a resident
-            td.setCanTravel(false);
-            return td;
-        }
+        Resident res = TownyUniverse.getInstance().getResident(p.getUniqueId());
+        td.setResident(res);
         if (res != null) {
             try {
                 if (res.getTown().equals(tb.getTown())) {

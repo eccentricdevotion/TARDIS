@@ -36,11 +36,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ReducerGUIListener extends TARDISMenuListener implements Listener {
 
-    private final TARDIS plugin;
+//    private final TARDIS plugin;
 
     public ReducerGUIListener(TARDIS plugin) {
         super(plugin);
-        this.plugin = plugin;
+//        this.plugin = plugin;
     }
 
     @EventHandler(ignoreCancelled = true)

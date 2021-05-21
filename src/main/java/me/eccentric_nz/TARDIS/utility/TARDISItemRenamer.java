@@ -52,7 +52,7 @@ public class TARDISItemRenamer {
     public void setName(String name, boolean setlore) {
         ItemMeta im = itemStack.getItemMeta();
         if (im == null) {
-            TARDIS.plugin.debug("ItemMeta was null for ItemStack: " + itemStack.toString());
+            TARDIS.plugin.debug("ItemMeta was null for ItemStack: " + itemStack);
         } else {
             im.setDisplayName(name);
             if (setlore) {

@@ -36,12 +36,12 @@ import java.util.List;
 
 public class LabGUIListener extends TARDISMenuListener implements Listener {
 
-    private final TARDIS plugin;
+    //    private final TARDIS plugin;
     private final List<Integer> slots = Arrays.asList(18, 19, 20, 21, 22, 23);
 
     public LabGUIListener(TARDIS plugin) {
         super(plugin);
-        this.plugin = plugin;
+//        this.plugin = plugin;
     }
 
     @EventHandler(ignoreCancelled = true)

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
@@ -29,12 +28,10 @@ import java.util.List;
  */
 public class TARDISRecipeLister {
 
-    private final TARDIS plugin;
     private final CommandSender sender;
     private final TableGenerator tg;
 
-    public TARDISRecipeLister(TARDIS plugin, CommandSender sender) {
-        this.plugin = plugin;
+    public TARDISRecipeLister(CommandSender sender) {
         this.sender = sender;
         if (TableGenerator.getSenderPrefs(sender)) {
             tg = new TableGeneratorCustomFont(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);

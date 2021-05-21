@@ -38,7 +38,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Tag;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
@@ -59,13 +58,9 @@ import java.util.Map;
 public class TARDISScanner {
 
     private final TARDIS plugin;
-    private final List<Material> validBlocks = new ArrayList<>();
 
     TARDISScanner(TARDIS plugin) {
         this.plugin = plugin;
-        validBlocks.add(Material.LEVER);
-        validBlocks.add(Material.COMPARATOR);
-        validBlocks.addAll(Tag.BUTTONS.getValues());
     }
 
     public static List<Entity> getNearbyEntities(Location l, int radius) {
@@ -88,7 +83,7 @@ public class TARDISScanner {
         TARDISScannerData data = new TARDISScannerData();
         TARDISSounds.playTARDISSound(player.getLocation(), "tardis_scanner");
         Location scan_loc;
-        String whereisit;
+        String whereIsIt;
         COMPASS tardisDirection;
         HashMap<String, Object> wherenl = new HashMap<>();
         wherenl.put("tardis_id", id);
@@ -100,7 +95,7 @@ public class TARDISScanner {
             }
             scan_loc = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
             tardisDirection = rsn.getDirection();
-            whereisit = TARDIS.plugin.getLanguage().getString("SCAN_NEXT");
+            whereIsIt = TARDIS.plugin.getLanguage().getString("SCAN_NEXT");
         } else {
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(TARDIS.plugin, wherenl);
             if (!rsc.resultSet()) {
@@ -109,13 +104,13 @@ public class TARDISScanner {
             }
             scan_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             tardisDirection = rsc.getDirection();
-            whereisit = TARDIS.plugin.getLanguage().getString("SCAN_CURRENT");
+            whereIsIt = TARDIS.plugin.getLanguage().getString("SCAN_CURRENT");
         }
         data.setScanLocation(scan_loc);
         data.setTardisDirection(tardisDirection);
         // record nearby entities
-        HashMap<EntityType, Integer> scannedentities = new HashMap<>();
-        List<String> playernames = new ArrayList<>();
+        HashMap<EntityType, Integer> scannedEntities = new HashMap<>();
+        List<String> playerNames = new ArrayList<>();
         for (Entity k : getNearbyEntities(scan_loc, 16)) {
             EntityType et = k.getType();
             if (TARDISConstants.ENTITY_TYPES.contains(et)) {
@@ -123,7 +118,7 @@ public class TARDISScanner {
                 if (et.equals(EntityType.PLAYER)) {
                     Player entPlayer = (Player) k;
                     if (player.canSee(entPlayer)) {
-                        playernames.add(entPlayer.getName());
+                        playerNames.add(entPlayer.getName());
                     } else {
                         visible = false;
                     }
@@ -133,7 +128,7 @@ public class TARDISScanner {
                         EntityEquipment ee = ((LivingEntity) k).getEquipment();
                         if (ee.getHelmet() != null) {
                             switch (ee.getHelmet().getType()) {
-                                case SLIME_BALL: // dalek
+                                case SLIME_BALL: // Dalek
                                     et = EntityType.LLAMA_SPIT;
                                     break;
                                 case IRON_INGOT: // Cyberman
@@ -160,7 +155,7 @@ public class TARDISScanner {
                                 case PAINTING: // Zygon
                                     et = EntityType.FISHING_HOOK;
                                     break;
-                                case STONE_BUTTON: // weeping angel
+                                case STONE_BUTTON: // Weeping Angel
                                     et = EntityType.DRAGON_FIREBALL;
                                     break;
                                 default:
@@ -194,9 +189,9 @@ public class TARDISScanner {
                         }
                     }
                 }
-                Integer entity_count = scannedentities.getOrDefault(et, 0);
+                Integer entity_count = scannedEntities.getOrDefault(et, 0);
                 if (visible) {
-                    scannedentities.put(et, entity_count + 1);
+                    scannedEntities.put(et, entity_count + 1);
                 }
             }
         }
@@ -230,21 +225,21 @@ public class TARDISScanner {
         }
         long time = scan_loc.getWorld().getTime();
         data.setTime(time);
-        String daynight = TARDISStaticUtils.getTime(time);
+        String dayNight = TARDISStaticUtils.getTime(time);
         // message the player
-        TARDISMessage.send(player, "SCAN_RESULT", whereisit);
-        String worldname;
+        TARDISMessage.send(player, "SCAN_RESULT", whereIsIt);
+        String worldName;
         if (TARDIS.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-            worldname = TARDIS.plugin.getMVHelper().getAlias(scan_loc.getWorld());
+            worldName = TARDIS.plugin.getMVHelper().getAlias(scan_loc.getWorld());
         } else {
-            worldname = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());
+            worldName = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());
         }
-        TARDISMessage.send(player, "SCAN_WORLD", worldname);
+        TARDISMessage.send(player, "SCAN_WORLD", worldName);
         TARDISMessage.send(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_DIRECTION", tardisDirection.toString()), 20L);
         // get biome
         TARDISBiome tmb;
-        if (whereisit.equals(TARDIS.plugin.getLanguage().getString("SCAN_CURRENT"))) {
+        if (whereIsIt.equals(TARDIS.plugin.getLanguage().getString("SCAN_CURRENT"))) {
             // adjust for current location as it will always return DEEP_OCEAN if set_biome is true
             switch (tardisDirection) {
                 case NORTH:
@@ -266,7 +261,7 @@ public class TARDISScanner {
         String biome = tmb.name();
         data.setScannedBiome(biome);
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome), 40L);
-        bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_TIME", daynight + " / " + time), 60L);
+        bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_TIME", dayNight + " / " + time), 60L);
         // get weather
         String weather;
         switch (biome) {
@@ -304,13 +299,13 @@ public class TARDISScanner {
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity())), 100L);
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature())), 120L);
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-            if (scannedentities.size() > 0) {
+            if (scannedEntities.size() > 0) {
                 TARDISMessage.send(player, "SCAN_ENTS");
-                for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
+                for (Map.Entry<EntityType, Integer> entry : scannedEntities.entrySet()) {
                     String message = "";
                     StringBuilder buf = new StringBuilder();
-                    if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
-                        playernames.forEach((p) -> buf.append(", ").append(p));
+                    if (entry.getKey().equals(EntityType.PLAYER) && playerNames.size() > 0) {
+                        playerNames.forEach((p) -> buf.append(", ").append(p));
                         message = " (" + buf.substring(2) + ")";
                     }
                     switch (entry.getKey()) {
@@ -366,7 +361,7 @@ public class TARDISScanner {
                             break;
                     }
                 }
-                scannedentities.clear();
+                scannedEntities.clear();
             } else {
                 TARDISMessage.send(player, "SCAN_NONE");
             }

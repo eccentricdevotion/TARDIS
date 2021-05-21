@@ -34,11 +34,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class CompoundGUIListener extends TARDISMenuListener implements Listener {
 
-    private final TARDIS plugin;
+//    private final TARDIS plugin;
 
     public CompoundGUIListener(TARDIS plugin) {
         super(plugin);
-        this.plugin = plugin;
+//        this.plugin = plugin;
     }
 
     @EventHandler(ignoreCancelled = true)

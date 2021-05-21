@@ -35,7 +35,6 @@ public class TARDISBiomeFinderOld implements Runnable {
     private final Player p;
     private final int startx;
     private final int startz;
-    private final int step = 64;
     private final Biome b;
     private final World w;
     private int taskid, limite, limits, limitw, limitn, i = 0, plus = 0;
@@ -77,7 +76,7 @@ public class TARDISBiomeFinderOld implements Runnable {
                         TARDISMessage.send(p, "BIOME_E", b.toString());
                         location = new Location(w, east, TARDISStaticLocationGetters.getHighestYin3x3(w, east, startz), startz);
                     }
-                    plus += step;
+                    plus += 64;
                     if (east >= limite) {
                         i++;
                         plus = 0;
@@ -91,7 +90,7 @@ public class TARDISBiomeFinderOld implements Runnable {
                         TARDISMessage.send(p, "BIOME_S", b.toString());
                         location = new Location(w, startx, TARDISStaticLocationGetters.getHighestYin3x3(w, startx, south), south);
                     }
-                    plus += step;
+                    plus += 64;
                     if (south >= limits) {
                         i++;
                         plus = 0;
@@ -105,7 +104,7 @@ public class TARDISBiomeFinderOld implements Runnable {
                         TARDISMessage.send(p, "BIOME_W", b.toString());
                         location = new Location(w, west, TARDISStaticLocationGetters.getHighestYin3x3(w, west, startz), startz);
                     }
-                    plus -= step;
+                    plus -= 64;
                     if (west <= limitw) {
                         i++;
                         plus = 0;
@@ -119,7 +118,7 @@ public class TARDISBiomeFinderOld implements Runnable {
                         TARDISMessage.send(p, "BIOME_N", b.toString());
                         location = new Location(w, startx, TARDISStaticLocationGetters.getHighestYin3x3(w, startx, north), north);
                     }
-                    plus -= step;
+                    plus -= 64;
                     if (north <= limitn) {
                         i++;
                         plus = 0;

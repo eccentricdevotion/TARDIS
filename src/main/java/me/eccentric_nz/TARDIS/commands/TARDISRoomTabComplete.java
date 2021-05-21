@@ -30,12 +30,10 @@ import java.util.List;
  */
 public class TARDISRoomTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final TARDIS plugin;
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add", "blocks", "required");
     private final ArrayList<String> ROOM_SUBS = new ArrayList<>();
 
     public TARDISRoomTabComplete(TARDIS plugin) {
-        this.plugin = plugin;
         // rooms - only add if enabled in the config
         plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((r) -> {
             if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {

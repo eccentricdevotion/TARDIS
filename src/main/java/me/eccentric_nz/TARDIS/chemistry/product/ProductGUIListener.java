@@ -36,13 +36,13 @@ import java.util.List;
 
 public class ProductGUIListener extends TARDISMenuListener implements Listener {
 
-    private final TARDIS plugin;
+    //    private final TARDIS plugin;
     private final List<Integer> slots = Arrays.asList(0, 1, 2, 9, 10, 11, 18, 19, 20);
     private final List<Integer> pipe = Arrays.asList(2, 11, 20);
 
     public ProductGUIListener(TARDIS plugin) {
         super(plugin);
-        this.plugin = plugin;
+//        this.plugin = plugin;
     }
 
     @EventHandler(ignoreCancelled = true)

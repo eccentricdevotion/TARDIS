@@ -175,7 +175,7 @@ public class Tardis {
         if (companions.equalsIgnoreCase("everyone")) {
             StringBuilder sb = new StringBuilder();
             for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-                sb.append(p.getUniqueId().toString()).append(":");
+                sb.append(p.getUniqueId()).append(":");
             }
             return sb.substring(0, sb.length() - 1);
         } else {

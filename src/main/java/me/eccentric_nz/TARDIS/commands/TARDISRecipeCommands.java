@@ -105,7 +105,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (player == null) {
                 if (args.length == 0) {
-                    new TARDISRecipeLister(plugin, sender).list();
+                    new TARDISRecipeLister(sender).list();
                 } else {
                     TARDISMessage.send(sender, "CMD_PLAYER");
                 }
@@ -120,7 +120,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if (!recipeItems.containsKey(args[0].toLowerCase(Locale.ENGLISH))) {
-                new TARDISRecipeLister(plugin, sender).list();
+                new TARDISRecipeLister(sender).list();
                 return true;
             }
             if (args.length < 1) {

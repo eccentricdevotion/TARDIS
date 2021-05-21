@@ -82,11 +82,10 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
                 }
                 TARDISWeather.setWeather(world, weather);
                 TARDISMessage.send(player, "WEATHER_SET", perm);
-                return true;
             } else {
                 TARDISMessage.send(sender, "CMD_PLAYER");
-                return true;
             }
+            return true;
         }
         return false;
     }

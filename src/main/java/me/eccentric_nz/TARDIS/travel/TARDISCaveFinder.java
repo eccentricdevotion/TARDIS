@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.WorldType;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
@@ -55,7 +54,7 @@ public class TARDISCaveFinder {
             // Assume all non-nether/non-end world environments are NORMAL
             boolean hoth = (w.getGenerator() != null && w.getGenerator().getClass().getName().contains("hothgenerator"));
             if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END) && !hoth) {
-                if (!w.getWorldType().equals(WorldType.FLAT) && worldCheck(w)) {
+                if (worldCheck(w)) {
                     int plusx = startx + 2000;
                     int plusz = startz + 2000;
                     int minusx = startx - 2000;
