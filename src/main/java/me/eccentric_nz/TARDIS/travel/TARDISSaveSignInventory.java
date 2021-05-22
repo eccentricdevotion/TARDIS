@@ -23,6 +23,8 @@ import me.eccentric_nz.TARDIS.custommodeldata.GUISaves;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.enumeration.WorldManager;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -122,7 +124,8 @@ public class TARDISSaveSignInventory {
                         ItemMeta im = is.getItemMeta();
                         im.setDisplayName(map.get("dest_name"));
                         List<String> lore = new ArrayList<>();
-                        lore.add(map.get("world"));
+                        String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.get("world")) : TARDISAliasResolver.getWorldAlias(map.get("world"));
+                        lore.add(world);
                         lore.add(map.get("x"));
                         lore.add(map.get("y"));
                         lore.add(map.get("z"));
