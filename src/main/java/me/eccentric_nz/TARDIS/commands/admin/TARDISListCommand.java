@@ -20,14 +20,15 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.messaging.TableGenerator;
-import me.eccentric_nz.TARDIS.messaging.TableGenerator.Alignment;
-import me.eccentric_nz.TARDIS.messaging.TableGenerator.Receiver;
-import me.eccentric_nz.TARDIS.messaging.TableGeneratorCustomFont;
-import me.eccentric_nz.TARDIS.messaging.TableGeneratorSmallChar;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -107,14 +108,11 @@ class TARDISListCommand {
             ResultSetTardis rsl = new ResultSetTardis(plugin, new HashMap<>(), limit, true, 0);
             if (rsl.resultSet()) {
                 TARDISMessage.send(sender, "TARDIS_LOCS");
-                TableGenerator tg;
-                if (TableGenerator.getSenderPrefs(sender)) {
-                    tg = new TableGeneratorCustomFont(Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
-                } else {
-                    tg = new TableGeneratorSmallChar(Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
+                if (sender instanceof Player) {
+                    TARDISMessage.message(sender, "Hover to see location (world x, y, z)");
+                    TARDISMessage.message(sender, "Click to enter the TARDIS");
                 }
-                tg.addRow(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "ID", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Time Lord", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "World", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "X", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Y", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Z");
-                tg.addRow();
+                TARDISMessage.message(sender, "");
                 for (Tardis t : rsl.getData()) {
                     HashMap<String, Object> wherecl = new HashMap<>();
                     wherecl.put("tardis_id", t.getTardis_id());
@@ -123,10 +121,12 @@ class TARDISListCommand {
                         TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
                         return true;
                     }
-                    tg.addRow("" + t.getTardis_id(), t.getOwner(), rsc.getWorld().getName(), "" + rsc.getX(), "" + rsc.getY(), "" + rsc.getZ());
-                }
-                for (String line : tg.generate(sender instanceof Player ? Receiver.CLIENT : Receiver.CONSOLE, true, true)) {
-                    sender.sendMessage(line);
+                    String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
+                    TextComponent tct = new TextComponent(String.format("%s %s", t.getTardis_id(), t.getOwner()));
+                    tct.setColor(ChatColor.GREEN);
+                    tct.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, rsc.getX(), rsc.getY(), rsc.getZ()))));
+                    tct.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisadmin enter " + t.getTardis_id()));
+                    sender.spigot().sendMessage(tct);
                 }
                 if (rsl.getData().size() > 18) {
                     TARDISMessage.send(sender, "TARDIS_LOCS_INFO");

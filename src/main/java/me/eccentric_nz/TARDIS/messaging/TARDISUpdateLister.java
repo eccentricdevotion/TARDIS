@@ -18,10 +18,12 @@ package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateableCategory;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -29,36 +31,28 @@ import java.util.List;
 public class TARDISUpdateLister {
 
     private final Player player;
-    private final TableGenerator tg;
 
     public TARDISUpdateLister(Player player) {
         this.player = player;
-        if (TableGenerator.getSenderPrefs(player)) {
-            tg = new TableGeneratorCustomFont(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
-        } else {
-            tg = new TableGeneratorSmallChar(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
-        }
     }
 
     public void list() {
         TARDISMessage.send(player, "UPDATE_INFO");
-        for (String line : createUpdateOptions()) {
-            player.sendMessage(line);
-        }
-    }
-
-    private List<String> createUpdateOptions() {
-        tg.addRow(ChatColor.GRAY + "" + ChatColor.UNDERLINE + "Command argument", ChatColor.DARK_GRAY + "" + ChatColor.UNDERLINE + "Description");
-        tg.addRow();
+        TARDISMessage.message(player, ChatColor.GRAY + "Hover over command argument to see a description");
+        TARDISMessage.message(player, ChatColor.GRAY + "Click to run the /tardis update command");
+        TARDISMessage.message(player, "");
         for (TARDISUpdateableCategory category : TARDISUpdateableCategory.values()) {
-            tg.addRow(category.getName(), "");
+            TARDISMessage.message(player, category.getName());
             for (Updateable updateable : Updateable.values()) {
                 if (updateable.getCategory() == category) {
-                    tg.addRow(category.getKeyColour() + updateable.getName(), category.getValueColour() + updateable.getDescription());
+                    TextComponent tcu = new TextComponent(updateable.getName());
+                    tcu.setColor(category.getColour());
+                    tcu.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(updateable.getDescription())));
+                    tcu.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tardis update " + updateable.getName()));
+                    player.spigot().sendMessage(tcu);
                 }
             }
-            tg.addRow();
+            TARDISMessage.message(player, "");
         }
-        return tg.generate(TableGeneratorSmallChar.Receiver.CLIENT, true, true);
     }
 }

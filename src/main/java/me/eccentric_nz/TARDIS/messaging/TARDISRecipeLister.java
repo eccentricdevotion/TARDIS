@@ -18,10 +18,12 @@ package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -29,38 +31,30 @@ import java.util.List;
 public class TARDISRecipeLister {
 
     private final CommandSender sender;
-    private final TableGenerator tg;
 
     public TARDISRecipeLister(CommandSender sender) {
         this.sender = sender;
-        if (TableGenerator.getSenderPrefs(sender)) {
-            tg = new TableGeneratorCustomFont(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
-        } else {
-            tg = new TableGeneratorSmallChar(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
-        }
     }
 
     public void list() {
         TARDISMessage.send(sender, "RECIPE_VIEW");
-        for (String line : createRecipeOptions()) {
-            sender.sendMessage(line);
-        }
-    }
-
-    private List<String> createRecipeOptions() {
-        tg.addRow(ChatColor.GRAY + "" + ChatColor.UNDERLINE + "Command argument", ChatColor.DARK_GRAY + "" + ChatColor.UNDERLINE + "Recipe Result");
-        tg.addRow();
+        TARDISMessage.message(sender, ChatColor.GRAY + "Hover over command argument to see a description");
+        TARDISMessage.message(sender, ChatColor.GRAY + "Click to view the recipe");
+        TARDISMessage.message(sender, "");
         for (RecipeCategory category : RecipeCategory.values()) {
             if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE) {
-                tg.addRow(category.getName(), "");
+                TARDISMessage.message(sender, category.getName());
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {
-                        tg.addRow(category.getKeyColour() + item.toTabCompletionString(), category.getValueColour() + item.toRecipeString());
+                        TextComponent tci = new TextComponent(item.toTabCompletionString());
+                        tci.setColor(category.getColour());
+                        tci.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(item.toRecipeString())));
+                        tci.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisrecipe " + item.toTabCompletionString()));
+                        sender.spigot().sendMessage(tci);
                     }
                 }
-                tg.addRow();
+                TARDISMessage.message(sender, "");
             }
         }
-        return tg.generate(TableGeneratorSmallChar.Receiver.CLIENT, true, true);
     }
 }
