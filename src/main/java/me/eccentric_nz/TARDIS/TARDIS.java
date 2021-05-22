@@ -180,7 +180,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("MultiInv", "3.3.6");
         versions.put("My_Worlds", "1.16.1");
         versions.put("PerWorldInventory", "2.3.0");
-        versions.put("TARDISChunkGenerator", "4.6.1");
+        versions.put("TARDISChunkGenerator", "4.6.2");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.0");
@@ -300,7 +300,10 @@ public class TARDIS extends JavaPlugin {
         // check server version
         if (serverVersion.compareTo(minversion) >= 0) {
             if (getServer().getBukkitVersion().startsWith("git-Bukkit-")) {
-                console.sendMessage(pluginName + ChatColor.RED + "Your server is running CraftBukkit. Please use Spigot or Paper instead! This plugin will continue to load, but performance may be affected.)");
+                console.sendMessage(pluginName + ChatColor.RED + "TARDIS no longer supports servers running CraftBukkit. Please use Spigot or Paper instead!)");
+                hasVersion = false;
+                pm.disablePlugin(this);
+                return;
             }
             // TARDISChunkGenerator needs to be enabled
             if (!loadHelper()) {
