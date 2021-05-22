@@ -16,31 +16,25 @@
  */
 package me.eccentric_nz.TARDIS.update;
 
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 
 public enum TARDISUpdateableCategory {
 
-    CONTROLS(ChatColor.GREEN, ChatColor.DARK_GREEN, "TARDIS Controls"),
-    INTERFACES(ChatColor.RED, ChatColor.DARK_RED, "User Interfaces"),
-    LOCATIONS(ChatColor.YELLOW, ChatColor.GOLD, "Spawn Locations"),
-    OTHERS(ChatColor.LIGHT_PURPLE, ChatColor.DARK_PURPLE, "Others");
+    CONTROLS(ChatColor.GREEN, "TARDIS Controls"),
+    INTERFACES(ChatColor.RED, "TARDIS User Interfaces"),
+    LOCATIONS(ChatColor.AQUA, "TARDIS Internal Spawn Locations"),
+    OTHERS(ChatColor.LIGHT_PURPLE, "Others");
 
-    private final ChatColor keyColour;
-    private final ChatColor valueColour;
+    private final ChatColor colour;
     private final String name;
 
-    TARDISUpdateableCategory(ChatColor keyColour, ChatColor valueColour, String name) {
-        this.keyColour = keyColour;
-        this.valueColour = valueColour;
+    TARDISUpdateableCategory(ChatColor colour, String name) {
+        this.colour = colour;
         this.name = name;
     }
 
-    public ChatColor getKeyColour() {
-        return keyColour;
-    }
-
-    public ChatColor getValueColour() {
-        return valueColour;
+    public ChatColor getColour() {
+        return colour;
     }
 
     public String getName() {

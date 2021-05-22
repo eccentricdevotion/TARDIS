@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.info;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,6 +27,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 import java.util.UUID;
@@ -40,14 +41,13 @@ import java.util.UUID;
 public class TARDISInformationSystemListener implements Listener, CommandExecutor {
 
     private final TARDIS plugin;
-    private final String JSON = "{\"text\":\"%s\",\"color\":\"gold\",\"extra\":[{\"text\":\"%s\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisinfo %s\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}},\"extra\":[{\"text\":\"%s\",\"color\":\"gold\"}]}]}";
 
     public TARDISInformationSystemListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (!(sender instanceof Player)) {
             return true;
         }
@@ -1315,9 +1315,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
         TARDISInfoMenu.getChildren(item.toString()).forEach((key, value) -> {
             String[] split = key.split(value, 2);
             String first = "> " + split[0];
-            TARDISUpdateChatGUI.sendJSON(String.format(JSON, first, value, value, split[1]), p);
+            TARDISUpdateChatGUI.sendTextComponent(first, value, split[1], p);
         });
-        TARDISUpdateChatGUI.sendJSON(String.format(JSON, "> ", "E", "E", "xit"), p);
+        TARDISUpdateChatGUI.sendTextComponent("> ", "E", "xit", p);
     }
 
     /**

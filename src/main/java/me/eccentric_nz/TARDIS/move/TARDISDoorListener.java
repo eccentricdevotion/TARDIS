@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISExitEvent;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -34,6 +33,11 @@ import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
 import multiworld.api.MultiWorldWorldData;
 import multiworld.api.flag.FlagName;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
@@ -77,61 +81,67 @@ public class TARDISDoorListener {
     /**
      * A method to teleport the player into and out of the TARDIS.
      *
-     * @param p      the player to teleport
-     * @param l      the location to teleport to
-     * @param exit   whether the player is entering or exiting the TARDIS, if true they are exiting
-     * @param from   the world they are teleporting from
-     * @param quotes whether the player will receive a TARDIS quote message
-     * @param sound  an integer representing the sound to play
-     * @param m      whether to play the resource pack sound
+     * @param player   the player to teleport
+     * @param location the location to teleport to
+     * @param exit     whether the player is entering or exiting the TARDIS, if true they are exiting
+     * @param from     the world they are teleporting from
+     * @param quotes   whether the player will receive a TARDIS quote message
+     * @param sound    an integer representing the sound to play
+     * @param m        whether to play the resource pack sound
      */
-    public void movePlayer(Player p, Location l, boolean exit, World from, boolean quotes, int sound, boolean m) {
+    public void movePlayer(Player player, Location location, boolean exit, World from, boolean quotes, int sound, boolean m) {
         int i = TARDISConstants.RANDOM.nextInt(plugin.getGeneralKeeper().getQuotes().size());
-        World to = l.getWorld();
-        boolean allowFlight = p.getAllowFlight();
+        World to = location.getWorld();
+        boolean allowFlight = player.getAllowFlight();
         boolean crossWorlds = (from != to);
         boolean isSurvival = checkSurvival(to);
 
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.teleport(l);
-            playDoorSound(p, sound, l, m);
+            player.teleport(location);
+            playDoorSound(player, sound, location, m);
         }, 5L);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.teleport(l);
-            if (p.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds && !isSurvival)) {
-                p.setAllowFlight(true);
+            player.teleport(location);
+            if (player.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds && !isSurvival)) {
+                player.setAllowFlight(true);
             }
             if (quotes) {
                 if (TARDISConstants.RANDOM.nextInt(100) < 3) {
-                    TARDISUpdateChatGUI.sendJSON(plugin.getJsonKeeper().getEgg(), p);
+                    TextComponent tcg = new TextComponent("[TARDIS] ");
+                    tcg.setColor(ChatColor.GOLD);
+                    TextComponent tcl = new TextComponent("Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!");
+                    tcl.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
+                    tcl.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis egg"));
+                    tcg.addExtra(tcl);
+                    player.spigot().sendMessage(tcg);
                 } else {
-                    p.sendMessage(plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));
+                    player.sendMessage(plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));
                 }
             }
             if (exit) {
-                plugin.getPM().callEvent(new TARDISExitEvent(p, to));
+                plugin.getPM().callEvent(new TARDISExitEvent(player, to));
                 // give some artron energy to player
                 HashMap<String, Object> where = new HashMap<>();
-                UUID uuid = p.getUniqueId();
+                UUID uuid = player.getUniqueId();
                 where.put("uuid", uuid.toString());
                 if (plugin.getTrackerKeeper().getHasTravelled().contains(uuid)) {
-                    plugin.getQueryFactory().alterEnergyLevel("player_prefs", player_artron, where, p);
+                    plugin.getQueryFactory().alterEnergyLevel("player_prefs", player_artron, where, player);
                     plugin.getTrackerKeeper().getHasTravelled().remove(uuid);
                 }
                 if (plugin.getTrackerKeeper().getSetTime().containsKey(uuid)) {
-                    setTemporalLocation(p, plugin.getTrackerKeeper().getSetTime().get(uuid));
+                    setTemporalLocation(player, plugin.getTrackerKeeper().getSetTime().get(uuid));
                     plugin.getTrackerKeeper().getSetTime().remove(uuid);
                 }
                 plugin.getTrackerKeeper().getEjecting().remove(uuid);
             } else {
-                plugin.getPM().callEvent(new TARDISEnterEvent(p, from));
-                if (p.isPlayerTimeRelative()) {
-                    setTemporalLocation(p, -1);
+                plugin.getPM().callEvent(new TARDISEnterEvent(player, from));
+                if (player.isPlayerTimeRelative()) {
+                    setTemporalLocation(player, -1);
                 }
-                TARDISSounds.playTARDISHum(p);
+                TARDISSounds.playTARDISHum(player);
             }
             // give a key
-            giveKey(p);
+            giveKey(player);
         }, 10L);
     }
 
