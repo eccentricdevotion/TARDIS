@@ -1,10 +1,10 @@
 # TODO
 
-## Current version `4.5.6`
+## Current version `4.6.2`
 
 1. Check Biome Reader in data pack worlds with custom biomes
 
-## Next version `4.6`
+## Next version `4.7`
 
 1. Update documentation...
 2. 13th Doctor's and Factory TARDIS console
@@ -16,6 +16,7 @@
 7. More sudo commands - [#307](https://github.com/eccentricdevotion/TARDIS/issues/307)
 8. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
 9. TCG API - use Police Box location instead of player location?
+10. All the things...
 
 ## Resource Pack / TARDISWeepingAngels
 
