@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISEntityTracker;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISEntityTracker;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -51,7 +51,7 @@ public class TARDISRenderRoomListener implements Listener {
 		if (plugin.getTrackerKeeper().getRenderRoomOccupants().contains(player.getUniqueId())) {
 			event.setCancelled(true);
 			if (event.getHand().equals(EquipmentSlot.HAND) && (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR))) {
-				// tp the player back to the TARDIS console
+				// tp the player back to the tardis console
 				transmat(player);
 				player.updateInventory();
 			}
@@ -60,7 +60,7 @@ public class TARDISRenderRoomListener implements Listener {
 
 	public void transmat(Player p) {
 		TARDISMessage.send(p, "TRANSMAT");
-		// get the TARDIS the player is in
+		// get the tardis the player is in
 		HashMap<String, Object> wherep = new HashMap<>();
 		wherep.put("uuid", p.getUniqueId().toString());
 		ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
@@ -76,26 +76,26 @@ public class TARDISRenderRoomListener implements Listener {
 				int getx = tp_loc.getBlockX();
 				int getz = tp_loc.getBlockZ();
 				switch (d) {
-					case NORTH:
+					case NORTH -> {
 						// z -ve
 						tp_loc.setX(getx + 0.5);
 						tp_loc.setZ(getz - 0.5);
-						break;
-					case EAST:
+					}
+					case EAST -> {
 						// x +ve
 						tp_loc.setX(getx + 1.5);
 						tp_loc.setZ(getz + 0.5);
-						break;
-					case SOUTH:
+					}
+					case SOUTH -> {
 						// z +ve
 						tp_loc.setX(getx + 0.5);
 						tp_loc.setZ(getz + 1.5);
-						break;
-					case WEST:
+					}
+					case WEST -> {
 						// x -ve
 						tp_loc.setX(getx - 0.5);
 						tp_loc.setZ(getz + 0.5);
-						break;
+					}
 				}
 				tp_loc.setPitch(p.getLocation().getPitch());
 				tp_loc.setYaw(p.getLocation().getYaw());

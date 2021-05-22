@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -40,8 +40,8 @@ public class TARDISFireListener implements Listener {
 	}
 
 	/**
-	 * Listens for block burn and ignite events around the TARDIS. If the affected block is part of the TARDIS, then the
-	 * event is canceled there by providing protection for the TARDIS blocks
+	 * Listens for block burn and ignite events around the tardis. If the affected block is part of the tardis, then the
+	 * event is canceled there by providing protection for the tardis blocks
 	 *
 	 * @param event a block catching fire
 	 */

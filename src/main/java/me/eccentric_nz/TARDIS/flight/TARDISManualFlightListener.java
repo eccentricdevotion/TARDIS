@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.flight;
+package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -30,8 +30,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import java.util.UUID;
 
 /**
- * The Absolute Tesseractulator is responsible for keeping track of a TARDIS's dimensional location. It uses the
- * Interstitial Antenna to collect data from the Vortex. A TARDIS knows where it's going by using digitally-modeled
+ * The Absolute Tesseractulator is responsible for keeping track of a tardis's dimensional location. It uses the
+ * Interstitial Antenna to collect data from the Vortex. A tardis knows where it's going by using digitally-modeled
  * time-cone isometry parallel-bussed into the image translator, with local motion being mapped over every
  * refresh-cycle.
  *
@@ -66,7 +66,7 @@ public class TARDISManualFlightListener implements Listener {
 					event.setCancelled(true);
 				}
 				plugin.getTrackerKeeper().getFlight().remove(uuid);
-			} else // if it is a TARDIS repeater cancel the event
+			} else // if it is a tardis repeater cancel the event
 			{
 				if (plugin.getTrackerKeeper().getRepeaters().containsKey(uuid) && plugin.getTrackerKeeper().getRepeaters().get(uuid).contains(loc)) {
 					event.setCancelled(true);

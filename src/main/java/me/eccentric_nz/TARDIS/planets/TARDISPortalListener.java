@@ -1,6 +1,6 @@
-package me.eccentric_nz.TARDIS.planets;
+package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.PortalCreateEvent;

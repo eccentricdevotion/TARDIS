@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.junk;
+package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.admin.TARDISDeleteCommand;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.commands.admin.TARDISDeleteCommand;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.destroyers.DestroyData;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.Consoles;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -63,7 +63,7 @@ class TARDISJunkDelete {
 				TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
 				return true;
 			}
-			// destroy junk TARDIS
+			// destroy junk tardis
 			DestroyData dd = new DestroyData();
 			dd.setDirection(COMPASS.SOUTH);
 			dd.setLocation(bb_loc);
@@ -74,9 +74,9 @@ class TARDISJunkDelete {
 			dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
 			dd.setThrottle(SpaceTimeThrottle.JUNK);
 			plugin.getPresetDestroyer().destroyPreset(dd);
-			// destroy the vortex TARDIS
+			// destroy the vortex tardis
 			World cw = plugin.getServer().getWorld(plugin.getConfig().getString("creation.default_world_name"));
-			// give the TARDIS time to remove itself as it's not hidden
+			// give the tardis time to remove itself as it's not hidden
 			if (cw != null) {
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 					plugin.getInteriorDestroyer().destroyInner(Consoles.schematicFor("junk"), id, cw, -999);

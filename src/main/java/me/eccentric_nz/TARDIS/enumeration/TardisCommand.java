@@ -14,96 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
 /**
  * @author eccentric_nz
  */
 public enum TardisCommand {
 
-	abandon,
-	abort,
-	add,
-	arch_time,
-	archive,
-	arsremove,
-	bell,
-	check_loc,
-	colourise,
-	colorize,
-	comehere,
-	construct,
-	cube,
-	desktop,
-	direction,
-	door,
-	egg,
-	eject,
-	ep1,
-	erase,
-	excite,
-	exterminate,
-	find,
-	handbrake,
-	help,
-	hide,
-	home,
-	inside,
-	item,
-	jettison,
-	lamps,
-	list,
-	make_her_blue,
-	namekey,
-	occupy,
-	rebuild,
-	remove,
-	removesave,
-	renamesave,
-	reordersave,
-	rescue,
-	room,
-	save,
-	saveicon,
-	save_player,
-	secondary,
-	section,
-	setdest,
-	sethome,
-	tagtheood,
-	theme,
-	transmat,
-	update,
-	upgrade,
-	version;
+	abandon, abort, add, arch_time, archive, arsremove, bell, check_loc, colourise, colorize, comehere, construct, cube, desktop, direction, door, egg, eject, ep1, erase, excite, exterminate, find, handbrake, help, hide, home, inside, item, jettison, lamps, list, make_her_blue, namekey, occupy, rebuild, remove, removesave, renamesave, reordersave, rescue, room, save, saveicon, save_player, secondary, section, setdest, sethome, tagtheood, theme, transmat, update, upgrade, version;
 
 	public boolean noSiege() {
-		switch (this) {
-			case abandon:
-			case archive:
-			case colourise:
-			case colorize:
-			case comehere:
-			case desktop:
-			case direction:
-			case door:
-			case eject:
-			case excite:
-			case exterminate:
-			case hide:
-			case home:
-			case sethome:
-			case lamps:
-			case make_her_blue:
-			case rebuild:
-			case rescue:
-			case room:
-			case setdest:
-			case theme:
-			case upgrade:
-				return true;
-			default:
-				return false;
-		}
+		return switch (this) {
+			case abandon, archive, colourise, colorize, comehere, desktop, direction, door, eject, excite, exterminate, hide, home, sethome, lamps, make_her_blue, rebuild, rescue, room, setdest, theme, upgrade -> true;
+			default -> false;
+		};
 	}
 }

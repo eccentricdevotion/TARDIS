@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.control;
+package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.utility.TARDISParticles;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.utility.TARDISParticles;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -31,9 +31,9 @@ import java.util.List;
  * @author eccentric_nz
  * <p>
  * Atmospheric excitation is an unnatural disturbance in the atmosphere which causes the weather to change. The Tenth
- * Doctor's sonic screwdriver, the TARDIS, and moving a planet can all cause atmospheric excitation.
+ * Doctor's sonic screwdriver, the tardis, and moving a planet can all cause atmospheric excitation.
  * <p>
- * The Tenth Doctor used a device above the inside of the door of the TARDIS to excite the atmosphere, causing snow, in
+ * The Tenth Doctor used a device above the inside of the door of the tardis to excite the atmosphere, causing snow, in
  * an attempt to cheer up Donna Noble.
  */
 class TARDISExcitationRunnable implements Runnable {
@@ -56,8 +56,7 @@ class TARDISExcitationRunnable implements Runnable {
 		if (i < 100) {
 			TARDISParticles.sendSnowParticles(location, player);
 			player.getNearbyEntities(16.0, 16.0, 16.0).forEach((e) -> {
-				if (e instanceof Player) {
-					Player p = (Player) e;
+				if (e instanceof Player p) {
 					TARDISParticles.sendSnowParticles(location, p);
 				}
 			});

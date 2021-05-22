@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -104,8 +104,7 @@ public class TARDISTagListener implements Listener {
 	 */
 	@EventHandler(ignoreCancelled = true)
 	public void onTagPlayerInteractTagPlayer(PlayerInteractEntityEvent event) {
-		if (event.getRightClicked() instanceof Player && eggcal.after(plugin.getBeforeCal()) && eggcal.before(plugin.getAfterCal())) {
-			Player clicked = (Player) event.getRightClicked();
+		if (event.getRightClicked() instanceof Player clicked && eggcal.after(plugin.getBeforeCal()) && eggcal.before(plugin.getAfterCal())) {
 			String p = clicked.getName();
 			if (clicked.getName().equals(plugin.getTagConfig().getString("it"))) {
 				Player newit = event.getPlayer();
@@ -138,16 +137,12 @@ public class TARDISTagListener implements Listener {
 	 * @return an ordinal string (1st, 2nd, 3rd, 4th)
 	 */
 	private String getOrdinal(int age) {
-		switch (age % 10) {
-			case 1:
-				return "st";
-			case 2:
-				return "nd";
-			case 3:
-				return "rd";
-			default:
-				return "th";
-		}
+		return switch (age % 10) {
+			case 1 -> "st";
+			case 2 -> "nd";
+			case 3 -> "rd";
+			default -> "th";
+		};
 	}
 
 	/**

@@ -14,23 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.Flag;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -67,7 +67,7 @@ public class TARDISTimeTravel {
 	}
 
 	/**
-	 * Checks if a random location is safe for the TARDIS Police Box to land at. The Police Box requires a clear 4 x 3 x
+	 * Checks if a random location is safe for the tardis Police Box to land at. The Police Box requires a clear 4 x 3 x
 	 * 4 (d x w x h) area.
 	 *
 	 * @param startx a starting position in the x direction.
@@ -82,15 +82,14 @@ public class TARDISTimeTravel {
 	public static int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
 		int level, row, col, rowcount, colcount, count = 0;
 		switch (d) {
-			case EAST:
-			case WEST:
+			case EAST, WEST -> {
 				rowcount = 3;
 				colcount = 4;
-				break;
-			default:
+			}
+			default -> {
 				rowcount = 4;
 				colcount = 3;
-				break;
+			}
 		}
 		for (level = 0; level < 4; level++) {
 			for (row = 0; row < rowcount; row++) {
@@ -141,41 +140,41 @@ public class TARDISTimeTravel {
 	public static int[] getStartLocation(Location loc, COMPASS d) {
 		int[] startLocation = new int[4];
 		switch (d) {
-			case EAST:
+			case EAST -> {
 				startLocation[0] = loc.getBlockX() - 2;
 				startLocation[1] = startLocation[0];
 				startLocation[2] = loc.getBlockZ() - 1;
 				startLocation[3] = startLocation[2];
-				break;
-			case SOUTH:
+			}
+			case SOUTH -> {
 				startLocation[0] = loc.getBlockX() - 1;
 				startLocation[1] = startLocation[0];
 				startLocation[2] = loc.getBlockZ() - 2;
 				startLocation[3] = startLocation[2];
-				break;
-			default:
+			}
+			default -> {
 				startLocation[0] = loc.getBlockX() - 1;
 				startLocation[1] = startLocation[0];
 				startLocation[2] = loc.getBlockZ() - 1;
 				startLocation[3] = startLocation[2];
-				break;
+			}
 		}
 		return startLocation;
 	}
 
 	/**
-	 * Retrieves a random location determined from the TARDIS repeater or terminal settings.
+	 * Retrieves a random location determined from the tardis repeater or terminal settings.
 	 *
 	 * @param p           a player object used to check permissions against.
 	 * @param rx          the delay setting of the x-repeater, this determines the distance in the x direction.
 	 * @param rz          the delay setting of the z-repeater, this determines the distance in the z direction.
 	 * @param ry          the delay setting of the y-repeater, this determines the multiplier for both the x and z
 	 *                    directions.
-	 * @param d           the direction the TARDIS Police Box faces.
+	 * @param d           the direction the tardis Police Box faces.
 	 * @param e           the environment(s) the player has chosen (or is allowed) to travel to.
 	 * @param this_world  the world the Police Box is currently in
 	 * @param malfunction whether there should be a malfunction
-	 * @param current     the current location of the TARDIS
+	 * @param current     the current location of the tardis
 	 * @return a random Location
 	 */
 	public Location randomDestination(Player p, int rx, int rz, int ry, COMPASS d, String e, World this_world, boolean malfunction, Location current) {
@@ -265,7 +264,7 @@ public class TARDISTimeTravel {
 								randworld.getChunkAt(chunk_loc).load();
 							}
 							// get start location for checking there is enough space
-							int gsl[] = getStartLocation(chunk_loc, d);
+							int[] gsl = getStartLocation(chunk_loc, d);
 							startx = gsl[0];
 							resetx = gsl[1];
 							starty = chunk_loc.getBlockY() + 1;
@@ -322,7 +321,7 @@ public class TARDISTimeTravel {
 											TARDISMessage.send(p, "SUB_SEARCH");
 											Location underwater = submarine(currentBlock, d);
 											if (underwater != null) {
-												// get TARDIS id
+												// get tardis id
 												HashMap<String, Object> wherep = new HashMap<>();
 												wherep.put("uuid", p.getUniqueId().toString());
 												ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
@@ -349,7 +348,7 @@ public class TARDISTimeTravel {
 											randworld.getChunkAt(chunk_loc).load();
 										}
 										// get start location for checking there is enough space
-										int gsl[] = getStartLocation(chunk_loc, d);
+										int[] gsl = getStartLocation(chunk_loc, d);
 										startx = gsl[0];
 										resetx = gsl[1];
 										starty = chunk_loc.getBlockY() + 1;
@@ -383,7 +382,7 @@ public class TARDISTimeTravel {
 	}
 
 	/**
-	 * Checks if a location is safe for the TARDIS Police Box to land at. Used for debugging purposes only. The Police
+	 * Checks if a location is safe for the tardis Police Box to land at. Used for debugging purposes only. The Police
 	 * Box requires a clear 4 x 3 x 4 (d x w x h) area.
 	 *
 	 * @param loc the location to test
@@ -394,30 +393,29 @@ public class TARDISTimeTravel {
 		int starty = loc.getBlockY();
 		int sx, sz;
 		switch (d) {
-			case EAST:
+			case EAST -> {
 				sx = loc.getBlockX() - 2;
 				sz = loc.getBlockZ() - 1;
-				break;
-			case SOUTH:
+			}
+			case SOUTH -> {
 				sx = loc.getBlockX() - 1;
 				sz = loc.getBlockZ() - 2;
-				break;
-			default:
+			}
+			default -> {
 				sx = loc.getBlockX() - 1;
 				sz = loc.getBlockZ() - 1;
-				break;
+			}
 		}
 		int row, col;
 		switch (d) {
-			case EAST:
-			case WEST:
+			case EAST, WEST -> {
 				row = 2;
 				col = 3;
-				break;
-			default:
+			}
+			default -> {
 				row = 3;
 				col = 2;
-				break;
+			}
 		}
 		int r = row;
 		int c = col;
@@ -472,7 +470,7 @@ public class TARDISTimeTravel {
 			netherLocation.setY(netherLocation.getY() + 1);
 			if (plugin.getPluginRespect().getRespect(netherLocation, new Parameters(p, Flag.getNoMessageFlags()))) {
 				// get start location for checking there is enough space
-				int gsl[] = getStartLocation(netherLocation, d);
+				int[] gsl = getStartLocation(netherLocation, d);
 				startx = gsl[0];
 				resetx = gsl[1];
 				starty = netherLocation.getBlockY();
@@ -498,7 +496,7 @@ public class TARDISTimeTravel {
 	 * @param rx      the delay of the x-repeater setting.
 	 * @param ry      the delay of the y-repeater setting.
 	 * @param e       a string to determine where to start the random search from
-	 * @param l       the current TARDIS location
+	 * @param l       the current tardis location
 	 */
 	private int randomX(int range, int quarter, int rx, int ry, String e, Location l) {
 		int currentx = (e.equals("THIS")) ? l.getBlockX() : 0;
@@ -523,7 +521,7 @@ public class TARDISTimeTravel {
 	 * @param rz      the delay of the x-repeater setting.
 	 * @param ry      the delay of the y-repeater setting.
 	 * @param e       a string to determine where to start the random search from
-	 * @param l       the current TARDIS location
+	 * @param l       the current tardis location
 	 */
 	private int randomZ(int range, int quarter, int rz, int ry, String e, Location l) {
 		int currentz = (e.equals("THIS")) ? l.getBlockZ() : 0;
@@ -563,15 +561,14 @@ public class TARDISTimeTravel {
 		int level, row, col, rowcount, colcount, count = 0;
 		int starty = l.getBlockY();
 		switch (d) {
-			case EAST:
-			case WEST:
+			case EAST, WEST -> {
 				rowcount = 3;
 				colcount = 4;
-				break;
-			default:
+			}
+			default -> {
 				rowcount = 4;
 				colcount = 3;
-				break;
+			}
 		}
 		for (level = 0; level < 4; level++) {
 			for (row = 0; row < rowcount; row++) {

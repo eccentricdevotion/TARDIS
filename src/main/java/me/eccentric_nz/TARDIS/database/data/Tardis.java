@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.data;
+package me.eccentric_nz.tardis.database.data;
 
-import me.eccentric_nz.TARDIS.enumeration.Adaption;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.tardis.enumeration.Adaption;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Schematic;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -94,16 +94,16 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns the numerical id of this TARDIS.
+	 * Returns the numerical id of this tardis.
 	 *
-	 * @return the TARDIS id
+	 * @return the tardis id
 	 */
 	public int getTardis_id() {
 		return tardis_id;
 	}
 
 	/**
-	 * Returns the UUID of the player who owns this TARDIS.
+	 * Returns the UUID of the player who owns this tardis.
 	 *
 	 * @return the owners UUID
 	 */
@@ -112,7 +112,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns the name of the player who owns this TARDIS.
+	 * Returns the name of the player who owns this tardis.
 	 *
 	 * @return the owners name
 	 */
@@ -121,7 +121,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns the last known name of the player who owns this TARDIS.
+	 * Returns the last known name of the player who owns this tardis.
 	 *
 	 * @return the owners last known name
 	 */
@@ -130,7 +130,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns a String representation of the Chunk coordinates that this TARDIS interior occupies. It is in the form of
+	 * Returns a String representation of the Chunk coordinates that this tardis interior occupies. It is in the form of
 	 * {@code World name:chunkX:chunkZ}
 	 *
 	 * @return the Chunk string
@@ -140,7 +140,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns the TARDIS Interior Positioning slot number of this TARDIS.
+	 * Returns the tardis Interior Positioning slot number of this tardis.
 	 *
 	 * @return the TIPS slot number, or -1 if the server is not using TIPS
 	 */
@@ -149,7 +149,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns the Schematic (desktop theme) this TARDIS is currently using.
+	 * Returns the Schematic (desktop theme) this tardis is currently using.
 	 *
 	 * @return the Schematic
 	 */
@@ -158,7 +158,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns the abandoned status this TARDIS.
+	 * Returns the abandoned status this tardis.
 	 *
 	 * @return true if abandoned, false if in use
 	 */
@@ -167,7 +167,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns a colon (:) separated list of companion UUID strings for this TARDIS.
+	 * Returns a colon (:) separated list of companion UUID strings for this tardis.
 	 *
 	 * @return the companion UUIDs, or an empty string if there are none
 	 */
@@ -175,7 +175,7 @@ public class Tardis {
 		if (companions.equalsIgnoreCase("everyone")) {
 			StringBuilder sb = new StringBuilder();
 			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-				sb.append(p.getUniqueId().toString()).append(":");
+				sb.append(p.getUniqueId()).append(":");
 			}
 			return sb.substring(0, sb.length() - 1);
 		} else {
@@ -202,7 +202,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns the Chameleon Circuit adaptive setting for this TARDIS. It will be one of BIOME, BLOCK or OFF.
+	 * Returns the Chameleon Circuit adaptive setting for this tardis. It will be one of BIOME, BLOCK or OFF.
 	 *
 	 * @return the Chameleon Circuit adaptive setting
 	 */
@@ -211,7 +211,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns the amount of Artron Energy this TARDIS has in its Artron Capacitor.
+	 * Returns the amount of Artron Energy this tardis has in its Artron Capacitor.
 	 *
 	 * @return the Artron Energy level
 	 */
@@ -220,7 +220,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns a String representation of the Creeper spawn location in this TARDIS. It is in the form of {@code World
+	 * Returns a String representation of the Creeper spawn location in this tardis. It is in the form of {@code World
 	 * name:x:y:z}
 	 *
 	 * @return the Creeper spawn location string
@@ -230,7 +230,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns a String representation of the Beacon block-off block location in this TARDIS (used to turn off the
+	 * Returns a String representation of the Beacon block-off block location in this tardis (used to turn off the
 	 * beacon). It is in the form of {@code World name:x:y:z}
 	 *
 	 * @return the Beacon block-off block location string
@@ -240,7 +240,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns whether the TARDIS handbrake is on or off.
+	 * Returns whether the tardis handbrake is on or off.
 	 *
 	 * @return true if on, false if off
 	 */
@@ -249,7 +249,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns whether the TARDIS has been initialized.
+	 * Returns whether the tardis has been initialized.
 	 *
 	 * @return true if initialized, false if not
 	 */
@@ -258,7 +258,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns whether the TARDIS is currently recharging.
+	 * Returns whether the tardis is currently recharging.
 	 *
 	 * @return true if recharging, false if not
 	 */
@@ -267,7 +267,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns whether the TARDIS is hidden.
+	 * Returns whether the tardis is hidden.
 	 *
 	 * @return true if hidden, false if not
 	 */
@@ -276,7 +276,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns the time in milliseconds that the TARDIS was last used.
+	 * Returns the time in milliseconds that the tardis was last used.
 	 *
 	 * @return the time in milliseconds, or if the player has the 'tardis.prune.bypass' permission Long.MAX_VALUE
 	 */
@@ -285,7 +285,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns whether the TARDIS Isomorphic circuit is on or off.
+	 * Returns whether the tardis Isomorphic circuit is on or off.
 	 *
 	 * @return true if on, false if off
 	 */
@@ -294,7 +294,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns a String representation of the Emergency Programme One hologram spawn location in this TARDIS. It is in
+	 * Returns a String representation of the Emergency Programme One hologram spawn location in this tardis. It is in
 	 * the form of {@code World name:x:y:z}
 	 *
 	 * @return the Emergency Programme One hologram spawn location string, or an empty string if the location does not
@@ -305,7 +305,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns a String representation of the Rail room minecart spawn location in this TARDIS. It is in the form of
+	 * Returns a String representation of the Rail room minecart spawn location in this tardis. It is in the form of
 	 * {@code World name:x:y:z}
 	 *
 	 * @return the Rail room minecart spawn location string, or an empty string if the room does not exist
@@ -315,7 +315,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns a String representation of the Renderer room spawn location in this TARDIS. It is in the form of {@code
+	 * Returns a String representation of the Renderer room spawn location in this tardis. It is in the form of {@code
 	 * World name:x:y:z}
 	 *
 	 * @return the Renderer room spawn location string, or an empty string if the room does not exist
@@ -325,7 +325,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns a String representation of the Zero room transmat location in this TARDIS. It is in the form of {@code
+	 * Returns a String representation of the Zero room transmat location in this tardis. It is in the form of {@code
 	 * World name:x:y:z}
 	 *
 	 * @return the Zero room transmat spawn location string, or an empty string if the room does not exist
@@ -335,7 +335,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns the UUID of the time rotor item frame in this TARDIS.
+	 * Returns the UUID of the time rotor item frame in this tardis.
 	 *
 	 * @return the item frame UUID
 	 */
@@ -344,7 +344,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns whether the TARDIS is powered on.
+	 * Returns whether the tardis is powered on.
 	 *
 	 * @return true if powered on, false if off
 	 */
@@ -353,7 +353,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns whether the TARDIS lights are on or off.
+	 * Returns whether the tardis lights are on or off.
 	 *
 	 * @return true if on, false if off
 	 */
@@ -362,7 +362,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns whether the TARDIS Siege Mode is on or off.
+	 * Returns whether the tardis Siege Mode is on or off.
 	 *
 	 * @return true if Siege Mode is on, false if off
 	 */
@@ -371,7 +371,7 @@ public class Tardis {
 	}
 
 	/**
-	 * Returns the number of monsters that have spawned in this TARDIS.
+	 * Returns the number of monsters that have spawned in this tardis.
 	 *
 	 * @return the number of monsters
 	 */

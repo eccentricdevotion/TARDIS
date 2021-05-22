@@ -14,38 +14,38 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS;
+package me.eccentric_nz.tardis;
 
-import me.eccentric_nz.TARDIS.artron.TARDISArtronStorageCommand;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronTabComplete;
-import me.eccentric_nz.TARDIS.commands.*;
-import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
-import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminTabComplete;
-import me.eccentric_nz.TARDIS.commands.admin.TARDISGiveCommand;
-import me.eccentric_nz.TARDIS.commands.admin.TARDISGiveTabComplete;
-import me.eccentric_nz.TARDIS.commands.bind.TARDISBindCommands;
-import me.eccentric_nz.TARDIS.commands.bind.TARDISBindTabComplete;
-import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesCommand;
-import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTabComplete;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsTabComplete;
-import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteCommands;
-import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoCommand;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISCommands;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
-import me.eccentric_nz.TARDIS.commands.utils.*;
-import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
-import me.eccentric_nz.TARDIS.junk.TARDISJunkCommands;
-import me.eccentric_nz.TARDIS.junk.TARDISJunkTabComplete;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicCommand;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicTabComplete;
-import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayCommand;
-import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayTabComplete;
+import me.eccentric_nz.tardis.artron.TARDISArtronStorageCommand;
+import me.eccentric_nz.tardis.artron.TARDISArtronTabComplete;
+import me.eccentric_nz.tardis.commands.*;
+import me.eccentric_nz.tardis.commands.admin.TARDISAdminCommands;
+import me.eccentric_nz.tardis.commands.admin.TARDISAdminTabComplete;
+import me.eccentric_nz.tardis.commands.admin.TARDISGiveCommand;
+import me.eccentric_nz.tardis.commands.admin.TARDISGiveTabComplete;
+import me.eccentric_nz.tardis.commands.bind.TARDISBindCommands;
+import me.eccentric_nz.tardis.commands.bind.TARDISBindTabComplete;
+import me.eccentric_nz.tardis.commands.handles.TARDISHandlesCommand;
+import me.eccentric_nz.tardis.commands.handles.TARDISHandlesTabComplete;
+import me.eccentric_nz.tardis.commands.preferences.TARDISPrefsCommands;
+import me.eccentric_nz.tardis.commands.preferences.TARDISPrefsTabComplete;
+import me.eccentric_nz.tardis.commands.remote.TARDISRemoteCommands;
+import me.eccentric_nz.tardis.commands.sudo.TARDISSudoCommand;
+import me.eccentric_nz.tardis.commands.tardis.TARDISCommands;
+import me.eccentric_nz.tardis.commands.tardis.TARDISTabComplete;
+import me.eccentric_nz.tardis.commands.utils.*;
+import me.eccentric_nz.tardis.info.TARDISInformationSystemListener;
+import me.eccentric_nz.tardis.junk.TARDISJunkCommands;
+import me.eccentric_nz.tardis.junk.TARDISJunkTabComplete;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicCommand;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicTabComplete;
+import me.eccentric_nz.tardis.universaltranslator.TARDISSayCommand;
+import me.eccentric_nz.tardis.universaltranslator.TARDISSayTabComplete;
 
 import java.io.File;
 
 /**
- * Loads all TARDIS command executors and tab completers.
+ * Loads all tardis command executors and tab completers.
  *
  * @author eccentric_nz
  */
@@ -60,7 +60,7 @@ class TARDISCommandSetter {
 	}
 
 	/**
-	 * Loads all the commands that the TARDIS uses.
+	 * Loads all the commands that the tardis uses.
 	 */
 	void loadCommands() {
 		plugin.getCommand("tardis").setExecutor(new TARDISCommands(plugin));

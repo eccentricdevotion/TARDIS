@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.flight;
+package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
  * While phoning Amy and Rory about his adventures without them, the Eleventh Doctor mentioned how he should be
- * returning to them "any day", but the TARDIS' helmic regulator was playing up.
+ * returning to them "any day", but the tardis' helmic regulator was playing up.
  *
  * @author eccentric_nz
  */

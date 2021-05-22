@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.utils;
+package me.eccentric_nz.tardis.commands.utils;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.control.TARDISAtmosphericExcitation;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -48,14 +48,14 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
 	public void onWeatherMenuInteract(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "TARDIS Weather Menu")) {
+		if (name.equals(ChatColor.DARK_RED + "tardis Weather Menu")) {
 			event.setCancelled(true);
 			int slot = event.getRawSlot();
 			Player player = (Player) event.getWhoClicked();
 			if (slot >= 0 && slot < 9) {
 				ItemStack is = view.getItem(slot);
 				if (is != null) {
-					// get the TARDIS the player is in
+					// get the tardis the player is in
 					HashMap<String, Object> wheres = new HashMap<>();
 					wheres.put("uuid", player.getUniqueId().toString());
 					ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);

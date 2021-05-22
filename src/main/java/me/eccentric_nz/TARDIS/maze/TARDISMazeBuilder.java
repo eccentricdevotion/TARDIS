@@ -1,6 +1,6 @@
-package me.eccentric_nz.TARDIS.maze;
+package me.eccentric_nz.tardis.maze;
 
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISConstants;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;

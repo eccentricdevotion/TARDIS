@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.move;
+package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
@@ -75,18 +75,10 @@ public class TARDISSpectaclesRunnable implements Runnable {
 
 	private Door calculateFacing(Door door, COMPASS compass) {
 		switch (compass) {
-			case SOUTH:
-				door.setFacing(BlockFace.SOUTH);
-				break;
-			case WEST:
-				door.setFacing(BlockFace.WEST);
-				break;
-			case NORTH:
-				door.setFacing(BlockFace.NORTH);
-				break;
-			default:
-				door.setFacing(BlockFace.EAST);
-				break;
+			case SOUTH -> door.setFacing(BlockFace.SOUTH);
+			case WEST -> door.setFacing(BlockFace.WEST);
+			case NORTH -> door.setFacing(BlockFace.NORTH);
+			default -> door.setFacing(BlockFace.EAST);
 		}
 		return door;
 	}

@@ -1,9 +1,9 @@
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.enumeration.Updateable;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

@@ -14,19 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If ChatColor.RESET, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.hads;
+package me.eccentric_nz.tardis.hads;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.HADS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.api.event.TARDISHADSEvent;
+import me.eccentric_nz.tardis.builders.BiomeSetter;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.HADS;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.move.TARDISDoorCloser;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -44,8 +44,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The Hostile Action Displacement System, or HADS, was one of the defence mechanisms of the Doctor's TARDIS. When the
- * outer shell of the vessel came under attack, the unit dematerialised the TARDIS and re-materialised it a short
+ * The Hostile Action Displacement System, or HADS, was one of the defence mechanisms of the Doctor's tardis. When the
+ * outer shell of the vessel came under attack, the unit dematerialised the tardis and re-materialised it a short
  * distance away after the attacker had gone, in a safer locale. The HADS had to be manually set, and the Doctor often
  * forgot to do so.
  *
@@ -66,7 +66,7 @@ class TARDISHostileDispersal {
 		wherecl.put("tardis_id", id);
 		ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
 		if (!rsc.resultSet()) {
-			plugin.debug("Could not get current TARDIS location for HADS!");
+			plugin.debug("Could not get current tardis location for HADS!");
 		}
 		if (rsc.isSubmarine()) {
 			// underwater use displacement
@@ -103,7 +103,7 @@ class TARDISHostileDispersal {
 		int sbz = l.getBlockZ() - 1;
 		// reset biome and it's not The End
 		if (!BiomeSetter.restoreBiome(l, TARDISBiome.get(rsc.getBiomeKey()))) {
-			// remove TARDIS from tracker
+			// remove tardis from tracker
 			plugin.getTrackerKeeper().getDematerialising().remove(id);
 		}
 		// remove problem blocks first
@@ -114,22 +114,22 @@ class TARDISHostileDispersal {
 				int flowery = (l.getBlockY() + 1);
 				int flowerz;
 				switch (d) {
-					case NORTH:
+					case NORTH -> {
 						flowerx = l.getBlockX();
 						flowerz = l.getBlockZ() + 1;
-						break;
-					case WEST:
+					}
+					case WEST -> {
 						flowerx = l.getBlockX() + 1;
 						flowerz = l.getBlockZ();
-						break;
-					case SOUTH:
+					}
+					case SOUTH -> {
 						flowerx = l.getBlockX();
 						flowerz = l.getBlockZ() - 1;
-						break;
-					default:
+					}
+					default -> {
 						flowerx = l.getBlockX() - 1;
 						flowerz = l.getBlockZ();
-						break;
+					}
 				}
 				TARDISBlockSetters.setBlock(w, flowerx, flowery, flowerz, Material.AIR);
 				break;

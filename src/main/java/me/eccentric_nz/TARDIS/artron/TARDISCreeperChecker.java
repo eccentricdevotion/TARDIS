@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.artron;
+package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Creeper;
@@ -55,7 +55,7 @@ public class TARDISCreeperChecker {
 			Tardis tardis = rs.getTardis();
 			// only if there is a saved creeper location
 			if (!tardis.getCreeper().isEmpty()) {
-				// only if the TARDIS has been initialised
+				// only if the tardis has been initialised
 				if (tardis.isTardis_init()) {
 					World w = TARDISStaticLocationGetters.getWorld(tardis.getCreeper());
 					if (w != null) {

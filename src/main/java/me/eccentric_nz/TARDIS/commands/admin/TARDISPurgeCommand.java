@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.destroyers.TARDISExterminator;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 import java.util.Locale;
@@ -44,21 +44,17 @@ class TARDISPurgeCommand {
 		} else {
 			uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
 		}
-		if (uuid != null) {
-			// get the player's TARDIS id
-			ResultSetTardisID rs = new ResultSetTardisID(plugin);
-			if (!rs.fromUUID(uuid.toString())) {
-				TARDISMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
-				return true;
-			}
-			int id = rs.getTardis_id();
-			TARDISExterminator purger = new TARDISExterminator(plugin);
-			purger.cleanHashMaps(id);
-			purger.cleanDatabase(id);
-			TARDISMessage.send(sender, "PURGE_PLAYER", args[1]);
-		} else {
-			TARDISMessage.send(sender, "UUID_NOT_FOUND", args[1]);
+		// get the player's tardis id
+		ResultSetTardisID rs = new ResultSetTardisID(plugin);
+		if (!rs.fromUUID(uuid.toString())) {
+			TARDISMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
+			return true;
 		}
+		int id = rs.getTardis_id();
+		TARDISExterminator purger = new TARDISExterminator(plugin);
+		purger.cleanHashMaps(id);
+		purger.cleanDatabase(id);
+		TARDISMessage.send(sender, "PURGE_PLAYER", args[1]);
 		return true;
 	}
 }

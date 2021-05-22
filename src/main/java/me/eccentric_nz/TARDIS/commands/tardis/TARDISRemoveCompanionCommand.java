@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -74,27 +74,22 @@ class TARDISRemoveCompanionCommand {
 				String message = "COMPANIONS_REMOVE_ALL";
 				if (!args[1].equals("all")) {
 					UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
-					if (oluuid != null) {
-						String[] split = comps.split(":");
-						StringBuilder sb = new StringBuilder();
-						if (split.length > 1) {
-							// recompile string without the specified player
-							for (String c : split) {
-								if (!c.equals(oluuid.toString())) {
-									// add to new string
-									sb.append(c).append(":");
-								}
-							}
-							// remove trailing colon
-							if (sb.length() > 0) {
-								newList = sb.substring(0, sb.length() - 1);
+					String[] split = comps.split(":");
+					StringBuilder sb = new StringBuilder();
+					if (split.length > 1) {
+						// recompile string without the specified player
+						for (String c : split) {
+							if (!c.equals(oluuid.toString())) {
+								// add to new string
+								sb.append(c).append(":");
 							}
 						}
-						message = "COMPANIONS_REMOVE_ONE";
-					} else {
-						TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
-						return true;
+						// remove trailing colon
+						if (sb.length() > 0) {
+							newList = sb.substring(0, sb.length() - 1);
+						}
 					}
+					message = "COMPANIONS_REMOVE_ONE";
 				}
 				// if using WorldGuard, remove them from the region membership
 				if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {

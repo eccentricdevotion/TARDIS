@@ -1,7 +1,7 @@
-package me.eccentric_nz.TARDIS.recipes;
+package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
-import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
+import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
+import me.eccentric_nz.tardis.enumeration.RecipeCategory;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;

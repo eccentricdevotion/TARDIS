@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.junk;
+package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.utility.TARDISParticles;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.utility.TARDISParticles;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
@@ -64,8 +64,7 @@ class TARDISJunkVortexRunnable implements Runnable {
 			}
 			if (plugin.getConfig().getBoolean("junk.particles")) {
 				plugin.getUtils().getJunkTravellers(vortexJunkLoc).forEach((e) -> {
-					if (e instanceof Player) {
-						Player p = (Player) e;
+					if (e instanceof Player p) {
 						TARDISParticles.sendVortexParticles(effectsLoc, p);
 					}
 				});
@@ -75,7 +74,7 @@ class TARDISJunkVortexRunnable implements Runnable {
 				TARDISSounds.playTARDISSound(vortexJunkLoc, "junk_arc");
 			}
 			if (i == LOOPS - 1) {
-				// build the TARDIS at the location
+				// build the tardis at the location
 				BuildData bd = new BuildData(null);
 				bd.setDirection(COMPASS.SOUTH);
 				bd.setLocation(destJunkLoc);
@@ -91,8 +90,7 @@ class TARDISJunkVortexRunnable implements Runnable {
 			if (i == LOOPS) {
 				// teleport players
 				getJunkTravellers().forEach((e) -> {
-					if (e instanceof Player) {
-						Player p = (Player) e;
+					if (e instanceof Player p) {
 						Location relativeLoc = getRelativeLocation(p);
 						p.teleport(relativeLoc);
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(relativeLoc), 2L);

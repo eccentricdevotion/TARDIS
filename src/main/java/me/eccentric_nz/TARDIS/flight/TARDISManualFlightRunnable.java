@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.flight;
+package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.database.resultset.ResultSetRepeaters;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * After materialization, the Astrosextant Rectifier will attempt to confirm that a TARDIS has arrived at the correct
+ * After materialization, the Astrosextant Rectifier will attempt to confirm that a tardis has arrived at the correct
  * coordinates. A damaged Sterometer will reduce the accuracy of the Rectifier to within a few thousand light years.
  *
  * @author eccentric_nz

@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.achievement;
+package me.eccentric_nz.tardis.achievement;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetAchievements;
-import me.eccentric_nz.TARDIS.enumeration.Advancement;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetAchievements;
+import me.eccentric_nz.tardis.enumeration.Advancement;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -116,6 +116,7 @@ public class TARDISAchievementFactory {
 					String reward_type = plugin.getAchievementConfig().getString(advancement.getConfigName() + ".reward_type");
 					// display a proper advancement if possible
 					grantAdvancement(advancement, player);
+					assert reward_type != null;
 					if (reward_type.equalsIgnoreCase("XP")) {
 						new TARDISXPRewarder(player).changeExp(reward_amount);
 					} else {
@@ -129,7 +130,7 @@ public class TARDISAchievementFactory {
 					plugin.getQueryFactory().doUpdate("achievements", seta, wherem);
 				} else {
 					if (obj.getClass().equals(String.class)) {
-						if (data != null && !data.contains(obj)) {
+						if (!data.contains(obj)) {
 							seta.put("amount", amount + ":" + obj);
 							plugin.getQueryFactory().doUpdate("achievements", seta, wherem);
 						}

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
 import com.google.gson.JsonObject;
 import org.bukkit.block.data.BlockData;

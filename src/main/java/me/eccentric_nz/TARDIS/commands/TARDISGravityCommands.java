@@ -14,16 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands;
+package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -60,7 +61,7 @@ public class TARDISGravityCommands implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
 		// If the player typed /tardisgravity then do the following...
 		if (cmd.getName().equalsIgnoreCase("tardisgravity")) {
 			Player player = null;
@@ -76,7 +77,7 @@ public class TARDISGravityCommands implements CommandExecutor {
 				return true;
 			}
 			if (!plugin.getConfig().getBoolean("allow.external_gravity")) {
-				// check they are still in the TARDIS world
+				// check they are still in the tardis world
 				if (!plugin.getUtils().inTARDISWorld(player)) {
 					String mess_stub = (player.getLocation().getWorld().getName().toLowerCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) ? "GRAVITY_OWN_WORLD" : "GRAVITY_A_WORLD";
 					TARDISMessage.send(player, mess_stub);
@@ -122,9 +123,7 @@ public class TARDISGravityCommands implements CommandExecutor {
 				plugin.getTrackerKeeper().getGravity().put(uuid, values);
 				String message = (dir.equals("remove")) ? "GRAVITY_CLICK_REMOVE" : "GRAVITY_CLICK_SAVE";
 				TARDISMessage.send(player, message);
-				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-					plugin.getTrackerKeeper().getGravity().remove(uuid);
-				}, 1200L);
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getGravity().remove(uuid), 1200L);
 				return true;
 			}
 		}

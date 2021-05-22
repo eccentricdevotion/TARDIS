@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.api.event;
+package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author eccentric_nz
@@ -50,7 +51,7 @@ public class TARDISEvent extends Event {
 
 	/**
 	 * Returns a Tardis data object. Use the object's getter methods to retrieve any data that is stored in the database
-	 * for this TARDIS.
+	 * for this tardis.
 	 *
 	 * @return the Tardis data object
 	 */
@@ -59,7 +60,7 @@ public class TARDISEvent extends Event {
 	}
 
 	@Override
-	public HandlerList getHandlers() {
+	public @NotNull HandlerList getHandlers() {
 		return HANDLERS;
 	}
 }

@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -38,11 +38,10 @@ class TARDISCondenserCommand {
 	}
 
 	public boolean set(CommandSender sender) {
-		if (!(sender instanceof Player)) {
+		if (!(sender instanceof Player player)) {
 			TARDISMessage.send(sender, "CMD_PLAYER");
 			return true;
 		}
-		Player player = (Player) sender;
 		Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
 		Material chest = b.getType();
 		if (!chest.equals(Material.CHEST)) {

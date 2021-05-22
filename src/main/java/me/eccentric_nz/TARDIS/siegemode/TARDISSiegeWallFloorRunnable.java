@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.siegemode;
+package me.eccentric_nz.tardis.siegemode;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.database.data.Archive;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.builders.TARDISTIPSData;
+import me.eccentric_nz.tardis.database.data.Archive;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.schematic.ResultSetArchive;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -40,7 +40,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
- * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
+ * There was also a safety mechanism for when tardis rooms were deleted, automatically relocating any living beings in
  * the deleted room, depositing them in the control room.
  *
  * @author eccentric_nz
@@ -139,7 +139,7 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
 				startx = pos.getCentreX();
 				startz = pos.getCentreZ();
 			} else {
-				int gsl[] = plugin.getLocationUtils().getStartLocation(id);
+				int[] gsl = plugin.getLocationUtils().getStartLocation(id);
 				startx = gsl[0];
 				startz = gsl[2];
 			}

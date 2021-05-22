@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.planets;
+package me.eccentric_nz.tardis.planets;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -34,8 +34,8 @@ import org.bukkit.entity.EntityType;
 import java.io.File;
 
 /**
- * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
- * simple inability to arrive at the proper time or location. While the Doctor did not build the TARDIS from scratch, he
+ * The tardis was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
+ * simple inability to arrive at the proper time or location. While the Doctor did not build the tardis from scratch, he
  * has substantially modified/rebuilt it.
  *
  * @author eccentric_nz
@@ -52,7 +52,7 @@ class TARDISBuildSkaroStructure implements Runnable {
 	/**
 	 * Builds a Skaro structure.
 	 *
-	 * @param plugin an instance of the main TARDIS plugin class
+	 * @param plugin an instance of the main tardis plugin class
 	 * @param startx the start coordinate on the x-axis
 	 * @param y      the start coordinate on the y-axis
 	 * @param startz the start coordinate on the z-axis
@@ -114,7 +114,7 @@ class TARDISBuildSkaroStructure implements Runnable {
 				BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
 				Material type = data.getMaterial();
 				switch (type) {
-					case CHEST:
+					case CHEST -> {
 						TARDISBlockSetters.setBlock(world, x, y, z, data);
 						Block chest = world.getBlockAt(x, y, z);
 						if (chest != null && chest.getType().equals(Material.CHEST)) {
@@ -127,14 +127,14 @@ class TARDISBuildSkaroStructure implements Runnable {
 								plugin.debug("Could not cast " + chest.getType() + "to Skaroan Chest." + e.getMessage());
 							}
 						}
-						break;
-					case SPONGE:
+					}
+					case SPONGE -> {
 						Block swap_block = world.getBlockAt(x, y, z);
 						if (!swap_block.getType().isOccluding()) {
 							TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
 						}
-						break;
-					case SPAWNER:
+					}
+					case SPAWNER -> {
 						Block spawner = world.getBlockAt(x, y, z);
 						spawner.setBlockData(data);
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -142,10 +142,8 @@ class TARDISBuildSkaroStructure implements Runnable {
 							cs.setSpawnedType(EntityType.SKELETON);
 							cs.update();
 						}, 2L);
-						break;
-					default:
-						TARDISBlockSetters.setBlock(world, x, y, z, data);
-						break;
+					}
+					default -> TARDISBlockSetters.setBlock(world, x, y, z, data);
 				}
 				if (col == d && row < w) {
 					row++;

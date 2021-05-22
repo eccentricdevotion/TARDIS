@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
 import java.util.Arrays;
 import java.util.List;
@@ -88,9 +88,9 @@ public class TARDISStringUtils {
 
 	/**
 	 * Determines the Material type of the block. Values are calculated by converting the string values stored in a
-	 * TARDIS Seed block.
+	 * tardis Seed block.
 	 *
-	 * @param str the lore stored in the TARDIS Seed block's Item Meta
+	 * @param str the lore stored in the tardis Seed block's Item Meta
 	 * @return an String representing the Material
 	 */
 	public static String getValuesFromWallString(String str) {

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.forcefield;
+package me.eccentric_nz.tardis.forcefield;
 
 import org.bukkit.Location;
 import org.bukkit.World;

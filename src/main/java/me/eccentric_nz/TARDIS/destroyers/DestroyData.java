@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.destroyers;
+package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.TARDIS.builders.MaterialisationData;
+import me.eccentric_nz.tardis.builders.MaterialisationData;
 import org.bukkit.Location;
 
 /**
- * Data class for building the TARDIS exterior.
+ * Data class for building the tardis exterior.
  *
  * @author eccentric_nz
  */

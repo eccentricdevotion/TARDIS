@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.desktop;
+package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.data.Archive;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.ars.TARDISARSMethods;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.data.Archive;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetARS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.ConsoleSize;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.schematic.ArchiveReset;
+import me.eccentric_nz.tardis.schematic.ResultSetArchive;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -182,7 +182,7 @@ class TARDISThemeProcessor {
 		HashMap<String, Object> wherep = new HashMap<>();
 		wherep.put("uuid", uuid.toString());
 		plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);
-		// update TARDIS
+		// update tardis
 		HashMap<String, Object> sett = new HashMap<>();
 		sett.put("size", tud.getSchematic().getPermission().toUpperCase(Locale.ENGLISH));
 		HashMap<String, Object> wheret = new HashMap<>();
@@ -216,7 +216,7 @@ class TARDISThemeProcessor {
 	}
 
 	private boolean checkARSGrid(ConsoleSize prev, ConsoleSize next, UUID uuid) {
-		// get ARS
+		// get ars
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("uuid", uuid.toString());
 		ResultSetARS rs = new ResultSetARS(plugin, where);

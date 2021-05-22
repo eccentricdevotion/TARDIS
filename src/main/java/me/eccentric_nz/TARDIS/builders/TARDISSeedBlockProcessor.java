@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Advancement;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.planets.TARDISSpace;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.api.event.TARDISCreationEvent;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.enumeration.Advancement;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.planets.TARDISSpace;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -43,7 +43,7 @@ import java.util.Locale;
 /**
  * TARDISes are bioships that are grown from a species of coral presumably indigenous to Gallifrey.
  * <p>
- * The TARDIS had a drawing room, which the Doctor claimed to be his "private study". Inside it were momentos of his
+ * The tardis had a drawing room, which the Doctor claimed to be his "private study". Inside it were momentos of his
  * many incarnations' travels.
  *
  * @author eccentric_nz
@@ -57,7 +57,7 @@ public class TARDISSeedBlockProcessor {
 	}
 
 	/**
-	 * Turns a seed block, that has been right-clicked by a player into a TARDIS.
+	 * Turns a seed block, that has been right-clicked by a player into a tardis.
 	 *
 	 * @param seed   the build data for this seed block
 	 * @param l      the location of the placed seed block
@@ -81,7 +81,7 @@ public class TARDISSeedBlockProcessor {
 				}
 			}
 			String playerNameStr = player.getName();
-			// check to see if they already have a TARDIS
+			// check to see if they already have a tardis
 			ResultSetTardisID rs = new ResultSetTardisID(plugin);
 			if (!rs.fromUUID(player.getUniqueId().toString())) {
 				// check it is not another Time Lords home location
@@ -108,14 +108,14 @@ public class TARDISSeedBlockProcessor {
 				boolean tips = false;
 				// TODO name worlds without player name
 				if (plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
-					// create a new world to store this TARDIS
+					// create a new world to store this tardis
 					cw = "TARDIS_WORLD_" + playerNameStr;
 					TARDISSpace space = new TARDISSpace(plugin);
 					chunkworld = space.getTardisWorld(cw);
 					cx = 0;
 					cz = 0;
 				} else if (plugin.getConfig().getBoolean("creation.default_world") && plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(player, "tardis.create_world")) {
-					// create a new world to store this TARDIS
+					// create a new world to store this tardis
 					cw = "TARDIS_WORLD_" + playerNameStr;
 					TARDISSpace space = new TARDISSpace(plugin);
 					chunkworld = space.getTardisWorld(cw);
@@ -196,7 +196,7 @@ public class TARDISSeedBlockProcessor {
 				setlocs.put("z", l.getBlockZ());
 				setlocs.put("direction", d);
 				plugin.getQueryFactory().insertLocations(setlocs, TARDISStaticUtils.getBiomeAt(l).getKey().toString(), lastInsertId);
-				// turn the block stack into a TARDIS
+				// turn the block stack into a tardis
 				BuildData bd = new BuildData(player.getUniqueId().toString());
 				bd.setDirection(COMPASS.valueOf(d));
 				bd.setLocation(l);
@@ -236,12 +236,12 @@ public class TARDISSeedBlockProcessor {
 					setc.put("count", player_count + 1);
 					setc.put("grace", grace_count);
 					if (has_count) {
-						// update the player's TARDIS count
+						// update the player's tardis count
 						HashMap<String, Object> wheretc = new HashMap<>();
 						wheretc.put("uuid", player.getUniqueId().toString());
 						plugin.getQueryFactory().doUpdate("t_count", setc, wheretc);
 					} else {
-						// insert new TARDIS count record
+						// insert new tardis count record
 						setc.put("uuid", player.getUniqueId().toString());
 						plugin.getQueryFactory().doInsert("t_count", setc);
 					}

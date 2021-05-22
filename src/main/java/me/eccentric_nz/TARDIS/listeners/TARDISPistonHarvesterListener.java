@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
@@ -40,7 +40,7 @@ public class TARDISPistonHarvesterListener implements Listener {
 		if (!event.isSticky()) {
 			return;
 		}
-		if (plugin.getConfig().getBoolean("preferences.nerf_pistons.only_tardis_worlds") && !event.getBlock().getWorld().getName().contains("TARDIS")) {
+		if (plugin.getConfig().getBoolean("preferences.nerf_pistons.only_tardis_worlds") && !event.getBlock().getWorld().getName().contains("tardis")) {
 			return;
 		}
 		String block = event.getBlock().getRelative(getOppositeDirection(event.getDirection()), 2).getLocation().toString();
@@ -51,7 +51,7 @@ public class TARDISPistonHarvesterListener implements Listener {
 
 	@EventHandler(ignoreCancelled = true)
 	public void onHarvestPistonExtend(BlockPistonExtendEvent event) {
-		if (plugin.getConfig().getBoolean("preferences.nerf_pistons.only_tardis_worlds") && !event.getBlock().getWorld().getName().contains("TARDIS")) {
+		if (plugin.getConfig().getBoolean("preferences.nerf_pistons.only_tardis_worlds") && !event.getBlock().getWorld().getName().contains("tardis")) {
 			return;
 		}
 		for (Block b : event.getBlocks()) {
@@ -64,15 +64,11 @@ public class TARDISPistonHarvesterListener implements Listener {
 	}
 
 	private BlockFace getOppositeDirection(BlockFace bf) {
-		switch (bf) {
-			case NORTH:
-				return BlockFace.SOUTH;
-			case EAST:
-				return BlockFace.WEST;
-			case SOUTH:
-				return BlockFace.NORTH;
-			default:
-				return BlockFace.EAST;
-		}
+		return switch (bf) {
+			case NORTH -> BlockFace.SOUTH;
+			case EAST -> BlockFace.WEST;
+			case SOUTH -> BlockFace.NORTH;
+			default -> BlockFace.EAST;
+		};
 	}
 }

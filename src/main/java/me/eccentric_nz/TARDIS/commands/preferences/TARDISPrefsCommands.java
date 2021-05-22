@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.preferences;
+package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronLevel;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuInventory;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
+import me.eccentric_nz.tardis.database.resultset.ResultSetArtronLevel;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.forcefield.TARDISForceField;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.sonic.TARDISSonicMenuInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -31,6 +31,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,7 +96,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 		Player player = null;
 		if (sender instanceof Player) {
 			player = (Player) sender;
@@ -125,7 +126,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
 					if (pref.equals("key_menu")) {
 						// open sonic prefs menu
 						ItemStack[] keys = new TARDISKeyMenuInventory().getMenu();
-						Inventory sim = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Key Prefs Menu");
+						Inventory sim = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "tardis Key Prefs Menu");
 						sim.setContents(keys);
 						player.openInventory(sim);
 						return true;
@@ -177,7 +178,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
 											return true;
 										}
 										if (TARDISForceField.addToTracker(player)) {
-											TARDISMessage.send(player, "PREF_WAS_ON", "The TARDIS force field");
+											TARDISMessage.send(player, "PREF_WAS_ON", "The tardis force field");
 										}
 									} else {
 										TARDISMessage.send(player, "POWER_LEVEL");
@@ -185,18 +186,15 @@ public class TARDISPrefsCommands implements CommandExecutor {
 									}
 								} else {
 									plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
-									TARDISMessage.send(player, "PREF_WAS_OFF", "The TARDIS force field");
+									TARDISMessage.send(player, "PREF_WAS_OFF", "The tardis force field");
 								}
 								return true;
 							}
-							switch (pref) {
-								case "build":
-									return new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
-								case "junk":
-									return new TARDISJunkPreference(plugin).toggle(player, args[1]);
-								default:
-									return new TARDISToggleOnOffCommand(plugin).toggle(player, args);
-							}
+							return switch (pref) {
+								case "build" -> new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
+								case "junk" -> new TARDISJunkPreference(plugin).toggle(player, args[1]);
+								default -> new TARDISToggleOnOffCommand(plugin).toggle(player, args);
+							};
 					}
 				} else {
 					TARDISMessage.send(player, "NO_PERMS");

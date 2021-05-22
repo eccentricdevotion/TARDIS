@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.sonic;
+package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -151,11 +151,11 @@ public class TARDISSonicUpgradeListener implements Listener {
 				}
 			}
 		} else if (recipe instanceof ShapedRecipe) {
-			if (is == null || !is.hasItemMeta() || !is.getItemMeta().hasDisplayName() || !is.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
+			if (is == null || !is.hasItemMeta() || !is.getItemMeta().hasDisplayName() || !is.getItemMeta().getDisplayName().equals("tardis Remote Key")) {
 				return;
 			}
 			ItemStack key = ci.getItem(5);
-			if (!key.hasItemMeta() || !key.getItemMeta().hasDisplayName() || !ChatColor.stripColor(key.getItemMeta().getDisplayName()).equals("TARDIS Key")) {
+			if (!key.hasItemMeta() || !key.getItemMeta().hasDisplayName() || !ChatColor.stripColor(key.getItemMeta().getDisplayName()).equals("tardis Key")) {
 				ci.setResult(null);
 				TARDISMessage.send(event.getView().getPlayer(), "REMOTE_KEY");
 			}

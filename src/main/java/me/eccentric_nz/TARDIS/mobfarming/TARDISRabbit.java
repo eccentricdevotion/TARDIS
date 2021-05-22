@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.tardis.mobfarming;
 
 import org.bukkit.entity.Rabbit;
 
@@ -23,7 +23,7 @@ import org.bukkit.entity.Rabbit;
  * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
  * creatures, as well as robots.
  * <p>
- * Data storage class for TARDIS pig.
+ * Data storage class for tardis pig.
  *
  * @author eccentric_nz
  */

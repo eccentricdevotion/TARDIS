@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.bind;
+package me.eccentric_nz.tardis.commands.bind;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
-import me.eccentric_nz.TARDIS.enumeration.Bind;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTransmat;
+import me.eccentric_nz.tardis.enumeration.Bind;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
@@ -31,6 +31,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.UUID;
 
 public class BindAdd {
 
@@ -42,6 +43,7 @@ public class BindAdd {
 
 	public boolean setClick(Bind bind, Player player, int id, String[] args) {
 		String which = (args.length > 2) ? args[2] : "";
+		UUID uuid = player.getUniqueId();
 		int bind_id = 0;
 		HashMap<String, Object> set = new HashMap<>();
 		set.put("tardis_id", id);
@@ -52,7 +54,7 @@ public class BindAdd {
 				whered.put("name", which);
 				ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
 				if (!rsd.resultSet()) {
-					TARDISMessage.send(player, "SAVE_NOT_FOUND", ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET);
+					TARDISMessage.send(player, "SAVE_NOT_FOUND", ChatColor.GREEN + "/tardis list saves" + ChatColor.RESET);
 					return true;
 				} else {
 					set.put("type", 0);
@@ -74,11 +76,7 @@ public class BindAdd {
 				// get player online or offline
 				Player p = plugin.getServer().getPlayer(which);
 				if (p == null) {
-					OfflinePlayer offp = plugin.getServer().getOfflinePlayer(which);
-					if (offp == null) {
-						TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
-						return true;
-					}
+					OfflinePlayer offp = plugin.getServer().getOfflinePlayer(uuid);
 				}
 				set.put("name", which);
 				set.put("type", 2);

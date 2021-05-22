@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.advanced;
+package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.BiomeLookup;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.enumeration.BiomeLookup;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -76,7 +76,7 @@ public class TARDISDiskCraftListener implements Listener {
 									if (items.size() > 1 && ladder > 0) {
 										// mega biome
 										items.remove(inv.getItem(ladder));
-										String lookup = items.get(0).getType().toString() + "_B";
+										String lookup = items.get(0).getType() + "_B";
 										try {
 											String biome = BiomeLookup.valueOf(lookup).getUpper();
 											disk_lore.add(biome);
@@ -85,7 +85,7 @@ public class TARDISDiskCraftListener implements Listener {
 										}
 									} else {
 										// regular biome
-										String lookup = items.get(0).getType().toString() + "_B";
+										String lookup = items.get(0).getType() + "_B";
 										try {
 											String biome = BiomeLookup.valueOf(lookup).getRegular();
 											disk_lore.add(biome);

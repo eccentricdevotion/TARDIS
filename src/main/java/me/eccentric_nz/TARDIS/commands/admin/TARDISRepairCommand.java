@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCount;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
@@ -43,10 +43,6 @@ class TARDISRepairCommand {
 		}
 		// Look up this player's UUID
 		OfflinePlayer op = plugin.getServer().getOfflinePlayer(args[1]);
-		if (op == null) {
-			TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-			return true;
-		}
 		String uuid = op.getUniqueId().toString();
 		ResultSetCount rs = new ResultSetCount(plugin, uuid);
 		if (!rs.resultSet()) {

@@ -1,10 +1,10 @@
-package me.eccentric_nz.TARDIS.sonic;
+package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.ConfiguredSonic;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetConfiguredSonic;
-import me.eccentric_nz.TARDIS.enumeration.SonicConfig;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.ConfiguredSonic;
+import me.eccentric_nz.tardis.database.resultset.ResultSetConfiguredSonic;
+import me.eccentric_nz.tardis.enumeration.SonicConfig;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -290,14 +290,11 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 
 	private int getSonicConfig(int slot, InventoryView view) {
 		ItemStack option = view.getItem(slot);
-		switch (option.getType()) {
-			case LIME_WOOL:
-				return 1;
-			case RED_WOOL:
-				return 2;
-			default:
-				return 0;
-		}
+		return switch (option.getType()) {
+			case LIME_WOOL -> 1;
+			case RED_WOOL -> 2;
+			default -> 0;
+		};
 	}
 
 	private ConfiguredSonic createConfiguredSonic(Player player, InventoryView view) {

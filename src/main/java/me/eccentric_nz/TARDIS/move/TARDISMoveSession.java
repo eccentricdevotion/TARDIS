@@ -22,7 +22,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package me.eccentric_nz.TARDIS.move;
+package me.eccentric_nz.tardis.move;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

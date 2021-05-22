@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.TARDIS.database.TARDISBoundTransmatRemoval;
-import me.eccentric_nz.TARDIS.database.data.Transmat;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
+import me.eccentric_nz.tardis.database.TARDISBoundTransmatRemoval;
+import me.eccentric_nz.tardis.database.data.Transmat;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -52,7 +52,7 @@ class TARDISTransmatCommand {
 			TARDISMessage.send(player, "NOT_A_TIMELORD");
 			return true;
 		}
-		// player is in TARDIS
+		// player is in tardis
 		HashMap<String, Object> wheret = new HashMap<>();
 		wheret.put("uuid", player.getUniqueId().toString());
 		ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -107,7 +107,7 @@ class TARDISTransmatCommand {
 		} else {
 			Location location = player.getLocation();
 			if (args[1].equalsIgnoreCase("add")) {
-				// must be in their TARDIS
+				// must be in their tardis
 				if (!plugin.getUtils().inTARDISWorld(location)) {
 					TARDISMessage.send(player, "CMD_IN_WORLD");
 					return true;

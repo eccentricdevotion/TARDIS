@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.control;
+package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
+import me.eccentric_nz.tardis.info.TARDISInfoMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -39,9 +39,9 @@ public class TARDISInfoMenuButton {
 
 	public void clickButton() {
 		plugin.getTrackerKeeper().getInfoMenu().put(player.getUniqueId(), TARDISInfoMenu.TIS);
-		player.sendMessage(ChatColor.GOLD + "-----------TARDIS Information System-----------");
+		player.sendMessage(ChatColor.GOLD + "-----------tardis Information System-----------");
 		player.sendMessage(ChatColor.GOLD + "---*" + plugin.getLanguage().getString("TIS_INFO") + "*---");
-		TARDISUpdateChatGUI.sendJSON(String.format(JSON, "> TARDIS ", "M", "M", "anual"), player);
+		TARDISUpdateChatGUI.sendJSON(String.format(JSON, "> tardis ", "M", "M", "anual"), player);
 		TARDISUpdateChatGUI.sendJSON(String.format(JSON, "> ", "I", "I", "tems"), player);
 		TARDISUpdateChatGUI.sendJSON(String.format(JSON, "> ", "C", "C", "omponents"), player);
 		TARDISUpdateChatGUI.sendJSON(String.format(JSON, "> ", "S", "S", "onic Components"), player);

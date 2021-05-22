@@ -1,6 +1,6 @@
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;

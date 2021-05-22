@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.reducer;
+package me.eccentric_nz.tardis.chemistry.reducer;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chemistry.compound.Compound;
-import me.eccentric_nz.TARDIS.chemistry.element.Element;
-import me.eccentric_nz.TARDIS.chemistry.element.ElementBuilder;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.chemistry.compound.Compound;
+import me.eccentric_nz.tardis.chemistry.element.Element;
+import me.eccentric_nz.tardis.chemistry.element.ElementBuilder;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -33,6 +33,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Objects;
 
 public class ReducerGUIListener extends TARDISMenuListener implements Listener {
 
@@ -67,7 +69,7 @@ public class ReducerGUIListener extends TARDISMenuListener implements Listener {
 					case 17:
 						// reduce
 						event.setCancelled(true);
-						reduce(event.getClickedInventory(), player);
+						reduce(Objects.requireNonNull(event.getClickedInventory()), player);
 						break;
 					case 26:
 						// close
@@ -93,6 +95,7 @@ public class ReducerGUIListener extends TARDISMenuListener implements Listener {
 			Material material = is.getType();
 			if (material.equals(Material.GLASS_BOTTLE) && is.hasItemMeta()) {
 				ItemMeta im = is.getItemMeta();
+				assert im != null;
 				if (im.hasDisplayName()) {
 					String c = im.getDisplayName().replace(" ", "_");
 					for (Compound compound : Compound.values()) {

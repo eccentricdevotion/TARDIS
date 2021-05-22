@@ -14,21 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
 public enum Config {
 
-	achievements,
-	artron,
-	blocks,
-	chameleon_guis,
-	condensables,
-	custom_consoles,
-	handles,
-	kits,
-	planets,
-	recipes,
-	rooms,
-	signs,
-	tag
+	achievements, artron, blocks, chameleon_guis, condensables, custom_consoles, handles, kits, planets, recipes, rooms, signs, tag
 }

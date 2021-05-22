@@ -14,25 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.advanced;
+package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.flight.TARDISDematerialiseToVortex;
-import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
-import me.eccentric_nz.TARDIS.flight.TARDISMaterialseFromVortex;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
+import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.Flag;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.flight.TARDISDematerialiseToVortex;
+import me.eccentric_nz.tardis.flight.TARDISHandbrake;
+import me.eccentric_nz.tardis.flight.TARDISMaterialseFromVortex;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.travel.TARDISEPSRunnable;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -43,10 +43,10 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Security Protocol 712 is a security feature aboard the Doctor's TARDIS which causes the ship to dematerialise and
+ * Security Protocol 712 is a security feature aboard the Doctor's tardis which causes the ship to dematerialise and
  * re-appear at a predetermined point in space and time without its pilot when activated. It can be programmed to be
  * triggered by different events or objects such as Sally Sparrow's DVDs or the activation of the echelon circuit. A
- * holographic recreation of the incumbent Doctor will be projected to inform anyone within the TARDIS of the protocol
+ * holographic recreation of the incumbent Doctor will be projected to inform anyone within the tardis of the protocol
  * being activated.
  *
  * @author eccentric_nz
@@ -75,7 +75,7 @@ public class TARDISAuthorisedControlDisk {
 		// find player
 		Player timelord = plugin.getServer().getPlayer(uuid);
 		if (timelord == null || !timelord.isOnline()) {
-			return "The Time Lord of this TARDIS is not online.";
+			return "The Time Lord of this tardis is not online.";
 		}
 		Location location = null;
 		COMPASS direction = COMPASS.EAST;
@@ -92,7 +92,7 @@ public class TARDISAuthorisedControlDisk {
 					location = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
 					direction = rsh.getDirection();
 				} else {
-					return "Could not find the TARDIS's home location.";
+					return "Could not find the tardis's home location.";
 				}
 			} else {
 				// get save location
@@ -103,7 +103,7 @@ public class TARDISAuthorisedControlDisk {
 						location = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
 						direction = COMPASS.valueOf(rsd.getDirection());
 					} else {
-						return "Could not find the specified TARDIS save.";
+						return "Could not find the specified tardis save.";
 					}
 				}
 			}
@@ -115,7 +115,7 @@ public class TARDISAuthorisedControlDisk {
 		if (location != null) {
 			if (isPlayerLocation) {
 				if (plugin.getUtils().inTARDISWorld(timelord)) {
-					return "The Time Lord must be outside the TARDIS.";
+					return "The Time Lord must be outside the tardis.";
 				}
 				// check respect
 				if (!plugin.getPluginRespect().getRespect(location, new Parameters(timelord, Flag.getNoMessageFlags()))) {
@@ -141,7 +141,7 @@ public class TARDISAuthorisedControlDisk {
 			if (rsc.resultSet()) {
 				Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
 				TARDISHandbrake.setLevers(handbrake.getBlock(), false, true, handbrake.toString(), id, plugin);
-				if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
+				if (plugin.getConfig().getBoolean("circuits.damage")) {
 					plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
 				}
 				TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
@@ -163,7 +163,7 @@ public class TARDISAuthorisedControlDisk {
 					playerUUIDs = new ArrayList<>();
 					playerUUIDs.add(player.getUniqueId());
 				}
-				String message = "The TARDIS has detected an authorised control disc, valid for one journey only. Travelling to the programmed location.";
+				String message = "The tardis has detected an authorised control disc, valid for one journey only. Travelling to the programmed location.";
 				TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, player, playerUUIDs, id, eps, creeper);
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

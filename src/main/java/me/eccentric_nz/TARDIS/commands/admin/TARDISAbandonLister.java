@@ -14,20 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.WorldManager;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -46,11 +47,11 @@ public class TARDISAbandonLister {
 		if (rst.resultSet()) {
 			boolean click = (sender instanceof Player);
 			if (click) {
-				sender.sendMessage(plugin.getLanguage().getString("ABANDONED_CLICK"));
+				sender.sendMessage(Objects.requireNonNull(plugin.getLanguage().getString("ABANDONED_CLICK")));
 			}
 			int i = 1;
 			for (Tardis t : rst.getData()) {
-				String owner = (t.getOwner().equals("")) ? "TARDIS Admin" : t.getOwner();
+				String owner = (t.getOwner().equals("")) ? "tardis Admin" : t.getOwner();
 				// get current location
 				HashMap<String, Object> wherec = new HashMap<>();
 				wherec.put("tardis_id", t.getTardis_id());
@@ -59,7 +60,7 @@ public class TARDISAbandonLister {
 					String w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
 					String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
 					if (click) {
-						String json = "[{\"text\":\"" + i + ". Abandoned by: " + owner + ", " + l + "\"},{\"text\":\" < Enter > \",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin enter " + t.getTardis_id() + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to enter this TARDIS\"}]}}},{\"text\":\" < Delete >\",\"color\":\"red\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin delete " + t.getTardis_id() + " abandoned\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to delete this TARDIS\"}]}}}]";
+						String json = "[{\"text\":\"" + i + ". Abandoned by: " + owner + ", " + l + "\"},{\"text\":\" < Enter > \",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin enter " + t.getTardis_id() + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to enter this tardis\"}]}}},{\"text\":\" < Delete >\",\"color\":\"red\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin delete " + t.getTardis_id() + " abandoned\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to delete this tardis\"}]}}}]";
 						TARDISUpdateChatGUI.sendJSON(json, (Player) sender);
 					} else {
 						sender.sendMessage(i + ". Abandoned by: " + owner + ", location: " + l);
@@ -68,7 +69,7 @@ public class TARDISAbandonLister {
 				}
 			}
 		} else {
-			sender.sendMessage(plugin.getLanguage().getString("ABANDONED_NONE"));
+			sender.sendMessage(Objects.requireNonNull(plugin.getLanguage().getString("ABANDONED_NONE")));
 		}
 	}
 }

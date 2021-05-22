@@ -14,20 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands;
+package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlock;
-import me.eccentric_nz.TARDIS.chemistry.block.RecipeData;
-import me.eccentric_nz.TARDIS.chemistry.compound.CompoundCommand;
-import me.eccentric_nz.TARDIS.chemistry.constructor.ConstructCommand;
-import me.eccentric_nz.TARDIS.chemistry.creative.CreativeCommand;
-import me.eccentric_nz.TARDIS.chemistry.formula.FormulaCommand;
-import me.eccentric_nz.TARDIS.chemistry.lab.LabCommand;
-import me.eccentric_nz.TARDIS.chemistry.product.ProductCommand;
-import me.eccentric_nz.TARDIS.chemistry.reducer.ReduceCommand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.chemistry.block.ChemistryBlock;
+import me.eccentric_nz.tardis.chemistry.block.RecipeData;
+import me.eccentric_nz.tardis.chemistry.compound.CompoundCommand;
+import me.eccentric_nz.tardis.chemistry.constructor.ConstructCommand;
+import me.eccentric_nz.tardis.chemistry.creative.CreativeCommand;
+import me.eccentric_nz.tardis.chemistry.formula.FormulaCommand;
+import me.eccentric_nz.tardis.chemistry.lab.LabCommand;
+import me.eccentric_nz.tardis.chemistry.product.ProductCommand;
+import me.eccentric_nz.tardis.chemistry.reducer.ReduceCommand;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -37,6 +37,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -51,7 +52,7 @@ public class TARDISChemistryCommand implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("tardischemistry")) {
 			Player player = null;
 			if (sender instanceof Player) {
@@ -113,27 +114,15 @@ public class TARDISChemistryCommand implements CommandExecutor {
 	private void showBlockRecipe(Player player, String which) {
 		player.closeInventory();
 		plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
-		Material surround;
-		switch (which) {
-			case "creative":
-				surround = Material.DIAMOND;
-				break;
-			case "construct":
-				surround = Material.LAPIS_LAZULI;
-				break;
-			case "compound":
-				surround = Material.REDSTONE;
-				break;
-			case "reduce":
-				surround = Material.GOLD_NUGGET;
-				break;
-			case "product":
-				surround = Material.IRON_NUGGET;
-				break;
-			default: // lab
-				surround = Material.COAL;
-				break;
-		}
+		Material surround = switch (which) {
+			case "creative" -> Material.DIAMOND;
+			case "construct" -> Material.LAPIS_LAZULI;
+			case "compound" -> Material.REDSTONE;
+			case "reduce" -> Material.GOLD_NUGGET;
+			case "product" -> Material.IRON_NUGGET;
+			default -> // lab
+					Material.COAL;
+		};
 		Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chemistry " + which + " recipe");
 		ItemStack ingredient = new ItemStack(surround, 1);
 		inv.setItem(0, ingredient);

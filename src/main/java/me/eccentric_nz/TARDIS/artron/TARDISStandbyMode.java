@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.artron;
+package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.StandbyData;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetStandby;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.StandbyData;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetStandby;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
@@ -51,7 +51,7 @@ public class TARDISStandbyMode implements Runnable {
 			// not while travelling or recharging and only until they hit zero
 			if (!isTravelling(id) && !isNearCharger(id) && level > amount) {
 				int remove = amount;
-				// if TARDIS force field is on drain more power
+				// if tardis force field is on drain more power
 				if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(standbyData.getUuid())) {
 					remove *= 3;
 				}
@@ -80,7 +80,7 @@ public class TARDISStandbyMode implements Runnable {
 						}
 						delay = 20L;
 					}
-					// police box lamp, delay it incase the TARDIS needs rebuilding
+					// police box lamp, delay it incase the tardis needs rebuilding
 					if (standbyData.getPreset().equals(PRESET.NEW) || standbyData.getPreset().equals(PRESET.OLD)) {
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
 					}
@@ -93,9 +93,7 @@ public class TARDISStandbyMode implements Runnable {
 					// update database
 					plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
 					// if force field is on, disable it
-					if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(standbyData.getUuid())) {
-						plugin.getTrackerKeeper().getActiveForceFields().remove(standbyData.getUuid());
-					}
+					plugin.getTrackerKeeper().getActiveForceFields().remove(standbyData.getUuid());
 				}, 1L);
 			}
 		});
@@ -106,7 +104,7 @@ public class TARDISStandbyMode implements Runnable {
 	}
 
 	/**
-	 * Checks whether the TARDIS is near a recharge location.
+	 * Checks whether the tardis is near a recharge location.
 	 */
 	private boolean isNearCharger(int id) {
 		HashMap<String, Object> where = new HashMap<>();

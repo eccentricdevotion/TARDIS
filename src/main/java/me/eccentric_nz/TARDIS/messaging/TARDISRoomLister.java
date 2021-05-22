@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.messaging;
+package me.eccentric_nz.tardis.messaging;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.TARDIS.messaging.TableGenerator.Alignment;
-import me.eccentric_nz.TARDIS.messaging.TableGenerator.Receiver;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
+import me.eccentric_nz.tardis.messaging.TableGenerator.Alignment;
+import me.eccentric_nz.tardis.messaging.TableGenerator.Receiver;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

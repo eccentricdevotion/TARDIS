@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.schematic;
+package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonParser;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.Archive;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.database.data.Archive;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,17 +75,7 @@ public class ResultSetArchive {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					archive = new Archive(
-							UUID.fromString(rs.getString("uuid")),
-							rs.getString("name"),
-							rs.getString("console_size"),
-							rs.getBoolean("beacon"),
-							rs.getBoolean("lanterns"),
-							rs.getInt("use"),
-							rs.getInt("y"),
-							new JsonParser().parse(rs.getString("data")).getAsJsonObject(),
-							rs.getString("description")
-					);
+					archive = new Archive(UUID.fromString(rs.getString("uuid")), rs.getString("name"), rs.getString("console_size"), rs.getBoolean("beacon"), rs.getBoolean("lanterns"), rs.getInt("use"), rs.getInt("y"), JsonParser.parseString(rs.getString("data")).getAsJsonObject(), rs.getString("description"));
 				}
 			} else {
 				return false;

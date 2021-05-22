@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,7 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the tardis vaults.
  * <p>
  * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
  * environment-repeater 6 = artron button
@@ -44,7 +44,7 @@ public class ResultSetVoid {
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the thevoid table.
 	 *
 	 * @param plugin    an instance of the main class.
-	 * @param tardis_id the TARDIS id to check
+	 * @param tardis_id the tardis id to check
 	 */
 	public ResultSetVoid(TARDIS plugin, int tardis_id) {
 		this.plugin = plugin;
@@ -53,10 +53,10 @@ public class ResultSetVoid {
 	}
 
 	/**
-	 * Attempts to see whether the supplied TARDIS id is in the thevoid table. This method builds an SQL query string
+	 * Attempts to see whether the supplied tardis id is in the thevoid table. This method builds an SQL query string
 	 * from the parameters supplied and then executes the query.
 	 *
-	 * @return true or false depending on whether the TARDIS id exists in the table
+	 * @return true or false depending on whether the tardis id exists in the table
 	 */
 	public boolean hasUpdatedToVOID() {
 		PreparedStatement statement = null;

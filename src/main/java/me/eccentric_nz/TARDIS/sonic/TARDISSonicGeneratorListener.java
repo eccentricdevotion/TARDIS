@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.sonic;
+package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.data.Sonic;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetSonic;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.database.data.Sonic;
+import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
+import me.eccentric_nz.tardis.database.resultset.ResultSetSonic;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -253,7 +253,7 @@ public class TARDISSonicGeneratorListener implements Listener {
 				}
 			} else {
 				event.setCancelled(true);
-				// only in TARDIS
+				// only in tardis
 				TARDISMessage.send(p, "NOT_IN_TARDIS");
 			}
 		}

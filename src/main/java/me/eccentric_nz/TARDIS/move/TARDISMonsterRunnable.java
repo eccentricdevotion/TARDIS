@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.move;
+package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.ars.TARDISARSMethods;
+import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.builders.TARDISTIPSData;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAngelsAPI;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.utility.*;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
@@ -80,7 +80,7 @@ public class TARDISMonsterRunnable implements Runnable {
 		// get open portals
 		for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
 			// only portals in police box worlds
-			if (map.getKey().getWorld().getName().contains("TARDIS")) {
+			if (map.getKey().getWorld().getName().contains("tardis")) {
 				continue;
 			}
 			if (map.getValue().isAbandoned()) {
@@ -204,7 +204,7 @@ public class TARDISMonsterRunnable implements Runnable {
 				}
 			}
 			if (!found && plugin.getConfig().getBoolean("preferences.spawn_random_monsters")) {
-				// spawn a random mob inside TARDIS?
+				// spawn a random mob inside tardis?
 				// 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
 				if (TARDISConstants.RANDOM.nextInt(4) == 0 && canSpawn(map.getKey(), TARDISConstants.RANDOM.nextInt(4))) {
 					HashMap<String, Object> wheret = new HashMap<>();
@@ -296,7 +296,7 @@ public class TARDISMonsterRunnable implements Runnable {
 			if (e != null) {
 				e.remove();
 			}
-			// if there are players in the TARDIS sound the cloister bell
+			// if there are players in the tardis sound the cloister bell
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("tardis_id", tpl.getTardisId());
 			ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
@@ -328,7 +328,7 @@ public class TARDISMonsterRunnable implements Runnable {
 			while (!loc.getChunk().isLoaded()) {
 				loc.getChunk().load();
 			}
-			// spawn a monster in the TARDIS
+			// spawn a monster in the tardis
 			plugin.setTardisSpawn(true);
 			Entity ent = loc.getWorld().spawnEntity(loc, m.getType());
 			switch (m.getType()) {

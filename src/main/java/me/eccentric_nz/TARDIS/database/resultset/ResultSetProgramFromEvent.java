@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.Program;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.database.data.Program;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,7 +26,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the tardis vaults.
  * <p>
  * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
  * environment-repeater 6 = artron button
@@ -75,14 +75,7 @@ public class ResultSetProgramFromEvent {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				program = new Program(
-						rs.getInt("program_id"),
-						rs.getString("uuid"),
-						rs.getString("name"),
-						rs.getString("inventory"),
-						rs.getString("parsed"),
-						rs.getBoolean("checked")
-				);
+				program = new Program(rs.getInt("program_id"), rs.getString("uuid"), rs.getString("name"), rs.getString("inventory"), rs.getString("parsed"), rs.getBoolean("checked"));
 			} else {
 				return false;
 			}

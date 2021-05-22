@@ -14,21 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.desktop;
+package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.UseClay;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.builders.TARDISTIPSData;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.UseClay;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.World;
@@ -86,7 +86,7 @@ public class TARDISUpgradeBlockScanner {
 				startx = pos.getCentreX();
 				startz = pos.getCentreZ();
 			} else {
-				int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+				int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
 				startx = gsl[0];
 				startz = gsl[2];
 			}
@@ -160,17 +160,11 @@ public class TARDISUpgradeBlockScanner {
 							switch (type) {
 								case ORANGE_WOOL:
 									if (wall_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Orange Wool / Terracotta
-										switch (use_clay) {
-											case TERRACOTTA:
-												type = Material.ORANGE_TERRACOTTA;
-												break;
-											case CONCRETE:
-												type = Material.ORANGE_CONCRETE;
-												break;
-											default:
-												type = Material.ORANGE_WOOL;
-												break;
-										}
+										type = switch (use_clay) {
+											case TERRACOTTA -> Material.ORANGE_TERRACOTTA;
+											case CONCRETE -> Material.ORANGE_CONCRETE;
+											default -> Material.ORANGE_WOOL;
+										};
 									} else {
 										type = wall_type;
 									}
@@ -178,17 +172,11 @@ public class TARDISUpgradeBlockScanner {
 								case LIGHT_GRAY_WOOL:
 									if (!tud.getSchematic().getPermission().equals("eleventh")) {
 										if (floor_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Light Grey Wool / Terracotta
-											switch (use_clay) {
-												case TERRACOTTA:
-													type = Material.LIGHT_GRAY_TERRACOTTA;
-													break;
-												case CONCRETE:
-													type = Material.LIGHT_GRAY_CONCRETE;
-													break;
-												default:
-													type = Material.LIGHT_GRAY_WOOL;
-													break;
-											}
+											type = switch (use_clay) {
+												case TERRACOTTA -> Material.LIGHT_GRAY_TERRACOTTA;
+												case CONCRETE -> Material.LIGHT_GRAY_CONCRETE;
+												default -> Material.LIGHT_GRAY_WOOL;
+											};
 										} else {
 											type = floor_type;
 										}
@@ -196,9 +184,9 @@ public class TARDISUpgradeBlockScanner {
 										String[] tsplit = type.toString().split("_");
 										String m;
 										if (tsplit.length > 2) {
-											m = tsplit[0] + "_" + tsplit[1] + "_" + use_clay.toString();
+											m = tsplit[0] + "_" + tsplit[1] + "_" + use_clay;
 										} else {
-											m = tsplit[0] + "_" + use_clay.toString();
+											m = tsplit[0] + "_" + use_clay;
 										}
 										type = Material.getMaterial(m);
 									}
@@ -210,9 +198,9 @@ public class TARDISUpgradeBlockScanner {
 									String[] tsplit = type.toString().split("_");
 									String m;
 									if (tsplit.length > 2) {
-										m = tsplit[0] + "_" + tsplit[1] + "_" + use_clay.toString();
+										m = tsplit[0] + "_" + tsplit[1] + "_" + use_clay;
 									} else {
-										m = tsplit[0] + "_" + use_clay.toString();
+										m = tsplit[0] + "_" + use_clay;
 									}
 									type = Material.getMaterial(m);
 							}

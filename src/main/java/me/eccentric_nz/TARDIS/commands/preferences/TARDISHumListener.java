@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.preferences;
+package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -64,7 +64,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
 	public void onPrefsMenuClick(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "TARDIS Interior Sounds")) {
+		if (name.equals(ChatColor.DARK_RED + "tardis Interior Sounds")) {
 			event.setCancelled(true);
 			int slot = event.getRawSlot();
 			if (slot >= 0 && slot < 18) {

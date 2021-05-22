@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
-import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
-import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
-import me.eccentric_nz.TARDIS.travel.TARDISSaveSignPageTwo;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.enumeration.Flag;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.flight.TARDISLand;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.travel.TARDISAreaCheck;
+import me.eccentric_nz.tardis.travel.TARDISAreasInventory;
+import me.eccentric_nz.tardis.travel.TARDISSaveSignInventory;
+import me.eccentric_nz.tardis.travel.TARDISSaveSignPageTwo;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -62,7 +62,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 	}
 
 	/**
-	 * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+	 * Listens for player clicking inside an inventory. If the inventory is a tardis GUI, then the click is processed
 	 * accordingly.
 	 *
 	 * @param event a player clicking an inventory slot
@@ -71,11 +71,11 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 	public void onSaveTerminalClick(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
-			boolean isSecondPage = name.equals(ChatColor.DARK_RED + "TARDIS saves 2");
+		if (name.startsWith(ChatColor.DARK_RED + "tardis saves")) {
+			boolean isSecondPage = name.equals(ChatColor.DARK_RED + "tardis saves 2");
 			Player player = (Player) event.getWhoClicked();
 			UUID uuid = player.getUniqueId();
-			// get the TARDIS the player is in
+			// get the tardis the player is in
 			boolean allow = false;
 			int id = -1;
 			if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(uuid)) {
@@ -161,7 +161,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 								}
 								TARDISAreaCheck tac = plugin.getTardisArea().areaCheckInExistingArea(save_dest);
 								if (tac.isInArea()) {
-									// save is in a TARDIS area, so check that the spot is not occupied
+									// save is in a tardis area, so check that the spot is not occupied
 									HashMap<String, Object> wheresave = new HashMap<>();
 									wheresave.put("world", lore.get(0));
 									wheresave.put("x", lore.get(1));
@@ -244,16 +244,14 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 					}
 				}
 				if (slot == 45) {
-					// check it is this player's TARDIS
+					// check it is this player's tardis
 					HashMap<String, Object> wherez = new HashMap<>();
 					wherez.put("tardis_id", id);
 					wherez.put("uuid", uuid.toString());
 					ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false, 0);
 					if (rs.resultSet()) {
-						if (!plugin.getTrackerKeeper().getArrangers().contains(uuid)) {
-							// Only add one at a time
-							plugin.getTrackerKeeper().getArrangers().add(uuid);
-						}
+						// Only add one at a time
+						plugin.getTrackerKeeper().getArrangers().add(uuid);
 						TARDISMessage.send(player, "SAVE_ARRANGE");
 					} else {
 						TARDISMessage.send(player, "NOT_OWNER");
@@ -265,13 +263,13 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 					int cmd = own.getItemMeta().getCustomModelData();
 					int ownId = -1;
 					if (cmd == 138) {
-						// get player's TARDIS id
+						// get player's tardis id
 						ResultSetTardisID rstid = new ResultSetTardisID(plugin);
 						if (rstid.fromUUID(uuid.toString())) {
 							ownId = rstid.getTardis_id();
 						}
 					} else {
-						// get id of TARDIS player is in
+						// get id of tardis player is in
 						ownId = TARDISInteriorPostioning.getTARDISIdFromLocation(player.getLocation());
 					}
 					if (ownId != -1) {
@@ -283,11 +281,11 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 							if (isSecondPage) {
 								TARDISSaveSignPageTwo sst = new TARDISSaveSignPageTwo(plugin, saveId, player);
 								items = sst.getPageTwo();
-								inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves 2");
+								inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves 2");
 							} else {
 								TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, saveId, player);
 								items = sst.getTerminal();
-								inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
+								inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves");
 							}
 							inv.setContents(items);
 							player.openInventory(inv);
@@ -303,22 +301,22 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 						if (isSecondPage) {
 							TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, finalId, player);
 							items = sst.getTerminal();
-							inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
+							inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves");
 						} else {
 							TARDISSaveSignPageTwo sst = new TARDISSaveSignPageTwo(plugin, finalId, player);
 							items = sst.getPageTwo();
-							inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves 2");
+							inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves 2");
 						}
 						inv.setContents(items);
 						player.openInventory(inv);
 					}, 2L);
 				}
 				if (slot == 53) {
-					// load TARDIS areas
+					// load tardis areas
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 						TARDISAreasInventory sst = new TARDISAreasInventory(plugin, player);
 						ItemStack[] items = sst.getTerminal();
-						Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS areas");
+						Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis areas");
 						areainv.setContents(items);
 						player.openInventory(areainv);
 					}, 2L);
@@ -330,10 +328,10 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 	@EventHandler(ignoreCancelled = true)
 	public void onSaveSignClose(InventoryCloseEvent event) {
 		String inv_name = event.getView().getTitle();
-		if (inv_name.startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
-			boolean isPageTwo = inv_name.equals(ChatColor.DARK_RED + "TARDIS saves 2");
+		if (inv_name.startsWith(ChatColor.DARK_RED + "tardis saves")) {
+			boolean isPageTwo = inv_name.equals(ChatColor.DARK_RED + "tardis saves 2");
 			UUID uuid = event.getPlayer().getUniqueId();
-			// get the TARDIS the player is in
+			// get the tardis the player is in
 			HashMap<String, Object> wheres = new HashMap<>();
 			wheres.put("uuid", uuid.toString());
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);

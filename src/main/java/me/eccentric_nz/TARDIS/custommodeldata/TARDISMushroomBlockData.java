@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.tardis.custommodeldata;
 
 import java.util.HashMap;
 
@@ -24,7 +24,7 @@ public class TARDISMushroomBlockData {
 	public static final String RED_MUSHROOM_DATA_ALL = "minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=true,west=true]";
 	public static final String MUSHROOM_STEM_DATA_ALL = "minecraft:mushroom_stem[down=true,east=true,north=true,south=true,up=true,west=true]";
 
-	public static final HashMap<Integer, String> BROWN_MUSHROOM_DATA = new HashMap<Integer, String>() {
+	public static final HashMap<Integer, String> BROWN_MUSHROOM_DATA = new HashMap<>() {
 		{
 			// the_moment
 			put(1, "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=false,up=false,west=true]");
@@ -33,7 +33,7 @@ public class TARDISMushroomBlockData {
 		}
 	};
 
-	public static final HashMap<Integer, String> RED_MUSHROOM_DATA = new HashMap<Integer, String>() {
+	public static final HashMap<Integer, String> RED_MUSHROOM_DATA = new HashMap<>() {
 		{
 			// ars
 			put(14, "minecraft:red_mushroom_block[down=false,east=true,north=true,south=true,up=true,west=false]");
@@ -103,7 +103,7 @@ public class TARDISMushroomBlockData {
 		}
 	};
 
-	public static final HashMap<Integer, String> MUSHROOM_STEM_DATA = new HashMap<Integer, String>() {
+	public static final HashMap<Integer, String> MUSHROOM_STEM_DATA = new HashMap<>() {
 		{
 			// heat_block
 			put(5, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=true]");

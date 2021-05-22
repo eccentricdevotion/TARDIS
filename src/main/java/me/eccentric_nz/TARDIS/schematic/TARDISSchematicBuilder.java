@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.schematic;
+package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -79,20 +79,15 @@ public class TARDISSchematicBuilder {
 			if (rsc.resultSet()) {
 				Location location = TARDISStaticLocationGetters.getLocationFromDB(rsc.getLocation());
 				switch (c) {
-					case 2:
-						// world repeater
-					case 3:
-						// x repeater
-					case 4:
-						// z repeater
-					case 5:
-						// distance multiplier
-						map.put(c, location);
-						break;
-					default:
-						// handbrake
-						h = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
-						break;
+					// world repeater
+					// x repeater
+					// z repeater
+					case 2, 3, 4, 5 ->
+							// distance multiplier
+							map.put(c, location);
+					default ->
+							// handbrake
+							h = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
 				}
 			}
 		}
@@ -147,7 +142,7 @@ public class TARDISSchematicBuilder {
 					Block b = w.getBlockAt(r, l, c);
 					BlockData data = b.getBlockData();
 					Material m = data.getMaterial();
-					// set ARS block
+					// set ars block
 					if (ars && m.isAir()) {
 						data = Material.INFESTED_COBBLESTONE.createBlockData();
 						ars = false;

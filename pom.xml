@@ -2,7 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>me.eccentric_nz.TARDIS</groupId>
+	<groupId>me.eccentric_nz.tardis</groupId>
 	<artifactId>TARDIS</artifactId>
 	<version>4.6.1</version>
 	<name>TARDIS</name>
@@ -30,7 +30,7 @@
 			<url>https://maven.sk89q.com/repo</url>
 		</repository>
 		<repository>
-			<id>townyadvanced-repo</id>
+			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
 		</repository>
 		<repository>
@@ -61,7 +61,7 @@
 			</activation>
 			<properties>
 				<!-- Set the build number to the date and time of the build -->
-				<project.build.number>${myBuildNumber}</project.build.number>
+				<project.buildNumber>${timestamp}</project.buildNumber>
 			</properties>
 			<build>
 				<plugins>
@@ -81,7 +81,6 @@
 								</goals>
 								<configuration>
 									<timestampFormat>dd.MM.yy-HH:mm</timestampFormat>
-									<timestampPropertyName>myBuildNumber</timestampPropertyName>
 									<!-- formats the timestamp all together like 04.12.16-14:17 and puts it in the ${myBuildNumber} buildProperty -->
 								</configuration>
 							</execution>
@@ -109,7 +108,6 @@
 						<artifactId>maven-javadoc-plugin</artifactId>
 						<version>3.2.0</version>
 						<configuration>
-							<!--<additionalparam>-Xdoclint:none</additionalparam>-->
 							<quiet/>
 							<excludePackageNames>com.*:org.*</excludePackageNames>
 						</configuration>
@@ -128,6 +126,7 @@
 		</profile>
 	</profiles>
 	<build>
+		<finalName>${project.artifactId}-${project.version}-${project.buildNumber}</finalName>
 		<defaultGoal>clean package</defaultGoal>
 		<plugins>
 			<plugin>
@@ -157,11 +156,11 @@
 					<replacements>
 						<replacement>
 							<token>maven-version-number</token>
-							<value>${project.version}-b${project.build.number}</value>
+							<value>${project.version}-${project.buildNumber}</value>
 						</replacement>
 						<replacement>
 							<token>maven-build-number</token>
-							<value>${project.build.number}</value>
+							<value>${project.buildNumber}</value>
 						</replacement>
 					</replacements>
 				</configuration>
@@ -220,13 +219,40 @@
 				<version>3.2.0</version>
 				<configuration>
 					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
 						<manifestEntries>
-							<Main-Class>me.eccentric_nz.TARDIS.database.tool.Main</Main-Class>
+							<Main-Class>me.eccentric_nz.tardis.database.tool.Main</Main-Class>
 							<Implementation-Title>${project.name}</Implementation-Title>
 							<Implementation-Version>${project.version}</Implementation-Version>
+							<Implementation-Build>${project.buildNumber}</Implementation-Build>
 						</manifestEntries>
 					</archive>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<appendAssemblyId>false</appendAssemblyId>
+					<archive>
+						<manifest>
+							<mainClass>me.eccentric_nz.tardis.database.tool.Main</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>directory-single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -248,7 +274,7 @@
 		<dependency>
 			<groupId>me.eccentric_nz.tardischunkgenerator</groupId>
 			<artifactId>TARDISChunkGenerator</artifactId>
-			<version>${project.version}</version>
+			<version>4.6.1</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
@@ -281,7 +307,7 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.wimbli.WorldBorder</groupId>
+			<groupId>com.github.PryPurity</groupId>
 			<artifactId>WorldBorder</artifactId>
 			<version>2.1.2</version>
 			<type>jar</type>
@@ -304,14 +330,7 @@
 		<dependency>
 			<groupId>com.onarandombox.multiverseadventure</groupId>
 			<artifactId>Multiverse-Adventure</artifactId>
-			<version>2.5.0-SNAPSHOT</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>uk.co.tggl.pluckerpluck</groupId>
-			<artifactId>MultiInv</artifactId>
-			<version>3.3.10</version>
+			<version>2.5</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -319,13 +338,6 @@
 			<groupId>me.ebonjaeger</groupId>
 			<artifactId>perworldinventory-kt</artifactId>
 			<version>2.3.2</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>multiworld</groupId>
-			<artifactId>MultiWorld</artifactId>
-			<version>5.2.8</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -344,13 +356,6 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.yi.acru.bukkit.lockette</groupId>
-			<artifactId>Lockette</artifactId>
-			<version>1.8.33</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>me.crafter.mc</groupId>
 			<artifactId>lockettepro</artifactId>
 			<version>2.10.10</version>
@@ -358,7 +363,7 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>me.ryanhamshire</groupId>
+			<groupId>com.github.TechFortress</groupId>
 			<artifactId>GriefPrevention</artifactId>
 			<version>16.17.1</version>
 			<type>jar</type>
@@ -421,6 +426,12 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.dynmap</groupId>
+			<artifactId>dynmap-api</artifactId>
+			<version>2.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.rauschig</groupId>
 			<artifactId>jarchivelib</artifactId>
 			<version>1.2.0-SNAPSHOT</version>
@@ -438,6 +449,13 @@
 			<groupId>org.swinglabs</groupId>
 			<artifactId>swing-layout</artifactId>
 			<version>1.0.3</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.6</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>

@@ -5,7 +5,7 @@
  * https://www.spigotmc.org/threads/help-making-a-chat-table-based.170306/
  *
  */
-package me.eccentric_nz.TARDIS.messaging;
+package me.eccentric_nz.tardis.messaging;
 
 public class TableGeneratorCustomFont extends TableGenerator {
 

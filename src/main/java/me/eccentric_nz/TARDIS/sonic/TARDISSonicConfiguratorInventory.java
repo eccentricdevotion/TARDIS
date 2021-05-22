@@ -1,6 +1,6 @@
-package me.eccentric_nz.TARDIS.sonic;
+package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.TARDIS.custommodeldata.GUISonicConfigurator;
+import me.eccentric_nz.tardis.custommodeldata.GUISonicConfigurator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 

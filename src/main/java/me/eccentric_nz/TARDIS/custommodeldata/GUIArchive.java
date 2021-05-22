@@ -14,22 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
 public enum GUIArchive {
 
-	// TARDIS Archive
-	BACK(8, 18, Material.BOWL),
-	SET_SIZE(77, 19, Material.BOWL),
-	SCAN_CONSOLE(75, 20, Material.BOWL),
-	ARCHIVE_CURRENT_CONSOLE(5, 0, Material.BOWL),
-	SMALL(79, 22, Material.BOWL),
-	MEDIUM(62, 23, Material.BOWL),
-	TALL(81, 24, Material.BOWL),
-	CLOSE(1, 26, Material.BOWL);
+	// tardis Archive
+	BACK(8, 18, Material.BOWL), SET_SIZE(77, 19, Material.BOWL), SCAN_CONSOLE(75, 20, Material.BOWL), ARCHIVE_CURRENT_CONSOLE(5, 0, Material.BOWL), SMALL(79, 22, Material.BOWL), MEDIUM(62, 23, Material.BOWL), TALL(81, 24, Material.BOWL), CLOSE(1, 26, Material.BOWL);
 
 	private final int customModelData;
 	private final int slot;

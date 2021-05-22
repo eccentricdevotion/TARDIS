@@ -14,23 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
 /**
  * @author eccentric_nz
  */
 public enum Hum {
 
-	ALIEN,
-	ATMOSPHERE,
-	COMPUTER,
-	COPPER,
-	CORAL,
-	GALAXY,
-	LEARNING,
-	MIND,
-	NEON,
-	SLEEPING,
-	VOID,
-	RANDOM
+	ALIEN, ATMOSPHERE, COMPUTER, COPPER, CORAL, GALAXY, LEARNING, MIND, NEON, SLEEPING, VOID, RANDOM
 }

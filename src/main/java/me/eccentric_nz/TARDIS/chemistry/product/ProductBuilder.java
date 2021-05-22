@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.product;
+package me.eccentric_nz.tardis.chemistry.product;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -27,6 +27,7 @@ public class ProductBuilder {
 	public static ItemStack getProduct(Product product) {
 		ItemStack is = new ItemStack(product.getItemMaterial(), 1);
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		im.setDisplayName(product.toString().replace("_", " "));
 		im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		int which = 10000001 + product.ordinal();

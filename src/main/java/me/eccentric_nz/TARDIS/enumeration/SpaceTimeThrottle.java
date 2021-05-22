@@ -1,19 +1,14 @@
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
 import java.util.HashMap;
 
 /**
- * The Space Time Throttle controls the effective "speed" of the TARDIS by altering the "length" of the route (and thus
+ * The Space Time Throttle controls the effective "speed" of the tardis by altering the "length" of the route (and thus
  * shorten the perceived travel time) through the Time Vortex.
  */
 public enum SpaceTimeThrottle {
 
-	NORMAL(4, 500, 18, 1.0f),
-	FASTER(3, 375, 12, 1.5f),
-	RAPID(2, 250, 9, 2.0f),
-	WARP(1, 125, 6, 3.0f),
-	REBUILD(0, 80, 3, 1.0f),
-	JUNK(-1, 600, 25, 1.0f);
+	NORMAL(4, 500, 18, 1.0f), FASTER(3, 375, 12, 1.5f), RAPID(2, 250, 9, 2.0f), WARP(1, 125, 6, 3.0f), REBUILD(0, 80, 3, 1.0f), JUNK(-1, 600, 25, 1.0f);
 
 	private static final HashMap<Integer, SpaceTimeThrottle> BY_DELAY = new HashMap<>();
 

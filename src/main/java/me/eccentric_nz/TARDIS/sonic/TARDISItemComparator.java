@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package me.eccentric_nz.TARDIS.sonic;
+package me.eccentric_nz.tardis.sonic;
 
 /*
  * Borrowed from the SimpleSort plugin. http://dev.bukkit.org/bukkit-plugins/simplesort/
@@ -50,9 +50,9 @@ class TARDISItemComparator implements Comparator<ItemStack> {
 			} else if (item1.getType().toString().compareTo(item2.getType().toString()) < 0) {
 				return -1;
 			} else if (item1.getType().toString().compareTo(item2.getType().toString()) == 0) {
-				if (item1.getItemMeta() instanceof Damageable) {
-					Damageable d1 = (Damageable) item1.getItemMeta();
+				if (item1.getItemMeta() instanceof Damageable d1) {
 					Damageable d2 = (Damageable) item2.getItemMeta();
+					assert d2 != null;
 					if (d1.getDamage() > d2.getDamage()) {
 						return 1;
 					} else if (d1.getDamage() < d2.getDamage()) {

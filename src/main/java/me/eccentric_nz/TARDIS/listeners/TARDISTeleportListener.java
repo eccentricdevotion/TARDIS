@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -57,7 +57,7 @@ public class TARDISTeleportListener implements Listener {
 			String world_to = event.getTo().getWorld().getName();
 			Player p = event.getPlayer();
 			String uuid = p.getUniqueId().toString();
-			if (world_from.contains("TARDIS") && !world_to.contains("TARDIS")) {
+			if (world_from.contains("tardis") && !world_to.contains("tardis")) {
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("uuid", uuid);
 				plugin.getQueryFactory().doDelete("travellers", where);
@@ -66,7 +66,7 @@ public class TARDISTeleportListener implements Listener {
 				}
 				// stop tracking telepaths
 				plugin.getTrackerKeeper().getTelepaths().remove(p.getUniqueId());
-			} else if (world_to.contains("TARDIS") && !cause.equals(TeleportCause.PLUGIN)) {
+			} else if (world_to.contains("tardis") && !cause.equals(TeleportCause.PLUGIN)) {
 				ResultSetTardisID rsid = new ResultSetTardisID(plugin);
 				// if TIPS determine tardis_id from player location
 				if (plugin.getConfig().getBoolean("creation.default_world")) {

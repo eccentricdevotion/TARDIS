@@ -14,20 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.junk;
+package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.builders.TARDISBuilderInner;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.Consoles;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -57,7 +57,7 @@ class TARDISJunkCreator {
 			TARDISMessage.send(p, "JUNK_DISABLED");
 			return true;
 		}
-		// check if there is a junk TARDIS already
+		// check if there is a junk tardis already
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
@@ -107,7 +107,7 @@ class TARDISJunkCreator {
 		setlocs.put("z", l.getBlockZ());
 		setlocs.put("direction", "SOUTH");
 		plugin.getQueryFactory().insertLocations(setlocs, TARDISStaticUtils.getBiomeAt(l).getKey().toString(), lastInsertId);
-		// build the TARDIS at the location
+		// build the tardis at the location
 		BuildData bd = new BuildData(null);
 		bd.setDirection(COMPASS.SOUTH);
 		bd.setLocation(l);
@@ -118,11 +118,11 @@ class TARDISJunkCreator {
 		bd.setSubmarine(false);
 		bd.setTardisID(lastInsertId);
 		bd.setThrottle(SpaceTimeThrottle.JUNK);
-		// build the TARDIS in the Vortex
+		// build the tardis in the Vortex
 		TARDISBuilderInner builder = new TARDISBuilderInner(plugin, Consoles.schematicFor("junk"), chunkworld, lastInsertId, p, wall_type, floor_type, true);
 		int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
 		builder.setTask(task);
-		// build the TARDIS in the world
+		// build the tardis in the world
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 5L);
 		return true;
 	}

@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.junk;
+package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
 import org.bukkit.Location;
 
 import java.util.HashMap;
@@ -41,7 +41,7 @@ class TARDISJunkLocation {
 	}
 
 	boolean isNotHome() {
-		// check the Junk TARDIS is not home already
+		// check the Junk tardis is not home already
 		ResultSetTardisID rs = new ResultSetTardisID(plugin);
 		if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
 			id = rs.getTardis_id();

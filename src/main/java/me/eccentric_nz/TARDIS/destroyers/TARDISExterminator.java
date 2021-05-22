@@ -14,24 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.destroyers;
+package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.event.TARDISDestructionEvent;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.BiomeSetter;
+import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.builders.TARDISTIPSData;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.enumeration.WorldManager;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -115,7 +115,7 @@ public class TARDISExterminator {
 				cleanHashMaps(id);
 				World cw = TARDISStaticLocationGetters.getWorld(chunkLoc);
 				if (cw == null) {
-					plugin.debug("The server could not find the TARDIS world, has it been deleted?");
+					plugin.debug("The server could not find the tardis world, has it been deleted?");
 					return false;
 				}
 				if (!cw.getName().toLowerCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) {
@@ -127,14 +127,14 @@ public class TARDISExterminator {
 				return true;
 			}
 		} catch (Exception e) {
-			plugin.getConsole().sendMessage(plugin.getPluginName() + "TARDIS exterminate by id error: " + e);
+			plugin.getConsole().sendMessage(plugin.getPluginName() + "tardis exterminate by id error: " + e);
 			return false;
 		}
 		return true;
 	}
 
 	/**
-	 * Deletes a TARDIS.
+	 * Deletes a tardis.
 	 *
 	 * @param player running the command.
 	 * @param block  the block that represents the Police Box sign
@@ -191,7 +191,7 @@ public class TARDISExterminator {
 			int tips = tardis.getTIPS();
 			boolean hasZero = (!tardis.getZero().isEmpty());
 			Schematic schm = tardis.getSchematic();
-			// need to check that a player is not currently in the TARDIS
+			// need to check that a player is not currently in the tardis
 			if (TARDISPermission.hasPermission(player, "tardis.delete")) {
 				HashMap<String, Object> travid = new HashMap<>();
 				travid.put("tardis_id", id);
@@ -210,25 +210,17 @@ public class TARDISExterminator {
 				return false;
 			}
 			Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-			// get TARDIS direction
+			// get tardis direction
 			COMPASS d = rsc.getDirection();
 			switch (d) {
-				case EAST:
-					signx = -2;
-					break;
-				case SOUTH:
-					signz = -2;
-					break;
-				case WEST:
-					signx = 2;
-					break;
-				case NORTH:
-					signz = 2;
-					break;
+				case EAST -> signx = -2;
+				case SOUTH -> signz = -2;
+				case WEST -> signx = 2;
+				case NORTH -> signz = 2;
 			}
 			int signy = -2;
 			if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
-				// if the sign was on the TARDIS destroy the TARDIS!
+				// if the sign was on the tardis destroy the tardis!
 				DestroyData dd = new DestroyData();
 				dd.setDirection(d);
 				dd.setLocation(bb_loc);
@@ -263,7 +255,7 @@ public class TARDISExterminator {
 					TARDISMessage.send(player, "TARDIS_EXTERMINATED");
 				}, 40L);
 			} else {
-				// cancel the event because it's not the player's TARDIS
+				// cancel the event because it's not the player's tardis
 				TARDISMessage.send(player, "NOT_OWNER");
 			}
 			return false;
@@ -290,24 +282,12 @@ public class TARDISExterminator {
 			for (HashMap<String, String> gmap : gdata) {
 				int direction = TARDISNumberParsers.parseInt(gmap.get("direction"));
 				switch (direction) {
-					case 1:
-						plugin.getGeneralKeeper().getGravityUpList().remove(gmap.get("location"));
-						break;
-					case 2:
-						plugin.getGeneralKeeper().getGravityNorthList().remove(gmap.get("location"));
-						break;
-					case 3:
-						plugin.getGeneralKeeper().getGravityWestList().remove(gmap.get("location"));
-						break;
-					case 4:
-						plugin.getGeneralKeeper().getGravitySouthList().remove(gmap.get("location"));
-						break;
-					case 5:
-						plugin.getGeneralKeeper().getGravityEastList().remove(gmap.get("location"));
-						break;
-					default:
-						plugin.getGeneralKeeper().getGravityDownList().remove(gmap.get("location"));
-						break;
+					case 1 -> plugin.getGeneralKeeper().getGravityUpList().remove(gmap.get("location"));
+					case 2 -> plugin.getGeneralKeeper().getGravityNorthList().remove(gmap.get("location"));
+					case 3 -> plugin.getGeneralKeeper().getGravityWestList().remove(gmap.get("location"));
+					case 4 -> plugin.getGeneralKeeper().getGravitySouthList().remove(gmap.get("location"));
+					case 5 -> plugin.getGeneralKeeper().getGravityEastList().remove(gmap.get("location"));
+					default -> plugin.getGeneralKeeper().getGravityDownList().remove(gmap.get("location"));
 				}
 			}
 		}

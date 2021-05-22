@@ -14,21 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.tardis.builders;
 
 import com.google.gson.*;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.enumeration.UseClay;
-import me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.enumeration.UseClay;
+import me.eccentric_nz.tardis.schematic.TARDISBannerSetter;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.utility.TARDISBannerData;
+import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -49,8 +49,8 @@ import java.io.File;
 import java.util.*;
 
 /**
- * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
- * simple inability to arrive at the proper time or location. While the Doctor did not build the TARDIS from scratch, he
+ * The tardis was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
+ * simple inability to arrive at the proper time or location. While the Doctor did not build the tardis from scratch, he
  * has substantially modified/rebuilt it.
  *
  * @author eccentric_nz
@@ -92,14 +92,14 @@ class TARDISBuildAbandoned implements Runnable {
 	private BossBar bb;
 
 	/**
-	 * Builds the interior of an abandoned TARDIS.
+	 * Builds the interior of an abandoned tardis.
 	 *
-	 * @param plugin an instance of the TARDIS plugin main class.
-	 * @param schm   the name of the schematic file to use can be ARS, BIGGER, BUDGET, CORAL, CUSTOM, DELUXE, ELEVENTH,
+	 * @param plugin an instance of the tardis plugin main class.
+	 * @param schm   the name of the schematic file to use can be ars, BIGGER, BUDGET, CORAL, CUSTOM, DELUXE, ELEVENTH,
 	 *               ENDER, MASTER, PYRAMID, REDSTONE, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR, WOOD, LEGACY_BUDGET,
 	 *               LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
-	 * @param world  the world where the TARDIS is to be built.
-	 * @param dbID   the unique key of the record for this TARDIS in the database.
+	 * @param world  the world where the tardis is to be built.
+	 * @param dbID   the unique key of the record for this tardis in the database.
 	 * @param player the player to show the progress bar to, may be null.
 	 */
 	TARDISBuildAbandoned(TARDIS plugin, Schematic schm, World world, int dbID, Player player) {
@@ -141,7 +141,7 @@ class TARDISBuildAbandoned implements Runnable {
 			set.put("tips", slot);
 			startx = pos.getCentreX();
 			startz = pos.getCentreZ();
-			// get the correct chunk for ARS
+			// get the correct chunk for ars
 			Location cl = new Location(world, startx, starty, startz);
 			Chunk cars = world.getChunkAt(cl);
 			String chun = world.getName() + ":" + cars.getX() + ":" + cars.getZ();
@@ -260,15 +260,9 @@ class TARDISBuildAbandoned implements Runnable {
 					case ORANGE_WOOL:
 						if (wall_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Orange Wool / Terracotta
 							switch (use_clay) {
-								case TERRACOTTA:
-									data = Material.ORANGE_TERRACOTTA.createBlockData();
-									break;
-								case CONCRETE:
-									data = Material.ORANGE_CONCRETE.createBlockData();
-									break;
-								default:
-									data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
-									break;
+								case TERRACOTTA -> data = Material.ORANGE_TERRACOTTA.createBlockData();
+								case CONCRETE -> data = Material.ORANGE_CONCRETE.createBlockData();
+								default -> data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
 							}
 						} else {
 							data = wall_type.createBlockData();
@@ -278,15 +272,9 @@ class TARDISBuildAbandoned implements Runnable {
 						if (!schm.getPermission().equals("eleventh")) {
 							if (floor_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Light Grey Wool / Terracotta
 								switch (use_clay) {
-									case TERRACOTTA:
-										data = Material.LIGHT_GRAY_TERRACOTTA.createBlockData();
-										break;
-									case CONCRETE:
-										data = Material.LIGHT_GRAY_CONCRETE.createBlockData();
-										break;
-									default:
-										data = Material.LIGHT_GRAY_WOOL.createBlockData();
-										break;
+									case TERRACOTTA -> data = Material.LIGHT_GRAY_TERRACOTTA.createBlockData();
+									case CONCRETE -> data = Material.LIGHT_GRAY_CONCRETE.createBlockData();
+									default -> data = Material.LIGHT_GRAY_WOOL.createBlockData();
 								}
 							} else {
 								data = floor_type.createBlockData();
@@ -304,15 +292,9 @@ class TARDISBuildAbandoned implements Runnable {
 						break;
 					case BLUE_WOOL:
 						switch (use_clay) {
-							case TERRACOTTA:
-								data = Material.BLUE_TERRACOTTA.createBlockData();
-								break;
-							case CONCRETE:
-								data = Material.BLUE_CONCRETE.createBlockData();
-								break;
-							default:
-								data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
-								break;
+							case TERRACOTTA -> data = Material.BLUE_TERRACOTTA.createBlockData();
+							case CONCRETE -> data = Material.BLUE_CONCRETE.createBlockData();
+							default -> data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
 						}
 						break;
 					default:
@@ -377,7 +359,7 @@ class TARDISBuildAbandoned implements Runnable {
 				 */
 				String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
 				plugin.getQueryFactory().insertSyncControl(dbID, 0, handbrakeloc, 0);
-				// create default json for ARS
+				// create default json for ars
 				String[][][] empty = new String[3][9][9];
 				for (int ars_y = 0; ars_y < 3; ars_y++) {
 					for (int ars_x = 0; ars_x < 9; ars_x++) {
@@ -432,7 +414,7 @@ class TARDISBuildAbandoned implements Runnable {
 						break;
 				}
 				Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-				JsonArray json = new JsonParser().parse(gson.toJson(empty)).getAsJsonArray();
+				JsonArray json = JsonParser.parseString(gson.toJson(empty)).getAsJsonArray();
 				HashMap<String, Object> seta = new HashMap<>();
 				seta.put("tardis_id", dbID);
 				seta.put("json", json.toString());
@@ -538,30 +520,30 @@ class TARDISBuildAbandoned implements Runnable {
 					data = Material.REPEATER.createBlockData();
 					Directional directional = (Directional) data;
 					switch (j) {
-						case 2:
+						case 2 -> {
 							directional.setFacing(BlockFace.WEST);
 							data = directional;
 							postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
 							plugin.getQueryFactory().insertSyncControl(dbID, 3, repeater, 0);
-							break;
-						case 3:
+						}
+						case 3 -> {
 							directional.setFacing(BlockFace.NORTH);
 							data = directional;
 							postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
 							plugin.getQueryFactory().insertSyncControl(dbID, 2, repeater, 0);
-							break;
-						case 4:
+						}
+						case 4 -> {
 							directional.setFacing(BlockFace.SOUTH);
 							data = directional;
 							postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
 							plugin.getQueryFactory().insertSyncControl(dbID, 5, repeater, 0);
-							break;
-						default:
+						}
+						default -> {
 							directional.setFacing(BlockFace.EAST);
 							data = directional;
 							postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
 							plugin.getQueryFactory().insertSyncControl(dbID, 4, repeater, 0);
-							break;
+						}
 					}
 					j++;
 				}

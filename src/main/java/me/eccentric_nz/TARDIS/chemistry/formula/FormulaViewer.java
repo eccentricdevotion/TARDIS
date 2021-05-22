@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.formula;
+package me.eccentric_nz.tardis.chemistry.formula;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chemistry.compound.Compound;
-import me.eccentric_nz.TARDIS.chemistry.compound.CompoundBuilder;
-import me.eccentric_nz.TARDIS.chemistry.element.Element;
-import me.eccentric_nz.TARDIS.chemistry.element.ElementBuilder;
-import me.eccentric_nz.TARDIS.chemistry.lab.Lab;
-import me.eccentric_nz.TARDIS.chemistry.lab.LabBuilder;
-import me.eccentric_nz.TARDIS.chemistry.product.Product;
-import me.eccentric_nz.TARDIS.chemistry.product.ProductBuilder;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.chemistry.compound.Compound;
+import me.eccentric_nz.tardis.chemistry.compound.CompoundBuilder;
+import me.eccentric_nz.tardis.chemistry.element.Element;
+import me.eccentric_nz.tardis.chemistry.element.ElementBuilder;
+import me.eccentric_nz.tardis.chemistry.lab.Lab;
+import me.eccentric_nz.tardis.chemistry.lab.LabBuilder;
+import me.eccentric_nz.tardis.chemistry.product.Product;
+import me.eccentric_nz.tardis.chemistry.product.ProductBuilder;
+import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -139,6 +139,7 @@ public class FormulaViewer {
 		// close
 		ItemStack close = new ItemStack(Material.BOWL, 1);
 		ItemMeta close_im = close.getItemMeta();
+		assert close_im != null;
 		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
 		close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
 		close.setItemMeta(close_im);

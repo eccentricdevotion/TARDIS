@@ -14,19 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISPerWorldInventoryChecker;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.utility.TARDISMultiverseInventoriesChecker;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISPerWorldInventoryChecker;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -75,7 +74,7 @@ public class TARDISMinecartListener implements Listener {
 				int bz = block_loc.getBlockZ();
 				String db_loc = bw + ":" + bx + ":" + by + ":" + bz;
 				switch (material) {
-					case ACACIA_DOOR: // is it a TARDIS door?
+					case ACACIA_DOOR: // is it a tardis door?
 					case BIRCH_DOOR:
 					case CRIMSON_DOOR:
 					case DARK_OAK_DOOR:
@@ -141,20 +140,11 @@ public class TARDISMinecartListener implements Listener {
 						break;
 				}
 				if (data != null && data.length > 3) {
-					boolean shouldPrevent;
-					switch (plugin.getInvManager()) {
-						case MULTIVERSE:
-							shouldPrevent = (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[0]));
-							break;
-						case MULTI:
-							shouldPrevent = (!TARDISMultiInvChecker.checkWorldsCanShare(bw, data[0]));
-							break;
-						case PER_WORLD:
-							shouldPrevent = (!TARDISPerWorldInventoryChecker.checkWorldsCanShare(bw, data[0]));
-							break;
-						default:
-							shouldPrevent = false;
-					}
+					boolean shouldPrevent = switch (plugin.getInvManager()) {
+						case MULTIVERSE -> (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[0]));
+						case PER_WORLD -> (!TARDISPerWorldInventoryChecker.checkWorldsCanShare(bw, data[0]));
+						default -> false;
+					};
 					if (shouldPrevent) {
 						if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
 							TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
@@ -212,18 +202,10 @@ public class TARDISMinecartListener implements Listener {
 		smc.getInventory().setContents(inv);
 		// calculate new velocity
 		switch (d) {
-			case NORTH:
-				e.setVelocity(new Vector(0, 0, -speed));
-				break;
-			case SOUTH:
-				e.setVelocity(new Vector(0, 0, speed));
-				break;
-			case WEST:
-				e.setVelocity(new Vector(-speed, 0, 0));
-				break;
-			default:
-				e.setVelocity(new Vector(speed, 0, 0));
-				break;
+			case NORTH -> e.setVelocity(new Vector(0, 0, -speed));
+			case SOUTH -> e.setVelocity(new Vector(0, 0, speed));
+			case WEST -> e.setVelocity(new Vector(-speed, 0, 0));
+			default -> e.setVelocity(new Vector(speed, 0, 0));
 		}
 	}
 
@@ -256,15 +238,11 @@ public class TARDISMinecartListener implements Listener {
 	}
 
 	private COMPASS switchDirection(COMPASS d) {
-		switch (d) {
-			case NORTH:
-				return COMPASS.SOUTH;
-			case SOUTH:
-				return COMPASS.NORTH;
-			case WEST:
-				return COMPASS.EAST;
-			default:
-				return COMPASS.WEST;
-		}
+		return switch (d) {
+			case NORTH -> COMPASS.SOUTH;
+			case SOUTH -> COMPASS.NORTH;
+			case WEST -> COMPASS.EAST;
+			default -> COMPASS.WEST;
+		};
 	}
 }

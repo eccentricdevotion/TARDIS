@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.api.event;
+package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
 import org.bukkit.entity.Player;
 
 /**
@@ -33,8 +33,8 @@ public final class TARDISDesktopThemeEvent extends TARDISEvent {
 	}
 
 	/**
-	 * Returns a desktop theme data object. You can use the {@link me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData
-	 * TARDISUpgradeData} to determine the previous theme, the theme that the TARDIS is changing to, the wall and floor
+	 * Returns a desktop theme data object. You can use the {@link me.eccentric_nz.tardis.desktop.TARDISUpgradeData
+	 * TARDISUpgradeData} to determine the previous theme, the theme that the tardis is changing to, the wall and floor
 	 * block types using the object's getter methods.
 	 *
 	 * @return the desktop theme data object

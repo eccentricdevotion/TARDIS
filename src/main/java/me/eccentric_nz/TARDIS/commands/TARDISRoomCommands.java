@@ -14,18 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands;
+package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.files.TARDISRoomMap;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.files.TARDISRoomMap;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.rooms.RoomRequiredLister;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -54,14 +55,14 @@ public class TARDISRoomCommands implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("tardisroom")) {
 			if (args.length < 2) {
 				new TARDISCommandHelper(plugin).getCommand("tardisroom", sender);
 				return true;
 			}
 			switch (args[0].toLowerCase(Locale.ENGLISH)) {
-				case "blocks": {
+				case "blocks" -> {
 					String name = args[1].toUpperCase(Locale.ENGLISH);
 					Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
 					if (name.equals("SAVE")) {
@@ -125,7 +126,7 @@ public class TARDISRoomCommands implements CommandExecutor {
 					}
 					return true;
 				}
-				case "required": {
+				case "required" -> {
 					Player player = null;
 					if (sender instanceof Player) {
 						player = (Player) sender;
@@ -143,7 +144,7 @@ public class TARDISRoomCommands implements CommandExecutor {
 					RoomRequiredLister.listCondensables(plugin, name, player);
 					return true;
 				}
-				case "add": {
+				case "add" -> {
 					if (!sender.hasPermission("tardis.admin")) {
 						TARDISMessage.send(sender, "NO_PERMS");
 						return false;
@@ -185,7 +186,7 @@ public class TARDISRoomCommands implements CommandExecutor {
 					TARDISMessage.send(sender, "ROOM_ADDED");
 					return true;
 				}
-				default: {
+				default -> {
 					if (!sender.hasPermission("tardis.admin")) {
 						TARDISMessage.send(sender, "NO_PERMS");
 						return false;

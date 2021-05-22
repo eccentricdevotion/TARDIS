@@ -14,30 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Material;
 
 public enum GUIArs {
 
 	// Architectural Reconfiguration
 
-	BUTTON_UP(1, 1, Material.CYAN_WOOL),
-	BUTTON_DOWN(2, 18, Material.CYAN_WOOL),
-	BUTTON_LEFT(3, 9, Material.CYAN_WOOL),
-	BUTTON_RIGHT(4, 11, Material.CYAN_WOOL),
-	BUTTON_MAP(2, 10, Material.MAP),
-	BUTTON_RECON(1, 12, Material.PINK_WOOL),
-	BUTTON_LEVEL_B(1, 27, Material.WHITE_WOOL),
-	BUTTON_LEVEL(2, 28, Material.YELLOW_WOOL),
-	BUTTON_LEVEL_T(3, 29, Material.WHITE_WOOL),
-	BUTTON_RESET(1, 30, Material.COBBLESTONE),
-	BUTTON_SCROLL_L(1, 36, Material.RED_WOOL),
-	BUTTON_SCROLL_R(1, 38, Material.LIME_WOOL),
-	BUTTON_JETT(1, 39, Material.TNT),
-	BUTTON_MAP_ON(1, -1, Material.BLACK_WOOL),
-	EMPTY_SLOT(1, -1, Material.STONE);
+	BUTTON_UP(1, 1, Material.CYAN_WOOL), BUTTON_DOWN(2, 18, Material.CYAN_WOOL), BUTTON_LEFT(3, 9, Material.CYAN_WOOL), BUTTON_RIGHT(4, 11, Material.CYAN_WOOL), BUTTON_MAP(2, 10, Material.MAP), BUTTON_RECON(1, 12, Material.PINK_WOOL), BUTTON_LEVEL_B(1, 27, Material.WHITE_WOOL), BUTTON_LEVEL(2, 28, Material.YELLOW_WOOL), BUTTON_LEVEL_T(3, 29, Material.WHITE_WOOL), BUTTON_RESET(1, 30, Material.COBBLESTONE), BUTTON_SCROLL_L(1, 36, Material.RED_WOOL), BUTTON_SCROLL_R(1, 38, Material.LIME_WOOL), BUTTON_JETT(1, 39, Material.TNT), BUTTON_MAP_ON(1, -1, Material.BLACK_WOOL), EMPTY_SLOT(1, -1, Material.STONE);
 
 	private final int customModelData;
 	private final int slot;

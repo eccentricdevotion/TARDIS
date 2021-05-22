@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.howto;
+package me.eccentric_nz.tardis.howto;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,7 +47,7 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
 	public void onSeedMenuClick(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "TARDIS Seed Recipe")) {
+		if (name.equals(ChatColor.DARK_RED + "tardis Seed Recipe")) {
 			Player p = (Player) event.getWhoClicked();
 			int slot = event.getRawSlot();
 			if (slot >= 0 && slot < 27) {
@@ -60,7 +60,7 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
 							close(p);
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 								ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
-								Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seeds Menu");
+								Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "tardis Seeds Menu");
 								gui.setContents(seeds);
 								p.openInventory(gui);
 							}, 2L);
@@ -71,7 +71,7 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
 							close(p);
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 								ItemStack[] recipe = new TARDISHowtoWallsInventory(plugin).getMenu();
-								Inventory gui = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Wall & Floor Menu");
+								Inventory gui = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis Wall & Floor Menu");
 								gui.setContents(recipe);
 								p.openInventory(gui);
 							}, 2L);

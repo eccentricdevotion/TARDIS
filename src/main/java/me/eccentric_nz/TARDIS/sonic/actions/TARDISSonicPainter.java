@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.sonic.actions;
+package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISMaterials;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -170,7 +170,7 @@ public class TARDISSonicPainter {
 	}
 
 	public static void paint(TARDIS plugin, Player player, Block b) {
-		// must be in TARDIS world
+		// must be in tardis world
 		if (!plugin.getUtils().inTARDISWorld(player)) {
 			TARDISMessage.send(player, "UPDATE_IN_WORLD");
 			return;

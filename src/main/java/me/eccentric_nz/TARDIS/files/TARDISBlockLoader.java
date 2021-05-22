@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.files;
+package me.eccentric_nz.tardis.files;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetGravity;
-import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
+import me.eccentric_nz.tardis.database.resultset.ResultSetGravity;
+import me.eccentric_nz.tardis.utility.TARDISAntiBuild;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.util.Vector;
 
 import java.sql.Connection;
@@ -34,7 +34,7 @@ import java.util.HashMap;
 
 /**
  * An anti-gravity spiral is a projectable beam used for removing gravity from an object. The Seventh Doctor used his
- * TARDIS to project a beam around a bus in space after it crashed. He manoeuvred it down to Earth and dropped it
+ * tardis to project a beam around a bus in space after it crashed. He manoeuvred it down to Earth and dropped it
  * outside Shangri-La camp in southern Wales.
  *
  * @author eccentric_nz
@@ -48,7 +48,7 @@ public class TARDISBlockLoader {
 	}
 
 	/**
-	 * Loads Police Box and precious TARDIS blocks for protection from griefing and harvesting. This speeds the looking
+	 * Loads Police Box and precious tardis blocks for protection from griefing and harvesting. This speeds the looking
 	 * up of block locations, as no database interaction is required.
 	 */
 	public void loadProtectedBlocks() {
@@ -59,9 +59,9 @@ public class TARDISBlockLoader {
 	}
 
 	/**
-	 * Unloads Police Box and precious TARDIS blocks from protection. Called when a TARDIS is deleted.
+	 * Unloads Police Box and precious tardis blocks from protection. Called when a tardis is deleted.
 	 *
-	 * @param id the TARDIS id to unload protection from
+	 * @param id the tardis id to unload protection from
 	 */
 	public void unloadProtectedBlocks(int id) {
 		HashMap<String, Object> where = new HashMap<>();
@@ -86,30 +86,24 @@ public class TARDISBlockLoader {
 				values[1] = Double.valueOf(map.get("distance"));
 				values[2] = Double.valueOf(map.get("velocity"));
 				switch (i) {
-					case 1:
-						// going up
-						plugin.getGeneralKeeper().getGravityUpList().put(map.get("location"), values);
-						break;
-					case 2:
-						// going north
-						plugin.getGeneralKeeper().getGravityNorthList().put(map.get("location"), values);
-						break;
-					case 3:
-						// going west
-						plugin.getGeneralKeeper().getGravityWestList().put(map.get("location"), values);
-						break;
-					case 4:
-						// going south
-						plugin.getGeneralKeeper().getGravitySouthList().put(map.get("location"), values);
-						break;
-					case 5:
-						// going east
-						plugin.getGeneralKeeper().getGravityEastList().put(map.get("location"), values);
-						break;
-					default:
-						// going down
-						plugin.getGeneralKeeper().getGravityDownList().add(map.get("location"));
-						break;
+					case 1 ->
+							// going up
+							plugin.getGeneralKeeper().getGravityUpList().put(map.get("location"), values);
+					case 2 ->
+							// going north
+							plugin.getGeneralKeeper().getGravityNorthList().put(map.get("location"), values);
+					case 3 ->
+							// going west
+							plugin.getGeneralKeeper().getGravityWestList().put(map.get("location"), values);
+					case 4 ->
+							// going south
+							plugin.getGeneralKeeper().getGravitySouthList().put(map.get("location"), values);
+					case 5 ->
+							// going east
+							plugin.getGeneralKeeper().getGravityEastList().put(map.get("location"), values);
+					default ->
+							// going down
+							plugin.getGeneralKeeper().getGravityDownList().add(map.get("location"));
 				}
 			}
 		}

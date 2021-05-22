@@ -14,25 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.database.data.Archive;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.schematic.*;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicBuilder.ArchiveData;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.builders.TARDISTIPSData;
+import me.eccentric_nz.tardis.database.data.Archive;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.ConsoleSize;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.schematic.*;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicBuilder.ArchiveData;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -118,13 +118,13 @@ class TARDISArchiveCommand {
 			return true;
 		}
 		if (sub.equals("scan") || sub.equals("add") || sub.equals("update")) {
-			// get TARDIS player is in
+			// get tardis player is in
 			HashMap<String, Object> wheret = new HashMap<>();
 			wheret.put("uuid", uuid);
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
 			if (rst.resultSet()) {
 				int id = rst.getTardis_id();
-				// must be the owner of the TARDIS
+				// must be the owner of the tardis
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("tardis_id", id);
 				where.put("uuid", uuid);
@@ -168,26 +168,26 @@ class TARDISArchiveCommand {
 								String size = (args[1].equalsIgnoreCase("scan")) ? args[2] : args[3];
 								console_size = ConsoleSize.valueOf(size.toUpperCase(Locale.ENGLISH));
 								switch (console_size) {
-									case MASSIVE:
+									case MASSIVE -> {
 										h = 31;
 										w = 47;
 										c = 47;
-										break;
-									case TALL:
+									}
+									case TALL -> {
 										h = 31;
 										w = 31;
 										c = 31;
-										break;
-									case MEDIUM:
+									}
+									case MEDIUM -> {
 										h = 15;
 										w = 31;
 										c = 31;
-										break;
-									default:
+									}
+									default -> {
 										h = 15;
 										w = 15;
 										c = 15;
-										break;
+									}
 								}
 							} catch (IllegalArgumentException e) {
 								TARDISMessage.send(player, "ARCHIVE_SIZE");
@@ -204,7 +204,7 @@ class TARDISArchiveCommand {
 							sx = pos.getCentreX();
 							sz = pos.getCentreZ();
 						} else {
-							int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+							int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
 							sx = gsl[0];
 							sz = gsl[2];
 						}
@@ -234,19 +234,16 @@ class TARDISArchiveCommand {
 							TARDISMessage.send(player, "ARCHIVE_ADD", name);
 							return true;
 						}
-						if (sub.equals("update")) {
-							// update json in database
-							HashMap<String, Object> whereu = new HashMap<>();
-							whereu.put("uuid", uuid);
-							whereu.put("name", name);
-							plugin.getQueryFactory().doUpdate("archive", set, whereu);
-							TARDISMessage.send(player, "ARCHIVE_UPDATE", name);
-							return true;
-						}
+						// update json in database
+						HashMap<String, Object> whereu = new HashMap<>();
+						whereu.put("uuid", uuid);
+						whereu.put("name", name);
+						plugin.getQueryFactory().doUpdate("archive", set, whereu);
+						TARDISMessage.send(player, "ARCHIVE_UPDATE", name);
 					} else {
 						TARDISMessage.send(player, "ARCHIVE_NO_JSON");
-						return true;
 					}
+					return true;
 				} else {
 					TARDISMessage.send(player, "CMD_ONLY_TL");
 					return true;

@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.desktop;
+package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.tardis.enumeration.Schematic;
 
 /**
  * @author eccentric_nz
@@ -45,7 +45,7 @@ public class TARDISUpgradeData {
 	}
 
 	/**
-	 * Returns the desktop theme the TARDIS had previously.
+	 * Returns the desktop theme the tardis had previously.
 	 *
 	 * @return the Schematic
 	 */

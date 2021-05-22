@@ -14,23 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.TARDISEmergencyRelocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.*;
+import me.eccentric_nz.tardis.flight.TARDISLand;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -71,7 +71,7 @@ public class TARDISTerminalListener implements Listener {
 	}
 
 	/**
-	 * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+	 * Listens for player clicking inside an inventory. If the inventory is a tardis GUI, then the click is processed
 	 * accordingly.
 	 *
 	 * @param event a player clicking an inventory slot
@@ -86,7 +86,7 @@ public class TARDISTerminalListener implements Listener {
 			if (slot >= 0 && slot < 54) {
 				Player player = (Player) event.getWhoClicked();
 				UUID uuid = player.getUniqueId();
-				// get the TARDIS the player is in
+				// get the tardis the player is in
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("uuid", player.getUniqueId().toString());
 				ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
@@ -220,7 +220,7 @@ public class TARDISTerminalListener implements Listener {
 					terminalIDs.put(uuid, id);
 				} else {
 					Player p = (Player) holder;
-					// emergency TARDIS relocation
+					// emergency tardis relocation
 					new TARDISEmergencyRelocation(plugin).relocate(id, p);
 					close(p);
 					return;
@@ -257,79 +257,41 @@ public class TARDISTerminalListener implements Listener {
 	private List<String> getLoreValue(int max, int slot, boolean signed, UUID uuid) {
 		int step = terminalStep.getOrDefault(uuid, 50);
 		int val = max - slot;
-		String str;
-		switch (val) {
-			case 0:
-				str = (signed) ? "+" + (3 * step) : "x" + 7;
-				break;
-			case 1:
-				str = (signed) ? "+" + (2 * step) : "x" + 6;
-				break;
-			case 2:
-				str = (signed) ? "+" + step : "x" + 5;
-				break;
-			case 4:
-				str = (signed) ? "-" + step : "x" + 3;
-				break;
-			case 5:
-				str = (signed) ? "-" + (2 * step) : "x" + 2;
-				break;
-			case 6:
-				str = (signed) ? "-" + (3 * step) : "x" + 1;
-				break;
-			default:
-				str = (signed) ? "0" : "x" + 4;
-				break;
-		}
+		String str = switch (val) {
+			case 0 -> (signed) ? "+" + (3 * step) : "x" + 7;
+			case 1 -> (signed) ? "+" + (2 * step) : "x" + 6;
+			case 2 -> (signed) ? "+" + step : "x" + 5;
+			case 4 -> (signed) ? "-" + step : "x" + 3;
+			case 5 -> (signed) ? "-" + (2 * step) : "x" + 2;
+			case 6 -> (signed) ? "-" + (3 * step) : "x" + 1;
+			default -> (signed) ? "0" : "x" + 4;
+		};
 		return Collections.singletonList(str);
 	}
 
 	private int getValue(int max, int slot, boolean signed, UUID uuid) {
 		int step = terminalStep.getOrDefault(uuid, 50);
 		int val = max - slot;
-		int intval;
-		switch (val) {
-			case 0:
-				intval = (signed) ? (3 * step) : 7;
-				break;
-			case 1:
-				intval = (signed) ? (2 * step) : 6;
-				break;
-			case 2:
-				intval = (signed) ? step : 5;
-				break;
-			case 4:
-				intval = (signed) ? -step : 3;
-				break;
-			case 5:
-				intval = (signed) ? -(2 * step) : 2;
-				break;
-			case 6:
-				intval = (signed) ? -(3 * step) : 1;
-				break;
-			default:
-				intval = (signed) ? 0 : 4;
-				break;
-		}
-		return intval;
+		return switch (val) {
+			case 0 -> (signed) ? (3 * step) : 7;
+			case 1 -> (signed) ? (2 * step) : 6;
+			case 2 -> (signed) ? step : 5;
+			case 4 -> (signed) ? -step : 3;
+			case 5 -> (signed) ? -(2 * step) : 2;
+			case 6 -> (signed) ? -(3 * step) : 1;
+			default -> (signed) ? 0 : 4;
+		};
 	}
 
 	private void setSlots(InventoryView view, int min, int max, boolean pos, String row, boolean signed, UUID uuid) {
 		int affected_slot = getSlot(view, min, max);
 		int new_slot = getNewSlot(affected_slot, min, max, pos);
 		view.setItem(affected_slot, null);
-		ItemStack is;
-		switch (row) {
-			case "X":
-				is = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
-				break;
-			case "Z":
-				is = new ItemStack(Material.YELLOW_WOOL, 1);
-				break;
-			default:
-				is = new ItemStack(Material.PURPLE_WOOL, 1);
-				break;
-		}
+		ItemStack is = switch (row) {
+			case "X" -> new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
+			case "Z" -> new ItemStack(Material.YELLOW_WOOL, 1);
+			default -> new ItemStack(Material.PURPLE_WOOL, 1);
+		};
 		ItemMeta im = is.getItemMeta();
 		im.setDisplayName(row);
 		List<String> lore = getLoreValue(max, new_slot, signed, uuid);

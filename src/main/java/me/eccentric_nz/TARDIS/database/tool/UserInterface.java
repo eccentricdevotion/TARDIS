@@ -14,14 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.tool;
+package me.eccentric_nz.tardis.database.tool;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +27,7 @@ import java.util.logging.Logger;
  */
 public class UserInterface extends javax.swing.JFrame {
 
+	@Serial
 	private static final long serialVersionUID = 3259909191489626727L;
 	private final PrintWriter consoleStream;
 	private File lastDir = new File(".");
@@ -65,7 +63,7 @@ public class UserInterface extends javax.swing.JFrame {
 	/**
 	 * @param args the command line arguments
 	 */
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		/*
 		 * Set the Nimbus look and feel
 		 */
@@ -146,9 +144,9 @@ public class UserInterface extends javax.swing.JFrame {
 
 		outputLabel.setText("Output file");
 
-		inputLabel.setText("TARDIS.db");
+		inputLabel.setText("tardis.db");
 
-		titleLabel.setText("TARDIS SQLite -> MySQL Database Converter");
+		titleLabel.setText("tardis SQLite -> MySQL Database Converter");
 
 		inputFile.addActionListener(this::inputFileActionPerformed);
 
@@ -209,7 +207,7 @@ public class UserInterface extends javax.swing.JFrame {
 
 	private void convert() throws IOException {
 		if (inputFile.getText().isEmpty() || outputFile.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Please browse for TARDIS.db and TARDIS.sql files.", "Please select required files.", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Please browse for tardis.db and tardis.sql files.", "Please select required files.", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		String pre = prefix.getText();

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.eccentric_nz.TARDIS.universaltranslator;
+package me.eccentric_nz.tardis.universaltranslator;
 
 import java.net.URL;
 import java.net.URLEncoder;

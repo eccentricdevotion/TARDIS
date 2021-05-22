@@ -14,20 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If ChatColor.RESET, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.hads;
+package me.eccentric_nz.tardis.hads;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.api.event.TARDISHADSEvent;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.destroyers.DestroyData;
+import me.eccentric_nz.tardis.enumeration.*;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
@@ -37,8 +37,8 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 /**
- * The Hostile Action Displacement System, or HADS, was one of the defence mechanisms of the Doctor's TARDIS. When the
- * outer shell of the vessel came under attack, the unit dematerialised the TARDIS and re-materialised it a short
+ * The Hostile Action Displacement System, or HADS, was one of the defence mechanisms of the Doctor's tardis. When the
+ * outer shell of the vessel came under attack, the unit dematerialised the tardis and re-materialised it a short
  * distance away after the attacker had gone, in a safer locale. The HADS had to be manually set, and the Doctor often
  * forgot to do so.
  *
@@ -63,7 +63,7 @@ class TARDISHostileDisplacement {
 		wherecl.put("tardis_id", id);
 		ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
 		if (!rsc.resultSet()) {
-			plugin.debug("Could not get current TARDIS location for HADS!");
+			plugin.debug("Could not get current tardis location for HADS!");
 		}
 		boolean underwater = rsc.isSubmarine();
 		Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
@@ -126,7 +126,7 @@ class TARDISHostileDisplacement {
 						set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
 						plugin.getQueryFactory().doUpdate("current", set, tid);
 						long delay = 1L;
-						// move TARDIS
+						// move tardis
 						plugin.getTrackerKeeper().getInVortex().add(id);
 						DestroyData dd = new DestroyData();
 						dd.setDirection(d);

@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.planets;
+package me.eccentric_nz.tardis.planets;
 
 import com.onarandombox.multiverseinventories.MultiverseInventories;
 import com.onarandombox.multiverseinventories.WorldGroup;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
-import me.eccentric_nz.TARDIS.perms.TARDISGroupManagerHandler;
-import me.eccentric_nz.TARDIS.perms.TARDISPermissionsExHandler;
-import me.eccentric_nz.TARDIS.perms.TARDISbPermissionsHandler;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.enumeration.InventoryManager;
+import me.eccentric_nz.tardis.perms.TARDISGroupManagerHandler;
+import me.eccentric_nz.tardis.perms.TARDISPermissionsExHandler;
+import me.eccentric_nz.tardis.perms.TARDISbPermissionsHandler;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -48,15 +48,16 @@ public class TARDISSpace {
 	}
 
 	/**
-	 * Gets custom world for the specified TARDIS. If the world does not exist, it is created.
+	 * Gets custom world for the specified tardis. If the world does not exist, it is created.
 	 *
 	 * @param name the name of this world
-	 * @return a new TARDIS World
+	 * @return a new tardis World
 	 */
 	public World getTardisWorld(String name) {
 		if (tardisWorld == null) {
 			tardisWorld = WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).generateStructures(false).createWorld();
 			// set the time to night
+			assert tardisWorld != null;
 			tardisWorld.setTime(14000L);
 			// add world to config, but time travel disabled by default
 			plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
@@ -71,24 +72,13 @@ public class TARDISSpace {
 			plugin.getPlanetsConfig().set("planets." + name + ".gamerules.doDaylightCycle", false);
 			plugin.savePlanetsConfig();
 			String inventory_group = plugin.getConfig().getString("creation.inventory_group");
+			assert inventory_group != null;
 			if (!inventory_group.equals("0")) {
-				//                    case MULTI:
-				//                        // No API to add world to group
-				//                        HashMap<String, String> migroups = MIYamlFiles.getGroups();
-				//                        migroups.put(name, inventory_group);
-				//                        // save YAML file and reload
-				//                        break;
 				if (plugin.getInvManager() == InventoryManager.MULTIVERSE) {
 					MultiverseInventories mi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
+					assert mi != null;
 					WorldGroup wgp = mi.getGroupManager().getGroup(inventory_group);
 					wgp.addWorld(name);
-					//                    case PER_WORLD:
-//                        // No API to add world to group
-//                        PerWorldInventory pwi = (PerWorldInventory) plugin.getPM().getPlugin("PerWorldInventory");
-//                        GroupManager pwigm = pwi.getGroupManager();
-//                        Group gf = pwigm.getGroup(inventory_group);
-//                        gf.getWorlds().add(name);
-//                        break;
 				}
 			}
 			if (plugin.getPM().isPluginEnabled("WorldBorder")) {

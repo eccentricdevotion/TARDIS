@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetSmelter;
-import me.eccentric_nz.TARDIS.rooms.smelter.TARDISSmelterDrop;
-import me.eccentric_nz.TARDIS.rooms.smelter.TARDISSmelterFuel;
-import me.eccentric_nz.TARDIS.rooms.smelter.TARDISSmelterOre;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetSmelter;
+import me.eccentric_nz.tardis.rooms.smelter.TARDISSmelterDrop;
+import me.eccentric_nz.tardis.rooms.smelter.TARDISSmelterFuel;
+import me.eccentric_nz.tardis.rooms.smelter.TARDISSmelterOre;
+import me.eccentric_nz.tardis.sonic.TARDISSonicSorterListener;
 import org.bukkit.block.Chest;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -44,8 +44,7 @@ public class TARDISSmelterListener implements Listener {
 	public void onSmelterDropChestClose(InventoryCloseEvent event) {
 		Inventory inv = event.getInventory();
 		InventoryHolder holder = inv.getHolder();
-		if (holder instanceof Chest) {
-			Chest chest = (Chest) holder;
+		if (holder instanceof Chest chest) {
 			String loc = chest.getLocation().toString();
 			// check is drop chest
 			ResultSetSmelter rs = new ResultSetSmelter(plugin, loc);
@@ -59,15 +58,10 @@ public class TARDISSmelterListener implements Listener {
 			List<Chest> oreChests = rs.getOreChests();
 			// process chest contents
 			switch (rs.getType()) {
-				case FUEL:
-					new TARDISSmelterFuel().processItems(inv, fuelChests);
-					break;
-				case SMELT:
-					new TARDISSmelterOre().processItems(inv, oreChests);
-					break;
-				default: // DROP
-					new TARDISSmelterDrop().processItems(inv, fuelChests, oreChests);
-					break;
+				case FUEL -> new TARDISSmelterFuel().processItems(inv, fuelChests);
+				case SMELT -> new TARDISSmelterOre().processItems(inv, oreChests);
+				default -> // DROP
+						new TARDISSmelterDrop().processItems(inv, fuelChests, oreChests);
 			}
 		}
 	}

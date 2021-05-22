@@ -14,19 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.desktop;
+package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.control.TARDISThemeButton;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.control.TARDISThemeButton;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.ConsoleSize;
+import me.eccentric_nz.tardis.enumeration.Consoles;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.schematic.ArchiveUpdate;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -58,13 +58,13 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
 	public void onThemeMenuClick(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "TARDIS Archive")) {
+		if (name.equals(ChatColor.DARK_RED + "tardis Archive")) {
 			Player p = (Player) event.getWhoClicked();
 			int slot = event.getRawSlot();
 			if (slot >= 0 && slot < 27) {
 				event.setCancelled(true);
 				switch (slot) {
-					case 17:
+					case 17 -> {
 						// back
 						HashMap<String, Object> where = new HashMap<>();
 						where.put("uuid", p.getUniqueId().toString());
@@ -74,15 +74,18 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
 						// return to Desktop Theme GUI
 						close(p);
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtron_level(), tardis.getTardis_id()).clickButton(), 2L);
-						break;
-					case 18:
+					}
+					case 18 -> {
 						// size
 						ItemStack iss = view.getItem(18);
+						assert iss != null;
 						ItemMeta ims = iss.getItemMeta();
+						assert ims != null;
 						List<String> lores = ims.getLore();
 						String t;
 						String b;
 						int s;
+						assert lores != null;
 						int o = ConsoleSize.valueOf(lores.get(0)).ordinal();
 						s = (o < 2) ? o + 1 : 0;
 						t = ConsoleSize.values()[s].toString();
@@ -91,23 +94,20 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
 							ims.setLore(Arrays.asList(t, b, ChatColor.AQUA + "Click to change"));
 							iss.setItemMeta(ims);
 						}
-						break;
-					case 19:
-						// scan
-						scan(p, view);
-						break;
-					case 20:
-						// archive
-						archive(p, view);
-						break;
-					case 22:
-					case 23:
-					case 24:
+					}
+					case 19 ->
+							// scan
+							scan(p, view);
+					case 20 ->
+							// archive
+							archive(p, view);
+					case 22, 23, 24 -> {
 						ItemStack template = view.getItem(slot);
 						if (template != null) {
 							UUID uuid = p.getUniqueId();
 							TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
 							ItemMeta im = template.getItemMeta();
+							assert im != null;
 							String size = im.getDisplayName().toLowerCase(Locale.ENGLISH);
 							int upgrade = plugin.getArtronConfig().getInt("upgrades.template." + size);
 							if (tud.getLevel() >= upgrade) {
@@ -123,12 +123,11 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
 								close(p);
 							}
 						}
-						break;
-					case 26:
-						// close
-						close(p);
-						break;
-					default:
+					}
+					case 26 ->
+							// close
+							close(p);
+					default -> {
 						// get Display name of selected archive
 						ItemStack choice = view.getItem(slot);
 						if (choice != null) {
@@ -137,7 +136,9 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
 							UUID uuid = p.getUniqueId();
 							TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
 							ItemMeta im = choice.getItemMeta();
+							assert im != null;
 							List<String> lore = im.getLore();
+							assert lore != null;
 							if (lore.contains(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"))) {
 								TARDISMessage.send(p, "ARCHIVE_NOT_CURRENT");
 								return;
@@ -161,7 +162,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
 								close(p);
 							}
 						}
-						break;
+					}
 				}
 			} else {
 				ClickType click = event.getClick();
@@ -215,7 +216,9 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
 
 	private List<String> getSizeLore(InventoryView view) {
 		ItemStack is = view.getItem(18);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		return im.getLore();
 	}
 }

@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chameleon;
+package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonHelp;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.GUIChameleonHelp;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -166,14 +166,7 @@ class TARDISChameleonHelpGUI {
 		ou.setCustomModelData(GUIChameleonHelp.ROW_4.getCustomModelData());
 		f.setItemMeta(ou);
 
-		return new ItemStack[]{
-				back, null, null, info, info2, null, null, null, null,
-				null, null, null, null, null, null, null, column, null,
-				null, grid, null, null, null, null, null, f, null,
-				three, four, five, null, null, null, null, t, null,
-				two, nine, six, null, example, null, null, w, null,
-				one, eight, seven, null, null, null, null, o, null
-		};
+		return new ItemStack[]{back, null, null, info, info2, null, null, null, null, null, null, null, null, null, null, null, column, null, null, grid, null, null, null, null, null, f, null, three, four, five, null, null, null, null, t, null, two, nine, six, null, example, null, null, w, null, one, eight, seven, null, null, null, null, o, null};
 	}
 
 	public ItemStack[] getHelp() {

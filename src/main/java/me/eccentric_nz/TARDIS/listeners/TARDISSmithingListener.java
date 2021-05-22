@@ -1,6 +1,6 @@
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;

@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.forcefield;
+package me.eccentric_nz.tardis.forcefield;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetForcefield;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetForcefield;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisCompanions;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;

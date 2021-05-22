@@ -16,9 +16,9 @@
  *
  * Rocket code borrowed from com.darkblade12.itemslotmachine.rocket.Rocket.java
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.*;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.entity.Firework;

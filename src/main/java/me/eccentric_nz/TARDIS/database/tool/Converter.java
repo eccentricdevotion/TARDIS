@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.tool;
+package me.eccentric_nz.tardis.database.tool;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 import java.io.File;
@@ -40,7 +40,7 @@ public class Converter implements Runnable {
 	/**
 	 * Reads an SQLite database and inserts the records into a MySQL database.
 	 *
-	 * @param plugin an instance of the TARDIS JavaPlugin class
+	 * @param plugin an instance of the tardis JavaPlugin class
 	 * @param sender the player using the /tadmin convert_database command
 	 * @throws SQLException if their is an SQL error
 	 **/
@@ -324,7 +324,7 @@ public class Converter implements Runnable {
 	public Connection getSQLiteConnection() throws Exception {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			String path = plugin.getDataFolder() + File.separator + "TARDIS.db";
+			String path = plugin.getDataFolder() + File.separator + "tardis.db";
 			return DriverManager.getConnection("jdbc:sqlite:" + path);
 		} catch (ClassNotFoundException ignore) {
 			return null;

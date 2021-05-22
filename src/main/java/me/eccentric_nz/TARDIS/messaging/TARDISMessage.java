@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.messaging;
+package me.eccentric_nz.tardis.messaging;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISMessage {
 
-	public static final String JENKINS_UPDATE_READY = ChatColor.RED + "There is a new TARDIS build! You are using " + ChatColor.GOLD + "#%s" + ChatColor.RED + ", the latest build is " + ChatColor.GOLD + "#%s" + ChatColor.RED + "!";
+	public static final String JENKINS_UPDATE_READY = ChatColor.RED + "There is a new tardis build! You are using " + ChatColor.GOLD + "#%s" + ChatColor.RED + ", the latest build is " + ChatColor.GOLD + "#%s" + ChatColor.RED + "!";
 	public static final String UPDATE_COMMAND = ChatColor.GOLD + "Visit http://tardisjenkins.duckdns.org:8080/job/TARDIS/ or run the '/tardisadmin update_plugins' command";
 	private static final String HANDLES = ChatColor.BLUE + "[Handles] " + ChatColor.RESET;
 

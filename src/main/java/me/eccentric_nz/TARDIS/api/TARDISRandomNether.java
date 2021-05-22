@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.api;
+package me.eccentric_nz.tardis.api;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -77,7 +77,7 @@ public class TARDISRandomNether extends TARDISRandomLocation {
 				if (param.spaceTardis()) {
 					if (plugin.getPluginRespect().getRespect(dest, param)) {
 						// get start location for checking there is enough space
-						int gsl[] = TARDISTimeTravel.getStartLocation(dest, param.getCompass());
+						int[] gsl = TARDISTimeTravel.getStartLocation(dest, param.getCompass());
 						startx = gsl[0];
 						resetx = gsl[1];
 						starty = dest.getBlockY();

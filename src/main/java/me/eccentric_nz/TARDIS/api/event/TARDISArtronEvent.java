@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.api.event;
+package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 public class TARDISArtronEvent extends Event {
 
@@ -63,9 +64,9 @@ public class TARDISArtronEvent extends Event {
 	}
 
 	/**
-	 * Returns the TARDIS id involved in this event.
+	 * Returns the tardis id involved in this event.
 	 *
-	 * @return the TARDIS id
+	 * @return the tardis id
 	 */
 	public int getTardis_id() {
 		return tardis_id;
@@ -81,7 +82,7 @@ public class TARDISArtronEvent extends Event {
 	}
 
 	@Override
-	public HandlerList getHandlers() {
+	public @NotNull HandlerList getHandlers() {
 		return HANDLERS;
 	}
 }

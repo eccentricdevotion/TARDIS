@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.move.TARDISDoorToggler;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.move.TARDISDoorToggler;
 import org.bukkit.entity.Player;
 
 public class TARDISDoorCommand {
@@ -36,7 +36,7 @@ public class TARDISDoorCommand {
 			TARDISMessage.send(player, "NO_PERMS");
 			return true;
 		}
-		// must have a TARDIS
+		// must have a tardis
 		ResultSetTardisID rs = new ResultSetTardisID(plugin);
 		if (!rs.fromUUID(player.getUniqueId().toString())) {
 			TARDISMessage.send(player, "NOT_A_TIMELORD");

@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -32,6 +32,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -50,15 +51,15 @@ public class TARDISHotbarListener implements Listener {
 		PlayerInventory inv = player.getInventory();
 		ItemStack is = inv.getItem(event.getNewSlot());
 		if (is != null) {
-			if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
+			if (is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName()) {
 				ItemMeta im = is.getItemMeta();
 				if (im.getPersistentDataContainer().has(plugin.getOldBlockKey(), PersistentDataType.INTEGER)) {
 					int which = im.getPersistentDataContainer().get(plugin.getOldBlockKey(), PersistentDataType.INTEGER);
 					im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
 					is.setItemMeta(im);
 				}
-				if (is.getType().equals(Material.COMPASS) && im.getDisplayName().equals("TARDIS Locator")) {
-					// get TARDIS location
+				if (is.getType().equals(Material.COMPASS) && im.getDisplayName().equals("tardis Locator")) {
+					// get tardis location
 					ResultSetTardisID rs = new ResultSetTardisID(plugin);
 					if (rs.fromUUID(player.getUniqueId().toString())) {
 						HashMap<String, Object> wherecl = new HashMap<>();
@@ -73,11 +74,7 @@ public class TARDISHotbarListener implements Listener {
 				} else {
 					Location bedspawn = player.getBedSpawnLocation();
 					// if player has bed spawn set
-					if (bedspawn != null) {
-						player.setCompassTarget(bedspawn);
-					} else {
-						player.setCompassTarget(player.getWorld().getSpawnLocation());
-					}
+					player.setCompassTarget(Objects.requireNonNullElseGet(bedspawn, () -> player.getWorld().getSpawnLocation()));
 				}
 			}
 		}

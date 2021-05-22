@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISUpdateChecker;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.utility.TARDISUpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -43,9 +43,9 @@ class TARDISVersionCommand {
 		String tardisversion = plugin.getDescription().getVersion();
 		String chunkversion = plugin.getPM().getPlugin("TARDISChunkGenerator").getDescription().getVersion();
 		String cb = Bukkit.getVersion();
-		// send server and TARDIS versions
+		// send server and tardis versions
 		sender.sendMessage(pluginName + "Server version: " + ChatColor.AQUA + cb);
-		sender.sendMessage(pluginName + "TARDIS version: " + ChatColor.AQUA + tardisversion);
+		sender.sendMessage(pluginName + "tardis version: " + ChatColor.AQUA + tardisversion);
 		sender.sendMessage(pluginName + "TARDISChunkGenerator version: " + ChatColor.AQUA + chunkversion);
 		// send dependent plugin versions
 		for (Plugin hook : plugin.getPM().getPlugins()) {
@@ -56,9 +56,9 @@ class TARDISVersionCommand {
 				sender.sendMessage(pluginName + name + " version: " + ChatColor.AQUA + version);
 			}
 		}
-		// check for new TARDIS build
+		// check for new tardis build
 		if (sender.isOp()) {
-			sender.sendMessage(pluginName + "Checking for new TARDIS builds...");
+			sender.sendMessage(pluginName + "Checking for new tardis builds...");
 			plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new TARDISUpdateChecker(plugin, sender));
 		}
 		return true;

@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.sonic.actions;
+package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -32,7 +32,7 @@ public class TARDISSonicDispersed {
 		Location pb = plugin.getTrackerKeeper().getDispersed().get(player.getUniqueId());
 		if (pl.equals(pb)) {
 			UUID uuid = player.getUniqueId();
-			// get TARDIS id
+			// get tardis id
 			ResultSetTardisID rs = new ResultSetTardisID(plugin);
 			if (rs.fromUUID(uuid.toString())) {
 				// rebuild

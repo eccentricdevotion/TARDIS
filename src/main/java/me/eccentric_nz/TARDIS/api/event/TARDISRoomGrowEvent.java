@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.api.event;
+package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
+import me.eccentric_nz.tardis.ars.TARDISARSSlot;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.rooms.TARDISRoomData;
 import org.bukkit.entity.Player;
 
 /**
@@ -47,7 +47,7 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
 
 	/**
 	 * Returns the Architectural Reconfiguration System position data object. Use the {@link
-	 * me.eccentric_nz.TARDIS.ARS.TARDISARSSlot TARDISARSSlot}'s getter methods to retrieve the coordinates.
+	 * me.eccentric_nz.tardis.ars.TARDISARSSlot TARDISARSSlot}'s getter methods to retrieve the coordinates.
 	 *
 	 * @return the TARDISARSSlot object or null if the room was manually grown
 	 */
@@ -56,7 +56,7 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
 	}
 
 	/**
-	 * Returns the room data object. Use the {@link me.eccentric_nz.TARDIS.rooms.TARDISRoomData TARDISRoomData}'s getter
+	 * Returns the room data object. Use the {@link me.eccentric_nz.tardis.rooms.TARDISRoomData TARDISRoomData}'s getter
 	 * methods to retrieve the room type, wall and floor materials.
 	 *
 	 * @return the TARDISRoomData object

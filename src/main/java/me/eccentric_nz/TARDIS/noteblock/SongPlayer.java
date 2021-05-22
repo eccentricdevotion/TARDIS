@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.noteblock;
+package me.eccentric_nz.tardis.noteblock;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -64,7 +64,7 @@ class SongPlayer {
 				if (duration < delayMillis) {
 					try {
 						Thread.sleep((long) delayMillis - duration);
-					} catch (InterruptedException e) {
+					} catch (InterruptedException ignored) {
 					}
 				}
 			}

@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chameleon;
+package me.eccentric_nz.tardis.chameleon;
 
 /**
- * A chameleon conversion is a repair procedure that technicians perform on TARDIS chameleon circuits. The Fourth Doctor
- * once said that the reason the TARDIS' chameleon circuit was stuck was because he had "borrowed" it from Gallifrey
+ * A chameleon conversion is a repair procedure that technicians perform on tardis chameleon circuits. The Fourth Doctor
+ * once said that the reason the tardis' chameleon circuit was stuck was because he had "borrowed" it from Gallifrey
  * before the chameleon conversion was completed.
  *
  * @author eccentric_nz

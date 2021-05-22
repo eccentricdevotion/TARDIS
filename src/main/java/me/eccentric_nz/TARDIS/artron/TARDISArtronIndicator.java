@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.artron;
+package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -60,7 +60,7 @@ public class TARDISArtronIndicator {
 			int percent = Math.round((current_level * 100F) / fc);
 			if (!isFiltered) {
 				Scoreboard board = manager.getNewScoreboard();
-				Objective objective = board.registerNewObjective("TARDIS", "Artron", plugin.getLanguage().getString("ARTRON_DISPLAY"));
+				Objective objective = board.registerNewObjective("tardis", "Artron", plugin.getLanguage().getString("ARTRON_DISPLAY"));
 				objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 				if (used == 0) {
 					Score max = objective.getScore(ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":");

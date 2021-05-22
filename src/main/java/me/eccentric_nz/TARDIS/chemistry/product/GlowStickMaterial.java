@@ -14,31 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.product;
+package me.eccentric_nz.tardis.chemistry.product;
 
 import org.bukkit.Material;
 
 public class GlowStickMaterial {
 
 	public static boolean isCorrectMaterial(Material material) {
-		switch (material) {
-			case WHITE_STAINED_GLASS_PANE:
-			case ORANGE_STAINED_GLASS_PANE:
-			case MAGENTA_STAINED_GLASS_PANE:
-			case LIGHT_BLUE_STAINED_GLASS_PANE:
-			case YELLOW_STAINED_GLASS_PANE:
-			case LIME_STAINED_GLASS_PANE:
-			case PINK_STAINED_GLASS_PANE:
-			case LIGHT_GRAY_STAINED_GLASS_PANE:
-			case BLUE_STAINED_GLASS_PANE:
-			case PURPLE_STAINED_GLASS_PANE:
-			case GREEN_STAINED_GLASS_PANE:
-			case BROWN_STAINED_GLASS_PANE:
-			case CYAN_STAINED_GLASS_PANE:
-			case RED_STAINED_GLASS_PANE:
-				return true;
-			default:
-				return false;
-		}
+		return switch (material) {
+			case WHITE_STAINED_GLASS_PANE, ORANGE_STAINED_GLASS_PANE, MAGENTA_STAINED_GLASS_PANE, LIGHT_BLUE_STAINED_GLASS_PANE, YELLOW_STAINED_GLASS_PANE, LIME_STAINED_GLASS_PANE, PINK_STAINED_GLASS_PANE, LIGHT_GRAY_STAINED_GLASS_PANE, BLUE_STAINED_GLASS_PANE, PURPLE_STAINED_GLASS_PANE, GREEN_STAINED_GLASS_PANE, BROWN_STAINED_GLASS_PANE, CYAN_STAINED_GLASS_PANE, RED_STAINED_GLASS_PANE -> true;
+			default -> false;
+		};
 	}
 }

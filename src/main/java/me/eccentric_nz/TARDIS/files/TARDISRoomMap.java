@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.files;
+package me.eccentric_nz.tardis.files;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
 import org.bukkit.ChatColor;
 
 import java.io.File;
@@ -70,7 +70,7 @@ public class TARDISRoomMap {
 	}
 
 	/**
-	 * Reads a TARDIS schematic file and maps the data for rooms_require_blocks.
+	 * Reads a tardis schematic file and maps the data for rooms_require_blocks.
 	 *
 	 * @param fileStr the schematic file to read
 	 * @param s       the schematic name
@@ -86,7 +86,7 @@ public class TARDISRoomMap {
 		// get JSON
 		JsonObject obj = TARDISSchematicGZip.unzip(fileStr + ".tschm");
 		if (obj == null) {
-			plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] is not a TARDIS JSON schematic!");
+			plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] is not a tardis JSON schematic!");
 			return false;
 		} else {
 			// get dimensions
@@ -104,7 +104,7 @@ public class TARDISRoomMap {
 					for (int col = 0; col < l; col++) {
 						JsonObject c = r.get(col).getAsJsonObject();
 						if (!(c.get("data").getAsString().contains("minecraft"))) {
-							plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] needs updating to a TARDIS v4 schematic and was disabled!");
+							plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] needs updating to a tardis v4 schematic and was disabled!");
 							plugin.getRoomsConfig().set("rooms." + s + ".enabled", false);
 							try {
 								plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));

@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.achievement.TARDISBook;
-import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.achievement.TARDISBook;
+import me.eccentric_nz.tardis.arch.TARDISArchPersister;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISResourcePackChanger;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -52,8 +52,8 @@ public class TARDISJoinListener implements Listener {
 	}
 
 	/**
-	 * Listens for a player joining the server. If the player has TARDIS permissions (ie not a guest), then check
-	 * whether they have achieved the building of a TARDIS. If not then insert an achievement record and give them the
+	 * Listens for a player joining the server. If the player has tardis permissions (ie not a guest), then check
+	 * whether they have achieved the building of a tardis. If not then insert an achievement record and give them the
 	 * tardis book.
 	 *
 	 * @param event a player joining the server
@@ -83,7 +83,7 @@ public class TARDISJoinListener implements Listener {
 		}
 		if (plugin.getConfig().getBoolean("allow.achievements")) {
 			if (TARDISPermission.hasPermission(player, "tardis.book")) {
-				// check if they have started building a TARDIS yet
+				// check if they have started building a tardis yet
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("uuid", uuid);
 				where.put("name", "tardis");
@@ -111,7 +111,7 @@ public class TARDISJoinListener implements Listener {
 			}
 		}
 		if (plugin.getConfig().getBoolean("allow.tp_switch") && TARDISPermission.hasPermission(player, "tardis.texture")) {
-			// are they in the TARDIS?
+			// are they in the tardis?
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("uuid", uuid);
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
@@ -179,7 +179,7 @@ public class TARDISJoinListener implements Listener {
 		}
 		// add to zero room occupants
 		if (plugin.getConfig().getBoolean("allow.zero_room")) {
-			if (player.getLocation().getWorld().getName().equals("TARDIS_Zero_Room") && !plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
+			if (player.getLocation().getWorld().getName().equals("TARDIS_Zero_Room")) {
 				plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
 			}
 		}

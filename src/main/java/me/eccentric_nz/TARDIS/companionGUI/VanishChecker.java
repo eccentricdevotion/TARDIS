@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.companionGUI;
+package me.eccentric_nz.tardis.companionGUI;
 
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;

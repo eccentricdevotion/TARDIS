@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.move.TARDISDoorToggler;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.artron.TARDISPoliceBoxLampToggler;
+import me.eccentric_nz.tardis.commands.tardis.TARDISHideCommand;
+import me.eccentric_nz.tardis.commands.tardis.TARDISRebuildCommand;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.move.TARDISDoorToggler;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -45,8 +45,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 
 /**
- * At one point, the Tenth Doctor installed a system that allowed him to lock the TARDIS remotely using a fob. As a
- * joke, the TARDIS roof light flashed and a alarm chirp sound was heard, similar to that used on vehicles on Earth.
+ * At one point, the Tenth Doctor installed a system that allowed him to lock the tardis remotely using a fob. As a
+ * joke, the tardis roof light flashed and a alarm chirp sound was heard, similar to that used on vehicles on Earth.
  *
  * @author eccentric_nz
  */
@@ -57,7 +57,7 @@ public class TARDISRemoteKeyListener implements Listener {
 
 	public TARDISRemoteKeyListener(TARDIS plugin) {
 		this.plugin = plugin;
-		rkey = Material.valueOf(this.plugin.getRecipesConfig().getString("shaped.TARDIS Remote Key.result"));
+		rkey = Material.valueOf(this.plugin.getRecipesConfig().getString("shaped.tardis Remote Key.result"));
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -75,9 +75,9 @@ public class TARDISRemoteKeyListener implements Listener {
 		if (is == null || !is.getType().equals(rkey)) {
 			return;
 		}
-		if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
+		if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("tardis Remote Key")) {
 			String uuid = player.getUniqueId().toString();
-			// has TARDIS?
+			// has tardis?
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("uuid", uuid);
 			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -98,7 +98,7 @@ public class TARDISRemoteKeyListener implements Listener {
 			}
 			boolean hidden = tardis.isHidden();
 			if (action.equals(Action.LEFT_CLICK_AIR)) {
-				// get the TARDIS current location
+				// get the tardis current location
 				HashMap<String, Object> wherec = new HashMap<>();
 				wherec.put("tardis_id", id);
 				ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);

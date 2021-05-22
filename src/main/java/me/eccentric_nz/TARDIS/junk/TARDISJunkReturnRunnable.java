@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.junk;
+package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 
@@ -40,7 +40,7 @@ public class TARDISJunkReturnRunnable implements Runnable {
 		// get current time
 		long now = System.currentTimeMillis();
 		if (lastUsed + waitTime > now) {
-			// check the Junk TARDIS is not home already
+			// check the Junk tardis is not home already
 			TARDISJunkLocation tjl = new TARDISJunkLocation(plugin);
 			// compare locations
 			if (tjl.isNotHome()) {

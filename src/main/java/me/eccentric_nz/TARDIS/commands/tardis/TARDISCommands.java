@@ -14,20 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
-import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.commands.sudo.SudoRepair;
-import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.noteblock.TARDISPlayThemeCommand;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.advanced.TARDISDiskWriterCommand;
+import me.eccentric_nz.tardis.arch.TARDISArchCommand;
+import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
+import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
+import me.eccentric_nz.tardis.commands.sudo.SudoRepair;
+import me.eccentric_nz.tardis.commands.sudo.TARDISSudoTracker;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.enumeration.TardisCommand;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.noteblock.TARDISPlayThemeCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -35,6 +35,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 import java.util.UUID;
@@ -42,7 +43,7 @@ import java.util.UUID;
 /**
  * Command /tardis [arguments].
  * <p>
- * A TARDIS console room or control room is the area which houses the TARDIS' control console, by which the TARDIS was
+ * A tardis console room or control room is the area which houses the tardis' control console, by which the tardis was
  * operated.
  *
  * @author eccentric_nz
@@ -56,7 +57,7 @@ public class TARDISCommands implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
 		// If the player typed /tardis then do the following...
 		// check there is the right number of arguments
 		if (cmd.getName().equalsIgnoreCase("tardis")) {
@@ -206,7 +207,7 @@ public class TARDISCommands implements CommandExecutor {
 					return new TARDISUpdateCommand(plugin).startUpdate(player, args);
 				case abort:
 					return new TARDISAbortCommand(plugin).doAbort(player, args);
-				case exterminate: // delete the TARDIS
+				case exterminate: // delete the tardis
 					return new TARDISExterminateCommand(plugin).doExterminate(player);
 				case save:
 					ItemStack itemStack = player.getInventory().getItemInMainHand();

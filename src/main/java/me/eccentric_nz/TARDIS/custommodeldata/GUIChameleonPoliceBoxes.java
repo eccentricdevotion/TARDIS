@@ -14,17 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
 public enum GUIChameleonPoliceBoxes {
 
 	// Chameleon Police Boxes
-	GO_TO_PAGE_1(11, 24, Material.ARROW),
-	BACK(8, 25, Material.BOWL),
-	CLOSE(1, 26, Material.BOWL);
+	GO_TO_PAGE_1(11, 24, Material.ARROW), BACK(8, 25, Material.BOWL), CLOSE(1, 26, Material.BOWL);
 
 	private final int customModelData;
 	private final int slot;

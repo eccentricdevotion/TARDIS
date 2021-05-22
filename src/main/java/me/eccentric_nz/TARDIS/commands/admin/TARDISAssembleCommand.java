@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -44,7 +44,7 @@ class TARDISAssembleCommand {
 			TARDISMessage.send(sender, "ASSEMBLE_ALL");
 			return true;
 		} else if (player.equalsIgnoreCase("list")) {
-			plugin.getTrackerKeeper().getDispersedTARDII().forEach((d) -> plugin.debug("TARDIS id: " + d));
+			plugin.getTrackerKeeper().getDispersedTARDII().forEach((d) -> plugin.debug("tardis id: " + d));
 			return true;
 		} else {
 			// turn off dispersal for this player
@@ -52,7 +52,7 @@ class TARDISAssembleCommand {
 			if (p != null) {
 				UUID uuid = p.getUniqueId();
 				plugin.getTrackerKeeper().getDispersed().remove(uuid);
-				// get players TARDIS
+				// get players tardis
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("uuid", uuid.toString());
 				ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);

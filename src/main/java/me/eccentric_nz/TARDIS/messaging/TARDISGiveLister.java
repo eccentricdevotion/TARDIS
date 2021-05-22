@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.messaging;
+package me.eccentric_nz.tardis.messaging;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.enumeration.RecipeCategory;
+import me.eccentric_nz.tardis.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -56,10 +56,10 @@ public class TARDISGiveLister {
 		tg.addRow();
 		tg.addRow("Admin & development", "");
 		tg.addRow(ChatColor.YELLOW + "artron", ChatColor.GOLD + "Artron Energy");
-		tg.addRow(ChatColor.YELLOW + "blueprint", ChatColor.GOLD + "TARDIS Blueprint Disk");
-		tg.addRow(ChatColor.YELLOW + "kit", ChatColor.GOLD + "TARDIS Item Kit");
-		tg.addRow(ChatColor.YELLOW + "recipes", ChatColor.GOLD + "Grant TARDIS recipes");
-		tg.addRow(ChatColor.YELLOW + "seed", ChatColor.GOLD + "TARDIS Seed Block");
+		tg.addRow(ChatColor.YELLOW + "blueprint", ChatColor.GOLD + "tardis Blueprint Disk");
+		tg.addRow(ChatColor.YELLOW + "kit", ChatColor.GOLD + "tardis Item Kit");
+		tg.addRow(ChatColor.YELLOW + "recipes", ChatColor.GOLD + "Grant tardis recipes");
+		tg.addRow(ChatColor.YELLOW + "seed", ChatColor.GOLD + "tardis Seed Block");
 		tg.addRow(ChatColor.YELLOW + "mushroom", ChatColor.GOLD + "Textured mushroom blocks");
 		tg.addRow();
 		for (RecipeCategory category : RecipeCategory.values()) {

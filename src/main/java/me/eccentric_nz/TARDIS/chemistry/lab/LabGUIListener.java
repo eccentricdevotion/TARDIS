@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.lab;
+package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -93,11 +93,12 @@ public class LabGUIListener extends TARDISMenuListener implements Listener {
 				Material material = is.getType();
 				if ((material.equals(Material.GLASS_BOTTLE) || material.equals(Material.FEATHER)) && is.hasItemMeta()) {
 					ItemMeta im = is.getItemMeta();
+					assert im != null;
 					if (im.hasDisplayName()) {
 						builder.append(im.getDisplayName()).append(",");
 					}
 				} else {
-					builder.append(is.getType().toString()).append(",");
+					builder.append(is.getType()).append(",");
 				}
 			}
 		}

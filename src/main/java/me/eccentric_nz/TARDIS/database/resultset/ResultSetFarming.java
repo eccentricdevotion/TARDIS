@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.Farm;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.database.data.Farm;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +27,7 @@ import java.sql.SQLException;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... everything about the construction of
- * the TARDIS itself.
+ * the tardis itself.
  *
  * @author eccentric_nz
  */
@@ -44,7 +44,7 @@ public class ResultSetFarming {
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the farming table.
 	 *
 	 * @param plugin    an instance of the main class.
-	 * @param tardis_id the id of the TARDIS to get the farm locations for.
+	 * @param tardis_id the id of the tardis to get the farm locations for.
 	 */
 	public ResultSetFarming(TARDIS plugin, int tardis_id) {
 		this.plugin = plugin;
@@ -70,19 +70,7 @@ public class ResultSetFarming {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				data = new Farm(
-						rs.getInt("tardis_id"),
-						rs.getString("apiary"),
-						rs.getString("aquarium"),
-						rs.getString("bamboo"),
-						rs.getString("birdcage"),
-						rs.getString("farm"),
-						rs.getString("hutch"),
-						rs.getString("igloo"),
-						rs.getString("stable"),
-						rs.getString("stall"),
-						rs.getString("village")
-				);
+				data = new Farm(rs.getInt("tardis_id"), rs.getString("apiary"), rs.getString("aquarium"), rs.getString("bamboo"), rs.getString("birdcage"), rs.getString("farm"), rs.getString("hutch"), rs.getString("igloo"), rs.getString("stable"), rs.getString("stall"), rs.getString("village"));
 			} else {
 				return false;
 			}

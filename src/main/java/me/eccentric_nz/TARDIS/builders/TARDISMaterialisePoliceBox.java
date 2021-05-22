@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.database.data.ReplacedBlock;
+import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -67,18 +67,14 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 			World world = bd.getLocation().getWorld();
 			if (i < loops) {
 				i++;
-				int cmd;
-				switch (i % 3) {
-					case 2: // stained
-						cmd = 1003;
-						break;
-					case 1: // glass
-						cmd = 1004;
-						break;
-					default: // preset
-						cmd = 1001;
-						break;
-				}
+				int cmd = switch (i % 3) {
+					case 2 -> // stained
+							1003;
+					case 1 -> // glass
+							1004;
+					default -> // preset
+							1001;
+				};
 				// first run
 				if (i == 1) {
 					TARDISBuilderUtility.saveDoorLocation(bd);
@@ -109,16 +105,11 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 							if (preset.equals(PRESET.JUNK_MODE)) {
 								sound = "junk_land";
 							} else {
-								switch (bd.getThrottle()) {
-									case WARP:
-									case RAPID:
-									case FASTER:
-										sound = "tardis_land_" + bd.getThrottle().toString().toLowerCase();
-										break;
-									default: // NORMAL
-										sound = "tardis_land";
-										break;
-								}
+								sound = switch (bd.getThrottle()) {
+									case WARP, RAPID, FASTER -> "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+									default -> // NORMAL
+											"tardis_land";
+								};
 							}
 							TARDISSounds.playTARDISSound(bd.getLocation(), sound);
 						} else {
@@ -150,7 +141,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 					plugin.getServer().getScheduler().cancelTask(taskID);
 					plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
 				}
-				if (!bd.isRebuild() && plugin.getTrackerKeeper().getActiveForceFields().containsKey(bd.getPlayer().getPlayer().getUniqueId())) {
+				if (!bd.isRebuild()) {
 					plugin.getTrackerKeeper().getActiveForceFields().remove(bd.getPlayer().getPlayer().getUniqueId());
 				}
 				// message travellers in tardis
@@ -165,10 +156,8 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 							if (p != null) {
 								String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
 								TARDISMessage.send(p, message);
-								// TARDIS has travelled so add players to list so they can receive Artron on exit
-								if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {
-									plugin.getTrackerKeeper().getHasTravelled().add(s);
-								}
+								// tardis has travelled so add players to list so they can receive Artron on exit
+								plugin.getTrackerKeeper().getHasTravelled().add(s);
 							}
 						});
 					} else if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(bd.getPlayer().getUniqueId())) {

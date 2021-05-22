@@ -1,7 +1,7 @@
-package me.eccentric_nz.TARDIS.recipes;
+package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,7 +24,7 @@ public class TARDISRecipeInventoryListener extends TARDISMenuListener implements
 	public void onRecipeInventoryClick(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "TARDIS Recipes")) {
+		if (name.equals(ChatColor.DARK_RED + "tardis Recipes")) {
 			event.setCancelled(true);
 			int slot = event.getRawSlot();
 			Player player = (Player) event.getWhoClicked();

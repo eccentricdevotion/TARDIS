@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
 import com.google.common.collect.Sets;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.entity.EntityType;
 
+import java.io.Serial;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -57,7 +58,8 @@ public class TARDISMaterials {
 
 	public static final List<Material> submarine_blocks = Arrays.asList(Material.BLUE_ICE, Material.FROSTED_ICE, Material.ICE, Material.KELP_PLANT, Material.PACKED_ICE, Material.SEA_PICKLE, Material.SEAGRASS, Material.TALL_SEAGRASS, Material.WATER);
 
-	public static final HashMap<Material, EntityType> fishMap = new HashMap<Material, EntityType>() {
+	public static final HashMap<Material, EntityType> fishMap = new HashMap<>() {
+		@Serial
 		private static final long serialVersionUID = 3109256773218160485L;
 
 		{

@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
@@ -48,7 +48,7 @@ public class TARDISEntityGriefListener implements Listener {
 	}
 
 	/**
-	 * Listens for Fireball, Wither and Dragon entity interaction with the TARDIS blocks. If the block is a TARDIS
+	 * Listens for Fireball, Wither and Dragon entity interaction with the tardis blocks. If the block is a tardis
 	 * block, then the block change event is cancelled.
 	 *
 	 * @param event an entity affecting a block

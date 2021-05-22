@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.preferences;
+package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIPlayerPreferences;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.FlightMode;
-import me.eccentric_nz.TARDIS.enumeration.HADS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.GUIPlayerPreferences;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.FlightMode;
+import me.eccentric_nz.tardis.enumeration.HADS;
+import me.eccentric_nz.tardis.enumeration.PRESET;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -103,7 +103,7 @@ public class TARDISPrefsMenuInventory {
 		values.add(rsp.isEasyDifficulty());
 		values.add(rsp.useCustomFont());
 
-		// get TARDIS preset
+		// get tardis preset
 		Tardis tardis = null;
 		HashMap<String, Object> wherej = new HashMap<>();
 		wherej.put("uuid", uuid.toString());
@@ -164,7 +164,7 @@ public class TARDISPrefsMenuInventory {
 		// map
 		ItemStack tt = new ItemStack(Material.MAP, 1);
 		ItemMeta map = tt.getItemMeta();
-		map.setDisplayName("TARDIS Map");
+		map.setDisplayName("tardis Map");
 		map.setCustomModelData(GUIPlayerPreferences.TARDIS_MAP.getCustomModelData());
 		tt.setItemMeta(map);
 		stack[32] = tt;

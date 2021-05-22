@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,10 +27,10 @@ import java.util.UUID;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the companions who travel in the
- * TARDIS.
+ * tardis.
  * <p>
  * Companions are the Doctor's closest friends. Such people knew the Doctor's "secret": that he was someone non-human
- * who travelled in space and time in a police box-shaped craft called the TARDIS.
+ * who travelled in space and time in a police box-shaped craft called the tardis.
  *
  * @author eccentric_nz
  */

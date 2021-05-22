@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.tardis.mobfarming;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetApiaries;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.database.resultset.ResultSetApiaries;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -58,7 +58,7 @@ public class TARDISBeeWaker implements Runnable {
 					int cz = chunk.getZ() << 4; // chunks z
 					for (int x = cx; x < cx + 16; x++) {
 						for (int z = cz; z < cz + 16; z++) {
-							for (int y = 51; y < 96; y++) { // limit Y values to within TARDIS ARS levels
+							for (int y = 51; y < 96; y++) { // limit Y values to within tardis ars levels
 								Block block = chunk.getWorld().getBlockAt(x, y, z);
 								Material material = block.getType();
 								if (material.equals(Material.BEE_NEST) || material.equals(Material.BEEHIVE)) {

@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.files;
+package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -71,31 +71,31 @@ public class TARDISRecipesUpdater {
 		colours.put("Green", "GREEN_WOOL");
 		colours.put("Red", "RED_WOOL");
 		colours.put("Black", "BLACK_WOOL");
-		damage.put("shaped.TARDIS ARS Circuit.lore", 20);
-		damage.put("shaped.TARDIS Chameleon Circuit.lore", 25);
-		damage.put("shaped.TARDIS Input Circuit.lore", 50);
-		damage.put("shaped.TARDIS Materialisation Circuit.lore", 50);
-		damage.put("shaped.TARDIS Memory Circuit.lore", 20);
-		damage.put("shaped.TARDIS Randomiser Circuit.lore", 50);
-		damage.put("shaped.TARDIS Scanner Circuit.lore", 20);
-		damage.put("shaped.TARDIS Temporal Circuit.lore", 20);
+		damage.put("shaped.tardis ars Circuit.lore", 20);
+		damage.put("shaped.tardis Chameleon Circuit.lore", 25);
+		damage.put("shaped.tardis Input Circuit.lore", 50);
+		damage.put("shaped.tardis Materialisation Circuit.lore", 50);
+		damage.put("shaped.tardis Memory Circuit.lore", 20);
+		damage.put("shaped.tardis Randomiser Circuit.lore", 50);
+		damage.put("shaped.tardis Scanner Circuit.lore", 20);
+		damage.put("shaped.tardis Temporal Circuit.lore", 20);
 	}
 
 	public void addRecipes() {
 		int i = 0;
-		// update TARDIS key recipe
-		if (recipes_config.getString("shaped.TARDIS Key.easy_shape").contains("-")) {
-			recipes_config.set("shaped.TARDIS Key.easy_shape", "R,G");
-			recipes_config.set("shaped.TARDIS Key.hard_shape", "C,G");
+		// update tardis key recipe
+		if (recipes_config.getString("shaped.tardis Key.easy_shape").contains("-")) {
+			recipes_config.set("shaped.tardis Key.easy_shape", "R,G");
+			recipes_config.set("shaped.tardis Key.hard_shape", "C,G");
 			i++;
 		}
 		// update circuits
-		if (recipes_config.getString("shaped.TARDIS Materialisation Circuit.result").contains(":")) {
+		if (recipes_config.getString("shaped.tardis Materialisation Circuit.result").contains(":")) {
 			recipes_config.set("shaped.Bio-scanner Circuit.result", "GLOWSTONE_DUST");
 			recipes_config.set("shaped.Diamond Disruptor Circuit.result", "GLOWSTONE_DUST");
 			recipes_config.set("shaped.Emerald Environment Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.Fob Watch.easy_ingredients.C", "GLOWSTONE_DUST=TARDIS Chameleon Circuit");
-			recipes_config.set("shaped.Fob Watch.hard_ingredients.C", "GLOWSTONE_DUST=TARDIS Chameleon Circuit");
+			recipes_config.set("shaped.Fob Watch.easy_ingredients.C", "GLOWSTONE_DUST=tardis Chameleon Circuit");
+			recipes_config.set("shaped.Fob Watch.hard_ingredients.C", "GLOWSTONE_DUST=tardis Chameleon Circuit");
 			recipes_config.set("shaped.Ignite Circuit.result", "GLOWSTONE_DUST");
 			recipes_config.set("shaped.Painter Circuit.result", "GLOWSTONE_DUST");
 			recipes_config.set("shaped.Perception Circuit.result", "GLOWSTONE_DUST");
@@ -110,29 +110,29 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shaped.Server Admin Circuit.result", "GLOWSTONE_DUST");
 			recipes_config.set("shaped.Sonic Oscillator.result", "GLOWSTONE_DUST");
 			recipes_config.set("shaped.Sonic Screwdriver.hard_ingredients.O", "GLOWSTONE_DUST=Sonic Oscillator");
-			recipes_config.set("shaped.Stattenheim Remote.hard_ingredients.L", "GLOWSTONE_DUST=TARDIS Stattenheim Circuit");
-			recipes_config.set("shaped.TARDIS ARS Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.C", "GLOWSTONE_DUST=Emerald Environment Circuit");
-			recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.C", "GLOWSTONE_DUST=Emerald Environment Circuit");
-			recipes_config.set("shaped.TARDIS Chameleon Circuit.hard_ingredients.M", "GLOWSTONE_DUST=TARDIS Materialisation Circuit");
-			recipes_config.set("shaped.TARDIS Chameleon Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Input Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.P", "GLOWSTONE_DUST=Perception Circuit");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.P", "GLOWSTONE_DUST=Perception Circuit");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Locator Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Locator.hard_ingredients.C", "GLOWSTONE_DUST=TARDIS Locator Circuit");
-			recipes_config.set("shaped.TARDIS Materialisation Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Memory Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.T", "GLOWSTONE_DUST=TARDIS Materialisation Circuit");
-			recipes_config.set("shaped.TARDIS Scanner Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Stattenheim Circuit.easy_ingredients.L", "GLOWSTONE_DUST=TARDIS Locator Circuit");
-			recipes_config.set("shaped.TARDIS Stattenheim Circuit.easy_ingredients.M", "GLOWSTONE_DUST=TARDIS Materialisation Circuit");
-			recipes_config.set("shaped.TARDIS Stattenheim Circuit.hard_ingredients.L", "GLOWSTONE_DUST=TARDIS Locator Circuit");
-			recipes_config.set("shaped.TARDIS Stattenheim Circuit.hard_ingredients.M", "GLOWSTONE_DUST=TARDIS Materialisation Circuit");
-			recipes_config.set("shaped.TARDIS Stattenheim Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Temporal Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.Stattenheim Remote.hard_ingredients.L", "GLOWSTONE_DUST=tardis Stattenheim Circuit");
+			recipes_config.set("shaped.tardis ars Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Biome Reader.easy_ingredients.C", "GLOWSTONE_DUST=Emerald Environment Circuit");
+			recipes_config.set("shaped.tardis Biome Reader.hard_ingredients.C", "GLOWSTONE_DUST=Emerald Environment Circuit");
+			recipes_config.set("shaped.tardis Chameleon Circuit.hard_ingredients.M", "GLOWSTONE_DUST=tardis Materialisation Circuit");
+			recipes_config.set("shaped.tardis Chameleon Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Input Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Invisibility Circuit.easy_ingredients.P", "GLOWSTONE_DUST=Perception Circuit");
+			recipes_config.set("shaped.tardis Invisibility Circuit.hard_ingredients.P", "GLOWSTONE_DUST=Perception Circuit");
+			recipes_config.set("shaped.tardis Invisibility Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Locator Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Locator.hard_ingredients.C", "GLOWSTONE_DUST=tardis Locator Circuit");
+			recipes_config.set("shaped.tardis Materialisation Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Memory Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Randomiser Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Remote Key.hard_ingredients.T", "GLOWSTONE_DUST=tardis Materialisation Circuit");
+			recipes_config.set("shaped.tardis Scanner Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Stattenheim Circuit.easy_ingredients.L", "GLOWSTONE_DUST=tardis Locator Circuit");
+			recipes_config.set("shaped.tardis Stattenheim Circuit.easy_ingredients.M", "GLOWSTONE_DUST=tardis Materialisation Circuit");
+			recipes_config.set("shaped.tardis Stattenheim Circuit.hard_ingredients.L", "GLOWSTONE_DUST=tardis Locator Circuit");
+			recipes_config.set("shaped.tardis Stattenheim Circuit.hard_ingredients.M", "GLOWSTONE_DUST=tardis Materialisation Circuit");
+			recipes_config.set("shaped.tardis Stattenheim Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Temporal Circuit.result", "GLOWSTONE_DUST");
 			recipes_config.set("shapeless.Admin Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Server Admin Circuit");
 			recipes_config.set("shapeless.Bio-scanner Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Bio-scanner Circuit");
 			recipes_config.set("shapeless.Diamond Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Diamond Disruptor Circuit");
@@ -140,13 +140,13 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shapeless.Ignite Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Ignite Circuit");
 			recipes_config.set("shapeless.Painter Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Painter Circuit");
 			recipes_config.set("shapeless.Pickup Arrows Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Pickup Arrows Circuit");
-			recipes_config.set("shapeless.Preset Storage Disk.recipe", "MUSIC_DISC_STRAD,GLOWSTONE_DUST=TARDIS Chameleon Circuit");
+			recipes_config.set("shapeless.Preset Storage Disk.recipe", "MUSIC_DISC_STRAD,GLOWSTONE_DUST=tardis Chameleon Circuit");
 			recipes_config.set("shapeless.Redstone Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Redstone Activator Circuit");
-			plugin.getConsole().sendMessage(plugin.getPluginName() + "All TARDIS and sonic screwdriver circuit recipes have changed!");
+			plugin.getConsole().sendMessage(plugin.getPluginName() + "All tardis and sonic screwdriver circuit recipes have changed!");
 			i++;
 		}
 		// update for 1.13
-		if (recipes_config.getString("shaped.TARDIS Locator.easy_ingredients.C").contains(":")) {
+		if (recipes_config.getString("shaped.tardis Locator.easy_ingredients.C").contains(":")) {
 			recipes_config.set("shaped.3-D Glasses.easy_ingredients.C", "CYAN_STAINED_GLASS");
 			recipes_config.set("shaped.3-D Glasses.easy_ingredients.M", "MAGENTA_STAINED_GLASS");
 			recipes_config.set("shaped.3-D Glasses.hard_ingredients.C", "CYAN_STAINED_GLASS");
@@ -166,9 +166,9 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shaped.Fish Finger.easy_ingredients.F", "COD");
 			recipes_config.set("shaped.Fish Finger.hard_ingredients.F", "COD");
 			recipes_config.set("shaped.Fish Finger.result", "COOKED_COD");
-			recipes_config.set("shaped.Fob Watch.easy_ingredients.C", "GLOWSTONE_DUST=TARDIS Chameleon Circuit");
+			recipes_config.set("shaped.Fob Watch.easy_ingredients.C", "GLOWSTONE_DUST=tardis Chameleon Circuit");
 			recipes_config.set("shaped.Fob Watch.easy_ingredients.W", "CLOCK");
-			recipes_config.set("shaped.Fob Watch.hard_ingredients.C", "GLOWSTONE_DUST=TARDIS Chameleon Circuit");
+			recipes_config.set("shaped.Fob Watch.hard_ingredients.C", "GLOWSTONE_DUST=tardis Chameleon Circuit");
 			recipes_config.set("shaped.Fob Watch.hard_ingredients.W", "CLOCK");
 			recipes_config.set("shaped.Fob Watch.result", "CLOCK");
 			recipes_config.set("shaped.Handles.easy_ingredients.S", "SKELETON_SKULL");
@@ -202,54 +202,54 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shaped.Sonic Generator.result", "FLOWER_POT");
 			recipes_config.set("shaped.Sonic Oscillator.result", "GLOWSTONE_DUST");
 			recipes_config.set("shaped.Sonic Screwdriver.hard_ingredients.O", "GLOWSTONE_DUST=Sonic Oscillator");
-			recipes_config.set("shaped.Stattenheim Remote.hard_ingredients.L", "GLOWSTONE_DUST=TARDIS Stattenheim Circuit");
-			recipes_config.set("shaped.TARDIS ARS Circuit.easy_ingredients.S", "WHEAT_SEEDS");
-			recipes_config.set("shaped.TARDIS ARS Circuit.easy_ingredients.T", "REDSTONE_TORCH");
-			recipes_config.set("shaped.TARDIS ARS Circuit.hard_ingredients.D", "REPEATER");
-			recipes_config.set("shaped.TARDIS ARS Circuit.hard_ingredients.P", "PISTON");
-			recipes_config.set("shaped.TARDIS ARS Circuit.hard_ingredients.S", "WHEAT_SEEDS");
-			recipes_config.set("shaped.TARDIS ARS Circuit.hard_ingredients.T", "REDSTONE_TORCH");
-			recipes_config.set("shaped.TARDIS ARS Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.C", "GLOWSTONE_DUST=Emerald Environment Circuit");
-			recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.C", "GLOWSTONE_DUST=Emerald Environment Circuit");
-			recipes_config.set("shaped.TARDIS Biome Reader.result", "BRICK");
-			recipes_config.set("shaped.TARDIS Chameleon Circuit.hard_ingredients.D", "REPEATER");
-			recipes_config.set("shaped.TARDIS Chameleon Circuit.hard_ingredients.M", "GLOWSTONE_DUST=TARDIS Materialisation Circuit");
-			recipes_config.set("shaped.TARDIS Chameleon Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Input Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.P", "GLOWSTONE_DUST=Perception Circuit");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.P", "GLOWSTONE_DUST=Perception Circuit");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Key.hard_ingredients.C", "COMPARATOR");
-			recipes_config.set("shaped.TARDIS Locator Circuit.easy_ingredients.D", "REPEATER");
-			recipes_config.set("shaped.TARDIS Locator Circuit.hard_ingredients.D", "REPEATER");
-			recipes_config.set("shaped.TARDIS Locator Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Locator.easy_ingredients.C", "RED_WOOL");
-			recipes_config.set("shaped.TARDIS Locator.hard_ingredients.C", "GLOWSTONE_DUST=TARDIS Locator Circuit");
-			recipes_config.set("shaped.TARDIS Materialisation Circuit.hard_ingredients.D", "REPEATER");
-			recipes_config.set("shaped.TARDIS Materialisation Circuit.hard_ingredients.I", "ENDER_EYE");
-			recipes_config.set("shaped.TARDIS Materialisation Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Memory Circuit.easy_ingredients.T", "REDSTONE_TORCH");
-			recipes_config.set("shaped.TARDIS Memory Circuit.hard_ingredients.R", "RED_SAND");
-			recipes_config.set("shaped.TARDIS Memory Circuit.hard_ingredients.T", "REDSTONE_TORCH");
-			recipes_config.set("shaped.TARDIS Memory Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.E", "END_STONE");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.E", "END_STONE");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.C", "COMPARATOR");
-			recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.T", "REDSTONE_TORCH");
-			recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.C", "COMPARATOR");
-			recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.T", "GLOWSTONE_DUST=TARDIS Materialisation Circuit");
-			recipes_config.set("shaped.TARDIS Scanner Circuit.easy_ingredients.G", "GLASS_PANE");
-			recipes_config.set("shaped.TARDIS Scanner Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Stattenheim Circuit.easy_ingredients.L", "GLOWSTONE_DUST=TARDIS Locator Circuit");
-			recipes_config.set("shaped.TARDIS Stattenheim Circuit.easy_ingredients.M", "GLOWSTONE_DUST=TARDIS Materialisation Circuit");
-			recipes_config.set("shaped.TARDIS Stattenheim Circuit.hard_ingredients.L", "GLOWSTONE_DUST=TARDIS Locator Circuit");
-			recipes_config.set("shaped.TARDIS Stattenheim Circuit.hard_ingredients.M", "GLOWSTONE_DUST=TARDIS Materialisation Circuit");
-			recipes_config.set("shaped.TARDIS Stattenheim Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Temporal Circuit.easy_ingredients.W", "CLOCK");
-			recipes_config.set("shaped.TARDIS Temporal Circuit.hard_ingredients.W", "CLOCK");
-			recipes_config.set("shaped.TARDIS Temporal Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.Stattenheim Remote.hard_ingredients.L", "GLOWSTONE_DUST=tardis Stattenheim Circuit");
+			recipes_config.set("shaped.tardis ars Circuit.easy_ingredients.S", "WHEAT_SEEDS");
+			recipes_config.set("shaped.tardis ars Circuit.easy_ingredients.T", "REDSTONE_TORCH");
+			recipes_config.set("shaped.tardis ars Circuit.hard_ingredients.D", "REPEATER");
+			recipes_config.set("shaped.tardis ars Circuit.hard_ingredients.P", "PISTON");
+			recipes_config.set("shaped.tardis ars Circuit.hard_ingredients.S", "WHEAT_SEEDS");
+			recipes_config.set("shaped.tardis ars Circuit.hard_ingredients.T", "REDSTONE_TORCH");
+			recipes_config.set("shaped.tardis ars Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Biome Reader.easy_ingredients.C", "GLOWSTONE_DUST=Emerald Environment Circuit");
+			recipes_config.set("shaped.tardis Biome Reader.hard_ingredients.C", "GLOWSTONE_DUST=Emerald Environment Circuit");
+			recipes_config.set("shaped.tardis Biome Reader.result", "BRICK");
+			recipes_config.set("shaped.tardis Chameleon Circuit.hard_ingredients.D", "REPEATER");
+			recipes_config.set("shaped.tardis Chameleon Circuit.hard_ingredients.M", "GLOWSTONE_DUST=tardis Materialisation Circuit");
+			recipes_config.set("shaped.tardis Chameleon Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Input Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Invisibility Circuit.easy_ingredients.P", "GLOWSTONE_DUST=Perception Circuit");
+			recipes_config.set("shaped.tardis Invisibility Circuit.hard_ingredients.P", "GLOWSTONE_DUST=Perception Circuit");
+			recipes_config.set("shaped.tardis Invisibility Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Key.hard_ingredients.C", "COMPARATOR");
+			recipes_config.set("shaped.tardis Locator Circuit.easy_ingredients.D", "REPEATER");
+			recipes_config.set("shaped.tardis Locator Circuit.hard_ingredients.D", "REPEATER");
+			recipes_config.set("shaped.tardis Locator Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Locator.easy_ingredients.C", "RED_WOOL");
+			recipes_config.set("shaped.tardis Locator.hard_ingredients.C", "GLOWSTONE_DUST=tardis Locator Circuit");
+			recipes_config.set("shaped.tardis Materialisation Circuit.hard_ingredients.D", "REPEATER");
+			recipes_config.set("shaped.tardis Materialisation Circuit.hard_ingredients.I", "ENDER_EYE");
+			recipes_config.set("shaped.tardis Materialisation Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Memory Circuit.easy_ingredients.T", "REDSTONE_TORCH");
+			recipes_config.set("shaped.tardis Memory Circuit.hard_ingredients.R", "RED_SAND");
+			recipes_config.set("shaped.tardis Memory Circuit.hard_ingredients.T", "REDSTONE_TORCH");
+			recipes_config.set("shaped.tardis Memory Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Randomiser Circuit.easy_ingredients.E", "END_STONE");
+			recipes_config.set("shaped.tardis Randomiser Circuit.hard_ingredients.E", "END_STONE");
+			recipes_config.set("shaped.tardis Randomiser Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Remote Key.easy_ingredients.C", "COMPARATOR");
+			recipes_config.set("shaped.tardis Remote Key.easy_ingredients.T", "REDSTONE_TORCH");
+			recipes_config.set("shaped.tardis Remote Key.hard_ingredients.C", "COMPARATOR");
+			recipes_config.set("shaped.tardis Remote Key.hard_ingredients.T", "GLOWSTONE_DUST=tardis Materialisation Circuit");
+			recipes_config.set("shaped.tardis Scanner Circuit.easy_ingredients.G", "GLASS_PANE");
+			recipes_config.set("shaped.tardis Scanner Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Stattenheim Circuit.easy_ingredients.L", "GLOWSTONE_DUST=tardis Locator Circuit");
+			recipes_config.set("shaped.tardis Stattenheim Circuit.easy_ingredients.M", "GLOWSTONE_DUST=tardis Materialisation Circuit");
+			recipes_config.set("shaped.tardis Stattenheim Circuit.hard_ingredients.L", "GLOWSTONE_DUST=tardis Locator Circuit");
+			recipes_config.set("shaped.tardis Stattenheim Circuit.hard_ingredients.M", "GLOWSTONE_DUST=tardis Materialisation Circuit");
+			recipes_config.set("shaped.tardis Stattenheim Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Temporal Circuit.easy_ingredients.W", "CLOCK");
+			recipes_config.set("shaped.tardis Temporal Circuit.hard_ingredients.W", "CLOCK");
+			recipes_config.set("shaped.tardis Temporal Circuit.result", "GLOWSTONE_DUST");
 			recipes_config.set("shapeless.Admin Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Server Admin Circuit");
 			recipes_config.set("shapeless.Bio-scanner Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Bio-scanner Circuit");
 			recipes_config.set("shapeless.Biome Storage Disk.recipe", "MUSIC_DISC_STRAD,EMERALD");
@@ -260,7 +260,7 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shapeless.Painter Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Painter Circuit");
 			recipes_config.set("shapeless.Player Storage Disk.recipe", "MUSIC_DISC_STRAD,LAPIS_BLOCK");
 			recipes_config.set("shapeless.Player Storage Disk.result", "MUSIC_DISC_WAIT");
-			recipes_config.set("shapeless.Preset Storage Disk.recipe", "MUSIC_DISC_STRAD,GLOWSTONE_DUST=TARDIS Chameleon Circuit");
+			recipes_config.set("shapeless.Preset Storage Disk.recipe", "MUSIC_DISC_STRAD,GLOWSTONE_DUST=tardis Chameleon Circuit");
 			recipes_config.set("shapeless.Preset Storage Disk.result", "MUSIC_DISC_MALL");
 			recipes_config.set("shapeless.Redstone Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Redstone Activator Circuit");
 			recipes_config.set("shapeless.Save Storage Disk.recipe", "MUSIC_DISC_STRAD,REDSTONE");
@@ -290,17 +290,17 @@ public class TARDISRecipesUpdater {
 			if (recipes_config.getString("shapeless.Licorice Jelly Baby.recipe").contains("INK_SAC")) {
 				recipes_config.set("shapeless.Licorice Jelly Baby.recipe", "SUGAR,SLIME_BALL,BLACK_DYE");
 			}
-			if (recipes_config.getString("shaped.TARDIS Input Circuit.easy_ingredients.S").equals("SIGN")) {
-				recipes_config.set("shaped.TARDIS Input Circuit.easy_ingredients.S", "OAK_SIGN");
-				recipes_config.set("shaped.TARDIS Input Circuit.hard_ingredients.S", "OAK_SIGN");
+			if (recipes_config.getString("shaped.tardis Input Circuit.easy_ingredients.S").equals("SIGN")) {
+				recipes_config.set("shaped.tardis Input Circuit.easy_ingredients.S", "OAK_SIGN");
+				recipes_config.set("shaped.tardis Input Circuit.hard_ingredients.S", "OAK_SIGN");
 			}
 			i++;
 		}
 		if (recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L").contains(":") || recipes_config.getString("shaped.Painter Circuit.easy_ingredients.I").contains("INK_SAC") || recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L").contains("LAPIS_LAZULI")) {
-			recipes_config.set("shaped.TARDIS Locator Circuit.easy_ingredients.L", "BLUE_DYE");
-			recipes_config.set("shaped.TARDIS Locator Circuit.hard_ingredients.L", "BLUE_DYE");
-			recipes_config.set("shaped.TARDIS Materialisation Circuit.easy_ingredients.L", "BLUE_DYE");
-			recipes_config.set("shaped.TARDIS Materialisation Circuit.hard_ingredients.L", "BLUE_DYE");
+			recipes_config.set("shaped.tardis Locator Circuit.easy_ingredients.L", "BLUE_DYE");
+			recipes_config.set("shaped.tardis Locator Circuit.hard_ingredients.L", "BLUE_DYE");
+			recipes_config.set("shaped.tardis Materialisation Circuit.easy_ingredients.L", "BLUE_DYE");
+			recipes_config.set("shaped.tardis Materialisation Circuit.hard_ingredients.L", "BLUE_DYE");
 			recipes_config.set("shaped.Painter Circuit.easy_ingredients.I", "BLACK_DYE");
 			recipes_config.set("shaped.Painter Circuit.hard_ingredients.I", "BLACK_DYE");
 			recipes_config.set("shaped.Painter Circuit.easy_ingredients.D", "PURPLE_DYE");
@@ -308,7 +308,7 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "SWEET_BERRIES");
 			recipes_config.set("shaped.Jammy Dodger.hard_ingredients.R", "SWEET_BERRIES");
 			recipes_config.set("shaped.Stattenheim Remote.easy_ingredients.L", "BLUE_DYE");
-			recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
+			recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call tardis");
 			recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
 			i++;
 		}
@@ -458,19 +458,19 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shaped.Time Rotor Twelfth.hard_ingredients.W", "CLOCK");
 			recipes_config.set("shaped.Time Rotor Twelfth.hard_ingredients.G", "GLASS_PANE");
 		}
-		if (!recipes_config.contains("shaped.TARDIS Communicator")) {
-			recipes_config.set("shaped.TARDIS Communicator.easy_shape", "N--,IIH,--I");
-			recipes_config.set("shaped.TARDIS Communicator.easy_ingredients.N", "NOTE_BLOCK");
-			recipes_config.set("shaped.TARDIS Communicator.easy_ingredients.I", "IRON_INGOT");
-			recipes_config.set("shaped.TARDIS Communicator.easy_ingredients.H", "HOPPER");
-			recipes_config.set("shaped.TARDIS Communicator.hard_shape", "N--,IIH,--D");
-			recipes_config.set("shaped.TARDIS Communicator.hard_ingredients.N", "NOTE_BLOCK");
-			recipes_config.set("shaped.TARDIS Communicator.hard_ingredients.I", "IRON_INGOT");
-			recipes_config.set("shaped.TARDIS Communicator.hard_ingredients.H", "HOPPER");
-			recipes_config.set("shaped.TARDIS Communicator.hard_ingredients.D", "DIAMOND");
-			recipes_config.set("shaped.TARDIS Communicator.result", "LEATHER_HELMET");
-			recipes_config.set("shaped.TARDIS Communicator.amount", 1);
-			recipes_config.set("shaped.TARDIS Communicator.lore", "");
+		if (!recipes_config.contains("shaped.tardis Communicator")) {
+			recipes_config.set("shaped.tardis Communicator.easy_shape", "N--,IIH,--I");
+			recipes_config.set("shaped.tardis Communicator.easy_ingredients.N", "NOTE_BLOCK");
+			recipes_config.set("shaped.tardis Communicator.easy_ingredients.I", "IRON_INGOT");
+			recipes_config.set("shaped.tardis Communicator.easy_ingredients.H", "HOPPER");
+			recipes_config.set("shaped.tardis Communicator.hard_shape", "N--,IIH,--D");
+			recipes_config.set("shaped.tardis Communicator.hard_ingredients.N", "NOTE_BLOCK");
+			recipes_config.set("shaped.tardis Communicator.hard_ingredients.I", "IRON_INGOT");
+			recipes_config.set("shaped.tardis Communicator.hard_ingredients.H", "HOPPER");
+			recipes_config.set("shaped.tardis Communicator.hard_ingredients.D", "DIAMOND");
+			recipes_config.set("shaped.tardis Communicator.result", "LEATHER_HELMET");
+			recipes_config.set("shaped.tardis Communicator.amount", 1);
+			recipes_config.set("shaped.tardis Communicator.lore", "");
 			i++;
 		}
 		if (!recipes_config.contains("shaped.Rust Plague Sword")) {
@@ -560,23 +560,23 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shaped.Sonic Generator.easy_shape", "-S-,-F-,GRG");
 			recipes_config.set("shaped.Sonic Generator.hard_shape", "-S-,-F-,GRG");
 		}
-		if (!recipes_config.contains("shaped.TARDIS Remote Key")) {
-			recipes_config.set("shaped.TARDIS Remote Key.easy_shape", "RCR,-K-,-T-");
-			recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.R", "REDSTONE");
-			recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.C", "REDSTONE_COMPARATOR");
-			recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.K", "GOLD_NUGGET");
-			recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.T", "REDSTONE_TORCH");
-			recipes_config.set("shaped.TARDIS Remote Key.hard_shape", "RCR,-K-,-T-");
-			recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.R", "REDSTONE");
-			recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.C", "REDSTONE_COMPARATOR");
-			recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.K", "GOLD_NUGGET");
-			recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.T", "GLOWSTONE_DUST=TARDIS Materialisation Circuit");
-			recipes_config.set("shaped.TARDIS Remote Key.result", "GOLD_NUGGET");
-			recipes_config.set("shaped.TARDIS Remote Key.amount", 1);
-			recipes_config.set("shaped.TARDIS Remote Key.lore", "Deadlock & unlock~Hide & rebuild");
+		if (!recipes_config.contains("shaped.tardis Remote Key")) {
+			recipes_config.set("shaped.tardis Remote Key.easy_shape", "RCR,-K-,-T-");
+			recipes_config.set("shaped.tardis Remote Key.easy_ingredients.R", "REDSTONE");
+			recipes_config.set("shaped.tardis Remote Key.easy_ingredients.C", "REDSTONE_COMPARATOR");
+			recipes_config.set("shaped.tardis Remote Key.easy_ingredients.K", "GOLD_NUGGET");
+			recipes_config.set("shaped.tardis Remote Key.easy_ingredients.T", "REDSTONE_TORCH");
+			recipes_config.set("shaped.tardis Remote Key.hard_shape", "RCR,-K-,-T-");
+			recipes_config.set("shaped.tardis Remote Key.hard_ingredients.R", "REDSTONE");
+			recipes_config.set("shaped.tardis Remote Key.hard_ingredients.C", "REDSTONE_COMPARATOR");
+			recipes_config.set("shaped.tardis Remote Key.hard_ingredients.K", "GOLD_NUGGET");
+			recipes_config.set("shaped.tardis Remote Key.hard_ingredients.T", "GLOWSTONE_DUST=tardis Materialisation Circuit");
+			recipes_config.set("shaped.tardis Remote Key.result", "GOLD_NUGGET");
+			recipes_config.set("shaped.tardis Remote Key.amount", 1);
+			recipes_config.set("shaped.tardis Remote Key.lore", "Deadlock & unlock~Hide & rebuild");
 			i++;
-		} else if (recipes_config.getString("shaped.TARDIS Remote Key.easy_ingredients.T").equals("REDSTONE_TORCH")) {
-			recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.T", "REDSTONE_TORCH");
+		} else if (recipes_config.getString("shaped.tardis Remote Key.easy_ingredients.T").equals("REDSTONE_TORCH")) {
+			recipes_config.set("shaped.tardis Remote Key.easy_ingredients.T", "REDSTONE_TORCH");
 		}
 		if (!recipes_config.contains("shaped.White Bow Tie") || recipes_config.getString("shaped.White Bow Tie.easy_ingredients.W").contains(":") || recipes_config.getString("shaped.White Bow Tie.result").equals("LEATHER_CHESTPLATE")) {
 			for (Map.Entry<String, String> map : colours.entrySet()) {
@@ -612,11 +612,11 @@ public class TARDISRecipesUpdater {
 		}
 		if (!recipes_config.contains("shaped.Fob Watch")) {
 			recipes_config.set("shaped.Fob Watch.easy_shape", "-C-,-W-,R-R");
-			recipes_config.set("shaped.Fob Watch.easy_ingredients.C", "GLOWSTONE_DUST=TARDIS Chameleon Circuit");
+			recipes_config.set("shaped.Fob Watch.easy_ingredients.C", "GLOWSTONE_DUST=tardis Chameleon Circuit");
 			recipes_config.set("shaped.Fob Watch.easy_ingredients.W", "CLOCK");
 			recipes_config.set("shaped.Fob Watch.easy_ingredients.R", "REDSTONE");
 			recipes_config.set("shaped.Fob Watch.hard_shape", "-C-,IWI,R-R");
-			recipes_config.set("shaped.Fob Watch.hard_ingredients.C", "GLOWSTONE_DUST=TARDIS Chameleon Circuit");
+			recipes_config.set("shaped.Fob Watch.hard_ingredients.C", "GLOWSTONE_DUST=tardis Chameleon Circuit");
 			recipes_config.set("shaped.Fob Watch.hard_ingredients.W", "CLOCK");
 			recipes_config.set("shaped.Fob Watch.hard_ingredients.I", "IRON_INGOT");
 			recipes_config.set("shaped.Fob Watch.hard_ingredients.R", "REDSTONE");
@@ -625,23 +625,23 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shaped.Fob Watch.lore", "");
 			i++;
 		}
-		if (!recipes_config.contains("shaped.TARDIS Biome Reader") || recipes_config.getString("shaped.TARDIS Biome Reader.result").equals("CLAY_BRICK")) {
-			recipes_config.set("shaped.TARDIS Biome Reader.easy_shape", "---,-C-,SDT");
-			recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.C", "GLOWSTONE_DUST=Emerald Environment Circuit");
-			recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.S", "SAND");
-			recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.D", "DIRT");
-			recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.T", "STONE");
-			recipes_config.set("shaped.TARDIS Biome Reader.hard_shape", "-C-,SDT,LWN");
-			recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.C", "GLOWSTONE_DUST=Emerald Environment Circuit");
-			recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.S", "SAND");
-			recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.D", "DIRT");
-			recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.T", "STONE");
-			recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.L", "CLAY");
-			recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.W", "SNOW_BLOCK");
-			recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.N", "NETHERRACK");
-			recipes_config.set("shaped.TARDIS Biome Reader.result", "BRICK");
-			recipes_config.set("shaped.TARDIS Biome Reader.amount", 1);
-			recipes_config.set("shaped.TARDIS Biome Reader.lore", "");
+		if (!recipes_config.contains("shaped.tardis Biome Reader") || recipes_config.getString("shaped.tardis Biome Reader.result").equals("CLAY_BRICK")) {
+			recipes_config.set("shaped.tardis Biome Reader.easy_shape", "---,-C-,SDT");
+			recipes_config.set("shaped.tardis Biome Reader.easy_ingredients.C", "GLOWSTONE_DUST=Emerald Environment Circuit");
+			recipes_config.set("shaped.tardis Biome Reader.easy_ingredients.S", "SAND");
+			recipes_config.set("shaped.tardis Biome Reader.easy_ingredients.D", "DIRT");
+			recipes_config.set("shaped.tardis Biome Reader.easy_ingredients.T", "STONE");
+			recipes_config.set("shaped.tardis Biome Reader.hard_shape", "-C-,SDT,LWN");
+			recipes_config.set("shaped.tardis Biome Reader.hard_ingredients.C", "GLOWSTONE_DUST=Emerald Environment Circuit");
+			recipes_config.set("shaped.tardis Biome Reader.hard_ingredients.S", "SAND");
+			recipes_config.set("shaped.tardis Biome Reader.hard_ingredients.D", "DIRT");
+			recipes_config.set("shaped.tardis Biome Reader.hard_ingredients.T", "STONE");
+			recipes_config.set("shaped.tardis Biome Reader.hard_ingredients.L", "CLAY");
+			recipes_config.set("shaped.tardis Biome Reader.hard_ingredients.W", "SNOW_BLOCK");
+			recipes_config.set("shaped.tardis Biome Reader.hard_ingredients.N", "NETHERRACK");
+			recipes_config.set("shaped.tardis Biome Reader.result", "BRICK");
+			recipes_config.set("shaped.tardis Biome Reader.amount", 1);
+			recipes_config.set("shaped.tardis Biome Reader.lore", "");
 			i++;
 		}
 		if (!recipes_config.contains("shaped.Jammy Dodger") || recipes_config.getString("shaped.Jammy Dodger.easy_ingredients.R").equals("RED_DYE")) {
@@ -685,14 +685,14 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shaped.Custard Cream.lore", "");
 			i++;
 		}
-		if (!recipes_config.contains("shapeless.TARDIS Schematic Wand")) {
-			recipes_config.set("shapeless.TARDIS Schematic Wand.recipe", "BONE,REDSTONE");
-			recipes_config.set("shapeless.TARDIS Schematic Wand.result", "BONE");
-			recipes_config.set("shapeless.TARDIS Schematic Wand.amount", 1);
-			recipes_config.set("shapeless.TARDIS Schematic Wand.lore", "Right-click start~Left-click end");
+		if (!recipes_config.contains("shapeless.tardis Schematic Wand")) {
+			recipes_config.set("shapeless.tardis Schematic Wand.recipe", "BONE,REDSTONE");
+			recipes_config.set("shapeless.tardis Schematic Wand.result", "BONE");
+			recipes_config.set("shapeless.tardis Schematic Wand.amount", 1);
+			recipes_config.set("shapeless.tardis Schematic Wand.lore", "Right-click start~Left-click end");
 			i++;
 		} else {
-			recipes_config.set("shapeless.TARDIS Schematic Wand.lore", "Right-click start~Left-click end");
+			recipes_config.set("shapeless.tardis Schematic Wand.lore", "Right-click start~Left-click end");
 		}
 		if (!recipes_config.contains("shapeless.Bowl of Custard") || recipes_config.getString("shapeless.Bowl of Custard.result").contains("SOUP")) {
 			recipes_config.set("shapeless.Bowl of Custard.recipe", "BOWL,MILK_BUCKET,EGG");
@@ -710,65 +710,65 @@ public class TARDISRecipesUpdater {
 				i++;
 			}
 		}
-		if (!recipes_config.contains("shaped.TARDIS Randomiser Circuit")) {
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_shape", "-D-,NCE,-W-");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.D", "DIRT");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.N", "NETHERRACK");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.C", "COMPASS");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.E", "END_STONE");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.W", "WATER_BUCKET");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_shape", "-D-,NCE,-W-");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.D", "DIRT");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.N", "NETHERRACK");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.C", "COMPASS");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.E", "END_STONE");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.W", "WATER_BUCKET");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.amount", 1);
-			recipes_config.set("shaped.TARDIS Randomiser Circuit.lore", "Uses left~50");
+		if (!recipes_config.contains("shaped.tardis Randomiser Circuit")) {
+			recipes_config.set("shaped.tardis Randomiser Circuit.easy_shape", "-D-,NCE,-W-");
+			recipes_config.set("shaped.tardis Randomiser Circuit.easy_ingredients.D", "DIRT");
+			recipes_config.set("shaped.tardis Randomiser Circuit.easy_ingredients.N", "NETHERRACK");
+			recipes_config.set("shaped.tardis Randomiser Circuit.easy_ingredients.C", "COMPASS");
+			recipes_config.set("shaped.tardis Randomiser Circuit.easy_ingredients.E", "END_STONE");
+			recipes_config.set("shaped.tardis Randomiser Circuit.easy_ingredients.W", "WATER_BUCKET");
+			recipes_config.set("shaped.tardis Randomiser Circuit.hard_shape", "-D-,NCE,-W-");
+			recipes_config.set("shaped.tardis Randomiser Circuit.hard_ingredients.D", "DIRT");
+			recipes_config.set("shaped.tardis Randomiser Circuit.hard_ingredients.N", "NETHERRACK");
+			recipes_config.set("shaped.tardis Randomiser Circuit.hard_ingredients.C", "COMPASS");
+			recipes_config.set("shaped.tardis Randomiser Circuit.hard_ingredients.E", "END_STONE");
+			recipes_config.set("shaped.tardis Randomiser Circuit.hard_ingredients.W", "WATER_BUCKET");
+			recipes_config.set("shaped.tardis Randomiser Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Randomiser Circuit.amount", 1);
+			recipes_config.set("shaped.tardis Randomiser Circuit.lore", "Uses left~50");
 			i++;
 		}
-		if (!recipes_config.contains("shaped.TARDIS Invisibility Circuit")) {
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_shape", "-D-,P-E,-W-");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.D", "DIAMOND");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.P", "GLOWSTONE_DUST=Perception Circuit");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.E", "EMERALD");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.W", "POTION>INVISIBILITY");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_shape", "-D-,P-E,-W-");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.D", "DIAMOND");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.P", "GLOWSTONE_DUST=Perception Circuit");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.E", "EMERALD");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.W", "POTION>INVISIBILITY");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.result", "GLOWSTONE_DUST");
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.amount", 1);
-			recipes_config.set("shaped.TARDIS Invisibility Circuit.lore", "Uses left~5");
+		if (!recipes_config.contains("shaped.tardis Invisibility Circuit")) {
+			recipes_config.set("shaped.tardis Invisibility Circuit.easy_shape", "-D-,P-E,-W-");
+			recipes_config.set("shaped.tardis Invisibility Circuit.easy_ingredients.D", "DIAMOND");
+			recipes_config.set("shaped.tardis Invisibility Circuit.easy_ingredients.P", "GLOWSTONE_DUST=Perception Circuit");
+			recipes_config.set("shaped.tardis Invisibility Circuit.easy_ingredients.E", "EMERALD");
+			recipes_config.set("shaped.tardis Invisibility Circuit.easy_ingredients.W", "POTION>INVISIBILITY");
+			recipes_config.set("shaped.tardis Invisibility Circuit.hard_shape", "-D-,P-E,-W-");
+			recipes_config.set("shaped.tardis Invisibility Circuit.hard_ingredients.D", "DIAMOND");
+			recipes_config.set("shaped.tardis Invisibility Circuit.hard_ingredients.P", "GLOWSTONE_DUST=Perception Circuit");
+			recipes_config.set("shaped.tardis Invisibility Circuit.hard_ingredients.E", "EMERALD");
+			recipes_config.set("shaped.tardis Invisibility Circuit.hard_ingredients.W", "POTION>INVISIBILITY");
+			recipes_config.set("shaped.tardis Invisibility Circuit.result", "GLOWSTONE_DUST");
+			recipes_config.set("shaped.tardis Invisibility Circuit.amount", 1);
+			recipes_config.set("shaped.tardis Invisibility Circuit.lore", "Uses left~5");
 			i++;
 		} else {
-			String easyValue = recipes_config.getString("shaped.TARDIS Invisibility Circuit.easy_ingredients.W");
+			String easyValue = recipes_config.getString("shaped.tardis Invisibility Circuit.easy_ingredients.W");
 			if (easyValue.equals("POTION:8206") || easyValue.equals("POTION")) {
-				recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.W", "POTION>INVISIBILITY");
+				recipes_config.set("shaped.tardis Invisibility Circuit.easy_ingredients.W", "POTION>INVISIBILITY");
 			}
-			String hardValue = recipes_config.getString("shaped.TARDIS Invisibility Circuit.hard_ingredients.W");
+			String hardValue = recipes_config.getString("shaped.tardis Invisibility Circuit.hard_ingredients.W");
 			if (hardValue.equals("POTION:8270") || hardValue.equals("POTION")) {
-				recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.W", "POTION>INVISIBILITY");
+				recipes_config.set("shaped.tardis Invisibility Circuit.hard_ingredients.W", "POTION>INVISIBILITY");
 			}
 		}
-		if (!recipes_config.contains("shaped.TARDIS Telepathic Circuit")) {
-			recipes_config.set("shaped.TARDIS Telepathic Circuit.easy_shape", "-S-,SES,-S-");
-			recipes_config.set("shaped.TARDIS Telepathic Circuit.easy_ingredients.S", "SLIME_BALL");
-			recipes_config.set("shaped.TARDIS Telepathic Circuit.easy_ingredients.E", "EMERALD");
-			recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_shape", "-S-,SPS,ESE");
-			recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.S", "SLIME_BALL");
-			recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.P", "POTION");
-			recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.E", "EMERALD");
-			recipes_config.set("shaped.TARDIS Telepathic Circuit.result", "DAYLIGHT_DETECTOR");
-			recipes_config.set("shaped.TARDIS Telepathic Circuit.amount", 1);
-			recipes_config.set("shaped.TARDIS Telepathic Circuit.lore", "Allow companions to~use TARDIS commands");
+		if (!recipes_config.contains("shaped.tardis Telepathic Circuit")) {
+			recipes_config.set("shaped.tardis Telepathic Circuit.easy_shape", "-S-,SES,-S-");
+			recipes_config.set("shaped.tardis Telepathic Circuit.easy_ingredients.S", "SLIME_BALL");
+			recipes_config.set("shaped.tardis Telepathic Circuit.easy_ingredients.E", "EMERALD");
+			recipes_config.set("shaped.tardis Telepathic Circuit.hard_shape", "-S-,SPS,ESE");
+			recipes_config.set("shaped.tardis Telepathic Circuit.hard_ingredients.S", "SLIME_BALL");
+			recipes_config.set("shaped.tardis Telepathic Circuit.hard_ingredients.P", "POTION");
+			recipes_config.set("shaped.tardis Telepathic Circuit.hard_ingredients.E", "EMERALD");
+			recipes_config.set("shaped.tardis Telepathic Circuit.result", "DAYLIGHT_DETECTOR");
+			recipes_config.set("shaped.tardis Telepathic Circuit.amount", 1);
+			recipes_config.set("shaped.tardis Telepathic Circuit.lore", "Allow companions to~use tardis commands");
 			i++;
 		} else {
-			String value = recipes_config.getString("shaped.TARDIS Telepathic Circuit.hard_ingredients.P");
+			String value = recipes_config.getString("shaped.tardis Telepathic Circuit.hard_ingredients.P");
 			if (value.equals("POTION:373") || value.equals("POTION")) {
-				recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.P", "POTION>AWKWARD");
+				recipes_config.set("shaped.tardis Telepathic Circuit.hard_ingredients.P", "POTION>AWKWARD");
 			}
 		}
 		if (!recipes_config.contains("shaped.Painter Circuit")) {
@@ -841,18 +841,18 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shapeless.Pickup Arrows Upgrade.lore", "");
 			i++;
 		}
-		if (!recipes_config.contains("shaped.TARDIS Artron Furnace")) {
-			recipes_config.set("shaped.TARDIS Artron Furnace.easy_shape", "---,OFO,RRR");
-			recipes_config.set("shaped.TARDIS Artron Furnace.easy_ingredients.O", "OBSIDIAN");
-			recipes_config.set("shaped.TARDIS Artron Furnace.easy_ingredients.F", "FURNACE");
-			recipes_config.set("shaped.TARDIS Artron Furnace.easy_ingredients.R", "REDSTONE");
-			recipes_config.set("shaped.TARDIS Artron Furnace.hard_shape", "---,OFO,RRR");
-			recipes_config.set("shaped.TARDIS Artron Furnace.hard_ingredients.O", "OBSIDIAN");
-			recipes_config.set("shaped.TARDIS Artron Furnace.hard_ingredients.F", "FURNACE");
-			recipes_config.set("shaped.TARDIS Artron Furnace.hard_ingredients.R", "REDSTONE");
-			recipes_config.set("shaped.TARDIS Artron Furnace.result", "FURNACE");
-			recipes_config.set("shaped.TARDIS Artron Furnace.amount", 1);
-			recipes_config.set("shaped.TARDIS Artron Furnace.lore", "");
+		if (!recipes_config.contains("shaped.tardis Artron Furnace")) {
+			recipes_config.set("shaped.tardis Artron Furnace.easy_shape", "---,OFO,RRR");
+			recipes_config.set("shaped.tardis Artron Furnace.easy_ingredients.O", "OBSIDIAN");
+			recipes_config.set("shaped.tardis Artron Furnace.easy_ingredients.F", "FURNACE");
+			recipes_config.set("shaped.tardis Artron Furnace.easy_ingredients.R", "REDSTONE");
+			recipes_config.set("shaped.tardis Artron Furnace.hard_shape", "---,OFO,RRR");
+			recipes_config.set("shaped.tardis Artron Furnace.hard_ingredients.O", "OBSIDIAN");
+			recipes_config.set("shaped.tardis Artron Furnace.hard_ingredients.F", "FURNACE");
+			recipes_config.set("shaped.tardis Artron Furnace.hard_ingredients.R", "REDSTONE");
+			recipes_config.set("shaped.tardis Artron Furnace.result", "FURNACE");
+			recipes_config.set("shaped.tardis Artron Furnace.amount", 1);
+			recipes_config.set("shaped.tardis Artron Furnace.lore", "");
 			i++;
 		}
 		if (!recipes_config.contains("smithing.Admin Repair")) {
@@ -899,13 +899,13 @@ public class TARDISRecipesUpdater {
 			if (i > 0) {
 				plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to recipes.yml");
 			}
-			String key = recipes_config.getString("shaped.TARDIS Key.result");
+			String key = recipes_config.getString("shaped.tardis Key.result");
 			if (!key.equals(plugin.getConfig().getString("preferences.key"))) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "The TARDIS Key recipe result (recipes.yml) does not match the configured key preference (config.yml)");
+				plugin.getConsole().sendMessage(plugin.getPluginName() + "The tardis Key recipe result (recipes.yml) does not match the configured key preference (config.yml)");
 			}
-			String r_key_5 = recipes_config.getString("shaped.TARDIS Remote Key.easy_ingredients.K");
+			String r_key_5 = recipes_config.getString("shaped.tardis Remote Key.easy_ingredients.K");
 			if (r_key_5 != null && !key.equals(r_key_5)) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "The TARDIS Key ingredient (" + r_key_5 + ") in the 'TARDIS Remote Key' recipe does not match the crafting result of the 'TARDIS Key' recipe (" + key + ") - they should be the same!");
+				plugin.getConsole().sendMessage(plugin.getPluginName() + "The tardis Key ingredient (" + r_key_5 + ") in the 'tardis Remote Key' recipe does not match the crafting result of the 'tardis Key' recipe (" + key + ") - they should be the same!");
 			}
 		} catch (IOException io) {
 			plugin.debug("Could not save recipes.yml, " + io);

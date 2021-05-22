@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISMaterials;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -37,9 +37,9 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The time rotor is a component in the central column of the TARDIS console. While the TARDIS is in flight, the rotor
- * rises and falls, stopping when the TARDIS has reached a destination. It is associated with the 'whooshing' noise
- * heard when the TARDIS is in flight.
+ * The time rotor is a component in the central column of the tardis console. While the tardis is in flight, the rotor
+ * rises and falls, stopping when the tardis has reached a destination. It is associated with the 'whooshing' noise
+ * heard when the tardis is in flight.
  *
  * @author eccentric_nz
  */

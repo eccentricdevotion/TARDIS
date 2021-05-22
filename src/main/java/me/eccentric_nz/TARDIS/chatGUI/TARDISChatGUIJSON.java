@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chatGUI;
+package me.eccentric_nz.tardis.chatGUI;
 
-import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.update.TARDISUpdateableCategory;
+import me.eccentric_nz.tardis.enumeration.Updateable;
+import me.eccentric_nz.tardis.update.TARDISUpdateableCategory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,16 +31,11 @@ public class TARDISChatGUIJSON {
 	// counter, updateable.getDescription(), updateable.getName()
 	private final String REPLACEMENT_STRING = "{\"text\":\"%s. %s\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update %s\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}";
 
-	private final String EGG = "{\"text\":\"[TARDIS] \",\"color\":\"gold\",\"extra\":[{\"text\":\"Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis egg\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}]}";
+	private final String EGG = "{\"text\":\"[tardis] \",\"color\":\"gold\",\"extra\":[{\"text\":\"Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis egg\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}]}";
 
 	private final String TRANSMAT_LOCATION = "{\"text\":\"%s \",\"color\":\"green\",\"extra\":[{\"text\":\"X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis transmat tp %s\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Transmat to this location\"}}}]}";
 
-	private final List<String> sections = Arrays.asList(
-			"{\"text\":\"1. TARDIS Controls\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section controls\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-			"{\"text\":\"2. TARDIS User Interfaces\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section interfaces\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-			"{\"text\":\"3. TARDIS Internal Spawn Locations\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section locations\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-			"{\"text\":\"4. Others\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section others\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
-	);
+	private final List<String> sections = Arrays.asList("{\"text\":\"1. tardis Controls\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section controls\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}", "{\"text\":\"2. tardis User Interfaces\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section interfaces\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}", "{\"text\":\"3. tardis Internal Spawn Locations\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section locations\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}", "{\"text\":\"4. Others\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis section others\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}");
 
 	private final List<String> controls = new ArrayList<>();
 	private final List<String> interfaces = new ArrayList<>();

@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.destroyers.TARDISPruner;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.destroyers.TARDISPruner;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.FileUtil;
 
@@ -45,7 +45,7 @@ class TARDISPruneCommand {
 		try {
 			TARDISMessage.send(sender, "BACKUP_DB");
 			// backup database
-			File oldFile = new File(plugin.getDataFolder() + File.separator + "TARDIS.db");
+			File oldFile = new File(plugin.getDataFolder() + File.separator + "tardis.db");
 			File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
 			// back up the file
 			FileUtil.copy(oldFile, newFile);

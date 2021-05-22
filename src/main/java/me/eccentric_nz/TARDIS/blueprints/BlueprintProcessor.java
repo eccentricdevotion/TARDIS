@@ -1,7 +1,7 @@
-package me.eccentric_nz.TARDIS.blueprints;
+package me.eccentric_nz.tardis.blueprints;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -9,6 +9,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public class BlueprintProcessor {
@@ -20,6 +21,7 @@ public class BlueprintProcessor {
 			if (pdc.has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
 				// check disk UUID is same as player UUID
 				UUID diskUuid = pdc.get(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID());
+				assert diskUuid != null;
 				if (!diskUuid.equals(player.getUniqueId())) {
 					return;
 				}
@@ -31,7 +33,7 @@ public class BlueprintProcessor {
 					set.put("uuid", diskUuid.toString());
 					set.put("permission", perm);
 					plugin.getQueryFactory().doInsert("blueprint", set);
-					TARDISMessage.send(player, "BLUEPRINT", im.getLore().get(0));
+					TARDISMessage.send(player, "BLUEPRINT", Objects.requireNonNull(im.getLore()).get(0));
 				}
 			}
 		}

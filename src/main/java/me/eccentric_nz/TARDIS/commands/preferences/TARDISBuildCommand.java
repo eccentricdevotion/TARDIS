@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.preferences;
+package me.eccentric_nz.tardis.commands.preferences;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISAntiBuild;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -44,7 +44,7 @@ class TARDISBuildCommand {
 			return true;
 		}
 		String playerNameStr = player.getName();
-		// get the player's TARDIS world
+		// get the player's tardis world
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("uuid", player.getUniqueId().toString());
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);

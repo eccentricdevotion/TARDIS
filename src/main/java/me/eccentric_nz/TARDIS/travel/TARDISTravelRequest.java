@@ -14,20 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISRedProtectChecker;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravelledTo;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISFactionsChecker;
+import me.eccentric_nz.tardis.utility.TARDISRedProtectChecker;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 
 /**
- * The telepathic password to the TARDIS was "the colour crimson, the number eleven, the feeling of delight, and the
+ * The telepathic password to the tardis was "the colour crimson, the number eleven, the feeling of delight, and the
  * smell of dust after rain".
  *
  * @author eccentric_nz
@@ -42,7 +42,7 @@ public class TARDISTravelRequest {
 
 	/**
 	 * Checks whether a location is allowed by other plugins. This checks WorldGuard regions, Towny plots, WorldBorder
-	 * borders and TARDIS areas.
+	 * borders and tardis areas.
 	 *
 	 * @param p  the player who is travelling.
 	 * @param to the player to request travel to.

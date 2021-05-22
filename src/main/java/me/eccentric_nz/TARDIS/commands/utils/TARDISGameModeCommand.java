@@ -14,15 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.utils;
+package me.eccentric_nz.tardis.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.commands.TARDISCompleter;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.GameMode;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Locale;
@@ -37,7 +38,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("tardisgamemode")) {
 			if (label.equalsIgnoreCase("tgms")) {
 				// set survival
@@ -106,21 +107,14 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
 			// get GameMode from first argument
 			if (args[0].length() <= 2) {
 				switch (args[0].toLowerCase(Locale.ENGLISH)) {
-					case "s":
-						gm = GameMode.SURVIVAL;
-						break;
-					case "c":
-						gm = GameMode.CREATIVE;
-						break;
-					case "a":
-						gm = GameMode.ADVENTURE;
-						break;
-					case "sp":
-						gm = GameMode.SPECTATOR;
-						break;
-					default:
+					case "s" -> gm = GameMode.SURVIVAL;
+					case "c" -> gm = GameMode.CREATIVE;
+					case "a" -> gm = GameMode.ADVENTURE;
+					case "sp" -> gm = GameMode.SPECTATOR;
+					default -> {
 						TARDISMessage.send(sender, "ARG_GAMEMODE");
 						return false;
+					}
 				}
 			} else {
 				try {
@@ -140,7 +134,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
 	}
 
 	@Override
-	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 		if (args.length <= 1) {
 			if (label.equalsIgnoreCase("tgms") || label.equalsIgnoreCase("tgmc") || label.equalsIgnoreCase("tgma") || label.equalsIgnoreCase("tgmsp")) {
 				return null;

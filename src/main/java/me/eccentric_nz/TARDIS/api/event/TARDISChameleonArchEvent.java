@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.api.event;
+package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
+import me.eccentric_nz.tardis.arch.TARDISWatchData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author eccentric_nz
@@ -49,7 +50,7 @@ public final class TARDISChameleonArchEvent extends Event {
 	}
 
 	/**
-	 * Returns the Chameleon Arch {@link me.eccentric_nz.TARDIS.arch.TARDISWatchData TARDISWatchData} object. This
+	 * Returns the Chameleon Arch {@link me.eccentric_nz.tardis.arch.TARDISWatchData TARDISWatchData} object. This
 	 * contains the 'arched' player's new display name, and the time (in milliseconds) that they became 'arched'.
 	 *
 	 * @return the TARDISWatchData object
@@ -59,7 +60,7 @@ public final class TARDISChameleonArchEvent extends Event {
 	}
 
 	@Override
-	public HandlerList getHandlers() {
+	public @NotNull HandlerList getHandlers() {
 		return HANDLERS;
 	}
 }

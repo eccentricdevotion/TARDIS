@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.schematic;
+package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -76,6 +76,6 @@ public class TARDISSchematicGZip {
 				TARDIS.plugin.debug("Could not close GZip schematic file! " + ex.getMessage());
 			}
 		}
-		return (s.startsWith("{")) ? new JsonParser().parse(s).getAsJsonObject() : null;
+		return (s.startsWith("{")) ? JsonParser.parseString(s).getAsJsonObject() : null;
 	}
 }

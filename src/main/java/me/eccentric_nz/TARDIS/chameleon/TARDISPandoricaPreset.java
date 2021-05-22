@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chameleon;
+package me.eccentric_nz.tardis.chameleon;
 
 /**
  * The Pandorica was a prison hidden under Stonehenge. It was built to hold the Doctor and ensure the safety of the

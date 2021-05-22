@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -26,7 +26,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 
 /**
- * Soon after taking Amy Pond on board for the first time, the TARDIS console provided the Doctor with a new sonic
+ * Soon after taking Amy Pond on board for the first time, the tardis console provided the Doctor with a new sonic
  * screwdriver, as the previous one had been destroyed.
  *
  * @author eccentric_nz
@@ -52,12 +52,12 @@ public class TARDISItemRenamer {
 	public void setName(String name, boolean setlore) {
 		ItemMeta im = itemStack.getItemMeta();
 		if (im == null) {
-			TARDIS.plugin.debug("ItemMeta was null for ItemStack: " + itemStack.toString());
+			TARDIS.plugin.debug("ItemMeta was null for ItemStack: " + itemStack);
 		} else {
 			im.setDisplayName(name);
 			if (setlore) {
 				ArrayList<String> lore = new ArrayList<>();
-				lore.add("Enter and exit your TARDIS");
+				lore.add("Enter and exit your tardis");
 				String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
 				lore.add(format + "This key belongs to");
 				lore.add(format + player.getName());

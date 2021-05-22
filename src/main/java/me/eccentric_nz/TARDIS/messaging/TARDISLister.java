@@ -14,20 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.messaging;
+package me.eccentric_nz.tardis.messaging;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
-import me.eccentric_nz.TARDIS.database.data.Area;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.messaging.TableGenerator.Alignment;
-import me.eccentric_nz.TARDIS.messaging.TableGenerator.Receiver;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.companionGUI.TARDISCompanionInventory;
+import me.eccentric_nz.tardis.database.data.Area;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
+import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.WorldManager;
+import me.eccentric_nz.tardis.messaging.TableGenerator.Alignment;
+import me.eccentric_nz.tardis.messaging.TableGenerator.Receiver;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -70,7 +70,7 @@ public class TARDISLister {
 			} else {
 				tg = new TableGeneratorSmallChar(Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
 			}
-			tg.addRow(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "TARDIS Rechargers", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "World", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "X", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Y", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Z");
+			tg.addRow(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "tardis Rechargers", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "World", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "X", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Y", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Z");
 			tg.addRow();
 			for (String s : therechargers) {
 				// only list public rechargers
@@ -111,7 +111,7 @@ public class TARDISLister {
 			if (rst.resultSet()) {
 				Tardis tardis = rst.getTardis();
 				int id = tardis.getTardis_id();
-				// list TARDIS saves
+				// list tardis saves
 				if (l.equalsIgnoreCase("saves")) {
 					TableGenerator tg;
 					if (TableGenerator.getSenderPrefs(p)) {
@@ -119,7 +119,7 @@ public class TARDISLister {
 					} else {
 						tg = new TableGeneratorSmallChar(Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
 					}
-					tg.addRow(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "TARDIS " + plugin.getLanguage().getString("SAVES"), ChatColor.GOLD + "" + ChatColor.UNDERLINE + "World", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "X", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Y", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Z");
+					tg.addRow(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "tardis " + plugin.getLanguage().getString("SAVES"), ChatColor.GOLD + "" + ChatColor.UNDERLINE + "World", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "X", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Y", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Z");
 					tg.addRow();
 					// get home
 					HashMap<String, Object> wherehl = new HashMap<>();

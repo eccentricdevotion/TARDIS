@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -27,7 +27,7 @@ import org.bukkit.scoreboard.Team;
 
 /**
  * Perception filters had the effect of directing attention away from the object or its bearer, rendering them
- * unnoticeable. The Doctor was able to construct a perception filter around three keys to the TARDIS, activated when
+ * unnoticeable. The Doctor was able to construct a perception filter around three keys to the tardis, activated when
  * they were worn around the neck on a chain.
  *
  * @author eccentric_nz

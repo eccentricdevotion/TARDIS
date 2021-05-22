@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.lazarus;
+package me.eccentric_nz.tardis.lazarus;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
-import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.event.TARDISGeneticManipulatorDisguiseEvent;
+import me.eccentric_nz.tardis.api.event.TARDISGeneticManipulatorUndisguiseEvent;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
 import me.eccentric_nz.tardischunkgenerator.disguise.*;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -75,7 +75,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 	}
 
 	/**
-	 * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+	 * Listens for player clicking inside an inventory. If the inventory is a tardis GUI, then the click is processed
 	 * accordingly.
 	 *
 	 * @param event a player clicking an inventory slot

@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.preferences;
+package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -39,7 +39,7 @@ class TARDISIsomorphicCommand {
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("uuid", player.getUniqueId().toString());
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-		// does the player have a TARDIS
+		// does the player have a tardis
 		if (rs.resultSet()) {
 			Tardis tardis = rs.getTardis();
 			int iso = (tardis.isIso_on()) ? 0 : 1;

@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesPattern;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesRequest;
-import me.eccentric_nz.TARDIS.howto.TARDISSeedsInventory;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.travel.TARDISRescue;
-import me.eccentric_nz.TARDIS.travel.TARDISRescue.RescueData;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.flight.TARDISLand;
+import me.eccentric_nz.tardis.handles.TARDISHandlesPattern;
+import me.eccentric_nz.tardis.handles.TARDISHandlesRequest;
+import me.eccentric_nz.tardis.howto.TARDISSeedsInventory;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.travel.TARDISRescue;
+import me.eccentric_nz.tardis.travel.TARDISRescue.RescueData;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
 
 /**
  * In 21st century London, Rory has his father, Brian Williams, over to help fix a light bulb. After saying the fixture
- * may be the problem, the sound of the TARDIS materialisation is heard. The TARDIS materialises around them, shocking
+ * may be the problem, the sound of the tardis materialisation is heard. The tardis materialises around them, shocking
  * Brian in place.
  *
  * @author eccentric_nz
@@ -58,7 +58,7 @@ public class TARDISChatListener implements Listener {
 	 * Listens for player typing "tardis rescue accept". If the player types it within 60 seconds of a Time Lord sending
 	 * a rescue request, a player rescue attempt is made.
 	 * <p>
-	 * Also processes questions pertaining to "How to make a TARDIS?" and variations thereof.
+	 * Also processes questions pertaining to "How to make a tardis?" and variations thereof.
 	 *
 	 * @param event a player typing in chat
 	 */
@@ -120,7 +120,7 @@ public class TARDISChatListener implements Listener {
 			// open how to GUI
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 				ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
-				Inventory wall = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seeds Menu");
+				Inventory wall = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "tardis Seeds Menu");
 				wall.setContents(seeds);
 				p.openInventory(wall);
 			}, 1L);

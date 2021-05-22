@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.perms;
+package me.eccentric_nz.tardis.perms;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -74,7 +74,7 @@ public class TARDISPermissionsExHandler {
 		}
 		// get the default world
 		String w = plugin.getServer().getWorlds().get(0).getName();
-		// pex world <world> inherit <parentWorld> - make the TARDIS world inherit the main worlds permissions
+		// pex world <world> inherit <parentWorld> - make the tardis world inherit the main worlds permissions
 		plugin.getServer().dispatchCommand(plugin.getConsole(), "pex world " + "TARDIS_WORLD_" + player + " inherit " + w);
 		plugin.getServer().dispatchCommand(plugin.getConsole(), "pex reload");
 	}

@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chameleon;
+package me.eccentric_nz.tardis.chameleon;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetChameleon;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
 
 import java.util.HashMap;
 
@@ -50,7 +50,7 @@ public class TARDISConstructColumn {
 			// convert to String[][] array
 			String data = rs.getData().get(field);
 			if (data != null) {
-				JsonArray json = new JsonParser().parse(data).getAsJsonArray();
+				JsonArray json = JsonParser.parseString(data).getAsJsonArray();
 				String[][] strings = new String[10][4];
 				for (int i = 0; i < 10; i++) {
 					JsonArray inner = json.get(i).getAsJsonArray();

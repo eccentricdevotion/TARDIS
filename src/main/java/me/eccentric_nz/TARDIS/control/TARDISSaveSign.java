@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.control;
+package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.travel.TARDISSaveSignInventory;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -76,14 +76,14 @@ public class TARDISSaveSign {
 			} else {
 				TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, player);
 				ItemStack[] items = sst.getTerminal();
-				Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
+				Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves");
 				inv.setContents(items);
 				player.openInventory(inv);
 			}
 		} else {
 			TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, player);
 			ItemStack[] items = sst.getTerminal();
-			Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
+			Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves");
 			inv.setContents(items);
 			player.openInventory(inv);
 		}

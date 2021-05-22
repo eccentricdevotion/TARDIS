@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.artron;
+package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 
 import java.util.HashMap;
 import java.util.Set;
 
 /**
- * A TARDIS has fifteen Power Rooms that contain all of the machinery that powers and operates the ship. They are
- * located deep in a TARDIS's interior and serve as the "nerve centre" of the capsule.
+ * A tardis has fifteen Power Rooms that contain all of the machinery that powers and operates the ship. They are
+ * located deep in a tardis's interior and serve as the "nerve centre" of the capsule.
  *
  * @author eccentric_nz
  */

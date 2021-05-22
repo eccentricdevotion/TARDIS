@@ -14,34 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.arch.TARDISArchInventory;
-import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
-import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
-import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
-import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.arch.TARDISArchInventory;
+import me.eccentric_nz.tardis.arch.TARDISArchPersister;
+import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
+import me.eccentric_nz.tardis.artron.TARDISLampToggler;
+import me.eccentric_nz.tardis.artron.TARDISPoliceBoxLampToggler;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.BiomeSetter;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
+import me.eccentric_nz.tardis.desktop.TARDISWallFloorRunnable;
+import me.eccentric_nz.tardis.destroyers.DestroyData;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.hads.TARDISCloisterBell;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.move.TARDISDoorCloser;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.siegemode.TARDISSiegeArea;
+import me.eccentric_nz.tardis.travel.TARDISEPSRunnable;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -59,7 +59,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Several events can trigger an Automatic Emergency Landing. Under these circumstances a TARDIS will use the coordinate
+ * Several events can trigger an Automatic Emergency Landing. Under these circumstances a tardis will use the coordinate
  * override to initiate an Automatic Emergency Landing on the "nearest" available habitable planet.
  *
  * @author eccentric_nz
@@ -73,7 +73,7 @@ public class TARDISTimeLordDeathListener implements Listener {
 	}
 
 	/**
-	 * Listens for player death. If the player is a time lord and the autonomous circuit is engaged, then the TARDIS
+	 * Listens for player death. If the player is a time lord and the autonomous circuit is engaged, then the tardis
 	 * will automatically return to its 'home' location, or the nearest Recharge area.
 	 *
 	 * @param event a player dying
@@ -105,7 +105,7 @@ public class TARDISTimeLordDeathListener implements Listener {
 								int amount = Math.round(plugin.getArtronConfig().getInt("autonomous") * spaceTimeThrottle.getArtronMultiplier());
 								if (tardis.getArtron_level() > amount) {
 									if (plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
-										// check if there are players in the TARDIS
+										// check if there are players in the tardis
 										HashMap<String, Object> wherev = new HashMap<>();
 										wherev.put("tardis_id", id);
 										ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
@@ -119,7 +119,7 @@ public class TARDISTimeLordDeathListener implements Listener {
 										}
 									}
 									String death_world = death_loc.getWorld().getName();
-									// where is the TARDIS Police Box?
+									// where is the tardis Police Box?
 									HashMap<String, Object> wherecl = new HashMap<>();
 									wherecl.put("tardis_id", id);
 									ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -148,7 +148,7 @@ public class TARDISTimeLordDeathListener implements Listener {
 										// look for a recharge location
 										goto_loc = getRecharger(death_world, player);
 										if (goto_loc == null) {
-											// no parking spots - default to TARDIS home location
+											// no parking spots - default to tardis home location
 											goto_loc = home_loc;
 											going_home = true;
 										}
@@ -163,12 +163,12 @@ public class TARDISTimeLordDeathListener implements Listener {
 												going_home = true;
 											}
 										} else {
-											// no parking spots - set to TARDIS home location
+											// no parking spots - set to tardis home location
 											goto_loc = home_loc;
 											going_home = true;
 										}
 									}
-									// if the TARDIS is already at the home location, do nothing
+									// if the tardis is already at the home location, do nothing
 									if (!compareCurrentToHome(rsc, rsh)) {
 										// check for creation area
 										if (!plugin.getConfig().getString("creation.area").equals("none") && plugin.getTardisArea().areaCheckLocPlayer(player, goto_loc)) {
@@ -274,7 +274,7 @@ public class TARDISTimeLordDeathListener implements Listener {
 											HashMap<String, Object> setp = new HashMap<>();
 											// power down
 											setp.put("powered_on", 0);
-											// police box lamp, delay it incase the TARDIS needs rebuilding
+											// police box lamp, delay it incase the tardis needs rebuilding
 											if (tardis.getPreset().equals(PRESET.NEW) || tardis.getPreset().equals(PRESET.OLD)) {
 												plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), 1L);
 											}
@@ -287,7 +287,7 @@ public class TARDISTimeLordDeathListener implements Listener {
 									}
 								} else if (plugin.getConfig().getBoolean("siege.enabled") && rsp.isAutoSiegeOn()) {
 									// enter siege mode
-									// where is the TARDIS Police Box?
+									// where is the tardis Police Box?
 									HashMap<String, Object> wherecl = new HashMap<>();
 									wherecl.put("tardis_id", id);
 									ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);

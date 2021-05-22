@@ -19,16 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package me.eccentric_nz.TARDIS.sonic;
+package me.eccentric_nz.tardis.sonic;
 
 import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -44,7 +44,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.yi.acru.bukkit.Lockette.Lockette;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -105,8 +104,7 @@ public class TARDISSonicSorterListener implements Listener {
 						continue;
 					}
 					if (item2.getType() == item1.getType()) {
-						if (item1.getItemMeta() instanceof Damageable) {
-							Damageable d1 = (Damageable) item1.getItemMeta();
+						if (item1.getItemMeta() instanceof Damageable d1) {
 							Damageable d2 = (Damageable) item2.getItemMeta();
 							if (d1.getDamage() == d2.getDamage() && item1.getEnchantments().equals(item2.getEnchantments()) && item1.getItemMeta().equals(item2.getItemMeta())) {
 								if (item2.getAmount() > needed) {
@@ -158,12 +156,6 @@ public class TARDISSonicSorterListener implements Listener {
 					Block block = event.getClickedBlock();
 					if (block != null && sortables.contains(block.getType())) {
 						boolean allow = true;
-						// is Lockette on the server?
-						if (plugin.getPM().isPluginEnabled("Lockette")) {
-							if (Lockette.isProtected(block)) {
-								allow = false;
-							}
-						}
 						if (plugin.getPM().isPluginEnabled("LockettePro")) {
 							if (LocketteProAPI.isProtected(block)) {
 								allow = false;

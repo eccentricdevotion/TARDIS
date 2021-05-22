@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
- * The distinctive TARDIS sound effect - a cyclic wheezing, groaning noise - was originally created in the BBC
+ * The distinctive tardis sound effect - a cyclic wheezing, groaning noise - was originally created in the BBC
  * Radiophonic Workshop by Brian Hodgson. He produced the effect by dragging a set of house keys along the strings of an
  * old, gutted piano. The resulting sound was recorded and electronically processed with echo and reverb.
  *
@@ -33,7 +33,7 @@ public class TARDISSounds {
 	private static float VOLUME = TARDIS.plugin.getConfig().getInt("preferences.sfx_volume") / 10.0F;
 
 	/**
-	 * Plays the interior hum sound upon TARDIS entry.
+	 * Plays the interior hum sound upon tardis entry.
 	 *
 	 * @param p the player to play the sound to
 	 */
@@ -54,7 +54,7 @@ public class TARDISSounds {
 	}
 
 	/**
-	 * Plays a TARDIS sound for the player and surrounding players at the current location.
+	 * Plays a tardis sound for the player and surrounding players at the current location.
 	 *
 	 * @param l      The location
 	 * @param s      The sound to play
@@ -65,7 +65,7 @@ public class TARDISSounds {
 	}
 
 	/**
-	 * Plays a TARDIS sound for the player and surrounding players at the current location.
+	 * Plays a tardis sound for the player and surrounding players at the current location.
 	 *
 	 * @param l The location
 	 * @param s The sound to play
@@ -75,7 +75,7 @@ public class TARDISSounds {
 	}
 
 	/**
-	 * Plays a TARDIS sound for the specified player.
+	 * Plays a tardis sound for the specified player.
 	 *
 	 * @param p The player
 	 * @param s The sound to play
@@ -85,7 +85,7 @@ public class TARDISSounds {
 	}
 
 	/**
-	 * Plays a TARDIS sound for the specified player after a delay.
+	 * Plays a tardis sound for the specified player after a delay.
 	 *
 	 * @param p The player
 	 * @param s The sound to play

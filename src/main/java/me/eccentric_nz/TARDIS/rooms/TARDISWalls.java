@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.rooms;
+package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A TARDIS isn't just a vehicle for travelling in space and time. As a TARDIS has no real constraints on the amount of
+ * A tardis isn't just a vehicle for travelling in space and time. As a tardis has no real constraints on the amount of
  * space it can use, most TARDISes contain extensive areas which can be used as living quarters or storage space.
  *
  * @author eccentric_nz

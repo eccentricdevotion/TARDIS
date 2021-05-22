@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -43,31 +43,27 @@ public class TARDISBlockSetters {
 	public static void setBlock(Location l, BlockData bd) {
 		Block b = l.getBlock();
 		BlockData blockData;
-		if (b != null) {
-			switch (bd.getMaterial()) {
-				case CAKE:
-					// cake -> handbrake
-					blockData = Material.LEVER.createBlockData();
-					Switch lever = (Switch) blockData;
-					lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
-					lever.setFacing(BlockFace.SOUTH);
-					b.setBlockData(lever);
-					break;
-				case SPAWNER:
-					// mob spawner -> scanner button
-					blockData = Material.OAK_BUTTON.createBlockData();
-					Switch button = (Switch) blockData;
-					button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
-					button.setFacing(BlockFace.SOUTH);
-					b.setBlockData(button);
-					break;
-				default:
-					b.setBlockData(bd);
-					break;
+		switch (bd.getMaterial()) {
+			case CAKE -> {
+				// cake -> handbrake
+				blockData = Material.LEVER.createBlockData();
+				Switch lever = (Switch) blockData;
+				lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
+				lever.setFacing(BlockFace.SOUTH);
+				b.setBlockData(lever);
 			}
-			if (TARDIS.plugin.getBlockLogger().isLogging()) {
-				TARDIS.plugin.getBlockLogger().logPlacement(b);
+			case SPAWNER -> {
+				// mob spawner -> scanner button
+				blockData = Material.OAK_BUTTON.createBlockData();
+				Switch button = (Switch) blockData;
+				button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
+				button.setFacing(BlockFace.SOUTH);
+				b.setBlockData(button);
 			}
+			default -> b.setBlockData(bd);
+		}
+		if (TARDIS.plugin.getBlockLogger().isLogging()) {
+			TARDIS.plugin.getBlockLogger().logPlacement(b);
 		}
 	}
 
@@ -82,31 +78,27 @@ public class TARDISBlockSetters {
 	 */
 	public static void setBlock(World w, int x, int y, int z, BlockData data) {
 		Block b = w.getBlockAt(x, y, z);
-		if (b != null) {
-			switch (data.getMaterial()) {
-				case CAKE:
-					// cake -> handbrake
-					BlockData blockData = Material.LEVER.createBlockData();
-					Switch lever = (Switch) blockData;
-					lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
-					lever.setFacing(BlockFace.SOUTH);
-					b.setBlockData(lever);
-					break;
-				case SPAWNER:
-					// mob spawner -> scanner button
-					BlockData oak = Material.OAK_BUTTON.createBlockData();
-					Switch button = (Switch) oak;
-					button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
-					button.setFacing(BlockFace.SOUTH);
-					b.setBlockData(button);
-					break;
-				default:
-					b.setBlockData(data);
-					break;
+		switch (data.getMaterial()) {
+			case CAKE -> {
+				// cake -> handbrake
+				BlockData blockData = Material.LEVER.createBlockData();
+				Switch lever = (Switch) blockData;
+				lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
+				lever.setFacing(BlockFace.SOUTH);
+				b.setBlockData(lever);
 			}
-			if (TARDIS.plugin.getBlockLogger().isLogging()) {
-				TARDIS.plugin.getBlockLogger().logPlacement(b);
+			case SPAWNER -> {
+				// mob spawner -> scanner button
+				BlockData oak = Material.OAK_BUTTON.createBlockData();
+				Switch button = (Switch) oak;
+				button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
+				button.setFacing(BlockFace.SOUTH);
+				b.setBlockData(button);
 			}
+			default -> b.setBlockData(data);
+		}
+		if (TARDIS.plugin.getBlockLogger().isLogging()) {
+			TARDIS.plugin.getBlockLogger().logPlacement(b);
 		}
 	}
 
@@ -122,31 +114,27 @@ public class TARDISBlockSetters {
 	public static void setBlock(World w, int x, int y, int z, Material material) {
 		Block b = w.getBlockAt(x, y, z);
 		BlockData blockData = material.createBlockData();
-		if (b != null) {
-			switch (material) {
-				case CAKE:
-					// cake -> handbrake
-					blockData = Material.LEVER.createBlockData();
-					Switch lever = (Switch) blockData;
-					lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
-					lever.setFacing(BlockFace.SOUTH);
-					b.setBlockData(lever);
-					break;
-				case SPAWNER:
-					// mob spawner -> scanner button
-					blockData = Material.OAK_BUTTON.createBlockData();
-					Switch button = (Switch) blockData;
-					button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
-					button.setFacing(BlockFace.SOUTH);
-					b.setBlockData(button);
-					break;
-				default:
-					b.setBlockData(blockData);
-					break;
+		switch (material) {
+			case CAKE -> {
+				// cake -> handbrake
+				blockData = Material.LEVER.createBlockData();
+				Switch lever = (Switch) blockData;
+				lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
+				lever.setFacing(BlockFace.SOUTH);
+				b.setBlockData(lever);
 			}
-			if (TARDIS.plugin.getBlockLogger().isLogging()) {
-				TARDIS.plugin.getBlockLogger().logPlacement(b);
+			case SPAWNER -> {
+				// mob spawner -> scanner button
+				blockData = Material.OAK_BUTTON.createBlockData();
+				Switch button = (Switch) blockData;
+				button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
+				button.setFacing(BlockFace.SOUTH);
+				b.setBlockData(button);
 			}
+			default -> b.setBlockData(blockData);
+		}
+		if (TARDIS.plugin.getBlockLogger().isLogging()) {
+			TARDIS.plugin.getBlockLogger().logPlacement(b);
 		}
 	}
 
@@ -158,7 +146,7 @@ public class TARDISBlockSetters {
 	 * @param y    the y co-ordinate of the block.
 	 * @param z    the z co-ordinate of the block.
 	 * @param data the block data to apply to the block.
-	 * @param id   the TARDIS this block belongs to.
+	 * @param id   the tardis this block belongs to.
 	 */
 	public static void setBlockAndRemember(World w, int x, int y, int z, BlockData data, int id) {
 		Block b = w.getBlockAt(x, y, z);
@@ -183,7 +171,7 @@ public class TARDISBlockSetters {
 	 * @param y        the y co-ordinate of the block.
 	 * @param z        the z co-ordinate of the block.
 	 * @param material the material to set the block.
-	 * @param id       the TARDIS this block belongs to.
+	 * @param id       the tardis this block belongs to.
 	 */
 	public static void setBlockAndRemember(World w, int x, int y, int z, Material material, int id) {
 		Block b = w.getBlockAt(x, y, z);
@@ -205,7 +193,7 @@ public class TARDISBlockSetters {
 	 *
 	 * @param b    the block to set and remember
 	 * @param m    the typeId to set the block to
-	 * @param id   the TARDIS this block belongs to
+	 * @param id   the tardis this block belongs to
 	 * @param type the police_box type (0 = interior, 1 = police box, 2 = beacon up block)
 	 */
 	public static void setBlockAndRemember(Block b, Material m, int id, int type) {
@@ -223,14 +211,14 @@ public class TARDISBlockSetters {
 	}
 
 	/**
-	 * Sets the block under the TARDIS Police Box door to the specified typeId and data and remembers the block for
+	 * Sets the block under the tardis Police Box door to the specified typeId and data and remembers the block for
 	 * replacement later on.
 	 *
 	 * @param w      the world the block is in.
 	 * @param x      the x coordinate of the block.
 	 * @param y      the y coordinate of the block.
 	 * @param z      the z coordinate of the block.
-	 * @param id     the TARDIS this block belongs to.
+	 * @param id     the tardis this block belongs to.
 	 * @param portal whether a chest can be in the portal block location
 	 */
 	public static void setUnderDoorBlock(World w, int x, int y, int z, int id, boolean portal) {

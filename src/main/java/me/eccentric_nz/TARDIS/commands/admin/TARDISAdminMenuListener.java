@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.commands.preferences.TARDISPrefsMenuInventory;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,7 +33,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
+ * The architectural reconfiguration system is a component of the Doctor's tardis in the shape of a tree that, according
  * to the Eleventh Doctor, "reconstructs the particles according to your needs." It is basically "a machine that makes
  * machines," perhaps somewhat like a 3D printer. It is, according to Gregor Van Baalen's scanner, "more valuable than
  * the total sum of any currency.
@@ -105,6 +105,7 @@ public class TARDISAdminMenuListener implements Listener {
 		ItemStack is = view.getItem(slot);
 		if (is != null) {
 			ItemMeta im = is.getItemMeta();
+			assert im != null;
 			return im.getDisplayName();
 		} else {
 			return "";
@@ -114,7 +115,9 @@ public class TARDISAdminMenuListener implements Listener {
 	private void setLore(InventoryView view, int slot, String str) {
 		List<String> lore = (str != null) ? Collections.singletonList(str) : null;
 		ItemStack is = view.getItem(slot);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		im.setLore(lore);
 		int cmd = im.getCustomModelData();
 		if (cmd > 100) {

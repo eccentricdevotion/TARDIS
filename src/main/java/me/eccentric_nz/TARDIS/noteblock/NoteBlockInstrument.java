@@ -15,25 +15,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.noteblock;
+package me.eccentric_nz.tardis.noteblock;
 
 import org.bukkit.Sound;
 
 class NoteBlockInstrument {
 
 	static Sound getInstrument(byte instrument) {
-		switch (instrument) {
-			case 0:
-				return Sound.BLOCK_NOTE_BLOCK_HARP;
-			case 1:
-				return Sound.BLOCK_NOTE_BLOCK_BASS;
-			case 2:
-				return Sound.BLOCK_NOTE_BLOCK_BASEDRUM;
-			case 3:
-				return Sound.BLOCK_NOTE_BLOCK_SNARE;
-			case 4:
-				return Sound.BLOCK_NOTE_BLOCK_HAT;
-		}
-		return Sound.BLOCK_NOTE_BLOCK_HARP;
+		return switch (instrument) {
+			case 1 -> Sound.BLOCK_NOTE_BLOCK_BASS;
+			case 2 -> Sound.BLOCK_NOTE_BLOCK_BASEDRUM;
+			case 3 -> Sound.BLOCK_NOTE_BLOCK_SNARE;
+			case 4 -> Sound.BLOCK_NOTE_BLOCK_HAT;
+			default -> Sound.BLOCK_NOTE_BLOCK_HARP;
+		};
 	}
 }

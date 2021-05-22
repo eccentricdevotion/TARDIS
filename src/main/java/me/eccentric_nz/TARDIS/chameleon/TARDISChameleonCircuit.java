@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chameleon;
+package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
@@ -69,27 +69,15 @@ public class TARDISChameleonCircuit {
 		}
 		// if it's a precious block or TNT and all_blocks is false, then switch it to wool of similar colour
 		if (TARDISConstants.CHAMELEON_BLOCKS_PRECIOUS.contains(chameleonType) && !plugin.getConfig().getBoolean("allow.all_blocks")) {
-			switch (chameleonType) {
-				case IRON_BLOCK:
-					wall_block = Material.YELLOW_WOOL;
-					break;
-				case DIAMOND_BLOCK:
-					wall_block = Material.LIGHT_BLUE_WOOL;
-					break;
-				case EMERALD_BLOCK:
-					wall_block = Material.LIME_WOOL;
-					break;
-				case REDSTONE_BLOCK:
-				case TNT:
-					wall_block = Material.RED_WOOL;
-					break;
-				case COAL_BLOCK:
-					wall_block = Material.BLACK_WOOL;
-					break;
-				default: // GOLD_BLOCK and any others
-					wall_block = Material.BLUE_WOOL;
-					break;
-			}
+			wall_block = switch (chameleonType) {
+				case IRON_BLOCK -> Material.YELLOW_WOOL;
+				case DIAMOND_BLOCK -> Material.LIGHT_BLUE_WOOL;
+				case EMERALD_BLOCK -> Material.LIME_WOOL;
+				case REDSTONE_BLOCK, TNT -> Material.RED_WOOL;
+				case COAL_BLOCK -> Material.BLACK_WOOL;
+				default -> // GOLD_BLOCK and any others
+						Material.BLUE_WOOL;
+			};
 		}
 		return wall_block;
 	}

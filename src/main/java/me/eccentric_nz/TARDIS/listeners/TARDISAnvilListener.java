@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,6 +30,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -39,12 +40,12 @@ public class TARDISAnvilListener implements Listener {
 	private final HashMap<String, Material> disallow = new HashMap<>();
 
 	public TARDISAnvilListener(TARDIS plugin) {
-		plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false).forEach((r) -> {
-			String[] result = plugin.getRecipesConfig().getString("shaped." + r + ".result").split(":");
+		Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("shaped")).getKeys(false).forEach((r) -> {
+			String[] result = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped." + r + ".result")).split(":");
 			disallow.put(r, Material.valueOf(result[0]));
 		});
-		plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false).forEach((q) -> {
-			String[] result = plugin.getRecipesConfig().getString("shapeless." + q + ".result").split(":");
+		Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("shapeless")).getKeys(false).forEach((q) -> {
+			String[] result = Objects.requireNonNull(plugin.getRecipesConfig().getString("shapeless." + q + ".result")).split(":");
 			disallow.put(q, Material.valueOf(result[0]));
 		});
 	}
@@ -62,9 +63,12 @@ public class TARDISAnvilListener implements Listener {
 					ItemMeta im = is.getItemMeta();
 					ItemStack one = inv.getItem(0);
 					ItemStack two = inv.getItem(1);
-					if (checkRepair(one, two) && im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getType() == disallow.get(im.getDisplayName())) {
-						TARDISMessage.send(player, "NO_RENAME");
-						event.setCancelled(true);
+					if (checkRepair(one, two)) {
+						assert im != null;
+						if (im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getType() == disallow.get(im.getDisplayName())) {
+							TARDISMessage.send(player, "NO_RENAME");
+							event.setCancelled(true);
+						}
 					}
 				}
 			}
@@ -80,7 +84,8 @@ public class TARDISAnvilListener implements Listener {
 		}
 		ItemMeta im_one = one.getItemMeta();
 		ItemMeta im_two = two.getItemMeta();
-		if (!im_one.hasDisplayName() || !im_two.hasDisplayName()) {
+		assert im_one != null;
+		if (!im_one.hasDisplayName() || !Objects.requireNonNull(im_two).hasDisplayName()) {
 			return true;
 		}
 		String dn_one = im_one.getDisplayName();

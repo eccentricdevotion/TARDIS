@@ -14,20 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravelledTo;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.*;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldBorder;
 
 /**
- * The telepathic password to the TARDIS was "the colour crimson, the number eleven, the feeling of delight, and the
+ * The telepathic password to the tardis was "the colour crimson, the number eleven, the feeling of delight, and the
  * smell of dust after rain".
  *
  * @author eccentric_nz
@@ -50,7 +50,7 @@ public class TARDISPluginRespect {
 
 	/**
 	 * Checks whether a location is allowed by other plugins. This checks WorldGuard regions, Towny plots, WorldBorder
-	 * borders and TARDIS areas.
+	 * borders and tardis areas.
 	 *
 	 * @param location the location to check.
 	 * @param flag     a list of flags to check (including whether to message the player).
@@ -118,7 +118,7 @@ public class TARDISPluginRespect {
 				bool = false;
 			}
 		}
-		if (flag.respectWorldguard() && plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canLand(flag.getPlayer(), location)) {
+		if (flag.respectWorldGuard() && plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canLand(flag.getPlayer(), location)) {
 			if (flag.messagePlayer()) {
 				TARDISMessage.send(flag.getPlayer(), "WORLDGUARD");
 			}
@@ -130,7 +130,7 @@ public class TARDISPluginRespect {
 			}
 			bool = false;
 		}
-		if (flag.repectWorldBorder()) {
+		if (flag.respectWorldBorder()) {
 			if (!borderOnServer) {
 				WorldBorder wb = location.getWorld().getWorldBorder();
 				if (!wb.isInside(location)) {
@@ -153,7 +153,7 @@ public class TARDISPluginRespect {
 			}
 			bool = false;
 		}
-		if (flag.respectGreifPrevention() && griefPreventionOnServer && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && griefchk.isInClaim(flag.getPlayer(), location)) {
+		if (flag.respectGriefPrevention() && griefPreventionOnServer && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && griefchk.isInClaim(flag.getPlayer(), location)) {
 			if (flag.messagePlayer()) {
 				TARDISMessage.send(flag.getPlayer(), "GRIEFPREVENTION");
 			}

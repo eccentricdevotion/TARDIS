@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,7 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the tardis vaults.
  *
  * @author eccentric_nz
  */
@@ -48,11 +48,11 @@ public class ResultSetTardisID {
 	}
 
 	/**
-	 * Attempts to see whether the supplied TARDIS id is in the tardis table. This method builds an SQL query string
+	 * Attempts to see whether the supplied tardis id is in the tardis table. This method builds an SQL query string
 	 * from the parameters supplied and then executes the query.
 	 *
 	 * @param uuid the Time Lord uuid to check
-	 * @return true or false depending on whether the TARDIS id exists in the table
+	 * @return true or false depending on whether the tardis id exists in the table
 	 */
 	public boolean fromUUID(String uuid) {
 		PreparedStatement statement = null;
@@ -87,11 +87,11 @@ public class ResultSetTardisID {
 	}
 
 	/**
-	 * Attempts to see whether the supplied TARDIS id is in the tardis table. This method builds an SQL query string
+	 * Attempts to see whether the supplied tardis id is in the tardis table. This method builds an SQL query string
 	 * from the parameters supplied and then executes the query.
 	 *
 	 * @param slot the TIPS slot number to check
-	 * @return true or false depending on whether the TARDIS id exists in the table
+	 * @return true or false depending on whether the tardis id exists in the table
 	 */
 	public boolean fromTIPSSlot(int slot) {
 		PreparedStatement statement = null;

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -47,10 +47,8 @@ public class Version implements Comparable<Version> {
 		String[] thatParts = that.get().split("\\.");
 		int length = Math.max(thisParts.length, thatParts.length);
 		for (int i = 0; i < length; i++) {
-			int thisPart = i < thisParts.length
-					? Integer.parseInt(thisParts[i]) : 0;
-			int thatPart = i < thatParts.length
-					? Integer.parseInt(thatParts[i]) : 0;
+			int thisPart = i < thisParts.length ? Integer.parseInt(thisParts[i]) : 0;
+			int thatPart = i < thatParts.length ? Integer.parseInt(thatParts[i]) : 0;
 			if (thisPart < thatPart) {
 				return -1;
 			}

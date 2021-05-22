@@ -14,19 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
-import me.eccentric_nz.TARDIS.control.TARDISScannerMap;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Control;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramInventory;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.TARDISTimeRotor;
+import me.eccentric_nz.tardis.control.TARDISScannerMap;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.enumeration.Control;
+import me.eccentric_nz.tardis.handles.TARDISHandlesProcessor;
+import me.eccentric_nz.tardis.handles.TARDISHandlesProgramInventory;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -59,14 +59,13 @@ public class TARDISItemFrameListener implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onItemFrameClick(PlayerInteractEntityEvent event) {
 		Player player = event.getPlayer();
-		if (event.getRightClicked() instanceof ItemFrame) {
-			ItemFrame frame = (ItemFrame) event.getRightClicked();
+		if (event.getRightClicked() instanceof ItemFrame frame) {
 			UUID uuid = player.getUniqueId();
 			// did they run the `/tardis update direction|frame|rotor|map` command?
 			if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {
 				Control control = Control.valueOf(plugin.getTrackerKeeper().getPlayers().get(uuid).toUpperCase());
 				if (control.equals(Control.DIRECTION) || control.equals(Control.FRAME) || control.equals(Control.ROTOR) || control.equals(Control.MAP)) {
-					// check they have a TARDIS
+					// check they have a tardis
 					ResultSetTardisID rst = new ResultSetTardisID(plugin);
 					if (!rst.fromUUID(uuid.toString())) {
 						TARDISMessage.send(player, "NO_TARDIS");
@@ -74,9 +73,7 @@ public class TARDISItemFrameListener implements Listener {
 					}
 					int id = rst.getTardis_id();
 					switch (control) {
-						case DIRECTION:
-						case FRAME:
-						case MAP:
+						case DIRECTION, FRAME, MAP -> {
 							if (control.equals(Control.MAP) && !TARDISPermission.hasPermission(player, "tardis.scanner.map")) {
 								plugin.getTrackerKeeper().getPlayers().remove(uuid);
 								TARDISMessage.send(player, "NO_PERM_MAP");
@@ -127,8 +124,8 @@ public class TARDISItemFrameListener implements Listener {
 								}
 							}
 							TARDISMessage.send(player, "FRAME_UPDATE", which);
-							break;
-						default:
+						}
+						default -> {
 							// ROTOR
 							UUID rotorId = frame.getUniqueId();
 							TARDISTimeRotor.updateRotorRecord(id, rotorId.toString());
@@ -138,18 +135,19 @@ public class TARDISItemFrameListener implements Listener {
 							frame.setVisible(false);
 							plugin.getTrackerKeeper().getPlayers().remove(uuid);
 							TARDISMessage.send(player, "ROTOR_UPDATE");
+						}
 					}
 					return;
 				}
 			}
-			// check if it is a TARDIS direction item frame
+			// check if it is a tardis direction item frame
 			String l = frame.getLocation().toString();
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("location", l);
 			where.put("type", 18);
 			ResultSetControls rs = new ResultSetControls(plugin, where, false);
 			if (rs.resultSet()) {
-				// it's a TARDIS direction frame
+				// it's a tardis direction frame
 				int id = rs.getTardis_id();
 				// prevent other players from stealing the tripwire hook
 				HashMap<String, Object> wherep = new HashMap<>();
@@ -170,42 +168,34 @@ public class TARDISItemFrameListener implements Listener {
 						// cancel the rotation!
 						event.setCancelled(true);
 						// perform the rotation
-						switch (frame.getRotation()) {
-							case FLIPPED:
-								direction = "NORTH";
-								break;
-							case COUNTER_CLOCKWISE:
-								direction = "EAST";
-								break;
-							case NONE:
-								direction = "SOUTH";
-								break;
-							default:
-								direction = "WEST";
-								break;
-						}
+						direction = switch (frame.getRotation()) {
+							case FLIPPED -> "NORTH";
+							case COUNTER_CLOCKWISE -> "EAST";
+							case NONE -> "SOUTH";
+							default -> "WEST";
+						};
 						player.performCommand("tardis direction " + direction);
 						plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardis direction " + direction);
 					} else {
 						Rotation r;
 						// set the rotation
 						switch (frame.getRotation()) {
-							case FLIPPED:
+							case FLIPPED -> {
 								r = Rotation.FLIPPED_45;
 								direction = "EAST";
-								break;
-							case COUNTER_CLOCKWISE:
+							}
+							case COUNTER_CLOCKWISE -> {
 								r = Rotation.COUNTER_CLOCKWISE_45;
 								direction = "SOUTH";
-								break;
-							case NONE:
+							}
+							case NONE -> {
 								r = Rotation.CLOCKWISE_45;
 								direction = "WEST";
-								break;
-							default:
+							}
+							default -> {
 								r = Rotation.CLOCKWISE_135;
 								direction = "NORTH";
-								break;
+							}
 						}
 						frame.setRotation(r);
 						TARDISMessage.send(player, "DIRECTON_SET", direction);
@@ -220,21 +210,12 @@ public class TARDISItemFrameListener implements Listener {
 						if (rscl.resultSet()) {
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 								// update the TRIPWIRE_HOOK rotation
-								Rotation r;
-								switch (rscl.getDirection()) {
-									case EAST:
-										r = Rotation.COUNTER_CLOCKWISE;
-										break;
-									case SOUTH:
-										r = Rotation.NONE;
-										break;
-									case WEST:
-										r = Rotation.CLOCKWISE;
-										break;
-									default:
-										r = Rotation.FLIPPED;
-										break;
-								}
+								Rotation r = switch (rscl.getDirection()) {
+									case EAST -> Rotation.COUNTER_CLOCKWISE;
+									case SOUTH -> Rotation.NONE;
+									case WEST -> Rotation.CLOCKWISE;
+									default -> Rotation.FLIPPED;
+								};
 								frame.setRotation(r);
 								TARDISMessage.send(player, "DIRECTION_CURRENT", rscl.getDirection().toString());
 							}, 4L);
@@ -307,13 +288,13 @@ public class TARDISItemFrameListener implements Listener {
 						TARDISMessage.send(player, "NO_PERMS");
 						return;
 					}
-					// cannot place unless inside the TARDIS
+					// cannot place unless inside the tardis
 					if (!plugin.getUtils().inTARDISWorld(event.getPlayer())) {
 						TARDISMessage.handlesSend(player, "HANDLES_TARDIS");
 						event.setCancelled(true);
 						return;
 					}
-					// must have a TARDIS
+					// must have a tardis
 					ResultSetTardisID rst = new ResultSetTardisID(plugin);
 					if (rst.fromUUID(uuid.toString())) {
 						// check if they have a handles block

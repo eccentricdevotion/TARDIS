@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
 import com.onarandombox.MultiverseAdventure.event.MVAResetEvent;
 import com.onarandombox.MultiverseAdventure.event.MVAResetFinishedEvent;
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 /**
- * Track Multiverse Adventure world resetting. If the world is being reset, prevent time travel in TARDIS that were in
+ * Track Multiverse Adventure world resetting. If the world is being reset, prevent time travel in tardis that were in
  * the world being reset.
  *
  * @author eccentric_nz

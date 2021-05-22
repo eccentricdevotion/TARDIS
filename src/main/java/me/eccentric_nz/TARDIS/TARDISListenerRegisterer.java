@@ -14,80 +14,80 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS;
+package me.eccentric_nz.tardis;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMapListener;
-import me.eccentric_nz.TARDIS.advanced.*;
-import me.eccentric_nz.TARDIS.arch.*;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronCapacitorListener;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceListener;
-import me.eccentric_nz.TARDIS.artron.TARDISCondenserListener;
-import me.eccentric_nz.TARDIS.chameleon.*;
-import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlockListener;
-import me.eccentric_nz.TARDIS.chemistry.compound.CompoundGUIListener;
-import me.eccentric_nz.TARDIS.chemistry.compound.GlueListener;
-import me.eccentric_nz.TARDIS.chemistry.constructor.ConstructorGUIListener;
-import me.eccentric_nz.TARDIS.chemistry.creative.CreativeGUIListener;
-import me.eccentric_nz.TARDIS.chemistry.element.ElementGUIListener;
-import me.eccentric_nz.TARDIS.chemistry.formula.FormulaViewerListener;
-import me.eccentric_nz.TARDIS.chemistry.inventory.InventoryHelper;
-import me.eccentric_nz.TARDIS.chemistry.lab.CureBrewingListener;
-import me.eccentric_nz.TARDIS.chemistry.lab.IceBombListener;
-import me.eccentric_nz.TARDIS.chemistry.lab.LabGUIListener;
-import me.eccentric_nz.TARDIS.chemistry.lab.SuperFertisliserListener;
-import me.eccentric_nz.TARDIS.chemistry.product.BalloonListener;
-import me.eccentric_nz.TARDIS.chemistry.product.GlowStickListener;
-import me.eccentric_nz.TARDIS.chemistry.product.ProductGUIListener;
-import me.eccentric_nz.TARDIS.chemistry.product.SparklerListener;
-import me.eccentric_nz.TARDIS.chemistry.reducer.ReducerGUIListener;
-import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuListener;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISHumListener;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISKeyMenuListener;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuListener;
-import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherListener;
-import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddGUIListener;
-import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionGUIListener;
-import me.eccentric_nz.TARDIS.control.TARDISControlListener;
-import me.eccentric_nz.TARDIS.control.TARDISControlMenuListener;
-import me.eccentric_nz.TARDIS.desktop.TARDISArchiveMenuListener;
-import me.eccentric_nz.TARDIS.desktop.TARDISThemeMenuListener;
-import me.eccentric_nz.TARDIS.desktop.TARDISWallMenuListener;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
-import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
-import me.eccentric_nz.TARDIS.flight.TARDISManualFlightListener;
-import me.eccentric_nz.TARDIS.flight.TARDISRegulatorListener;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesEventListener;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesListener;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramListener;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesSavedListener;
-import me.eccentric_nz.TARDIS.howto.TARDISRecipeMenuListener;
-import me.eccentric_nz.TARDIS.howto.TARDISSeedMenuListener;
-import me.eccentric_nz.TARDIS.howto.TARDISWallFloorMenuListener;
-import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
-import me.eccentric_nz.TARDIS.junk.TARDISJunkControlListener;
-import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusGUIListener;
-import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
-import me.eccentric_nz.TARDIS.listeners.*;
-import me.eccentric_nz.TARDIS.move.*;
-import me.eccentric_nz.TARDIS.planets.*;
-import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryListener;
-import me.eccentric_nz.TARDIS.recipes.TARDISRecipeInventoryListener;
-import me.eccentric_nz.TARDIS.rooms.TARDISJettisonSeeder;
-import me.eccentric_nz.TARDIS.rooms.TARDISRoomSeeder;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicListener;
-import me.eccentric_nz.TARDIS.siegemode.TARDISBreedingListener;
-import me.eccentric_nz.TARDIS.siegemode.TARDISGrowthListener;
-import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeListener;
-import me.eccentric_nz.TARDIS.sonic.*;
-import me.eccentric_nz.TARDIS.transmat.TARDISTransmatGUIListener;
-import me.eccentric_nz.TARDIS.travel.TARDISAreaSignListener;
-import me.eccentric_nz.TARDIS.travel.TARDISTerminalListener;
-import me.eccentric_nz.TARDIS.update.TARDISUpdateListener;
+import me.eccentric_nz.tardis.advanced.*;
+import me.eccentric_nz.tardis.arch.*;
+import me.eccentric_nz.tardis.ars.TARDISARSListener;
+import me.eccentric_nz.tardis.ars.TARDISARSMapListener;
+import me.eccentric_nz.tardis.artron.TARDISArtronCapacitorListener;
+import me.eccentric_nz.tardis.artron.TARDISArtronFurnaceListener;
+import me.eccentric_nz.tardis.artron.TARDISCondenserListener;
+import me.eccentric_nz.tardis.chameleon.*;
+import me.eccentric_nz.tardis.chemistry.block.ChemistryBlockListener;
+import me.eccentric_nz.tardis.chemistry.compound.CompoundGUIListener;
+import me.eccentric_nz.tardis.chemistry.compound.GlueListener;
+import me.eccentric_nz.tardis.chemistry.constructor.ConstructorGUIListener;
+import me.eccentric_nz.tardis.chemistry.creative.CreativeGUIListener;
+import me.eccentric_nz.tardis.chemistry.element.ElementGUIListener;
+import me.eccentric_nz.tardis.chemistry.formula.FormulaViewerListener;
+import me.eccentric_nz.tardis.chemistry.inventory.InventoryHelper;
+import me.eccentric_nz.tardis.chemistry.lab.CureBrewingListener;
+import me.eccentric_nz.tardis.chemistry.lab.IceBombListener;
+import me.eccentric_nz.tardis.chemistry.lab.LabGUIListener;
+import me.eccentric_nz.tardis.chemistry.lab.SuperFertisliserListener;
+import me.eccentric_nz.tardis.chemistry.product.BalloonListener;
+import me.eccentric_nz.tardis.chemistry.product.GlowStickListener;
+import me.eccentric_nz.tardis.chemistry.product.ProductGUIListener;
+import me.eccentric_nz.tardis.chemistry.product.SparklerListener;
+import me.eccentric_nz.tardis.chemistry.reducer.ReducerGUIListener;
+import me.eccentric_nz.tardis.commands.admin.TARDISAdminMenuListener;
+import me.eccentric_nz.tardis.commands.preferences.TARDISHumListener;
+import me.eccentric_nz.tardis.commands.preferences.TARDISKeyMenuListener;
+import me.eccentric_nz.tardis.commands.preferences.TARDISPrefsMenuListener;
+import me.eccentric_nz.tardis.commands.utils.TARDISWeatherListener;
+import me.eccentric_nz.tardis.companionGUI.TARDISCompanionAddGUIListener;
+import me.eccentric_nz.tardis.companionGUI.TARDISCompanionGUIListener;
+import me.eccentric_nz.tardis.control.TARDISControlListener;
+import me.eccentric_nz.tardis.control.TARDISControlMenuListener;
+import me.eccentric_nz.tardis.desktop.TARDISArchiveMenuListener;
+import me.eccentric_nz.tardis.desktop.TARDISThemeMenuListener;
+import me.eccentric_nz.tardis.desktop.TARDISWallMenuListener;
+import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.enumeration.InventoryManager;
+import me.eccentric_nz.tardis.flight.TARDISHandbrakeListener;
+import me.eccentric_nz.tardis.flight.TARDISManualFlightListener;
+import me.eccentric_nz.tardis.flight.TARDISRegulatorListener;
+import me.eccentric_nz.tardis.handles.TARDISHandlesEventListener;
+import me.eccentric_nz.tardis.handles.TARDISHandlesListener;
+import me.eccentric_nz.tardis.handles.TARDISHandlesProgramListener;
+import me.eccentric_nz.tardis.handles.TARDISHandlesSavedListener;
+import me.eccentric_nz.tardis.howto.TARDISRecipeMenuListener;
+import me.eccentric_nz.tardis.howto.TARDISSeedMenuListener;
+import me.eccentric_nz.tardis.howto.TARDISWallFloorMenuListener;
+import me.eccentric_nz.tardis.info.TARDISInformationSystemListener;
+import me.eccentric_nz.tardis.junk.TARDISJunkControlListener;
+import me.eccentric_nz.tardis.lazarus.TARDISLazarusGUIListener;
+import me.eccentric_nz.tardis.lazarus.TARDISLazarusListener;
+import me.eccentric_nz.tardis.listeners.*;
+import me.eccentric_nz.tardis.move.*;
+import me.eccentric_nz.tardis.planets.*;
+import me.eccentric_nz.tardis.recipes.TARDISRecipeCategoryListener;
+import me.eccentric_nz.tardis.recipes.TARDISRecipeInventoryListener;
+import me.eccentric_nz.tardis.rooms.TARDISJettisonSeeder;
+import me.eccentric_nz.tardis.rooms.TARDISRoomSeeder;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicListener;
+import me.eccentric_nz.tardis.siegemode.TARDISBreedingListener;
+import me.eccentric_nz.tardis.siegemode.TARDISGrowthListener;
+import me.eccentric_nz.tardis.siegemode.TARDISSiegeListener;
+import me.eccentric_nz.tardis.sonic.*;
+import me.eccentric_nz.tardis.transmat.TARDISTransmatGUIListener;
+import me.eccentric_nz.tardis.travel.TARDISAreaSignListener;
+import me.eccentric_nz.tardis.travel.TARDISTerminalListener;
+import me.eccentric_nz.tardis.update.TARDISUpdateListener;
 
 /**
- * Registers all the listeners for the various events required to use the TARDIS.
+ * Registers all the listeners for the various events required to use the tardis.
  *
  * @author eccentric_nz
  */
@@ -100,7 +100,7 @@ class TARDISListenerRegisterer {
 	}
 
 	/**
-	 * Registers all the listeners for the various events required to use the TARDIS.
+	 * Registers all the listeners for the various events required to use the tardis.
 	 */
 	TARDISInformationSystemListener registerListeners() {
 		plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);

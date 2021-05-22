@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
-import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.event.TARDISCreationEvent;
+import me.eccentric_nz.tardis.enumeration.*;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,6 +31,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -66,13 +67,13 @@ public class TARDISAbandoned {
 		// populate home, current, next and back tables
 		HashMap<String, Object> setlocs = new HashMap<>();
 		setlocs.put("tardis_id", lastInsertId);
-		setlocs.put("world", l.getWorld().getName());
+		setlocs.put("world", Objects.requireNonNull(l.getWorld()).getName());
 		setlocs.put("x", l.getBlockX());
 		setlocs.put("y", l.getBlockY());
 		setlocs.put("z", l.getBlockZ());
 		setlocs.put("direction", d.toString());
 		plugin.getQueryFactory().insertLocations(setlocs, TARDISStaticUtils.getBiomeAt(l).getKey().toString(), lastInsertId);
-		// turn the block stack into a TARDIS
+		// turn the block stack into a tardis
 		BuildData bd = new BuildData(null);
 		bd.setDirection(d);
 		bd.setLocation(l);

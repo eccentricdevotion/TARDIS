@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.flight;
+package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,9 +32,9 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The helmic regulator was a component of the control panel of a Type 40 TARDIS. This device's principle function was
+ * The helmic regulator was a component of the control panel of a Type 40 tardis. This device's principle function was
  * to control the accuracy of travel through the Time Vortex. If incorrectly handled, the helmic regulator could greatly
- * change the landing position of the TARDIS.
+ * change the landing position of the tardis.
  *
  * @author eccentric_nz
  */

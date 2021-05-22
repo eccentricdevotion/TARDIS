@@ -1,14 +1,8 @@
-package me.eccentric_nz.TARDIS.blueprints;
+package me.eccentric_nz.tardis.blueprints;
 
 public enum BlueprintTravel {
 
-	BIOME("tardis.timetravel.biome"),
-	CAVE("tardis.timetravel.cave"),
-	LOCATION("tardis.timetravel.location"),
-	NETHER("tardis.nether"),
-	PLAYER("tardis.timetravel.player"),
-	END("tardis.end"),
-	VILLAGE("tardis.timetravel.village");
+	BIOME("tardis.timetravel.biome"), CAVE("tardis.timetravel.cave"), LOCATION("tardis.timetravel.location"), NETHER("tardis.nether"), PLAYER("tardis.timetravel.player"), END("tardis.end"), VILLAGE("tardis.timetravel.village");
 
 	private final String permission;
 

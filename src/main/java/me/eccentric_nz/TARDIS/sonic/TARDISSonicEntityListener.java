@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.sonic;
+package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicSound;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.sonic.actions.TARDISSonicSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -62,11 +62,11 @@ public class TARDISSonicEntityListener implements Listener {
 		ItemStack is = player.getInventory().getItemInMainHand();
 		if (is.getType().equals(sonic) && is.hasItemMeta()) {
 			ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
+			assert im != null;
 			if (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
 				List<String> lore = im.getLore();
 				Entity ent = event.getRightClicked();
-				if (ent instanceof Player) {
-					Player scanned = (Player) ent;
+				if (ent instanceof Player scanned) {
 					TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
 					if (TARDISPermission.hasPermission(player, "tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade") && player.isSneaking()) {
 						TARDISMessage.send(player, "SONIC_INV");

@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.rooms;
+package me.eccentric_nz.tardis.rooms;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -28,7 +28,7 @@ import java.util.List;
  * Data storage class for room building. We can just create a new instance and pass this around to the various methods
  * instead of a whole bunch of parameters.
  * <p>
- * The TARDIS had a full kitchen which included a refrigerator.
+ * The tardis had a full kitchen which included a refrigerator.
  *
  * @author eccentric_nz
  */

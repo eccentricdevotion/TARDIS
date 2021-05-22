@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.planets;
+package me.eccentric_nz.tardis.planets;
 
 import org.bukkit.World;
 

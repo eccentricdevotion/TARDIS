@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -30,10 +30,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Within the first nanosecond of landing in a new location, the TARDIS chameleon circuit analyses the surrounding area,
+ * Within the first nanosecond of landing in a new location, the tardis chameleon circuit analyses the surrounding area,
  * calculates a twelve-dimensional data map of all objects within a thousand-mile radius and then determines which outer
  * shell would best blend in with the environment.
  *
@@ -49,7 +50,7 @@ public class TARDISAreaListener implements Listener {
 
 	/**
 	 * Listens for player clicking blocks. If the player's name is contained in various tracking HashMaps then we know
-	 * that they are trying to create a TARDIS area.
+	 * that they are trying to create a tardis area.
 	 *
 	 * @param event a player clicking a block
 	 */
@@ -66,7 +67,7 @@ public class TARDISAreaListener implements Listener {
 				Location block_loc = block.getLocation();
 				// check if block is in an already defined area
 				if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
-					String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
+					String locStr = Objects.requireNonNull(block_loc.getWorld()).getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
 					plugin.getTrackerKeeper().getBlock().put(uuid, locStr);
 					TARDISMessage.send(player, "AREA_END_INFO", ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET);
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -81,7 +82,7 @@ public class TARDISAreaListener implements Listener {
 				// check if block is in an already defined area
 				if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
 					String[] firstblock = plugin.getTrackerKeeper().getBlock().get(uuid).split(":");
-					if (!block_loc.getWorld().getName().equals(firstblock[0])) {
+					if (!Objects.requireNonNull(block_loc.getWorld()).getName().equals(firstblock[0])) {
 						TARDISMessage.send(player, "AREA_WORLD");
 						return;
 					}

@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility.recalculators;
+package me.eccentric_nz.tardis.utility.recalculators;
 
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
@@ -27,10 +27,10 @@ import org.bukkit.block.data.Directional;
 public class TARDISStairRecalculator {
 
 	/**
-	 * Recalculate the data for directional block (STAIR) when the TARDIS preset changes direction.
+	 * Recalculate the data for directional block (STAIR) when the tardis preset changes direction.
 	 *
 	 * @param b    the block data stored in the preset data
-	 * @param d    the new direction of the TARDIS
+	 * @param d    the new direction of the tardis
 	 * @param col  the preset column that is being calculated
 	 * @param duck whether this is the Rubber Duck preset
 	 * @return the recalculated block data

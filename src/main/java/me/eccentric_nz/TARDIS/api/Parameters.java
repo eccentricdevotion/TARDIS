@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.api;
+package me.eccentric_nz.tardis.api;
 
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.Flag;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -32,12 +32,12 @@ public class Parameters {
 	private boolean permsArea = false;
 	private boolean permsNether = false;
 	private boolean permsTheEnd = false;
-	private boolean repectWorldBorder = false;
+	private boolean respectWorldBorder = false;
 	private boolean respectFactions = false;
-	private boolean respectGreifPrevention = false;
+	private boolean respectGriefPrevention = false;
 	private boolean respectRedProtect = false;
 	private boolean respectTowny = false;
-	private boolean respectWorldguard = false;
+	private boolean respectWorldGuard = false;
 	private boolean spaceTardis = false;
 	private COMPASS compass;
 
@@ -61,7 +61,7 @@ public class Parameters {
 					respectFactions = true;
 					break;
 				case RESPECT_GRIEFPREVENTION:
-					respectGreifPrevention = true;
+					respectGriefPrevention = true;
 					break;
 				case RESPECT_REDPROTECT:
 					respectRedProtect = true;
@@ -70,10 +70,10 @@ public class Parameters {
 					respectTowny = true;
 					break;
 				case RESPECT_WORLDBORDER:
-					repectWorldBorder = true;
+					respectWorldBorder = true;
 					break;
 				case RESPECT_WORLDGUARD:
-					respectWorldguard = true;
+					respectWorldGuard = true;
 					break;
 				case SPACE_TARDIS:
 					spaceTardis = true;
@@ -100,16 +100,16 @@ public class Parameters {
 		return permsTheEnd;
 	}
 
-	public boolean repectWorldBorder() {
-		return repectWorldBorder;
+	public boolean respectWorldBorder() {
+		return respectWorldBorder;
 	}
 
 	public boolean respectFactions() {
 		return respectFactions;
 	}
 
-	public boolean respectGreifPrevention() {
-		return respectGreifPrevention;
+	public boolean respectGriefPrevention() {
+		return respectGriefPrevention;
 	}
 
 	public boolean respectRedProtect() {
@@ -120,8 +120,8 @@ public class Parameters {
 		return respectTowny;
 	}
 
-	public boolean respectWorldguard() {
-		return respectWorldguard;
+	public boolean respectWorldGuard() {
+		return respectWorldGuard;
 	}
 
 	boolean spaceTardis() {

@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.artron;
+package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.enumeration.RecipeItem;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,6 +45,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -132,7 +133,7 @@ public class TARDISArtronFurnaceListener implements Listener {
 		if (!event.getItemInHand().getItemMeta().hasDisplayName()) {
 			return;
 		}
-		if (!event.getItemInHand().getItemMeta().getDisplayName().equals("TARDIS Artron Furnace")) {
+		if (!event.getItemInHand().getItemMeta().getDisplayName().equals("tardis Artron Furnace")) {
 			return;
 		}
 		if (TARDISPermission.hasPermission(event.getPlayer(), "tardis.furnace")) {
@@ -140,11 +141,11 @@ public class TARDISArtronFurnaceListener implements Listener {
 			if (plugin.getArtronConfig().getBoolean("artron_furnace.particles")) {
 				plugin.getGeneralKeeper().getArtronFurnaces().add(b);
 			}
-			plugin.getTardisHelper().nameFurnaceGUI(b, "TARDIS Artron Furnace");
+			plugin.getTardisHelper().nameFurnaceGUI(b, "tardis Artron Furnace");
 			if (plugin.getArtronConfig().getBoolean("artron_furnace.set_biome")) {
 				Location l = b.getLocation();
 				// set biome
-				l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), Biome.DEEP_OCEAN);
+				Objects.requireNonNull(l.getWorld()).setBiome(l.getBlockX(), l.getBlockY(), l.getBlockZ(), Biome.DEEP_OCEAN);
 				Chunk c = l.getChunk();
 				plugin.getTardisHelper().refreshChunk(c);
 			}
@@ -167,7 +168,7 @@ public class TARDISArtronFurnaceListener implements Listener {
 			}
 			ItemStack is = new ItemStack(Material.FURNACE, 1);
 			ItemMeta im = is.getItemMeta();
-			im.setDisplayName("TARDIS Artron Furnace");
+			im.setDisplayName("tardis Artron Furnace");
 			im.setCustomModelData(RecipeItem.TARDIS_ARTRON_FURNACE.getCustomModelData());
 			is.setItemMeta(im);
 			block.setBlockData(TARDISConstants.AIR);
@@ -186,7 +187,7 @@ public class TARDISArtronFurnaceListener implements Listener {
 					if (b.getKey().getNamespace().equalsIgnoreCase("minecraft")) {
 						try {
 							Biome biome = Biome.valueOf(b.name());
-							l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), biome);
+							Objects.requireNonNull(l.getWorld()).setBiome(l.getBlockX(), l.getBlockY(), l.getBlockZ(), biome);
 							Chunk c = l.getChunk();
 							plugin.getTardisHelper().refreshChunk(c);
 						} catch (IllegalArgumentException e) {

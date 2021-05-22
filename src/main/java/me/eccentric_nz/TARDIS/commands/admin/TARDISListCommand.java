@@ -14,19 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.messaging.TableGenerator;
-import me.eccentric_nz.TARDIS.messaging.TableGenerator.Alignment;
-import me.eccentric_nz.TARDIS.messaging.TableGenerator.Receiver;
-import me.eccentric_nz.TARDIS.messaging.TableGeneratorCustomFont;
-import me.eccentric_nz.TARDIS.messaging.TableGeneratorSmallChar;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TableGenerator;
+import me.eccentric_nz.tardis.messaging.TableGenerator.Alignment;
+import me.eccentric_nz.tardis.messaging.TableGenerator.Receiver;
+import me.eccentric_nz.tardis.messaging.TableGeneratorCustomFont;
+import me.eccentric_nz.tardis.messaging.TableGeneratorSmallChar;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -76,7 +76,7 @@ class TARDISListCommand {
 				TARDISMessage.send(sender, "FILE_SAVED");
 				return true;
 			} else if (args[1].equalsIgnoreCase("portals")) {
-				plugin.getTrackerKeeper().getPortals().forEach((key, value) -> sender.sendMessage("TARDIS id: " + value.getTardisId() + " has a portal open at: " + key.toString()));
+				plugin.getTrackerKeeper().getPortals().forEach((key, value) -> sender.sendMessage("tardis id: " + value.getTardisId() + " has a portal open at: " + key.toString()));
 				return true;
 			} else if (args[1].equalsIgnoreCase("abandoned")) {
 				new TARDISAbandonLister(plugin).list(sender);

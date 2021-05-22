@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.planets;
+package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.enumeration.WorldManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -43,7 +43,7 @@ public class TARDISGameModeSwitcher implements Listener {
 		Player player = event.getPlayer();
 		String world = player.getWorld().getName();
 		if (plugin.getWorldManager().equals(WorldManager.NONE) && !TARDISPermission.hasPermission(player, "tardis.gamemode.bypass")) {
-			// TARDIS is managing worlds so switch player GameMode if necessary
+			// tardis is managing worlds so switch player GameMode if necessary
 			try {
 				GameMode gm = GameMode.valueOf(plugin.getPlanetsConfig().getString("planets." + world + ".gamemode"));
 				player.setGameMode(gm);

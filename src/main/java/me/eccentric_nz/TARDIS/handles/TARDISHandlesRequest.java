@@ -14,21 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.handles;
+package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
-import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTeleportCommand;
-import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTransmatCommand;
-import me.eccentric_nz.TARDIS.control.TARDISLightSwitch;
-import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
-import me.eccentric_nz.TARDIS.control.TARDISRandomButton;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.commands.TARDISRecipeTabComplete;
+import me.eccentric_nz.tardis.commands.handles.TARDISHandlesTeleportCommand;
+import me.eccentric_nz.tardis.commands.handles.TARDISHandlesTransmatCommand;
+import me.eccentric_nz.tardis.control.TARDISLightSwitch;
+import me.eccentric_nz.tardis.control.TARDISPowerButton;
+import me.eccentric_nz.tardis.control.TARDISRandomButton;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -55,7 +55,7 @@ public class TARDISHandlesRequest {
 	}
 
 	public void process(UUID uuid, String chat) {
-		// check if player is inside / outside TARDIS
+		// check if player is inside / outside tardis
 		Player player = plugin.getServer().getPlayer(uuid);
 		if (player == null || !player.isOnline()) {
 			return;
@@ -64,7 +64,7 @@ public class TARDISHandlesRequest {
 			TARDISMessage.send(player, "NO_PERMS");
 			return;
 		}
-		// must have a TARDIS
+		// must have a tardis
 		ResultSetTardisID rs = new ResultSetTardisID(plugin);
 		if (rs.fromUUID(uuid.toString())) {
 			int id = rs.getTardis_id();
@@ -74,7 +74,7 @@ public class TARDISHandlesRequest {
 			where.put("type", 26);
 			ResultSetControls rsc = new ResultSetControls(plugin, where, false);
 			if (rsc.resultSet()) {
-				// if placed player must be in TARDIS or be wearing a communicator
+				// if placed player must be in tardis or be wearing a communicator
 				if (!plugin.getUtils().inTARDISWorld(player)) {
 					// player must have communicator
 					if (!TARDISPermission.hasPermission(player, "tardis.handles.communicator")) {
@@ -83,7 +83,7 @@ public class TARDISHandlesRequest {
 					}
 					PlayerInventory pi = player.getInventory();
 					ItemStack communicator = pi.getHelmet();
-					if (communicator == null || !communicator.hasItemMeta() || !communicator.getType().equals(Material.BIRCH_BUTTON) || !communicator.getItemMeta().getDisplayName().equals("TARDIS Communicator")) {
+					if (communicator == null || !communicator.hasItemMeta() || !communicator.getType().equals(Material.BIRCH_BUTTON) || !communicator.getItemMeta().getDisplayName().equals("tardis Communicator")) {
 						TARDISMessage.send(player, "HANDLES_COMMUNICATOR");
 						return;
 					}
@@ -155,30 +155,30 @@ public class TARDISHandlesRequest {
 						if (groups != null) {
 							String reminder = groups.get(0);
 							String time = groups.get(1);
-							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles remind " + uuid.toString() + " " + reminder + " " + time), 1L);
+							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles remind " + uuid + " " + reminder + " " + time), 1L);
 							return;
 						}
 						break;
 					case "say":
 						if (groups != null) {
 							String g = groups.get(0);
-							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles say " + uuid.toString() + " " + StringUtils.normalizeSpace(g)), 1L);
+							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles say " + uuid + " " + StringUtils.normalizeSpace(g)), 1L);
 						}
 						break;
 					case "name":
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles name " + uuid.toString()), 1L);
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles name " + uuid), 1L);
 						break;
 					case "time":
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles time " + uuid.toString()), 1L);
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles time " + uuid), 1L);
 						break;
 					case "call":
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles call " + uuid.toString() + " " + id), 1L);
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles call " + uuid + " " + id), 1L);
 						break;
 					case "takeoff":
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid.toString() + " " + id), 1L);
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid + " " + id), 1L);
 						break;
 					case "land":
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid.toString() + " " + id), 1L);
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid + " " + id), 1L);
 						break;
 					case "hide":
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis hide"), 1L);
@@ -340,13 +340,13 @@ public class TARDISHandlesRequest {
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis door CLOSE"), 1L);
 						break;
 					case "door.lock":
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles lock " + uuid.toString() + " " + id + " true"), 1L);
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles lock " + uuid + " " + id + " true"), 1L);
 						break;
 					case "door.unlock":
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles unlock " + uuid.toString() + " " + id + " false"), 1L);
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles unlock " + uuid + " " + id + " false"), 1L);
 						break;
 					case "scan":
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid.toString() + " " + id), 1L);
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id), 1L);
 						break;
 					case "teleport":
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISHandlesTeleportCommand(plugin).beamMeUp(player), 1L);
@@ -358,7 +358,7 @@ public class TARDISHandlesRequest {
 								return;
 							}
 							Location location = player.getLocation();
-							// must be in their TARDIS
+							// must be in their tardis
 							if (!plugin.getUtils().inTARDISWorld(location)) {
 								TARDISMessage.handlesSend(player, "HANDLES_NO_TRANSMAT_WORLD");
 								return;

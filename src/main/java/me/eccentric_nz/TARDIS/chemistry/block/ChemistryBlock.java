@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.block;
+package me.eccentric_nz.tardis.chemistry.block;
 
 import org.bukkit.Material;
 
@@ -23,7 +23,7 @@ import java.util.HashMap;
 
 public class ChemistryBlock {
 
-	public static final HashMap<String, RecipeData> RECIPES = new HashMap<String, RecipeData>() {
+	public static final HashMap<String, RecipeData> RECIPES = new HashMap<>() {
 		{
 			put("creative", new RecipeData("Atomic elements", "creative_block", Arrays.asList("A creative inventory", "of atomic elements."), Material.DIAMOND, 10000040));
 			put("compound", new RecipeData("Chemical compounds", "compound_block", Arrays.asList("Create over thirty compounds", "by combining elements."), Material.REDSTONE, 10000041));

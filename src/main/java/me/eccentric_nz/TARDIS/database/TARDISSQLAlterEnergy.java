@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database;
+package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.event.TARDISArtronEvent;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.event.TARDISArtronEvent;
+import me.eccentric_nz.tardis.artron.TARDISArtronIndicator;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -70,7 +70,7 @@ class TARDISSQLAlterEnergy implements Runnable {
 		where.forEach((key, value) -> {
 			sbw.append(key).append(" = ");
 			if (value instanceof String || value instanceof UUID) {
-				sbw.append("'").append(value.toString()).append("' AND ");
+				sbw.append("'").append(value).append("' AND ");
 			} else {
 				sbw.append(value).append(" AND ");
 			}

@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISVoidFall;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.utility.TARDISVoidFall;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,7 +40,7 @@ public class TARDISPlayerKickListener implements Listener {
 		Player player = event.getPlayer();
 		Location location = player.getLocation();
 		if (location.getBlockY() < 1 && plugin.getUtils().inTARDISWorld(player)) {
-			event.setReason(player.getName() + " fell out of their TARDIS!");
+			event.setReason(player.getName() + " fell out of their tardis!");
 			event.setCancelled(true);
 			if (plugin.getConfig().getString("preferences.vortex_fall").equals("kill")) {
 				player.setHealth(0);

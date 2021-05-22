@@ -14,23 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.move.TARDISDoorCloser;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Rotation;
@@ -174,23 +174,13 @@ public class TARDISDirectionCommand {
 						chunk.load();
 					}
 					for (Entity e : chunk.getEntities()) {
-						if (e instanceof ItemFrame && e.getLocation().toString().equals(locToCheck)) {
-							ItemFrame frame = (ItemFrame) e;
-							Rotation r;
-							switch (d) {
-								case EAST:
-									r = Rotation.COUNTER_CLOCKWISE;
-									break;
-								case SOUTH:
-									r = Rotation.NONE;
-									break;
-								case WEST:
-									r = Rotation.CLOCKWISE;
-									break;
-								default:
-									r = Rotation.FLIPPED;
-									break;
-							}
+						if (e instanceof ItemFrame frame && e.getLocation().toString().equals(locToCheck)) {
+							Rotation r = switch (d) {
+								case EAST -> Rotation.COUNTER_CLOCKWISE;
+								case SOUTH -> Rotation.NONE;
+								case WEST -> Rotation.CLOCKWISE;
+								default -> Rotation.FLIPPED;
+							};
 							frame.setRotation(r);
 							break;
 						}

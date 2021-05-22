@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.element;
+package me.eccentric_nz.tardis.chemistry.element;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chemistry.creative.CompoundsCreativeInventory;
-import me.eccentric_nz.TARDIS.chemistry.creative.ProductsCreativeInventory;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.chemistry.creative.CompoundsCreativeInventory;
+import me.eccentric_nz.tardis.chemistry.creative.ProductsCreativeInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,10 +30,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class ElementGUIListener implements Listener {
 
@@ -68,26 +65,24 @@ public class ElementGUIListener implements Listener {
 			int slot = event.getRawSlot();
 			if (slot >= 0 && slot < 54) {
 				switch (slot) {
-					case 8:
+					case 8 -> {
 						// scroll up
 						event.setCancelled(true);
 						if (!scrolling.contains(uuid)) {
 							scrolling.add(uuid);
 							scroll(view, scroll.get(uuid) + 1, true, uuid);
 						}
-						break;
-					case 17:
+					}
+					case 17 -> {
 						// scroll down
 						event.setCancelled(true);
 						if (!scrolling.contains(uuid)) {
 							scrolling.add(uuid);
 							scroll(view, scroll.get(uuid) - 1, false, uuid);
 						}
-						break;
-					case 26:
-						event.setCancelled(true);
-						break;
-					case 35:
+					}
+					case 26 -> event.setCancelled(true);
+					case 35 -> {
 						event.setCancelled(true);
 						// switch to compounds
 						close(p);
@@ -97,8 +92,8 @@ public class ElementGUIListener implements Listener {
 							compounds.setContents(cmenu);
 							p.openInventory(compounds);
 						}, 2L);
-						break;
-					case 44:
+					}
+					case 44 -> {
 						event.setCancelled(true);
 						// switch to products
 						close(p);
@@ -108,20 +103,20 @@ public class ElementGUIListener implements Listener {
 							lab.setContents(lmenu);
 							p.openInventory(lab);
 						}, 2L);
-						break;
-					case 53:
+					}
+					case 53 -> {
 						// close
 						event.setCancelled(true);
 						close(p);
-						break;
-					default:
+					}
+					default -> {
 						event.setCancelled(true);
 						// get clicked ItemStack
-						ItemStack choice = view.getItem(slot).clone();
+						ItemStack choice = Objects.requireNonNull(view.getItem(slot)).clone();
 						choice.setAmount(event.getClick().equals(ClickType.SHIFT_LEFT) ? 64 : 1);
 						// add ItemStack to inventory if there is room
 						p.getInventory().addItem(choice);
-						break;
+					}
 				}
 			} else {
 				ClickType click = event.getClick();

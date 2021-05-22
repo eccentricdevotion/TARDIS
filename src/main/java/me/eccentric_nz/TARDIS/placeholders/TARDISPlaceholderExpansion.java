@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.placeholders;
+package me.eccentric_nz.tardis.placeholders;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,20 +37,17 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
 	 * @return The identifier in {@code %<identifier>_<value>%} as String.
 	 */
 	@Override
-	public @NotNull
-	String getIdentifier() {
+	public @NotNull String getIdentifier() {
 		return "tardis";
 	}
 
 	@Override
-	public @NotNull
-	String getAuthor() {
+	public @NotNull String getAuthor() {
 		return "eccentric_nz";
 	}
 
 	@Override
-	public @NotNull
-	String getVersion() {
+	public @NotNull String getVersion() {
 		return "1.0.0";
 	}
 
@@ -132,7 +129,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
 							break;
 					}
 				} else {
-					result = "Not in any TARDIS";
+					result = "Not in any tardis";
 				}
 			} else {
 				switch (identifier) {
@@ -141,7 +138,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
 						if (percent != null) {
 							result = Integer.toString(percent);
 						} else {
-							result = "ARS not in use";
+							result = "ars not in use";
 						}
 						break;
 					case "artron_amount":
@@ -184,7 +181,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
 							where.put("tardis_id", rsti.getTardis_id());
 							rscl = new ResultSetCurrentLocation(plugin, where);
 							if (rscl.resultSet()) {
-								result = "TARDIS was left at " + rscl.getWorld().getName() + " at " + "x: " + rscl.getX() + " y: " + rscl.getY() + " z: " + rscl.getZ();
+								result = "tardis was left at " + rscl.getWorld().getName() + " at " + "x: " + rscl.getX() + " y: " + rscl.getY() + " z: " + rscl.getZ();
 							} else {
 								result = "";
 							}

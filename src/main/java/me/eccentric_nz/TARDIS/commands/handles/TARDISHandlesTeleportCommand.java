@@ -14,20 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.handles;
+package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.destroyers.DestroyData;
+import me.eccentric_nz.tardis.enumeration.Flag;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -48,7 +48,7 @@ public class TARDISHandlesTeleportCommand {
 	public void beamMeUp(Player player) {
 		// set destination to the player's location
 		Location location = player.getLocation();
-		// must be outside the TARDIS
+		// must be outside the tardis
 		if (plugin.getUtils().inTARDISWorld(location)) {
 			TARDISMessage.handlesSend(player, "TARDIS_OUTSIDE");
 			return;
@@ -83,7 +83,7 @@ public class TARDISHandlesTeleportCommand {
 				TARDISMessage.handlesSend(player, "CURRENT_NOT_FOUND");
 			}
 			int[] start_loc = TARDISTimeTravel.getStartLocation(location, rsc.getDirection());
-			// check destination has room for TARDIS
+			// check destination has room for tardis
 			int count = TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
 			if (count > 0) {
 				TARDISMessage.handlesSend(player, "RESCUE_NOT_SAFE");
@@ -107,7 +107,7 @@ public class TARDISHandlesTeleportCommand {
 			UUID uuid = player.getUniqueId();
 			// rescue
 			plugin.getTrackerKeeper().getRescue().put(id, uuid);
-			// destroy TARDIS
+			// destroy tardis
 			DestroyData dd = new DestroyData();
 			dd.setDirection(rsc.getDirection());
 			dd.setLocation(current);
@@ -122,7 +122,7 @@ public class TARDISHandlesTeleportCommand {
 				plugin.getTrackerKeeper().getDematerialising().add(id);
 				plugin.getPresetDestroyer().destroyPreset(dd);
 			}, delay);
-			// move TARDIS
+			// move tardis
 			BuildData bd = new BuildData(uuid.toString());
 			bd.setDirection(rsc.getDirection());
 			bd.setLocation(location);

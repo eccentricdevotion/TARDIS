@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
 import org.bukkit.Rotation;
 
@@ -23,10 +23,7 @@ import org.bukkit.Rotation;
  */
 public enum COMPASS {
 
-	EAST(Rotation.FLIPPED),
-	SOUTH(Rotation.COUNTER_CLOCKWISE),
-	WEST(Rotation.NONE),
-	NORTH(Rotation.CLOCKWISE);
+	EAST(Rotation.FLIPPED), SOUTH(Rotation.COUNTER_CLOCKWISE), WEST(Rotation.NONE), NORTH(Rotation.CLOCKWISE);
 
 	private final Rotation rotation;
 

@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS;
+package me.eccentric_nz.tardis;
 
-import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
-import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
-import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
+import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
+import me.eccentric_nz.tardis.commands.TARDISTravelCommands;
+import me.eccentric_nz.tardis.commands.admin.TARDISAdminCommands;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.listeners.TARDISRenderRoomListener;
+import me.eccentric_nz.tardis.move.TARDISDoorListener;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.rooms.TARDISCondenserData;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;

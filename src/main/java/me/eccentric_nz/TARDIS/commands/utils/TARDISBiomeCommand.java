@@ -1,14 +1,15 @@
-package me.eccentric_nz.TARDIS.commands.utils;
+package me.eccentric_nz.tardis.commands.utils;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class TARDISBiomeCommand implements CommandExecutor {
 
@@ -19,7 +20,7 @@ public class TARDISBiomeCommand implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("tardisbiome")) {
 			Player player;
 			if (sender instanceof Player) {
@@ -32,7 +33,7 @@ public class TARDISBiomeCommand implements CommandExecutor {
 			Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 20).getLocation();
 			// get biome
 			TARDISBiome biome = TARDISStaticUtils.getBiomeAt(eyeLocation);
-			TARDISMessage.message(player, "The TARDISBiome is: " + biome.getKey().toString());
+			TARDISMessage.message(player, "The TARDISBiome is: " + biome.getKey());
 			return true;
 		}
 		return false;

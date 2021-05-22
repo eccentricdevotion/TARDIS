@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility.recalculators;
+package me.eccentric_nz.tardis.utility.recalculators;
 
 import com.google.common.collect.Sets;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
@@ -39,10 +39,10 @@ public class TARDISMushroomRecalculator {
 	private final Set<BlockFace> nine = Sets.newHashSet(BlockFace.UP, BlockFace.EAST, BlockFace.SOUTH);
 
 	/**
-	 * Recalculate the data for multiple facing block (MUSHROOM) when the TARDIS preset changes direction.
+	 * Recalculate the data for multiple facing block (MUSHROOM) when the tardis preset changes direction.
 	 *
 	 * @param b   the block data stored in the preset data
-	 * @param d   the new direction of the TARDIS
+	 * @param d   the new direction of the tardis
 	 * @param col the preset column that is being calculated
 	 * @return the recalculated block data
 	 */

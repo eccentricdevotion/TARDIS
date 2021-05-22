@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.product;
+package me.eccentric_nz.tardis.chemistry.product;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,6 +29,8 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.Objects;
 
 public class BalloonListener implements Listener {
 
@@ -115,7 +117,7 @@ public class BalloonListener implements Listener {
 	}
 
 	private boolean isBalloon(ItemStack is) {
-		return is != null && is.getType().equals(Material.CORNFLOWER) && is.hasItemMeta() && is.getItemMeta().hasCustomModelData() && isInDataRange(is.getItemMeta().getCustomModelData());
+		return is != null && is.getType().equals(Material.CORNFLOWER) && is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasCustomModelData() && isInDataRange(is.getItemMeta().getCustomModelData());
 	}
 
 	private boolean isInDataRange(int custom) {
@@ -125,6 +127,7 @@ public class BalloonListener implements Listener {
 	private void removeJumpBoost(Player player) {
 		if (player.hasPotionEffect(PotionEffectType.JUMP)) {
 			PotionEffect potionEffect = player.getPotionEffect(PotionEffectType.JUMP);
+			assert potionEffect != null;
 			if (potionEffect.getDuration() > 150000000) {
 				player.removePotionEffect(PotionEffectType.JUMP);
 			}

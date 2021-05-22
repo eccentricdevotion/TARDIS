@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.advanced;
+package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
-import me.eccentric_nz.TARDIS.enumeration.Storage;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDiskStorage;
+import me.eccentric_nz.tardis.enumeration.DiskCircuit;
+import me.eccentric_nz.tardis.enumeration.GlowstoneCircuit;
+import me.eccentric_nz.tardis.enumeration.Storage;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -46,7 +46,7 @@ import java.util.Locale;
 
 /**
  * Banshee Circuits were components of TARDISes, emergency defence mechanisms used as a last resort when all other
- * systems had failed. They allowed a TARDIS to use whatever resources were available to ensure the survival of the ship
+ * systems had failed. They allowed a tardis to use whatever resources were available to ensure the survival of the ship
  * and its crew.
  *
  * @author eccentric_nz
@@ -83,7 +83,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
 			}
 			Storage store = Storage.valueOf(tmp);
 			saveCurrentStorage(event.getInventory(), store.getTable(), (Player) event.getPlayer());
-		} else if (!title.equals(ChatColor.DARK_RED + "TARDIS Console") && !title.equals(ChatColor.DARK_RED + "Handles Program")) {
+		} else if (!title.equals(ChatColor.DARK_RED + "tardis Console") && !title.equals(ChatColor.DARK_RED + "Handles Program")) {
 			// scan the inventory for area disks and spit them out
 			for (int i = 0; i < event.getInventory().getSize(); i++) {
 				ItemStack stack = view.getItem(i);

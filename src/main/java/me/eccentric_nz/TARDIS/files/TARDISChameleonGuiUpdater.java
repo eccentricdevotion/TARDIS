@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.files;
+package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -41,10 +41,10 @@ public class TARDISChameleonGuiUpdater {
 		this.plugin = plugin;
 		chameleon_config = chameleoon_config;
 		chameleonListOptions.put("ADAPT_LORE", Arrays.asList("The Chameleon Circuit", "will choose a preset", "that blends in with", "the environment.", "Use BIOME or BLOCK mode."));
-		chameleonListOptions.put("APPLY_LORE", Arrays.asList("Rebuild the TARDIS", "exterior with the", "current settings."));
+		chameleonListOptions.put("APPLY_LORE", Arrays.asList("Rebuild the tardis", "exterior with the", "current settings."));
 		chameleonListOptions.put("CONSTRUCT_LORE", Arrays.asList("Build your own", "Chameleon preset."));
 		chameleonListOptions.put("DISABLED_LORE", Arrays.asList("Disable the Chameleon", "Circuit and revert", "to the FACTORY preset."));
-		chameleonListOptions.put("INVISIBLE_LORE", Arrays.asList("Engages the TARDIS", "Invisiblity Circuit."));
+		chameleonListOptions.put("INVISIBLE_LORE", Arrays.asList("Engages the tardis", "Invisiblity Circuit."));
 		chameleonListOptions.put("SHORT_LORE", Arrays.asList("Make the Chameleon", "Circuit malfunction and", "always choose the", "same appearance."));
 		chameleonListOptions.put("INFO_TRANSMAT", Arrays.asList("Click on a transmat", "location, then choose", "an action button."));
 		chameleonOptions.put("ADAPT", "Adaptive");

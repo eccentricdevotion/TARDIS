@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.creative;
+package me.eccentric_nz.tardis.chemistry.creative;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chemistry.compound.Compound;
-import me.eccentric_nz.TARDIS.chemistry.compound.CompoundBuilder;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.chemistry.compound.Compound;
+import me.eccentric_nz.tardis.chemistry.compound.CompoundBuilder;
+import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -52,6 +52,7 @@ public class CompoundsCreativeInventory {
 		// elements
 		ItemStack elements = new ItemStack(GUIChemistry.ELEMENTS.getMaterial(), 1);
 		ItemMeta eim = elements.getItemMeta();
+		assert eim != null;
 		eim.setDisplayName("Elements");
 		eim.setCustomModelData(GUIChemistry.ELEMENTS.getCustomModelData());
 		elements.setItemMeta(eim);
@@ -59,6 +60,7 @@ public class CompoundsCreativeInventory {
 		// products
 		ItemStack products = new ItemStack(GUIChemistry.PRODUCTS.getMaterial(), 1);
 		ItemMeta pim = products.getItemMeta();
+		assert pim != null;
 		pim.setDisplayName("Products");
 		pim.setCustomModelData(GUIChemistry.PRODUCTS.getCustomModelData());
 		products.setItemMeta(pim);
@@ -66,6 +68,7 @@ public class CompoundsCreativeInventory {
 		// close
 		ItemStack close = new ItemStack(Material.BOWL, 1);
 		ItemMeta close_im = close.getItemMeta();
+		assert close_im != null;
 		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
 		close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
 		close.setItemMeta(close_im);

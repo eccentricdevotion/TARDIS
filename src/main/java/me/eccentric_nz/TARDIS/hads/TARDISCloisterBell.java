@@ -14,27 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.hads;
+package me.eccentric_nz.tardis.hads;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
 /**
- * The Cloister Bell is a signal to the crew that a catastrophe that could threaten even a TARDIS is occurring or will
+ * The Cloister Bell is a signal to the crew that a catastrophe that could threaten even a tardis is occurring or will
  * soon occur. In short it is a call to "battle-stations." Cloister Bells can be found on all TARDISes since the Type
  * 22.
  * <p>
- * The bell will ring for events ranging from the phasing of the TARDIS engines, to the detection of a vortex
+ * The bell will ring for events ranging from the phasing of the tardis engines, to the detection of a vortex
  * discontinuity, to the imminent heat death of the universe. Though it is located in the Cloister Room, the Bell can be
- * heard from anywhere in a TARDIS. Normally controlled by the Main Logic Junction, the Cloister Bell is linked to the
- * flow of the Universe and thus able to predict many disasters before they occur. Even when the TARDIS Sentient Matrix
+ * heard from anywhere in a tardis. Normally controlled by the Main Logic Junction, the Cloister Bell is linked to the
+ * flow of the Universe and thus able to predict many disasters before they occur. Even when the tardis Sentient Matrix
  * is unconscious the Main Logic Junction can still trigger the bell. The Cloister Bell can also be manually rung from
  * the Control Room by crew members.
  */
@@ -55,9 +55,9 @@ public class TARDISCloisterBell implements Runnable {
 	/**
 	 * Runnable class to action a repeating cloister bell task. Each loop should take 70 ticks.
 	 *
-	 * @param plugin an instance of the TARDIS plugin
+	 * @param plugin an instance of the tardis plugin
 	 * @param loops  the number of times to ring the cloister bell
-	 * @param id     the id of the TARDIS whose cloister bell we are ringing
+	 * @param id     the id of the tardis whose cloister bell we are ringing
 	 */
 	public TARDISCloisterBell(TARDIS plugin, int loops, int id) {
 		this.plugin = plugin;
@@ -114,15 +114,15 @@ public class TARDISCloisterBell implements Runnable {
 		}
 		if (i < loops) {
 			if (centre != null) {
-				// play sound in TARDIS with range size of ARS grid
+				// play sound in tardis with range size of ars grid
 				centre.getWorld().playSound(centre, "cloister_bell", 10.0f, 1.0f);
 			}
 			if (current != null) {
-				// play sound outside the TARDIS with a range of 32 blocks
+				// play sound outside the tardis with a range of 32 blocks
 				current.getWorld().playSound(current, "cloister_bell", 2.0f, 1.0f);
 			}
 			if (player != null && player.isOnline()) {
-				// play sound at Time Lords location (if they are not in the TARDIS and not within range of the TARDIS exterior)
+				// play sound at Time Lords location (if they are not in the tardis and not within range of the tardis exterior)
 				Location location = player.getLocation();
 				if (!plugin.getUtils().inTARDISWorld(player) && !isInPoliceBoxRange(current, location)) {
 					location.getWorld().playSound(location, "cloister_bell", 1.0f, 1.0f);
@@ -144,7 +144,7 @@ public class TARDISCloisterBell implements Runnable {
 	}
 
 	private Location getCentre(int id) {
-		// get the location of the centre of the TARDIS
+		// get the location of the centre of the tardis
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("tardis_id", id);
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
@@ -159,7 +159,7 @@ public class TARDISCloisterBell implements Runnable {
 	}
 
 	private Location getCurrent(int id) {
-		// get the location of the TARDIS Police Box
+		// get the location of the tardis Police Box
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("tardis_id", id);
 		ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
@@ -170,7 +170,7 @@ public class TARDISCloisterBell implements Runnable {
 	}
 
 	private Player getPlayer(int id) {
-		// get Time Lord of this TARDIS
+		// get Time Lord of this tardis
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("tardis_id", id);
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);

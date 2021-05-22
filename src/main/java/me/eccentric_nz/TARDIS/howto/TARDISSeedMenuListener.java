@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.howto;
+package me.eccentric_nz.tardis.howto;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,7 +47,7 @@ public class TARDISSeedMenuListener extends TARDISMenuListener implements Listen
 	public void onSeedMenuClick(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "TARDIS Seeds Menu")) {
+		if (name.equals(ChatColor.DARK_RED + "tardis Seeds Menu")) {
 			Player p = (Player) event.getWhoClicked();
 			int slot = event.getRawSlot();
 			if (slot >= 0 && slot < 27) {
@@ -59,7 +59,7 @@ public class TARDISSeedMenuListener extends TARDISMenuListener implements Listen
 					if (slot != 26) {
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 							ItemStack[] recipe = new TARDISSeedRecipeInventory(plugin, is.getType()).getMenu();
-							Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seed Recipe");
+							Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "tardis Seed Recipe");
 							gui.setContents(recipe);
 							p.openInventory(gui);
 						}, 2L);

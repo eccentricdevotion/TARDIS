@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.junk;
+package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -32,7 +32,7 @@ class TARDISJunkTime {
 	}
 
 	boolean elapsed(CommandSender sender) {
-		// check the Junk TARDIS is not home already
+		// check the Junk tardis is not home already
 		if (new TARDISJunkLocation(plugin).isNotHome()) {
 			long conf = plugin.getConfig().getLong("junk.return");
 			if (conf > 0) {

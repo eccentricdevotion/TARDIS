@@ -14,16 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.HADS;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.enumeration.HADS;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -111,7 +112,7 @@ public class ResultSetPlayerPrefs {
 			if (rs.next()) {
 				pp_id = rs.getInt("pp_id");
 				uuid = UUID.fromString(rs.getString("uuid"));
-				key = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? rs.getString("key") : rs.getString("key_item");
+				key = (Objects.equals(plugin.getConfig().getString("storage.database"), "sqlite")) ? rs.getString("key") : rs.getString("key_item");
 				sfxOn = rs.getBoolean("sfx_on");
 				quotesOn = rs.getBoolean("quotes_on");
 				autoOn = rs.getBoolean("auto_on");
@@ -137,7 +138,7 @@ public class ResultSetPlayerPrefs {
 				// if empty use default
 				String message = rs.getString("eps_message");
 				if (rs.wasNull() || message.isEmpty()) {
-					epsMessage = "This is Emergency Programme One. I have died. I'm sure I will regenerate soon, but just in case. I have engaged the TARDIS autonomous circuit, and we are returning to my Home location or a recharge point - which ever is closest!";
+					epsMessage = "This is Emergency Programme One. I have died. I'm sure I will regenerate soon, but just in case. I have engaged the tardis autonomous circuit, and we are returning to my Home location or a recharge point - which ever is closest!";
 				} else {
 					epsMessage = rs.getString("eps_message");
 				}

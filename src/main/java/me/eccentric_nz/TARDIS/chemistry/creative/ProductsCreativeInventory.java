@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.creative;
+package me.eccentric_nz.tardis.chemistry.creative;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chemistry.lab.Lab;
-import me.eccentric_nz.TARDIS.chemistry.lab.LabBuilder;
-import me.eccentric_nz.TARDIS.chemistry.product.Product;
-import me.eccentric_nz.TARDIS.chemistry.product.ProductBuilder;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.chemistry.lab.Lab;
+import me.eccentric_nz.tardis.chemistry.lab.LabBuilder;
+import me.eccentric_nz.tardis.chemistry.product.Product;
+import me.eccentric_nz.tardis.chemistry.product.ProductBuilder;
+import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -66,6 +66,7 @@ public class ProductsCreativeInventory {
 		// elements
 		ItemStack elements = new ItemStack(GUIChemistry.ELEMENTS.getMaterial(), 1);
 		ItemMeta eim = elements.getItemMeta();
+		assert eim != null;
 		eim.setDisplayName("Elements");
 		eim.setCustomModelData(GUIChemistry.ELEMENTS.getCustomModelData());
 		elements.setItemMeta(eim);
@@ -73,6 +74,7 @@ public class ProductsCreativeInventory {
 		// compounds
 		ItemStack compounds = new ItemStack(GUIChemistry.COMPOUNDS.getMaterial(), 1);
 		ItemMeta cim = compounds.getItemMeta();
+		assert cim != null;
 		cim.setDisplayName("Compounds");
 		cim.setCustomModelData(GUIChemistry.COMPOUNDS.getCustomModelData());
 		compounds.setItemMeta(cim);
@@ -80,6 +82,7 @@ public class ProductsCreativeInventory {
 		// close
 		ItemStack close = new ItemStack(Material.BOWL, 1);
 		ItemMeta close_im = close.getItemMeta();
+		assert close_im != null;
 		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
 		close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
 		close.setItemMeta(close_im);

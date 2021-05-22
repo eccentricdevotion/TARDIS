@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCreeper;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCreeper;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
@@ -51,7 +51,7 @@ public class TARDISExplosionListener implements Listener {
 	}
 
 	/**
-	 * Listens for explosions around the TARDIS Police Box. If the explosion affects any of the Police Box blocks, then
+	 * Listens for explosions around the tardis Police Box. If the explosion affects any of the Police Box blocks, then
 	 * those blocks are removed from the effect of the explosion, there by protecting the Police box from damage.
 	 *
 	 * @param e an entity exploding
@@ -62,8 +62,8 @@ public class TARDISExplosionListener implements Listener {
 			return;
 		}
 		Location explode = e.getLocation();
-		// check if the explosion is in a TARDIS world
-		if ((explode.getWorld().getName().contains("TARDIS") || explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) && e.getEntity() instanceof Creeper) {
+		// check if the explosion is in a tardis world
+		if ((explode.getWorld().getName().contains("tardis") || explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) && e.getEntity() instanceof Creeper) {
 			e.setCancelled(true);
 			// check it is not the Artron creeper
 			String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" + (explode.getBlockY() - 1) + ":" + (explode.getBlockZ() + 0.5f);
@@ -80,7 +80,7 @@ public class TARDISExplosionListener implements Listener {
 				Location loc = TARDISStaticLocationGetters.getLocationFromBukkitString(str);
 				if (loc != null) {
 					Block block = loc.getBlock();
-					// if the block is a TARDIS block then remove it
+					// if the block is a tardis block then remove it
 					e.blockList().remove(block);
 				}
 			}
@@ -89,9 +89,8 @@ public class TARDISExplosionListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void onEntityDamage(EntityDamageByEntityEvent e) {
-		if (e.getEntity() instanceof ItemFrame && e.getDamager() instanceof Player) {
-			ItemFrame frame = (ItemFrame) e.getEntity();
-			// check if it is a TARDIS Chameleon item frame
+		if (e.getEntity() instanceof ItemFrame frame && e.getDamager() instanceof Player) {
+			// check if it is a tardis Chameleon item frame
 			String l = frame.getLocation().toString();
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("location", l);
@@ -105,7 +104,7 @@ public class TARDISExplosionListener implements Listener {
 			return;
 		}
 		String l = e.getDamager().getLocation().getWorld().getName();
-		if (l.contains("TARDIS") || l.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+		if (l.contains("tardis") || l.equals(plugin.getConfig().getString("creation.default_world_name"))) {
 			e.setCancelled(true);
 		}
 	}

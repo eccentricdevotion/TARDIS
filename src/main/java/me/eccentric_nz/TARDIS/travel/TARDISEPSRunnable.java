@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandException;
@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Emergency Programme One was a feature of the Doctor's TARDIS designed to return a companion to a designated place in
+ * Emergency Programme One was a feature of the Doctor's tardis designed to return a companion to a designated place in
  * case of extreme emergency.
  *
  * @author eccentric_nz
@@ -114,7 +114,7 @@ public class TARDISEPSRunnable implements Runnable {
 	}
 
 	/**
-	 * @param id the TARDIS to look up
+	 * @param id the tardis to look up
 	 * @return the EP1 spawn location
 	 */
 	private Location getSpawnLocation(int id) {
@@ -133,22 +133,22 @@ public class TARDISEPSRunnable implements Runnable {
 				double z;
 				Location location = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location());
 				switch (rsd.getDoor_direction()) {
-					case NORTH:
+					case NORTH -> {
 						x = 0.5;
 						z = -1.5;
-						break;
-					case EAST:
+					}
+					case EAST -> {
 						x = 1.5;
 						z = 0.5;
-						break;
-					case WEST:
+					}
+					case WEST -> {
 						x = -1.5;
 						z = 0.5;
-						break;
-					default: // SOUTH
+					}
+					default -> { // SOUTH
 						x = 0.5;
 						z = 1.5;
-						break;
+					}
 				}
 				return location.add(x, 0, z);
 			} else {

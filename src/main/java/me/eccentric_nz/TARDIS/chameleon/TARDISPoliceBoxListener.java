@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chameleon;
+package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -50,7 +50,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 	}
 
 	/**
-	 * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+	 * Listens for player clicking inside an inventory. If the inventory is a tardis GUI, then the click is processed
 	 * accordingly.
 	 *
 	 * @param event a player clicking an inventory slot
@@ -66,7 +66,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 			if (slot >= 0 && slot < 54) {
 				ItemStack is = view.getItem(slot);
 				if (is != null) {
-					// get the TARDIS the player is in
+					// get the tardis the player is in
 					HashMap<String, Object> wheres = new HashMap<>();
 					wheres.put("uuid", player.getUniqueId().toString());
 					ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
@@ -97,7 +97,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 							}
 							String last_line = TARDISStaticUtils.getLastLine(chameleon);
 							switch (slot) {
-								case 0:
+								case 0 -> {
 									// blue
 									if (!last_line.equals("BLUE")) {
 										set.put("chameleon_preset", "POLICE_BOX_BLUE");
@@ -105,8 +105,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_BLUE);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Blue Police Box");
-									break;
-								case 1:
+								}
+								case 1 -> {
 									// white
 									if (!last_line.equals("WHITE")) {
 										set.put("chameleon_preset", "POLICE_BOX_WHITE");
@@ -114,8 +114,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_WHITE);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "White Police Box");
-									break;
-								case 2:
+								}
+								case 2 -> {
 									// orange
 									if (!last_line.equals("ORANGE")) {
 										set.put("chameleon_preset", "POLICE_BOX_ORANGE");
@@ -123,8 +123,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_ORANGE);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Orange Police Box");
-									break;
-								case 3:
+								}
+								case 3 -> {
 									// magenta
 									if (!last_line.equals("MAGENTA")) {
 										set.put("chameleon_preset", "POLICE_BOX_MAGENTA");
@@ -132,8 +132,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_MAGENTA);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Magenta Police Box");
-									break;
-								case 4:
+								}
+								case 4 -> {
 									// light blue
 									if (!last_line.equals("LIGHTBLUE")) {
 										set.put("chameleon_preset", "POLICE_BOX_LIGHT_BLUE");
@@ -141,8 +141,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_LIGHT_BLUE);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Light Blue Police Box");
-									break;
-								case 5:
+								}
+								case 5 -> {
 									// yellow
 									if (!last_line.equals("YELLOW")) {
 										set.put("chameleon_preset", "POLICE_BOX_YELLOW");
@@ -150,8 +150,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_YELLOW);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Yellow Police Box");
-									break;
-								case 6:
+								}
+								case 6 -> {
 									// lime
 									if (!last_line.equals("LIME")) {
 										set.put("chameleon_preset", "POLICE_BOX_LIME");
@@ -159,8 +159,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_LIME);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Lime Police Box");
-									break;
-								case 7:
+								}
+								case 7 -> {
 									// pink
 									if (!last_line.equals("PINK")) {
 										set.put("chameleon_preset", "POLICE_BOX_PINK");
@@ -168,8 +168,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_PINK);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Pink Police Box");
-									break;
-								case 8:
+								}
+								case 8 -> {
 									// gray
 									if (!last_line.equals("GRAY")) {
 										set.put("chameleon_preset", "POLICE_BOX_GRAY");
@@ -177,8 +177,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_GRAY);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Gray Police Box");
-									break;
-								case 9:
+								}
+								case 9 -> {
 									// light gray
 									if (!last_line.equals("LIGHTGRAY")) {
 										set.put("chameleon_preset", "POLICE_BOX_LIGHT_GRAY");
@@ -186,8 +186,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_LIGHT_GRAY);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Light Gray Police Box");
-									break;
-								case 10:
+								}
+								case 10 -> {
 									// cyan
 									if (!last_line.equals("CYAN")) {
 										set.put("chameleon_preset", "POLICE_BOX_CYAN");
@@ -195,8 +195,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_CYAN);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Cyan Police Box");
-									break;
-								case 11:
+								}
+								case 11 -> {
 									// purple
 									if (!last_line.equals("PURPLE")) {
 										set.put("chameleon_preset", "POLICE_BOX_PURPLE");
@@ -204,8 +204,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_PURPLE);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Purple Police Box");
-									break;
-								case 12:
+								}
+								case 12 -> {
 									// brown
 									if (!last_line.equals("BROWN")) {
 										set.put("chameleon_preset", "POLICE_BOX_BROWN");
@@ -213,8 +213,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_BROWN);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Brown Police Box");
-									break;
-								case 13:
+								}
+								case 13 -> {
 									// green
 									if (!last_line.equals("GREEN")) {
 										set.put("chameleon_preset", "POLICE_BOX_GREEN");
@@ -222,8 +222,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_GREEN);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Green Police Box");
-									break;
-								case 14:
+								}
+								case 14 -> {
 									// red
 									if (!last_line.equals("RED")) {
 										set.put("chameleon_preset", "POLICE_BOX_RED");
@@ -231,8 +231,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_RED);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Red Police Box");
-									break;
-								case 15:
+								}
+								case 15 -> {
 									// black
 									if (!last_line.equals("BLACK")) {
 										set.put("chameleon_preset", "POLICE_BOX_BLACK");
@@ -240,29 +240,25 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_BLACK);
 									}
 									TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Black Police Box");
-									break;
-								case 24:
-									// go to page one (regular presets)
-									plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-										TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
-										ItemStack[] items = tpi.getPresets();
-										Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Presets");
-										presetinv.setContents(items);
-										player.openInventory(presetinv);
-									}, 2L);
-									break;
-								case 25:
-									// return to Chameleon Circuit GUI
-									plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-										ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
-										Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
-										gui.setContents(stacks);
-										player.openInventory(gui);
-									}, 2L);
-									break;
-								default:
-									close(player);
-									break;
+								}
+								case 24 ->
+										// go to page one (regular presets)
+										plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+											TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
+											ItemStack[] items = tpi.getPresets();
+											Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Presets");
+											presetinv.setContents(items);
+											player.openInventory(presetinv);
+										}, 2L);
+								case 25 ->
+										// return to Chameleon Circuit GUI
+										plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+											ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
+											Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
+											gui.setContents(stacks);
+											player.openInventory(gui);
+										}, 2L);
+								default -> close(player);
 							}
 							if (set.size() > 0) {
 								set.put("adapti_on", 0);

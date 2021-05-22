@@ -14,18 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
 public enum GUIUpgrade {
 
-	// TARDIS Upgrade Menu
-	ARCHIVE_CONSOLES(4, 46, Material.BOWL),
-	REPAIR_CONSOLE(72, 47, Material.BOWL),
-	CLEAN(34, 48, Material.BOWL),
-	CLOSE(1, 53, Material.BOWL);
+	// tardis Upgrade Menu
+	ARCHIVE_CONSOLES(4, 46, Material.BOWL), REPAIR_CONSOLE(72, 47, Material.BOWL), CLEAN(34, 48, Material.BOWL), CLOSE(1, 53, Material.BOWL);
 
 	private final int customModelData;
 	private final int slot;

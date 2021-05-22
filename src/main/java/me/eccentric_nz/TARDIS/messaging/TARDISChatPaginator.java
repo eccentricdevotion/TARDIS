@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.messaging;
+package me.eccentric_nz.tardis.messaging;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.ChatColor;
 
 import java.util.Arrays;
@@ -102,7 +102,7 @@ public class TARDISChatPaginator {
 				lines.set(i, ChatColor.getByChar(color) + subLine);
 			}
 		}
-		return lines.toArray(new String[lines.size()]);
+		return lines.toArray(new String[0]);
 	}
 
 	public static void setGuaranteedNoWrapChatPageWidth(int guaranteedNoWrapChatPageWidth) {

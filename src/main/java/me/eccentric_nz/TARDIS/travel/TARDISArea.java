@@ -14,24 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.data.Area;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.data.Area;
+import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
 /**
- * The control or console room of the Doctor's TARDIS is the space in which the operation of the craft is usually
+ * The control or console room of the Doctor's tardis is the space in which the operation of the craft is usually
  * effected. It is dominated by a large, hexagonal console, typically in or near the middle of the room.
  *
  * @author eccentric_nz
@@ -45,20 +46,20 @@ public class TARDISArea {
 	}
 
 	/**
-	 * Checks if a location is contained within any TARDIS area.
+	 * Checks if a location is contained within any tardis area.
 	 *
 	 * @param l a location object to check.
-	 * @return true or false depending on whether the location is within an existing TARDIS area
+	 * @return true or false depending on whether the location is within an existing tardis area
 	 */
 	public boolean areaCheckInExisting(Location l) {
 		boolean chk = true;
-		String w = l.getWorld().getName();
+		String w = Objects.requireNonNull(l.getWorld()).getName();
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("world", w);
 		ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
 		if (rsa.resultSet()) {
 			for (Area a : rsa.getData()) {
-				// is clicked block within a defined TARDIS area?
+				// is clicked block within a defined tardis area?
 				if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
 					chk = false;
 					break;
@@ -69,20 +70,20 @@ public class TARDISArea {
 	}
 
 	/**
-	 * Checks if a location is contained within any TARDIS area.
+	 * Checks if a location is contained within any tardis area.
 	 *
 	 * @param l a location object to check.
 	 * @return a TARDISAreaCheck &lt;Area, Boolean&gt; with values dependent on whether the location is within an
-	 * existing TARDIS area
+	 * existing tardis area
 	 */
 	public TARDISAreaCheck areaCheckInExistingArea(Location l) {
-		String w = l.getWorld().getName();
+		String w = Objects.requireNonNull(l.getWorld()).getName();
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("world", w);
 		ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
 		if (rsa.resultSet()) {
 			for (Area a : rsa.getData()) {
-				// is clicked block within a defined TARDIS area?
+				// is clicked block within a defined tardis area?
 				if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
 					return new TARDISAreaCheck(a, true);
 				}
@@ -92,11 +93,11 @@ public class TARDISArea {
 	}
 
 	/**
-	 * Checks if a location is contained within a specific TARDIS area.
+	 * Checks if a location is contained within a specific tardis area.
 	 *
-	 * @param area the TARDIS area to check in.
+	 * @param area the tardis area to check in.
 	 * @param l    a location object to check.
-	 * @return true or false depending on whether the location is in the specified TARDIS area
+	 * @return true or false depending on whether the location is in the specified tardis area
 	 */
 	public boolean areaCheckInExile(String area, Location l) {
 		boolean chk = true;
@@ -105,8 +106,8 @@ public class TARDISArea {
 		ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, false);
 		if (rsa.resultSet()) {
 			Area a = rsa.getArea();
-			String lw = l.getWorld().getName();
-			// is clicked block within a defined TARDIS area?
+			String lw = Objects.requireNonNull(l.getWorld()).getName();
+			// is clicked block within a defined tardis area?
 			if (a.getWorld().equals(lw) && (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ())) {
 				chk = false;
 			}
@@ -115,7 +116,7 @@ public class TARDISArea {
 	}
 
 	/**
-	 * Checks if a player has permission to travel to a TARDIS area.
+	 * Checks if a player has permission to travel to a tardis area.
 	 *
 	 * @param p a player to check.
 	 * @param l a location object to check.
@@ -123,14 +124,14 @@ public class TARDISArea {
 	 */
 	public boolean areaCheckLocPlayer(Player p, Location l) {
 		boolean chk = false;
-		String w = l.getWorld().getName();
+		String w = Objects.requireNonNull(l.getWorld()).getName();
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("world", w);
 		ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
 		if (rsa.resultSet()) {
 			for (Area a : rsa.getData()) {
 				String n = a.getAreaName();
-				// is time travel destination within a defined TARDIS area?
+				// is time travel destination within a defined tardis area?
 				if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
 					// does the player have permission to travel here
 					if (!TARDISPermission.hasPermission(p, "tardis.area." + n) || !p.isPermissionSet("tardis.area." + n)) {
@@ -145,9 +146,9 @@ public class TARDISArea {
 	}
 
 	/**
-	 * Gets the next available parking spot in a specified TARDIS area.
+	 * Gets the next available parking spot in a specified tardis area.
 	 *
-	 * @param area the TARDIS area to look in.
+	 * @param area the tardis area to look in.
 	 * @return the next free Location in an area
 	 */
 	public Location getNextSpot(String area) {
@@ -168,7 +169,7 @@ public class TARDISArea {
 			int maxz = a.getMaxZ();
 			String wStr = a.getWorld();
 			boolean chk = false;
-			// only loop for the size of the TARDIS area
+			// only loop for the size of the tardis area
 			outerloop:
 			for (xx = x; xx <= maxx; xx += park) {
 				for (zz = z; zz <= maxz; zz += park) {
@@ -198,7 +199,7 @@ public class TARDISArea {
 	}
 
 	/**
-	 * Gets the TARDIS area a player is exiled to.
+	 * Gets the tardis area a player is exiled to.
 	 *
 	 * @param p a player to check.
 	 * @return the area the player has been exiled to

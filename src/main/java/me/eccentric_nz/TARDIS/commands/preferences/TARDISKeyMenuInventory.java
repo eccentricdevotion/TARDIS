@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.preferences;
+package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.TARDIS.custommodeldata.GUIKeyPreferences;
+import me.eccentric_nz.tardis.custommodeldata.GUIKeyPreferences;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -52,7 +52,7 @@ class TARDISKeyMenuInventory {
 			if (key == GUIKeyPreferences.CLOSE || key == GUIKeyPreferences.INSTRUCTIONS) {
 				im.setDisplayName(key.getName());
 			} else {
-				im.setDisplayName(key.getChatColor() + "TARDIS Key");
+				im.setDisplayName(key.getChatColor() + "tardis Key");
 			}
 			if (!key.getLore().isEmpty()) {
 				if (key.getLore().contains("~")) {

@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.sonic;
+package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
-import me.eccentric_nz.TARDIS.sonic.actions.*;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.commands.preferences.TARDISPrefsMenuInventory;
+import me.eccentric_nz.tardis.sonic.actions.*;
+import me.eccentric_nz.tardis.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -151,7 +151,7 @@ public class TARDISSonicListener implements Listener {
 				if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
 					Block block = event.getClickedBlock();
 					if (doors.contains(block.getType()) && player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
-						// display TARDIS info
+						// display tardis info
 						TARDISSonicAdmin.displayInfo(plugin, player, block);
 					}
 					if (Tag.WALL_SIGNS.isTagged(block.getType()) && TARDISPermission.hasPermission(player, "tardis.atmospheric")) {
@@ -164,11 +164,10 @@ public class TARDISSonicListener implements Listener {
 							TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
 						}
 						// scan area around block for an arrow
-						List<Entity> nearbyEntites = new ArrayList(block.getWorld().getNearbyEntities(block.getLocation(), 2, 2, 2));
+						List<Entity> nearbyEntites = new ArrayList<>(block.getWorld().getNearbyEntities(block.getLocation(), 2, 2, 2));
 						for (Entity e : nearbyEntites) {
-							if (e instanceof Arrow) {
+							if (e instanceof Arrow arrow) {
 								// pick up arrow
-								Arrow arrow = (Arrow) e;
 								arrow.setPickupStatus(AbstractArrow.PickupStatus.ALLOWED);
 								return;
 							}

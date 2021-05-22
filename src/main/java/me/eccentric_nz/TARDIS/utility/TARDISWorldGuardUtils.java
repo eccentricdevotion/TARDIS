@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.math.BlockVector3;
@@ -32,9 +32,9 @@ import com.sk89q.worldguard.protection.managers.storage.StorageException;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.util.SpongeUtil;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.builders.TARDISTIPSData;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -44,8 +44,8 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 /**
- * Before a TARDIS becomes fully functional, it must be primed with the biological imprint of a Time Lord, normally done
- * by simply having a Time Lord operate the TARDIS for the first time.
+ * Before a tardis becomes fully functional, it must be primed with the biological imprint of a Time Lord, normally done
+ * by simply having a Time Lord operate the tardis for the first time.
  *
  * @author eccentric_nz
  */
@@ -58,7 +58,7 @@ public class TARDISWorldGuardUtils {
 	/**
 	 * Checks if WorldGuard is on the server.
 	 *
-	 * @param plugin an instance of the TARDIS plugin
+	 * @param plugin an instance of the tardis plugin
 	 */
 	public TARDISWorldGuardUtils(TARDIS plugin) {
 		this.plugin = plugin;
@@ -78,6 +78,7 @@ public class TARDISWorldGuardUtils {
 	public boolean canBuild(Player p, Location l) {
 		BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
 		RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(l.getWorld()));
+		assert rm != null;
 		ApplicableRegionSet rs = rm.getApplicableRegions(vector);
 		return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
 	}
@@ -115,8 +116,8 @@ public class TARDISWorldGuardUtils {
 	}
 
 	/**
-	 * Adds a WorldGuard protected region to the inner TARDIS location. This stops other players and mobs from griefing
-	 * the TARDIS :)
+	 * Adds a WorldGuard protected region to the inner tardis location. This stops other players and mobs from griefing
+	 * the tardis :)
 	 *
 	 * @param p   the player to assign as the owner of the region
 	 * @param one a start location of a cuboid region
@@ -132,7 +133,7 @@ public class TARDISWorldGuardUtils {
 			b1 = BlockVector3.at(cube, 256, cube);
 			b2 = BlockVector3.at(-cube, 0, -cube);
 		} else {
-			// just get the TARDIS size
+			// just get the tardis size
 			b1 = makeBlockVector(one);
 			b2 = makeBlockVector(two);
 		}
@@ -153,12 +154,12 @@ public class TARDISWorldGuardUtils {
 		try {
 			rm.save();
 		} catch (StorageException e) {
-			plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
+			plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for tardis! " + e.getMessage());
 		}
 	}
 
 	/**
-	 * Adds a WorldGuard protected region for a TIPS slot. This stops other players and mobs from griefing the TARDIS
+	 * Adds a WorldGuard protected region for a TIPS slot. This stops other players and mobs from griefing the tardis
 	 * :)
 	 *
 	 * @param p    the player to assign as the owner of the region
@@ -193,7 +194,7 @@ public class TARDISWorldGuardUtils {
 		try {
 			rm.save();
 		} catch (StorageException e) {
-			plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
+			plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for tardis! " + e.getMessage());
 		}
 	}
 
@@ -263,7 +264,7 @@ public class TARDISWorldGuardUtils {
 	}
 
 	/**
-	 * Removes the WorldGuard region when the TARDIS is deleted.
+	 * Removes the WorldGuard region when the tardis is deleted.
 	 *
 	 * @param w the world the region is located in
 	 * @param p the player's name
@@ -274,14 +275,14 @@ public class TARDISWorldGuardUtils {
 		try {
 			rm.save();
 		} catch (StorageException e) {
-			plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove WorldGuard Protection for TARDIS! " + e.getMessage());
+			plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove WorldGuard Protection for tardis! " + e.getMessage());
 		}
 	}
 
 	/**
-	 * Removes the WorldGuard region when the TARDIS is deleted.
+	 * Removes the WorldGuard region when the tardis is deleted.
 	 *
-	 * @param l the TARDIS interior location
+	 * @param l the tardis interior location
 	 */
 	public void removeRegion(Location l) {
 		RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(l.getWorld()));
@@ -304,10 +305,10 @@ public class TARDISWorldGuardUtils {
 			try {
 				rm.save();
 			} catch (StorageException e) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove WorldGuard Protection for TARDIS! " + e.getMessage());
+				plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove WorldGuard Protection for tardis! " + e.getMessage());
 			}
 		} else {
-			plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not get WorldGuard region for TARDIS location!");
+			plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not get WorldGuard region for tardis location!");
 		}
 	}
 
@@ -328,7 +329,7 @@ public class TARDISWorldGuardUtils {
 	}
 
 	/**
-	 * Removes the exterior rendering room region when the room is jettisoned or the TARDIS is deleted.
+	 * Removes the exterior rendering room region when the room is jettisoned or the tardis is deleted.
 	 *
 	 * @param w the world the region is located in
 	 * @param p the player's name
@@ -391,7 +392,7 @@ public class TARDISWorldGuardUtils {
 	}
 
 	/**
-	 * Updates the TARDIS WorldGuard region when the player name has changed.
+	 * Updates the tardis WorldGuard region when the player name has changed.
 	 *
 	 * @param w     the world the region is located in
 	 * @param o     the owner's name
@@ -409,15 +410,15 @@ public class TARDISWorldGuardUtils {
 			try {
 				rm.save();
 			} catch (StorageException e) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard Protection for TARDIS owner name change! " + e.getMessage());
+				plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard Protection for tardis owner name change! " + e.getMessage());
 			}
 		}
 	}
 
 	/**
-	 * Updates the TARDIS WorldGuard region when the TARDIS has been claimed by a new player.
+	 * Updates the tardis WorldGuard region when the tardis has been claimed by a new player.
 	 *
-	 * @param location the TARDIS interior location
+	 * @param location the tardis interior location
 	 * @param uuid     the UUID of the player
 	 */
 	public void updateRegionForClaim(Location location, UUID uuid) {
@@ -451,7 +452,7 @@ public class TARDISWorldGuardUtils {
 			try {
 				rm.save();
 			} catch (StorageException e) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard Protection for abandoned TARDIS claim! " + e.getMessage());
+				plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard Protection for abandoned tardis claim! " + e.getMessage());
 			}
 		}
 	}
@@ -483,7 +484,7 @@ public class TARDISWorldGuardUtils {
 	}
 
 	/**
-	 * Gets a TARDIS WorldGuard region.
+	 * Gets a tardis WorldGuard region.
 	 *
 	 * @param world the world the region is in
 	 * @param p     the Time Lord whose region it is
@@ -499,10 +500,10 @@ public class TARDISWorldGuardUtils {
 	}
 
 	/**
-	 * Gets a List of all TARDIS regions in a world.
+	 * Gets a List of all tardis regions in a world.
 	 *
 	 * @param w the world to get the regions for
-	 * @return a list of TARDIS region names for this world
+	 * @return a list of tardis region names for this world
 	 */
 	public List<String> getTARDISRegions(World w) {
 		List<String> regions = new ArrayList<>();

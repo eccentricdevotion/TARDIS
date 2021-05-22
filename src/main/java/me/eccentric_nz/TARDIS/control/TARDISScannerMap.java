@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.control;
+package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Rotation;
@@ -48,6 +48,7 @@ public class TARDISScannerMap {
 		view.setLocked(true);
 		ItemStack map = new ItemStack(Material.FILLED_MAP, 1, (short) view.getId());
 		MapMeta meta = (MapMeta) map.getItemMeta();
+		assert meta != null;
 		meta.setMapView(view);
 		map.setItemMeta(meta);
 		itemFrame.setItem(map, false);

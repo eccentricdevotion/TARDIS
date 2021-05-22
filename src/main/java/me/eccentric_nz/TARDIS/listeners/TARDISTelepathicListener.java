@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -67,7 +67,7 @@ public class TARDISTelepathicListener implements Listener {
 		ResultSetControls rsc = new ResultSetControls(plugin, where, false);
 		if (rsc.resultSet()) {
 			int id = rsc.getTardis_id();
-			// get the Time Lord of this TARDIS
+			// get the Time Lord of this tardis
 			HashMap<String, Object> wheret = new HashMap<>();
 			wheret.put("tardis_id", id);
 			ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
@@ -112,8 +112,8 @@ public class TARDISTelepathicListener implements Listener {
 		// drop a custom DAYLIGHT_DETECTOR
 		ItemStack is = new ItemStack(Material.DAYLIGHT_DETECTOR, 1);
 		ItemMeta im = is.getItemMeta();
-		im.setDisplayName("TARDIS Telepathic Circuit");
-		im.setLore(Arrays.asList("Allow companions to", "use TARDIS commands"));
+		im.setDisplayName("tardis Telepathic Circuit");
+		im.setLore(Arrays.asList("Allow companions to", "use tardis commands"));
 		is.setItemMeta(im);
 		b.getWorld().dropItemNaturally(b.getLocation(), is);
 	}
@@ -125,7 +125,7 @@ public class TARDISTelepathicListener implements Listener {
 			return;
 		}
 		ItemMeta im = is.getItemMeta();
-		if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Telepathic Circuit")) {
+		if (im.hasDisplayName() && im.getDisplayName().equals("tardis Telepathic Circuit")) {
 			UUID uuid = event.getPlayer().getUniqueId();
 			String l = event.getBlock().getLocation().toString();
 			plugin.getTrackerKeeper().getTelepathicPlacements().put(uuid, l);

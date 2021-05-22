@@ -14,15 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.arch;
+package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -89,7 +90,7 @@ public class TARDISArchCommand {
 				TARDISArchDisguise.undisguise(player);
 			}
 			player.getWorld().strikeLightningEffect(player.getLocation());
-			double mh = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+			double mh = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue();
 			player.setHealth(mh / 10.0d);
 			if (inv) {
 				new TARDISArchInventory().switchInventories(player, 0);

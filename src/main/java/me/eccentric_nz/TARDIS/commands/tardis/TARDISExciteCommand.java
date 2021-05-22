@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.control.TARDISAtmosphericExcitation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -38,7 +38,7 @@ class TARDISExciteCommand {
 			TARDISMessage.send(player, "CMD_EXCITE");
 			return true;
 		}
-		// get TARDIS id
+		// get tardis id
 		ResultSetTardisID rs = new ResultSetTardisID(plugin);
 		if (rs.fromUUID(player.getUniqueId().toString())) {
 			new TARDISAtmosphericExcitation(plugin).excite(rs.getTardis_id(), player);

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,18 +25,7 @@ import java.util.List;
  */
 public enum Flag {
 
-	MESSAGE_PLAYER,
-	PERMS_AREA,
-	PERMS_NETHER,
-	PERMS_THEEND,
-	PERMS_WORLD,
-	RESPECT_FACTIONS,
-	RESPECT_GRIEFPREVENTION,
-	RESPECT_REDPROTECT,
-	RESPECT_TOWNY,
-	RESPECT_WORLDBORDER,
-	RESPECT_WORLDGUARD,
-	SPACE_TARDIS;
+	MESSAGE_PLAYER, PERMS_AREA, PERMS_NETHER, PERMS_THEEND, PERMS_WORLD, RESPECT_FACTIONS, RESPECT_GRIEFPREVENTION, RESPECT_REDPROTECT, RESPECT_TOWNY, RESPECT_WORLDBORDER, RESPECT_WORLDGUARD, SPACE_TARDIS;
 
 	public static List<Flag> getNoMessageFlags() {
 		List<Flag> flags = new ArrayList<>(Arrays.asList(Flag.values()));

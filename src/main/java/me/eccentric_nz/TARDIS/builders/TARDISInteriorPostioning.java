@@ -14,16 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import com.onarandombox.MultiverseCore.exceptions.PropertyDoesNotExistException;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.ars.TARDISARSMethods;
+import me.eccentric_nz.tardis.ars.TARDISARSSlot;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.database.resultset.ResultSetARS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.travel.TARDISDoorLocation;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -57,7 +58,7 @@ public class TARDISInteriorPostioning {
 	/**
 	 * Get the TIPS slot from a player location
 	 *
-	 * @param location the player's current location in the TARDIS world
+	 * @param location the player's current location in the tardis world
 	 * @return the TIPS slot number
 	 */
 	public static int getTIPSSlot(Location location) {
@@ -69,10 +70,10 @@ public class TARDISInteriorPostioning {
 	}
 
 	/**
-	 * Get the TARDIS id from a player location
+	 * Get the tardis id from a player location
 	 *
-	 * @param location the player's current location in the TARDIS world
-	 * @return the TARDIS id
+	 * @param location the player's current location in the tardis world
+	 * @return the tardis id
 	 */
 	public static int getTARDISIdFromLocation(Location location) {
 		int tips = getTIPSSlot(location);
@@ -139,7 +140,7 @@ public class TARDISInteriorPostioning {
 	}
 
 	/**
-	 * Calculate the position data for the Junk TARDIS TIPS slot.
+	 * Calculate the position data for the Junk tardis TIPS slot.
 	 *
 	 * @return a TIPS Data container
 	 */
@@ -195,7 +196,7 @@ public class TARDISInteriorPostioning {
 
 	// won't remove manually grown rooms...
 	public void reclaimChunks(World w, int id) {
-		// get ARS data
+		// get ars data
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("tardis_id", id);
 		ResultSetARS rs = new ResultSetARS(plugin, where);
@@ -209,7 +210,7 @@ public class TARDISInteriorPostioning {
 				for (int x = 0; x < 9; x++) {
 					for (int z = 0; z < 9; z++) {
 						if (!json[l][x][z].equalsIgnoreCase("STONE")) {
-							// get ARS slot
+							// get ars slot
 							TARDISARSSlot slot = new TARDISARSSlot();
 							slot.setChunk(c);
 							slot.setY(l);
@@ -218,8 +219,7 @@ public class TARDISInteriorPostioning {
 							Chunk tipsChunk = w.getBlockAt(slot.getX(), slot.getY(), slot.getZ()).getChunk();
 							// remove mobs
 							for (Entity e : tipsChunk.getEntities()) {
-								if (e instanceof Player) {
-									Player p = (Player) e;
+								if (e instanceof Player p) {
 									// get the exit location
 									TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
 									Location location = dl.getL();

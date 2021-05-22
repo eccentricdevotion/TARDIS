@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Repeater;
@@ -53,7 +53,7 @@ public class ResultSetRepeaters {
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the controls table.
 	 *
 	 * @param plugin    an instance of the main class.
-	 * @param id        the TARDIS id to search for.
+	 * @param id        the tardis id to search for.
 	 * @param secondary the level of control to look for.
 	 */
 	public ResultSetRepeaters(TARDIS plugin, int id, int secondary) {

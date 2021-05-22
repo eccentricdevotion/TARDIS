@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIArea;
-import me.eccentric_nz.TARDIS.database.data.Area;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.custommodeldata.GUIArea;
+import me.eccentric_nz.tardis.database.data.Area;
+import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -65,6 +65,7 @@ public class TARDISAreasInventory {
 				if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
 					ItemStack is = new ItemStack(TARDISConstants.GUI_IDS.get(i), 1);
 					ItemMeta im = is.getItemMeta();
+					assert im != null;
 					im.setDisplayName(name);
 					List<String> lore = new ArrayList<>();
 					lore.add(a.getWorld());
@@ -84,10 +85,11 @@ public class TARDISAreasInventory {
 				stack[s] = null;
 			}
 		}
-		// add button to load TARDIS areas
+		// add button to load tardis areas
 		ItemStack map = new ItemStack(Material.MAP, 1);
 		ItemMeta switchto = map.getItemMeta();
-		switchto.setDisplayName("Load TARDIS saves");
+		assert switchto != null;
+		switchto.setDisplayName("Load tardis saves");
 		switchto.setCustomModelData(GUIArea.LOAD_TARDIS_SAVES.getCustomModelData());
 		map.setItemMeta(switchto);
 		for (int m = 45; m < 54; m++) {

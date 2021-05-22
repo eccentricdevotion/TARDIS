@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.data;
+package me.eccentric_nz.tardis.database.data;
 
-import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
+import me.eccentric_nz.tardis.advanced.TARDISSerializeInventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;

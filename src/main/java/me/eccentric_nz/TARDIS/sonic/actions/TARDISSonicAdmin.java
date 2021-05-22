@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.sonic.actions;
+package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetBackLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -56,7 +56,7 @@ public class TARDISSonicAdmin {
 			ResultSetDoors rsd = new ResultSetDoors(plugin, wheredoor, false);
 			if (rsd.resultSet()) {
 				int id = rsd.getTardis_id();
-				// get the TARDIS owner's name
+				// get the tardis owner's name
 				HashMap<String, Object> wheren = new HashMap<>();
 				wheren.put("tardis_id", id);
 				ResultSetTardis rsn = new ResultSetTardis(plugin, wheren, "", false, 0);

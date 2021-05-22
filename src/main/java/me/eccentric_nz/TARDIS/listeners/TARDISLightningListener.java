@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.LightningStrike;
@@ -31,7 +31,7 @@ import org.bukkit.event.weather.LightningStrikeEvent;
 import java.util.HashMap;
 
 /**
- * Artron energy is vital in the running of a TARDIS; it can run low and when down to 10% it means even backup power is
+ * Artron energy is vital in the running of a tardis; it can run low and when down to 10% it means even backup power is
  * unavailable, as this requires artron energy as well.
  *
  * @author eccentric_nz
@@ -45,8 +45,8 @@ public class TARDISLightningListener implements Listener {
 	}
 
 	/**
-	 * Listens for lightning strikes around the TARDIS Police Box. If the strike is within (recharge_distance in
-	 * artron.yml) blocks, then the TARDIS Artron Levels will be increased by the configured amount (lightning_recharge
+	 * Listens for lightning strikes around the tardis Police Box. If the strike is within (recharge_distance in
+	 * artron.yml) blocks, then the tardis Artron Levels will be increased by the configured amount (lightning_recharge
 	 * in artron.yml).
 	 *
 	 * @param e a lightning strike
@@ -61,10 +61,7 @@ public class TARDISLightningListener implements Listener {
 			ResultSetTardis rs = new ResultSetTardis(plugin, new HashMap<>(), "", true, 0);
 			if (rs.resultSet()) {
 				for (Tardis t : rs.getData()) {
-					boolean charging = true;
-					if (t.isRecharging()) {
-						charging = false;
-					}
+					boolean charging = !t.isRecharging();
 					int id = t.getTardis_id();
 					if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
 						return;
@@ -77,7 +74,7 @@ public class TARDISLightningListener implements Listener {
 						// only if the tardis is in the same world as the lightning strike and is not at a beacon recharger!
 						if (strikeworld.equals(w) && !charging) {
 							Location loc = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
-							// only recharge if the TARDIS is within range
+							// only recharge if the tardis is within range
 							if (plugin.getUtils().compareLocations(loc, loc)) {
 								int amount = plugin.getArtronConfig().getInt("lightning_recharge") + t.getArtron_level();
 								HashMap<String, Object> set = new HashMap<>();

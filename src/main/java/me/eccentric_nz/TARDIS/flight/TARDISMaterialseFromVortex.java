@@ -14,29 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.flight;
+package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.api.event.TARDISMalfunctionEvent;
-import me.eccentric_nz.TARDIS.api.event.TARDISMaterialisationEvent;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Advancement;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.api.event.TARDISMalfunctionEvent;
+import me.eccentric_nz.tardis.api.event.TARDISMaterialisationEvent;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetNextLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.Advancement;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.hads.TARDISCloisterBell;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.travel.TARDISMalfunction;
+import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -178,26 +178,26 @@ public class TARDISMaterialseFromVortex implements Runnable {
 					long travel_time;
 					String landSFX;
 					switch (spaceTimeThrottle) {
-						case WARP:
+						case WARP -> {
 							flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 130L);
 							travel_time = (malfunction) ? 400L : 94L;
 							landSFX = "tardis_land_warp";
-							break;
-						case RAPID:
+						}
+						case RAPID -> {
 							flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 259L);
 							travel_time = (malfunction) ? 400L : 188L;
 							landSFX = "tardis_land_rapid";
-							break;
-						case FASTER:
+						}
+						case FASTER -> {
 							flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 388L);
 							travel_time = (malfunction) ? 400L : 282L;
 							landSFX = "tardis_land_faster";
-							break;
-						default: // NORMAL
+						}
+						default -> { // NORMAL
 							flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 518L);
 							travel_time = (malfunction) ? 400L : 375L;
 							landSFX = "tardis_land";
-							break;
+						}
 					}
 					// remember flight data
 					plugin.getTrackerKeeper().getFlightData().put(uuid, bd);

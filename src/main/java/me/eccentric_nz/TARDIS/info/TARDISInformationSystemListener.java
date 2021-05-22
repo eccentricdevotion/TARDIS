@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.info;
+package me.eccentric_nz.tardis.info;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,13 +27,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 import java.util.UUID;
 
 /**
- * The TARDIS information system is a searchable database which was discovered by the Fifth Doctor's companions Nyssa
- * and Tegan from a readout in the control room. The Fifth Doctor called it the TARDIS databank.
+ * The tardis information system is a searchable database which was discovered by the Fifth Doctor's companions Nyssa
+ * and Tegan from a readout in the control room. The Fifth Doctor called it the tardis databank.
  *
  * @author bootthanoo, eccentric_nz
  */
@@ -47,11 +48,10 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!(sender instanceof Player)) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+		if (!(sender instanceof Player p)) {
 			return true;
 		}
-		Player p = (Player) sender;
 		UUID uuid = p.getUniqueId();
 		if (plugin.getTrackerKeeper().getInfoMenu().containsKey(uuid)) {
 			if (args[0].equalsIgnoreCase("E")) {
@@ -68,7 +68,7 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
 	}
 
 	/**
-	 * Listens for player typing a TARDIS Information System key code. The player must be found in the trackInfoMenu
+	 * Listens for player typing a tardis Information System key code. The player must be found in the trackInfoMenu
 	 * HashMap, where their position in the TIS is stored. The key code is then processed.
 	 *
 	 * @param event a player typing in chat
@@ -1321,7 +1321,7 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
 	}
 
 	/**
-	 * Displays information about a TARDIS room. Descriptions are stored in the TARDISDescription enum. Other values are
+	 * Displays information about a tardis room. Descriptions are stored in the TARDISDescription enum. Other values are
 	 * pulled directly from the rooms.yml configuration file.
 	 *
 	 * @param p    the player to show the room information to
@@ -1340,10 +1340,10 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
 	}
 
 	/**
-	 * Displays information about an item or TARDIS type. Descriptions are stored in the TARDISDescription enum.
+	 * Displays information about an item or tardis type. Descriptions are stored in the TARDISDescription enum.
 	 *
 	 * @param p    the player to show the information to
-	 * @param item the item or TARDIS type to display
+	 * @param item the item or tardis type to display
 	 */
 	private void showInfo(Player p, TARDISInfoMenu item) {
 		p.sendMessage("---");
@@ -1392,7 +1392,7 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
 	}
 
 	/**
-	 * Exits the TARDIS Information System menu
+	 * Exits the tardis Information System menu
 	 *
 	 * @param p the player to exit
 	 */

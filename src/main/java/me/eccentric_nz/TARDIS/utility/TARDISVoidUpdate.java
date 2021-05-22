@@ -14,20 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 
 import java.util.HashMap;
 
-import static me.eccentric_nz.TARDIS.utility.TARDISSpiral.SPIRAL;
+import static me.eccentric_nz.tardis.utility.TARDISSpiral.SPIRAL;
 
 /**
  * @author eccentric_nz
@@ -50,7 +50,7 @@ public class TARDISVoidUpdate {
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 		if (rs.resultSet()) {
 			Tardis tardis = rs.getTardis();
-			// get start chunk for this TARDIS
+			// get start chunk for this tardis
 			String[] cstr = tardis.getChunk().split(":");
 			World w = TARDISAliasResolver.getWorldFromAlias(cstr[0]);
 			int cx = TARDISNumberParsers.parseInt(cstr[1]);

@@ -14,26 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.artron;
+package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.api.event.TARDISClaimEvent;
-import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import multiworld.MultiWorldPlugin;
-import multiworld.api.MultiWorldAPI;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.api.event.TARDISClaimEvent;
+import me.eccentric_nz.tardis.control.TARDISPowerButton;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.move.TARDISDoorCloser;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -55,11 +53,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
-import static me.eccentric_nz.TARDIS.commands.tardis.TARDISAbandonCommand.getSign;
+import static me.eccentric_nz.tardis.commands.tardis.TARDISAbandonCommand.getSign;
 
 /**
- * The Ninth Doctor used the Cardiff rift to "re-charge" his TARDIS. The process took 2 days.
+ * The Ninth Doctor used the Cardiff rift to "re-charge" his tardis. The process took 2 days.
  *
  * @author eccentric_nz
  */
@@ -84,7 +83,7 @@ public class TARDISArtronCapacitorListener implements Listener {
 	/**
 	 * Listens for player interaction with the button on the Artron Energy Capacitor. If the button is right-clicked,
 	 * then the Artron levels are updated. Clicking with a Nether Star puts the capacitor to maximum, clicking with the
-	 * TARDIS key initialises the capacitor by spawning a charged creeper inside it and sets the level to 50%. Clicking
+	 * tardis key initialises the capacitor by spawning a charged creeper inside it and sets the level to 50%. Clicking
 	 * while sneaking transfers player Artron Energy into the capacitor.
 	 * <p>
 	 * If the button is just right-clicked, it displays the current capacitor level as percentage of full.
@@ -156,15 +155,8 @@ public class TARDISArtronCapacitorListener implements Listener {
 													return;
 												}
 												break;
-											case MULTIWORLD:
-												MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
-												if (multiworld.isCreativeWorld(block.getLocation().getWorld().getName())) {
-													TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
-													return;
-												}
-												break;
 											case NONE:
-												if (plugin.getPlanetsConfig().getString("planets." + block.getLocation().getWorld().getName() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
+												if (Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + Objects.requireNonNull(block.getLocation().getWorld()).getName() + ".gamemode")).equalsIgnoreCase("CREATIVE")) {
 													TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
 													return;
 												}
@@ -192,12 +184,14 @@ public class TARDISArtronCapacitorListener implements Listener {
 									ItemStack is = player.getInventory().getItemInMainHand();
 									if (is.hasItemMeta()) {
 										ItemMeta im = is.getItemMeta();
+										assert im != null;
 										String name = im.getDisplayName();
 										if (!name.equals("Artron Storage Cell")) {
 											TARDISMessage.send(player, "CELL_NOT_VALID");
 											return;
 										}
 										List<String> lore = im.getLore();
+										assert lore != null;
 										int charge = TARDISNumberParsers.parseInt(lore.get(1)) * is.getAmount();
 										if (charge <= 0) {
 											TARDISMessage.send(player, "CELL_NOT_CHARGED");
@@ -215,96 +209,101 @@ public class TARDISArtronCapacitorListener implements Listener {
 								HashMap<String, Object> set = new HashMap<>();
 								set.put("artron_level", amount);
 								plugin.getQueryFactory().doUpdate("tardis", set, whereid);
-							} else if (item.equals(Material.getMaterial(key))) {
-								// has the TARDIS been initialised?
-								if (!init) {
-									// kickstart the TARDIS Artron Energy Capacitor
-									TARDISSounds.playTARDISSound(block.getLocation(), "power_up");
-									if (abandoned) {
-										// transfer ownership to the player who clicked
-										claimAbandoned(player, id, block, tardis);
-									}
-									// get locations from database
-									String creeper = tardis.getCreeper();
-									if (!creeper.isEmpty() && !creeper.equals(":")) {
-										World w = block.getLocation().getWorld();
-										Location cl = TARDISStaticLocationGetters.getLocationFromDB(creeper);
-										plugin.setTardisSpawn(true);
-										Entity e = w.spawnEntity(cl.add(0.0d, 1.0d, 0.0d), EntityType.CREEPER);
-										Creeper c = (Creeper) e;
-										c.setPowered(true);
-										c.setRemoveWhenFarAway(false);
-										if (tardis.getSchematic().hasBeacon()) {
-											String beacon = tardis.getBeacon();
-											Block bl = TARDISStaticLocationGetters.getLocationFromDB(beacon).getBlock();
-											bl.setBlockData(TARDISConstants.GLASS);
-										}
-									}
-									// set the capacitor to 50% charge
-									HashMap<String, Object> set = new HashMap<>();
-									int half = Math.round(fc / 2.0F);
-									set.put("artron_level", half);
-									set.put("tardis_init", 1);
-									set.put("powered_on", 1);
-									plugin.getQueryFactory().doUpdate("tardis", set, whereid);
-									TARDISMessage.send(player, "ENERGY_INIT");
-								} else { // toggle power
-									if (plugin.getConfig().getBoolean("allow.power_down")) {
-										boolean pu = true;
+							} else {
+								assert key != null;
+								if (item.equals(Material.getMaterial(key))) {
+									// has the tardis been initialised?
+									if (!init) {
+										// kickstart the tardis Artron Energy Capacitor
+										TARDISSounds.playTARDISSound(block.getLocation(), "power_up");
 										if (abandoned) {
 											// transfer ownership to the player who clicked
-											pu = claimAbandoned(player, id, block, tardis);
+											claimAbandoned(player, id, block, tardis);
 										}
-										if (pu) {
-											new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().hasLanterns()).clickButton();
+										// get locations from database
+										String creeper = tardis.getCreeper();
+										if (!creeper.isEmpty() && !creeper.equals(":")) {
+											World w = block.getLocation().getWorld();
+											Location cl = TARDISStaticLocationGetters.getLocationFromDB(creeper);
+											plugin.setTardisSpawn(true);
+											assert w != null;
+											assert cl != null;
+											Entity e = w.spawnEntity(cl.add(0.0d, 1.0d, 0.0d), EntityType.CREEPER);
+											Creeper c = (Creeper) e;
+											c.setPowered(true);
+											c.setRemoveWhenFarAway(false);
+											if (tardis.getSchematic().hasBeacon()) {
+												String beacon = tardis.getBeacon();
+												Block bl = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(beacon)).getBlock();
+												bl.setBlockData(TARDISConstants.GLASS);
+											}
+										}
+										// set the capacitor to 50% charge
+										HashMap<String, Object> set = new HashMap<>();
+										int half = Math.round(fc / 2.0F);
+										set.put("artron_level", half);
+										set.put("tardis_init", 1);
+										set.put("powered_on", 1);
+										plugin.getQueryFactory().doUpdate("tardis", set, whereid);
+										TARDISMessage.send(player, "ENERGY_INIT");
+									} else { // toggle power
+										if (plugin.getConfig().getBoolean("allow.power_down")) {
+											boolean pu = true;
+											if (abandoned) {
+												// transfer ownership to the player who clicked
+												pu = claimAbandoned(player, id, block, tardis);
+											}
+											if (pu) {
+												new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().hasLanterns()).clickButton();
+											}
 										}
 									}
-								}
-							} else if (player.isSneaking()) {
-								if (!init) {
-									TARDISMessage.send(player, "ENERGY_NO_INIT");
-									return;
-								}
-								// transfer player artron energy into the capacitor
-								int ten_percent = Math.round(fc * 0.1F);
-								if (current_level >= ten_percent && plugin.getConfig().getBoolean("creation.create_worlds")) {
-									TARDISMessage.send(player, "ENERGY_UNDER_10");
-									return;
-								}
-								if (hasPrefs) {
-									int level = rsp.getArtronLevel();
-									if (level < 1) {
-										TARDISMessage.send(player, "ENERGY_NONE");
+								} else if (player.isSneaking()) {
+									if (!init) {
+										TARDISMessage.send(player, "ENERGY_NO_INIT");
 										return;
 									}
-									int new_level = current_level + level;
-									// set player level to 0
-									HashMap<String, Object> set = new HashMap<>();
-									set.put("artron_level", 0);
-									HashMap<String, Object> wherel = new HashMap<>();
-									wherel.put("uuid", player.getUniqueId().toString());
-									plugin.getQueryFactory().doUpdate("player_prefs", set, wherel);
-									// add player level to TARDIS level
-									HashMap<String, Object> sett = new HashMap<>();
-									sett.put("artron_level", new_level);
-									plugin.getQueryFactory().doUpdate("tardis", sett, whereid);
-									int percent = Math.round((new_level * 100F) / fc);
-									TARDISMessage.send(player, "ENERGY_CHARGED", String.format("%d", percent));
+									// transfer player artron energy into the capacitor
+									int ten_percent = Math.round(fc * 0.1F);
+									if (current_level >= ten_percent && plugin.getConfig().getBoolean("creation.create_worlds")) {
+										TARDISMessage.send(player, "ENERGY_UNDER_10");
+										return;
+									}
+									if (hasPrefs) {
+										int level = rsp.getArtronLevel();
+										if (level < 1) {
+											TARDISMessage.send(player, "ENERGY_NONE");
+											return;
+										}
+										int new_level = current_level + level;
+										// set player level to 0
+										HashMap<String, Object> set = new HashMap<>();
+										set.put("artron_level", 0);
+										HashMap<String, Object> wherel = new HashMap<>();
+										wherel.put("uuid", player.getUniqueId().toString());
+										plugin.getQueryFactory().doUpdate("player_prefs", set, wherel);
+										// add player level to tardis level
+										HashMap<String, Object> sett = new HashMap<>();
+										sett.put("artron_level", new_level);
+										plugin.getQueryFactory().doUpdate("tardis", sett, whereid);
+										int percent = Math.round((new_level * 100F) / fc);
+										TARDISMessage.send(player, "ENERGY_CHARGED", String.format("%d", percent));
+									} else {
+										TARDISMessage.send(player, "ENERGY_NONE");
+									}
 								} else {
-									TARDISMessage.send(player, "ENERGY_NONE");
+									if (!init) {
+										TARDISMessage.send(player, "ENERGY_NO_INIT");
+										return;
+									}
+									// just tell us how much energy we have
+									new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
 								}
-							} else {
-								if (!init) {
-									TARDISMessage.send(player, "ENERGY_NO_INIT");
-									return;
-								}
-								// just tell us how much energy we have
-								new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
 							}
 						}
 					} else if (action == Action.LEFT_CLICK_BLOCK && player.isSneaking()) {
 						event.setCancelled(true);
-						// check if the charged creeper in the TARDIS Artron Energy Capacitor is still there
+						// check if the charged creeper in the tardis Artron Energy Capacitor is still there
 						new TARDISCreeperChecker(plugin, id).checkCreeper();
 					}
 				}
@@ -341,16 +340,9 @@ public class TARDISArtronCapacitorListener implements Listener {
 						owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
 					}
 					switch (preset) {
-						case GRAVESTONE:
-							sign.setLine(3, owner);
-							break;
-						case ANGEL:
-						case JAIL:
-							sign.setLine(2, owner);
-							break;
-						default:
-							sign.setLine(0, owner);
-							break;
+						case GRAVESTONE -> sign.setLine(3, owner);
+						case ANGEL, JAIL -> sign.setLine(2, owner);
+						default -> sign.setLine(0, owner);
 					}
 					sign.update();
 				}

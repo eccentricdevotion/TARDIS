@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Storage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.enumeration.Storage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -85,31 +85,31 @@ public class TARDISMenuListener implements Listener {
 		map.put(ChatColor.DARK_RED + "Lab table", 27);
 		map.put(ChatColor.DARK_RED + "Genetic Manipulator", 54);
 		// TODO should Handles Program GUI be in here?
-//        map.put(ChatColor.DARK_RED + "Handles Program", 54);
+		//        map.put(ChatColor.DARK_RED + "Handles Program", 54);
 		map.put(ChatColor.DARK_RED + "Player Prefs Menu", 36);
 		map.put(ChatColor.DARK_RED + "Recipe Categories", 27);
-		map.put(ChatColor.DARK_RED + "TARDIS Recipes", 27);
+		map.put(ChatColor.DARK_RED + "tardis Recipes", 27);
 		map.put(ChatColor.DARK_RED + "Saved Programs", 54);
 		map.put(ChatColor.DARK_RED + "Sonic Activator", 9);
 		map.put(ChatColor.DARK_RED + "Sonic Configurator", 27);
 		map.put(ChatColor.DARK_RED + "Sonic Generator", 54);
 		map.put(ChatColor.DARK_RED + "Sonic Prefs Menu", 27);
-		map.put(ChatColor.DARK_RED + "TARDIS Archive", 27);
-		map.put(ChatColor.DARK_RED + "TARDIS Console", 9);
-		map.put(ChatColor.DARK_RED + "TARDIS Control Menu", 54);
-		map.put(ChatColor.DARK_RED + "TARDIS Floor Menu", 54);
-		map.put(ChatColor.DARK_RED + "TARDIS Interior Sounds", 18);
-		map.put(ChatColor.DARK_RED + "TARDIS Key Prefs Menu", 27);
-		map.put(ChatColor.DARK_RED + "TARDIS Map", 54);
-		map.put(ChatColor.DARK_RED + "TARDIS Seeds Menu", 90);
-		map.put(ChatColor.DARK_RED + "TARDIS Seeds Recipe", 90);
-		map.put(ChatColor.DARK_RED + "TARDIS Upgrade Menu", 54);
-		map.put(ChatColor.DARK_RED + "TARDIS Wall & Floor Menu", 90);
-		map.put(ChatColor.DARK_RED + "TARDIS Wall Menu", 54);
-		map.put(ChatColor.DARK_RED + "TARDIS Weather Menu", 9);
-		map.put(ChatColor.DARK_RED + "TARDIS areas", 90);
-		map.put(ChatColor.DARK_RED + "TARDIS saves", 90);
-		map.put(ChatColor.DARK_RED + "TARDIS transmats", 90);
+		map.put(ChatColor.DARK_RED + "tardis Archive", 27);
+		map.put(ChatColor.DARK_RED + "tardis Console", 9);
+		map.put(ChatColor.DARK_RED + "tardis Control Menu", 54);
+		map.put(ChatColor.DARK_RED + "tardis Floor Menu", 54);
+		map.put(ChatColor.DARK_RED + "tardis Interior Sounds", 18);
+		map.put(ChatColor.DARK_RED + "tardis Key Prefs Menu", 27);
+		map.put(ChatColor.DARK_RED + "tardis Map", 54);
+		map.put(ChatColor.DARK_RED + "tardis Seeds Menu", 90);
+		map.put(ChatColor.DARK_RED + "tardis Seeds Recipe", 90);
+		map.put(ChatColor.DARK_RED + "tardis Upgrade Menu", 54);
+		map.put(ChatColor.DARK_RED + "tardis Wall & Floor Menu", 90);
+		map.put(ChatColor.DARK_RED + "tardis Wall Menu", 54);
+		map.put(ChatColor.DARK_RED + "tardis Weather Menu", 9);
+		map.put(ChatColor.DARK_RED + "tardis areas", 90);
+		map.put(ChatColor.DARK_RED + "tardis saves", 90);
+		map.put(ChatColor.DARK_RED + "tardis transmats", 90);
 		map.put(ChatColor.DARK_RED + "Temporal Locator", 27);
 		for (Storage s : Storage.values()) {
 			map.put(s.getTitle(), 54);

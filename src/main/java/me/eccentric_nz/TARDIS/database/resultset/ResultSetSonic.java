@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.Sonic;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.database.data.Sonic;
 import org.bukkit.ChatColor;
 
 import java.sql.Connection;
@@ -69,7 +69,7 @@ public class ResultSetSonic {
 		if (where != null) {
 			StringBuilder sbw = new StringBuilder();
 			where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
-			wheres = " WHERE " + sbw.toString() + "sonic_uuid = ''";
+			wheres = " WHERE " + sbw + "sonic_uuid = ''";
 		}
 		String query = "SELECT * FROM " + prefix + "sonic" + wheres;
 		try {

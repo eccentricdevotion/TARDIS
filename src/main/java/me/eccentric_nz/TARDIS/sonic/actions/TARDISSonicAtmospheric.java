@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.sonic.actions;
+package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.control.TARDISAtmosphericExcitation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -39,7 +39,7 @@ public class TARDISSonicAtmospheric {
 		String line1 = ChatColor.stripColor(sign.getLine(1));
 		String line2 = ChatColor.stripColor(sign.getLine(2));
 		if (isPresetSign(plugin, line0, line1, line2)) {
-			// get TARDIS id
+			// get tardis id
 			ResultSetTardisID rs = new ResultSetTardisID(plugin);
 			if (rs.fromUUID(player.getUniqueId().toString())) {
 				int tid = rs.getTardis_id();

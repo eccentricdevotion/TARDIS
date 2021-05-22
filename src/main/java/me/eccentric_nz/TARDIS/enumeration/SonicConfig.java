@@ -1,13 +1,11 @@
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
 public enum SonicConfig {
 
-	NOT_UPGRADED(1, Material.GRAY_WOOL),
-	ENABLED(2, Material.LIME_WOOL),
-	DISABLED(2, Material.RED_WOOL);
+	NOT_UPGRADED(1, Material.GRAY_WOOL), ENABLED(2, Material.LIME_WOOL), DISABLED(2, Material.RED_WOOL);
 
 	private final int customModelData;
 	private final Material material;

@@ -14,13 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.planets;
+package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISChecker;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISChecker;
 import org.bukkit.ChatColor;
-import org.bukkit.World;
 
 /**
  * @author eccentric_nz
@@ -33,7 +32,7 @@ public class TARDISSiluria {
 		this.plugin = plugin;
 	}
 
-	public World loadSilurianUnderworld() {
+	public void loadSilurianUnderworld() {
 		String s_world = plugin.getServer().getWorlds().get(0).getName();
 		// copy datapack files
 		if (!TARDISChecker.hasDimension("siluria")) {
@@ -46,9 +45,8 @@ public class TARDISSiluria {
 				plugin.getPlanetsConfig().set("planets." + s_world + "_tardis_siluria.time_travel", true);
 				plugin.savePlanetsConfig();
 			}
-			return null;
 		} else {
-			return plugin.getServer().getWorld(s_world + "_tardis_siluriao");
+			plugin.getServer().getWorld(s_world + "_tardis_siluriao");
 		}
 	}
 }

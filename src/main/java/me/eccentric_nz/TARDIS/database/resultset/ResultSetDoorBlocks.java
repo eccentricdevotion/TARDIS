@@ -14,21 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.block.Block;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
+ * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the tardis can
  * travel to.
  *
  * @author eccentric_nz
@@ -49,7 +50,7 @@ public class ResultSetDoorBlocks {
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
 	 *
 	 * @param plugin an instance of the main class.
-	 * @param id     the TARDIS id to get the doors for.
+	 * @param id     the tardis id to get the doors for.
 	 */
 	public ResultSetDoorBlocks(TARDIS plugin, int id) {
 		this.plugin = plugin;
@@ -76,10 +77,10 @@ public class ResultSetDoorBlocks {
 					// get block
 					String door = rs.getString("door_location");
 					if (rs.getInt("door_type") == 0) {
-						outerBlock = TARDISStaticLocationGetters.getLocationFromDB(door).getBlock();
+						outerBlock = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(door)).getBlock();
 						outerDirection = COMPASS.valueOf(rs.getString("door_direction"));
 					} else {
-						innerBlock = TARDISStaticLocationGetters.getLocationFromDB(door).getBlock();
+						innerBlock = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(door)).getBlock();
 						innerDirection = COMPASS.valueOf(rs.getString("door_direction"));
 					}
 				}

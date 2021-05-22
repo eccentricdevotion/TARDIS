@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.flight;
+package me.eccentric_nz.tardis.flight;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -24,20 +24,14 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Using data collected from the Interstitial Antenna, the Mean Free Path Tracker shows a TARDIS' planned path through
- * the Space-Time Vortex. It allows the operator to spot approaching turbulence in a TARDIS' flight path.
+ * Using data collected from the Interstitial Antenna, the Mean Free Path Tracker shows a tardis' planned path through
+ * the Space-Time Vortex. It allows the operator to spot approaching turbulence in a tardis' flight path.
  *
  * @author eccentric_nz
  */
 class TARDISRegulatorSlot {
 
-	final List<Integer> bounds = Arrays.asList(
-			0, 1, 2, 3, 4,
-			9, 10, 11, 12, 13,
-			18, 19, 20, 21, 22,
-			27, 28, 29, 30, 31,
-			36, 37, 38, 39, 40
-	);
+	final List<Integer> bounds = Arrays.asList(0, 1, 2, 3, 4, 9, 10, 11, 12, 13, 18, 19, 20, 21, 22, 27, 28, 29, 30, 31, 36, 37, 38, 39, 40);
 	final ItemStack box;
 	final ItemStack vortex;
 

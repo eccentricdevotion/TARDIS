@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.compound;
+package me.eccentric_nz.tardis.chemistry.compound;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -40,6 +40,7 @@ public class CompoundInventory {
 		// info
 		ItemStack info = new ItemStack(Material.BOWL, 1);
 		ItemMeta info_im = info.getItemMeta();
+		assert info_im != null;
 		info_im.setDisplayName("Info");
 		info_im.setLore(Arrays.asList("Combine elements to create", "chemical compounds.", "To see a compound formula", "use the " + ChatColor.GREEN + ChatColor.ITALIC + "/tardischemistry formula" + ChatColor.DARK_PURPLE + ChatColor.ITALIC + " command.", "Place items in the bottom", "row from left to right."));
 		info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
@@ -48,6 +49,7 @@ public class CompoundInventory {
 		// check formula
 		ItemStack check = new ItemStack(Material.BOWL, 1);
 		ItemMeta check_im = check.getItemMeta();
+		assert check_im != null;
 		check_im.setDisplayName("Check formula");
 		check_im.setCustomModelData(GUIChemistry.CHECK.getCustomModelData());
 		check.setItemMeta(check_im);
@@ -55,6 +57,7 @@ public class CompoundInventory {
 		// close
 		ItemStack close = new ItemStack(Material.BOWL, 1);
 		ItemMeta close_im = close.getItemMeta();
+		assert close_im != null;
 		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
 		close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
 		close.setItemMeta(close_im);

@@ -14,23 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.universaltranslator;
+package me.eccentric_nz.tardis.universaltranslator;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
 /**
  * A Time Control Unit is a golden sphere about the size of a Cricket ball. It is stored in the Secondary Control Room.
- * All TARDISes have one of these devices, which can be used to remotely control a TARDIS by broadcasting Stattenheim
+ * All TARDISes have one of these devices, which can be used to remotely control a tardis by broadcasting Stattenheim
  * signals that travel along the time contours in the Space/Time Vortex.
  *
  * @author eccentric_nz
@@ -38,14 +39,14 @@ import java.util.Locale;
 public class TARDISSayCommand implements CommandExecutor {
 
 	private final TARDIS plugin;
-	private final String UT = ChatColor.GOLD + "[TARDIS Universal Translator]" + ChatColor.RESET + " ";
+	private final String UT = ChatColor.GOLD + "[tardis Universal Translator]" + ChatColor.RESET + " ";
 
 	public TARDISSayCommand(TARDIS plugin) {
 		this.plugin = plugin;
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("tardissay")) {
 			if (!TARDISPermission.hasPermission(sender, "tardis.translate")) {
 				TARDISMessage.send(sender, "NO_PERMS");

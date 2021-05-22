@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.sudo;
+package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.desktop.TARDISRepair;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.desktop.TARDISRepair;
+import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -43,6 +43,7 @@ public class SudoRepair {
 	public boolean repair() {
 		Player player = plugin.getServer().getPlayer(uuid);
 		HashMap<String, Object> where = new HashMap<>();
+		assert player != null;
 		where.put("uuid", player.getUniqueId().toString());
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 		if (!rs.resultSet()) {

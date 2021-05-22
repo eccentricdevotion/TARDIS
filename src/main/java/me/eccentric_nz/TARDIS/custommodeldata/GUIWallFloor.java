@@ -14,19 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Material;
 
 public enum GUIWallFloor {
 
-	// TARDIS Wall & Floor Menu
-	BUTTON_SCROLL_U(3, 8, Material.ARROW),
-	BUTTON_SCROLL_D(2, 17, Material.ARROW),
-	WALL(136, 26, Material.BOWL),
-	FLOOR(137, 35, Material.BOWL),
-	BUTTON_ABORT(2, 53, Material.BOWL);
+	// tardis Wall & Floor Menu
+	BUTTON_SCROLL_U(3, 8, Material.ARROW), BUTTON_SCROLL_D(2, 17, Material.ARROW), WALL(136, 26, Material.BOWL), FLOOR(137, 35, Material.BOWL), BUTTON_ABORT(2, 53, Material.BOWL);
 
 	private final int customModelData;
 	private final int slot;

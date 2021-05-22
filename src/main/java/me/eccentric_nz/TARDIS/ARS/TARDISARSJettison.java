@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.ARS;
+package me.eccentric_nz.tardis.ars;
 
 import org.bukkit.Chunk;
 
@@ -78,65 +78,42 @@ public class TARDISARSJettison {
 	private int getChunkX(int xx, Chunk c) {
 		int cx = c.getX();
 		int cz = c.getZ();
-		switch (xx) {
-			case 0:
-				return c.getWorld().getChunkAt(cx - 4, cz).getBlock(0, 64, 0).getX();
-			case 1:
-				return c.getWorld().getChunkAt(cx - 3, cz).getBlock(0, 64, 0).getX();
-			case 2:
-				return c.getWorld().getChunkAt(cx - 2, cz).getBlock(0, 64, 0).getX();
-			case 3:
-				return c.getWorld().getChunkAt(cx - 1, cz).getBlock(0, 64, 0).getX();
-			case 5:
-				return c.getWorld().getChunkAt(cx + 1, cz).getBlock(0, 64, 0).getX();
-			case 6:
-				return c.getWorld().getChunkAt(cx + 2, cz).getBlock(0, 64, 0).getX();
-			case 7:
-				return c.getWorld().getChunkAt(cx + 3, cz).getBlock(0, 64, 0).getX();
-			case 8:
-				return c.getWorld().getChunkAt(cx + 4, cz).getBlock(0, 64, 0).getX();
-			default:
-				return c.getBlock(0, 64, 0).getX();
-		}
+		return switch (xx) {
+			case 0 -> c.getWorld().getChunkAt(cx - 4, cz).getBlock(0, 64, 0).getX();
+			case 1 -> c.getWorld().getChunkAt(cx - 3, cz).getBlock(0, 64, 0).getX();
+			case 2 -> c.getWorld().getChunkAt(cx - 2, cz).getBlock(0, 64, 0).getX();
+			case 3 -> c.getWorld().getChunkAt(cx - 1, cz).getBlock(0, 64, 0).getX();
+			case 5 -> c.getWorld().getChunkAt(cx + 1, cz).getBlock(0, 64, 0).getX();
+			case 6 -> c.getWorld().getChunkAt(cx + 2, cz).getBlock(0, 64, 0).getX();
+			case 7 -> c.getWorld().getChunkAt(cx + 3, cz).getBlock(0, 64, 0).getX();
+			case 8 -> c.getWorld().getChunkAt(cx + 4, cz).getBlock(0, 64, 0).getX();
+			default -> c.getBlock(0, 64, 0).getX();
+		};
 	}
 
 	private int getChunkZ(int zz, Chunk c) {
 		int cx = c.getX();
 		int cz = c.getZ();
-		switch (zz) {
-			case 0:
-				return c.getWorld().getChunkAt(cz, cz - 4).getBlock(0, 64, 0).getZ();
-			case 1:
-				return c.getWorld().getChunkAt(cx, cz - 3).getBlock(0, 64, 0).getZ();
-			case 2:
-				return c.getWorld().getChunkAt(cx, cz - 2).getBlock(0, 64, 0).getZ();
-			case 3:
-				return c.getWorld().getChunkAt(cx, cz - 1).getBlock(0, 64, 0).getZ();
-			case 5:
-				return c.getWorld().getChunkAt(cx, cz + 1).getBlock(0, 64, 0).getZ();
-			case 6:
-				return c.getWorld().getChunkAt(cx, cz + 2).getBlock(0, 64, 0).getZ();
-			case 7:
-				return c.getWorld().getChunkAt(cx, cz + 3).getBlock(0, 64, 0).getZ();
-			case 8:
-				return c.getWorld().getChunkAt(cx, cz + 4).getBlock(0, 64, 0).getZ();
-			default:
-				return c.getBlock(0, 64, 0).getZ();
-		}
+		return switch (zz) {
+			case 0 -> c.getWorld().getChunkAt(cz, cz - 4).getBlock(0, 64, 0).getZ();
+			case 1 -> c.getWorld().getChunkAt(cx, cz - 3).getBlock(0, 64, 0).getZ();
+			case 2 -> c.getWorld().getChunkAt(cx, cz - 2).getBlock(0, 64, 0).getZ();
+			case 3 -> c.getWorld().getChunkAt(cx, cz - 1).getBlock(0, 64, 0).getZ();
+			case 5 -> c.getWorld().getChunkAt(cx, cz + 1).getBlock(0, 64, 0).getZ();
+			case 6 -> c.getWorld().getChunkAt(cx, cz + 2).getBlock(0, 64, 0).getZ();
+			case 7 -> c.getWorld().getChunkAt(cx, cz + 3).getBlock(0, 64, 0).getZ();
+			case 8 -> c.getWorld().getChunkAt(cx, cz + 4).getBlock(0, 64, 0).getZ();
+			default -> c.getBlock(0, 64, 0).getZ();
+		};
 	}
 
 	private int getChunkY(int yy) {
-		switch (yy) {
-			case -1:
-				return 32;
-			case 0:
-				return 48;
-			case 2:
-				return 80;
-			case 3:
-				return 96;
-			default:
-				return 64;
-		}
+		return switch (yy) {
+			case -1 -> 32;
+			case 0 -> 48;
+			case 2 -> 80;
+			case 3 -> 96;
+			default -> 64;
+		};
 	}
 }

@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.planets;
+package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.enumeration.WorldManager;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
@@ -59,6 +59,7 @@ public class TARDISWorlds {
 				if (TARDIS.plugin.getPlanetsConfig().contains("planets." + world + ".gamerules")) {
 					for (String rule : TARDIS.plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules").getKeys(false)) {
 						GameRule gameRule = GameRule.getByName(rule);
+						assert gameRule != null;
 						w.setGameRule(gameRule, TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".gamerules." + rule));
 					}
 				}
@@ -88,7 +89,7 @@ public class TARDISWorlds {
 				plugin.getConsole().sendMessage(plugin.getPluginName() + "Added '" + worldname + "' to planets.yml. To exclude this world from time travel run: /tardisadmin exclude " + worldname);
 			}
 		});
-		// revert lowercase TARDIS world names
+		// revert lowercase tardis world names
 		if (plugin.getConfig().getBoolean("conversions.level_names")) {
 			for (Map.Entry<String, String> level : TARDISConstants.REVERT_LEVELS.entrySet()) {
 				// set the LevelName in level.dat
@@ -106,7 +107,7 @@ public class TARDISWorlds {
 		}
 		// get default server world
 		String s_world = plugin.getServer().getWorlds().get(0).getName();
-		// now load TARDIS worlds / remove worlds that may have been deleted
+		// now load tardis worlds / remove worlds that may have been deleted
 		Set<String> cWorlds = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
 		cWorlds.forEach((cw) -> {
 			if (!TARDISConstants.PLANETS.contains(cw) && TARDISAliasResolver.getWorldFromAlias(cw) == null) {

@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.StandbyData;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.database.data.StandbyData;
+import me.eccentric_nz.tardis.enumeration.Consoles;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.schematic.ResultSetArchive;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
- * Gets a list of TARDIS ids whose power is on.
+ * Gets a list of tardis ids whose power is on.
  *
  * @author eccentric_nz
  */
@@ -66,10 +66,8 @@ public class ResultSetStandby {
 						preset = PRESET.FACTORY;
 					}
 					switch (rs.getString("size")) {
-						case "JUNK":
-							sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, PRESET.JUNK, false);
-							break;
-						case "ARCHIVE":
+						case "JUNK" -> sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, PRESET.JUNK, false);
+						case "ARCHIVE" -> {
 							HashMap<String, Object> wherea = new HashMap<>();
 							wherea.put("uuid", rs.getString("uuid"));
 							wherea.put("use", 1);
@@ -79,10 +77,8 @@ public class ResultSetStandby {
 								lanterns = rsa.getArchive().isLanterns();
 							}
 							sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, lanterns);
-							break;
-						default:
-							sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, Consoles.getBY_NAMES().get(rs.getString("size")).hasLanterns());
-							break;
+						}
+						default -> sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, Consoles.getBY_NAMES().get(rs.getString("size")).hasLanterns());
 					}
 					ids.put(rs.getInt("tardis_id"), sd);
 				}

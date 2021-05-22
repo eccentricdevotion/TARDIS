@@ -12,13 +12,13 @@
   You should have received a copy of the GNU General Public License along with ASkyBlock. If not, see
   <http://www.gnu.org/licenses/>.
   <p>
-  Adapted by eccentric_nz for the TARDIS plugin
+  Adapted by eccentric_nz for the tardis plugin
  */
-package me.eccentric_nz.TARDIS.planets;
+package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.move.TARDISMoveSession;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -43,6 +43,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -134,7 +135,7 @@ public class TARDISAcidWater implements Listener {
 					if (player.isDead()) {
 						burningPlayers.remove(player);
 						cancel();
-					} else if ((player.getLocation().getBlock().isLiquid() || player.getLocation().getBlock().getRelative(BlockFace.UP).isLiquid()) && player.getLocation().getWorld().getName().equalsIgnoreCase(s_world + "_tardis_skaro")) {
+					} else if ((player.getLocation().getBlock().isLiquid() || player.getLocation().getBlock().getRelative(BlockFace.UP).isLiquid()) && Objects.requireNonNull(player.getLocation().getWorld()).getName().equalsIgnoreCase(s_world + "_tardis_skaro")) {
 						// Apply additional potion effects
 						if (!plugin.getPlanetsConfig().getStringList("planets." + s_world + "_tardis_skaro.acid_potions").isEmpty()) {
 							plugin.getPlanetsConfig().getStringList("planets." + s_world + "_tardis_skaro.acid_potions").forEach((t) -> {
@@ -280,12 +281,15 @@ public class TARDISAcidWater implements Listener {
 		}
 		Material type = event.getBlockClicked().getType();
 		ItemStack bucket = event.getItemStack();
+		assert bucket != null;
 		ItemMeta im = bucket.getItemMeta();
 		if (type.equals(Material.WATER)) {
+			assert im != null;
 			im.setDisplayName("Acid Bucket");
 			im.setCustomModelData(1);
 		}
 		if (type.equals(Material.LAVA)) {
+			assert im != null;
 			im.setDisplayName("Rust Bucket");
 			im.setCustomModelData(1);
 		}

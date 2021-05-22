@@ -14,24 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.event.TARDISDestructionEvent;
+import me.eccentric_nz.tardis.builders.BiomeSetter;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.destroyers.DestroyData;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.enumeration.WorldManager;
+import me.eccentric_nz.tardis.files.TARDISBlockLoader;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -40,7 +40,7 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.util.*;
 
-import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
+import static me.eccentric_nz.tardis.destroyers.TARDISExterminator.deleteFolder;
 
 /**
  * @author eccentric_nz
@@ -141,7 +141,7 @@ public class TARDISDeleteCommand {
 				biome = TARDISBiome.PLAINS;
 			}
 			plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, tardis.getOwner()));
-			// destroy outer TARDIS
+			// destroy outer tardis
 			if (!hidden) {
 				UUID u = rs.getTardis().getUuid();
 				DestroyData dd = new DestroyData();
@@ -159,11 +159,11 @@ public class TARDISDeleteCommand {
 				// restore biome
 				BiomeSetter.restoreBiome(bb_loc, biome);
 			}
-			// destroy the inner TARDIS
-			// give the TARDIS time to remove itself as it's not hidden
+			// destroy the inner tardis
+			// give the tardis time to remove itself as it's not hidden
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 				if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || wname.contains("TARDIS_WORLD_")) {
-					// delete TARDIS world
+					// delete tardis world
 					List<Player> players = cw.getPlayers();
 					players.forEach((p) -> p.kickPlayer("World scheduled for deletion!"));
 					if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {

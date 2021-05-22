@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands;
+package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.messaging.TARDISRecipeLister;
-import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryInventory;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.custommodeldata.TARDISSeedModel;
+import me.eccentric_nz.tardis.enumeration.Consoles;
+import me.eccentric_nz.tardis.enumeration.RecipeCategory;
+import me.eccentric_nz.tardis.enumeration.RecipeItem;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TARDISRecipeLister;
+import me.eccentric_nz.tardis.recipes.TARDISRecipeCategoryInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -34,12 +34,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 /**
  * A Time Control Unit is a golden sphere about the size of a Cricket ball. It is stored in the Secondary Control Room.
- * All TARDISes have one of these devices, which can be used to remotely control a TARDIS by broadcasting Stattenheim
+ * All TARDISes have one of these devices, which can be used to remotely control a tardis by broadcasting Stattenheim
  * signals that travel along the time contours in the Space/Time Vortex.
  *
  * @author eccentric_nz
@@ -57,8 +58,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
 		for (RecipeItem recipeItem : RecipeItem.values()) {
 			recipeItems.put(recipeItem.toTabCompletionString(), recipeItem.toRecipeString());
 		}
-		// DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
-		t.put("ARS", Material.QUARTZ_BLOCK); // ARS
+		// DELUXE, ELEVENTH, TWELFTH, ars & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
+		t.put("ars", Material.QUARTZ_BLOCK); // ars
 		t.put("BIGGER", Material.GOLD_BLOCK); // bigger
 		t.put("BUDGET", Material.IRON_BLOCK); // budget
 		t.put("COPPER", Material.WARPED_PLANKS); // copper schematic designed by vistaero
@@ -93,7 +94,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("tardisrecipe")) {
 			if (!TARDISPermission.hasPermission(sender, "tardis.help")) {
 				TARDISMessage.send(sender, "NO_PERMS");
@@ -141,27 +142,14 @@ public class TARDISRecipeCommands implements CommandExecutor {
 			}
 			String which = args[0].toLowerCase();
 			switch (which) {
-				case "bowl-of-custard":
-				case "jelly-baby":
-				case "biome-storage-disk":
-				case "player-storage-disk":
-				case "preset-storage-disk":
-				case "save-storage-disk":
-				case "schematic-wand":
-				case "admin-upgrade":
-				case "bio-scanner-upgrade":
-				case "redstone-upgrade":
-				case "diamond-upgrade":
-				case "emerald-upgrade":
-				case "painter-upgrade":
-				case "ignite-upgrade":
-				case "pickup-arrows-upgrade":
-				case "knockback-upgrade":
+				case "bowl-of-custard", "jelly-baby", "biome-storage-disk", "player-storage-disk", "preset-storage-disk", "save-storage-disk", "schematic-wand", "admin-upgrade", "bio-scanner-upgrade", "redstone-upgrade", "diamond-upgrade", "emerald-upgrade", "painter-upgrade", "ignite-upgrade", "pickup-arrows-upgrade", "knockback-upgrade" -> {
 					showShapelessRecipe(player, recipeItems.get(which));
 					return true;
-				default:
+				}
+				default -> {
 					showShapedRecipe(player, recipeItems.get(which));
 					return true;
+				}
 			}
 		}
 		return false;
@@ -190,8 +178,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
 					im.setCustomModelData(RecipeItem.getByName(dn).getCustomModelData());
 					glowstoneCount++;
 				}
-				if (str.equals("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
-					im.setDisplayName("TARDIS Key");
+				if (str.equals("tardis Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
+					im.setDisplayName("tardis Key");
 					im.setCustomModelData(1);
 				}
 				if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
@@ -217,7 +205,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
 		if (recipeItem != RecipeItem.NOT_FOUND) {
 			im.setCustomModelData(recipeItem.getCustomModelData());
 		}
-		if (str.equals("TARDIS Invisibility Circuit")) {
+		if (str.equals("tardis Invisibility Circuit")) {
 			// set the second line of lore
 			List<String> lore = im.getLore();
 			String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
@@ -282,7 +270,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
 
 	private void showTARDISRecipe(Player player, String type) {
 		plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
-		Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS " + type.toUpperCase(Locale.ENGLISH) + " seed recipe");
+		Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "tardis " + type.toUpperCase(Locale.ENGLISH) + " seed recipe");
 		// redstone torch
 		ItemStack red = new ItemStack(Material.REDSTONE_TORCH, 1);
 		// lapis block
@@ -325,7 +313,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
 		seed.setCustomModelData(10000000 + model);
 		seed.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
 		// set display name
-		seed.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
+		seed.setDisplayName(ChatColor.GOLD + "tardis Seed Block");
 		List<String> lore = new ArrayList<>();
 		lore.add(type.toUpperCase());
 		lore.add("Walls: ORANGE_WOOL");
@@ -344,22 +332,22 @@ public class TARDISRecipeCommands implements CommandExecutor {
 
 	private String getDisplayName(String recipe, int quartzCount) {
 		switch (recipe) {
-			case "TARDIS Locator":
-				return "TARDIS Locator Circuit"; // 1965
+			case "tardis Locator":
+				return "tardis Locator Circuit"; // 1965
 			case "Stattenheim Remote":
-				return "TARDIS Stattenheim Circuit"; // 1963
-			case "TARDIS Chameleon Circuit":
-			case "TARDIS Remote Key":
-				return "TARDIS Materialisation Circuit"; // 1964
-			case "TARDIS Invisibility Circuit":
+				return "tardis Stattenheim Circuit"; // 1963
+			case "tardis Chameleon Circuit":
+			case "tardis Remote Key":
+				return "tardis Materialisation Circuit"; // 1964
+			case "tardis Invisibility Circuit":
 			case "Perception Filter":
 				return "Perception Circuit"; // 1978
 			case "Sonic Screwdriver":
 			case "Server Admin Circuit":
 				return "Sonic Oscillator"; // 1967
 			case "Fob Watch":
-				return "TARDIS Chameleon Circuit"; // 1966
-			case "TARDIS Biome Reader":
+				return "tardis Chameleon Circuit"; // 1966
+			case "tardis Biome Reader":
 				return "Emerald Environment Circuit"; // 1972
 			case "Rift Manipulator":
 				return "Rift Circuit"; // 1983
@@ -381,11 +369,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
 				return "Pickup Arrows Circuit";
 			case "Knockback Upgrade":
 				return "Knockback Circuit";
-			default:  //TARDIS Stattenheim Circuit"
+			default:  //tardis Stattenheim Circuit"
 				if (quartzCount == 0) {
-					return "TARDIS Locator Circuit"; // 1965
+					return "tardis Locator Circuit"; // 1965
 				} else {
-					return "TARDIS Materialisation Circuit"; // 1964
+					return "tardis Materialisation Circuit"; // 1964
 				}
 		}
 	}

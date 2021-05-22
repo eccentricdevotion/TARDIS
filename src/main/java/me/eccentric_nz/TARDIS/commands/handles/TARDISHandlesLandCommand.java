@@ -14,28 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.handles;
+package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
-import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
-import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.tardis.artron.TARDISArtronIndicator;
+import me.eccentric_nz.tardis.artron.TARDISArtronLevels;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.enumeration.DiskCircuit;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.flight.TARDISHandbrake;
+import me.eccentric_nz.tardis.flight.TARDISHandbrakeListener;
+import me.eccentric_nz.tardis.flight.TARDISLand;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.travel.TARDISRandomiserCircuit;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -71,7 +71,7 @@ class TARDISHandlesLandCommand {
 				TARDISMessage.handlesSend(player, "HANDLES_VORTEX");
 				return true;
 			}
-			// must have a destination, but setting one will make the TARDIS automatically exit the time vortex
+			// must have a destination, but setting one will make the tardis automatically exit the time vortex
 			// so generate a random overworld location
 			HashMap<String, Object> wherecl = new HashMap<>();
 			wherecl.put("tardis_id", id);
@@ -88,9 +88,7 @@ class TARDISHandlesLandCommand {
 					set_next.put("direction", rscl.getDirection().toString());
 					boolean sub = plugin.getTrackerKeeper().getSubmarine().contains(id);
 					set_next.put("submarine", (sub) ? 1 : 0);
-					if (plugin.getTrackerKeeper().getSubmarine().contains(id)) {
-						plugin.getTrackerKeeper().getSubmarine().remove(id);
-					}
+					plugin.getTrackerKeeper().getSubmarine().remove(id);
 					where_next.put("tardis_id", id);
 					plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);
 					plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("random_circuit"));
@@ -120,7 +118,7 @@ class TARDISHandlesLandCommand {
 							if (!beac_on && !beacon.isEmpty()) {
 								TARDISHandbrakeListener.toggleBeacon(beacon, false);
 							}
-							// Remove energy from TARDIS and sets database
+							// Remove energy from tardis and sets database
 							TARDISMessage.send(player, "HANDBRAKE_ON");
 							int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
 							HashMap<String, Object> wheret = new HashMap<>();

@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -46,7 +46,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
 	}
 
 	/**
-	 * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+	 * Listens for player clicking inside an inventory. If the inventory is a tardis GUI, then the click is processed
 	 * accordingly.
 	 *
 	 * @param event a player clicking an inventory slot
@@ -55,12 +55,12 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
 	public void onAreaTerminalClick(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "TARDIS areas")) {
+		if (name.equals(ChatColor.DARK_RED + "tardis areas")) {
 			event.setCancelled(true);
 			int slot = event.getRawSlot();
 			Player player = (Player) event.getWhoClicked();
 			if (slot >= 0 && slot < 45) {
-				// get the TARDIS the player is in
+				// get the tardis the player is in
 				HashMap<String, Object> wheres = new HashMap<>();
 				wheres.put("uuid", player.getUniqueId().toString());
 				ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
@@ -68,6 +68,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
 					ItemStack is = view.getItem(slot);
 					if (is != null) {
 						ItemMeta im = is.getItemMeta();
+						assert im != null;
 						String area = im.getDisplayName();
 						Location l = plugin.getTardisArea().getNextSpot(area);
 						if (l == null) {
@@ -88,16 +89,16 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
 				}
 			}
 			if (slot == 49) {
-				// load TARDIS saves
+				// load tardis saves
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-					// get the TARDIS the player is in
+					// get the tardis the player is in
 					HashMap<String, Object> wheres = new HashMap<>();
 					wheres.put("uuid", player.getUniqueId().toString());
 					ResultSetTravellers rs = new ResultSetTravellers(plugin, wheres, false);
 					if (rs.resultSet()) {
 						TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id(), player);
 						ItemStack[] items = sst.getTerminal();
-						Inventory saveinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
+						Inventory saveinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves");
 						saveinv.setContents(items);
 						player.openInventory(saveinv);
 					}

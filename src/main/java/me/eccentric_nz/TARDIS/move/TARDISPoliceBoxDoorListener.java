@@ -1,23 +1,23 @@
-package me.eccentric_nz.TARDIS.move;
+package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
-import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
-import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.control.TARDISPowerButton;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCompanions;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.mobfarming.TARDISFarmer;
+import me.eccentric_nz.tardis.mobfarming.TARDISFollowerSpawner;
+import me.eccentric_nz.tardis.mobfarming.TARDISPetsAndFollowers;
+import me.eccentric_nz.tardis.travel.TARDISDoorLocation;
+import me.eccentric_nz.tardis.utility.TARDISResourcePackChanger;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -42,17 +42,17 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onItemFrameClick(PlayerInteractEntityEvent event) {
 		Player player = event.getPlayer();
-		if (event.getRightClicked() instanceof ItemFrame) {
-			ItemFrame frame = (ItemFrame) event.getRightClicked();
+		if (event.getRightClicked() instanceof ItemFrame frame) {
 			UUID uuid = player.getUniqueId();
 			ItemStack dye = frame.getItem();
-			if (dye != null && TARDISConstants.DYES.contains(dye.getType()) && dye.hasItemMeta()) {
+			if (TARDISConstants.DYES.contains(dye.getType()) && dye.hasItemMeta()) {
 				ItemMeta dim = dye.getItemMeta();
+				assert dim != null;
 				if (dim.hasCustomModelData()) {
 					int cmd = dim.getCustomModelData();
 					if ((cmd == 1001 || cmd == 1002) && TARDISPermission.hasPermission(player, "tardis.enter")) {
 						UUID playerUUID = player.getUniqueId();
-						// get TARDIS from location
+						// get tardis from location
 						Location location = frame.getLocation();
 						String doorloc = location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
 						HashMap<String, Object> where = new HashMap<>();
@@ -95,7 +95,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 												key = (!rspref.getKey().isEmpty()) ? rspref.getKey() : plugin.getConfig().getString("preferences.key");
 												willFarm = rspref.isFarmOn();
 												if (rspref.isAutoPowerUp() && plugin.getConfig().getBoolean("allow.power_down")) {
-													// check TARDIS is not abandoned
+													// check tardis is not abandoned
 													canPowerUp = !tardis.isAbandoned();
 												}
 											} else {
@@ -105,7 +105,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 											if (player.getInventory().getItemInMainHand().getType().equals(m)) {
 												if (player.isSneaking()) {
 													// tp to the interior
-													// get INNER TARDIS location
+													// get INNER tardis location
 													TARDISDoorLocation idl = getDoor(1, id);
 													Location tardis_loc = idl.getL();
 													World cw = idl.getW();
@@ -120,11 +120,11 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 														TARDISFarmer tf = new TARDISFarmer(plugin);
 														petsAndFollowers = tf.farmAnimals(location, d, id, player.getPlayer(), tardis_loc.getWorld().getName(), playerWorld.getName());
 													}
-													// if WorldGuard is on the server check for TARDIS region protection and add admin as member
+													// if WorldGuard is on the server check for tardis region protection and add admin as member
 													if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
 														plugin.getWorldGuardUtils().addMemberToRegion(cw, tardis.getOwner(), player.getName());
 													}
-													// enter TARDIS!
+													// enter tardis!
 													cw.getChunkAt(tardis_loc).load();
 													tardis_loc.setPitch(player.getLocation().getPitch());
 													// get inner door direction so we can adjust yaw if necessary
@@ -148,7 +148,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 														}
 													}
 													if (canPowerUp && !tardis.isPowered_on() && !tardis.isAbandoned()) {
-														// power up the TARDIS
+														// power up the tardis
 														plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton(), 20L);
 													}
 													// put player into travellers table

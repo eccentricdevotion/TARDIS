@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.handles;
+package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -38,7 +38,7 @@ class TARDISHandlesLockUnlockCommand {
 	}
 
 	boolean toggleLock(Player player, int id, boolean lock) {
-		// get the TARDIS current location
+		// get the tardis current location
 		HashMap<String, Object> wherec = new HashMap<>();
 		wherec.put("tardis_id", id);
 		ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);

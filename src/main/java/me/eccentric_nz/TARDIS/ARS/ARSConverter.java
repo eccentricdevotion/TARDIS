@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.ARS;
+package me.eccentric_nz.tardis.ars;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.converters.TARDISMaterialIDConverter;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.database.converters.TARDISMaterialIDConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -68,7 +68,7 @@ public class ARSConverter {
 						continue;
 					}
 					String[][][] grid = new String[3][9][9];
-					JsonArray json = new JsonParser().parse(js).getAsJsonArray();
+					JsonArray json = JsonParser.parseString(js).getAsJsonArray();
 					for (int y = 0; y < 3; y++) {
 						JsonArray jsonx = json.get(y).getAsJsonArray();
 						for (int x = 0; x < 9; x++) {
@@ -83,7 +83,7 @@ public class ARSConverter {
 						}
 					}
 					Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-					JsonArray arr = new JsonParser().parse(gson.toJson(grid)).getAsJsonArray();
+					JsonArray arr = JsonParser.parseString(gson.toJson(grid)).getAsJsonArray();
 					update.setString(1, arr.toString());
 					update.setInt(2, id);
 					update.addBatch();
@@ -93,7 +93,7 @@ public class ARSConverter {
 			if (i > 0) {
 				update.executeBatch();
 				connection.commit();
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " ARS records");
+				plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " ars records");
 			}
 			plugin.getConfig().set("conversions.ars_materials", true);
 			plugin.saveConfig();

@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.rooms;
+package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunks;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.Advancement;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.database.resultset.ResultSetChunks;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.enumeration.Advancement;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -40,7 +40,7 @@ import java.util.UUID;
 
 /**
  * The Doctor kept some of the clothes from his previous regenerations, as well as clothing for other people in the
- * TARDIS wardrobe. At least some of the clothes had pockets that were bigger on the inside.
+ * tardis wardrobe. At least some of the clothes had pockets that were bigger on the inside.
  *
  * @author eccentric_nz
  */
@@ -54,10 +54,10 @@ public class TARDISRoomSeeder implements Listener {
 
 	/**
 	 * Listens for player interaction with one of the blocks required to seed a room. If the block is clicked with the
-	 * TARDIS key after running the command /tardis room [room type], the seed block will start growing into the room
+	 * tardis key after running the command /tardis room [room type], the seed block will start growing into the room
 	 * type specified.
 	 * <p>
-	 * Requires the TARDIS to have sufficient Artron Energy to grow the room.
+	 * Requires the tardis to have sufficient Artron Energy to grow the room.
 	 *
 	 * @param event a player clicking a block
 	 */
@@ -80,9 +80,9 @@ public class TARDISRoomSeeder implements Listener {
 			} else {
 				key = plugin.getConfig().getString("preferences.key");
 			}
-			// only proceed if they are clicking a seed block with the TARDIS key!
+			// only proceed if they are clicking a seed block with the tardis key!
 			if (plugin.getBuildKeeper().getSeeds().containsKey(blockType) && inhand.equals(Material.getMaterial(key))) {
-				// check they are still in the TARDIS world
+				// check they are still in the tardis world
 				if (!plugin.getUtils().inTARDISWorld(player)) {
 					TARDISMessage.send(player, "ROOM_IN_WORLD");
 					plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
@@ -119,7 +119,7 @@ public class TARDISRoomSeeder implements Listener {
 					plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
 					return;
 				}
-				// check they are not in an ARS chunk
+				// check they are not in an ars chunk
 				if (sd.hasARS()) {
 					int cx = c.getX();
 					int cy = block.getY();

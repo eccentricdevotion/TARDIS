@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -46,7 +46,7 @@ class TARDISDesiegeCommand {
 		if (p != null && p.isOnline()) {
 			// get the player's UUID
 			UUID uuid = p.getUniqueId();
-			// get the player's TARDIS id
+			// get the player's tardis id
 			ResultSetTardisID rs = new ResultSetTardisID(plugin);
 			if (!rs.fromUUID(uuid.toString())) {
 				TARDISMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
@@ -79,7 +79,7 @@ class TARDISDesiegeCommand {
 				setc.put("direction", rsh.getDirection().toString());
 				setc.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
 				plugin.getQueryFactory().doUpdate("current", setc, wherec);
-				// rebuild the TARDIS
+				// rebuild the tardis
 				BuildData bd = new BuildData(uuid.toString());
 				bd.setDirection(rsh.getDirection());
 				bd.setLocation(new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ()));

@@ -20,10 +20,10 @@
  * kristian@comphenix.net
  * thtp://www.comphenix.net/
  */
-package me.eccentric_nz.TARDIS.arch;
+package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;

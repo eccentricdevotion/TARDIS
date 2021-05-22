@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,6 +27,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Objects;
 
 public class TARDISAccessoryListener implements Listener {
 
@@ -45,11 +47,13 @@ public class TARDISAccessoryListener implements Listener {
 				ItemStack cursor = event.getCursor();
 				if (cursor != null && cursor.getType() == Material.LEATHER_HELMET && cursor.hasItemMeta() && isNullOrAir(event.getCurrentItem())) {
 					ItemMeta im = cursor.getItemMeta();
+					assert im != null;
 					if (im.hasCustomModelData()) {
 						int cmd = im.getCustomModelData();
 						if (cmd > 10000022 && cmd < 10000041) {
 							ItemStack accessory = new ItemStack(Material.BIRCH_BUTTON, 1);
 							ItemMeta bim = accessory.getItemMeta();
+							assert bim != null;
 							bim.setDisplayName(im.getDisplayName());
 							bim.setCustomModelData(cmd);
 							accessory.setItemMeta(bim);
@@ -59,14 +63,16 @@ public class TARDISAccessoryListener implements Listener {
 							}, 1L);
 						}
 					}
-				} else if (isNullOrAir(cursor) && event.getCurrentItem().getType() == Material.BIRCH_BUTTON && event.getCurrentItem().hasItemMeta()) {
+				} else if (isNullOrAir(cursor) && Objects.requireNonNull(event.getCurrentItem()).getType() == Material.BIRCH_BUTTON && event.getCurrentItem().hasItemMeta()) {
 					ItemStack current = event.getCurrentItem();
 					ItemMeta im = current.getItemMeta();
+					assert im != null;
 					if (im.hasCustomModelData()) {
 						int cmd = im.getCustomModelData();
 						if (cmd > 10000022 && cmd < 10000041) {
 							ItemStack accessory = new ItemStack(Material.LEATHER_HELMET, 1);
 							ItemMeta bim = accessory.getItemMeta();
+							assert bim != null;
 							bim.setDisplayName(im.getDisplayName());
 							bim.setCustomModelData(cmd);
 							bim.addItemFlags(ItemFlag.values());

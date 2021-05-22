@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS;
+package me.eccentric_nz.tardis;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.enumeration.Bind;
-import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.flight.TARDISRegulatorRunnable;
-import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
-import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
-import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
-import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
-import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
-import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
-import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
+import me.eccentric_nz.tardis.arch.TARDISWatchData;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
+import me.eccentric_nz.tardis.enumeration.Bind;
+import me.eccentric_nz.tardis.enumeration.Updateable;
+import me.eccentric_nz.tardis.flight.TARDISRegulatorRunnable;
+import me.eccentric_nz.tardis.info.TARDISInfoMenu;
+import me.eccentric_nz.tardis.move.TARDISMoveSession;
+import me.eccentric_nz.tardis.move.TARDISTeleportLocation;
+import me.eccentric_nz.tardis.rooms.TARDISRoomData;
+import me.eccentric_nz.tardis.rooms.TARDISSeedData;
+import me.eccentric_nz.tardis.siegemode.TARDISSiegeArea;
+import me.eccentric_nz.tardis.utility.TARDISAntiBuild;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -38,7 +38,7 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 /**
- * A central repository used to store various data values required to track what Time lords and TARDIS are doing
+ * A central repository used to store various data values required to track what Time lords and tardis are doing
  * in-game, and provide easy access to the data in other classes. For example the spectacleWearers List tracks which
  * Time Lords are currently wearing 3d_glasses.
  *

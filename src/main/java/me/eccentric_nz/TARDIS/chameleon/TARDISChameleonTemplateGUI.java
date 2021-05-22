@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chameleon;
+package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonTemplate;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.GUIChameleonTemplate;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -152,14 +152,7 @@ class TARDISChameleonTemplateGUI {
 		dr.setLore(Arrays.asList(doorList.get(1), doorList.get(2)));
 		door.setItemMeta(dr);
 
-		return new ItemStack[]{
-				back, null, null, null, info, null, null, null, next,
-				one, two, three, four, five, six, seven, eight, nine,
-				slab, slab, slab, slab, slab, slab, slab, slab, lamp,
-				blue, blue, blue, blue, blue, blue, blue, blue, power,
-				blue, blue, blue, blue, blue, blue, blue, door, null,
-				blue, blue, blue, blue, blue, blue, blue, door, null
-		};
+		return new ItemStack[]{back, null, null, null, info, null, null, null, next, one, two, three, four, five, six, seven, eight, nine, slab, slab, slab, slab, slab, slab, slab, slab, lamp, blue, blue, blue, blue, blue, blue, blue, blue, power, blue, blue, blue, blue, blue, blue, blue, door, null, blue, blue, blue, blue, blue, blue, blue, door, null};
 	}
 
 	public ItemStack[] getTemplate() {

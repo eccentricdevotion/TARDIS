@@ -1,6 +1,6 @@
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -24,7 +24,7 @@ public class UpdateTARDISPlugins {
 
 	public UpdateTARDISPlugins(TARDIS plugin) {
 		this.plugin = plugin;
-		FILES.add("TARDIS.jar");
+		FILES.add("tardis.jar");
 		FILES.add("TARDISChunkGenerator.jar");
 		URLS.add("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/artifact/target/TARDIS.jar");
 		URLS.add("http://tardisjenkins.duckdns.org:8080/job/TARDISChunkGenerator/lastSuccessfulBuild/artifact/target/TARDISChunkGenerator.jar");
@@ -35,7 +35,7 @@ public class UpdateTARDISPlugins {
 			sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "An update is already in progress!");
 			return true;
 		}
-		sender.sendMessage(plugin.getPluginName() + ChatColor.AQUA + "Downloading TARDIS & TARDISChunkGenerator ...");
+		sender.sendMessage(plugin.getPluginName() + ChatColor.AQUA + "Downloading tardis & TARDISChunkGenerator ...");
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -54,7 +54,7 @@ public class UpdateTARDISPlugins {
 						URL url = new URL(URLS.get(i));
 						// create a connection
 						HttpURLConnection con = (HttpURLConnection) url.openConnection();
-						con.setRequestProperty("User-Agent", "eccentric_nz/TARDIS");
+						con.setRequestProperty("User-Agent", "eccentric_nz/tardis");
 						// get the input stream
 						try (InputStream input = con.getInputStream()) {
 							Files.copy(input, dest.toPath(), StandardCopyOption.REPLACE_EXISTING);

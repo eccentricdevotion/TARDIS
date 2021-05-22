@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.StructureType;
 import org.bukkit.World;
@@ -53,17 +53,14 @@ public class TARDISVillageTravel {
 			Environment env = world.getEnvironment();
 			Location loc;
 			switch (env) {
-				case NETHER:
-					loc = world.locateNearestStructure(location, StructureType.NETHER_FORTRESS, 64, false);
-					break;
-				case THE_END:
+				case NETHER -> loc = world.locateNearestStructure(location, StructureType.NETHER_FORTRESS, 64, false);
+				case THE_END -> {
 					loc = world.locateNearestStructure(location, StructureType.END_CITY, 64, false);
 					int highesty = TARDISStaticLocationGetters.getHighestYin3x3(world, rs.getX(), rs.getZ());
 					loc.setY(highesty);
-					break;
-				default: // NORMAL
-					loc = world.locateNearestStructure(location, StructureType.VILLAGE, 64, false);
-					break;
+				}
+				default -> // NORMAL
+						loc = world.locateNearestStructure(location, StructureType.VILLAGE, 64, false);
 			}
 			if (loc == null) {
 				return null;

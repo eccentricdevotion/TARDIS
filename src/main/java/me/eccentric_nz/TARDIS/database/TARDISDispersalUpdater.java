@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database;
+package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 
 import java.sql.*;
 
@@ -40,7 +40,7 @@ class TARDISDispersalUpdater {
 	}
 
 	/**
-	 * Convert pre-TARDIS v2.3 controls to the new system.
+	 * Convert pre-tardis v2.3 controls to the new system.
 	 */
 	void updateTardis_ids() {
 		int i = 0;

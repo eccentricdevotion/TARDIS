@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
 import org.bukkit.ChatColor;
 
@@ -23,11 +23,7 @@ import org.bukkit.ChatColor;
  */
 public enum ChameleonOption {
 
-	FACTORY(20, "DISABLED", ChatColor.RED, "SET_ON", ChatColor.GREEN),
-	ADAPTIVE(21, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
-	INVISIBLE(22, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
-	PRESET(23, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
-	CONSTRUCT(24, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED);
+	FACTORY(20, "DISABLED", ChatColor.RED, "SET_ON", ChatColor.GREEN), ADAPTIVE(21, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED), INVISIBLE(22, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED), PRESET(23, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED), CONSTRUCT(24, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED);
 
 	private final int slot;
 	private final String on;

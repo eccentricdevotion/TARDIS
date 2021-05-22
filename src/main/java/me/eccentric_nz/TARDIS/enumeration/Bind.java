@@ -14,22 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
 public enum Bind {
 
-	SAVE(0, 3),
-	CAVE(1, 2),
-	HIDE(1, 2),
-	HOME(1, 2),
-	MAKE_HER_BLUE(1, 2),
-	OCCUPY(1, 2),
-	REBUILD(1, 2),
-	PLAYER(2, 3),
-	AREA(3, 3),
-	BIOME(4, 3),
-	CHAMELEON(5, 3),
-	TRANSMAT(6, 2);
+	SAVE(0, 3), CAVE(1, 2), HIDE(1, 2), HOME(1, 2), MAKE_HER_BLUE(1, 2), OCCUPY(1, 2), REBUILD(1, 2), PLAYER(2, 3), AREA(3, 3), BIOME(4, 3), CHAMELEON(5, 3), TRANSMAT(6, 2);
 
 	private final int type;
 	private final int args;

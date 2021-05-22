@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 
 import java.sql.Connection;
@@ -48,7 +48,7 @@ public class ResultSetTransmat {
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the transmats table.
 	 *
 	 * @param plugin an instance of the main class.
-	 * @param id     the TARDIS id to refine the search.
+	 * @param id     the tardis id to refine the search.
 	 * @param name   the name of the transmat location to refine the search.
 	 */
 	public ResultSetTransmat(TARDIS plugin, int id, String name) {

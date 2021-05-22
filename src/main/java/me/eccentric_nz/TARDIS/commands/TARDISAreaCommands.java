@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands;
+package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.data.Area;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.database.data.Area;
+import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -34,6 +34,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -56,7 +57,7 @@ public class TARDISAreaCommands implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 		if (!sender.hasPermission("tardis.admin")) {
 			TARDISMessage.send(sender, "NO_PERM_AREA");
 			return true;
@@ -154,6 +155,7 @@ public class TARDISAreaCommands implements CommandExecutor {
 					int max = a.getMaxX();
 					int maz = a.getMaxZ();
 					World w = TARDISAliasResolver.getWorldFromAlias(a.getWorld());
+					assert w != null;
 					Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
 					b1.setBlockData(SNOW);
 					Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
@@ -202,6 +204,7 @@ public class TARDISAreaCommands implements CommandExecutor {
 					World yardWorld = TARDISAliasResolver.getWorldFromAlias(yardArea.getWorld());
 					for (int x = yardMinX; x <= yardMaxX; x++) {
 						for (int z = yardMinZ; z <= yardMaxZ; z++) {
+							assert yardWorld != null;
 							int y = yardWorld.getHighestBlockYAt(x, z);
 							if ((x - 2) % 5 == 0 && (z - 2) % 5 == 0) {
 								yardWorld.getBlockAt(x, y, z).setBlockData(dock);

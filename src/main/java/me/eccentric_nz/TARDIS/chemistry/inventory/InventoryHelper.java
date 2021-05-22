@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.inventory;
+package me.eccentric_nz.tardis.chemistry.inventory;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,10 +28,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class InventoryHelper implements Listener {
 
@@ -58,11 +55,11 @@ public class InventoryHelper implements Listener {
 				}
 				if (!leftovers.isEmpty()) {
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-						HashMap<Integer, ItemStack> notadded = player.getInventory().addItem(leftovers.toArray(new ItemStack[leftovers.size()]));
+						HashMap<Integer, ItemStack> notadded = player.getInventory().addItem(leftovers.toArray(new ItemStack[0]));
 						if (!notadded.isEmpty()) {
 							Location location = player.getLocation();
 							for (ItemStack is : notadded.values()) {
-								location.getWorld().dropItemNaturally(location, is);
+								Objects.requireNonNull(location.getWorld()).dropItemNaturally(location, is);
 							}
 						}
 					}, 1L);

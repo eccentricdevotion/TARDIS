@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.advanced.TARDISSerializeInventory;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDiskStorage;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -34,10 +34,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -73,14 +70,15 @@ public class TARDISBiomeReaderListener implements Listener {
 		if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
 			return;
 		}
-		if (event.getClickedBlock().getType().isInteractable()) {
+		if (Objects.requireNonNull(event.getClickedBlock()).getType().isInteractable()) {
 			return;
 		}
 		Player player = event.getPlayer();
 		ItemStack is = player.getInventory().getItemInMainHand();
 		if (is.getType().equals(Material.BRICK) && is.hasItemMeta()) {
 			ItemMeta im = is.getItemMeta();
-			if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Biome Reader")) {
+			assert im != null;
+			if (im.hasDisplayName() && im.getDisplayName().equals("tardis Biome Reader")) {
 				TARDISBiome biome = TARDISStaticUtils.getBiomeAt(event.getClickedBlock().getLocation());
 				if (biome.equals(Biome.THE_VOID)) {
 					TARDISMessage.send(player, "BIOME_READER_NOT_VALID");

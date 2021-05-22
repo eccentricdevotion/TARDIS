@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.destroyers;
+package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 import java.io.BufferedWriter;
@@ -69,14 +69,14 @@ public class TARDISPruner {
 						wherecl.put("tardis_id", rs.getInt("tardis_id"));
 						ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
 						if (rsc.resultSet()) {
-							// double check that this is an unused TARDIS
+							// double check that this is an unused tardis
 							Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
 							if (lastuse.before(prune)) {
 								String line = "Time Lord: " + rs.getString("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
 								// write line to file
 								bw.write(line);
 								bw.newLine();
-								// display the TARDIS prune list
+								// display the tardis prune list
 								sender.sendMessage(line);
 							}
 						} else {
@@ -114,12 +114,12 @@ public class TARDISPruner {
 			rs = statement.executeQuery(query);
 			TARDISExterminator te = new TARDISExterminator(plugin);
 			while (rs.next()) {
-				// double check that this is an unused TARDIS
+				// double check that this is an unused tardis
 				Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
 				if (lastuse.before(prune)) {
-					// remove the TARDIS
+					// remove the tardis
 					if (te.exterminate(rs.getInt("tardis_id"))) {
-						sender.sendMessage("Pruned " + rs.getString("owner") + "'s TARDIS");
+						sender.sendMessage("Pruned " + rs.getString("owner") + "'s tardis");
 					}
 				}
 			}

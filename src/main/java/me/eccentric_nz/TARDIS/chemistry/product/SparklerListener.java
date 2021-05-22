@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.product;
+package me.eccentric_nz.tardis.chemistry.product;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -53,6 +53,7 @@ public class SparklerListener implements Listener {
 			ItemStack is = event.getItem();
 			if (is != null && SparklerMaterial.isCorrectMaterial(is.getType()) && is.hasItemMeta()) {
 				ItemMeta im = is.getItemMeta();
+				assert im != null;
 				if (im.hasDisplayName() && im.getDisplayName().endsWith("Sparkler") && im.hasCustomModelData() && !im.hasEnchant(Enchantment.LOYALTY)) {
 					player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1.0f, 1.0f);
 					// switch custom data models e.g. 10000035 -> 12000035

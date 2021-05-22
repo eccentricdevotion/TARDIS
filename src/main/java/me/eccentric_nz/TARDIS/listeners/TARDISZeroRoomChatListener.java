@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,7 +31,7 @@ import java.util.UUID;
 
 /**
  * In 21st century London, Rory has his father, Brian Williams, over to help fix a light bulb. After saying the fixture
- * may be the problem, the sound of the TARDIS materialisation is heard. The TARDIS materialises around them, shocking
+ * may be the problem, the sound of the tardis materialisation is heard. The tardis materialises around them, shocking
  * Brian in place.
  *
  * @author eccentric_nz
@@ -77,7 +77,7 @@ public class TARDISZeroRoomChatListener implements Listener {
 				Player timelord = plugin.getServer().getPlayer(owner);
 				if (timelord != null && timelord.isOnline()) {
 					// message console so it is logged
-					TARDISMessage.message(plugin.getConsole(), "[TARDIS] Companion [" + player.getName() + "] ran a telepathic command as Time Lord [" + timelord.getName() + "]");
+					TARDISMessage.message(plugin.getConsole(), "[tardis] Companion [" + player.getName() + "] ran a telepathic command as Time Lord [" + timelord.getName() + "]");
 					if (command.contains("rescue") && command.contains(timelord.getName().toLowerCase(Locale.ENGLISH))) {
 						// track the timelord
 						plugin.getTrackerKeeper().getTelepathicRescue().put(owner, uuid);

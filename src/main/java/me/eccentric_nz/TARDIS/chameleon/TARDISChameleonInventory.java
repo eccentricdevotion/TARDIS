@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chameleon;
+package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleon;
-import me.eccentric_nz.TARDIS.enumeration.Adaption;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.GUIChameleon;
+import me.eccentric_nz.tardis.enumeration.Adaption;
+import me.eccentric_nz.tardis.enumeration.PRESET;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -28,12 +28,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 /**
- * A TARDIS with a functioning chameleon circuit can appear as almost anything desired. The owner can program the
- * circuit to make it assume a specific shape. If no appearance is specified, the TARDIS automatically choses its own
- * shape. When a TARDIS materialises in a new location, within the first nanosecond of landing, its chameleon circuit
+ * A tardis with a functioning chameleon circuit can appear as almost anything desired. The owner can program the
+ * circuit to make it assume a specific shape. If no appearance is specified, the tardis automatically choses its own
+ * shape. When a tardis materialises in a new location, within the first nanosecond of landing, its chameleon circuit
  * analyses the surrounding area, calculates a twelve-dimensional data map of all objects within a thousand-mile radius
  * and then determines which outer shell will best blend in with the environment. According to the Eleventh Doctor, the
- * TARDIS would perform these functions, but then disguise itself as a 1960s era police box anyway.
+ * tardis would perform these functions, but then disguise itself as a 1960s era police box anyway.
  *
  * @author eccentric_nz
  */

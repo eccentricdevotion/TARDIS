@@ -14,21 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.ARS;
+package me.eccentric_nz.tardis.ars;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.enumeration.Consoles;
+import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.enumeration.DiskCircuit;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.rooms.RoomRequiredLister;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
@@ -38,7 +38,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 
 /**
- * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
+ * The architectural reconfiguration system is a component of the Doctor's tardis in the shape of a tree that, according
  * to the Eleventh Doctor, "reconstructs the particles according to your needs." It is basically "a machine that makes
  * machines," perhaps somewhat like a 3D printer. It is, according to Gregor Van Baalen's scanner, "more valuable than
  * the total sum of any currency.
@@ -69,7 +69,7 @@ public class TARDISARSMethods {
 	 */
 	public static String[][][] getGridFromJSON(String js) {
 		String[][][] grid = new String[3][9][9];
-		JsonArray json = new JsonParser().parse(js).getAsJsonArray();
+		JsonArray json = JsonParser.parseString(js).getAsJsonArray();
 		for (int y = 0; y < 3; y++) {
 			JsonArray jsonx = json.get(y).getAsJsonArray();
 			for (int x = 0; x < 9; x++) {
@@ -87,14 +87,14 @@ public class TARDISARSMethods {
 	}
 
 	/**
-	 * Saves the current ARS data to the database.
+	 * Saves the current ars data to the database.
 	 *
-	 * @param uuid the UUID of the player who is using the ARS GUI
+	 * @param uuid the UUID of the player who is using the ars GUI
 	 */
 	private void saveAll(UUID uuid) {
 		TARDISARSMapData md = map_data.get(uuid);
 		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-		JsonArray json = new JsonParser().parse(gson.toJson(md.getData())).getAsJsonArray();
+		JsonArray json = JsonParser.parseString(gson.toJson(md.getData())).getAsJsonArray();
 		HashMap<String, Object> set = new HashMap<>();
 		set.put("ars_x_east", md.getE());
 		set.put("ars_z_south", md.getS());
@@ -106,14 +106,14 @@ public class TARDISARSMethods {
 	}
 
 	/**
-	 * Saves the current ARS data to the database.
+	 * Saves the current ars data to the database.
 	 *
-	 * @param uuid the UUID of the player who is using the ARS GUI
+	 * @param uuid the UUID of the player who is using the ars GUI
 	 */
 	private void revert(UUID uuid) {
 		TARDISARSSaveData sd = save_map_data.get(uuid);
 		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-		JsonArray json = new JsonParser().parse(gson.toJson(sd.getData())).getAsJsonArray();
+		JsonArray json = JsonParser.parseString(gson.toJson(sd.getData())).getAsJsonArray();
 		HashMap<String, Object> set = new HashMap<>();
 		set.put("json", json.toString());
 		HashMap<String, Object> wherea = new HashMap<>();
@@ -156,6 +156,7 @@ public class TARDISARSMethods {
 	void setSlot(InventoryView view, int slot, Material material, String room, UUID uuid, boolean update) {
 		ItemStack is = new ItemStack(material, 1);
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		im.setDisplayName(room);
 		if (!room.equals("Empty slot")) {
 			String config_path = TARDISARS.ARSFor(material.toString()).getConfigPath();
@@ -190,7 +191,7 @@ public class TARDISARSMethods {
 	}
 
 	/**
-	 * Get the coordinates of the clicked slot in relation to the ARS map.
+	 * Get the coordinates of the clicked slot in relation to the ars map.
 	 *
 	 * @param slot the slot that was clicked
 	 * @param md   an instance of the TARDISARSMapData class from which to retrieve the map offset
@@ -259,7 +260,9 @@ public class TARDISARSMethods {
 	void setLore(InventoryView view, int slot, String str) {
 		List<String> lore = (str != null) ? Collections.singletonList(str) : null;
 		ItemStack is = view.getItem(slot);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		im.setLore(lore);
 		is.setItemMeta(im);
 	}
@@ -282,6 +285,7 @@ public class TARDISARSMethods {
 			}
 			ItemStack is = new ItemStack(material, 1);
 			ItemMeta im = is.getItemMeta();
+			assert im != null;
 			im.setDisplayName(levels[i - 27]);
 			im.setCustomModelData(i - 26);
 			is.setItemMeta(im);
@@ -339,7 +343,7 @@ public class TARDISARSMethods {
 						}
 						// damage the circuit if configured
 						if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
-							// get the id of the TARDIS this player is in
+							// get the id of the tardis this player is in
 							int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(uuid);
 							TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
 							tcc.getCircuits();
@@ -375,7 +379,7 @@ public class TARDISARSMethods {
 	 * @param uuid the UUID of the player using the GUI
 	 */
 	void loadMap(InventoryView view, UUID uuid) {
-		if (view.getItem(10).getItemMeta().hasLore()) {
+		if (Objects.requireNonNull(Objects.requireNonNull(view.getItem(10)).getItemMeta()).hasLore()) {
 			setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_ERROR"));
 			return;
 		}
@@ -436,22 +440,22 @@ public class TARDISARSMethods {
 			TARDISARSMapData md = map_data.get(uuid);
 			int ue, us;
 			switch (slot) {
-				case 1:
+				case 1 -> {
 					ue = md.getE();
 					us = ((md.getS() + 1) < 5) ? md.getS() + 1 : md.getS();
-					break;
-				case 9:
+				}
+				case 9 -> {
 					ue = ((md.getE() + 1) < 5) ? md.getE() + 1 : md.getE();
 					us = md.getS();
-					break;
-				case 11:
+				}
+				case 11 -> {
 					ue = ((md.getE() - 1) >= 0) ? md.getE() - 1 : md.getE();
 					us = md.getS();
-					break;
-				default:
+				}
+				default -> {
 					ue = md.getE();
 					us = ((md.getS() - 1) >= 0) ? md.getS() - 1 : md.getS();
-					break;
+				}
 			}
 			setMap(md.getY(), ue, us, uuid, view);
 			setLore(view, slot, null);
@@ -467,8 +471,8 @@ public class TARDISARSMethods {
 	 * Checks whether a player has condensed the required BLOCKS to grow the room (s).
 	 *
 	 * @param uuid the UUID of the player to check for
-	 * @param map  a HashMap where the key is the changed room slot and the value is the ARS room type
-	 * @param id   the TARDIS id
+	 * @param map  a HashMap where the key is the changed room slot and the value is the ars room type
+	 * @param id   the tardis id
 	 * @return true or false
 	 */
 	private boolean hasCondensables(String uuid, HashMap<TARDISARSSlot, ARS> map, int id) {
@@ -540,7 +544,7 @@ public class TARDISARSMethods {
 	}
 
 	boolean checkSlotForConsole(InventoryView view, int slot, String uuid) {
-		Material m = view.getItem(slot).getType();
+		Material m = Objects.requireNonNull(view.getItem(slot)).getType();
 		if (m.equals(Material.NETHER_BRICKS)) {
 			// allow only if console is not MASTER
 			HashMap<String, Object> where = new HashMap<>();

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS;
+package me.eccentric_nz.tardis;
 
 import com.google.common.collect.ImmutableMap;
 import org.bukkit.Bukkit;
@@ -34,14 +34,14 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * One of the key features of a TARDIS is that the interior exists in a dimension different from the exterior. The main
+ * One of the key features of a tardis is that the interior exists in a dimension different from the exterior. The main
  * application of this concept is that they are bigger on the inside than the outside.
  *
  * @author eccentric_nz
  */
 public class TARDISConstants {
 
-	// TARDIS world names
+	// tardis world names
 	public static final List<String> PLANETS = Arrays.asList("Gallifrey", "Siluria", "Skaro");
 	public static final ImmutableMap<String, String> REVERT_LEVELS = ImmutableMap.of("gallifrey", "Gallifrey", "siluria", "Siluria", "skaro", "Skaro", "tardis_time_vortex", "TARDIS_TimeVortex", "tardis_zero_room", "TARDIS_Zero_Room");
 
@@ -63,7 +63,7 @@ public class TARDISConstants {
 	public static final List<Biome> ILLEGAL_BIOMES = Arrays.asList(Biome.NETHER_WASTES, Biome.SOUL_SAND_VALLEY, Biome.CRIMSON_FOREST, Biome.WARPED_FOREST, Biome.BASALT_DELTAS, Biome.THE_END, Biome.END_BARRENS, Biome.END_HIGHLANDS, Biome.END_MIDLANDS, Biome.SMALL_END_ISLANDS, Biome.THE_VOID);
 	public static final List<Material> GOOD_MATERIALS = Arrays.asList(Material.ACACIA_LEAVES, Material.ACACIA_SAPLING, Material.AIR, Material.ALLIUM, Material.AZURE_BLUET, Material.BAMBOO_SAPLING, Material.BIRCH_LEAVES, Material.BIRCH_SAPLING, Material.BLUE_ORCHID, Material.BROWN_MUSHROOM, Material.CAVE_AIR, Material.CORNFLOWER, Material.DANDELION, Material.DARK_OAK_LEAVES, Material.DARK_OAK_SAPLING, Material.DEAD_BUSH, Material.FERN, Material.GRASS, Material.JUNGLE_LEAVES, Material.JUNGLE_SAPLING, Material.LARGE_FERN, Material.LILAC, Material.LILY_OF_THE_VALLEY, Material.LILY_PAD, Material.NETHER_WART, Material.OAK_LEAVES, Material.OAK_SAPLING, Material.ORANGE_TULIP, Material.OXEYE_DAISY, Material.PEONY, Material.PINK_TULIP, Material.POPPY, Material.RED_MUSHROOM, Material.RED_TULIP, Material.ROSE_BUSH, Material.SNOW, Material.SPRUCE_LEAVES, Material.SPRUCE_SAPLING, Material.SUNFLOWER, Material.TALL_GRASS, Material.VOID_AIR, Material.WHITE_TULIP, Material.WITHER_ROSE);
 	public static final List<Material> GOOD_WATER = Arrays.asList(Material.AIR, Material.CAVE_AIR, Material.VOID_AIR, Material.WATER, Material.SEAGRASS, Material.TALL_SEAGRASS, Material.KELP_PLANT, Material.SEA_PICKLE);
-	public static final List<String> GROWTH_STATES = Arrays.asList("Initiating block transfer mathematics", "Distributing cluster algebra", "Determining quantum probability/uncertainty", "Multiplying universal base code numerals", "Building artron mainframe module", "Assembling hyper-loom null-zone", "Complicating space-time events", "Forming extra-dimensional metastructure framework", "Finding dimensionally transcendental cradle", "Formatting organic protyon units", "Engineering warp matrix", "Inducting transducer power cells", "Implanting exitonic circuitry", "Kick-starting dynomorphic generator", "Regenerating molecular stabilizers", "Imprinting symbiotic nuclei", "Constructing temporal drive systems", "Choosing XX or XY gender circuits", "Acquiring extra internal dimensions", "Stabilising Eye of Harmony", "Catalyzing huon particles", "Crystalising morphic fields", "Sterilizing life-support systems", "Zeroing transdimensional flux relay indicators", "Contrafibulating trachoidal crystals", "Overriding Vespian transmogrifier ratchet", "Installing time-warp anchorage unit", "Magnetising pseudo-timeline narrow focus coils", "Inserting translevel communications system", "Linking absolute tesseractulator", "Polishing telepathic induction circuits", "Preparing TARDIS factory exterior");
+	public static final List<String> GROWTH_STATES = Arrays.asList("Initiating block transfer mathematics", "Distributing cluster algebra", "Determining quantum probability/uncertainty", "Multiplying universal base code numerals", "Building artron mainframe module", "Assembling hyper-loom null-zone", "Complicating space-time events", "Forming extra-dimensional metastructure framework", "Finding dimensionally transcendental cradle", "Formatting organic protyon units", "Engineering warp matrix", "Inducting transducer power cells", "Implanting exitonic circuitry", "Kick-starting dynomorphic generator", "Regenerating molecular stabilizers", "Imprinting symbiotic nuclei", "Constructing temporal drive systems", "Choosing XX or XY gender circuits", "Acquiring extra internal dimensions", "Stabilising Eye of Harmony", "Catalyzing huon particles", "Crystalising morphic fields", "Sterilizing life-support systems", "Zeroing transdimensional flux relay indicators", "Contrafibulating trachoidal crystals", "Overriding Vespian transmogrifier ratchet", "Installing time-warp anchorage unit", "Magnetising pseudo-timeline narrow focus coils", "Inserting translevel communications system", "Linking absolute tesseractulator", "Polishing telepathic induction circuits", "Preparing tardis factory exterior");
 	public static final BlockData AIR = Material.AIR.createBlockData();
 	public static final BlockData VOID_AIR = Material.VOID_AIR.createBlockData();
 	public static final BlockData FIRE = Material.FIRE.createBlockData();

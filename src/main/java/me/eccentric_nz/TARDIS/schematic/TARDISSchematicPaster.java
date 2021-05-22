@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.schematic;
+package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
-import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.rooms.TARDISPainting;
+import me.eccentric_nz.tardis.utility.TARDISBannerData;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
+import static me.eccentric_nz.tardis.schematic.TARDISBannerSetter.setBanners;
 
 /**
  * @author eccentric_nz
@@ -93,7 +93,7 @@ class TARDISSchematicPaster implements Runnable {
 			world = player.getWorld();
 			// get input array
 			arr = obj.get("input").getAsJsonArray();
-			bb = Bukkit.createBossBar("TARDIS Schematic Paste Progress", BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
+			bb = Bukkit.createBossBar("tardis Schematic Paste Progress", BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
 			bb.setProgress(0);
 			bb.addPlayer(player);
 			bb.setVisible(true);
@@ -147,53 +147,20 @@ class TARDISSchematicPaster implements Runnable {
 				plugin.getBlockLogger().logRemoval(block);
 			}
 			switch (data.getMaterial()) {
-				case REDSTONE_TORCH:
-					postRedstoneTorches.put(block, data);
-					break;
-				case BLACK_BANNER:
-				case BLACK_WALL_BANNER:
-				case BLUE_BANNER:
-				case BLUE_WALL_BANNER:
-				case BROWN_BANNER:
-				case BROWN_WALL_BANNER:
-				case CYAN_BANNER:
-				case CYAN_WALL_BANNER:
-				case GRAY_BANNER:
-				case GRAY_WALL_BANNER:
-				case GREEN_BANNER:
-				case GREEN_WALL_BANNER:
-				case LIGHT_BLUE_BANNER:
-				case LIGHT_BLUE_WALL_BANNER:
-				case LIGHT_GRAY_BANNER:
-				case LIGHT_GRAY_WALL_BANNER:
-				case LIME_BANNER:
-				case LIME_WALL_BANNER:
-				case MAGENTA_BANNER:
-				case MAGENTA_WALL_BANNER:
-				case ORANGE_BANNER:
-				case ORANGE_WALL_BANNER:
-				case PINK_BANNER:
-				case PINK_WALL_BANNER:
-				case PURPLE_BANNER:
-				case PURPLE_WALL_BANNER:
-				case RED_BANNER:
-				case RED_WALL_BANNER:
-				case WHITE_BANNER:
-				case WHITE_WALL_BANNER:
-				case YELLOW_BANNER:
-				case YELLOW_WALL_BANNER:
+				case REDSTONE_TORCH -> postRedstoneTorches.put(block, data);
+				case BLACK_BANNER, BLACK_WALL_BANNER, BLUE_BANNER, BLUE_WALL_BANNER, BROWN_BANNER, BROWN_WALL_BANNER, CYAN_BANNER, CYAN_WALL_BANNER, GRAY_BANNER, GRAY_WALL_BANNER, GREEN_BANNER, GREEN_WALL_BANNER, LIGHT_BLUE_BANNER, LIGHT_BLUE_WALL_BANNER, LIGHT_GRAY_BANNER, LIGHT_GRAY_WALL_BANNER, LIME_BANNER, LIME_WALL_BANNER, MAGENTA_BANNER, MAGENTA_WALL_BANNER, ORANGE_BANNER, ORANGE_WALL_BANNER, PINK_BANNER, PINK_WALL_BANNER, PURPLE_BANNER, PURPLE_WALL_BANNER, RED_BANNER, RED_WALL_BANNER, WHITE_BANNER, WHITE_WALL_BANNER, YELLOW_BANNER, YELLOW_WALL_BANNER -> {
 					JsonObject state = col.has("banner") ? col.get("banner").getAsJsonObject() : null;
 					if (state != null) {
 						TARDISBannerData tbd = new TARDISBannerData(data, state);
 						postBanners.put(block, tbd);
 					}
-					break;
-				default:
+				}
+				default -> {
 					block.setBlockData(data, true);
 					if (plugin.getBlockLogger().isLogging()) {
 						plugin.getBlockLogger().logPlacement(block);
 					}
-					break;
+				}
 			}
 			double progress = counter / div;
 			bb.setProgress(progress);

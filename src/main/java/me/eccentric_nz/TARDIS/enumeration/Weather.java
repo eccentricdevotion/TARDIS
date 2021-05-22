@@ -14,29 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
 public enum Weather {
 
-	CLEAR,
-	RAIN,
-	THUNDER;
+	CLEAR, RAIN, THUNDER;
 
 	public static Weather fromString(String s) {
 		String lower = s.toLowerCase();
-		switch (lower) {
-			case "r":
-			case "rain":
-			case "w":
-			case "wet":
-				return RAIN;
-			case "t":
-			case "thunder":
-			case "l":
-			case "lightning":
-				return THUNDER;
-			default:
-				return CLEAR;
-		}
+		return switch (lower) {
+			case "r", "rain", "w", "wet" -> RAIN;
+			case "t", "thunder", "l", "lightning" -> THUNDER;
+			default -> CLEAR;
+		};
 	}
 }

@@ -14,19 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.desktop;
+package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIWallFloor;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.GUIWallFloor;
+import me.eccentric_nz.tardis.rooms.TARDISWalls;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
- * the TARDIS revealed that she had archived 30 versions. Once a control room was reconfigured, the TARDIS archived the
- * old design "for neatness". The TARDIS effectively "curated" a museum of control rooms — both those in the Doctor's
+ * the tardis revealed that she had archived 30 versions. Once a control room was reconfigured, the tardis archived the
+ * old design "for neatness". The tardis effectively "curated" a museum of control rooms — both those in the Doctor's
  * personal past and future
  *
  * @author eccentric_nz

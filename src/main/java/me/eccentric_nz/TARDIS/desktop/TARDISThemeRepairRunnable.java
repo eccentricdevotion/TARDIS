@@ -14,33 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.desktop;
+package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
-import me.eccentric_nz.TARDIS.builders.FractalFence;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.database.data.Archive;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
-import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.api.event.TARDISDesktopThemeEvent;
+import me.eccentric_nz.tardis.builders.FractalFence;
+import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.builders.TARDISTIPSData;
+import me.eccentric_nz.tardis.builders.TARDISTimeRotor;
+import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.database.data.Archive;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.ConsoleSize;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.rooms.TARDISCondenserData;
+import me.eccentric_nz.tardis.schematic.ArchiveReset;
+import me.eccentric_nz.tardis.schematic.ResultSetArchive;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -55,7 +55,7 @@ import java.io.File;
 import java.util.*;
 
 /**
- * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
+ * There was also a safety mechanism for when tardis rooms were deleted, automatically relocating any living beings in
  * the deleted room, depositing them in the control room.
  *
  * @author eccentric_nz
@@ -201,7 +201,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 				startx = pos.getCentreX();
 				startz = pos.getCentreZ();
 			} else {
-				int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+				int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
 				startx = gsl[0];
 				startz = gsl[2];
 			}
@@ -211,8 +211,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 			wg1 = new Location(world, startx, starty, startz);
 			wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (c - 1));
 			// wall/floor block prefs
-			String wall[] = tud.getWall().split(":");
-			String floor[] = tud.getFloor().split(":");
+			String[] wall = tud.getWall().split(":");
+			String[] floor = tud.getFloor().split(":");
 			wall_type = Material.valueOf(wall[0]);
 			floor_type = Material.valueOf(floor[0]);
 			// get input array
@@ -540,30 +540,30 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 						data = Material.REPEATER.createBlockData();
 						Directional directional = (Directional) data;
 						switch (j) {
-							case 2:
+							case 2 -> {
 								directional.setFacing(BlockFace.WEST);
 								data = directional;
 								postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
 								plugin.getQueryFactory().insertSyncControl(id, 3, repeater, 0);
-								break;
-							case 3:
+							}
+							case 3 -> {
 								directional.setFacing(BlockFace.NORTH);
 								data = directional;
 								postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
 								plugin.getQueryFactory().insertSyncControl(id, 2, repeater, 0);
-								break;
-							case 4:
+							}
+							case 4 -> {
 								directional.setFacing(BlockFace.SOUTH);
 								data = directional;
 								postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
 								plugin.getQueryFactory().insertSyncControl(id, 5, repeater, 0);
-								break;
-							default:
+							}
+							default -> {
 								directional.setFacing(BlockFace.EAST);
 								data = directional;
 								postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
 								plugin.getQueryFactory().insertSyncControl(id, 4, repeater, 0);
-								break;
+							}
 						}
 						j++;
 					}

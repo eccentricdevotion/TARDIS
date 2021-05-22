@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -53,8 +53,8 @@ public class TARDISBlockBreakListener implements Listener {
 	}
 
 	/**
-	 * Listens for the TARDIS Police Box sign being broken. If the sign is broken, then the TARDIS is destroyed, the
-	 * database records removed and the TARDIS world deleted.
+	 * Listens for the tardis Police Box sign being broken. If the sign is broken, then the tardis is destroyed, the
+	 * database records removed and the tardis world deleted.
 	 *
 	 * @param event a player breaking a block
 	 */
@@ -62,7 +62,7 @@ public class TARDISBlockBreakListener implements Listener {
 	public void onSignBreak(BlockBreakEvent event) {
 		Player player = event.getPlayer();
 		if (player.getGameMode().equals(GameMode.CREATIVE)) {
-			// prevent TARDIS block breakage
+			// prevent tardis block breakage
 			Block b = event.getBlock();
 			String l = b.getLocation().toString();
 			HashMap<String, Object> where = new HashMap<>();
@@ -108,7 +108,7 @@ public class TARDISBlockBreakListener implements Listener {
 				sign.update();
 				if (TARDISPermission.hasPermission(player, "tardis.exterminate")) {
 					UUID uuid = player.getUniqueId();
-					// check it is their TARDIS
+					// check it is their tardis
 					plugin.getTrackerKeeper().getExterminate().put(uuid, block);
 					long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");
 					TARDISMessage.send(player, "Q_DELETE", ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET, String.format("%d", timeout));
@@ -120,7 +120,7 @@ public class TARDISBlockBreakListener implements Listener {
 		}
 		if (blockType == Material.BEACON) {
 			Location loc = event.getBlock().getLocation();
-			if (loc.getWorld().getName().startsWith("TARDIS")) {
+			if (loc.getWorld().getName().startsWith("tardis")) {
 				return;
 			}
 			String b = loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();

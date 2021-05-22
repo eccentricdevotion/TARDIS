@@ -14,34 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.control;
+package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
-import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
-import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chameleon.TARDISShellRoomConstructor;
-import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherInventory;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
-import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramInventory;
-import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
-import me.eccentric_nz.TARDIS.maze.TARDISMazeBuilder;
-import me.eccentric_nz.TARDIS.maze.TARDISMazeGenerator;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
-import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
-import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
-import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.tardis.advanced.TARDISSerializeInventory;
+import me.eccentric_nz.tardis.api.event.TARDISZeroRoomEnterEvent;
+import me.eccentric_nz.tardis.api.event.TARDISZeroRoomExitEvent;
+import me.eccentric_nz.tardis.ars.TARDISARSInventory;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.chameleon.TARDISShellRoomConstructor;
+import me.eccentric_nz.tardis.commands.utils.TARDISWeatherInventory;
+import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.enumeration.*;
+import me.eccentric_nz.tardis.forcefield.TARDISForceField;
+import me.eccentric_nz.tardis.hads.TARDISCloisterBell;
+import me.eccentric_nz.tardis.handles.TARDISHandlesProcessor;
+import me.eccentric_nz.tardis.handles.TARDISHandlesProgramInventory;
+import me.eccentric_nz.tardis.listeners.TARDISKeyboardListener;
+import me.eccentric_nz.tardis.maze.TARDISMazeBuilder;
+import me.eccentric_nz.tardis.maze.TARDISMazeGenerator;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.move.TARDISBlackWoolToggler;
+import me.eccentric_nz.tardis.rooms.TARDISExteriorRenderer;
+import me.eccentric_nz.tardis.travel.TARDISTemporalLocatorInventory;
+import me.eccentric_nz.tardis.travel.TARDISTerminalInventory;
+import me.eccentric_nz.tardis.utility.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -91,8 +91,8 @@ public class TARDISControlListener implements Listener {
 	}
 
 	/**
-	 * Listens for player interaction with the TARDIS console button. If the button is clicked it will return a random
-	 * destination based on the settings of the four TARDIS console repeaters.
+	 * Listens for player interaction with the tardis console button. If the button is clicked it will return a random
+	 * destination based on the settings of the four tardis console repeaters.
 	 *
 	 * @param event the player clicking a block
 	 */
@@ -207,7 +207,7 @@ public class TARDISControlListener implements Listener {
 									aec.setContents(items);
 									player.openInventory(aec);
 									break;
-								case 10: // ARS sign
+								case 10: // ars sign
 									if (!hb) {
 										TARDISMessage.send(player, "ARS_NO_TRAVEL");
 										return;
@@ -369,7 +369,7 @@ public class TARDISControlListener implements Listener {
 									} else {
 										// controls GUI
 										ItemStack[] controls = new TARDISControlInventory(plugin, player.getUniqueId()).getControls();
-										Inventory cgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Control Menu");
+										Inventory cgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis Control Menu");
 										cgui.setContents(controls);
 										player.openInventory(cgui);
 									}
@@ -490,7 +490,7 @@ public class TARDISControlListener implements Listener {
 								case 38:
 									// weather menu
 									ItemStack[] weather = new TARDISWeatherInventory(plugin).getWeatherButtons();
-									Inventory forecast = plugin.getServer().createInventory(player, 9, ChatColor.DARK_RED + "TARDIS Weather Menu");
+									Inventory forecast = plugin.getServer().createInventory(player, 9, ChatColor.DARK_RED + "tardis Weather Menu");
 									forecast.setContents(weather);
 									player.openInventory(forecast);
 									break;

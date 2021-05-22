@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.advanced;
+package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -72,7 +72,7 @@ public class TARDISCircuitRepairListener implements Listener {
 				if (fim.hasDisplayName() && fim.hasCustomModelData()) {
 					// get the display name
 					String dnf = fim.getDisplayName();
-					if (dnf.startsWith("TARDIS") && dnf.endsWith("Circuit")) {
+					if (dnf.startsWith("tardis") && dnf.endsWith("Circuit")) {
 						if (fim.hasLore()) {
 							// get the lore
 							List<String> flore = fim.getLore();

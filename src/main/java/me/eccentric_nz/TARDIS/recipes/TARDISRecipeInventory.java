@@ -1,10 +1,10 @@
-package me.eccentric_nz.TARDIS.recipes;
+package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
-import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.GUIChameleonPresets;
+import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
+import me.eccentric_nz.tardis.enumeration.RecipeCategory;
+import me.eccentric_nz.tardis.enumeration.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -92,6 +92,6 @@ public class TARDISRecipeInventory {
 	}
 
 	private boolean isShapeless(String s) {
-		return !s.equals("Blank Storage Disk") && !s.equals("Authorised Control Disk") && (s.contains("Jelly") || s.contains("Disk") || s.equals("Bowl of Custard") || s.equals("TARDIS Schematic Wand") || s.contains("Upgrade"));
+		return !s.equals("Blank Storage Disk") && !s.equals("Authorised Control Disk") && (s.contains("Jelly") || s.contains("Disk") || s.equals("Bowl of Custard") || s.equals("tardis Schematic Wand") || s.contains("Upgrade"));
 	}
 }

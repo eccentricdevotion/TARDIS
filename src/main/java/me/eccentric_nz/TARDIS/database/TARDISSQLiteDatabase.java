@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database;
+package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -45,7 +45,7 @@ public class TARDISSQLiteDatabase {
 	}
 
 	/**
-	 * Creates the TARDIS default tables in the database.
+	 * Creates the tardis default tables in the database.
 	 */
 	public void createTables() {
 		service.setIsMySQL(false);

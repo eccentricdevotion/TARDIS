@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.constructor;
+package me.eccentric_nz.tardis.chemistry.constructor;
 
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
+import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -36,6 +36,7 @@ public class ConstructorInventory {
 		// info
 		ItemStack info = new ItemStack(Material.BOWL, 1);
 		ItemMeta info_im = info.getItemMeta();
+		assert info_im != null;
 		info_im.setDisplayName("Info");
 		info_im.setLore(Arrays.asList("Add or subtract protons,", "neutrons and electrons to", "construct an atomic element."));
 		info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
@@ -44,6 +45,7 @@ public class ConstructorInventory {
 		// proton count
 		ItemStack p_zero = new ItemStack(Material.PAPER, 1);
 		ItemMeta pzim = p_zero.getItemMeta();
+		assert pzim != null;
 		pzim.setDisplayName("0");
 		pzim.setCustomModelData(26);
 		p_zero.setItemMeta(pzim);
@@ -51,6 +53,7 @@ public class ConstructorInventory {
 		// protons
 		ItemStack protons = new ItemStack(Material.BOWL, 1);
 		ItemMeta pim = protons.getItemMeta();
+		assert pim != null;
 		pim.setDisplayName("Protons");
 		pim.setCustomModelData(GUIChemistry.PROTONS.getCustomModelData());
 		protons.setItemMeta(pim);
@@ -58,6 +61,7 @@ public class ConstructorInventory {
 		// proton down
 		ItemStack proton_down = new ItemStack(Material.ARROW, 1);
 		ItemMeta pdim = proton_down.getItemMeta();
+		assert pdim != null;
 		pdim.setDisplayName("-");
 		pdim.setCustomModelData(GUIChemistry.MINUS.getCustomModelData());
 		proton_down.setItemMeta(pdim);
@@ -65,6 +69,7 @@ public class ConstructorInventory {
 		// proton up
 		ItemStack proton_up = new ItemStack(Material.ARROW, 1);
 		ItemMeta puim = proton_up.getItemMeta();
+		assert puim != null;
 		puim.setDisplayName("+");
 		puim.setCustomModelData(GUIChemistry.PLUS.getCustomModelData());
 		proton_up.setItemMeta(puim);
@@ -72,6 +77,7 @@ public class ConstructorInventory {
 		// neutron count
 		ItemStack n_zero = new ItemStack(Material.PAPER, 1);
 		ItemMeta nzim = n_zero.getItemMeta();
+		assert nzim != null;
 		nzim.setDisplayName("0");
 		nzim.setCustomModelData(26);
 		n_zero.setItemMeta(nzim);
@@ -79,6 +85,7 @@ public class ConstructorInventory {
 		// neutrons
 		ItemStack neutrons = new ItemStack(Material.BOWL, 1);
 		ItemMeta nim = neutrons.getItemMeta();
+		assert nim != null;
 		nim.setDisplayName("Neutrons");
 		nim.setCustomModelData(GUIChemistry.NEUTRONS.getCustomModelData());
 		neutrons.setItemMeta(nim);
@@ -86,6 +93,7 @@ public class ConstructorInventory {
 		// neutron down
 		ItemStack neutron_down = new ItemStack(Material.ARROW, 1);
 		ItemMeta ndim = neutron_down.getItemMeta();
+		assert ndim != null;
 		ndim.setDisplayName("-");
 		ndim.setCustomModelData(GUIChemistry.MINUS.getCustomModelData());
 		neutron_down.setItemMeta(ndim);
@@ -93,6 +101,7 @@ public class ConstructorInventory {
 		// neutron up
 		ItemStack neutron_up = new ItemStack(Material.ARROW, 1);
 		ItemMeta nuim = neutron_up.getItemMeta();
+		assert nuim != null;
 		nuim.setDisplayName("+");
 		nuim.setCustomModelData(GUIChemistry.PLUS.getCustomModelData());
 		neutron_up.setItemMeta(nuim);
@@ -100,6 +109,7 @@ public class ConstructorInventory {
 		// electron count
 		ItemStack e_zero = new ItemStack(Material.PAPER, 1);
 		ItemMeta ezim = e_zero.getItemMeta();
+		assert ezim != null;
 		ezim.setDisplayName("0");
 		ezim.setCustomModelData(26);
 		e_zero.setItemMeta(ezim);
@@ -107,6 +117,7 @@ public class ConstructorInventory {
 		// electrons
 		ItemStack electrons = new ItemStack(Material.BOWL, 1);
 		ItemMeta eim = electrons.getItemMeta();
+		assert eim != null;
 		eim.setDisplayName("Electrons");
 		eim.setCustomModelData(GUIChemistry.ELECTRONS.getCustomModelData());
 		electrons.setItemMeta(eim);
@@ -114,6 +125,7 @@ public class ConstructorInventory {
 		// electron down
 		ItemStack electron_down = new ItemStack(Material.ARROW, 1);
 		ItemMeta edim = electron_down.getItemMeta();
+		assert edim != null;
 		edim.setDisplayName("-");
 		edim.setCustomModelData(GUIChemistry.MINUS.getCustomModelData());
 		electron_down.setItemMeta(edim);
@@ -121,6 +133,7 @@ public class ConstructorInventory {
 		// electron up
 		ItemStack electron_up = new ItemStack(Material.ARROW, 1);
 		ItemMeta euim = electron_up.getItemMeta();
+		assert euim != null;
 		euim.setDisplayName("+");
 		euim.setCustomModelData(GUIChemistry.PLUS.getCustomModelData());
 		electron_up.setItemMeta(euim);

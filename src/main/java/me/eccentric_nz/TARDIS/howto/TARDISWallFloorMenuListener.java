@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.howto;
+package me.eccentric_nz.tardis.howto;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.rooms.TARDISWalls;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -59,7 +59,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
 
 	@EventHandler
 	public void onWallFloorMenuOpen(InventoryOpenEvent event) {
-		if (event.getView().getTitle().equals(ChatColor.DARK_RED + "TARDIS Wall & Floor Menu")) {
+		if (event.getView().getTitle().equals(ChatColor.DARK_RED + "tardis Wall & Floor Menu")) {
 			Player p = (Player) event.getPlayer();
 			scroll.put(p.getUniqueId(), 0);
 		}
@@ -69,7 +69,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
 	public void onWallFloorMenuClick(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "TARDIS Wall & Floor Menu")) {
+		if (name.equals(ChatColor.DARK_RED + "tardis Wall & Floor Menu")) {
 			Player p = (Player) event.getWhoClicked();
 			UUID uuid = p.getUniqueId();
 			int slot = event.getRawSlot();
@@ -130,7 +130,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
 		close(p);
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 			ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
-			Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seeds Menu");
+			Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "tardis Seeds Menu");
 			gui.setContents(seeds);
 			p.openInventory(gui);
 		}, 2L);

@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISWorldBorderChecker;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -69,7 +69,7 @@ public class TARDISBiomeFinderOld implements Runnable {
 	public void run() {
 		if (location == null) {
 			switch (directions[i]) {
-				case 0:
+				case 0 -> {
 					// east
 					int east = startx + plus;
 					Biome chkbe = w.getBiome(east, w.getHighestBlockYAt(east, startz), startz);
@@ -82,8 +82,8 @@ public class TARDISBiomeFinderOld implements Runnable {
 						i++;
 						plus = 0;
 					}
-					break;
-				case 1:
+				}
+				case 1 -> {
 					// south
 					int south = startz + plus;
 					Biome chkbs = w.getBiome(startx, w.getHighestBlockYAt(startx, south), south);
@@ -96,8 +96,8 @@ public class TARDISBiomeFinderOld implements Runnable {
 						i++;
 						plus = 0;
 					}
-					break;
-				case 2:
+				}
+				case 2 -> {
 					// west
 					int west = startx - plus;
 					Biome chkbw = w.getBiome(west, w.getHighestBlockYAt(west, startz), startz);
@@ -110,8 +110,8 @@ public class TARDISBiomeFinderOld implements Runnable {
 						i++;
 						plus = 0;
 					}
-					break;
-				case 3:
+				}
+				case 3 -> {
 					// north
 					int north = startz - plus;
 					Biome chkbn = w.getBiome(startx, w.getHighestBlockYAt(startx, north), north);
@@ -124,7 +124,7 @@ public class TARDISBiomeFinderOld implements Runnable {
 						i++;
 						plus = 0;
 					}
-					break;
+				}
 			}
 		}
 	}

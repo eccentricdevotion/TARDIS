@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
 import br.net.fabiozumbi12.RedProtect.Bukkit.RedProtect;
 import br.net.fabiozumbi12.RedProtect.Bukkit.Region;
@@ -27,70 +27,16 @@ public class TARDISRedProtectChecker {
 	public static boolean canSonic(Player player, Block block) {
 		boolean cansonic;
 		Region region = RedProtect.get().getRegionManager().getTopRegion(block.getLocation());
-		switch (block.getType()) {
-			case ENDER_CHEST:
-				cansonic = region.canEnderChest(player);
-				break;
-			case CHEST:
-			case TRAPPED_CHEST:
-				cansonic = region.canChest(player);
-				break;
-			case LEVER:
-				cansonic = region.canLever(player);
-				break;
-			case DETECTOR_RAIL:
-			case MUSHROOM_STEM:
-			case PISTON:
-			case POLISHED_BLACKSTONE_BUTTON:
-			case POWERED_RAIL:
-			case REDSTONE_LAMP:
-			case REDSTONE_WIRE:
-			case STICKY_PISTON:
-				cansonic = region.canRedstone(player);
-				break;
-			case ACACIA_BUTTON:
-			case BIRCH_BUTTON:
-			case CRIMSON_BUTTON:
-			case DARK_OAK_BUTTON:
-			case JUNGLE_BUTTON:
-			case OAK_BUTTON:
-			case SPRUCE_BUTTON:
-			case STONE_BUTTON:
-			case WARPED_BUTTON:
-				cansonic = region.canButton(player);
-				break;
-			case ACACIA_DOOR:
-			case ACACIA_TRAPDOOR:
-			case BIRCH_DOOR:
-			case BIRCH_TRAPDOOR:
-			case CRIMSON_DOOR:
-			case CRIMSON_TRAPDOOR:
-			case DARK_OAK_DOOR:
-			case DARK_OAK_TRAPDOOR:
-			case IRON_DOOR:
-			case IRON_TRAPDOOR:
-			case JUNGLE_DOOR:
-			case JUNGLE_TRAPDOOR:
-			case OAK_DOOR:
-			case OAK_TRAPDOOR:
-			case SPRUCE_DOOR:
-			case SPRUCE_TRAPDOOR:
-			case WARPED_DOOR:
-			case WARPED_TRAPDOOR:
-				cansonic = region.canDoor(player);
-				break;
-			case CAMPFIRE:
-			case NETHERRACK:
-			case OBSIDIAN:
-			case SOUL_CAMPFIRE:
-			case SOUL_SAND:
-			case SOUL_SOIL:
-				cansonic = region.canFire();
-				break;
-			default:
-				cansonic = region.canBreak(block.getType());
-				break;
-		}
+		cansonic = switch (block.getType()) {
+			case ENDER_CHEST -> region.canEnderChest(player);
+			case CHEST, TRAPPED_CHEST -> region.canChest(player);
+			case LEVER -> region.canLever(player);
+			case DETECTOR_RAIL, MUSHROOM_STEM, PISTON, POLISHED_BLACKSTONE_BUTTON, POWERED_RAIL, REDSTONE_LAMP, REDSTONE_WIRE, STICKY_PISTON -> region.canRedstone(player);
+			case ACACIA_BUTTON, BIRCH_BUTTON, CRIMSON_BUTTON, DARK_OAK_BUTTON, JUNGLE_BUTTON, OAK_BUTTON, SPRUCE_BUTTON, STONE_BUTTON, WARPED_BUTTON -> region.canButton(player);
+			case ACACIA_DOOR, ACACIA_TRAPDOOR, BIRCH_DOOR, BIRCH_TRAPDOOR, CRIMSON_DOOR, CRIMSON_TRAPDOOR, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, IRON_DOOR, IRON_TRAPDOOR, JUNGLE_DOOR, JUNGLE_TRAPDOOR, OAK_DOOR, OAK_TRAPDOOR, SPRUCE_DOOR, SPRUCE_TRAPDOOR, WARPED_DOOR, WARPED_TRAPDOOR -> region.canDoor(player);
+			case CAMPFIRE, NETHERRACK, OBSIDIAN, SOUL_CAMPFIRE, SOUL_SAND, SOUL_SOIL -> region.canFire();
+			default -> region.canBreak(block.getType());
+		};
 		return cansonic;
 	}
 

@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,7 +34,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * Perception filters had the effect of directing attention away from the object or its bearer, rendering them
- * unnoticeable. The Doctor was able to construct a perception filter around three keys to the TARDIS, activated when
+ * unnoticeable. The Doctor was able to construct a perception filter around three keys to the tardis, activated when
  * they were worn around the neck on a chain.
  *
  * @author eccentric_nz

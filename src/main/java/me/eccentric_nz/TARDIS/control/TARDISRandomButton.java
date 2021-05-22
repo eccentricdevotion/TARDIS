@@ -14,21 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.control;
+package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.TARDISEmergencyRelocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetRepeaters;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravelledTo;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.WorldManager;
+import me.eccentric_nz.tardis.flight.TARDISLand;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -69,7 +69,7 @@ public class TARDISRandomButton {
 		wherecl.put("tardis_id", id);
 		ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
 		if (!rscl.resultSet()) {
-			// emergency TARDIS relocation
+			// emergency tardis relocation
 			new TARDISEmergencyRelocation(plugin).relocate(id, player);
 			return;
 		}
@@ -104,7 +104,7 @@ public class TARDISRandomButton {
 				}
 				if (repeaters[0] == 1) { // first position
 					environment = "THIS";
-					// check TARDIS travel is allowed in this world
+					// check tardis travel is allowed in this world
 					if (!plugin.getPlanetsConfig().getBoolean("planets." + rscl.getWorld().getName() + ".time_travel")) {
 						TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 						return;
@@ -145,7 +145,7 @@ public class TARDISRandomButton {
 				TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
 				Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, rscl.getWorld(), false, cl);
 				if (rand != null) {
-					// double check TARDIS travel is allowed in this world
+					// double check tardis travel is allowed in this world
 					if (!plugin.getPlanetsConfig().getBoolean("planets." + rand.getWorld().getName() + ".time_travel")) {
 						TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 						return;

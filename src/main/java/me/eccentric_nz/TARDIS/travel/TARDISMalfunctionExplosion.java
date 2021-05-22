@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.utility.TARDISFirework;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetRepeaters;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.utility.TARDISFirework;
 import org.bukkit.Location;
 
 import java.util.HashMap;
@@ -31,9 +31,9 @@ import java.util.List;
  * @author eccentric_nz
  * <p>
  * Atmospheric excitation is an unnatural disturbance in the atmosphere which causes the weather to change. The Tenth
- * Doctor's sonic screwdriver, the TARDIS, and moving a planet can all cause atmospheric excitation.
+ * Doctor's sonic screwdriver, the tardis, and moving a planet can all cause atmospheric excitation.
  * <p>
- * The Tenth Doctor used a device above the inside of the door of the TARDIS to excite the atmosphere, causing snow, in
+ * The Tenth Doctor used a device above the inside of the door of the tardis to excite the atmosphere, causing snow, in
  * an attempt to cheer up Donna Noble.
  */
 public class TARDISMalfunctionExplosion implements Runnable {

@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.rooms;
+package me.eccentric_nz.tardis.rooms;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -33,7 +33,7 @@ import java.util.Locale;
 
 /**
  * When the Eleventh Doctor was trying to get out of his universe, he said he was deleting the scullery room and squash
- * court seven to give the TARDIS an extra boost.
+ * court seven to give the tardis an extra boost.
  *
  * @author eccentric_nz
  */
@@ -54,7 +54,7 @@ class TARDISRoomRemover {
 	}
 
 	/**
-	 * Jettison a TARDIS room, leaving just the walls behind. We will probably need to get the dimensions of the room
+	 * Jettison a tardis room, leaving just the walls behind. We will probably need to get the dimensions of the room
 	 * from the schematic, if user supplied room schematics will be allowed.
 	 *
 	 * @return false if the room has already been jettisoned
@@ -79,20 +79,16 @@ class TARDISRoomRemover {
 		upy = h - (downy + 1);
 		int xzoffset = (wid / 2);
 		switch (d) {
-			case NORTH:
+			case NORTH -> {
 				l.setX(l.getX() - xzoffset);
 				l.setZ(l.getZ() - wid);
-				break;
-			case WEST:
+			}
+			case WEST -> {
 				l.setX(l.getX() - wid);
 				l.setZ(l.getZ() - xzoffset);
-				break;
-			case SOUTH:
-				l.setX(l.getX() - xzoffset);
-				break;
-			default:
-				l.setZ(l.getZ() - xzoffset);
-				break;
+			}
+			case SOUTH -> l.setX(l.getX() - xzoffset);
+			default -> l.setZ(l.getZ() - xzoffset);
 		}
 		sx = l.getBlockX();
 		ex = l.getBlockX() + (wid - 1);

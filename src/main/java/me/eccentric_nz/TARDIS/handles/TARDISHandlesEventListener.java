@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.handles;
+package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.event.*;
-import me.eccentric_nz.TARDIS.database.data.Program;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetProgramFromEvent;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.event.*;
+import me.eccentric_nz.tardis.database.data.Program;
+import me.eccentric_nz.tardis.database.resultset.ResultSetProgramFromEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -46,12 +46,14 @@ public class TARDISHandlesEventListener implements Listener {
 					TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
 					TARDISHandlesProcessor processor = new TARDISHandlesProcessor(TARDIS.plugin, program, player, program.getProgram_id());
 					switch (thb) {
-						case ARTRON:
+						case ARTRON -> {
 							processor.processArtronCommand(i + 1);
 							return;
-						case DO:
+						}
+						case DO -> {
 							processor.processCommand(i + 1);
 							return;
+						}
 					}
 				}
 				i++;

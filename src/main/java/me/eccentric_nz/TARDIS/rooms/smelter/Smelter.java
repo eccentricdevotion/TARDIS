@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.rooms.smelter;
+package me.eccentric_nz.tardis.rooms.smelter;
 
 import org.bukkit.Material;
 import org.bukkit.util.Vector;
@@ -66,77 +66,10 @@ public class Smelter {
 	}
 
 	public static boolean isSmeltable(Material material) {
-		switch (material) {
-			case ACACIA_WOOD:
-			case ACACIA_LOG:
-			case BEEF:
-			case BIRCH_WOOD:
-			case BIRCH_LOG:
-			case BLACK_TERRACOTTA:
-			case BLUE_TERRACOTTA:
-			case BROWN_TERRACOTTA:
-			case CACTUS:
-			case CHICKEN:
-			case CHORUS_FRUIT:
-			case CLAY:
-			case CLAY_BALL:
-			case COBBLESTONE:
-			case COD:
-			case CYAN_TERRACOTTA:
-			case DARK_OAK_WOOD:
-			case DARK_OAK_LOG:
-			case GOLD_ORE:
-			case GRAY_TERRACOTTA:
-			case GREEN_TERRACOTTA:
-			case IRON_ORE:
-			case JUNGLE_WOOD:
-			case JUNGLE_LOG:
-			case KELP:
-			case LIGHT_BLUE_TERRACOTTA:
-			case LIGHT_GRAY_TERRACOTTA:
-			case LIME_TERRACOTTA:
-			case MAGENTA_TERRACOTTA:
-			case MUTTON:
-			case NETHERRACK:
-			case OAK_WOOD:
-			case OAK_LOG:
-			case ORANGE_TERRACOTTA:
-			case PINK_TERRACOTTA:
-			case PORKCHOP:
-			case POTATO:
-			case PURPLE_TERRACOTTA:
-			case QUARTZ_BLOCK:
-			case RABBIT:
-			case RED_SANDSTONE:
-			case RED_TERRACOTTA:
-			case SALMON:
-			case SAND:
-			case SANDSTONE:
-			case SEA_PICKLE:
-			case SPONGE:
-			case SPRUCE_WOOD:
-			case SPRUCE_LOG:
-			case STONE:
-			case STONE_BRICKS:
-			case STRIPPED_ACACIA_LOG:
-			case STRIPPED_ACACIA_WOOD:
-			case STRIPPED_BIRCH_LOG:
-			case STRIPPED_BIRCH_WOOD:
-			case STRIPPED_DARK_OAK_LOG:
-			case STRIPPED_DARK_OAK_WOOD:
-			case STRIPPED_JUNGLE_LOG:
-			case STRIPPED_JUNGLE_WOOD:
-			case STRIPPED_OAK_LOG:
-			case STRIPPED_OAK_WOOD:
-			case STRIPPED_SPRUCE_LOG:
-			case STRIPPED_SPRUCE_WOOD:
-			case WET_SPONGE:
-			case WHITE_TERRACOTTA:
-			case YELLOW_TERRACOTTA:
-				return true;
-			default:
-				return false;
-		}
+		return switch (material) {
+			case ACACIA_WOOD, ACACIA_LOG, BEEF, BIRCH_WOOD, BIRCH_LOG, BLACK_TERRACOTTA, BLUE_TERRACOTTA, BROWN_TERRACOTTA, CACTUS, CHICKEN, CHORUS_FRUIT, CLAY, CLAY_BALL, COBBLESTONE, COD, CYAN_TERRACOTTA, DARK_OAK_WOOD, DARK_OAK_LOG, GOLD_ORE, GRAY_TERRACOTTA, GREEN_TERRACOTTA, IRON_ORE, JUNGLE_WOOD, JUNGLE_LOG, KELP, LIGHT_BLUE_TERRACOTTA, LIGHT_GRAY_TERRACOTTA, LIME_TERRACOTTA, MAGENTA_TERRACOTTA, MUTTON, NETHERRACK, OAK_WOOD, OAK_LOG, ORANGE_TERRACOTTA, PINK_TERRACOTTA, PORKCHOP, POTATO, PURPLE_TERRACOTTA, QUARTZ_BLOCK, RABBIT, RED_SANDSTONE, RED_TERRACOTTA, SALMON, SAND, SANDSTONE, SEA_PICKLE, SPONGE, SPRUCE_WOOD, SPRUCE_LOG, STONE, STONE_BRICKS, STRIPPED_ACACIA_LOG, STRIPPED_ACACIA_WOOD, STRIPPED_BIRCH_LOG, STRIPPED_BIRCH_WOOD, STRIPPED_DARK_OAK_LOG, STRIPPED_DARK_OAK_WOOD, STRIPPED_JUNGLE_LOG, STRIPPED_JUNGLE_WOOD, STRIPPED_OAK_LOG, STRIPPED_OAK_WOOD, STRIPPED_SPRUCE_LOG, STRIPPED_SPRUCE_WOOD, WET_SPONGE, WHITE_TERRACOTTA, YELLOW_TERRACOTTA -> true;
+			default -> false;
+		};
 	}
 
 	public static List<Vector> getFuelVectors() {

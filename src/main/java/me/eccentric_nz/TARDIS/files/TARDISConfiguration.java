@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.files;
+package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.planets.TARDISWorlds;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.planets.TARDISWorlds;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -202,7 +202,7 @@ public class TARDISConfiguration {
 		stringOptions.put("storage.database", "sqlite");
 		stringOptions.put("storage.mysql.host", "localhost");
 		stringOptions.put("storage.mysql.port", "3306");
-		stringOptions.put("storage.mysql.database", "TARDIS");
+		stringOptions.put("storage.mysql.database", "tardis");
 		stringOptions.put("storage.mysql.user", "bukkit");
 		stringOptions.put("storage.mysql.password", "mysecurepassword");
 		stringOptions.put("storage.mysql.prefix", "");
@@ -260,7 +260,7 @@ public class TARDISConfiguration {
 		}
 		// check mysql settings
 		if (config.contains("storage.mysql.url")) {
-			// mysql://localhost:3306/TARDIS
+			// mysql://localhost:3306/tardis
 			String[] firstSplit = config.getString("storage.mysql.url").split(":");
 			String host = firstSplit[1].substring(2);
 			String[] secondSplit = firstSplit[2].split("/");

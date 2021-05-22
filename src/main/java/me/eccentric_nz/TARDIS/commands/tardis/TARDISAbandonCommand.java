@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.event.TARDISAbandonEvent;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
-import me.eccentric_nz.TARDIS.commands.admin.TARDISAbandonLister;
-import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
-import me.eccentric_nz.TARDIS.database.converters.TARDISAbandonUpdate;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisAbandoned;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.event.TARDISAbandonEvent;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.TARDISBuilderUtility;
+import me.eccentric_nz.tardis.commands.admin.TARDISAbandonLister;
+import me.eccentric_nz.tardis.control.TARDISPowerButton;
+import me.eccentric_nz.tardis.database.converters.TARDISAbandonUpdate;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisAbandoned;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.move.TARDISDoorCloser;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -63,18 +63,18 @@ public class TARDISAbandonCommand {
 		switch (p) {
 			case JUNK_MODE:
 				switch (d) {
-					case EAST:
+					case EAST -> {
 						signx = 0;
 						signz = 1;
-						break;
-					case WEST:
+					}
+					case WEST -> {
 						signx = 0;
 						signz = -1;
-						break;
-					default:
+					}
+					default -> {
 						signx = 1;
 						signz = 0;
-						break;
+					}
 				}
 				break;
 			case GRAVESTONE:
@@ -83,106 +83,91 @@ public class TARDISAbandonCommand {
 				break;
 			case TORCH:
 				switch (d) {
-					case EAST:
+					case EAST -> {
 						signx = -1;
 						signz = 0;
-						break;
-					case SOUTH:
+					}
+					case SOUTH -> {
 						signx = 0;
 						signz = -1;
-						break;
-					case WEST:
+					}
+					case WEST -> {
 						signx = 1;
 						signz = 0;
-						break;
-					default:
+					}
+					default -> {
 						signx = 0;
 						signz = 1;
-						break;
+					}
 				}
 				break;
 			case TOILET:
 				switch (d) {
-					case EAST:
+					case EAST -> {
 						signx = 1;
 						signz = -1;
-						break;
-					case SOUTH:
+					}
+					case SOUTH -> {
 						signx = 1;
 						signz = 1;
-						break;
-					case WEST:
+					}
+					case WEST -> {
 						signx = -1;
 						signz = 1;
-						break;
-					default:
+					}
+					default -> {
 						signx = -1;
 						signz = -1;
-						break;
+					}
 				}
 				break;
 			case APPERTURE:
 				switch (d) {
-					case EAST:
+					case EAST -> {
 						signx = 1;
 						signz = 0;
-						break;
-					case SOUTH:
+					}
+					case SOUTH -> {
 						signx = 0;
 						signz = 1;
-						break;
-					case WEST:
+					}
+					case WEST -> {
 						signx = -1;
 						signz = 0;
-						break;
-					default:
+					}
+					default -> {
 						signx = 0;
 						signz = -1;
-						break;
+					}
 				}
 				break;
 			default:
 				switch (d) {
-					case EAST:
+					case EAST -> {
 						signx = -2;
 						signz = 0;
-						break;
-					case SOUTH:
+					}
+					case SOUTH -> {
 						signx = 0;
 						signz = -2;
-						break;
-					case WEST:
+					}
+					case WEST -> {
 						signx = 2;
 						signz = 0;
-						break;
-					default:
+					}
+					default -> {
 						signx = 0;
 						signz = 2;
-						break;
+					}
 				}
 				break;
 		}
-		switch (p) {
-			case GAZEBO:
-			case JAIL:
-			case SHROOM:
-			case SWAMP:
-				signy = 3;
-				break;
-			case TOPSYTURVEY:
-			case TOILET:
-			case TORCH:
-				signy = 1;
-				break;
-			case ANGEL:
-			case APPERTURE:
-			case LAMP:
-				signy = 0;
-				break;
-			default:
-				signy = 2;
-				break;
-		}
+		signy = switch (p) {
+			case GAZEBO, JAIL, SHROOM, SWAMP -> 3;
+			case TOPSYTURVEY, TOILET, TORCH -> 1;
+			case ANGEL, APPERTURE, LAMP -> 0;
+			default -> 2;
+		};
 		Block b = new Location(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz).getBlock();
 		if (Tag.WALL_SIGNS.isTagged(b.getType())) {
 			sign = (Sign) b.getState();
@@ -214,7 +199,7 @@ public class TARDISAbandonCommand {
 					TARDISMessage.send(sender, "ABANDON_POWER_DOWN");
 					return true;
 				}
-				// abandon TARDIS
+				// abandon tardis
 				ResultSetTardisAbandoned rs = new ResultSetTardisAbandoned(plugin);
 				if (!rs.fromUUID(player.getUniqueId().toString())) {
 					TARDISMessage.send(player, "NO_TARDIS");
@@ -256,7 +241,7 @@ public class TARDISAbandonCommand {
 					}
 					new TARDISAbandonUpdate(plugin, id, player.getUniqueId().toString()).run();
 					if (rs.isPowered_on()) {
-						// power down TARDIS
+						// power down tardis
 						new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), rs.isLights_on(), player.getLocation(), rs.getArtron_level(), rs.getSchematic().hasLanterns()).clickButton();
 					}
 					// close the door
@@ -285,6 +270,7 @@ public class TARDISAbandonCommand {
 								Material dye = TARDISBuilderUtility.getDyeMaterial(preset);
 								ItemStack is = new ItemStack(dye, 1);
 								ItemMeta im = is.getItemMeta();
+								assert im != null;
 								im.setCustomModelData(1001);
 								im.setDisplayName("");
 								is.setItemMeta(im);
@@ -294,16 +280,9 @@ public class TARDISAbandonCommand {
 							Sign sign = getSign(current, rsc.getDirection(), preset);
 							if (sign != null) {
 								switch (preset) {
-									case GRAVESTONE:
-										sign.setLine(3, "");
-										break;
-									case ANGEL:
-									case JAIL:
-										sign.setLine(2, "");
-										break;
-									default:
-										sign.setLine(0, "");
-										break;
+									case GRAVESTONE -> sign.setLine(3, "");
+									case ANGEL, JAIL -> sign.setLine(2, "");
+									default -> sign.setLine(0, "");
 								}
 								sign.update();
 							}

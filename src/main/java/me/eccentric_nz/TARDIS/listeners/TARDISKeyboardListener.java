@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Biome;
@@ -58,7 +58,7 @@ public class TARDISKeyboardListener implements Listener {
 	public static boolean isKeyboardEditor(ItemStack is) {
 		if (is != null && is.getType().equals(Material.OAK_SIGN) && is.hasItemMeta()) {
 			ItemMeta im = is.getItemMeta();
-			return im.hasDisplayName() && im.getDisplayName().equals("TARDIS Keyboard Editor") && im.hasCustomModelData();
+			return im.hasDisplayName() && im.getDisplayName().equals("tardis Keyboard Editor") && im.hasCustomModelData();
 		}
 		return false;
 	}
@@ -197,7 +197,7 @@ public class TARDISKeyboardListener implements Listener {
 			}
 			plugin.getTardisHelper().finishSignEditing(p);
 		} else {
-			plugin.debug("Player is not in a TARDIS!");
+			plugin.debug("Player is not in a tardis!");
 		}
 		TARDISMessage.send(p, "KEYBOARD_ERROR");
 		plugin.getTardisHelper().finishSignEditing(p);

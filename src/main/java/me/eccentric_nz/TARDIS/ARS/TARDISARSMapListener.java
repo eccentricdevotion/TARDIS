@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.ARS;
+package me.eccentric_nz.tardis.ars;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.builders.TARDISTIPSData;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
- * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
+ * The architectural reconfiguration system is a component of the Doctor's tardis in the shape of a tree that, according
  * to the Eleventh Doctor, "reconstructs the particles according to your needs." It is basically "a machine that makes
  * machines," perhaps somewhat like a 3D printer. It is, according to Gregor Van Baalen's scanner, "more valuable than
  * the total sum of any currency.
@@ -55,7 +55,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
 	}
 
 	/**
-	 * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+	 * Listens for player clicking inside an inventory. If the inventory is a tardis GUI, then the click is processed
 	 * accordingly.
 	 *
 	 * @param event a player clicking an inventory slot
@@ -64,7 +64,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
 	public void onARSMapClick(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "TARDIS Map")) {
+		if (name.equals(ChatColor.DARK_RED + "tardis Map")) {
 			event.setCancelled(true);
 			Player player = (Player) event.getWhoClicked();
 			UUID uuid = player.getUniqueId();
@@ -135,6 +135,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
 							ItemStack is = view.getItem(slot);
 							if (is != null) {
 								ItemMeta im = is.getItemMeta();
+								assert im != null;
 								String dn = im.getDisplayName();
 								if (!dn.equals("Empty slot")) {
 									selectedLocation.put(uuid, is.getType().toString());
@@ -175,7 +176,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
 				int col = (int) (4 + (Math.floor((px - tx) / 16.0d)));
 				int row = (int) (4 + (Math.floor((pz - tz) / 16.0d)));
 				if (col < 0 || col > 8 || row < 0 || row > 8) {
-					// outside ARS grid
+					// outside ars grid
 					setLore(view, 47, plugin.getLanguage().getString("ARS_MAP_OUTSIDE"));
 					return;
 				}
@@ -201,8 +202,10 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
 				// get itemstack to change lore
 				int slot = ((row - south) * 9) + 4 + (col - east);
 				ItemStack is = view.getItem(slot);
+				assert is != null;
 				is.setType(Material.ARROW);
 				ItemMeta im = is.getItemMeta();
+				assert im != null;
 				im.setLore(Collections.singletonList(plugin.getLanguage().getString("ARS_MAP_HERE")));
 				im.setCustomModelData(6);
 				is.setItemMeta(im);

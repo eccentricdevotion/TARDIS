@@ -14,19 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
-import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.builders.TARDISBuildData;
+import me.eccentric_nz.tardis.builders.TARDISSeedBlockProcessor;
+import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.custommodeldata.TARDISSeedModel;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.enumeration.Consoles;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.*;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Player;
@@ -57,10 +57,10 @@ public class TARDISSeedBlockListener implements Listener {
 	}
 
 	/**
-	 * Store the TARDIS Seed block's values for use when clicked with the TARDIS key to activate growing, or to return
+	 * Store the tardis Seed block's values for use when clicked with the tardis key to activate growing, or to return
 	 * the block if broken.
 	 *
-	 * @param event The TARDIS Seed block placement event
+	 * @param event The tardis Seed block placement event
 	 */
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onSeedBlockPlace(BlockPlaceEvent event) {
@@ -73,7 +73,7 @@ public class TARDISSeedBlockListener implements Listener {
 		if (!im.hasDisplayName() || !im.hasLore()) {
 			return;
 		}
-		if (im.getDisplayName().equals(ChatColor.GOLD + "TARDIS Seed Block")) {
+		if (im.getDisplayName().equals(ChatColor.GOLD + "tardis Seed Block")) {
 			if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
 				int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
 				MultipleFacing multipleFacing;
@@ -95,12 +95,12 @@ public class TARDISSeedBlockListener implements Listener {
 			Location l = event.getBlockPlaced().getLocation();
 			plugin.getBuildKeeper().getTrackTARDISSeed().put(l, seed);
 			TARDISMessage.send(player, "SEED_PLACE");
-			// now the player has to click the block with the TARDIS key
+			// now the player has to click the block with the tardis key
 		}
 	}
 
 	/**
-	 * Return the TARDIS seed block to the player after it is broken.
+	 * Return the tardis seed block to the player after it is broken.
 	 *
 	 * @param event a block break event
 	 */
@@ -113,7 +113,7 @@ public class TARDISSeedBlockListener implements Listener {
 			if (!p.getGameMode().equals(GameMode.CREATIVE)) {
 				// get the Seed block data
 				TARDISBuildData data = plugin.getBuildKeeper().getTrackTARDISSeed().get(l);
-				// drop a TARDIS Seed Block
+				// drop a tardis Seed Block
 				World w = l.getWorld();
 				ItemStack is = new ItemStack(event.getBlock().getType(), 1);
 				ItemMeta im = is.getItemMeta();
@@ -128,7 +128,7 @@ public class TARDISSeedBlockListener implements Listener {
 					model = 45;
 				}
 				im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
-				im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
+				im.setDisplayName(ChatColor.GOLD + "tardis Seed Block");
 				im.setCustomModelData(10000000 + model);
 				List<String> lore = new ArrayList<>();
 				lore.add(console);
@@ -145,7 +145,7 @@ public class TARDISSeedBlockListener implements Listener {
 	}
 
 	/**
-	 * Process the TARDIS seed block and turn it into a TARDIS!
+	 * Process the tardis seed block and turn it into a tardis!
 	 *
 	 * @param event a block interact event
 	 */
@@ -177,7 +177,7 @@ public class TARDISSeedBlockListener implements Listener {
 							return;
 						}
 					}
-					// grow a TARDIS
+					// grow a tardis
 					TARDISBuildData seed = plugin.getBuildKeeper().getTrackTARDISSeed().get(l);
 					// process seed data
 					if (new TARDISSeedBlockProcessor(plugin).processBlock(seed, l, player)) {

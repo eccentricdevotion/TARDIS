@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.flight;
+package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.QueryFactory;
+import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -34,7 +34,7 @@ public class TARDISHandbrake {
 		lever.setPowered(powered);
 		block.setBlockData(lever);
 		if (inside) {
-			// get other handbrakes in this TARDIS
+			// get other handbrakes in this tardis
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("tardis_id", id);
 			where.put("type", 0);
@@ -46,8 +46,7 @@ public class TARDISHandbrake {
 						if (location != null) {
 							Block other = location.getBlock();
 							BlockData blockData = other.getBlockData();
-							if (blockData instanceof Switch) {
-								Switch brake = (Switch) blockData;
+							if (blockData instanceof Switch brake) {
 								brake.setPowered(powered);
 								other.setBlockData(brake);
 							} else {

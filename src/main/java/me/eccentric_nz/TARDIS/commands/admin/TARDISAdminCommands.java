@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
-import me.eccentric_nz.TARDIS.builders.FractalFence;
-import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.database.tool.Converter;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.UseClay;
-import me.eccentric_nz.TARDIS.maze.TARDISMazeBuilder;
-import me.eccentric_nz.TARDIS.maze.TARDISMazeGenerator;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.UpdateTARDISPlugins;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.arch.TARDISArchCommand;
+import me.eccentric_nz.tardis.builders.FractalFence;
+import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
+import me.eccentric_nz.tardis.database.tool.Converter;
+import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.UseClay;
+import me.eccentric_nz.tardis.maze.TARDISMazeBuilder;
+import me.eccentric_nz.tardis.maze.TARDISMazeGenerator;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.UpdateTARDISPlugins;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -38,6 +38,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -197,7 +198,7 @@ public class TARDISAdminCommands implements CommandExecutor {
 		firstsInt.put("hads_damage", "preferences");
 		firstsInt.put("hads_distance", "preferences");
 		firstsInt.put("heal_speed", "preferences");
-		firstsInt.put("ARS", "circuits.uses");
+		firstsInt.put("ars", "circuits.uses");
 		firstsInt.put("chameleon_uses", "circuits.uses");
 		firstsInt.put("input", "circuits.uses");
 		firstsInt.put("invisibility_uses", "circuits.uses");
@@ -240,7 +241,7 @@ public class TARDISAdminCommands implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
 		// If the player typed /tardisadmin then do the following...
 		if (cmd.getName().equalsIgnoreCase("tardisadmin")) {
 			if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
@@ -280,8 +281,7 @@ public class TARDISAdminCommands implements CommandExecutor {
 						return new UpdateTARDISPlugins(plugin).fetchFromJenkins(sender);
 					}
 					if (first.equals("maze")) {
-						if (sender instanceof Player) {
-							Player p = (Player) sender;
+						if (sender instanceof Player p) {
 							Location l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation();
 							TARDISMazeGenerator generator = new TARDISMazeGenerator();
 							generator.makeMaze();
@@ -309,8 +309,7 @@ public class TARDISAdminCommands implements CommandExecutor {
 					return false;
 				}
 				if (first.equals("tree")) {
-					if (sender instanceof Player) {
-						Player p = (Player) sender;
+					if (sender instanceof Player p) {
 						Block l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation().getBlock();
 						int which = TARDISNumberParsers.parseInt(args[1]);
 						FractalFence.grow(l, which);

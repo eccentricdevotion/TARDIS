@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,7 +26,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the tardis vaults.
  *
  * @author eccentric_nz
  */
@@ -49,10 +49,10 @@ public class ResultSetTardisTimeLord {
 	}
 
 	/**
-	 * Attempts to see whether the supplied TARDIS id is in the tardis table. This method builds an SQL query string
+	 * Attempts to see whether the supplied tardis id is in the tardis table. This method builds an SQL query string
 	 * from the parameters supplied and then executes the query.
 	 *
-	 * @param id the TARDIS id to check
+	 * @param id the tardis id to check
 	 * @return true or false depending on whether the Time Lord uuid exists in the table
 	 */
 	public boolean fromID(int id) {
@@ -71,7 +71,7 @@ public class ResultSetTardisTimeLord {
 			}
 			return false;
 		} catch (SQLException e) {
-			plugin.debug("ResultSet error for tardis [time lord uuid from TARDIS id] table! " + e.getMessage());
+			plugin.debug("ResultSet error for tardis [time lord uuid from tardis id] table! " + e.getMessage());
 			return false;
 		} finally {
 			try {
@@ -82,7 +82,7 @@ public class ResultSetTardisTimeLord {
 					statement.close();
 				}
 			} catch (SQLException e) {
-				plugin.debug("Error closing tardis [time lord uuid from TARDIS id] table! " + e.getMessage());
+				plugin.debug("Error closing tardis [time lord uuid from tardis id] table! " + e.getMessage());
 			}
 		}
 	}

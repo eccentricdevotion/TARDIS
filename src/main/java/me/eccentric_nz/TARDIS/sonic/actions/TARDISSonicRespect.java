@@ -14,28 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.sonic.actions;
+package me.eccentric_nz.tardis.sonic.actions;
 
 import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISRedProtectChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.utility.TARDISFactionsChecker;
+import me.eccentric_nz.tardis.utility.TARDISGriefPreventionChecker;
+import me.eccentric_nz.tardis.utility.TARDISRedProtectChecker;
+import me.eccentric_nz.tardis.utility.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.yi.acru.bukkit.Lockette.Lockette;
+import me.crafter.mc.lockettepro.LocketteProAPI;
 
 public class TARDISSonicRespect {
 
 	/**
 	 * Check whether a player can alter a block with their Sonic Screwdriver
 	 *
-	 * @param plugin an instance of the TARDIS plugin
+	 * @param plugin an instance of the tardis plugin
 	 * @param player the player to check
 	 * @param block  the block to check
 	 * @return true if the player has permission to alter the block, otherwise false
@@ -79,10 +79,6 @@ public class TARDISSonicRespect {
 			// BlockLocker
 			if (plugin.getPM().isPluginEnabled("BlockLocker")) {
 				return !BlockLockerAPIv2.isProtected(block);
-			}
-			// Lockette
-			if (plugin.getPM().isPluginEnabled("Lockette")) {
-				return !Lockette.isProtected(block);
 			}
 		}
 		return true;

@@ -14,11 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.creative;
+package me.eccentric_nz.tardis.chemistry.creative;
 
 public enum Creative {
-	elements,
-	compounds,
-	products,
-	lab
+	elements, compounds, products, lab
 }

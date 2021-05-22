@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.destroyers;
+package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.builders.TARDISTIPSData;
+import me.eccentric_nz.tardis.enumeration.Schematic;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -27,9 +27,9 @@ import java.util.Collections;
 import java.util.HashMap;
 
 /**
- * Destroys the inner TARDIS.
+ * Destroys the inner tardis.
  * <p>
- * If a TARDIS landed in the same space and time as another TARDIS, a time ram could occur, destroying both TARDISes,
+ * If a tardis landed in the same space and time as another tardis, a time ram could occur, destroying both TARDISes,
  * their occupants and even cause a black hole that would tear a hole in the universe
  *
  * @author eccentric_nz
@@ -43,15 +43,15 @@ public class TARDISDestroyerInner {
 	}
 
 	/**
-	 * Destroys the inside of the TARDIS.
+	 * Destroys the inside of the tardis.
 	 *
 	 * @param schematic the name of the schematic file to use can be DEFAULT, BIGGER or DELUXE.
-	 * @param id        the unique key of the record for this TARDIS in the database.
-	 * @param w         the world where the TARDIS is to be built.
+	 * @param id        the unique key of the record for this tardis in the database.
+	 * @param w         the world where the tardis is to be built.
 	 * @param slot      the TIPS slot number
 	 */
 	public void destroyInner(Schematic schematic, int id, World w, int slot) {
-		// destroy TARDIS
+		// destroy tardis
 		if (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
 			plugin.debug(TARDIS.plugin.getLanguage().getString("CONFIG_CREATION_WORLD"));
 			return;

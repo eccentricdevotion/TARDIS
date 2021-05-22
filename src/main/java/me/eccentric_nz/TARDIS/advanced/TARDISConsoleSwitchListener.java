@@ -14,19 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.advanced;
+package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
-import me.eccentric_nz.TARDIS.control.TARDISScanner;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
-import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
-import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.ars.TARDISARSInventory;
+import me.eccentric_nz.tardis.chameleon.TARDISChameleonInventory;
+import me.eccentric_nz.tardis.control.TARDISScanner;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.travel.TARDISSaveSignInventory;
+import me.eccentric_nz.tardis.travel.TARDISTemporalLocatorInventory;
+import me.eccentric_nz.tardis.travel.TARDISTerminalInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -61,9 +61,9 @@ public class TARDISConsoleSwitchListener implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onConsoleInventoryClick(InventoryClickEvent event) {
 		InventoryView view = event.getView();
-		if (view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Console")) {
+		if (view.getTitle().equals(ChatColor.DARK_RED + "tardis Console")) {
 			Player p = (Player) event.getWhoClicked();
-			// check they're in the TARDIS
+			// check they're in the tardis
 			HashMap<String, Object> wheret = new HashMap<>();
 			wheret.put("uuid", p.getUniqueId().toString());
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -88,35 +88,29 @@ public class TARDISConsoleSwitchListener implements Listener {
 								plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 									ItemStack[] stack = null;
 									Inventory new_inv = null;
-									switch (cmd) {
-										case 10001966: // Chameleon circuit
-										case 20001966:
+									switch (cmd) { // Chameleon circuit
+										case 10001966, 20001966 -> {
 											new_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Chameleon Circuit");
 											stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
-											break;
-										case 10001973: // ARS circuit
-										case 20001973:
+										} // ars circuit
+										case 10001973, 20001973 -> {
 											new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
 											stack = new TARDISARSInventory(plugin).getARS();
-											break;
-										case 10001974: // Temporal circuit
-										case 20001974:
+										} // Temporal circuit
+										case 10001974, 20001974 -> {
 											new_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Temporal Locator");
 											stack = new TARDISTemporalLocatorInventory(plugin).getTemporal();
-											break;
-										case 10001975: // Memory circuit (saves/areas)
-										case 20001975:
-											new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS saves");
+										} // Memory circuit (saves/areas)
+										case 10001975, 20001975 -> {
+											new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis saves");
 											stack = new TARDISSaveSignInventory(plugin, tardis.getTardis_id(), p).getTerminal();
-											break;
-										case 10001976: // Input circuit (terminal)
-										case 20001976:
+										} // Input circuit (terminal)
+										case 10001976, 20001976 -> {
 											new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Destination Terminal");
 											stack = new TARDISTerminalInventory(plugin).getTerminal();
-											break;
-										default: // scanner circuit
-											TARDISScanner.scan(p, tardis.getTardis_id(), plugin.getServer().getScheduler());
-											break;
+										}
+										default -> // scanner circuit
+												TARDISScanner.scan(p, tardis.getTardis_id(), plugin.getServer().getScheduler());
 									}
 									// close inventory
 									p.closeInventory();

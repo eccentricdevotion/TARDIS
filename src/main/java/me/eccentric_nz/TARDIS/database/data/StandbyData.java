@@ -1,6 +1,6 @@
-package me.eccentric_nz.TARDIS.database.data;
+package me.eccentric_nz.tardis.database.data;
 
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.PRESET;
 
 import java.util.UUID;
 

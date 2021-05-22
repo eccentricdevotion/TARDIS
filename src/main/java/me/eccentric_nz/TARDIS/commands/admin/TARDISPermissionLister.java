@@ -1,6 +1,6 @@
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class TARDISPermissionLister {
 	}
 
 	void listPerms(CommandSender sender) {
-		List<String> perms = new ArrayList(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("permissions").getKeys(true));
+		List<String> perms = new ArrayList<>(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("permissions").getKeys(true));
 		perms.sort(Comparator.naturalOrder());
 		String lastPerm = "";
 		for (int i = perms.size() - 1; i >= 0; i--) {

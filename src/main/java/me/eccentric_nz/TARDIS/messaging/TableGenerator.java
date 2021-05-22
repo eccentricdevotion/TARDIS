@@ -5,10 +5,10 @@
  * https://www.spigotmc.org/threads/help-making-a-chat-table-based.170306/
  *
  */
-package me.eccentric_nz.TARDIS.messaging;
+package me.eccentric_nz.tardis.messaging;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -38,7 +38,7 @@ public class TableGenerator {
 		if (alignments == null || alignments.length < 1) {
 			throw new IllegalArgumentException("Must at least provide 1 alignment.");
 		}
-		this.char1 = char1;
+		TableGenerator.char1 = char1;
 		regex = Pattern.compile(char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1);
 		columns = alignments.length;
 		this.alignments = alignments;
@@ -205,18 +205,14 @@ public class TableGenerator {
 		if (length < 1) {
 			return "";
 		}
-		StringBuilder s = new StringBuilder();
-		for (int i = 0; i < length; i++) {
-			s.append(c);
-		}
-		return s.toString();
+		return String.valueOf(c).repeat(length);
 	}
 
 	public void addRow(String... texts) {
 		if (texts == null) {
 			throw new IllegalArgumentException("Texts must not be null.");
 		}
-		if (texts != null && texts.length > columns) {
+		if (texts.length > columns) {
 			throw new IllegalArgumentException("Too big for the table.");
 		}
 		Row r = new Row(texts);
@@ -225,15 +221,12 @@ public class TableGenerator {
 
 	public enum Receiver {
 
-		CONSOLE,
-		CLIENT
+		CONSOLE, CLIENT
 	}
 
 	public enum Alignment {
 
-		CENTER,
-		LEFT,
-		RIGHT
+		CENTER, LEFT, RIGHT
 	}
 
 	public class Row {

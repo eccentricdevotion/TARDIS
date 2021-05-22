@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.rooms;
+package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCondenser;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -39,7 +39,7 @@ public class RoomRequiredLister {
 			wall = rsp.getWall();
 			floor = rsp.getFloor();
 		}
-		// get the TARDIS id
+		// get the tardis id
 		ResultSetTardisID rs = new ResultSetTardisID(plugin);
 		if (rs.fromUUID(player.getUniqueId().toString())) {
 			TARDISMessage.send(player, "CONDENSE_REQUIRE", name);

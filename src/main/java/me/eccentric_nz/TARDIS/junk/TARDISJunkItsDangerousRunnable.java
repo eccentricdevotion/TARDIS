@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.junk;
+package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -54,7 +54,7 @@ class TARDISJunkItsDangerousRunnable implements Runnable {
 	public void run() {
 		lightable.setLit(c % 5 >= 3);
 		t.setBlockData(lightable);
-		// check if player is in Junk TARDIS effects zone
+		// check if player is in Junk tardis effects zone
 		List<UUID> remove = new ArrayList<>();
 		plugin.getGeneralKeeper().getJunkTravellers().forEach((uuid) -> {
 			Player p = plugin.getServer().getPlayer(uuid);
@@ -64,7 +64,7 @@ class TARDISJunkItsDangerousRunnable implements Runnable {
 			}
 		});
 		if (remove.size() > 0) {
-			plugin.getGeneralKeeper().getJunkTravellers().removeAll(remove);
+			remove.forEach(plugin.getGeneralKeeper().getJunkTravellers()::remove);
 		}
 		c++;
 	}

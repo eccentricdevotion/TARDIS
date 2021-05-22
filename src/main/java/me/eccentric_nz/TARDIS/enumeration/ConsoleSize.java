@@ -14,17 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
 /**
  * @author eccentric_nz
  */
 public enum ConsoleSize {
 
-	SMALL("small", "16 x 16 x 16 blocks", 600L),
-	MEDIUM("medium", "32 x 16 x 32 blocks", 1460L),
-	TALL("tall", "32 x 32 x 32 blocks", 3072L),
-	MASSIVE("massive", "48 x 32 x 48 blocks", 3760L);
+	SMALL("small", "16 x 16 x 16 blocks", 600L), MEDIUM("medium", "32 x 16 x 32 blocks", 1460L), TALL("tall", "32 x 32 x 32 blocks", 3072L), MASSIVE("massive", "48 x 32 x 48 blocks", 3760L);
 
 	private final String configPath;
 	private final String blocks;

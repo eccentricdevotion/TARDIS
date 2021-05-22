@@ -14,26 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.flight;
+package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.tardis.artron.TARDISArtronIndicator;
+import me.eccentric_nz.tardis.artron.TARDISArtronLevels;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.TARDISTimeRotor;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.enumeration.DiskCircuit;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -50,7 +50,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
- * The handbrake was a utensil on the TARDIS used for quick stops. River song once claimed that the TARDIS made it's
+ * The handbrake was a utensil on the tardis used for quick stops. River song once claimed that the tardis made it's
  * "whoosh" noise because the Doctor had left the handbrake on.
  *
  * @author eccentric_nz
@@ -69,7 +69,7 @@ public class TARDISHandbrakeListener implements Listener {
 	}
 
 	/**
-	 * Listens for player interaction with the handbrake (lever) on the TARDIS console. If the button is right-clicked
+	 * Listens for player interaction with the handbrake (lever) on the tardis console. If the button is right-clicked
 	 * the handbrake is set off, if right-clicked while sneaking it is set on.
 	 *
 	 * @param event the player clicking the handbrake
@@ -214,7 +214,7 @@ public class TARDISHandbrakeListener implements Listener {
 									if (!beac_on && !beacon.isEmpty()) {
 										toggleBeacon(beacon, false);
 									}
-									// Remove energy from TARDIS and sets database
+									// Remove energy from tardis and sets database
 									TARDISMessage.send(player, "HANDBRAKE_ON");
 									if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
 										int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id) * spaceTimeThrottle.getArtronMultiplier());

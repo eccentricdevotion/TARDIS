@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.recipes;
+package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISSeedModel;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.TARDISSeedModel;
+import me.eccentric_nz.tardis.enumeration.Consoles;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.rooms.TARDISWalls;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -70,7 +70,7 @@ public class TARDISSeedRecipe {
 		}
 		ItemMeta im = is.getItemMeta();
 		im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
-		im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
+		im.setDisplayName(ChatColor.GOLD + "tardis Seed Block");
 		im.setCustomModelData(10000000 + model);
 		List<String> lore = new ArrayList<>();
 		lore.add(s.getPermission().toUpperCase(Locale.ENGLISH));

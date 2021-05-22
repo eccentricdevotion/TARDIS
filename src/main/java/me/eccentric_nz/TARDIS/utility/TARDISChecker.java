@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Advancement;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.enumeration.Advancement;
 import org.bukkit.ChatColor;
 
 import java.io.*;
@@ -171,22 +171,22 @@ public class TARDISChecker {
 					out.write(buf, 0, len);
 				}
 			} catch (IOException io) {
-				System.err.println("[TARDIS] Checker: Could not save the file (" + file + ").");
+				System.err.println("[tardis] Checker: Could not save the file (" + file + ").");
 			} finally {
 				try {
 					out.close();
 				} catch (IOException e) {
-					System.err.println("[TARDIS] Checker: Could not close the output stream.");
+					System.err.println("[tardis] Checker: Could not close the output stream.");
 				}
 			}
 		} catch (FileNotFoundException e) {
-			System.err.println("[TARDIS] Checker: File not found: " + filename);
+			System.err.println("[tardis] Checker: File not found: " + filename);
 		} finally {
 			if (in != null) {
 				try {
 					in.close();
 				} catch (IOException e) {
-					System.err.println("[TARDIS] Checker: Could not close the input stream.");
+					System.err.println("[tardis] Checker: Could not close the input stream.");
 				}
 			}
 		}

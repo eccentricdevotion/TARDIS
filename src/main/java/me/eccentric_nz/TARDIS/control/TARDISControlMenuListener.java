@@ -14,36 +14,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.control;
+package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
-import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
-import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
-import me.eccentric_nz.TARDIS.transmat.TARDISTransmatInventory;
-import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
-import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
-import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
-import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.tardis.ars.TARDISARSInventory;
+import me.eccentric_nz.tardis.ars.TARDISARSMap;
+import me.eccentric_nz.tardis.artron.TARDISArtronIndicator;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.chameleon.TARDISChameleonInventory;
+import me.eccentric_nz.tardis.commands.preferences.TARDISPrefsMenuInventory;
+import me.eccentric_nz.tardis.commands.tardis.TARDISDirectionCommand;
+import me.eccentric_nz.tardis.commands.tardis.TARDISHideCommand;
+import me.eccentric_nz.tardis.commands.tardis.TARDISRebuildCommand;
+import me.eccentric_nz.tardis.companionGUI.TARDISCompanionInventory;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.move.TARDISBlackWoolToggler;
+import me.eccentric_nz.tardis.rooms.TARDISExteriorRenderer;
+import me.eccentric_nz.tardis.transmat.TARDISTransmatInventory;
+import me.eccentric_nz.tardis.travel.TARDISAreasInventory;
+import me.eccentric_nz.tardis.travel.TARDISSaveSignInventory;
+import me.eccentric_nz.tardis.travel.TARDISTemporalLocatorInventory;
+import me.eccentric_nz.tardis.travel.TARDISTerminalInventory;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -74,14 +74,14 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 	public void onControlMenuInteract(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "TARDIS Control Menu")) {
+		if (name.equals(ChatColor.DARK_RED + "tardis Control Menu")) {
 			event.setCancelled(true);
 			int slot = event.getRawSlot();
 			Player player = (Player) event.getWhoClicked();
 			if (slot >= 0 && slot < 54) {
 				ItemStack is = view.getItem(slot);
 				if (is != null) {
-					// get the TARDIS the player is in
+					// get the tardis the player is in
 					HashMap<String, Object> wheres = new HashMap<>();
 					wheres.put("uuid", player.getUniqueId().toString());
 					ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
@@ -231,7 +231,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 									}
 									TARDISSaveSignInventory tssi = new TARDISSaveSignInventory(plugin, tardis.getTardis_id(), player);
 									ItemStack[] saves = tssi.getTerminal();
-									Inventory saved = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
+									Inventory saved = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves");
 									saved.setContents(saves);
 									player.openInventory(saved);
 									break;
@@ -329,7 +329,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 									}
 									TARDISAreasInventory tai = new TARDISAreasInventory(plugin, player);
 									ItemStack[] areas = tai.getTerminal();
-									Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS areas");
+									Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis areas");
 									areainv.setContents(areas);
 									player.openInventory(areainv);
 									break;
@@ -358,7 +358,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 								case 33:
 									// transmat
 									ItemStack[] tran = new TARDISTransmatInventory(plugin, id).getMenu();
-									Inventory smat = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS transmats");
+									Inventory smat = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis transmats");
 									smat.setContents(tran);
 									player.openInventory(smat);
 									break;
@@ -418,7 +418,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 									break;
 								case 47:
 									// tardis map
-									Inventory new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Map");
+									Inventory new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis Map");
 									// open new inventory
 									new_inv.setContents(new TARDISARSMap(plugin).getMap());
 									player.openInventory(new_inv);

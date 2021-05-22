@@ -14,19 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.destroyers;
+package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
-import me.eccentric_nz.TARDIS.builders.MaterialisationData;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.builders.BiomeSetter;
+import me.eccentric_nz.tardis.builders.MaterialisationData;
+import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.move.TARDISDoorCloser;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,8 +41,8 @@ import java.util.HashMap;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public wishing to get help from the police.
- * Early in the First Doctor's travels, the TARDIS assumed the exterior shape of a police box during a five-month
- * stopover in 1963 London. Due a malfunction in its chameleon circuit, the TARDIS became locked into that shape.
+ * Early in the First Doctor's travels, the tardis assumed the exterior shape of a police box during a five-month
+ * stopover in 1963 London. Due a malfunction in its chameleon circuit, the tardis became locked into that shape.
  *
  * @author eccentric_nz
  */
@@ -55,7 +55,7 @@ public class TARDISDeinstantPreset {
 	}
 
 	/**
-	 * Destroys the TARDIS Police Box. A 3 x 3 x 3 block area.
+	 * Destroys the tardis Police Box. A 3 x 3 x 3 block area.
 	 *
 	 * @param dd     the MaterialisationData
 	 * @param hide   boolean determining whether to forget the protected Police Box blocks.
@@ -82,8 +82,7 @@ public class TARDISDeinstantPreset {
 		if (preset.isColoured()) {
 			// remove item frame
 			for (Entity e : w.getNearbyEntities(dd.getLocation(), 1.0d, 1.0d, 1.0d)) {
-				if (e instanceof ItemFrame) {
-					ItemFrame frame = (ItemFrame) e;
+				if (e instanceof ItemFrame frame) {
 					frame.setItem(null, false);
 					frame.remove();
 				}
@@ -102,7 +101,7 @@ public class TARDISDeinstantPreset {
 			int sbz = l.getBlockZ() - 1;
 			// reset biome and it's not The End
 			if (!BiomeSetter.restoreBiome(l, biome)) {
-				// remove TARDIS from tracker
+				// remove tardis from tracker
 				plugin.getTrackerKeeper().getDematerialising().remove(id);
 			}
 			// remove problem blocks first
@@ -113,22 +112,22 @@ public class TARDISDeinstantPreset {
 					int flowery = (l.getBlockY() + 1);
 					int flowerz;
 					switch (d) {
-						case NORTH:
+						case NORTH -> {
 							flowerx = l.getBlockX();
 							flowerz = l.getBlockZ() + 1;
-							break;
-						case WEST:
+						}
+						case WEST -> {
 							flowerx = l.getBlockX() + 1;
 							flowerz = l.getBlockZ();
-							break;
-						case SOUTH:
+						}
+						case SOUTH -> {
 							flowerx = l.getBlockX();
 							flowerz = l.getBlockZ() - 1;
-							break;
-						default:
+						}
+						default -> {
 							flowerx = l.getBlockX() - 1;
 							flowerz = l.getBlockZ();
-							break;
+						}
 					}
 					TARDISBlockSetters.setBlock(w, flowerx, flowery, flowerz, Material.AIR);
 					break;

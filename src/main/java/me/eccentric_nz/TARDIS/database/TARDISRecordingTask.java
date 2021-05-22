@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database;
+package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,7 +52,7 @@ public class TARDISRecordingTask implements Runnable {
 				// Handle dead connections
 				if (connection == null || connection.isClosed()) {
 					if (TARDISRecordingManager.failedDbConnectionCount == 0) {
-						plugin.debug("TARDIS database error. Connection should be there but it's not. Leaving actions to log in queue.");
+						plugin.debug("tardis database error. Connection should be there but it's not. Leaving actions to log in queue.");
 					}
 					TARDISRecordingManager.failedDbConnectionCount++;
 					if (TARDISRecordingManager.failedDbConnectionCount > 5) {
@@ -70,7 +70,7 @@ public class TARDISRecordingTask implements Runnable {
 				int i = 0;
 				while (!TARDISRecordingQueue.getQUEUE().isEmpty()) {
 					if (connection.isClosed()) {
-						plugin.debug("TARDIS database error. We have to bail in the middle of building primary bulk insert query.");
+						plugin.debug("tardis database error. We have to bail in the middle of building primary bulk insert query.");
 						break;
 					}
 					String a = TARDISRecordingQueue.getQUEUE().poll();
@@ -97,7 +97,7 @@ public class TARDISRecordingTask implements Runnable {
 				}
 				s.executeBatch();
 				if (connection.isClosed()) {
-					plugin.debug("TARDIS database error. We have to bail in the middle of building primary bulk insert query.");
+					plugin.debug("tardis database error. We have to bail in the middle of building primary bulk insert query.");
 				} else {
 					connection.commit();
 					connection.setAutoCommit(true);

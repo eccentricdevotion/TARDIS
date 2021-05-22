@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.planets;
+package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -27,8 +27,8 @@ import org.bukkit.util.Vector;
 import java.io.File;
 
 /**
- * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
- * simple inability to arrive at the proper time or location. While the Doctor did not build the TARDIS from scratch, he
+ * The tardis was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
+ * simple inability to arrive at the proper time or location. While the Doctor did not build the tardis from scratch, he
  * has substantially modified/rebuilt it.
  *
  * @author eccentric_nz
@@ -98,22 +98,22 @@ class TARDISBuildSilurianStructure {
 		int z = chunk.getZ();
 		Vector vector;
 		switch (compass) {
-			case WEST:
+			case WEST -> {
 				vector = new Vector(-16, 17, 0);
 				x -= 1;
-				break;
-			case NORTH:
+			}
+			case NORTH -> {
 				vector = new Vector(0, 17, -16);
 				z -= 1;
-				break;
-			case EAST:
+			}
+			case EAST -> {
 				vector = new Vector(16, 17, 0);
 				x += 1;
-				break;
-			default: //SOUTH
+			}
+			default -> { //SOUTH
 				vector = new Vector(0, 17, 16);
 				z += 1;
-				break;
+			}
 		}
 		// see if the chunk is loaded
 		Chunk newChunk = chunk.getWorld().getChunkAt(x, z);

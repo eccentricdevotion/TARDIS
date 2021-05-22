@@ -14,25 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.siegemode;
+package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.api.event.TARDISSiegeEvent;
-import me.eccentric_nz.TARDIS.api.event.TARDISSiegeOffEvent;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.enumeration.UseClay;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.api.event.TARDISSiegeEvent;
+import me.eccentric_nz.tardis.api.event.TARDISSiegeOffEvent;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
+import me.eccentric_nz.tardis.destroyers.DestroyData;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.enumeration.UseClay;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -46,8 +46,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Siege mode is a feature of the TARDIS that can be activated using a lever under the console to prevent entry or exit.
- * Additionally, it makes the TARDIS impervious to all external damage. Siege mode requires power to activate or
+ * Siege mode is a feature of the tardis that can be activated using a lever under the console to prevent entry or exit.
+ * Additionally, it makes the tardis impervious to all external damage. Siege mode requires power to activate or
  * deactivate.
  *
  * @author eccentric_nz
@@ -105,9 +105,7 @@ public class TARDISSiegeMode {
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
 			set.put("siege_on", 0);
 			// remove trackers
-			if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-				plugin.getTrackerKeeper().getInSiegeMode().remove(id);
-			}
+			plugin.getTrackerKeeper().getInSiegeMode().remove(id);
 			if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
 				String[] chu = tardis.getChunk().split(":");
 				if (plugin.getConfig().getInt("siege.breeding") > 0) {
@@ -142,7 +140,7 @@ public class TARDISSiegeMode {
 			}
 			TARDISMessage.send(p, "SIEGE_OFF");
 		} else {
-			// make sure TARDIS is not dispersed
+			// make sure tardis is not dispersed
 			if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id)) {
 				TARDISMessage.send(p, "NOT_WHILE_DISPERSED");
 				return;
@@ -206,9 +204,7 @@ public class TARDISSiegeMode {
 				changeTextures(tardis.getUuid().toString(), tardis.getSchematic(), p, true);
 			}
 			// turn off force field
-			if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(p.getUniqueId())) {
-				plugin.getTrackerKeeper().getActiveForceFields().remove(p.getUniqueId());
-			}
+			plugin.getTrackerKeeper().getActiveForceFields().remove(p.getUniqueId());
 		}
 		// update the database
 		plugin.getQueryFactory().doUpdate("tardis", set, wheres);

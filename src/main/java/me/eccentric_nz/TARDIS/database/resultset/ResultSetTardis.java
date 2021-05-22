@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.enumeration.Consoles;
+import me.eccentric_nz.tardis.enumeration.PRESET;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,7 +30,7 @@ import java.util.*;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... everything about the construction of
- * the TARDIS itself.
+ * the tardis itself.
  *
  * @author eccentric_nz
  */
@@ -80,7 +80,7 @@ public class ResultSetTardis {
 			StringBuilder sbw = new StringBuilder();
 			where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
 			if (abandoned < 2) {
-				wheres = " WHERE " + sbw.toString() + "abandoned = " + abandoned;
+				wheres = " WHERE " + sbw + "abandoned = " + abandoned;
 			} else {
 				wheres = " WHERE " + sbw.substring(0, sbw.length() - 5);
 			}

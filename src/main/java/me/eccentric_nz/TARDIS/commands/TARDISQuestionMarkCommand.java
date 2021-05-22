@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands;
+package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -35,20 +36,23 @@ public class TARDISQuestionMarkCommand implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("tardis?")) {
 			TARDISCommandHelper tch = new TARDISCommandHelper(plugin);
 			switch (args.length) {
-				case 2:
+				case 2 -> {
 					String cmds = args[0].toLowerCase(Locale.ENGLISH) + " " + args[1].toLowerCase(Locale.ENGLISH);
 					tch.getCommand(cmds, sender);
 					return true;
-				case 1:
+				}
+				case 1 -> {
 					tch.getCommand(args[0].toLowerCase(Locale.ENGLISH), sender);
 					return true;
-				default:
+				}
+				default -> {
 					tch.getCommand("", sender);
 					return true;
+				}
 			}
 		}
 		return false;

@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.desktop;
+package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCount;
+import me.eccentric_nz.tardis.enumeration.Consoles;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.schematic.ArchiveUpdate;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -54,7 +54,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
 	public void onThemeMenuClick(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "TARDIS Upgrade Menu")) {
+		if (name.equals(ChatColor.DARK_RED + "tardis Upgrade Menu")) {
 			Player p = (Player) event.getWhoClicked();
 			int slot = event.getRawSlot();
 			if (slot >= 0 && slot < 54) {
@@ -133,7 +133,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 			p.closeInventory();
 			ItemStack[] wall_blocks = new TARDISWallsInventory(plugin).getMenu();
-			Inventory wall = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Wall Menu");
+			Inventory wall = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis Wall Menu");
 			wall.setContents(wall_blocks);
 			p.openInventory(wall);
 		}, 1L);
@@ -148,14 +148,14 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 			p.closeInventory();
 			ItemStack[] archive = new TARDISArchiveInventory(plugin, p).getArchives();
-			Inventory menu = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Archive");
+			Inventory menu = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "tardis Archive");
 			menu.setContents(archive);
 			p.openInventory(menu);
 		}, 1L);
 	}
 
 	/**
-	 * Initiates a TARDIS repair. Resets the console back to the original console schematic, Players must condense all
+	 * Initiates a tardis repair. Resets the console back to the original console schematic, Players must condense all
 	 * missing blocks - unless the /tardisadmin repair [player] [amount] command has been run, assigning the player a
 	 * 'free' repair(s).
 	 */
@@ -186,7 +186,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
 	}
 
 	/**
-	 * Initiates a TARDIS clean. Removes any blocks that are not part of the original console schematic (missing blocks
+	 * Initiates a tardis clean. Removes any blocks that are not part of the original console schematic (missing blocks
 	 * will not be restored).
 	 */
 	private void clean(Player p) {

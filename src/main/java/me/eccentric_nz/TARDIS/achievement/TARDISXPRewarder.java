@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.achievement;
+package me.eccentric_nz.tardis.achievement;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.entity.Player;
@@ -40,7 +40,7 @@ import java.util.Arrays;
 class TARDISXPRewarder {
 
 	private static final int hardMaxLevel = 100000;
-	private static int xpTotalToReachLevel[];
+	private static int[] xpTotalToReachLevel;
 
 	static {
 		// 25 is an arbitrary value for the initial table size - the actual

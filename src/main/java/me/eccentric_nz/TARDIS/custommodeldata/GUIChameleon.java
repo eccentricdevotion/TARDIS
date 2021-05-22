@@ -14,21 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Material;
 
 public enum GUIChameleon {
 
 	// Chameleon Circuit
-	BUTTON_APPLY(1, 0, Material.COMPARATOR),
-	BUTTON_CHAMELEON(17, 10, Material.BOWL),
-	BUTTON_ADAPT(11, 11, Material.BOWL),
-	BUTTON_INVISIBLE(22, 12, Material.BOWL),
-	BUTTON_SHORT(28, 13, Material.BOWL),
-	BUTTON_CONSTRUCT(18, 14, Material.BOWL),
-	BUTTON_CLOSE(1, 26, Material.BOWL);
+	BUTTON_APPLY(1, 0, Material.COMPARATOR), BUTTON_CHAMELEON(17, 10, Material.BOWL), BUTTON_ADAPT(11, 11, Material.BOWL), BUTTON_INVISIBLE(22, 12, Material.BOWL), BUTTON_SHORT(28, 13, Material.BOWL), BUTTON_CONSTRUCT(18, 14, Material.BOWL), BUTTON_CLOSE(1, 26, Material.BOWL);
 
 	private final int customModelData;
 	private final int slot;

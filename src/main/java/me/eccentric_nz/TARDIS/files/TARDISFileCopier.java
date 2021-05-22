@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.files;
+package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARS;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.ars.TARDISARS;
+import me.eccentric_nz.tardis.enumeration.Consoles;
 
 import java.io.*;
 import java.util.Locale;
@@ -38,7 +38,7 @@ public class TARDISFileCopier {
 	}
 
 	/**
-	 * Copies a file to the TARDIS plugin directory if it is not present.
+	 * Copies a file to the tardis plugin directory if it is not present.
 	 *
 	 * @param filepath  the path to the file to write to
 	 * @param in        the input file to read from
@@ -57,22 +57,22 @@ public class TARDISFileCopier {
 						out.write(buf, 0, len);
 					}
 				} catch (IOException io) {
-					System.err.println("[TARDIS] Copier: Could not save the file (" + file.toString() + ").");
+					System.err.println("[tardis] Copier: Could not save the file (" + file + ").");
 				} finally {
 					try {
 						out.close();
 					} catch (IOException e) {
-						System.err.println("[TARDIS] Copier: Could not close the output stream.");
+						System.err.println("[tardis] Copier: Could not close the output stream.");
 					}
 				}
 			} catch (FileNotFoundException e) {
-				System.err.println("[TARDIS] Copier: File not found: " + filepath);
+				System.err.println("[tardis] Copier: File not found: " + filepath);
 			} finally {
 				if (in != null) {
 					try {
 						in.close();
 					} catch (IOException e) {
-						System.err.println("[TARDIS] Copier: Could not close the input stream.");
+						System.err.println("[tardis] Copier: Could not close the input stream.");
 					}
 				}
 			}
@@ -81,7 +81,7 @@ public class TARDISFileCopier {
 	}
 
 	/**
-	 * Copies files for use by the TARDIS builder classes.
+	 * Copies files for use by the tardis builder classes.
 	 */
 	public void copyFiles() {
 		// make directories if they don't exist
@@ -103,7 +103,7 @@ public class TARDISFileCopier {
 				plugin.getConsole().sendMessage(plugin.getPluginName() + "Created user_schematics directory.");
 			}
 		}
-		// DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
+		// DELUXE, ELEVENTH, TWELFTH, ars & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
 		// THIRTEENTH schematic designed by Razihel
 		// The COPPER & CORAL schematic designed by vistaero
 		// The PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
@@ -148,7 +148,7 @@ public class TARDISFileCopier {
 	}
 
 	/**
-	 * Copies a file to the TARDIS plugin directory if it is not present.
+	 * Copies a file to the tardis plugin directory if it is not present.
 	 *
 	 * @param filename the name of the file to copy
 	 * @return a File

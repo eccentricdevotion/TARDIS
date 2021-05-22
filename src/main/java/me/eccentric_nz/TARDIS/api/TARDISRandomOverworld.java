@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.api;
+package me.eccentric_nz.tardis.api;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -103,7 +103,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
 					world.getChunkAt(overworld).load();
 				}
 				// get start location for checking there is enough space
-				int gsl[] = TARDISTimeTravel.getStartLocation(overworld, d);
+				int[] gsl = TARDISTimeTravel.getStartLocation(overworld, d);
 				int startx = gsl[0];
 				int resetx = gsl[1];
 				int starty = overworld.getBlockY() + 1;
@@ -136,15 +136,14 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
 			int level, row, col, rowcount, colcount;
 			int starty = loc.getBlockY();
 			switch (d) {
-				case EAST:
-				case WEST:
+				case EAST, WEST -> {
 					rowcount = 3;
 					colcount = 4;
-					break;
-				default:
+				}
+				default -> {
 					rowcount = 4;
 					colcount = 3;
-					break;
+				}
 			}
 			for (level = starty; level < starty + 4; level++) {
 				for (row = s[0]; row < s[0] + rowcount; row++) {
@@ -158,7 +157,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
 			}
 			if (count == 0) {
 				safe = true;
-				// get TARDIS id
+				// get tardis id
 				HashMap<String, Object> wherep = new HashMap<>();
 				wherep.put("uuid", p.getUniqueId().toString());
 				ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);

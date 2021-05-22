@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.utils;
+package me.eccentric_nz.tardis.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.enumeration.Time;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.commands.TARDISCompleter;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.enumeration.Time;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -29,6 +29,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +44,7 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("tardistime")) {
 			if (args.length < 1) {
 				TARDISMessage.send(sender, "TOO_FEW_ARGS");
@@ -63,16 +64,16 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
 				Location location = player.getLocation();
 				World world = location.getWorld();
 				if (plugin.getUtils().inTARDISWorld(player)) {
-					// get TARDIS player is in
+					// get tardis player is in
 					int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player);
-					// get current TARDIS location
+					// get current tardis location
 					HashMap<String, Object> where = new HashMap<>();
 					where.put("tardis_id", id);
 					ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
 					if (rsc.resultSet()) {
 						world = rsc.getWorld();
 					} else {
-						// can't change weather in TARDIS world
+						// can't change weather in tardis world
 						TARDISMessage.send(player, "TIME_TARDIS");
 						return true;
 					}
@@ -98,7 +99,7 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
 	}
 
 	@Override
-	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 		if (args.length <= 1) {
 			return partial(args[0], ROOT_SUBS);
 		}

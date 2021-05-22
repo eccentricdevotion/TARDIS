@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.api.event;
+package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -33,7 +33,7 @@ public final class TARDISDematerialisationEvent extends TARDISEvent {
 	}
 
 	/**
-	 * Returns the Bukkit Location of the TARDIS exterior preset where it dematerialise from.
+	 * Returns the Bukkit Location of the tardis exterior preset where it dematerialise from.
 	 *
 	 * @return the location of the dematerialisation event
 	 */

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.tool;
+package me.eccentric_nz.tardis.database.tool;
 
 import java.io.*;
 import java.sql.*;
@@ -69,7 +69,7 @@ public class Main {
 				return;
 			}
 			BufferedWriter bw = new BufferedWriter(new FileWriter(mysql, false));
-			bw.write("-- TARDIS SQL Dump");
+			bw.write("-- tardis SQL Dump");
 			bw.newLine();
 			bw.newLine();
 			bw.write("SET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";");

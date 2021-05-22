@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetVault;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetVault;
+import me.eccentric_nz.tardis.sonic.TARDISSonicSorterListener;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -49,8 +49,7 @@ public class TARDISVaultListener implements Listener {
 	public void onVaultDropChestClose(InventoryCloseEvent event) {
 		Inventory inv = event.getInventory();
 		InventoryHolder holder = inv.getHolder();
-		if (holder instanceof org.bukkit.block.Chest) {
-			org.bukkit.block.Chest chest = (org.bukkit.block.Chest) holder;
+		if (holder instanceof org.bukkit.block.Chest chest) {
 			Location l = chest.getLocation();
 			if (plugin.getUtils().inTARDISWorld(l)) {
 				String loc = l.toString();
@@ -84,33 +83,19 @@ public class TARDISVaultListener implements Listener {
 								// is it a double chest
 								if (chestType.equals(Chest.Type.LEFT)) {
 									switch (chestdata.getFacing()) {
-										case WEST:
-											chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
-											break;
-										case SOUTH:
-											chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
-											break;
-										case EAST:
-											chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
-											break;
-										default: // NORTH
-											chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
-											break;
+										case WEST -> chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
+										case SOUTH -> chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
+										case EAST -> chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
+										default -> // NORTH
+												chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
 									}
 								} else if (chestType.equals(Chest.Type.RIGHT)) {
 									switch (chestdata.getFacing()) {
-										case WEST:
-											chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
-											break;
-										case SOUTH:
-											chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
-											break;
-										case EAST:
-											chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
-											break;
-										default: // NORTH
-											chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
-											break;
+										case WEST -> chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
+										case SOUTH -> chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
+										case EAST -> chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
+										default -> // NORTH
+												chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
 									}
 								}
 								chestLocations.add(blocation);

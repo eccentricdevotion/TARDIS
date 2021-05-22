@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.control;
+package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
@@ -33,9 +33,9 @@ import java.util.HashMap;
  * @author eccentric_nz
  * <p>
  * Atmospheric excitation is an unnatural disturbance in the atmosphere which causes the weather to change. The Tenth
- * Doctor's sonic screwdriver, the TARDIS, and moving a planet can all cause atmospheric excitation.
+ * Doctor's sonic screwdriver, the tardis, and moving a planet can all cause atmospheric excitation.
  * <p>
- * The Tenth Doctor used a device above the inside of the door of the TARDIS to excite the atmosphere, causing snow, in
+ * The Tenth Doctor used a device above the inside of the door of the tardis to excite the atmosphere, causing snow, in
  * an attempt to cheer up Donna Noble.
  */
 public class TARDISAtmosphericExcitation {
@@ -55,20 +55,14 @@ public class TARDISAtmosphericExcitation {
 			if (rs.isSubmarine()) {
 				return;
 			}
-			// get TARDIS location
+			// get tardis location
 			Location l = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
 			// get lamp block location
 			l.add(0, 18, 0);
 			// construct a firework effect and shoot it from lamp block location
 			Firework firework = (Firework) l.getWorld().spawnEntity(l, EntityType.FIREWORK);
 			FireworkMeta fireworkMeta = firework.getFireworkMeta();
-			fireworkMeta.addEffect(FireworkEffect.builder()
-					.flicker(false)
-					.withColor(Color.SILVER)
-					.withFade(Color.WHITE)
-					.with(Type.BURST)
-					.withTrail()
-					.build());
+			fireworkMeta.addEffect(FireworkEffect.builder().flicker(false).withColor(Color.SILVER).withFade(Color.WHITE).with(Type.BURST).withTrail().build());
 			fireworkMeta.setPower(3);
 			firework.setFireworkMeta(fireworkMeta);
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

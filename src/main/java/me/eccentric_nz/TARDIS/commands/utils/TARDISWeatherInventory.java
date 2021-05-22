@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.utils;
+package me.eccentric_nz.tardis.commands.utils;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIWeather;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.GUIWeather;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -33,7 +33,7 @@ public class TARDISWeatherInventory {
 	}
 
 	/**
-	 * Constructs an inventory for the TARDIS Weather GUI.
+	 * Constructs an inventory for the tardis Weather GUI.
 	 *
 	 * @return an Array of itemStacks (an inventory)
 	 */

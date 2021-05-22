@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.tardis.mobfarming;
 
 /**
  * According to the Fourth Doctor, bees are "insects with stings on their tails", and a non-sentient species found on
@@ -28,7 +28,7 @@ public class TARDISBee extends TARDISMob {
 	private int anger;
 
 	/**
-	 * Data storage class for TARDIS Bee.
+	 * Data storage class for tardis Bee.
 	 */
 	public TARDISBee() {
 	}

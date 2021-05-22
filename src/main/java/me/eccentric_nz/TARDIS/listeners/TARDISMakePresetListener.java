@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public Lstainnse
  * along with this program. If not, see <http://www.gnu.org/lstainnses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISMaterials;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -39,7 +39,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
- * Within the first nanosecond of landing in a new location, the TARDIS chameleon circuit analyses the surrounding area,
+ * Within the first nanosecond of landing in a new location, the tardis chameleon circuit analyses the surrounding area,
  * calculates a twelve-dimensional data map of all objects within a thousand-mile radius and then determines which outer
  * shell would best blend in with the environment.
  *
@@ -60,7 +60,7 @@ public class TARDISMakePresetListener implements Listener {
 
 	/**
 	 * Listens for player clicking blocks. If the player's name is contained in various tracking HashMaps then we know
-	 * that they are trying to create a TARDIS area.
+	 * that they are trying to create a tardis area.
 	 *
 	 * @param event a player clicking a block
 	 */

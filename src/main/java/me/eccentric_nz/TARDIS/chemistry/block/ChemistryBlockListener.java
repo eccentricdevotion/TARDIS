@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.block;
+package me.eccentric_nz.tardis.chemistry.block;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chemistry.compound.CompoundInventory;
-import me.eccentric_nz.TARDIS.chemistry.constructor.ConstructorInventory;
-import me.eccentric_nz.TARDIS.chemistry.element.ElementInventory;
-import me.eccentric_nz.TARDIS.chemistry.lab.LabInventory;
-import me.eccentric_nz.TARDIS.chemistry.product.ProductInventory;
-import me.eccentric_nz.TARDIS.chemistry.reducer.ReducerInventory;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.chemistry.compound.CompoundInventory;
+import me.eccentric_nz.tardis.chemistry.constructor.ConstructorInventory;
+import me.eccentric_nz.tardis.chemistry.element.ElementInventory;
+import me.eccentric_nz.tardis.chemistry.lab.LabInventory;
+import me.eccentric_nz.tardis.chemistry.product.ProductInventory;
+import me.eccentric_nz.tardis.chemistry.reducer.ReducerInventory;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -45,6 +45,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class ChemistryBlockListener implements Listener {
 
@@ -84,8 +85,9 @@ public class ChemistryBlockListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onChemistryBlockInteract(PlayerInteractEvent event) {
-		if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getHand().equals(EquipmentSlot.HAND)) {
+		if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Objects.equals(event.getHand(), EquipmentSlot.HAND)) {
 			Block block = event.getClickedBlock();
+			assert block != null;
 			Material material = block.getType();
 			if (!material.equals(Material.RED_MUSHROOM_BLOCK)) {
 				return;
@@ -171,6 +173,7 @@ public class ChemistryBlockListener implements Listener {
 			if (name != null) {
 				ItemStack is = new ItemStack(mush, 1);
 				ItemMeta im = is.getItemMeta();
+				assert im != null;
 				im.setDisplayName(name);
 				int cmd = models.get(name);
 				im.setCustomModelData(10000000 + cmd);
@@ -189,19 +192,15 @@ public class ChemistryBlockListener implements Listener {
 	public void onChemistryBlockPlace(BlockPlaceEvent event) {
 		ItemStack is = event.getItemInHand();
 		Material material = event.getBlock().getType();
-		if (is.hasItemMeta() && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER) && !isMushroomBlock(material)) {
+		if (is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER) && !isMushroomBlock(material)) {
 			event.setCancelled(true);
 		}
 	}
 
 	private boolean isMushroomBlock(Material material) {
-		switch (material) {
-			case MUSHROOM_STEM:
-			case RED_MUSHROOM_BLOCK:
-			case BROWN_MUSHROOM_BLOCK:
-				return true;
-			default:
-				return false;
-		}
+		return switch (material) {
+			case MUSHROOM_STEM, RED_MUSHROOM_BLOCK, BROWN_MUSHROOM_BLOCK -> true;
+			default -> false;
+		};
 	}
 }

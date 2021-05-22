@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -39,7 +39,7 @@ public class TARDISIceMeltListener implements Listener {
 	}
 
 	/**
-	 * Listens for ice melting when the TARDIS Police Box is materialising. If the block is contained in the blocks
+	 * Listens for ice melting when the tardis Police Box is materialising. If the block is contained in the blocks
 	 * table then it cancels the event.
 	 *
 	 * @param event ice melting

@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.planets;
+package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
 import org.bukkit.entity.Skeleton;
@@ -31,12 +31,13 @@ public class TARDISAngelsAPI {
 	/**
 	 * Get TARDISWeepingAngelsAPI.
 	 *
-	 * @param plugin - a TARDIS plugin instance
+	 * @param plugin - a tardis plugin instance
 	 * @return the TARDISWeepingAngelsAPI
 	 */
 	public static TARDISWeepingAngelsAPI getAPI(TARDIS plugin) {
 		Plugin p = plugin.getPM().getPlugin("TARDISWeepingAngels");
 		TARDISWeepingAngels twa = (TARDISWeepingAngels) p;
+		assert twa != null;
 		return twa.getWeepingAngelsAPI();
 	}
 

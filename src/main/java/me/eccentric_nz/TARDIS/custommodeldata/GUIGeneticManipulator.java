@@ -14,36 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Material;
 
 public enum GUIGeneticManipulator {
 
 	// Genetic Manipulator
-	BUTTON_MASTER(3, 45, Material.COMPARATOR),
-	BUTTON_AGE(2, 47, Material.HOPPER),
-	BUTTON_TYPE(1, 48, Material.CYAN_DYE),
-	BUTTON_OPTS(1, 49, Material.LEAD),
-	BUTTON_RESTORE(1, 51, Material.APPLE),
-	BUTTON_DNA(1, 52, Material.WRITABLE_BOOK),
-	BUTTON_CANCEL(16, 53, Material.BOWL),
-	ANGEL(1, 1, Material.BRICK),
-	CYBERMAN(1, 1, Material.IRON_INGOT),
-	DALEK(1, 1, Material.SLIME_BALL),
-	EMPTY_CHILD(1, 1, Material.SUGAR),
-	ICE_WARRIOR(1, 1, Material.SNOWBALL),
-	K9(6, 1, Material.BONE),
-	JUDOON(1, 1, Material.YELLOW_DYE),
-	OOD(1, 1, Material.ROTTEN_FLESH),
-	SILENT(4, 1, Material.END_STONE),
-	SILURIAN(1, 1, Material.FEATHER),
-	SONTARAN(1, 1, Material.POTATO),
-	STRAX(1, 1, Material.BAKED_POTATO),
-	TOCLAFANE(3, 1, Material.GUNPOWDER),
-	VASHTA_NERADA(2, 1, Material.BOOK),
-	ZYGON(1, 1, Material.PAINTING);
+	BUTTON_MASTER(3, 45, Material.COMPARATOR), BUTTON_AGE(2, 47, Material.HOPPER), BUTTON_TYPE(1, 48, Material.CYAN_DYE), BUTTON_OPTS(1, 49, Material.LEAD), BUTTON_RESTORE(1, 51, Material.APPLE), BUTTON_DNA(1, 52, Material.WRITABLE_BOOK), BUTTON_CANCEL(16, 53, Material.BOWL), ANGEL(1, 1, Material.BRICK), CYBERMAN(1, 1, Material.IRON_INGOT), DALEK(1, 1, Material.SLIME_BALL), EMPTY_CHILD(1, 1, Material.SUGAR), ICE_WARRIOR(1, 1, Material.SNOWBALL), K9(6, 1, Material.BONE), JUDOON(1, 1, Material.YELLOW_DYE), OOD(1, 1, Material.ROTTEN_FLESH), SILENT(4, 1, Material.END_STONE), SILURIAN(1, 1, Material.FEATHER), SONTARAN(1, 1, Material.POTATO), STRAX(1, 1, Material.BAKED_POTATO), TOCLAFANE(3, 1, Material.GUNPOWDER), VASHTA_NERADA(2, 1, Material.BOOK), ZYGON(1, 1, Material.PAINTING);
 
 	private final int customModelData;
 	private final int slot;

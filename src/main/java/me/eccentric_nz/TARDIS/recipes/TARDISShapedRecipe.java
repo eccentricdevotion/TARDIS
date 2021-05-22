@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.recipes;
+package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.enumeration.DiskCircuit;
+import me.eccentric_nz.tardis.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -104,7 +104,7 @@ public class TARDISShapedRecipe {
 		int amount = plugin.getRecipesConfig().getInt("shaped." + s + ".amount");
 		ItemStack is = new ItemStack(mat, amount);
 		ItemMeta im = is.getItemMeta();
-		if (s.equals("TARDIS Key") && keyDisplay != null) {
+		if (s.equals("tardis Key") && keyDisplay != null) {
 			im.setDisplayName(keyDisplay + s);
 		} else if (s.equals("Sonic Screwdriver") && sonicDisplay != null) {
 			im.setDisplayName(sonicDisplay + s);
@@ -126,7 +126,7 @@ public class TARDISShapedRecipe {
 				im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("~")));
 			}
 		}
-		if (s.endsWith("Bow Tie") || s.equals("3-D Glasses") || s.equals("TARDIS Communicator")) {
+		if (s.endsWith("Bow Tie") || s.equals("3-D Glasses") || s.equals("tardis Communicator")) {
 			Damageable damageable = (Damageable) im;
 			damageable.setDamage(50);
 			im.addItemFlags(ItemFlag.values());

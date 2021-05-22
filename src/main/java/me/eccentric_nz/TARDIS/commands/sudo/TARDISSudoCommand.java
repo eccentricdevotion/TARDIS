@@ -14,15 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.sudo;
+package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.commands.TARDISCompleter;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("tardissudo")) {
 			if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
 				if (args.length < 1) {
@@ -59,10 +60,6 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
 				} else {
 					// must be a player name
 					OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(args[0]);
-					if (offlinePlayer == null) {
-						TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-						return true;
-					}
 					ResultSetTardisID rs = new ResultSetTardisID(plugin);
 					if (!rs.fromUUID(offlinePlayer.getUniqueId().toString())) {
 						TARDISMessage.send(sender, "PLAYER_NO_TARDIS");
@@ -80,7 +77,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
 	}
 
 	@Override
-	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 		if (args.length == 1) {
 			List<String> SUBS = new ArrayList<>();
 			SUBS.add("off");

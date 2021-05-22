@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.lab;
+package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -101,7 +101,7 @@ public class CureBrewingListener implements Listener {
 							}
 							noPickUps.add(player.getUniqueId());
 							Location particles = cauldron.getLocation().add(0.5, 1.25, 0.5);
-							location.getWorld().spawnParticle(Particle.WATER_SPLASH, particles, 5);
+							Objects.requireNonNull(location.getWorld()).spawnParticle(Particle.WATER_SPLASH, particles, 5);
 							player.playSound(player.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, 1.0F, 1.0F);
 							List<String> items = new ArrayList<>();
 							// add the current item
@@ -113,9 +113,10 @@ public class CureBrewingListener implements Listener {
 									Material type = is.getType();
 									if (type.equals(Material.FEATHER) && is.hasItemMeta()) {
 										ItemMeta im = is.getItemMeta();
+										assert im != null;
 										if (im.hasDisplayName() && im.hasCustomModelData()) {
 											String dn = im.getDisplayName();
-											items.add(type.toString() + (elements.contains(dn) ? ":" + dn : ""));
+											items.add(type + (elements.contains(dn) ? ":" + dn : ""));
 										} else {
 											items.add(type.toString());
 										}
@@ -188,27 +189,32 @@ public class CureBrewingListener implements Listener {
 										if (milk) {
 											ItemMeta im = is.getItemMeta();
 											switch (potionType) {
-												case AWKWARD:
+												case AWKWARD -> {
+													assert im != null;
 													im.setDisplayName("Antidote");
 													im.setCustomModelData(1);
-													break;
-												case MUNDANE:
+												}
+												case MUNDANE -> {
+													assert im != null;
 													im.setDisplayName("Elixir");
 													im.setCustomModelData(2);
-													break;
-												case THICK:
+												}
+												case THICK -> {
+													assert im != null;
 													im.setDisplayName("Eye drops");
 													im.setCustomModelData(3);
-													break;
-												default: // UNCRAFTABLE
+												}
+												default -> { // UNCRAFTABLE
+													assert im != null;
 													im.setDisplayName("Tonic");
 													im.setCustomModelData(4);
-													break;
+												}
 											}
 											is.setItemMeta(im);
 										} else {
 											PotionMeta pm = (PotionMeta) is.getItemMeta();
 											PotionData potionData = new PotionData(map.getKey(), extend, upgrade);
+											assert pm != null;
 											pm.setBasePotionData(potionData);
 											is.setItemMeta(pm);
 										}

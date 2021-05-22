@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.api.event;
+package me.eccentric_nz.tardis.api.event;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author eccentric_nz
@@ -51,25 +52,25 @@ public class TARDISLocationEvent extends Event {
 	}
 
 	/**
-	 * Returns the tardis_id of the TARDIS in the database.
+	 * Returns the tardis_id of the tardis in the database.
 	 *
-	 * @return the TARDIS location
+	 * @return the tardis location
 	 */
 	public int getTardis_id() {
 		return tardis_id;
 	}
 
 	/**
-	 * Returns the exterior location of the TARDIS.
+	 * Returns the exterior location of the tardis.
 	 *
-	 * @return the TARDIS location
+	 * @return the tardis location
 	 */
 	public Location getLocation() {
 		return location;
 	}
 
 	@Override
-	public HandlerList getHandlers() {
+	public @NotNull HandlerList getHandlers() {
 		return HANDLERS;
 	}
 }

@@ -14,23 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.move;
+package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetVoid;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import me.eccentric_nz.TARDIS.utility.TARDISVoidUpdate;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.control.TARDISPowerButton;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCompanions;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetVoid;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.mobfarming.TARDISFarmer;
+import me.eccentric_nz.tardis.mobfarming.TARDISFollowerSpawner;
+import me.eccentric_nz.tardis.mobfarming.TARDISPetsAndFollowers;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.utility.TARDISVoidUpdate;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -80,18 +80,18 @@ public class TARDISMoveListener implements Listener {
 			TARDISTeleportLocation tpl = plugin.getTrackerKeeper().getPortals().get(l);
 			UUID uuid = p.getUniqueId();
 			int id = tpl.getTardisId();
-			// are they a companion of this TARDIS?
+			// are they a companion of this tardis?
 			List<UUID> companions = new ResultSetCompanions(plugin, id).getCompanions();
 			if (tpl.isAbandoned() || companions.contains(uuid)) {
 				Location to = tpl.getLocation();
 				boolean exit;
 				if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(plugin.getServer().getPlayer(uuid), "tardis.create_world")) {
-					exit = !(to.getWorld().getName().contains("TARDIS"));
+					exit = !(to.getWorld().getName().contains("tardis"));
 				} else if (plugin.getConfig().getBoolean("creation.default_world")) {
 					// check default world name
 					exit = !(to.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name")));
 				} else {
-					exit = !(to.getWorld().getName().contains("TARDIS"));
+					exit = !(to.getWorld().getName().contains("tardis"));
 				}
 				// adjust player yaw for to
 				float yaw = (exit) ? p.getLocation().getYaw() + 180.0f : p.getLocation().getYaw();
@@ -121,7 +121,7 @@ public class TARDISMoveListener implements Listener {
 					set.put("tardis_id", id);
 					set.put("uuid", uuid.toString());
 					plugin.getQueryFactory().doSyncInsert("travellers", set);
-					// check to see whether the TARDIS has been updated to VOID biome
+					// check to see whether the tardis has been updated to VOID biome
 					if (!new ResultSetVoid(plugin, id).hasUpdatedToVOID()) {
 						new TARDISVoidUpdate(plugin, id).updateBiome();
 						// add tardis id to void table
@@ -139,7 +139,7 @@ public class TARDISMoveListener implements Listener {
 					}
 				}
 				if (canPowerUp && !exit) {
-					// power up the TARDIS
+					// power up the tardis
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 						HashMap<String, Object> where = new HashMap<>();
 						where.put("tardis_id", id);

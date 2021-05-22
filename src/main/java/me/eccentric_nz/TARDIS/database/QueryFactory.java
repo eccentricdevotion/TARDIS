@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database;
+package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
@@ -166,7 +166,7 @@ public class QueryFactory {
 		where.forEach((key, value) -> {
 			sbw.append(key).append(" = ");
 			if (value instanceof String || value instanceof UUID) {
-				sbw.append("'").append(value.toString()).append("' AND ");
+				sbw.append("'").append(value).append("' AND ");
 			} else {
 				sbw.append(value).append(" AND ");
 			}
@@ -322,7 +322,7 @@ public class QueryFactory {
 	 * Save the biome the Police Box lands in to the current table so that it can be restored after it leaves. This is
 	 * only done if `police_box.set_biome: true` is set in the config.
 	 *
-	 * @param id    the TARDIS to update
+	 * @param id    the tardis to update
 	 * @param biome the biome to save
 	 */
 	public void saveBiome(int id, String biome) {
@@ -348,7 +348,7 @@ public class QueryFactory {
 	}
 
 	/**
-	 * Add a TARDIS id to the thevoid table.
+	 * Add a tardis id to the thevoid table.
 	 *
 	 * @param id the tardis_id to add
 	 */
@@ -374,15 +374,15 @@ public class QueryFactory {
 	}
 
 	/**
-	 * Claim an abandoned TARDIS.
+	 * Claim an abandoned tardis.
 	 *
 	 * @param player the claiming player
-	 * @param id     the TARDIS id
+	 * @param id     the tardis id
 	 * @return true if the claim was a success
 	 */
 	public boolean claimTARDIS(Player player, int id) {
 		PreparedStatement ps = null;
-		// check if they have a non-abandoned TARDIS
+		// check if they have a non-abandoned tardis
 		HashMap<String, Object> where = new HashMap<>();
 		String uuid = player.getUniqueId().toString();
 		where.put("uuid", uuid);
@@ -413,7 +413,7 @@ public class QueryFactory {
 				}
 				return bool;
 			} catch (SQLException e) {
-				plugin.debug("Update error for claiming abandoned TARDIS! " + e.getMessage());
+				plugin.debug("Update error for claiming abandoned tardis! " + e.getMessage());
 				return false;
 			} finally {
 				try {
@@ -421,7 +421,7 @@ public class QueryFactory {
 						ps.close();
 					}
 				} catch (SQLException e) {
-					plugin.debug("Error closing abandoned TARDIS claim statement! " + e.getMessage());
+					plugin.debug("Error closing abandoned tardis claim statement! " + e.getMessage());
 				}
 			}
 		} else {

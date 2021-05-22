@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.element;
+package me.eccentric_nz.tardis.chemistry.element;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -27,6 +27,7 @@ public class ElementBuilder {
 	public static ItemStack getElement(Element element) {
 		ItemStack is = new ItemStack(Material.FEATHER, 1);
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		im.setDisplayName(element.toString());
 		if (element.equals(Element.Unknown)) {
 			im.setLore(Arrays.asList("?", "?"));

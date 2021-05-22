@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.schematic;
+package me.eccentric_nz.tardis.schematic;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -73,7 +73,7 @@ public class TARDISSchematicListener implements Listener {
 	private Material getWand() {
 		Material mat;
 		try {
-			mat = Material.valueOf(plugin.getRecipesConfig().getString("shapeless.TARDIS Schematic Wand.result"));
+			mat = Material.valueOf(plugin.getRecipesConfig().getString("shapeless.tardis Schematic Wand.result"));
 		} catch (IllegalArgumentException e) {
 			mat = Material.BONE;
 		}
@@ -88,6 +88,6 @@ public class TARDISSchematicListener implements Listener {
 		if (!im.hasDisplayName()) {
 			return false;
 		}
-		return im.getDisplayName().equals("TARDIS Schematic Wand");
+		return im.getDisplayName().equals("tardis Schematic Wand");
 	}
 }

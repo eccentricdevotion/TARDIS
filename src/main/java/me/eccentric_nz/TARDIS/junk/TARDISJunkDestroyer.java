@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.junk;
+package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.destroyers.DestroyData;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.utility.*;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -76,8 +76,7 @@ public class TARDISJunkDestroyer implements Runnable {
 			i++;
 			if (i == 1) {
 				getJunkTravellers().forEach((e) -> {
-					if (e instanceof Player) {
-						Player p = (Player) e;
+					if (e instanceof Player p) {
 						plugin.getGeneralKeeper().getJunkTravellers().add(p.getUniqueId());
 					}
 				});
@@ -93,8 +92,7 @@ public class TARDISJunkDestroyer implements Runnable {
 					// teleport players to vortex
 					vortexJunkLoc = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getTardis().getCreeper()).add(3.0d, 0.0d, 2.0d);
 					getJunkTravellers().forEach((e) -> {
-						if (e instanceof Player) {
-							Player p = (Player) e;
+						if (e instanceof Player p) {
 							Location relativeLoc = getRelativeLocation(p);
 							p.teleport(relativeLoc);
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(relativeLoc), 2L);
@@ -129,7 +127,7 @@ public class TARDISJunkDestroyer implements Runnable {
 								try {
 									world.setBiome(row, col, b);
 								} catch (NullPointerException e) {
-									// remove TARDIS from tracker
+									// remove tardis from tracker
 									plugin.getTrackerKeeper().getDematerialising().remove(pdd.getTardisID());
 								}
 							}
@@ -161,8 +159,7 @@ public class TARDISJunkDestroyer implements Runnable {
 			} else if (plugin.getConfig().getBoolean("junk.particles")) {
 				// just animate particles
 				plugin.getUtils().getJunkTravellers(junkLoc).forEach((e) -> {
-					if (e instanceof Player) {
-						Player p = (Player) e;
+					if (e instanceof Player p) {
 						TARDISParticles.sendVortexParticles(effectsLoc, p);
 					}
 				});

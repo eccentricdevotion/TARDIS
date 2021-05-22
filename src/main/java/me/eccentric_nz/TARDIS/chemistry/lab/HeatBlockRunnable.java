@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.lab;
+package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -34,38 +34,8 @@ import java.util.List;
 
 public class HeatBlockRunnable implements Runnable {
 
-	private static final List<Vector> INNER_VECTORS = new ArrayList<>(
-			Arrays.asList(
-					new Vector(-1.0, 0.0, 1.0),
-					new Vector(0.0, 0.0, 1.0),
-					new Vector(1.0, 0.0, 1.0),
-					new Vector(-1.0, 0.0, 0.0),
-					new Vector(1.0, 0.0, 0.0),
-					new Vector(-1.0, 0.0, -1.0),
-					new Vector(0.0, 0.0, -1.0),
-					new Vector(1.0, 0.0, -1.0)
-			)
-	);
-	private static final List<Vector> OUTER_VECTORS = new ArrayList<>(
-			Arrays.asList(
-					new Vector(-2.0, 0.0, 2.0),
-					new Vector(-1.0, 0.0, 2.0),
-					new Vector(0.0, 0.0, 2.0),
-					new Vector(1.0, 0.0, 2.0),
-					new Vector(2.0, 0.0, 2.0),
-					new Vector(-2.0, 0.0, 1.0),
-					new Vector(2.0, 0.0, 1.0),
-					new Vector(-2.0, 0.0, 0.0),
-					new Vector(2.0, 0.0, 0.0),
-					new Vector(-2.0, 0.0, -1.0),
-					new Vector(2.0, 0.0, -1.0),
-					new Vector(-2.0, 0.0, -2.0),
-					new Vector(-1.0, 0.0, -2.0),
-					new Vector(0.0, 0.0, -2.0),
-					new Vector(1.0, 0.0, -2.0),
-					new Vector(2.0, 0.0, -2.0)
-			)
-	);
+	private static final List<Vector> INNER_VECTORS = new ArrayList<>(Arrays.asList(new Vector(-1.0, 0.0, 1.0), new Vector(0.0, 0.0, 1.0), new Vector(1.0, 0.0, 1.0), new Vector(-1.0, 0.0, 0.0), new Vector(1.0, 0.0, 0.0), new Vector(-1.0, 0.0, -1.0), new Vector(0.0, 0.0, -1.0), new Vector(1.0, 0.0, -1.0)));
+	private static final List<Vector> OUTER_VECTORS = new ArrayList<>(Arrays.asList(new Vector(-2.0, 0.0, 2.0), new Vector(-1.0, 0.0, 2.0), new Vector(0.0, 0.0, 2.0), new Vector(1.0, 0.0, 2.0), new Vector(2.0, 0.0, 2.0), new Vector(-2.0, 0.0, 1.0), new Vector(2.0, 0.0, 1.0), new Vector(-2.0, 0.0, 0.0), new Vector(2.0, 0.0, 0.0), new Vector(-2.0, 0.0, -1.0), new Vector(2.0, 0.0, -1.0), new Vector(-2.0, 0.0, -2.0), new Vector(-1.0, 0.0, -2.0), new Vector(0.0, 0.0, -2.0), new Vector(1.0, 0.0, -2.0), new Vector(2.0, 0.0, -2.0)));
 	private final TARDIS plugin;
 
 	public HeatBlockRunnable(TARDIS plugin) {

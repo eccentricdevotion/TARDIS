@@ -1,6 +1,6 @@
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISConstants;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -33,22 +33,22 @@ public class FractalFence {
 		int miny = location.getBlockY() + 1;
 		int minz = location.getBlockZ();
 		switch (i) {
-			case 1:
+			case 1 -> {
 				minx -= 4;
 				minz -= 4;
-				break;
-			case 2:
+			}
+			case 2 -> {
 				minx -= 4;
 				minz -= 1;
-				break;
-			case 3:
+			}
+			case 3 -> {
 				minx -= 1;
 				minz -= 4;
-				break;
-			default: // 0
+			}
+			default -> { // 0
 				minx -= 1;
 				minz -= 1;
-				break;
+			}
 		}
 		int n = 0;
 		while (n < 60) {

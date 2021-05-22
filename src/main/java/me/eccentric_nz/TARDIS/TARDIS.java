@@ -14,59 +14,59 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS;
+package me.eccentric_nz.tardis;
 
 import io.papermc.lib.PaperLib;
-import me.eccentric_nz.TARDIS.ARS.ARSConverter;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.api.TARDII;
-import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceParticle;
-import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
-import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
-import me.eccentric_nz.TARDIS.builders.TARDISConsoleLoader;
-import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
-import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockPersister;
-import me.eccentric_nz.TARDIS.chameleon.ConstructsConverter;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
-import me.eccentric_nz.TARDIS.chemistry.block.ChemistryBlockRecipes;
-import me.eccentric_nz.TARDIS.chemistry.lab.BleachRecipe;
-import me.eccentric_nz.TARDIS.chemistry.lab.HeatBlockRunnable;
-import me.eccentric_nz.TARDIS.chemistry.product.GlowStickRunnable;
-import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
-import me.eccentric_nz.TARDIS.database.*;
-import me.eccentric_nz.TARDIS.database.converters.*;
-import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
-import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
-import me.eccentric_nz.TARDIS.enumeration.Language;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.files.*;
-import me.eccentric_nz.TARDIS.flight.TARDISVortexPersister;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceFieldPersister;
-import me.eccentric_nz.TARDIS.hads.TARDISHadsPersister;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesRunnable;
-import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
-import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISBeeWaker;
-import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
-import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
-import me.eccentric_nz.TARDIS.move.TARDISSpectaclesRunnable;
-import me.eccentric_nz.TARDIS.placeholders.TARDISPlaceholderExpansion;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.planets.TARDISSpace;
-import me.eccentric_nz.TARDIS.recipes.*;
-import me.eccentric_nz.TARDIS.rooms.TARDISRoomPersister;
-import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
-import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
-import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeRunnable;
-import me.eccentric_nz.TARDIS.travel.TARDISArea;
-import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
-import me.eccentric_nz.TARDIS.utility.*;
-import me.eccentric_nz.TARDIS.utility.logging.TARDISBlockLogger;
+import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.api.TARDII;
+import me.eccentric_nz.tardis.arch.TARDISArchPersister;
+import me.eccentric_nz.tardis.ars.ARSConverter;
+import me.eccentric_nz.tardis.artron.TARDISArtronFurnaceParticle;
+import me.eccentric_nz.tardis.artron.TARDISCondensables;
+import me.eccentric_nz.tardis.artron.TARDISStandbyMode;
+import me.eccentric_nz.tardis.builders.TARDISConsoleLoader;
+import me.eccentric_nz.tardis.builders.TARDISPresetBuilderFactory;
+import me.eccentric_nz.tardis.builders.TARDISSeedBlockPersister;
+import me.eccentric_nz.tardis.chameleon.ConstructsConverter;
+import me.eccentric_nz.tardis.chameleon.TARDISChameleonPreset;
+import me.eccentric_nz.tardis.chatGUI.TARDISChatGUIJSON;
+import me.eccentric_nz.tardis.chemistry.block.ChemistryBlockRecipes;
+import me.eccentric_nz.tardis.chemistry.lab.BleachRecipe;
+import me.eccentric_nz.tardis.chemistry.lab.HeatBlockRunnable;
+import me.eccentric_nz.tardis.chemistry.product.GlowStickRunnable;
+import me.eccentric_nz.tardis.control.TARDISControlRunnable;
+import me.eccentric_nz.tardis.database.*;
+import me.eccentric_nz.tardis.database.converters.*;
+import me.eccentric_nz.tardis.destroyers.TARDISDestroyerInner;
+import me.eccentric_nz.tardis.destroyers.TARDISPresetDestroyerFactory;
+import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.enumeration.InventoryManager;
+import me.eccentric_nz.tardis.enumeration.Language;
+import me.eccentric_nz.tardis.enumeration.WorldManager;
+import me.eccentric_nz.tardis.files.*;
+import me.eccentric_nz.tardis.flight.TARDISVortexPersister;
+import me.eccentric_nz.tardis.forcefield.TARDISForceField;
+import me.eccentric_nz.tardis.forcefield.TARDISForceFieldPersister;
+import me.eccentric_nz.tardis.hads.TARDISHadsPersister;
+import me.eccentric_nz.tardis.handles.TARDISHandlesRunnable;
+import me.eccentric_nz.tardis.info.TARDISInformationSystemListener;
+import me.eccentric_nz.tardis.junk.TARDISJunkReturnRunnable;
+import me.eccentric_nz.tardis.mobfarming.TARDISBeeWaker;
+import me.eccentric_nz.tardis.move.TARDISMonsterRunnable;
+import me.eccentric_nz.tardis.move.TARDISPortalPersister;
+import me.eccentric_nz.tardis.move.TARDISSpectaclesRunnable;
+import me.eccentric_nz.tardis.placeholders.TARDISPlaceholderExpansion;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.planets.TARDISSpace;
+import me.eccentric_nz.tardis.recipes.*;
+import me.eccentric_nz.tardis.rooms.TARDISRoomPersister;
+import me.eccentric_nz.tardis.rooms.TARDISZeroRoomRunnable;
+import me.eccentric_nz.tardis.siegemode.TARDISSiegePersister;
+import me.eccentric_nz.tardis.siegemode.TARDISSiegeRunnable;
+import me.eccentric_nz.tardis.travel.TARDISArea;
+import me.eccentric_nz.tardis.travel.TARDISPluginRespect;
+import me.eccentric_nz.tardis.utility.*;
+import me.eccentric_nz.tardis.utility.logging.TARDISBlockLogger;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -91,7 +91,7 @@ import java.util.regex.Pattern;
 /**
  * The main class where everything is enabled and disabled.
  * <p>
- * "TARDIS" is an acronym meaning "Time And Relative Dimension In Space". TARDISes move through time and space by
+ * "tardis" is an acronym meaning "Time And Relative Dimension In Space". TARDISes move through time and space by
  * "disappearing there and reappearing here", a process known as "de- and re-materialisation". TARDISes are used for the
  * observation of various places and times.
  *
@@ -111,11 +111,10 @@ public class TARDIS extends JavaPlugin {
 	private final TARDISChatGUIJSON jsonKeeper = new TARDISChatGUIJSON();
 	private final List<String> cleanUpWorlds = new ArrayList<>();
 	private final HashMap<String, String> versions = new HashMap<>();
-	//    public TARDISFurnaceRecipe fornacis;
 	private Calendar afterCal;
 	private Calendar beforeCal;
 	private ConsoleCommandSender console;
-	private File quotesfile = null;
+	private File quotesFile = null;
 	private FileConfiguration achievementConfig;
 	private FileConfiguration artronConfig;
 	private FileConfiguration blocksConfig;
@@ -152,6 +151,7 @@ public class TARDIS extends JavaPlugin {
 	private TARDISGeneralInstanceKeeper generalKeeper;
 	private TARDISHelper tardisHelper = null;
 	private TARDISMultiverseHelper mvHelper = null;
+	private TARDISDynmapUtils tardisDynmapUtils = null;
 	private String prefix;
 	private Difficulty difficulty;
 	private WorldManager worldManager;
@@ -171,6 +171,7 @@ public class TARDIS extends JavaPlugin {
 	public TARDIS() {
 		worldGuardOnServer = false;
 		invManager = InventoryManager.NONE;
+		versions.put("dynmap", "3.1-beta-5");
 		versions.put("GriefPrevention", "16.13");
 		versions.put("LibsDisguises", "10.0.14");
 		versions.put("MultiWorld", "5.2");
@@ -207,7 +208,8 @@ public class TARDIS extends JavaPlugin {
 	private boolean checkPluginVersion(String plg, String min) {
 		if (pm.isPluginEnabled(plg)) {
 			Plugin check = pm.getPlugin(plg);
-			Version minver = new Version(min);
+			Version minVersion = new Version(min);
+			assert check != null;
 			String preSplit = check.getDescription().getVersion();
 			String[] split = preSplit.split("-");
 			try {
@@ -225,7 +227,7 @@ public class TARDIS extends JavaPlugin {
 				} else {
 					ver = new Version(split[0]);
 				}
-				return (ver.compareTo(minver) >= 0);
+				return (ver.compareTo(minVersion) >= 0);
 			} catch (IllegalArgumentException e) {
 				getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the version for {0}.", plg);
 				getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
@@ -296,14 +298,14 @@ public class TARDIS extends JavaPlugin {
 		persistentDataTypeUUID = new TARDISUUIDDataType();
 		console = getServer().getConsoleSender();
 		Version serverVersion = getServerVersion(getServer().getVersion());
-		Version minversion = new Version("1.16.2");
+		Version minVersion = new Version("1.16.2");
 		// check server version
-		if (serverVersion.compareTo(minversion) >= 0) {
+		if (serverVersion.compareTo(minVersion) >= 0) {
 			if (getServer().getBukkitVersion().startsWith("git-Bukkit-")) {
-				console.sendMessage(pluginName + ChatColor.RED + "Your server is running CraftBukkit. Please use Spigot or Paper instead! This plugin will continue to load, but performance may be affected.)");
+				console.sendMessage(pluginName + ChatColor.RED + "Your server is running CraftBukkit. Please use Spigot or Paper instead! (This plugin will continue to load, but performance may be affected.)");
 			}
 			// TARDISChunkGenerator needs to be enabled
-			if (!loadHelper()) {
+			if (!loadTardisHelper()) {
 				console.sendMessage(pluginName + ChatColor.RED + "This plugin requires TARDISChunkGenerator to function, disabling...");
 				hasVersion = false;
 				pm.disablePlugin(this);
@@ -387,7 +389,7 @@ public class TARDIS extends JavaPlugin {
 			generalKeeper = new TARDISGeneralInstanceKeeper(this);
 			generalKeeper.setQuotes(quotes());
 			try {
-				difficulty = Difficulty.valueOf(getConfig().getString("preferences.difficulty").toUpperCase(Locale.ENGLISH));
+				difficulty = Difficulty.valueOf(Objects.requireNonNull(getConfig().getString("preferences.difficulty")).toUpperCase(Locale.ENGLISH));
 			} catch (IllegalArgumentException e) {
 				debug("Could not determine difficulty setting, using EASY");
 				difficulty = Difficulty.EASY;
@@ -406,6 +408,7 @@ public class TARDIS extends JavaPlugin {
 			startReminders();
 			loadWorldGuard();
 			loadPluginRespect();
+			loadDynmap();
 			startZeroHealing();
 			startBeeTicks();
 			startSiegeTicks();
@@ -498,7 +501,7 @@ public class TARDIS extends JavaPlugin {
 					getServer().reloadData();
 				}
 			}, 199L);
-			// check TARDIS build
+			// check tardis build
 			if (getConfig().getBoolean("preferences.notify_update")) {
 				getServer().getScheduler().runTaskAsynchronously(this, new TARDISUpdateChecker(this, null));
 			}
@@ -521,7 +524,7 @@ public class TARDIS extends JavaPlugin {
 				blockLogger.enableLogger();
 			}
 		} else {
-			console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion.get() + " or higher, disabling...");
+			console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minVersion.get() + " or higher, disabling...");
 			pm.disablePlugin(this);
 		}
 	}
@@ -534,10 +537,11 @@ public class TARDIS extends JavaPlugin {
 	 * Sets up the database.
 	 */
 	private void loadDatabase() {
-		String dbtype = getConfig().getString("storage.database");
+		String dbType = getConfig().getString("storage.database");
 		try {
-			if (dbtype.equals("sqlite")) {
-				String path = getDataFolder() + File.separator + "TARDIS.db";
+			assert dbType != null;
+			if (dbType.equals("sqlite")) {
+				String path = getDataFolder() + File.separator + "tardis.db";
 				service.setConnection(path);
 				TARDISSQLiteDatabase sqlite = new TARDISSQLiteDatabase(this);
 				sqlite.createTables();
@@ -662,11 +666,11 @@ public class TARDIS extends JavaPlugin {
 	private void loadFiles() {
 		tardisCopier.copyFiles();
 		new TARDISRoomMap(this).load();
-		quotesfile = tardisCopier.copy("quotes.txt");
+		quotesFile = tardisCopier.copy("quotes.txt");
 	}
 
 	/**
-	 * Saves the default book files to the /plugins/TARDIS/books directory.
+	 * Saves the default book files to the /plugins/tardis/books directory.
 	 */
 	private void loadBooks() {
 		// copy book files
@@ -684,7 +688,7 @@ public class TARDIS extends JavaPlugin {
 	}
 
 	/**
-	 * Starts a repeating task that plays TARDIS sound effects to players while they are inside the TARDIS.
+	 * Starts a repeating task that plays tardis sound effects to players while they are inside the tardis.
 	 */
 	private void startSound() {
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> new TARDISHumSounds().playTARDISHum(), 60L, 1500L);
@@ -700,7 +704,7 @@ public class TARDIS extends JavaPlugin {
 	}
 
 	/**
-	 * Starts a repeating task that removes Artron Energy from the TARDIS while it is in standby mode (ie not
+	 * Starts a repeating task that removes Artron Energy from the tardis while it is in standby mode (ie not
 	 * travelling). Only runs if `standby_time` in artron.yml is greater than 0 (the default is 6000 or every 5
 	 * minutes).
 	 */
@@ -715,7 +719,7 @@ public class TARDIS extends JavaPlugin {
 	}
 
 	/**
-	 * Starts a repeating task that removes Artron Energy from the TARDIS while it is in Siege Mode. Only runs if
+	 * Starts a repeating task that removes Artron Energy from the tardis while it is in Siege Mode. Only runs if
 	 * `siege_ticks` in artron.yml is greater than 0 (the default is 1500 or every 1 minute 15 seconds).
 	 */
 	private void startSiegeTicks() {
@@ -782,9 +786,9 @@ public class TARDIS extends JavaPlugin {
 	 */
 	private void loadMultiverse() {
 		if (worldManager.equals(WorldManager.MULTIVERSE)) {
-			Plugin mvplugin = pm.getPlugin("Multiverse-Core");
+			Plugin mvPlugin = pm.getPlugin("Multiverse-Core");
 			debug("Hooking into Multiverse-Core!");
-			mvHelper = new TARDISMultiverseHelper(mvplugin);
+			mvHelper = new TARDISMultiverseHelper(mvPlugin);
 		}
 	}
 
@@ -795,7 +799,7 @@ public class TARDIS extends JavaPlugin {
 	/**
 	 * Checks if the TARDISChunkGenerator plugin is available, and loads support if it is.
 	 */
-	private boolean loadHelper() {
+	private boolean loadTardisHelper() {
 		Plugin tcg = pm.getPlugin("TARDISChunkGenerator");
 		if (tcg != null && tcg.isEnabled()) {
 			debug("Hooking into TARDISChunkGenerator!");
@@ -809,6 +813,18 @@ public class TARDIS extends JavaPlugin {
 		return tardisHelper;
 	}
 
+	/**
+	 * Checks if the Dynmap plugin is available, and loads support if it is.
+	 */
+	private boolean loadDynmap() {
+		if (pm.getPlugin("dynmap") != null) {
+			tardisDynmapUtils = new TARDISDynmapUtils();
+			tardisDynmapUtils.load();
+			return true;
+		}
+		return false;
+	}
+
 	private void loadPluginRespect() {
 		pluginRespect = new TARDISPluginRespect(this);
 		pluginRespect.loadFactions();
@@ -819,7 +835,7 @@ public class TARDIS extends JavaPlugin {
 	}
 
 	/**
-	 * Loads the permissions handler for TARDIS worlds if the relevant permissions plugin is enabled. Currently supports
+	 * Loads the permissions handler for tardis worlds if the relevant permissions plugin is enabled. Currently supports
 	 * GroupManager and bPermissions (as they have per world config files).
 	 */
 	private void loadPerms() {
@@ -827,7 +843,7 @@ public class TARDIS extends JavaPlugin {
 			// copy default permissions file if not present
 			tardisCopier.copy("permissions.txt");
 			if (getConfig().getBoolean("creation.create_worlds")) {
-				console.sendMessage(pluginName + "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
+				console.sendMessage(pluginName + "World specific permissions plugin detected please edit plugins/tardis/permissions.txt");
 			}
 		}
 	}
@@ -839,10 +855,10 @@ public class TARDIS extends JavaPlugin {
 	 */
 	private ArrayList<String> quotes() {
 		ArrayList<String> quotes = new ArrayList<>();
-		if (quotesfile != null) {
+		if (quotesFile != null) {
 			BufferedReader bufRdr = null;
 			try {
-				bufRdr = new BufferedReader(new FileReader(quotesfile));
+				bufRdr = new BufferedReader(new FileReader(quotesFile));
 				String line;
 				//read each line of text file
 				while ((line = bufRdr.readLine()) != null) {
@@ -871,7 +887,7 @@ public class TARDIS extends JavaPlugin {
 	 */
 	private HashMap<Material, String> getSeeds() {
 		HashMap<Material, String> map = new HashMap<>();
-		Set<String> rooms = getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
+		Set<String> rooms = Objects.requireNonNull(getRoomsConfig().getConfigurationSection("rooms")).getKeys(false);
 		int r = 0;
 		for (String s : rooms) {
 			if (!getRoomsConfig().contains("rooms." + s + ".user")) {
@@ -993,6 +1009,7 @@ public class TARDIS extends JavaPlugin {
 
 	private void updateTagStats() {
 		String it = getTagConfig().getString("it");
+		assert it != null;
 		if (!it.equals("")) {
 			HashMap<String, Object> set = new HashMap<>();
 			set.put("player", getTagConfig().getString("it"));
@@ -1007,6 +1024,7 @@ public class TARDIS extends JavaPlugin {
 			return;
 		}
 		String defWorld = getConfig().getString("creation.default_world_name");
+		assert defWorld != null;
 		if (getServer().getWorld(defWorld) == null) {
 			console.sendMessage(pluginName + "Default world specified, but it doesn't exist! Trying to create it now...");
 			new TARDISSpace(this).createDefaultWorld(defWorld);
@@ -1028,6 +1046,7 @@ public class TARDIS extends JavaPlugin {
 	public boolean checkTWA() {
 		if (getPM().isPluginEnabled("TARDISWeepingAngels")) {
 			Plugin twa = getPM().getPlugin("TARDISWeepingAngels");
+			assert twa != null;
 			Version version = new Version(twa.getDescription().getVersion());
 			return (version.compareTo(new Version("3.3.1")) >= 0);
 		} else {

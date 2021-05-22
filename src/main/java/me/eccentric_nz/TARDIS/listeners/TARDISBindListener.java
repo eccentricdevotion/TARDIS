@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetBind;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.Bind;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetBind;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTransmat;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.Bind;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -65,8 +65,8 @@ public class TARDISBindListener implements Listener {
 	 * command. If the player's name is contained in the trackBinder HashMap then the block location is recorded in the
 	 * bind field of the destinations table.
 	 * <p>
-	 * If the player is travelling in the TARDIS then a check is made of the destinations table for the location of the
-	 * clicked block. If found the destination for the next TARDIS time travel location is set.
+	 * If the player is travelling in the tardis then a check is made of the destinations table for the location of the
+	 * clicked block. If found the destination for the next tardis time travel location is set.
 	 *
 	 * @param event a player clicking a block
 	 */
@@ -106,7 +106,7 @@ public class TARDISBindListener implements Listener {
 					}
 					plugin.getTrackerKeeper().getBindRemoval().remove(uuid);
 				} else {
-					// is player travelling in TARDIS
+					// is player travelling in tardis
 					where.put("uuid", player.getUniqueId().toString());
 					ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
 					if (rst.resultSet()) {
@@ -135,7 +135,7 @@ public class TARDISBindListener implements Listener {
 									TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
 									return;
 								}
-								// make sure TARDIS is not dispersed
+								// make sure tardis is not dispersed
 								if (type != 6 && plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
 									TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
 									return;
@@ -185,18 +185,18 @@ public class TARDISBindListener implements Listener {
 										HashMap<String, Object> wherec = new HashMap<>();
 										HashMap<String, Object> set = new HashMap<>();
 										switch (name) {
-											case "OFF":
+											case "OFF" -> {
 												set.put("adapti_on", 0);
 												set.put("chameleon_preset", "NEW");
-												break;
-											case "ADAPT":
+											}
+											case "ADAPT" -> {
 												set.put("adapti_on", 1);
 												set.put("chameleon_preset", "FACTORY");
-												break;
-											default: // preset
+											}
+											default -> { // preset
 												set.put("adapti_on", 0);
 												set.put("chameleon_preset", name);
-												break;
+											}
 										}
 										wherec.put("tardis_id", id);
 										plugin.getQueryFactory().doUpdate("tardis", set, wherec);

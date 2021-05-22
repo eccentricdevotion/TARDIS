@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -153,14 +153,7 @@ public class TARDISTerminalInventory {
 		cim.setDisplayName(plugin.getLanguage().getString("BUTTON_CANCEL"));
 		c.setItemMeta(cim);
 
-		return new ItemStack[]{
-				null, ten, null, twentyfive, null, fifty, null, onehundred, null,
-				neg, null, null, null, x, null, null, null, pos,
-				neg, null, null, null, z, null, null, null, pos,
-				neg, m, null, null, null, null, null, null, pos,
-				u, null, w, null, r, null, e, null, sub,
-				null, t, null, null, s, null, null, c, null
-		};
+		return new ItemStack[]{null, ten, null, twentyfive, null, fifty, null, onehundred, null, neg, null, null, null, x, null, null, null, pos, neg, null, null, null, z, null, null, null, pos, neg, m, null, null, null, null, null, null, pos, u, null, w, null, r, null, e, null, sub, null, t, null, null, s, null, null, c, null};
 	}
 
 	public ItemStack[] getTerminal() {

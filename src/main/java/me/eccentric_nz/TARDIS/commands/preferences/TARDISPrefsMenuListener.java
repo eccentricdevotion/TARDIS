@@ -14,26 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.preferences;
+package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
-import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.FlightMode;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicConfiguratorInventory;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.tardis.ars.TARDISARSMap;
+import me.eccentric_nz.tardis.artron.TARDISArtronLevels;
+import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.commands.admin.TARDISAdminMenuInventory;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.enumeration.DiskCircuit;
+import me.eccentric_nz.tardis.enumeration.FlightMode;
+import me.eccentric_nz.tardis.forcefield.TARDISForceField;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.sonic.TARDISSonicConfiguratorInventory;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -114,7 +114,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 										return;
 									}
 									if (TARDISForceField.addToTracker(p)) {
-										TARDISMessage.send(p, "PREF_WAS_ON", "The TARDIS force field");
+										TARDISMessage.send(p, "PREF_WAS_ON", "The tardis force field");
 									}
 								} else {
 									TARDISMessage.send(p, "POWER_LEVEL");
@@ -122,7 +122,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 								}
 							} else {
 								plugin.getTrackerKeeper().getActiveForceFields().remove(p.getUniqueId());
-								TARDISMessage.send(p, "PREF_WAS_OFF", "The TARDIS force field");
+								TARDISMessage.send(p, "PREF_WAS_OFF", "The tardis force field");
 							}
 							close(p);
 						} else {
@@ -152,7 +152,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 					if (slot == 29 && im.getDisplayName().equals("Interior Hum Sound")) {
 						// close this gui and load the sounds GUI
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-							Inventory hum_inv = plugin.getServer().createInventory(p, 18, ChatColor.DARK_RED + "TARDIS Interior Sounds");
+							Inventory hum_inv = plugin.getServer().createInventory(p, 18, ChatColor.DARK_RED + "tardis Interior Sounds");
 							// close inventory
 							p.closeInventory();
 							// open new inventory
@@ -165,7 +165,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 						// you can only set it to ON!
 						List<String> lore = im.getLore();
 						if (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF"))) {
-							// get this player's TARDIS
+							// get this player's tardis
 							ResultSetTardisID rs = new ResultSetTardisID(plugin);
 							if (rs.fromUUID(uuid.toString())) {
 								int id = rs.getTardis_id();
@@ -182,7 +182,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 									// Check if it's at a recharge point
 									TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
 									tal.recharge(id);
-									// Remove energy from TARDIS and sets database
+									// Remove energy from tardis and sets database
 									TARDISMessage.send(p, "HANDBRAKE_ON");
 									if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
 										int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
@@ -216,15 +216,15 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 						}
 						return;
 					}
-					if (slot == 32 && im.getDisplayName().equals("TARDIS Map")) {
-						// must be in the TARDIS
+					if (slot == 32 && im.getDisplayName().equals("tardis Map")) {
+						// must be in the tardis
 						HashMap<String, Object> where = new HashMap<>();
 						where.put("uuid", uuid.toString());
 						ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
 						if (rs.resultSet()) {
-							// close this gui and load the TARDIS map
+							// close this gui and load the tardis map
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-								Inventory new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Map");
+								Inventory new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis Map");
 								// close inventory
 								p.closeInventory();
 								// open new inventory
@@ -262,8 +262,8 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 					String value = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
 					int b = (bool) ? 0 : 1;
 					switch (im.getDisplayName()) {
-						case "Junk TARDIS": {
-							// must be outside of the TARDIS
+						case "Junk tardis" -> {
+							// must be outside of the tardis
 							HashMap<String, Object> wheret = new HashMap<>();
 							wheret.put("uuid", uuid);
 							ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -350,15 +350,14 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 								TARDISMessage.send(p, message);
 								p.performCommand("tardis rebuild");
 							}
-							break;
 						}
-						case "Companion Build":
+						case "Companion Build" -> {
 							String[] args = new String[2];
 							args[0] = "";
 							args[1] = value;
 							new TARDISBuildCommand(plugin).toggleCompanionBuilding(p, args);
-							break;
-						default: {
+						}
+						default -> {
 							HashMap<String, Object> set = new HashMap<>();
 							HashMap<String, Object> where = new HashMap<>();
 							where.put("uuid", uuid.toString());
@@ -369,7 +368,6 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 								set.put(lookup.get(im.getDisplayName()), b);
 							}
 							plugin.getQueryFactory().doUpdate("player_prefs", set, where);
-							break;
 						}
 					}
 					lore.set(0, value);

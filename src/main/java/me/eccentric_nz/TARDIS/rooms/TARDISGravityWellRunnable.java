@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.rooms;
+package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 /**
- * TARDIS corridors normally used anti-gravity, as the corridors went vertically as well as horizontally. House disabled
+ * tardis corridors normally used anti-gravity, as the corridors went vertically as well as horizontally. House disabled
  * the anti-gravity in the corridors in an attempt to kill Amy Pond and Rory Williams.
  *
  * @author eccentric_nz

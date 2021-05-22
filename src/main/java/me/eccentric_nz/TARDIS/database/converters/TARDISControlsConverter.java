@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.converters;
+package me.eccentric_nz.tardis.database.converters;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 
 import java.sql.*;
 
@@ -47,7 +47,7 @@ public class TARDISControlsConverter {
 			String controlsInsert = "INSERT INTO " + prefix + "controls (tardis_id, type, location) VALUES (?, ?, ?)";
 			ps = connection.prepareStatement(controlsInsert);
 			connection.setAutoCommit(false);
-			// get TARDIS records
+			// get tardis records
 			ResultSet rst = statement.executeQuery(tardisQuery);
 			String location;
 			if (rst.isBeforeFirst()) {
@@ -93,12 +93,12 @@ public class TARDISControlsConverter {
 				if (i > 0) {
 					ps.executeBatch();
 					connection.commit();
-					plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " old TARDIS control records");
+					plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " old tardis control records");
 				}
 				connection.setAutoCommit(true);
 			}
 		} catch (SQLException e) {
-			plugin.debug("Conversion error for tardis/controls tables (converting old TARDIS controls)! " + e.getMessage());
+			plugin.debug("Conversion error for tardis/controls tables (converting old tardis controls)! " + e.getMessage());
 		} finally {
 			try {
 				if (ps != null) {
@@ -110,7 +110,7 @@ public class TARDISControlsConverter {
 				// reset auto commit
 				connection.setAutoCommit(true);
 			} catch (SQLException e) {
-				plugin.debug("Error closing tardis/controls tables (converting old TARDIS controls)! " + e.getMessage());
+				plugin.debug("Error closing tardis/controls tables (converting old tardis controls)! " + e.getMessage());
 			}
 		}
 	}

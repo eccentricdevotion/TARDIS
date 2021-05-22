@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.planets;
+package me.eccentric_nz.tardis.planets;
 
 import com.google.common.base.Preconditions;
 import org.bukkit.Keyed;
@@ -171,10 +171,9 @@ public final class TARDISBiome implements Keyed {
 		if (this == o) {
 			return true;
 		}
-		if (!(o instanceof TARDISBiome)) {
+		if (!(o instanceof TARDISBiome biome)) {
 			return false;
 		}
-		TARDISBiome biome = (TARDISBiome) o;
 		return Objects.equals(key, biome.key);
 	}
 

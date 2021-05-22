@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.desktop;
+package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIArchive;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisSize;
-import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveButtons;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.GUIArchive;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisSize;
+import me.eccentric_nz.tardis.enumeration.ConsoleSize;
+import me.eccentric_nz.tardis.schematic.ResultSetArchiveButtons;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,8 +31,8 @@ import java.util.Arrays;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
- * the TARDIS revealed that she had archived 30 versions. Once a control room was reconfigured, the TARDIS archived the
- * old design "for neatness". The TARDIS effectively "curated" a museum of control rooms — both those in the Doctor's
+ * the tardis revealed that she had archived 30 versions. Once a control room was reconfigured, the tardis archived the
+ * old design "for neatness". The tardis effectively "curated" a museum of control rooms — both those in the Doctor's
  * personal past and future
  *
  * @author eccentric_nz
@@ -68,6 +68,7 @@ class TARDISArchiveInventory {
 		// back
 		ItemStack back = new ItemStack(Material.BOWL, 1);
 		ItemMeta back_im = back.getItemMeta();
+		assert back_im != null;
 		back_im.setDisplayName("Back");
 		back_im.setCustomModelData(GUIArchive.BACK.getCustomModelData());
 		back.setItemMeta(back_im);
@@ -75,6 +76,7 @@ class TARDISArchiveInventory {
 		// size
 		ItemStack size = new ItemStack(Material.BOWL, 1);
 		ItemMeta size_im = size.getItemMeta();
+		assert size_im != null;
 		size_im.setDisplayName("Set size");
 		size_im.setCustomModelData(GUIArchive.SET_SIZE.getCustomModelData());
 		String s = "SMALL";
@@ -92,6 +94,7 @@ class TARDISArchiveInventory {
 		// scan
 		ItemStack scan = new ItemStack(Material.BOWL, 1);
 		ItemMeta but_im = scan.getItemMeta();
+		assert but_im != null;
 		but_im.setDisplayName("Scan console");
 		but_im.setCustomModelData(GUIArchive.SCAN_CONSOLE.getCustomModelData());
 		scan.setItemMeta(but_im);
@@ -99,6 +102,7 @@ class TARDISArchiveInventory {
 		// archive
 		ItemStack arc = new ItemStack(Material.BOWL, 1);
 		ItemMeta hive_im = arc.getItemMeta();
+		assert hive_im != null;
 		hive_im.setDisplayName("Archive current console");
 		hive_im.setLore(Arrays.asList("A random name will", "be generated - use the", "/tardis archive command", "to set your own."));
 		hive_im.setCustomModelData(GUIArchive.ARCHIVE_CURRENT_CONSOLE.getCustomModelData());
@@ -110,6 +114,7 @@ class TARDISArchiveInventory {
 			if (!c.equals(ConsoleSize.MASSIVE)) {
 				ItemStack temp = new ItemStack(Material.BOWL, 1);
 				ItemMeta late = temp.getItemMeta();
+				assert late != null;
 				late.setDisplayName(c.toString());
 				late.setCustomModelData(GUIArchive.valueOf(c.toString()).getCustomModelData());
 				late.setLore(Arrays.asList("Cobblestone template", c.getBlocks()));
@@ -121,6 +126,7 @@ class TARDISArchiveInventory {
 		// close
 		ItemStack close = new ItemStack(Material.BOWL, 1);
 		ItemMeta close_im = close.getItemMeta();
+		assert close_im != null;
 		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
 		close_im.setCustomModelData(GUIArchive.CLOSE.getCustomModelData());
 		close.setItemMeta(close_im);

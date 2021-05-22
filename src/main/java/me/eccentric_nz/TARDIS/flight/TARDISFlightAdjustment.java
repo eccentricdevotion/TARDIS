@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.flight;
+package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.enumeration.Flag;
+import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
@@ -31,7 +31,7 @@ import java.util.List;
 
 /**
  * The Helmic Orientators are slide controls (some consoles have a keyboard) used by the operator for setting the
- * Space-Time Coordinates. The coordinates must take into account the motion of objects relative to a TARDIS' current
+ * Space-Time Coordinates. The coordinates must take into account the motion of objects relative to a tardis' current
  * location, gravity's distortion of the Space-Time Vortex, and the exact time the operator wishes to travel to.
  *
  * @author eccentric_nz

@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.junk;
+package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
-import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisPreset;
+import me.eccentric_nz.tardis.destroyers.DestroyData;
+import me.eccentric_nz.tardis.enumeration.*;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -87,7 +87,7 @@ public class TARDISJunkControlListener implements Listener {
 				ResultSetControls rsh = new ResultSetControls(plugin, where, false);
 				if (rsh.resultSet()) {
 					int id = rsh.getTardis_id();
-					// is it the Junk TARDIS?
+					// is it the Junk tardis?
 					ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
 					if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
 						Player player = event.getPlayer();
@@ -113,7 +113,7 @@ public class TARDISJunkControlListener implements Listener {
 							Switch lever = (Switch) block.getBlockData();
 							lever.setPowered(!lever.isPowered());
 							block.setBlockData(lever);
-							// destroy junk TARDIS
+							// destroy junk tardis
 							DestroyData dd = new DestroyData();
 							dd.setPlayer(player);
 							dd.setDirection(COMPASS.SOUTH);
@@ -140,7 +140,7 @@ public class TARDISJunkControlListener implements Listener {
 				ResultSetControls rst = new ResultSetControls(plugin, where, false);
 				if (rst.resultSet()) {
 					int id = rst.getTardis_id();
-					// is it the Junk TARDIS?
+					// is it the Junk tardis?
 					ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
 					if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
 						Player player = event.getPlayer();
@@ -158,7 +158,7 @@ public class TARDISJunkControlListener implements Listener {
 				ResultSetControls rsh = new ResultSetControls(plugin, where, false);
 				if (rsh.resultSet()) {
 					int id = rsh.getTardis_id();
-					// is it the Junk TARDIS?
+					// is it the Junk tardis?
 					ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
 					if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
 						Player player = event.getPlayer();
@@ -176,7 +176,7 @@ public class TARDISJunkControlListener implements Listener {
 				ResultSetControls rsh = new ResultSetControls(plugin, where, false);
 				if (rsh.resultSet()) {
 					int id = rsh.getTardis_id();
-					// is it the Junk TARDIS?
+					// is it the Junk tardis?
 					ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
 					if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
 						Player player = event.getPlayer();

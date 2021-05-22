@@ -1,10 +1,10 @@
-package me.eccentric_nz.TARDIS.database.converters;
+package me.eccentric_nz.tardis.database.converters;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import org.apache.commons.lang.StringUtils;
 
 import java.sql.Connection;
@@ -70,7 +70,7 @@ public class TARDISWallConverter {
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
 					boolean updateRecord = false;
-					JsonObject json = new JsonParser().parse(rs.getString("data")).getAsJsonObject();
+					JsonObject json = JsonParser.parseString(rs.getString("data")).getAsJsonObject();
 					// get dimensions
 					JsonObject dimensions = json.get("dimensions").getAsJsonObject();
 					int h = dimensions.get("height").getAsInt();

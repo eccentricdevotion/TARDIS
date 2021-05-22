@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.lazarus;
+package me.eccentric_nz.tardis.lazarus;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIGeneticManipulator;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.GUIGeneticManipulator;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -104,15 +104,9 @@ class TARDISLazarusInventory {
 			ItemStack egg = new ItemStack(m, 1);
 			ItemMeta me = egg.getItemMeta();
 			switch (m) {
-				case MOOSHROOM_SPAWN_EGG:
-					me.setDisplayName("MUSHROOM_COW");
-					break;
-				case ZOMBIFIED_PIGLIN_SPAWN_EGG:
-					me.setDisplayName("PIG_ZOMBIE");
-					break;
-				default:
-					me.setDisplayName(m.toString().replace("_SPAWN_EGG", ""));
-					break;
+				case MOOSHROOM_SPAWN_EGG -> me.setDisplayName("MUSHROOM_COW");
+				case ZOMBIFIED_PIGLIN_SPAWN_EGG -> me.setDisplayName("PIG_ZOMBIE");
+				default -> me.setDisplayName(m.toString().replace("_SPAWN_EGG", ""));
 			}
 			egg.setItemMeta(me);
 			eggs[i] = egg;

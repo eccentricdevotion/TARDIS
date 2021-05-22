@@ -14,29 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
 public enum GUIChemistry {
 
-	// TARDIS Areas
-	CLOSE(1, 1, Material.BOWL),
-	INFO(57, 1, Material.BOWL),
-	CHECK(89, 1, Material.BOWL),
-	CRAFT(90, 1, Material.BOWL),
-	ELECTRONS(91, 1, Material.BOWL),
-	NEUTRONS(92, 1, Material.BOWL),
-	PROTONS(93, 1, Material.BOWL),
-	REDUCE(94, 1, Material.BOWL),
-	SCROLL_DOWN(7, 1, Material.ARROW),
-	SCROLL_UP(8, 1, Material.ARROW),
-	PLUS(9, 1, Material.ARROW),
-	MINUS(10, 1, Material.ARROW),
-	ELEMENTS(10000999, 1, Material.FEATHER),
-	COMPOUNDS(1, 1, Material.GLASS_BOTTLE),
-	PRODUCTS(1, 1, Material.CRAFTING_TABLE);
+	// tardis Areas
+	CLOSE(1, 1, Material.BOWL), INFO(57, 1, Material.BOWL), CHECK(89, 1, Material.BOWL), CRAFT(90, 1, Material.BOWL), ELECTRONS(91, 1, Material.BOWL), NEUTRONS(92, 1, Material.BOWL), PROTONS(93, 1, Material.BOWL), REDUCE(94, 1, Material.BOWL), SCROLL_DOWN(7, 1, Material.ARROW), SCROLL_UP(8, 1, Material.ARROW), PLUS(9, 1, Material.ARROW), MINUS(10, 1, Material.ARROW), ELEMENTS(10000999, 1, Material.FEATHER), COMPOUNDS(1, 1, Material.GLASS_BOTTLE), PRODUCTS(1, 1, Material.CRAFTING_TABLE);
 
 	private final int customModelData;
 	private final int slot;

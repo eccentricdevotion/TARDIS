@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.ARS;
+package me.eccentric_nz.tardis.ars;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,7 +33,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 
 /**
- * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
+ * The architectural reconfiguration system is a component of the Doctor's tardis in the shape of a tree that, according
  * to the Eleventh Doctor, "reconstructs the particles according to your needs." It is basically "a machine that makes
  * machines," perhaps somewhat like a 3D printer. It is, according to Gregor Van Baalen's scanner, "more valuable than
  * the total sum of any currency.
@@ -51,7 +51,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
 	}
 
 	/**
-	 * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+	 * Listens for player clicking inside an inventory. If the inventory is a tardis GUI, then the click is processed
 	 * accordingly.
 	 *
 	 * @param event a player clicking an inventory slot
@@ -144,6 +144,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
 							} else {
 								ItemStack stone = new ItemStack(Material.STONE, 1);
 								ItemMeta s1 = stone.getItemMeta();
+								assert s1 != null;
 								s1.setDisplayName("Empty slot");
 								s1.setCustomModelData(1);
 								stone.setItemMeta(s1);
@@ -195,6 +196,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
 							// need to check for gravity wells, and jettison both layers...
 							ItemStack tnt = new ItemStack(Material.TNT, 1);
 							ItemMeta j = tnt.getItemMeta();
+							assert j != null;
 							j.setDisplayName("Jettison");
 							j.setCustomModelData(1);
 							tnt.setItemMeta(j);
@@ -221,7 +223,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
 								break;
 							} else {
 								ItemStack ris = view.getItem(slot);
-								String displayName = ris.getItemMeta().getDisplayName();
+								assert ris != null;
+								String displayName = Objects.requireNonNull(ris.getItemMeta()).getDisplayName();
 								String room = TARDISARS.ARSFor(ris.getType().toString()).getConfigPath();
 								if (!TARDISPermission.hasPermission(player, "tardis.room." + room.toLowerCase(Locale.ENGLISH))) {
 									setLore(view, slot, plugin.getLanguage().getString("NO_PERM_ROOM_TYPE"));
@@ -266,7 +269,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
 		TARDISARSSaveData sd = save_map_data.get(uuid);
 		String[][][] grid = sd.getData();
 		int yy = md.getY() + updown;
-		// avoid ArrayIndexOutOfBoundsException if gravity well extends beyond ARS area
+		// avoid ArrayIndexOutOfBoundsException if gravity well extends beyond ars area
 		if (yy < 0 || yy > 2) {
 			return false;
 		}
@@ -325,13 +328,13 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
 	}
 
 	/**
-	 * Checks and gets custom rooms for ARS.
+	 * Checks and gets custom rooms for ars.
 	 *
 	 * @return a list of enabled custom room names
 	 */
 	private List<String> getCustomRoomNames() {
 		List<String> crooms = new ArrayList<>();
-		Set<String> names = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
+		Set<String> names = Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false);
 		names.forEach((cr) -> {
 			if (plugin.getRoomsConfig().getBoolean("rooms." + cr + ".user") && plugin.getRoomsConfig().getBoolean("rooms." + cr + ".enabled")) {
 				crooms.add(cr);

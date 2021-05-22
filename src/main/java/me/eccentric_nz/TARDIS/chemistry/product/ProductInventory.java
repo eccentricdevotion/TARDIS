@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.product;
+package me.eccentric_nz.tardis.chemistry.product;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -40,6 +40,7 @@ public class ProductInventory {
 		// info
 		ItemStack info = new ItemStack(Material.BOWL, 1);
 		ItemMeta info_im = info.getItemMeta();
+		assert info_im != null;
 		info_im.setDisplayName("Info");
 		info_im.setLore(Arrays.asList("Combine elements and compounds", "to create sparklers, balloons,", "lamps, and glow sticks.", "To see a product formula", "use the " + ChatColor.GREEN + ChatColor.ITALIC + "/tardischemistry formula" + ChatColor.DARK_PURPLE + ChatColor.ITALIC + " command.", "Place items like you would", "in a crafting table", "in the 9 left slots."));
 		info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
@@ -48,6 +49,7 @@ public class ProductInventory {
 		// craft recipe
 		ItemStack craft = new ItemStack(Material.BOWL, 1);
 		ItemMeta craft_im = craft.getItemMeta();
+		assert craft_im != null;
 		craft_im.setDisplayName("Craft");
 		craft_im.setCustomModelData(GUIChemistry.CRAFT.getCustomModelData());
 		craft.setItemMeta(craft_im);
@@ -55,6 +57,7 @@ public class ProductInventory {
 		// close
 		ItemStack close = new ItemStack(Material.BOWL, 1);
 		ItemMeta close_im = close.getItemMeta();
+		assert close_im != null;
 		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
 		close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
 		close.setItemMeta(close_im);

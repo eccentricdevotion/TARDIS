@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.preferences;
+package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetJunk;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
+import me.eccentric_nz.tardis.database.resultset.ResultSetJunk;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -43,7 +43,7 @@ class TARDISJunkPreference {
 	public boolean toggle(Player player, String arg) {
 		UUID uuid = player.getUniqueId();
 		String ustr = uuid.toString();
-		// get TARDIS
+		// get tardis
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("uuid", ustr);
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -52,7 +52,7 @@ class TARDISJunkPreference {
 			int id = tardis.getTardis_id();
 			// get current preset
 			String current = tardis.getPreset().toString();
-			// must be outside of the TARDIS
+			// must be outside of the tardis
 			HashMap<String, Object> wheret = new HashMap<>();
 			wheret.put("uuid", ustr);
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);

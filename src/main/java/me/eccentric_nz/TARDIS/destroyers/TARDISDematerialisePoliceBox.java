@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.destroyers;
+package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -54,18 +54,14 @@ public class TARDISDematerialisePoliceBox implements Runnable {
 		World world = dd.getLocation().getWorld();
 		if (i < loops) {
 			i++;
-			int cmd;
-			switch (i % 3) {
-				case 2: // stained
-					cmd = 1003;
-					break;
-				case 1: // glass
-					cmd = 1004;
-					break;
-				default: // preset
-					cmd = 1001;
-					break;
-			}
+			int cmd = switch (i % 3) {
+				case 2 -> // stained
+						1003;
+				case 1 -> // glass
+						1004;
+				default -> // preset
+						1001;
+			};
 			// first run - play sound
 			if (i == 1) {
 				boolean found = false;
@@ -83,7 +79,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
 				frame.setRotation(dd.getDirection().getRotation());
 				Material dye = getDyeMaterial(preset);
 				is = new ItemStack(dye, 1);
-				// only play the sound if the player is outside the TARDIS
+				// only play the sound if the player is outside the tardis
 				if (dd.isOutside()) {
 					ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, dd.getPlayer().getUniqueId().toString());
 					boolean minecart = false;
@@ -93,17 +89,11 @@ public class TARDISDematerialisePoliceBox implements Runnable {
 						spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
 					}
 					if (!minecart) {
-						String sound;
-						switch (spaceTimeThrottle) {
-							case WARP:
-							case RAPID:
-							case FASTER:
-								sound = "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
-								break;
-							default: // NORMAL
-								sound = "tardis_takeoff";
-								break;
-						}
+						String sound = switch (spaceTimeThrottle) {
+							case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
+							default -> // NORMAL
+									"tardis_takeoff";
+						};
 						TARDISSounds.playTARDISSound(dd.getLocation(), sound);
 					} else {
 						world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);

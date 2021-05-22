@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chameleon;
+package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
 
 /**
- * The Junk TARDIS is a makeshift TARDIS created by the Eleventh Doctor and Idris (the embodied matrix of his TARDIS).
+ * The Junk tardis is a makeshift tardis created by the Eleventh Doctor and Idris (the embodied matrix of his tardis).
  * <p>
  * They built it from bits of TARDISes in the Bubble universe's junkyard, a task which Idris called "impossible". This
- * TARDIS consisted solely of a console (complete with time rotor) and only three walls. Because it lacked a proper
+ * tardis consisted solely of a console (complete with time rotor) and only three walls. Because it lacked a proper
  * shell, the Doctor said it would be very dangerous to fly.
  *
  * @author eccentric_nz

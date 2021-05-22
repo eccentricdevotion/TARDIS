@@ -1,6 +1,6 @@
-package me.eccentric_nz.TARDIS.maze;
+package me.eccentric_nz.tardis.maze;
 
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISConstants;
 
 import java.util.ArrayDeque;
 import java.util.Random;
@@ -155,9 +155,7 @@ public class TARDISMazeGenerator {
 		} else {
 			// otherwise trim the array to the right length and return it
 			int[] cancut = new int[place];
-			for (int i = 0; i < place; i++) {
-				cancut[i] = cut[i];
-			}
+			System.arraycopy(cut, 0, cancut, 0, place);
 			return cancut;
 		}
 	}
@@ -222,12 +220,13 @@ public class TARDISMazeGenerator {
 		}
 	}
 
-	private int cutNextUp() {
+	private void cutNextUp() {
 		// gets the current location
 		Integer[] current = tracker.peekFirst();
 		// temp var to access the stack
 		Integer[] loc = new Integer[2];
 		// the location of the next row index
+		assert current != null;
 		int nxt_row = current[0] - 2;
 		// Location of next col index
 		int nxt_col = current[1];
@@ -238,10 +237,9 @@ public class TARDISMazeGenerator {
 		loc[1] = nxt_col;
 		// adds the new index to the stack
 		tracker.addFirst(loc);
-		return 1;
 	}
 
-	private int cutNextDown() {
+	private void cutNextDown() {
 		// gets the current location
 		Integer[] current = tracker.peekFirst();
 		// temp variable to access stack
@@ -256,10 +254,9 @@ public class TARDISMazeGenerator {
 		loc[1] = nxt_col;
 		// adds new index to stack
 		tracker.addFirst(loc);
-		return 1;
 	}
 
-	private int cutNextRight() {
+	private void cutNextRight() {
 		// gets the current location
 		Integer[] current = tracker.peekFirst();
 		// dummy variable to access stack
@@ -274,10 +271,9 @@ public class TARDISMazeGenerator {
 		loc[1] = nxt_col;
 		// adds index to stack
 		tracker.addFirst(loc);
-		return 1;
 	}
 
-	private int cutNextLeft() {
+	private void cutNextLeft() {
 		// gets current location
 		Integer[] current = tracker.peekFirst();
 		// temp variable to access stack
@@ -292,7 +288,6 @@ public class TARDISMazeGenerator {
 		loc[1] = nxt_col;
 		// adds new index to stack
 		tracker.addFirst(loc);
-		return 1;
 	}
 
 	private void back() {

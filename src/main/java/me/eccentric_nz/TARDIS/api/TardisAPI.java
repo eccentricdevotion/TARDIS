@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.api;
+package me.eccentric_nz.tardis.api;
 
-import me.eccentric_nz.TARDIS.blueprints.BlueprintType;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISUtils;
+import me.eccentric_nz.tardis.blueprints.BlueprintType;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.travel.TARDISPluginRespect;
+import me.eccentric_nz.tardis.utility.TARDISLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -41,49 +41,49 @@ import java.util.UUID;
 public interface TardisAPI {
 
 	/**
-	 * Fetches a map of TARDIS owners and ids.
+	 * Fetches a map of tardis owners and ids.
 	 *
-	 * @return a map of TARDIS owner names and TARDIS ids
+	 * @return a map of tardis owner names and tardis ids
 	 */
 	HashMap<String, Integer> getTimelordMap();
 
 	/**
-	 * Retrieves a TARDIS's current location.
+	 * Retrieves a tardis's current location.
 	 *
-	 * @param id the TARDIS id to retrieve the location for
-	 * @return the current TARDIS location or null if not found
+	 * @param id the tardis id to retrieve the location for
+	 * @return the current tardis location or null if not found
 	 */
 	Location getTARDISCurrentLocation(int id);
 
 	/**
-	 * Retrieves a TARDIS's current location.
+	 * Retrieves a tardis's current location.
 	 *
-	 * @param p the Time Lord of the TARDIS to retrieve the location for
-	 * @return the current TARDIS location or null if not found
+	 * @param p the Time Lord of the tardis to retrieve the location for
+	 * @return the current tardis location or null if not found
 	 */
 	Location getTARDISCurrentLocation(Player p);
 
 	/**
-	 * Retrieves a TARDIS's current location.
+	 * Retrieves a tardis's current location.
 	 *
-	 * @param uuid the UUID of the TARDIS' Time Lord to retrieve the location for
-	 * @return the current TARDIS location or null if not found
+	 * @param uuid the UUID of the tardis' Time Lord to retrieve the location for
+	 * @return the current tardis location or null if not found
 	 */
 	Location getTARDISCurrentLocation(UUID uuid);
 
 	/**
-	 * Retrieves a TARDIS's next location.
+	 * Retrieves a tardis's next location.
 	 *
-	 * @param id the TARDIS id to retrieve the location for
-	 * @return the current TARDIS location or null if not found
+	 * @param id the tardis id to retrieve the location for
+	 * @return the current tardis location or null if not found
 	 */
 	Location getTARDISNextLocation(int id);
 
 	/**
-	 * Retries the Current TARDIS location, chameleon preset, powered and siege status for the Dynmap-TARDIS plugin.
+	 * Retries the Current tardis location, chameleon preset, powered and siege status for the Dynmap-tardis plugin.
 	 *
-	 * @param id the TARDIS id to retrieve the data for
-	 * @return the current TARDIS data or null if not found
+	 * @param id the tardis id to retrieve the data for
+	 * @return the current tardis data or null if not found
 	 */
 	TARDISData getTARDISMapData(int id);
 
@@ -170,95 +170,95 @@ public interface TardisAPI {
 	Location getRandomEndLocation(String world, Player p);
 
 	/**
-	 * Get a string list of TARDIS enabled worlds on the server.
+	 * Get a string list of tardis enabled worlds on the server.
 	 *
 	 * @return a list of worlds
 	 */
 	List<String> getWorlds();
 
 	/**
-	 * Get a string list of TARDIS enabled overworlds on the server.
+	 * Get a string list of tardis enabled overworlds on the server.
 	 *
 	 * @return a list of worlds
 	 */
 	List<String> getOverWorlds();
 
 	/**
-	 * Get the TARDIS a player is in.
+	 * Get the tardis a player is in.
 	 *
 	 * @param p the player to query
-	 * @return a string containing the Time Lord (player name) of the TARDIS the player is in
+	 * @return a string containing the Time Lord (player name) of the tardis the player is in
 	 */
 	String getTARDISPlayerIsIn(Player p);
 
 	/**
-	 * Get the TARDIS a player is in.
+	 * Get the tardis a player is in.
 	 *
 	 * @param uuid the UUID of the player
-	 * @return a string containing the Time Lord (player name) of the TARDIS the player is in
+	 * @return a string containing the Time Lord (player name) of the tardis the player is in
 	 */
 	String getTARDISPlayerIsIn(UUID uuid);
 
 	/**
-	 * Get the id of the TARDIS a player is in.
+	 * Get the id of the tardis a player is in.
 	 *
 	 * @param p the player to query
-	 * @return the id of the TARDIS the player is in
+	 * @return the id of the tardis the player is in
 	 */
 	int getIdOfTARDISPlayerIsIn(Player p);
 
 	/**
-	 * Get the id of the TARDIS a player is in.
+	 * Get the id of the tardis a player is in.
 	 *
 	 * @param uuid the UUID of the player
-	 * @return the id of the TARDIS the player is in
+	 * @return the id of the tardis the player is in
 	 */
 	int getIdOfTARDISPlayerIsIn(UUID uuid);
 
 	/**
-	 * Get the players in a TARDIS.
+	 * Get the players in a tardis.
 	 *
-	 * @param id the tardis_id of the TARDIS
+	 * @param id the tardis_id of the tardis
 	 * @return a List of player names
 	 */
 	List<String> getPlayersInTARDIS(int id);
 
 	/**
-	 * Get the players in a TARDIS.
+	 * Get the players in a tardis.
 	 *
-	 * @param p the Player who is the TARDIS' Time Lord
+	 * @param p the Player who is the tardis' Time Lord
 	 * @return a List of (online) player names
 	 */
 	List<String> getPlayersInTARDIS(Player p);
 
 	/**
-	 * Get the players in a TARDIS.
+	 * Get the players in a tardis.
 	 *
-	 * @param uuid the UUID of the TARDIS' Time Lord
+	 * @param uuid the UUID of the tardis' Time Lord
 	 * @return a List of (online) player names
 	 */
 	List<String> getPlayersInTARDIS(UUID uuid);
 
 	/**
-	 * Get the companions of a TARDIS.
+	 * Get the companions of a tardis.
 	 *
-	 * @param id the tardis_id of the TARDIS
+	 * @param id the tardis_id of the tardis
 	 * @return a List of companion names
 	 */
 	List<String> getTARDISCompanions(int id);
 
 	/**
-	 * Get the companions of a TARDIS.
+	 * Get the companions of a tardis.
 	 *
-	 * @param p the Player who is the TARDIS' Time Lord
+	 * @param p the Player who is the tardis' Time Lord
 	 * @return a List of (online) companion names
 	 */
 	List<String> getTARDISCompanions(Player p);
 
 	/**
-	 * Get the companions of a TARDIS.
+	 * Get the companions of a tardis.
 	 *
-	 * @param uuid the UUID of the TARDIS' Time Lord
+	 * @param uuid the UUID of the tardis' Time Lord
 	 * @return a List of (online) companion names
 	 */
 	List<String> getTARDISCompanions(UUID uuid);
@@ -296,195 +296,195 @@ public interface TardisAPI {
 	boolean isPlayerGeneticallyModified(UUID uuid);
 
 	/**
-	 * Get a handle for the TARDIS utilities.
+	 * Get a handle for the tardis utilities.
 	 *
-	 * @return the TARDIS Utilities instance
+	 * @return the tardis Utilities instance
 	 */
 	TARDISUtils getUtils();
 
 	/**
-	 * Get a handle for the TARDIS utilities.
+	 * Get a handle for the tardis utilities.
 	 *
-	 * @return the TARDIS Utilities instance
+	 * @return the tardis Utilities instance
 	 */
 	TARDISLocationGetters getLocationUtils();
 
 	/**
-	 * Get a handle for the TARDIS Plugin Respect.
+	 * Get a handle for the tardis Plugin Respect.
 	 *
-	 * @return the TARDIS Plugin Respect instance
+	 * @return the tardis Plugin Respect instance
 	 */
 	TARDISPluginRespect getRespect();
 
 	/**
-	 * Get the TARDIS shaped recipes.
+	 * Get the tardis shaped recipes.
 	 *
-	 * @return a HashMap&lt;String, ShapedRecipe&gt; containing the TARDIS shaped recipes
+	 * @return a HashMap&lt;String, ShapedRecipe&gt; containing the tardis shaped recipes
 	 */
 	HashMap<String, ShapedRecipe> getShapedRecipes();
 
 	/**
-	 * Get the TARDIS shapeless recipes.
+	 * Get the tardis shapeless recipes.
 	 *
-	 * @return a HashMap&lt;String, ShapelessRecipe&gt; containing the TARDIS shapeless recipes
+	 * @return a HashMap&lt;String, ShapelessRecipe&gt; containing the tardis shapeless recipes
 	 */
 	HashMap<String, ShapelessRecipe> getShapelessRecipes();
 
 	/**
-	 * Get a TARDIS item
+	 * Get a tardis item
 	 *
-	 * @param item   the TARDIS item to get
+	 * @param item   the tardis item to get
 	 * @param player the player who will be receiving the item
-	 * @return an ItemStack of the TARDIS item ot null if an invalid item was specified
+	 * @return an ItemStack of the tardis item ot null if an invalid item was specified
 	 */
 	ItemStack getTARDISShapeItem(String item, Player player);
 
 	/**
-	 * Get the TARDIS seed recipes.
+	 * Get the tardis seed recipes.
 	 *
-	 * @return a HashMap&lt;Schematic, ShapedRecipe&gt; containing the TARDIS seed recipes
+	 * @return a HashMap&lt;Schematic, ShapedRecipe&gt; containing the tardis seed recipes
 	 */
 	HashMap<Schematic, ShapedRecipe> getSeedRecipes();
 
 	/**
-	 * Get a TARDIS Seed ItemStack
+	 * Get a tardis Seed ItemStack
 	 *
 	 * @param schematic the console type to get
-	 * @return a TARDIS seed block item or null if an invalid schematic is specified
+	 * @return a tardis seed block item or null if an invalid schematic is specified
 	 */
 	ItemStack getTARDISSeedItem(String schematic);
 
 	/**
-	 * Get the TARDIS blueprints.
+	 * Get the tardis blueprints.
 	 *
-	 * @return a list of TARDIS blueprints
+	 * @return a list of tardis blueprints
 	 */
 	List<BlueprintType> getBlueprints();
 
 	/**
-	 * Get a TARDIS Blueprint Disk
+	 * Get a tardis Blueprint Disk
 	 *
 	 * @param item   the blueprint disk to get
 	 * @param player the player who will be receiving the item
-	 * @return a TARDIS Blueprint Disk item or null if an invalid schematic is specified
+	 * @return a tardis Blueprint Disk item or null if an invalid schematic is specified
 	 */
 	ItemStack getTARDISBlueprintItem(String item, Player player);
 
 	/**
-	 * Get the TARDIS wall and floor block names.
+	 * Get the tardis wall and floor block names.
 	 *
-	 * @return a String List containing the TARDIS wall and floor block names
+	 * @return a String List containing the tardis wall and floor block names
 	 */
 	List<String> getWallFloorBlocks();
 
 	/**
-	 * Set a TARDIS's next destination.
+	 * Set a tardis's next destination.
 	 *
-	 * @param id       the TARDIS id to set the destination for
+	 * @param id       the tardis id to set the destination for
 	 * @param location the next location to travel to
-	 * @param travel   whether the TARDIS should travel to the destination
+	 * @param travel   whether the tardis should travel to the destination
 	 * @return true if the destination was set successfully
 	 */
 	boolean setDestination(int id, Location location, boolean travel);
 
 	/**
-	 * Convenience method to set a TARDIS's next destination.
+	 * Convenience method to set a tardis's next destination.
 	 *
 	 * @param uuid     the UUID of the Time Lord (player) to set the destination for
 	 * @param location the next location to travel to
-	 * @param travel   whether the TARDIS should travel to the destination
+	 * @param travel   whether the tardis should travel to the destination
 	 * @return true if the destination was set successfully
 	 */
 	boolean setDestination(UUID uuid, Location location, boolean travel);
 
 	/**
-	 * Convenience method to set a TARDIS's next destination.
+	 * Convenience method to set a tardis's next destination.
 	 *
 	 * @param player   the Time Lord (player) to set the destination for
 	 * @param location the next location to travel to
-	 * @param travel   whether the TARDIS should travel to the destination
+	 * @param travel   whether the tardis should travel to the destination
 	 * @return true if the destination was set successfully
 	 */
 	boolean setDestination(Player player, Location location, boolean travel);
 
 	/**
-	 * Get information from the database for a TARDIS.
+	 * Get information from the database for a tardis.
 	 *
-	 * @param id the TARDIS id to get information for
+	 * @param id the tardis id to get information for
 	 * @return return a {@link Tardis} data object, or null if no data was found
 	 */
 	Tardis getTardisData(int id);
 
 	/**
-	 * Convenience method to get information from the database for a TARDIS.
+	 * Convenience method to get information from the database for a tardis.
 	 *
-	 * @param uuid the UUID of the Time Lord (player) of the TARDIS id to get information for
+	 * @param uuid the UUID of the Time Lord (player) of the tardis id to get information for
 	 * @return return a {@link Tardis} data object, or null if no data was found
 	 */
 	Tardis getTardisData(UUID uuid);
 
 	/**
-	 * Convenience method to get information from the database for a TARDIS.
+	 * Convenience method to get information from the database for a tardis.
 	 *
-	 * @param player the Time Lord (player) of the TARDIS to get information for
+	 * @param player the Time Lord (player) of the tardis to get information for
 	 * @return return a {@link Tardis} data object, or null if no data was found
 	 */
 	Tardis getTardisData(Player player);
 
 	/**
-	 * Set the Chameleon Preset for a TARDIS.
+	 * Set the Chameleon Preset for a tardis.
 	 *
-	 * @param id      the TARDIS id to set the destination for
+	 * @param id      the tardis id to set the destination for
 	 * @param preset  the exterior preset to use
-	 * @param rebuild whether to rebuild the TARDIS exterior
+	 * @param rebuild whether to rebuild the tardis exterior
 	 * @return true if the preset was set
 	 */
 	boolean setChameleonPreset(int id, PRESET preset, boolean rebuild);
 
 	/**
-	 * Convenience method to set the Chameleon Preset for a TARDIS.
+	 * Convenience method to set the Chameleon Preset for a tardis.
 	 *
-	 * @param uuid    the UUID of the Time Lord (player) of the TARDIS to set the destination for
+	 * @param uuid    the UUID of the Time Lord (player) of the tardis to set the destination for
 	 * @param preset  the exterior preset to use
-	 * @param rebuild whether to rebuild the TARDIS exterior
+	 * @param rebuild whether to rebuild the tardis exterior
 	 * @return true if the preset was set
 	 */
 	boolean setChameleonPreset(UUID uuid, PRESET preset, boolean rebuild);
 
 	/**
-	 * Convenience method to set the Chameleon Preset for a TARDIS.
+	 * Convenience method to set the Chameleon Preset for a tardis.
 	 *
-	 * @param player  the Time Lord (player) of the TARDIS to set the destination for
+	 * @param player  the Time Lord (player) of the tardis to set the destination for
 	 * @param preset  the exterior preset to use
-	 * @param rebuild whether to rebuild the TARDIS exterior
+	 * @param rebuild whether to rebuild the tardis exterior
 	 * @return true if the preset was set
 	 */
 	boolean setChameleonPreset(Player player, PRESET preset, boolean rebuild);
 
 	/**
-	 * Spawn an abandoned TARDIS at the specified Bukkit Location.
+	 * Spawn an abandoned tardis at the specified Bukkit Location.
 	 *
-	 * @param location  the location to spawn the TARDIS
+	 * @param location  the location to spawn the tardis
 	 * @param type      the type of interior to build
 	 * @param preset    the Chameleon preset of the exterior
-	 * @param direction the direction of the TARDIS exterior ( this is the direction the player is facing when looking
+	 * @param direction the direction of the tardis exterior ( this is the direction the player is facing when looking
 	 *                  at the door)
-	 * @throws TARDISException if the console type is not valid or TARDIS abandonment is disabled on the server
+	 * @throws TARDISException if the console type is not valid or tardis abandonment is disabled on the server
 	 */
 	void spawnAbandonedTARDIS(Location location, String type, PRESET preset, COMPASS direction) throws TARDISException;
 
 	/**
-	 * Convenience method to spawn an abandoned TARDIS at the specified Bukkit Location. The interior will default to
+	 * Convenience method to spawn an abandoned tardis at the specified Bukkit Location. The interior will default to
 	 * BUDGET, the exterior Chameleon Preset to FACTORY and the direction to SOUTH.
 	 *
-	 * @param location the location to spawn the TARDIS
+	 * @param location the location to spawn the tardis
 	 */
 	void spawnAbandonedTARDIS(Location location);
 
 	/**
-	 * Change the desktop theme of a TARDIS.
+	 * Change the desktop theme of a tardis.
 	 *
-	 * @param id     the TARDIS id to change the desktop for
+	 * @param id     the tardis id to change the desktop for
 	 * @param wall   the wall block type to change to
 	 * @param floor  the floor block type to change to
 	 * @param artron whether to check for and charge Artron Energy
@@ -494,9 +494,9 @@ public interface TardisAPI {
 	String setDesktopWallAndFloor(int id, String wall, String floor, boolean artron);
 
 	/**
-	 * Convenience method to change the desktop theme of a TARDIS.
+	 * Convenience method to change the desktop theme of a tardis.
 	 *
-	 * @param uuid   the UUID of the Time Lord (player) of the TARDIS to change the desktop for
+	 * @param uuid   the UUID of the Time Lord (player) of the tardis to change the desktop for
 	 * @param wall   the wall block type to change to
 	 * @param floor  the floor block type to change to
 	 * @param artron whether to check for and charge Artron Energy

@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.artron;
+package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
 import org.bukkit.Location;
 
 import java.util.HashMap;
 
 /**
- * Within the TARDIS' generator room is an Artron Energy Capacitor. The Eighth Doctor had a habit of using Artron Energy
+ * Within the tardis' generator room is an Artron Energy Capacitor. The Eighth Doctor had a habit of using Artron Energy
  * to make toast.
  *
  * @author eccentric_nz
@@ -41,7 +41,7 @@ class TARDISArtronRunnable implements Runnable {
 	}
 
 	/**
-	 * A runnable task that recharges the TARDIS.
+	 * A runnable task that recharges the tardis.
 	 */
 	@Override
 	public void run() {
@@ -58,13 +58,13 @@ class TARDISArtronRunnable implements Runnable {
 		} else if (near) {
 			// calculate percentage
 			int onepercent = Math.round(plugin.getArtronConfig().getInt("full_charge") / 100.0F);
-			// update TARDIS artron_level
+			// update tardis artron_level
 			plugin.getQueryFactory().alterEnergyLevel("tardis", onepercent, where, null);
 		}
 	}
 
 	/**
-	 * Checks whether the TARDIS is near a recharge location.
+	 * Checks whether the tardis is near a recharge location.
 	 */
 	private boolean isNearCharger(int id) {
 		HashMap<String, Object> where = new HashMap<>();
@@ -93,7 +93,7 @@ class TARDISArtronRunnable implements Runnable {
 	}
 
 	/**
-	 * Gets the current Artron Energy Level for the specified TARDIS.
+	 * Gets the current Artron Energy Level for the specified tardis.
 	 */
 	private int isFull(int id) {
 		ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);

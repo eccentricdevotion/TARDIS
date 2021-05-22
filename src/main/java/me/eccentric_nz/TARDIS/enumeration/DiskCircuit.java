@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -27,26 +27,7 @@ import java.util.List;
  */
 public enum DiskCircuit {
 
-	AREA("Area Storage Disk", Material.MUSIC_DISC_BLOCKS),
-	ARS("TARDIS ARS Circuit", Material.GLOWSTONE_DUST),
-	BIOME("Biome Storage Disk", Material.MUSIC_DISC_CAT),
-	BLANK("Blank Storage Disk", Material.MUSIC_DISC_STRAD),
-	BLUEPRINT("Blueprint Disk", Material.MUSIC_DISC_MELLOHI),
-	CHAMELEON("TARDIS Chameleon Circuit", Material.GLOWSTONE_DUST),
-	CONTROL("Authorised Control Disk", Material.MUSIC_DISC_FAR),
-	HANDLES("Handles Program Disk", Material.MUSIC_DISC_WARD),
-	INPUT("TARDIS Input Circuit", Material.GLOWSTONE_DUST),
-	INVISIBILITY("TARDIS Invisibility Circuit", Material.GLOWSTONE_DUST),
-	KEY("TARDIS Key", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.TARDIS Key.result"))),
-	MATERIALISATION("TARDIS Materialisation Circuit", Material.GLOWSTONE_DUST),
-	MEMORY("TARDIS Memory Circuit", Material.GLOWSTONE_DUST),
-	PLAYER("Player Storage Disk", Material.MUSIC_DISC_WAIT),
-	PRESET("Preset Storage Disk", Material.MUSIC_DISC_MALL),
-	RANDOMISER("TARDIS Randomiser Circuit", Material.GLOWSTONE_DUST),
-	SAVE("Save Storage Disk", Material.MUSIC_DISC_CHIRP),
-	SCANNER("TARDIS Scanner Circuit", Material.GLOWSTONE_DUST),
-	SONIC("Sonic Screwdriver", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result"))),
-	TEMPORAL("TARDIS Temporal Circuit", Material.GLOWSTONE_DUST);
+	AREA("Area Storage Disk", Material.MUSIC_DISC_BLOCKS), ARS("tardis ars Circuit", Material.GLOWSTONE_DUST), BIOME("Biome Storage Disk", Material.MUSIC_DISC_CAT), BLANK("Blank Storage Disk", Material.MUSIC_DISC_STRAD), BLUEPRINT("Blueprint Disk", Material.MUSIC_DISC_MELLOHI), CHAMELEON("tardis Chameleon Circuit", Material.GLOWSTONE_DUST), CONTROL("Authorised Control Disk", Material.MUSIC_DISC_FAR), HANDLES("Handles Program Disk", Material.MUSIC_DISC_WARD), INPUT("tardis Input Circuit", Material.GLOWSTONE_DUST), INVISIBILITY("tardis Invisibility Circuit", Material.GLOWSTONE_DUST), KEY("tardis Key", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.tardis Key.result"))), MATERIALISATION("tardis Materialisation Circuit", Material.GLOWSTONE_DUST), MEMORY("tardis Memory Circuit", Material.GLOWSTONE_DUST), PLAYER("Player Storage Disk", Material.MUSIC_DISC_WAIT), PRESET("Preset Storage Disk", Material.MUSIC_DISC_MALL), RANDOMISER("tardis Randomiser Circuit", Material.GLOWSTONE_DUST), SAVE("Save Storage Disk", Material.MUSIC_DISC_CHIRP), SCANNER("tardis Scanner Circuit", Material.GLOWSTONE_DUST), SONIC("Sonic Screwdriver", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result"))), TEMPORAL("tardis Temporal Circuit", Material.GLOWSTONE_DUST);
 
 	static final List<String> circuitNames = new ArrayList<>();
 	static final List<DiskCircuit> tardisCircuits = new ArrayList<>();
@@ -87,17 +68,9 @@ public enum DiskCircuit {
 	}
 
 	public boolean isDisk() {
-		switch (this) {
-			case AREA:
-			case BIOME:
-			case BLANK:
-			case HANDLES:
-			case PLAYER:
-			case PRESET:
-			case SAVE:
-				return true;
-			default:
-				return false;
-		}
+		return switch (this) {
+			case AREA, BIOME, BLANK, HANDLES, PLAYER, PRESET, SAVE -> true;
+			default -> false;
+		};
 	}
 }

@@ -1,12 +1,10 @@
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
 import java.util.HashMap;
 
 public enum FlightMode {
 
-	NORMAL(1),
-	REGULATOR(2),
-	MANUAL(3);
+	NORMAL(1), REGULATOR(2), MANUAL(3);
 
 	private static final HashMap<Integer, FlightMode> byMode = new HashMap<>();
 

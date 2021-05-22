@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.rooms;
+package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -53,7 +53,7 @@ public class TARDISJettisonSeeder implements Listener {
 	}
 
 	/**
-	 * Listens for player interaction with a TNT block. If the block is clicked with the TARDIS key after running the
+	 * Listens for player interaction with a TNT block. If the block is clicked with the tardis key after running the
 	 * command /tardis jettison [room type], the TNT block's location and the room type are used to determine a cuboid
 	 * region that is set to AIR. The room walls are left in place as they maybe attached to other rooms/passage ways.
 	 *
@@ -67,7 +67,7 @@ public class TARDISJettisonSeeder implements Listener {
 		Player player = event.getPlayer();
 		String playerNameStr = player.getName();
 		UUID uuid = player.getUniqueId();
-		// check that player is in TARDIS
+		// check that player is in tardis
 		if (!plugin.getTrackerKeeper().getJettison().containsKey(uuid)) {
 			return;
 		}
@@ -82,7 +82,7 @@ public class TARDISJettisonSeeder implements Listener {
 			} else {
 				key = plugin.getConfig().getString("preferences.key");
 			}
-			// only proceed if they are clicking a seed block with the TARDIS key!
+			// only proceed if they are clicking a seed block with the tardis key!
 			if (blockType.equals(Material.getMaterial(plugin.getArtronConfig().getString("jettison_seed"))) && inhand.equals(Material.getMaterial(key))) {
 				String r = plugin.getTrackerKeeper().getJettison().get(uuid);
 				// get jettison direction
@@ -96,7 +96,7 @@ public class TARDISJettisonSeeder implements Listener {
 				BlockFace facing = trd.getFace();
 				// get clicked block location
 				Location l = block.getRelative(facing, 3).getLocation();
-				// get the TARDIS id
+				// get the tardis id
 				ResultSetTardisID rs = new ResultSetTardisID(plugin);
 				if (rs.fromUUID(player.getUniqueId().toString())) {
 					int id = rs.getTardis_id();

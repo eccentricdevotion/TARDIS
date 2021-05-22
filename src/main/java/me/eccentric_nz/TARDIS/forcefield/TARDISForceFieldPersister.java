@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.forcefield;
+package me.eccentric_nz.tardis.forcefield;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 
 import java.sql.Connection;
@@ -56,7 +56,7 @@ public class TARDISForceFieldPersister {
 				}
 				ps.executeBatch();
 				connection.setAutoCommit(true);
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " TARDIS force fields.");
+				plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " tardis force fields.");
 			} catch (SQLException e) {
 				plugin.debug("Insert error for force field query: " + e.getMessage());
 			} finally {
@@ -83,7 +83,7 @@ public class TARDISForceFieldPersister {
 					plugin.getTrackerKeeper().getActiveForceFields().put(uuid, location);
 					count++;
 				}
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " TARDIS force fields.");
+				plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " tardis force fields.");
 			}
 			// clear the table
 			ps = connection.prepareStatement("DELETE FROM " + prefix + "forcefield");

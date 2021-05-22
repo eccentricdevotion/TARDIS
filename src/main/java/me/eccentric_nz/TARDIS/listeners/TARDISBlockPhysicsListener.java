@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISRecordingQueue;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISRecordingQueue;
+import me.eccentric_nz.tardis.utility.TARDISMaterials;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -82,22 +82,12 @@ public class TARDISBlockPhysicsListener implements Listener {
 	}
 
 	private Block getBlockBehindAttachable(Block block, BlockFace face) {
-		Block ret;
-		switch (face) {
-			case NORTH:
-				ret = block.getRelative(BlockFace.SOUTH);
-				break;
-			case WEST:
-				ret = block.getRelative(BlockFace.EAST);
-				break;
-			case SOUTH:
-				ret = block.getRelative(BlockFace.NORTH);
-				break;
-			default:
-				ret = block.getRelative(BlockFace.WEST);
-				break;
-		}
-		return ret;
+		return switch (face) {
+			case NORTH -> block.getRelative(BlockFace.SOUTH);
+			case WEST -> block.getRelative(BlockFace.EAST);
+			case SOUTH -> block.getRelative(BlockFace.NORTH);
+			default -> block.getRelative(BlockFace.WEST);
+		};
 	}
 
 	private Block getBlockBelow(Block block) {

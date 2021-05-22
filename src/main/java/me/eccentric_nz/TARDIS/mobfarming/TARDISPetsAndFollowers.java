@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.tardis.mobfarming;
 
 import java.util.List;
 

@@ -14,30 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
 import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
+import me.eccentric_nz.tardis.artron.TARDISLampToggler;
+import me.eccentric_nz.tardis.artron.TARDISPoliceBoxLampToggler;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.BiomeSetter;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.destroyers.DestroyData;
+import me.eccentric_nz.tardis.enumeration.*;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
+import me.eccentric_nz.tardis.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -55,7 +55,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.yi.acru.bukkit.Lockette.Lockette;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,8 +62,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The handheld Recall Button on the TARDIS Stattenheim remote broadcasts a Stattenheim signal through the Vortex, which
- * summons the operator's TARDIS when the operator is in the field.
+ * The handheld Recall Button on the tardis Stattenheim remote broadcasts a Stattenheim signal through the Vortex, which
+ * summons the operator's tardis when the operator is in the field.
  *
  * @author eccentric_nz
  */
@@ -179,7 +178,7 @@ public class TARDISStattenheimListener implements Listener {
 							TARDISMessage.send(player, "NOT_WHILE_MAT");
 							return;
 						}
-						// get TARDIS's current location
+						// get tardis's current location
 						HashMap<String, Object> wherecl = new HashMap<>();
 						wherecl.put("tardis_id", tardis.getTardis_id());
 						ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -203,11 +202,6 @@ public class TARDISStattenheimListener implements Listener {
 							count = TARDISTimeTravel.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), player_d);
 						}
 						Block under = remoteLocation.getBlock().getRelative(BlockFace.DOWN);
-						if (plugin.getPM().isPluginEnabled("Lockette")) {
-							if (Lockette.isProtected(remoteLocation.getBlock()) || Lockette.isProtected(under)) {
-								count = 1;
-							}
-						}
 						if (plugin.getPM().isPluginEnabled("LockettePro")) {
 							if (LocketteProAPI.isProtected(remoteLocation.getBlock()) || LocketteProAPI.isProtected(under) || plugin.getUtils().checkSurrounding(under)) {
 								count = 1;
@@ -317,7 +311,7 @@ public class TARDISStattenheimListener implements Listener {
 						bd.setTardisID(id);
 						bd.setThrottle(spaceTimeThrottle);
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
-						// remove energy from TARDIS
+						// remove energy from tardis
 						HashMap<String, Object> wheret = new HashMap<>();
 						wheret.put("tardis_id", id);
 						plugin.getQueryFactory().alterEnergyLevel("tardis", -ch, wheret, player);

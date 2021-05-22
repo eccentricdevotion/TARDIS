@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.formula;
+package me.eccentric_nz.tardis.chemistry.formula;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chemistry.compound.Compound;
-import me.eccentric_nz.TARDIS.chemistry.lab.Lab;
-import me.eccentric_nz.TARDIS.chemistry.product.Product;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.chemistry.compound.Compound;
+import me.eccentric_nz.tardis.chemistry.lab.Lab;
+import me.eccentric_nz.tardis.chemistry.product.Product;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 public class FormulaCommand {

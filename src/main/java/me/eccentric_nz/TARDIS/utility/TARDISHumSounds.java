@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetSounds;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetSounds;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The distinctive TARDIS sound effect - a cyclic wheezing, groaning noise - was originally created in the BBC
+ * The distinctive tardis sound effect - a cyclic wheezing, groaning noise - was originally created in the BBC
  * Radiophonic Workshop by Brian Hodgson. He produced the effect by dragging a set of house keys along the strings of an
  * old, gutted piano. The resulting sound was recorded and electronically processed with echo and reverb.
  *
@@ -66,7 +66,7 @@ public class TARDISHumSounds {
 	};
 
 	/**
-	 * Plays an interior hum sound to players who are inside the TARDIS and don't have SFX set to false.
+	 * Plays an interior hum sound to players who are inside the tardis and don't have SFX set to false.
 	 */
 	public void playTARDISHum() {
 		if (TARDIS.plugin.getConfig().getBoolean("allow.sfx")) {

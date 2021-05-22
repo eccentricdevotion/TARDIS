@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database;
+package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,7 +66,7 @@ class TARDISSQLUpdate implements Runnable {
 		where.forEach((key, value) -> {
 			sbw.append(key).append(" = ");
 			if (value instanceof String || value instanceof UUID) {
-				sbw.append("'").append(value.toString()).append("' AND ");
+				sbw.append("'").append(value).append("' AND ");
 			} else {
 				sbw.append(value).append(" AND ");
 			}
@@ -75,7 +75,7 @@ class TARDISSQLUpdate implements Runnable {
 		updates = sbu.substring(0, sbu.length() - 1);
 		wheres = sbw.substring(0, sbw.length() - 5);
 		String query = "UPDATE " + prefix + table + " SET " + updates + " WHERE " + wheres;
-//        plugin.debug(query);
+		//        plugin.debug(query);
 		try {
 			service.testConnection(connection);
 			ps = connection.prepareStatement(query);

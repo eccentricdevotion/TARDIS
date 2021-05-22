@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.compound;
+package me.eccentric_nz.tardis.chemistry.compound;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chemistry.element.Element;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.chemistry.element.Element;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -90,11 +90,12 @@ public class CompoundGUIListener extends TARDISMenuListener implements Listener 
 			ItemStack is = inventory.getItem(i);
 			if (is != null && is.getType().equals(Material.FEATHER) && is.hasItemMeta()) {
 				ItemMeta im = is.getItemMeta();
+				assert im != null;
 				if (im.hasDisplayName()) {
 					try {
 						Element element = Element.valueOf(im.getDisplayName());
 						int amount = is.getAmount();
-						formula.append(element.toString()).append(":").append(amount).append("-");
+						formula.append(element).append(":").append(amount).append("-");
 					} catch (IllegalArgumentException e) {
 						// ignore
 					}

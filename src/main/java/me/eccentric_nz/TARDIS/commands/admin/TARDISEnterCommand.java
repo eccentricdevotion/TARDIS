@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -89,32 +89,32 @@ class TARDISEnterCommand {
 				int getx = tardis_loc.getBlockX();
 				int getz = tardis_loc.getBlockZ();
 				switch (innerD) {
-					case NORTH:
+					case NORTH -> {
 						// z -ve
 						tardis_loc.setX(getx + 0.5);
 						tardis_loc.setZ(getz - 0.5);
-						break;
-					case EAST:
+					}
+					case EAST -> {
 						// x +ve
 						tardis_loc.setX(getx + 1.5);
 						tardis_loc.setZ(getz + 0.5);
-						break;
-					case SOUTH:
+					}
+					case SOUTH -> {
 						// z +ve
 						tardis_loc.setX(getx + 0.5);
 						tardis_loc.setZ(getz + 1.5);
-						break;
-					case WEST:
+					}
+					case WEST -> {
 						// x -ve
 						tardis_loc.setX(getx - 0.5);
 						tardis_loc.setZ(getz + 0.5);
-						break;
+					}
 				}
-				// if WorldGuard is on the server check for TARDIS region protection and add admin as member
+				// if WorldGuard is on the server check for tardis region protection and add admin as member
 				if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
 					plugin.getWorldGuardUtils().addMemberToRegion(cw, owner, player.getName());
 				}
-				// enter TARDIS!
+				// enter tardis!
 				cw.getChunkAt(tardis_loc).load();
 				float yaw = player.getLocation().getYaw();
 				float pitch = player.getLocation().getPitch();
@@ -123,18 +123,10 @@ class TARDISEnterCommand {
 				COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
 				if (!innerD.equals(d)) {
 					switch (d) {
-						case NORTH:
-							yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[0][innerD.ordinal()];
-							break;
-						case WEST:
-							yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[1][innerD.ordinal()];
-							break;
-						case SOUTH:
-							yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[2][innerD.ordinal()];
-							break;
-						case EAST:
-							yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[3][innerD.ordinal()];
-							break;
+						case NORTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[0][innerD.ordinal()];
+						case WEST -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[1][innerD.ordinal()];
+						case SOUTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[2][innerD.ordinal()];
+						case EAST -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[3][innerD.ordinal()];
 					}
 				}
 				tardis_loc.setYaw(yaw);

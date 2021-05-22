@@ -14,17 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
 public enum GUITransmat {
 
-	INFO(57, 8, Material.BOWL),
-	TRANSMAT(133, 26, Material.BOWL),
-	DELETE(1, 35, Material.BUCKET),
-	CLOSE(1, 53, Material.BOWL);
+	INFO(57, 8, Material.BOWL), TRANSMAT(133, 26, Material.BOWL), DELETE(1, 35, Material.BUCKET), CLOSE(1, 53, Material.BOWL);
 
 	private final int customModelData;
 	private final int slot;

@@ -14,13 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.api;
+package me.eccentric_nz.tardis.api;
+
+import java.io.Serial;
 
 /**
  * @author eccentric_nz
  */
 public class TARDISException extends Exception {
 
+	@Serial
 	private static final long serialVersionUID = -5152771166812835530L;
 
 	public TARDISException() {

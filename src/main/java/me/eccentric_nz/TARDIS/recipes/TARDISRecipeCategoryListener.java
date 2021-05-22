@@ -1,9 +1,9 @@
-package me.eccentric_nz.TARDIS.recipes;
+package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.enumeration.RecipeCategory;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,7 +39,7 @@ public class TARDISRecipeCategoryListener extends TARDISMenuListener implements 
 					RecipeCategory category = RecipeCategory.valueOf(cat);
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 						ItemStack[] items = new TARDISRecipeInventory(plugin, category).getMenu();
-						Inventory recipes = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Recipes");
+						Inventory recipes = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "tardis Recipes");
 						recipes.setContents(items);
 						player.openInventory(recipes);
 					}, 2L);

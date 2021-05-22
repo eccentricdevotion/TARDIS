@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.lab;
+package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -26,6 +26,7 @@ public class LabBuilder {
 	public static ItemStack getLabProduct(Lab lab) {
 		ItemStack is = new ItemStack(lab.getItemMaterial(), 1);
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		im.setDisplayName(lab.toString().replace("_", " "));
 		im.setCustomModelData(10000000 + lab.getCustomModelData());
 		im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, lab.getCustomModelData());

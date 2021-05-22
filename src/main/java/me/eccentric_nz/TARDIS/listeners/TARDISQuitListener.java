@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
-import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.arch.TARDISArchPersister;
+import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
+import me.eccentric_nz.tardis.artron.TARDISLampToggler;
+import me.eccentric_nz.tardis.artron.TARDISPoliceBoxLampToggler;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.PRESET;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -66,7 +66,7 @@ public class TARDISQuitListener implements Listener {
 					chunk.setForceLoaded(false);
 				}
 			}
-			// power down TARDIS
+			// power down tardis
 			if (plugin.getConfig().getBoolean("allow.power_down") && plugin.getConfig().getBoolean("allow.power_down_on_quit")) {
 				// check if powered on
 				if (tardis.isPowered_on()) {
@@ -79,7 +79,7 @@ public class TARDISQuitListener implements Listener {
 					PRESET preset = tardis.getPreset();
 					boolean hidden = tardis.isHidden();
 					boolean lights = tardis.isLights_on();
-					// police box lamp, delay it incase the TARDIS needs rebuilding
+					// police box lamp, delay it incase the tardis needs rebuilding
 					long delay = 1L;
 					// if hidden, rebuild
 					if (hidden) {
@@ -96,9 +96,7 @@ public class TARDISQuitListener implements Listener {
 					// if beacon is on turn it off
 					new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);
 					// turn force field off
-					if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
-						plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
-					}
+					plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
 					// update database
 					HashMap<String, Object> wheret = new HashMap<>();
 					wheret.put("tardis_id", id);

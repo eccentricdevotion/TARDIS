@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.api.event;
+package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -33,9 +33,9 @@ public final class TARDISClaimEvent extends TARDISEvent {
 	}
 
 	/**
-	 * Returns the exterior location of the TARDIS.
+	 * Returns the exterior location of the tardis.
 	 *
-	 * @return the TARDIS location
+	 * @return the tardis location
 	 */
 	public Location getLocation() {
 		return location;

@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisChunk;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisChunk;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 
@@ -34,10 +34,10 @@ public class TARDISLocationGetters {
 	}
 
 	/**
-	 * Get the chunk where the interior TARDIS is.
+	 * Get the chunk where the interior tardis is.
 	 *
-	 * @param id the database record id of the TARDIS to get the chunk for
-	 * @return the TARDIS interior chunk
+	 * @param id the database record id of the tardis to get the chunk for
+	 * @return the tardis interior chunk
 	 */
 	public Chunk getTARDISChunk(int id) {
 		ResultSetTardisChunk rs = new ResultSetTardisChunk(plugin);
@@ -53,9 +53,9 @@ public class TARDISLocationGetters {
 	}
 
 	/**
-	 * Gets a start location for building the inner TARDIS.
+	 * Gets a start location for building the inner tardis.
 	 *
-	 * @param id the TARDIS this location belongs to.
+	 * @param id the tardis this location belongs to.
 	 * @return an array of ints.
 	 */
 	public int[] getStartLocation(int id) {

@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.ARS;
+package me.eccentric_nz.tardis.ars;
 
 /**
- * Used to dynamically add custom rooms to the TARDIS' Architectural Reconfiguration System.
+ * Used to dynamically add custom rooms to the tardis' Architectural Reconfiguration System.
  *
  * @author eccentric_nz
  */

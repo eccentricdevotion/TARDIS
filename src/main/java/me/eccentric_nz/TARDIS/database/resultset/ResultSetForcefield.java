@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -30,7 +30,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
+ * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the tardis can
  * travel to.
  *
  * @author eccentric_nz
@@ -83,7 +83,7 @@ public class ResultSetForcefield {
 				int y = rs.getInt("y");
 				int z = rs.getInt("z");
 				location = new Location(world, x, y, z);
-				// check location is not in a TARDIS area
+				// check location is not in a tardis area
 				if (!plugin.getTardisArea().areaCheckInExisting(location)) {
 					TARDISMessage.send(plugin.getServer().getPlayer(uuid), "FORCE_FIELD_IN_AREA");
 					return false;

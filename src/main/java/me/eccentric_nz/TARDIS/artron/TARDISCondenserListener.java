@@ -14,19 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.artron;
+package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.blueprints.BlueprintProcessor;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Advancement;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import multiworld.MultiWorldPlugin;
-import multiworld.api.MultiWorldAPI;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.blueprints.BlueprintProcessor;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCondenser;
+import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.Advancement;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -62,7 +60,7 @@ public class TARDISCondenserListener implements Listener {
 	}
 
 	/**
-	 * Listens for player interaction with the TARDIS condenser chest. When the chest is closed, any DIRT, SAND, GRAVEL,
+	 * Listens for player interaction with the tardis condenser chest. When the chest is closed, any DIRT, SAND, GRAVEL,
 	 * COBBLESTONE or ROTTEN FLESH is converted to Artron Energy at a ratio of 1:1.
 	 *
 	 * @param event a chest closing
@@ -86,13 +84,6 @@ public class TARDISCondenserListener implements Listener {
 						switch (plugin.getWorldManager()) {
 							case MULTIVERSE:
 								if (!plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
-									TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
-									return;
-								}
-								break;
-							case MULTIWORLD:
-								MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
-								if (multiworld.isCreativeWorld(loc.getWorld().getName())) {
 									TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
 									return;
 								}
@@ -230,7 +221,7 @@ public class TARDISCondenserListener implements Listener {
 							TARDISMessage.send(player, "CONDENSE_NO_VALID");
 						}
 					} else {
-						plugin.debug("TARDIS data was null!");
+						plugin.debug("tardis data was null!");
 					}
 				}
 			}
@@ -296,7 +287,7 @@ public class TARDISCondenserListener implements Listener {
 		if (is.hasItemMeta()) {
 			ItemMeta im = is.getItemMeta();
 			if (im.hasDisplayName()) {
-				return im.getDisplayName().equals("TARDIS Blueprint Disk");
+				return im.getDisplayName().equals("tardis Blueprint Disk");
 			}
 		}
 		return false;

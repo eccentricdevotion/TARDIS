@@ -14,26 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands;
+package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
-import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.travel.*;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.advanced.TARDISSerializeInventory;
+import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.enumeration.*;
+import me.eccentric_nz.tardis.flight.TARDISLand;
+import me.eccentric_nz.tardis.listeners.TARDISBiomeReaderListener;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.travel.*;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.utility.TARDISWorldBorderChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -45,6 +45,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.*;
@@ -99,7 +100,7 @@ public class TARDISTravelCommands implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 		Player player = null;
 		if (sender instanceof Player) {
 			player = (Player) sender;
@@ -374,17 +375,11 @@ public class TARDISTravelCommands implements CommandExecutor {
 								set.put("y", village.getBlockY());
 								set.put("z", village.getBlockZ());
 								set.put("submarine", 0);
-								switch (village.getWorld().getEnvironment()) {
-									case THE_END:
-										which = "End City";
-										break;
-									case NETHER:
-										which = "Nether Fortress";
-										break;
-									default:
-										which = "Village";
-										break;
-								}
+								which = switch (village.getWorld().getEnvironment()) {
+									case THE_END -> "End City";
+									case NETHER -> "Nether Fortress";
+									default -> "Village";
+								};
 							}
 							plugin.getQueryFactory().doSyncUpdate("next", set, tid);
 							TARDISMessage.send(player, "TRAVEL_LOADED", which, !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
@@ -557,7 +552,7 @@ public class TARDISTravelCommands implements CommandExecutor {
 								}
 								TARDISAreaCheck tac = plugin.getTardisArea().areaCheckInExistingArea(save_dest);
 								if (tac.isInArea()) {
-									// save is in a TARDIS area, so check that the spot is not occupied
+									// save is in a tardis area, so check that the spot is not occupied
 									HashMap<String, Object> wheres = new HashMap<>();
 									wheres.put("world", rsd.getWorld());
 									wheres.put("x", rsd.getX());
@@ -672,7 +667,7 @@ public class TARDISTravelCommands implements CommandExecutor {
 						set.put("x", l.getBlockX());
 						set.put("y", l.getBlockY());
 						set.put("z", l.getBlockZ());
-						// should be setting direction of TARDIS
+						// should be setting direction of tardis
 						if (!rsa.getArea().getDirection().isEmpty()) {
 							set.put("direction", rsa.getArea().getDirection());
 						} else {

@@ -1,7 +1,7 @@
-package me.eccentric_nz.TARDIS.blueprints;
+package me.eccentric_nz.tardis.blueprints;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlueprint;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetBlueprint;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -39,12 +39,8 @@ class TARDISAbortCommand {
 		try {
 			int task = Integer.parseInt(args[1]);
 			plugin.getServer().getScheduler().cancelTask(task);
-			if (plugin.getTrackerKeeper().getRoomTasks().containsKey(task)) {
-				plugin.getTrackerKeeper().getRoomTasks().remove(task);
-			}
-			if (plugin.getBuildKeeper().getRoomProgress().containsKey(player.getUniqueId())) {
-				plugin.getBuildKeeper().getRoomProgress().remove(player.getUniqueId());
-			}
+			plugin.getTrackerKeeper().getRoomTasks().remove(task);
+			plugin.getBuildKeeper().getRoomProgress().remove(player.getUniqueId());
 			TARDISMessage.send(player, "TASK_ABORT");
 			return true;
 		} catch (NumberFormatException nfe) {

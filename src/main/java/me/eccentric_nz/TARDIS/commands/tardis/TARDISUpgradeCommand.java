@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.desktop.TARDISThemeInventory;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.builders.TARDISTIPSData;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.desktop.TARDISThemeInventory;
+import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -50,7 +50,7 @@ class TARDISUpgradeCommand {
 			TARDISMessage.send(player, "NO_PERM_UPGRADE");
 			return true;
 		}
-		// they must have an existing TARDIS
+		// they must have an existing tardis
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("uuid", player.getUniqueId().toString());
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -59,12 +59,12 @@ class TARDISUpgradeCommand {
 			return false;
 		}
 		Tardis tardis = rs.getTardis();
-		// console must in a TARDIS world
+		// console must in a tardis world
 		if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
 			TARDISMessage.send(player, "UPGRADE_ABORT_WORLD");
 			return true;
 		}
-		// it must be their own TARDIS
+		// it must be their own tardis
 		boolean own;
 		Location pl = player.getLocation();
 		String current_world = pl.getWorld().getName();
@@ -73,7 +73,7 @@ class TARDISUpgradeCommand {
 			if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(player, "tardis.create_world")) {
 				own = (current_world.equals(split[0]));
 			} else {
-				// get if player is in TIPS area for their TARDIS
+				// get if player is in TIPS area for their tardis
 				TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
 				TARDISTIPSData pos = tintpos.getTIPSData(tardis.getTIPS());
 				own = (pl.getBlockX() > pos.getMinX() && pl.getBlockZ() > pos.getMinZ() && pl.getBlockX() < pos.getMaxX() && pl.getBlockZ() < pos.getMaxZ());
@@ -94,7 +94,7 @@ class TARDISUpgradeCommand {
 		plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
 		// open the upgrade menu
 		ItemStack[] consoles = new TARDISThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
-		Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Upgrade Menu");
+		Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis Upgrade Menu");
 		upg.setContents(consoles);
 		player.openInventory(upg);
 		return true;

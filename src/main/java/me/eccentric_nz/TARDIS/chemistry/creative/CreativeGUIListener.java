@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.creative;
+package me.eccentric_nz.tardis.chemistry.creative;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chemistry.element.ElementInventory;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.chemistry.element.ElementInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,6 +27,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Objects;
 
 public class CreativeGUIListener implements Listener {
 
@@ -45,7 +47,7 @@ public class CreativeGUIListener implements Listener {
 			int slot = event.getRawSlot();
 			if (slot >= 0 && slot < 54) {
 				switch (slot) {
-					case 35:
+					case 35 -> {
 						event.setCancelled(true);
 						// switch to elements
 						close(p);
@@ -55,8 +57,8 @@ public class CreativeGUIListener implements Listener {
 							elements.setContents(emenu);
 							p.openInventory(elements);
 						}, 2L);
-						break;
-					case 44:
+					}
+					case 44 -> {
 						event.setCancelled(true);
 						boolean molecular = (name.equals(ChatColor.DARK_RED + "Molecular compounds"));
 						close(p);
@@ -67,22 +69,22 @@ public class CreativeGUIListener implements Listener {
 							inventory.setContents(stacks);
 							p.openInventory(inventory);
 						}, 2L);
-						break;
-					case 53:
+					}
+					case 53 -> {
 						// close
 						event.setCancelled(true);
 						close(p);
-						break;
-					default:
+					}
+					default -> {
 						event.setCancelled(true);
 						// get clicked ItemStack
 						if (view.getItem(slot) != null) {
-							ItemStack choice = view.getItem(slot).clone();
+							ItemStack choice = Objects.requireNonNull(view.getItem(slot)).clone();
 							choice.setAmount(event.getClick().equals(ClickType.SHIFT_LEFT) ? 64 : 1);
 							// add ItemStack to inventory if there is room
 							p.getInventory().addItem(choice);
 						}
-						break;
+					}
 				}
 			} else {
 				ClickType click = event.getClick();

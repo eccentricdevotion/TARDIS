@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.destroyers;
+package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Adaption;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.junk.TARDISJunkDestroyer;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.chameleon.TARDISChameleonCircuit;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.Adaption;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.junk.TARDISJunkDestroyer;
+import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -40,9 +40,9 @@ import java.util.Collections;
 import java.util.HashMap;
 
 /**
- * Destroy the TARDIS Police Box.
+ * Destroy the tardis Police Box.
  * <p>
- * The chameleon circuit is the component of a TARDIS which changes its outer plasmic shell to assume a shape which
+ * The chameleon circuit is the component of a tardis which changes its outer plasmic shell to assume a shape which
  * blends in with its surroundings.
  *
  * @author eccentric_nz
@@ -71,7 +71,7 @@ public class TARDISPresetDestroyerFactory {
 				Material cham_id = Material.LIGHT_GRAY_TERRACOTTA;
 				if ((tardis.getAdaption().equals(Adaption.BIOME) && demat.equals(PRESET.FACTORY)) || demat.equals(PRESET.SUBMERGED) || tardis.getAdaption().equals(Adaption.BLOCK)) {
 					Block chameleonBlock;
-					// chameleon circuit is on - get block under TARDIS
+					// chameleon circuit is on - get block under tardis
 					if (dd.getLocation().getBlock().getType() == Material.SNOW) {
 						chameleonBlock = dd.getLocation().getBlock();
 					} else {
@@ -142,18 +142,18 @@ public class TARDISPresetDestroyerFactory {
 		switch (p) {
 			case JUNK_MODE:
 				switch (d) {
-					case EAST:
+					case EAST -> {
 						signx = 0;
 						signz = 1;
-						break;
-					case WEST:
+					}
+					case WEST -> {
 						signx = 0;
 						signz = -1;
-						break;
-					default:
+					}
+					default -> {
 						signx = 1;
 						signz = 0;
-						break;
+					}
 				}
 				break;
 			case GRAVESTONE:
@@ -162,106 +162,91 @@ public class TARDISPresetDestroyerFactory {
 				break;
 			case TORCH:
 				switch (d) {
-					case EAST:
+					case EAST -> {
 						signx = -1;
 						signz = 0;
-						break;
-					case SOUTH:
+					}
+					case SOUTH -> {
 						signx = 0;
 						signz = -1;
-						break;
-					case WEST:
+					}
+					case WEST -> {
 						signx = 1;
 						signz = 0;
-						break;
-					default:
+					}
+					default -> {
 						signx = 0;
 						signz = 1;
-						break;
+					}
 				}
 				break;
 			case TOILET:
 				switch (d) {
-					case EAST:
+					case EAST -> {
 						signx = 1;
 						signz = -1;
-						break;
-					case SOUTH:
+					}
+					case SOUTH -> {
 						signx = 1;
 						signz = 1;
-						break;
-					case WEST:
+					}
+					case WEST -> {
 						signx = -1;
 						signz = 1;
-						break;
-					default:
+					}
+					default -> {
 						signx = -1;
 						signz = -1;
-						break;
+					}
 				}
 				break;
 			case APPERTURE:
 				switch (d) {
-					case EAST:
+					case EAST -> {
 						signx = 1;
 						signz = 0;
-						break;
-					case SOUTH:
+					}
+					case SOUTH -> {
 						signx = 0;
 						signz = 1;
-						break;
-					case WEST:
+					}
+					case WEST -> {
 						signx = -1;
 						signz = 0;
-						break;
-					default:
+					}
+					default -> {
 						signx = 0;
 						signz = -1;
-						break;
+					}
 				}
 				break;
 			default:
 				switch (d) {
-					case EAST:
+					case EAST -> {
 						signx = -2;
 						signz = 0;
-						break;
-					case SOUTH:
+					}
+					case SOUTH -> {
 						signx = 0;
 						signz = -2;
-						break;
-					case WEST:
+					}
+					case WEST -> {
 						signx = 2;
 						signz = 0;
-						break;
-					default:
+					}
+					default -> {
 						signx = 0;
 						signz = 2;
-						break;
+					}
 				}
 				break;
 		}
-		switch (p) {
-			case GAZEBO:
-			case JAIL:
-			case SHROOM:
-			case SWAMP:
-				signy = 3;
-				break;
-			case TOPSYTURVEY:
-			case TOILET:
-			case TORCH:
-				signy = 1;
-				break;
-			case ANGEL:
-			case APPERTURE:
-			case LAMP:
-				signy = 0;
-				break;
-			default:
-				signy = 2;
-				break;
-		}
+		signy = switch (p) {
+			case GAZEBO, JAIL, SHROOM, SWAMP -> 3;
+			case TOPSYTURVEY, TOILET, TORCH -> 1;
+			case ANGEL, APPERTURE, LAMP -> 0;
+			default -> 2;
+		};
 		TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, Material.AIR);
 		if (p.equals(PRESET.SWAMP)) {
 			TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, Material.AIR);
@@ -272,22 +257,22 @@ public class TARDISPresetDestroyerFactory {
 		int lx;
 		int lz;
 		switch (d) {
-			case EAST:
+			case EAST -> {
 				lx = -1;
 				lz = 1;
-				break;
-			case SOUTH:
+			}
+			case SOUTH -> {
 				lx = -1;
 				lz = -1;
-				break;
-			case WEST:
+			}
+			case WEST -> {
 				lx = 1;
 				lz = -1;
-				break;
-			default:
+			}
+			default -> {
 				lx = 1;
 				lz = 1;
-				break;
+			}
 		}
 		World w = l.getWorld();
 		int tx = l.getBlockX() + lx;
@@ -317,30 +302,30 @@ public class TARDISPresetDestroyerFactory {
 		int leftx, leftz, rightx, rightz;
 		int eyey = l.getBlockY() + 3;
 		switch (d) {
-			case NORTH:
+			case NORTH -> {
 				leftx = l.getBlockX() - 1;
 				leftz = l.getBlockZ() + 1;
 				rightx = l.getBlockX() + 1;
 				rightz = l.getBlockZ() + 1;
-				break;
-			case WEST:
+			}
+			case WEST -> {
 				leftx = l.getBlockX() + 1;
 				leftz = l.getBlockZ() + 1;
 				rightx = l.getBlockX() + 1;
 				rightz = l.getBlockZ() - 1;
-				break;
-			case SOUTH:
+			}
+			case SOUTH -> {
 				leftx = l.getBlockX() + 1;
 				leftz = l.getBlockZ() - 1;
 				rightx = l.getBlockX() - 1;
 				rightz = l.getBlockZ() - 1;
-				break;
-			default:
+			}
+			default -> {
 				leftx = l.getBlockX() - 1;
 				leftz = l.getBlockZ() - 1;
 				rightx = l.getBlockX() - 1;
 				rightz = l.getBlockZ() + 1;
-				break;
+			}
 		}
 		TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, Material.AIR);
 		TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, Material.AIR);
@@ -351,19 +336,18 @@ public class TARDISPresetDestroyerFactory {
 		int leftx, leftz, rightx, rightz;
 		int eyey = l.getBlockY() + 2;
 		switch (d) {
-			case NORTH:
-			case SOUTH:
+			case NORTH, SOUTH -> {
 				leftx = l.getBlockX() - 1;
 				leftz = l.getBlockZ();
 				rightx = l.getBlockX() + 1;
 				rightz = l.getBlockZ();
-				break;
-			default:
+			}
+			default -> {
 				leftx = l.getBlockX();
 				leftz = l.getBlockZ() - 1;
 				rightx = l.getBlockX();
 				rightz = l.getBlockZ() + 1;
-				break;
+			}
 		}
 		TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, Material.AIR);
 		TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, Material.AIR);
@@ -375,16 +359,12 @@ public class TARDISPresetDestroyerFactory {
 	}
 
 	private BlockFace getOppositeFace(COMPASS c) {
-		switch (c) {
-			case NORTH:
-				return BlockFace.SOUTH;
-			case WEST:
-				return BlockFace.EAST;
-			case SOUTH:
-				return BlockFace.NORTH;
-			default:
-				return BlockFace.WEST;
-		}
+		return switch (c) {
+			case NORTH -> BlockFace.SOUTH;
+			case WEST -> BlockFace.EAST;
+			case SOUTH -> BlockFace.NORTH;
+			default -> BlockFace.WEST;
+		};
 	}
 
 	public void removeBlockProtection(int id) {

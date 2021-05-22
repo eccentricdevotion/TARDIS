@@ -14,9 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
 import org.bukkit.*;
+
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -130,17 +132,17 @@ public class TARDISStaticLocationGetters {
 	}
 
 	/**
-	 * Create a TARDIS Repeater location string from a Bukkit location.
+	 * Create a tardis Repeater location string from a Bukkit location.
 	 *
 	 * @param location the location to convert to a String
 	 * @return a String in the style of world:x:y:z
 	 */
 	public static String makeLocationStr(Location location) {
-		return location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+		return Objects.requireNonNull(location.getWorld()).getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
 	}
 
 	/**
-	 * Gets the chunk the TARDIS interior is in.
+	 * Gets the chunk the tardis interior is in.
 	 *
 	 * @param str the saved location data from the database.
 	 * @return a Chunk.
@@ -150,6 +152,7 @@ public class TARDISStaticLocationGetters {
 		World cw = Bukkit.getServer().getWorld(split[0]);
 		int cx = TARDISNumberParsers.parseInt(split[1]);
 		int cz = TARDISNumberParsers.parseInt(split[2]);
+		assert cw != null;
 		return cw.getChunkAt(cx, cz);
 	}
 

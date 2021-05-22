@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.UUID;
 
 /**
- * As with the rest of the Doctor's TARDIS, the aesthetic design of the time rotor occasionally changed throughout the
+ * As with the rest of the Doctor's tardis, the aesthetic design of the time rotor occasionally changed throughout the
  * Doctor's travels. As it varied through designs, it alternated between being a single column and a series of
  * components that moved into each other from above and below.
  *
@@ -48,12 +48,12 @@ class TARDISColouriseCommand {
 			TARDISMessage.send(player, "NO_PERMS");
 			return;
 		}
-		// check they are still in the TARDIS world
+		// check they are still in the tardis world
 		if (!plugin.getUtils().inTARDISWorld(player)) {
 			TARDISMessage.send(player, "CMD_IN_WORLD");
 			return;
 		}
-		// must have a TARDIS
+		// must have a tardis
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("uuid", player.getUniqueId().toString());
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -80,7 +80,7 @@ class TARDISColouriseCommand {
 			return;
 		}
 		int thisid = rst.getTardis_id();
-		// must be timelord of the TARDIS
+		// must be timelord of the tardis
 		if (thisid != ownerid) {
 			TARDISMessage.send(player, "CMD_ONLY_TL");
 			return;
@@ -90,8 +90,6 @@ class TARDISColouriseCommand {
 		plugin.getTrackerKeeper().getBeaconColouring().add(uuid);
 		// message player
 		TARDISMessage.send(player, "COLOUR_TIME");
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-			plugin.getTrackerKeeper().getBeaconColouring().remove(uuid);
-		}, 1200L);
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getBeaconColouring().remove(uuid), 1200L);
 	}
 }

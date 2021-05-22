@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -24,7 +24,7 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyPermission;
 import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -88,7 +88,7 @@ public class TARDISTownyChecker {
 	}
 
 	/**
-	 * Checks whether a player can land their TARDIS in a town.
+	 * Checks whether a player can land their tardis in a town.
 	 *
 	 * @param p the player
 	 * @param l the location instance to check
@@ -163,9 +163,7 @@ public class TARDISTownyChecker {
 	 */
 	private enum TownyRegion {
 
-		wilderness,
-		town,
-		nation
+		wilderness, town, nation
 	}
 
 	/**

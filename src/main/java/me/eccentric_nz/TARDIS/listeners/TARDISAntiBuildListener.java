@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetAntiBuild;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.database.resultset.ResultSetAntiBuild;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISAntiBuild;
+import me.eccentric_nz.tardis.utility.TARDISMaterials;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -42,6 +42,7 @@ import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -219,17 +220,13 @@ public class TARDISAntiBuildListener implements Listener {
 		}
 		ItemStack t = (hand.equals(EquipmentSlot.HAND)) ? p.getInventory().getItemInMainHand() : p.getInventory().getItemInOffHand();
 		Material m;
-		if (t != null) {
-			m = t.getType();
-		} else {
-			m = Material.AIR;
-		}
-		if ((hand.equals(EquipmentSlot.HAND) && no_place.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_place.contains(m)) && !allow_interact.contains(event.getClickedBlock().getType())) {
+		m = t.getType();
+		if ((hand.equals(EquipmentSlot.HAND) && no_place.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_place.contains(m)) && !allow_interact.contains(Objects.requireNonNull(event.getClickedBlock()).getType())) {
 			event.setUseItemInHand(Result.DENY);
 			event.setCancelled(true);
 			TARDISMessage.send(p, "ANTIBUILD");
 		}
-		if (event.getClickedBlock().getType().equals(Material.FLOWER_POT) && (hand.equals(EquipmentSlot.HAND) && no_flower_pot.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_flower_pot.contains(m))) {
+		if (Objects.requireNonNull(event.getClickedBlock()).getType().equals(Material.FLOWER_POT) && (hand.equals(EquipmentSlot.HAND) && no_flower_pot.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_flower_pot.contains(m))) {
 			event.setUseItemInHand(Result.DENY);
 			event.setCancelled(true);
 			Block b = event.getClickedBlock();
@@ -265,8 +262,7 @@ public class TARDISAntiBuildListener implements Listener {
 
 	@EventHandler(ignoreCancelled = true)
 	public void onCompanionDamage(EntityDamageByEntityEvent event) {
-		if (event.getDamager() instanceof Player) {
-			Player p = (Player) event.getDamager();
+		if (event.getDamager() instanceof Player p) {
 			if (!plugin.getUtils().inTARDISWorld(p)) {
 				return;
 			}
@@ -285,8 +281,7 @@ public class TARDISAntiBuildListener implements Listener {
 
 	@EventHandler(ignoreCancelled = true)
 	public void onCompanionBreakHanging(HangingBreakByEntityEvent event) {
-		if (event.getRemover() instanceof Player) {
-			Player p = (Player) event.getRemover();
+		if (event.getRemover() instanceof Player p) {
 			if (!plugin.getUtils().inTARDISWorld(p)) {
 				return;
 			}

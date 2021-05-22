@@ -14,16 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.preferences;
+package me.eccentric_nz.tardis.commands.preferences;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.commands.TARDISCompleter;
+import me.eccentric_nz.tardis.rooms.TARDISWalls;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,37 +62,25 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
 	}
 
 	@Override
-	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 		String lastArg = args[args.length - 1];
 		if (args.length <= 1) {
 			return partial(args[0], ROOT_SUBS);
 		} else if (args.length == 2) {
 			String sub = args[0];
-			switch (sub) {
-				case "add":
-				case "remove":
-					// return null to default to online player name matching
-					return null;
-				case "floor":
-				case "wall":
-				case "siege_floor":
-				case "siege_wall":
-					return partial(lastArg, MAT_SUBS);
-				case "key":
-					return partial(lastArg, KEY_SUBS);
-				case "language":
-					return partial(lastArg, LANGUAGE_SUBS);
-				case "flight":
-					return partial(lastArg, FLIGHT_SUBS);
-				case "difficulty":
-					return partial(lastArg, DIFF_SUBS);
-				case "hads_type":
-					return partial(lastArg, HADS_SUBS);
-				case "hum":
-					return partial(lastArg, HUM_SUBS);
-				default:
-					return partial(lastArg, ONOFF_SUBS);
-			}
+			return switch (sub) {
+				case "add", "remove" ->
+						// return null to default to online player name matching
+						null;
+				case "floor", "wall", "siege_floor", "siege_wall" -> partial(lastArg, MAT_SUBS);
+				case "key" -> partial(lastArg, KEY_SUBS);
+				case "language" -> partial(lastArg, LANGUAGE_SUBS);
+				case "flight" -> partial(lastArg, FLIGHT_SUBS);
+				case "difficulty" -> partial(lastArg, DIFF_SUBS);
+				case "hads_type" -> partial(lastArg, HADS_SUBS);
+				case "hum" -> partial(lastArg, HUM_SUBS);
+				default -> partial(lastArg, ONOFF_SUBS);
+			};
 		}
 		return ImmutableList.of();
 	}

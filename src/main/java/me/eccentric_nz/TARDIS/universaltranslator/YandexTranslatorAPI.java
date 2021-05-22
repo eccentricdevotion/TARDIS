@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.eccentric_nz.TARDIS.universaltranslator;
+package me.eccentric_nz.tardis.universaltranslator;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -99,7 +99,7 @@ public abstract class YandexTranslatorAPI {
 	 */
 	protected static String retrievePropString(URL url, String jsonValProperty) throws Exception {
 		String response = retrieveResponse(url);
-		JsonObject jsonObj = new JsonParser().parse(response).getAsJsonObject();
+		JsonObject jsonObj = JsonParser.parseString(response).getAsJsonObject();
 		return jsonObj.get(jsonValProperty).toString();
 	}
 
@@ -119,7 +119,7 @@ public abstract class YandexTranslatorAPI {
 
 	// Helper method to parse a JsonObject containing an array of Strings with the given label.
 	private static String jsonObjValToStringArr(String inputString, String subObjPropertyName) {
-		JsonObject jsonObj = new JsonParser().parse(inputString).getAsJsonObject();
+		JsonObject jsonObj = JsonParser.parseString(inputString).getAsJsonObject();
 		JsonArray jsonArr = jsonObj.get(subObjPropertyName).getAsJsonArray();
 		return jsonArr.getAsString();
 	}

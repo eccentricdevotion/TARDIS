@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.ARS;
+package me.eccentric_nz.tardis.ars;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -79,9 +79,7 @@ class TARDISARSJettisonRunnable implements Runnable {
 						}
 					}
 					BlockState state = b.getState();
-					if (state instanceof BlockState) {
-						plugin.getTardisHelper().removeTileEntity(state);
-					}
+					plugin.getTardisHelper().removeTileEntity(state);
 					b.setBlockData(TARDISConstants.AIR);
 				}
 			}

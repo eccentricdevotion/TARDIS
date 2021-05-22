@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.enumeration.DiskCircuit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -51,7 +51,7 @@ public class TARDISCraftListener implements Listener {
 
 	public TARDISCraftListener(TARDIS plugin) {
 		this.plugin = plugin;
-		// DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
+		// DELUXE, ELEVENTH, TWELFTH, ars & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
 		t.put(Material.BOOKSHELF, "PLANK"); // plank
 		t.put(Material.COAL_BLOCK, "STEAMPUNK"); // steampunk
 		t.put(Material.DIAMOND_BLOCK, "DELUXE"); // deluxe
@@ -65,7 +65,7 @@ public class TARDISCraftListener implements Listener {
 		t.put(Material.ORANGE_CONCRETE, "THIRTEENTH"); // thirteenth designed by Razihel
 		t.put(Material.YELLOW_CONCRETE_POWDER, "FACTORY"); // factory designed by Razihel
 		t.put(Material.PURPUR_BLOCK, "ENDER"); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
-		t.put(Material.QUARTZ_BLOCK, "ARS"); // ARS
+		t.put(Material.QUARTZ_BLOCK, "ars"); // ars
 		t.put(Material.REDSTONE_BLOCK, "REDSTONE"); // redstone
 		t.put(Material.CRYING_OBSIDIAN, "DELTA"); // delta
 		t.put(Material.HONEYCOMB_BLOCK, "ROTOR"); // rotor
@@ -114,11 +114,11 @@ public class TARDISCraftListener implements Listener {
 			CraftingInventory ci = event.getInventory();
 			if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
 				String dn = is.getItemMeta().getDisplayName();
-				if ((is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM)) && dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
+				if ((is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM)) && dn.equals(ChatColor.GOLD + "tardis Seed Block")) {
 					ItemMeta im = is.getItemMeta();
 					List<String> lore = im.getLore();
-					lore.add("Walls: " + ci.getItem(6).getType().toString());
-					lore.add("Floors: " + ci.getItem(9).getType().toString());
+					lore.add("Walls: " + ci.getItem(6).getType());
+					lore.add("Floors: " + ci.getItem(9).getType());
 					lore.add("Chameleon: FACTORY");
 					im.setLore(lore);
 					is.setItemMeta(im);
@@ -146,7 +146,7 @@ public class TARDISCraftListener implements Listener {
 					// enchant the result
 					is.addEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
 					ci.setResult(is);
-				} else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses") || dn.equals("TARDIS Communicator")) {
+				} else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses") || dn.equals("tardis Communicator")) {
 					LeatherArmorMeta lam = (LeatherArmorMeta) is.getItemMeta();
 					lam.setColor(Color.WHITE);
 					is.setItemMeta(lam);

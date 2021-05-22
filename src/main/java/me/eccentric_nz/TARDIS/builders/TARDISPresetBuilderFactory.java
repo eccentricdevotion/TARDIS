@@ -14,23 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
-import me.eccentric_nz.TARDIS.enumeration.Adaption;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.junk.TARDISJunkBuilder;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import com.onarandombox.MultiverseCore.exceptions.PropertyDoesNotExistException;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.chameleon.TARDISChameleonCircuit;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.destroyers.TARDISDeinstantPreset;
+import me.eccentric_nz.tardis.enumeration.Adaption;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.junk.TARDISJunkBuilder;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -41,8 +42,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * The Wibbly lever was a part of The Doctor's TARDIS console. The lever had at least two functions: opening and closing
- * doors and controlling implosions used to revert paradoxes in which the TARDIS had materialised within itself.
+ * The Wibbly lever was a part of The Doctor's tardis console. The lever had at least two functions: opening and closing
+ * doors and controlling implosions used to revert paradoxes in which the tardis had materialised within itself.
  *
  * @author eccentric_nz
  */
@@ -76,9 +77,9 @@ public class TARDISPresetBuilderFactory {
 	}
 
 	/**
-	 * Builds the TARDIS Police Box.
+	 * Builds the tardis Police Box.
 	 *
-	 * @param bd the TARDIS build data
+	 * @param bd the tardis build data
 	 */
 	public void buildPreset(BuildData bd) {
 		HashMap<String, Object> where = new HashMap<>();
@@ -115,7 +116,7 @@ public class TARDISPresetBuilderFactory {
 			Material chameleonMaterial = Material.LIGHT_GRAY_TERRACOTTA;
 			if ((tardis.getAdaption().equals(Adaption.BIOME) && preset.equals(PRESET.FACTORY)) || tardis.getAdaption().equals(Adaption.BLOCK) || preset.equals(PRESET.SUBMERGED)) {
 				Block chameleonBlock;
-				// chameleon circuit is on - get block under TARDIS
+				// chameleon circuit is on - get block under tardis
 				if (bd.getLocation().getBlock().getType() == Material.SNOW) {
 					chameleonBlock = bd.getLocation().getBlock();
 				} else {
@@ -201,100 +202,27 @@ public class TARDISPresetBuilderFactory {
 		if (adaption.equals(Adaption.BLOCK)) {
 			return PRESET.OLD;
 		} else {
-			switch (biome.name()) {
-				case "BEACH":
-				case "FROZEN_RIVER":
-				case "RIVER":
-				case "SNOWY_BEACH":
-					return PRESET.BOAT;
-				case "COLD_OCEAN":
-				case "DEEP_COLD_OCEAN":
-				case "DEEP_LUKEWARM_OCEAN":
-				case "DEEP_OCEAN":
-				case "DEEP_WARM_OCEAN":
-				case "FROZEN_OCEAN":
-				case "LUKEWARM_OCEAN":
-				case "OCEAN":
-				case "WARM_OCEAN":
-					return PRESET.YELLOW;
-				case "DESERT":
-				case "DESERT_HILLS":
-				case "DESERT_LAKES":
-					return PRESET.DESERT;
-				case "GRAVELLY_MOUNTAINS":
-				case "MODIFIED_GRAVELLY_MOUNTAINS":
-				case "MOUNTAINS":
-				case "SNOWY_MOUNTAINS":
-				case "WOODED_MOUNTAINS":
-					return PRESET.EXTREME_HILLS;
-				case "BIRCH_FOREST":
-				case "BIRCH_FOREST_HILLS":
-				case "FOREST":
-				case "TALL_BIRCH_FOREST":
-				case "TALL_BIRCH_HILLS":
-					return PRESET.FOREST;
-				case "NETHER_WASTES":
-				case "SOUL_SAND_VALLEY":
-				case "CRIMSON_FOREST":
-				case "WARPED_FOREST":
-				case "BASALT_DELTAS":
-					return PRESET.NETHER;
-				case "SNOWY_TUNDRA":
-				case "DEEP_FROZEN_OCEAN":
-					return PRESET.ICE_FLATS;
-				case "ICE_SPIKES":
-					return PRESET.ICE_SPIKES;
-				case "JUNGLE":
-				case "JUNGLE_EDGE":
-				case "JUNGLE_HILLS":
-				case "MODIFIED_JUNGLE":
-				case "MODIFIED_JUNGLE_EDGE":
-					return PRESET.JUNGLE;
-				case "BADLANDS":
-				case "BADLANDS_PLATEAU":
-				case "ERODED_BADLANDS":
-				case "MODIFIED_BADLANDS_PLATEAU":
-				case "MODIFIED_WOODED_BADLANDS_PLATEAU":
-				case "WOODED_BADLANDS_PLATEAU":
-					return PRESET.MESA;
-				case "MUSHROOM_FIELDS":
-				case "MUSHROOM_FIELD_SHORE":
-					return PRESET.SHROOM;
-				case "PLAINS":
-				case "SUNFLOWER_PLAINS":
-					return PRESET.PLAINS;
-				case "DARK_FOREST":
-				case "DARK_FOREST_HILLS":
-					return PRESET.ROOFED_FOREST;
-				case "SAVANNA":
-				case "SHATTERED_SAVANNA":
-				case "SAVANNA_PLATEAU":
-				case "SHATTERED_SAVANNA_PLATEAU":
-					return PRESET.SAVANNA;
-				case "SWAMP":
-				case "SWAMP_HILLS":
-					return PRESET.SWAMP;
-				case "END_BARRENS":
-				case "END_HIGHLANDS":
-				case "END_MIDLANDS":
-				case "SMALL_END_ISLANDS":
-				case "THE_END":
-					return PRESET.THEEND;
-				case "GIANT_SPRUCE_TAIGA":
-				case "GIANT_SPRUCE_TAIGA_HILLS":
-				case "GIANT_TREE_TAIGA":
-				case "GIANT_TREE_TAIGA_HILLS":
-				case "TAIGA":
-				case "TAIGA_HILLS":
-				case "TAIGA_MOUNTAINS":
-					return PRESET.TAIGA;
-				case "SNOWY_TAIGA":
-				case "SNOWY_TAIGA_HILLS":
-				case "SNOWY_TAIGA_MOUNTAINS":
-					return PRESET.COLD_TAIGA;
-				default:
-					return PRESET.FACTORY;
-			}
+			return switch (biome.name()) {
+				case "BEACH", "FROZEN_RIVER", "RIVER", "SNOWY_BEACH" -> PRESET.BOAT;
+				case "COLD_OCEAN", "DEEP_COLD_OCEAN", "DEEP_LUKEWARM_OCEAN", "DEEP_OCEAN", "DEEP_WARM_OCEAN", "FROZEN_OCEAN", "LUKEWARM_OCEAN", "OCEAN", "WARM_OCEAN" -> PRESET.YELLOW;
+				case "DESERT", "DESERT_HILLS", "DESERT_LAKES" -> PRESET.DESERT;
+				case "GRAVELLY_MOUNTAINS", "MODIFIED_GRAVELLY_MOUNTAINS", "MOUNTAINS", "SNOWY_MOUNTAINS", "WOODED_MOUNTAINS" -> PRESET.EXTREME_HILLS;
+				case "BIRCH_FOREST", "BIRCH_FOREST_HILLS", "FOREST", "TALL_BIRCH_FOREST", "TALL_BIRCH_HILLS" -> PRESET.FOREST;
+				case "NETHER_WASTES", "SOUL_SAND_VALLEY", "CRIMSON_FOREST", "WARPED_FOREST", "BASALT_DELTAS" -> PRESET.NETHER;
+				case "SNOWY_TUNDRA", "DEEP_FROZEN_OCEAN" -> PRESET.ICE_FLATS;
+				case "ICE_SPIKES" -> PRESET.ICE_SPIKES;
+				case "JUNGLE", "JUNGLE_EDGE", "JUNGLE_HILLS", "MODIFIED_JUNGLE", "MODIFIED_JUNGLE_EDGE" -> PRESET.JUNGLE;
+				case "BADLANDS", "BADLANDS_PLATEAU", "ERODED_BADLANDS", "MODIFIED_BADLANDS_PLATEAU", "MODIFIED_WOODED_BADLANDS_PLATEAU", "WOODED_BADLANDS_PLATEAU" -> PRESET.MESA;
+				case "MUSHROOM_FIELDS", "MUSHROOM_FIELD_SHORE" -> PRESET.SHROOM;
+				case "PLAINS", "SUNFLOWER_PLAINS" -> PRESET.PLAINS;
+				case "DARK_FOREST", "DARK_FOREST_HILLS" -> PRESET.ROOFED_FOREST;
+				case "SAVANNA", "SHATTERED_SAVANNA", "SAVANNA_PLATEAU", "SHATTERED_SAVANNA_PLATEAU" -> PRESET.SAVANNA;
+				case "SWAMP", "SWAMP_HILLS" -> PRESET.SWAMP;
+				case "END_BARRENS", "END_HIGHLANDS", "END_MIDLANDS", "SMALL_END_ISLANDS", "THE_END" -> PRESET.THEEND;
+				case "GIANT_SPRUCE_TAIGA", "GIANT_SPRUCE_TAIGA_HILLS", "GIANT_TREE_TAIGA", "GIANT_TREE_TAIGA_HILLS", "TAIGA", "TAIGA_HILLS", "TAIGA_MOUNTAINS" -> PRESET.TAIGA;
+				case "SNOWY_TAIGA", "SNOWY_TAIGA_HILLS", "SNOWY_TAIGA_MOUNTAINS" -> PRESET.COLD_TAIGA;
+				default -> PRESET.FACTORY;
+			};
 		}
 	}
 
@@ -304,15 +232,11 @@ public class TARDISPresetBuilderFactory {
 	}
 
 	public BlockFace getOppositeFace(COMPASS d) {
-		switch (d) {
-			case SOUTH:
-				return BlockFace.NORTH;
-			case WEST:
-				return BlockFace.EAST;
-			case NORTH:
-				return BlockFace.SOUTH;
-			default:
-				return BlockFace.WEST;
-		}
+		return switch (d) {
+			case SOUTH -> BlockFace.NORTH;
+			case WEST -> BlockFace.EAST;
+			case NORTH -> BlockFace.SOUTH;
+			default -> BlockFace.WEST;
+		};
 	}
 }

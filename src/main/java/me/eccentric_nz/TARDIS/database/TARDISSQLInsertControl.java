@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database;
+package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -42,7 +42,7 @@ class TARDISSQLInsertControl implements Runnable {
 	 * then executes the update.
 	 *
 	 * @param plugin an instance of the main plugin class
-	 * @param id     the unique TARDIS identifier
+	 * @param id     the unique tardis identifier
 	 * @param type   the type of control to insert
 	 * @param l      the location of the control
 	 * @param s      whether the control is a secondary control

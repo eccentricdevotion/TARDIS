@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.rooms;
+package me.eccentric_nz.tardis.rooms;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.event.TARDISRoomGrowEvent;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.event.TARDISRoomGrowEvent;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -33,8 +33,8 @@ import java.io.File;
 import java.util.Locale;
 
 /**
- * There were at least fourteen bathrooms in the TARDIS, one of which had had a leaky tap for three centuries. Because
- * he had misplaced his washers, the Doctor kept it from flooding the TARDIS by sealing it in a time loop that made the
+ * There were at least fourteen bathrooms in the tardis, one of which had had a leaky tap for three centuries. Because
+ * he had misplaced his washers, the Doctor kept it from flooding the tardis by sealing it in a time loop that made the
  * same drop of water leak out over and over again.
  *
  * @author eccentric_nz
@@ -56,7 +56,7 @@ public class TARDISRoomBuilder {
 	}
 
 	/**
-	 * Gets the required data to build a TARDIS room, then starts a repeating task to build it.
+	 * Gets the required data to build a tardis room, then starts a repeating task to build it.
 	 * <p>
 	 * This needs to be set up to use the actual dimensions from the schematic files, if user supplied room schematics
 	 * are allowed to be used.
@@ -91,20 +91,16 @@ public class TARDISRoomBuilder {
 			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 			int xzoffset = (dimensions.get("width").getAsInt() / 2);
 			switch (d) {
-				case NORTH:
+				case NORTH -> {
 					l.setX(l.getX() - xzoffset);
 					l.setZ(l.getZ() - dimensions.get("width").getAsInt());
-					break;
-				case WEST:
+				}
+				case WEST -> {
 					l.setX(l.getX() - dimensions.get("width").getAsInt());
 					l.setZ(l.getZ() - xzoffset);
-					break;
-				case SOUTH:
-					l.setX(l.getX() - xzoffset);
-					break;
-				default:
-					l.setZ(l.getZ() - xzoffset);
-					break;
+				}
+				case SOUTH -> l.setX(l.getX() - xzoffset);
+				default -> l.setZ(l.getZ() - xzoffset);
 			}
 			// set y offset
 			int offset = Math.abs(plugin.getRoomsConfig().getInt("rooms." + r + ".offset"));

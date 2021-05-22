@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -41,7 +41,7 @@ import java.util.HashMap;
 /**
  * TARDISes are bioships that are grown from a species of coral presumably indigenous to Gallifrey.
  * <p>
- * The TARDIS had a drawing room, which the Doctor claimed to be his "private study". Inside it were momentos of his
+ * The tardis had a drawing room, which the Doctor claimed to be his "private study". Inside it were momentos of his
  * many incarnations' travels.
  *
  * @author eccentric_nz
@@ -55,7 +55,7 @@ public class TARDISBlockPlaceListener implements Listener {
 	}
 
 	/**
-	 * Listens for a player placing a block. If the player places a brown mushroom block with a TARDIS namespaced key,
+	 * Listens for a player placing a block. If the player places a brown mushroom block with a tardis namespaced key,
 	 * then convert it to one of the unused brown mushroom block states.
 	 *
 	 * @param event a player placing a block
@@ -91,9 +91,7 @@ public class TARDISBlockPlaceListener implements Listener {
 						light = (which > 10000000 && which < 10000005);
 						if (plugin.getConfig().getBoolean("allow.chemistry") && which == 5) {
 							// remember heat block location
-							if (!plugin.getTrackerKeeper().getHeatBlocks().contains(blockStr)) {
-								plugin.getTrackerKeeper().getHeatBlocks().add(blockStr);
-							}
+							plugin.getTrackerKeeper().getHeatBlocks().add(blockStr);
 						}
 					}
 					event.getBlockPlaced().setBlockData(multipleFacing, light);
@@ -124,7 +122,7 @@ public class TARDISBlockPlaceListener implements Listener {
 		}
 		ItemMeta im = is.getItemMeta();
 		if (im.hasDisplayName() && im.getDisplayName().equals("Rift Manipulator")) {
-			// make sure they're not inside the TARDIS
+			// make sure they're not inside the tardis
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("uuid", player.getUniqueId().toString());
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);

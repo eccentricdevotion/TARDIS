@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.lab;
+package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -58,6 +58,7 @@ public class BleachRecipe {
 		// bleach
 		ItemStack bleach = new ItemStack(Material.WHITE_DYE, 1);
 		ItemMeta bm = bleach.getItemMeta();
+		assert bm != null;
 		bm.setDisplayName("Bleach");
 		bm.setCustomModelData(10000001);
 		bm.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
@@ -100,6 +101,7 @@ public class BleachRecipe {
 		// leather helmet
 		ItemStack helmet = new ItemStack(Material.LEATHER_HELMET, 1);
 		LeatherArmorMeta helmetItemMeta = (LeatherArmorMeta) helmet.getItemMeta();
+		assert helmetItemMeta != null;
 		helmetItemMeta.setColor(Color.WHITE);
 		helmet.setItemMeta(helmetItemMeta);
 		ShapelessRecipe helmetRecipe = new ShapelessRecipe(helmetKey, helmet);
@@ -110,6 +112,7 @@ public class BleachRecipe {
 		// leather chestplate
 		ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
 		LeatherArmorMeta chestplateItemMeta = (LeatherArmorMeta) chestplate.getItemMeta();
+		assert chestplateItemMeta != null;
 		chestplateItemMeta.setColor(Color.WHITE);
 		chestplate.setItemMeta(chestplateItemMeta);
 		ShapelessRecipe chestplateRecipe = new ShapelessRecipe(chestplateKey, chestplate);
@@ -120,6 +123,7 @@ public class BleachRecipe {
 		// leather leggings
 		ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS, 1);
 		LeatherArmorMeta leggingsItemMeta = (LeatherArmorMeta) leggings.getItemMeta();
+		assert leggingsItemMeta != null;
 		leggingsItemMeta.setColor(Color.WHITE);
 		leggings.setItemMeta(leggingsItemMeta);
 		ShapelessRecipe leggingsRecipe = new ShapelessRecipe(leggingsKey, leggings);
@@ -130,6 +134,7 @@ public class BleachRecipe {
 		// leather boots
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS, 1);
 		LeatherArmorMeta bootsItemMeta = (LeatherArmorMeta) boots.getItemMeta();
+		assert bootsItemMeta != null;
 		bootsItemMeta.setColor(Color.WHITE);
 		boots.setItemMeta(bootsItemMeta);
 		ShapelessRecipe bootsRecipe = new ShapelessRecipe(bootsKey, boots);

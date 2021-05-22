@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.SmelterChest;
-import me.eccentric_nz.TARDIS.rooms.smelter.Smelter;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.enumeration.SmelterChest;
+import me.eccentric_nz.tardis.rooms.smelter.Smelter;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
+ * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the tardis vaults.
  * <p>
  * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
  * environment-repeater 6 = artron button
@@ -139,6 +139,7 @@ public class ResultSetSmelter {
 
 	private List<Chest> getChests(String location, boolean fuel) {
 		Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(location);
+		assert l != null;
 		int offset = l.getBlockY() - 68;
 		List<Chest> chests = new ArrayList<>();
 		List<Vector> vectors = (fuel) ? Smelter.getFuelVectors() : Smelter.getOreVectors();

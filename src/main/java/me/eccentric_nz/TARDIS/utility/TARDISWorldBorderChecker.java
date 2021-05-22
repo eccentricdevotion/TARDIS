@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
 import com.wimbli.WorldBorder.BorderData;
 import com.wimbli.WorldBorder.Config;
 import com.wimbli.WorldBorder.WorldBorder;
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Location;
 
 /**
- * The TARDIS grants its passengers the ability to understand and speak other languages. This is due to the TARDIS's
+ * The tardis grants its passengers the ability to understand and speak other languages. This is due to the tardis's
  * telepathic field.
  *
  * @author eccentric_nz

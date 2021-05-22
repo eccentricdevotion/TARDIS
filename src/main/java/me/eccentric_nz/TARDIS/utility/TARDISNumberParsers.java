@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 
 /**
  * @author eccentric_nz
@@ -35,7 +35,7 @@ public class TARDISNumberParsers {
 			num = Integer.parseInt(i);
 		} catch (NumberFormatException n) {
 			TARDIS.plugin.debug("Could not convert to int, the string was: " + i);
-//            n.printStackTrace();
+			//            n.printStackTrace();
 		}
 		return num;
 	}

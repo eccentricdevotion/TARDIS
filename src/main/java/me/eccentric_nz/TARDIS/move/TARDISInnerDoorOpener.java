@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.move;
+package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPortals;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDoorBlocks;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPortals;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Tag;
@@ -124,40 +124,29 @@ public class TARDISInnerDoorOpener {
 						indirection = tmp_direction;
 						// adjust for teleport
 						switch (indirection) {
-							case NORTH:
-								// z -ve
-								indoor.add(0.5d, 0.0d, -0.5d);
-								break;
-							case EAST:
-								// x +ve
-								indoor.add(1.5d, 0.0d, 0.5d);
-								break;
-							case SOUTH:
-								// z +ve
-								indoor.add(0.5d, 0.0d, 1.5d);
-								break;
-							case WEST:
-								// x -ve
-								indoor.add(-0.5d, 0.0d, 0.5d);
-								break;
+							case NORTH ->
+									// z -ve
+									indoor.add(0.5d, 0.0d, -0.5d);
+							case EAST ->
+									// x +ve
+									indoor.add(1.5d, 0.0d, 0.5d);
+							case SOUTH ->
+									// z +ve
+									indoor.add(0.5d, 0.0d, 1.5d);
+							case WEST ->
+									// x -ve
+									indoor.add(-0.5d, 0.0d, 0.5d);
 						}
 					} else {
 						// outer door
 						exdirection = COMPASS.valueOf(map.get("door_direction"));
 						// adjust for teleport
 						switch (rsc.getDirection()) {
-							case NORTH:
-								exdoor.add(0.5d, 0.0d, 1.75d);
-								break;
-							case WEST:
-								exdoor.add(1.75d, 0.0d, 0.5d);
-								break;
-							case SOUTH:
-								exdoor.add(0.5d, 0.0d, -1.75d);
-								break;
-							default: // EAST
-								exdoor.add(-1.75d, 0.0d, 0.5d);
-								break;
+							case NORTH -> exdoor.add(0.5d, 0.0d, 1.75d);
+							case WEST -> exdoor.add(1.75d, 0.0d, 0.5d);
+							case SOUTH -> exdoor.add(0.5d, 0.0d, -1.75d);
+							default -> // EAST
+									exdoor.add(-1.75d, 0.0d, 0.5d);
 						}
 					}
 				}
@@ -177,9 +166,7 @@ public class TARDISInnerDoorOpener {
 						// players
 						uuids.forEach((u) -> {
 							// only add them if they're not there already!
-							if (!plugin.getTrackerKeeper().getMover().contains(u)) {
-								plugin.getTrackerKeeper().getMover().add(u);
-							}
+							plugin.getTrackerKeeper().getMover().add(u);
 						});
 					}
 					// locations
@@ -198,15 +185,11 @@ public class TARDISInnerDoorOpener {
 	}
 
 	private BlockFace getOppositeFace(COMPASS d) {
-		switch (d) {
-			case SOUTH:
-				return BlockFace.NORTH;
-			case WEST:
-				return BlockFace.EAST;
-			case NORTH:
-				return BlockFace.SOUTH;
-			default:
-				return BlockFace.WEST;
-		}
+		return switch (d) {
+			case SOUTH -> BlockFace.NORTH;
+			case WEST -> BlockFace.EAST;
+			case NORTH -> BlockFace.SOUTH;
+			default -> BlockFace.WEST;
+		};
 	}
 }

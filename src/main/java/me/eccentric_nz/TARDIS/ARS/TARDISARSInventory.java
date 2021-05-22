@@ -14,19 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.ARS;
+package me.eccentric_nz.tardis.ars;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIArs;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.GUIArs;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * During his exile on Earth, the Third Doctor altered the TARDIS' Architectural Configuration software to relocate the
+ * During his exile on Earth, the Third Doctor altered the tardis' Architectural Configuration software to relocate the
  * console outside the ship (as it was too big to go through the doors), allowing him to work on it in his lab.
  *
  * @author eccentric_nz
@@ -52,6 +53,7 @@ public class TARDISARSInventory {
 		// direction pad up
 		ItemStack pad_up = new ItemStack(Material.CYAN_WOOL, 1);
 		ItemMeta up = pad_up.getItemMeta();
+		assert up != null;
 		up.setDisplayName(plugin.getLanguage().getString("BUTTON_UP"));
 		up.setCustomModelData(GUIArs.BUTTON_UP.getCustomModelData());
 		pad_up.setItemMeta(up);
@@ -59,6 +61,7 @@ public class TARDISARSInventory {
 		// black wool
 		ItemStack black = new ItemStack(Material.BLACK_WOOL, 1);
 		ItemMeta wool = black.getItemMeta();
+		assert wool != null;
 		wool.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP_NO"));
 		wool.setCustomModelData(GUIArs.BUTTON_MAP_ON.getCustomModelData());
 		black.setItemMeta(wool);
@@ -71,6 +74,7 @@ public class TARDISARSInventory {
 		// direction pad left
 		ItemStack pad_left = new ItemStack(Material.CYAN_WOOL, 1);
 		ItemMeta left = pad_left.getItemMeta();
+		assert left != null;
 		left.setDisplayName(plugin.getLanguage().getString("BUTTON_LEFT"));
 		left.setCustomModelData(GUIArs.BUTTON_LEFT.getCustomModelData());
 		pad_left.setItemMeta(left);
@@ -78,6 +82,7 @@ public class TARDISARSInventory {
 		// load map
 		ItemStack map = new ItemStack(Material.MAP, 1);
 		ItemMeta load = map.getItemMeta();
+		assert load != null;
 		load.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP"));
 		load.setCustomModelData(GUIArs.BUTTON_MAP.getCustomModelData());
 		map.setItemMeta(load);
@@ -85,6 +90,7 @@ public class TARDISARSInventory {
 		// direction pad right
 		ItemStack pad_right = new ItemStack(Material.CYAN_WOOL, 1);
 		ItemMeta right = pad_right.getItemMeta();
+		assert right != null;
 		right.setDisplayName(plugin.getLanguage().getString("BUTTON_RIGHT"));
 		right.setCustomModelData(GUIArs.BUTTON_RIGHT.getCustomModelData());
 		pad_right.setItemMeta(right);
@@ -92,6 +98,7 @@ public class TARDISARSInventory {
 		// set
 		ItemStack s = new ItemStack(Material.PINK_WOOL, 1);
 		ItemMeta sim = s.getItemMeta();
+		assert sim != null;
 		sim.setDisplayName(plugin.getLanguage().getString("BUTTON_RECON"));
 		sim.setCustomModelData(GUIArs.BUTTON_RECON.getCustomModelData());
 		s.setItemMeta(sim);
@@ -99,6 +106,7 @@ public class TARDISARSInventory {
 		// direction pad down
 		ItemStack pad_down = new ItemStack(Material.CYAN_WOOL, 1);
 		ItemMeta down = pad_down.getItemMeta();
+		assert down != null;
 		down.setDisplayName(plugin.getLanguage().getString("BUTTON_DOWN"));
 		down.setCustomModelData(GUIArs.BUTTON_DOWN.getCustomModelData());
 		pad_down.setItemMeta(down);
@@ -106,6 +114,7 @@ public class TARDISARSInventory {
 		// level bottom
 		ItemStack level_bot = new ItemStack(Material.WHITE_WOOL, 1);
 		ItemMeta bot = level_bot.getItemMeta();
+		assert bot != null;
 		bot.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL_B"));
 		bot.setCustomModelData(GUIArs.BUTTON_LEVEL_B.getCustomModelData());
 		level_bot.setItemMeta(bot);
@@ -113,6 +122,7 @@ public class TARDISARSInventory {
 		// level selected
 		ItemStack level_sel = new ItemStack(Material.YELLOW_WOOL, 1);
 		ItemMeta main = level_sel.getItemMeta();
+		assert main != null;
 		main.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL"));
 		main.setCustomModelData(GUIArs.BUTTON_LEVEL.getCustomModelData());
 		level_sel.setItemMeta(main);
@@ -120,6 +130,7 @@ public class TARDISARSInventory {
 		// level top
 		ItemStack level_top = new ItemStack(Material.WHITE_WOOL, 1);
 		ItemMeta top = level_top.getItemMeta();
+		assert top != null;
 		top.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL_T"));
 		top.setCustomModelData(GUIArs.BUTTON_LEVEL_T.getCustomModelData());
 		level_top.setItemMeta(top);
@@ -127,6 +138,7 @@ public class TARDISARSInventory {
 		// reset
 		ItemStack reset = new ItemStack(Material.COBBLESTONE, 1);
 		ItemMeta cobble = reset.getItemMeta();
+		assert cobble != null;
 		cobble.setDisplayName(plugin.getLanguage().getString("BUTTON_RESET"));
 		cobble.setCustomModelData(GUIArs.BUTTON_RESET.getCustomModelData());
 		reset.setItemMeta(cobble);
@@ -134,6 +146,7 @@ public class TARDISARSInventory {
 		// scroll left
 		ItemStack scroll_left = new ItemStack(Material.RED_WOOL, 1);
 		ItemMeta nim = scroll_left.getItemMeta();
+		assert nim != null;
 		nim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_L"));
 		nim.setCustomModelData(GUIArs.BUTTON_SCROLL_L.getCustomModelData());
 		scroll_left.setItemMeta(nim);
@@ -141,6 +154,7 @@ public class TARDISARSInventory {
 		// scroll right
 		ItemStack scroll_right = new ItemStack(Material.LIME_WOOL, 1);
 		ItemMeta pim = scroll_right.getItemMeta();
+		assert pim != null;
 		pim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_R"));
 		pim.setCustomModelData(GUIArs.BUTTON_SCROLL_R.getCustomModelData());
 		scroll_right.setItemMeta(pim);
@@ -148,6 +162,7 @@ public class TARDISARSInventory {
 		// jettison
 		ItemStack jettison = new ItemStack(Material.TNT, 1);
 		ItemMeta tnt = jettison.getItemMeta();
+		assert tnt != null;
 		tnt.setDisplayName(plugin.getLanguage().getString("BUTTON_JETT"));
 		tnt.setCustomModelData(GUIArs.BUTTON_JETT.getCustomModelData());
 		jettison.setItemMeta(tnt);
@@ -156,10 +171,11 @@ public class TARDISARSInventory {
 		int i = 45;
 		for (TARDISARS a : TARDISARS.values()) {
 			if (a.getOffset() != 0 && i < 54) {
-				ItemStack room = new ItemStack(Material.getMaterial(a.getMaterial()), 1);
+				ItemStack room = new ItemStack(Objects.requireNonNull(Material.getMaterial(a.getMaterial())), 1);
 				ItemMeta im = room.getItemMeta();
+				assert im != null;
 				im.setDisplayName(a.getDescriptiveName());
-				List<String> lore = Collections.singletonList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + a.toString() + ".cost"));
+				List<String> lore = Collections.singletonList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + a + ".cost"));
 				im.setLore(lore);
 				im.setCustomModelData(1);
 				room.setItemMeta(im);

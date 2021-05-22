@@ -14,47 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
 /**
  * @author eccentric_nz
  */
 public enum Room {
 
-	ANTIGRAVITY,
-	APIARY,
-	AQUARIUM,
-	ARBORETUM,
-	BAKER,
-	BAMBOO,
-	BEDROOM,
-	BIRDCAGE,
-	CHEMISTRY,
-	EMPTY,
-	FARM,
-	GRAVITY,
-	GREENHOUSE,
-	HARMONY,
-	HUTCH,
-	IGLOO,
-	KITCHEN,
-	LAZARUS,
-	LIBRARY,
-	MAZE,
-	MUSHROOM,
-	NETHER,
-	PASSAGE,
-	POOL,
-	RAIL,
-	RENDERER,
-	SHELL,
-	SMELTER,
-	STABLE,
-	STALL,
-	TRENZALORE,
-	VAULT,
-	VILLAGE,
-	WOOD,
-	WORKSHOP,
-	ZERO
+	ANTIGRAVITY, APIARY, AQUARIUM, ARBORETUM, BAKER, BAMBOO, BEDROOM, BIRDCAGE, CHEMISTRY, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, HUTCH, IGLOO, KITCHEN, LAZARUS, LIBRARY, MAZE, MUSHROOM, NETHER, PASSAGE, POOL, RAIL, RENDERER, SHELL, SMELTER, STABLE, STALL, TRENZALORE, VAULT, VILLAGE, WOOD, WORKSHOP, ZERO
 }

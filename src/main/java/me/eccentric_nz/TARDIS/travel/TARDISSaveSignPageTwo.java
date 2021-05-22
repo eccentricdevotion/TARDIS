@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISaves;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.custommodeldata.GUISaves;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -127,10 +127,10 @@ public class TARDISSaveSignPageTwo {
 			delete.setCustomModelData(GUISaves.DELETE_SAVE.getCustomModelData());
 			bucket.setItemMeta(delete);
 			ItemStack own;
-			// is it this player's TARDIS?
+			// is it this player's tardis?
 			ResultSetTardisID rstid = new ResultSetTardisID(plugin);
 			if (rstid.fromUUID(player.getUniqueId().toString())) {
-				// add button to view own saves (if in another player's TARDIS)
+				// add button to view own saves (if in another player's tardis)
 				if (rstid.getTardis_id() != id) {
 					own = new ItemStack(GUISaves.LOAD_MY_SAVES.getMaterial(), 1);
 					ItemMeta saves = own.getItemMeta();
@@ -138,7 +138,7 @@ public class TARDISSaveSignPageTwo {
 					saves.setCustomModelData(GUISaves.LOAD_MY_SAVES.getCustomModelData());
 					own.setItemMeta(saves);
 				} else {
-					// get TARDIS id of TARDIS player is in as they may have switched using the 'load my saves' button
+					// get tardis id of tardis player is in as they may have switched using the 'load my saves' button
 					int tid = TARDISInteriorPostioning.getTARDISIdFromLocation(player.getLocation());
 					if (tid != id) {
 						own = new ItemStack(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getMaterial(), 1);
@@ -155,29 +155,19 @@ public class TARDISSaveSignPageTwo {
 			page.setDisplayName(GUISaves.GO_TO_PAGE_1.getName());
 			page.setCustomModelData(GUISaves.GO_TO_PAGE_1.getCustomModelData());
 			prev.setItemMeta(page);
-			// add button to load TARDIS areas
+			// add button to load tardis areas
 			ItemStack map = new ItemStack(Material.MAP, 1);
 			ItemMeta switchto = map.getItemMeta();
-			switchto.setDisplayName("Load TARDIS areas");
+			switchto.setDisplayName("Load tardis areas");
 			switchto.setCustomModelData(GUISaves.LOAD_TARDIS_AREAS.getCustomModelData());
 			map.setItemMeta(switchto);
 			for (int m = 45; m < 54; m++) {
 				switch (m) {
-					case 45:
-						stack[m] = tool;
-						break;
-					case 47:
-						stack[m] = bucket;
-						break;
-					case 51:
-						stack[m] = prev;
-						break;
-					case 53:
-						stack[m] = map;
-						break;
-					default:
-						stack[m] = null;
-						break;
+					case 45 -> stack[m] = tool;
+					case 47 -> stack[m] = bucket;
+					case 51 -> stack[m] = prev;
+					case 53 -> stack[m] = map;
+					default -> stack[m] = null;
 				}
 			}
 		}

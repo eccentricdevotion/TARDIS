@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.transmat;
+package me.eccentric_nz.tardis.transmat;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUITransmat;
-import me.eccentric_nz.TARDIS.database.data.Transmat;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmatList;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.GUITransmat;
+import me.eccentric_nz.tardis.database.data.Transmat;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTransmatList;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

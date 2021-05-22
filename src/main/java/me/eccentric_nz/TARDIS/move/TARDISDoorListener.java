@@ -14,26 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.move;
+package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.api.event.TARDISEnterEvent;
-import me.eccentric_nz.TARDIS.api.event.TARDISExitEvent;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
-import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
-import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import multiworld.MultiWorldPlugin;
-import multiworld.api.MultiWorldAPI;
-import multiworld.api.MultiWorldWorldData;
-import multiworld.api.flag.FlagName;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.api.event.TARDISEnterEvent;
+import me.eccentric_nz.tardis.api.event.TARDISExitEvent;
+import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.mobfarming.TARDISPet;
+import me.eccentric_nz.tardis.travel.TARDISDoorLocation;
+import me.eccentric_nz.tardis.utility.TARDISItemRenamer;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
@@ -41,6 +37,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -144,25 +141,14 @@ public class TARDISDoorListener {
 	public boolean checkSurvival(World world) {
 		boolean bool = false;
 		switch (plugin.getWorldManager()) {
-			case MULTIVERSE:
-				bool = plugin.getMVHelper().isWorldSurvival(world);
-				break;
-			case MULTIWORLD:
-				MultiWorldAPI mw = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
-				MultiWorldWorldData mww = mw.getWorld(world.getName());
-				if (!mww.isOptionSet(FlagName.CREATIVEWORLD)) {
-					bool = true;
-				}
-				break;
-			case NONE:
-				bool = plugin.getPlanetsConfig().getString("planets." + world.getName() + ".gamemode").equalsIgnoreCase("SURVIVAL");
-				break;
+			case MULTIVERSE -> bool = plugin.getMVHelper().isWorldSurvival(world);
+			case NONE -> bool = Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + world.getName() + ".gamemode")).equalsIgnoreCase("SURVIVAL");
 		}
 		return bool;
 	}
 
 	/**
-	 * A method to transport player pets (tamed mobs) into and out of the TARDIS.
+	 * A method to transport player pets (tamed mobs) into and out of the tardis.
 	 *
 	 * @param pets   a list of the player's pets found nearby
 	 * @param l      the location to teleport pets to
@@ -178,26 +164,27 @@ public class TARDISDoorListener {
 			pl.setZ(l.getZ() + 1);
 		} else {
 			switch (d) {
-				case NORTH:
+				case NORTH -> {
 					pl.setX(l.getX() + 1);
 					pl.setZ(l.getZ() + 1);
-					break;
-				case WEST:
+				}
+				case WEST -> {
 					pl.setX(l.getX() + 1);
 					pl.setZ(l.getZ() - 1);
-					break;
-				case SOUTH:
+				}
+				case SOUTH -> {
 					pl.setX(l.getX() - 1);
 					pl.setZ(l.getZ() - 1);
-					break;
-				default:
+				}
+				default -> {
 					pl.setX(l.getX() - 1);
 					pl.setZ(l.getZ() + 1);
-					break;
+				}
 			}
 		}
 		for (TARDISPet pet : pets) {
 			plugin.setTardisSpawn(true);
+			assert w != null;
 			LivingEntity ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
 			if (ent.isDead()) {
 				ent.remove();
@@ -254,7 +241,7 @@ public class TARDISDoorListener {
 	}
 
 	/**
-	 * A method to give the TARDIS key to a player if the server is using a multi-inventory plugin.
+	 * A method to give the tardis key to a player if the server is using a multi-inventory plugin.
 	 *
 	 * @param player the player to give the key to
 	 */
@@ -267,14 +254,15 @@ public class TARDISDoorListener {
 			} else {
 				key = plugin.getConfig().getString("preferences.key");
 			}
+			assert key != null;
 			if (!key.equals("AIR")) {
 				PlayerInventory inv = player.getInventory();
 				Material m = Material.valueOf(key);
 				ItemStack oh = inv.getItemInOffHand();
-				if (!inv.contains(m) && (oh != null && !oh.getType().equals(m))) {
+				if (!inv.contains(m) && !oh.getType().equals(m)) {
 					ItemStack is = new ItemStack(m, 1);
 					TARDISItemRenamer ir = new TARDISItemRenamer(plugin, player, is);
-					ir.setName("TARDIS Key", true);
+					ir.setName("tardis Key", true);
 					inv.addItem(is);
 					player.updateInventory();
 					TARDISMessage.send(player, "KEY_REMIND");
@@ -291,23 +279,19 @@ public class TARDISDoorListener {
 	 * @return the angle needed to correct the yaw
 	 */
 	float adjustYaw(COMPASS d1, COMPASS d2) {
-		switch (d1) {
-			case EAST:
-				return adjustYaw[0][d2.ordinal()];
-			case SOUTH:
-				return adjustYaw[1][d2.ordinal()];
-			case WEST:
-				return adjustYaw[2][d2.ordinal()];
-			default:
-				return adjustYaw[3][d2.ordinal()];
-		}
+		return switch (d1) {
+			case EAST -> adjustYaw[0][d2.ordinal()];
+			case SOUTH -> adjustYaw[1][d2.ordinal()];
+			case WEST -> adjustYaw[2][d2.ordinal()];
+			default -> adjustYaw[3][d2.ordinal()];
+		};
 	}
 
 	/**
-	 * Get door location data for teleport entry and exit of the TARDIS.
+	 * Get door location data for teleport entry and exit of the tardis.
 	 *
 	 * @param doortype a reference to the door_type field in the doors table
-	 * @param id       the unique TARDIS identifier i the database
+	 * @param id       the unique tardis identifier i the database
 	 * @return an instance of the TARDISDoorLocation data class
 	 */
 	public TARDISDoorLocation getDoor(int doortype, int id) {
@@ -324,29 +308,30 @@ public class TARDISDoorListener {
 			World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
 			tdl.setW(cw);
 			Location tmp_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
+			assert tmp_loc != null;
 			int getx = tmp_loc.getBlockX();
 			int getz = tmp_loc.getBlockZ();
 			switch (d) {
-				case NORTH:
+				case NORTH -> {
 					// z -ve
 					tmp_loc.setX(getx + 0.5);
 					tmp_loc.setZ(getz - 0.5);
-					break;
-				case EAST:
+				}
+				case EAST -> {
 					// x +ve
 					tmp_loc.setX(getx + 1.5);
 					tmp_loc.setZ(getz + 0.5);
-					break;
-				case SOUTH:
+				}
+				case SOUTH -> {
 					// z +ve
 					tmp_loc.setX(getx + 0.5);
 					tmp_loc.setZ(getz + 1.5);
-					break;
-				case WEST:
+				}
+				case WEST -> {
 					// x -ve
 					tmp_loc.setX(getx - 0.5);
 					tmp_loc.setZ(getz + 0.5);
-					break;
+				}
 			}
 			tdl.setL(tmp_loc);
 		}
@@ -359,7 +344,7 @@ public class TARDISDoorListener {
 	 * @param p     a player to play the sound for
 	 * @param sound the sound to play
 	 * @param l     a location to play the sound at
-	 * @param m     whether to play the TARDIS sound or a Minecraft substitute
+	 * @param m     whether to play the tardis sound or a Minecraft substitute
 	 */
 	private void playDoorSound(Player p, int sound, Location l, boolean m) {
 		switch (sound) {

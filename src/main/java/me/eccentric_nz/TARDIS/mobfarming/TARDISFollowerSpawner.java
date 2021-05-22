@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.tardis.mobfarming;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.planets.TARDISAngelsAPI;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
@@ -45,18 +45,10 @@ public class TARDISFollowerSpawner {
 			pl.setZ(location.getZ() + 1);
 		} else {
 			switch (direction) {
-				case NORTH:
-					pl.add(1, 0, 1);
-					break;
-				case WEST:
-					pl.add(1, 0, -1);
-					break;
-				case SOUTH:
-					pl.add(-1, 0, -1);
-					break;
-				default:
-					pl.add(-1, 0, 1);
-					break;
+				case NORTH -> pl.add(1, 0, 1);
+				case WEST -> pl.add(1, 0, -1);
+				case SOUTH -> pl.add(-1, 0, -1);
+				default -> pl.add(-1, 0, 1);
 			}
 		}
 		TARDISWeepingAngelsAPI twa = TARDISAngelsAPI.getAPI(TARDIS.plugin);

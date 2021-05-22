@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.preferences;
+package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -50,7 +50,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener implements Listene
 	public void onPrefsMenuClick(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
+		if (name.equals(ChatColor.DARK_RED + "tardis Key Prefs Menu")) {
 			Player player = (Player) event.getWhoClicked();
 			int slot = event.getRawSlot();
 			if (slot >= 0 && slot < 27) {
@@ -122,7 +122,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener implements Listene
 	public void onKeyMenuClose(InventoryCloseEvent event) {
 		InventoryView view = event.getView();
 		String title = view.getTitle();
-		if (!title.equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
+		if (!title.equals(ChatColor.DARK_RED + "tardis Key Prefs Menu")) {
 			return;
 		}
 		ItemStack key = view.getItem(18);

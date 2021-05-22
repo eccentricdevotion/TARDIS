@@ -14,23 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.siegemode;
+package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -126,7 +126,7 @@ public class TARDISSiegeListener implements Listener {
 		String tl = tardis.getOwner();
 		ItemStack is = new ItemStack(Material.BROWN_MUSHROOM_BLOCK, 1);
 		ItemMeta im = is.getItemMeta();
-		im.setDisplayName("TARDIS Siege Cube");
+		im.setDisplayName("tardis Siege Cube");
 		im.setCustomModelData(10000002);
 		im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 2);
 		List<String> lore = new ArrayList<>();
@@ -299,7 +299,7 @@ public class TARDISSiegeListener implements Listener {
 		if (!rsc.resultSet()) {
 			return;
 		}
-		// must be the Time Lord or companion of this TARDIS
+		// must be the Time Lord or companion of this tardis
 		HashMap<String, Object> wheret = new HashMap<>();
 		wheret.put("tardis_id", rsc.getTardis_id());
 		ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
@@ -325,7 +325,7 @@ public class TARDISSiegeListener implements Listener {
 		}
 		int min = (plugin.getArtronConfig().getInt("full_charge") / 100) * plugin.getArtronConfig().getInt("siege_transfer");
 		if (!p.isSneaking()) {
-			// attempt to transfer Time Lord energy to the TARDIS
+			// attempt to transfer Time Lord energy to the tardis
 			// check player has a prefs record
 			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
 			if (!rsp.resultSet()) {
@@ -346,13 +346,13 @@ public class TARDISSiegeListener implements Listener {
 			plugin.getQueryFactory().alterEnergyLevel("tardis", min, wherea, p);
 			TARDISMessage.send(p, "SIEGE_TRANSFER", String.format("%s", min));
 		} else {
-			// attempt to unsiege the TARDIS
-			// check TARDIS has minimum energy level
+			// attempt to unsiege the tardis
+			// check tardis has minimum energy level
 			if (min > tardis.getArtron_level()) {
 				TARDISMessage.send(p, "SIEGE_POWER");
 				return;
 			}
-			// rebuild the TARDIS
+			// rebuild the tardis
 			Location current = b.getLocation();
 			BuildData bd = new BuildData(p.getUniqueId().toString());
 			bd.setDirection(rsc.getDirection());
@@ -371,9 +371,7 @@ public class TARDISSiegeListener implements Listener {
 			wheres.put("tardis_id", id);
 			// update the database
 			plugin.getQueryFactory().doUpdate("tardis", set, wheres);
-			if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-				plugin.getTrackerKeeper().getInSiegeMode().remove(id);
-			}
+			plugin.getTrackerKeeper().getInSiegeMode().remove(id);
 			if (plugin.getConfig().getBoolean("siege.texture")) {
 				new TARDISSiegeMode(plugin).changeTextures(tardis.getUuid().toString(), tardis.getSchematic(), p, false);
 			}
@@ -403,6 +401,6 @@ public class TARDISSiegeListener implements Listener {
 	}
 
 	private boolean hasSiegeCubeName(ItemStack is) {
-		return (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Siege Cube"));
+		return (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("tardis Siege Cube"));
 	}
 }

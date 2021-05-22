@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.data;
+package me.eccentric_nz.tardis.database.data;
 
 /**
  * @author eccentric_nz
@@ -48,16 +48,16 @@ public class Farm {
 	}
 
 	/**
-	 * Returns the numerical id of this TARDIS.
+	 * Returns the numerical id of this tardis.
 	 *
-	 * @return the TARDIS id
+	 * @return the tardis id
 	 */
 	public int getTardis_id() {
 		return tardis_id;
 	}
 
 	/**
-	 * Returns a String representation of the Apiary room bee spawn location in this TARDIS. It is in the form of {@code
+	 * Returns a String representation of the Apiary room bee spawn location in this tardis. It is in the form of {@code
 	 * World name:x:y:z}
 	 *
 	 * @return the Apiary room bee spawn location string, or an empty string if the room does not exist
@@ -67,7 +67,7 @@ public class Farm {
 	}
 
 	/**
-	 * Returns a String representation of the Aquarium room fish spawn location in this TARDIS. It is in the form of
+	 * Returns a String representation of the Aquarium room fish spawn location in this tardis. It is in the form of
 	 * {@code World name:x:y:z}
 	 *
 	 * @return the Aquarium room fish spawn location string, or an empty string if the room does not exist
@@ -77,7 +77,7 @@ public class Farm {
 	}
 
 	/**
-	 * Returns a String representation of the Bamboo room panda spawn location in this TARDIS. It is in the form of
+	 * Returns a String representation of the Bamboo room panda spawn location in this tardis. It is in the form of
 	 * {@code World name:x:y:z}
 	 *
 	 * @return the Bamboo room panda spawn location string, or an empty string if the room does not exist
@@ -87,7 +87,7 @@ public class Farm {
 	}
 
 	/**
-	 * Returns a String representation of the Birdcage room parrot spawn location in this TARDIS. It is in the form of
+	 * Returns a String representation of the Birdcage room parrot spawn location in this tardis. It is in the form of
 	 * {@code World name:x:y:z}
 	 *
 	 * @return the Birdcage room parrot spawn location string, or an empty string if the room does not exist
@@ -97,7 +97,7 @@ public class Farm {
 	}
 
 	/**
-	 * Returns a String representation of the Farm room mob spawn location in this TARDIS. It is in the form of {@code
+	 * Returns a String representation of the Farm room mob spawn location in this tardis. It is in the form of {@code
 	 * World name:x:y:z}
 	 *
 	 * @return the Farm room mob spawn location string, or an empty string if the room does not exist
@@ -107,7 +107,7 @@ public class Farm {
 	}
 
 	/**
-	 * Returns a String representation of the Hutch room rabbit spawn location in this TARDIS. It is in the form of
+	 * Returns a String representation of the Hutch room rabbit spawn location in this tardis. It is in the form of
 	 * {@code World name:x:y:z}
 	 *
 	 * @return the Hutch room rabbit spawn location string, or an empty string if the room does not exist
@@ -117,7 +117,7 @@ public class Farm {
 	}
 
 	/**
-	 * Returns a String representation of the Igloo room polar bear spawn location in this TARDIS. It is in the form of
+	 * Returns a String representation of the Igloo room polar bear spawn location in this tardis. It is in the form of
 	 * {@code World name:x:y:z}
 	 *
 	 * @return the Igloo room polar bear spawn location string, or an empty string if the room does not exist
@@ -127,7 +127,7 @@ public class Farm {
 	}
 
 	/**
-	 * Returns a String representation of the Stable room horse spawn location in this TARDIS. It is in the form of
+	 * Returns a String representation of the Stable room horse spawn location in this tardis. It is in the form of
 	 * {@code World name:x:y:z}
 	 *
 	 * @return the Stable room horse spawn location string, or an empty string if the room does not exist
@@ -137,7 +137,7 @@ public class Farm {
 	}
 
 	/**
-	 * Returns a String representation of the Stall room llama spawn location in this TARDIS. It is in the form of
+	 * Returns a String representation of the Stall room llama spawn location in this tardis. It is in the form of
 	 * {@code World name:x:y:z}
 	 *
 	 * @return the Stall room llama spawn location string, or an empty string if the room does not exist
@@ -147,7 +147,7 @@ public class Farm {
 	}
 
 	/**
-	 * Returns a String representation of the Village room villager spawn location in this TARDIS. It is in the form of
+	 * Returns a String representation of the Village room villager spawn location in this tardis. It is in the form of
 	 * {@code World name:x:y:z}
 	 *
 	 * @return the Village room villager spawn location string, or an empty string if the room does not exist

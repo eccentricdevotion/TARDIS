@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Advancement;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.companionGUI.TARDISCompanionAddInventory;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.Advancement;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -93,24 +93,19 @@ class TARDISAddCompanionCommand {
 				} else {
 					// get player from name
 					UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
-					if (oluuid != null) {
-						tid.put("tardis_id", id);
-						if (comps != null && !comps.isEmpty() && !comps.equalsIgnoreCase("everyone")) {
-							// add to the list
-							String newList = comps + ":" + oluuid.toString();
-							set.put("companions", newList);
-						} else {
-							// make a list
-							set.put("companions", oluuid.toString());
-						}
-						// are we doing an achievement?
-						if (plugin.getAchievementConfig().getBoolean("friends.enabled")) {
-							TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.FRIENDS, 1);
-							taf.doAchievement(1);
-						}
+					tid.put("tardis_id", id);
+					if (comps != null && !comps.isEmpty() && !comps.equalsIgnoreCase("everyone")) {
+						// add to the list
+						String newList = comps + ":" + oluuid;
+						set.put("companions", newList);
 					} else {
-						TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
-						return true;
+						// make a list
+						set.put("companions", oluuid.toString());
+					}
+					// are we doing an achievement?
+					if (plugin.getAchievementConfig().getBoolean("friends.enabled")) {
+						TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.FRIENDS, 1);
+						taf.doAchievement(1);
 					}
 				}
 				// if using WorldGuard, add them to the region membership

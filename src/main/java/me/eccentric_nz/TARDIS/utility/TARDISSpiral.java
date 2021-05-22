@@ -14,9 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
 import java.awt.*;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +29,9 @@ class TARDISSpiral {
 	static final List<Point> SPIRAL;
 
 	static {
-		SPIRAL = new ArrayList<Point>() {
+		SPIRAL = new ArrayList<>() {
 
+			@Serial
 			private static final long serialVersionUID = 3109256773218160485L;
 
 			{

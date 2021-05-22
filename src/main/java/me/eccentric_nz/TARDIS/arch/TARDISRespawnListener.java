@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.arch;
+package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -44,7 +44,7 @@ public class TARDISRespawnListener implements Listener {
 		UUID uuid = player.getUniqueId();
 		// check if we should re-arch this player
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISArchPersister(plugin).reArch(uuid), 5L);
-		// remove the player from the travellers table if they respawned in a non-TARDIS world
+		// remove the player from the travellers table if they respawned in a non-tardis world
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("uuid", uuid.toString());
 		ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);

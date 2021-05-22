@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.planets.TARDISAngelsAPI;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Bee;
@@ -87,10 +87,10 @@ public class TARDISSpawnListener implements Listener {
 	}
 
 	/**
-	 * Listens for entity spawn events. If WorldGuard is enabled it blocks mob-spawning inside the TARDIS, so this
+	 * Listens for entity spawn events. If WorldGuard is enabled it blocks mob-spawning inside the tardis, so this
 	 * checks to see if we are doing the spawning and un-cancels WorldGuard's setCancelled(true).
 	 * <p>
-	 * It also prevents natural mob spawning in the TARDIS DEEP_OCEAN biome.
+	 * It also prevents natural mob spawning in the tardis DEEP_OCEAN biome.
 	 *
 	 * @param event A creature spawn event
 	 */
@@ -98,7 +98,7 @@ public class TARDISSpawnListener implements Listener {
 	public void onEntitySpawn(CreatureSpawnEvent event) {
 		SpawnReason spawnReason = event.getSpawnReason();
 		Location l = event.getLocation();
-		if (l.getWorld().getName().contains("TARDIS")) {
+		if (l.getWorld().getName().contains("tardis")) {
 			if (event.getEntityType().equals(EntityType.ARMOR_STAND)) {
 				return;
 			}
@@ -111,7 +111,7 @@ public class TARDISSpawnListener implements Listener {
 				((Bee) event.getEntity()).setCannotEnterHiveTicks(random);
 				return;
 			}
-			// if not an allowable TARDIS spawn reason, cancel
+			// if not an allowable tardis spawn reason, cancel
 			if (!good_spawns.contains(spawnReason)) {
 				event.setCancelled(true);
 			}
@@ -171,7 +171,7 @@ public class TARDISSpawnListener implements Listener {
 				default:
 					break;
 			}
-			// only TARDIS locations
+			// only tardis locations
 			if (isTARDISBiome(l)) {
 				event.setCancelled(true);
 			}

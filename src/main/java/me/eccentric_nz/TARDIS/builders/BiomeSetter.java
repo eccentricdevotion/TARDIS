@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,6 +29,7 @@ import org.bukkit.block.Biome;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BiomeSetter {
 
@@ -42,6 +43,7 @@ public class BiomeSetter {
 		// load the chunk
 		int cx = bd.getLocation().getBlockX() >> 4;
 		int cz = bd.getLocation().getBlockZ() >> 4;
+		assert world != null;
 		if (!world.loadChunk(cx, cz, false)) {
 			world.loadChunk(cx, cz, true);
 		}
@@ -89,11 +91,12 @@ public class BiomeSetter {
 			chunks.add(chunk);
 			// reset biome and it's not The End
 			TARDISBiome blockBiome = TARDISStaticUtils.getBiomeAt(l);
-			if (blockBiome.equals(TARDISBiome.DEEP_OCEAN) || blockBiome.equals(TARDISBiome.THE_VOID) || (blockBiome.equals(TARDISBiome.THE_END) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END))) {
+			if (blockBiome.equals(TARDISBiome.DEEP_OCEAN) || blockBiome.equals(TARDISBiome.THE_VOID) || (blockBiome.equals(TARDISBiome.THE_END) && !Objects.requireNonNull(l.getWorld()).getEnvironment().equals(World.Environment.THE_END))) {
 				// reset the biome
 				for (int c = -3; c < 4; c++) {
 					for (int r = -3; r < 4; r++) {
 						try {
+							assert w != null;
 							w.setBiome(sbx + c, sbz + r, biome);
 							Chunk tmp_chunk = w.getChunkAt(new Location(w, sbx + c, 64, sbz + r));
 							if (!chunks.contains(tmp_chunk)) {

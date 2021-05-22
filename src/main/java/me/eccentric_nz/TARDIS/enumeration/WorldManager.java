@@ -14,16 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.tardis.enumeration;
 
 import org.bukkit.Bukkit;
 
 public enum WorldManager {
 
-	MULTIVERSE,
-	MULTIWORLD,
-	MYWORLDS,
-	NONE;
+	MULTIVERSE, MULTIWORLD, MYWORLDS, NONE;
 
 	public static WorldManager getWorldManager() {
 		if (Bukkit.getPluginManager().isPluginEnabled("Multiverse-Core")) {

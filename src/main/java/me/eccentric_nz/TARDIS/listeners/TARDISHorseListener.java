@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISHorse;
-import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.mobfarming.TARDISHorse;
+import me.eccentric_nz.tardis.travel.TARDISDoorLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -50,18 +50,16 @@ public class TARDISHorseListener implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onInteract(EntityInteractEvent event) {
 		Entity e = event.getEntity();
-		if (e instanceof AbstractHorse && !(e instanceof Llama)) {
-			AbstractHorse h = (AbstractHorse) e;
+		if (e instanceof AbstractHorse h && !(e instanceof Llama)) {
 			Material m = event.getBlock().getType();
 			Entity passenger = (h.getPassengers().size() > 0) ? h.getPassengers().get(0) : null;
 			if (passenger != null && m.equals(Material.OAK_PRESSURE_PLATE)) {
-				if (passenger instanceof Player) {
-					Player p = (Player) passenger;
+				if (passenger instanceof Player p) {
 					String pworld = p.getLocation().getWorld().getName();
 					HashMap<String, Object> wherep = new HashMap<>();
 					wherep.put("uuid", p.getUniqueId().toString());
 					ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
-					if (rst.resultSet() && pworld.contains("TARDIS")) {
+					if (rst.resultSet() && pworld.contains("tardis")) {
 						int id = rst.getTardis_id();
 						HashMap<String, Object> whered = new HashMap<>();
 						whered.put("tardis_id", id);
@@ -76,22 +74,22 @@ public class TARDISHorseListener implements Listener {
 						Location l = dl.getL();
 						// set the horse's direction as you would for a player when exiting
 						switch (dl.getD()) {
-							case NORTH:
+							case NORTH -> {
 								l.setZ(l.getZ() + 5);
 								l.setYaw(0.0f);
-								break;
-							case WEST:
+							}
+							case WEST -> {
 								l.setX(l.getX() + 5);
 								l.setYaw(270.0f);
-								break;
-							case SOUTH:
+							}
+							case SOUTH -> {
 								l.setZ(l.getZ() - 5);
 								l.setYaw(180.0f);
-								break;
-							default:
+							}
+							default -> {
 								l.setX(l.getX() - 5);
 								l.setYaw(90.0f);
-								break;
+							}
 						}
 						// save horse
 						TARDISHorse tmhor = new TARDISHorse();
@@ -105,8 +103,7 @@ public class TARDISHorseListener implements Listener {
 						tmhor.setHorseVariant(e.getType());
 						tmhor.setName(h.getCustomName());
 						tmhor.setTamed(true);
-						if (h instanceof ChestedHorse) {
-							ChestedHorse ch = (ChestedHorse) h;
+						if (h instanceof ChestedHorse ch) {
 							if (ch.isCarryingChest()) {
 								tmhor.setHasChest(true);
 							}

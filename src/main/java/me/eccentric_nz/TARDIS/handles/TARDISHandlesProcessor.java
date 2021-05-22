@@ -14,36 +14,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.handles;
+package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
-import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTeleportCommand;
-import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
-import me.eccentric_nz.TARDIS.database.data.Program;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
-import me.eccentric_nz.TARDIS.move.TARDISDoorOpener;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeMode;
-import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.artron.TARDISArtronIndicator;
+import me.eccentric_nz.tardis.artron.TARDISLampToggler;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.BiomeSetter;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.commands.handles.TARDISHandlesTeleportCommand;
+import me.eccentric_nz.tardis.control.TARDISPowerButton;
+import me.eccentric_nz.tardis.database.data.Program;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.destroyers.DestroyData;
+import me.eccentric_nz.tardis.enumeration.*;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.move.TARDISDoorCloser;
+import me.eccentric_nz.tardis.move.TARDISDoorOpener;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.siegemode.TARDISSiegeMode;
+import me.eccentric_nz.tardis.travel.TARDISRandomiserCircuit;
+import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -123,7 +123,7 @@ public class TARDISHandlesProcessor {
 				TARDISHandlesBlock next = getNext(i + 1);
 				if (next != null) {
 					UUID uuid = player.getUniqueId();
-					// get TARDIS
+					// get tardis
 					HashMap<String, Object> where = new HashMap<>();
 					where.put("uuid", uuid.toString());
 					ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
@@ -133,14 +133,9 @@ public class TARDISHandlesProcessor {
 						switch (thb) {
 							case DOOR:
 								switch (next) {
-									case CLOSE:
-										new TARDISDoorCloser(plugin, uuid, id).closeDoors();
-										break;
-									case OPEN:
-										new TARDISDoorOpener(plugin, uuid, id).openDoors();
-										break;
-									case LOCK:
-									case UNLOCK:
+									case CLOSE -> new TARDISDoorCloser(plugin, uuid, id).closeDoors();
+									case OPEN -> new TARDISDoorOpener(plugin, uuid, id).openDoors();
+									case LOCK, UNLOCK -> {
 										HashMap<String, Object> whered = new HashMap<>();
 										whered.put("tardis_id", id);
 										whered.put("door_type", 0);
@@ -158,7 +153,7 @@ public class TARDISHandlesProcessor {
 												TARDISMessage.handlesSend(player, "DOOR_LOCK", message);
 											}
 										}
-										break;
+									}
 								}
 								break;
 							case LIGHTS:
@@ -562,19 +557,19 @@ public class TARDISHandlesProcessor {
 								player.performCommand("tardis rebuild");
 								break;
 							case SCAN:
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid.toString() + " " + id);
+								plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id);
 								break;
 							case COMEHERE:
 								new TARDISHandlesTeleportCommand(plugin).beamMeUp(player);
 								break;
 							case TAKE_OFF:
-								// player must be in TARDIS
+								// player must be in tardis
 								if (plugin.getUtils().inTARDISWorld(player.getLocation())) {
-									plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid.toString() + " " + id);
+									plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid + " " + id);
 								}
 								break;
 							case LAND:
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid.toString() + " " + id);
+								plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid + " " + id);
 								break;
 						}
 					}
@@ -616,23 +611,14 @@ public class TARDISHandlesProcessor {
 							// get the current Artron level
 							ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
 							if (rs.fromUUID(player.getUniqueId().toString())) {
-								switch (comparison) {
-									case LESS_THAN:
-										process = (level < rs.getArtronLevel());
-										break;
-									case LESS_THAN_EQUAL:
-										process = (level <= rs.getArtronLevel());
-										break;
-									case GREATER_THAN:
-										process = (level > rs.getArtronLevel());
-										break;
-									case GREATER_THAN_EQUAL:
-										process = (level >= rs.getArtronLevel());
-										break;
-									default: // EQUALS
-										process = (level == rs.getArtronLevel());
-										break;
-								}
+								process = switch (comparison) {
+									case LESS_THAN -> (level < rs.getArtronLevel());
+									case LESS_THAN_EQUAL -> (level <= rs.getArtronLevel());
+									case GREATER_THAN -> (level > rs.getArtronLevel());
+									case GREATER_THAN_EQUAL -> (level >= rs.getArtronLevel());
+									default -> // EQUALS
+											(level == rs.getArtronLevel());
+								};
 								if (!process) {
 									return;
 								}

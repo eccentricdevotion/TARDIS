@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
+ * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the tardis can
  * travel to.
  *
  * @author eccentric_nz
@@ -48,7 +48,7 @@ public class ResultSetCompanions {
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
 	 *
 	 * @param plugin an instance of the main class.
-	 * @param id     the TARDIS id to get the companions for.
+	 * @param id     the tardis id to get the companions for.
 	 */
 	public ResultSetCompanions(TARDIS plugin, int id) {
 		this.plugin = plugin;
@@ -71,7 +71,7 @@ public class ResultSetCompanions {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				// always add the Time Lord of the TARDIS
+				// always add the Time Lord of the tardis
 				companions.add(UUID.fromString(rs.getString("uuid")));
 				String comps = rs.getString("companions");
 				if (!rs.wasNull() && !comps.isEmpty()) {

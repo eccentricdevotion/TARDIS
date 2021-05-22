@@ -14,37 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
 public enum GUIDestinationTerminal {
 
 	// Destination Terminal
-	STEP_10(1, 1, Material.WHITE_WOOL),
-	STEP_25(1, 3, Material.LIGHT_GRAY_WOOL),
-	STEP_50(1, 5, Material.GRAY_WOOL),
-	STEP_100(1, 7, Material.BLACK_WOOL),
-	NEGATIVE_X(1, 9, Material.RED_WOOL),
-	X(1, 13, Material.LIGHT_BLUE_WOOL),
-	POSITIVE_X(1, 17, Material.LIME_WOOL),
-	NEGATIVE_Z(1, 18, Material.RED_WOOL),
-	Z(1, 22, Material.YELLOW_WOOL),
-	POSITIVE_Z(1, 26, Material.LIME_WOOL),
-	NEGATIVE_MULTIPLIER(1, 27, Material.RED_WOOL),
-	BUTTON_MULTI(1, 31, Material.PURPLE_WOOL),
-	POSITIVE_MULTIPLIER(1, 35, Material.LIME_WOOL),
-	BUTTON_CURRENT(1, 36, Material.OAK_LEAVES),
-	BUTTON_NORM(1, 38, Material.DIRT),
-	NETHER(1, 40, Material.NETHERRACK),
-	THE_END(1, 42, Material.END_STONE),
-	BUTTON_SUB(1, 44, Material.WATER_BUCKET),
-	BUTTON_CHECK(1, 46, Material.PISTON),
-	BUTTON_DEST(1, 49, Material.BOOKSHELF),
-	BUTTON_CANCEL(1, 52, Material.TNT);
+	STEP_10(1, 1, Material.WHITE_WOOL), STEP_25(1, 3, Material.LIGHT_GRAY_WOOL), STEP_50(1, 5, Material.GRAY_WOOL), STEP_100(1, 7, Material.BLACK_WOOL), NEGATIVE_X(1, 9, Material.RED_WOOL), X(1, 13, Material.LIGHT_BLUE_WOOL), POSITIVE_X(1, 17, Material.LIME_WOOL), NEGATIVE_Z(1, 18, Material.RED_WOOL), Z(1, 22, Material.YELLOW_WOOL), POSITIVE_Z(1, 26, Material.LIME_WOOL), NEGATIVE_MULTIPLIER(1, 27, Material.RED_WOOL), BUTTON_MULTI(1, 31, Material.PURPLE_WOOL), POSITIVE_MULTIPLIER(1, 35, Material.LIME_WOOL), BUTTON_CURRENT(1, 36, Material.OAK_LEAVES), BUTTON_NORM(1, 38, Material.DIRT), NETHER(1, 40, Material.NETHERRACK), THE_END(1, 42, Material.END_STONE), BUTTON_SUB(1, 44, Material.WATER_BUCKET), BUTTON_CHECK(1, 46, Material.PISTON), BUTTON_DEST(1, 49, Material.BOOKSHELF), BUTTON_CANCEL(1, 52, Material.TNT);
 
 	private final int customModelData;
 	private final int slot;

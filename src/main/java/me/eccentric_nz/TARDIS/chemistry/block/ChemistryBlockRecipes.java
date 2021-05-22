@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.chemistry.block;
+package me.eccentric_nz.tardis.chemistry.block;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -35,6 +35,7 @@ public class ChemistryBlockRecipes {
 		for (RecipeData data : ChemistryBlock.RECIPES.values()) {
 			ItemStack is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
 			ItemMeta im = is.getItemMeta();
+			assert im != null;
 			im.setDisplayName(data.getDisplayName());
 			im.setLore(data.getLore());
 			im.setCustomModelData(data.getCustomModelData());

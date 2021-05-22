@@ -1,6 +1,6 @@
-package me.eccentric_nz.TARDIS.utility.logging;
+package me.eccentric_nz.tardis.utility.logging;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import org.bukkit.block.Block;
@@ -25,7 +25,7 @@ public class TARDISBlockLogger {
 		if (pm.isPluginEnabled("CoreProtect")) {
 			CoreProtect cp = (CoreProtect) pm.getPlugin("CoreProtect");
 			// Check that CoreProtect is loaded
-			if (cp == null || !(cp instanceof CoreProtect)) {
+			if (cp == null) {
 				return;
 			}
 			// Check that the API is enabled
@@ -44,10 +44,10 @@ public class TARDISBlockLogger {
 	}
 
 	public void logPlacement(Block block) {
-		coreProtectAPI.logPlacement("TARDIS", block.getLocation(), block.getType(), block.getBlockData());
+		coreProtectAPI.logPlacement("tardis", block.getLocation(), block.getType(), block.getBlockData());
 	}
 
 	public void logRemoval(Block block) {
-		coreProtectAPI.logRemoval("TARDIS", block.getLocation(), block.getType(), block.getBlockData());
+		coreProtectAPI.logRemoval("tardis", block.getLocation(), block.getType(), block.getBlockData());
 	}
 }

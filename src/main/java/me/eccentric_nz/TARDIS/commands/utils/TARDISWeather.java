@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.utils;
+package me.eccentric_nz.tardis.commands.utils;
 
-import me.eccentric_nz.TARDIS.enumeration.Weather;
+import me.eccentric_nz.tardis.enumeration.Weather;
 import org.bukkit.World;
 
 public class TARDISWeather {
@@ -37,15 +37,9 @@ public class TARDISWeather {
 
 	public static void setWeather(World world, Weather weather) {
 		switch (weather) {
-			case RAIN:
-				setRain(world);
-				break;
-			case THUNDER:
-				setThunder(world);
-				break;
-			default:
-				setClear(world);
-				break;
+			case RAIN -> setRain(world);
+			case THUNDER -> setThunder(world);
+			default -> setClear(world);
 		}
 	}
 }

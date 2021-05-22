@@ -14,21 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
 public enum GUISaves {
 
-	// TARDIS saves
-	REARRANGE_SAVES(5, 45, Material.ARROW),
-	LOAD_TARDIS_AREAS(1, 53, Material.MAP),
-	DELETE_SAVE(1, 47, Material.BUCKET),
-	LOAD_MY_SAVES(138, 49, Material.BOWL),
-	LOAD_SAVES_FROM_THIS_TARDIS(139, 49, Material.BOWL),
-	GO_TO_PAGE_1(11, 51, Material.ARROW),
-	GO_TO_PAGE_2(12, 51, Material.ARROW);
+	// tardis saves
+	REARRANGE_SAVES(5, 45, Material.ARROW), LOAD_TARDIS_AREAS(1, 53, Material.MAP), DELETE_SAVE(1, 47, Material.BUCKET), LOAD_MY_SAVES(138, 49, Material.BOWL), LOAD_SAVES_FROM_THIS_TARDIS(139, 49, Material.BOWL), GO_TO_PAGE_1(11, 51, Material.ARROW), GO_TO_PAGE_2(12, 51, Material.ARROW);
 
 	private final int customModelData;
 	private final int slot;

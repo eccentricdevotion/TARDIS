@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.schematic;
+package me.eccentric_nz.tardis.schematic;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -67,6 +67,7 @@ public class ResultSetArchiveButtons {
 				while (rs.next()) {
 					ItemStack is = new ItemStack(terracotta[i], 1);
 					ItemMeta im = is.getItemMeta();
+					assert im != null;
 					im.setDisplayName(rs.getString("name"));
 					List<String> lore = new ArrayList<>();
 					if (!rs.getString("description").isEmpty()) {

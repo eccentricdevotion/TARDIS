@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.utils;
+package me.eccentric_nz.tardis.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.*;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.commands.TARDISCompleter;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.*;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -33,6 +33,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.*;
@@ -66,7 +67,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("tardisworld")) {
 			if (sender == null) {
 				plugin.debug("Sender was null!");
@@ -159,15 +160,9 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
 					String name = args[1].toLowerCase(Locale.ROOT);
 					if (name.equals("gallifrey") || name.equals("siluria") || name.equals("skaro")) {
 						switch (name) {
-							case "gallifrey":
-								new TARDISGallifrey(plugin).loadTimeLordWorld();
-								break;
-							case "siluria":
-								new TARDISSiluria(plugin).loadSilurianUnderworld();
-								break;
-							default:
-								new TARDISSkaro(plugin).loadDalekWorld();
-								break;
+							case "gallifrey" -> new TARDISGallifrey(plugin).loadTimeLordWorld();
+							case "siluria" -> new TARDISSiluria(plugin).loadSilurianUnderworld();
+							default -> new TARDISSkaro(plugin).loadDalekWorld();
 						}
 						FileConfiguration pConfig = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "planets_template.yml"));
 						ConfigurationSection section = pConfig.getConfigurationSection("planets." + TARDISStringUtils.uppercaseFirst(name));
@@ -234,10 +229,10 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
 		return false;
 	}
 
-//    Function<String, Boolean> hasUpperCase = s -> s.chars().filter(c -> Character.isUpperCase(c)).count() > 0;
+	//    Function<String, Boolean> hasUpperCase = s -> s.chars().filter(c -> Character.isUpperCase(c)).count() > 0;
 
 	@Override
-	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 		String lastArg = args[args.length - 1];
 		if (args.length <= 1) {
 			List<String> part = partial(args[0], ROOT_SUBS);

@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -32,12 +32,10 @@ import java.net.URLConnection;
 public class TARDISUpdateChecker implements Runnable {
 
 	private final TARDIS plugin;
-	private final JsonParser jp;
 	private final CommandSender sender;
 
 	public TARDISUpdateChecker(TARDIS plugin, CommandSender sender) {
 		this.plugin = plugin;
-		jp = new JsonParser();
 		this.sender = sender;
 	}
 
@@ -83,17 +81,17 @@ public class TARDISUpdateChecker implements Runnable {
 	 */
 	private JsonObject fetchLatestJenkinsBuild() {
 		try {
-			// We're connecting to TARDIS's Jenkins REST api
+			// We're connecting to tardis's Jenkins REST api
 			URL url = new URL("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/api/json");
 			// Create a connection
 			URLConnection request = url.openConnection();
 			request.setRequestProperty("User-Agent", "TARDISPlugin");
 			request.connect();
 			// Convert to a JSON object
-			JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+			JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
 			return root.getAsJsonObject();
 		} catch (Exception ex) {
-			plugin.debug("Failed to check for a snapshot update on TARDIS Jenkins.");
+			plugin.debug("Failed to check for a snapshot update on tardis Jenkins.");
 		}
 		return null;
 	}

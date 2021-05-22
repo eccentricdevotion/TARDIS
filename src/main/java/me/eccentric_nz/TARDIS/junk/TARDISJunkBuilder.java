@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.junk;
+package me.eccentric_nz.tardis.junk;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.utility.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -74,8 +74,7 @@ public class TARDISJunkBuilder implements Runnable {
 				i++;
 				if (i == 2) {
 					plugin.getUtils().getJunkTravellers(loc).forEach((e) -> {
-						if (e instanceof Player) {
-							Player p = (Player) e;
+						if (e instanceof Player p) {
 							TARDISSounds.playTARDISSound(p, "junk_land", 5L);
 						}
 					});
@@ -93,7 +92,7 @@ public class TARDISJunkBuilder implements Runnable {
 						floor_type = Material.LIGHT_GRAY_WOOL;
 						wall_type = Material.ORANGE_WOOL;
 					}
-					// build TARDIS and remember BLOCKS
+					// build tardis and remember BLOCKS
 					Material type;
 					BlockData data;
 					Block postTerminalBlock = null;
@@ -160,18 +159,15 @@ public class TARDISJunkBuilder implements Runnable {
 									plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 4, trip, 0);
 								}
 								switch (type) {
-									case SPONGE:
-									case AIR:
-										TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
-										break;
-									case CAKE:
+									case SPONGE, AIR -> TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+									case CAKE -> {
 										BlockData handbrake = Material.LEVER.createBlockData();
 										Switch lever = (Switch) handbrake;
 										lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
 										lever.setFacing(BlockFace.SOUTH);
 										TARDISBlockSetters.setBlockAndRemember(world, x, y, z, lever, bd.getTardisID());
-										break;
-									case ORANGE_WOOL:
+									}
+									case ORANGE_WOOL -> {
 										BlockData stem;
 										if (wall_type.equals(Material.ORANGE_WOOL)) {
 											stem = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
@@ -179,13 +175,9 @@ public class TARDISJunkBuilder implements Runnable {
 											stem = wall_type.createBlockData();
 										}
 										TARDISBlockSetters.setBlockAndRemember(world, x, y, z, stem, bd.getTardisID());
-										break;
-									case LIGHT_GRAY_WOOL:
-										TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
-										break;
-									default:
-										TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
-										break;
+									}
+									case LIGHT_GRAY_WOOL -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
+									default -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
 								}
 							}
 						}
@@ -203,8 +195,7 @@ public class TARDISJunkBuilder implements Runnable {
 				} else if (plugin.getConfig().getBoolean("junk.particles")) {
 					// just animate particles
 					plugin.getUtils().getJunkTravellers(loc).forEach((e) -> {
-						if (e instanceof Player) {
-							Player p = (Player) e;
+						if (e instanceof Player p) {
 							TARDISParticles.sendVortexParticles(effectsLoc, p);
 						}
 					});

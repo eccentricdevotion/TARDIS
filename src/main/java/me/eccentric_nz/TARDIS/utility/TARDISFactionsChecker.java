@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
  * The Cloister Bell is a signal to the crew that a galaxy-scale catastrophe is occurring or a warning that they are in
  * immediate danger. In short it is a call to "battle-stations." Though it is located in the Cloister Room, the Bell can
- * be heard from anywhere in a TARDIS.
+ * be heard from anywhere in a tardis.
  *
  * @author eccentric_nz
  */

@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.tardis.commands.tardis;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunks;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetChunks;
+import me.eccentric_nz.tardis.database.resultset.ResultSetLamps;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.Schematic;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * The TARDIS scanner was the main method for the occupants of the vessel to observe the outside environment. The
+ * The tardis scanner was the main method for the occupants of the vessel to observe the outside environment. The
  * appearance and specifications of the scanner system varied significantly in the course of the Doctor's travels.
  *
  * @author eccentric_nz
@@ -56,8 +56,8 @@ class TARDISLampsCommand {
 	/**
 	 * Updates TARDISes from pre-malfunction plugin versions so that the lamps can flash.
 	 *
-	 * @param owner the Timelord of the TARDIS
-	 * @return true if the TARDIS has not been updated, otherwise false
+	 * @param owner the Timelord of the tardis
+	 * @return true if the tardis has not been updated, otherwise false
 	 */
 
 	boolean addLampBlocks(Player owner) {
@@ -82,7 +82,7 @@ class TARDISLampsCommand {
 				wheredel.put("tardis_id", id);
 				plugin.getQueryFactory().doDelete("lamps", wheredel);
 			}
-			// get the TARDIS console chunks
+			// get the tardis console chunks
 			HashMap<String, Object> wherec = new HashMap<>();
 			wherec.put("tardis_id", id);
 			ResultSetChunks rsc = new ResultSetChunks(plugin, wherec, true);

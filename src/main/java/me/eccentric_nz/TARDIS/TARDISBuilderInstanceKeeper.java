@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS;
+package me.eccentric_nz.tardis;
 
 import com.google.common.collect.Sets;
-import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
-import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
+import me.eccentric_nz.tardis.builders.TARDISBuildData;
+import me.eccentric_nz.tardis.chameleon.TARDISStainedGlassLookup;
 import org.bukkit.Location;
 import org.bukkit.Material;
 

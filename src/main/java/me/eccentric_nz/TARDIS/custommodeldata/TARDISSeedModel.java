@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.tardis.custommodeldata;
 
 import org.bukkit.Material;
 
@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class TARDISSeedModel {
 
-	public static final HashMap<Material, Integer> materialMap = new HashMap<Material, Integer>() {
+	public static final HashMap<Material, Integer> materialMap = new HashMap<>() {
 		{
 			// ars
 			put(Material.QUARTZ_BLOCK, 14);
@@ -74,18 +74,12 @@ public class TARDISSeedModel {
 			put(Material.CRYING_OBSIDIAN, 43);
 			// copper
 			put(Material.WARPED_PLANKS, 42);
-//            // custom
-//            put(Material.MUSHROOM_STEM, 45);
-//            // templates
-//            put(Material.COBBLESTONE, 41);
-//            // archive
-//            put(Material.BONE_BLOCK, 42);
 		}
 	};
 
-	public static final HashMap<String, Integer> consoleMap = new HashMap<String, Integer>() {
+	public static final HashMap<String, Integer> consoleMap = new HashMap<>() {
 		{
-			put("ARS", 14);
+			put("ars", 14);
 			put("BIGGER", 15);
 			put("BUDGET", 16);
 			put("CORAL", 17);

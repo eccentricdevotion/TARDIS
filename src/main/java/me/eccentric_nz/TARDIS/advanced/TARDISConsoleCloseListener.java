@@ -14,24 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.advanced;
+package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
-import me.eccentric_nz.TARDIS.travel.TARDISRescue;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.builders.TARDISEmergencyRelocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
+import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.*;
+import me.eccentric_nz.tardis.flight.TARDISLand;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.travel.TARDISRandomiserCircuit;
+import me.eccentric_nz.tardis.travel.TARDISRescue;
+import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -72,9 +72,9 @@ public class TARDISConsoleCloseListener implements Listener {
 	public void onInventoryClose(InventoryCloseEvent event) {
 		InventoryView view = event.getView();
 		String inv_name = view.getTitle();
-		if (inv_name.equals(ChatColor.DARK_RED + "TARDIS Console")) {
+		if (inv_name.equals(ChatColor.DARK_RED + "tardis Console")) {
 			Player p = ((Player) event.getPlayer());
-			// get the TARDIS the player is in
+			// get the tardis the player is in
 			HashMap<String, Object> wheret = new HashMap<>();
 			wheret.put("uuid", p.getUniqueId().toString());
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -104,7 +104,7 @@ public class TARDISConsoleCloseListener implements Listener {
 						return;
 					}
 				}
-				// get TARDIS's current location
+				// get tardis's current location
 				HashMap<String, Object> wherecl = new HashMap<>();
 				wherecl.put("tardis_id", id);
 				ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -157,7 +157,7 @@ public class TARDISConsoleCloseListener implements Listener {
 											set_next.put("y", l.getBlockY());
 											set_next.put("z", l.getBlockZ());
 											set_next.put("submarine", 0);
-											// should be setting direction of TARDIS
+											// should be setting direction of tardis
 											if (!rsa.getArea().getDirection().isEmpty()) {
 												set_next.put("direction", rsa.getArea().getDirection());
 											} else {
@@ -313,7 +313,7 @@ public class TARDISConsoleCloseListener implements Listener {
 									TARDISMessage.send(p, "ADV_BLANK");
 								}
 							}
-						} else if (mat.equals(Material.GLOWSTONE_DUST) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Randomiser Circuit")) {
+						} else if (mat.equals(Material.GLOWSTONE_DUST) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("tardis Randomiser Circuit")) {
 							// Randomiser Circuit
 							Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(p, rsc.getDirection());
 							if (l != null) {
@@ -326,9 +326,7 @@ public class TARDISConsoleCloseListener implements Listener {
 								set_next.put("direction", rsc.getDirection().toString());
 								boolean sub = plugin.getTrackerKeeper().getSubmarine().contains(id);
 								set_next.put("submarine", (sub) ? 1 : 0);
-								if (plugin.getTrackerKeeper().getSubmarine().contains(id)) {
-									plugin.getTrackerKeeper().getSubmarine().remove(id);
-								}
+								plugin.getTrackerKeeper().getSubmarine().remove(id);
 								where_next.put("tardis_id", id);
 								plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);
 								plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("random_circuit"));

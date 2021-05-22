@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.sonic.actions;
+package me.eccentric_nz.tardis.sonic.actions;
 
 import com.google.common.collect.Sets;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlock;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
+import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlock;
+import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -65,7 +65,7 @@ public class TARDISSonicRedstone {
 					if (bisected.getHalf().equals(Bisected.Half.TOP)) {
 						tmp = block.getRelative(BlockFace.DOWN);
 					}
-					// not TARDIS doors!
+					// not tardis doors!
 					String doorloc = tmp.getLocation().getWorld().getName() + ":" + tmp.getLocation().getBlockX() + ":" + tmp.getLocation().getBlockY() + ":" + tmp.getLocation().getBlockZ();
 					HashMap<String, Object> wheredoor = new HashMap<>();
 					wheredoor.put("door_location", doorloc);
