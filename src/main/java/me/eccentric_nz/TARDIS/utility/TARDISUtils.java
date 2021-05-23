@@ -25,7 +25,10 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
@@ -66,7 +69,6 @@ public class TARDISUtils {
         String[] data = chunk.split(":");
         World room_world = TARDISStaticLocationGetters.getWorld(chunk);
         ChunkGenerator gen = room_world.getGenerator();
-        WorldType wt = room_world.getWorldType();
         String dn = "TARDIS_TimeVortex";
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name");
@@ -89,7 +91,7 @@ public class TARDISUtils {
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
-        boolean special = ((name.equals(dn) || name.equals("TARDIS_Zero_Room")) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        boolean special = ((name.equals(dn) || name.equals("TARDIS_Zero_Room")) && gen instanceof TARDISChunkGenerator);
         return name.equals("TARDIS_WORLD_" + player.getName()) || special;
     }
 
@@ -103,7 +105,7 @@ public class TARDISUtils {
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
-        boolean special = (name.equals(dn) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        boolean special = (name.equals(dn) && gen instanceof TARDISChunkGenerator);
         return name.startsWith("TARDIS_WORLD_") || special;
     }
 
