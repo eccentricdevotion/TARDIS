@@ -21,6 +21,8 @@ import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
+
 /**
  * The distinctive tardis sound effect - a cyclic wheezing, groaning noise - was originally created in the BBC
  * Radiophonic Workshop by Brian Hodgson. He produced the effect by dragging a set of house keys along the strings of an
@@ -61,7 +63,7 @@ public class TARDISSounds {
 	 * @param volume The volume to play the sound at
 	 */
 	public static void playTARDISSound(Location l, String s, float volume) {
-		l.getWorld().playSound(l, s, VOLUME * volume, 1.0f);
+		Objects.requireNonNull(l.getWorld()).playSound(l, s, VOLUME * volume, 1.0f);
 	}
 
 	/**
@@ -71,7 +73,7 @@ public class TARDISSounds {
 	 * @param s The sound to play
 	 */
 	public static void playTARDISSound(Location l, String s) {
-		l.getWorld().playSound(l, s, VOLUME, 1.0f);
+		Objects.requireNonNull(l.getWorld()).playSound(l, s, VOLUME, 1.0f);
 	}
 
 	/**

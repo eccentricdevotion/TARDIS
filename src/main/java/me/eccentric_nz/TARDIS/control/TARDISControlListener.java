@@ -91,8 +91,8 @@ public class TARDISControlListener implements Listener {
 	}
 
 	/**
-	 * Listens for player interaction with the tardis console button. If the button is clicked it will return a random
-	 * destination based on the settings of the four tardis console repeaters.
+	 * Listens for player interaction with the TARDIS console button. If the button is clicked it will return a random
+	 * destination based on the settings of the four TARDIS console repeaters.
 	 *
 	 * @param event the player clicking a block
 	 */
@@ -151,8 +151,8 @@ public class TARDISControlListener implements Listener {
 							TARDISMessage.send(player, "SIEGE_NO_CONTROL");
 							return;
 						}
-						boolean lightsOn = tardis.isLightsOn();
-						if (!lightsOn && type == 12 && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
+						boolean lights = tardis.isLightsOn();
+						if (!lights && type == 12 && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
 							TARDISMessage.send(player, "POWER_DOWN");
 							return;
 						}
@@ -207,7 +207,7 @@ public class TARDISControlListener implements Listener {
 									aec.setContents(items);
 									player.openInventory(aec);
 									break;
-								case 10: // ars sign
+								case 10: // ARS sign
 									if (!hb) {
 										TARDISMessage.send(player, "ARS_NO_TRAVEL");
 										return;
@@ -260,7 +260,7 @@ public class TARDISControlListener implements Listener {
 									player.openInventory(tmpl);
 									break;
 								case 12: // Control room light switch
-									new TARDISLightSwitch(plugin, id, lightsOn, player, tardis.getSchematic().hasLanterns()).flickSwitch();
+									new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().hasLanterns()).flickSwitch();
 									break;
 								case 13: // TIS
 									new TARDISInfoMenuButton(plugin, player).clickButton();
@@ -296,6 +296,7 @@ public class TARDISControlListener implements Listener {
 											for (ItemStack is : stack) {
 												if (is != null && is.hasItemMeta()) {
 													ItemMeta im = is.getItemMeta();
+													assert im != null;
 													if (im.hasDisplayName()) {
 														if (is.getType().equals(Material.FILLED_MAP)) {
 															GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
@@ -369,7 +370,7 @@ public class TARDISControlListener implements Listener {
 									} else {
 										// controls GUI
 										ItemStack[] controls = new TARDISControlInventory(plugin, player.getUniqueId()).getControls();
-										Inventory cgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis Control Menu");
+										Inventory cgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Control Menu");
 										cgui.setContents(controls);
 										player.openInventory(cgui);
 									}
@@ -398,11 +399,12 @@ public class TARDISControlListener implements Listener {
 									} else {
 										// check if item in hand is a Handles program disk
 										ItemStack disk = player.getInventory().getItemInMainHand();
-										if (disk != null && disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
+										if (disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
 											ItemMeta dim = disk.getItemMeta();
+											assert dim != null;
 											if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
-												// get the programId from the disk
-												int pid = TARDISNumberParsers.parseInt(dim.getLore().get(1));
+												// get the program_id from the disk
+												int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(dim.getLore()).get(1));
 												// query the database
 												ResultSetProgram rsp = new ResultSetProgram(plugin, pid);
 												if (rsp.resultSet()) {
@@ -412,7 +414,7 @@ public class TARDISControlListener implements Listener {
 													HashMap<String, Object> set = new HashMap<>();
 													set.put("checked", 0);
 													HashMap<String, Object> wherep = new HashMap<>();
-													wherep.put("programId", pid);
+													wherep.put("program_id", pid);
 													plugin.getQueryFactory().doUpdate("programs", set, wherep);
 													player.getInventory().setItemInMainHand(null);
 												}
@@ -482,15 +484,15 @@ public class TARDISControlListener implements Listener {
 										plugin.getTrackerKeeper().getCloisterBells().remove(id);
 									} else {
 										TARDISCloisterBell bell = new TARDISCloisterBell(plugin, Integer.MAX_VALUE, id, plugin.getServer().getPlayer(tardis.getUuid()));
-										int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
-										bell.setTask(taskID);
-										plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
+										int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
+										bell.setTask(taskId);
+										plugin.getTrackerKeeper().getCloisterBells().put(id, taskId);
 									}
 									break;
 								case 38:
 									// weather menu
 									ItemStack[] weather = new TARDISWeatherInventory(plugin).getWeatherButtons();
-									Inventory forecast = plugin.getServer().createInventory(player, 9, ChatColor.DARK_RED + "tardis Weather Menu");
+									Inventory forecast = plugin.getServer().createInventory(player, 9, ChatColor.DARK_RED + "TARDIS Weather Menu");
 									forecast.setContents(weather);
 									player.openInventory(forecast);
 									break;

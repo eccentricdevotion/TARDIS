@@ -35,8 +35,9 @@ class TARDISEPSMessageCommand {
 		String message;
 		int count = args.length;
 		ItemStack bq = player.getInventory().getItemInMainHand();
-		if (bq != null && (bq.getType().equals(Material.WRITABLE_BOOK) || bq.getType().equals(Material.WRITTEN_BOOK))) {
+		if (bq.getType().equals(Material.WRITABLE_BOOK) || bq.getType().equals(Material.WRITTEN_BOOK)) {
 			BookMeta bm = (BookMeta) bq.getItemMeta();
+			assert bm != null;
 			List<String> pages = bm.getPages();
 			StringBuilder sb = new StringBuilder();
 			pages.forEach((s) -> sb.append(s).append(" "));

@@ -51,7 +51,7 @@ public class TARDISSchematicListener implements Listener {
 		Player player = event.getPlayer();
 		UUID uuid = player.getUniqueId();
 		ItemStack itemStack = player.getInventory().getItemInMainHand();
-		if (itemStack == null || !itemStack.getType().equals(wand) || !player.hasPermission("tardis.admin") || !isWand(itemStack)) {
+		if (!itemStack.getType().equals(wand) || !player.hasPermission("tardis.admin") || !isWand(itemStack)) {
 			return;
 		}
 		Block b = event.getClickedBlock();
@@ -85,6 +85,7 @@ public class TARDISSchematicListener implements Listener {
 			return false;
 		}
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		if (!im.hasDisplayName()) {
 			return false;
 		}

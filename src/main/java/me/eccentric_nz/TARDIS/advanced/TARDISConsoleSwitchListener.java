@@ -78,6 +78,7 @@ public class TARDISConsoleSwitchListener implements Listener {
 					ItemStack item = view.getItem(slot);
 					if (item != null && item.getType().equals(Material.GLOWSTONE_DUST) && item.hasItemMeta()) {
 						ItemMeta im = item.getItemMeta();
+						assert im != null;
 						int cmd = (im.hasCustomModelData()) ? im.getCustomModelData() : 10001963;
 						if (gui_circuits.contains(cmd)) {
 							HashMap<String, Object> where = new HashMap<>();

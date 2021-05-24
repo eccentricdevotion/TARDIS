@@ -18,8 +18,8 @@ package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
@@ -43,6 +43,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class TARDISSchematicCommand implements CommandExecutor {
@@ -103,7 +104,8 @@ public class TARDISSchematicCommand implements CommandExecutor {
 				}
 				// get the world
 				World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
-				String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
+				String chk_w = Objects.requireNonNull(plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld()).getName();
+				assert w != null;
 				if (!w.getName().equals(chk_w)) {
 					TARDISMessage.send(player, "SCHM_WORLD");
 					return true;
@@ -153,7 +155,8 @@ public class TARDISSchematicCommand implements CommandExecutor {
 				}
 				// get the world
 				World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
-				String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
+				String chk_w = Objects.requireNonNull(plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld()).getName();
+				assert w != null;
 				if (!w.getName().equals(chk_w)) {
 					TARDISMessage.send(player, "SCHM_WORLD");
 					return true;
@@ -210,7 +213,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
 							Block b = w.getBlockAt(r, l, c);
 							// check for paintings
 							Location bLocation = b.getLocation();
-							for (Entity entity : bLocation.getWorld().getNearbyEntities(bLocation, 1.25, 1.25, 1.25)) {
+							for (Entity entity : Objects.requireNonNull(bLocation.getWorld()).getNearbyEntities(bLocation, 1.25, 1.25, 1.25)) {
 								if (entity instanceof Painting) {
 									Location ploc = entity.getLocation();
 									if (!entities.contains(entity)) {
@@ -300,7 +303,8 @@ public class TARDISSchematicCommand implements CommandExecutor {
 				}
 				// get the world
 				World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
-				String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
+				String chk_w = Objects.requireNonNull(plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld()).getName();
+				assert w != null;
 				if (!w.getName().equals(chk_w)) {
 					TARDISMessage.send(player, "SCHM_WORLD");
 					return true;
@@ -329,9 +333,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
 								Block b = w.getBlockAt(r, l, c);
 								if (b.getType().equals(from)) {
 									BlockState state = b.getState();
-									if (state instanceof BlockState) {
-										plugin.getTardisHelper().removeTileEntity(state);
-									}
+									plugin.getTardisHelper().removeTileEntity(state);
 									b.setType(to);
 								}
 							}

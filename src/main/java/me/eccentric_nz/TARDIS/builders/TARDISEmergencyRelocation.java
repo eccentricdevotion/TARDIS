@@ -29,6 +29,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -54,7 +55,7 @@ public class TARDISEmergencyRelocation {
 			if (emergency != null) {
 				BuildData bd = new BuildData(p.getUniqueId().toString());
 				bd.setLocation(emergency);
-				bd.setTardisID(id);
+				bd.setTardisId(id);
 				bd.setDirection(COMPASS.EAST);
 				bd.setMalfunction(false);
 				bd.setSubmarine(false);
@@ -68,7 +69,7 @@ public class TARDISEmergencyRelocation {
 				HashMap<String, Object> wherec = new HashMap<>();
 				wherec.put("tardis_id", id);
 				HashMap<String, Object> setc = new HashMap<>();
-				setc.put("world", emergency.getWorld().getName());
+				setc.put("world", Objects.requireNonNull(emergency.getWorld()).getName());
 				setc.put("x", emergency.getBlockX());
 				setc.put("y", emergency.getBlockY());
 				setc.put("z", emergency.getBlockZ());

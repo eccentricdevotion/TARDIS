@@ -117,7 +117,7 @@ public class TARDISVortexPersister {
 								dd.setLocation(location);
 								dd.setDirection(rsb.getDirection());
 								dd.setSubmarine(rsb.isSubmarine());
-								dd.setTardisID(id);
+								dd.setTardisId(id);
 								dd.setTardisBiome(null);
 								dd.setSiege(false);
 								dd.setThrottle(SpaceTimeThrottle.REBUILD);
@@ -136,7 +136,7 @@ public class TARDISVortexPersister {
 						ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
 						if (rsc.resultSet()) {
 							BuildData bd = new BuildData(uuid.toString());
-							bd.setTardisID(id);
+							bd.setTardisId(id);
 							Location location = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
 							bd.setLocation(location);
 							OfflinePlayer olp = plugin.getServer().getOfflinePlayer(uuid);

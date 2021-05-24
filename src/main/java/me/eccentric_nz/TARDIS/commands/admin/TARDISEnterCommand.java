@@ -86,6 +86,7 @@ class TARDISEnterCommand {
 				String doorLocStr = rsi.getDoorLocation();
 				World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
 				Location tardis_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
+				assert tardis_loc != null;
 				int getx = tardis_loc.getBlockX();
 				int getz = tardis_loc.getBlockZ();
 				switch (innerD) {

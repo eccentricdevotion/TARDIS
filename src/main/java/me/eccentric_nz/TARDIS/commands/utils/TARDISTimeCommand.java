@@ -53,10 +53,6 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
 			Player player;
 			if (sender instanceof Player) {
 				player = (Player) sender;
-				if (player == null) {
-					TARDISMessage.send(sender, "CMD_PLAYER");
-					return true;
-				}
 				if (!player.hasPermission("tardis.admin")) {
 					TARDISMessage.send(sender, "NO_PERMS");
 					return true;
@@ -90,6 +86,7 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
 						return true;
 					}
 				}
+				assert world != null;
 				world.setTime(ticks);
 				TARDISMessage.send(player, "TIME_SET", String.format("%s", ticks), world.getName());
 				return true;

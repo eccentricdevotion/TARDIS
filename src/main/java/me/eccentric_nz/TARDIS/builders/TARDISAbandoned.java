@@ -81,7 +81,7 @@ public class TARDISAbandoned {
 		bd.setOutside(true);
 		bd.setRebuild(false);
 		bd.setSubmarine(l.getBlock().getType().equals(Material.WATER));
-		bd.setTardisID(lastInsertId);
+		bd.setTardisId(lastInsertId);
 		bd.setPlayer(player);
 		bd.setThrottle(SpaceTimeThrottle.REBUILD);
 		plugin.getPM().callEvent(new TARDISCreationEvent(null, lastInsertId, l));

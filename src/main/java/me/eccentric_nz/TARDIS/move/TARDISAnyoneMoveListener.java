@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import com.onarandombox.MultiverseCore.exceptions.PropertyDoesNotExistException;
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
@@ -50,7 +49,7 @@ public class TARDISAnyoneMoveListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPlayerMoveToFromTARDIS(PlayerMoveEvent event) throws PropertyDoesNotExistException {
+	public void onPlayerMoveToFromTARDIS(PlayerMoveEvent event) {
 		Player p = event.getPlayer();
 		Location l = new Location(Objects.requireNonNull(event.getTo()).getWorld(), event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ(), 0.0f, 0.0f);
 		Location loc = p.getLocation(); // Grab Location

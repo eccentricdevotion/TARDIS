@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
@@ -64,6 +64,7 @@ public class TARDISHandlesListener implements Listener {
 		// drop a custom BIRCH_BUTTON
 		ItemStack is = new ItemStack(Material.BIRCH_BUTTON, 1);
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		im.setDisplayName("Handles");
 		im.setLore(Arrays.asList("Cyberhead from the", "Maldovar Market"));
 		im.setCustomModelData(10000001);
@@ -83,6 +84,7 @@ public class TARDISHandlesListener implements Listener {
 			return;
 		}
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		if (im.hasDisplayName() && im.getDisplayName().equals("Handles")) {
 			// can only be placed in an item frame
 			event.setCancelled(true);

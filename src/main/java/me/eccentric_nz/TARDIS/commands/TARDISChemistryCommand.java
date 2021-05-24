@@ -137,6 +137,7 @@ public class TARDISChemistryCommand implements CommandExecutor {
 		ItemStack result = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
 		ItemMeta im = result.getItemMeta();
 		RecipeData data = ChemistryBlock.RECIPES.get(which);
+		assert im != null;
 		im.setDisplayName(data.getDisplayName());
 		im.setLore(data.getLore());
 		im.setCustomModelData(data.getCustomModelData());

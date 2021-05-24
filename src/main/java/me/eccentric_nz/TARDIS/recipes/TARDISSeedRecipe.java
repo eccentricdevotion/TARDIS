@@ -69,6 +69,7 @@ public class TARDISSeedRecipe {
 			is = new ItemStack(Material.MUSHROOM_STEM, 1);
 		}
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
 		im.setDisplayName(ChatColor.GOLD + "tardis Seed Block");
 		im.setCustomModelData(10000000 + model);

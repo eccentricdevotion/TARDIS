@@ -130,7 +130,7 @@ class TARDISMakeHerBlueCommand {
 		bd.setPlayer(player);
 		bd.setRebuild(true);
 		bd.setSubmarine(rsc.isSubmarine());
-		bd.setTardisID(id);
+		bd.setTardisId(id);
 		bd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
 		bd.setThrottle(SpaceTimeThrottle.REBUILD);
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 20L);

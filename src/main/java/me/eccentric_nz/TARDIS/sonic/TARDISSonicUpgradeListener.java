@@ -33,6 +33,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -44,7 +45,7 @@ public class TARDISSonicUpgradeListener implements Listener {
 	private final HashMap<Integer, String> customModelData = new HashMap<>();
 
 	public TARDISSonicUpgradeListener(TARDISPlugin plugin) {
-		String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
+		String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result")).split(":");
 		sonicMaterial = Material.valueOf(split[0]);
 		upgrades.put("Admin Upgrade", "admin");
 		upgrades.put("Bio-scanner Upgrade", "bio");
@@ -85,10 +86,12 @@ public class TARDISSonicUpgradeListener implements Listener {
 				ItemMeta im = is.getItemMeta();
 				// get the upgrade
 				boolean found = false;
+				assert im != null;
 				String upgrade = im.getDisplayName();
 				for (ItemStack glowstone : ci.getContents()) {
 					if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
 						ItemMeta rm = glowstone.getItemMeta();
+						assert rm != null;
 						upgrade = customModelData.get(rm.getCustomModelData());
 						found = true;
 					}
@@ -123,6 +126,7 @@ public class TARDISSonicUpgradeListener implements Listener {
 				} else {
 					ItemMeta sim = sonic.getItemMeta();
 					int cmd = 10000011;
+					assert sim != null;
 					if (sim.hasCustomModelData()) {
 						cmd = sim.getCustomModelData();
 					}
@@ -137,6 +141,7 @@ public class TARDISSonicUpgradeListener implements Listener {
 						lore.add("Upgrades:");
 					}
 					// if they don't already have the upgrade
+					assert lore != null;
 					if (!lore.contains(upgrade)) {
 						im.setDisplayName(dn);
 						im.setCustomModelData(cmd);
@@ -151,11 +156,12 @@ public class TARDISSonicUpgradeListener implements Listener {
 				}
 			}
 		} else if (recipe instanceof ShapedRecipe) {
-			if (is == null || !is.hasItemMeta() || !is.getItemMeta().hasDisplayName() || !is.getItemMeta().getDisplayName().equals("tardis Remote Key")) {
+			if (is == null || !is.hasItemMeta() || !Objects.requireNonNull(is.getItemMeta()).hasDisplayName() || !is.getItemMeta().getDisplayName().equals("tardis Remote Key")) {
 				return;
 			}
 			ItemStack key = ci.getItem(5);
-			if (!key.hasItemMeta() || !key.getItemMeta().hasDisplayName() || !ChatColor.stripColor(key.getItemMeta().getDisplayName()).equals("tardis Key")) {
+			assert key != null;
+			if (!key.hasItemMeta() || !Objects.requireNonNull(key.getItemMeta()).hasDisplayName() || !ChatColor.stripColor(key.getItemMeta().getDisplayName()).equals("tardis Key")) {
 				ci.setResult(null);
 				TARDISMessage.send(event.getView().getPlayer(), "REMOTE_KEY");
 			}

@@ -27,7 +27,6 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Objects;
 
 public class TARDISHandbrakeCommand {
 

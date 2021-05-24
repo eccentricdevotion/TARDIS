@@ -48,6 +48,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Borrowed from the SimpleSort plugin. http://dev.bukkit.org/bukkit-plugins/simplesort/
@@ -106,6 +107,7 @@ public class TARDISSonicSorterListener implements Listener {
 					if (item2.getType() == item1.getType()) {
 						if (item1.getItemMeta() instanceof Damageable d1) {
 							Damageable d2 = (Damageable) item2.getItemMeta();
+							assert d2 != null;
 							if (d1.getDamage() == d2.getDamage() && item1.getEnchantments().equals(item2.getEnchantments()) && item1.getItemMeta().equals(item2.getItemMeta())) {
 								if (item2.getAmount() > needed) {
 									item1.setAmount(maxStackSize);
@@ -118,7 +120,7 @@ public class TARDISSonicSorterListener implements Listener {
 								}
 							}
 						} else {
-							if (item1.getEnchantments().equals(item2.getEnchantments()) && item1.getItemMeta().equals(item2.getItemMeta())) {
+							if (item1.getEnchantments().equals(item2.getEnchantments()) && Objects.equals(item1.getItemMeta(), item2.getItemMeta())) {
 								if (item2.getAmount() > needed) {
 									item1.setAmount(maxStackSize);
 									item2.setAmount(item2.getAmount() - needed);
@@ -152,6 +154,7 @@ public class TARDISSonicSorterListener implements Listener {
 			ItemStack is = player.getInventory().getItemInMainHand();
 			if (is.hasItemMeta()) {
 				ItemMeta im = is.getItemMeta();
+				assert im != null;
 				if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
 					Block block = event.getClickedBlock();
 					if (block != null && sortables.contains(block.getType())) {

@@ -26,7 +26,7 @@ public class SQL {
 
 	public static final List<String> CREATES = Arrays.asList(
 
-			"CREATE TABLE IF NOT EXISTS %sachievements (a_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', `name` varchar(32) DEFAULT '', amount text, completed int(1) DEFAULT '0', PRIMARY KEY (a_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+			"CREATE TABLE IF NOT EXISTS %sadvancements (a_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', `name` varchar(32) DEFAULT '', amount text, completed int(1) DEFAULT '0', PRIMARY KEY (a_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
 			"CREATE TABLE IF NOT EXISTS %sarched (uuid varchar(48) DEFAULT '', arch_name varchar(16) DEFAULT '', arch_time bigint(20) DEFAULT '0', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -120,7 +120,7 @@ public class SQL {
 
 	public static final List<String> INSERTS = Arrays.asList(
 
-			"INSERT INTO `%sachievements` (`a_id`, `uuid`, `player`, `name`, `amount`, `completed`) VALUES ",
+			"INSERT INTO `%sadvancements` (`a_id`, `uuid`, `player`, `name`, `amount`, `completed`) VALUES ",
 
 			"INSERT INTO `%sarched` (`uuid`, `arch_name`, `arch_time`) VALUES ",
 

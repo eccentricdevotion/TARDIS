@@ -51,10 +51,9 @@ class TARDISIsomorphicCommand {
 			wheret.put("tardis_id", id);
 			plugin.getQueryFactory().doUpdate("tardis", seti, wheret);
 			TARDISMessage.send(player, onoff);
-			return true;
 		} else {
 			TARDISMessage.send(player, "NO_TARDIS");
-			return true;
 		}
+		return true;
 	}
 }

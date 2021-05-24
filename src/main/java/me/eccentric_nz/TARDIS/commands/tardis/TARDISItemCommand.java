@@ -38,11 +38,12 @@ public class TARDISItemCommand {
 		}
 		if (args[1].equalsIgnoreCase("hand")) {
 			ItemStack inHand = player.getInventory().getItemInMainHand();
-			if (inHand == null || !inHand.hasItemMeta()) {
+			if (!inHand.hasItemMeta()) {
 				TARDISMessage.send(player, "ITEM_IN_HAND");
 				return true;
 			}
 			ItemMeta im = inHand.getItemMeta();
+			assert im != null;
 			if (!im.hasDisplayName()) {
 				TARDISMessage.send(player, "ITEM_IN_HAND");
 				return true;
@@ -75,6 +76,7 @@ public class TARDISItemCommand {
 				if (is != null && is.hasItemMeta()) {
 					TARDISMessage.message(player, is.getType().toString());
 					ItemMeta im = is.getItemMeta();
+					assert im != null;
 					if (im.hasDisplayName()) {
 						// strip color codes
 						String stripped = ChatColor.stripColor(im.getDisplayName());

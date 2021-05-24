@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.enumeration.PRESET;
@@ -52,6 +52,7 @@ public class TARDISExteriorRenderer {
 		int epbx = exterior.getBlockX();
 		int epby = exterior.getBlockY();
 		int epbz = exterior.getBlockZ();
+		assert ew != null;
 		String isRendered = ew.getName() + ":" + epbx + ":" + epby + ":" + epbz;
 		String[] idata = interior.split(":");
 		World iw = TARDISAliasResolver.getWorldFromAlias(idata[0]);
@@ -86,6 +87,7 @@ public class TARDISExteriorRenderer {
 						// don't do preset blocks - they'l be set to glass later
 						if (!(y >= epby && y <= buy && x >= bwx && x <= bex && z >= bnz && z <= bsz)) {
 							Block eb = ew.getBlockAt(x, y, z);
+							assert iw != null;
 							Block ib = iw.getBlockAt(isx + xx, isy + yy, isz + zz);
 							switch (eb.getType()) {
 								case WATER -> ib.setBlockData(Material.LIGHT_BLUE_STAINED_GLASS.createBlockData(), true);
@@ -154,6 +156,7 @@ public class TARDISExteriorRenderer {
 					}
 				}
 				for (int py = 0; py < 4; py++) {
+					assert iw != null;
 					TARDISBlockSetters.setBlock(iw, px, (y + py), pz, coldatas[py]);
 				}
 			}

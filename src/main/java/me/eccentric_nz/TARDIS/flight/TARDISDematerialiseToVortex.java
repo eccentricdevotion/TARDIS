@@ -36,6 +36,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -105,7 +106,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
 			dd.setHide(false);
 			dd.setOutside(false);
 			dd.setSubmarine(sub);
-			dd.setTardisID(id);
+			dd.setTardisId(id);
 			dd.setTardisBiome(biome);
 			dd.setThrottle(spaceTimeThrottle);
 			PRESET preset = tardis.getPreset();
@@ -144,7 +145,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
 						TARDISSounds.playTARDISSound(handbrake, "junk_takeoff");
 					}
 				} else {
-					handbrake.getWorld().playSound(handbrake, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+					Objects.requireNonNull(handbrake.getWorld()).playSound(handbrake, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
 				}
 				plugin.getTrackerKeeper().getDematerialising().add(id);
 				plugin.getPresetDestroyer().destroyPreset(dd);

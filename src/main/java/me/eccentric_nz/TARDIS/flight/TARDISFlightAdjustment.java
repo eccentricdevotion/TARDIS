@@ -28,6 +28,7 @@ import org.bukkit.block.BlockFace;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The Helmic Orientators are slide controls (some consoles have a keyboard) used by the operator for setting the
@@ -59,7 +60,7 @@ class TARDISFlightAdjustment {
 			adjusted_location.setZ(wz);
 			boolean bool = true;
 			int y;
-			if (adjusted_location.getWorld().getEnvironment().equals(World.Environment.NETHER)) {
+			if (Objects.requireNonNull(adjusted_location.getWorld()).getEnvironment().equals(World.Environment.NETHER)) {
 				y = plugin.getUtils().getHighestNetherBlock(adjusted_location.getWorld(), wx, wz);
 			} else {
 				y = adjusted_location.getWorld().getHighestBlockAt(adjusted_location).getY();

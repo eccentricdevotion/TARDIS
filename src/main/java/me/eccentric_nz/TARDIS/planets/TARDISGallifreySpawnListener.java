@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Villager;
@@ -26,6 +26,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -40,7 +42,7 @@ public final class TARDISGallifreySpawnListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onGallifreyanSpawn(CreatureSpawnEvent event) {
-		if (!event.getLocation().getWorld().getName().endsWith("gallifrey")) {
+		if (!Objects.requireNonNull(event.getLocation().getWorld()).getName().endsWith("gallifrey")) {
 			return;
 		}
 		CreatureSpawnEvent.SpawnReason spawnReason = event.getSpawnReason();

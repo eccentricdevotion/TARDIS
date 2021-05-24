@@ -88,6 +88,7 @@ public class TARDISRoomBuilder {
 			String path = plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase(Locale.ENGLISH) + ".tschm";
 			// get JSON
 			JsonObject obj = TARDISSchematicGZip.unzip(path);
+			assert obj != null;
 			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 			int xzoffset = (dimensions.get("width").getAsInt() / 2);
 			switch (d) {

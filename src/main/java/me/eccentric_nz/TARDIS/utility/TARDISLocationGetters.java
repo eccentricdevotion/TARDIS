@@ -47,6 +47,7 @@ public class TARDISLocationGetters {
 			World w = TARDISAliasResolver.getWorldFromAlias(data[0]);
 			int cx = TARDISNumberParsers.parseInt(data[1]);
 			int cz = TARDISNumberParsers.parseInt(data[2]);
+			assert w != null;
 			return w.getChunkAt(cx, cz);
 		}
 		return null;
@@ -68,6 +69,7 @@ public class TARDISLocationGetters {
 			World w = TARDISAliasResolver.getWorldFromAlias(split[0]);
 			cx = TARDISNumberParsers.parseInt(split[1]);
 			cz = TARDISNumberParsers.parseInt(split[2]);
+			assert w != null;
 			Chunk chunk = w.getChunkAt(cx, cz);
 			startLoc[0] = (chunk.getBlock(0, 64, 0).getX());
 			startLoc[1] = startLoc[0];

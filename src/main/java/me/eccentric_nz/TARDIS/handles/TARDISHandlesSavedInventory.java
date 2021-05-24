@@ -59,6 +59,7 @@ class TARDISHandlesSavedInventory {
 			for (Program p : rs.getPrograms()) {
 				ItemStack is = new ItemStack(Material.MUSIC_DISC_WARD, 1);
 				ItemMeta im = is.getItemMeta();
+				assert im != null;
 				im.setDisplayName("Handles Program Disk");
 				String checked = (p.isCheckedOut()) ? "Checked OUT" : "Checked IN";
 				if (!p.getParsed().isEmpty()) {
@@ -79,6 +80,7 @@ class TARDISHandlesSavedInventory {
 		// back
 		ItemStack back = new ItemStack(Material.ARROW, 1);
 		ItemMeta bk = back.getItemMeta();
+		assert bk != null;
 		bk.setDisplayName("Back to editor");
 		bk.setCustomModelData(GUISavedPrograms.BACK_TO_EDITOR.getCustomModelData());
 		back.setItemMeta(bk);
@@ -86,6 +88,7 @@ class TARDISHandlesSavedInventory {
 		// load button
 		ItemStack load = new ItemStack(Material.BOWL, 1);
 		ItemMeta ld = load.getItemMeta();
+		assert ld != null;
 		ld.setDisplayName("Load selected program in editor");
 		ld.setCustomModelData(GUISavedPrograms.LOAD_SELECTED_PROGRAM_IN_EDITOR.getCustomModelData());
 		load.setItemMeta(ld);
@@ -93,6 +96,7 @@ class TARDISHandlesSavedInventory {
 		// deactivate
 		ItemStack deactivate = new ItemStack(Material.BUCKET, 1);
 		ItemMeta dem = deactivate.getItemMeta();
+		assert dem != null;
 		dem.setDisplayName("Deactivate selected program");
 		dem.setCustomModelData(GUISavedPrograms.DEACTIVATE_SELECTED_PROGRAM.getCustomModelData());
 		deactivate.setItemMeta(dem);
@@ -100,6 +104,7 @@ class TARDISHandlesSavedInventory {
 		// delete
 		ItemStack delete = new ItemStack(Material.BUCKET, 1);
 		ItemMeta dm = delete.getItemMeta();
+		assert dm != null;
 		dm.setDisplayName("Delete selected program");
 		dm.setCustomModelData(GUISavedPrograms.DELETE_SELECTED_PROGRAM.getCustomModelData());
 		delete.setItemMeta(dm);
@@ -107,6 +112,7 @@ class TARDISHandlesSavedInventory {
 		// check out
 		ItemStack checked = new ItemStack(Material.BOWL, 1);
 		ItemMeta km = checked.getItemMeta();
+		assert km != null;
 		km.setDisplayName("Check out selected program");
 		km.setCustomModelData(GUISavedPrograms.CHECK_OUT_SELECTED_PROGRAM.getCustomModelData());
 		checked.setItemMeta(km);
@@ -114,6 +120,7 @@ class TARDISHandlesSavedInventory {
 		// close
 		ItemStack close = new ItemStack(Material.BOWL, 1);
 		ItemMeta cm = close.getItemMeta();
+		assert cm != null;
 		cm.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
 		cm.setCustomModelData(GUISavedPrograms.CLOSE.getCustomModelData());
 		close.setItemMeta(cm);

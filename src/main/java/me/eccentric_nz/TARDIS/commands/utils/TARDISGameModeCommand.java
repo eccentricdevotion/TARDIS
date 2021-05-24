@@ -125,6 +125,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
 				}
 			}
 		}
+		assert player != null;
 		player.setGameMode(gm);
 		if (thirdperson) {
 			TARDISMessage.send(sender, "CMD_GAMEMODE_CONSOLE", player.getName(), gm.toString());

@@ -25,10 +25,7 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -44,7 +41,7 @@ public class TARDISShapelessRecipe {
 	}
 
 	public void addShapelessRecipes() {
-		Set<String> shapeless = plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false);
+		Set<String> shapeless = Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("shapeless")).getKeys(false);
 		shapeless.forEach((s) -> plugin.getServer().addRecipe(makeRecipe(s)));
 	}
 
@@ -55,15 +52,16 @@ public class TARDISShapelessRecipe {
          amount: 1
          lore: ""
          */
-		String[] ingredients = plugin.getRecipesConfig().getString("shapeless." + s + ".recipe").split(",");
+		String[] ingredients = Objects.requireNonNull(plugin.getRecipesConfig().getString("shapeless." + s + ".recipe")).split(",");
 		String result = plugin.getRecipesConfig().getString("shapeless." + s + ".result");
 		Material mat = Material.valueOf(result);
 		int amount = plugin.getRecipesConfig().getInt("shapeless." + s + ".amount");
 		ItemStack is = new ItemStack(mat, amount);
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		im.setDisplayName(s);
-		if (!plugin.getRecipesConfig().getString("shapeless." + s + ".lore").equals("")) {
-			im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shapeless." + s + ".lore").split("~")));
+		if (!Objects.equals(plugin.getRecipesConfig().getString("shapeless." + s + ".lore"), "")) {
+			im.setLore(Arrays.asList(Objects.requireNonNull(plugin.getRecipesConfig().getString("shapeless." + s + ".lore")).split("~")));
 		}
 		im.setCustomModelData(RecipeItem.getByName(s).getCustomModelData());
 		is.setItemMeta(im);
@@ -76,6 +74,7 @@ public class TARDISShapelessRecipe {
 				Material m = Material.valueOf(choice[0]);
 				exact = new ItemStack(m, 1);
 				ItemMeta em = exact.getItemMeta();
+				assert em != null;
 				em.setDisplayName(choice[1]);
 				em.setCustomModelData(RecipeItem.getByName(choice[1]).getCustomModelData());
 				exact.setItemMeta(em);

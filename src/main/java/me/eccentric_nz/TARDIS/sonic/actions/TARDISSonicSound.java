@@ -37,6 +37,7 @@ public class TARDISSonicSound {
 	public static void playSonicSound(TARDISPlugin plugin, Player player, long now, long cooldown, String sound) {
 		if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
 			ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
+			assert im != null;
 			im.addEnchant(Enchantment.DURABILITY, 1, true);
 			im.addItemFlags(ItemFlag.values());
 			player.getInventory().getItemInMainHand().setItemMeta(im);
@@ -68,6 +69,7 @@ public class TARDISSonicSound {
 			return;
 		}
 		ItemStack stack = inv.getItem(first);
+		assert stack != null;
 		if (stack.containsEnchantment(Enchantment.DURABILITY)) {
 			stack.getEnchantments().keySet().forEach(stack::removeEnchantment);
 		}

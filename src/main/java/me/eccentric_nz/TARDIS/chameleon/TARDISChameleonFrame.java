@@ -53,6 +53,7 @@ public class TARDISChameleonFrame {
 							ItemFrame frame = (ItemFrame) e;
 							ItemStack is = new ItemStack(preset.getGuiDisplay());
 							ItemMeta im = is.getItemMeta();
+							assert im != null;
 							im.setDisplayName(preset.toString());
 							is.setItemMeta(im);
 							frame.setItem(is, true);

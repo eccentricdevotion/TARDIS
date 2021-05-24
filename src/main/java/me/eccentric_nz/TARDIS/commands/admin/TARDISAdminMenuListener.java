@@ -31,7 +31,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * The architectural reconfiguration system is a component of the Doctor's tardis in the shape of a tree that, according

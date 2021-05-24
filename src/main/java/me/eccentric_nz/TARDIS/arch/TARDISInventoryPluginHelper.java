@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardis.arch;
 
-import com.onarandombox.MultiverseCore.exceptions.PropertyDoesNotExistException;
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.tardis.utility.TARDISPerWorldInventoryChecker;
@@ -68,7 +67,7 @@ public class TARDISInventoryPluginHelper implements Listener {
 	 * we should go after.
 	 */
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onPlayerWorldChangeNORMAL(PlayerChangedWorldEvent event) throws PropertyDoesNotExistException {
+	public void onPlayerWorldChangeNORMAL(PlayerChangedWorldEvent event) {
 
 		Player player = event.getPlayer();
 		boolean shouldSwitch = switch (plugin.getInvManager()) {

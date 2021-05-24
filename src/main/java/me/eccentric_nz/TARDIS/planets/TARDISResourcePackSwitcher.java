@@ -68,6 +68,7 @@ public class TARDISResourcePackSwitcher implements Listener {
 			path = plugin.getPlanetsConfig().getString("default_resource_pack");
 		}
 		if (player.isOnline()) {
+			assert path != null;
 			player.setResourcePack(path);
 		}
 	}

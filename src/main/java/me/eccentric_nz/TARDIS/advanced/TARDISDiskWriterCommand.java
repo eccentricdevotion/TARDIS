@@ -52,6 +52,7 @@ public class TARDISDiskWriterCommand {
 		if (plugin.getDifficulty().equals(Difficulty.MEDIUM)) {
 			is = new ItemStack(Material.MUSIC_DISC_CHIRP, 1);
 			ItemMeta im = is.getItemMeta();
+			assert im != null;
 			im.setDisplayName("Save Storage Disk");
 			im.setLore(Collections.singletonList("Blank"));
 			im.setCustomModelData(10000001);
@@ -61,8 +62,10 @@ public class TARDISDiskWriterCommand {
 		}
 		if (is.hasItemMeta()) {
 			ItemMeta im = is.getItemMeta();
+			assert im != null;
 			if (im.hasDisplayName() && im.getDisplayName().equals("Save Storage Disk")) {
 				List<String> lore = im.getLore();
+				assert lore != null;
 				if (!lore.get(0).equals("Blank")) {
 					TARDISMessage.send(player, "DISK_ONLY_BLANK");
 					return true;
@@ -188,8 +191,10 @@ public class TARDISDiskWriterCommand {
 		ItemStack is = player.getInventory().getItemInMainHand();
 		if (is.hasItemMeta()) {
 			ItemMeta im = is.getItemMeta();
+			assert im != null;
 			if (im.hasDisplayName() && im.getDisplayName().equals("Player Storage Disk")) {
 				List<String> lore = im.getLore();
+				assert lore != null;
 				if (!lore.get(0).equals("Blank")) {
 					TARDISMessage.send(player, "DISK_ONLY_BLANK");
 					return true;
@@ -226,7 +231,7 @@ public class TARDISDiskWriterCommand {
 
 	public boolean eraseDisk(Player player) {
 		ItemStack is = player.getInventory().getItemInMainHand();
-		if (is.hasItemMeta() && disks.contains(is.getItemMeta().getDisplayName())) {
+		if (is.hasItemMeta() && disks.contains(Objects.requireNonNull(is.getItemMeta()).getDisplayName())) {
 			ItemMeta im = is.getItemMeta();
 			List<String> lore = Collections.singletonList("Blank");
 			im.setLore(lore);
@@ -240,8 +245,9 @@ public class TARDISDiskWriterCommand {
 
 	public boolean writeSaveToControlDisk(Player player, String[] args) {
 		ItemStack is = player.getInventory().getItemInMainHand();
-		if (is != null && is.hasItemMeta()) {
+		if (is.hasItemMeta()) {
 			ItemMeta im = is.getItemMeta();
+			assert im != null;
 			if (im.hasDisplayName() && im.getDisplayName().equals("Authorised Control Disk") && im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
 				if (args.length < 2) {
 					TARDISMessage.send(player, "TOO_FEW_ARGS");
@@ -268,6 +274,7 @@ public class TARDISDiskWriterCommand {
 						save = args[1];
 					}
 					List<String> lore = im.getLore();
+					assert lore != null;
 					lore.add(save);
 					im.setLore(lore);
 					is.setItemMeta(im);

@@ -26,6 +26,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -61,7 +62,7 @@ class TARDISRechargerCommand {
 			return true;
 		}
 		Location l = b.getLocation();
-		plugin.getConfig().set("rechargers." + args[1] + ".world", l.getWorld().getName());
+		plugin.getConfig().set("rechargers." + args[1] + ".world", Objects.requireNonNull(l.getWorld()).getName());
 		plugin.getConfig().set("rechargers." + args[1] + ".x", l.getBlockX());
 		plugin.getConfig().set("rechargers." + args[1] + ".y", l.getBlockY());
 		plugin.getConfig().set("rechargers." + args[1] + ".z", l.getBlockZ());

@@ -84,6 +84,7 @@ public class TARDISGlassesListener implements Listener {
 				} else if (is != null && g) {
 					// damage the glasses so they run out
 					Damageable damageable = (Damageable) is.getItemMeta();
+					assert damageable != null;
 					int d = damageable.getDamage() + 1;
 					if (d >= 56) {
 						// if run out then remove them and the potion effect
@@ -104,6 +105,7 @@ public class TARDISGlassesListener implements Listener {
 	private boolean is3DGlasses(ItemStack is) {
 		if (is != null && is.hasItemMeta()) {
 			ItemMeta im = is.getItemMeta();
+			assert im != null;
 			return im.hasDisplayName() && im.getDisplayName().equals("3-D Glasses");
 		}
 		return false;

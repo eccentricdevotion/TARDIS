@@ -40,6 +40,7 @@ public class TARDISScannerMap {
 
 	public void setMap() {
 		World world = location.getWorld();
+		assert world != null;
 		MapView view = plugin.getServer().createMap(world);
 		view.setCenterX(location.getBlockX());
 		view.setCenterZ(location.getBlockZ());

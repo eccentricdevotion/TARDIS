@@ -55,10 +55,10 @@ public class InventoryHelper implements Listener {
 				}
 				if (!leftovers.isEmpty()) {
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-						HashMap<Integer, ItemStack> notadded = player.getInventory().addItem(leftovers.toArray(new ItemStack[0]));
-						if (!notadded.isEmpty()) {
+						HashMap<Integer, ItemStack> notAdded = player.getInventory().addItem(leftovers.toArray(new ItemStack[0]));
+						if (!notAdded.isEmpty()) {
 							Location location = player.getLocation();
-							for (ItemStack is : notadded.values()) {
+							for (ItemStack is : notAdded.values()) {
 								Objects.requireNonNull(location.getWorld()).dropItemNaturally(location, is);
 							}
 						}

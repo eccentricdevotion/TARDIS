@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.ars.TARDISARSMethods;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
@@ -80,7 +80,7 @@ public class TARDISMonsterRunnable implements Runnable {
 		// get open portals
 		for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
 			// only portals in police box worlds
-			if (map.getKey().getWorld().getName().contains("tardis")) {
+			if (Objects.requireNonNull(map.getKey().getWorld()).getName().contains("tardis")) {
 				continue;
 			}
 			if (map.getValue().isAbandoned()) {
@@ -135,7 +135,7 @@ public class TARDISMonsterRunnable implements Runnable {
 							tm.setAggressive(pigzombie.isAngry());
 							tm.setAnger(pigzombie.getAnger());
 							tm.setEquipment(pigzombie.getEquipment());
-							if (twa && pigzombie.getEquipment().getHelmet() != null && pigzombie.getEquipment().getHelmet().hasItemMeta() && pigzombie.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
+							if (twa && Objects.requireNonNull(pigzombie.getEquipment()).getHelmet() != null && Objects.requireNonNull(pigzombie.getEquipment().getHelmet()).hasItemMeta() && Objects.requireNonNull(pigzombie.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
 								String name = pigzombie.getEquipment().getHelmet().getItemMeta().getDisplayName();
 								if (name.equals("Ice Warrior Head") || name.equals("Strax Head")) {
 									dn = name.substring(0, name.length() - 5);
@@ -149,7 +149,7 @@ public class TARDISMonsterRunnable implements Runnable {
 						case WITHER_SKELETON:
 							Skeleton skeleton = (Skeleton) e;
 							tm.setEquipment(skeleton.getEquipment());
-							if (twa && skeleton.getEquipment().getHelmet() != null && skeleton.getEquipment().getHelmet().hasItemMeta() && skeleton.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
+							if (twa && Objects.requireNonNull(skeleton.getEquipment()).getHelmet() != null && Objects.requireNonNull(skeleton.getEquipment().getHelmet()).hasItemMeta() && Objects.requireNonNull(skeleton.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
 								String name = skeleton.getEquipment().getHelmet().getItemMeta().getDisplayName();
 								if (name.equals("Dalek Head") || name.equals("Silurian Head") || name.equals("Weeping Angel Head")) {
 									dn = name.substring(0, name.length() - 5);
@@ -169,7 +169,7 @@ public class TARDISMonsterRunnable implements Runnable {
 							Zombie zombie = (Zombie) e;
 							tm.setBaby(!zombie.isAdult());
 							tm.setEquipment(zombie.getEquipment());
-							if (twa && zombie.getEquipment().getHelmet() != null && zombie.getEquipment().getHelmet().hasItemMeta() && zombie.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
+							if (twa && Objects.requireNonNull(zombie.getEquipment()).getHelmet() != null && Objects.requireNonNull(zombie.getEquipment().getHelmet()).hasItemMeta() && Objects.requireNonNull(zombie.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
 								String name = zombie.getEquipment().getHelmet().getItemMeta().getDisplayName();
 								if (name.equals("Cyberman Head") || name.equals("Empty Child Head") || name.equals("Sontaran Head") || name.equals("Vashta Nerada Head") || name.equals("Zygon Head")) {
 									dn = name.substring(0, name.length() - 5);
@@ -240,7 +240,7 @@ public class TARDISMonsterRunnable implements Runnable {
 			return false;
 		}
 		// difficulty
-		return !l.getWorld().getDifficulty().equals(Difficulty.PEACEFUL);
+		return !Objects.requireNonNull(l.getWorld()).getDifficulty().equals(Difficulty.PEACEFUL);
 	}
 
 	private void moveMonster(TARDISTeleportLocation tpl, TARDISMonster m, Entity e, boolean guardian) {
@@ -321,6 +321,7 @@ public class TARDISMonsterRunnable implements Runnable {
 				if (rsc.resultSet()) {
 					// move the location to the y-repeater
 					loc = TARDISStaticLocationGetters.getLocationFromDB(rsc.getLocation());
+					assert loc != null;
 					loc.add(0.5d, 0.125d, 0.5d);
 				}
 			}
@@ -330,7 +331,7 @@ public class TARDISMonsterRunnable implements Runnable {
 			}
 			// spawn a monster in the tardis
 			plugin.setTardisSpawn(true);
-			Entity ent = loc.getWorld().spawnEntity(loc, m.getType());
+			Entity ent = Objects.requireNonNull(loc.getWorld()).spawnEntity(loc, m.getType());
 			switch (m.getType()) {
 				case CREEPER:
 					Creeper creeper = (Creeper) ent;
@@ -348,6 +349,7 @@ public class TARDISMonsterRunnable implements Runnable {
 					pigzombie.setAnger(m.getAnger());
 					EntityEquipment ep = pigzombie.getEquipment();
 					if (m.getEquipment() != null) {
+						assert ep != null;
 						ep.setArmorContents(m.getEquipment().getArmorContents());
 						ep.setItemInMainHand(m.getEquipment().getItemInMainHand());
 					}
@@ -358,6 +360,7 @@ public class TARDISMonsterRunnable implements Runnable {
 					Skeleton skeleton = (Skeleton) ent;
 					EntityEquipment es = skeleton.getEquipment();
 					if (m.getEquipment() != null) {
+						assert es != null;
 						es.setArmorContents(m.getEquipment().getArmorContents());
 						es.setItemInMainHand(m.getEquipment().getItemInMainHand());
 						if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
@@ -377,6 +380,7 @@ public class TARDISMonsterRunnable implements Runnable {
 					Vindicator vindicator = (Vindicator) ent;
 					EntityEquipment ev = vindicator.getEquipment();
 					if (m.getEquipment() != null) {
+						assert ev != null;
 						ev.setArmorContents(m.getEquipment().getArmorContents());
 						ev.setItemInMainHand(m.getEquipment().getItemInMainHand());
 					}
@@ -389,6 +393,7 @@ public class TARDISMonsterRunnable implements Runnable {
 					}
 					EntityEquipment ez = zombie.getEquipment();
 					if (m.getEquipment() != null) {
+						assert ez != null;
 						ez.setArmorContents(m.getEquipment().getArmorContents());
 						ez.setItemInMainHand(m.getEquipment().getItemInMainHand());
 					}
@@ -403,6 +408,7 @@ public class TARDISMonsterRunnable implements Runnable {
 					}
 					EntityEquipment zv = zombie_villager.getEquipment();
 					if (m.getEquipment() != null) {
+						assert zv != null;
 						zv.setArmorContents(m.getEquipment().getArmorContents());
 						zv.setItemInMainHand(m.getEquipment().getItemInMainHand());
 					}
@@ -411,6 +417,7 @@ public class TARDISMonsterRunnable implements Runnable {
 					Pillager pillager = (Pillager) ent;
 					EntityEquipment p = pillager.getEquipment();
 					if (m.getEquipment() != null) {
+						assert p != null;
 						p.setArmorContents(m.getEquipment().getArmorContents());
 						p.setItemInMainHand(m.getEquipment().getItemInMainHand());
 					}

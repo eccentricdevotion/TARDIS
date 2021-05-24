@@ -126,7 +126,7 @@ public class Main {
 							String str;
 							try {
 								switch (table) {
-									case achievements:
+									case advancements:
 										String player = rs.getString("player");
 										if (rs.wasNull()) {
 											player = "";

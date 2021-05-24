@@ -23,7 +23,10 @@ import me.eccentric_nz.tardis.database.resultset.ResultSetFarming;
 import me.eccentric_nz.tardis.enumeration.Advancement;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.*;
+import me.eccentric_nz.tardis.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.utility.TARDISMultiverseInventoriesChecker;
+import me.eccentric_nz.tardis.utility.TARDISPerWorldInventoryChecker;
+import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -38,6 +41,7 @@ import org.bukkit.inventory.meta.TropicalFishBucketMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Undefined Storage Holds make up most of a tardis's interior volume. Each Hold has an identifying number.
@@ -948,7 +952,7 @@ public class TARDISFarmer {
 		for (Entity entity : mobs) {
 			if (entity.getType().equals(EntityType.CAT) || entity.getType().equals(EntityType.WOLF) || entity.getType().equals(EntityType.PARROT)) {
 				Tameable tamed = (Tameable) entity;
-				if (tamed.isTamed() && tamed.getOwner().getUniqueId().equals(player.getUniqueId())) {
+				if (tamed.isTamed() && Objects.requireNonNull(tamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
 					TARDISPet pet = new TARDISPet();
 					pet.setType(entity.getType());
 					String pet_name = entity.getCustomName();

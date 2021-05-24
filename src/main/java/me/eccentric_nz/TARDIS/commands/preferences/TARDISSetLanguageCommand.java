@@ -37,9 +37,8 @@ class TARDISSetLanguageCommand {
 			return false;
 		}
 		String l = args[1].toUpperCase(Locale.ENGLISH);
-		Language lang;
 		try {
-			lang = Language.valueOf(l);
+			Language.valueOf(l);
 		} catch (IllegalArgumentException e) {
 			TARDISMessage.send(player, "LANG_NOT_VALID");
 			return true;

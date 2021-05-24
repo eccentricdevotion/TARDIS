@@ -93,6 +93,7 @@ public class TARDISCircuitChecker {
 				for (ItemStack is : items) {
 					if (is != null && is.hasItemMeta()) {
 						ItemMeta im = is.getItemMeta();
+						assert im != null;
 						if (im.hasDisplayName()) {
 							String dn = im.getDisplayName();
 							if (dn.equals("tardis ars Circuit")) {
@@ -222,6 +223,7 @@ public class TARDISCircuitChecker {
 		int uses = 0;
 		if (im.hasLore()) {
 			List<String> lore = im.getLore();
+			assert lore != null;
 			String stripped = ChatColor.stripColor(lore.get(1));
 			if (!stripped.equals("unlimited")) {
 				uses = TARDISNumberParsers.parseInt(stripped);

@@ -28,6 +28,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -60,7 +61,7 @@ public class TARDISAtmosphericExcitation {
 			// get lamp block location
 			l.add(0, 18, 0);
 			// construct a firework effect and shoot it from lamp block location
-			Firework firework = (Firework) l.getWorld().spawnEntity(l, EntityType.FIREWORK);
+			Firework firework = (Firework) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.FIREWORK);
 			FireworkMeta fireworkMeta = firework.getFireworkMeta();
 			fireworkMeta.addEffect(FireworkEffect.builder().flicker(false).withColor(Color.SILVER).withFade(Color.WHITE).with(Type.BURST).withTrail().build());
 			fireworkMeta.setPower(3);

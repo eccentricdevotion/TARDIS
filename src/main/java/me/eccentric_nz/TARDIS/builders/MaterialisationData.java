@@ -36,7 +36,7 @@ public class MaterialisationData {
 	private boolean outside;
 	private boolean submarine;
 	private boolean siege;
-	private int tardisID;
+	private int tardisId;
 	private SpaceTimeThrottle throttle;
 
 	public TARDISBiome getTardisBiome() {
@@ -96,11 +96,11 @@ public class MaterialisationData {
 	}
 
 	public int getTardisId() {
-		return tardisID;
+		return tardisId;
 	}
 
-	public void setTardisID(int tardisID) {
-		this.tardisID = tardisID;
+	public void setTardisId(int tardisId) {
+		this.tardisId = tardisId;
 	}
 
 	public SpaceTimeThrottle getThrottle() {

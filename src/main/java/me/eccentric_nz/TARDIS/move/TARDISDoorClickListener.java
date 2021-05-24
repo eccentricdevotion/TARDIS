@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import com.onarandombox.MultiverseCore.exceptions.PropertyDoesNotExistException;
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.TARDISEmergencyRelocation;
@@ -53,6 +52,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -75,7 +75,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
 	 * @param event a player clicking a block
 	 */
 	@EventHandler(ignoreCancelled = true)
-	public void onDoorInteract(PlayerInteractEvent event) throws PropertyDoesNotExistException {
+	public void onDoorInteract(PlayerInteractEvent event) {
 		if (event.getHand() == null) {
 			return;
 		}
@@ -90,7 +90,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
 					UUID playerUUID = player.getUniqueId();
 					World playerWorld = player.getLocation().getWorld();
 					Location block_loc = block.getLocation();
-					String bw = block_loc.getWorld().getName();
+					String bw = Objects.requireNonNull(block_loc.getWorld()).getName();
 					int bx = block_loc.getBlockX();
 					int by = block_loc.getBlockY();
 					int bz = block_loc.getBlockZ();
@@ -119,6 +119,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
 						key = plugin.getConfig().getString("preferences.key");
 					}
 					boolean minecart = rsp.isMinecartOn();
+					assert key != null;
 					Material m = Material.getMaterial(key);
 					HashMap<String, Object> where = new HashMap<>();
 					where.put("door_location", doorloc);
@@ -153,7 +154,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
 										0;
 							};
 							if (action == Action.LEFT_CLICK_BLOCK) {
-								if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName() && stack.getItemMeta().getDisplayName().equals("tardis Remote Key")) {
+								if (stack.hasItemMeta() && Objects.requireNonNull(stack.getItemMeta()).hasDisplayName() && stack.getItemMeta().getDisplayName().equals("tardis Remote Key")) {
 									return;
 								}
 								// must be the owner
@@ -395,7 +396,8 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
 												if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(playerUUID) && willFarm) {
 													plugin.getTrackerKeeper().getFarming().add(playerUUID);
 													TARDISFarmer tf = new TARDISFarmer(plugin);
-													petsAndFollowers = tf.farmAnimals(block_loc, d, id, player.getPlayer(), tardis_loc.getWorld().getName(), playerWorld.getName());
+													assert playerWorld != null;
+													petsAndFollowers = tf.farmAnimals(block_loc, d, id, player.getPlayer(), Objects.requireNonNull(tardis_loc.getWorld()).getName(), playerWorld.getName());
 												}
 												// if WorldGuard is on the server check for tardis region protection and add admin as member
 												if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
@@ -500,7 +502,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
 												return;
 											}
 											// backdoor is located in the end
-											if (outer_loc.getWorld().getEnvironment().equals(Environment.THE_END)) {
+											if (Objects.requireNonNull(outer_loc.getWorld()).getEnvironment().equals(Environment.THE_END)) {
 												// check enabled
 												if (!plugin.getConfig().getBoolean("travel.the_end")) {
 													TARDISMessage.send(player, "ANCIENT", "End");
@@ -561,7 +563,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
 								}
 							}
 						} else {
-							String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
+							String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result")).split(":");
 							Material sonic = Material.valueOf(split[0]);
 							if (!material.equals(sonic) || !TARDISPermission.hasPermission(player, "tardis.sonic.admin")) {
 								TARDISMessage.send(player, "NOT_KEY", key);
@@ -585,6 +587,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
 											if (rsv.resultSet()) {
 												Player tl = plugin.getServer().getPlayer(tluuid);
 												Sound knock = (blockType.equals(Material.IRON_DOOR)) ? Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR : Sound.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR;
+												assert tl != null;
 												tl.getWorld().playSound(tl.getLocation(), knock, 3.0F, 3.0F);
 											}
 										}

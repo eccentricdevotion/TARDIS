@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import me.eccentric_nz.tardis.travel.TARDISDoorLocation;
 import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
@@ -73,6 +73,7 @@ public class TARDISInstantPoliceBox {
 		plugin.getGeneralKeeper().getProtectBlockMap().put(bd.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString(), bd.getTardisId());
 		ItemFrame frame = null;
 		boolean found = false;
+		assert world != null;
 		for (Entity e : world.getNearbyEntities(bd.getLocation(), 1.0d, 1.0d, 1.0d)) {
 			if (e instanceof ItemFrame) {
 				frame = (ItemFrame) e;
@@ -93,6 +94,7 @@ public class TARDISInstantPoliceBox {
 		Material dye = TARDISBuilderUtility.getDyeMaterial(preset);
 		ItemStack is = new ItemStack(dye, 1);
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		im.setCustomModelData(1001);
 		if (bd.shouldAddSign()) {
 			im.setDisplayName(bd.getPlayer().getName() + "'s Police Box");

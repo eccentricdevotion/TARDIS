@@ -70,10 +70,9 @@ class TARDISARSRemoveCommand {
 				plugin.getQueryFactory().doDelete("controls", del);
 				TARDISMessage.send(player, "ARS_REMOVED");
 			}
-			return true;
 		} else {
 			TARDISMessage.send(player, "NO_ARS");
-			return true;
 		}
+		return true;
 	}
 }

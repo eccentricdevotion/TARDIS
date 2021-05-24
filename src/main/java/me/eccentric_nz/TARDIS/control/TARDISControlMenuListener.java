@@ -412,7 +412,9 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 									new TARDISDirectionCommand(plugin).changeDirection(player, args);
 									// update the lore
 									ItemStack d = view.getItem(40);
+									assert d != null;
 									ItemMeta im = d.getItemMeta();
+									assert im != null;
 									im.setLore(Collections.singletonList(direction));
 									d.setItemMeta(im);
 									break;

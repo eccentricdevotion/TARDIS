@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -248,7 +249,7 @@ public class TARDISRoomsUpdater {
 			}
 		}
 		// 1.13 material updates
-		if (rooms_config.getString("rooms.GREENHOUSE.seed").equals("MELON_BLOCK")) {
+		if (Objects.equals(rooms_config.getString("rooms.GREENHOUSE.seed"), "MELON_BLOCK")) {
 			rooms_config.set("rooms.ARBORETUM.seed", "OAK_LEAVES");
 			rooms_config.set("rooms.BAKER.seed", "END_STONE");
 			rooms_config.set("rooms.GREENHOUSE.seed", "MELON");

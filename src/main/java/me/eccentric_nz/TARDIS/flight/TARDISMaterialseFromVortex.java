@@ -48,6 +48,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -102,7 +103,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
 						HashMap<String, Object> wheress = new HashMap<>();
 						wheress.put("tardis_id", id);
 						HashMap<String, Object> setsave = new HashMap<>();
-						setsave.put("world", exit.getWorld().getName());
+						setsave.put("world", Objects.requireNonNull(exit.getWorld()).getName());
 						setsave.put("x", exit.getBlockX());
 						setsave.put("y", exit.getBlockY());
 						setsave.put("z", exit.getBlockZ());
@@ -132,16 +133,16 @@ public class TARDISMaterialseFromVortex implements Runnable {
 						scheduler.scheduleSyncDelayedTask(plugin, () -> {
 							// sound the cloister bell
 							TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 6, id, location, plugin.getServer().getPlayer(uuid), true, "a flight malfunction", false);
-							int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
-							bell.setTask(taskID);
-							plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
+							int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
+							bell.setTask(taskId);
+							plugin.getTrackerKeeper().getCloisterBells().put(id, taskId);
 						}, cloister_delay);
 					} else {
 						malfunction = false;
 					}
 				}
 				if (exit != null) {
-					if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
+					if (!Objects.requireNonNull(exit.getWorld()).isChunkLoaded(exit.getChunk())) {
 						exit.getWorld().loadChunk(exit.getChunk());
 					}
 					PRESET preset = tardis.getPreset();
@@ -170,7 +171,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
 					bd.setPlayer(player);
 					bd.setRebuild(false);
 					bd.setSubmarine(is_next_sub);
-					bd.setTardisID(id);
+					bd.setTardisId(id);
 					bd.setTexture(set_biome);
 					bd.setThrottle(spaceTimeThrottle);
 					// determine delay values
@@ -247,7 +248,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
 								TARDISSounds.playTARDISSound(sound_loc, "junk_land");
 							}
 						} else {
-							handbrake.getWorld().playSound(handbrake, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+							Objects.requireNonNull(handbrake.getWorld()).playSound(handbrake, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
 						}
 						HashMap<String, Object> setcurrent = new HashMap<>();
 						HashMap<String, Object> wherecurrent = new HashMap<>();
@@ -256,7 +257,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
 						HashMap<String, Object> setdoor = new HashMap<>();
 						HashMap<String, Object> wheredoor = new HashMap<>();
 						// current
-						setcurrent.put("world", final_location.getWorld().getName());
+						setcurrent.put("world", Objects.requireNonNull(final_location.getWorld()).getName());
 						setcurrent.put("x", final_location.getBlockX());
 						setcurrent.put("y", final_location.getBlockY());
 						setcurrent.put("z", final_location.getBlockZ());
@@ -281,7 +282,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
 							plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
 						}
 						if (plugin.getAdvancementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getReset().contains(rscl.getWorld().getName())) {
-							if (l.getWorld().equals(final_location.getWorld())) {
+							if (Objects.equals(l.getWorld(), final_location.getWorld())) {
 								int distance = (int) l.distance(final_location);
 								if (distance > 0 && plugin.getAdvancementConfig().getBoolean("travel.enabled")) {
 									TARDISAdvancementFactory taf = new TARDISAdvancementFactory(plugin, player, Advancement.TRAVEL, 1);
@@ -314,6 +315,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
 
 	private void setBeaconUpBlock(String str, int id) {
 		Location bl = TARDISStaticLocationGetters.getLocationFromDB(str);
+		assert bl != null;
 		Block b = bl.getBlock();
 		while (!b.getType().equals(Material.BEACON) && b.getLocation().getBlockY() > 0) {
 			b = b.getRelative(BlockFace.DOWN);

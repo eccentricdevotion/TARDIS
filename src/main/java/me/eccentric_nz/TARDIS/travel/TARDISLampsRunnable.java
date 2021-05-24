@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -27,6 +27,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Lightable;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Phosphor lamps are used for lighting. They use electron excitation; when shaken, they grow brighter.
@@ -85,7 +86,7 @@ class TARDISLampsRunnable implements Runnable {
 		} else {
 			// play smoke effect
 			for (int j = 0; j < 9; j++) {
-				handbrakeLoc.getWorld().playEffect(handbrakeLoc, Effect.SMOKE, j);
+				Objects.requireNonNull(handbrakeLoc.getWorld()).playEffect(handbrakeLoc, Effect.SMOKE, j);
 			}
 			lamps.forEach((b) -> {
 				if (b.getType().equals(light.getMaterial())) {

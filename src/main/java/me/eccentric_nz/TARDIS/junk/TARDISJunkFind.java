@@ -57,11 +57,10 @@ class TARDISJunkFind {
 					world = plugin.getMVHelper().getAlias(rsc.getWorld());
 				}
 				TARDISMessage.send(sender, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
-				return true;
 			} else {
 				TARDISMessage.send(sender, "JUNK_NOT_FOUND");
-				return true;
 			}
+			return true;
 		}
 		return true;
 	}

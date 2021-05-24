@@ -89,6 +89,7 @@ public class TARDISGeneralInstanceKeeper {
 		sign_lookup = buildSignLookup();
 		setRechargers();
 		InputStream is = plugin.getResource("plugin.yml");
+		assert is != null;
 		InputStreamReader reader = new InputStreamReader(is);
 		pluginYAML = new YamlConfiguration();
 		try {
@@ -260,7 +261,7 @@ public class TARDISGeneralInstanceKeeper {
 
 	private void setRechargers() {
 		if (plugin.getConfig().isConfigurationSection("rechargers")) {
-			Set<String> therechargers = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
+			Set<String> therechargers = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("rechargers")).getKeys(false);
 			therechargers.forEach((s) -> {
 				World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + s + ".world"));
 				if (w != null) {
@@ -316,7 +317,7 @@ public class TARDISGeneralInstanceKeeper {
 	private List<String> buildRoomArgs() {
 		List<String> rooms = new ArrayList<>();
 		// rooms - only add if enabled in the config
-		plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((r) -> {
+		Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false).forEach((r) -> {
 			if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
 				rooms.add(r);
 			}

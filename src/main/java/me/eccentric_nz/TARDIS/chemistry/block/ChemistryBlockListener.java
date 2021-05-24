@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.chemistry.block;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.chemistry.compound.CompoundInventory;
 import me.eccentric_nz.tardis.chemistry.constructor.ConstructorInventory;

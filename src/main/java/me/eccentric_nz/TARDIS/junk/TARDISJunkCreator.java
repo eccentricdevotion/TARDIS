@@ -34,6 +34,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -101,7 +102,7 @@ class TARDISJunkCreator {
 		// populate home, current, next and back tables
 		HashMap<String, Object> setlocs = new HashMap<>();
 		setlocs.put("tardis_id", lastInsertId);
-		setlocs.put("world", l.getWorld().getName());
+		setlocs.put("world", Objects.requireNonNull(l.getWorld()).getName());
 		setlocs.put("x", l.getBlockX());
 		setlocs.put("y", l.getBlockY());
 		setlocs.put("z", l.getBlockZ());
@@ -116,7 +117,7 @@ class TARDISJunkCreator {
 		bd.setPlayer(p);
 		bd.setRebuild(false);
 		bd.setSubmarine(false);
-		bd.setTardisID(lastInsertId);
+		bd.setTardisId(lastInsertId);
 		bd.setThrottle(SpaceTimeThrottle.JUNK);
 		// build the tardis in the Vortex
 		TARDISBuilderInner builder = new TARDISBuilderInner(plugin, Consoles.schematicFor("junk"), chunkworld, lastInsertId, p, wall_type, floor_type, true);

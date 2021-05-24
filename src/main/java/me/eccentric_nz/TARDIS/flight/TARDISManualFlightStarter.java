@@ -46,7 +46,7 @@ class TARDISManualFlightStarter implements Runnable {
 		TARDISMessage.send(player, "FLIGHT_ENGAGED");
 		TARDISManualFlightRunnable mfr = new TARDISManualFlightRunnable(plugin, player, id);
 		int taskid = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, mfr, 10L, delay);
-		mfr.setTaskID(taskid);
+		mfr.setTaskId(taskid);
 		// play inflight sound
 		if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
 			plugin.getServer().getScheduler().runTask(plugin, new TARDISLoopingFlightSound(plugin, player.getLocation(), id));

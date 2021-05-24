@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.builders;
 
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.ars.TARDISARSMethods;
 import me.eccentric_nz.tardis.ars.TARDISARSSlot;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetARS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;

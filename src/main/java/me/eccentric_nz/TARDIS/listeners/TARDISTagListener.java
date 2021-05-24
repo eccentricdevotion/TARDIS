@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -29,10 +29,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -65,7 +62,7 @@ public class TARDISTagListener implements Listener {
 			}
 			event.getPlayer().sendMessage(plugin.getPluginName() + "Today, and today only, you can play 'Tag the OOD'!");
 			event.getPlayer().sendMessage(plugin.getPluginName() + "To see tag stats (and who is currently 'it'), use the command " + ChatColor.AQUA + "/tardis tagtheood");
-			if (plugin.getTagConfig().get("it").equals("")) {
+			if (Objects.equals(plugin.getTagConfig().get("it"), "")) {
 				Player startit = getRandomPlayer();
 				plugin.getServer().broadcastMessage(plugin.getPluginName() + startit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
 				setConfig(startit.getName());

@@ -35,9 +35,8 @@ class TARDISHadsTypeCommand {
 			return false;
 		}
 		String hadsType = args[1].toUpperCase(Locale.ENGLISH);
-		HADS go;
 		try {
-			go = HADS.valueOf(hadsType);
+			HADS.valueOf(hadsType);
 		} catch (IllegalArgumentException e) {
 			TARDISMessage.send(player, "HADS_NOT_VALID");
 			return false;

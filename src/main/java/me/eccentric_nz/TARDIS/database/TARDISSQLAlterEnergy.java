@@ -51,7 +51,7 @@ class TARDISSQLAlterEnergy implements Runnable {
 	 * @param table  the database table name to insert the data into.
 	 * @param amount the amount of energy to add or remove (use a negative value)
 	 * @param where  a HashMap&lt;String, Object&gt; of table fields and values to select the records to alter.
-	 * @param player      the player who receives the success message.
+	 * @param player the player who receives the success message.
 	 */
 	TARDISSQLAlterEnergy(TARDISPlugin plugin, String table, int amount, HashMap<String, Object> where, Player player) {
 		this.plugin = plugin;
@@ -62,54 +62,54 @@ class TARDISSQLAlterEnergy implements Runnable {
 		prefix = this.plugin.getPrefix();
 	}
 
-    @Override
-    public void run() {
-        Statement statement = null;
-        String wheres;
-        StringBuilder sbw = new StringBuilder();
-        where.forEach((key, value) -> {
-            sbw.append(key).append(" = ");
-            if (value instanceof String || value instanceof UUID) {
-                sbw.append("'").append(value).append("' AND ");
-            } else {
-                sbw.append(value).append(" AND ");
-            }
-        });
-        int tmp = 0;
-        if (where.containsKey("tardis_id")) {
-            tmp = (Integer) where.get("tardis_id");
-        }
-        int id = tmp;
-        where.clear();
-        wheres = sbw.substring(0, sbw.length() - 5);
-        String query = "UPDATE " + prefix + table + " SET artron_level = artron_level + " + amount + " WHERE " + wheres;
-        if (amount < 0 && player != null) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (id > 0) {
-                        new TARDISArtronIndicator(plugin).showArtronLevel(player, id, Math.abs(amount));
-                        plugin.getPM().callEvent(new TARDISArtronEvent(player, amount, id));
-                    } else {
-                        TARDISMessage.send(player, "ENERGY_USED", String.format("%d", Math.abs(amount)));
-                    }
-                }
-            }.runTask(plugin);
-        }
-        try {
-            service.testConnection(connection);
-            statement = connection.createStatement();
-            statement.executeUpdate(query);
-        } catch (SQLException e) {
-            plugin.debug("Artron Energy update error for " + table + "! " + e.getMessage());
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Artron Energy error closing " + table + "! " + e.getMessage());
-            }
-        }
-    }
+	@Override
+	public void run() {
+		Statement statement = null;
+		String wheres;
+		StringBuilder sbw = new StringBuilder();
+		where.forEach((key, value) -> {
+			sbw.append(key).append(" = ");
+			if (value instanceof String || value instanceof UUID) {
+				sbw.append("'").append(value).append("' AND ");
+			} else {
+				sbw.append(value).append(" AND ");
+			}
+		});
+		int tmp = 0;
+		if (where.containsKey("tardis_id")) {
+			tmp = (Integer) where.get("tardis_id");
+		}
+		int id = tmp;
+		where.clear();
+		wheres = sbw.substring(0, sbw.length() - 5);
+		String query = "UPDATE " + prefix + table + " SET artron_level = artron_level + " + amount + " WHERE " + wheres;
+		if (amount < 0 && player != null) {
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					if (id > 0) {
+						new TARDISArtronIndicator(plugin).showArtronLevel(player, id, Math.abs(amount));
+						plugin.getPM().callEvent(new TARDISArtronEvent(player, amount, id));
+					} else {
+						TARDISMessage.send(player, "ENERGY_USED", String.format("%d", Math.abs(amount)));
+					}
+				}
+			}.runTask(plugin);
+		}
+		try {
+			service.testConnection(connection);
+			statement = connection.createStatement();
+			statement.executeUpdate(query);
+		} catch (SQLException e) {
+			plugin.debug("Artron Energy update error for " + table + "! " + e.getMessage());
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				plugin.debug("Artron Energy error closing " + table + "! " + e.getMessage());
+			}
+		}
+	}
 }

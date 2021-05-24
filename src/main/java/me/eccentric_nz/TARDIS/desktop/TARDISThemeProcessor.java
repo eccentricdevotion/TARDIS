@@ -55,20 +55,23 @@ class TARDISThemeProcessor {
 		// get upgrade data
 		TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
 		Player player = plugin.getServer().getPlayer(uuid);
-		if (plugin.getHandlesConfig().getBoolean("enabled") && TARDISPermission.hasPermission(player, "tardis.handles")) {
-			HashMap<String, Object> wheret = new HashMap<>();
-			wheret.put("uuid", uuid.toString());
-			ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
-			rs.resultSet();
-			TARDIS tardis = rs.getTardis();
-			// check if the player has a Handles placed
-			HashMap<String, Object> whereh = new HashMap<>();
-			whereh.put("type", 26);
-			whereh.put("tardis_id", tardis.getTardisId());
-			ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
-			if (rsc.resultSet()) {
-				TARDISMessage.send(player, "UPGRADE_REMOVE_HANDLES");
-				return;
+		if (plugin.getHandlesConfig().getBoolean("enabled")) {
+			assert player != null;
+			if (TARDISPermission.hasPermission(player, "tardis.handles")) {
+				HashMap<String, Object> wheret = new HashMap<>();
+				wheret.put("uuid", uuid.toString());
+				ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
+				rs.resultSet();
+				TARDIS tardis = rs.getTardis();
+				// check if the player has a Handles placed
+				HashMap<String, Object> whereh = new HashMap<>();
+				whereh.put("type", 26);
+				whereh.put("tardis_id", tardis.getTardisId());
+				ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
+				if (rsc.resultSet()) {
+					TARDISMessage.send(player, "UPGRADE_REMOVE_HANDLES");
+					return;
+				}
 			}
 		}
 		// get Archive if necessary
@@ -103,6 +106,7 @@ class TARDISThemeProcessor {
 			// get JSON
 			JsonObject obj = TARDISSchematicGZip.unzip(path);
 			// get dimensions
+			assert obj != null;
 			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 			h = dimensions.get("height").getAsInt();
 			w = dimensions.get("width").getAsInt();
@@ -138,6 +142,7 @@ class TARDISThemeProcessor {
 			// get JSON
 			JsonObject obj = TARDISSchematicGZip.unzip(path);
 			// get dimensions
+			assert obj != null;
 			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 			ph = dimensions.get("height").getAsInt();
 			pw = dimensions.get("width").getAsInt();

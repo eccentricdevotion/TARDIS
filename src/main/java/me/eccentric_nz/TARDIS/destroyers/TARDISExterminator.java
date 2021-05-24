@@ -99,7 +99,7 @@ public class TARDISExterminator {
 				dd.setHide(false);
 				dd.setOutside(false);
 				dd.setSubmarine(rsc.isSubmarine());
-				dd.setTardisID(id);
+				dd.setTardisId(id);
 				dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
 				dd.setThrottle(SpaceTimeThrottle.REBUILD);
 				if (!hid) {
@@ -164,7 +164,7 @@ public class TARDISExterminator {
 				Block blockDown = blockbehind.getRelative(BlockFace.DOWN, 2);
 				Location bd_loc = blockDown.getLocation();
 				HashMap<String, Object> wherecl = new HashMap<>();
-				wherecl.put("world", bd_loc.getWorld().getName());
+				wherecl.put("world", Objects.requireNonNull(bd_loc.getWorld()).getName());
 				wherecl.put("x", bd_loc.getBlockX());
 				wherecl.put("y", bd_loc.getBlockY());
 				wherecl.put("z", bd_loc.getBlockZ());
@@ -228,7 +228,7 @@ public class TARDISExterminator {
 				dd.setHide(true);
 				dd.setOutside(false);
 				dd.setSubmarine(rsc.isSubmarine());
-				dd.setTardisID(id);
+				dd.setTardisId(id);
 				TARDISBiome tardisBiome = TARDISBiome.get(rsc.getBiomeKey());
 				dd.setTardisBiome(tardisBiome);
 				dd.setThrottle(SpaceTimeThrottle.REBUILD);

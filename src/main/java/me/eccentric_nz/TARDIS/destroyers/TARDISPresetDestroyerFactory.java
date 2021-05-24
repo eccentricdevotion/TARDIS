@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
@@ -38,6 +38,7 @@ import org.bukkit.block.BlockFace;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Destroy the tardis Police Box.
@@ -64,7 +65,7 @@ public class TARDISPresetDestroyerFactory {
 			PRESET demat = tardis.getDemat();
 			PRESET preset = tardis.getPreset();
 			// load the chunk if unloaded
-			if (!dd.getLocation().getWorld().isChunkLoaded(dd.getLocation().getChunk())) {
+			if (!Objects.requireNonNull(dd.getLocation().getWorld()).isChunkLoaded(dd.getLocation().getChunk())) {
 				dd.getLocation().getWorld().loadChunk(dd.getLocation().getChunk());
 			}
 			if (!demat.equals(PRESET.INVISIBLE)) {
@@ -247,6 +248,7 @@ public class TARDISPresetDestroyerFactory {
 			case ANGEL, APPERTURE, LAMP -> 0;
 			default -> 2;
 		};
+		assert w != null;
 		TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, Material.AIR);
 		if (p.equals(PRESET.SWAMP)) {
 			TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, Material.AIR);
@@ -278,6 +280,7 @@ public class TARDISPresetDestroyerFactory {
 		int tx = l.getBlockX() + lx;
 		int ty = l.getBlockY() + 2;
 		int tz = l.getBlockZ() + lz;
+		assert w != null;
 		TARDISBlockSetters.setBlock(w, tx, ty, tz, Material.AIR);
 	}
 
@@ -289,10 +292,12 @@ public class TARDISPresetDestroyerFactory {
 		if (p.equals(PRESET.CAKE)) {
 			for (int i = (tx - 1); i < (tx + 2); i++) {
 				for (int j = (tz - 1); j < (tz + 2); j++) {
+					assert w != null;
 					TARDISBlockSetters.setBlock(w, i, ty, j, Material.AIR);
 				}
 			}
 		} else {
+			assert w != null;
 			TARDISBlockSetters.setBlock(w, tx, ty, tz, Material.AIR);
 		}
 	}
@@ -327,6 +332,7 @@ public class TARDISPresetDestroyerFactory {
 				rightz = l.getBlockZ() + 1;
 			}
 		}
+		assert w != null;
 		TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, Material.AIR);
 		TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, Material.AIR);
 	}
@@ -349,6 +355,7 @@ public class TARDISPresetDestroyerFactory {
 				rightz = l.getBlockZ() + 1;
 			}
 		}
+		assert w != null;
 		TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, Material.AIR);
 		TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, Material.AIR);
 	}

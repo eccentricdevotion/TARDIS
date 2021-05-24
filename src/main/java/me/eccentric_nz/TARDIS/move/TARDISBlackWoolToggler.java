@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Tag;

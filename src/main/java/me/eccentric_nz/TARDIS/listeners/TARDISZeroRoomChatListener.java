@@ -27,6 +27,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -56,7 +57,7 @@ public class TARDISZeroRoomChatListener implements Listener {
 			event.setCancelled(true);
 			TARDISMessage.send(zero, "NOT_IN_ZERO");
 		} else if (plugin.getServer().getWorld("TARDIS_Zero_Room") != null) {
-			List<Player> inZeroRoom = plugin.getServer().getWorld("TARDIS_Zero_Room").getPlayers();
+			List<Player> inZeroRoom = Objects.requireNonNull(plugin.getServer().getWorld("TARDIS_Zero_Room")).getPlayers();
 			inZeroRoom.forEach((p) -> event.getRecipients().remove(p));
 		}
 	}

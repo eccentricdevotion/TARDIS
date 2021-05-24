@@ -21,6 +21,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Objects;
+
 /**
  * Programming is a process used by Cybermen to control humans. To program a human, the person has to be dead. A control
  * is installed in the person, powered by electricity, turning the person into an agent of the Cybermen. Control over
@@ -44,7 +46,7 @@ class TARDISHandlesValidator {
 		int i = 0;
 		for (ItemStack is : program) {
 			if (is != null) {
-				TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
+				TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(is.getItemMeta()).getDisplayName());
 				switch (thb) {
 					case FOR:
 						if (!validateFor(i + 1)) {
@@ -106,7 +108,7 @@ class TARDISHandlesValidator {
 					case RANDOM:
 						// must be followed by a number or preceded by travel
 						ItemStack pre = program[i - 1];
-						TARDISHandlesBlock cede = TARDISHandlesBlock.BY_NAME.get(pre.getItemMeta().getDisplayName());
+						TARDISHandlesBlock cede = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(pre.getItemMeta()).getDisplayName());
 						if (!TARDISHandlesBlock.TRAVEL.equals(cede) && !validateCoordOrMath(i + 1)) {
 							TARDISMessage.handlesMessage(player, "The Math operation does not compute!");
 							return false;
@@ -154,7 +156,7 @@ class TARDISHandlesValidator {
 		if (op == null) {
 			return false;
 		}
-		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(op.getItemMeta().getDisplayName());
+		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(op.getItemMeta()).getDisplayName());
 		if (!thb.getCategory().equals(TARDISHandlesCategory.OPERATOR)) {
 			return false;
 		}
@@ -162,7 +164,7 @@ class TARDISHandlesValidator {
 		if (val == null) {
 			return false;
 		}
-		TARDISHandlesBlock thbv = TARDISHandlesBlock.BY_NAME.get(val.getItemMeta().getDisplayName());
+		TARDISHandlesBlock thbv = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(val.getItemMeta()).getDisplayName());
 		return thbv.getCategory().equals(TARDISHandlesCategory.NUMBER);
 	}
 
@@ -171,7 +173,7 @@ class TARDISHandlesValidator {
 		if (op == null) {
 			return false;
 		}
-		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(op.getItemMeta().getDisplayName());
+		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(op.getItemMeta()).getDisplayName());
 		return thb.getCategory().equals(TARDISHandlesCategory.NUMBER) || thb.equals(TARDISHandlesBlock.SUBTRACTION);
 	}
 
@@ -180,7 +182,7 @@ class TARDISHandlesValidator {
 		if (op == null) {
 			return false;
 		}
-		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(op.getItemMeta().getDisplayName());
+		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(op.getItemMeta()).getDisplayName());
 		return thb.equals(TARDISHandlesBlock.ASSIGNMENT) || thb.equals(TARDISHandlesBlock.EQUALS) || thb.equals(TARDISHandlesBlock.OPEN) || thb.equals(TARDISHandlesBlock.CLOSE) || thb.equals(TARDISHandlesBlock.LOCK) || thb.equals(TARDISHandlesBlock.UNLOCK);
 	}
 
@@ -189,7 +191,7 @@ class TARDISHandlesValidator {
 		if (op == null) {
 			return false;
 		}
-		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(op.getItemMeta().getDisplayName());
+		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(op.getItemMeta()).getDisplayName());
 		return thb.equals(TARDISHandlesBlock.ASSIGNMENT) || thb.equals(TARDISHandlesBlock.EQUALS) || thb.equals(TARDISHandlesBlock.ON) || thb.equals(TARDISHandlesBlock.OFF);
 	}
 
@@ -198,7 +200,7 @@ class TARDISHandlesValidator {
 		if (op == null) {
 			return false;
 		}
-		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(op.getItemMeta().getDisplayName());
+		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(op.getItemMeta()).getDisplayName());
 		return thb.equals(TARDISHandlesBlock.ASSIGNMENT) || thb.equals(TARDISHandlesBlock.EQUALS) || thb.equals(TARDISHandlesBlock.ON) || thb.equals(TARDISHandlesBlock.OFF) || thb.equals(TARDISHandlesBlock.SHOW) || thb.equals(TARDISHandlesBlock.REDSTONE);
 	}
 
@@ -207,7 +209,7 @@ class TARDISHandlesValidator {
 		if (op == null) {
 			return false;
 		}
-		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(op.getItemMeta().getDisplayName());
+		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(op.getItemMeta()).getDisplayName());
 		Material record = op.getType();
 		return thb.equals(TARDISHandlesBlock.HOME) || thb.equals(TARDISHandlesBlock.RECHARGER) || thb.equals(TARDISHandlesBlock.X) || thb.equals(TARDISHandlesBlock.Y) || thb.equals(TARDISHandlesBlock.Z) || thb.equals(TARDISHandlesBlock.RANDOM) || record.equals(Material.MUSIC_DISC_CHIRP) || record.equals(Material.MUSIC_DISC_WAIT) || record.equals(Material.MUSIC_DISC_CAT) || record.equals(Material.MUSIC_DISC_BLOCKS);
 	}
@@ -223,7 +225,7 @@ class TARDISHandlesValidator {
 					continue;
 				}
 			}
-			TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
+			TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(is.getItemMeta()).getDisplayName());
 			switch (i - start) {
 				case 0: // must be a variable
 					if (!thb.getCategory().equals(TARDISHandlesCategory.VARIABLE)) {
@@ -277,7 +279,7 @@ class TARDISHandlesValidator {
 					continue;
 				}
 			}
-			TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
+			TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(is.getItemMeta()).getDisplayName());
 			switch (i - start) {
 				case 0: // must be an event, variable or selector
 					if (!thb.getCategory().equals(TARDISHandlesCategory.VARIABLE) && !thb.getCategory().equals(TARDISHandlesCategory.SELECTOR) && !thb.getCategory().equals(TARDISHandlesCategory.EVENT)) {

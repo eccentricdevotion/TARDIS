@@ -18,8 +18,8 @@ package me.eccentric_nz.tardis.planets;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
 import org.bukkit.Material;
@@ -69,6 +69,7 @@ public class TARDISSilurianStructureRunnable implements Runnable {
 			world = plugin.getServer().getWorld(s_world + "_tardis_siluria");
 			obj = TARDISSchematicGZip.unzip(path);
 			// get dimensions
+			assert obj != null;
 			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 			h = dimensions.get("height").getAsInt() - 1;
 			w = dimensions.get("width").getAsInt();
@@ -102,7 +103,7 @@ public class TARDISSilurianStructureRunnable implements Runnable {
 					case CHEST:
 						TARDISBlockSetters.setBlock(world, x, y, z, data);
 						chest = world.getBlockAt(x, y, z);
-						if (chest != null && chest.getType().equals(Material.CHEST)) {
+						if (chest.getType().equals(Material.CHEST)) {
 							try {
 								// set chest contents
 								Chest container = (Chest) chest.getState();

@@ -85,9 +85,9 @@ public class TARDISShapedRecipe {
 	}
 
 	public void addShapedRecipes() {
-		keyDisplay = key_colour_lookup.get(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ENGLISH));
-		sonicDisplay = sonic_colour_lookup.get(plugin.getConfig().getString("preferences.default_sonic").toLowerCase(Locale.ENGLISH));
-		Set<String> shaped = plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false);
+		keyDisplay = key_colour_lookup.get(Objects.requireNonNull(plugin.getConfig().getString("preferences.default_key")).toLowerCase(Locale.ENGLISH));
+		sonicDisplay = sonic_colour_lookup.get(Objects.requireNonNull(plugin.getConfig().getString("preferences.default_sonic")).toLowerCase(Locale.ENGLISH));
+		Set<String> shaped = Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("shaped")).getKeys(false);
 		shaped.forEach((s) -> plugin.getServer().addRecipe(makeRecipe(s)));
 	}
 
@@ -105,25 +105,28 @@ public class TARDISShapedRecipe {
 		ItemStack is = new ItemStack(mat, amount);
 		ItemMeta im = is.getItemMeta();
 		if (s.equals("tardis Key") && keyDisplay != null) {
+			assert im != null;
 			im.setDisplayName(keyDisplay + s);
 		} else if (s.equals("Sonic Screwdriver") && sonicDisplay != null) {
+			assert im != null;
 			im.setDisplayName(sonicDisplay + s);
 		} else {
+			assert im != null;
 			im.setDisplayName(s);
 		}
 		im.setCustomModelData(RecipeItem.getByName(s).getCustomModelData());
-		if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
+		if (!Objects.equals(plugin.getRecipesConfig().getString("shaped." + s + ".lore"), "")) {
 			if (mat.equals(Material.GLOWSTONE_DUST) && DiskCircuit.getCircuitNames().contains(s)) {
 				// which circuit is it?
 				String[] split = s.split(" ");
 				String which = split[1].toLowerCase(Locale.ENGLISH);
 				// set the second line of lore
 				List<String> lore;
-				String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+				String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses." + which), "0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
 				lore = Arrays.asList("Uses left", uses);
 				im.setLore(lore);
 			} else {
-				im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("~")));
+				im.setLore(Arrays.asList(Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped." + s + ".lore")).split("~")));
 			}
 		}
 		if (s.endsWith("Bow Tie") || s.equals("3-D Glasses") || s.equals("tardis Communicator")) {
@@ -138,9 +141,9 @@ public class TARDISShapedRecipe {
 		NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
 		ShapedRecipe r = new ShapedRecipe(key, is);
 		// get shape
-		String difficulty = (plugin.getDifficulty().equals(Difficulty.MEDIUM)) ? "easy" : plugin.getConfig().getString("preferences.difficulty").toLowerCase(Locale.ENGLISH);
+		String difficulty = (plugin.getDifficulty().equals(Difficulty.MEDIUM)) ? "easy" : Objects.requireNonNull(plugin.getConfig().getString("preferences.difficulty")).toLowerCase(Locale.ENGLISH);
 		try {
-			String[] shape_tmp = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_shape").split(",");
+			String[] shape_tmp = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_shape")).split(",");
 			String[] shape = new String[shape_tmp.length];
 			for (int i = 0; i < shape_tmp.length; i++) {
 				shape[i] = shape_tmp[i].replaceAll("-", " ");
@@ -150,16 +153,18 @@ public class TARDISShapedRecipe {
 			} else {
 				r.shape(shape[0], shape[1]);
 			}
-			Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection("shaped." + s + "." + difficulty + "_ingredients").getKeys(false);
+			Set<String> ingredients = Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("shaped." + s + "." + difficulty + "_ingredients")).getKeys(false);
 			ingredients.forEach((g) -> {
 				char c = g.charAt(0);
 				String i = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_ingredients." + g);
+				assert i != null;
 				if (i.contains("=")) {
 					ItemStack exact;
 					String[] choice = i.split("=");
 					Material m = Material.valueOf(choice[0]);
 					exact = new ItemStack(m, 1);
 					ItemMeta em = exact.getItemMeta();
+					assert em != null;
 					em.setDisplayName(choice[1]);
 					em.setCustomModelData(RecipeItem.getByName(choice[1]).getCustomModelData());
 					if (m.equals(Material.GLOWSTONE_DUST) && DiskCircuit.getCircuitNames().contains(choice[1])) {
@@ -168,7 +173,7 @@ public class TARDISShapedRecipe {
 						String which = split[1].toLowerCase(Locale.ENGLISH);
 						// set the second line of lore
 						List<String> lore;
-						String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+						String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses." + which), "0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
 						lore = Arrays.asList("Uses left", uses);
 						em.setLore(lore);
 					}
@@ -186,6 +191,7 @@ public class TARDISShapedRecipe {
 						potionType = PotionType.INVISIBILITY;
 					}
 					PotionData potionData = new PotionData(potionType);
+					assert pm != null;
 					pm.setBasePotionData(potionData);
 					potion.setItemMeta(pm);
 					r.setIngredient(c, new RecipeChoice.ExactChoice(potion));
@@ -200,6 +206,8 @@ public class TARDISShapedRecipe {
 					} catch (IllegalArgumentException e) {
 						enchantment = Enchantment.KNOCKBACK;
 					}
+					assert pm != null;
+					assert enchantment != null;
 					pm.addStoredEnchant(enchantment, 1, false);
 					book.setItemMeta(pm);
 					r.setIngredient(c, new RecipeChoice.ExactChoice(book));

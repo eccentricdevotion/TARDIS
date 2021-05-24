@@ -42,6 +42,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Following his disrupted resurrection, the Master was able to offensively use energy - presumably his own artron
@@ -89,7 +90,7 @@ public class TARDISCondenserListener implements Listener {
 								}
 								break;
 							case NONE:
-								if (plugin.getPlanetsConfig().getString("planets." + loc.getWorld().getName() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
+								if (Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + Objects.requireNonNull(loc.getWorld()).getName() + ".gamemode")).equalsIgnoreCase("CREATIVE")) {
 									TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
 									return;
 								}
@@ -110,7 +111,7 @@ public class TARDISCondenserListener implements Listener {
 				} else {
 					where.put("uuid", player.getUniqueId().toString());
 					rs = new ResultSetTardis(plugin, where, "", false, 0);
-					isCondenser = (plugin.getArtronConfig().contains("condenser") && plugin.getArtronConfig().getString("condenser").equals(chest_loc) && rs.resultSet());
+					isCondenser = (plugin.getArtronConfig().contains("condenser") && Objects.equals(plugin.getArtronConfig().getString("condenser"), chest_loc) && rs.resultSet());
 				}
 				if (isCondenser) {
 					player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 0.5f, 1);
@@ -124,9 +125,10 @@ public class TARDISCondenserListener implements Listener {
 							if (plugin.getCondensables().containsKey(item) && !zero.contains(item)) {
 								int stack_size = is.getAmount();
 								if (item.equals("BLAZE_ROD") && isSonic(is)) {
-									List<String> lore = is.getItemMeta().getLore();
+									List<String> lore = Objects.requireNonNull(is.getItemMeta()).getLore();
 									double full = plugin.getArtronConfig().getDouble("full_charge") / 75.0d;
 									amount += plugin.getArtronConfig().getDouble("sonic_generator.standard") * full;
+									assert lore != null;
 									if (lore.contains("Bio-scanner Upgrade")) {
 										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
 									}
@@ -249,7 +251,7 @@ public class TARDISCondenserListener implements Listener {
 				if (!plugin.getArtronConfig().contains("condenser")) {
 					return;
 				}
-				if (plugin.getArtronConfig().getString("condenser").equals(loc.toString())) {
+				if (Objects.equals(plugin.getArtronConfig().getString("condenser"), loc.toString())) {
 					event.setCancelled(true);
 					openCondenser(b, event.getPlayer(), "Server Condenser");
 				}
@@ -273,6 +275,7 @@ public class TARDISCondenserListener implements Listener {
 	private boolean isSonic(ItemStack is) {
 		if (is.hasItemMeta()) {
 			ItemMeta im = is.getItemMeta();
+			assert im != null;
 			if (im.hasDisplayName()) {
 				return (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver"));
 			}
@@ -286,6 +289,7 @@ public class TARDISCondenserListener implements Listener {
 		}
 		if (is.hasItemMeta()) {
 			ItemMeta im = is.getItemMeta();
+			assert im != null;
 			if (im.hasDisplayName()) {
 				return im.getDisplayName().equals("tardis Blueprint Disk");
 			}

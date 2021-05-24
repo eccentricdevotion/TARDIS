@@ -43,8 +43,8 @@ public class TARDISLanguageUpdater {
 	public void update() {
 		// get currently configured language
 		String lang = plugin.getConfig().getString("preferences.language");
-        assert lang != null;
-        if (lang.equals("en")) {
+		assert lang != null;
+		if (lang.equals("en")) {
 			return;
 		}
 		// get the English language config

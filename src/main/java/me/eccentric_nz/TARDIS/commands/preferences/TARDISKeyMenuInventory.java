@@ -50,8 +50,10 @@ class TARDISKeyMenuInventory {
 			ItemStack is = new ItemStack(key.getMaterial(), 1);
 			ItemMeta im = is.getItemMeta();
 			if (key == GUIKeyPreferences.CLOSE || key == GUIKeyPreferences.INSTRUCTIONS) {
+				assert im != null;
 				im.setDisplayName(key.getName());
 			} else {
+				assert im != null;
 				im.setDisplayName(key.getChatColor() + "tardis Key");
 			}
 			if (!key.getLore().isEmpty()) {

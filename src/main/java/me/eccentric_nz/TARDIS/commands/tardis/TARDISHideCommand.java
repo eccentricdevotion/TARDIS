@@ -128,7 +128,7 @@ public class TARDISHideCommand {
 			dd.setHide(true);
 			dd.setOutside(false);
 			dd.setSubmarine(rsc.isSubmarine());
-			dd.setTardisID(id);
+			dd.setTardisId(id);
 			dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
 			dd.setThrottle(SpaceTimeThrottle.REBUILD);
 			plugin.getPresetDestroyer().destroyPreset(dd);

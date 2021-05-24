@@ -66,6 +66,7 @@ class TARDISWallsInventory {
 		// scroll up
 		ItemStack scroll_up = new ItemStack(Material.ARROW, 1);
 		ItemMeta uim = scroll_up.getItemMeta();
+		assert uim != null;
 		uim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_U"));
 		uim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_U.getCustomModelData());
 		scroll_up.setItemMeta(uim);
@@ -73,6 +74,7 @@ class TARDISWallsInventory {
 		// scroll down
 		ItemStack scroll_down = new ItemStack(Material.ARROW, 1);
 		ItemMeta dim = scroll_down.getItemMeta();
+		assert dim != null;
 		dim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_D"));
 		dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.getCustomModelData());
 		scroll_down.setItemMeta(dim);
@@ -80,6 +82,7 @@ class TARDISWallsInventory {
 		// default wall
 		ItemStack wall = new ItemStack(Material.BOWL, 1);
 		ItemMeta wim = wall.getItemMeta();
+		assert wim != null;
 		wim.setDisplayName("Default Wall Block");
 		wim.setCustomModelData(GUIWallFloor.WALL.getCustomModelData());
 		wall.setItemMeta(wim);
@@ -87,6 +90,7 @@ class TARDISWallsInventory {
 		// default floor
 		ItemStack floor = new ItemStack(Material.BOWL, 1);
 		ItemMeta fim = floor.getItemMeta();
+		assert fim != null;
 		fim.setDisplayName("Default Floor Block");
 		fim.setCustomModelData(GUIWallFloor.FLOOR.getCustomModelData());
 		floor.setItemMeta(fim);
@@ -94,6 +98,7 @@ class TARDISWallsInventory {
 		// close
 		ItemStack close = new ItemStack(Material.BOWL, 1);
 		ItemMeta close_im = close.getItemMeta();
+		assert close_im != null;
 		close_im.setDisplayName("Abort upgrade");
 		close_im.setCustomModelData(GUIWallFloor.BUTTON_ABORT.getCustomModelData());
 		close.setItemMeta(close_im);

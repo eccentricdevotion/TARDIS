@@ -61,8 +61,6 @@ public class TARDISArchInventory {
 				ps.setString(1, inv);
 				ps.setString(2, arm);
 				ps.setInt(5, id);
-				ps.executeUpdate();
-				ps.close();
 			} else {
 				// they haven't got an inventory saved yet so make one with their current inventory
 				String insertQuery = "INSERT INTO " + prefix + "inventories (uuid, player, arch, inventory, armour, attributes, armour_attributes) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -72,9 +70,9 @@ public class TARDISArchInventory {
 				ps.setInt(3, arch);
 				ps.setString(4, inv);
 				ps.setString(5, arm);
-				ps.executeUpdate();
-				ps.close();
 			}
+			ps.executeUpdate();
+			ps.close();
 			rsInv.close();
 			// check if they have an inventory for the apposing chameleon arch state
 			int to = (arch == 0) ? 1 : 0;

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.tardis.database.data.TARDIS;
@@ -71,6 +71,7 @@ public class TARDISShellRoomConstructor {
 			boolean hasDoor = false;
 			for (int c = 0; c < 10; c++) {
 				for (int y = fy; y < fy + 4; y++) {
+					assert w != null;
 					Block fb = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
 					if (!fb.getType().isAir()) {
 						if (TARDISMaterials.doors.contains(fb.getType())) {

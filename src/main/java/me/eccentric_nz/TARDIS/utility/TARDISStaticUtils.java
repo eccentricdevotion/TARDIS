@@ -217,6 +217,7 @@ public class TARDISStaticUtils {
 	public static String getNick(UUID uuid) {
 		if (Bukkit.getServer().getPluginManager().getPlugin("Essentials") != null) {
 			Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+			assert essentials != null;
 			User user = essentials.getUser(uuid);
 			String prefix = essentials.getSettings().getNicknamePrefix();
 			return ChatColor.stripColor(user.getNick(false)).replace(prefix, "");
@@ -224,7 +225,7 @@ public class TARDISStaticUtils {
 		Player player = Bukkit.getPlayer(uuid);
 		if (player == null) {
 			OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
-			return (offlinePlayer != null) ? offlinePlayer.getName() : "Unknown";
+			return offlinePlayer.getName();
 		} else {
 			return player.getName();
 		}
@@ -233,6 +234,7 @@ public class TARDISStaticUtils {
 	public static String getNick(Player player) {
 		if (Bukkit.getServer().getPluginManager().getPlugin("Essentials") != null) {
 			Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+			assert essentials != null;
 			User user = essentials.getUser(player.getUniqueId());
 			String prefix = essentials.getSettings().getNicknamePrefix();
 			return ChatColor.stripColor(user.getNick(false)).replace(prefix, "");

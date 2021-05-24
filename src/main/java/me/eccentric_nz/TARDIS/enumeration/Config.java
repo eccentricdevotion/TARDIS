@@ -18,5 +18,5 @@ package me.eccentric_nz.tardis.enumeration;
 
 public enum Config {
 
-	achievements, artron, blocks, chameleon_guis, condensables, custom_consoles, handles, kits, planets, recipes, rooms, signs, tag
+	advancements, artron, blocks, chameleon_guis, condensables, custom_consoles, handles, kits, planets, recipes, rooms, signs, tag
 }

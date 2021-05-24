@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.builders.MaterialisationData;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
@@ -75,6 +75,7 @@ public class TARDISDeinstantPreset {
 		}
 		World w = l.getWorld();
 		// make sure chunk is loaded
+		assert w != null;
 		Chunk chunk = w.getChunkAt(l);
 		while (!chunk.isLoaded()) {
 			chunk.load();

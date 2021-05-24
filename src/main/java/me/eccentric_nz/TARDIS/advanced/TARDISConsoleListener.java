@@ -39,10 +39,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -100,7 +97,7 @@ public class TARDISConsoleListener implements Listener {
 					}
 					onlythese.add(Material.valueOf(key));
 					ItemStack disk = event.getPlayer().getInventory().getItemInMainHand();
-					if ((disk != null && onlythese.contains(disk.getType()) && disk.hasItemMeta()) || key.equals("AIR")) {
+					if (onlythese.contains(disk.getType()) && disk.hasItemMeta() || Objects.equals(key, "AIR")) {
 						// only the time lord of this tardis
 						ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
 						if (!rs.fromBoth(id, uuid.toString())) {
@@ -124,6 +121,7 @@ public class TARDISConsoleListener implements Listener {
 										if (circuit != null && circuit.hasItemMeta()) {
 											ItemMeta cm = circuit.getItemMeta();
 											if (circuit.getType().equals(Material.FILLED_MAP)) {
+												assert cm != null;
 												if (cm.hasDisplayName()) {
 													GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(cm.getDisplayName());
 													if (glowstone != null) {
@@ -131,6 +129,7 @@ public class TARDISConsoleListener implements Listener {
 													}
 												}
 											} else if (TARDISStaticUtils.isMusicDisk(circuit)) {
+												assert cm != null;
 												cm.setCustomModelData(10000001);
 												circuit.setItemMeta(cm);
 											}
@@ -152,6 +151,7 @@ public class TARDISConsoleListener implements Listener {
 						p.openInventory(inv);
 					} else if (disk.equals(Material.MUSIC_DISC_FAR)) {
 						ItemMeta im = disk.getItemMeta();
+						assert im != null;
 						if (im.hasDisplayName() && im.getDisplayName().equals("Authorised Control Disk")) {
 							// get the UUID from the disk
 							if (im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {

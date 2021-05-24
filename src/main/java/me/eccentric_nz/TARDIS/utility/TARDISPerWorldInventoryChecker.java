@@ -30,6 +30,7 @@ public class TARDISPerWorldInventoryChecker {
 
 	public static void setupPWI() {
 		PerWorldInventory pwi = (PerWorldInventory) Bukkit.getServer().getPluginManager().getPlugin("PerWorldInventory");
+		assert pwi != null;
 		api = pwi.getApi();
 	}
 }

@@ -18,8 +18,8 @@ package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.rooms.TARDISPainting;
 import me.eccentric_nz.tardis.utility.TARDISBannerData;
 import org.bukkit.*;

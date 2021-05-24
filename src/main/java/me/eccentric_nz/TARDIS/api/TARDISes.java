@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -147,7 +147,7 @@ public class TARDISes implements TardisAPI {
 			String chameleon = tardis.getPreset().toString();
 			String door = "Closed";
 			for (Map.Entry<Location, TARDISTeleportLocation> map : TARDISPlugin.plugin.getTrackerKeeper().getPortals().entrySet()) {
-				if (!Objects.requireNonNull(map.getKey().getWorld()).getName().contains("tardis") && !map.getValue().isAbandoned()) {
+				if (!Objects.requireNonNull(map.getKey().getWorld()).getName().contains("TARDIS") && !map.getValue().isAbandoned()) {
 					if (id == map.getValue().getTardisId()) {
 						door = "Open";
 						break;
@@ -261,7 +261,7 @@ public class TARDISes implements TardisAPI {
 	public String getTARDISPlayerIsIn(UUID uuid) {
 		Player p = Bukkit.getPlayer(uuid);
 		if (p != null && p.isOnline()) {
-			String str = " is not in any tardis.";
+			String str = " is not in any TARDIS.";
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("uuid", uuid.toString());
 			ResultSetTravellers rs = new ResultSetTravellers(TARDISPlugin.plugin, where, false);
@@ -271,9 +271,9 @@ public class TARDISes implements TardisAPI {
 				ResultSetTardis rst = new ResultSetTardis(TARDISPlugin.plugin, wheret, "", false, 2);
 				if (rst.resultSet()) {
 					if (rst.getTardis().isAbandoned()) {
-						str = " is in an abandoned tardis.";
+						str = " is in an abandoned TARDIS.";
 					} else {
-						str = " is in " + rst.getTardis().getOwner() + "'s tardis.";
+						str = " is in " + rst.getTardis().getOwner() + "'s TARDIS.";
 					}
 				}
 			}
@@ -429,7 +429,7 @@ public class TARDISes implements TardisAPI {
 			}
 			result = recipe.getResult();
 		}
-		if (item.equals("tardis Invisibility Circuit")) {
+		if (item.equals("TARDIS Invisibility Circuit")) {
 			// set the second line of lore
 			ItemMeta im = result.getItemMeta();
 			assert im != null;
@@ -446,7 +446,7 @@ public class TARDISes implements TardisAPI {
 			im.addItemFlags(ItemFlag.values());
 			result.setItemMeta(im);
 		}
-		if (item.equals("tardis Key") || item.equals("Authorised Control Disk")) {
+		if (item.equals("TARDIS Key") || item.equals("Authorised Control Disk")) {
 			ItemMeta im = result.getItemMeta();
 			assert im != null;
 			im.getPersistentDataContainer().set(TARDISPlugin.plugin.getTimeLordUuidKey(), TARDISPlugin.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
@@ -486,7 +486,7 @@ public class TARDISes implements TardisAPI {
 			im.setCustomModelData(10000000 + model);
 			im.getPersistentDataContainer().set(TARDISPlugin.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
 			// set display name
-			im.setDisplayName(ChatColor.GOLD + "tardis Seed Block");
+			im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
 			List<String> lore = new ArrayList<>();
 			lore.add(schematic);
 			lore.add("Walls: ORANGE_WOOL");
@@ -554,7 +554,7 @@ public class TARDISes implements TardisAPI {
 				PersistentDataContainer pdc = im.getPersistentDataContainer();
 				pdc.set(TARDISPlugin.plugin.getTimeLordUuidKey(), TARDISPlugin.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
 				pdc.set(TARDISPlugin.plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
-				im.setDisplayName("tardis Blueprint Disk");
+				im.setDisplayName("TARDIS Blueprint Disk");
 				List<String> lore = Arrays.asList(TARDISStringUtils.capitalise(item), "Valid only for", player.getName());
 				im.setLore(lore);
 				im.addItemFlags(ItemFlag.values());
@@ -592,7 +592,7 @@ public class TARDISes implements TardisAPI {
 			set.put("submarine", 0);
 			TARDISPlugin.plugin.getQueryFactory().doUpdate("next", set, where);
 			if (travel) {
-				// get tardis data
+				// get TARDIS data
 				HashMap<String, Object> wheret = new HashMap<>();
 				wheret.put("tardis_id", id);
 				ResultSetTardis rst = new ResultSetTardis(TARDISPlugin.plugin, wheret, "", false, 2);
@@ -630,7 +630,7 @@ public class TARDISes implements TardisAPI {
 
 	@Override
 	public TARDIS getTardisData(int id) {
-		// get tardis data
+		// get TARDIS data
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("tardis_id", id);
 		ResultSetTardis rs = new ResultSetTardis(TARDISPlugin.plugin, where, "", false, 2);
@@ -643,7 +643,7 @@ public class TARDISes implements TardisAPI {
 
 	@Override
 	public TARDIS getTardisData(UUID uuid) {
-		// get tardis data
+		// get TARDIS data
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("uuid", uuid.toString());
 		ResultSetTardis rs = new ResultSetTardis(TARDISPlugin.plugin, where, "", false, 2);
@@ -693,7 +693,7 @@ public class TARDISes implements TardisAPI {
 				bd.setPlayer(player);
 				bd.setRebuild(true);
 				bd.setSubmarine(false);
-				bd.setTardisID(id);
+				bd.setTardisId(id);
 				bd.setThrottle(SpaceTimeThrottle.REBUILD);
 				TARDISPlugin.plugin.getPresetBuilder().buildPreset(bd);
 				TARDISPlugin.plugin.getTrackerKeeper().getInVortex().add(id);
@@ -734,7 +734,7 @@ public class TARDISes implements TardisAPI {
 			throw new TARDISException("Abandoned TARDISes are not allowed on this server");
 		}
 		if (!TARDISPlugin.plugin.getConfig().getBoolean("creation.default_world")) {
-			throw new TARDISException("tardis must be configured to create TARDISes in a default world");
+			throw new TARDISException("TARDIS must be configured to create TARDISes in a default world");
 		}
 		Schematic schm = Consoles.getBY_NAMES().get(type.toUpperCase(Locale.ENGLISH));
 		new TARDISAbandoned(TARDISPlugin.plugin).spawn(location, schm, preset, direction, null);

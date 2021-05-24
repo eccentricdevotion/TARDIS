@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -56,6 +56,7 @@ public class TARDISTelepathicListener implements Listener {
 			return;
 		}
 		Block block = event.getClickedBlock();
+		assert block != null;
 		if (!block.getType().equals(Material.DAYLIGHT_DETECTOR)) {
 			return;
 		}
@@ -112,6 +113,7 @@ public class TARDISTelepathicListener implements Listener {
 		// drop a custom DAYLIGHT_DETECTOR
 		ItemStack is = new ItemStack(Material.DAYLIGHT_DETECTOR, 1);
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		im.setDisplayName("tardis Telepathic Circuit");
 		im.setLore(Arrays.asList("Allow companions to", "use tardis commands"));
 		is.setItemMeta(im);
@@ -125,6 +127,7 @@ public class TARDISTelepathicListener implements Listener {
 			return;
 		}
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		if (im.hasDisplayName() && im.getDisplayName().equals("tardis Telepathic Circuit")) {
 			UUID uuid = event.getPlayer().getUniqueId();
 			String l = event.getBlock().getLocation().toString();

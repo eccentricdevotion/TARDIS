@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 public class UserInterface extends javax.swing.JFrame {
 
 	@Serial
-    private static final long serialVersionUID = 3259909191489626727L;
+	private static final long serialVersionUID = 3259909191489626727L;
 	private final PrintWriter consoleStream;
 	private File lastDir = new File(".");
 	// Variables declaration - do not modify//GEN-BEGIN:variables

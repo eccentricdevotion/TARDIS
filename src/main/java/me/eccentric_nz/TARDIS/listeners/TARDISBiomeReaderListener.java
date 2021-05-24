@@ -53,11 +53,11 @@ public class TARDISBiomeReaderListener implements Listener {
 			ItemStack disk = stack[s];
 			if (disk != null && disk.hasItemMeta()) {
 				ItemMeta diskim = disk.getItemMeta();
-                assert diskim != null;
-                if (diskim.hasLore()) {
+				assert diskim != null;
+				if (diskim.hasLore()) {
 					List<String> lore = diskim.getLore();
-                    assert lore != null;
-                    if (lore.contains(biome)) {
+					assert lore != null;
+					if (lore.contains(biome)) {
 						found = true;
 						break;
 					}
@@ -79,8 +79,8 @@ public class TARDISBiomeReaderListener implements Listener {
 		ItemStack is = player.getInventory().getItemInMainHand();
 		if (is.getType().equals(Material.BRICK) && is.hasItemMeta()) {
 			ItemMeta im = is.getItemMeta();
-            assert im != null;
-            if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Biome Reader")) {
+			assert im != null;
+			if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Biome Reader")) {
 				TARDISBiome biome = TARDISStaticUtils.getBiomeAt(event.getClickedBlock().getLocation());
 				if (biome.equals(Biome.THE_VOID)) {
 					TARDISMessage.send(player, "BIOME_READER_NOT_VALID");
@@ -99,8 +99,8 @@ public class TARDISBiomeReaderListener implements Listener {
 							if (!hasBiomeDisk(disks2, biome.name())) {
 								ItemStack bd = new ItemStack(Material.MUSIC_DISC_CAT, 1);
 								ItemMeta dim = bd.getItemMeta();
-                                assert dim != null;
-                                dim.setDisplayName("Biome Storage Disk");
+								assert dim != null;
+								dim.setDisplayName("Biome Storage Disk");
 								List<String> disk_lore = new ArrayList<>();
 								disk_lore.add(biome.name());
 								dim.setLore(disk_lore);

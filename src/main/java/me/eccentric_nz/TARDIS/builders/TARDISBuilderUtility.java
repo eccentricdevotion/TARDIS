@@ -32,6 +32,7 @@ public class TARDISBuilderUtility {
 		int y = bd.getLocation().getBlockY();
 		int z = bd.getLocation().getBlockZ();
 		// remember the door location
+		assert world != null;
 		String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
 		String doorStr = world.getBlockAt(x, y, z).getLocation().toString();
 		TARDISPlugin.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisId());

@@ -25,7 +25,6 @@ import me.eccentric_nz.tardis.enumeration.Bind;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 
@@ -76,7 +75,7 @@ public class BindAdd {
 				// get player online or offline
 				Player p = plugin.getServer().getPlayer(which);
 				if (p == null) {
-					OfflinePlayer offp = plugin.getServer().getOfflinePlayer(uuid);
+					plugin.getServer().getOfflinePlayer(uuid);
 				}
 				set.put("name", which);
 				set.put("type", 2);

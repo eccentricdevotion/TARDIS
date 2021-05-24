@@ -31,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * TabCompleter for /tardis command
@@ -104,7 +105,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
 					return partial(lastArg, LIST_SUBS);
 				case "room":
 				case "jettison":
-					return partial(lastArg, plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false));
+					return partial(lastArg, Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false));
 				case "transmat":
 					return partial(lastArg, TRANSMAT_SUBS);
 				case "secondary":
@@ -145,7 +146,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
 
 	private List<String> getPublicRechargers() {
 		List<String> ret = new ArrayList<>();
-		plugin.getConfig().getConfigurationSection("rechargers").getKeys(false).forEach((r) -> {
+		Objects.requireNonNull(plugin.getConfig().getConfigurationSection("rechargers")).getKeys(false).forEach((r) -> {
 			if (!r.startsWith("rift")) {
 				ret.add(r);
 			}

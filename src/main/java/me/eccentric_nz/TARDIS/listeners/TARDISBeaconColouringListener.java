@@ -31,10 +31,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * The time rotor is a component in the central column of the tardis console. While the tardis is in flight, the rotor
@@ -62,11 +59,11 @@ public class TARDISBeaconColouringListener implements Listener {
 			return;
 		}
 		ItemStack dye = player.getInventory().getItemInMainHand();
-		if (dye == null || !TARDISMaterials.dyes.contains(player.getInventory().getItemInMainHand().getType())) {
+		if (!TARDISMaterials.dyes.contains(player.getInventory().getItemInMainHand().getType())) {
 			TARDISMessage.send(player, "COLOUR_DYE");
 			return;
 		}
-		if (!TARDISMaterials.glass.contains(event.getClickedBlock().getType())) {
+		if (!TARDISMaterials.glass.contains(Objects.requireNonNull(event.getClickedBlock()).getType())) {
 			TARDISMessage.send(player, "COLOUR_GLASS");
 			return;
 		}

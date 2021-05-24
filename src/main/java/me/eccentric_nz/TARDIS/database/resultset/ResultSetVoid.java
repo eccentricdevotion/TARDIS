@@ -43,7 +43,7 @@ public class ResultSetVoid {
 	/**
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the thevoid table.
 	 *
-	 * @param plugin    an instance of the main class.
+	 * @param plugin   an instance of the main class.
 	 * @param tardisId the tardis id to check
 	 */
 	public ResultSetVoid(TARDISPlugin plugin, int tardisId) {

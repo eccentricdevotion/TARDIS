@@ -100,164 +100,190 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 					Player p = (Player) event.getWhoClicked();
 					UUID uuid = p.getUniqueId();
 					ItemMeta im = is.getItemMeta();
-					if (slot == 23 && im.getDisplayName().equals("Force Field")) {
-						// toggle force field on / off
-						if (TARDISPermission.hasPermission(p, "tardis.forcefield")) {
-							List<String> lore = im.getLore();
-							boolean bool = (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF")));
-							if (bool) {
-								// check power
-								ResultSetArtronLevel rsal = new ResultSetArtronLevel(plugin, uuid.toString());
-								if (rsal.resultset()) {
-									if (rsal.getArtronLevel() <= plugin.getArtronConfig().getInt("standby")) {
-										TARDISMessage.send(p, "POWER_LOW");
+					if (slot == 23) {
+						assert im != null;
+						if (im.getDisplayName().equals("Force Field")) {
+							// toggle force field on / off
+							if (TARDISPermission.hasPermission(p, "tardis.forcefield")) {
+								List<String> lore = im.getLore();
+								assert lore != null;
+								boolean bool = (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF")));
+								if (bool) {
+									// check power
+									ResultSetArtronLevel rsal = new ResultSetArtronLevel(plugin, uuid.toString());
+									if (rsal.resultset()) {
+										if (rsal.getArtronLevel() <= plugin.getArtronConfig().getInt("standby")) {
+											TARDISMessage.send(p, "POWER_LOW");
+											return;
+										}
+										if (TARDISForceField.addToTracker(p)) {
+											TARDISMessage.send(p, "PREF_WAS_ON", "The tardis force field");
+										}
+									} else {
+										TARDISMessage.send(p, "POWER_LEVEL");
 										return;
 									}
-									if (TARDISForceField.addToTracker(p)) {
-										TARDISMessage.send(p, "PREF_WAS_ON", "The tardis force field");
-									}
 								} else {
-									TARDISMessage.send(p, "POWER_LEVEL");
-									return;
+									plugin.getTrackerKeeper().getActiveForceFields().remove(p.getUniqueId());
+									TARDISMessage.send(p, "PREF_WAS_OFF", "The tardis force field");
 								}
+								close(p);
 							} else {
-								plugin.getTrackerKeeper().getActiveForceFields().remove(p.getUniqueId());
-								TARDISMessage.send(p, "PREF_WAS_OFF", "The tardis force field");
+								TARDISMessage.send(p, "NO_PERMS");
 							}
-							close(p);
-						} else {
-							TARDISMessage.send(p, "NO_PERMS");
+							return;
 						}
-						return;
 					}
-					if (slot == 28 && im.getDisplayName().equals("Flight Mode")) {
-						List<String> lore = im.getLore();
-						// cycle through flight modes
-						FlightMode flight = FlightMode.valueOf(lore.get(0));
-						int mode = flight.getMode() + 1;
-						if (mode > 3) {
-							mode = 1;
-						}
-						lore.set(0, FlightMode.getByMode().get(mode).toString());
-						im.setLore(lore);
-						is.setItemMeta(im);
-						// set flight mode
-						HashMap<String, Object> setf = new HashMap<>();
-						setf.put("flying_mode", mode);
-						HashMap<String, Object> wheref = new HashMap<>();
-						wheref.put("uuid", p.getUniqueId().toString());
-						plugin.getQueryFactory().doUpdate("player_prefs", setf, wheref);
-						return;
-					}
-					if (slot == 29 && im.getDisplayName().equals("Interior Hum Sound")) {
-						// close this gui and load the sounds GUI
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-							Inventory hum_inv = plugin.getServer().createInventory(p, 18, ChatColor.DARK_RED + "tardis Interior Sounds");
-							// close inventory
-							p.closeInventory();
-							// open new inventory
-							hum_inv.setContents(new TARDISHumInventory(plugin).getSounds());
-							p.openInventory(hum_inv);
-						}, 1L);
-						return;
-					}
-					if (slot == 31 && im.getDisplayName().equals("Handbrake")) {
-						// you can only set it to ON!
-						List<String> lore = im.getLore();
-						if (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF"))) {
-							// get this player's tardis
-							ResultSetTardisID rs = new ResultSetTardisID(plugin);
-							if (rs.fromUUID(uuid.toString())) {
-								int id = rs.getTardisId();
-								// must not be in the vortex or materialising
-								if (!plugin.getTrackerKeeper().getMaterialising().contains(id) && !plugin.getTrackerKeeper().getInVortex().contains(id)) {
-									// set the handbrake to ON
-									HashMap<String, Object> wheret = new HashMap<>();
-									wheret.put("tardis_id", id);
-									HashMap<String, Object> set = new HashMap<>();
-									set.put("handbrake_on", 1);
-									plugin.getQueryFactory().doUpdate("tardis", set, wheret);
-									im.setLore(Collections.singletonList(plugin.getLanguage().getString("SET_ON")));
-									is.setItemMeta(im);
-									// Check if it's at a recharge point
-									TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
-									tal.recharge(id);
-									// Remove energy from tardis and sets database
-									TARDISMessage.send(p, "HANDBRAKE_ON");
-									if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-										int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
-										HashMap<String, Object> wheref = new HashMap<>();
-										wheref.put("tardis_id", id);
-										plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheref, p);
-									}
-									plugin.getTrackerKeeper().getHasDestination().remove(id);
-									if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
-										plugin.getTrackerKeeper().getHasRandomised().removeAll(Collections.singleton(id));
-									}
-									TARDISCircuitChecker tcc = null;
-									if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(p, true)) {
-										tcc = new TARDISCircuitChecker(plugin, id);
-										tcc.getCircuits();
-									}
-									// damage the circuit if configured
-									if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
-										// decrement uses
-										int uses_left = tcc.getMaterialisationUses();
-										new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, p).damage();
-									}
-								} else {
-									TARDISMessage.send(p, "HANDBRAKE_IN_VORTEX");
-								}
-							} else {
-								TARDISMessage.send(p, "NO_TARDIS");
+					if (slot == 28) {
+						assert im != null;
+						if (im.getDisplayName().equals("Flight Mode")) {
+							List<String> lore = im.getLore();
+							// cycle through flight modes
+							assert lore != null;
+							FlightMode flight = FlightMode.valueOf(lore.get(0));
+							int mode = flight.getMode() + 1;
+							if (mode > 3) {
+								mode = 1;
 							}
-						} else {
-							TARDISMessage.send(p, "SONIC_HANDBRAKE_ON");
+							lore.set(0, FlightMode.getByMode().get(mode).toString());
+							im.setLore(lore);
+							is.setItemMeta(im);
+							// set flight mode
+							HashMap<String, Object> setf = new HashMap<>();
+							setf.put("flying_mode", mode);
+							HashMap<String, Object> wheref = new HashMap<>();
+							wheref.put("uuid", p.getUniqueId().toString());
+							plugin.getQueryFactory().doUpdate("player_prefs", setf, wheref);
+							return;
 						}
-						return;
 					}
-					if (slot == 32 && im.getDisplayName().equals("tardis Map")) {
-						// must be in the tardis
-						HashMap<String, Object> where = new HashMap<>();
-						where.put("uuid", uuid.toString());
-						ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
-						if (rs.resultSet()) {
-							// close this gui and load the tardis map
+					if (slot == 29) {
+						assert im != null;
+						if (im.getDisplayName().equals("Interior Hum Sound")) {
+							// close this gui and load the sounds GUI
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-								Inventory new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis Map");
+								Inventory hum_inv = plugin.getServer().createInventory(p, 18, ChatColor.DARK_RED + "tardis Interior Sounds");
 								// close inventory
 								p.closeInventory();
 								// open new inventory
-								new_inv.setContents(new TARDISARSMap(plugin).getMap());
-								p.openInventory(new_inv);
+								hum_inv.setContents(new TARDISHumInventory(plugin).getSounds());
+								p.openInventory(hum_inv);
 							}, 1L);
-						} else {
-							TARDISMessage.send(p, "NOT_IN_TARDIS");
+							return;
 						}
-						return;
 					}
-					if (slot == 33 && im.getDisplayName().equals("Sonic Configurator")) {
-						// close this gui and load the Sonic Configurator
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-							Inventory sonic_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Sonic Configurator");
-							// close inventory
-							p.closeInventory();
-							// open new inventory
-							sonic_inv.setContents(new TARDISSonicConfiguratorInventory().getConfigurator());
-							p.openInventory(sonic_inv);
-						}, 1L);
-						return;
+					if (slot == 31) {
+						assert im != null;
+						if (im.getDisplayName().equals("Handbrake")) {
+							// you can only set it to ON!
+							List<String> lore = im.getLore();
+							assert lore != null;
+							if (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF"))) {
+								// get this player's tardis
+								ResultSetTardisID rs = new ResultSetTardisID(plugin);
+								if (rs.fromUUID(uuid.toString())) {
+									int id = rs.getTardisId();
+									// must not be in the vortex or materialising
+									if (!plugin.getTrackerKeeper().getMaterialising().contains(id) && !plugin.getTrackerKeeper().getInVortex().contains(id)) {
+										// set the handbrake to ON
+										HashMap<String, Object> wheret = new HashMap<>();
+										wheret.put("tardis_id", id);
+										HashMap<String, Object> set = new HashMap<>();
+										set.put("handbrake_on", 1);
+										plugin.getQueryFactory().doUpdate("tardis", set, wheret);
+										im.setLore(Collections.singletonList(plugin.getLanguage().getString("SET_ON")));
+										is.setItemMeta(im);
+										// Check if it's at a recharge point
+										TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
+										tal.recharge(id);
+										// Remove energy from tardis and sets database
+										TARDISMessage.send(p, "HANDBRAKE_ON");
+										if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+											int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
+											HashMap<String, Object> wheref = new HashMap<>();
+											wheref.put("tardis_id", id);
+											plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheref, p);
+										}
+										plugin.getTrackerKeeper().getHasDestination().remove(id);
+										if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
+											plugin.getTrackerKeeper().getHasRandomised().removeAll(Collections.singleton(id));
+										}
+										TARDISCircuitChecker tcc = null;
+										if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(p, true)) {
+											tcc = new TARDISCircuitChecker(plugin, id);
+											tcc.getCircuits();
+										}
+										// damage the circuit if configured
+										if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+											// decrement uses
+											int uses_left = tcc.getMaterialisationUses();
+											new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, p).damage();
+										}
+									} else {
+										TARDISMessage.send(p, "HANDBRAKE_IN_VORTEX");
+									}
+								} else {
+									TARDISMessage.send(p, "NO_TARDIS");
+								}
+							} else {
+								TARDISMessage.send(p, "SONIC_HANDBRAKE_ON");
+							}
+							return;
+						}
 					}
-					if (slot == 35 && im.getDisplayName().equals("Admin Menu")) {
-						// close this gui and load the Admin Menu
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-							Inventory menu = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
-							menu.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
-							p.openInventory(menu);
-						}, 1L);
-						return;
+					if (slot == 32) {
+						assert im != null;
+						if (im.getDisplayName().equals("tardis Map")) {
+							// must be in the tardis
+							HashMap<String, Object> where = new HashMap<>();
+							where.put("uuid", uuid.toString());
+							ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+							if (rs.resultSet()) {
+								// close this gui and load the tardis map
+								plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+									Inventory new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis Map");
+									// close inventory
+									p.closeInventory();
+									// open new inventory
+									new_inv.setContents(new TARDISARSMap(plugin).getMap());
+									p.openInventory(new_inv);
+								}, 1L);
+							} else {
+								TARDISMessage.send(p, "NOT_IN_TARDIS");
+							}
+							return;
+						}
 					}
+					if (slot == 33) {
+						assert im != null;
+						if (im.getDisplayName().equals("Sonic Configurator")) {
+							// close this gui and load the Sonic Configurator
+							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+								Inventory sonic_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Sonic Configurator");
+								// close inventory
+								p.closeInventory();
+								// open new inventory
+								sonic_inv.setContents(new TARDISSonicConfiguratorInventory().getConfigurator());
+								p.openInventory(sonic_inv);
+							}, 1L);
+							return;
+						}
+					}
+					if (slot == 35) {
+						assert im != null;
+						if (im.getDisplayName().equals("Admin Menu")) {
+							// close this gui and load the Admin Menu
+							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+								Inventory menu = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
+								menu.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
+								p.openInventory(menu);
+							}, 1L);
+							return;
+						}
+					}
+					assert im != null;
 					List<String> lore = im.getLore();
+					assert lore != null;
 					boolean bool = (lore.get(0).equals(plugin.getLanguage().getString("SET_ON")));
 					String value = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
 					int b = (bool) ? 0 : 1;

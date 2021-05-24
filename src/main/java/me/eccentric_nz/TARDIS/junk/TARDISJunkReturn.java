@@ -50,7 +50,7 @@ class TARDISJunkReturn {
 			dd.setHide(false);
 			dd.setOutside(false);
 			dd.setSubmarine(false);
-			dd.setTardisID(tjl.getId());
+			dd.setTardisId(tjl.getId());
 			dd.setTardisBiome(tjl.getTardisBiome());
 			dd.setThrottle(SpaceTimeThrottle.JUNK);
 			plugin.getPresetDestroyer().destroyPreset(dd);
@@ -58,10 +58,9 @@ class TARDISJunkReturn {
 			plugin.getGeneralKeeper().setJunkTravelling(true);
 			plugin.getGeneralKeeper().setJunkDestination(home);
 			TARDISMessage.send(sender, "JUNK_RETURN");
-			return true;
 		} else {
 			TARDISMessage.send(sender, "JUNK_AT_HOME");
-			return true;
 		}
+		return true;
 	}
 }

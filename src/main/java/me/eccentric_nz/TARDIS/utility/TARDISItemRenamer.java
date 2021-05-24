@@ -43,34 +43,34 @@ public class TARDISItemRenamer {
 		this.itemStack = itemStack;
 	}
 
-    /**
-     * Sets the name of the held item to the specified string. Also adds some lore.
-     *
-     * @param name    the name to give the item
-     * @param setLore whether to set lore on the item
-     */
-    public void setName(String name, boolean setLore) {
-        ItemMeta im = itemStack.getItemMeta();
-        if (im == null) {
-            TARDISPlugin.plugin.debug("ItemMeta was null for ItemStack: " + itemStack);
-        } else {
-            im.setDisplayName(name);
-            if (setLore) {
-                ArrayList<String> lore = new ArrayList<>();
-                lore.add("Enter and exit your TARDIS");
-                String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
-                lore.add(format + "This key belongs to");
-                lore.add(format + player.getName());
-                im.setLore(lore);
-                im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
-            }
-            try {
-                RecipeItem recipeItem = RecipeItem.valueOf(TARDISStringUtils.toScoredUppercase(name));
-                im.setCustomModelData(recipeItem.getCustomModelData());
-            } catch (IllegalArgumentException e) {
-                // do nothing
-            }
-            itemStack.setItemMeta(im);
-        }
-    }
+	/**
+	 * Sets the name of the held item to the specified string. Also adds some lore.
+	 *
+	 * @param name    the name to give the item
+	 * @param setLore whether to set lore on the item
+	 */
+	public void setName(String name, boolean setLore) {
+		ItemMeta im = itemStack.getItemMeta();
+		if (im == null) {
+			TARDISPlugin.plugin.debug("ItemMeta was null for ItemStack: " + itemStack);
+		} else {
+			im.setDisplayName(name);
+			if (setLore) {
+				ArrayList<String> lore = new ArrayList<>();
+				lore.add("Enter and exit your TARDIS");
+				String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+				lore.add(format + "This key belongs to");
+				lore.add(format + player.getName());
+				im.setLore(lore);
+				im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+			}
+			try {
+				RecipeItem recipeItem = RecipeItem.valueOf(TARDISStringUtils.toScoredUppercase(name));
+				im.setCustomModelData(recipeItem.getCustomModelData());
+			} catch (IllegalArgumentException e) {
+				// do nothing
+			}
+			itemStack.setItemMeta(im);
+		}
+	}
 }

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -39,6 +39,7 @@ import org.bukkit.block.BlockFace;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The Wibbly lever was a part of The Doctor's tardis console. The lever had at least two functions: opening and closing
@@ -94,7 +95,7 @@ public class TARDISPresetBuilderFactory {
 				thisChunk.load();
 			}
 			if (bd.isRebuild()) {
-				biome = TARDISStaticUtils.getBiomeAt(bd.getLocation().getWorld().getBlockAt(bd.getLocation()).getRelative(getOppositeFace(bd.getDirection()), 2).getLocation());
+				biome = TARDISStaticUtils.getBiomeAt(Objects.requireNonNull(bd.getLocation().getWorld()).getBlockAt(bd.getLocation()).getRelative(getOppositeFace(bd.getDirection()), 2).getLocation());
 			} else {
 				biome = TARDISStaticUtils.getBiomeAt(bd.getLocation());
 				// disable force field
@@ -160,7 +161,7 @@ public class TARDISPresetBuilderFactory {
 				}
 				TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");
 				if (plugin.getUtils().inTARDISWorld(bd.getPlayer().getPlayer())) {
-					TARDISSounds.playTARDISSound(bd.getPlayer().getPlayer().getLocation(), "tardis_land_fast");
+					TARDISSounds.playTARDISSound(Objects.requireNonNull(bd.getPlayer().getPlayer()).getLocation(), "tardis_land_fast");
 				}
 			} else if (!preset.equals(PRESET.INVISIBLE)) {
 				plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisId());

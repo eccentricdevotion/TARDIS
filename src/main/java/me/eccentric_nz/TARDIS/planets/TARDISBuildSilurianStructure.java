@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -66,6 +66,7 @@ class TARDISBuildSilurianStructure {
 		String s_world = plugin.getServer().getWorlds().get(0).getName();
 		World world = plugin.getServer().getWorld(s_world + "_tardis_siluria");
 		// see if the chunk is loaded
+		assert world != null;
 		Vector v1 = isChunkLoaded(compass, world.getBlockAt(startx, starty, startz));
 		if (v1 != null) {
 			startx += v1.getBlockX();

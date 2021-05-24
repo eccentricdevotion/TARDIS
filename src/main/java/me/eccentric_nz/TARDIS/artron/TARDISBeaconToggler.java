@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.desktop.TARDISBlockScannerData;
@@ -60,6 +60,7 @@ public class TARDISBeaconToggler {
 				String[] beaconData = beacon.split(":");
 				if (beaconData.length > 1) {
 					Location bl = TARDISStaticLocationGetters.getLocationFromDB(beacon);
+					assert bl != null;
 					Block b = bl.getBlock();
 					while (!b.getChunk().isLoaded()) {
 						b.getChunk().load();

@@ -65,9 +65,11 @@ public class TARDISThemeInventory {
 		// get consoles
 		for (Schematic a : Consoles.getBY_NAMES().values()) {
 			Material m = Material.getMaterial(a.getSeed());
+			assert m != null;
 			if (!m.equals(Material.COBBLESTONE)) {
 				ItemStack is = new ItemStack(m, 1);
 				ItemMeta im = is.getItemMeta();
+				assert im != null;
 				im.setDisplayName(a.getDescription());
 				int cost = plugin.getArtronConfig().getInt("upgrades." + a.getPermission());
 				if (current_console.equals(a.getPermission())) {
@@ -97,6 +99,7 @@ public class TARDISThemeInventory {
 		if (TARDISPermission.hasPermission(player, "tardis.archive")) {
 			ItemStack arc = new ItemStack(Material.BOWL, 1);
 			ItemMeta hive_im = arc.getItemMeta();
+			assert hive_im != null;
 			hive_im.setDisplayName("Archive Consoles");
 			hive_im.setCustomModelData(GUIUpgrade.ARCHIVE_CONSOLES.getCustomModelData());
 			arc.setItemMeta(hive_im);
@@ -107,6 +110,7 @@ public class TARDISThemeInventory {
 			if (TARDISPermission.hasPermission(player, "tardis.repair")) {
 				ItemStack rep = new ItemStack(Material.BOWL, 1);
 				ItemMeta air_im = rep.getItemMeta();
+				assert air_im != null;
 				air_im.setDisplayName("Repair Console");
 				air_im.setCustomModelData(GUIUpgrade.REPAIR_CONSOLE.getCustomModelData());
 				rep.setItemMeta(air_im);
@@ -116,6 +120,7 @@ public class TARDISThemeInventory {
 			if (TARDISPermission.hasPermission(player, "tardis.repair")) {
 				ItemStack cle = new ItemStack(Material.BOWL, 1);
 				ItemMeta an_im = cle.getItemMeta();
+				assert an_im != null;
 				an_im.setDisplayName("Clean");
 				an_im.setCustomModelData(GUIUpgrade.CLEAN.getCustomModelData());
 				cle.setItemMeta(an_im);
@@ -125,6 +130,7 @@ public class TARDISThemeInventory {
 		// close
 		ItemStack close = new ItemStack(Material.BOWL, 1);
 		ItemMeta close_im = close.getItemMeta();
+		assert close_im != null;
 		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
 		close_im.setCustomModelData(GUIUpgrade.CLOSE.getCustomModelData());
 		close.setItemMeta(close_im);

@@ -18,8 +18,8 @@ package me.eccentric_nz.tardis.api;
 
 import com.wimbli.WorldBorder.BorderData;
 import com.wimbli.WorldBorder.Config;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;

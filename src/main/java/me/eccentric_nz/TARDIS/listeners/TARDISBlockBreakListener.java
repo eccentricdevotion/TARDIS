@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -36,6 +36,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -120,21 +121,22 @@ public class TARDISBlockBreakListener implements Listener {
 		}
 		if (blockType == Material.BEACON) {
 			Location loc = event.getBlock().getLocation();
-			if (loc.getWorld().getName().startsWith("tardis")) {
+			if (Objects.requireNonNull(loc.getWorld()).getName().startsWith("tardis")) {
 				return;
 			}
 			String b = loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();
 			// check if it is a rift manipulator
-			for (String r : plugin.getConfig().getConfigurationSection("rechargers").getKeys(false)) {
+			for (String r : Objects.requireNonNull(plugin.getConfig().getConfigurationSection("rechargers")).getKeys(false)) {
 				if (r.startsWith("rift")) {
 					// get the location
 					World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + r + ".world"));
 					int x = plugin.getConfig().getInt("rechargers." + r + ".x");
 					int y = plugin.getConfig().getInt("rechargers." + r + ".y");
 					int z = plugin.getConfig().getInt("rechargers." + r + ".z");
+					assert w != null;
 					String l = w.getName() + "," + x + "," + y + "," + z;
 					if (l.equals(b)) {
-						if (plugin.getConfig().getString("rechargers." + r + ".uuid").equals(player.getUniqueId().toString())) {
+						if (Objects.equals(plugin.getConfig().getString("rechargers." + r + ".uuid"), player.getUniqueId().toString())) {
 							plugin.getConfig().set("rechargers." + r, null);
 							TARDISMessage.send(player, "RIFT_REMOVED");
 							event.setCancelled(true);
@@ -142,15 +144,15 @@ public class TARDISBlockBreakListener implements Listener {
 							event.getBlock().setBlockData(TARDISConstants.AIR);
 							ItemStack rm = new ItemStack(Material.BEACON, 1);
 							ItemMeta im = rm.getItemMeta();
+							assert im != null;
 							im.setDisplayName("Rift Manipulator");
 							rm.setItemMeta(im);
 							w.dropItem(loc, rm);
-							break;
 						} else {
 							event.setCancelled(true);
 							TARDISMessage.send(player, "RIFT_PLAYER");
-							break;
 						}
+						break;
 					}
 				}
 			}

@@ -80,10 +80,10 @@ class TARDISHostileDisplacement {
 			l.setZ(wz);
 			boolean bool = true;
 			int y;
-			if (l.getWorld().getEnvironment().equals(Environment.NETHER)) {
+			if (Objects.requireNonNull(l.getWorld()).getEnvironment().equals(Environment.NETHER)) {
 				y = plugin.getUtils().getHighestNetherBlock(l.getWorld(), wx, wz);
 			} else {
-				y = TARDISStaticLocationGetters.getHighestYin3x3(l.getWorld(), wx, wz);
+				y = TARDISStaticLocationGetters.getHighestYIn3x3(l.getWorld(), wx, wz);
 			}
 			l.setY(y);
 			if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !rsc.isSubmarine()) {
@@ -105,9 +105,9 @@ class TARDISHostileDisplacement {
 					if (plugin.getPluginRespect().getRespect(fl, new Parameters(player, Flag.getNoMessageFlags()))) {
 						// sound the cloister bell at current location for dematerialisation
 						TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 5, id, current, plugin.getServer().getPlayer(uuid), true, "HADS displacement", false);
-						int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
-						bell.setTask(taskID);
-						plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
+						int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
+						bell.setTask(taskId);
+						plugin.getTrackerKeeper().getCloisterBells().put(id, taskId);
 						// sound the cloister bell at HADS location for materialisation
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 							TARDISCloisterBell end = new TARDISCloisterBell(plugin, 6, id, fl, plugin.getServer().getPlayer(uuid), false, "", true);
@@ -119,7 +119,7 @@ class TARDISHostileDisplacement {
 						HashMap<String, Object> tid = new HashMap<>();
 						tid.put("tardis_id", id);
 						HashMap<String, Object> set = new HashMap<>();
-						set.put("world", fl.getWorld().getName());
+						set.put("world", Objects.requireNonNull(fl.getWorld()).getName());
 						set.put("x", fl.getBlockX());
 						set.put("y", fl.getBlockY());
 						set.put("z", fl.getBlockZ());
@@ -135,7 +135,7 @@ class TARDISHostileDisplacement {
 						dd.setHide(false);
 						dd.setOutside(true);
 						dd.setSubmarine(rsc.isSubmarine());
-						dd.setTardisID(id);
+						dd.setTardisId(id);
 						TARDISBiome biome = TARDISStaticUtils.getBiomeAt(current);
 						dd.setTardisBiome(biome);
 						dd.setThrottle(SpaceTimeThrottle.NORMAL);
@@ -151,11 +151,12 @@ class TARDISHostileDisplacement {
 						bd.setPlayer(player);
 						bd.setRebuild(false);
 						bd.setSubmarine(rsc.isSubmarine());
-						bd.setTardisID(id);
+						bd.setTardisId(id);
 						bd.setThrottle(SpaceTimeThrottle.NORMAL);
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
 						// message time lord
 						String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem " + plugin.getLanguage().getString("HADS_ENGAGED");
+						assert player != null;
 						player.sendMessage(message);
 						String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
 						TARDISMessage.send(player, "HADS_LOC", hads);

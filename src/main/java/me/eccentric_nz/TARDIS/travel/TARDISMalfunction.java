@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;

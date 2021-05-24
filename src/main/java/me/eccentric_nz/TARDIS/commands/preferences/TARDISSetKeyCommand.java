@@ -21,10 +21,7 @@ import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -67,7 +64,7 @@ class TARDISSetKeyCommand {
 			TARDISMessage.send(player, "MATERIAL_NOT_VALID");
 			return true;
 		}
-		String field = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "key" : "key_item";
+		String field = (Objects.equals(plugin.getConfig().getString("storage.database"), "sqlite")) ? "key" : "key_item";
 		HashMap<String, Object> setk = new HashMap<>();
 		setk.put(field, setMaterial);
 		HashMap<String, Object> where = new HashMap<>();

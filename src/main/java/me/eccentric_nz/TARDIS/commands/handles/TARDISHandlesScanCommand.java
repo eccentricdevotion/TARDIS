@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
@@ -37,10 +37,7 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static me.eccentric_nz.tardis.control.TARDISScanner.getNearbyEntities;
 
@@ -111,6 +108,7 @@ class TARDISHandlesScanCommand {
 				if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
 					if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
 						EntityEquipment ee = ((LivingEntity) k).getEquipment();
+						assert ee != null;
 						if (ee.getHelmet() != null) {
 							switch (ee.getHelmet().getType()) {
 								case SLIME_BALL: // dalek
@@ -154,6 +152,7 @@ class TARDISHandlesScanCommand {
 					}
 					if (et.equals(EntityType.ARMOR_STAND)) {
 						EntityEquipment ee = ((ArmorStand) k).getEquipment();
+						assert ee != null;
 						if (ee.getHelmet() != null) {
 							switch (ee.getHelmet().getType()) {
 								case YELLOW_DYE: // Judoon
@@ -180,7 +179,7 @@ class TARDISHandlesScanCommand {
 				}
 			}
 		}
-		long time = scan_loc.getWorld().getTime();
+		long time = Objects.requireNonNull(scan_loc.getWorld()).getTime();
 		String daynight = TARDISStaticUtils.getTime(time);
 		// message the player
 		if (inTARDIS) {
@@ -200,6 +199,7 @@ class TARDISHandlesScanCommand {
 		bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_DIRECTION", tardisDirection.toString()), 20L);
 		// get biome
 		TARDISBiome tmb;
+		assert whereIsIt != null;
 		if (whereIsIt.equals(plugin.getLanguage().getString("SCAN_CURRENT"))) {
 			// adjust for current location as it will always return DEEP_OCEAN if set_biome is true
 			tmb = switch (tardisDirection) {

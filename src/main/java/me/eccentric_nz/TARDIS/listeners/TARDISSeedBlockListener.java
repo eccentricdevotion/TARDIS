@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.TARDISBuildData;
 import me.eccentric_nz.tardis.builders.TARDISSeedBlockProcessor;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
@@ -44,6 +44,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -70,6 +71,7 @@ public class TARDISSeedBlockListener implements Listener {
 			return;
 		}
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		if (!im.hasDisplayName() || !im.hasLore()) {
 			return;
 		}
@@ -85,6 +87,7 @@ public class TARDISSeedBlockListener implements Listener {
 				event.getBlockPlaced().setBlockData(multipleFacing);
 			}
 			List<String> lore = im.getLore();
+			assert lore != null;
 			Schematic schm = Consoles.getBY_NAMES().get(lore.get(0));
 			Material wall = Material.valueOf(TARDISStringUtils.getValuesFromWallString(lore.get(1)));
 			Material floor = Material.valueOf(TARDISStringUtils.getValuesFromWallString(lore.get(2)));
@@ -138,6 +141,7 @@ public class TARDISSeedBlockListener implements Listener {
 				is.setItemMeta(im);
 				// set the block to AIR
 				event.getBlock().setBlockData(TARDISConstants.AIR);
+				assert w != null;
 				w.dropItemNaturally(l, is);
 			}
 			plugin.getBuildKeeper().getTrackTARDISSeed().remove(l);
@@ -166,11 +170,11 @@ public class TARDISSeedBlockListener implements Listener {
 					key = plugin.getConfig().getString("preferences.key");
 				}
 				if (player.getInventory().getItemInMainHand().getType().equals(Material.valueOf(key))) {
-					if (!plugin.getPlanetsConfig().getBoolean("planets." + l.getWorld().getName() + ".time_travel")) {
+					if (!plugin.getPlanetsConfig().getBoolean("planets." + Objects.requireNonNull(l.getWorld()).getName() + ".time_travel")) {
 						TARDISMessage.send(player, "WORLD_NO_TARDIS");
 						return;
 					}
-					if (!plugin.getConfig().getString("creation.area").equals("none")) {
+					if (!Objects.equals(plugin.getConfig().getString("creation.area"), "none")) {
 						String area = plugin.getConfig().getString("creation.area");
 						if (plugin.getTardisArea().areaCheckInExile(area, l)) {
 							TARDISMessage.send(player, "TARDIS_ONLY_AREA", area);

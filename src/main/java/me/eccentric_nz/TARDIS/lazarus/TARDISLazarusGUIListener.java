@@ -100,6 +100,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 				if (is != null) {
 					ItemMeta im = is.getItemMeta();
 					// remember selection
+					assert im != null;
 					String display = im.getDisplayName();
 					if (twaMonsters.contains(display) && !plugin.checkTWA()) {
 						im.setLore(Collections.singletonList("Genetic modification not available!"));
@@ -117,23 +118,28 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 			}
 			if (slot == 45) { // The Master Switch : ON | OFF
 				ItemStack is = view.getItem(slot);
+				assert is != null;
 				ItemMeta im = is.getItemMeta();
 				if (TARDISPermission.hasPermission(player, "tardis.themaster")) {
+					assert im != null;
 					if (plugin.getTrackerKeeper().getImmortalityGate().equals("")) {
-						String onoff = (im.getLore().get(0).equals(plugin.getLanguage().getString("SET_OFF"))) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-						im.setLore(Collections.singletonList(onoff));
+						String onOff = (Objects.requireNonNull(im.getLore()).get(0).equals(plugin.getLanguage().getString("SET_OFF"))) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
+						im.setLore(Collections.singletonList(onOff));
 					} else {
 						im.setLore(Arrays.asList("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
 					}
 				} else {
+					assert im != null;
 					im.setLore(Arrays.asList("You do not have permission", "to be The Master!"));
 				}
 				is.setItemMeta(im);
 			}
 			if (slot == 47) { // adult / baby
 				ItemStack is = view.getItem(slot);
+				assert is != null;
 				ItemMeta im = is.getItemMeta();
-				String onoff = (im.getLore().get(0).equals("ADULT")) ? "BABY" : "ADULT";
+				assert im != null;
+				String onoff = (Objects.requireNonNull(im.getLore()).get(0).equals("ADULT")) ? "BABY" : "ADULT";
 				im.setLore(Collections.singletonList(onoff));
 				is.setItemMeta(im);
 			}
@@ -144,11 +150,14 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 			}
 			if (slot == 49) { // Tamed / Flying / Blazing / Powered / Beaming / Aggressive / Decorated / Chest carrying : TRUE | FALSE
 				ItemStack is = view.getItem(slot);
+				assert is != null;
 				ItemMeta im = is.getItemMeta();
+				assert im != null;
 				List<String> lore = im.getLore();
+				assert lore != null;
 				int pos = lore.size() - 1;
-				String truefalse = (ChatColor.stripColor(lore.get(pos)).equals("FALSE")) ? ChatColor.GREEN + "TRUE" : ChatColor.RED + "FALSE";
-				lore.set(pos, truefalse);
+				String trueFalse = (ChatColor.stripColor(lore.get(pos)).equals("FALSE")) ? ChatColor.GREEN + "TRUE" : ChatColor.RED + "FALSE";
+				lore.set(pos, trueFalse);
 				im.setLore(lore);
 				is.setItemMeta(im);
 			}
@@ -608,7 +617,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 		}
 		if (t != null) {
 			ItemStack is = i.getItem(48);
+			assert is != null;
 			ItemMeta im = is.getItemMeta();
+			assert im != null;
 			im.setLore(Collections.singletonList(t));
 			is.setItemMeta(im);
 		}
@@ -616,15 +627,19 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 
 	private boolean isReversedPolarity(InventoryView i) {
 		ItemStack is = i.getItem(45);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
-		return im.getLore().get(0).equals(plugin.getLanguage().getString("SET_ON"));
+		assert im != null;
+		return Objects.requireNonNull(im.getLore()).get(0).equals(plugin.getLanguage().getString("SET_ON"));
 	}
 
 	private DyeColor getColor(InventoryView i) {
 		ItemStack is = i.getItem(48);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
 		try {
-			return DyeColor.valueOf(im.getLore().get(0));
+			assert im != null;
+			return DyeColor.valueOf(Objects.requireNonNull(im.getLore()).get(0));
 		} catch (IllegalArgumentException e) {
 			return DyeColor.WHITE;
 		}
@@ -632,9 +647,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 
 	private Horse.Color getHorseColor(InventoryView i) {
 		ItemStack is = i.getItem(48);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
 		try {
-			return Horse.Color.valueOf(im.getLore().get(0));
+			assert im != null;
+			return Horse.Color.valueOf(Objects.requireNonNull(im.getLore()).get(0));
 		} catch (IllegalArgumentException e) {
 			return Horse.Color.WHITE;
 		}
@@ -642,9 +659,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 
 	private MushroomCow.Variant getCowVariant(InventoryView i) {
 		ItemStack is = i.getItem(48);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
 		try {
-			return MushroomCow.Variant.valueOf(im.getLore().get(0));
+			assert im != null;
+			return MushroomCow.Variant.valueOf(Objects.requireNonNull(im.getLore()).get(0));
 		} catch (IllegalArgumentException e) {
 			return MushroomCow.Variant.RED;
 		}
@@ -652,9 +671,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 
 	private Llama.Color getLlamaColor(InventoryView i) {
 		ItemStack is = i.getItem(48);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
 		try {
-			return Llama.Color.valueOf(im.getLore().get(0));
+			assert im != null;
+			return Llama.Color.valueOf(Objects.requireNonNull(im.getLore()).get(0));
 		} catch (IllegalArgumentException e) {
 			return org.bukkit.entity.Llama.Color.CREAMY;
 		}
@@ -662,9 +683,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 
 	private Type getCatType(InventoryView i) {
 		ItemStack is = i.getItem(48);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
 		try {
-			return Type.valueOf(im.getLore().get(0));
+			assert im != null;
+			return Type.valueOf(Objects.requireNonNull(im.getLore()).get(0));
 		} catch (IllegalArgumentException e) {
 			return Type.TABBY;
 		}
@@ -672,9 +695,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 
 	private Fox.Type getFoxType(InventoryView i) {
 		ItemStack is = i.getItem(48);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
 		try {
-			return Fox.Type.valueOf(im.getLore().get(0));
+			assert im != null;
+			return Fox.Type.valueOf(Objects.requireNonNull(im.getLore()).get(0));
 		} catch (IllegalArgumentException e) {
 			return Fox.Type.RED;
 		}
@@ -682,9 +707,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 
 	private Panda.Gene getGene(InventoryView i) {
 		ItemStack is = i.getItem(48);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
 		try {
-			return Panda.Gene.valueOf(im.getLore().get(0));
+			assert im != null;
+			return Panda.Gene.valueOf(Objects.requireNonNull(im.getLore()).get(0));
 		} catch (IllegalArgumentException e) {
 			return Panda.Gene.NORMAL;
 		}
@@ -692,9 +719,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 
 	private Parrot.Variant getParrotVariant(InventoryView i) {
 		ItemStack is = i.getItem(48);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
 		try {
-			return Parrot.Variant.valueOf(im.getLore().get(0));
+			assert im != null;
+			return Parrot.Variant.valueOf(Objects.requireNonNull(im.getLore()).get(0));
 		} catch (IllegalArgumentException e) {
 			return Parrot.Variant.GRAY;
 		}
@@ -702,9 +731,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 
 	private Rabbit.Type getRabbitType(InventoryView i) {
 		ItemStack is = i.getItem(48);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
 		try {
-			return Rabbit.Type.valueOf(im.getLore().get(0));
+			assert im != null;
+			return Rabbit.Type.valueOf(Objects.requireNonNull(im.getLore()).get(0));
 		} catch (IllegalArgumentException e) {
 			return Rabbit.Type.BROWN;
 		}
@@ -712,9 +743,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 
 	private Profession getProfession(InventoryView i) {
 		ItemStack is = i.getItem(48);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
 		try {
-			return Profession.valueOf(im.getLore().get(0));
+			assert im != null;
+			return Profession.valueOf(Objects.requireNonNull(im.getLore()).get(0));
 		} catch (IllegalArgumentException e) {
 			return Profession.FARMER;
 		}
@@ -722,28 +755,35 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 
 	private int getSlimeSize(InventoryView i) {
 		ItemStack is = i.getItem(48);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
-		int size = TARDISNumberParsers.parseInt(im.getLore().get(0));
+		assert im != null;
+		int size = TARDISNumberParsers.parseInt(Objects.requireNonNull(im.getLore()).get(0));
 		return (size == 0) ? 2 : size;
 	}
 
 	private boolean getBaby(InventoryView i) {
 		ItemStack is = i.getItem(47);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
-		return im.getLore().get(0).equals("BABY");
+		assert im != null;
+		return Objects.requireNonNull(im.getLore()).get(0).equals("BABY");
 	}
 
 	private boolean getBoolean(InventoryView i) {
 		ItemStack is = i.getItem(49);
+		assert is != null;
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		List<String> lore = im.getLore();
+		assert lore != null;
 		int pos = lore.size() - 1;
 		return ChatColor.stripColor(lore.get(pos)).equals("TRUE");
 	}
 
 	private void twaOff(Player player) {
 		ItemStack helmet = player.getInventory().getHelmet();
-		if (helmet != null && helmet.hasItemMeta() && helmet.getItemMeta().hasDisplayName()) {
+		if (helmet != null && helmet.hasItemMeta() && Objects.requireNonNull(helmet.getItemMeta()).hasDisplayName()) {
 			String metaName = helmet.getItemMeta().getDisplayName();
 			if (twaHelmets.contains(metaName)) {
 				plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise WEEPING_ANGEL off " + player.getUniqueId());

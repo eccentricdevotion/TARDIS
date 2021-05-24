@@ -22,6 +22,8 @@ import com.wimbli.WorldBorder.WorldBorder;
 import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Location;
 
+import java.util.Objects;
+
 /**
  * The tardis grants its passengers the ability to understand and speak other languages. This is due to the tardis's
  * telepathic field.
@@ -45,7 +47,7 @@ public class TARDISWorldBorderChecker {
 	public boolean isInBorder(Location l) {
 		boolean bool = true;
 		if (border != null) {
-			BorderData bd = border.getWorldBorder(l.getWorld().getName());
+			BorderData bd = border.getWorldBorder(Objects.requireNonNull(l.getWorld()).getName());
 			if (bd != null && !bd.insideBorder(l)) {
 				bool = false;
 			}

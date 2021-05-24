@@ -48,30 +48,35 @@ class TARDISRegulatorInventory {
 		// direction pad up
 		ItemStack pad_up = new ItemStack(Material.LIME_WOOL, 1);
 		ItemMeta up = pad_up.getItemMeta();
+		assert up != null;
 		up.setDisplayName("Up");
 		pad_up.setItemMeta(up);
 		is[16] = pad_up;
 		// regulator
 		ItemStack wobb = new ItemStack(Material.BLUE_WOOL, 1);
 		ItemMeta ler = wobb.getItemMeta();
+		assert ler != null;
 		ler.setDisplayName("Regulator");
 		wobb.setItemMeta(ler);
 		is[20] = wobb;
 		// direction pad left
 		ItemStack pad_left = new ItemStack(Material.LIME_WOOL, 1);
 		ItemMeta left = pad_left.getItemMeta();
+		assert left != null;
 		left.setDisplayName("Left");
 		pad_left.setItemMeta(left);
 		is[24] = pad_left;
 		// direction pad right
 		ItemStack pad_right = new ItemStack(Material.LIME_WOOL, 1);
 		ItemMeta right = pad_right.getItemMeta();
+		assert right != null;
 		right.setDisplayName("Right");
 		pad_right.setItemMeta(right);
 		is[26] = pad_right;
 		// direction pad down
 		ItemStack pad_down = new ItemStack(Material.LIME_WOOL, 1);
 		ItemMeta down = pad_down.getItemMeta();
+		assert down != null;
 		down.setDisplayName("Down");
 		pad_down.setItemMeta(down);
 		is[34] = pad_down;

@@ -57,15 +57,13 @@ class TARDISFindCommand {
 						world = plugin.getMVHelper().getAlias(rsc.getWorld());
 					}
 					TARDISMessage.send(player, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
-					return true;
 				} else {
 					TARDISMessage.send(player, "CURRENT_NOT_FOUND");
-					return true;
 				}
 			} else {
 				TARDISMessage.send(player, "DIFF_HARD_FIND", ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET);
-				return true;
 			}
+			return true;
 		} else {
 			TARDISMessage.send(player, "NO_PERMS");
 			return false;

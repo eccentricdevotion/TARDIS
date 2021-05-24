@@ -38,6 +38,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -76,7 +77,7 @@ public class TARDISGravityWellListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerMove(PlayerMoveEvent event) {
-		World world = event.getTo().getWorld();
+		World world = Objects.requireNonNull(event.getTo()).getWorld();
 		Location l = new Location(world, event.getTo().getBlockX(), event.getTo().getBlockY() - 1, event.getTo().getBlockZ(), 0.0F, 0.0F);
 		String loc = l.toString();
 		Double[] values;
@@ -173,7 +174,7 @@ public class TARDISGravityWellListener implements Listener {
 				case VOID:
 					Player p = (Player) ent;
 					if (l.getBlockY() < 1 && plugin.getUtils().inTARDISWorld(p)) {
-						if (plugin.getConfig().getString("preferences.vortex_fall").equals("kill")) {
+						if (Objects.equals(plugin.getConfig().getString("preferences.vortex_fall"), "kill")) {
 							p.setHealth(0);
 						} else {
 							e.setCancelled(true);

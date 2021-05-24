@@ -126,7 +126,7 @@ public class TARDISRebuildCommand {
 			bd.setPlayer(player);
 			bd.setRebuild(true);
 			bd.setSubmarine(rsc.isSubmarine());
-			bd.setTardisID(id);
+			bd.setTardisId(id);
 			bd.setThrottle(SpaceTimeThrottle.REBUILD);
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 				plugin.getTrackerKeeper().getDematerialising().add(id);

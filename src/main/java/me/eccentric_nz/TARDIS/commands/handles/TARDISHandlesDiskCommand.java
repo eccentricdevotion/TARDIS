@@ -28,6 +28,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 class TARDISHandlesDiskCommand {
 
@@ -45,11 +46,12 @@ class TARDISHandlesDiskCommand {
 		}
 		// check if item in hand is a Handles program disk
 		ItemStack disk = player.getInventory().getItemInMainHand();
-		if (disk != null && disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
+		if (disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
 			ItemMeta dim = disk.getItemMeta();
+			assert dim != null;
 			if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
 				// get the program_id from the disk
-				int pid = TARDISNumberParsers.parseInt(dim.getLore().get(1));
+				int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(dim.getLore()).get(1));
 				// get the name - must be 32 chars or less
 				StringBuilder sb = new StringBuilder();
 				for (int s = 1; s < args.length; s++) {

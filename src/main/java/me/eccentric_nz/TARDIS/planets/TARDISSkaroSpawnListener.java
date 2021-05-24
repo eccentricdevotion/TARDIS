@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -29,6 +29,8 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -45,7 +47,7 @@ public class TARDISSkaroSpawnListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onDalekSpawn(CreatureSpawnEvent event) {
-		if (!event.getLocation().getWorld().getName().endsWith("skaro")) {
+		if (!Objects.requireNonNull(event.getLocation().getWorld()).getName().endsWith("skaro")) {
 			return;
 		}
 		SpawnReason spawnReason = event.getSpawnReason();
@@ -66,6 +68,7 @@ public class TARDISSkaroSpawnListener implements Listener {
 			if (plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.flying_daleks") && TARDISConstants.RANDOM.nextInt(100) < 10) {
 				// make the Dalek fly
 				EntityEquipment ee = le.getEquipment();
+				assert ee != null;
 				ee.setChestplate(new ItemStack(Material.ELYTRA, 1));
 				// teleport them straight up
 				le.teleport(le.getLocation().add(0.0d, 20.0d, 0.0d));

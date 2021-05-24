@@ -43,6 +43,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -68,7 +69,7 @@ public class TARDISMinecartListener implements Listener {
 				int id = 0;
 				COMPASS d = COMPASS.SOUTH;
 				Location block_loc = block.getLocation();
-				String bw = block_loc.getWorld().getName();
+				String bw = Objects.requireNonNull(block_loc.getWorld()).getName();
 				int bx = block_loc.getBlockX();
 				int by = block_loc.getBlockY();
 				int bz = block_loc.getBlockZ();
@@ -146,7 +147,7 @@ public class TARDISMinecartListener implements Listener {
 						default -> false;
 					};
 					if (shouldPrevent) {
-						if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
+						if (playerUUID != null && Objects.requireNonNull(plugin.getServer().getPlayer(playerUUID)).isOnline()) {
 							TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
 						}
 						plugin.getTrackerKeeper().getMinecart().remove(id);
@@ -158,8 +159,10 @@ public class TARDISMinecartListener implements Listener {
 						Location in_out = new Location(w, x, y, z);
 						if (Tag.DOORS.isTagged(material)) {
 							d = getDirection(in_out);
+							assert w != null;
 							w.getChunkAt(in_out).setForceLoaded(true);
 						} else {
+							assert w != null;
 							w.getChunkAt(in_out).setForceLoaded(false);
 						}
 						Inventory inventory = ((InventoryHolder) vehicle).getInventory();
@@ -197,7 +200,7 @@ public class TARDISMinecartListener implements Listener {
 		// start a delayed task to remove the chunk
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> thisChunk.setForceLoaded(false), delay);
 		minecart.remove();
-		Entity e = trackLocation.getWorld().spawnEntity(trackLocation, cart);
+		Entity e = Objects.requireNonNull(trackLocation.getWorld()).spawnEntity(trackLocation, cart);
 		InventoryHolder smc = (InventoryHolder) e;
 		smc.getInventory().setContents(inv);
 		// calculate new velocity

@@ -88,10 +88,9 @@ class TARDISEmergencyProgrammeCommand {
 			}
 			TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
-			return true;
 		} else {
 			TARDISMessage.send(p, "EP1_DISABLED");
-			return true;
 		}
+		return true;
 	}
 }

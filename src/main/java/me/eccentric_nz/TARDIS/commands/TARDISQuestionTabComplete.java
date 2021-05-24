@@ -24,10 +24,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * TabCompleter for /tardis?
@@ -54,7 +51,7 @@ public class TARDISQuestionTabComplete extends TARDISCompleter implements TabCom
 			return partial(args[0], ROOT_SUBS);
 		} else if (args.length == 2) {
 			String sub = args[0];
-			return partial(lastArg, removeUnwanted(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands." + sub).getKeys(false)));
+			return partial(lastArg, removeUnwanted(Objects.requireNonNull(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands." + sub)).getKeys(false)));
 		}
 		return ImmutableList.of();
 	}

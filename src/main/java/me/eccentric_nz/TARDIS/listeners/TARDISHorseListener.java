@@ -35,6 +35,7 @@ import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.inventory.Inventory;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -55,7 +56,7 @@ public class TARDISHorseListener implements Listener {
 			Entity passenger = (h.getPassengers().size() > 0) ? h.getPassengers().get(0) : null;
 			if (passenger != null && m.equals(Material.OAK_PRESSURE_PLATE)) {
 				if (passenger instanceof Player p) {
-					String pworld = p.getLocation().getWorld().getName();
+					String pworld = Objects.requireNonNull(p.getLocation().getWorld()).getName();
 					HashMap<String, Object> wherep = new HashMap<>();
 					wherep.put("uuid", p.getUniqueId().toString());
 					ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
@@ -111,10 +112,10 @@ public class TARDISHorseListener implements Listener {
 						tmhor.setHorseInventory(h.getInventory().getContents());
 						tmhor.setDomesticity(h.getDomestication());
 						tmhor.setJumpStrength(h.getJumpStrength());
-						double mh = h.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+						double mh = Objects.requireNonNull(h.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue();
 						tmhor.setHorseHealth(mh);
 						tmhor.setHealth(h.getHealth());
-						tmhor.setSpeed(h.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue());
+						tmhor.setSpeed(Objects.requireNonNull(h.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).getBaseValue());
 						// eject player
 						if (h.eject()) {
 							// remove horse
@@ -122,7 +123,11 @@ public class TARDISHorseListener implements Listener {
 							// respawn horse
 							World world = l.getWorld();
 							// load the chunk
-							while (!world.getChunkAt(l).isLoaded()) {
+							while (true) {
+								assert world != null;
+								if (world.getChunkAt(l).isLoaded()) {
+									break;
+								}
 								world.getChunkAt(l).load();
 							}
 							Entity ent = world.spawnEntity(l, tmhor.getHorseVariant());
@@ -139,6 +144,7 @@ public class TARDISHorseListener implements Listener {
 								chested.setCarryingChest(true);
 							}
 							AttributeInstance attribute = equine.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+							assert attribute != null;
 							attribute.setBaseValue(tmhor.getHorseHealth());
 							equine.setHealth(tmhor.getHealth());
 							Inventory inv = equine.getInventory();
@@ -148,7 +154,7 @@ public class TARDISHorseListener implements Listener {
 								ee.setColor(tmhor.getHorseColour());
 								ee.setStyle(tmhor.getHorseStyle());
 							}
-							equine.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(tmhor.getSpeed());
+							Objects.requireNonNull(equine.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).setBaseValue(tmhor.getSpeed());
 							equine.setTamed(true);
 							equine.setOwner(p);
 

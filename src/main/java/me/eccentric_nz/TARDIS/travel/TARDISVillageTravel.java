@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
@@ -56,7 +56,8 @@ public class TARDISVillageTravel {
 				case NETHER -> loc = world.locateNearestStructure(location, StructureType.NETHER_FORTRESS, 64, false);
 				case THE_END -> {
 					loc = world.locateNearestStructure(location, StructureType.END_CITY, 64, false);
-					int highesty = TARDISStaticLocationGetters.getHighestYin3x3(world, rs.getX(), rs.getZ());
+					int highesty = TARDISStaticLocationGetters.getHighestYIn3x3(world, rs.getX(), rs.getZ());
+					assert loc != null;
 					loc.setY(highesty);
 				}
 				default -> // NORMAL

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -29,6 +29,7 @@ import org.bukkit.event.block.BlockGrowEvent;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -52,7 +53,7 @@ public class TARDISGrowthListener implements Listener {
 			return;
 		}
 		Location l = plant.getLocation();
-		String w = l.getWorld().getName();
+		String w = Objects.requireNonNull(l.getWorld()).getName();
 		if (!plugin.getTrackerKeeper().getSiegeGrowthAreas().containsKey(w)) {
 			return;
 		}

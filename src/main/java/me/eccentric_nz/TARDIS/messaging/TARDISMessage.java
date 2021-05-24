@@ -75,12 +75,16 @@ public class TARDISMessage {
 
 	public static void send(Player p, String key, String sub) {
 		String local = TARDISPlugin.plugin.getLanguage().getString(key);
+		assert local != null;
 		message(p, TARDISPlugin.plugin.getPluginName() + String.format(local, sub));
 	}
 
 	public static void handlesSend(Player p, String key, String sub) {
 		String local = TARDISPlugin.plugin.getLanguage().getString(key);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(TARDISPlugin.plugin, () -> message(p, HANDLES + String.format(local, sub)), 2L);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(TARDISPlugin.plugin, () -> {
+			assert local != null;
+			message(p, HANDLES + String.format(local, sub));
+		}, 2L);
 	}
 
 	public static void send(CommandSender cs, String key) {
@@ -90,6 +94,7 @@ public class TARDISMessage {
 
 	public static void send(CommandSender cs, String key, String sub) {
 		String local = TARDISPlugin.plugin.getLanguage().getString(key);
+		assert local != null;
 		message(cs, TARDISPlugin.plugin.getPluginName() + String.format(local, sub));
 	}
 
@@ -104,6 +109,7 @@ public class TARDISMessage {
 
 	public static void send(Player p, String key, String sub, boolean handbrake) {
 		String local = TARDISPlugin.plugin.getLanguage().getString(key);
+		assert local != null;
 		if (handbrake) {
 			message(p, TARDISPlugin.plugin.getPluginName() + String.format(local, sub) + " " + TARDISPlugin.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
 		} else {
@@ -113,26 +119,31 @@ public class TARDISMessage {
 
 	public static void send(Player p, String key, String one, String two) {
 		String local = TARDISPlugin.plugin.getLanguage().getString(key);
+		assert local != null;
 		message(p, TARDISPlugin.plugin.getPluginName() + String.format(local, one, two));
 	}
 
 	public static void send(CommandSender cs, String key, String one, String two) {
 		String local = TARDISPlugin.plugin.getLanguage().getString(key);
+		assert local != null;
 		message(cs, TARDISPlugin.plugin.getPluginName() + String.format(local, one, two));
 	}
 
 	public static void send(Player p, String key, String one, String two, String three) {
 		String local = TARDISPlugin.plugin.getLanguage().getString(key);
+		assert local != null;
 		message(p, TARDISPlugin.plugin.getPluginName() + String.format(local, one, two, three));
 	}
 
 	public static void handlesSend(Player p, String key, long one, String two, String three) {
 		String local = TARDISPlugin.plugin.getLanguage().getString(key);
+		assert local != null;
 		message(p, HANDLES + String.format(local, one, two, three));
 	}
 
 	public static void send(CommandSender cs, String key, String one, int two, int three) {
 		String local = TARDISPlugin.plugin.getLanguage().getString(key);
+		assert local != null;
 		message(cs, TARDISPlugin.plugin.getPluginName() + String.format(local, one, two, three));
 	}
 }

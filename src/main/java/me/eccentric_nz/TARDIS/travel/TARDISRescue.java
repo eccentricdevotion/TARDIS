@@ -33,6 +33,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -66,7 +67,7 @@ public class TARDISRescue {
 			TARDISMessage.send(player, "NOT_ONLINE");
 			return false;
 		}
-		Location player_loc = plugin.getServer().getPlayer(saved).getLocation();
+		Location player_loc = Objects.requireNonNull(plugin.getServer().getPlayer(saved)).getLocation();
 		if (!plugin.getTardisArea().areaCheckInExisting(player_loc)) {
 			TARDISMessage.send(player, "PLAYER_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
 			return false;
@@ -74,7 +75,7 @@ public class TARDISRescue {
 		if (!request && !plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, Flag.getDefaultFlags()))) {
 			return false;
 		}
-		if (!plugin.getPlanetsConfig().getBoolean("planets." + player_loc.getWorld().getName() + ".time_travel")) {
+		if (!plugin.getPlanetsConfig().getBoolean("planets." + Objects.requireNonNull(player_loc.getWorld()).getName() + ".time_travel")) {
 			TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 			return false;
 		}

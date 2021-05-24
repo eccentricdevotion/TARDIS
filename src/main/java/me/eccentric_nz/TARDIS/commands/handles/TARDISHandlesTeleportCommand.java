@@ -32,6 +32,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -95,7 +96,7 @@ public class TARDISHandlesTeleportCommand {
 			HashMap<String, Object> tid = new HashMap<>();
 			tid.put("tardis_id", id);
 			HashMap<String, Object> set = new HashMap<>();
-			set.put("world", location.getWorld().getName());
+			set.put("world", Objects.requireNonNull(location.getWorld()).getName());
 			set.put("x", location.getBlockX());
 			set.put("y", location.getBlockY());
 			set.put("z", location.getBlockZ());
@@ -115,7 +116,7 @@ public class TARDISHandlesTeleportCommand {
 			dd.setHide(false);
 			dd.setOutside(true);
 			dd.setSubmarine(rsc.isSubmarine());
-			dd.setTardisID(id);
+			dd.setTardisId(id);
 			dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
 			dd.setThrottle(SpaceTimeThrottle.NORMAL);
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -131,7 +132,7 @@ public class TARDISHandlesTeleportCommand {
 			bd.setPlayer(player);
 			bd.setRebuild(false);
 			bd.setSubmarine(rsc.isSubmarine());
-			bd.setTardisID(id);
+			bd.setTardisId(id);
 			bd.setThrottle(SpaceTimeThrottle.NORMAL);
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
 		}

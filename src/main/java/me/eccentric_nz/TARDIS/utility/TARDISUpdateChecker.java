@@ -46,6 +46,7 @@ public class TARDISUpdateChecker implements Runnable {
 			return;
 		}
 		String build = plugin.getGeneralKeeper().getPluginYAML().getString("build-number");
+		assert build != null;
 		if (build.contains(":")) {
 			// local build, not a Jenkins build
 			return;

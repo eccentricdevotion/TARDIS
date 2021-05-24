@@ -73,7 +73,7 @@ public class TARDISHandlesProgramListener implements Listener {
 			if (slot >= 0 && slot < 36) {
 				// only allow Storage Disks
 				ItemStack item = player.getItemOnCursor();
-				if (item != null && !allowed.contains(item.getType())) {
+				if (!allowed.contains(item.getType())) {
 					event.setCancelled(true);
 				}
 			}
@@ -140,6 +140,7 @@ public class TARDISHandlesProgramListener implements Listener {
 						close(player);
 						ItemStack is = new ItemStack(Material.MUSIC_DISC_WARD, 1);
 						ItemMeta im = is.getItemMeta();
+						assert im != null;
 						im.setDisplayName("Handles Program Disk");
 						im.setLore(Arrays.asList("Untitled Disk", pid + "", "Checked OUT"));
 						im.addItemFlags(ItemFlag.values());
@@ -161,7 +162,7 @@ public class TARDISHandlesProgramListener implements Listener {
 					// duplicate Item stack on cursor
 					ItemStack is = view.getItem(slot);
 					ItemStack cursor = player.getItemOnCursor();
-					if (cursor != null && (is == null || cursor.isSimilar(is))) {
+					if (is == null || cursor.isSimilar(is)) {
 						player.setItemOnCursor(null);
 					} else {
 						player.setItemOnCursor(is.clone());
@@ -211,7 +212,7 @@ public class TARDISHandlesProgramListener implements Listener {
 					break;
 				default:
 					ItemStack item = player.getItemOnCursor();
-					if (slot > 53 && item != null && item.getType().equals(Material.PAPER)) {
+					if (slot > 53 && item.getType().equals(Material.PAPER)) {
 						event.setCancelled(true);
 						player.setItemOnCursor(null);
 					}
@@ -229,7 +230,7 @@ public class TARDISHandlesProgramListener implements Listener {
 		}
 		Player p = (Player) event.getPlayer();
 		ItemStack item = p.getItemOnCursor();
-		if (item != null && item.getType().equals(Material.PAPER)) {
+		if (item.getType().equals(Material.PAPER)) {
 			p.setItemOnCursor(null);
 		}
 	}
@@ -244,6 +245,7 @@ public class TARDISHandlesProgramListener implements Listener {
 	private void setSlot(InventoryView view, int slot, TARDISHandlesBlock block) {
 		ItemStack is = new ItemStack(Material.PAPER, 1);
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		im.setDisplayName(block.getDisplayName());
 		if (block.getLore() != null) {
 			im.setLore(block.getLore());

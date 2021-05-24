@@ -33,6 +33,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -50,7 +51,7 @@ public class TARDISRenderRoomListener implements Listener {
 		Player player = event.getPlayer();
 		if (plugin.getTrackerKeeper().getRenderRoomOccupants().contains(player.getUniqueId())) {
 			event.setCancelled(true);
-			if (event.getHand().equals(EquipmentSlot.HAND) && (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR))) {
+			if (Objects.equals(event.getHand(), EquipmentSlot.HAND) && (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR))) {
 				// tp the player back to the tardis console
 				transmat(player);
 				player.updateInventory();
@@ -73,6 +74,7 @@ public class TARDISRenderRoomListener implements Listener {
 			if (rsd.resultSet()) {
 				COMPASS d = rsd.getDoorDirection();
 				Location tp_loc = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoorLocation());
+				assert tp_loc != null;
 				int getx = tp_loc.getBlockX();
 				int getz = tp_loc.getBlockZ();
 				switch (d) {

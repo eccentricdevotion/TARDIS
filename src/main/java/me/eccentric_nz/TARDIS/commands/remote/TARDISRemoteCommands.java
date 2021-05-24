@@ -97,7 +97,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 				boolean hidden = tardis.isHidden();
 				boolean handbrake = tardis.isHandbrakeOn();
 				int level = tardis.getArtronLevel();
-				if (sender instanceof Player && !sender.hasPermission("tardis.admin")) {
+				if (!sender.hasPermission("tardis.admin")) {
 					HashMap<String, Object> wheret = new HashMap<>();
 					wheret.put("uuid", ((Player) sender).getUniqueId().toString());
 					ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
@@ -138,7 +138,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 						case HIDE:
 							// if it's a non-admin player or command block running the command
 							// check the usual requirements (circuits/energy) - else just do it
-							if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
+							if (!sender.hasPermission("tardis.admin") || sender instanceof BlockCommandSender) {
 								return new TARDISHideCommand(plugin).hide(p);
 							} else {
 								return new TARDISRemoteHideCommand(plugin).doRemoteHide(sender, id);
@@ -146,14 +146,14 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 						case REBUILD:
 							// if it's a non-admin player or command block running the command
 							// check the usual requirements (circuits/energy) - else just do it
-							if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
+							if (!sender.hasPermission("tardis.admin") || sender instanceof BlockCommandSender) {
 								return new TARDISRebuildCommand(plugin).rebuildPreset(p);
 							} else {
 								return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, p, hidden);
 							}
 						case COMEHERE:
 							// NOT non-admin players, command blocks or the console
-							if (sender instanceof Player && sender.hasPermission("tardis.admin")) {
+							if (sender.hasPermission("tardis.admin")) {
 								return new TARDISRemoteComehereCommand(plugin).doRemoteComeHere((Player) sender, uuid);
 							} else {
 								TARDISMessage.send(sender, "NO_PERMS");
@@ -161,7 +161,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 							}
 						case BACK:
 							// NOT non-admin players or command blocks
-							if ((sender instanceof Player && sender.hasPermission("tardis.admin")) || sender instanceof ConsoleCommandSender) {
+							if (sender.hasPermission("tardis.admin") || sender instanceof ConsoleCommandSender) {
 								if (!handbrake) {
 									TARDISMessage.send(sender, "NOT_WHILE_TRAVELLING");
 									return true;
@@ -182,7 +182,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 								return true;
 							}
 							// check artron energy if not admin
-							if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
+							if (!sender.hasPermission("tardis.admin") || sender instanceof BlockCommandSender) {
 								int travel = plugin.getArtronConfig().getInt("travel");
 								if (level < travel) {
 									TARDISMessage.send(sender, "NOT_ENOUGH_ENERGY");
@@ -231,7 +231,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 										TARDISMessage.send(sender, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
 										return true;
 									}
-									if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
+									if (!sender.hasPermission("tardis.admin") || sender instanceof BlockCommandSender) {
 										// must use advanced console if difficulty hard
 										if (plugin.getDifficulty().equals(Difficulty.HARD)) {
 											TARDISMessage.send(sender, "ADV_AREA");
@@ -268,7 +268,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 										TARDISMessage.send(sender, "NO_MORE_SPOTS");
 										return true;
 									}
-									set.put("world", l.getWorld().getName());
+									set.put("world", Objects.requireNonNull(l.getWorld()).getName());
 									set.put("x", l.getBlockX());
 									set.put("y", l.getBlockY());
 									set.put("z", l.getBlockZ());
@@ -280,7 +280,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 										TARDISMessage.send(sender, "ARG_COORDS");
 										return true;
 									}
-									if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
+									if (!sender.hasPermission("tardis.admin") || sender instanceof BlockCommandSender) {
 										if (!TARDISPermission.hasPermission(p, "tardis.timetravel.location")) {
 											TARDISMessage.send(sender, "NO_PERMS");
 											return true;
@@ -314,7 +314,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 										return true;
 									}
 									// check respect if not admin
-									if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
+									if (!sender.hasPermission("tardis.admin") || sender instanceof BlockCommandSender) {
 										if (!plugin.getPluginRespect().getRespect(location, new Parameters(p.getPlayer(), Flag.getDefaultFlags()))) {
 											return true;
 										}
@@ -333,7 +333,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 										TARDISMessage.send(sender, "NOT_SAFE");
 										return true;
 									} else {
-										set.put("world", location.getWorld().getName());
+										set.put("world", Objects.requireNonNull(location.getWorld()).getName());
 										set.put("x", location.getBlockX());
 										set.put("y", location.getBlockY());
 										set.put("z", location.getBlockZ());

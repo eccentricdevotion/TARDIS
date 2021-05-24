@@ -28,6 +28,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -56,7 +57,7 @@ public class TARDISHadsPersister {
 				Location l = map.getValue();
 				String uuid = map.getKey().toString();
 				ps.setString(1, uuid);
-				ps.setString(2, l.getWorld().getName());
+				ps.setString(2, Objects.requireNonNull(l.getWorld()).getName());
 				ps.setInt(3, l.getBlockX());
 				ps.setInt(4, l.getBlockY());
 				ps.setInt(5, l.getBlockZ());

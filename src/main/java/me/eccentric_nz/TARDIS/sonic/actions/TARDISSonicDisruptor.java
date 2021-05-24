@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
@@ -27,6 +27,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Snow;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Objects;
 
 public class TARDISSonicDisruptor {
 
@@ -40,11 +42,11 @@ public class TARDISSonicDisruptor {
 				Location l = block.getLocation();
 				if (mat.equals(Material.SNOW)) {
 					Snow snow = (Snow) block.getBlockData();
-					block.getLocation().getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.SNOWBALL, 1 + snow.getLayers()));
+					Objects.requireNonNull(block.getLocation().getWorld()).dropItemNaturally(block.getLocation(), new ItemStack(Material.SNOWBALL, 1 + snow.getLayers()));
 				} else {
-					l.getWorld().dropItemNaturally(l, new ItemStack(block.getType(), 1));
+					Objects.requireNonNull(l.getWorld()).dropItemNaturally(l, new ItemStack(block.getType(), 1));
 				}
-				l.getWorld().playSound(l, Sound.ENTITY_SHEEP_SHEAR, 1.0F, 1.5F);
+				Objects.requireNonNull(l.getWorld()).playSound(l, Sound.ENTITY_SHEEP_SHEAR, 1.0F, 1.5F);
 				// set the block to AIR
 				block.setBlockData(TARDISConstants.AIR);
 			} else if (mat.equals(Material.SNOW) || mat.equals(Material.SNOW_BLOCK)) {
@@ -57,10 +59,10 @@ public class TARDISSonicDisruptor {
 					balls = 1 + snow.getLayers();
 				}
 				block.setBlockData(TARDISConstants.AIR);
-				block.getLocation().getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.SNOWBALL, balls));
+				Objects.requireNonNull(block.getLocation().getWorld()).dropItemNaturally(block.getLocation(), new ItemStack(Material.SNOWBALL, balls));
 			} else {
 				block.breakNaturally();
-				block.getLocation().getWorld().playSound(block.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1.0F, 1.5F);
+				Objects.requireNonNull(block.getLocation().getWorld()).playSound(block.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1.0F, 1.5F);
 			}
 		} else {
 			TARDISMessage.send(player, "SONIC_PROTECT");

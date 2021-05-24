@@ -69,10 +69,6 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("tardisworld")) {
-			if (sender == null) {
-				plugin.debug("Sender was null!");
-				return true;
-			}
 			if (args.length < 2) {
 				TARDISMessage.send(sender, "TOO_FEW_ARGS");
 				return false;
@@ -169,8 +165,10 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
 						ConfigurationSection rules = pConfig.getConfigurationSection("planets." + TARDISStringUtils.uppercaseFirst(name) + ".gamerules");
 						String s_world = plugin.getServer().getWorlds().get(0).getName();
 						name = s_world + "_tardis_" + name;
+						assert section != null;
 						plugin.getPlanetsConfig().createSection("planets." + name, section.getValues(true));
 						plugin.getPlanetsConfig().set("planets." + name + "gamerules", null);
+						assert rules != null;
 						plugin.getPlanetsConfig().createSection("planets." + name + ".gamerules", rules.getValues(true));
 						plugin.getPlanetsConfig().set("planets." + name + ".time_travel", true);
 						if (name.equals(s_world + "_tardis_skaro")) {

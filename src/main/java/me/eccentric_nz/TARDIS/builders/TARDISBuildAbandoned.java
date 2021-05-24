@@ -17,9 +17,9 @@
 package me.eccentric_nz.tardis.builders;
 
 import com.google.gson.*;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import me.eccentric_nz.tardis.enumeration.UseClay;
@@ -128,6 +128,7 @@ class TARDISBuildAbandoned implements Runnable {
 			// get JSON
 			obj = TARDISSchematicGZip.unzip(path);
 			// get dimensions
+			assert obj != null;
 			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 			h = dimensions.get("height").getAsInt() - 1;
 			w = dimensions.get("width").getAsInt();
@@ -287,7 +288,7 @@ class TARDISBuildAbandoned implements Runnable {
 							} else {
 								m = split[0] + "_" + use_clay.toString();
 							}
-							data = Material.getMaterial(m).createBlockData();
+							data = Objects.requireNonNull(Material.getMaterial(m)).createBlockData();
 						}
 						break;
 					case BLUE_WOOL:
@@ -305,7 +306,7 @@ class TARDISBuildAbandoned implements Runnable {
 						} else {
 							m = split[0] + "_" + use_clay.toString();
 						}
-						data = Material.getMaterial(m).createBlockData();
+						data = Objects.requireNonNull(Material.getMaterial(m)).createBlockData();
 				}
 			}
 			if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {

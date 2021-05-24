@@ -37,10 +37,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Security Protocol 712 is a security feature aboard the Doctor's tardis which causes the ship to dematerialise and
@@ -125,7 +122,7 @@ public class TARDISAuthorisedControlDisk {
 			HashMap<String, Object> wheren = new HashMap<>();
 			wheren.put("tardis_id", id);
 			HashMap<String, Object> setn = new HashMap<>();
-			setn.put("world", location.getWorld().getName());
+			setn.put("world", Objects.requireNonNull(location.getWorld()).getName());
 			setn.put("x", location.getBlockX());
 			setn.put("y", location.getBlockY());
 			setn.put("z", location.getBlockZ());
@@ -140,6 +137,7 @@ public class TARDISAuthorisedControlDisk {
 			ResultSetControls rsc = new ResultSetControls(plugin, where, false);
 			if (rsc.resultSet()) {
 				Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+				assert handbrake != null;
 				TARDISHandbrake.setLevers(handbrake.getBlock(), false, true, handbrake.toString(), id, plugin);
 				if (plugin.getConfig().getBoolean("circuits.damage")) {
 					plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);

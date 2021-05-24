@@ -61,7 +61,7 @@ class TARDISRemoteRebuildCommand {
 		bd.setPlayer(player);
 		bd.setRebuild(true);
 		bd.setSubmarine(rsc.isSubmarine());
-		bd.setTardisID(id);
+		bd.setTardisId(id);
 		bd.setThrottle(SpaceTimeThrottle.REBUILD);
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
 		TARDISMessage.send(sender, "TARDIS_REBUILT");

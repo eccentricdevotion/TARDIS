@@ -32,6 +32,7 @@ public class TARDISMultiverseInventoriesChecker {
 
 	public static boolean checkWorldsCanShare(String from, String to) {
 		MultiverseInventories mvi = (MultiverseInventories) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Inventories");
+		assert mvi != null;
 		WorldGroupManager gm = mvi.getGroupManager();
 		if (gm.hasGroup(from)) {
 			List<WorldGroup> profiles = gm.getGroupsForWorld(from);

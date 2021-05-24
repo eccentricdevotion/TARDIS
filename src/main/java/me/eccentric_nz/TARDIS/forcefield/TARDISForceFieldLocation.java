@@ -23,7 +23,7 @@ public class TARDISForceFieldLocation {
 
 	private final Location topFrontLeft;
 	private final Location topFrontRight;
-	private final Location topBacktLeft;
+	private final Location topBackLeft;
 	private final Location topBackRight;
 	private final Location bottomFrontLeft;
 	private final Location bottomFrontRight;
@@ -40,7 +40,7 @@ public class TARDISForceFieldLocation {
 		World world = location.getWorld();
 		topFrontLeft = new Location(world, minX, maxY, minZ);
 		topFrontRight = new Location(world, maxX, maxY, minZ);
-		topBacktLeft = new Location(world, minX, maxY, maxZ);
+		topBackLeft = new Location(world, minX, maxY, maxZ);
 		topBackRight = new Location(world, maxX, maxY, maxZ);
 		bottomFrontLeft = new Location(world, minX, minY, minZ);
 		bottomFrontRight = new Location(world, maxX, minY, minZ);
@@ -57,7 +57,7 @@ public class TARDISForceFieldLocation {
 	}
 
 	public Location getTopBackLeft() {
-		return topBacktLeft;
+		return topBackLeft;
 	}
 
 	public Location getTopBackRight() {

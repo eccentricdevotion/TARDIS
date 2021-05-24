@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * The Unified Intelligence Taskforce — formerly known as the United Nations Intelligence Taskforce, and more usually
@@ -49,7 +50,7 @@ public class TARDISRoomMap {
 	public void load() {
 		String defaultbasepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
 		String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
-		plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((r) -> {
+		Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false).forEach((r) -> {
 			if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
 				boolean user = plugin.getRoomsConfig().getBoolean("rooms." + r + ".user");
 				String basepath = (user) ? userbasepath : defaultbasepath;

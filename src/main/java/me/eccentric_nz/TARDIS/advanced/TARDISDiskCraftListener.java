@@ -34,6 +34,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -67,9 +68,11 @@ public class TARDISDiskCraftListener implements Listener {
 						ItemStack is = inv.getItem(inv.first(Material.MUSIC_DISC_CAT));
 						if (is != null && is.hasItemMeta()) {
 							ItemMeta im = is.getItemMeta();
+							assert im != null;
 							if (im.hasDisplayName() && im.getDisplayName().equals("Biome Storage Disk") && im.hasLore()) {
 								List<String> lore = im.getLore();
 								int ladder = inv.first(Material.LADDER);
+								assert lore != null;
 								if (lore.get(0).equals("Blank")) {
 									List<String> disk_lore = new ArrayList<>();
 									// biome disk
@@ -96,6 +99,7 @@ public class TARDISDiskCraftListener implements Listener {
 									if (disk_lore.size() > 0) {
 										disk = new ItemStack(Material.MUSIC_DISC_CAT, 1);
 										ItemMeta dim = disk.getItemMeta();
+										assert dim != null;
 										dim.setDisplayName("Biome Storage Disk");
 										dim.setLore(disk_lore);
 										dim.setCustomModelData(10000001);
@@ -111,6 +115,7 @@ public class TARDISDiskCraftListener implements Listener {
 										disk_lore.add(biome);
 										disk = new ItemStack(Material.MUSIC_DISC_CAT, 1);
 										ItemMeta dim = disk.getItemMeta();
+										assert dim != null;
 										dim.setDisplayName("Biome Storage Disk");
 										dim.setLore(disk_lore);
 										dim.setCustomModelData(10000001);
@@ -130,8 +135,10 @@ public class TARDISDiskCraftListener implements Listener {
 						ItemStack is = inv.getItem(inv.first(Material.MUSIC_DISC_MALL));
 						if (is != null && is.hasItemMeta()) {
 							ItemMeta im = is.getItemMeta();
+							assert im != null;
 							if (im.hasDisplayName() && im.getDisplayName().equals("Preset Storage Disk") && im.hasLore()) {
 								List<String> lore = im.getLore();
+								assert lore != null;
 								if (lore.get(0).equals("Blank")) {
 									// preset disk
 									if (items.size() > 0) {
@@ -144,6 +151,7 @@ public class TARDISDiskCraftListener implements Listener {
 											List<String> disk_lore = Collections.singletonList(preset);
 											disk = new ItemStack(Material.MUSIC_DISC_MALL, 1);
 											ItemMeta dim = disk.getItemMeta();
+											assert dim != null;
 											dim.setDisplayName("Preset Storage Disk");
 											dim.setLore(disk_lore);
 											dim.setCustomModelData(10000001);
@@ -167,7 +175,7 @@ public class TARDISDiskCraftListener implements Listener {
 		boolean check = false;
 		int count = 0;
 		for (int i = 1; i < 10; i++) {
-			if (inv.getItem(i) != null && !inv.getItem(i).getType().isAir()) {
+			if (inv.getItem(i) != null && !Objects.requireNonNull(inv.getItem(i)).getType().isAir()) {
 				count++;
 			}
 		}

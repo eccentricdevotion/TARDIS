@@ -79,7 +79,7 @@ public class TARDISGravityCommands implements CommandExecutor {
 			if (!plugin.getConfig().getBoolean("allow.external_gravity")) {
 				// check they are still in the tardis world
 				if (!plugin.getUtils().inTARDISWorld(player)) {
-					String mess_stub = (player.getLocation().getWorld().getName().toLowerCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) ? "GRAVITY_OWN_WORLD" : "GRAVITY_A_WORLD";
+					String mess_stub = (Objects.requireNonNull(player.getLocation().getWorld()).getName().toLowerCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) ? "GRAVITY_OWN_WORLD" : "GRAVITY_A_WORLD";
 					TARDISMessage.send(player, mess_stub);
 					return true;
 				}

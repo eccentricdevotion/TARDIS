@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.hads;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.event.TARDISHADSEvent;
 import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
@@ -76,9 +76,9 @@ class TARDISHostileDispersal {
 		Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
 		// sound the cloister bell
 		TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 3, id, l, plugin.getServer().getPlayer(uuid), "HADS dispersal");
-		int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
-		bell.setTask(taskID);
-		plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
+		int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
+		bell.setTask(taskId);
+		plugin.getTrackerKeeper().getCloisterBells().put(id, taskId);
 		// disperse
 		COMPASS d = rsc.getDirection();
 		if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
@@ -89,6 +89,7 @@ class TARDISHostileDispersal {
 		}
 		World w = l.getWorld();
 		// make sure chunk is loaded
+		assert w != null;
 		Chunk chunk = w.getChunkAt(l);
 		while (!chunk.isLoaded()) {
 			chunk.load();

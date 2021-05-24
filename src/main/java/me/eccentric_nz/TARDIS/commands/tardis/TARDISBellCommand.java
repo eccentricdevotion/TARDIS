@@ -64,8 +64,8 @@ public class TARDISBellCommand {
 
 	private void startCloisterBell(int id) {
 		TARDISCloisterBell bell = new TARDISCloisterBell(plugin, Integer.MAX_VALUE, id);
-		int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
-		bell.setTask(taskID);
-		plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
+		int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
+		bell.setTask(taskId);
+		plugin.getTrackerKeeper().getCloisterBells().put(id, taskId);
 	}
 }

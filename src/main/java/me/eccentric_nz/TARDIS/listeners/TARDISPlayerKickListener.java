@@ -24,6 +24,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerKickEvent;
 
+import java.util.Objects;
+
 /**
  * @author eccentric_nz
  */
@@ -42,7 +44,7 @@ public class TARDISPlayerKickListener implements Listener {
 		if (location.getBlockY() < 1 && plugin.getUtils().inTARDISWorld(player)) {
 			event.setReason(player.getName() + " fell out of their tardis!");
 			event.setCancelled(true);
-			if (plugin.getConfig().getString("preferences.vortex_fall").equals("kill")) {
+			if (Objects.equals(plugin.getConfig().getString("preferences.vortex_fall"), "kill")) {
 				player.setHealth(0);
 			} else {
 				new TARDISVoidFall(plugin).teleport(player);

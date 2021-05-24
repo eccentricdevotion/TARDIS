@@ -41,11 +41,11 @@ class TARDISSQLInsertControl implements Runnable {
 	 * Updates data in an SQLite database table. This method builds an SQL query string from the parameters supplied and
 	 * then executes the update.
 	 *
-	 * @param plugin an instance of the main plugin class
-	 * @param id     the unique tardis identifier
-	 * @param type   the type of control to insert
-	 * @param location      the location of the control
-	 * @param secondary      whether the control is a secondary control
+	 * @param plugin    an instance of the main plugin class
+	 * @param id        the unique tardis identifier
+	 * @param type      the type of control to insert
+	 * @param location  the location of the control
+	 * @param secondary whether the control is a secondary control
 	 */
 	TARDISSQLInsertControl(TARDISPlugin plugin, int id, int type, String location, int secondary) {
 		this.plugin = plugin;

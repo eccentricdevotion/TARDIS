@@ -35,6 +35,7 @@ import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -79,7 +80,7 @@ class TARDISRemoteTravelCommand {
 			Location exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
 			COMPASS sd = rsn.getDirection();
 			// Removes Blue Box and loads chunk if it unloaded somehow
-			if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
+			if (!Objects.requireNonNull(exit.getWorld()).isChunkLoaded(exit.getChunk())) {
 				exit.getWorld().loadChunk(exit.getChunk());
 			}
 			HashMap<String, Object> set = new HashMap<>();
@@ -92,7 +93,7 @@ class TARDISRemoteTravelCommand {
 				dd.setHide(false);
 				dd.setOutside(false);
 				dd.setSubmarine(sub);
-				dd.setTardisID(id);
+				dd.setTardisId(id);
 				dd.setTardisBiome(biome);
 				dd.setThrottle(SpaceTimeThrottle.NORMAL);
 				if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
@@ -115,7 +116,7 @@ class TARDISRemoteTravelCommand {
 			bd.setPlayer(player);
 			bd.setRebuild(false);
 			bd.setSubmarine(is_next_sub);
-			bd.setTardisID(id);
+			bd.setTardisId(id);
 			bd.setThrottle(SpaceTimeThrottle.NORMAL);
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 				plugin.getPresetBuilder().buildPreset(bd);

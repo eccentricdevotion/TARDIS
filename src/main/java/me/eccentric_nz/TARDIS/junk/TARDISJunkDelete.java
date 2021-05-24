@@ -31,6 +31,7 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -70,12 +71,12 @@ class TARDISJunkDelete {
 			dd.setHide(false);
 			dd.setOutside(false);
 			dd.setSubmarine(rsc.isSubmarine());
-			dd.setTardisID(id);
+			dd.setTardisId(id);
 			dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
 			dd.setThrottle(SpaceTimeThrottle.JUNK);
 			plugin.getPresetDestroyer().destroyPreset(dd);
 			// destroy the vortex tardis
-			World cw = plugin.getServer().getWorld(plugin.getConfig().getString("creation.default_world_name"));
+			World cw = plugin.getServer().getWorld(Objects.requireNonNull(plugin.getConfig().getString("creation.default_world_name")));
 			// give the tardis time to remove itself as it's not hidden
 			if (cw != null) {
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

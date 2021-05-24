@@ -111,6 +111,7 @@ public class TARDISTransmatGUIListener extends TARDISMenuListener implements Lis
 							default:
 								// select
 								ItemMeta im = is.getItemMeta();
+								assert im != null;
 								selectedLocation.put(player.getUniqueId(), im.getDisplayName());
 								break;
 						}

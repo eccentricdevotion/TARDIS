@@ -29,6 +29,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -83,7 +84,7 @@ class TARDISJunkVortexRunnable implements Runnable {
 				bd.setPlayer(player);
 				bd.setRebuild(false);
 				bd.setSubmarine(false);
-				bd.setTardisID(id);
+				bd.setTardisId(id);
 				bd.setThrottle(SpaceTimeThrottle.JUNK);
 				plugin.getPresetBuilder().buildPreset(bd);
 			}
@@ -105,7 +106,7 @@ class TARDISJunkVortexRunnable implements Runnable {
 
 	private List<Entity> getJunkTravellers() {
 		// spawn an entity
-		Entity orb = vortexJunkLoc.getWorld().spawnEntity(vortexJunkLoc, EntityType.EXPERIENCE_ORB);
+		Entity orb = Objects.requireNonNull(vortexJunkLoc.getWorld()).spawnEntity(vortexJunkLoc, EntityType.EXPERIENCE_ORB);
 		List<Entity> ents = orb.getNearbyEntities(4.0d, 4.0d, 4.0d);
 		orb.remove();
 		return ents;

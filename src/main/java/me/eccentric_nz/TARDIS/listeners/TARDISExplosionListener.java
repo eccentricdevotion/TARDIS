@@ -35,6 +35,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Distronic explosives are powerful but unstable weapons, used on many worlds as components of explosive warheads
@@ -63,7 +64,7 @@ public class TARDISExplosionListener implements Listener {
 		}
 		Location explode = e.getLocation();
 		// check if the explosion is in a tardis world
-		if ((explode.getWorld().getName().contains("tardis") || explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) && e.getEntity() instanceof Creeper) {
+		if ((Objects.requireNonNull(explode.getWorld()).getName().contains("tardis") || explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) && e.getEntity() instanceof Creeper) {
 			e.setCancelled(true);
 			// check it is not the Artron creeper
 			String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" + (explode.getBlockY() - 1) + ":" + (explode.getBlockZ() + 0.5f);
@@ -103,7 +104,7 @@ public class TARDISExplosionListener implements Listener {
 		if (e.getCause() != DamageCause.ENTITY_EXPLOSION) {
 			return;
 		}
-		String l = e.getDamager().getLocation().getWorld().getName();
+		String l = Objects.requireNonNull(e.getDamager().getLocation().getWorld()).getName();
 		if (l.contains("tardis") || l.equals(plugin.getConfig().getString("creation.default_world_name"))) {
 			e.setCancelled(true);
 		}

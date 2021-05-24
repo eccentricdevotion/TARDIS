@@ -88,7 +88,7 @@ class TARDISDesiegeCommand {
 				bd.setPlayer(p);
 				bd.setRebuild(true);
 				bd.setSubmarine(rsh.isSubmarine());
-				bd.setTardisID(id);
+				bd.setTardisId(id);
 				bd.setThrottle(SpaceTimeThrottle.REBUILD);
 				plugin.getPresetBuilder().buildPreset(bd);
 				TARDISMessage.send(sender, "SIEGE_REBUILT");

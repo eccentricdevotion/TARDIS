@@ -90,7 +90,7 @@ class TARDISRemoteBackCommand {
 			dd.setHide(false);
 			dd.setOutside(true);
 			dd.setSubmarine(rsc.isSubmarine());
-			dd.setTardisID(id);
+			dd.setTardisId(id);
 			dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
 			dd.setThrottle(SpaceTimeThrottle.NORMAL);
 			plugin.getTrackerKeeper().getDematerialising().add(id);
@@ -105,7 +105,7 @@ class TARDISRemoteBackCommand {
 		bd.setPlayer(player);
 		bd.setRebuild(false);
 		bd.setSubmarine(rsb.isSubmarine());
-		bd.setTardisID(id);
+		bd.setTardisId(id);
 		bd.setThrottle(SpaceTimeThrottle.NORMAL);
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 20L);
 		plugin.getTrackerKeeper().getHasDestination().remove(id);

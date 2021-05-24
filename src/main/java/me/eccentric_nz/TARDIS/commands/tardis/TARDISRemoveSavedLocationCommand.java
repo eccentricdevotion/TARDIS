@@ -56,9 +56,9 @@ class TARDISRemoveSavedLocationCommand {
 				TARDISMessage.send(player, "SAVE_NOT_FOUND");
 				return false;
 			}
-			int destID = rsd.getDestId();
+			int destId = rsd.getDestId();
 			HashMap<String, Object> did = new HashMap<>();
-			did.put("dest_id", destID);
+			did.put("dest_id", destId);
 			plugin.getQueryFactory().doDelete("destinations", did);
 			TARDISMessage.send(player, "DEST_DELETED", args[1]);
 			return true;

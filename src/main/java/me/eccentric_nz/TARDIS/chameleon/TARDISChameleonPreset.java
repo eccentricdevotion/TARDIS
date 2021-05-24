@@ -43,7 +43,7 @@ public class TARDISChameleonPreset {
 	private final TARDISAndesitePreset andesite;
 	private final TARDISAngelDownPreset angeld;
 	private final TARDISAngelUpPreset angelu;
-	private final TARDISAppertureSciencePreset apperture;
+	private final TARDISApertureSciencePreset apperture;
 	private final TARDISCakePreset cake;
 	private final TARDISCandyCanePreset candy;
 	private final TARDISChalicePreset chalice;
@@ -111,7 +111,7 @@ public class TARDISChameleonPreset {
 		andesite = new TARDISAndesitePreset();
 		angeld = new TARDISAngelDownPreset();
 		angelu = new TARDISAngelUpPreset();
-		apperture = new TARDISAppertureSciencePreset();
+		apperture = new TARDISApertureSciencePreset();
 		cake = new TARDISCakePreset();
 		candy = new TARDISCandyCanePreset();
 		chalice = new TARDISChalicePreset();
@@ -365,8 +365,7 @@ public class TARDISChameleonPreset {
 								data[col][block] = new TARDISMushroomRecalculator().recalculate(data[col][block], d, col);
 						case ANVIL, CHIPPED_ANVIL, DAMAGED_ANVIL -> {
 							Directional anvil = (Directional) data[col][block];
-							if (d == COMPASS.WEST) {
-							} else {
+							if (d != COMPASS.WEST) {
 								if (anvil.getFacing() == BlockFace.SOUTH) {
 									anvil.setFacing(BlockFace.WEST);
 								} else {

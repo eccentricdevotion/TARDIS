@@ -27,6 +27,7 @@ import org.bukkit.Material;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -98,7 +99,7 @@ public class TARDISConsoleLoader {
 					continue;
 				}
 				// check seed material
-				String seed = plugin.getCustomConsolesConfig().getString(console + ".seed").toUpperCase(Locale.ENGLISH);
+				String seed = Objects.requireNonNull(plugin.getCustomConsolesConfig().getString(console + ".seed")).toUpperCase(Locale.ENGLISH);
 				try {
 					Material.valueOf(seed);
 				} catch (IllegalArgumentException e) {
@@ -109,6 +110,7 @@ public class TARDISConsoleLoader {
 				// get JSON
 				JsonObject obj = TARDISSchematicGZip.unzip(path);
 				// get dimensions
+				assert obj != null;
 				JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 				int h = dimensions.get("height").getAsInt();
 				int w = dimensions.get("width").getAsInt();

@@ -30,6 +30,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Teleportation is a form of matter transmission and can be either a process of physical/psychological will or a
@@ -53,8 +54,8 @@ public class TARDISTeleportListener implements Listener {
 	public void onTeleport(PlayerTeleportEvent event) {
 		TeleportCause cause = event.getCause();
 		if (causes.contains(cause)) {
-			String world_from = event.getFrom().getWorld().getName();
-			String world_to = event.getTo().getWorld().getName();
+			String world_from = Objects.requireNonNull(event.getFrom().getWorld()).getName();
+			String world_to = Objects.requireNonNull(Objects.requireNonNull(event.getTo()).getWorld()).getName();
 			Player p = event.getPlayer();
 			String uuid = p.getUniqueId().toString();
 			if (world_from.contains("tardis") && !world_to.contains("tardis")) {

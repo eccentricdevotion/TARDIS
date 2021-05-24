@@ -35,6 +35,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -51,7 +52,7 @@ public class TARDISLazarusListener implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onInteract(PlayerInteractEvent event) {
 		Action a = event.getAction();
-		if (a.equals(Action.PHYSICAL) && event.getClickedBlock().getType().equals(Material.OAK_PRESSURE_PLATE)) {
+		if (a.equals(Action.PHYSICAL) && Objects.requireNonNull(event.getClickedBlock()).getType().equals(Material.OAK_PRESSURE_PLATE)) {
 			Player player = event.getPlayer();
 			if (plugin.getTrackerKeeper().getLazarus().containsKey(player.getUniqueId())) {
 				return;

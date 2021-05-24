@@ -45,8 +45,8 @@ public class ResultSetProgram {
 	/**
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
 	 *
-	 * @param plugin an instance of the main class.
-	 * @param programId    a program_id to refine the search.
+	 * @param plugin    an instance of the main class.
+	 * @param programId a program_id to refine the search.
 	 */
 	public ResultSetProgram(TARDISPlugin plugin, int programId) {
 		this.plugin = plugin;

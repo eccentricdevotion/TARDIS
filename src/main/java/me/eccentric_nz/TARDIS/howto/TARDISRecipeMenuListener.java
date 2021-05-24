@@ -70,7 +70,7 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
 							// wall & floor
 							close(p);
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-								ItemStack[] recipe = new TARDISHowtoWallsInventory(plugin).getMenu();
+								ItemStack[] recipe = new TARDISHowToWallsInventory(plugin).getMenu();
 								Inventory gui = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis Wall & Floor Menu");
 								gui.setContents(recipe);
 								p.openInventory(gui);

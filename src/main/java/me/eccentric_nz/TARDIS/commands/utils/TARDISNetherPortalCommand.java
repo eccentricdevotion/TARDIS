@@ -33,6 +33,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Inspired by Nether Portal Calculator v1.0 by D3Phoenix http://ilurker.rooms.cwal.net/portal.html
@@ -90,7 +91,7 @@ public class TARDISNetherPortalCommand extends TARDISCompleter implements Comman
 		int x, y, z, dx, dz;
 		// get player coords
 		Location l = player.getLocation();
-		boolean overworld = !(l.getWorld().getEnvironment().equals(Environment.NETHER));
+		boolean overworld = !(Objects.requireNonNull(l.getWorld()).getEnvironment().equals(Environment.NETHER));
 		x = l.getBlockX();
 		y = l.getBlockY();
 		z = l.getBlockZ();

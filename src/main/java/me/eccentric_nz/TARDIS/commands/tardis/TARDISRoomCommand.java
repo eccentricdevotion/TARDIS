@@ -31,10 +31,7 @@ import me.eccentric_nz.tardis.rooms.TARDISSeedData;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -152,11 +149,11 @@ class TARDISRoomCommand {
 					if (rsc.getBlockCount() < map.getValue()) {
 						hasRequired = false;
 						int diff = map.getValue() - rsc.getBlockCount();
-						TARDISMessage.send(player, "CONDENSE_MORE", String.format("%d", diff), Material.getMaterial(map.getKey()).toString());
+						TARDISMessage.send(player, "CONDENSE_MORE", String.format("%d", diff), Objects.requireNonNull(Material.getMaterial(map.getKey())).toString());
 					}
 				} else {
 					hasRequired = false;
-					TARDISMessage.send(player, "CONDENSE_MIN", String.format("%d", map.getValue()), Material.getMaterial(map.getKey()).toString());
+					TARDISMessage.send(player, "CONDENSE_MIN", String.format("%d", map.getValue()), Objects.requireNonNull(Material.getMaterial(map.getKey())).toString());
 				}
 			}
 			if (!hasRequired) {

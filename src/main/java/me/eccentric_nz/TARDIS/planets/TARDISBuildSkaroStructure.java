@@ -18,8 +18,8 @@ package me.eccentric_nz.tardis.planets;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
 import org.bukkit.Material;
@@ -82,6 +82,7 @@ class TARDISBuildSkaroStructure implements Runnable {
 			// get JSON
 			JsonObject obj = TARDISSchematicGZip.unzip(path);
 			// get dimensions
+			assert obj != null;
 			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 			h = dimensions.get("height").getAsInt() - 1;
 			w = dimensions.get("width").getAsInt();
@@ -117,7 +118,7 @@ class TARDISBuildSkaroStructure implements Runnable {
 					case CHEST -> {
 						TARDISBlockSetters.setBlock(world, x, y, z, data);
 						Block chest = world.getBlockAt(x, y, z);
-						if (chest != null && chest.getType().equals(Material.CHEST)) {
+						if (chest.getType().equals(Material.CHEST)) {
 							try {
 								// set chest contents
 								Chest container = (Chest) chest.getState();

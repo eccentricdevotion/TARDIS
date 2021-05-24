@@ -39,6 +39,7 @@ import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -73,10 +74,10 @@ public class TARDISBlockDamageListener implements Listener {
 				ReplacedBlock rb = rsb.getReplacedBlock();
 				int id = rb.getTardisId();
 				if (TARDISPermission.hasPermission(p, "tardis.sonic.admin")) {
-					String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
+					String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result")).split(":");
 					Material sonic = Material.valueOf(split[0]);
 					ItemStack is = event.getItemInHand();
-					if (is != null && is.getType().equals(sonic)) {
+					if (is.getType().equals(sonic)) {
 						// unhide tardis
 						unhide(id, p);
 					}
@@ -158,7 +159,7 @@ public class TARDISBlockDamageListener implements Listener {
 			bd.setPlayer(player);
 			bd.setRebuild(true);
 			bd.setSubmarine(rsc.isSubmarine());
-			bd.setTardisID(id);
+			bd.setTardisId(id);
 			bd.setThrottle(SpaceTimeThrottle.REBUILD);
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 5L);
 			// set hidden to false

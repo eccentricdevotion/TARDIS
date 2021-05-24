@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.enumeration.Flag;
 import org.bukkit.GameMode;
@@ -80,7 +80,7 @@ public class SuperFertisliserListener implements Listener {
 		Player player = event.getPlayer();
 		assert player != null;
 		ItemStack is = player.getInventory().getItemInMainHand();
-		if (is.getType() == Material.BONE_MEAL && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Super Fertiliser") && is.getItemMeta().hasCustomModelData()) {
+		if (is.getType() == Material.BONE_MEAL && is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName() && is.getItemMeta().getDisplayName().equals("Super Fertiliser") && is.getItemMeta().hasCustomModelData()) {
 			event.setCancelled(true);
 			Block block = event.getBlock();
 			boolean removeItem = false;

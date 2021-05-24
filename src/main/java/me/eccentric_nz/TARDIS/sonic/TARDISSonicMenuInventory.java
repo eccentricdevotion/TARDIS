@@ -55,6 +55,7 @@ public class TARDISSonicMenuInventory {
 			if (sonic.getMaterial() == Material.BLAZE_ROD) {
 				ItemStack is = new ItemStack(sonic.getMaterial(), 1);
 				ItemMeta im = is.getItemMeta();
+				assert im != null;
 				im.setDisplayName(sonic.getChatColor() + "Sonic Screwdriver");
 				im.setLore(Collections.singletonList(sonic.getName()));
 				im.setCustomModelData(sonic.getCustomModelData());
@@ -66,6 +67,7 @@ public class TARDISSonicMenuInventory {
 		// info
 		ItemStack info = new ItemStack(Material.BOOK, 1);
 		ItemMeta info_im = info.getItemMeta();
+		assert info_im != null;
 		info_im.setDisplayName("Instructions");
 		List<String> lore = Arrays.asList("Put your Sonic Screwdriver", "in the bottom left most slot", "and then click on the", "Sonic of your choice.");
 		info_im.setLore(lore);
@@ -75,6 +77,7 @@ public class TARDISSonicMenuInventory {
 		// close
 		ItemStack close = new ItemStack(Material.BOWL, 1);
 		ItemMeta close_im = close.getItemMeta();
+		assert close_im != null;
 		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
 		close_im.setCustomModelData(GUISonicPreferences.CLOSE.getCustomModelData());
 		close.setItemMeta(close_im);

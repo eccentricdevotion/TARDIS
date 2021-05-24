@@ -152,7 +152,7 @@ public class TARDISDeleteCommand {
 				dd.setHide(true);
 				dd.setOutside(false);
 				dd.setSubmarine(rsc.isSubmarine());
-				dd.setTardisID(id);
+				dd.setTardisId(id);
 				dd.setTardisBiome(biome);
 				dd.setThrottle(SpaceTimeThrottle.REBUILD);
 				plugin.getPresetDestroyer().destroyPreset(dd);

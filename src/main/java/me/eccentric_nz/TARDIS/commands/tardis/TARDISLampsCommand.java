@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardis.commands.tardis;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetChunks;
@@ -100,6 +100,7 @@ class TARDISLampsCommand {
 				// get JSON
 				JsonObject obj = TARDISSchematicGZip.unzip(path);
 				// get dimensions
+				assert obj != null;
 				JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 				int h = dimensions.get("height").getAsInt();
 				starty = TARDISConstants.HIGHER.contains(schm.getPermission()) ? 65 : 64;
@@ -111,6 +112,7 @@ class TARDISLampsCommand {
 					World world = TARDISAliasResolver.getWorldFromAlias(w);
 					int x = TARDISNumberParsers.parseInt(map.get("x"));
 					int z = TARDISNumberParsers.parseInt(map.get("z"));
+					assert world != null;
 					Chunk chunk = world.getChunkAt(x, z);
 					// find the lamps in the chunks
 					int bx = chunk.getX() << 4;

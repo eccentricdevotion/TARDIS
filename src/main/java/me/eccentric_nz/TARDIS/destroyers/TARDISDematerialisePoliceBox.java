@@ -65,6 +65,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
 			// first run - play sound
 			if (i == 1) {
 				boolean found = false;
+				assert world != null;
 				for (Entity e : world.getNearbyEntities(dd.getLocation(), 1.0d, 1.0d, 1.0d)) {
 					if (e instanceof ItemFrame) {
 						frame = (ItemFrame) e;
@@ -101,6 +102,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
 				}
 			}
 			ItemMeta im = is.getItemMeta();
+			assert im != null;
 			im.setCustomModelData(cmd);
 			is.setItemMeta(im);
 			frame.setItem(is, false);

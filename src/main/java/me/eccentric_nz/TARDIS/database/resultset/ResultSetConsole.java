@@ -51,7 +51,7 @@ public class ResultSetConsole {
 	/**
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the blocks table.
 	 *
-	 * @param plugin    - an instance of the main class
+	 * @param plugin   - an instance of the main class
 	 * @param tardisId - the tardis_id to get the data for
 	 */
 	public ResultSetConsole(TARDISPlugin plugin, int tardisId) {

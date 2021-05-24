@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.event.TARDISClaimEvent;
 import me.eccentric_nz.tardis.control.TARDISPowerButton;
 import me.eccentric_nz.tardis.database.data.TARDIS;

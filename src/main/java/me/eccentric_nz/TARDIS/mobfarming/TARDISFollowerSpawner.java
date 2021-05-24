@@ -54,6 +54,7 @@ public class TARDISFollowerSpawner {
 		TARDISWeepingAngelsAPI twa = TARDISAngelsAPI.getAPI(TARDISPlugin.plugin);
 		for (TARDISFollower follower : followers) {
 			plugin.setTardisSpawn(true);
+			assert w != null;
 			ArmorStand stand = (ArmorStand) w.spawnEntity(pl, EntityType.ARMOR_STAND);
 			if (follower.getMonster().equals(Monster.JUDOON)) {
 				twa.setJudoonEquipment(player, stand, follower.getPersist());

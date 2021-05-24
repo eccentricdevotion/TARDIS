@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Location;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
@@ -26,6 +26,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -50,7 +52,7 @@ public class TARDISBreedingListener implements Listener {
 			return;
 		}
 		Location l = ent.getLocation();
-		String w = l.getWorld().getName();
+		String w = Objects.requireNonNull(l.getWorld()).getName();
 		if (!plugin.getTrackerKeeper().getSiegeBreedingAreas().containsKey(w)) {
 			return;
 		}

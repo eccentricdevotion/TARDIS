@@ -47,10 +47,10 @@ class TARDISReloadCommand {
 		return true;
 	}
 
-    boolean reloadOtherConfig(CommandSender sender, String[] args) {
-        try {
-            Config config = Config.valueOf(args[1].toLowerCase());
-            File file = new File(plugin.getDataFolder(), config + ".yml");
+	boolean reloadOtherConfig(CommandSender sender, String[] args) {
+		try {
+			Config config = Config.valueOf(args[1].toLowerCase());
+			File file = new File(plugin.getDataFolder(), config + ".yml");
 			switch (config) {
 				case advancements -> plugin.getAdvancementConfig().load(file);
 				case artron -> plugin.getArtronConfig().load(file);
@@ -66,14 +66,14 @@ class TARDISReloadCommand {
 					return true;
 				}
 			}
-            TARDISMessage.send(sender, "RELOAD_SUCCESS", config.toString());
-        } catch (IllegalArgumentException e) {
-            TARDISMessage.send(sender, "RELOAD_FILE_BAD", args[1]);
-            return true;
-        } catch (InvalidConfigurationException | IOException e) {
-            TARDISMessage.send(sender, "RELOAD_FAIL", args[1]);
-            return true;
-        }
-        return true;
-    }
+			TARDISMessage.send(sender, "RELOAD_SUCCESS", config.toString());
+		} catch (IllegalArgumentException e) {
+			TARDISMessage.send(sender, "RELOAD_FILE_BAD", args[1]);
+			return true;
+		} catch (InvalidConfigurationException | IOException e) {
+			TARDISMessage.send(sender, "RELOAD_FAIL", args[1]);
+			return true;
+		}
+		return true;
+	}
 }

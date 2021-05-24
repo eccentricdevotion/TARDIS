@@ -32,6 +32,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Objects;
+
 public class TARDISFarmBlockListener implements Listener {
 
 	private final TARDISPlugin plugin;
@@ -52,7 +54,7 @@ public class TARDISFarmBlockListener implements Listener {
 
 	public TARDISFarmBlockListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
-		String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
+		String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result")).split(":");
 		sonic = Material.valueOf(split[0]);
 	}
 
@@ -70,7 +72,8 @@ public class TARDISFarmBlockListener implements Listener {
 		ItemStack stack = player.getInventory().getItemInMainHand();
 		if (stack.getType().equals(sonic) && stack.hasItemMeta()) {
 			ItemMeta im = stack.getItemMeta();
-			if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver") && im.hasLore() && im.getLore().contains("Emerald Upgrade")) {
+			assert im != null;
+			if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver") && im.hasLore() && Objects.requireNonNull(im.getLore()).contains("Emerald Upgrade")) {
 				if ((material.equals(sc)) && player.getInventory().contains(sc)) {
 					// SUGAR_CANE
 					processHarvest(player, sc, block);
@@ -138,6 +141,7 @@ public class TARDISFarmBlockListener implements Listener {
 		int slot = p.getInventory().first(m);
 		if (slot >= 0) {
 			ItemStack next = p.getInventory().getItem(slot);
+			assert next != null;
 			if (next.getAmount() > 1) {
 				next.setAmount(next.getAmount() - 1);
 				p.getInventory().setItem(slot, next);

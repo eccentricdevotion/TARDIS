@@ -33,6 +33,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -83,7 +84,7 @@ public class TARDISRandomButton {
 			if (l == null) {
 				TARDISMessage.send(player, "NO_MORE_SPOTS");
 			} else {
-				set.put("world", l.getWorld().getName());
+				set.put("world", Objects.requireNonNull(l.getWorld()).getName());
 				set.put("x", l.getBlockX());
 				set.put("y", l.getBlockY());
 				set.put("z", l.getBlockZ());
@@ -146,7 +147,7 @@ public class TARDISRandomButton {
 				Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, rscl.getWorld(), false, cl);
 				if (rand != null) {
 					// double check tardis travel is allowed in this world
-					if (!plugin.getPlanetsConfig().getBoolean("planets." + rand.getWorld().getName() + ".time_travel")) {
+					if (!plugin.getPlanetsConfig().getBoolean("planets." + Objects.requireNonNull(rand.getWorld()).getName() + ".time_travel")) {
 						TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 						return;
 					}

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
@@ -45,6 +45,7 @@ import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -121,7 +122,7 @@ public class TARDISJunkControlListener implements Listener {
 							dd.setHide(false);
 							dd.setOutside(false);
 							dd.setSubmarine(rsc.isSubmarine());
-							dd.setTardisID(id);
+							dd.setTardisId(id);
 							dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
 							dd.setThrottle(SpaceTimeThrottle.JUNK);
 							plugin.getPresetDestroyer().destroyPreset(dd);
@@ -220,11 +221,12 @@ public class TARDISJunkControlListener implements Listener {
 			int x = TARDISNumberParsers.parseInt(line2);
 			int z = TARDISNumberParsers.parseInt(line3);
 			// load the chunk
+			assert w != null;
 			Chunk chunk = w.getChunkAt(x, z);
 			while (!chunk.isLoaded()) {
 				w.loadChunk(chunk);
 			}
-			int y = TARDISStaticLocationGetters.getHighestYin3x3(w, x, z);
+			int y = TARDISStaticLocationGetters.getHighestYIn3x3(w, x, z);
 			Location d = new Location(w, x, y, z);
 			// check destination
 			if (plugin.getPluginRespect().getRespect(d, new Parameters(p, Flag.getNoMessageFlags()))) {
@@ -258,7 +260,7 @@ public class TARDISJunkControlListener implements Listener {
 		Repeater r = (Repeater) getControlBlock(id, 2).getBlockData();
 		// get comparator data
 		Comparator c = (Comparator) getControlBlock(id, 3).getBlockData();
-		if (s != null && r != null && c != null) {
+		if (s != null) {
 			String txt = s.getLine(line);
 			if (txt.isEmpty()) {
 				txt = "0";
@@ -291,6 +293,7 @@ public class TARDISJunkControlListener implements Listener {
 		ResultSetControls rs = new ResultSetControls(plugin, where, false);
 		if (rs.resultSet()) {
 			Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
+			assert l != null;
 			b = l.getBlock();
 		}
 		return b;
@@ -302,7 +305,7 @@ public class TARDISJunkControlListener implements Listener {
 			boolean found = false;
 			for (row = 0; row < 6; row++) {
 				for (col = 0; col < 6; col++) {
-					Material mat = l.getWorld().getBlockAt(startx, starty, startz).getType();
+					Material mat = Objects.requireNonNull(l.getWorld()).getBlockAt(startx, starty, startz).getType();
 					if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
 						found = true;
 					}
