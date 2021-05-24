@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,9 +18,9 @@ package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.tardis.builders.FractalFence;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
@@ -65,7 +65,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 	private final TARDISPlugin plugin;
 	private final UUID uuid;
 	private final TARDISUpgradeData tud;
-	private final List<Block> lampblocks = new ArrayList<>();
+	private final List<Block> lampBlocks = new ArrayList<>();
 	private final List<Block> fractalBlocks = new ArrayList<>();
 	private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
 	private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
@@ -152,6 +152,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 				obj = archive.getJson();
 			}
 			// get dimensions
+			assert obj != null;
 			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 			h = dimensions.get("height").getAsInt();
 			w = dimensions.get("width").getAsInt();
@@ -187,7 +188,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 			if (!tardis.getCreeper().isEmpty()) {
 				// remove the charged creeper
 				Location creeper = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
-				Entity ent = creeper.getWorld().spawnEntity(creeper, EntityType.EGG);
+				assert creeper != null;
+				Entity ent = Objects.requireNonNull(creeper.getWorld()).spawnEntity(creeper, EntityType.EGG);
 				ent.getNearbyEntities(1.5d, 1.5d, 1.5d).forEach((e) -> {
 					if (e instanceof Creeper) {
 						e.remove();
@@ -280,11 +282,11 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 					s++;
 				}
 			}
-			lampblocks.forEach((lamp) -> {
+			lampBlocks.forEach((lamp) -> {
 				BlockData l = (tud.getSchematic().hasLanterns() || (archive != null && archive.isLanterns())) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
 				lamp.setBlockData(l);
 			});
-			lampblocks.clear();
+			lampBlocks.clear();
 			for (int f = 0; f < fractalBlocks.size(); f++) {
 				FractalFence.grow(fractalBlocks.get(f), f);
 			}
@@ -450,7 +452,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 				if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
 					// remember lamp blocks
 					Block lamp = world.getBlockAt(x, y, z);
-					lampblocks.add(lamp);
+					lampBlocks.add(lamp);
 					// remember lamp block locations for malfunction and light switch
 					HashMap<String, Object> setlb = new HashMap<>();
 					String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
@@ -571,17 +573,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 					TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
 				} else {
 					BlockState state = world.getBlockAt(x, y, z).getState();
-					if (state instanceof BlockState) {
-						plugin.getTardisHelper().removeTileEntity(state);
-						TARDISBlockSetters.setBlock(world, x, y, z, data);
-					} else {
-						Block tmp = world.getBlockAt(x, y, z);
-						if (clean && !tmp.getType().equals(type) && !tmp.getType().isAir()) {
-							TARDISBlockSetters.setBlock(world, x, y, z, data);
-						} else if (!tmp.getType().equals(type)) {
-							TARDISBlockSetters.setBlock(world, x, y, z, data);
-						}
-					}
+					plugin.getTardisHelper().removeTileEntity(state);
+					TARDISBlockSetters.setBlock(world, x, y, z, data);
 				}
 			}
 			// remove items

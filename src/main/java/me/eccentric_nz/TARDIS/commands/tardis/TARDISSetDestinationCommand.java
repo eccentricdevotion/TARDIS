@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -87,7 +88,7 @@ class TARDISSetDestinationCommand {
 					TARDISMessage.send(player, "AREA_NO_SETDEST", ChatColor.AQUA + "/tardistravel area [area name]");
 					return true;
 				}
-				String world = l.getWorld().getName();
+				String world = Objects.requireNonNull(l.getWorld()).getName();
 				if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
 					TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 					return true;

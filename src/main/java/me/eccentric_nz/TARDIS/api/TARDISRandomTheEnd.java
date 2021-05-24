@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.api;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -58,8 +58,8 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
 			int z = war.getMinZ() + randZ;
 			// get the spawn point
 			Location endSpawn = war.getW().getSpawnLocation();
-			int highest = TARDISStaticLocationGetters.getHighestYin3x3(war.getW(), endSpawn.getBlockX() + x, endSpawn.getBlockZ() + z);
-			int startX, startY, startZ, resetX, resetZ, count = 0;
+			int highest = TARDISStaticLocationGetters.getHighestYIn3x3(war.getW(), endSpawn.getBlockX() + x, endSpawn.getBlockZ() + z);
+			int startx, starty, startz, resetx, resetz, count = 0;
 			if (highest > 40) {
 				Block currentBlock = war.getW().getBlockAt(x, highest, z);
 				Location chunk_loc = currentBlock.getLocation();
@@ -70,12 +70,12 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
 					if (param.spaceTardis()) {
 						// get start location for checking there is enough space
 						int[] gsl = TARDISTimeTravel.getStartLocation(chunk_loc, param.getCompass());
-						startX = gsl[0];
-						resetX = gsl[1];
-						startY = chunk_loc.getBlockY() + 1;
-						startZ = gsl[2];
-						resetZ = gsl[3];
-						count = TARDISTimeTravel.safeLocation(startX, startY, startZ, resetX, resetZ, war.getW(), param.getCompass());
+						startx = gsl[0];
+						resetx = gsl[1];
+						starty = chunk_loc.getBlockY() + 1;
+						startz = gsl[2];
+						resetz = gsl[3];
+						count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, war.getW(), param.getCompass());
 					}
 				} else {
 					count = 1;

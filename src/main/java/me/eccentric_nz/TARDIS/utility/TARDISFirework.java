@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class TARDISFirework {
@@ -97,7 +98,7 @@ public class TARDISFirework {
 	}
 
 	private Firework launch(Location l) {
-		Firework f = l.getWorld().spawn(l, Firework.class);
+		Firework f = Objects.requireNonNull(l.getWorld()).spawn(l, Firework.class);
 		f.setFireworkMeta(meta);
 		return f;
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,10 +26,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class TARDISForceField implements Runnable {
 
@@ -77,7 +74,7 @@ public class TARDISForceField implements Runnable {
 			}
 			Location location = map.getValue().clone().add(0.5, 0.5, 0.5);
 			new TARDISForceFieldVisualiser(plugin).showBorder(location.clone(), dust);
-			for (Entity other : location.getWorld().getNearbyEntities(location, doubleRange, doubleRange, doubleRange)) {
+			for (Entity other : Objects.requireNonNull(location.getWorld()).getNearbyEntities(location, doubleRange, doubleRange, doubleRange)) {
 				if (!(other instanceof LivingEntity)) {
 					continue;
 				}

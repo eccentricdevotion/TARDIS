@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class TARDISHandlesEventListener implements Listener {
@@ -43,7 +44,7 @@ public class TARDISHandlesEventListener implements Listener {
 			for (ItemStack is : stack) {
 				// find the ARTRON / DO
 				if (is != null) {
-					TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
+					TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(is.getItemMeta()).getDisplayName());
 					TARDISHandlesProcessor processor = new TARDISHandlesProcessor(TARDISPlugin.plugin, program, player, program.getProgramId());
 					switch (thb) {
 						case ARTRON -> {

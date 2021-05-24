@@ -494,6 +494,9 @@ permissions:
   tardis.weather.thunder:
     description: Allow a player to change the weather to a thunderstorm.
     default: op
+  tardis.display:
+    description: Allow a player to toggle the HUD display on and off.
+    default: op
 commands:
   tardis:
     aliases: tt
@@ -1082,7 +1085,6 @@ commands:
     description: Set texure pack preferences.
     usage: /<command> [on|off|in|out] [url]
     permission: tardis.texture
-    permission-message: You don't have the permission <permission> to use this command
     'on':
       description: Turns resource pack switching on.
       usage: /<command> on
@@ -1095,6 +1097,7 @@ commands:
     out:
       description: Set resource pack that is switched to in the outside world.
       usage: /<command> out [url]
+    permission-message: You don't have the permission <permission> to use this command
   tardisrecipe:
     aliases: trecipe
     description: View TARDIS item recipes.
@@ -1208,21 +1211,25 @@ commands:
       description: Remove the Handles record from the TARDIS database
       usage: /<command> remove
       permission: tardis.handles.use
+    permission-message: You don't have the permission <permission> to use this command
   tardisteleport:
     aliases: [ tardistp, ttp ]
     description: Teleport to a world's spawn point
     usage: /<command> [world]
     permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
   tardisworld:
     aliases: tworld
     description: Load or unload TARDIS worlds
     usage: /<command> [load|unload|gm] [world] <WorldType> <Environment> <generator>
     permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
   tardisgamemode:
     aliases: [ tgm, tgms, tgmc, tgma, tgmsp ]
     description: Set a player's gamemode
     usage: /<command> [GameMode] <player>
     permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
   tardischemistry:
     aliases: tchemistry
     description: Open a Chemistry creative GUI or show a chemical formula.
@@ -1268,23 +1275,34 @@ commands:
     description: Internal command used by the TARDIS Information System.
     usage: /<command> [letter]
     permission: tardis.help
+    permission-message: You don't have the permission <permission> to use this command
   tardissudo:
     aliases: [ tsudo ]
     description: Used by TARDIS admins to run commands as another Time Lord. Currently only works for the /tardis theme [clean|repair] command.
     permission: tardis.admin
     usage: /<command> [player|off]
+    permission-message: You don't have the permission <permission> to use this command
   tardisweather:
     aliases: tweather
     description: Change the weather in the world the player is in (or where their TARDIS is if they are inside it).
     permission: tardis.use
     usage: /<command> [clear|rain|thunder]
+    permission-message: You don't have the permission <permission> to use this command
   tardistime:
     aliases: ttime
     description: Change the time in the world the player is in (or where their TARDIS is if they are inside it).
     permission: tardis.admin
     usage: /<command> [day|morning|noon|night|midnight|?AM|?PM|ticks]
+    permission-message: You don't have the permission <permission> to use this command
   tardisbiome:
     aliases: tbiome
     description: Get the biome the player is looking at.
     permission: tardis.admin
     usage: /<command>
+    permission-message: You don't have the permission <permission> to use this command
+  tardisdisplay:
+    aliases: tdisplay
+    description: Toggle coordinates on and off.
+    usage: /<command> [ALL|BIOME|COORDS|DIRECTION|TARGET_BLOCK]
+    permission: tardis.display
+    permission-message: You don't have the permission <permission> to use this command

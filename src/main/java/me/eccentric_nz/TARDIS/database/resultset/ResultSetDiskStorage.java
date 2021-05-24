@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ public class ResultSetDiskStorage {
 	private final HashMap<String, Object> where;
 	private final String prefix;
 	private int id;
-	private int tardisId;
+	private int tardis_id;
 	private UUID uuid;
 	private String savesOne;
 	private String savesTwo;
@@ -104,8 +104,8 @@ public class ResultSetDiskStorage {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					id = rs.getInt("storageId");
-					tardisId = rs.getInt("tardisId");
+					id = rs.getInt("storage_id");
+					tardis_id = rs.getInt("tardis_id");
 					if (!rs.wasNull()) {
 						uuid = UUID.fromString(rs.getString("uuid"));
 					} else {
@@ -177,8 +177,8 @@ public class ResultSetDiskStorage {
 		return id;
 	}
 
-	public int getTardisId() {
-		return tardisId;
+	public int getTardis_id() {
+		return tardis_id;
 	}
 
 	public UUID getUuid() {

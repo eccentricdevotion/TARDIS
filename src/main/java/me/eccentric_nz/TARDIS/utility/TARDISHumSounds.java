@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ public class TARDISHumSounds {
 	};
 
 	/**
-	 * Plays an interior hum sound to players who are inside the tardis and don't have SFX set to false.
+	 * Plays an interior hum sound to players who are inside the TARDIS and don't have SFX set to false.
 	 */
 	public void playTARDISHum() {
 		if (TARDISPlugin.plugin.getConfig().getBoolean("allow.sfx")) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.ars.TARDISARSMethods;
 import me.eccentric_nz.tardis.ars.TARDISARSSlot;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetARS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -57,7 +57,7 @@ public class TARDISInteriorPostioning {
 	/**
 	 * Get the TIPS slot from a player location
 	 *
-	 * @param location the player's current location in the tardis world
+	 * @param location the player's current location in the TARDIS world
 	 * @return the TIPS slot number
 	 */
 	public static int getTIPSSlot(Location location) {
@@ -69,10 +69,10 @@ public class TARDISInteriorPostioning {
 	}
 
 	/**
-	 * Get the tardis id from a player location
+	 * Get the TARDIS id from a player location
 	 *
-	 * @param location the player's current location in the tardis world
-	 * @return the tardis id
+	 * @param location the player's current location in the TARDIS world
+	 * @return the TARDIS id
 	 */
 	public static int getTARDISIdFromLocation(Location location) {
 		int tips = getTIPSSlot(location);
@@ -139,7 +139,7 @@ public class TARDISInteriorPostioning {
 	}
 
 	/**
-	 * Calculate the position data for the Junk tardis TIPS slot.
+	 * Calculate the position data for the Junk TARDIS TIPS slot.
 	 *
 	 * @return a TIPS Data container
 	 */
@@ -195,7 +195,7 @@ public class TARDISInteriorPostioning {
 
 	// won't remove manually grown rooms...
 	public void reclaimChunks(World w, int id) {
-		// get ars data
+		// get ARS data
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("tardis_id", id);
 		ResultSetARS rs = new ResultSetARS(plugin, where);
@@ -209,7 +209,7 @@ public class TARDISInteriorPostioning {
 				for (int x = 0; x < 9; x++) {
 					for (int z = 0; z < 9; z++) {
 						if (!json[l][x][z].equalsIgnoreCase("STONE")) {
-							// get ars slot
+							// get ARS slot
 							TARDISARSSlot slot = new TARDISARSSlot();
 							slot.setChunk(c);
 							slot.setY(l);
@@ -218,14 +218,14 @@ public class TARDISInteriorPostioning {
 							Chunk tipsChunk = w.getBlockAt(slot.getX(), slot.getY(), slot.getZ()).getChunk();
 							// remove mobs
 							for (Entity e : tipsChunk.getEntities()) {
-								if (e instanceof Player p) {
+								if (e instanceof Player player) {
 									// get the exit location
 									TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
 									Location location = dl.getL();
 									// teleport player and remove from travellers table
-									plugin.getGeneralKeeper().getDoorListener().movePlayer(p, location, true, p.getWorld(), false, 0, true);
+									plugin.getGeneralKeeper().getDoorListener().movePlayer(player, location, true, player.getWorld(), false, 0, true);
 									HashMap<String, Object> wheret = new HashMap<>();
-									wheret.put("uuid", p.getUniqueId().toString());
+									wheret.put("uuid", player.getUniqueId().toString());
 									plugin.getQueryFactory().doDelete("travellers", wheret);
 								} else {
 									e.remove();

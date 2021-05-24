@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -215,7 +215,7 @@ class TARDISRemoteComehereCommand {
 			dd.setHide(false);
 			dd.setOutside(true);
 			dd.setSubmarine(rsc.isSubmarine());
-			dd.setTardisID(id);
+			dd.setTardisId(id);
 			dd.setTardisBiome(biome);
 			dd.setThrottle(SpaceTimeThrottle.NORMAL);
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -235,7 +235,7 @@ class TARDISRemoteComehereCommand {
 		bd.setPlayer(player);
 		bd.setRebuild(false);
 		bd.setSubmarine(sub);
-		bd.setTardisID(id);
+		bd.setTardisId(id);
 		bd.setThrottle(SpaceTimeThrottle.NORMAL);
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
 		plugin.getTrackerKeeper().getHasDestination().remove(id);

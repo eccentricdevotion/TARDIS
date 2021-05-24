@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,7 @@ import me.eccentric_nz.tardis.control.TARDISControlMenuListener;
 import me.eccentric_nz.tardis.desktop.TARDISArchiveMenuListener;
 import me.eccentric_nz.tardis.desktop.TARDISThemeMenuListener;
 import me.eccentric_nz.tardis.desktop.TARDISWallMenuListener;
+import me.eccentric_nz.tardis.display.TARDISDisplayListener;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.InventoryManager;
 import me.eccentric_nz.tardis.flight.TARDISHandbrakeListener;
@@ -86,6 +87,8 @@ import me.eccentric_nz.tardis.travel.TARDISAreaSignListener;
 import me.eccentric_nz.tardis.travel.TARDISTerminalListener;
 import me.eccentric_nz.tardis.update.TARDISUpdateListener;
 
+import java.util.Objects;
+
 /**
  * Registers all the listeners for the various events required to use the tardis.
  *
@@ -100,7 +103,7 @@ class TARDISListenerRegisterer {
 	}
 
 	/**
-	 * Registers all the listeners for the various events required to use the tardis.
+	 * Registers all the listeners for the various events required to use the TARDIS.
 	 */
 	TARDISInformationSystemListener registerListeners() {
 		plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);
@@ -160,6 +163,7 @@ class TARDISListenerRegisterer {
 		plugin.getPM().registerEvents(new TARDISCraftListener(plugin), plugin);
 		plugin.getPM().registerEvents(new TARDISCreeperDeathListener(plugin), plugin);
 		plugin.getPM().registerEvents(new TARDISDiskCraftListener(plugin), plugin);
+		plugin.getPM().registerEvents(new TARDISDisplayListener(plugin), plugin);
 		plugin.getPM().registerEvents(new TARDISEjectListener(plugin), plugin);
 		plugin.getPM().registerEvents(new TARDISEntityGriefListener(plugin), plugin);
 		plugin.getPM().registerEvents(new TARDISExplosionListener(plugin), plugin);
@@ -283,14 +287,14 @@ class TARDISListenerRegisterer {
 			if (plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.acid")) {
 				plugin.getPM().registerEvents(new TARDISAcidWater(plugin), plugin);
 			}
-			if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
+			if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && Objects.requireNonNull(plugin.getPM().getPlugin("TARDISWeepingAngels")).isEnabled()) {
 				plugin.getPM().registerEvents(new TARDISSkaroSpawnListener(plugin), plugin);
 			}
 		}
 		if (plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.enabled")) {
 			plugin.debug("Siluria enabled, registering planet event listeners");
 			plugin.getPM().registerEvents(new TARDISSiluriaChunkPopulateListener(plugin), plugin);
-			if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
+			if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && Objects.requireNonNull(plugin.getPM().getPlugin("TARDISWeepingAngels")).isEnabled()) {
 				plugin.getPM().registerEvents(new TARDISSiluriaSpawnListener(plugin), plugin);
 			}
 		}

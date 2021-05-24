@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,16 @@
 package me.eccentric_nz.tardis.commands.admin;
 
 import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -51,7 +54,7 @@ public class TARDISAbandonLister {
 			}
 			int i = 1;
 			for (TARDIS t : rst.getData()) {
-				String owner = (t.getOwner().equals("")) ? "tardis Admin" : t.getOwner();
+				String owner = (t.getOwner().equals("")) ? "TARDIS Admin" : t.getOwner();
 				// get current location
 				HashMap<String, Object> wherec = new HashMap<>();
 				wherec.put("tardis_id", t.getTardisId());
@@ -60,8 +63,13 @@ public class TARDISAbandonLister {
 					String w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
 					String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
 					if (click) {
-						String json = "[{\"text\":\"" + i + ". Abandoned by: " + owner + ", " + l + "\"},{\"text\":\" < Enter > \",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin enter " + t.getTardisId() + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to enter this tardis\"}]}}},{\"text\":\" < Delete >\",\"color\":\"red\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin delete " + t.getTardisId() + " abandoned\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to delete this tardis\"}]}}}]";
-						TARDISUpdateChatGUI.sendJSON(json, (Player) sender);
+						TextComponent tcg = new TextComponent(i + ". Abandoned by: " + owner + ", " + l);
+						TextComponent tce = new TextComponent(" < Enter > ");
+						tce.setColor(ChatColor.GREEN);
+						tce.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to enter this TARDIS")));
+						tce.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisadmin enter " + t.getTardisId()));
+						tcg.addExtra(tce);
+						sender.spigot().sendMessage(tcg);
 					} else {
 						sender.sendMessage(i + ". Abandoned by: " + owner + ", location: " + l);
 					}

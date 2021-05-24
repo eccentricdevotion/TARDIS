@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,12 +36,12 @@ import java.util.List;
  */
 class TARDISPoliceBoxInventory {
 
-	final List<String> colours = Arrays.asList("Blue", "White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Brown", "Green", "Red", "Black");
+	private final List<String> colours = Arrays.asList("Blue", "White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Brown", "Green", "Red", "Black");
 	private final ItemStack[] boxes;
 	private final TARDISPlugin plugin;
 	private final Player player;
 
-	public TARDISPoliceBoxInventory(TARDISPlugin plugin, Player player) {
+	TARDISPoliceBoxInventory(TARDISPlugin plugin, Player player) {
 		this.plugin = plugin;
 		this.player = player;
 		boxes = getItemStack();
@@ -62,6 +62,7 @@ class TARDISPoliceBoxInventory {
 				String dye = underscored.toUpperCase() + "_DYE";
 				ItemStack is = new ItemStack(Material.valueOf(dye), 1);
 				ItemMeta im = is.getItemMeta();
+				assert im != null;
 				im.setDisplayName(s + " Police Box");
 				im.setCustomModelData(1001);
 				is.setItemMeta(im);
@@ -72,6 +73,7 @@ class TARDISPoliceBoxInventory {
 		// page one
 		ItemStack page = new ItemStack(Material.ARROW, 1);
 		ItemMeta one = page.getItemMeta();
+		assert one != null;
 		one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
 		one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.getCustomModelData());
 		page.setItemMeta(one);
@@ -79,6 +81,7 @@ class TARDISPoliceBoxInventory {
 		// back
 		ItemStack back = new ItemStack(Material.BOWL, 1);
 		ItemMeta but = back.getItemMeta();
+		assert but != null;
 		but.setDisplayName("Back");
 		but.setCustomModelData(GUIChameleonPoliceBoxes.BACK.getCustomModelData());
 		back.setItemMeta(but);
@@ -86,6 +89,7 @@ class TARDISPoliceBoxInventory {
 		// Cancel / close
 		ItemStack close = new ItemStack(Material.BOWL, 1);
 		ItemMeta can = close.getItemMeta();
+		assert can != null;
 		can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
 		can.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.getCustomModelData());
 		close.setItemMeta(can);
@@ -94,7 +98,7 @@ class TARDISPoliceBoxInventory {
 		return boxes;
 	}
 
-	public ItemStack[] getBoxes() {
+	ItemStack[] getBoxes() {
 		return boxes;
 	}
 }

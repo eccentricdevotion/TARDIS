@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,13 +36,11 @@ import java.util.List;
 
 public class ProductGUIListener extends TARDISMenuListener implements Listener {
 
-	private final TARDISPlugin plugin;
 	private final List<Integer> slots = Arrays.asList(0, 1, 2, 9, 10, 11, 18, 19, 20);
 	private final List<Integer> pipe = Arrays.asList(2, 11, 20);
 
 	public ProductGUIListener(TARDISPlugin plugin) {
 		super(plugin);
-		this.plugin = plugin;
 	}
 
 	@EventHandler(ignoreCancelled = true)

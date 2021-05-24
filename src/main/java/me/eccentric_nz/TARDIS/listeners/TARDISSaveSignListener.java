@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -62,7 +63,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 	}
 
 	/**
-	 * Listens for player clicking inside an inventory. If the inventory is a tardis GUI, then the click is processed
+	 * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
 	 * accordingly.
 	 *
 	 * @param event a player clicking an inventory slot
@@ -71,11 +72,11 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 	public void onSaveTerminalClick(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.startsWith(ChatColor.DARK_RED + "tardis saves")) {
-			boolean isSecondPage = name.equals(ChatColor.DARK_RED + "tardis saves 2");
+		if (name.startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
+			boolean isSecondPage = name.equals(ChatColor.DARK_RED + "TARDIS saves 2");
 			Player player = (Player) event.getWhoClicked();
 			UUID uuid = player.getUniqueId();
-			// get the tardis the player is in
+			// get the TARDIS the player is in
 			boolean allow = false;
 			int id = -1;
 			if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(uuid)) {
@@ -108,6 +109,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 								event.setCancelled(true);
 							} else {
 								ItemMeta cim = cursor.getItemMeta();
+								assert cim != null;
 								String save = cim.getDisplayName();
 								HashMap<String, Object> where = new HashMap<>();
 								where.put("tardis_id", id);
@@ -133,7 +135,9 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 						ItemStack is = view.getItem(slot);
 						if (is != null) {
 							ItemMeta im = is.getItemMeta();
+							assert im != null;
 							List<String> lore = im.getLore();
+							assert lore != null;
 							Location save_dest = getLocation(lore);
 							if (save_dest != null) {
 								if (lore.get(0).startsWith("TARDIS_")) {
@@ -161,7 +165,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 								}
 								TARDISAreaCheck tac = plugin.getTardisArea().areaCheckInExistingArea(save_dest);
 								if (tac.isInArea()) {
-									// save is in a tardis area, so check that the spot is not occupied
+									// save is in a TARDIS area, so check that the spot is not occupied
 									HashMap<String, Object> wheresave = new HashMap<>();
 									wheresave.put("world", lore.get(0));
 									wheresave.put("x", lore.get(1));
@@ -244,32 +248,31 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 					}
 				}
 				if (slot == 45) {
-					// check it is this player's tardis
+					// check it is this player's TARDIS
 					HashMap<String, Object> wherez = new HashMap<>();
 					wherez.put("tardis_id", id);
 					wherez.put("uuid", uuid.toString());
 					ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false, 0);
 					if (rs.resultSet()) {
-						// Only add one at a time
 						plugin.getTrackerKeeper().getArrangers().add(uuid);
 						TARDISMessage.send(player, "SAVE_ARRANGE");
 					} else {
 						TARDISMessage.send(player, "NOT_OWNER");
 					}
 				}
-				ItemStack own = event.getClickedInventory().getItem(49);
+				ItemStack own = Objects.requireNonNull(event.getClickedInventory()).getItem(49);
 				if (slot == 49 && own != null) {
 					// custom model data of item
-					int cmd = own.getItemMeta().getCustomModelData();
+					int cmd = Objects.requireNonNull(own.getItemMeta()).getCustomModelData();
 					int ownId = -1;
 					if (cmd == 138) {
-						// get player's tardis id
+						// get player's TARDIS id
 						ResultSetTardisID rstid = new ResultSetTardisID(plugin);
 						if (rstid.fromUUID(uuid.toString())) {
 							ownId = rstid.getTardisId();
 						}
 					} else {
-						// get id of tardis player is in
+						// get id of TARDIS player is in
 						ownId = TARDISInteriorPostioning.getTARDISIdFromLocation(player.getLocation());
 					}
 					if (ownId != -1) {
@@ -281,11 +284,11 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 							if (isSecondPage) {
 								TARDISSaveSignPageTwo sst = new TARDISSaveSignPageTwo(plugin, saveId, player);
 								items = sst.getPageTwo();
-								inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves 2");
+								inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves 2");
 							} else {
 								TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, saveId, player);
 								items = sst.getTerminal();
-								inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves");
+								inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
 							}
 							inv.setContents(items);
 							player.openInventory(inv);
@@ -301,22 +304,22 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 						if (isSecondPage) {
 							TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, finalId, player);
 							items = sst.getTerminal();
-							inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves");
+							inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
 						} else {
 							TARDISSaveSignPageTwo sst = new TARDISSaveSignPageTwo(plugin, finalId, player);
 							items = sst.getPageTwo();
-							inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves 2");
+							inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves 2");
 						}
 						inv.setContents(items);
 						player.openInventory(inv);
 					}, 2L);
 				}
 				if (slot == 53) {
-					// load tardis areas
+					// load TARDIS areas
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 						TARDISAreasInventory sst = new TARDISAreasInventory(plugin, player);
 						ItemStack[] items = sst.getTerminal();
-						Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis areas");
+						Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS areas");
 						areainv.setContents(items);
 						player.openInventory(areainv);
 					}, 2L);
@@ -342,6 +345,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 				for (int i = start; i < 45; i++) {
 					if (stack[i] != null) {
 						ItemMeta im = stack[i].getItemMeta();
+						assert im != null;
 						String save = im.getDisplayName();
 						HashMap<String, Object> set = new HashMap<>();
 						int slot = (isPageTwo) ? 45 + i : i;

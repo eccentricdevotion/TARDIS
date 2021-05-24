@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -100,6 +101,7 @@ public class TARDISJunkBuilder implements Runnable {
 					String path = plugin.getDataFolder() + File.separator + "schematics" + File.separator + "junk.tschm";
 					JsonObject obj = TARDISSchematicGZip.unzip(path);
 					// get dimensions
+					assert obj != null;
 					JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 					int h = dimensions.get("height").getAsInt();
 					int w = dimensions.get("width").getAsInt();
@@ -215,7 +217,7 @@ public class TARDISJunkBuilder implements Runnable {
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("tardis_id", bd.getTardisId());
 				HashMap<String, Object> set = new HashMap<>();
-				set.put("world", loc.getWorld().getName());
+				set.put("world", Objects.requireNonNull(loc.getWorld()).getName());
 				set.put("x", loc.getBlockX());
 				set.put("y", sy);
 				set.put("z", loc.getBlockZ());

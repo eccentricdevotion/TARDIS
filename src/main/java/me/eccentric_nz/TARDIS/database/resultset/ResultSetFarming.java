@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ public class ResultSetFarming {
 	/**
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the farming table.
 	 *
-	 * @param plugin    an instance of the main class.
+	 * @param plugin   an instance of the main class.
 	 * @param tardisId the id of the tardis to get the farm locations for.
 	 */
 	public ResultSetFarming(TARDISPlugin plugin, int tardisId) {

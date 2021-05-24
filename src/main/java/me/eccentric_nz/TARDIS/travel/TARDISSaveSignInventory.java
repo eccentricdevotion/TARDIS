@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,13 +16,15 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.custommodeldata.GUISaves;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.enumeration.WorldManager;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -67,6 +69,7 @@ public class TARDISSaveSignInventory {
 		wherehl.put("tardis_id", id);
 		ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
 		if (rsh.resultSet()) {
+			assert him != null;
 			him.setDisplayName("Home");
 			hlore.add(rsh.getWorld().getName());
 			hlore.add("" + rsh.getX());
@@ -80,6 +83,7 @@ public class TARDISSaveSignInventory {
 		} else {
 			hlore.add("Not found!");
 		}
+		assert him != null;
 		him.setLore(hlore);
 		his.setItemMeta(him);
 		ItemStack[] stack = new ItemStack[54];
@@ -120,9 +124,11 @@ public class TARDISSaveSignInventory {
 						}
 						ItemStack is = new ItemStack(material, 1);
 						ItemMeta im = is.getItemMeta();
+						assert im != null;
 						im.setDisplayName(map.get("dest_name"));
 						List<String> lore = new ArrayList<>();
-						lore.add(map.get("world"));
+						String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.get("world")) : TARDISAliasResolver.getWorldAlias(map.get("world"));
+						lore.add(world);
 						lore.add(map.get("x"));
 						lore.add(map.get("y"));
 						lore.add(map.get("z"));
@@ -138,7 +144,7 @@ public class TARDISSaveSignInventory {
 					}
 				}
 			}
-			hasSecondPage = (data != null && data.size() > 44) || highest > 44;
+			hasSecondPage = data.size() > 44 || highest > 44;
 			for (int s = 1; s < 45; s++) {
 				stack[s] = dests.getOrDefault(s, null);
 			}
@@ -146,12 +152,14 @@ public class TARDISSaveSignInventory {
 		// add button to allow rearranging saves
 		ItemStack tool = new ItemStack(Material.ARROW, 1);
 		ItemMeta rearrange = tool.getItemMeta();
+		assert rearrange != null;
 		rearrange.setDisplayName("Rearrange saves");
 		rearrange.setCustomModelData(GUISaves.REARRANGE_SAVES.getCustomModelData());
 		tool.setItemMeta(rearrange);
 		// add button to allow deleting saves
 		ItemStack bucket = new ItemStack(Material.BUCKET, 1);
 		ItemMeta delete = bucket.getItemMeta();
+		assert delete != null;
 		delete.setDisplayName("Delete save");
 		delete.setCustomModelData(GUISaves.DELETE_SAVE.getCustomModelData());
 		bucket.setItemMeta(delete);
@@ -160,37 +168,41 @@ public class TARDISSaveSignInventory {
 			// add button to go to next page
 			next = new ItemStack(GUISaves.GO_TO_PAGE_2.getMaterial(), 1);
 			ItemMeta page = next.getItemMeta();
+			assert page != null;
 			page.setDisplayName(GUISaves.GO_TO_PAGE_2.getName());
 			page.setCustomModelData(GUISaves.GO_TO_PAGE_2.getCustomModelData());
 			next.setItemMeta(page);
 		}
 		ItemStack own = null;
-		// is it this player's tardis?
+		// is it this player's TARDIS?
 		ResultSetTardisID rstid = new ResultSetTardisID(plugin);
 		if (rstid.fromUUID(player.getUniqueId().toString())) {
-			// add button to view own saves (if in another player's tardis)
+			// add button to view own saves (if in another player's TARDIS)
 			if (rstid.getTardisId() != id) {
 				own = new ItemStack(GUISaves.LOAD_MY_SAVES.getMaterial(), 1);
 				ItemMeta saves = own.getItemMeta();
+				assert saves != null;
 				saves.setDisplayName(GUISaves.LOAD_MY_SAVES.getName());
 				saves.setCustomModelData(GUISaves.LOAD_MY_SAVES.getCustomModelData());
 				own.setItemMeta(saves);
 			} else {
-				// get tardis id of tardis player is in as they may have switched using the 'load my saves' button
+				// get TARDIS id of TARDIS player is in as they may have switched using the 'load my saves' button
 				int tid = TARDISInteriorPostioning.getTARDISIdFromLocation(player.getLocation());
 				if (tid != id) {
 					own = new ItemStack(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getMaterial(), 1);
 					ItemMeta saves = own.getItemMeta();
+					assert saves != null;
 					saves.setDisplayName(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getName());
 					saves.setCustomModelData(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getCustomModelData());
 					own.setItemMeta(saves);
 				}
 			}
 		}
-		// add button to load tardis areas
+		// add button to load TARDIS areas
 		ItemStack map = new ItemStack(Material.MAP, 1);
 		ItemMeta switchto = map.getItemMeta();
-		switchto.setDisplayName("Load tardis areas");
+		assert switchto != null;
+		switchto.setDisplayName("Load TARDIS areas");
 		switchto.setCustomModelData(GUISaves.LOAD_TARDIS_AREAS.getCustomModelData());
 		map.setItemMeta(switchto);
 		for (int m = 45; m < 54; m++) {

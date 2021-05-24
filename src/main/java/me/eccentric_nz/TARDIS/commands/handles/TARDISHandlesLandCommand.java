@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -49,7 +50,7 @@ class TARDISHandlesLandCommand {
 
 	private final TARDISPlugin plugin;
 
-	public TARDISHandlesLandCommand(TARDISPlugin plugin) {
+	TARDISHandlesLandCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -71,7 +72,7 @@ class TARDISHandlesLandCommand {
 				TARDISMessage.handlesSend(player, "HANDLES_VORTEX");
 				return true;
 			}
-			// must have a destination, but setting one will make the tardis automatically exit the time vortex
+			// must have a destination, but setting one will make the TARDIS automatically exit the time vortex
 			// so generate a random overworld location
 			HashMap<String, Object> wherecl = new HashMap<>();
 			wherecl.put("tardis_id", id);
@@ -81,7 +82,7 @@ class TARDISHandlesLandCommand {
 				if (l != null) {
 					HashMap<String, Object> set_next = new HashMap<>();
 					HashMap<String, Object> where_next = new HashMap<>();
-					set_next.put("world", l.getWorld().getName());
+					set_next.put("world", Objects.requireNonNull(l.getWorld()).getName());
 					set_next.put("x", l.getBlockX());
 					set_next.put("y", l.getBlockY());
 					set_next.put("z", l.getBlockZ());
@@ -103,6 +104,7 @@ class TARDISHandlesLandCommand {
 						ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
 						if (rsc.resultSet()) {
 							Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+							assert location != null;
 							TARDISSounds.playTARDISSound(location, "tardis_handbrake_engage");
 							// Changes the lever to on
 							TARDISHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);
@@ -118,7 +120,7 @@ class TARDISHandlesLandCommand {
 							if (!beac_on && !beacon.isEmpty()) {
 								TARDISHandbrakeListener.toggleBeacon(beacon, false);
 							}
-							// Remove energy from tardis and sets database
+							// Remove energy from TARDIS and sets database
 							TARDISMessage.send(player, "HANDBRAKE_ON");
 							int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
 							HashMap<String, Object> wheret = new HashMap<>();

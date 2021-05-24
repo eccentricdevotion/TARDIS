@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,9 @@
 package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.*;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.tardis.ars.TARDISARSJettison;
 import me.eccentric_nz.tardis.ars.TARDISARSMethods;
@@ -189,7 +189,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 				}
 				// get JSON
 				JsonObject prevObj = TARDISSchematicGZip.unzip(prevPath);
-				JsonObject prevDimensions = prevObj.get("dimensions").getAsJsonObject();
+                assert prevObj != null;
+                JsonObject prevDimensions = prevObj.get("dimensions").getAsJsonObject();
 				ph = prevDimensions.get("height").getAsInt();
 				pw = prevDimensions.get("width").getAsInt();
 				size_prev = tud.getPrevious().getConsoleSize();
@@ -200,7 +201,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 				size_prev = archive_prev.getConsoleSize();
 			}
 			// get dimensions
-			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            assert obj != null;
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 			h = dimensions.get("height").getAsInt();
 			w = dimensions.get("width").getAsInt();
 			c = dimensions.get("length").getAsInt();
@@ -241,7 +243,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 			if (!tardis.getCreeper().isEmpty()) {
 				// remove the charged creeper
 				Location creeper = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
-				Entity ent = creeper.getWorld().spawnEntity(creeper, EntityType.EGG);
+                assert creeper != null;
+                Entity ent = Objects.requireNonNull(creeper.getWorld()).spawnEntity(creeper, EntityType.EGG);
 				ent.getNearbyEntities(1.5d, 1.5d, 1.5d).forEach((e) -> {
 					if (e instanceof Creeper) {
 						e.remove();
@@ -295,7 +298,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 				loc = chunk.getBlock(8, floorLevel, 4).getLocation();
 			}
 			loc.getBlock().getRelative(BlockFace.DOWN).setType(Material.BARRIER);
-			// get players in tardis
+			// get players in TARDIS
 			HashMap<String, Object> wherev = new HashMap<>();
 			wherev.put("tardis_id", id);
 			ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherev, true);
@@ -395,7 +398,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 					// remove the room
 					setAir(jet.getX(), jet.getY(), jet.getZ(), jet.getChunk().getWorld(), 16);
 				});
-				// also tidy up the space directly above the ars centre slot
+				// also tidy up the space directly above the ARS centre slot
 				int tidy = starty + h;
 				int plus = 16 - h;
 				setAir(chunk.getBlock(0, 64, 0).getX(), tidy, chunk.getBlock(0, 64, 0).getZ(), chunk.getWorld(), plus);
@@ -546,7 +549,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 					 */
 					String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
 					plugin.getQueryFactory().insertSyncControl(id, 0, handbrakeloc, 0);
-					// get current ars json
+					// get current ARS json
 					HashMap<String, Object> wherer = new HashMap<>();
 					wherer.put("tardis_id", id);
 					ResultSetARS rsa = new ResultSetARS(plugin, wherer);
@@ -747,32 +750,32 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 						String repeater = world.getName() + ":" + x + ":" + y + ":" + z;
 						data = Material.REPEATER.createBlockData();
 						Directional directional = (Directional) data;
-						switch (j) {
-							case 2 -> {
-								directional.setFacing(BlockFace.WEST);
-								data = directional;
-								postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-								plugin.getQueryFactory().insertSyncControl(id, 3, repeater, 0);
-							}
-							case 3 -> {
-								directional.setFacing(BlockFace.NORTH);
-								data = directional;
-								postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-								plugin.getQueryFactory().insertSyncControl(id, 2, repeater, 0);
-							}
-							case 4 -> {
-								directional.setFacing(BlockFace.SOUTH);
-								data = directional;
-								postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-								plugin.getQueryFactory().insertSyncControl(id, 5, repeater, 0);
-							}
-							default -> {
-								directional.setFacing(BlockFace.EAST);
-								data = directional;
-								postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
-								plugin.getQueryFactory().insertSyncControl(id, 4, repeater, 0);
-							}
-						}
+                        switch (j) {
+                            case 2 -> {
+                                directional.setFacing(BlockFace.WEST);
+                                data = directional;
+                                postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
+                                plugin.getQueryFactory().insertSyncControl(id, 3, repeater, 0);
+                            }
+                            case 3 -> {
+                                directional.setFacing(BlockFace.NORTH);
+                                data = directional;
+                                postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
+                                plugin.getQueryFactory().insertSyncControl(id, 2, repeater, 0);
+                            }
+                            case 4 -> {
+                                directional.setFacing(BlockFace.SOUTH);
+                                data = directional;
+                                postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
+                                plugin.getQueryFactory().insertSyncControl(id, 5, repeater, 0);
+                            }
+                            default -> {
+                                directional.setFacing(BlockFace.EAST);
+                                data = directional;
+                                postRepeaterBlocks.put(world.getBlockAt(x, y, z), data);
+                                plugin.getQueryFactory().insertSyncControl(id, 4, repeater, 0);
+                            }
+                        }
 						j++;
 					}
 				} else if (type.equals(Material.BROWN_MUSHROOM) && tud.getSchematic().getPermission().equals("master")) {
@@ -784,10 +787,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 					TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
 				} else {
 					BlockState state = world.getBlockAt(x, y, z).getState();
-					if (state instanceof BlockState) {
-						plugin.getTardisHelper().removeTileEntity(state);
-					}
-					TARDISBlockSetters.setBlock(world, x, y, z, data);
+                    plugin.getTardisHelper().removeTileEntity(state);
+                    TARDISBlockSetters.setBlock(world, x, y, z, data);
 				}
 			}
 			// remove items
@@ -918,10 +919,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 				for (int zz = jz; zz < (jz + 16); zz++) {
 					Block b = jw.getBlockAt(xx, yy, zz);
 					BlockState state = b.getState();
-					if (state instanceof BlockState) {
-						plugin.getTardisHelper().removeTileEntity(state);
-					}
-					b.setBlockData(TARDISConstants.AIR);
+                    plugin.getTardisHelper().removeTileEntity(state);
+                    b.setBlockData(TARDISConstants.AIR);
 				}
 			}
 		}

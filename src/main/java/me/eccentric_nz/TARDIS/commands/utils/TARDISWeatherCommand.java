@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,16 +57,16 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
 				Location location = player.getLocation();
 				World world = location.getWorld();
 				if (plugin.getUtils().inTARDISWorld(player)) {
-					// get tardis player is in
+					// get TARDIS player is in
 					int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player);
-					// get current tardis location
+					// get current TARDIS location
 					HashMap<String, Object> where = new HashMap<>();
 					where.put("tardis_id", id);
 					ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
 					if (rsc.resultSet()) {
 						world = rsc.getWorld();
 					} else {
-						// can't change weather in tardis world
+						// can't change weather in TARDIS world
 						TARDISMessage.send(player, "WEATHER_TARDIS");
 						return true;
 					}

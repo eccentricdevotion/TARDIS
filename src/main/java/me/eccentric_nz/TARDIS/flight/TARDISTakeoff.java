@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
@@ -96,6 +96,7 @@ public class TARDISTakeoff {
 				spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
 			}
 			// set the handbrake
+			assert handbrake != null;
 			TARDISHandbrake.setLevers(handbrake.getBlock(), false, true, rs.getLocation(), rs.getTardisId(), plugin);
 			if (plugin.getConfig().getBoolean("circuits.damage")) {
 				plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
@@ -130,6 +131,7 @@ public class TARDISTakeoff {
 
 	private void toggleBeacon(String str) {
 		Location bl = TARDISStaticLocationGetters.getLocationFromDB(str);
+		assert bl != null;
 		Block b = bl.getBlock();
 		b.setBlockData(TARDISConstants.GLASS);
 	}

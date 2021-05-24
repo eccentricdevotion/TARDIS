@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,21 +88,21 @@ class TARDISAddCompanionCommand {
 				HashMap<String, Object> tid = new HashMap<>();
 				HashMap<String, Object> set = new HashMap<>();
 				if (addAll) {
-					tid.put("tardisID", id);
+					tid.put("tardis_id", id);
 					set.put("companions", "everyone");
 				} else {
 					// get player from name
-					UUID offlineUUID = plugin.getServer().getOfflinePlayer(player.getUniqueId()).getUniqueId();
-					tid.put("tardisID", id);
+					UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+					tid.put("tardis_id", id);
 					if (comps != null && !comps.isEmpty() && !comps.equalsIgnoreCase("everyone")) {
 						// add to the list
-						String newList = comps + ":" + offlineUUID;
+						String newList = comps + ":" + oluuid;
 						set.put("companions", newList);
 					} else {
 						// make a list
-						set.put("companions", offlineUUID.toString());
+						set.put("companions", oluuid.toString());
 					}
-					// are we doing an advancement?
+					// are we doing an achievement?
 					if (plugin.getAdvancementConfig().getBoolean("friends.enabled")) {
 						TARDISAdvancementFactory taf = new TARDISAdvancementFactory(plugin, player, Advancement.FRIENDS, 1);
 						taf.doAdvancement(1);

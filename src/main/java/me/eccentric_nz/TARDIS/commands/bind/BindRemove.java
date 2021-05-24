@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,15 +21,15 @@ import me.eccentric_nz.tardis.enumeration.Bind;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
-public class BindRemove {
+class BindRemove {
 
 	private final TARDISPlugin plugin;
 
-	public BindRemove(TARDISPlugin plugin) {
+	BindRemove(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
-	public boolean setClick(Bind bind, Player player) {
+	boolean setClick(Bind bind, Player player) {
 		plugin.getTrackerKeeper().getBindRemoval().put(player.getUniqueId(), bind);
 		TARDISMessage.send(player, "BIND_REMOVE_CLICK_BLOCK", bind.toString());
 		return true;

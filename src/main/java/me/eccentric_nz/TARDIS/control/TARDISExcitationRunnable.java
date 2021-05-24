@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.utility.TARDISParticles;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -26,6 +26,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -62,7 +63,7 @@ class TARDISExcitationRunnable implements Runnable {
 			});
 			if (i % 5 == 0) {
 				Location s = calculateLocationInCircle(location);
-				s.setY(location.getWorld().getHighestBlockYAt(s) + 1);
+				s.setY(Objects.requireNonNull(location.getWorld()).getHighestBlockYAt(s) + 1);
 				Block b = s.getBlock();
 				if (b.isEmpty() && b.getRelative(BlockFace.DOWN).getType().isOccluding()) {
 					b.setBlockData(TARDISConstants.SNOW);

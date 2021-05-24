@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,8 +66,8 @@ public class TARDISBindListener implements Listener {
 	 * command. If the player's name is contained in the trackBinder HashMap then the block location is recorded in the
 	 * bind field of the destinations table.
 	 * <p>
-	 * If the player is travelling in the tardis then a check is made of the destinations table for the location of the
-	 * clicked block. If found the destination for the next tardis time travel location is set.
+	 * If the player is travelling in the TARDIS then a check is made of the destinations table for the location of the
+	 * clicked block. If found the destination for the next TARDIS time travel location is set.
 	 *
 	 * @param event a player clicking a block
 	 */
@@ -107,7 +107,7 @@ public class TARDISBindListener implements Listener {
 					}
 					plugin.getTrackerKeeper().getBindRemoval().remove(uuid);
 				} else {
-					// is player travelling in tardis
+					// is player travelling in TARDIS
 					where.put("uuid", player.getUniqueId().toString());
 					ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
 					if (rst.resultSet()) {
@@ -127,7 +127,7 @@ public class TARDISBindListener implements Listener {
 									TARDISMessage.send(player, "POWER_DOWN");
 									return;
 								}
-								if ((tardis.isIsoOn() && !player.getUniqueId().equals(ownerUUID) && event.useInteractedBlock().equals(Event.Result.ALLOW)) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
+								if ((tardis.isIsoOn() && !player.getUniqueId().equals(ownerUUID) && !event.useInteractedBlock().equals(Event.Result.DENY)) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
 									TARDISMessage.send(player, "ISO_HANDS_OFF");
 									return;
 								}
@@ -136,7 +136,7 @@ public class TARDISBindListener implements Listener {
 									TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
 									return;
 								}
-								// make sure tardis is not dispersed
+								// make sure TARDIS is not dispersed
 								if (type != 6 && plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
 									TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
 									return;

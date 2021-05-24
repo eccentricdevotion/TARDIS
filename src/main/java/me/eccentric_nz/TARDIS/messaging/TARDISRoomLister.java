@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,82 +18,75 @@ package me.eccentric_nz.tardis.messaging;
 
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.tardis.messaging.TableGenerator.Alignment;
-import me.eccentric_nz.tardis.messaging.TableGenerator.Receiver;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
  */
 public class TARDISRoomLister {
 
-	private final TARDISPlugin plugin;
-	private final Player player;
-	private final LinkedHashMap<String, List<String>> options;
-	private final String JSON = "{\"text\":\"https://eccentricdevotion.github.io/TARDIS/room-gallery\",\"color\":\"aqua\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://eccentricdevotion.github.io/TARDIS/room-gallery\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":\"Click me!\"}}";
+    private final TARDISPlugin plugin;
+    private final Player player;
+    private final LinkedHashMap<String, List<String>> options;
 
-	public TARDISRoomLister(TARDISPlugin plugin, Player player) {
-		this.plugin = plugin;
-		this.player = player;
-		options = createRoomOptions(this.player);
-	}
+    public TARDISRoomLister(TARDISPlugin plugin, Player player) {
+        this.plugin = plugin;
+        this.player = player;
+        options = createRoomOptions();
+    }
 
-	public void list() {
-		TARDISMessage.send(player, "ROOM_INFO", String.format("%d", plugin.getGeneralKeeper().getRoomArgs().size()));
-		options.forEach((key, value) -> {
-			player.sendMessage(key);
-			TableGenerator tg;
-			if (TableGenerator.getSenderPrefs(player)) {
-				tg = new TableGeneratorCustomFont(Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.LEFT);
-			} else {
-				tg = new TableGeneratorSmallChar(Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.LEFT);
-			}
-			int s = value.size();
-			if (s > 0) {
-				value.sort(Comparator.naturalOrder());
-				// how many rows?
-				int limit = roundUpTo4(s);
-				for (int i = 0; i < limit; i += 4) {
-					tg.addRow("    " + value.get(i), (i + 1 < s) ? value.get(i + 1) : "", (i + 2 < s) ? value.get(i + 2) : "", (i + 3 < s) ? value.get(i + 3) : "");
-				}
-				for (String line : tg.generate(Receiver.CLIENT, true, true)) {
-					player.sendMessage(line);
-				}
-			} else {
-				TARDISMessage.send(player, "ROOM_NONE");
-			}
-		});
-		TARDISMessage.send(player, "ROOM_GALLERY");
-		TARDISUpdateChatGUI.sendJSON(JSON, player);
-	}
+    public void list() {
+        TARDISMessage.send(player, "ROOM_INFO", String.format("%d", plugin.getGeneralKeeper().getRoomArgs().size()));
+        TARDISMessage.message(player, ChatColor.GRAY + "Click a room name to suggest a command");
+        TARDISMessage.message(player, "");
+        options.forEach((key, value) -> {
+            player.sendMessage(key);
+            if (value.size() > 0) {
+                value.forEach((s) -> {
+                    TextComponent tcr = new TextComponent("    " + s);
+                    ChatColor colour = (TARDISPermission.hasPermission(player, "tardis.room." + s.toLowerCase())) ? ChatColor.GREEN : ChatColor.RED;
+                    tcr.setColor(colour);
+                    tcr.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
+                    tcr.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tardis room " + s));
+                    player.spigot().sendMessage(tcr);
+                });
+            } else {
+                TARDISMessage.send(player, "ROOM_NONE");
+            }
+        });
+        TARDISMessage.send(player, "ROOM_GALLERY");
+        TextComponent tcg = new TextComponent("https://eccentricdevotion.github.io/TARDIS/room-gallery");
+        tcg.setColor(ChatColor.AQUA);
+        tcg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
+        tcg.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://eccentricdevotion.github.io/TARDIS/room-gallery"));
+        player.spigot().sendMessage(tcg);
+    }
 
-	private LinkedHashMap<String, List<String>> createRoomOptions(Player player) {
-		LinkedHashMap<String, List<String>> room_options = new LinkedHashMap<>();
-		List<String> default_rooms = new ArrayList<>();
-		List<String> custom_rooms = new ArrayList<>();
-		plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((room) -> {
-			if (plugin.getRoomsConfig().getBoolean("rooms." + room + ".enabled")) {
-				ChatColor colour = (TARDISPermission.hasPermission(player, "tardis.room." + room)) ? ChatColor.GREEN : ChatColor.RED;
-				if (plugin.getRoomsConfig().getBoolean("rooms." + room + ".user")) {
-					custom_rooms.add(colour + room);
-				} else {
-					default_rooms.add(colour + room);
-				}
-			}
-		});
-		room_options.put("Default Rooms", default_rooms);
-		room_options.put("Custom Rooms", custom_rooms);
-		return room_options;
-	}
-
-	int roundUpTo4(int num) {
-		return (int) (Math.ceil(num / 4d) * 4);
-	}
+    private LinkedHashMap<String, List<String>> createRoomOptions() {
+        LinkedHashMap<String, List<String>> room_options = new LinkedHashMap<>();
+        List<String> default_rooms = new ArrayList<>();
+        List<String> custom_rooms = new ArrayList<>();
+        Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false).forEach((room) -> {
+            if (plugin.getRoomsConfig().getBoolean("rooms." + room + ".enabled")) {
+                if (plugin.getRoomsConfig().getBoolean("rooms." + room + ".user")) {
+                    custom_rooms.add(room);
+                } else {
+                    default_rooms.add(room);
+                }
+            }
+        });
+        room_options.put("Default Rooms", default_rooms);
+        room_options.put("Custom Rooms", custom_rooms);
+        return room_options;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,54 +62,54 @@ class TARDISSQLAlterEnergy implements Runnable {
 		prefix = this.plugin.getPrefix();
 	}
 
-	@Override
-	public void run() {
-		Statement statement = null;
-		String wheres;
-		StringBuilder sbw = new StringBuilder();
-		where.forEach((key, value) -> {
-			sbw.append(key).append(" = ");
-			if (value instanceof String || value instanceof UUID) {
-				sbw.append("'").append(value).append("' AND ");
-			} else {
-				sbw.append(value).append(" AND ");
-			}
-		});
-		int tmp = 0;
-		if (where.containsKey("tardis_id")) {
-			tmp = (Integer) where.get("tardis_id");
-		}
-		int id = tmp;
-		where.clear();
-		wheres = sbw.substring(0, sbw.length() - 5);
-		String query = "UPDATE " + prefix + table + " SET artron_level = artron_level + " + amount + " WHERE " + wheres;
-		if (amount < 0 && player != null) {
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					if (id > 0) {
-						new TARDISArtronIndicator(plugin).showArtronLevel(player, id, Math.abs(amount));
-						plugin.getPM().callEvent(new TARDISArtronEvent(player, amount, id));
-					} else {
-						TARDISMessage.send(player, "ENERGY_USED", String.format("%d", Math.abs(amount)));
-					}
-				}
-			}.runTask(plugin);
-		}
-		try {
-			service.testConnection(connection);
-			statement = connection.createStatement();
-			statement.executeUpdate(query);
-		} catch (SQLException e) {
-			plugin.debug("Artron Energy update error for " + table + "! " + e.getMessage());
-		} finally {
-			try {
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Artron Energy error closing " + table + "! " + e.getMessage());
-			}
-		}
-	}
+    @Override
+    public void run() {
+        Statement statement = null;
+        String wheres;
+        StringBuilder sbw = new StringBuilder();
+        where.forEach((key, value) -> {
+            sbw.append(key).append(" = ");
+            if (value instanceof String || value instanceof UUID) {
+                sbw.append("'").append(value).append("' AND ");
+            } else {
+                sbw.append(value).append(" AND ");
+            }
+        });
+        int tmp = 0;
+        if (where.containsKey("tardis_id")) {
+            tmp = (Integer) where.get("tardis_id");
+        }
+        int id = tmp;
+        where.clear();
+        wheres = sbw.substring(0, sbw.length() - 5);
+        String query = "UPDATE " + prefix + table + " SET artron_level = artron_level + " + amount + " WHERE " + wheres;
+        if (amount < 0 && player != null) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (id > 0) {
+                        new TARDISArtronIndicator(plugin).showArtronLevel(player, id, Math.abs(amount));
+                        plugin.getPM().callEvent(new TARDISArtronEvent(player, amount, id));
+                    } else {
+                        TARDISMessage.send(player, "ENERGY_USED", String.format("%d", Math.abs(amount)));
+                    }
+                }
+            }.runTask(plugin);
+        }
+        try {
+            service.testConnection(connection);
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            plugin.debug("Artron Energy update error for " + table + "! " + e.getMessage());
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Artron Energy error closing " + table + "! " + e.getMessage());
+            }
+        }
+    }
 }

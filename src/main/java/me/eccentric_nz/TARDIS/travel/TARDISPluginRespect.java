@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@ import me.eccentric_nz.tardis.utility.*;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldBorder;
+
+import java.util.Objects;
 
 /**
  * The telepathic password to the tardis was "the colour crimson, the number eleven, the feeling of delight, and the
@@ -62,7 +64,7 @@ public class TARDISPluginRespect {
 			return true;
 		}
 		if (plugin.getConfig().getBoolean("travel.per_world_perms")) {
-			String perm = location.getWorld().getName();
+			String perm = Objects.requireNonNull(location.getWorld()).getName();
 			if (!TARDISPermission.hasPermission(flag.getPlayer(), "tardis.travel." + perm)) {
 				if (flag.messagePlayer()) {
 					TARDISMessage.send(flag.getPlayer(), "TRAVEL_NO_PERM_WORLD", perm);
@@ -71,7 +73,7 @@ public class TARDISPluginRespect {
 			}
 		}
 		// nether travel
-		if (flag.permsNether() && location.getWorld().getEnvironment().equals(Environment.NETHER)) {
+		if (flag.permsNether() && Objects.requireNonNull(location.getWorld()).getEnvironment().equals(Environment.NETHER)) {
 			// check if nether enabled
 			if (!plugin.getConfig().getBoolean("travel.nether")) {
 				if (flag.messagePlayer()) {
@@ -95,7 +97,7 @@ public class TARDISPluginRespect {
 			}
 		}
 		// end travel
-		if (flag.permsTheEnd() && location.getWorld().getEnvironment().equals(Environment.THE_END)) {
+		if (flag.permsTheEnd() && Objects.requireNonNull(location.getWorld()).getEnvironment().equals(Environment.THE_END)) {
 			// check if end enabled
 			if (!plugin.getConfig().getBoolean("travel.the_end")) {
 				if (flag.messagePlayer()) {
@@ -124,7 +126,7 @@ public class TARDISPluginRespect {
 			}
 			bool = false;
 		}
-		if (flag.respectTowny() && townyOnServer && !plugin.getConfig().getString("preferences.respect_towny").equals("none") && !tychk.checkTowny(flag.getPlayer(), location)) {
+		if (flag.respectTowny() && townyOnServer && !Objects.equals(plugin.getConfig().getString("preferences.respect_towny"), "none") && !tychk.checkTowny(flag.getPlayer(), location)) {
 			if (flag.messagePlayer()) {
 				TARDISMessage.send(flag.getPlayer(), "TOWNY");
 			}
@@ -132,7 +134,7 @@ public class TARDISPluginRespect {
 		}
 		if (flag.respectWorldBorder()) {
 			if (!borderOnServer) {
-				WorldBorder wb = location.getWorld().getWorldBorder();
+				WorldBorder wb = Objects.requireNonNull(location.getWorld()).getWorldBorder();
 				if (!wb.isInside(location)) {
 					if (flag.messagePlayer()) {
 						TARDISMessage.send(flag.getPlayer(), "WORLDBORDER");
@@ -259,7 +261,7 @@ public class TARDISPluginRespect {
 		return griefPreventionOnServer;
 	}
 
-	public boolean isRedProtectOnServer() {
+	boolean isRedProtectOnServer() {
 		return redProtectOnServer;
 	}
 }

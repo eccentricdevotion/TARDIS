@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 public class UserInterface extends javax.swing.JFrame {
 
 	@Serial
-	private static final long serialVersionUID = 3259909191489626727L;
+    private static final long serialVersionUID = 3259909191489626727L;
 	private final PrintWriter consoleStream;
 	private File lastDir = new File(".");
 	// Variables declaration - do not modify//GEN-BEGIN:variables
@@ -83,7 +83,6 @@ public class UserInterface extends javax.swing.JFrame {
 		} catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException ex) {
 			java.util.logging.Logger.getLogger(UserInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
-		//</editor-fold>
 		//</editor-fold>
 
 		/*
@@ -144,9 +143,9 @@ public class UserInterface extends javax.swing.JFrame {
 
 		outputLabel.setText("Output file");
 
-		inputLabel.setText("tardis.db");
+		inputLabel.setText("TARDIS.db");
 
-		titleLabel.setText("tardis SQLite -> MySQL Database Converter");
+		titleLabel.setText("TARDIS SQLite -> MySQL Database Converter");
 
 		inputFile.addActionListener(this::inputFileActionPerformed);
 
@@ -207,7 +206,7 @@ public class UserInterface extends javax.swing.JFrame {
 
 	private void convert() throws IOException {
 		if (inputFile.getText().isEmpty() || outputFile.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Please browse for tardis.db and tardis.sql files.", "Please select required files.", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Please browse for TARDIS.db and TARDIS.sql files.", "Please select required files.", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		String pre = prefix.getText();

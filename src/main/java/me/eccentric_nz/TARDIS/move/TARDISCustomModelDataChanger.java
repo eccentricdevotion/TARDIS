@@ -1,7 +1,23 @@
+/*
+ * Copyright (C) 2021 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
 import org.bukkit.Location;
@@ -13,16 +29,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
-public class TARDISCustomModelDataChanger {
+class TARDISCustomModelDataChanger {
 
 	private final TARDISPlugin plugin;
 	private final Block block;
 	private final Player player;
 	private final int id;
 
-	public TARDISCustomModelDataChanger(TARDISPlugin plugin, Block block, Player player, int id) {
+	TARDISCustomModelDataChanger(TARDISPlugin plugin, Block block, Player player, int id) {
 		this.plugin = plugin;
 		this.block = block;
 		this.player = player;
@@ -32,7 +49,7 @@ public class TARDISCustomModelDataChanger {
 	/**
 	 * Toggle the door open and closed by setting the custom model data.
 	 */
-	public void toggleOuterDoor() {
+	void toggleOuterDoor() {
 		UUID uuid = player.getUniqueId();
 		HashMap<String, Object> wherecl = new HashMap<>();
 		wherecl.put("tardis_id", id);
@@ -45,7 +62,7 @@ public class TARDISCustomModelDataChanger {
 			outer.getChunk().load();
 		}
 		ItemFrame itemFrame = null;
-		for (Entity e : outer.getWorld().getNearbyEntities(outer, 1.0d, 1.0d, 1.0d)) {
+		for (Entity e : Objects.requireNonNull(outer.getWorld()).getNearbyEntities(outer, 1.0d, 1.0d, 1.0d)) {
 			if (e instanceof ItemFrame) {
 				itemFrame = (ItemFrame) e;
 				break;
@@ -55,6 +72,7 @@ public class TARDISCustomModelDataChanger {
 			ItemStack is = itemFrame.getItem();
 			if (TARDISConstants.DYES.contains(is.getType()) && is.hasItemMeta()) {
 				ItemMeta im = is.getItemMeta();
+				assert im != null;
 				if (im.hasCustomModelData()) {
 					int cmd = im.getCustomModelData();
 					if (cmd == 1001 || cmd == 1002) {

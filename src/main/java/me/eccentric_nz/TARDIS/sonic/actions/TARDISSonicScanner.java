@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
@@ -34,6 +34,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import static me.eccentric_nz.tardis.control.TARDISScanner.getNearbyEntities;
 
@@ -58,6 +59,7 @@ public class TARDISSonicScanner {
 				if (TARDISPlugin.plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
 					if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
 						EntityEquipment ee = ((LivingEntity) k).getEquipment();
+						assert ee != null;
 						if (ee.getHelmet() != null) {
 							switch (ee.getHelmet().getType()) {
 								case SLIME_BALL: // dalek
@@ -101,6 +103,7 @@ public class TARDISSonicScanner {
 					}
 					if (et.equals(EntityType.ARMOR_STAND)) {
 						EntityEquipment ee = ((ArmorStand) k).getEquipment();
+						assert ee != null;
 						if (ee.getHelmet() != null) {
 							switch (ee.getHelmet().getType()) {
 								case YELLOW_DYE: // Judoon
@@ -127,7 +130,7 @@ public class TARDISSonicScanner {
 				}
 			}
 		});
-		long time = scan_loc.getWorld().getTime();
+		long time = Objects.requireNonNull(scan_loc.getWorld()).getTime();
 		String daynight = TARDISStaticUtils.getTime(time);
 		String worldname;
 		if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {

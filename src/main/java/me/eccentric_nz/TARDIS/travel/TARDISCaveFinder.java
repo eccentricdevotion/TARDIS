@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,14 +23,12 @@ import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.WorldType;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -44,7 +42,7 @@ public class TARDISCaveFinder {
 	}
 
 	public Location searchCave(Player p, int id) {
-		// get the current tardis location
+		// get the current TARDIS location
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("tardis_id", id);
 		ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
@@ -56,7 +54,7 @@ public class TARDISCaveFinder {
 			// Assume all non-nether/non-end world environments are NORMAL
 			boolean hoth = (w.getGenerator() != null && w.getGenerator().getClass().getName().contains("hothgenerator"));
 			if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END) && !hoth) {
-				if (!Objects.equals(w.getWorldType(), WorldType.FLAT) && worldCheck(w)) {
+				if (worldCheck(w)) {
 					int plusx = startx + 2000;
 					int plusz = startz + 2000;
 					int minusx = startx - 2000;

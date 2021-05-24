@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,15 @@ package me.eccentric_nz.tardis.messaging;
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.RecipeCategory;
 import me.eccentric_nz.tardis.enumeration.RecipeItem;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author eccentric_nz
@@ -32,47 +36,47 @@ public class TARDISGiveLister {
 
 	private final TARDISPlugin plugin;
 	private final CommandSender sender;
-	private final TableGenerator tg;
+	private final TreeMap<String, String> dev = new TreeMap<>();
 
 	public TARDISGiveLister(TARDISPlugin plugin, CommandSender sender) {
 		this.plugin = plugin;
 		this.sender = sender;
-		if (TableGenerator.getSenderPrefs(sender)) {
-			tg = new TableGeneratorCustomFont(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
-		} else {
-			tg = new TableGeneratorSmallChar(TableGenerator.Alignment.LEFT, TableGenerator.Alignment.LEFT);
-		}
+		dev.put("artron", "Artron Energy");
+		dev.put("blueprint", "TARDIS Blueprint Disk");
+		dev.put("kit", "TARDIS Item Kit");
+		dev.put("recipes", "Grant TARDIS recipes");
+		dev.put("seed", "TARDIS Seed Block");
+		dev.put("mushroom", "Textured mushroom blocks");
 	}
 
 	public void list() {
-		sender.sendMessage(plugin.getPluginName() + "You can 'give' the following items:");
-		for (String line : createGiveOptions()) {
-			sender.sendMessage(line);
+		TARDISMessage.message(sender, plugin.getPluginName() + "You can 'give' the following items:");
+		TARDISMessage.message(sender, ChatColor.GRAY + "Hover over command argument to see a description");
+		TARDISMessage.message(sender, ChatColor.GRAY + "Click to suggest a command");
+		TARDISMessage.message(sender, "");
+		TARDISMessage.message(sender, "Admin & development");
+		for (Map.Entry<String, String> entry : dev.entrySet()) {
+			TextComponent tcd = new TextComponent(entry.getKey());
+			tcd.setColor(net.md_5.bungee.api.ChatColor.YELLOW);
+			tcd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(entry.getValue())));
+			tcd.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tardisgive [player] " + entry.getKey() + " "));
+			sender.spigot().sendMessage(tcd);
 		}
-	}
-
-	private List<String> createGiveOptions() {
-		tg.addRow(ChatColor.GRAY + "Command argument", ChatColor.DARK_GRAY + "Description");
-		tg.addRow();
-		tg.addRow("Admin & development", "");
-		tg.addRow(ChatColor.YELLOW + "artron", ChatColor.GOLD + "Artron Energy");
-		tg.addRow(ChatColor.YELLOW + "blueprint", ChatColor.GOLD + "tardis Blueprint Disk");
-		tg.addRow(ChatColor.YELLOW + "kit", ChatColor.GOLD + "tardis Item Kit");
-		tg.addRow(ChatColor.YELLOW + "recipes", ChatColor.GOLD + "Grant tardis recipes");
-		tg.addRow(ChatColor.YELLOW + "seed", ChatColor.GOLD + "tardis Seed Block");
-		tg.addRow(ChatColor.YELLOW + "mushroom", ChatColor.GOLD + "Textured mushroom blocks");
-		tg.addRow();
+		TARDISMessage.message(sender, "");
 		for (RecipeCategory category : RecipeCategory.values()) {
 			if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE) {
-				tg.addRow(category.getName(), "");
+				TARDISMessage.message(sender, category.getName());
 				for (RecipeItem item : RecipeItem.values()) {
 					if (item.getCategory() == category) {
-						tg.addRow(category.getKeyColour() + item.toTabCompletionString(), category.getValueColour() + item.toRecipeString());
+						TextComponent tci = new TextComponent(item.toTabCompletionString());
+						tci.setColor(category.getColour());
+						tci.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(item.toRecipeString())));
+						tci.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tardisgive [player] " + item.toTabCompletionString() + " "));
+						sender.spigot().sendMessage(tci);
 					}
 				}
 			}
-			tg.addRow();
+			TARDISMessage.message(sender, "");
 		}
-		return tg.generate(sender instanceof Player ? TableGeneratorSmallChar.Receiver.CLIENT : TableGeneratorSmallChar.Receiver.CONSOLE, true, true);
 	}
 }

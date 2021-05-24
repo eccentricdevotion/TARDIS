@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.event.TARDISSiegeEvent;
 import me.eccentric_nz.tardis.api.event.TARDISSiegeOffEvent;
 import me.eccentric_nz.tardis.builders.BuildData;
@@ -100,7 +100,7 @@ public class TARDISSiegeMode {
 			bd.setPlayer(p);
 			bd.setRebuild(true);
 			bd.setSubmarine(rsc.isSubmarine());
-			bd.setTardisID(id);
+			bd.setTardisId(id);
 			bd.setThrottle(SpaceTimeThrottle.REBUILD);
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
 			set.put("siege_on", 0);
@@ -140,7 +140,7 @@ public class TARDISSiegeMode {
 			}
 			TARDISMessage.send(p, "SIEGE_OFF");
 		} else {
-			// make sure tardis is not dispersed
+			// make sure TARDIS is not dispersed
 			if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id)) {
 				TARDISMessage.send(p, "NOT_WHILE_DISPERSED");
 				return;
@@ -154,7 +154,7 @@ public class TARDISSiegeMode {
 			dd.setOutside(false);
 			dd.setSiege(true);
 			dd.setSubmarine(rsc.isSubmarine());
-			dd.setTardisID(id);
+			dd.setTardisId(id);
 			dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
 			dd.setThrottle(SpaceTimeThrottle.REBUILD);
 			plugin.getPresetDestroyer().destroyPreset(dd);
@@ -172,6 +172,7 @@ public class TARDISSiegeMode {
 							// check it is not the Artron Capacitor Creeper
 							Location cl = ent.getLocation();
 							Location dbl = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
+							assert dbl != null;
 							if (cl.getBlockX() == dbl.getBlockX() && cl.getBlockY() == dbl.getBlockY() && cl.getBlockZ() == dbl.getBlockZ()) {
 								continue;
 							}

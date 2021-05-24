@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@ package me.eccentric_nz.tardis.utility;
 
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -88,7 +89,7 @@ public class TARDISTownyChecker {
 	}
 
 	/**
-	 * Checks whether a player can land their tardis in a town.
+	 * Checks whether a player can land their TARDIS in a town.
 	 *
 	 * @param p the player
 	 * @param l the location instance to check
@@ -105,8 +106,7 @@ public class TARDISTownyChecker {
 			return td;
 		}
 		td.setTownBlock(tb);
-		Resident res;
-		res = TownyAPI.getInstance().getResident(p.getUniqueId());
+		Resident res = TownyUniverse.getInstance().getResident(p.getUniqueId());
 		td.setResident(res);
 		if (res != null) {
 			try {

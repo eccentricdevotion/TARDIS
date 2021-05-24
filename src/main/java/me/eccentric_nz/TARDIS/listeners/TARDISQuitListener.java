@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ public class TARDISQuitListener implements Listener {
 					chunk.setForceLoaded(false);
 				}
 			}
-			// power down tardis
+			// power down TARDIS
 			if (plugin.getConfig().getBoolean("allow.power_down") && plugin.getConfig().getBoolean("allow.power_down_on_quit")) {
 				// check if powered on
 				if (tardis.isPowered()) {
@@ -78,8 +78,8 @@ public class TARDISQuitListener implements Listener {
 					// power off
 					PRESET preset = tardis.getPreset();
 					boolean hidden = tardis.isHidden();
-					boolean lightsOn = tardis.isLightsOn();
-					// police box lamp, delay it incase the tardis needs rebuilding
+					boolean lights = tardis.isLightsOn();
+					// police box lamp, delay it incase the TARDIS needs rebuilding
 					long delay = 1L;
 					// if hidden, rebuild
 					if (hidden) {
@@ -90,7 +90,7 @@ public class TARDISQuitListener implements Listener {
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
 					}
 					// if lights are on, turn them off
-					if (lightsOn) {
+					if (lights) {
 						new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().hasLanterns());
 					}
 					// if beacon is on turn it off

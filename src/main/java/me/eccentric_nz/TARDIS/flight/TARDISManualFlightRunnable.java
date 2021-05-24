@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetRepeaters;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Effect;
@@ -26,6 +26,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -42,7 +43,7 @@ class TARDISManualFlightRunnable implements Runnable {
 	private final List<String> controls = Arrays.asList("Helmic Regulator", "Astrosextant Rectifier", "Gravitic Anomaliser", "Absolute Tesseractulator");
 	private final Player player;
 	private final UUID uuid;
-	private int taskID;
+	private int taskId;
 	private int i = 0;
 
 	TARDISManualFlightRunnable(TARDISPlugin plugin, Player player, int id) {
@@ -66,12 +67,12 @@ class TARDISManualFlightRunnable implements Runnable {
 			int r = TARDISConstants.RANDOM.nextInt(4);
 			Location loc = target.get(r);
 			TARDISMessage.send(player, "FLIGHT_CLICK", controls.get(r));
-			loc.getWorld().playEffect(loc, Effect.STEP_SOUND, 152);
+			Objects.requireNonNull(loc.getWorld()).playEffect(loc, Effect.STEP_SOUND, 152);
 			plugin.getTrackerKeeper().getFlight().put(player.getUniqueId(), loc.toString());
 		} else {
 			int blocks = 10 - plugin.getTrackerKeeper().getCount().get(player.getUniqueId());
-			plugin.getServer().getScheduler().cancelTask(taskID);
-			taskID = 0;
+			plugin.getServer().getScheduler().cancelTask(taskId);
+			taskId = 0;
 			plugin.getTrackerKeeper().getCount().remove(player.getUniqueId());
 			plugin.getTrackerKeeper().getFlight().remove(uuid);
 			// adjust location
@@ -91,7 +92,7 @@ class TARDISManualFlightRunnable implements Runnable {
 		return null;
 	}
 
-	public void setTaskID(int taskID) {
-		this.taskID = taskID;
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
 	}
 }

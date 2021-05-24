@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.tardis.artron.TARDISArtronIndicator;
@@ -48,6 +48,7 @@ import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -65,12 +66,12 @@ public class TARDISHandbrakeListener implements Listener {
 	}
 
 	public static void toggleBeacon(String str, boolean on) {
-		Block b = TARDISStaticLocationGetters.getLocationFromDB(str).getBlock();
+		Block b = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(str)).getBlock();
 		b.setBlockData((on) ? TARDISConstants.GLASS : TARDISConstants.POWER);
 	}
 
 	/**
-	 * Listens for player interaction with the handbrake (lever) on the tardis console. If the button is right-clicked
+	 * Listens for player interaction with the handbrake (lever) on the TARDIS console. If the button is right-clicked
 	 * the handbrake is set off, if right-clicked while sneaking it is set on.
 	 *
 	 * @param event the player clicking the handbrake
@@ -215,7 +216,7 @@ public class TARDISHandbrakeListener implements Listener {
 									if (!beac_on && !beacon.isEmpty()) {
 										toggleBeacon(beacon, false);
 									}
-									// Remove energy from tardis and sets database
+									// Remove energy from TARDIS and sets database
 									TARDISMessage.send(player, "HANDBRAKE_ON");
 									if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
 										int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id) * spaceTimeThrottle.getArtronMultiplier());
@@ -261,7 +262,7 @@ public class TARDISHandbrakeListener implements Listener {
 		where.put("door_type", 1);
 		ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
 		if (rs.resultSet()) {
-			Block door = TARDISStaticLocationGetters.getLocationFromDB(rs.getDoorLocation()).getBlock();
+			Block door = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(rs.getDoorLocation())).getBlock();
 			return TARDISStaticUtils.isDoorOpen(door);
 		}
 		return false;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * The Alpha Centauran Table Tennis Club is a club established by the Alpha Centaurans for the play of table tennis. The
@@ -189,6 +190,7 @@ public class TARDISConfiguration {
 		stringOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
 		stringOptions.put("creation.gamemode", "survival");
 		stringOptions.put("creation.use_clay", "WOOL");
+		stringOptions.put("display.all", "&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%");
 		stringOptions.put("police_box.default_preset", "FACTORY");
 		stringOptions.put("police_box.sign_colour", "WHITE");
 		stringOptions.put("preferences.default_key", "eleventh");
@@ -202,7 +204,7 @@ public class TARDISConfiguration {
 		stringOptions.put("storage.database", "sqlite");
 		stringOptions.put("storage.mysql.host", "localhost");
 		stringOptions.put("storage.mysql.port", "3306");
-		stringOptions.put("storage.mysql.database", "tardis");
+		stringOptions.put("storage.mysql.database", "TARDIS");
 		stringOptions.put("storage.mysql.user", "bukkit");
 		stringOptions.put("storage.mysql.password", "mysecurepassword");
 		stringOptions.put("storage.mysql.prefix", "");
@@ -217,7 +219,7 @@ public class TARDISConfiguration {
 	 */
 	public void checkConfig() {
 		int i = 0;
-		if (config.getString("creation.default_world_name").equals("tardis_time_vortex")) {
+		if (Objects.equals(config.getString("creation.default_world_name"), "tardis_time_vortex")) {
 			plugin.getConfig().set("creation.default_world_name", "TARDIS_TimeVortex");
 			i++;
 		}
@@ -261,7 +263,7 @@ public class TARDISConfiguration {
 		// check mysql settings
 		if (config.contains("storage.mysql.url")) {
 			// mysql://localhost:3306/tardis
-			String[] firstSplit = config.getString("storage.mysql.url").split(":");
+			String[] firstSplit = Objects.requireNonNull(config.getString("storage.mysql.url")).split(":");
 			String host = firstSplit[1].substring(2);
 			String[] secondSplit = firstSplit[2].split("/");
 			String port = secondSplit[0];

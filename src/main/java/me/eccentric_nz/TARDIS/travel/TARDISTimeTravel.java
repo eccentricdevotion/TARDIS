@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
@@ -41,10 +41,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * All things related to time travel.
@@ -113,9 +110,7 @@ public class TARDISTimeTravel {
 								count++;
 								break;
 							}
-						} else if (w.getName().equals("Siluria") && mat.equals(Material.BAMBOO)) {
-							// do nothing
-						} else {
+						} else if (!(w.getName().equals("Siluria") && mat.equals(Material.BAMBOO))) {
 							count++;
 						}
 					}
@@ -187,7 +182,7 @@ public class TARDISTimeTravel {
 		int range = quarter + 1;
 		int wherex = 0, highest = 252, wherez = 0;
 		// get worlds
-		Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
+		Set<String> worldlist = Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false);
 		List<World> allowedWorlds = new ArrayList<>();
 
 		if (e.equals("THIS") && plugin.getPlanetsConfig().getBoolean("planets." + this_world.getName() + ".time_travel")) {
@@ -255,7 +250,7 @@ public class TARDISTimeTravel {
 					wherez -= 120;
 					// get the spawn point
 					Location endSpawn = randworld.getSpawnLocation();
-					highest = TARDISStaticLocationGetters.getHighestYin3x3(randworld, endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
+					highest = TARDISStaticLocationGetters.getHighestYIn3x3(randworld, endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
 					if (highest > 40) {
 						Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
 						Location chunk_loc = currentBlock.getLocation();
@@ -309,7 +304,7 @@ public class TARDISTimeTravel {
 							// randomX(Random TARDISConstants.RANDOM, int range, int quarter, int rx, int ry, int max)
 							wherex = randomX(range, quarter, rx, ry, e, current);
 							wherez = randomZ(range, quarter, rz, ry, e, current);
-							highest = TARDISStaticLocationGetters.getHighestYin3x3(randworld, wherex, wherez);
+							highest = TARDISStaticLocationGetters.getHighestYIn3x3(randworld, wherex, wherez);
 							if (highest > 3) {
 								Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
 								if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && !plugin.getConfig().getBoolean("travel.land_on_water")) {
@@ -321,7 +316,7 @@ public class TARDISTimeTravel {
 											TARDISMessage.send(p, "SUB_SEARCH");
 											Location underwater = submarine(currentBlock, d);
 											if (underwater != null) {
-												// get tardis id
+												// get TARDIS id
 												HashMap<String, Object> wherep = new HashMap<>();
 												wherep.put("uuid", p.getUniqueId().toString());
 												ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
@@ -419,25 +414,26 @@ public class TARDISTimeTravel {
 		}
 		int r = row;
 		int c = col;
-		int startx = sx;
-		int startz = sz;
-		TARDISBlockSetters.setBlock(w, startx, starty, startz, Material.SNOW_BLOCK);
-		TARDISBlockSetters.setBlock(w, startx, starty, startz + row, Material.SNOW_BLOCK);
-		TARDISBlockSetters.setBlock(w, startx + col, starty, startz, Material.SNOW_BLOCK);
-		TARDISBlockSetters.setBlock(w, startx + col, starty, startz + row, Material.SNOW_BLOCK);
-		TARDISBlockSetters.setBlock(w, startx, starty + 3, startz, Material.SNOW_BLOCK);
-		TARDISBlockSetters.setBlock(w, startx + col, starty + 3, startz, Material.SNOW_BLOCK);
-		TARDISBlockSetters.setBlock(w, startx, starty + 3, startz + row, Material.SNOW_BLOCK);
-		TARDISBlockSetters.setBlock(w, startx + col, starty + 3, startz + row, Material.SNOW_BLOCK);
+		int startX = sx;
+		int startZ = sz;
+		assert w != null;
+		TARDISBlockSetters.setBlock(w, startX, starty, startZ, Material.SNOW_BLOCK);
+		TARDISBlockSetters.setBlock(w, startX, starty, startZ + row, Material.SNOW_BLOCK);
+		TARDISBlockSetters.setBlock(w, startX + col, starty, startZ, Material.SNOW_BLOCK);
+		TARDISBlockSetters.setBlock(w, startX + col, starty, startZ + row, Material.SNOW_BLOCK);
+		TARDISBlockSetters.setBlock(w, startX, starty + 3, startZ, Material.SNOW_BLOCK);
+		TARDISBlockSetters.setBlock(w, startX + col, starty + 3, startZ, Material.SNOW_BLOCK);
+		TARDISBlockSetters.setBlock(w, startX, starty + 3, startZ + row, Material.SNOW_BLOCK);
+		TARDISBlockSetters.setBlock(w, startX + col, starty + 3, startZ + row, Material.SNOW_BLOCK);
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-			TARDISBlockSetters.setBlock(w, startx, starty, startz, Material.AIR);
-			TARDISBlockSetters.setBlock(w, startx, starty, startz + r, Material.AIR);
-			TARDISBlockSetters.setBlock(w, startx + c, starty, startz, Material.AIR);
-			TARDISBlockSetters.setBlock(w, startx + c, starty, startz + r, Material.AIR);
-			TARDISBlockSetters.setBlock(w, startx, starty + 3, startz, Material.AIR);
-			TARDISBlockSetters.setBlock(w, startx + c, starty + 3, startz, Material.AIR);
-			TARDISBlockSetters.setBlock(w, startx, starty + 3, startz + r, Material.AIR);
-			TARDISBlockSetters.setBlock(w, startx + c, starty + 3, startz + r, Material.AIR);
+			TARDISBlockSetters.setBlock(w, startX, starty, startZ, Material.AIR);
+			TARDISBlockSetters.setBlock(w, startX, starty, startZ + r, Material.AIR);
+			TARDISBlockSetters.setBlock(w, startX + c, starty, startZ, Material.AIR);
+			TARDISBlockSetters.setBlock(w, startX + c, starty, startZ + r, Material.AIR);
+			TARDISBlockSetters.setBlock(w, startX, starty + 3, startZ, Material.AIR);
+			TARDISBlockSetters.setBlock(w, startX + c, starty + 3, startZ, Material.AIR);
+			TARDISBlockSetters.setBlock(w, startX, starty + 3, startZ + r, Material.AIR);
+			TARDISBlockSetters.setBlock(w, startX + c, starty + 3, startZ + r, Material.AIR);
 		}, 300L);
 	}
 
@@ -573,7 +569,7 @@ public class TARDISTimeTravel {
 		for (level = 0; level < 4; level++) {
 			for (row = 0; row < rowcount; row++) {
 				for (col = 0; col < colcount; col++) {
-					Material mat = l.getWorld().getBlockAt(s[0], starty, s[2]).getType();
+					Material mat = Objects.requireNonNull(l.getWorld()).getBlockAt(s[0], starty, s[2]).getType();
 					if (!TARDISConstants.GOOD_WATER.contains(mat)) {
 						count++;
 					}

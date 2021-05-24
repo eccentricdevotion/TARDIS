@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2021 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.tardis.maze;
 
 import me.eccentric_nz.tardis.TARDISConstants;
@@ -32,7 +48,7 @@ public class TARDISMazeGenerator {
 		}
 	}
 
-	private static int[] mix(int[] arr) {
+	private static void mix(int[] arr) {
 		Random rand = new Random(); // a random number generator
 		int temp; // a temp variable for swapping
 		int place1; // one location to be swapped
@@ -47,7 +63,6 @@ public class TARDISMazeGenerator {
 			arr[place1] = arr[place2];
 			arr[place2] = temp;
 		}
-		return arr;
 	}
 
 	public void makeMaze() {
@@ -69,7 +84,7 @@ public class TARDISMazeGenerator {
 			if (cut_order[0] != 0) {
 				// shuffle the available directions take the first direction to be cut into after shuffling and
 				// cut into it - like shuffling a deck of cards and drawing the top card
-				cut_order = mix(cut_order);
+				mix(cut_order);
 				switch (cut_order[0]) {
 					case 1:
 						cutNextUp();
@@ -154,9 +169,9 @@ public class TARDISMazeGenerator {
 			return cut;
 		} else {
 			// otherwise trim the array to the right length and return it
-			int[] cancut = new int[place];
-			System.arraycopy(cut, 0, cancut, 0, place);
-			return cancut;
+			int[] canCut = new int[place];
+			System.arraycopy(cut, 0, canCut, 0, place);
+			return canCut;
 		}
 	}
 
@@ -164,6 +179,7 @@ public class TARDISMazeGenerator {
 		// current location
 		Integer[] current = tracker.peekFirst();
 		// next location
+		assert current != null;
 		int nxt_row = current[0] - 2;
 		int nxt_col = current[1];
 		// if next location is in the array and not already cut, can cut it
@@ -179,6 +195,7 @@ public class TARDISMazeGenerator {
 		// current location
 		Integer[] current = tracker.peekFirst();
 		// next location
+		assert current != null;
 		int nxt_row = current[0] + 2;
 		int nxt_col = current[1];
 		// if the next location is in the array and not already cut, can cut it
@@ -194,6 +211,7 @@ public class TARDISMazeGenerator {
 		// current location
 		Integer[] current = tracker.peekFirst();
 		// next location
+		assert current != null;
 		int nxt_row = current[0];
 		int nxt_col = current[1] + 2;
 		// if the next location is in the array and not already cut, can cut it
@@ -209,6 +227,7 @@ public class TARDISMazeGenerator {
 		// current location
 		Integer[] current = tracker.peekFirst();
 		// next location
+		assert current != null;
 		int nxt_row = current[0];
 		int nxt_col = current[1] - 2;
 		// if next location is in the array and not already cut, can cut it
@@ -245,6 +264,7 @@ public class TARDISMazeGenerator {
 		// temp variable to access stack
 		Integer[] loc = new Integer[2];
 		// Location of next row and col
+		assert current != null;
 		int nxt_row = current[0] + 2;
 		int nxt_col = current[1];
 		// clears the next index and the wall between it
@@ -262,6 +282,7 @@ public class TARDISMazeGenerator {
 		// dummy variable to access stack
 		Integer[] loc = new Integer[2];
 		// location of next row and col
+		assert current != null;
 		int nxt_row = current[0];
 		int nxt_col = current[1] + 2;
 		// clears the necessary locations
@@ -279,6 +300,7 @@ public class TARDISMazeGenerator {
 		// temp variable to access stack
 		Integer[] loc = new Integer[2];
 		// location of next row and col
+		assert current != null;
 		int nxt_row = current[0];
 		int nxt_col = current[1] - 2;
 		// clears the necessary locations

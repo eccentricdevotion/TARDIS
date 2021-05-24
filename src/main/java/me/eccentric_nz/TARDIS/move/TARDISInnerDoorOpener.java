@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ public class TARDISInnerDoorOpener {
 	private final UUID uuid;
 	private final int id;
 
-	public TARDISInnerDoorOpener(TARDISPlugin plugin, UUID uuid, int id) {
+	TARDISInnerDoorOpener(TARDISPlugin plugin, UUID uuid, int id) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		this.id = id;
@@ -126,16 +126,28 @@ public class TARDISInnerDoorOpener {
 						switch (indirection) {
 							case NORTH ->
 									// z -ve
-									indoor.add(0.5d, 0.0d, -0.5d);
+									{
+										assert indoor != null;
+										indoor.add(0.5d, 0.0d, -0.5d);
+									}
 							case EAST ->
 									// x +ve
-									indoor.add(1.5d, 0.0d, 0.5d);
+									{
+										assert indoor != null;
+										indoor.add(1.5d, 0.0d, 0.5d);
+									}
 							case SOUTH ->
 									// z +ve
-									indoor.add(0.5d, 0.0d, 1.5d);
+									{
+										assert indoor != null;
+										indoor.add(0.5d, 0.0d, 1.5d);
+									}
 							case WEST ->
 									// x -ve
-									indoor.add(-0.5d, 0.0d, 0.5d);
+									{
+										assert indoor != null;
+										indoor.add(-0.5d, 0.0d, 0.5d);
+									}
 						}
 					} else {
 						// outer door
@@ -164,10 +176,7 @@ public class TARDISInnerDoorOpener {
 					tp_out.setAbandoned(abandoned);
 					if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
 						// players
-						uuids.forEach((u) -> {
-							// only add them if they're not there already!
-							plugin.getTrackerKeeper().getMover().add(u);
-						});
+						uuids.forEach((u) -> plugin.getTrackerKeeper().getMover().add(u));
 					}
 					// locations
 					if (tardis != null && preset != null) {

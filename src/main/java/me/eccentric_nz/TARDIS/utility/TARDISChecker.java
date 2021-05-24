@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import me.eccentric_nz.tardis.enumeration.Advancement;
 import org.bukkit.ChatColor;
 
 import java.io.*;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -167,26 +168,30 @@ public class TARDISChecker {
 			byte[] buf = new byte[1024];
 			int len;
 			try {
-				while ((len = in.read(buf)) > 0) {
+				while (true) {
+					assert in != null;
+					if (!((len = in.read(buf)) > 0)) {
+						break;
+					}
 					out.write(buf, 0, len);
 				}
 			} catch (IOException io) {
-				System.err.println("[tardis] Checker: Could not save the file (" + file + ").");
+				System.err.println("[TARDIS] Checker: Could not save the file (" + file + ").");
 			} finally {
 				try {
 					out.close();
 				} catch (IOException e) {
-					System.err.println("[tardis] Checker: Could not close the output stream.");
+					System.err.println("[TARDIS] Checker: Could not close the output stream.");
 				}
 			}
 		} catch (FileNotFoundException e) {
-			System.err.println("[tardis] Checker: File not found: " + filename);
+			System.err.println("[TARDIS] Checker: File not found: " + filename);
 		} finally {
 			if (in != null) {
 				try {
 					in.close();
 				} catch (IOException e) {
-					System.err.println("[tardis] Checker: Could not close the input stream.");
+					System.err.println("[TARDIS] Checker: Could not close the input stream.");
 				}
 			}
 		}
@@ -208,16 +213,16 @@ public class TARDISChecker {
 			String json = advancement.getConfigName() + ".json";
 			File jfile = new File(dataPacksRoot, json);
 			if (!jfile.exists() || (advancement == Advancement.DEFENDER && jfile.lastModified() < 1593067877851L)) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), json));
-				plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), json));
+				plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(Objects.requireNonNull(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND")), json));
+				plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(Objects.requireNonNull(plugin.getLanguage().getString("ADVANCEMENT_COPYING")), json));
 				copy(json, jfile);
 			}
 		}
 		String dataPacksMeta = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis";
 		File mcmeta = new File(dataPacksMeta, "pack.mcmeta");
 		if (!mcmeta.exists()) {
-			plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), "pack.mcmeta"));
-			plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), "pack.mcmeta"));
+			plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(Objects.requireNonNull(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND")), "pack.mcmeta"));
+			plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(Objects.requireNonNull(plugin.getLanguage().getString("ADVANCEMENT_COPYING")), "pack.mcmeta"));
 			copy("pack.mcmeta", mcmeta);
 		}
 	}

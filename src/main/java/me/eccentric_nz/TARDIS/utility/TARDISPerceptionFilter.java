@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.util.Objects;
+
 /**
  * Perception filters had the effect of directing attention away from the object or its bearer, rendering them
  * unnoticeable. The Doctor was able to construct a perception filter around three keys to the tardis, activated when
@@ -42,12 +44,13 @@ public class TARDISPerceptionFilter {
 	}
 
 	public static void removePerceptionFilter() {
-		Scoreboard board = Bukkit.getServer().getScoreboardManager().getMainScoreboard();
+		Scoreboard board = Objects.requireNonNull(Bukkit.getServer().getScoreboardManager()).getMainScoreboard();
 		Team perceptionFilter = board.getTeam("PerceptionFilter");
 		if (perceptionFilter != null) {
 			for (OfflinePlayer olp : Bukkit.getServer().getOfflinePlayers()) {
 				if (olp != null) {
 					String entry = olp.getName();
+					assert entry != null;
 					if (perceptionFilter.hasEntry(entry)) {
 						perceptionFilter.removeEntry(entry);
 					}
@@ -58,7 +61,7 @@ public class TARDISPerceptionFilter {
 	}
 
 	public void createPerceptionFilter() {
-		Scoreboard board = plugin.getServer().getScoreboardManager().getMainScoreboard();
+		Scoreboard board = Objects.requireNonNull(plugin.getServer().getScoreboardManager()).getMainScoreboard();
 		perceptionFilter = board.getTeam("PerceptionFilter");
 		if (perceptionFilter == null) {
 			perceptionFilter = board.registerNewTeam("PerceptionFilter");

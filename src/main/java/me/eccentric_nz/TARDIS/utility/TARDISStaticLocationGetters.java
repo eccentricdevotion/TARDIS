@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -132,7 +132,7 @@ public class TARDISStaticLocationGetters {
 	}
 
 	/**
-	 * Create a tardis Repeater location string from a Bukkit location.
+	 * Create a TARDIS Repeater location string from a Bukkit location.
 	 *
 	 * @param location the location to convert to a String
 	 * @return a String in the style of world:x:y:z
@@ -142,7 +142,7 @@ public class TARDISStaticLocationGetters {
 	}
 
 	/**
-	 * Gets the chunk the tardis interior is in.
+	 * Gets the chunk the TARDIS interior is in.
 	 *
 	 * @param str the saved location data from the database.
 	 * @return a Chunk.
@@ -156,7 +156,7 @@ public class TARDISStaticLocationGetters {
 		return cw.getChunkAt(cx, cz);
 	}
 
-	public static int getHighestYin3x3(World world, int x, int z) {
+	public static int getHighestYIn3x3(World world, int x, int z) {
 		int y = 0;
 		for (int xx : threeByThree) {
 			for (int zz : threeByThree) {

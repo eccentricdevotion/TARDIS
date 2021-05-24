@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,15 +28,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class TARDISChameleonControl {
+class TARDISChameleonControl {
 
 	private final TARDISPlugin plugin;
 
-	public TARDISChameleonControl(TARDISPlugin plugin) {
+	TARDISChameleonControl(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
-	public void openGUI(Player player, int id, Adaption adapt, PRESET preset) {
+	void openGUI(Player player, int id, Adaption adapt, PRESET preset) {
 		TARDISCircuitChecker tcc = null;
 		if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
 			tcc = new TARDISCircuitChecker(plugin, id);

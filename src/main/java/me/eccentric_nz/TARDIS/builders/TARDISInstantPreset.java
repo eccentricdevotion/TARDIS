@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@ package me.eccentric_nz.tardis.builders;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.tardis.chameleon.TARDISConstructColumn;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
@@ -74,7 +74,7 @@ public class TARDISInstantPreset {
 	}
 
 	/**
-	 * Builds the tardis Preset.
+	 * Builds the TARDIS Preset.
 	 */
 	public void buildPreset() {
 		if (preset.equals(PRESET.ANGEL)) {
@@ -127,72 +127,72 @@ public class TARDISInstantPreset {
 			plugin.getTrackerKeeper().getRescue().remove(bd.getTardisId());
 		}
 		switch (bd.getDirection()) {
-			case SOUTH -> {
+			case SOUTH:
 				//if (yaw >= 315 || yaw < 45)
 				signx = x;
 				signz = (minusz - 1);
-			}
-			case EAST -> {
+				break;
+			case EAST:
 				//if (yaw >= 225 && yaw < 315)
 				signx = (minusx - 1);
 				signz = z;
-			}
-			case NORTH -> {
+				break;
+			case NORTH:
 				//if (yaw >= 135 && yaw < 225)
 				signx = x;
 				signz = (plusz + 1);
-			}
-			case WEST -> {
+				break;
+			case WEST:
 				//if (yaw >= 45 && yaw < 135)
 				signx = (plusx + 1);
 				signz = z;
-			}
+				break;
 		}
 		int xx, zz;
 		BlockData[][] data = column.getBlockData();
 		for (int i = 0; i < 10; i++) {
 			BlockData[] colData = data[i];
 			switch (i) {
-				case 0 -> {
+				case 0:
 					xx = minusx;
 					zz = minusz;
-				}
-				case 1 -> {
+					break;
+				case 1:
 					xx = x;
 					zz = minusz;
-				}
-				case 2 -> {
+					break;
+				case 2:
 					xx = plusx;
 					zz = minusz;
-				}
-				case 3 -> {
+					break;
+				case 3:
 					xx = plusx;
 					zz = z;
-				}
-				case 4 -> {
+					break;
+				case 4:
 					xx = plusx;
 					zz = plusz;
-				}
-				case 5 -> {
+					break;
+				case 5:
 					xx = x;
 					zz = plusz;
-				}
-				case 6 -> {
+					break;
+				case 6:
 					xx = minusx;
 					zz = plusz;
-				}
-				case 7 -> {
+					break;
+				case 7:
 					xx = minusx;
 					zz = z;
-				}
-				case 8 -> {
+					break;
+				case 8:
 					xx = x;
 					zz = z;
-				}
-				default -> {
+					break;
+				default:
 					xx = signx;
 					zz = signz;
-				}
+					break;
 			}
 			for (int yy = 0; yy < 4; yy++) {
 				boolean change = true;
@@ -272,7 +272,8 @@ public class TARDISInstantPreset {
 						if (mat.equals(Material.TORCH)) {
 							do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), light));
 						} else {
-							if (light instanceof Lightable lit) {
+							if (light instanceof Lightable) {
+								Lightable lit = (Lightable) light;
 								lit.setLit(true);
 								TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, lit, bd.getTardisId());
 							} else {
@@ -378,9 +379,16 @@ public class TARDISInstantPreset {
 											owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
 										}
 										switch (preset) {
-											case GRAVESTONE -> s.setLine(3, owner);
-											case ANGEL, JAIL -> s.setLine(2, owner);
-											default -> s.setLine(0, owner);
+											case GRAVESTONE:
+												s.setLine(3, owner);
+												break;
+											case ANGEL:
+											case JAIL:
+												s.setLine(2, owner);
+												break;
+											default:
+												s.setLine(0, owner);
+												break;
 										}
 									}
 								}
@@ -394,27 +402,27 @@ public class TARDISInstantPreset {
 									line2 = preset.getSecondLine();
 								}
 								switch (preset) {
-									case ANGEL -> {
+									case ANGEL:
 										s.setLine(0, sign_colour + line1);
 										s.setLine(1, sign_colour + line2);
-										s.setLine(3, sign_colour + "tardis");
-									}
-									case APPERTURE -> {
+										s.setLine(3, sign_colour + "TARDIS");
+										break;
+									case APPERTURE:
 										s.setLine(1, sign_colour + line1);
 										s.setLine(2, sign_colour + line2);
 										s.setLine(3, sign_colour + "LAB");
-									}
-									case JAIL -> {
+										break;
+									case JAIL:
 										s.setLine(0, sign_colour + line1);
 										s.setLine(1, sign_colour + line2);
 										s.setLine(3, sign_colour + "CAPTURE");
-									}
-									case THEEND -> {
+										break;
+									case THEEND:
 										s.setLine(1, sign_colour + line1);
 										s.setLine(2, sign_colour + line2);
 										s.setLine(3, sign_colour + "HOT ROD");
-									}
-									case CONSTRUCT -> {
+										break;
+									case CONSTRUCT:
 										// get sign text from database
 										ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, bd.getTardisId());
 										if (rscs.resultSet()) {
@@ -428,11 +436,11 @@ public class TARDISInstantPreset {
 												s.setLine(3, rscs.getLine4());
 											}
 										}
-									}
-									default -> {
+										break;
+									default:
 										s.setLine(1, sign_colour + line1);
 										s.setLine(2, sign_colour + line2);
-									}
+										break;
 								}
 								s.update();
 							}
@@ -501,7 +509,7 @@ public class TARDISInstantPreset {
 					if (trav != null) {
 						String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
 						TARDISMessage.send(trav, message);
-						// tardis has travelled so add players to list so they can receive Artron on exit
+						// TARDIS has travelled so add players to list so they can receive Artron on exit
 						plugin.getTrackerKeeper().getHasTravelled().add(s);
 					}
 				}), 30L);

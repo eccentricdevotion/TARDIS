@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,19 +44,6 @@ import java.util.*;
 public class CureBrewingListener implements Listener {
 
 	private final TARDISPlugin plugin;
-	private final List<String> fireResistancePotion = Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "MAGMA_CREAM", "NETHER_WART");
-	private final List<String> healingPotion = Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "GLISTERING_MELON", "NETHER_WART");
-	private final List<String> invisiblePotion = Arrays.asList("BLAZE_POWDER", "FERMENTED_SPIDER_EYE", "GLASS_BOTTLE", "GOLDEN_CARROT", "NETHER_WART");
-	private final List<String> jumpingPotion = Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "RABBIT_FOOT");
-	private final List<String> nightVisionPotion = Arrays.asList("BLAZE_POWDER", "CARROT", "GLASS_BOTTLE", "GOLDEN_CARROT", "NETHER_WART");
-	private final List<String> regenerationPotion = Arrays.asList("BLAZE_POWDER", "GHAST_TEAR", "GLASS_BOTTLE", "NETHER_WART");
-	private final List<String> strengthPotion = Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "IRON_INGOT", "NETHER_WART");
-	private final List<String> swiftnessPotion = Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "SUGAR");
-	private final List<String> waterBreathingPotion = Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "PUFFERFISH");
-	private final List<String> antidote = Arrays.asList("BLAZE_POWDER", "FEATHER:Silver", "GLASS_BOTTLE", "NETHER_WART");
-	private final List<String> elixir = Arrays.asList("BLAZE_POWDER", "FEATHER:Cobalt", "GLASS_BOTTLE", "NETHER_WART");
-	private final List<String> eyedrops = Arrays.asList("BLAZE_POWDER", "FEATHER:Calcium", "GLASS_BOTTLE", "NETHER_WART");
-	private final List<String> tonic = Arrays.asList("BLAZE_POWDER", "FEATHER:Bismuth", "GLASS_BOTTLE", "NETHER_WART");
 	private final List<String> elements = Arrays.asList("Silver", "Bismuth", "Calcium", "Cobalt");
 	private final List<PotionType> cures = Arrays.asList(PotionType.AWKWARD, PotionType.MUNDANE, PotionType.THICK, PotionType.UNCRAFTABLE);
 	private final HashMap<PotionType, List<String>> potions = new HashMap<>();
@@ -64,19 +51,19 @@ public class CureBrewingListener implements Listener {
 
 	public CureBrewingListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
-		potions.put(PotionType.FIRE_RESISTANCE, fireResistancePotion);
-		potions.put(PotionType.INSTANT_HEAL, healingPotion);
-		potions.put(PotionType.INVISIBILITY, invisiblePotion);
-		potions.put(PotionType.JUMP, jumpingPotion);
-		potions.put(PotionType.NIGHT_VISION, nightVisionPotion);
-		potions.put(PotionType.REGEN, regenerationPotion);
-		potions.put(PotionType.SPEED, swiftnessPotion);
-		potions.put(PotionType.STRENGTH, strengthPotion);
-		potions.put(PotionType.WATER_BREATHING, waterBreathingPotion);
-		potions.put(PotionType.AWKWARD, antidote);
-		potions.put(PotionType.MUNDANE, elixir);
-		potions.put(PotionType.THICK, eyedrops);
-		potions.put(PotionType.UNCRAFTABLE, tonic);
+		potions.put(PotionType.FIRE_RESISTANCE, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "MAGMA_CREAM", "NETHER_WART"));
+		potions.put(PotionType.INSTANT_HEAL, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "GLISTERING_MELON", "NETHER_WART"));
+		potions.put(PotionType.INVISIBILITY, Arrays.asList("BLAZE_POWDER", "FERMENTED_SPIDER_EYE", "GLASS_BOTTLE", "GOLDEN_CARROT", "NETHER_WART"));
+		potions.put(PotionType.JUMP, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "RABBIT_FOOT"));
+		potions.put(PotionType.NIGHT_VISION, Arrays.asList("BLAZE_POWDER", "CARROT", "GLASS_BOTTLE", "GOLDEN_CARROT", "NETHER_WART"));
+		potions.put(PotionType.REGEN, Arrays.asList("BLAZE_POWDER", "GHAST_TEAR", "GLASS_BOTTLE", "NETHER_WART"));
+		potions.put(PotionType.SPEED, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "SUGAR"));
+		potions.put(PotionType.STRENGTH, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "IRON_INGOT", "NETHER_WART"));
+		potions.put(PotionType.WATER_BREATHING, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "PUFFERFISH"));
+		potions.put(PotionType.AWKWARD, Arrays.asList("BLAZE_POWDER", "FEATHER:Silver", "GLASS_BOTTLE", "NETHER_WART"));
+		potions.put(PotionType.MUNDANE, Arrays.asList("BLAZE_POWDER", "FEATHER:Cobalt", "GLASS_BOTTLE", "NETHER_WART"));
+		potions.put(PotionType.THICK, Arrays.asList("BLAZE_POWDER", "FEATHER:Calcium", "GLASS_BOTTLE", "NETHER_WART"));
+		potions.put(PotionType.UNCRAFTABLE, Arrays.asList("BLAZE_POWDER", "FEATHER:Bismuth", "GLASS_BOTTLE", "NETHER_WART"));
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)

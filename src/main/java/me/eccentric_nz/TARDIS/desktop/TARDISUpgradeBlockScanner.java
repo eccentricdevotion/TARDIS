@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@ package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
 import me.eccentric_nz.tardis.database.data.TARDIS;
@@ -66,6 +66,7 @@ public class TARDISUpgradeBlockScanner {
 		// get JSON
 		JsonObject obj = TARDISSchematicGZip.unzip(path);
 		// get dimensions
+		assert obj != null;
 		JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 		int h = dimensions.get("height").getAsInt();
 		int w = dimensions.get("width").getAsInt();
@@ -121,9 +122,11 @@ public class TARDISUpgradeBlockScanner {
 						if (type.equals(Material.ORANGE_WOOL)) {
 							type = wall_type;
 						}
+						assert type != null;
 						if (type.equals(Material.LIGHT_GRAY_WOOL)) {
 							type = floor_type;
 						}
+						assert type != null;
 						if (type.equals(Material.SPONGE)) {
 							type = Material.AIR;
 						}
@@ -177,8 +180,6 @@ public class TARDISUpgradeBlockScanner {
 												case CONCRETE -> Material.LIGHT_GRAY_CONCRETE;
 												default -> Material.LIGHT_GRAY_WOOL;
 											};
-										} else {
-											type = floor_type;
 										}
 									} else {
 										String[] tsplit = type.toString().split("_");
@@ -205,6 +206,7 @@ public class TARDISUpgradeBlockScanner {
 									type = Material.getMaterial(m);
 							}
 						}
+						assert type != null;
 						if (type.isAir()) {
 							v--;
 						}

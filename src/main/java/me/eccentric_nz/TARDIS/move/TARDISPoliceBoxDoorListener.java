@@ -1,7 +1,23 @@
+/*
+ * Copyright (C) 2021 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.control.TARDISPowerButton;
 import me.eccentric_nz.tardis.database.data.TARDIS;
@@ -31,6 +47,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements Listener {
@@ -54,7 +71,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 						UUID playerUUID = player.getUniqueId();
 						// get tardis from location
 						Location location = frame.getLocation();
-						String doorloc = location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+						String doorloc = Objects.requireNonNull(location.getWorld()).getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
 						HashMap<String, Object> where = new HashMap<>();
 						where.put("door_location", doorloc);
 						where.put("door_type", 0);
@@ -118,7 +135,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 													if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(playerUUID) && willFarm) {
 														plugin.getTrackerKeeper().getFarming().add(playerUUID);
 														TARDISFarmer tf = new TARDISFarmer(plugin);
-														petsAndFollowers = tf.farmAnimals(location, d, id, player.getPlayer(), tardis_loc.getWorld().getName(), playerWorld.getName());
+														petsAndFollowers = tf.farmAnimals(location, d, id, player.getPlayer(), Objects.requireNonNull(tardis_loc.getWorld()).getName(), playerWorld.getName());
 													}
 													// if WorldGuard is on the server check for tardis region protection and add admin as member
 													if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,6 +129,7 @@ public class TARDISDoorOpener {
 					COMPASS tmp_direction = COMPASS.valueOf(map.get("door_direction"));
 					if (map.get("door_type").equals("1")) {
 						// clone it because we're going to change it!
+						assert tmp_loc != null;
 						inportal = tmp_loc.clone();
 						indirection = tmp_direction;
 						// adjust for teleport
@@ -158,9 +159,11 @@ public class TARDISDoorOpener {
 						}
 						indoor = tmp_loc;
 					} else {
+						assert tmp_loc != null;
 						exdoor = tmp_loc.clone();
 						exdirection = COMPASS.valueOf(map.get("door_direction"));
 						// adjust for teleport
+						assert preset != null;
 						if (preset.isColoured()) {
 							switch (rsc.getDirection()) {
 								case NORTH -> exdoor.add(0.5d, 0.0d, 1.0d);
@@ -188,10 +191,7 @@ public class TARDISDoorOpener {
 					tp_out.setAbandoned(abandoned);
 					if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
 						// players
-						uuids.forEach((u) -> {
-							// only add them if they're not there already!
-							plugin.getTrackerKeeper().getMover().add(u);
-						});
+						uuids.forEach((u) -> plugin.getTrackerKeeper().getMover().add(u));
 					}
 					// locations
 					if (tardis != null && preset != null && preset.hasPortal()) {

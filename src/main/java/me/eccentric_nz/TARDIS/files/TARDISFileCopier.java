@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ public class TARDISFileCopier {
 	}
 
 	/**
-	 * Copies a file to the tardis plugin directory if it is not present.
+	 * Copies a file to the TARDIS plugin directory if it is not present.
 	 *
 	 * @param filepath  the path to the file to write to
 	 * @param in        the input file to read from
@@ -57,22 +57,22 @@ public class TARDISFileCopier {
 						out.write(buf, 0, len);
 					}
 				} catch (IOException io) {
-					System.err.println("[tardis] Copier: Could not save the file (" + file + ").");
+					System.err.println("[TARDIS] Copier: Could not save the file (" + file + ").");
 				} finally {
 					try {
 						out.close();
 					} catch (IOException e) {
-						System.err.println("[tardis] Copier: Could not close the output stream.");
+						System.err.println("[TARDIS] Copier: Could not close the output stream.");
 					}
 				}
 			} catch (FileNotFoundException e) {
-				System.err.println("[tardis] Copier: File not found: " + filepath);
+				System.err.println("[TARDIS] Copier: File not found: " + filepath);
 			} finally {
 				if (in != null) {
 					try {
 						in.close();
 					} catch (IOException e) {
-						System.err.println("[tardis] Copier: Could not close the input stream.");
+						System.err.println("[TARDIS] Copier: Could not close the input stream.");
 					}
 				}
 			}

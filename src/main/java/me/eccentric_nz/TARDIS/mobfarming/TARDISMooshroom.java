@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,15 +18,15 @@ package me.eccentric_nz.tardis.mobfarming;
 
 import org.bukkit.entity.MushroomCow.Variant;
 
-public class TARDISMooshroom extends TARDISMob {
+class TARDISMooshroom extends TARDISMob {
 
-	Variant variant;
+	private Variant variant;
 
-	public Variant getVariant() {
+	Variant getVariant() {
 		return variant;
 	}
 
-	public void setVariant(Variant variant) {
+	void setVariant(Variant variant) {
 		this.variant = variant;
 	}
 }

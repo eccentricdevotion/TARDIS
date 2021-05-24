@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,12 +29,12 @@ public class TARDISLocationEvent extends Event {
 
 	private static final HandlerList HANDLERS = new HandlerList();
 	private final Player player;
-	private final int tardisId;
+	private final int tardis_id;
 	private final Location location;
 
-	TARDISLocationEvent(Player player, int tardisId, Location location) {
+	TARDISLocationEvent(Player player, int tardisid, Location location) {
 		this.player = player;
-		this.tardisId = tardisId;
+		tardis_id = tardisid;
 		this.location = location;
 	}
 
@@ -52,18 +52,18 @@ public class TARDISLocationEvent extends Event {
 	}
 
 	/**
-	 * Returns the tardisId of the tardis in the database.
+	 * Returns the tardis_id of the TARDIS in the database.
 	 *
-	 * @return the tardis location
+	 * @return the TARDIS location
 	 */
-	public int getTardisId() {
-		return tardisId;
+	public int getTardis_id() {
+		return tardis_id;
 	}
 
 	/**
-	 * Returns the exterior location of the tardis.
+	 * Returns the exterior location of the TARDIS.
 	 *
-	 * @return the tardis location
+	 * @return the TARDIS location
 	 */
 	public Location getLocation() {
 		return location;

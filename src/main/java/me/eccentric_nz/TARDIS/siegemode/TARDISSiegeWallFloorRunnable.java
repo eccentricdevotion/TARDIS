@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardis.siegemode;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
 import me.eccentric_nz.tardis.database.data.Archive;
@@ -77,7 +77,6 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
 	}
 
 	@Override
-
 	public void run() {
 		// initialise
 		if (!running) {
@@ -115,11 +114,12 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
 				obj = archive.getJson();
 			}
 			// get dimensions
+			assert obj != null;
 			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 			h = dimensions.get("height").getAsInt();
 			w = dimensions.get("width").getAsInt();
 			c = dimensions.get("length").getAsInt();
-			// calculate startX, startY, startZ
+			// calculate startx, starty, startz
 			HashMap<String, Object> wheret = new HashMap<>();
 			wheret.put("uuid", uuid.toString());
 			ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);

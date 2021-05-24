@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,11 +34,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class CompoundGUIListener extends TARDISMenuListener implements Listener {
 
-	private final TARDISPlugin plugin;
-
 	public CompoundGUIListener(TARDISPlugin plugin) {
 		super(plugin);
-		this.plugin = plugin;
 	}
 
 	@EventHandler(ignoreCancelled = true)

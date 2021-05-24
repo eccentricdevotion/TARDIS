@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardis.commands.tardis;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
@@ -118,13 +118,13 @@ class TARDISArchiveCommand {
 			return true;
 		}
 		if (sub.equals("scan") || sub.equals("add") || sub.equals("update")) {
-			// get tardis player is in
+			// get TARDIS player is in
 			HashMap<String, Object> wheret = new HashMap<>();
 			wheret.put("uuid", uuid);
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
 			if (rst.resultSet()) {
 				int id = rst.getTardisId();
-				// must be the owner of the tardis
+				// must be the owner of the TARDIS
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("tardis_id", id);
 				where.put("uuid", uuid);
@@ -161,13 +161,13 @@ class TARDISArchiveCommand {
 						int w = dimensions.get("width").getAsInt() - 1;
 						int c = dimensions.get("length").getAsInt() - 1;
 						// get console size
-						ConsoleSize consoleSize = ConsoleSize.getByWidthAndHeight(w, h);
+						ConsoleSize console_size = ConsoleSize.getByWidthAndHeight(w, h);
 						if (((args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("update")) && args.length == 4) || (args[1].equalsIgnoreCase("scan") && args.length == 3)) {
 							// size from args[2/3]
 							try {
 								String size = (args[1].equalsIgnoreCase("scan")) ? args[2] : args[3];
-								consoleSize = ConsoleSize.valueOf(size.toUpperCase(Locale.ENGLISH));
-								switch (consoleSize) {
+								console_size = ConsoleSize.valueOf(size.toUpperCase(Locale.ENGLISH));
+								switch (console_size) {
 									case MASSIVE -> {
 										h = 31;
 										w = 47;
@@ -216,7 +216,7 @@ class TARDISArchiveCommand {
 						}
 						HashMap<String, Object> set = new HashMap<>();
 						set.put("data", ad.getJSON().toString());
-						set.put("console_size", consoleSize.toString());
+						set.put("console_size", console_size.toString());
 						set.put("beacon", ad.getBeacon());
 						// get lanterns preference
 						int lanterns = 0;
@@ -243,15 +243,13 @@ class TARDISArchiveCommand {
 					} else {
 						TARDISMessage.send(player, "ARCHIVE_NO_JSON");
 					}
-					return true;
 				} else {
 					TARDISMessage.send(player, "CMD_ONLY_TL");
-					return true;
 				}
 			} else {
 				TARDISMessage.send(player, "CMD_IN_WORLD");
-				return true;
 			}
+			return true;
 		}
 		if (sub.equals("description")) {
 			// get description

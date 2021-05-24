@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ public class TARDISControlInventory {
 	private final UUID uuid;
 	private final ItemStack[] controls;
 
-	public TARDISControlInventory(TARDISPlugin plugin, UUID uuid) {
+	TARDISControlInventory(TARDISPlugin plugin, UUID uuid) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		controls = getItemStack();
@@ -85,30 +85,35 @@ public class TARDISControlInventory {
 		// random location
 		ItemStack ran = new ItemStack(Material.BOWL, 1);
 		ItemMeta dom = ran.getItemMeta();
+		assert dom != null;
 		dom.setDisplayName(ChatColor.MAGIC + "ran" + ChatColor.RESET + plugin.getLanguage().getString("BUTTON_RANDOM") + ChatColor.MAGIC + "dom");
 		dom.setCustomModelData(GUIControlCentre.BUTTON_RANDOM.getCustomModelData());
 		ran.setItemMeta(dom);
 		// Saves
 		ItemStack save = new ItemStack(Material.BOWL, 1);
 		ItemMeta locs = save.getItemMeta();
+		assert locs != null;
 		locs.setDisplayName(plugin.getLanguage().getString("BUTTON_SAVES"));
 		locs.setCustomModelData(GUIControlCentre.BUTTON_SAVES.getCustomModelData());
 		save.setItemMeta(locs);
 		// back
 		ItemStack fast = new ItemStack(Material.BOWL, 1);
 		ItemMeta ret = fast.getItemMeta();
+		assert ret != null;
 		ret.setDisplayName(plugin.getLanguage().getString("BUTTON_BACK"));
 		ret.setCustomModelData(GUIControlCentre.BUTTON_BACK.getCustomModelData());
 		fast.setItemMeta(ret);
 		// areas
 		ItemStack area = new ItemStack(Material.BOWL, 1);
 		ItemMeta tar = area.getItemMeta();
+		assert tar != null;
 		tar.setDisplayName(plugin.getLanguage().getString("BUTTON_AREAS"));
 		tar.setCustomModelData(GUIControlCentre.BUTTON_AREAS.getCustomModelData());
 		area.setItemMeta(tar);
 		// destination terminal
 		ItemStack ter = new ItemStack(Material.BOWL, 1);
 		ItemMeta min = ter.getItemMeta();
+		assert min != null;
 		min.setDisplayName(plugin.getLanguage().getString("BUTTON_TERM"));
 		min.setCustomModelData(GUIControlCentre.BUTTON_TERM.getCustomModelData());
 		ter.setItemMeta(min);
@@ -118,21 +123,25 @@ public class TARDISControlInventory {
 		// architectural reconfiguration system
 		ItemStack ars = new ItemStack(Material.BOWL, 1);
 		ItemMeta but = ars.getItemMeta();
+		assert but != null;
 		but.setDisplayName(plugin.getLanguage().getString("BUTTON_ARS"));
 		but.setCustomModelData(GUIControlCentre.BUTTON_ARS.getCustomModelData());
 		ars.setItemMeta(but);
 		// desktop theme
 		ItemStack upg = new ItemStack(Material.BOWL, 1);
 		ItemMeta rade = upg.getItemMeta();
+		assert rade != null;
 		rade.setDisplayName(plugin.getLanguage().getString("BUTTON_THEME"));
 		rade.setCustomModelData(GUIControlCentre.BUTTON_THEME.getCustomModelData());
 		upg.setItemMeta(rade);
 		// power up/down
 		ItemStack pow = new ItemStack(Material.REPEATER, 1);
 		ItemMeta dwn = pow.getItemMeta();
+		assert dwn != null;
 		dwn.setDisplayName(plugin.getLanguage().getString("BUTTON_POWER"));
 		dwn.setLore(Collections.singletonList(poweredOnOff));
 		int pcmd = GUIControlCentre.BUTTON_POWER.getCustomModelData();
+		assert poweredOnOff != null;
 		if (poweredOnOff.equals(off)) {
 			pcmd += 100;
 		}
@@ -141,9 +150,11 @@ public class TARDISControlInventory {
 		// light
 		ItemStack lig = new ItemStack(Material.REPEATER, 1);
 		ItemMeta swi = lig.getItemMeta();
+		assert swi != null;
 		swi.setDisplayName(plugin.getLanguage().getString("BUTTON_LIGHTS"));
 		swi.setLore(Collections.singletonList(lightsOnOff));
 		int lcmd = GUIControlCentre.BUTTON_LIGHTS.getCustomModelData();
+		assert lightsOnOff != null;
 		if (lightsOnOff.equals(off)) {
 			lcmd += 100;
 		}
@@ -152,6 +163,7 @@ public class TARDISControlInventory {
 		// toggle wool
 		ItemStack tog = new ItemStack(Material.REPEATER, 1);
 		ItemMeta gle = tog.getItemMeta();
+		assert gle != null;
 		gle.setDisplayName(plugin.getLanguage().getString("BUTTON_TOGGLE"));
 		gle.setLore(Collections.singletonList(toggleOpenClosed));
 		int tcmd = GUIControlCentre.BUTTON_TOGGLE.getCustomModelData();
@@ -163,6 +175,7 @@ public class TARDISControlInventory {
 		// tardis map
 		ItemStack map = new ItemStack(Material.MAP, 1);
 		ItemMeta me = map.getItemMeta();
+		assert me != null;
 		me.setDisplayName(plugin.getLanguage().getString("BUTTON_TARDIS_MAP"));
 		me.setCustomModelData(GUIControlCentre.BUTTON_TARDIS_MAP.getCustomModelData());
 		map.setItemMeta(me);
@@ -172,15 +185,18 @@ public class TARDISControlInventory {
 		// chameleon circuit
 		ItemStack cham = new ItemStack(Material.BOWL, 1);
 		ItemMeta eleon = cham.getItemMeta();
+		assert eleon != null;
 		eleon.setDisplayName(plugin.getLanguage().getString("BUTTON_CHAMELEON"));
 		eleon.setCustomModelData(GUIControlCentre.BUTTON_CHAMELEON.getCustomModelData());
 		cham.setItemMeta(eleon);
 		// siege
 		ItemStack siege = new ItemStack(Material.REPEATER, 1);
 		ItemMeta mode = siege.getItemMeta();
+		assert mode != null;
 		mode.setDisplayName(plugin.getLanguage().getString("BUTTON_SIEGE"));
 		mode.setLore(Collections.singletonList(siegeOnOff));
 		int scmd = GUIControlCentre.BUTTON_SIEGE.getCustomModelData();
+		assert siegeOnOff != null;
 		if (siegeOnOff.equals(off)) {
 			scmd += 100;
 		}
@@ -189,18 +205,21 @@ public class TARDISControlInventory {
 		// hide
 		ItemStack hide = new ItemStack(Material.BOWL, 1);
 		ItemMeta box = hide.getItemMeta();
+		assert box != null;
 		box.setDisplayName(plugin.getLanguage().getString("BUTTON_HIDE"));
 		box.setCustomModelData(GUIControlCentre.BUTTON_HIDE.getCustomModelData());
 		hide.setItemMeta(box);
 		// rebuild
 		ItemStack reb = new ItemStack(Material.BOWL, 1);
 		ItemMeta uild = reb.getItemMeta();
+		assert uild != null;
 		uild.setDisplayName(plugin.getLanguage().getString("BUTTON_REBUILD"));
 		uild.setCustomModelData(GUIControlCentre.BUTTON_REBUILD.getCustomModelData());
 		reb.setItemMeta(uild);
 		// direction
 		ItemStack dir = new ItemStack(Material.BOWL, 1);
 		ItemMeta ection = dir.getItemMeta();
+		assert ection != null;
 		ection.setDisplayName(plugin.getLanguage().getString("BUTTON_DIRECTION"));
 		ection.setCustomModelData(GUIControlCentre.BUTTON_DIRECTION.getCustomModelData());
 		ection.setLore(Collections.singletonList(direction));
@@ -208,6 +227,7 @@ public class TARDISControlInventory {
 		// temporal
 		ItemStack temp = new ItemStack(Material.BOWL, 1);
 		ItemMeta oral = temp.getItemMeta();
+		assert oral != null;
 		oral.setDisplayName(plugin.getLanguage().getString("BUTTON_TEMP"));
 		oral.setCustomModelData(GUIControlCentre.BUTTON_TEMP.getCustomModelData());
 		temp.setItemMeta(oral);
@@ -217,24 +237,28 @@ public class TARDISControlInventory {
 		// artron levels
 		ItemStack art = new ItemStack(Material.BOWL, 1);
 		ItemMeta ron = art.getItemMeta();
+		assert ron != null;
 		ron.setDisplayName(plugin.getLanguage().getString("BUTTON_ARTRON"));
 		ron.setCustomModelData(GUIControlCentre.BUTTON_ARTRON.getCustomModelData());
 		art.setItemMeta(ron);
 		// scanner
 		ItemStack scan = new ItemStack(Material.BOWL, 1);
 		ItemMeta ner = scan.getItemMeta();
+		assert ner != null;
 		ner.setDisplayName(plugin.getLanguage().getString("BUTTON_SCANNER"));
 		ner.setCustomModelData(GUIControlCentre.BUTTON_SCANNER.getCustomModelData());
 		scan.setItemMeta(ner);
 		// TIS
 		ItemStack info = new ItemStack(Material.BOWL, 1);
 		ItemMeta sys = info.getItemMeta();
+		assert sys != null;
 		sys.setDisplayName(plugin.getLanguage().getString("BUTTON_INFO"));
 		sys.setCustomModelData(GUIControlCentre.BUTTON_INFO.getCustomModelData());
 		info.setItemMeta(sys);
 		// transmats
 		ItemStack tran = new ItemStack(Material.BOWL, 1);
 		ItemMeta smat = tran.getItemMeta();
+		assert smat != null;
 		smat.setDisplayName(plugin.getLanguage().getString("BUTTON_TRANSMAT"));
 		smat.setCustomModelData(GUIControlCentre.BUTTON_TRANSMAT.getCustomModelData());
 		tran.setItemMeta(smat);
@@ -244,24 +268,28 @@ public class TARDISControlInventory {
 		// zero room
 		ItemStack zero = new ItemStack(Material.BOWL, 1);
 		ItemMeta room = zero.getItemMeta();
+		assert room != null;
 		room.setDisplayName(plugin.getLanguage().getString("BUTTON_ZERO"));
 		room.setCustomModelData(GUIControlCentre.BUTTON_ZERO.getCustomModelData());
 		zero.setItemMeta(room);
 		// player prefs
 		ItemStack player = new ItemStack(Material.BOWL, 1);
 		ItemMeta prefs = player.getItemMeta();
+		assert prefs != null;
 		prefs.setDisplayName(plugin.getLanguage().getString("BUTTON_PREFS"));
 		prefs.setCustomModelData(GUIControlCentre.BUTTON_PREFS.getCustomModelData());
 		player.setItemMeta(prefs);
 		// companion menu
 		ItemStack companion = new ItemStack(Material.BOWL, 1);
 		ItemMeta list = companion.getItemMeta();
+		assert list != null;
 		list.setDisplayName(plugin.getLanguage().getString("COMPANIONS_MENU"));
 		list.setCustomModelData(GUIControlCentre.COMPANIONS_MENU.getCustomModelData());
 		companion.setItemMeta(list);
 		// close
 		ItemStack close = new ItemStack(Material.BOWL, 1);
 		ItemMeta can = close.getItemMeta();
+		assert can != null;
 		can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
 		can.setCustomModelData(GUIControlCentre.BUTTON_CLOSE.getCustomModelData());
 		close.setItemMeta(can);

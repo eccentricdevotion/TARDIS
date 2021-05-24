@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -51,7 +52,7 @@ public class TARDISStandbyMode implements Runnable {
 			// not while travelling or recharging and only until they hit zero
 			if (!isTravelling(id) && !isNearCharger(id) && level > amount) {
 				int remove = amount;
-				// if tardis force field is on drain more power
+				// if TARDIS force field is on drain more power
 				if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(standbyData.getUuid())) {
 					remove *= 3;
 				}
@@ -68,7 +69,7 @@ public class TARDISStandbyMode implements Runnable {
 					setp.put("powered_on", 0);
 					OfflinePlayer player = plugin.getServer().getOfflinePlayer(standbyData.getUuid());
 					if (player.isOnline()) {
-						TARDISSounds.playTARDISSound(player.getPlayer().getLocation(), "power_down");
+						TARDISSounds.playTARDISSound(Objects.requireNonNull(player.getPlayer()).getLocation(), "power_down");
 						TARDISMessage.send(player.getPlayer(), "POWER_OFF_AUTO");
 					}
 					long delay = 0;
@@ -80,12 +81,12 @@ public class TARDISStandbyMode implements Runnable {
 						}
 						delay = 20L;
 					}
-					// police box lamp, delay it incase the tardis needs rebuilding
+					// police box lamp, delay it incase the TARDIS needs rebuilding
 					if (standbyData.getPreset().equals(PRESET.NEW) || standbyData.getPreset().equals(PRESET.OLD)) {
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
 					}
 					// if lights are on, turn them off
-					if (standbyData.isLightsOn()) {
+					if (standbyData.isLights()) {
 						new TARDISLampToggler(plugin).flickSwitch(id, standbyData.getUuid(), true, standbyData.isLanterns());
 					}
 					// if beacon is on turn it off

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.api;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -55,9 +55,9 @@ public class TARDISRandomNether extends TARDISRandomLocation {
 			int x = war.getMinX() + randX;
 			// get the z coord
 			int z = war.getMinZ() + randZ;
-			int startX, startY, startZ, resetX, resetZ, count;
-			int whereY = 100;
-			Block startBlock = war.getW().getBlockAt(x, whereY, z);
+			int startx, starty, startz, resetx, resetz, count;
+			int wherey = 100;
+			Block startBlock = war.getW().getBlockAt(x, wherey, z);
 			while (!startBlock.getChunk().isLoaded()) {
 				startBlock.getChunk().load();
 			}
@@ -78,12 +78,12 @@ public class TARDISRandomNether extends TARDISRandomLocation {
 					if (plugin.getPluginRespect().getRespect(dest, param)) {
 						// get start location for checking there is enough space
 						int[] gsl = TARDISTimeTravel.getStartLocation(dest, param.getCompass());
-						startX = gsl[0];
-						resetX = gsl[1];
-						startY = dest.getBlockY();
-						startZ = gsl[2];
-						resetZ = gsl[3];
-						count = TARDISTimeTravel.safeLocation(startX, startY, startZ, resetX, resetZ, war.getW(), param.getCompass());
+						startx = gsl[0];
+						resetx = gsl[1];
+						starty = dest.getBlockY();
+						startz = gsl[2];
+						resetz = gsl[3];
+						count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, war.getW(), param.getCompass());
 					} else {
 						count = 1;
 					}

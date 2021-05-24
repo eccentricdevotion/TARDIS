@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.tardis.database.data.TARDIS;
@@ -51,10 +51,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -126,6 +123,7 @@ public class TARDISSiegeListener implements Listener {
 		String tl = tardis.getOwner();
 		ItemStack is = new ItemStack(Material.BROWN_MUSHROOM_BLOCK, 1);
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		im.setDisplayName("tardis Siege Cube");
 		im.setCustomModelData(10000002);
 		im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 2);
@@ -178,7 +176,7 @@ public class TARDISSiegeListener implements Listener {
 			TARDISMessage.send(p, "SIEGE_NO_TARDIS");
 			return;
 		}
-		if (!plugin.getPlanetsConfig().getBoolean("planets." + p.getLocation().getWorld().getName() + ".time_travel")) {
+		if (!plugin.getPlanetsConfig().getBoolean("planets." + Objects.requireNonNull(p.getLocation().getWorld()).getName() + ".time_travel")) {
 			event.setCancelled(true);
 			TARDISMessage.send(p, "SIEGE_NO_WORLD");
 			return;
@@ -194,7 +192,7 @@ public class TARDISSiegeListener implements Listener {
 				TARDISMessage.send(p, "SIEGE_NO_SPACE");
 				return;
 			}
-			List<String> lore = is.getItemMeta().getLore();
+			List<String> lore = Objects.requireNonNull(is.getItemMeta()).getLore();
 			if (lore == null || lore.size() < 2) {
 				TARDISMessage.send(p, "SIEGE_NO_ID");
 				return;
@@ -212,7 +210,7 @@ public class TARDISSiegeListener implements Listener {
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("tardis_id", id);
 			HashMap<String, Object> set = new HashMap<>();
-			set.put("world", loc.getWorld().getName());
+			set.put("world", Objects.requireNonNull(loc.getWorld()).getName());
 			set.put("x", loc.getBlockX());
 			set.put("y", loc.getBlockY());
 			set.put("z", loc.getBlockZ());
@@ -239,7 +237,7 @@ public class TARDISSiegeListener implements Listener {
 			TARDISMessage.send(p, "SIEGE_NO_TARDIS");
 			return;
 		}
-		String w = p.getLocation().getWorld().getName();
+		String w = Objects.requireNonNull(p.getLocation().getWorld()).getName();
 		if (!plugin.getPlanetsConfig().getBoolean("planets." + w + ".time_travel")) {
 			event.setCancelled(true);
 			TARDISMessage.send(p, "SIEGE_NO_WORLD");
@@ -259,7 +257,7 @@ public class TARDISSiegeListener implements Listener {
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("tardis_id", id);
 		HashMap<String, Object> set = new HashMap<>();
-		set.put("world", loc.getWorld().getName());
+		set.put("world", Objects.requireNonNull(loc.getWorld()).getName());
 		set.put("x", loc.getBlockX());
 		set.put("y", loc.getBlockY());
 		set.put("z", loc.getBlockZ());
@@ -280,6 +278,7 @@ public class TARDISSiegeListener implements Listener {
 			return;
 		}
 		Block b = event.getClickedBlock();
+		assert b != null;
 		if (!isSiegeCube(b)) {
 			return;
 		}
@@ -299,7 +298,7 @@ public class TARDISSiegeListener implements Listener {
 		if (!rsc.resultSet()) {
 			return;
 		}
-		// must be the Time Lord or companion of this tardis
+		// must be the Time Lord or companion of this TARDIS
 		HashMap<String, Object> wheret = new HashMap<>();
 		wheret.put("tardis_id", rsc.getTardisId());
 		ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
@@ -325,7 +324,7 @@ public class TARDISSiegeListener implements Listener {
 		}
 		int min = (plugin.getArtronConfig().getInt("full_charge") / 100) * plugin.getArtronConfig().getInt("siege_transfer");
 		if (!p.isSneaking()) {
-			// attempt to transfer Time Lord energy to the tardis
+			// attempt to transfer Time Lord energy to the TARDIS
 			// check player has a prefs record
 			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
 			if (!rsp.resultSet()) {
@@ -346,13 +345,13 @@ public class TARDISSiegeListener implements Listener {
 			plugin.getQueryFactory().alterEnergyLevel("tardis", min, wherea, p);
 			TARDISMessage.send(p, "SIEGE_TRANSFER", String.format("%s", min));
 		} else {
-			// attempt to unsiege the tardis
-			// check tardis has minimum energy level
+			// attempt to unsiege the TARDIS
+			// check TARDIS has minimum energy level
 			if (min > tardis.getArtronLevel()) {
 				TARDISMessage.send(p, "SIEGE_POWER");
 				return;
 			}
-			// rebuild the tardis
+			// rebuild the TARDIS
 			Location current = b.getLocation();
 			BuildData bd = new BuildData(p.getUniqueId().toString());
 			bd.setDirection(rsc.getDirection());
@@ -362,7 +361,7 @@ public class TARDISSiegeListener implements Listener {
 			bd.setPlayer(p);
 			bd.setRebuild(true);
 			bd.setSubmarine(rsc.isSubmarine());
-			bd.setTardisID(id);
+			bd.setTardisId(id);
 			bd.setThrottle(SpaceTimeThrottle.REBUILD);
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
 			HashMap<String, Object> set = new HashMap<>();
@@ -401,6 +400,6 @@ public class TARDISSiegeListener implements Listener {
 	}
 
 	private boolean hasSiegeCubeName(ItemStack is) {
-		return (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("tardis Siege Cube"));
+		return (is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName() && is.getItemMeta().getDisplayName().equals("tardis Siege Cube"));
 	}
 }

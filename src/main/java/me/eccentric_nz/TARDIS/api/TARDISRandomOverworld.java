@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.api;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
@@ -79,7 +79,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
 				}
 			} else {
 				// space for a player / check plugin respect
-				int highest = TARDISStaticLocationGetters.getHighestYin3x3(war.getW(), x, z);
+				int highest = TARDISStaticLocationGetters.getHighestYIn3x3(war.getW(), x, z);
 				Location chk = new Location(war.getW(), x, highest, z);
 				if (plugin.getPluginRespect().getRespect(chk, param)) {
 					return chk;
@@ -89,12 +89,12 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
 		return dest;
 	}
 
-	private boolean safeOverworld(World world, int whereX, int whereZ, COMPASS d) {
+	private boolean safeOverworld(World world, int wherex, int wherez, COMPASS d) {
 		boolean safe = false;
 		int count;
-		int highest = TARDISStaticLocationGetters.getHighestYin3x3(world, whereX, whereZ);
+		int highest = TARDISStaticLocationGetters.getHighestYIn3x3(world, wherex, wherez);
 		if (highest > 3) {
-			Block currentBlock = world.getBlockAt(whereX, highest, whereZ);
+			Block currentBlock = world.getBlockAt(wherex, highest, wherez);
 			if (TARDISConstants.GOOD_MATERIALS.contains(currentBlock.getType())) {
 				currentBlock = currentBlock.getRelative(BlockFace.DOWN);
 			}
@@ -105,12 +105,12 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
 				}
 				// get start location for checking there is enough space
 				int[] gsl = TARDISTimeTravel.getStartLocation(overworld, d);
-				int startX = gsl[0];
-				int resetX = gsl[1];
-				int startY = overworld.getBlockY() + 1;
-				int startZ = gsl[2];
-				int resetZ = gsl[3];
-				count = TARDISTimeTravel.safeLocation(startX, startY, startZ, resetX, resetZ, world, d);
+				int startx = gsl[0];
+				int resetx = gsl[1];
+				int starty = overworld.getBlockY() + 1;
+				int startz = gsl[2];
+				int resetz = gsl[3];
+				count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, world, d);
 			} else {
 				count = 1;
 			}
@@ -118,7 +118,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
 			count = 1;
 		}
 		if (count == 0) {
-			dest = new Location(world, whereX, highest, whereZ);
+			dest = new Location(world, wherex, highest, wherez);
 			safe = true;
 		}
 		return safe;

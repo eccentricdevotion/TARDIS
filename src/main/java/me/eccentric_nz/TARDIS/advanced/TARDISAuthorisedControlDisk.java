@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ public class TARDISAuthorisedControlDisk {
 		// find player
 		Player timelord = plugin.getServer().getPlayer(uuid);
 		if (timelord == null || !timelord.isOnline()) {
-			return "The Time Lord of this tardis is not online.";
+			return "The Time Lord of this TARDIS is not online.";
 		}
 		Location location = null;
 		COMPASS direction = COMPASS.EAST;
@@ -92,7 +92,7 @@ public class TARDISAuthorisedControlDisk {
 					location = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
 					direction = rsh.getDirection();
 				} else {
-					return "Could not find the tardis's home location.";
+					return "Could not find the TARDIS's home location.";
 				}
 			} else {
 				// get save location
@@ -103,7 +103,7 @@ public class TARDISAuthorisedControlDisk {
 						location = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
 						direction = COMPASS.valueOf(rsd.getDirection());
 					} else {
-						return "Could not find the specified tardis save.";
+						return "Could not find the specified TARDIS save.";
 					}
 				}
 			}
@@ -115,7 +115,7 @@ public class TARDISAuthorisedControlDisk {
 		if (location != null) {
 			if (isPlayerLocation) {
 				if (plugin.getUtils().inTARDISWorld(timelord)) {
-					return "The Time Lord must be outside the tardis.";
+					return "The Time Lord must be outside the TARDIS.";
 				}
 				// check respect
 				if (!plugin.getPluginRespect().getRespect(location, new Parameters(timelord, Flag.getNoMessageFlags()))) {
@@ -163,7 +163,7 @@ public class TARDISAuthorisedControlDisk {
 					playerUUIDs = new ArrayList<>();
 					playerUUIDs.add(player.getUniqueId());
 				}
-				String message = "The tardis has detected an authorised control disc, valid for one journey only. Travelling to the programmed location.";
+				String message = "The TARDIS has detected an authorised control disc, valid for one journey only. Travelling to the programmed location.";
 				TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, player, playerUUIDs, id, eps, creeper);
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import java.sql.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -842,9 +843,8 @@ public class TARDISMaterialIDConverter {
 					String newFloor = rs.getString("floor");
 					String newSiegeWall = rs.getString("siege_wall");
 					String newSiegeFloor = rs.getString("siege_floor");
-					Material material;
 					try {
-						material = Material.valueOf(wall);
+						Material.valueOf(wall);
 					} catch (IllegalArgumentException e) {
 						// look up blockData to get the correct material...
 						String mat = LEGACY_TYPE_LOOKUP.get(wall);
@@ -853,7 +853,7 @@ public class TARDISMaterialIDConverter {
 						}
 					}
 					try {
-						material = Material.valueOf(floor);
+						Material.valueOf(floor);
 					} catch (IllegalArgumentException e) {
 						// look up blockData to get the correct material...
 						String mat = LEGACY_TYPE_LOOKUP.get(floor);
@@ -862,7 +862,7 @@ public class TARDISMaterialIDConverter {
 						}
 					}
 					try {
-						material = Material.valueOf(siegeWall);
+						Material.valueOf(siegeWall);
 					} catch (IllegalArgumentException e) {
 						// look up blockData to get the correct material...
 						String mat = LEGACY_TYPE_LOOKUP.get(siegeWall);
@@ -871,7 +871,7 @@ public class TARDISMaterialIDConverter {
 						}
 					}
 					try {
-						material = Material.valueOf(siegeFloor);
+						Material.valueOf(siegeFloor);
 					} catch (IllegalArgumentException e) {
 						// look up blockData to get the correct material...
 						String mat = LEGACY_TYPE_LOOKUP.get(siegeFloor);
@@ -925,7 +925,7 @@ public class TARDISMaterialIDConverter {
 		PreparedStatement statement = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String check = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "blocks' AND sql LIKE '%block INTEGER DEFAULT 0%'" : "SHOW COLUMNS FROM " + prefix + "blocks LIKE 'block'";
+		String check = (Objects.equals(plugin.getConfig().getString("storage.database"), "sqlite")) ? "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "blocks' AND sql LIKE '%block INTEGER DEFAULT 0%'" : "SHOW COLUMNS FROM " + prefix + "blocks LIKE 'block'";
 		String query = "SELECT b_id, block, data FROM " + prefix + "blocks";
 		String update = "UPDATE " + prefix + "blocks SET data = ? WHERE b_id = ?";
 		int i = 0;

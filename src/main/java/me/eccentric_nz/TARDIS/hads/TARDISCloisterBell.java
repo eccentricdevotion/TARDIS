@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * The Cloister Bell is a signal to the crew that a catastrophe that could threaten even a tardis is occurring or will
@@ -83,7 +84,7 @@ public class TARDISCloisterBell implements Runnable {
 		messageOff = false;
 	}
 
-	public TARDISCloisterBell(TARDISPlugin plugin, int loops, int id, Location current, Player player, String reason) {
+	TARDISCloisterBell(TARDISPlugin plugin, int loops, int id, Location current, Player player, String reason) {
 		this.plugin = plugin;
 		this.loops = loops;
 		this.id = id;
@@ -115,17 +116,20 @@ public class TARDISCloisterBell implements Runnable {
 		if (i < loops) {
 			if (centre != null) {
 				// play sound in tardis with range size of ars grid
-				centre.getWorld().playSound(centre, "cloister_bell", 10.0f, 1.0f);
+				Objects.requireNonNull(centre.getWorld()).playSound(centre, "cloister_bell", 10.0f, 1.0f);
 			}
 			if (current != null) {
 				// play sound outside the tardis with a range of 32 blocks
-				current.getWorld().playSound(current, "cloister_bell", 2.0f, 1.0f);
+				Objects.requireNonNull(current.getWorld()).playSound(current, "cloister_bell", 2.0f, 1.0f);
 			}
 			if (player != null && player.isOnline()) {
 				// play sound at Time Lords location (if they are not in the tardis and not within range of the tardis exterior)
 				Location location = player.getLocation();
-				if (!plugin.getUtils().inTARDISWorld(player) && !isInPoliceBoxRange(current, location)) {
-					location.getWorld().playSound(location, "cloister_bell", 1.0f, 1.0f);
+				if (!plugin.getUtils().inTARDISWorld(player)) {
+					assert current != null;
+					if (!isInPoliceBoxRange(current, location)) {
+						Objects.requireNonNull(location.getWorld()).playSound(location, "cloister_bell", 1.0f, 1.0f);
+					}
 				}
 			}
 			i++;

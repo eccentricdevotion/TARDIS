@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2021 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.tardis.commands.tardis;
 
 import me.eccentric_nz.tardis.TARDISPlugin;
@@ -11,15 +27,15 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class TARDISSaveIconCommand {
+class TARDISSaveIconCommand {
 
 	private final TARDISPlugin plugin;
 
-	public TARDISSaveIconCommand(TARDISPlugin plugin) {
+	TARDISSaveIconCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
-	public boolean changeIcon(Player player, String[] args) {
+	boolean changeIcon(Player player, String[] args) {
 		if (TARDISPermission.hasPermission(player, "tardis.save")) {
 			if (args.length < 3) {
 				TARDISMessage.send(player, "TOO_FEW_ARGS");
@@ -33,7 +49,7 @@ public class TARDISSaveIconCommand {
 			int id = rs.getTardisId();
 			HashMap<String, Object> whered = new HashMap<>();
 			whered.put("dest_name", args[1]);
-			whered.put("tardis_hd", id);
+			whered.put("tardis_id", id);
 			ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
 			if (!rsd.resultSet()) {
 				TARDISMessage.send(player, "SAVE_NOT_FOUND");

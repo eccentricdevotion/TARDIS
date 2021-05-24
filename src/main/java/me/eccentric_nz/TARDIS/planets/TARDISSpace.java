@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,10 +48,10 @@ public class TARDISSpace {
 	}
 
 	/**
-	 * Gets custom world for the specified tardis. If the world does not exist, it is created.
+	 * Gets custom world for the specified TARDIS. If the world does not exist, it is created.
 	 *
 	 * @param name the name of this world
-	 * @return a new tardis World
+	 * @return a new TARDIS World
 	 */
 	public World getTardisWorld(String name) {
 		if (tardisWorld == null) {

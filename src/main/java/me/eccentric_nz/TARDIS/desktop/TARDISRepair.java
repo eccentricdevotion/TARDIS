@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@ package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
 import me.eccentric_nz.tardis.database.data.TARDIS;
@@ -41,6 +41,7 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -223,11 +224,11 @@ public class TARDISRepair {
 						if (rsc.getBlockCount() < map.getValue()) {
 							hasRequired = false;
 							int diff = map.getValue() - rsc.getBlockCount();
-							TARDISMessage.send(player, "CONDENSE_MORE", String.format("%d", diff), Material.getMaterial(map.getKey()).toString());
+							TARDISMessage.send(player, "CONDENSE_MORE", String.format("%d", diff), Objects.requireNonNull(Material.getMaterial(map.getKey())).toString());
 						}
 					} else {
 						hasRequired = false;
-						TARDISMessage.send(player, "CONDENSE_MIN", String.format("%d", map.getValue()), Material.getMaterial(map.getKey()).toString());
+						TARDISMessage.send(player, "CONDENSE_MIN", String.format("%d", map.getValue()), Objects.requireNonNull(Material.getMaterial(map.getKey())).toString());
 					}
 				}
 				if (!hasRequired) {

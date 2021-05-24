@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISFactionsUUID {
+class TARDISFactionsUUID {
 
 	/**
 	 * Checks whether a location is in the player's faction or 'wilderness'... ie NOT in a claimed faction that this

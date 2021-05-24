@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Tylos was a member of Varsh's group of Outlers on Alzarius. When Adric asked to join them, Tylos challenged him to
@@ -52,8 +53,8 @@ public class TARDISJoinListener implements Listener {
 	}
 
 	/**
-	 * Listens for a player joining the server. If the player has tardis permissions (ie not a guest), then check
-	 * whether they have achieved the building of a tardis. If not then insert an advancement record and give them the
+	 * Listens for a player joining the server. If the player has TARDIS permissions (ie not a guest), then check
+	 * whether they have achieved the building of a TARDIS. If not then insert an achievement record and give them the
 	 * tardis book.
 	 *
 	 * @param event a player joining the server
@@ -68,7 +69,7 @@ public class TARDISJoinListener implements Listener {
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("uuid", uuid);
 				where.put("name", "joinkit");
-				ResultSetAdvancements rsa = new ResultSetAdvancements(plugin, where, false);
+				ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
 				if (!rsa.resultSet()) {
 					//add a record
 					HashMap<String, Object> set = new HashMap<>();
@@ -83,11 +84,11 @@ public class TARDISJoinListener implements Listener {
 		}
 		if (plugin.getConfig().getBoolean("allow.achievements")) {
 			if (TARDISPermission.hasPermission(player, "tardis.book")) {
-				// check if they have started building a tardis yet
+				// check if they have started building a TARDIS yet
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("uuid", uuid);
 				where.put("name", "tardis");
-				ResultSetAdvancements rsa = new ResultSetAdvancements(plugin, where, false);
+				ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
 				if (!rsa.resultSet()) {
 					//add a record
 					HashMap<String, Object> set = new HashMap<>();
@@ -111,7 +112,7 @@ public class TARDISJoinListener implements Listener {
 			}
 		}
 		if (plugin.getConfig().getBoolean("allow.tp_switch") && TARDISPermission.hasPermission(player, "tardis.texture")) {
-			// are they in the tardis?
+			// are they in the TARDIS?
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("uuid", uuid);
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
@@ -133,7 +134,7 @@ public class TARDISJoinListener implements Listener {
 			TARDIS tardis = rs.getTardis();
 			int id = tardis.getTardisId();
 			String owner = tardis.getOwner();
-			String lastKnownName = tardis.getLastKnownName();
+			String last_known_name = tardis.getLastKnownName();
 			HashMap<String, Object> wherecl = new HashMap<>();
 			wherecl.put("tardis_id", id);
 			ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -154,9 +155,9 @@ public class TARDISJoinListener implements Listener {
 				now = System.currentTimeMillis();
 			}
 			HashMap<String, Object> set = new HashMap<>();
-			set.put("last_use", now);
+			set.put("lastuse", now);
 			set.put("monsters", 0);
-			if (!lastKnownName.equals(player.getName())) {
+			if (!last_known_name.equals(player.getName())) {
 				// update the player's name WG region as it may have changed
 				if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
 					World cw = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
@@ -179,7 +180,7 @@ public class TARDISJoinListener implements Listener {
 		}
 		// add to zero room occupants
 		if (plugin.getConfig().getBoolean("allow.zero_room")) {
-			if (player.getLocation().getWorld().getName().equals("TARDIS_Zero_Room")) {
+			if (Objects.requireNonNull(player.getLocation().getWorld()).getName().equals("TARDIS_Zero_Room")) {
 				plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
 			}
 		}

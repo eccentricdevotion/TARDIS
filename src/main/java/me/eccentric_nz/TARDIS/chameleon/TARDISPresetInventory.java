@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ class TARDISPresetInventory {
 	private final Player player;
 	private final List<Material> notThese = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
 
-	public TARDISPresetInventory(TARDISPlugin plugin, Player player) {
+	TARDISPresetInventory(TARDISPlugin plugin, Player player) {
 		this.plugin = plugin;
 		this.player = player;
 		terminal = getItemStack();
@@ -56,22 +56,22 @@ class TARDISPresetInventory {
 	private ItemStack[] getItemStack() {
 		ItemStack[] stacks = new ItemStack[54];
 
-		int i = 0;
 		for (PRESET preset : PRESET.values()) {
 			if (!notThese.contains(preset.getCraftMaterial()) && !preset.isColoured()) {
 				if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
 					ItemStack is = new ItemStack(preset.getGuiDisplay(), 1);
 					ItemMeta im = is.getItemMeta();
+					assert im != null;
 					im.setDisplayName(preset.getDisplayName());
 					is.setItemMeta(im);
 					stacks[preset.getSlot()] = is;
 				}
-				i++;
 			}
 		}
 		// back
 		ItemStack back = new ItemStack(Material.BOWL, 1);
 		ItemMeta but = back.getItemMeta();
+		assert but != null;
 		but.setDisplayName("Back");
 		but.setCustomModelData(GUIChameleonPresets.BACK.getCustomModelData());
 		back.setItemMeta(but);
@@ -79,6 +79,7 @@ class TARDISPresetInventory {
 		// page two
 		ItemStack page = new ItemStack(Material.ARROW, 1);
 		ItemMeta two = page.getItemMeta();
+		assert two != null;
 		two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
 		two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData());
 		page.setItemMeta(two);
@@ -86,6 +87,7 @@ class TARDISPresetInventory {
 		// Cancel / close
 		ItemStack close = new ItemStack(Material.BOWL, 1);
 		ItemMeta can = close.getItemMeta();
+		assert can != null;
 		can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
 		can.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
 		close.setItemMeta(can);

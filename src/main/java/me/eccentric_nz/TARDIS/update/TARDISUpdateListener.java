@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.update;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.tardis.database.QueryFactory;
 import me.eccentric_nz.tardis.database.data.TARDIS;
@@ -66,7 +66,7 @@ public class TARDISUpdateListener implements Listener {
 	}
 
 	/**
-	 * Listens for player interaction with the tardis console and other specific items. If the block is clicked and
+	 * Listens for player interaction with the TARDIS console and other specific items. If the block is clicked and
 	 * players name is contained in the appropriate HashMap, then the block's position is recorded in the database.
 	 *
 	 * @param event a player clicking on a block
@@ -90,13 +90,14 @@ public class TARDISUpdateListener implements Listener {
 			// attempt to remove secondary control record
 			HashMap<String, Object> wherec = new HashMap<>();
 			wherec.put("tardis_id", plugin.getTrackerKeeper().getSecondaryRemovers().get(uuid));
+			assert block != null;
 			String location = (block.getType().equals(Material.REPEATER)) ? TARDISStaticLocationGetters.makeLocationStr(block.getLocation()) : block.getLocation().toString();
 			wherec.put("location", location);
 			wherec.put("secondary", 1);
 			ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
 			if (rsc.resultSet()) {
 				HashMap<String, Object> whered = new HashMap<>();
-				whered.put("cId", rsc.getcId());
+				whered.put("c_id", rsc.getcId());
 				new QueryFactory(plugin).doDelete("controls", whered);
 				TARDISMessage.send(player, "SEC_REMOVED");
 			} else {
@@ -107,7 +108,7 @@ public class TARDISUpdateListener implements Listener {
 		} else {
 			return;
 		}
-		// check they are still in the tardis world
+		// check they are still in the TARDIS world
 		if (!updateable.equals(Updateable.BACKDOOR) && !plugin.getUtils().inTARDISWorld(player)) {
 			TARDISMessage.send(player, "UPDATE_IN_WORLD");
 			return;
@@ -141,7 +142,13 @@ public class TARDISUpdateListener implements Listener {
 			HashMap<String, Object> tid = new HashMap<>();
 			HashMap<String, Object> set = new HashMap<>();
 			tid.put("tardis_id", id);
-			String blockLocStr = (updateable.isControl()) ? block_loc.toString() : bw.getName() + ":" + bx + ":" + by + ":" + bz;
+			String blockLocStr;
+			if ((updateable.isControl())) {
+				blockLocStr = block_loc.toString();
+			} else {
+				assert bw != null;
+				blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
+			}
 			if (secondary) {
 				plugin.getTrackerKeeper().getSecondary().remove(uuid);
 			} else {
@@ -171,11 +178,13 @@ public class TARDISUpdateListener implements Listener {
 					plugin.getQueryFactory().doUpdate("farming", set, tid);
 				}
 				case CREEPER -> {
+					assert bw != null;
 					blockLocStr = bw.getName() + ":" + bx + ".5:" + by + ":" + bz + ".5";
 					set.put("creeper", blockLocStr);
 					plugin.getQueryFactory().doUpdate("tardis", set, tid);
 				}
 				case EPS -> {
+					assert bw != null;
 					blockLocStr = bw.getName() + ":" + bx + ".5:" + (by + 1) + ":" + bz + ".5";
 					set.put("eps", blockLocStr);
 					plugin.getQueryFactory().doUpdate("tardis", set, tid);
@@ -208,7 +217,7 @@ public class TARDISUpdateListener implements Listener {
 					plugin.getQueryFactory().insertControl(id, 32, blockLocStr, secondary ? 1 : 0);
 					// add text to sign
 					Sign ss = (Sign) block.getState();
-					ss.setLine(0, "tardis");
+					ss.setLine(0, "TARDIS");
 					ss.setLine(1, plugin.getSigns().getStringList("saves").get(0));
 					ss.setLine(2, plugin.getSigns().getStringList("saves").get(1));
 					ss.setLine(3, "");
@@ -278,7 +287,7 @@ public class TARDISUpdateListener implements Listener {
 					// add text to sign
 					Sign s = (Sign) block.getState();
 					s.setLine(0, "-----");
-					s.setLine(1, "tardis");
+					s.setLine(1, "TARDIS");
 					s.setLine(2, plugin.getSigns().getStringList("info").get(0));
 					s.setLine(3, plugin.getSigns().getStringList("info").get(1));
 					s.update();
@@ -294,9 +303,13 @@ public class TARDISUpdateListener implements Listener {
 						rblock.setBlockData(repeater);
 					}, 2L);
 				}
+				case SMELT, FUEL -> new TARDISSmelterCommand(plugin).addDropChest(player, updateable, id, block);
+				case VAULT -> new TARDISVaultCommand(plugin).addDropChest(player, id, block);
 				default -> plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
 			}
-			TARDISMessage.send(player, "UPDATE_SET", updateable.getName());
+			if (!updateable.equals(Updateable.FUEL) && !updateable.equals(Updateable.SMELT)) {
+				TARDISMessage.send(player, "UPDATE_SET", updateable.getName());
+			}
 		}
 	}
 }

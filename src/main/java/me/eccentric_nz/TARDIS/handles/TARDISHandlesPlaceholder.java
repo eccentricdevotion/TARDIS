@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@ package me.eccentric_nz.tardis.handles;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.OfflinePlayer;
 
-public class TARDISHandlesPlaceholder {
+class TARDISHandlesPlaceholder {
 
-	public static String getSubstituted(String s, OfflinePlayer player) {
+	static String getSubstituted(String s, OfflinePlayer player) {
 		return PlaceholderAPI.setPlaceholders(player, s);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +18,21 @@ package me.eccentric_nz.tardis.commands.tardis;
 
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.tardis.database.TARDISBoundTransmatRemoval;
 import me.eccentric_nz.tardis.database.data.Transmat;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 class TARDISTransmatCommand {
 
@@ -37,7 +42,7 @@ class TARDISTransmatCommand {
 		this.plugin = plugin;
 	}
 
-	public boolean teleportOrProcess(Player player, String[] args) {
+	boolean teleportOrProcess(Player player, String[] args) {
 		if (args.length < 2) {
 			TARDISMessage.send(player, "TOO_FEW_ARGS");
 			return false;
@@ -52,7 +57,7 @@ class TARDISTransmatCommand {
 			TARDISMessage.send(player, "NOT_A_TIMELORD");
 			return true;
 		}
-		// player is in tardis
+		// player is in TARDIS
 		HashMap<String, Object> wheret = new HashMap<>();
 		wheret.put("uuid", player.getUniqueId().toString());
 		ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -71,8 +76,16 @@ class TARDISTransmatCommand {
 			if (rslist.resultSet()) {
 				TARDISMessage.send(player, "TRANSMAT_LIST");
 				for (Transmat t : rslist.getData()) {
-					String entry = String.format(plugin.getJsonKeeper().getTransmatLocation(), t.getName(), t.getX(), t.getY(), t.getZ(), t.getYaw(), t.getName());
-					TARDISUpdateChatGUI.sendJSON(entry, player);
+					TextComponent tcg = new TextComponent(t.getName());
+					tcg.setColor(ChatColor.GREEN);
+					TextComponent tcl = new TextComponent(String.format("X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f", t.getX(), t.getY(), t.getZ(), t.getYaw()));
+					TextComponent tce = new TextComponent(" < Transmat > ");
+					tce.setColor(ChatColor.AQUA);
+					tce.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Transmat to this location")));
+					tce.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis transmat tp " + t.getName()));
+					tcg.addExtra(tcl);
+					tcg.addExtra(tce);
+					player.spigot().sendMessage(tcg);
 				}
 			} else {
 				TARDISMessage.send(player, "TRANSMAT_NO_LIST");
@@ -107,7 +120,7 @@ class TARDISTransmatCommand {
 		} else {
 			Location location = player.getLocation();
 			if (args[1].equalsIgnoreCase("add")) {
-				// must be in their tardis
+				// must be in their TARDIS
 				if (!plugin.getUtils().inTARDISWorld(location)) {
 					TARDISMessage.send(player, "CMD_IN_WORLD");
 					return true;
@@ -126,7 +139,7 @@ class TARDISTransmatCommand {
 					HashMap<String, Object> set = new HashMap<>();
 					set.put("tardis_id", id);
 					set.put("name", args[2]);
-					set.put("world", location.getWorld().getName());
+					set.put("world", Objects.requireNonNull(location.getWorld()).getName());
 					set.put("x", location.getX());
 					set.put("y", location.getY());
 					set.put("z", location.getZ());
@@ -140,7 +153,7 @@ class TARDISTransmatCommand {
 				ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, args[2]);
 				if (rsm.resultSet()) {
 					HashMap<String, Object> set = new HashMap<>();
-					set.put("world", location.getWorld().getName());
+					set.put("world", Objects.requireNonNull(location.getWorld()).getName());
 					set.put("x", location.getX());
 					set.put("y", location.getY());
 					set.put("z", location.getZ());

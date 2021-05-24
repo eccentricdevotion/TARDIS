@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.info;
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,6 +30,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -41,7 +42,6 @@ import java.util.UUID;
 public class TARDISInformationSystemListener implements Listener, CommandExecutor {
 
 	private final TARDISPlugin plugin;
-	private final String JSON = "{\"text\":\"%s\",\"color\":\"gold\",\"extra\":[{\"text\":\"%s\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisinfo %s\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}},\"extra\":[{\"text\":\"%s\",\"color\":\"gold\"}]}]}";
 
 	public TARDISInformationSystemListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
@@ -1315,9 +1315,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
 		TARDISInfoMenu.getChildren(item.toString()).forEach((key, value) -> {
 			String[] split = key.split(value, 2);
 			String first = "> " + split[0];
-			TARDISUpdateChatGUI.sendJSON(String.format(JSON, first, value, value, split[1]), p);
+			TARDISUpdateChatGUI.sendTextComponent(first, value, split[1], p);
 		});
-		TARDISUpdateChatGUI.sendJSON(String.format(JSON, "> ", "E", "E", "xit"), p);
+		TARDISUpdateChatGUI.sendTextComponent("> ", "E", "xit", p);
 	}
 
 	/**
@@ -1379,10 +1379,10 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
 		String usage;
 		if (c.length > 1) {
 			desc = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + "." + c[1] + ".description");
-			usage = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + "." + c[1] + ".usage").replace("<command>", c[0]);
+			usage = Objects.requireNonNull(plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + "." + c[1] + ".usage")).replace("<command>", c[0]);
 		} else {
 			desc = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".description");
-			usage = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".usage").replace("<command>", c[0]);
+			usage = Objects.requireNonNull(plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".usage")).replace("<command>", c[0]);
 		}
 		p.sendMessage("---");
 		p.sendMessage("[" + item.getName() + "]");

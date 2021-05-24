@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import org.bukkit.entity.Player;
@@ -294,8 +294,8 @@ public class QueryFactory {
 	/**
 	 * Updates the Artron condenser block count for a specific block.
 	 *
-	 * @param new_size   the newly calculated total number of blocks condensed
-	 * @param id         the tardis_id of the record to update
+	 * @param new_size  the newly calculated total number of blocks condensed
+	 * @param id        the tardis_id of the record to update
 	 * @param blockData the block_data of the record to update
 	 */
 	public void updateCondensedBlockCount(int new_size, int id, String blockData) {

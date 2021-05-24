@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ public class TARDISHandlesRequest {
 	}
 
 	public void process(UUID uuid, String chat) {
-		// check if player is inside / outside tardis
+		// check if player is inside / outside TARDIS
 		Player player = plugin.getServer().getPlayer(uuid);
 		if (player == null || !player.isOnline()) {
 			return;
@@ -64,7 +64,7 @@ public class TARDISHandlesRequest {
 			TARDISMessage.send(player, "NO_PERMS");
 			return;
 		}
-		// must have a tardis
+		// must have a TARDIS
 		ResultSetTardisID rs = new ResultSetTardisID(plugin);
 		if (rs.fromUUID(uuid.toString())) {
 			int id = rs.getTardisId();
@@ -74,7 +74,7 @@ public class TARDISHandlesRequest {
 			where.put("type", 26);
 			ResultSetControls rsc = new ResultSetControls(plugin, where, false);
 			if (rsc.resultSet()) {
-				// if placed player must be in tardis or be wearing a communicator
+				// if placed player must be in TARDIS or be wearing a communicator
 				if (!plugin.getUtils().inTARDISWorld(player)) {
 					// player must have communicator
 					if (!TARDISPermission.hasPermission(player, "tardis.handles.communicator")) {
@@ -83,7 +83,7 @@ public class TARDISHandlesRequest {
 					}
 					PlayerInventory pi = player.getInventory();
 					ItemStack communicator = pi.getHelmet();
-					if (communicator == null || !communicator.hasItemMeta() || !communicator.getType().equals(Material.BIRCH_BUTTON) || !communicator.getItemMeta().getDisplayName().equals("tardis Communicator")) {
+					if (communicator == null || !communicator.hasItemMeta() || !communicator.getType().equals(Material.BIRCH_BUTTON) || !Objects.requireNonNull(communicator.getItemMeta()).getDisplayName().equals("TARDIS Communicator")) {
 						TARDISMessage.send(player, "HANDLES_COMMUNICATOR");
 						return;
 					}
@@ -101,7 +101,7 @@ public class TARDISHandlesRequest {
 			boolean matched = false;
 			String key = "";
 			List<String> groups = null;
-			for (String k : plugin.getHandlesConfig().getConfigurationSection("core-commands").getKeys(true)) {
+			for (String k : Objects.requireNonNull(plugin.getHandlesConfig().getConfigurationSection("core-commands")).getKeys(true)) {
 				if (!k.equals("travel") && !k.equals("door")) {
 					Pattern pattern = TARDISHandlesPattern.getPattern(k, false);
 					Matcher m = pattern.matcher(removed);
@@ -358,7 +358,7 @@ public class TARDISHandlesRequest {
 								return;
 							}
 							Location location = player.getLocation();
-							// must be in their tardis
+							// must be in their TARDIS
 							if (!plugin.getUtils().inTARDISWorld(location)) {
 								TARDISMessage.handlesSend(player, "HANDLES_NO_TRANSMAT_WORLD");
 								return;
@@ -379,7 +379,7 @@ public class TARDISHandlesRequest {
 				}
 			} else {
 				// try custom-commands
-				for (String k : plugin.getHandlesConfig().getConfigurationSection("custom-commands").getKeys(false)) {
+				for (String k : Objects.requireNonNull(plugin.getHandlesConfig().getConfigurationSection("custom-commands")).getKeys(false)) {
 					Pattern pattern = TARDISHandlesPattern.getPattern(k, true);
 					Matcher m = pattern.matcher(removed);
 					if (m.find()) {
@@ -430,6 +430,7 @@ public class TARDISHandlesRequest {
 	private ItemStack getHandles() {
 		ItemStack is = new ItemStack(Material.BIRCH_BUTTON);
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		im.setDisplayName("Handles");
 		im.setLore(Arrays.asList("Cyberhead from the", "Maldovar Market"));
 		is.setItemMeta(im);

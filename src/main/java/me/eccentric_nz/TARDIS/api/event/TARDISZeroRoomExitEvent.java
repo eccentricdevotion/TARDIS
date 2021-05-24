@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,9 +49,9 @@ public final class TARDISZeroRoomExitEvent extends Event {
 	}
 
 	/**
-	 * Returns the tardisId of the Zero room the player is entering or exiting.
+	 * Returns the tardis_id of the Zero room the player is entering or exiting.
 	 *
-	 * @return the tardisId
+	 * @return the tardis_id
 	 */
 	public int getTardisId() {
 		return tardisId;

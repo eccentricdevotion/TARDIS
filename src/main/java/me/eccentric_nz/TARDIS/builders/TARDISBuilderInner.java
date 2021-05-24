@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,9 @@
 package me.eccentric_nz.tardis.builders;
 
 import com.google.gson.*;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAdvancements;
@@ -47,10 +47,7 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The tardis was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
@@ -153,6 +150,7 @@ public class TARDISBuilderInner implements Runnable {
 			// get JSON
 			obj = TARDISSchematicGZip.unzip(path);
 			// get dimensions
+			assert obj != null;
 			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 			h = dimensions.get("height").getAsInt() - 1;
 			w = dimensions.get("width").getAsInt();
@@ -177,7 +175,7 @@ public class TARDISBuilderInner implements Runnable {
 				resetx = pos.getCentreX();
 				startz = pos.getCentreZ();
 				resetz = pos.getCentreZ();
-				// get the correct chunk for ars
+				// get the correct chunk for ARS
 				Location cl = new Location(world, startx, starty, startz);
 				Chunk c = world.getChunkAt(cl);
 				while (!c.isLoaded()) {
@@ -408,7 +406,7 @@ public class TARDISBuilderInner implements Runnable {
 							} else {
 								m = split[0] + "_" + use_clay.toString();
 							}
-							data = Material.getMaterial(m).createBlockData();
+							data = Objects.requireNonNull(Material.getMaterial(m)).createBlockData();
 						}
 						break;
 					case BLUE_WOOL:
@@ -429,7 +427,7 @@ public class TARDISBuilderInner implements Runnable {
 						} else {
 							m = split[0] + "_" + use_clay.toString();
 						}
-						data = Material.getMaterial(m).createBlockData();
+						data = Objects.requireNonNull(Material.getMaterial(m)).createBlockData();
 				}
 			}
 			if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && schm.getPermission().equals("delta")) {
@@ -494,7 +492,7 @@ public class TARDISBuilderInner implements Runnable {
 				 */
 				String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
 				plugin.getQueryFactory().insertSyncControl(dbID, 0, handbrakeloc, 0);
-				// create default json for ars
+				// create default json for ARS
 				String[][][] empty = new String[3][9][9];
 				for (int ars_y = 0; ars_y < 3; ars_y++) {
 					for (int ars_x = 0; ars_x < 9; ars_x++) {

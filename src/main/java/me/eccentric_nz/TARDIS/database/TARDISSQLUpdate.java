@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,7 +75,6 @@ class TARDISSQLUpdate implements Runnable {
 		updates = sbu.substring(0, sbu.length() - 1);
 		wheres = sbw.substring(0, sbw.length() - 5);
 		String query = "UPDATE " + prefix + table + " SET " + updates + " WHERE " + wheres;
-		//        plugin.debug(query);
 		try {
 			service.testConnection(connection);
 			ps = connection.prepareStatement(query);

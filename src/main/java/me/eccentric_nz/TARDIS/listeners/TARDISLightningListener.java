@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,8 +45,8 @@ public class TARDISLightningListener implements Listener {
 	}
 
 	/**
-	 * Listens for lightning strikes around the tardis Police Box. If the strike is within (recharge_distance in
-	 * artron.yml) blocks, then the tardis Artron Levels will be increased by the configured amount (lightning_recharge
+	 * Listens for lightning strikes around the TARDIS Police Box. If the strike is within (recharge_distance in
+	 * artron.yml) blocks, then the TARDIS Artron Levels will be increased by the configured amount (lightning_recharge
 	 * in artron.yml).
 	 *
 	 * @param e a lightning strike
@@ -72,9 +72,10 @@ public class TARDISLightningListener implements Listener {
 					if (rsc.resultSet()) {
 						World w = rsc.getWorld();
 						// only if the tardis is in the same world as the lightning strike and is not at a beacon recharger!
+						assert strikeworld != null;
 						if (strikeworld.equals(w) && !charging) {
 							Location loc = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
-							// only recharge if the tardis is within range
+							// only recharge if the TARDIS is within range
 							if (plugin.getUtils().compareLocations(loc, loc)) {
 								int amount = plugin.getArtronConfig().getInt("lightning_recharge") + t.getArtronLevel();
 								HashMap<String, Object> set = new HashMap<>();

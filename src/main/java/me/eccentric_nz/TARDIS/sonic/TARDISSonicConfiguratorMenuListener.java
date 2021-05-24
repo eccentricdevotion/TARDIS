@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2021 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.tardis.sonic;
 
 import me.eccentric_nz.tardis.TARDISPlugin;
@@ -18,10 +34,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener implements Listener {
 
@@ -59,7 +72,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 					case 15:
 					case 16:
 						// toggle option enabled / disabled
-						toggleOption(view.getItem(slot));
+						toggleOption(Objects.requireNonNull(view.getItem(slot)));
 					case 25:
 						// save selected options
 						saveConfiguredSonic(player, view);
@@ -85,6 +98,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 		}
 		ItemMeta im = sonic.getItemMeta();
 		ConfiguredSonic configuredSonic;
+		assert im != null;
 		if (im.getPersistentDataContainer().has(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID())) {
 			configuredSonic = getConfiguredSonic(im.getPersistentDataContainer().get(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID()), im);
 		} else {
@@ -99,50 +113,66 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 		ConfiguredSonic configuredSonic = sonics.get(player.getUniqueId());
 		if (configuredSonic != null) {
 			ItemStack bio = view.getItem(9);
+			assert bio != null;
 			bio.setType(configuredSonic.getBio().getMaterial());
 			ItemMeta bim = bio.getItemMeta();
+			assert bim != null;
 			bim.setDisplayName(configuredSonic.getBio().getName());
 			bim.setCustomModelData(configuredSonic.getBio().getCustomModelData());
 			bio.setItemMeta(bim);
 			ItemStack dia = view.getItem(10);
+			assert dia != null;
 			dia.setType(configuredSonic.getDiamond().getMaterial());
 			ItemMeta dim = dia.getItemMeta();
+			assert dim != null;
 			dim.setDisplayName(configuredSonic.getDiamond().getName());
 			dim.setCustomModelData(configuredSonic.getDiamond().getCustomModelData());
 			dia.setItemMeta(dim);
 			ItemStack eme = view.getItem(11);
+			assert eme != null;
 			eme.setType(configuredSonic.getEmerald().getMaterial());
 			ItemMeta eim = eme.getItemMeta();
+			assert eim != null;
 			eim.setDisplayName(configuredSonic.getEmerald().getName());
 			eim.setCustomModelData(configuredSonic.getEmerald().getCustomModelData());
 			eme.setItemMeta(eim);
 			ItemStack red = view.getItem(12);
+			assert red != null;
 			red.setType(configuredSonic.getRedstone().getMaterial());
 			ItemMeta rim = red.getItemMeta();
+			assert rim != null;
 			rim.setDisplayName(configuredSonic.getRedstone().getName());
 			rim.setCustomModelData(configuredSonic.getRedstone().getCustomModelData());
 			red.setItemMeta(rim);
 			ItemStack pai = view.getItem(13);
+			assert pai != null;
 			pai.setType(configuredSonic.getPainter().getMaterial());
 			ItemMeta pim = pai.getItemMeta();
+			assert pim != null;
 			pim.setDisplayName(configuredSonic.getPainter().getName());
 			pim.setCustomModelData(configuredSonic.getPainter().getCustomModelData());
 			pai.setItemMeta(pim);
 			ItemStack ign = view.getItem(14);
+			assert ign != null;
 			ign.setType(configuredSonic.getIgnite().getMaterial());
 			ItemMeta iim = ign.getItemMeta();
+			assert iim != null;
 			iim.setDisplayName(configuredSonic.getIgnite().getName());
 			iim.setCustomModelData(configuredSonic.getIgnite().getCustomModelData());
 			ign.setItemMeta(iim);
 			ItemStack arr = view.getItem(15);
+			assert arr != null;
 			arr.setType(configuredSonic.getArrow().getMaterial());
 			ItemMeta aim = arr.getItemMeta();
+			assert aim != null;
 			aim.setDisplayName(configuredSonic.getArrow().getName());
 			aim.setCustomModelData(configuredSonic.getArrow().getCustomModelData());
 			arr.setItemMeta(aim);
 			ItemStack kno = view.getItem(16);
+			assert kno != null;
 			kno.setType(configuredSonic.getKnockback().getMaterial());
 			ItemMeta kim = kno.getItemMeta();
+			assert kim != null;
 			kim.setDisplayName(configuredSonic.getKnockback().getName());
 			kim.setCustomModelData(configuredSonic.getKnockback().getCustomModelData());
 			kno.setItemMeta(kim);
@@ -155,11 +185,13 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 		switch (cmd) {
 			case LIME_WOOL:
 				// disable
+				assert im != null;
 				im.setDisplayName("Disabled");
 				option.setType(Material.RED_WOOL);
 				break;
 			case RED_WOOL:
 				// enable
+				assert im != null;
 				im.setDisplayName("Enabled");
 				option.setType(Material.LIME_WOOL);
 				break;
@@ -278,6 +310,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 			ItemStack sonic = view.getItem(18);
 			if (isSonic(sonic)) {
 				ItemMeta im = sonic.getItemMeta();
+				assert im != null;
 				if (upgrades.size() > 1) {
 					im.setLore(upgrades);
 				} else {
@@ -290,6 +323,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 
 	private int getSonicConfig(int slot, InventoryView view) {
 		ItemStack option = view.getItem(slot);
+		assert option != null;
 		return switch (option.getType()) {
 			case LIME_WOOL -> 1;
 			case RED_WOOL -> 2;
@@ -303,6 +337,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 		if (isSonic(is)) {
 			ItemMeta im = is.getItemMeta();
 			// get the upgrades from the lore
+			assert im != null;
 			List<String> lore = im.getLore();
 			UUID uuid = player.getUniqueId();
 			int bio = lore != null && lore.contains("Bio-scanner Upgrade") ? 1 : 0;
@@ -342,6 +377,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 		if (is != null) {
 			if (is.hasItemMeta()) {
 				ItemMeta im = is.getItemMeta();
+				assert im != null;
 				if (im.hasDisplayName()) {
 					return (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver"));
 				}
@@ -361,7 +397,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 		if (sonic != null) {
 			Player p = (Player) event.getPlayer();
 			Location loc = p.getLocation();
-			loc.getWorld().dropItemNaturally(loc, sonic);
+			Objects.requireNonNull(loc.getWorld()).dropItemNaturally(loc, sonic);
 			view.setItem(18, new ItemStack(Material.AIR));
 		}
 	}

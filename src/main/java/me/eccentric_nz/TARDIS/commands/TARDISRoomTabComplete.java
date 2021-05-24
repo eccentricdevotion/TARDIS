@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,20 +25,19 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * TabCompleter for /tardisroom
  */
 public class TARDISRoomTabComplete extends TARDISCompleter implements TabCompleter {
 
-	private final TARDISPlugin plugin;
 	private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add", "blocks", "required");
 	private final ArrayList<String> ROOM_SUBS = new ArrayList<>();
 
 	public TARDISRoomTabComplete(TARDISPlugin plugin) {
-		this.plugin = plugin;
 		// rooms - only add if enabled in the config
-		plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((r) -> {
+		Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false).forEach((r) -> {
 			if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
 				ROOM_SUBS.add(r);
 			}

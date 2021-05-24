@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
 	 *
 	 * @param player   the player growing the room
 	 * @param tardis   the Tardis data object, may be null - if room was manually grown, use {@link
-	 *                 #getRoomData()}.getTardisId()
+	 *                 #getRoomData()}.getTardis_id()
 	 * @param slot     the TARDISARSSlot data object, may be null - if the room was manually grown, use {@link
 	 *                 #getRoomData()}.getLocation()
 	 * @param roomData the TARDISRoomData data object
@@ -61,8 +61,7 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
 	 *
 	 * @return the TARDISRoomData object
 	 */
-	public TARDISRoomData getRoomData() {
+	private TARDISRoomData getRoomData() {
 		return roomData;
 	}
-
 }

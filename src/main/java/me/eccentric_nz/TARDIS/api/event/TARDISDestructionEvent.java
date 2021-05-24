@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author eccentric_nz
@@ -33,11 +32,11 @@ public final class TARDISDestructionEvent extends Event {
 	private final String owner;
 
 	/**
-	 * A tardis extermination event.
+	 * A TARDIS extermination event.
 	 *
-	 * @param player   the player who is destroying the tardis - may be null if it is initiated by the console.
-	 * @param location the location of the tardis exterior preset
-	 * @param owner    the Time Lord of the tardis
+	 * @param player   the player who is destroying the TARDIS - may be null if it is initiated by the console.
+	 * @param location the location of the TARDIS exterior preset
+	 * @param owner    the Time Lord of the TARDIS
 	 */
 	public TARDISDestructionEvent(Player player, Location location, String owner) {
 		this.player = player;
@@ -54,26 +53,26 @@ public final class TARDISDestructionEvent extends Event {
 	}
 
 	/**
-	 * Returns the exterior location of the tardis being destroyed.
+	 * Returns the exterior location of the TARDIS being destroyed.
 	 *
-	 * @return the tardis location
+	 * @return the TARDIS location
 	 */
 	public Location getLocation() {
 		return location;
 	}
 
 	/**
-	 * Returns the Time Lord of the tardis being destroyed. This may be different from the player who is doing the
+	 * Returns the Time Lord of the TARDIS being destroyed. This may be different from the player who is doing the
 	 * destroying, i.e. a server admin.
 	 *
-	 * @return the tardis owner's name
+	 * @return the TARDIS owner's name
 	 */
 	public String getOwner() {
 		return owner;
 	}
 
 	@Override
-	public @NotNull HandlerList getHandlers() {
+	public HandlerList getHandlers() {
 		return HANDLERS;
 	}
 }

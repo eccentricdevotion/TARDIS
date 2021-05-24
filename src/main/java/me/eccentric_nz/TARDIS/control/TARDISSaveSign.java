@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,16 +29,17 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
-public class TARDISSaveSign {
+class TARDISSaveSign {
 
 	private final TARDISPlugin plugin;
 
-	public TARDISSaveSign(TARDISPlugin plugin) {
+	TARDISSaveSign(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
-	public void openGUI(Player player, int id) {
+	void openGUI(Player player, int id) {
 		TARDISCircuitChecker tcc = null;
 		if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
 			tcc = new TARDISCircuitChecker(plugin, id);
@@ -50,9 +51,10 @@ public class TARDISSaveSign {
 		}
 		if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(player.getUniqueId()) && plugin.getDifficulty().equals(Difficulty.HARD)) {
 			ItemStack disk = player.getInventory().getItemInMainHand();
-			if (disk.hasItemMeta() && disk.getItemMeta().hasDisplayName() && disk.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
+			if (disk.hasItemMeta() && Objects.requireNonNull(disk.getItemMeta()).hasDisplayName() && disk.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
 				List<String> lore = disk.getItemMeta().getLore();
-				if (!lore.get(0).equals("Blank")) {
+                assert lore != null;
+                if (!lore.get(0).equals("Blank")) {
 					// read the lore from the disk
 					String world = lore.get(1);
 					int x = TARDISNumberParsers.parseInt(lore.get(2));
@@ -76,14 +78,14 @@ public class TARDISSaveSign {
 			} else {
 				TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, player);
 				ItemStack[] items = sst.getTerminal();
-				Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves");
+				Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
 				inv.setContents(items);
 				player.openInventory(inv);
 			}
 		} else {
 			TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, player);
 			ItemStack[] items = sst.getTerminal();
-			Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves");
+			Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
 			inv.setContents(items);
 			player.openInventory(inv);
 		}

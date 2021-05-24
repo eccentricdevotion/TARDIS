@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,6 +58,7 @@ class TARDISJunkItsDangerousRunnable implements Runnable {
 		List<UUID> remove = new ArrayList<>();
 		plugin.getGeneralKeeper().getJunkTravellers().forEach((uuid) -> {
 			Player p = plugin.getServer().getPlayer(uuid);
+			assert p != null;
 			if (p.isOnline() && !isInside(p.getLocation())) {
 				p.setHealth(0);
 				remove.add(uuid);

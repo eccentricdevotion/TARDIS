@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
@@ -75,7 +76,14 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
 			}
 			World world = TARDISAliasResolver.getWorldFromAlias(args[0]);
 			if (world != null) {
-				Location spawn = world.getSpawnLocation();
+				Location spawn;
+				if (args.length == 4 && args[3].equals("not_for_players")) {
+					int x = TARDISNumberParsers.parseInt(args[1]);
+					int z = TARDISNumberParsers.parseInt(args[2]);
+					spawn = new Location(world, x, 64, z);
+				} else {
+					spawn = world.getSpawnLocation();
+				}
 				while (!world.getChunkAt(spawn).isLoaded()) {
 					world.getChunkAt(spawn).load();
 				}

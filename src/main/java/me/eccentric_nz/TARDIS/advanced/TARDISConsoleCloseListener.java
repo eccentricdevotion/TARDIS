@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,9 +72,9 @@ public class TARDISConsoleCloseListener implements Listener {
 	public void onInventoryClose(InventoryCloseEvent event) {
 		InventoryView view = event.getView();
 		String inv_name = view.getTitle();
-		if (inv_name.equals(ChatColor.DARK_RED + "tardis Console")) {
+		if (inv_name.equals(ChatColor.DARK_RED + "TARDIS Console")) {
 			Player p = ((Player) event.getPlayer());
-			// get the tardis the player is in
+			// get the TARDIS the player is in
 			HashMap<String, Object> wheret = new HashMap<>();
 			wheret.put("uuid", p.getUniqueId().toString());
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -104,7 +104,7 @@ public class TARDISConsoleCloseListener implements Listener {
 						return;
 					}
 				}
-				// get tardis's current location
+				// get TARDIS's current location
 				HashMap<String, Object> wherecl = new HashMap<>();
 				wherecl.put("tardis_id", id);
 				ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -157,7 +157,7 @@ public class TARDISConsoleCloseListener implements Listener {
 											set_next.put("y", l.getBlockY());
 											set_next.put("z", l.getBlockZ());
 											set_next.put("submarine", 0);
-											// should be setting direction of tardis
+											// should be setting direction of TARDIS
 											if (!rsa.getArea().getDirection().isEmpty()) {
 												set_next.put("direction", rsa.getArea().getDirection());
 											} else {
@@ -313,7 +313,7 @@ public class TARDISConsoleCloseListener implements Listener {
 									TARDISMessage.send(p, "ADV_BLANK");
 								}
 							}
-						} else if (mat.equals(Material.GLOWSTONE_DUST) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("tardis Randomiser Circuit")) {
+						} else if (mat.equals(Material.GLOWSTONE_DUST) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Randomiser Circuit")) {
 							// Randomiser Circuit
 							Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(p, rsc.getDirection());
 							if (l != null) {

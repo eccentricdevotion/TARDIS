@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardis.sonic.actions;
 
 import com.google.common.collect.Sets;
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlock;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import org.bukkit.Material;
@@ -33,6 +33,7 @@ import org.bukkit.block.data.type.*;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
 public class TARDISSonicRedstone {
@@ -65,8 +66,8 @@ public class TARDISSonicRedstone {
 					if (bisected.getHalf().equals(Bisected.Half.TOP)) {
 						tmp = block.getRelative(BlockFace.DOWN);
 					}
-					// not tardis doors!
-					String doorloc = tmp.getLocation().getWorld().getName() + ":" + tmp.getLocation().getBlockX() + ":" + tmp.getLocation().getBlockY() + ":" + tmp.getLocation().getBlockZ();
+					// not TARDIS doors!
+					String doorloc = Objects.requireNonNull(tmp.getLocation().getWorld()).getName() + ":" + tmp.getLocation().getBlockX() + ":" + tmp.getLocation().getBlockY() + ":" + tmp.getLocation().getBlockZ();
 					HashMap<String, Object> wheredoor = new HashMap<>();
 					wheredoor.put("door_location", doorloc);
 					ResultSetDoors rsd = new ResultSetDoors(plugin, wheredoor, false);

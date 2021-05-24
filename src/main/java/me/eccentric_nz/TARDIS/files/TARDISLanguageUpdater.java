@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,8 @@ public class TARDISLanguageUpdater {
 	public void update() {
 		// get currently configured language
 		String lang = plugin.getConfig().getString("preferences.language");
-		if (lang.equals("en")) {
+        assert lang != null;
+        if (lang.equals("en")) {
 			return;
 		}
 		// get the English language config
@@ -73,7 +74,7 @@ public class TARDISLanguageUpdater {
 				j++;
 			}
 		}
-		// resave file
+		// re-save file
 		String lang_path = plugin.getDataFolder() + File.separator + "language" + File.separator + lang + ".yml";
 		try {
 			// save the config

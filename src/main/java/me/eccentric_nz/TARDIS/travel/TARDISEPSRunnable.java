@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -114,7 +115,7 @@ public class TARDISEPSRunnable implements Runnable {
 	}
 
 	/**
-	 * @param id the tardis to look up
+	 * @param id the TARDIS to look up
 	 * @return the EP1 spawn location
 	 */
 	private Location getSpawnLocation(int id) {
@@ -122,7 +123,7 @@ public class TARDISEPSRunnable implements Runnable {
 			return TARDISStaticLocationGetters.getLocationFromDB(eps);
 		} else if (plugin.getConfig().getBoolean("creation.create_worlds")) {
 			// get world spawn location
-			return plugin.getServer().getWorld("TARDIS_WORLD_" + tl.getName()).getSpawnLocation();
+			return Objects.requireNonNull(plugin.getServer().getWorld("TARDIS_WORLD_" + tl.getName())).getSpawnLocation();
 		} else {
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("tardis_id", id);
@@ -150,6 +151,7 @@ public class TARDISEPSRunnable implements Runnable {
 						z = 1.5;
 					}
 				}
+				assert location != null;
 				return location.add(x, 0, z);
 			} else {
 				return null;

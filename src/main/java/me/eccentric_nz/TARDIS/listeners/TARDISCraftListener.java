@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -112,13 +112,14 @@ public class TARDISCraftListener implements Listener {
 		if (recipe != null) {
 			ItemStack is = recipe.getResult();
 			CraftingInventory ci = event.getInventory();
-			if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
+			if (is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName()) {
 				String dn = is.getItemMeta().getDisplayName();
-				if ((is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM)) && dn.equals(ChatColor.GOLD + "tardis Seed Block")) {
+				if ((is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM)) && dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
 					ItemMeta im = is.getItemMeta();
 					List<String> lore = im.getLore();
-					lore.add("Walls: " + ci.getItem(6).getType());
-					lore.add("Floors: " + ci.getItem(9).getType());
+					assert lore != null;
+					lore.add("Walls: " + Objects.requireNonNull(ci.getItem(6)).getType());
+					lore.add("Floors: " + Objects.requireNonNull(ci.getItem(9)).getType());
 					lore.add("Chameleon: FACTORY");
 					im.setLore(lore);
 					is.setItemMeta(im);
@@ -131,9 +132,10 @@ public class TARDISCraftListener implements Listener {
 						// set the second line of lore
 						ItemMeta im = is.getItemMeta();
 						List<String> lore;
-						String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+						String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses." + which), "0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
 						if (im.hasLore()) {
 							lore = im.getLore();
+							assert lore != null;
 							lore.set(1, uses);
 						} else {
 							lore = Arrays.asList("Uses left", uses);
@@ -146,7 +148,7 @@ public class TARDISCraftListener implements Listener {
 					// enchant the result
 					is.addEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
 					ci.setResult(is);
-				} else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses") || dn.equals("tardis Communicator")) {
+				} else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses") || dn.equals("TARDIS Communicator")) {
 					LeatherArmorMeta lam = (LeatherArmorMeta) is.getItemMeta();
 					lam.setColor(Color.WHITE);
 					is.setItemMeta(lam);

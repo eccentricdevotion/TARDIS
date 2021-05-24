@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,15 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.io.File;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class TARDISWorlds {
 
@@ -57,7 +54,7 @@ public class TARDISWorlds {
 					TARDISPlugin.plugin.getTardisHelper().setWorldGameMode(world, GameMode.CREATIVE);
 				}
 				if (TARDISPlugin.plugin.getPlanetsConfig().contains("planets." + world + ".gamerules")) {
-					for (String rule : TARDISPlugin.plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules").getKeys(false)) {
+					for (String rule : Objects.requireNonNull(TARDISPlugin.plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules")).getKeys(false)) {
 						GameRule gameRule = GameRule.getByName(rule);
 						assert gameRule != null;
 						w.setGameRule(gameRule, TARDISPlugin.plugin.getPlanetsConfig().getBoolean("planets." + world + ".gamerules." + rule));
@@ -75,21 +72,21 @@ public class TARDISWorlds {
 		List<World> worlds = plugin.getServer().getWorlds();
 		String defWorld = plugin.getConfig().getString("creation.default_world_name");
 		worlds.forEach((w) -> {
-			String worldname = w.getName();
-			if (!plugin.getPlanetsConfig().contains("planets." + worldname) && !worldname.equals(defWorld)) {
+			String worldName = w.getName();
+			if (!plugin.getPlanetsConfig().contains("planets." + worldName) && !worldName.equals(defWorld)) {
 				TARDISPlanetData data = plugin.getTardisHelper().getLevelData(w.getName());
-				plugin.getPlanetsConfig().set("planets." + worldname + ".enabled", false);
-				plugin.getPlanetsConfig().set("planets." + worldname + ".time_travel", !isTARDISDatapackWorld(worldname));
-				plugin.getPlanetsConfig().set("planets." + worldname + ".resource_pack", "default");
-				plugin.getPlanetsConfig().set("planets." + worldname + ".gamemode", data.getGameMode().toString());
-				plugin.getPlanetsConfig().set("planets." + worldname + ".world_type", data.getWorldType().toString());
-				plugin.getPlanetsConfig().set("planets." + worldname + ".environment", data.getEnvironment().toString());
-				plugin.getPlanetsConfig().set("planets." + worldname + ".generator", (worldname.startsWith("TARDIS_") || worldname.equals(plugin.getConfig().getString("creation.default_world_name"))) ? "TARDISChunkGenerator" : "DEFAULT");
-				plugin.getPlanetsConfig().set("planets." + worldname + ".keep_spawn_in_memory", false);
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Added '" + worldname + "' to planets.yml. To exclude this world from time travel run: /tardisadmin exclude " + worldname);
+				plugin.getPlanetsConfig().set("planets." + worldName + ".enabled", false);
+				plugin.getPlanetsConfig().set("planets." + worldName + ".time_travel", !isTARDISDataPackWorld(worldName));
+				plugin.getPlanetsConfig().set("planets." + worldName + ".resource_pack", "default");
+				plugin.getPlanetsConfig().set("planets." + worldName + ".gamemode", data.getGameMode().toString());
+				plugin.getPlanetsConfig().set("planets." + worldName + ".world_type", data.getWorldType().toString());
+				plugin.getPlanetsConfig().set("planets." + worldName + ".environment", data.getEnvironment().toString());
+				plugin.getPlanetsConfig().set("planets." + worldName + ".generator", (worldName.startsWith("TARDIS_") || worldName.equals(plugin.getConfig().getString("creation.default_world_name"))) ? "TARDISChunkGenerator" : "DEFAULT");
+				plugin.getPlanetsConfig().set("planets." + worldName + ".keep_spawn_in_memory", false);
+				plugin.getConsole().sendMessage(plugin.getPluginName() + "Added '" + worldName + "' to planets.yml. To exclude this world from time travel run: /tardisadmin exclude " + worldName);
 			}
 		});
-		// revert lowercase tardis world names
+		// revert lowercase TARDIS world names
 		if (plugin.getConfig().getBoolean("conversions.level_names")) {
 			for (Map.Entry<String, String> level : TARDISConstants.REVERT_LEVELS.entrySet()) {
 				// set the LevelName in level.dat
@@ -105,13 +102,11 @@ public class TARDISWorlds {
 			plugin.getConfig().set("conversions.level_names", null);
 			plugin.saveConfig();
 		}
-		// get default server world
-		String s_world = plugin.getServer().getWorlds().get(0).getName();
-		// now load tardis worlds / remove worlds that may have been deleted
-		Set<String> cWorlds = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
+		// now load TARDIS worlds / remove worlds that may have been deleted
+		Set<String> cWorlds = Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false);
 		cWorlds.forEach((cw) -> {
 			if (!TARDISConstants.PLANETS.contains(cw) && TARDISAliasResolver.getWorldFromAlias(cw) == null) {
-				if ((plugin.getWorldManager().equals(WorldManager.NONE) || plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false).contains(cw)) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
+				if ((plugin.getWorldManager().equals(WorldManager.NONE) || Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false).contains(cw)) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
 					plugin.getConsole().sendMessage(plugin.getPluginName() + "Attempting to load world: '" + cw + "'");
 					loadWorld(cw);
 				}
@@ -151,7 +146,7 @@ public class TARDISWorlds {
 		return false;
 	}
 
-	private boolean isTARDISDatapackWorld(String p) {
+	private boolean isTARDISDataPackWorld(String p) {
 		return (p.endsWith("tardis_gallifrey") || p.endsWith("tardis_siluria") || p.endsWith("tardis_skaro"));
 	}
 }

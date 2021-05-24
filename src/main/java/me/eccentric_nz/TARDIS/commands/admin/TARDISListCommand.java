@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,14 +20,15 @@ import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.WorldManager;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.messaging.TableGenerator;
-import me.eccentric_nz.tardis.messaging.TableGenerator.Alignment;
-import me.eccentric_nz.tardis.messaging.TableGenerator.Receiver;
-import me.eccentric_nz.tardis.messaging.TableGeneratorCustomFont;
-import me.eccentric_nz.tardis.messaging.TableGeneratorSmallChar;
+import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -76,7 +77,7 @@ class TARDISListCommand {
 				TARDISMessage.send(sender, "FILE_SAVED");
 				return true;
 			} else if (args[1].equalsIgnoreCase("portals")) {
-				plugin.getTrackerKeeper().getPortals().forEach((key, value) -> sender.sendMessage("tardis id: " + value.getTardisId() + " has a portal open at: " + key.toString()));
+				plugin.getTrackerKeeper().getPortals().forEach((key, value) -> sender.sendMessage("TARDIS id: " + value.getTardisId() + " has a portal open at: " + key.toString()));
 				return true;
 			} else if (args[1].equalsIgnoreCase("abandoned")) {
 				new TARDISAbandonLister(plugin).list(sender);
@@ -107,14 +108,11 @@ class TARDISListCommand {
 			ResultSetTardis rsl = new ResultSetTardis(plugin, new HashMap<>(), limit, true, 0);
 			if (rsl.resultSet()) {
 				TARDISMessage.send(sender, "TARDIS_LOCS");
-				TableGenerator tg;
-				if (TableGenerator.getSenderPrefs(sender)) {
-					tg = new TableGeneratorCustomFont(Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
-				} else {
-					tg = new TableGeneratorSmallChar(Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT, Alignment.RIGHT);
+				if (sender instanceof Player) {
+					TARDISMessage.message(sender, "Hover to see location (world x, y, z)");
+					TARDISMessage.message(sender, "Click to enter the TARDIS");
 				}
-				tg.addRow(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "ID", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Time Lord", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "World", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "X", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Y", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Z");
-				tg.addRow();
+				TARDISMessage.message(sender, "");
 				for (TARDIS t : rsl.getData()) {
 					HashMap<String, Object> wherecl = new HashMap<>();
 					wherecl.put("tardis_id", t.getTardisId());
@@ -123,10 +121,12 @@ class TARDISListCommand {
 						TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
 						return true;
 					}
-					tg.addRow("" + t.getTardisId(), t.getOwner(), rsc.getWorld().getName(), "" + rsc.getX(), "" + rsc.getY(), "" + rsc.getZ());
-				}
-				for (String line : tg.generate(sender instanceof Player ? Receiver.CLIENT : Receiver.CONSOLE, true, true)) {
-					sender.sendMessage(line);
+					String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
+					TextComponent tct = new TextComponent(String.format("%s %s", t.getTardisId(), t.getOwner()));
+					tct.setColor(ChatColor.GREEN);
+					tct.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, rsc.getX(), rsc.getY(), rsc.getZ()))));
+					tct.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisadmin enter " + t.getTardisId()));
+					sender.spigot().sendMessage(tct);
 				}
 				if (rsl.getData().size() > 18) {
 					TARDISMessage.send(sender, "TARDIS_LOCS_INFO");

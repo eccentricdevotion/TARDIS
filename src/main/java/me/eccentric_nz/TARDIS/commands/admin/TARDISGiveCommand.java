@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -239,19 +239,23 @@ public class TARDISGiveCommand implements CommandExecutor {
 		if (item.equals("invisible")) {
 			// set the second line of lore
 			ItemMeta im = result.getItemMeta();
+			assert im != null;
 			List<String> lore = im.getLore();
-			String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+			String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses.invisibility"), "0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+			assert lore != null;
 			lore.set(1, uses);
 			im.setLore(lore);
 			result.setItemMeta(im);
 		}
 		if (item.equals("blank") || item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("blaster") || item.equals("control")) {
 			ItemMeta im = result.getItemMeta();
+			assert im != null;
 			im.addItemFlags(ItemFlag.values());
 			result.setItemMeta(im);
 		}
 		if (item.equals("key") || item.equals("control")) {
 			ItemMeta im = result.getItemMeta();
+			assert im != null;
 			im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
 			List<String> lore = im.getLore();
 			if (lore == null) {
@@ -281,12 +285,14 @@ public class TARDISGiveCommand implements CommandExecutor {
 			result = recipe.getResult();
 			if (result.hasItemMeta()) {
 				ItemMeta im = result.getItemMeta();
+				assert im != null;
 				if (im.hasDisplayName() && (im.getDisplayName().contains("Key") || im.getDisplayName().contains("Authorised Control Disk"))) {
 					im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
 					if (im.hasLore()) {
 						List<String> lore = im.getLore();
 						String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
 						String what = im.getDisplayName().contains("Key") ? "key" : "disk";
+						assert lore != null;
 						lore.add(format + "This " + what + " belongs to");
 						lore.add(format + player.getName());
 						im.setLore(lore);
@@ -359,7 +365,7 @@ public class TARDISGiveCommand implements CommandExecutor {
 			ItemStack bp = plugin.getTardisAPI().getTARDISBlueprintItem(blueprint, player);
 			player.getInventory().addItem(bp);
 			player.updateInventory();
-			TARDISMessage.send(player, "GIVE_ITEM", sender.getName(), "a tardis Blueprint Disk");
+			TARDISMessage.send(player, "GIVE_ITEM", sender.getName(), "a TARDIS Blueprint Disk");
 		}
 		return true;
 	}
@@ -408,6 +414,7 @@ public class TARDISGiveCommand implements CommandExecutor {
 					is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
 				}
 				ItemMeta im = is.getItemMeta();
+				assert im != null;
 				im.setCustomModelData(10000000 + model);
 				im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
 				// set display name
@@ -433,7 +440,7 @@ public class TARDISGiveCommand implements CommandExecutor {
 			return true;
 		}
 		// Look up this player's UUID
-		UUID uuid = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId()).getUniqueId();
+		UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
 		plugin.getServer().dispatchCommand(sender, "vmg " + uuid + " " + amount);
 		return true;
 	}
@@ -448,8 +455,10 @@ public class TARDISGiveCommand implements CommandExecutor {
 		result.setAmount(amount);
 		// add lore and enchantment
 		ItemMeta im = result.getItemMeta();
+		assert im != null;
 		List<String> lore = im.getLore();
 		int max = plugin.getArtronConfig().getInt("full_charge");
+		assert lore != null;
 		lore.set(1, "" + max);
 		im.setLore(lore);
 		im.addEnchant(Enchantment.DURABILITY, 1, true);
@@ -471,6 +480,7 @@ public class TARDISGiveCommand implements CommandExecutor {
 						List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
 						colours.forEach((bt) -> {
 							NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
+							assert kbm != null;
 							kbm.addRecipe(nsk);
 						});
 					}
@@ -478,11 +488,13 @@ public class TARDISGiveCommand implements CommandExecutor {
 						List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
 						flavours.forEach((jelly) -> {
 							NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
+							assert kbm != null;
 							kbm.addRecipe(nsk);
 						});
 					}
 					default -> {
 						NamespacedKey nsk = new NamespacedKey(plugin, map.getValue().replace(" ", "_").toLowerCase(Locale.ENGLISH));
+						assert kbm != null;
 						kbm.addRecipe(nsk);
 					}
 				}
@@ -505,6 +517,7 @@ public class TARDISGiveCommand implements CommandExecutor {
 				List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
 				colours.forEach((bt) -> {
 					NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
+					assert kbm != null;
 					kbm.addRecipe(nsk);
 				});
 				message = "Bow Ties";
@@ -513,12 +526,14 @@ public class TARDISGiveCommand implements CommandExecutor {
 				List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
 				flavours.forEach((jelly) -> {
 					NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
+					assert kbm != null;
 					kbm.addRecipe(nsk);
 				});
 				message = "Jelly Babies";
 			}
 			default -> {
 				NamespacedKey nsk = new NamespacedKey(plugin, item_to_give.replace(" ", "_").toLowerCase(Locale.ENGLISH));
+				assert kbm != null;
 				kbm.addRecipe(nsk);
 			}
 		}

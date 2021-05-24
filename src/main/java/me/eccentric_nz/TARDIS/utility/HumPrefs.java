@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ class HumPrefs {
 	private Boolean sfx;
 	private String hum;
 
-	public HumPrefs(Player player, Boolean sfx, String hum) {
+	HumPrefs(Player player, Boolean sfx, String hum) {
 		this.player = player;
 		this.sfx = sfx;
 		this.hum = hum;

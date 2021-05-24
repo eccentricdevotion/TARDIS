@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,12 +47,12 @@ class TARDISReloadCommand {
 		return true;
 	}
 
-	boolean reloadOtherConfig(CommandSender sender, String[] args) {
-		try {
-			Config config = Config.valueOf(args[1].toLowerCase());
-			File file = new File(plugin.getDataFolder(), config + ".yml");
+    boolean reloadOtherConfig(CommandSender sender, String[] args) {
+        try {
+            Config config = Config.valueOf(args[1].toLowerCase());
+            File file = new File(plugin.getDataFolder(), config + ".yml");
 			switch (config) {
-				case achievements -> plugin.getAdvancementConfig().load(file);
+				case advancements -> plugin.getAdvancementConfig().load(file);
 				case artron -> plugin.getArtronConfig().load(file);
 				case blocks -> plugin.getBlocksConfig().load(file);
 				case chameleon_guis -> plugin.getChameleonGuis().load(file);
@@ -66,14 +66,14 @@ class TARDISReloadCommand {
 					return true;
 				}
 			}
-			TARDISMessage.send(sender, "RELOAD_SUCCESS", config.toString());
-		} catch (IllegalArgumentException e) {
-			TARDISMessage.send(sender, "RELOAD_FILE_BAD", args[1]);
-			return true;
-		} catch (InvalidConfigurationException | IOException e) {
-			TARDISMessage.send(sender, "RELOAD_FAIL", args[1]);
-			return true;
-		}
-		return true;
-	}
+            TARDISMessage.send(sender, "RELOAD_SUCCESS", config.toString());
+        } catch (IllegalArgumentException e) {
+            TARDISMessage.send(sender, "RELOAD_FILE_BAD", args[1]);
+            return true;
+        } catch (InvalidConfigurationException | IOException e) {
+            TARDISMessage.send(sender, "RELOAD_FAIL", args[1]);
+            return true;
+        }
+        return true;
+    }
 }

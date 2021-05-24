@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ public class TARDISChameleonColumn {
 
 	private final BlockData[][] blockData;
 
-	public TARDISChameleonColumn(BlockData[][] blockData) {
+	TARDISChameleonColumn(BlockData[][] blockData) {
 		this.blockData = blockData;
 	}
 

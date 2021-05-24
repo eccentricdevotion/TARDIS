@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 eccentric_nz
+ * Copyright (C) 2021 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.tardis.arch.TARDISWatchData;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
+import me.eccentric_nz.tardis.display.TARDISDisplayType;
 import me.eccentric_nz.tardis.enumeration.Bind;
 import me.eccentric_nz.tardis.enumeration.Updateable;
 import me.eccentric_nz.tardis.flight.TARDISRegulatorRunnable;
@@ -92,6 +93,7 @@ public class TARDISTrackerInstanceKeeper {
 	private final HashMap<UUID, String> players = new HashMap<>();
 	private final HashMap<UUID, String> preset = new HashMap<>();
 	private final HashMap<UUID, String> telepathicPlacements = new HashMap<>();
+	private final HashMap<UUID, TARDISDisplayType> display = new HashMap<>();
 	private final HashMap<UUID, TARDISInfoMenu> infoMenu = new HashMap<>();
 	private final HashMap<UUID, TARDISMoveSession> moveSessions = new HashMap<>();
 	private final HashMap<UUID, TARDISRegulatorRunnable> regulating = new HashMap<>();
@@ -337,6 +339,10 @@ public class TARDISTrackerInstanceKeeper {
 
 	public HashMap<UUID, String> getTelepathicPlacements() {
 		return telepathicPlacements;
+	}
+
+	public HashMap<UUID, TARDISDisplayType> getDisplay() {
+		return display;
 	}
 
 	public HashMap<UUID, TARDISInfoMenu> getInfoMenu() {
