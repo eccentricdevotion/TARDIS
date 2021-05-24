@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
@@ -34,7 +34,7 @@ import java.util.UUID;
  */
 public class TARDISPortalPersister {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final String prefix;
@@ -43,7 +43,7 @@ public class TARDISPortalPersister {
 	private int count = 0;
 	private int counta = 0;
 
-	public TARDISPortalPersister(TARDIS plugin) {
+	public TARDISPortalPersister(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}

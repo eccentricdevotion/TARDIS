@@ -18,11 +18,11 @@ package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.UseClay;
@@ -44,12 +44,12 @@ import java.util.UUID;
  */
 public class TARDISUpgradeBlockScanner {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISUpgradeData tud;
 	private final UUID uuid;
 	private int count = 0;
 
-	public TARDISUpgradeBlockScanner(TARDIS plugin, TARDISUpgradeData tud, UUID uuid) {
+	public TARDISUpgradeBlockScanner(TARDISPlugin plugin, TARDISUpgradeData tud, UUID uuid) {
 		this.plugin = plugin;
 		this.tud = tud;
 		this.uuid = uuid;
@@ -76,7 +76,7 @@ public class TARDISUpgradeBlockScanner {
 		wheret.put("uuid", uuid.toString());
 		ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			int slot = tardis.getTIPS();
 			int startz;
 			int startx;
@@ -86,7 +86,7 @@ public class TARDISUpgradeBlockScanner {
 				startx = pos.getCentreX();
 				startz = pos.getCentreZ();
 			} else {
-				int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+				int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
 				startx = gsl[0];
 				startz = gsl[2];
 			}

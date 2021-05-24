@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -35,9 +35,9 @@ import java.util.UUID;
  */
 class TARDISEmergencyProgrammeCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISEmergencyProgrammeCommand(TARDIS plugin) {
+	TARDISEmergencyProgrammeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -54,8 +54,8 @@ class TARDISEmergencyProgrammeCommand {
 				TARDISMessage.send(p, "NOT_A_TIMELORD");
 				return true;
 			}
-			Tardis tardis = rs.getTardis();
-			int id = tardis.getTardis_id();
+			TARDIS tardis = rs.getTardis();
+			int id = tardis.getTardisId();
 			String eps = tardis.getEps();
 			String creeper = tardis.getCreeper();
 			HashMap<String, Object> wherem = new HashMap<>();
@@ -65,7 +65,7 @@ class TARDISEmergencyProgrammeCommand {
 				TARDISMessage.send(p, "NOT_IN_TARDIS");
 				return true;
 			}
-			if (rsm.getTardis_id() != id) {
+			if (rsm.getTardisId() != id) {
 				TARDISMessage.send(p, "NOT_IN_TARDIS");
 				return true;
 			}

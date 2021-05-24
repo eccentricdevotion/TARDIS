@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
@@ -48,9 +48,9 @@ import java.util.HashMap;
  */
 public class TARDISBlockPlaceListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBlockPlaceListener(TARDIS plugin) {
+	public TARDISBlockPlaceListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

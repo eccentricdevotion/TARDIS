@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.info;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -40,10 +40,10 @@ import java.util.UUID;
  */
 public class TARDISInformationSystemListener implements Listener, CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String JSON = "{\"text\":\"%s\",\"color\":\"gold\",\"extra\":[{\"text\":\"%s\",\"color\":\"white\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisinfo %s\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}},\"extra\":[{\"text\":\"%s\",\"color\":\"gold\"}]}]}";
 
-	public TARDISInformationSystemListener(TARDIS plugin) {
+	public TARDISInformationSystemListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

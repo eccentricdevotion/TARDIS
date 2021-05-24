@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.event.*;
 import me.eccentric_nz.tardis.database.data.Program;
 import me.eccentric_nz.tardis.database.resultset.ResultSetProgramFromEvent;
@@ -44,7 +44,7 @@ public class TARDISHandlesEventListener implements Listener {
 				// find the ARTRON / DO
 				if (is != null) {
 					TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
-					TARDISHandlesProcessor processor = new TARDISHandlesProcessor(TARDIS.plugin, program, player, program.getProgram_id());
+					TARDISHandlesProcessor processor = new TARDISHandlesProcessor(TARDISPlugin.plugin, program, player, program.getProgramId());
 					switch (thb) {
 						case ARTRON -> {
 							processor.processArtronCommand(i + 1);
@@ -105,16 +105,16 @@ public class TARDISHandlesEventListener implements Listener {
 	 * Retrieve a Program asynchronously from the database
 	 */
 	private void getProgram(String uuid, String event) {
-		if (TARDIS.plugin.getHandlesConfig().getBoolean("enabled")) {
+		if (TARDISPlugin.plugin.getHandlesConfig().getBoolean("enabled")) {
 			new BukkitRunnable() {
 				@Override
 				public void run() {
-					ResultSetProgramFromEvent rs = new ResultSetProgramFromEvent(TARDIS.plugin, uuid, event);
+					ResultSetProgramFromEvent rs = new ResultSetProgramFromEvent(TARDISPlugin.plugin, uuid, event);
 					if (rs.resultSet()) {
 						programCallback.execute(rs.getProgram());
 					}
 				}
-			}.runTaskAsynchronously(TARDIS.plugin);
+			}.runTaskAsynchronously(TARDISPlugin.plugin);
 		}
 	}
 

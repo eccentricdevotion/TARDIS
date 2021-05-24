@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.api.event;
 
 import me.eccentric_nz.tardis.ars.TARDISARSSlot;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.rooms.TARDISRoomData;
 import org.bukkit.entity.Player;
 
@@ -34,12 +34,12 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
 	 *
 	 * @param player   the player growing the room
 	 * @param tardis   the Tardis data object, may be null - if room was manually grown, use {@link
-	 *                 #getRoomData()}.getTardis_id()
+	 *                 #getRoomData()}.getTardisId()
 	 * @param slot     the TARDISARSSlot data object, may be null - if the room was manually grown, use {@link
 	 *                 #getRoomData()}.getLocation()
 	 * @param roomData the TARDISRoomData data object
 	 */
-	public TARDISRoomGrowEvent(Player player, Tardis tardis, TARDISARSSlot slot, TARDISRoomData roomData) {
+	public TARDISRoomGrowEvent(Player player, TARDIS tardis, TARDISARSSlot slot, TARDISRoomData roomData) {
 		super(player, tardis);
 		this.slot = slot;
 		this.roomData = roomData;

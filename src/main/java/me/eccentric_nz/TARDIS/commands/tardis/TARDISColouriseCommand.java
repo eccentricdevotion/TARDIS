@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.Schematic;
@@ -37,9 +37,9 @@ import java.util.UUID;
  */
 class TARDISColouriseCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISColouriseCommand(TARDIS plugin) {
+	TARDISColouriseCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -61,7 +61,7 @@ class TARDISColouriseCommand {
 			TARDISMessage.send(player, "NOT_A_TIMELORD");
 			return;
 		}
-		Tardis tardis = rs.getTardis();
+		TARDIS tardis = rs.getTardis();
 		Schematic console = tardis.getSchematic();
 		if (!console.hasBeacon()) {
 			TARDISMessage.send(player, "COLOUR_NOT_VALID");
@@ -71,7 +71,7 @@ class TARDISColouriseCommand {
 			TARDISMessage.send(player, "COLOUR_SONIC");
 			return;
 		}
-		int ownerid = tardis.getTardis_id();
+		int ownerid = tardis.getTardisId();
 		HashMap<String, Object> wheret = new HashMap<>();
 		wheret.put("uuid", player.getUniqueId().toString());
 		ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -79,7 +79,7 @@ class TARDISColouriseCommand {
 			TARDISMessage.send(player, "NOT_IN_TARDIS");
 			return;
 		}
-		int thisid = rst.getTardis_id();
+		int thisid = rst.getTardisId();
 		// must be timelord of the tardis
 		if (thisid != ownerid) {
 			TARDISMessage.send(player, "CMD_ONLY_TL");

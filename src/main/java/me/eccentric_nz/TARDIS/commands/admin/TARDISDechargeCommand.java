@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -26,9 +26,9 @@ import org.bukkit.command.CommandSender;
  */
 class TARDISDechargeCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISDechargeCommand(TARDIS plugin) {
+	TARDISDechargeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

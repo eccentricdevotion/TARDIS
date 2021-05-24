@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.lazarus;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIGeneticManipulator;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -37,10 +37,10 @@ import java.util.List;
 class TARDISLazarusExtraInventory {
 
 	private final ItemStack[] terminal;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Material> disguises = new ArrayList<>();
 
-	TARDISLazarusExtraInventory(TARDIS plugin) {
+	TARDISLazarusExtraInventory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		disguises.add(Material.COD_SPAWN_EGG);
 		disguises.add(Material.PUFFERFISH_SPAWN_EGG);

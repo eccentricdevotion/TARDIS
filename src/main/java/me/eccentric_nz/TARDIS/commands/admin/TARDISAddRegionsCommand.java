@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.admin;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
@@ -37,13 +37,13 @@ import java.sql.Statement;
  */
 class TARDISAddRegionsCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final String prefix;
 	private WorldGuardPlugin wg;
 
-	TARDISAddRegionsCommand(TARDIS plugin) {
+	TARDISAddRegionsCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 		if (plugin.isWorldGuardOnServer()) {

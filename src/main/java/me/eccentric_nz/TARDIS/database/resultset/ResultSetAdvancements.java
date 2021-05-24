@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.*;
@@ -29,16 +29,16 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class ResultSetAchievements {
+public class ResultSetAdvancements {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final boolean multiple;
 	private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
 	private final String prefix;
-	private int a_id;
+	private int aId;
 	private UUID uuid;
 	private String name;
 	private String amount;
@@ -52,7 +52,7 @@ public class ResultSetAchievements {
 	 * @param multiple a boolean setting whether to retrieve more than on record, it true returns an ArrayList that can
 	 *                 be looped through later.
 	 */
-	public ResultSetAchievements(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+	public ResultSetAdvancements(TARDISPlugin plugin, HashMap<String, Object> where, boolean multiple) {
 		this.plugin = plugin;
 		this.where = where;
 		this.multiple = multiple;
@@ -100,7 +100,7 @@ public class ResultSetAchievements {
 					}
 					data.add(row);
 				}
-				a_id = rs.getInt("a_id");
+				aId = rs.getInt("a_id");
 				uuid = UUID.fromString(rs.getString("uuid"));
 				name = rs.getString("name");
 				amount = rs.getString("amount");
@@ -129,8 +129,8 @@ public class ResultSetAchievements {
 		return true;
 	}
 
-	public int getA_id() {
-		return a_id;
+	public int getaId() {
+		return aId;
 	}
 
 	public UUID getUuid() {

@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.TARDISZeroRoomBuilder;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.Schematic;
@@ -41,9 +41,9 @@ import java.util.UUID;
  */
 class TARDISRoomCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISRoomCommand(TARDIS plugin) {
+	TARDISRoomCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -70,8 +70,8 @@ class TARDISRoomCommand {
 			TARDISMessage.send(player, "NOT_A_TIMELORD");
 			return true;
 		}
-		Tardis tardis = rs.getTardis();
-		if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+		TARDIS tardis = rs.getTardis();
+		if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
 			TARDISMessage.send(player, "POWER_DOWN");
 			return true;
 		}
@@ -83,7 +83,7 @@ class TARDISRoomCommand {
 			TARDISMessage.send(player, "RENDER_EXISTS");
 			return true;
 		}
-		int id = tardis.getTardis_id();
+		int id = tardis.getTardisId();
 		TARDISCircuitChecker tcc = null;
 		if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
 			tcc = new TARDISCircuitChecker(plugin, id);
@@ -93,7 +93,7 @@ class TARDISRoomCommand {
 			TARDISMessage.send(player, "ARS_MISSING");
 			return true;
 		}
-		int level = tardis.getArtron_level();
+		int level = tardis.getArtronLevel();
 		String chunk = tardis.getChunk();
 		Schematic schm = tardis.getSchematic();
 		int tips = tardis.getTIPS();
@@ -125,22 +125,22 @@ class TARDISRoomCommand {
 			}
 			HashMap<String, Integer> item_counts = new HashMap<>();
 			for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
-				String[] block_data = entry.getKey().split(":");
-				String bid = block_data[0];
+				String[] blockData = entry.getKey().split(":");
+				String bid = blockData[0];
 				String mat;
-				String block_id;
-				if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
-					mat = (block_data[1].equals("1")) ? wall : floor;
-					block_id = mat;
+				String blockId;
+				if (hasPrefs && blockData.length == 2 && (blockData[1].equals("1") || blockData[1].equals("8"))) {
+					mat = (blockData[1].equals("1")) ? wall : floor;
+					blockId = mat;
 				} else {
-					block_id = bid;
+					blockId = bid;
 				}
 				int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
 				int required = (tmp > 0) ? tmp : 1;
-				if (item_counts.containsKey(block_id)) {
-					item_counts.put(block_id, item_counts.get(block_id) + required);
+				if (item_counts.containsKey(blockId)) {
+					item_counts.put(blockId, item_counts.get(blockId) + required);
 				} else {
-					item_counts.put(block_id, required);
+					item_counts.put(blockId, required);
 				}
 			}
 			for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
@@ -149,9 +149,9 @@ class TARDISRoomCommand {
 				wherec.put("block_data", map.getKey());
 				ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
 				if (rsc.resultSet()) {
-					if (rsc.getBlock_count() < map.getValue()) {
+					if (rsc.getBlockCount() < map.getValue()) {
 						hasRequired = false;
-						int diff = map.getValue() - rsc.getBlock_count();
+						int diff = map.getValue() - rsc.getBlockCount();
 						TARDISMessage.send(player, "CONDENSE_MORE", String.format("%d", diff), Material.getMaterial(map.getKey()).toString());
 					}
 				} else {
@@ -166,7 +166,7 @@ class TARDISRoomCommand {
 			}
 			TARDISCondenserData c_data = new TARDISCondenserData();
 			c_data.setBlockIDCount(item_counts);
-			c_data.setTardis_id(id);
+			c_data.setTardisId(id);
 			plugin.getGeneralKeeper().getRoomCondenserData().put(uuid, c_data);
 		}
 		if (room.equals("ZERO")) {

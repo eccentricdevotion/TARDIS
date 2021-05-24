@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,9 +38,9 @@ import java.util.UUID;
  */
 public class TARDISZeroRoomChatListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISZeroRoomChatListener(TARDIS plugin) {
+	public TARDISZeroRoomChatListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

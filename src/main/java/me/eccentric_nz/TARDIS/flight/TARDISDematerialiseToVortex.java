@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.event.TARDISDematerialisationEvent;
 import me.eccentric_nz.tardis.builders.BiomeSetter;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
@@ -43,12 +43,12 @@ import java.util.UUID;
  */
 public class TARDISDematerialiseToVortex implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private final Player player;
 	private final Location handbrake;
 
-	public TARDISDematerialiseToVortex(TARDIS plugin, int id, Player player, Location handbrake) {
+	public TARDISDematerialiseToVortex(TARDISPlugin plugin, int id, Player player, Location handbrake) {
 		this.plugin = plugin;
 		this.id = id;
 		this.player = player;
@@ -64,7 +64,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
 		wherei.put("tardis_id", id);
 		ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			boolean hidden = tardis.isHidden();
 			HashMap<String, Object> wherecl = new HashMap<>();
 			wherecl.put("tardis_id", id);

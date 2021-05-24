@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -36,12 +36,12 @@ public class ResultSetVault {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String where;
 	private final int id;
 	private final String prefix;
-	private int vault_id;
-	private int tardis_id;
+	private int vaultId;
+	private int tardisId;
 	private String location;
 	private int x;
 	private int y;
@@ -53,7 +53,7 @@ public class ResultSetVault {
 	 * @param plugin an instance of the main class.
 	 * @param where  the location of the drop chest.
 	 */
-	public ResultSetVault(TARDIS plugin, String where) {
+	public ResultSetVault(TARDISPlugin plugin, String where) {
 		this.plugin = plugin;
 		this.where = where;
 		id = -1;
@@ -66,7 +66,7 @@ public class ResultSetVault {
 	 * @param plugin an instance of the main class.
 	 * @param id     the tardis_id of the player updating the drop chest.
 	 */
-	public ResultSetVault(TARDIS plugin, int id) {
+	public ResultSetVault(TARDISPlugin plugin, int id) {
 		this.plugin = plugin;
 		where = "";
 		this.id = id;
@@ -99,8 +99,8 @@ public class ResultSetVault {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					vault_id = rs.getInt("v_id");
-					tardis_id = rs.getInt("tardis_id");
+					vaultId = rs.getInt("v_id");
+					tardisId = rs.getInt("tardis_id");
 					location = rs.getString("location");
 					x = rs.getInt("x");
 					y = rs.getInt("y");
@@ -127,12 +127,12 @@ public class ResultSetVault {
 		return true;
 	}
 
-	public int getVault_id() {
-		return vault_id;
+	public int getVaultId() {
+		return vaultId;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	public String getLocation() {

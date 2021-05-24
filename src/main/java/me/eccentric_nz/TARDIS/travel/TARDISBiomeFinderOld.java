@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardis.utility.TARDISWorldBorderChecker;
@@ -41,7 +41,7 @@ public class TARDISBiomeFinderOld implements Runnable {
 	private int taskid, limite, limits, limitw, limitn, i = 0, plus = 0;
 	private Location location = null;
 
-	public TARDISBiomeFinderOld(TARDIS plugin, Player p, int startx, int startz, Biome b, World w) {
+	public TARDISBiomeFinderOld(TARDISPlugin plugin, Player p, int startx, int startz, Biome b, World w) {
 		this.p = p;
 		this.startx = startx;
 		this.startz = startz;

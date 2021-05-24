@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetConstructSign;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -33,10 +33,10 @@ import java.util.List;
  */
 class TARDISConstructCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> lineNumbers = Arrays.asList("1", "2", "3", "4", "asymmetric");
 
-	TARDISConstructCommand(TARDIS plugin) {
+	TARDISConstructCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -50,7 +50,7 @@ class TARDISConstructCommand {
 			TARDISMessage.send(player, "NO_TARDIS");
 			return true;
 		}
-		int id = rs.getTardis_id();
+		int id = rs.getTardisId();
 		// must have a construct
 		ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, id);
 		if (!rscs.resultSet()) {

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.tardis.enumeration.DiskCircuit;
 import me.eccentric_nz.tardis.enumeration.GlowstoneCircuit;
@@ -53,11 +53,11 @@ import java.util.Locale;
  */
 public class TARDISStorageListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> inv_titles = new ArrayList<>();
 	private final List<Material> onlythese = new ArrayList<>();
 
-	public TARDISStorageListener(TARDIS plugin) {
+	public TARDISStorageListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 		for (Storage s : Storage.values()) {

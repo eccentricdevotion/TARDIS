@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.enumeration.Control;
 import me.eccentric_nz.tardis.enumeration.PRESET;
@@ -31,9 +31,9 @@ import java.util.HashMap;
 
 public class TARDISChameleonFrame {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISChameleonFrame(TARDIS plugin) {
+	public TARDISChameleonFrame(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

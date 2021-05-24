@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.HADS;
 
@@ -37,27 +37,27 @@ public class ResultSetPlayerPrefs {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String where;
 	private final String prefix;
-	private int pp_id;
+	private int ppId;
 	private UUID uuid;
 	private boolean autoOn;
-	private boolean autoPowerUp;
+	private boolean autoPowerupOn;
 	private boolean autoRescueOn;
 	private boolean autoSiegeOn;
 	private boolean beaconOn;
 	private boolean buildOn;
 	private boolean ctmOn;
-	private boolean customFont;
-	private boolean DND;
-	private boolean easyDifficulty;
+	private boolean fontOn;
+	private boolean dndOn;
+	private boolean difficulty;
 	private boolean epsOn;
 	private boolean farmOn;
 	private boolean hadsOn;
 	private boolean lanternsOn;
 	private boolean minecartOn;
-	private boolean policeboxTexturesOn;
+	private boolean policeBoxTexturesOn;
 	private boolean quotesOn;
 	private boolean rendererOn;
 	private boolean sfxOn;
@@ -65,7 +65,7 @@ public class ResultSetPlayerPrefs {
 	private boolean submarineOn;
 	private boolean telepathyOn;
 	private boolean textureOn;
-	private boolean travelbarOn;
+	private boolean travelBarOn;
 	private boolean woolLightsOn;
 	private HADS hadsType;
 	private int artronLevel;
@@ -88,7 +88,7 @@ public class ResultSetPlayerPrefs {
 	 * @param plugin an instance of the main class.
 	 * @param where  the UUID to select the preferences for.
 	 */
-	public ResultSetPlayerPrefs(TARDIS plugin, String where) {
+	public ResultSetPlayerPrefs(TARDISPlugin plugin, String where) {
 		this.plugin = plugin;
 		this.where = where;
 		prefix = this.plugin.getPrefix();
@@ -110,9 +110,9 @@ public class ResultSetPlayerPrefs {
 			statement.setString(1, where);
 			rs = statement.executeQuery();
 			if (rs.next()) {
-				pp_id = rs.getInt("pp_id");
+				ppId = rs.getInt("pp_id");
 				uuid = UUID.fromString(rs.getString("uuid"));
-				key = (Objects.equals(plugin.getConfig().getString("storage.database"), "sqlite")) ? rs.getString("key") : rs.getString("key_item");
+				key = Objects.equals(plugin.getConfig().getString("storage.database"), "sqlite") ? rs.getString("key") : rs.getString("key_item");
 				sfxOn = rs.getBoolean("sfx_on");
 				quotesOn = rs.getBoolean("quotes_on");
 				autoOn = rs.getBoolean("auto_on");
@@ -120,11 +120,11 @@ public class ResultSetPlayerPrefs {
 				autoSiegeOn = rs.getBoolean("auto_siege_on");
 				beaconOn = rs.getBoolean("beacon_on");
 				hadsOn = rs.getBoolean("hads_on");
-				String ht = rs.getString("hads_type");
+				String hadsType = rs.getString("hads_type");
 				if (rs.wasNull()) {
-					hadsType = HADS.DISPLACEMENT;
+					this.hadsType = HADS.DISPLACEMENT;
 				} else {
-					hadsType = HADS.valueOf(ht);
+					this.hadsType = HADS.valueOf(hadsType);
 				}
 				submarineOn = rs.getBoolean("submarine_on");
 				artronLevel = rs.getInt("artron_level");
@@ -136,32 +136,32 @@ public class ResultSetPlayerPrefs {
 				buildOn = rs.getBoolean("build_on");
 				epsOn = rs.getBoolean("eps_on");
 				// if empty use default
-				String message = rs.getString("eps_message");
-				if (rs.wasNull() || message.isEmpty()) {
-					epsMessage = "This is Emergency Programme One. I have died. I'm sure I will regenerate soon, but just in case. I have engaged the tardis autonomous circuit, and we are returning to my Home location or a recharge point - which ever is closest!";
+				String epsMessage = rs.getString("eps_message");
+				if (rs.wasNull() || epsMessage.isEmpty()) {
+					this.epsMessage = "This is Emergency Programme One. I have died. I'm sure I will regenerate soon, but just in case. I have engaged the tardis autonomous circuit, and we are returning to my Home location or a recharge point - which ever is closest!";
 				} else {
-					epsMessage = rs.getString("eps_message");
+					this.epsMessage = rs.getString("eps_message");
 				}
 				textureOn = rs.getBoolean("texture_on");
 				textureIn = rs.getString("texture_in");
-				String tp_out = rs.getString("texture_out");
-				textureOut = (tp_out.equals("default")) ? plugin.getResourcePack() : tp_out;
-				DND = rs.getBoolean("dnd_on");
+				String textureOut = rs.getString("texture_out");
+				this.textureOut = (textureOut.equals("default")) ? plugin.getResourcePack() : textureOut;
+				dndOn = rs.getBoolean("dnd_on");
 				minecartOn = rs.getBoolean("minecart_on");
 				rendererOn = rs.getBoolean("renderer_on");
 				woolLightsOn = rs.getBoolean("wool_lights_on");
 				ctmOn = rs.getBoolean("ctm_on");
-				customFont = rs.getBoolean("font_on");
+				fontOn = rs.getBoolean("font_on");
 				signOn = rs.getBoolean("sign_on");
 				telepathyOn = rs.getBoolean("telepathy_on");
-				travelbarOn = rs.getBoolean("travelbar_on");
+				travelBarOn = rs.getBoolean("travelbar_on");
 				farmOn = rs.getBoolean("farm_on");
 				lanternsOn = rs.getBoolean("lanterns_on");
-				policeboxTexturesOn = rs.getBoolean("policebox_textures_on");
+				policeBoxTexturesOn = rs.getBoolean("policebox_textures_on");
 				flightMode = rs.getInt("flying_mode");
 				throttle = rs.getInt("throttle");
-				easyDifficulty = rs.getBoolean("difficulty");
-				autoPowerUp = rs.getBoolean("auto_powerup_on");
+				difficulty = rs.getBoolean("difficulty");
+				autoPowerupOn = rs.getBoolean("auto_powerup_on");
 				hum = rs.getString("hum");
 			} else {
 				return false;
@@ -184,8 +184,8 @@ public class ResultSetPlayerPrefs {
 		return true;
 	}
 
-	public int getPp_id() {
-		return pp_id;
+	public int getPpId() {
+		return ppId;
 	}
 
 	public UUID getUuid() {
@@ -276,8 +276,8 @@ public class ResultSetPlayerPrefs {
 		return submarineOn;
 	}
 
-	public boolean isDND() {
-		return DND;
+	public boolean isDndOn() {
+		return dndOn;
 	}
 
 	public boolean isMinecartOn() {
@@ -297,7 +297,7 @@ public class ResultSetPlayerPrefs {
 	}
 
 	public boolean useCustomFont() {
-		return customFont;
+		return fontOn;
 	}
 
 	public boolean isSignOn() {
@@ -308,8 +308,8 @@ public class ResultSetPlayerPrefs {
 		return telepathyOn;
 	}
 
-	public boolean isTravelbarOn() {
-		return travelbarOn;
+	public boolean isTravelBarOn() {
+		return travelBarOn;
 	}
 
 	public boolean isFarmOn() {
@@ -320,8 +320,8 @@ public class ResultSetPlayerPrefs {
 		return lanternsOn;
 	}
 
-	public boolean isPoliceboxTexturesOn() {
-		return policeboxTexturesOn;
+	public boolean isPoliceBoxTexturesOn() {
+		return policeBoxTexturesOn;
 	}
 
 	public int getFlightMode() {
@@ -332,12 +332,12 @@ public class ResultSetPlayerPrefs {
 		return throttle;
 	}
 
-	public boolean isEasyDifficulty() {
-		return easyDifficulty;
+	public boolean isDifficulty() {
+		return difficulty;
 	}
 
-	public boolean isAutoPowerUp() {
-		return autoPowerUp;
+	public boolean isAutoPowerupOn() {
+		return autoPowerupOn;
 	}
 
 	public boolean isAutoRescueOn() {

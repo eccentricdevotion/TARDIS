@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
@@ -39,12 +39,12 @@ import java.util.UUID;
  */
 public class TARDISHumListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<Integer, Long> sounds = new HashMap<>();
 	private final HashMap<UUID, Long> cooldown = new HashMap<>();
 	private final HashMap<UUID, Integer> last = new HashMap<>();
 
-	public TARDISHumListener(TARDIS plugin) {
+	public TARDISHumListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 		sounds.put(0, 27402L);

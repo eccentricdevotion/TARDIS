@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.builders.TARDISBuildData;
 import me.eccentric_nz.tardis.builders.TARDISSeedBlockProcessor;
@@ -50,9 +50,9 @@ import java.util.Locale;
  */
 public class TARDISSeedBlockListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSeedBlockListener(TARDIS plugin) {
+	public TARDISSeedBlockListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

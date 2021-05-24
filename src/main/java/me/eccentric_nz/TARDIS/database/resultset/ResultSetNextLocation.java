@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
@@ -39,11 +39,11 @@ public class ResultSetNextLocation {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final String prefix;
-	private int next_id;
-	private int tardis_id;
+	private int nextId;
+	private int tardisId;
 	private World world;
 	private int x;
 	private int y;
@@ -57,7 +57,7 @@ public class ResultSetNextLocation {
 	 * @param plugin an instance of the main class.
 	 * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
 	 */
-	public ResultSetNextLocation(TARDIS plugin, HashMap<String, Object> where) {
+	public ResultSetNextLocation(TARDISPlugin plugin, HashMap<String, Object> where) {
 		this.plugin = plugin;
 		this.where = where;
 		prefix = this.plugin.getPrefix();
@@ -97,8 +97,8 @@ public class ResultSetNextLocation {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					next_id = rs.getInt("next_id");
-					tardis_id = rs.getInt("tardis_id");
+					nextId = rs.getInt("nextId");
+					tardisId = rs.getInt("tardisId");
 					world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
 					x = rs.getInt("x");
 					y = rs.getInt("y");
@@ -127,12 +127,12 @@ public class ResultSetNextLocation {
 		return world != null;
 	}
 
-	public int getNext_id() {
-		return next_id;
+	public int getNextId() {
+		return nextId;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	public World getWorld() {

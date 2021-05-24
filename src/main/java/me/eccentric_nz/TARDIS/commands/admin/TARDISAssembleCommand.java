@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
@@ -31,9 +31,9 @@ import java.util.UUID;
  */
 class TARDISAssembleCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISAssembleCommand(TARDIS plugin) {
+	TARDISAssembleCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -57,9 +57,9 @@ class TARDISAssembleCommand {
 				where.put("uuid", uuid.toString());
 				ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 				if (rs.resultSet()) {
-					Tardis tardis = rs.getTardis();
-					while (plugin.getTrackerKeeper().getDispersedTARDII().contains(tardis.getTardis_id())) {
-						plugin.getTrackerKeeper().getDispersedTARDII().remove(tardis.getTardis_id());
+					TARDIS tardis = rs.getTardis();
+					while (plugin.getTrackerKeeper().getDispersedTARDII().contains(tardis.getTardisId())) {
+						plugin.getTrackerKeeper().getDispersedTARDII().remove(tardis.getTardisId());
 					}
 					TARDISMessage.send(sender, "ASSEMBLE_PLAYER", player);
 				}

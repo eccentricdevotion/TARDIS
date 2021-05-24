@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.api.event.TARDISClaimEvent;
 import me.eccentric_nz.tardis.control.TARDISPowerButton;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
@@ -64,10 +64,10 @@ import static me.eccentric_nz.tardis.commands.tardis.TARDISAbandonCommand.getSig
  */
 public class TARDISArtronCapacitorListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Material> validBlocks = new ArrayList<>();
 
-	public TARDISArtronCapacitorListener(TARDIS plugin) {
+	public TARDISArtronCapacitorListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		validBlocks.add(Material.ACACIA_BUTTON);
 		validBlocks.add(Material.BIRCH_BUTTON);
@@ -109,23 +109,23 @@ public class TARDISArtronCapacitorListener implements Listener {
 				where.put("location", buttonloc);
 				ResultSetControls rsc = new ResultSetControls(plugin, where, false);
 				if (rsc.resultSet()) {
-					int id = rsc.getTardis_id();
+					int id = rsc.getTardisId();
 					if (action == Action.RIGHT_CLICK_BLOCK) {
 						// get tardis data
 						HashMap<String, Object> wheret = new HashMap<>();
 						wheret.put("tardis_id", id);
 						ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
 						if (rs.resultSet()) {
-							Tardis tardis = rs.getTardis();
+							TARDIS tardis = rs.getTardis();
 							if (tardis.getPreset().equals(PRESET.JUNK)) {
 								return;
 							}
 							boolean abandoned = tardis.isAbandoned();
-							HashMap<String, Object> whereid = new HashMap<>();
-							whereid.put("tardis_id", id);
-							int current_level = tardis.getArtron_level();
-							boolean init = tardis.isTardis_init();
-							boolean lights = tardis.isLights_on();
+							HashMap<String, Object> whereId = new HashMap<>();
+							whereId.put("tardis_id", id);
+							int current_level = tardis.getArtronLevel();
+							boolean init = tardis.isTardisInit();
+							boolean lightsOn = tardis.isLightsOn();
 							int fc = plugin.getArtronConfig().getInt("full_charge");
 							Material item = player.getInventory().getItemInMainHand().getType();
 							Material full = Material.valueOf(plugin.getArtronConfig().getString("full_charge_item"));
@@ -208,7 +208,7 @@ public class TARDISArtronCapacitorListener implements Listener {
 								// update charge
 								HashMap<String, Object> set = new HashMap<>();
 								set.put("artron_level", amount);
-								plugin.getQueryFactory().doUpdate("tardis", set, whereid);
+								plugin.getQueryFactory().doUpdate("tardis", set, whereId);
 							} else {
 								assert key != null;
 								if (item.equals(Material.getMaterial(key))) {
@@ -244,7 +244,7 @@ public class TARDISArtronCapacitorListener implements Listener {
 										set.put("artron_level", half);
 										set.put("tardis_init", 1);
 										set.put("powered_on", 1);
-										plugin.getQueryFactory().doUpdate("tardis", set, whereid);
+										plugin.getQueryFactory().doUpdate("tardis", set, whereId);
 										TARDISMessage.send(player, "ENERGY_INIT");
 									} else { // toggle power
 										if (plugin.getConfig().getBoolean("allow.power_down")) {
@@ -254,7 +254,7 @@ public class TARDISArtronCapacitorListener implements Listener {
 												pu = claimAbandoned(player, id, block, tardis);
 											}
 											if (pu) {
-												new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().hasLanterns()).clickButton();
+												new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered(), tardis.isHidden(), lightsOn, player.getLocation(), current_level, tardis.getSchematic().hasLanterns()).clickButton();
 											}
 										}
 									}
@@ -285,7 +285,7 @@ public class TARDISArtronCapacitorListener implements Listener {
 										// add player level to tardis level
 										HashMap<String, Object> sett = new HashMap<>();
 										sett.put("artron_level", new_level);
-										plugin.getQueryFactory().doUpdate("tardis", sett, whereid);
+										plugin.getQueryFactory().doUpdate("tardis", sett, whereId);
 										int percent = Math.round((new_level * 100F) / fc);
 										TARDISMessage.send(player, "ENERGY_CHARGED", String.format("%d", percent));
 									} else {
@@ -311,7 +311,7 @@ public class TARDISArtronCapacitorListener implements Listener {
 		}
 	}
 
-	private boolean claimAbandoned(Player player, int id, Block block, Tardis tardis) {
+	private boolean claimAbandoned(Player player, int id, Block block, TARDIS tardis) {
 		// transfer ownership to the player who clicked
 		boolean pu = plugin.getQueryFactory().claimTARDIS(player, id);
 		// make sure player is added as owner of interior WorldGuard region

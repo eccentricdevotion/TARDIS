@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.flight.TARDISHandbrake;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -27,12 +27,13 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 public class TARDISHandbrakeCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISHandbrakeCommand(TARDIS plugin) {
+	public TARDISHandbrakeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -60,6 +61,7 @@ public class TARDISHandbrakeCommand {
 			set.put("handbrake_on", onoff);
 			plugin.getQueryFactory().doUpdate("tardis", set, where);
 			Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+			assert location != null;
 			TARDISSounds.playTARDISSound(location, "tardis_handbrake_engage");
 			// Changes the lever to on
 			TARDISHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);

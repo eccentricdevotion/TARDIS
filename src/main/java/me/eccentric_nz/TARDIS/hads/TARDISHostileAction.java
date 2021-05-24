@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.hads;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.PRESET;
@@ -32,9 +32,9 @@ import java.util.UUID;
  */
 public class TARDISHostileAction {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISHostileAction(TARDIS plugin) {
+	public TARDISHostileAction(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -47,13 +47,13 @@ public class TARDISHostileAction {
 		where.put("tardis_id", id);
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			UUID uuid = tardis.getUuid();
-			boolean poweredOn = tardis.isPowered_on();
+			boolean powered = tardis.isPowered();
 			PRESET preset = tardis.getPreset();
 			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
 			if (rsp.resultSet()) {
-				if (rsp.isHadsOn() && poweredOn) {
+				if (rsp.isHadsOn() && powered) {
 					switch (rsp.getHadsType()) {
 						case DISPLACEMENT:
 							new TARDISHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);

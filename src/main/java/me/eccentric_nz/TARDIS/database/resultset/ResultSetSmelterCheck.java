@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -38,10 +38,10 @@ public class ResultSetSmelterCheck {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final String prefix;
-	private int smelter_id;
+	private int smelterId;
 
 	/**
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
@@ -49,7 +49,7 @@ public class ResultSetSmelterCheck {
 	 * @param plugin an instance of the main class.
 	 * @param where  the location of the smelter chest.
 	 */
-	public ResultSetSmelterCheck(TARDIS plugin, HashMap<String, Object> where) {
+	public ResultSetSmelterCheck(TARDISPlugin plugin, HashMap<String, Object> where) {
 		this.plugin = plugin;
 		this.where = where;
 		prefix = this.plugin.getPrefix();
@@ -89,7 +89,7 @@ public class ResultSetSmelterCheck {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					smelter_id = rs.getInt("v_id");
+					smelterId = rs.getInt("v_id");
 				}
 			} else {
 				return false;
@@ -112,7 +112,7 @@ public class ResultSetSmelterCheck {
 		return true;
 	}
 
-	public int getSmelter_id() {
-		return smelter_id;
+	public int getSmelterId() {
+		return smelterId;
 	}
 }

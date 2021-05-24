@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.planets.TARDISAngelsAPI;
 import org.bukkit.entity.Skeleton;
 
 public class TARDISDalekDisguiser {
 
 	public static void dalekanium(Skeleton skeleton) {
-		TARDISAngelsAPI.getAPI(TARDIS.plugin).setDalekEquipment(skeleton, false);
+		TARDISAngelsAPI.getAPI(TARDISPlugin.plugin).setDalekEquipment(skeleton, false);
 	}
 }

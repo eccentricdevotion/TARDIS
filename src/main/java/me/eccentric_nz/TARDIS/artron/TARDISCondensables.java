@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -29,10 +29,10 @@ import java.util.Set;
  */
 public class TARDISCondensables {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private HashMap<String, Integer> condensables;
 
-	public TARDISCondensables(TARDIS plugin) {
+	public TARDISCondensables(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

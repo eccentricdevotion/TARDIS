@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +29,7 @@ import java.util.UUID;
  */
 public class TARDISTimeRotorLoader {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final String prefix;
@@ -37,7 +37,7 @@ public class TARDISTimeRotorLoader {
 	private ResultSet rs = null;
 	private int count = 0;
 
-	public TARDISTimeRotorLoader(TARDIS plugin) {
+	public TARDISTimeRotorLoader(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}

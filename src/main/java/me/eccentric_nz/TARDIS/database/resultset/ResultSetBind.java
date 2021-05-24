@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -36,11 +36,11 @@ public class ResultSetBind {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final String prefix;
-	private int bind_id;
-	private int tardis_id;
+	private int bindId;
+	private int tardisId;
 	private int type;
 	private String location;
 	private String name;
@@ -51,7 +51,7 @@ public class ResultSetBind {
 	 * @param plugin an instance of the main class.
 	 * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
 	 */
-	public ResultSetBind(TARDIS plugin, HashMap<String, Object> where) {
+	public ResultSetBind(TARDISPlugin plugin, HashMap<String, Object> where) {
 		this.plugin = plugin;
 		this.where = where;
 		prefix = this.plugin.getPrefix();
@@ -91,8 +91,8 @@ public class ResultSetBind {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					bind_id = rs.getInt("bind_id");
-					tardis_id = rs.getInt("tardis_id");
+					bindId = rs.getInt("bind_id");
+					tardisId = rs.getInt("tardis_id");
 					type = rs.getInt("type");
 					location = rs.getString("location");
 					name = rs.getString("name");
@@ -118,12 +118,12 @@ public class ResultSetBind {
 		return true;
 	}
 
-	public int getBind_id() {
-		return bind_id;
+	public int getBindId() {
+		return bindId;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	public int getType() {

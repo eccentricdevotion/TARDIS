@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -32,9 +32,9 @@ import java.util.UUID;
  */
 public class TARDISResourcePackChanger {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISResourcePackChanger(TARDIS plugin) {
+	public TARDISResourcePackChanger(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

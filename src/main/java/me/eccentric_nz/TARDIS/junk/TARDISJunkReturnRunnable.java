@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 
@@ -25,10 +25,10 @@ import org.bukkit.Location;
  */
 public class TARDISJunkReturnRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final long waitTime;
 
-	public TARDISJunkReturnRunnable(TARDIS plugin) {
+	public TARDISJunkReturnRunnable(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		waitTime = this.plugin.getConfig().getLong("junk.return") * 1000;
 	}

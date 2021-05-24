@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import org.bukkit.ChatColor;
@@ -40,10 +40,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class TARDISTagListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Calendar eggcal = Calendar.getInstance();
 
-	public TARDISTagListener(TARDIS plugin) {
+	public TARDISTagListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

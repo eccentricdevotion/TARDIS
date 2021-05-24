@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
@@ -41,10 +41,10 @@ import java.util.List;
  */
 public class TARDISTeleportCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> ROOT_SUBS = new ArrayList<>();
 
-	public TARDISTeleportCommand(TARDIS plugin) {
+	public TARDISTeleportCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		for (World w : plugin.getServer().getWorlds()) {
 			ROOT_SUBS.add(TARDISAliasResolver.getWorldAlias(w));

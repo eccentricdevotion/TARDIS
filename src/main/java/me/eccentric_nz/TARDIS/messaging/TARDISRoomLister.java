@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.messaging;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.tardis.messaging.TableGenerator.Alignment;
@@ -34,12 +34,12 @@ import java.util.List;
  */
 public class TARDISRoomLister {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 	private final LinkedHashMap<String, List<String>> options;
 	private final String JSON = "{\"text\":\"https://eccentricdevotion.github.io/TARDIS/room-gallery\",\"color\":\"aqua\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://eccentricdevotion.github.io/TARDIS/room-gallery\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":\"Click me!\"}}";
 
-	public TARDISRoomLister(TARDIS plugin, Player player) {
+	public TARDISRoomLister(TARDISPlugin plugin, Player player) {
 		this.plugin = plugin;
 		this.player = player;
 		options = createRoomOptions(this.player);

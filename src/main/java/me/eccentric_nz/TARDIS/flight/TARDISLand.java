@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
@@ -31,12 +31,12 @@ import java.util.HashMap;
  */
 public class TARDISLand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private final Player player;
 	private final SpaceTimeThrottle spaceTimeThrottle;
 
-	public TARDISLand(TARDIS plugin, int id, Player player) {
+	public TARDISLand(TARDISPlugin plugin, int id, Player player) {
 		this.plugin = plugin;
 		this.id = id;
 		this.player = player;

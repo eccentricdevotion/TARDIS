@@ -17,12 +17,12 @@
 package me.eccentric_nz.tardis.siegemode;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
 import me.eccentric_nz.tardis.database.data.Archive;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -47,7 +47,7 @@ import java.util.UUID;
  */
 class TARDISSiegeWallFloorRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final UUID uuid;
 	private final TARDISUpgradeData tud;
 	private final boolean toSiege;
@@ -57,19 +57,19 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
 	private int h;
 	private int w;
 	private int c;
-	private int startx;
-	private int starty;
-	private int startz;
+	private int startX;
+	private int startY;
+	private int startZ;
 	private World world;
-	private Material wall_type;
-	private Material floor_type;
-	private Material siege_wall_type;
-	private Material siege_floor_type;
+	private Material wallType;
+	private Material floorType;
+	private Material siegeWallType;
+	private Material siegeFloorType;
 	private Player player;
-	private int taskID;
+	private int taskId;
 	private Archive archive;
 
-	TARDISSiegeWallFloorRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud, boolean toSiege) {
+	TARDISSiegeWallFloorRunnable(TARDISPlugin plugin, UUID uuid, TARDISUpgradeData tud, boolean toSiege) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		this.tud = tud;
@@ -94,7 +94,7 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
 					Player cp = plugin.getServer().getPlayer(uuid);
 					TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
 					// cancel task
-					plugin.getServer().getScheduler().cancelTask(taskID);
+					plugin.getServer().getScheduler().cancelTask(taskId);
 					return;
 				}
 			}
@@ -106,20 +106,20 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
 				if (!file.exists()) {
 					plugin.debug("Could not find a schematic with that name!");
 					// cancel task
-					plugin.getServer().getScheduler().cancelTask(taskID);
+					plugin.getServer().getScheduler().cancelTask(taskId);
 					return;
 				}
 				// get JSON
 				obj = TARDISSchematicGZip.unzip(path);
 			} else {
-				obj = archive.getJSON();
+				obj = archive.getJson();
 			}
 			// get dimensions
 			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
 			h = dimensions.get("height").getAsInt();
 			w = dimensions.get("width").getAsInt();
 			c = dimensions.get("length").getAsInt();
-			// calculate startx, starty, startz
+			// calculate startX, startY, startZ
 			HashMap<String, Object> wheret = new HashMap<>();
 			wheret.put("uuid", uuid.toString());
 			ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
@@ -130,27 +130,27 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
 				int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
 				plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
 			}
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			int slot = tardis.getTIPS();
-			int id = tardis.getTardis_id();
+			int id = tardis.getTardisId();
 			if (slot != -1) { // default world - use TIPS
 				TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
 				TARDISTIPSData pos = tintpos.getTIPSData(slot);
-				startx = pos.getCentreX();
-				startz = pos.getCentreZ();
+				startX = pos.getCentreX();
+				startZ = pos.getCentreZ();
 			} else {
 				int[] gsl = plugin.getLocationUtils().getStartLocation(id);
-				startx = gsl[0];
-				startz = gsl[2];
+				startX = gsl[0];
+				startZ = gsl[2];
 			}
-			starty = TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
+			startY = TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
 			world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
 			// wall/floor block prefs
-			wall_type = Material.valueOf(tud.getWall());
-			floor_type = Material.valueOf(tud.getFloor());
+			wallType = Material.valueOf(tud.getWall());
+			floorType = Material.valueOf(tud.getFloor());
 			// siege wall/floor block prefs
-			siege_wall_type = Material.valueOf(tud.getSiegeWall());
-			siege_floor_type = Material.valueOf(tud.getSiegeFloor());
+			siegeWallType = Material.valueOf(tud.getSiegeWall());
+			siegeFloorType = Material.valueOf(tud.getSiegeFloor());
 			// set running
 			running = true;
 			player = plugin.getServer().getPlayer(uuid);
@@ -159,25 +159,25 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
 		}
 		if (level == (h - 1) && row == (w - 1)) {
 			// we're finished cancel the task
-			plugin.getServer().getScheduler().cancelTask(taskID);
-			taskID = 0;
+			plugin.getServer().getScheduler().cancelTask(taskId);
+			taskId = 0;
 		} else {
 			// place a row of blocks
 			for (int col = 0; col < c; col++) {
-				int x = startx + row;
-				int y = starty + level;
-				int z = startz + col;
+				int x = startX + row;
+				int y = startY + level;
+				int z = startZ + col;
 				Block bb = world.getBlockAt(x, y, z);
 				Material compare_type = bb.getType();
-				Material to_wall_type = (toSiege) ? wall_type : siege_wall_type;
-				Material to_floor_type = (toSiege) ? floor_type : siege_floor_type;
+				Material to_wall_type = (toSiege) ? wallType : siegeWallType;
+				Material to_floor_type = (toSiege) ? floorType : siegeFloorType;
 				Material type;
 				if (compare_type.equals(to_wall_type)) {
-					type = (toSiege) ? siege_wall_type : wall_type;
+					type = (toSiege) ? siegeWallType : wallType;
 					TARDISBlockSetters.setBlock(world, x, y, z, type);
 				}
 				if (compare_type.equals(to_floor_type)) {
-					type = (toSiege) ? siege_floor_type : floor_type;
+					type = (toSiege) ? siegeFloorType : floorType;
 					TARDISBlockSetters.setBlock(world, x, y, z, type);
 				}
 			}
@@ -191,7 +191,7 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
 		}
 	}
 
-	public void setTaskID(int taskID) {
-		this.taskID = taskID;
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
 	}
 }

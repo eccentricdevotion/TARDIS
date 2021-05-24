@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravelledTo;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -34,9 +34,9 @@ import org.bukkit.entity.Player;
  */
 public class TARDISTravelRequest {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISTravelRequest(TARDIS plugin) {
+	public TARDISTravelRequest(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

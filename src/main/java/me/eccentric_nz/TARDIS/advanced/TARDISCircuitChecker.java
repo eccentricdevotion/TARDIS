@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class TARDISCircuitChecker {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private boolean ars;
 	private boolean chameleon;
@@ -56,7 +56,7 @@ public class TARDISCircuitChecker {
 	private int scannerUses;
 	private int temporalUses;
 
-	public TARDISCircuitChecker(TARDIS plugin, int id) {
+	public TARDISCircuitChecker(TARDISPlugin plugin, int id) {
 		this.plugin = plugin;
 		this.id = id;
 		ars = false;

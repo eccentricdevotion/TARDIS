@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.bind;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
@@ -35,16 +35,16 @@ import java.util.UUID;
 
 public class BindAdd {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public BindAdd(TARDIS plugin) {
+	public BindAdd(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
 	public boolean setClick(Bind bind, Player player, int id, String[] args) {
 		String which = (args.length > 2) ? args[2] : "";
 		UUID uuid = player.getUniqueId();
-		int bind_id = 0;
+		int bindId = 0;
 		HashMap<String, Object> set = new HashMap<>();
 		set.put("tardis_id", id);
 		switch (bind) {
@@ -59,7 +59,7 @@ public class BindAdd {
 				} else {
 					set.put("type", 0);
 					set.put("name", which);
-					bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
+					bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
 				}
 				break;
 			case CAVE: // type 1
@@ -70,7 +70,7 @@ public class BindAdd {
 			case REBUILD:
 				set.put("type", 1);
 				set.put("name", bind.toString().toLowerCase());
-				bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
+				bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
 				break;
 			case PLAYER: // type 2
 				// get player online or offline
@@ -80,7 +80,7 @@ public class BindAdd {
 				}
 				set.put("name", which);
 				set.put("type", 2);
-				bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
+				bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
 				break;
 			case AREA: // type 3
 				// check area name
@@ -97,7 +97,7 @@ public class BindAdd {
 				}
 				set.put("name", which.toLowerCase(Locale.ENGLISH));
 				set.put("type", 3);
-				bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
+				bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
 				break;
 			case BIOME:  // type 4
 				// check valid biome
@@ -107,7 +107,7 @@ public class BindAdd {
 					if (!biome.equals(Biome.THE_VOID)) {
 						set.put("type", 4);
 						set.put("name", biome.toString());
-						bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
+						bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
 					}
 				} catch (IllegalArgumentException iae) {
 					TARDISMessage.send(player, "BIOME_NOT_VALID");
@@ -130,7 +130,7 @@ public class BindAdd {
 					set.put("name", preset.toString());
 				}
 				set.put("type", 5);
-				bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
+				bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
 				break;
 			case TRANSMAT: // type 6
 				// check transmat location exists
@@ -147,13 +147,13 @@ public class BindAdd {
 					set.put("name", "console");
 				}
 				set.put("type", 6);
-				bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
+				bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
 				break;
 			default:
 				break;
 		}
-		if (bind_id != 0) {
-			plugin.getTrackerKeeper().getBinder().put(player.getUniqueId(), bind_id);
+		if (bindId != 0) {
+			plugin.getTrackerKeeper().getBinder().put(player.getUniqueId(), bindId);
 			TARDISMessage.send(player, "BIND_CLICK");
 			return true;
 		}

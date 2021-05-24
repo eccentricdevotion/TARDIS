@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.artron.TARDISArtronLevels;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
@@ -32,12 +32,12 @@ import java.util.HashMap;
 
 public class TARDISCustardCreamDispenser {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 	private final Block block;
 	private final int id;
 
-	public TARDISCustardCreamDispenser(TARDIS plugin, Player player, Block block, int id) {
+	public TARDISCustardCreamDispenser(TARDISPlugin plugin, Player player, Block block, int id) {
 		this.plugin = plugin;
 		this.player = player;
 		this.block = block;

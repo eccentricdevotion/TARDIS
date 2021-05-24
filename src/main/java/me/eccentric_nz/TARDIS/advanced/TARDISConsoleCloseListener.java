@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.TARDISEmergencyRelocation;
@@ -56,10 +56,10 @@ import java.util.UUID;
  */
 public class TARDISConsoleCloseListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Material> onlythese = new ArrayList<>();
 
-	public TARDISConsoleCloseListener(TARDIS plugin) {
+	public TARDISConsoleCloseListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		for (DiskCircuit dc : DiskCircuit.values()) {
 			if (!onlythese.contains(dc.getMaterial())) {
@@ -79,7 +79,7 @@ public class TARDISConsoleCloseListener implements Listener {
 			wheret.put("uuid", p.getUniqueId().toString());
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
 			if (rst.resultSet()) {
-				int id = rst.getTardis_id();
+				int id = rst.getTardisId();
 				// loop through inventory contents and remove any items that are not disks or circuits
 				for (int i = 0; i < 9; i++) {
 					ItemStack is = view.getItem(i);
@@ -235,7 +235,7 @@ public class TARDISConsoleCloseListener implements Listener {
 												UUID toUUID = to.getUniqueId();
 												// check the to player's DND status
 												ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, toUUID.toString());
-												if (rspp.resultSet() && rspp.isDND()) {
+												if (rspp.resultSet() && rspp.isDndOn()) {
 													TARDISMessage.send(p, "DND", first);
 													continue;
 												}

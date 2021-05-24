@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardis.achievement;
+package me.eccentric_nz.tardis.advancement;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.entity.Player;

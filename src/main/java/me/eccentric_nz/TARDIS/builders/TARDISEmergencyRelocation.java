@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
@@ -35,9 +35,9 @@ import java.util.HashMap;
  */
 public class TARDISEmergencyRelocation {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISEmergencyRelocation(TARDIS plugin) {
+	public TARDISEmergencyRelocation(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -59,7 +59,7 @@ public class TARDISEmergencyRelocation {
 				bd.setMalfunction(false);
 				bd.setSubmarine(false);
 				bd.setThrottle(SpaceTimeThrottle.REBUILD);
-				Tardis tardis = rs.getTardis();
+				TARDIS tardis = rs.getTardis();
 				if (tardis.getPreset().isColoured()) {
 					new TARDISInstantPoliceBox(plugin, bd, tardis.getPreset()).buildPreset();
 				} else {

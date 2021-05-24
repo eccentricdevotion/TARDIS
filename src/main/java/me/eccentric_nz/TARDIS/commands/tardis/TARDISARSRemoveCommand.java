@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -34,9 +34,9 @@ import java.util.HashMap;
  */
 class TARDISARSRemoveCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISARSRemoveCommand(TARDIS plugin) {
+	TARDISARSRemoveCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -47,7 +47,7 @@ class TARDISARSRemoveCommand {
 			TARDISMessage.send(player, "NOT_A_TIMELORD");
 			return true;
 		}
-		int id = rs.getTardis_id();
+		int id = rs.getTardisId();
 		// get the sign location so we can reset the sign text
 		HashMap<String, Object> wheres = new HashMap<>();
 		wheres.put("tardis_id", id);

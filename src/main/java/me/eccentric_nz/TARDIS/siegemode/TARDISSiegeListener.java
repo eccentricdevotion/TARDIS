@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -61,9 +61,9 @@ import java.util.UUID;
  */
 public class TARDISSiegeListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSiegeListener(TARDIS plugin) {
+	public TARDISSiegeListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -96,14 +96,14 @@ public class TARDISSiegeListener implements Listener {
 			return;
 		}
 		event.setCancelled(true);
-		int id = rsc.getTardis_id();
+		int id = rsc.getTardisId();
 		HashMap<String, Object> wheret = new HashMap<>();
 		wheret.put("tardis_id", id);
 		ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
 		if (!rs.resultSet()) {
 			return;
 		}
-		Tardis tardis = rs.getTardis();
+		TARDIS tardis = rs.getTardis();
 		// only break if player is owner or companion
 		UUID puuid = event.getPlayer().getUniqueId();
 		UUID tluuid = tardis.getUuid();
@@ -301,13 +301,13 @@ public class TARDISSiegeListener implements Listener {
 		}
 		// must be the Time Lord or companion of this tardis
 		HashMap<String, Object> wheret = new HashMap<>();
-		wheret.put("tardis_id", rsc.getTardis_id());
+		wheret.put("tardis_id", rsc.getTardisId());
 		ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
 		if (!rst.resultSet()) {
 			return;
 		}
-		Tardis tardis = rst.getTardis();
-		int id = tardis.getTardis_id();
+		TARDIS tardis = rst.getTardis();
+		int id = tardis.getTardisId();
 		if (!uuid.equals(tardis.getUuid())) {
 			boolean isCompanion = false;
 			if (!tardis.getCompanions().isEmpty()) {
@@ -348,7 +348,7 @@ public class TARDISSiegeListener implements Listener {
 		} else {
 			// attempt to unsiege the tardis
 			// check tardis has minimum energy level
-			if (min > tardis.getArtron_level()) {
+			if (min > tardis.getArtronLevel()) {
 				TARDISMessage.send(p, "SIEGE_POWER");
 				return;
 			}

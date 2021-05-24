@@ -18,13 +18,13 @@ package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
@@ -47,7 +47,7 @@ import java.util.UUID;
  */
 public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final UUID uuid;
 	private final TARDISUpgradeData tud;
 	private boolean running;
@@ -65,7 +65,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
 	private Material floor_type;
 	private Player player;
 
-	public TARDISWallFloorRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud) {
+	public TARDISWallFloorRunnable(TARDISPlugin plugin, UUID uuid, TARDISUpgradeData tud) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		this.tud = tud;
@@ -101,7 +101,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
 				int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
 				plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
 			}
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			int slot = tardis.getTIPS();
 			if (slot != -1) { // default world - use TIPS
 				TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
@@ -109,7 +109,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
 				startx = pos.getCentreX();
 				startz = pos.getCentreZ();
 			} else {
-				int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+				int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
 				startx = gsl[0];
 				startz = gsl[2];
 			}

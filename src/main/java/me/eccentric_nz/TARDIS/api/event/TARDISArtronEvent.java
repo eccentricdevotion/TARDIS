@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -28,16 +28,16 @@ public class TARDISArtronEvent extends Event {
 	private static final HandlerList HANDLERS = new HandlerList();
 	private final Player player;
 	private final int amount;
-	private final int tardis_id;
-	private int level = 0;
+	private final int tardisId;
+	private int artronLevel = 0;
 
-	public TARDISArtronEvent(Player player, int amount, int tardis_id) {
+	public TARDISArtronEvent(Player player, int amount, int tardisId) {
 		this.player = player;
 		this.amount = amount;
-		this.tardis_id = tardis_id;
-		ResultSetTardisArtron rs = new ResultSetTardisArtron(TARDIS.plugin);
-		if (rs.fromID(this.tardis_id)) {
-			level = rs.getArtronLevel();
+		this.tardisId = tardisId;
+		ResultSetTardisArtron rs = new ResultSetTardisArtron(TARDISPlugin.plugin);
+		if (rs.fromID(this.tardisId)) {
+			artronLevel = rs.getArtronLevel();
 		}
 	}
 
@@ -68,8 +68,8 @@ public class TARDISArtronEvent extends Event {
 	 *
 	 * @return the tardis id
 	 */
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	/**
@@ -77,8 +77,8 @@ public class TARDISArtronEvent extends Event {
 	 *
 	 * @return the player
 	 */
-	public int getLevel() {
-		return level;
+	public int getArtronLevel() {
+		return artronLevel;
 	}
 
 	@Override

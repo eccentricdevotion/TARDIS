@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Advancement;
@@ -40,9 +40,9 @@ import java.util.HashMap;
  */
 public class TARDISCreeperDeathListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISCreeperDeathListener(TARDIS plugin) {
+	public TARDISCreeperDeathListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -80,10 +80,10 @@ public class TARDISCreeperDeathListener implements Listener {
 							plugin.getQueryFactory().doUpdate("player_prefs", set, wherea);
 						}
 						TARDISMessage.send(p, "ENERGY_CREEPER", String.format("%d", amount));
-						// are we doing an achievement?
-						if (plugin.getAchievementConfig().getBoolean("kill.enabled")) {
-							TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, Advancement.KILL, 1);
-							taf.doAchievement(1);
+						// are we doing an advancement?
+						if (plugin.getAdvancementConfig().getBoolean("kill.enabled")) {
+							TARDISAdvancementFactory taf = new TARDISAdvancementFactory(plugin, p, Advancement.KILL, 1);
+							taf.doAdvancement(1);
 						}
 					}
 				}

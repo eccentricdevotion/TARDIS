@@ -16,8 +16,7 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import com.onarandombox.MultiverseCore.exceptions.PropertyDoesNotExistException;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.ars.TARDISARSMethods;
 import me.eccentric_nz.tardis.ars.TARDISARSSlot;
@@ -47,10 +46,10 @@ public class TARDISInteriorPostioning {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String prefix;
 
-	public TARDISInteriorPostioning(TARDIS plugin) {
+	public TARDISInteriorPostioning(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}
@@ -77,9 +76,9 @@ public class TARDISInteriorPostioning {
 	 */
 	public static int getTARDISIdFromLocation(Location location) {
 		int tips = getTIPSSlot(location);
-		ResultSetTardisID rs = new ResultSetTardisID(TARDIS.plugin);
+		ResultSetTardisID rs = new ResultSetTardisID(TARDISPlugin.plugin);
 		if (rs.fromTIPSSlot(tips)) {
-			return rs.getTardis_id();
+			return rs.getTardisId();
 		} else {
 			return -1;
 		}

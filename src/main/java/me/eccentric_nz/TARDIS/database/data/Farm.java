@@ -21,7 +21,7 @@ package me.eccentric_nz.tardis.database.data;
  */
 public class Farm {
 
-	private final int tardis_id;
+	private final int tardisId;
 	private final String apiary;
 	private final String aquarium;
 	private final String bamboo;
@@ -33,8 +33,8 @@ public class Farm {
 	private final String stall;
 	private final String village;
 
-	public Farm(int tardis_id, String apiary, String aquarium, String bamboo, String birdcage, String farm, String hutch, String igloo, String stable, String stall, String village) {
-		this.tardis_id = tardis_id;
+	public Farm(int tardisId, String apiary, String aquarium, String bamboo, String birdcage, String farm, String hutch, String igloo, String stable, String stall, String village) {
+		this.tardisId = tardisId;
 		this.apiary = apiary;
 		this.aquarium = aquarium;
 		this.bamboo = bamboo;
@@ -52,8 +52,8 @@ public class Farm {
 	 *
 	 * @return the tardis id
 	 */
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	/**

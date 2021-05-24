@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.converters;
 
-import me.eccentric_nz.tardis.TARDIS;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import org.bukkit.Material;
 
@@ -35,12 +35,12 @@ public class TARDISMaterialIDConverter {
 	public final HashMap<Integer, String> COLOUR_LOOKUP = new HashMap<>();
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String prefix;
 	private final HashMap<String, String> LEGACY_TYPE_LOOKUP = new HashMap<>();
 	private final List<Integer> COLOURED = Arrays.asList(35, 95, 159, 160, 171, 251, 252);
 
-	public TARDISMaterialIDConverter(TARDIS plugin) {
+	public TARDISMaterialIDConverter(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 		LEGACY_ID_LOOKUP.put(0, Material.AIR);
@@ -770,7 +770,7 @@ public class TARDISMaterialIDConverter {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					int c_id = rs.getInt("c_id");
+					int cId = rs.getInt("c_id");
 					String blockData = rs.getString("block_data");
 					try {
 						Material.valueOf(blockData);
@@ -783,7 +783,7 @@ public class TARDISMaterialIDConverter {
 						if (mat != null) {
 							// update the record
 							ps.setString(1, mat);
-							ps.setInt(2, c_id);
+							ps.setInt(2, cId);
 							ps.addBatch();
 						}
 					}
@@ -880,13 +880,13 @@ public class TARDISMaterialIDConverter {
 						}
 					}
 					if (!wall.equals(newWall) || !floor.equals(newFloor) || !siegeWall.equals(newSiegeWall) || !siegeFloor.equals(newSiegeFloor)) {
-						int pp_id = rs.getInt("pp_id");
+						int ppId = rs.getInt("pp_id");
 						// update the record
 						ps.setString(1, newWall);
 						ps.setString(2, newFloor);
 						ps.setString(3, newSiegeWall);
 						ps.setString(4, newSiegeFloor);
-						ps.setInt(5, pp_id);
+						ps.setInt(5, ppId);
 						ps.addBatch();
 						i++;
 					}

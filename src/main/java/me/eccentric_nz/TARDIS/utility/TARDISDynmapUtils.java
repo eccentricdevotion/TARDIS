@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.TARDISData;
 import me.eccentric_nz.tardis.api.TardisAPI;
 import org.bukkit.Bukkit;
@@ -37,7 +37,7 @@ public class TARDISDynmapUtils {
 		/*
 		 * Gets TARDIS API
 		 */
-		tardisAPI = TARDIS.plugin.getTardisAPI();
+		tardisAPI = TARDISPlugin.plugin.getTardisAPI();
 
 		/*
 		 * Loads configuration
@@ -63,14 +63,14 @@ public class TARDISDynmapUtils {
 		 * Sets up update job - based on period
 		 */
 		stop = false;
-		getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, new MarkerUpdate(), 5 * 20);
+		getServer().getScheduler().scheduleSyncDelayedTask(TARDISPlugin.plugin, new MarkerUpdate(), 5 * 20);
 	}
 
 	private void updateMarkers() {
 		if (tardisAPI != null) {
 			tardisLayer.updateMarkerSet();
 		}
-		getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, new MarkerUpdate(), 100L);
+		getServer().getScheduler().scheduleSyncDelayedTask(TARDISPlugin.plugin, new MarkerUpdate(), 100L);
 	}
 
 	private String formatInfoWindow(String who, TARDISData data, Marker m) {

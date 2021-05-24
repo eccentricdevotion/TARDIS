@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -50,7 +50,7 @@ public class TARDISHandlesPattern {
 
 	private static Pattern buildPattern(String key) {
 		Pattern pattern = null;
-		String regex = TARDIS.plugin.getHandlesConfig().getString(key);
+		String regex = TARDISPlugin.plugin.getHandlesConfig().getString(key);
 		if (regex != null) {
 			pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			patterns.put(key, pattern);

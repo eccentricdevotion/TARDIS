@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -42,9 +42,9 @@ import java.util.HashMap;
  */
 public class TARDISPresetListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISPresetListener(TARDIS plugin) {
+	public TARDISPresetListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}
@@ -71,12 +71,12 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
 					wheres.put("uuid", player.getUniqueId().toString());
 					ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
 					if (rst.resultSet()) {
-						int id = rst.getTardis_id();
+						int id = rst.getTardisId();
 						HashMap<String, Object> where = new HashMap<>();
 						where.put("tardis_id", id);
 						ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 						if (rs.resultSet()) {
-							Tardis tardis = rs.getTardis();
+							TARDIS tardis = rs.getTardis();
 							String chameleon = "";
 							// set the Chameleon Circuit sign(s)
 							HashMap<String, Object> whereh = new HashMap<>();

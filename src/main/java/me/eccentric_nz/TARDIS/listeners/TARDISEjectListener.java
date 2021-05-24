@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.listeners;
 
 import com.onarandombox.MultiverseCore.exceptions.PropertyDoesNotExistException;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.mobfarming.TARDISLlama;
@@ -42,9 +42,9 @@ import java.util.UUID;
  */
 public class TARDISEjectListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISEjectListener(TARDIS plugin) {
+	public TARDISEjectListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.hads;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -40,7 +40,7 @@ import java.util.HashMap;
  */
 public class TARDISCloisterBell implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int loops;
 	private final int id;
 	private final Location centre;
@@ -59,7 +59,7 @@ public class TARDISCloisterBell implements Runnable {
 	 * @param loops  the number of times to ring the cloister bell
 	 * @param id     the id of the tardis whose cloister bell we are ringing
 	 */
-	public TARDISCloisterBell(TARDIS plugin, int loops, int id) {
+	public TARDISCloisterBell(TARDISPlugin plugin, int loops, int id) {
 		this.plugin = plugin;
 		this.loops = loops;
 		this.id = id;
@@ -71,7 +71,7 @@ public class TARDISCloisterBell implements Runnable {
 		reason = "";
 	}
 
-	public TARDISCloisterBell(TARDIS plugin, int loops, int id, Player player) {
+	public TARDISCloisterBell(TARDISPlugin plugin, int loops, int id, Player player) {
 		this.plugin = plugin;
 		this.loops = loops;
 		this.id = id;
@@ -83,7 +83,7 @@ public class TARDISCloisterBell implements Runnable {
 		messageOff = false;
 	}
 
-	public TARDISCloisterBell(TARDIS plugin, int loops, int id, Location current, Player player, String reason) {
+	public TARDISCloisterBell(TARDISPlugin plugin, int loops, int id, Location current, Player player, String reason) {
 		this.plugin = plugin;
 		this.loops = loops;
 		this.id = id;
@@ -95,7 +95,7 @@ public class TARDISCloisterBell implements Runnable {
 		messageOff = true;
 	}
 
-	public TARDISCloisterBell(TARDIS plugin, int loops, int id, Location current, Player player, boolean messageOn, String reason, boolean messageOff) {
+	public TARDISCloisterBell(TARDISPlugin plugin, int loops, int id, Location current, Player player, boolean messageOn, String reason, boolean messageOff) {
 		this.plugin = plugin;
 		this.loops = loops;
 		this.id = id;

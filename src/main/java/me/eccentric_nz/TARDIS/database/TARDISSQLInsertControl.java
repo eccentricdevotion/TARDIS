@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -28,13 +28,13 @@ import java.sql.Statement;
  */
 class TARDISSQLInsertControl implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final int id;
 	private final int type;
-	private final String l;
-	private final int s;
+	private final String location;
+	private final int secondary;
 	private final String prefix;
 
 	/**
@@ -44,15 +44,15 @@ class TARDISSQLInsertControl implements Runnable {
 	 * @param plugin an instance of the main plugin class
 	 * @param id     the unique tardis identifier
 	 * @param type   the type of control to insert
-	 * @param l      the location of the control
-	 * @param s      whether the control is a secondary control
+	 * @param location      the location of the control
+	 * @param secondary      whether the control is a secondary control
 	 */
-	TARDISSQLInsertControl(TARDIS plugin, int id, int type, String l, int s) {
+	TARDISSQLInsertControl(TARDISPlugin plugin, int id, int type, String location, int secondary) {
 		this.plugin = plugin;
 		this.id = id;
 		this.type = type;
-		this.l = l;
-		this.s = s;
+		this.location = location;
+		this.secondary = secondary;
 		prefix = this.plugin.getPrefix();
 	}
 
@@ -62,16 +62,16 @@ class TARDISSQLInsertControl implements Runnable {
 		try {
 			service.testConnection(connection);
 			statement = connection.createStatement();
-			String select = "SELECT c_id FROM " + prefix + "controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + s;
+			String select = "SELECT c_id FROM " + prefix + "controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + secondary;
 			ResultSet rs = statement.executeQuery(select);
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				// update
-				String update = "UPDATE " + prefix + "controls SET location = '" + l + "' WHERE c_id = " + rs.getInt("c_id");
+				String update = "UPDATE " + prefix + "controls SET location = '" + location + "' WHERE c_id = " + rs.getInt("c_id");
 				statement.executeUpdate(update);
 			} else {
 				// insert
-				String insert = "INSERT INTO " + prefix + "controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + l + "', " + s + ")";
+				String insert = "INSERT INTO " + prefix + "controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + location + "', " + secondary + ")";
 				statement.executeUpdate(insert);
 			}
 		} catch (SQLException e) {

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Rotation;
@@ -28,11 +28,11 @@ import org.bukkit.map.MapView;
 
 public class TARDISScannerMap {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Location location;
 	private final ItemFrame itemFrame;
 
-	public TARDISScannerMap(TARDIS plugin, Location location, ItemFrame itemFrame) {
+	public TARDISScannerMap(TARDISPlugin plugin, Location location, ItemFrame itemFrame) {
 		this.plugin = plugin;
 		this.location = location;
 		this.itemFrame = itemFrame;

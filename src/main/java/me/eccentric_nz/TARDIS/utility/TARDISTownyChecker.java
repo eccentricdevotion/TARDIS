@@ -24,7 +24,7 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyPermission;
 import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -40,7 +40,7 @@ public class TARDISTownyChecker {
 	private final Towny towny;
 	private TownyRegion tr;
 
-	public TARDISTownyChecker(TARDIS plugin) {
+	public TARDISTownyChecker(TARDISPlugin plugin) {
 		towny = (Towny) plugin.getPM().getPlugin("Towny");
 		// get the respect_towny setting
 		try {
@@ -106,14 +106,8 @@ public class TARDISTownyChecker {
 		}
 		td.setTownBlock(tb);
 		Resident res;
-		try {
-			res = TownyAPI.getInstance().getDataSource().getResident(p.getName());
-			td.setResident(res);
-		} catch (NotRegisteredException ex) {
-			// deny, player is not a resident
-			td.setCanTravel(false);
-			return td;
-		}
+		res = TownyAPI.getInstance().getResident(p.getUniqueId());
+		td.setResident(res);
 		if (res != null) {
 			try {
 				if (res.getTown().equals(tb.getTown())) {

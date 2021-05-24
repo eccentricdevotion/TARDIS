@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.api;
 
 import me.eccentric_nz.tardis.blueprints.BlueprintType;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import me.eccentric_nz.tardis.enumeration.Schematic;
@@ -411,25 +411,25 @@ public interface TardisAPI {
 	 * Get information from the database for a tardis.
 	 *
 	 * @param id the tardis id to get information for
-	 * @return return a {@link Tardis} data object, or null if no data was found
+	 * @return return a {@link TARDIS} data object, or null if no data was found
 	 */
-	Tardis getTardisData(int id);
+	TARDIS getTardisData(int id);
 
 	/**
 	 * Convenience method to get information from the database for a tardis.
 	 *
 	 * @param uuid the UUID of the Time Lord (player) of the tardis id to get information for
-	 * @return return a {@link Tardis} data object, or null if no data was found
+	 * @return return a {@link TARDIS} data object, or null if no data was found
 	 */
-	Tardis getTardisData(UUID uuid);
+	TARDIS getTardisData(UUID uuid);
 
 	/**
 	 * Convenience method to get information from the database for a tardis.
 	 *
 	 * @param player the Time Lord (player) of the tardis to get information for
-	 * @return return a {@link Tardis} data object, or null if no data was found
+	 * @return return a {@link TARDIS} data object, or null if no data was found
 	 */
-	Tardis getTardisData(Player player);
+	TARDIS getTardisData(Player player);
 
 	/**
 	 * Set the Chameleon Preset for a tardis.

@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.chatGUI;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 public class TARDISUpdateChatGUI {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISUpdateChatGUI(TARDIS plugin) {
+	public TARDISUpdateChatGUI(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
 	public static void sendJSON(String json, Player p) {
-		TARDIS.plugin.getTardisHelper().sendJson(p, json);
+		TARDISPlugin.plugin.getTardisHelper().sendJson(p, json);
 	}
 
 	public boolean showInterface(Player player, String[] args) {

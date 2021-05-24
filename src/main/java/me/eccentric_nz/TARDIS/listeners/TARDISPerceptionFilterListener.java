@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
@@ -41,10 +41,10 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISPerceptionFilterListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Material filter;
 
-	public TARDISPerceptionFilterListener(TARDIS plugin) {
+	public TARDISPerceptionFilterListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
 	}

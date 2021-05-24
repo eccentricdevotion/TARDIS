@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.companionGUI;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUICompanion;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -32,11 +32,11 @@ import java.util.UUID;
  */
 public class TARDISCompanionInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ItemStack[] skulls;
 	private final String[] companionData;
 
-	public TARDISCompanionInventory(TARDIS plugin, String[] companionData) {
+	public TARDISCompanionInventory(TARDISPlugin plugin, String[] companionData) {
 		this.plugin = plugin;
 		this.companionData = companionData;
 		skulls = getItemStack();

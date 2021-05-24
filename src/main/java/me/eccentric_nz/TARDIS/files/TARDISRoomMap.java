@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.files;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
 import org.bukkit.ChatColor;
 
@@ -37,9 +37,9 @@ import java.util.Locale;
  */
 public class TARDISRoomMap {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISRoomMap(TARDIS plugin) {
+	public TARDISRoomMap(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

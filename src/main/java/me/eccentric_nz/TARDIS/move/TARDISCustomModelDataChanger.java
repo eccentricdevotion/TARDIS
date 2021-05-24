@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
@@ -17,12 +17,12 @@ import java.util.UUID;
 
 public class TARDISCustomModelDataChanger {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Block block;
 	private final Player player;
 	private final int id;
 
-	public TARDISCustomModelDataChanger(TARDIS plugin, Block block, Player player, int id) {
+	public TARDISCustomModelDataChanger(TARDISPlugin plugin, Block block, Player player, int id) {
 		this.plugin = plugin;
 		this.block = block;
 		this.player = player;

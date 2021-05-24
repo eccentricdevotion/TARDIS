@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import me.eccentric_nz.tardis.planets.TARDISBiome;
@@ -34,11 +34,11 @@ import static me.eccentric_nz.tardis.utility.TARDISSpiral.SPIRAL;
  */
 public class TARDISVoidUpdate {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private int taskID;
 
-	public TARDISVoidUpdate(TARDIS plugin, int id) {
+	public TARDISVoidUpdate(TARDISPlugin plugin, int id) {
 		this.plugin = plugin;
 		this.id = id;
 	}
@@ -49,7 +49,7 @@ public class TARDISVoidUpdate {
 		where.put("tardis_id", id);
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			// get start chunk for this tardis
 			String[] cstr = tardis.getChunk().split(":");
 			World w = TARDISAliasResolver.getWorldFromAlias(cstr[0]);

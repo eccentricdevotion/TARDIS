@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
@@ -34,9 +34,9 @@ import java.util.UUID;
  */
 class TARDISRemoveCompanionCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISRemoveCompanionCommand(TARDIS plugin) {
+	TARDISRemoveCompanionCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -53,13 +53,13 @@ class TARDISRemoveCompanionCommand {
 				TARDISMessage.send(player, "NO_TARDIS");
 				return false;
 			} else {
-				Tardis tardis = rs.getTardis();
+				TARDIS tardis = rs.getTardis();
 				comps = tardis.getCompanions();
 				if (comps == null || comps.isEmpty()) {
 					TARDISMessage.send(player, "COMPANIONS_NONE");
 					return true;
 				}
-				id = tardis.getTardis_id();
+				id = tardis.getTardisId();
 				data = tardis.getChunk();
 				owner = tardis.getOwner();
 			}
@@ -73,7 +73,7 @@ class TARDISRemoveCompanionCommand {
 				String newList = "";
 				String message = "COMPANIONS_REMOVE_ALL";
 				if (!args[1].equals("all")) {
-					UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+					UUID oluuid = plugin.getServer().getOfflinePlayer(player.getUniqueId()).getUniqueId();
 					String[] split = comps.split(":");
 					StringBuilder sb = new StringBuilder();
 					if (split.length > 1) {

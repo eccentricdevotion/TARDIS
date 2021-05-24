@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -40,7 +40,7 @@ public class TARDISFactionsChecker {
 	public static boolean isInFaction(Player p, Location l) {
 		try {
 			Class.forName("com.massivecraft.factions.entity.MPlayer");
-			return TARDIS.plugin.getTardisHelper().isInFaction(p, l);
+			return TARDISPlugin.plugin.getTardisHelper().isInFaction(p, l);
 		} catch (Exception e) {
 			return new TARDISFactionsUUID().isInFaction(p, l);
 		}

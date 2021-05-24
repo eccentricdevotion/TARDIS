@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.lazarus;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisPowered;
@@ -42,9 +42,9 @@ import java.util.HashMap;
 public class TARDISLazarusListener implements Listener {
 
 	final BlockData WALL = Material.COBBLESTONE_WALL.createBlockData();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISLazarusListener(TARDIS plugin) {
+	public TARDISLazarusListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -68,7 +68,7 @@ public class TARDISLazarusListener implements Listener {
 					// check for power
 					if (plugin.getConfig().getBoolean("allow.power_down")) {
 						ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
-						if (rs.fromID(rsc.getTardis_id()) && !rs.isPowered()) {
+						if (rs.fromID(rsc.getTardisId()) && !rs.isPowered()) {
 							TARDISMessage.send(player, "POWER_DOWN");
 							return;
 						}

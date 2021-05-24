@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.PRESET;
@@ -36,10 +36,10 @@ import java.util.*;
  */
 public class TARDISDiskWriterCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> disks = new ArrayList<>();
 
-	public TARDISDiskWriterCommand(TARDIS plugin) {
+	public TARDISDiskWriterCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		disks.add("Save Storage Disk");
 		disks.add("Player Storage Disk");
@@ -82,8 +82,8 @@ public class TARDISDiskWriterCommand {
 					TARDISMessage.send(player, "NO_TARDIS");
 					return false;
 				} else {
-					Tardis tardis = rs.getTardis();
-					int id = tardis.getTardis_id();
+					TARDIS tardis = rs.getTardis();
+					int id = tardis.getTardisId();
 					PRESET preset = tardis.getPreset();
 					// check has unique name - this will always return false in HARD & MEDIUM difficulty
 					// TODO check for disk lore if MEDIUM difficulty
@@ -257,7 +257,7 @@ public class TARDISDiskWriterCommand {
 						save = "Home";
 					} else {
 						HashMap<String, Object> wherename = new HashMap<>();
-						wherename.put("tardis_id", rs.getTardis_id());
+						wherename.put("tardis_id", rs.getTardisId());
 						wherename.put("dest_name", args[1]);
 						wherename.put("type", 0);
 						ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);

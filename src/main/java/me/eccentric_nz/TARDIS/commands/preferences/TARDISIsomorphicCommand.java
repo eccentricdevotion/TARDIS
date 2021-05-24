@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -29,9 +29,9 @@ import java.util.HashMap;
  */
 class TARDISIsomorphicCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISIsomorphicCommand(TARDIS plugin) {
+	TARDISIsomorphicCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -41,10 +41,10 @@ class TARDISIsomorphicCommand {
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 		// does the player have a tardis
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
-			int iso = (tardis.isIso_on()) ? 0 : 1;
-			String onoff = (tardis.isIso_on()) ? "ISO_OFF" : "ISO_ON";
-			int id = tardis.getTardis_id();
+			TARDIS tardis = rs.getTardis();
+			int iso = (tardis.isIsoOn()) ? 0 : 1;
+			String onoff = (tardis.isIsoOn()) ? "ISO_OFF" : "ISO_ON";
+			int id = tardis.getTardisId();
 			HashMap<String, Object> seti = new HashMap<>();
 			seti.put("iso_on", iso);
 			HashMap<String, Object> wheret = new HashMap<>();

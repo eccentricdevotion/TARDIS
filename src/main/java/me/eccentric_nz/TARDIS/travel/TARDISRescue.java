@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -44,9 +44,9 @@ import java.util.UUID;
  */
 public class TARDISRescue {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISRescue(TARDIS plugin) {
+	public TARDISRescue(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -127,9 +127,9 @@ public class TARDISRescue {
 				TARDISMessage.send(player, "NO_TARDIS");
 				return new RescueData(false, 0);
 			}
-			Tardis tardis = rs.getTardis();
-			int id = tardis.getTardis_id();
-			if (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+			TARDIS tardis = rs.getTardis();
+			int id = tardis.getTardisId();
+			if (!tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
 				TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
 				return new RescueData(false, 0);
 			}
@@ -140,12 +140,12 @@ public class TARDISRescue {
 				TARDISMessage.send(player, "NOT_IN_TARDIS");
 				return new RescueData(false, 0);
 			}
-			int tardis_id = rst.getTardis_id();
-			if (tardis_id != id && !plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
+			int tardisId = rst.getTardisId();
+			if (tardisId != id && !plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
 				TARDISMessage.send(player, "CMD_ONLY_TL");
 				return new RescueData(false, 0);
 			}
-			int level = tardis.getArtron_level();
+			int level = tardis.getArtronLevel();
 			int travel = plugin.getArtronConfig().getInt("travel");
 			if (level < travel) {
 				TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
@@ -168,19 +168,19 @@ public class TARDISRescue {
 	public static class RescueData {
 
 		private final boolean success;
-		private final int tardis_id;
+		private final int tardisId;
 
 		RescueData(boolean success, int id) {
 			this.success = success;
-			tardis_id = id;
+			tardisId = id;
 		}
 
 		public boolean success() {
 			return success;
 		}
 
-		public int getTardis_id() {
-			return tardis_id;
+		public int getTardisId() {
+			return tardisId;
 		}
 	}
 }

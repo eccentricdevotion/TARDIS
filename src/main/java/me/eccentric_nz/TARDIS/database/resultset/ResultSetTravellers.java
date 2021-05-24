@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -38,13 +38,13 @@ public class ResultSetTravellers {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final boolean multiple;
 	private final List<UUID> data = new ArrayList<>();
 	private final String prefix;
-	private int traveller_id;
-	private int tardis_id;
+	private int travellerId;
+	private int tardisId;
 	private UUID uuid;
 
 	/**
@@ -55,7 +55,7 @@ public class ResultSetTravellers {
 	 * @param multiple a boolean setting whether to retrieve more than one record, it true returns an ArrayList that can
 	 *                 be looped through later.
 	 */
-	public ResultSetTravellers(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+	public ResultSetTravellers(TARDISPlugin plugin, HashMap<String, Object> where, boolean multiple) {
 		this.plugin = plugin;
 		this.where = where;
 		this.multiple = multiple;
@@ -99,8 +99,8 @@ public class ResultSetTravellers {
 					if (multiple) {
 						data.add(UUID.fromString(rs.getString("uuid")));
 					}
-					traveller_id = rs.getInt("traveller_id");
-					tardis_id = rs.getInt("tardis_id");
+					travellerId = rs.getInt("traveller_id");
+					tardisId = rs.getInt("tardis_id");
 					uuid = UUID.fromString(rs.getString("uuid"));
 				}
 			} else {
@@ -124,12 +124,12 @@ public class ResultSetTravellers {
 		return true;
 	}
 
-	public int getTraveller_id() {
-		return traveller_id;
+	public int getTravellerId() {
+		return travellerId;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	public UUID getUuid() {

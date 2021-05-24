@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -34,7 +34,7 @@ public class ResultSetConstructSign {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private final String prefix;
 	private String line1;
@@ -49,7 +49,7 @@ public class ResultSetConstructSign {
 	 * @param plugin an instance of the main class.
 	 * @param id     the tardis_id of this chameleon construct
 	 */
-	public ResultSetConstructSign(TARDIS plugin, int id) {
+	public ResultSetConstructSign(TARDISPlugin plugin, int id) {
 		this.plugin = plugin;
 		this.id = id;
 		prefix = this.plugin.getPrefix();

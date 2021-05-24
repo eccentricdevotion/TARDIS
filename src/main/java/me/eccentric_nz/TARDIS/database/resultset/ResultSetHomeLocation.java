@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
@@ -39,11 +39,11 @@ public class ResultSetHomeLocation {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final String prefix;
-	private int home_id;
-	private int tardis_id;
+	private int homeId;
+	private int tardisId;
 	private World world;
 	private int x;
 	private int y;
@@ -58,7 +58,7 @@ public class ResultSetHomeLocation {
 	 * @param plugin an instance of the main class.
 	 * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
 	 */
-	public ResultSetHomeLocation(TARDIS plugin, HashMap<String, Object> where) {
+	public ResultSetHomeLocation(TARDISPlugin plugin, HashMap<String, Object> where) {
 		this.plugin = plugin;
 		this.where = where;
 		prefix = this.plugin.getPrefix();
@@ -98,8 +98,8 @@ public class ResultSetHomeLocation {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					home_id = rs.getInt("home_id");
-					tardis_id = rs.getInt("tardis_id");
+					homeId = rs.getInt("home_id");
+					tardisId = rs.getInt("tardis_id");
 					world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
 					x = rs.getInt("x");
 					y = rs.getInt("y");
@@ -129,12 +129,12 @@ public class ResultSetHomeLocation {
 		return world != null;
 	}
 
-	public int getHome_id() {
-		return home_id;
+	public int getHomeId() {
+		return homeId;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	public World getWorld() {

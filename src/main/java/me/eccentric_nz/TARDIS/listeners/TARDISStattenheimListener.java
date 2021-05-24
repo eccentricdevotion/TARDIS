@@ -20,7 +20,7 @@ import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
@@ -29,7 +29,7 @@ import me.eccentric_nz.tardis.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
 import me.eccentric_nz.tardis.enumeration.*;
@@ -69,11 +69,11 @@ import java.util.UUID;
  */
 public class TARDISStattenheimListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Material> useless = new ArrayList<>();
 	private final Material remote;
 
-	public TARDISStattenheimListener(TARDIS plugin) {
+	public TARDISStattenheimListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		// add useless blocks
 		useless.add(Material.SNOW);
@@ -103,8 +103,8 @@ public class TARDISStattenheimListener implements Listener {
 					TARDISMessage.send(player, "NO_TARDIS");
 					return;
 				}
-				Tardis tardis = rs.getTardis();
-				int id = tardis.getTardis_id();
+				TARDIS tardis = rs.getTardis();
+				int id = tardis.getTardisId();
 				if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
 					TARDISMessage.send(player, "SIEGE_NO_CONTROL");
 					return;
@@ -113,7 +113,7 @@ public class TARDISStattenheimListener implements Listener {
 					TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
 					return;
 				}
-				boolean power = tardis.isPowered_on();
+				boolean power = tardis.isPowered();
 				if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
 					Block b = event.getClickedBlock();
 					Material m = b.getType();
@@ -164,7 +164,7 @@ public class TARDISStattenheimListener implements Listener {
 							return;
 						}
 						boolean hidden = tardis.isHidden();
-						int level = tardis.getArtron_level();
+						int level = tardis.getArtronLevel();
 						// check they are not in the tardis
 						HashMap<String, Object> wherettrav = new HashMap<>();
 						wherettrav.put("uuid", uuid.toString());
@@ -180,7 +180,7 @@ public class TARDISStattenheimListener implements Listener {
 						}
 						// get tardis's current location
 						HashMap<String, Object> wherecl = new HashMap<>();
-						wherecl.put("tardis_id", tardis.getTardis_id());
+						wherecl.put("tardis_id", tardis.getTardisId());
 						ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
 						if (!rsc.resultSet()) {
 							hidden = true;
@@ -324,9 +324,9 @@ public class TARDISStattenheimListener implements Listener {
 					// is the power off?
 					if (!power) {
 						ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
-						boolean beacon_on = true;
+						boolean beaconOn = true;
 						if (rsp.resultSet()) {
-							beacon_on = rsp.isBeaconOn();
+							beaconOn = rsp.isBeaconOn();
 						}
 						// power up
 						PRESET preset = tardis.getPreset();
@@ -336,11 +336,11 @@ public class TARDISStattenheimListener implements Listener {
 						setp.put("powered_on", 1);
 						TARDISMessage.send(player, "POWER_ON");
 						// if lights are off, turn them on
-						if (tardis.isLights_on()) {
+						if (tardis.isLightsOn()) {
 							new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, tardis.getSchematic().hasLanterns());
 						}
 						// if beacon is off turn it on
-						if (beacon_on) {
+						if (beaconOn) {
 							new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
 						}
 						// police box lamp

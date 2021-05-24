@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
 import me.eccentric_nz.tardis.artron.TARDISLampToggler;
 import me.eccentric_nz.tardis.artron.TARDISPoliceBoxLampToggler;
@@ -35,25 +35,25 @@ import java.util.UUID;
  */
 public class TARDISPowerButton {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private final Player player;
 	private final PRESET preset;
 	private final boolean powered;
 	private final boolean hidden;
-	private final boolean lights;
+	private final boolean lightsOn;
 	private final Location loc;
 	private final int level;
 	private final boolean lanterns;
 
-	public TARDISPowerButton(TARDIS plugin, int id, Player player, PRESET preset, boolean powered, boolean hidden, boolean lights, Location loc, int level, boolean lanterns) {
+	public TARDISPowerButton(TARDISPlugin plugin, int id, Player player, PRESET preset, boolean powered, boolean hidden, boolean lightsOn, Location loc, int level, boolean lanterns) {
 		this.plugin = plugin;
 		this.id = id;
 		this.player = player;
 		this.preset = preset;
 		this.powered = powered;
 		this.hidden = hidden;
-		this.lights = lights;
+		this.lightsOn = lightsOn;
 		this.loc = loc;
 		this.level = level;
 		this.lanterns = lanterns;
@@ -86,7 +86,7 @@ public class TARDISPowerButton {
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
 			}
 			// if lights are on, turn them off
-			if (lights) {
+			if (lightsOn) {
 				new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, lanterns);
 			}
 			// if beacon is on turn it off
@@ -107,17 +107,17 @@ public class TARDISPowerButton {
 			setp.put("powered_on", 1);
 			TARDISMessage.send(player, "POWER_ON");
 			// if lights are off, turn them on
-			if (lights) {
+			if (lightsOn) {
 				new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, lanterns);
 			}
 			// determine beacon prefs
 			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
-			boolean beacon_on = true;
+			boolean beaconOn = true;
 			if (rsp.resultSet()) {
-				beacon_on = rsp.isBeaconOn();
+				beaconOn = rsp.isBeaconOn();
 			}
 			// if beacon is off turn it on
-			if (beacon_on) {
+			if (beaconOn) {
 				new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
 			}
 			// police box lamp

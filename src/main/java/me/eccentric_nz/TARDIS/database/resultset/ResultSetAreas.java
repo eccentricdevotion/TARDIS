@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.database.data.Area;
 
@@ -39,10 +39,10 @@ public class ResultSetAreas {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final boolean multiple;
-	private final boolean onlynames;
+	private final boolean onlyNames;
 	private final List<Area> data = new ArrayList<>();
 	private final List<String> names = new ArrayList<>();
 	private final String prefix;
@@ -54,13 +54,13 @@ public class ResultSetAreas {
 	 * @param plugin    an instance of the main class.
 	 * @param where     a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
 	 * @param multiple  a boolean indicating whether multiple rows should be fetched
-	 * @param onlynames a boolean indicating whether to fetch a list of area names
+	 * @param onlyNames a boolean indicating whether to fetch a list of area names
 	 */
-	public ResultSetAreas(TARDIS plugin, HashMap<String, Object> where, boolean multiple, boolean onlynames) {
+	public ResultSetAreas(TARDISPlugin plugin, HashMap<String, Object> where, boolean multiple, boolean onlyNames) {
 		this.plugin = plugin;
 		this.where = where;
 		this.multiple = multiple;
-		this.onlynames = onlynames;
+		this.onlyNames = onlyNames;
 		prefix = this.plugin.getPrefix();
 	}
 
@@ -98,7 +98,7 @@ public class ResultSetAreas {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					if (!onlynames) {
+					if (!onlyNames) {
 						area = new Area(rs.getString("area_name"), rs.getString("world"), rs.getInt("minx"), rs.getInt("minz"), rs.getInt("maxx"), rs.getInt("maxz"), rs.getInt("y"), rs.getInt("parking_distance"), rs.getString("invisibility"), rs.getString("direction"));
 						if (multiple) {
 							data.add(area);

@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.api.event.TARDISSiegeEvent;
 import me.eccentric_nz.tardis.api.event.TARDISSiegeOffEvent;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -54,9 +54,9 @@ import java.util.List;
  */
 public class TARDISSiegeMode {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSiegeMode(TARDIS plugin) {
+	public TARDISSiegeMode(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -68,7 +68,7 @@ public class TARDISSiegeMode {
 		if (!rs.resultSet()) {
 			return;
 		}
-		Tardis tardis = rs.getTardis();
+		TARDIS tardis = rs.getTardis();
 		// get current location
 		HashMap<String, Object> wherec = new HashMap<>();
 		wherec.put("tardis_id", id);
@@ -81,10 +81,10 @@ public class TARDISSiegeMode {
 		HashMap<String, Object> wheres = new HashMap<>();
 		wheres.put("tardis_id", id);
 		HashMap<String, Object> set = new HashMap<>();
-		if (tardis.isSiege_on()) {
+		if (tardis.isSiegeOn()) {
 			// must have at least 10% power
 			int min = (plugin.getArtronConfig().getInt("full_charge") / 100) * plugin.getArtronConfig().getInt("siege_transfer");
-			if (min > tardis.getArtron_level()) {
+			if (min > tardis.getArtronLevel()) {
 				TARDISMessage.send(p, "SIEGE_POWER");
 				return;
 			}
@@ -246,7 +246,7 @@ public class TARDISSiegeMode {
 			TARDISSiegeWallFloorRunnable ttr = new TARDISSiegeWallFloorRunnable(plugin, p.getUniqueId(), tud, toSiege);
 			long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
 			int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, delay);
-			ttr.setTaskID(task);
+			ttr.setTaskId(task);
 		}
 	}
 }

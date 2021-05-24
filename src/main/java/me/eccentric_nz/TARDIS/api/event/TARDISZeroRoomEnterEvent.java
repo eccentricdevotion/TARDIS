@@ -28,11 +28,11 @@ public final class TARDISZeroRoomEnterEvent extends Event {
 
 	private static final HandlerList HANDLERS = new HandlerList();
 	private final Player player;
-	private final int tardis_id;
+	private final int tardisId;
 
-	public TARDISZeroRoomEnterEvent(Player player, int tardis_id) {
+	public TARDISZeroRoomEnterEvent(Player player, int tardisId) {
 		this.player = player;
-		this.tardis_id = tardis_id;
+		this.tardisId = tardisId;
 	}
 
 	public static HandlerList getHandlerList() {
@@ -49,12 +49,12 @@ public final class TARDISZeroRoomEnterEvent extends Event {
 	}
 
 	/**
-	 * Returns the tardis_id of the Zero room the player is entering or exiting.
+	 * Returns the tardisId of the Zero room the player is entering or exiting.
 	 *
-	 * @return the tardis_id
+	 * @return the tardisId
 	 */
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	@Override

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -38,7 +38,7 @@ public class ResultSetApiaries {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Location> data = new ArrayList<>();
 	private final String prefix;
 
@@ -47,7 +47,7 @@ public class ResultSetApiaries {
 	 *
 	 * @param plugin an instance of the main class.
 	 */
-	public ResultSetApiaries(TARDIS plugin) {
+	public ResultSetApiaries(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}

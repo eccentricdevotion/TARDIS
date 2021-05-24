@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -32,9 +32,9 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
  */
 public final class TARDISGallifreySpawnListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISGallifreySpawnListener(TARDIS plugin) {
+	public TARDISGallifreySpawnListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

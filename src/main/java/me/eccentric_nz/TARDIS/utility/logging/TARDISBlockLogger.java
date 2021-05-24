@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.utility.logging;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import org.bukkit.block.Block;
@@ -8,11 +8,11 @@ import org.bukkit.plugin.PluginManager;
 
 public class TARDISBlockLogger {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private CoreProtectAPI coreProtectAPI = null;
 	private boolean logging = false;
 
-	public TARDISBlockLogger(TARDIS plugin) {
+	public TARDISBlockLogger(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

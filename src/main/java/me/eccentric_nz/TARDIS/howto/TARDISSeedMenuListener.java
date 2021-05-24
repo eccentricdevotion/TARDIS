@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.howto;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -36,9 +36,9 @@ import org.bukkit.inventory.ItemStack;
  */
 public class TARDISSeedMenuListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSeedMenuListener(TARDIS plugin) {
+	public TARDISSeedMenuListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}

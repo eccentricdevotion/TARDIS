@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -32,9 +32,9 @@ import java.util.Collections;
 public class TARDISTerminalInventory {
 
 	private final ItemStack[] terminal;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISTerminalInventory(TARDIS plugin) {
+	public TARDISTerminalInventory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		terminal = getItemStack();
 	}

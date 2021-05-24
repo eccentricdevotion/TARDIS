@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.planets;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
@@ -42,7 +42,7 @@ import java.util.HashMap;
  */
 class TARDISBuildGallifreyanStructure implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int startx, y, startz;
 	private final HashMap<Block, BlockData> postLadderBlocks = new HashMap<>();
 	private boolean running = false;
@@ -62,7 +62,7 @@ class TARDISBuildGallifreyanStructure implements Runnable {
 	 * @param y      the start coordinate on the y-axis
 	 * @param startz the start coordinate on the z-axis
 	 */
-	TARDISBuildGallifreyanStructure(TARDIS plugin, int startx, int y, int startz) {
+	TARDISBuildGallifreyanStructure(TARDISPlugin plugin, int startx, int y, int startz) {
 		this.plugin = plugin;
 		this.startx = startx;
 		this.y = y;

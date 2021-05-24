@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -36,13 +36,13 @@ public class ResultSetCondenser {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final String prefix;
-	private int c_id;
-	private int tardis_id;
-	private String block_data;
-	private int block_count;
+	private int cId;
+	private int tardisId;
+	private String blockData;
+	private int blockCount;
 
 	/**
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the condenser table.
@@ -50,7 +50,7 @@ public class ResultSetCondenser {
 	 * @param plugin an instance of the main class.
 	 * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
 	 */
-	public ResultSetCondenser(TARDIS plugin, HashMap<String, Object> where) {
+	public ResultSetCondenser(TARDISPlugin plugin, HashMap<String, Object> where) {
 		this.plugin = plugin;
 		this.where = where;
 		prefix = this.plugin.getPrefix();
@@ -90,10 +90,10 @@ public class ResultSetCondenser {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					c_id = rs.getInt("c_id");
-					tardis_id = rs.getInt("tardis_id");
-					block_data = rs.getString("block_data");
-					block_count = rs.getInt("block_count");
+					cId = rs.getInt("c_id");
+					tardisId = rs.getInt("tardis_id");
+					blockData = rs.getString("block_data");
+					blockCount = rs.getInt("block_count");
 				}
 			} else {
 				return false;
@@ -116,19 +116,19 @@ public class ResultSetCondenser {
 		return true;
 	}
 
-	public int getC_id() {
-		return c_id;
+	public int getcId() {
+		return cId;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
-	public String getBlock_data() {
-		return block_data;
+	public String getBlockData() {
+		return blockData;
 	}
 
-	public int getBlock_count() {
-		return block_count;
+	public int getBlockCount() {
+		return blockCount;
 	}
 }

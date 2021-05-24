@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIControlCentre;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.move.TARDISBlackWoolToggler;
@@ -36,11 +36,11 @@ import java.util.UUID;
  */
 public class TARDISControlInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final UUID uuid;
 	private final ItemStack[] controls;
 
-	public TARDISControlInventory(TARDIS plugin, UUID uuid) {
+	public TARDISControlInventory(TARDISPlugin plugin, UUID uuid) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		controls = getItemStack();
@@ -57,23 +57,23 @@ public class TARDISControlInventory {
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("uuid", uuid.toString());
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-		String lights_onoff = "";
-		String siege_onoff = "";
-		String toggle_openclosed = "";
-		String power_onoff = "";
+		String lightsOnOff = "";
+		String siegeOnOff = "";
+		String toggleOpenClosed = "";
+		String poweredOnOff = "";
 		String direction = "";
 		String off = plugin.getLanguage().getString("SET_OFF");
 		String on = plugin.getLanguage().getString("SET_ON");
 		boolean open = false;
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
-			siege_onoff = (tardis.isSiege_on()) ? on : off;
-			lights_onoff = (tardis.isLights_on()) ? on : off;
-			open = new TARDISBlackWoolToggler(plugin).isOpen(tardis.getTardis_id());
-			toggle_openclosed = (open) ? plugin.getLanguage().getString("SET_OPEN") : plugin.getLanguage().getString("SET_CLOSED");
-			power_onoff = (tardis.isPowered_on()) ? on : off;
+			TARDIS tardis = rs.getTardis();
+			siegeOnOff = (tardis.isSiegeOn()) ? on : off;
+			lightsOnOff = (tardis.isLightsOn()) ? on : off;
+			open = new TARDISBlackWoolToggler(plugin).isOpen(tardis.getTardisId());
+			toggleOpenClosed = (open) ? plugin.getLanguage().getString("SET_OPEN") : plugin.getLanguage().getString("SET_CLOSED");
+			poweredOnOff = (tardis.isPowered()) ? on : off;
 			HashMap<String, Object> wheret = new HashMap<>();
-			wheret.put("tardis_id", tardis.getTardis_id());
+			wheret.put("tardis_id", tardis.getTardisId());
 			ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wheret);
 			if (rsc.resultSet()) {
 				direction = rsc.getDirection().toString();
@@ -131,9 +131,9 @@ public class TARDISControlInventory {
 		ItemStack pow = new ItemStack(Material.REPEATER, 1);
 		ItemMeta dwn = pow.getItemMeta();
 		dwn.setDisplayName(plugin.getLanguage().getString("BUTTON_POWER"));
-		dwn.setLore(Collections.singletonList(power_onoff));
+		dwn.setLore(Collections.singletonList(poweredOnOff));
 		int pcmd = GUIControlCentre.BUTTON_POWER.getCustomModelData();
-		if (power_onoff.equals(off)) {
+		if (poweredOnOff.equals(off)) {
 			pcmd += 100;
 		}
 		dwn.setCustomModelData(pcmd);
@@ -142,9 +142,9 @@ public class TARDISControlInventory {
 		ItemStack lig = new ItemStack(Material.REPEATER, 1);
 		ItemMeta swi = lig.getItemMeta();
 		swi.setDisplayName(plugin.getLanguage().getString("BUTTON_LIGHTS"));
-		swi.setLore(Collections.singletonList(lights_onoff));
+		swi.setLore(Collections.singletonList(lightsOnOff));
 		int lcmd = GUIControlCentre.BUTTON_LIGHTS.getCustomModelData();
-		if (lights_onoff.equals(off)) {
+		if (lightsOnOff.equals(off)) {
 			lcmd += 100;
 		}
 		swi.setCustomModelData(lcmd);
@@ -153,7 +153,7 @@ public class TARDISControlInventory {
 		ItemStack tog = new ItemStack(Material.REPEATER, 1);
 		ItemMeta gle = tog.getItemMeta();
 		gle.setDisplayName(plugin.getLanguage().getString("BUTTON_TOGGLE"));
-		gle.setLore(Collections.singletonList(toggle_openclosed));
+		gle.setLore(Collections.singletonList(toggleOpenClosed));
 		int tcmd = GUIControlCentre.BUTTON_TOGGLE.getCustomModelData();
 		if (!open) {
 			tcmd += 100;
@@ -179,9 +179,9 @@ public class TARDISControlInventory {
 		ItemStack siege = new ItemStack(Material.REPEATER, 1);
 		ItemMeta mode = siege.getItemMeta();
 		mode.setDisplayName(plugin.getLanguage().getString("BUTTON_SIEGE"));
-		mode.setLore(Collections.singletonList(siege_onoff));
+		mode.setLore(Collections.singletonList(siegeOnOff));
 		int scmd = GUIControlCentre.BUTTON_SIEGE.getCustomModelData();
-		if (siege_onoff.equals(off)) {
+		if (siegeOnOff.equals(off)) {
 			scmd += 100;
 		}
 		mode.setCustomModelData(scmd);

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.remote;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -41,9 +41,9 @@ import java.util.HashMap;
  */
 class TARDISRemoteTravelCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISRemoteTravelCommand(TARDIS plugin) {
+	TARDISRemoteTravelCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -52,7 +52,7 @@ class TARDISRemoteTravelCommand {
 		wherei.put("tardis_id", id);
 		ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			boolean hidden = tardis.isHidden();
 			HashMap<String, Object> wherecl = new HashMap<>();
 			wherecl.put("tardis_id", id);

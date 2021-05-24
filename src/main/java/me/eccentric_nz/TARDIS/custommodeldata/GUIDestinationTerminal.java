@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.Material;
@@ -52,17 +52,17 @@ public enum GUIDestinationTerminal {
 		String s = toString();
 		if (s.startsWith("STEP")) {
 			String[] split = s.split("_");
-			return TARDIS.plugin.getLanguage().getString("BUTTON_STEP") + ": " + (TARDISNumberParsers.parseInt(split[1]) * TARDIS.plugin.getConfig().getInt("travel.terminal_step"));
+			return TARDISPlugin.plugin.getLanguage().getString("BUTTON_STEP") + ": " + (TARDISNumberParsers.parseInt(split[1]) * TARDISPlugin.plugin.getConfig().getInt("travel.terminal_step"));
 		} else if (s.startsWith("POSITIVE")) {
-			return TARDIS.plugin.getLanguage().getString("BUTTON_POS");
+			return TARDISPlugin.plugin.getLanguage().getString("BUTTON_POS");
 		} else if (s.startsWith("NEGATIVE")) {
-			return TARDIS.plugin.getLanguage().getString("BUTTON_NEG");
+			return TARDISPlugin.plugin.getLanguage().getString("BUTTON_NEG");
 		} else if (this == X || this == Z) {
 			return s;
 		} else if (this == NETHER || this == THE_END) {
 			return TARDISStringUtils.capitalise(s);
 		} else {
-			return TARDIS.plugin.getLanguage().getString(s);
+			return TARDISPlugin.plugin.getLanguage().getString(s);
 		}
 	}
 }

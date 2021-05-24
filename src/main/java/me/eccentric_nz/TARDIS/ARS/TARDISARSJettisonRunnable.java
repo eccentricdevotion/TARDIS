@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.ars;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
@@ -36,13 +36,13 @@ import java.util.Locale;
  */
 class TARDISARSJettisonRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISARSJettison slot;
 	private final ARS room;
 	private final int id;
 	private final Player p;
 
-	TARDISARSJettisonRunnable(TARDIS plugin, TARDISARSJettison slot, ARS room, int id, Player p) {
+	TARDISARSJettisonRunnable(TARDISPlugin plugin, TARDISARSJettison slot, ARS room, int id, Player p) {
 		this.plugin = plugin;
 		this.slot = slot;
 		this.room = room;

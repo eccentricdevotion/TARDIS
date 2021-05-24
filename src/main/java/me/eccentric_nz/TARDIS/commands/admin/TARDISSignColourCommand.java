@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
@@ -29,10 +29,10 @@ import java.util.Locale;
  */
 class TARDISSignColourCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> COLOURS = Arrays.asList("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
 
-	TARDISSignColourCommand(TARDIS plugin) {
+	TARDISSignColourCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

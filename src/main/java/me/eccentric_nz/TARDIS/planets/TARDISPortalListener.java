@@ -1,15 +1,15 @@
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.PortalCreateEvent;
 
 public class TARDISPortalListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISPortalListener(TARDIS plugin) {
+	public TARDISPortalListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

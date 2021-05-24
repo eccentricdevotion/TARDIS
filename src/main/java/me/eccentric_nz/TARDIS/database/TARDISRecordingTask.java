@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 
@@ -27,10 +27,10 @@ import java.util.HashMap;
 
 public class TARDISRecordingTask implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String prefix;
 
-	public TARDISRecordingTask(TARDIS plugin) {
+	public TARDISRecordingTask(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}
@@ -83,7 +83,7 @@ public class TARDISRecordingTask implements Runnable {
 					ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
 					if (rs.resultSet()) {
 						String loco = TARDISStaticLocationGetters.getLocationFromBukkitString(a).add(0.0d, -1.0d, 0.0d).toString();
-						s.setInt(1, rs.getReplacedBlock().getTardis_id());
+						s.setInt(1, rs.getReplacedBlock().getTardisId());
 						s.setString(2, loco);
 						s.setString(3, "minecraft:grass_path");
 						s.addBatch();

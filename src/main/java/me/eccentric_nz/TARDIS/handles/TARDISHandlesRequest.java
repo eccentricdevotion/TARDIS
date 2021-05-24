@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.commands.TARDISRecipeTabComplete;
 import me.eccentric_nz.tardis.commands.handles.TARDISHandlesTeleportCommand;
@@ -24,7 +24,7 @@ import me.eccentric_nz.tardis.commands.handles.TARDISHandlesTransmatCommand;
 import me.eccentric_nz.tardis.control.TARDISLightSwitch;
 import me.eccentric_nz.tardis.control.TARDISPowerButton;
 import me.eccentric_nz.tardis.control.TARDISRandomButton;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -44,11 +44,11 @@ import java.util.regex.Pattern;
 
 public class TARDISHandlesRequest {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ItemStack handles;
 	private final Pattern handlesPattern;
 
-	public TARDISHandlesRequest(TARDIS plugin) {
+	public TARDISHandlesRequest(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		handles = getHandles();
 		handlesPattern = TARDISHandlesPattern.getPattern("prefix", false);
@@ -67,7 +67,7 @@ public class TARDISHandlesRequest {
 		// must have a tardis
 		ResultSetTardisID rs = new ResultSetTardisID(plugin);
 		if (rs.fromUUID(uuid.toString())) {
-			int id = rs.getTardis_id();
+			int id = rs.getTardisId();
 			// check for placed Handles
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("tardis_id", id);
@@ -212,9 +212,9 @@ public class TARDISHandlesRequest {
 							wherel.put("tardis_id", id);
 							ResultSetTardis rst = new ResultSetTardis(plugin, wherel, "", false, 2);
 							if (rst.resultSet()) {
-								Tardis tardis = rst.getTardis();
-								if ((onoff && !tardis.isLights_on()) || (!onoff && tardis.isLights_on())) {
-									plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISLightSwitch(plugin, id, tardis.isLights_on(), player, tardis.getSchematic().hasLanterns()).flickSwitch(), 1L);
+								TARDIS tardis = rst.getTardis();
+								if ((onoff && !tardis.isLightsOn()) || (!onoff && tardis.isLightsOn())) {
+									plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISLightSwitch(plugin, id, tardis.isLightsOn(), player, tardis.getSchematic().hasLanterns()).flickSwitch(), 1L);
 								}
 							}
 						}
@@ -227,10 +227,10 @@ public class TARDISHandlesRequest {
 							wherel.put("tardis_id", id);
 							ResultSetTardis rst = new ResultSetTardis(plugin, wherel, "", false, 2);
 							if (rst.resultSet()) {
-								Tardis tardis = rst.getTardis();
-								if ((onoff && tardis.isPowered_on()) || (!onoff && !tardis.isPowered_on())) {
+								TARDIS tardis = rst.getTardis();
+								if ((onoff && tardis.isPowered()) || (!onoff && !tardis.isPowered())) {
 									if (plugin.getConfig().getBoolean("allow.power_down")) {
-										plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton(), 1L);
+										plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered(), tardis.isHidden(), tardis.isLightsOn(), player.getLocation(), tardis.getArtronLevel(), tardis.getSchematic().hasLanterns()).clickButton(), 1L);
 									}
 								}
 							}
@@ -261,8 +261,8 @@ public class TARDISHandlesRequest {
 						wherel.put("tardis_id", id);
 						ResultSetTardis rsr = new ResultSetTardis(plugin, wherel, "", false, 2);
 						if (rsr.resultSet()) {
-							Tardis tardis = rsr.getTardis();
-							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISRandomButton(plugin, player, id, tardis.getArtron_level(), 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 1L);
+							TARDIS tardis = rsr.getTardis();
+							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISRandomButton(plugin, player, id, tardis.getArtronLevel(), 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 1L);
 							return;
 						}
 						break;

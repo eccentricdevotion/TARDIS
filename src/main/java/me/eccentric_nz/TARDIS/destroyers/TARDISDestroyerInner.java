@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
 import me.eccentric_nz.tardis.enumeration.Schematic;
@@ -36,9 +36,9 @@ import java.util.HashMap;
  */
 public class TARDISDestroyerInner {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISDestroyerInner(TARDIS plugin) {
+	public TARDISDestroyerInner(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -53,7 +53,7 @@ public class TARDISDestroyerInner {
 	public void destroyInner(Schematic schematic, int id, World w, int slot) {
 		// destroy tardis
 		if (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
-			plugin.debug(TARDIS.plugin.getLanguage().getString("CONFIG_CREATION_WORLD"));
+			plugin.debug(TARDISPlugin.plugin.getLanguage().getString("CONFIG_CREATION_WORLD"));
 			return;
 		}
 		Location wgl;

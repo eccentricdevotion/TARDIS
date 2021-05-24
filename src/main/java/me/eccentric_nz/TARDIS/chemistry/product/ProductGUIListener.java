@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.product;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -36,11 +36,11 @@ import java.util.List;
 
 public class ProductGUIListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Integer> slots = Arrays.asList(0, 1, 2, 9, 10, 11, 18, 19, 20);
 	private final List<Integer> pipe = Arrays.asList(2, 11, 20);
 
-	public ProductGUIListener(TARDIS plugin) {
+	public ProductGUIListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -40,11 +40,11 @@ public class ResultSetARS {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final String prefix;
 	private int id;
-	private int tardis_id;
+	private int tardisId;
 	private UUID uuid;
 	private int east;
 	private int south;
@@ -57,7 +57,7 @@ public class ResultSetARS {
 	 * @param plugin an instance of the main class.
 	 * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
 	 */
-	public ResultSetARS(TARDIS plugin, HashMap<String, Object> where) {
+	public ResultSetARS(TARDISPlugin plugin, HashMap<String, Object> where) {
 		this.plugin = plugin;
 		this.where = where;
 		prefix = this.plugin.getPrefix();
@@ -98,7 +98,7 @@ public class ResultSetARS {
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
 					id = rs.getInt("ars_id");
-					tardis_id = rs.getInt("tardis_id");
+					tardisId = rs.getInt("tardisId");
 					if (!rs.getString("uuid").isEmpty()) {
 						uuid = UUID.fromString(rs.getString("uuid"));
 					} else {
@@ -138,8 +138,8 @@ public class ResultSetARS {
 		return id;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	public UUID getUuid() {

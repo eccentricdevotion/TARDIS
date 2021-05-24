@@ -18,12 +18,12 @@ package me.eccentric_nz.tardis.builders;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.tardis.chameleon.TARDISConstructColumn;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetConstructSign;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -53,7 +53,7 @@ import java.util.*;
  */
 public class TARDISInstantPreset {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final BuildData bd;
 	private final BlockData chameleonBlockData;
 	private final boolean rebuild;
@@ -62,7 +62,7 @@ public class TARDISInstantPreset {
 	private final ChatColor sign_colour;
 	private final List<ProblemBlock> do_at_end = new ArrayList<>();
 
-	public TARDISInstantPreset(TARDIS plugin, BuildData bd, PRESET preset, BlockData chameleonBlockData, boolean rebuild) {
+	public TARDISInstantPreset(TARDISPlugin plugin, BuildData bd, PRESET preset, BlockData chameleonBlockData, boolean rebuild) {
 		this.plugin = plugin;
 		this.bd = bd;
 		this.preset = preset;
@@ -82,7 +82,7 @@ public class TARDISInstantPreset {
 		}
 		TARDISChameleonColumn column;
 		if (preset.equals(PRESET.CONSTRUCT)) {
-			column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprint", bd.getDirection()).getColumn();
+			column = new TARDISConstructColumn(plugin, bd.getTardisId(), "blueprint", bd.getDirection()).getColumn();
 			if (column == null) {
 				TARDISMessage.send(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");
 				return;
@@ -111,20 +111,20 @@ public class TARDISInstantPreset {
 			BiomeSetter.setBiome(bd, true, 1);
 		}
 		// rescue player?
-		if (plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisID())) {
-			UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisID());
+		if (plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisId())) {
+			UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisId());
 			Player saved = plugin.getServer().getPlayer(playerUUID);
 			if (saved != null) {
-				TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisID());
+				TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisId());
 				Location l = idl.getL();
 				plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds());
 				// put player into travellers table
 				HashMap<String, Object> set = new HashMap<>();
-				set.put("tardis_id", bd.getTardisID());
+				set.put("tardis_id", bd.getTardisId());
 				set.put("uuid", playerUUID.toString());
 				plugin.getQueryFactory().doInsert("travellers", set);
 			}
-			plugin.getTrackerKeeper().getRescue().remove(bd.getTardisID());
+			plugin.getTrackerKeeper().getRescue().remove(bd.getTardisId());
 		}
 		switch (bd.getDirection()) {
 			case SOUTH -> {
@@ -200,14 +200,14 @@ public class TARDISInstantPreset {
 					Block rail = world.getBlockAt(xx, y, zz);
 					if (rail.getType().equals(Material.RAIL) || rail.getType().equals(Material.POWERED_RAIL)) {
 						change = false;
-						TARDISBlockSetters.setBlockAndRemember(world, xx, y, zz, rail.getBlockData(), bd.getTardisID());
+						TARDISBlockSetters.setBlockAndRemember(world, xx, y, zz, rail.getBlockData(), bd.getTardisId());
 					}
 					if (world.getEnvironment().equals(World.Environment.NETHER) || world.getEnvironment().equals(World.Environment.THE_END) || world.getGenerator() instanceof TARDISChunkGenerator) {
-						TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
+						TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), false);
 					}
 				}
 				if (yy == 0 && i == 8 && !plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-					TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
+					TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), true);
 				}
 				Material mat = colData[yy].getMaterial();
 				// update door location if invisible
@@ -215,20 +215,20 @@ public class TARDISInstantPreset {
 					String invisible_door = world.getName() + ":" + xx + ":" + y + ":" + zz;
 					processDoor(invisible_door);
 					// if tardis is in the air add under door
-					TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
+					TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), true);
 				}
 				switch (mat) {
 					case GRASS_BLOCK:
 					case DIRT:
 						BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? chameleonBlockData : colData[yy];
-						TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisID());
+						TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisId());
 						break;
 					case BEDROCK:
 						if (preset.equals(PRESET.THEEND)) {
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
 							world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
 						} else {
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
 						}
 						break;
 					case WHITE_WOOL:
@@ -248,16 +248,16 @@ public class TARDISInstantPreset {
 					case RED_WOOL:
 					case BLACK_WOOL:
 						if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisID());
+							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisId());
 						}
 						if (bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && isPoliceBox && plugin.getConfig().getBoolean("police_box.set_biome")) {
 							// set an observer block instead
 							Directional directional = (Directional) Material.OBSERVER.createBlockData();
 							directional.setFacing(BlockFace.valueOf(bd.getDirection().toString()));
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, directional, bd.getTardisID());
+							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, directional, bd.getTardisId());
 						}
 						if ((preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.JUNK)) && mat.equals(Material.ORANGE_WOOL)) {
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)), bd.getTardisID());
+							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)), bd.getTardisId());
 						}
 						break;
 					case TORCH: // lamps, glowstone and torches
@@ -274,9 +274,9 @@ public class TARDISInstantPreset {
 						} else {
 							if (light instanceof Lightable lit) {
 								lit.setLit(true);
-								TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, lit, bd.getTardisID());
+								TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, lit, bd.getTardisId());
 							} else {
-								TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, light, bd.getTardisID());
+								TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, light, bd.getTardisId());
 							}
 						}
 						break;
@@ -310,27 +310,27 @@ public class TARDISInstantPreset {
 							// remember the door location
 							String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
 							String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
-							plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
+							plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisId());
 							processDoor(doorloc);
 							// place block under door if block is in list of blocks an iron door cannot go on
 							if (yy == 0) {
 								if (bd.isSubmarine() && plugin.isWorldGuardOnServer()) {
 									int sy = y - 1;
-									TARDISBlockSetters.setBlockAndRemember(world, xx, sy, zz, Material.SPONGE, bd.getTardisID());
+									TARDISBlockSetters.setBlockAndRemember(world, xx, sy, zz, Material.SPONGE, bd.getTardisId());
 									Block sponge = world.getBlockAt(xx, sy, zz);
 									plugin.getWorldGuardUtils().sponge(sponge, true);
 								} else if (!plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-									TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
+									TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), false);
 								}
 							}
 						} else {
 							String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
-							plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
+							plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisId());
 						}
 						if (mat.equals(Material.RAIL)) {
 							do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colData[yy]));
 						} else {
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
 						}
 						break;
 					case ACACIA_SIGN:
@@ -340,7 +340,7 @@ public class TARDISInstantPreset {
 					case OAK_SIGN:
 					case SPRUCE_SIGN:
 						if (preset.equals(PRESET.APPERTURE)) {
-							TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
+							TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), false);
 						}
 						break;
 					case ACACIA_WALL_SIGN:
@@ -353,15 +353,15 @@ public class TARDISInstantPreset {
 						if (bd.shouldAddSign()) {
 							TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
 							Block sign = world.getBlockAt(xx, (y + yy), zz);
-							plugin.getGeneralKeeper().getProtectBlockMap().put(sign.getLocation().toString(), bd.getTardisID());
+							plugin.getGeneralKeeper().getProtectBlockMap().put(sign.getLocation().toString(), bd.getTardisId());
 							if (Tag.SIGNS.isTagged(sign.getType())) {
 								Sign s = (Sign) sign.getState();
 								if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
 									HashMap<String, Object> wheret = new HashMap<>();
-									wheret.put("tardis_id", bd.getTardisID());
+									wheret.put("tardis_id", bd.getTardisId());
 									ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
 									if (rst.resultSet()) {
-										Tardis tardis = rst.getTardis();
+										TARDIS tardis = rst.getTardis();
 										String player_name = TARDISStaticUtils.getNick(tardis.getUuid());
 										if (player_name == null) {
 											player_name = tardis.getOwner();
@@ -416,7 +416,7 @@ public class TARDISInstantPreset {
 									}
 									case CONSTRUCT -> {
 										// get sign text from database
-										ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, bd.getTardisID());
+										ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, bd.getTardisId());
 										if (rscs.resultSet()) {
 											if (rscs.getLine1().isEmpty() && rscs.getLine2().isEmpty() && rscs.getLine3().isEmpty() && rscs.getLine4().isEmpty()) {
 												s.setLine(1, sign_colour + line1);
@@ -439,14 +439,14 @@ public class TARDISInstantPreset {
 						}
 						break;
 					case NETHERRACK:
-						TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+						TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
 						if (preset.equals(PRESET.TORCH)) {
 							world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
 						}
 						break;
 					case NETHER_PORTAL:
-						TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy + 1), zz, Material.OBSIDIAN, bd.getTardisID());
-						TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+						TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy + 1), zz, Material.OBSIDIAN, bd.getTardisId());
+						TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
 						break;
 					case SKELETON_SKULL:
 						if (bd.isSubmarine()) {
@@ -454,7 +454,7 @@ public class TARDISInstantPreset {
 						} else {
 							Rotatable rotatable = (Rotatable) colData[yy];
 							rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection()));
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisID());
+							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisId());
 						}
 						break;
 					case WHITE_TERRACOTTA:
@@ -474,25 +474,25 @@ public class TARDISInstantPreset {
 					case RED_TERRACOTTA:
 					case BLACK_TERRACOTTA:
 						BlockData chai = (preset.equals(PRESET.FACTORY)) ? chameleonBlockData : colData[yy];
-						TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, chai, bd.getTardisID());
+						TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, chai, bd.getTardisId());
 						break;
 					default: // everything else
 						if (change) {
 							if (mat.equals(Material.LEVER) || mat.equals(Material.STONE_BUTTON) || mat.equals(Material.OAK_BUTTON)) {
 								do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colData[yy]));
 							} else {
-								TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+								TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
 							}
 						}
 						break;
 				}
 			}
 		}
-		do_at_end.forEach((pb) -> TARDISBlockSetters.setBlockAndRemember(pb.getL().getWorld(), pb.getL().getBlockX(), pb.getL().getBlockY(), pb.getL().getBlockZ(), pb.getData(), bd.getTardisID()));
+		do_at_end.forEach((pb) -> TARDISBlockSetters.setBlockAndRemember(pb.getL().getWorld(), pb.getL().getBlockX(), pb.getL().getBlockY(), pb.getL().getBlockZ(), pb.getData(), bd.getTardisId()));
 		if (!rebuild) {
 			// message travellers in tardis
 			HashMap<String, Object> where = new HashMap<>();
-			where.put("tardis_id", bd.getTardisID());
+			where.put("tardis_id", bd.getTardisId());
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
 			if (rst.resultSet()) {
 				List<UUID> travellers = rst.getData();
@@ -507,15 +507,15 @@ public class TARDISInstantPreset {
 				}), 30L);
 			}
 		}
-		plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
-		plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(bd.getTardisID()));
-		plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisID()));
-		plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
-		if (plugin.getTrackerKeeper().getDidDematToVortex().contains(bd.getTardisID())) {
-			plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(bd.getTardisID()));
+		plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisId()));
+		plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(bd.getTardisId()));
+		plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisId()));
+		plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisId());
+		if (plugin.getTrackerKeeper().getDidDematToVortex().contains(bd.getTardisId())) {
+			plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(bd.getTardisId()));
 		}
-		if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(bd.getTardisID())) {
-			int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(bd.getTardisID());
+		if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(bd.getTardisId())) {
+			int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(bd.getTardisId());
 			plugin.getServer().getScheduler().cancelTask(taskID);
 		}
 		if (!bd.isRebuild() && bd.getPlayer().getPlayer() != null) {
@@ -527,17 +527,17 @@ public class TARDISInstantPreset {
 		// should insert the door when tardis is first made, and then update the location there after!
 		HashMap<String, Object> whered = new HashMap<>();
 		whered.put("door_type", 0);
-		whered.put("tardis_id", bd.getTardisID());
+		whered.put("tardis_id", bd.getTardisId());
 		ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
 		HashMap<String, Object> setd = new HashMap<>();
 		setd.put("door_location", doorloc);
 		setd.put("door_direction", bd.getDirection().toString());
 		if (rsd.resultSet()) {
 			HashMap<String, Object> whereid = new HashMap<>();
-			whereid.put("door_id", rsd.getDoor_id());
+			whereid.put("door_id", rsd.getDoorId());
 			plugin.getQueryFactory().doUpdate("doors", setd, whereid);
 		} else {
-			setd.put("tardis_id", bd.getTardisID());
+			setd.put("tardis_id", bd.getTardisId());
 			setd.put("door_type", 0);
 			plugin.getQueryFactory().doInsert("doors", setd);
 		}

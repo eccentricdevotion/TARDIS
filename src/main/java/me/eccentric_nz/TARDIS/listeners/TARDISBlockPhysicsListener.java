@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISRecordingQueue;
 import me.eccentric_nz.tardis.utility.TARDISMaterials;
 import org.bukkit.Material;
@@ -36,9 +36,9 @@ import org.bukkit.event.block.BlockPhysicsEvent;
  */
 public class TARDISBlockPhysicsListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBlockPhysicsListener(TARDIS plugin) {
+	public TARDISBlockPhysicsListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
@@ -38,11 +38,11 @@ import java.util.*;
  */
 public class TARDISGravityCommands implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> directions = new ArrayList<>();
 	private final HashMap<String, Double> gravityDirection = new HashMap<>();
 
-	public TARDISGravityCommands(TARDIS plugin) {
+	public TARDISGravityCommands(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		directions.add("down");
 		directions.add("up");

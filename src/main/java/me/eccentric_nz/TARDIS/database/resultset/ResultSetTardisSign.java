@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.Adaption;
 
@@ -36,17 +36,17 @@ public class ResultSetTardisSign {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String where;
 	private final String prefix;
-	private int tardis_id;
+	private int tardisId;
 	private UUID uuid;
 	private String owner;
-	private String save_sign;
+	private String saveSign;
 	private String chameleon;
 	private Adaption adaption;
-	private boolean iso_on;
-	private boolean powered_on;
+	private boolean isoOn;
+	private boolean powered;
 	private int which;
 
 	/**
@@ -56,7 +56,7 @@ public class ResultSetTardisSign {
 	 * @param plugin an instance of the main class.
 	 * @param where  a String value to search for.
 	 */
-	public ResultSetTardisSign(TARDIS plugin, String where) {
+	public ResultSetTardisSign(TARDISPlugin plugin, String where) {
 		this.plugin = plugin;
 		this.where = where;
 		prefix = this.plugin.getPrefix();
@@ -71,7 +71,7 @@ public class ResultSetTardisSign {
 	public boolean resultSet() {
 		PreparedStatement statement = null;
 		ResultSet rs = null;
-		String query = "SELECT * FROM " + prefix + "tardis WHERE chameleon = ? OR save_sign = ? AND abandoned = 0";
+		String query = "SELECT * FROM " + prefix + "tardis WHERE chameleon = ? OR saveSign = ? AND abandoned = 0";
 		try {
 			service.testConnection(connection);
 			statement = connection.prepareStatement(query);
@@ -79,14 +79,14 @@ public class ResultSetTardisSign {
 			statement.setString(2, where);
 			rs = statement.executeQuery();
 			if (rs.next()) {
-				tardis_id = rs.getInt("tardis_id");
+				tardisId = rs.getInt("tardis_id");
 				uuid = UUID.fromString(rs.getString("uuid"));
 				owner = rs.getString("owner");
-				save_sign = rs.getString("save_sign");
+				saveSign = rs.getString("saveSign");
 				chameleon = rs.getString("chameleon");
 				adaption = Adaption.values()[rs.getInt("adapti_on")];
-				iso_on = rs.getBoolean("iso_on");
-				powered_on = rs.getBoolean("powered_on");
+				isoOn = rs.getBoolean("iso_on");
+				powered = rs.getBoolean("powered_on");
 				which = (chameleon.equals(where)) ? 0 : 1;
 			} else {
 				return false;
@@ -109,8 +109,8 @@ public class ResultSetTardisSign {
 		return true;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	public UUID getUuid() {
@@ -121,8 +121,8 @@ public class ResultSetTardisSign {
 		return owner;
 	}
 
-	public String getSave_sign() {
-		return save_sign;
+	public String getSaveSign() {
+		return saveSign;
 	}
 
 	public String getChameleon() {
@@ -133,12 +133,12 @@ public class ResultSetTardisSign {
 		return adaption;
 	}
 
-	public boolean isIso_on() {
-		return iso_on;
+	public boolean isIsoOn() {
+		return isoOn;
 	}
 
-	public boolean isPowered_on() {
-		return powered_on;
+	public boolean isPowered() {
+		return powered;
 	}
 
 	public int getWhich() {

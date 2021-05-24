@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.tardis.artron.TARDISArtronIndicator;
 import me.eccentric_nz.tardis.artron.TARDISArtronLevels;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
@@ -47,9 +47,9 @@ import java.util.HashMap;
  */
 class TARDISHandlesLandCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISHandlesLandCommand(TARDIS plugin) {
+	public TARDISHandlesLandCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -58,12 +58,12 @@ class TARDISHandlesLandCommand {
 		wherei.put("tardis_id", id);
 		ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			if (tardis.getPreset().equals(PRESET.JUNK)) {
 				TARDISMessage.handlesSend(player, "HANDLES_JUNK");
 				return true;
 			}
-			if (tardis.isHandbrake_on()) {
+			if (tardis.isHandbrakeOn()) {
 				TARDISMessage.handlesSend(player, "HANDBRAKE_ON_ERR");
 				return true;
 			}

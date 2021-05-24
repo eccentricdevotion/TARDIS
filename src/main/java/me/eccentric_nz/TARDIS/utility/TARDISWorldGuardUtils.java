@@ -32,7 +32,7 @@ import com.sk89q.worldguard.protection.managers.storage.StorageException;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.util.SpongeUtil;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.Bukkit;
@@ -51,7 +51,7 @@ import java.util.*;
  */
 public class TARDISWorldGuardUtils {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private WorldGuardPlugin wgp;
 	private WorldGuardPlatform wg;
 
@@ -60,7 +60,7 @@ public class TARDISWorldGuardUtils {
 	 *
 	 * @param plugin an instance of the tardis plugin
 	 */
-	public TARDISWorldGuardUtils(TARDIS plugin) {
+	public TARDISWorldGuardUtils(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		if (plugin.isWorldGuardOnServer()) {
 			wgp = (WorldGuardPlugin) plugin.getPM().getPlugin("WorldGuard");

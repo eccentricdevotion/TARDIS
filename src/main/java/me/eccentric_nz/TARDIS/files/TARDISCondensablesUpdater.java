@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,9 +28,9 @@ import java.util.Map;
  */
 public class TARDISCondensablesUpdater {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISCondensablesUpdater(TARDIS plugin) {
+	public TARDISCondensablesUpdater(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

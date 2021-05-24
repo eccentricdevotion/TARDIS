@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -29,9 +29,9 @@ public class TARDISEvent extends Event {
 
 	private static final HandlerList HANDLERS = new HandlerList();
 	private final Player player;
-	private final Tardis tardis;
+	private final TARDIS tardis;
 
-	TARDISEvent(Player player, Tardis tardis) {
+	TARDISEvent(Player player, TARDIS tardis) {
 		this.player = player;
 		this.tardis = tardis;
 	}
@@ -55,7 +55,7 @@ public class TARDISEvent extends Event {
 	 *
 	 * @return the Tardis data object
 	 */
-	public Tardis getTardis() {
+	public TARDIS getTardis() {
 		return tardis;
 	}
 

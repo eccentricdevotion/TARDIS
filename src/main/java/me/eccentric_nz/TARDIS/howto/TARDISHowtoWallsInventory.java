@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.howto;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIChameleonPresets;
 import me.eccentric_nz.tardis.custommodeldata.GUIWallFloor;
 import me.eccentric_nz.tardis.rooms.TARDISWalls;
@@ -35,9 +35,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 class TARDISHowtoWallsInventory {
 
 	private final ItemStack[] menu;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISHowtoWallsInventory(TARDIS plugin) {
+	public TARDISHowtoWallsInventory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		menu = getItemStack();
 	}

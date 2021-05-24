@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -29,11 +29,11 @@ import java.util.*;
  */
 public class TARDISSignsUpdater {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final FileConfiguration signs_config;
 	private final HashMap<String, List<String>> strings = new HashMap<>();
 
-	public TARDISSignsUpdater(TARDIS plugin, FileConfiguration signs_config) {
+	public TARDISSignsUpdater(TARDISPlugin plugin, FileConfiguration signs_config) {
 		this.plugin = plugin;
 		this.signs_config = signs_config;
 		strings.put("chameleon", Arrays.asList("Chameleon", "Circuit"));

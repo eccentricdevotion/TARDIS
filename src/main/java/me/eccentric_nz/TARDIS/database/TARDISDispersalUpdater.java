@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 
 import java.sql.*;
 
@@ -29,12 +29,12 @@ import java.sql.*;
  */
 class TARDISDispersalUpdater {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final String prefix;
 
-	TARDISDispersalUpdater(TARDIS plugin) {
+	TARDISDispersalUpdater(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}
@@ -42,7 +42,7 @@ class TARDISDispersalUpdater {
 	/**
 	 * Convert pre-tardis v2.3 controls to the new system.
 	 */
-	void updateTardis_ids() {
+	void updateTardisIds() {
 		int i = 0;
 		Statement statement = null;
 		ResultSet rs = null;

@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
@@ -16,7 +16,7 @@ public class TARDISAliasResolver {
 	}
 
 	public static String getWorldAlias(String world) {
-		return TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".alias", world);
+		return TARDISPlugin.plugin.getPlanetsConfig().getString("planets." + world + ".alias", world);
 	}
 
 	public static World getWorldFromAlias(String alias) {
@@ -48,10 +48,10 @@ public class TARDISAliasResolver {
 	}
 
 	public static void createAliasMap() {
-		for (String s : Objects.requireNonNull(TARDIS.plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false)) {
+		for (String s : Objects.requireNonNull(TARDISPlugin.plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false)) {
 			World world = Bukkit.getServer().getWorld(s);
 			if (world != null) {
-				String alias = TARDIS.plugin.getPlanetsConfig().getString("planets." + s + ".alias", s);
+				String alias = TARDISPlugin.plugin.getPlanetsConfig().getString("planets." + s + ".alias", s);
 				TARDISPlanet tp = new TARDISPlanet();
 				tp.setAlias(!alias.isEmpty() ? alias : s);
 				tp.setName(s);

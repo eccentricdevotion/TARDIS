@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.flight.TARDISLand;
 import me.eccentric_nz.tardis.handles.TARDISHandlesPattern;
 import me.eccentric_nz.tardis.handles.TARDISHandlesRequest;
@@ -46,11 +46,11 @@ import java.util.regex.Pattern;
  */
 public class TARDISChatListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Pattern handlesPattern = TARDISHandlesPattern.getPattern("prefix");
 	private Pattern howToPattern = null;
 
-	public TARDISChatListener(TARDIS plugin) {
+	public TARDISChatListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -82,15 +82,15 @@ public class TARDISChatListener implements Listener {
 						if (rd.success()) {
 							if (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
 								Player who = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(saved));
-								if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
+								if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
 									TARDISMessage.send(who, message, player);
 								}
 								plugin.getTrackerKeeper().getTelepathicRescue().remove(saved);
-							} else if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
+							} else if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
 								TARDISMessage.send(rescuer, message, player);
 							}
-							if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
-								new TARDISLand(plugin, rd.getTardis_id(), rescuer).exitVortex();
+							if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
+								new TARDISLand(plugin, rd.getTardisId(), rescuer).exitVortex();
 							}
 						}
 					}, 2L);

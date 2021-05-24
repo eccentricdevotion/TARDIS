@@ -25,9 +25,9 @@ import java.util.UUID;
  */
 public class ConfiguredSonic {
 
-	private final int sonic_id;
+	private final int sonicId;
 	private final UUID uuid;
-	private final UUID sonic_uuid;
+	private final UUID sonicUuid;
 	private SonicConfig bio;
 	private SonicConfig diamond;
 	private SonicConfig emerald;
@@ -37,8 +37,8 @@ public class ConfiguredSonic {
 	private SonicConfig arrow;
 	private SonicConfig knockback;
 
-	public ConfiguredSonic(int sonic_id, UUID uuid, int bio, int diamond, int emerald, int redstone, int painter, int ignite, int arrow, int knockback, UUID sonic_uuid) {
-		this.sonic_id = sonic_id;
+	public ConfiguredSonic(int sonicId, UUID uuid, int bio, int diamond, int emerald, int redstone, int painter, int ignite, int arrow, int knockback, UUID sonicUuid) {
+		this.sonicId = sonicId;
 		this.uuid = uuid;
 		this.bio = SonicConfig.values()[bio];
 		this.diamond = SonicConfig.values()[diamond];
@@ -48,11 +48,11 @@ public class ConfiguredSonic {
 		this.ignite = SonicConfig.values()[ignite];
 		this.arrow = SonicConfig.values()[arrow];
 		this.knockback = SonicConfig.values()[knockback];
-		this.sonic_uuid = sonic_uuid;
+		this.sonicUuid = sonicUuid;
 	}
 
-	public int getSonic_id() {
-		return sonic_id;
+	public int getSonicId() {
+		return sonicId;
 	}
 
 	public UUID getUuid() {
@@ -123,7 +123,7 @@ public class ConfiguredSonic {
 		this.knockback = knockback;
 	}
 
-	public UUID getSonic_uuid() {
-		return sonic_uuid;
+	public UUID getSonicUuid() {
+		return sonicUuid;
 	}
 }

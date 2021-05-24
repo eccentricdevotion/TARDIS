@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravelledTo;
@@ -34,7 +34,7 @@ import org.bukkit.WorldBorder;
  */
 public class TARDISPluginRespect {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private TARDISTownyChecker tychk;
 	private TARDISWorldBorderChecker borderchk;
 	private TARDISGriefPreventionChecker griefchk;
@@ -44,7 +44,7 @@ public class TARDISPluginRespect {
 	private boolean griefPreventionOnServer = false;
 	private boolean redProtectOnServer = false;
 
-	public TARDISPluginRespect(TARDIS plugin) {
+	public TARDISPluginRespect(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -167,12 +167,12 @@ public class TARDISPluginRespect {
 		}
 		if (flag.permsArea() && plugin.getTardisArea().areaCheckLocPlayer(flag.getPlayer(), location)) {
 			if (flag.messagePlayer()) {
-				String area_perm = plugin.getTrackerKeeper().getPerm().get(flag.getPlayer().getUniqueId());
-				String area_name = "tardis.area." + plugin.getConfig().getString("creation.area");
-				if (area_perm.equals(area_name)) {
+				String areaPerm = plugin.getTrackerKeeper().getPerm().get(flag.getPlayer().getUniqueId());
+				String areaName = "tardis.area." + plugin.getConfig().getString("creation.area");
+				if (areaPerm.equals(areaName)) {
 					TARDISMessage.send(flag.getPlayer(), "TARDIS_SET_HOME");
 				} else {
-					TARDISMessage.send(flag.getPlayer(), "TRAVEL_NO_PERM", area_perm);
+					TARDISMessage.send(flag.getPlayer(), "TRAVEL_NO_PERM", areaPerm);
 				}
 			}
 			plugin.getTrackerKeeper().getPerm().remove(flag.getPlayer().getUniqueId());

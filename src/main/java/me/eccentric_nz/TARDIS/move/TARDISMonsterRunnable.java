@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.ars.TARDISARSMethods;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
@@ -40,11 +40,11 @@ import java.util.*;
  */
 public class TARDISMonsterRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<EntityType> monsters = new ArrayList<>();
 	private final List<EntityType> random_monsters = new ArrayList<>();
 
-	public TARDISMonsterRunnable(TARDIS plugin) {
+	public TARDISMonsterRunnable(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		monsters.add(EntityType.CAVE_SPIDER);
 		monsters.add(EntityType.CREEPER);
@@ -314,7 +314,7 @@ public class TARDISMonsterRunnable implements Runnable {
 					}
 				}
 				HashMap<String, Object> wherer = new HashMap<>();
-				wherer.put("tardis_id", rst.getTardis().getTardis_id());
+				wherer.put("tardis_id", rst.getTardis().getTardisId());
 				wherer.put("type", 5);
 				wherer.put("secondary", 0);
 				ResultSetControls rsc = new ResultSetControls(plugin, wherer, false);

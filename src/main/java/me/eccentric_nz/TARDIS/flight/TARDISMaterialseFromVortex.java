@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
 import me.eccentric_nz.tardis.api.event.TARDISMalfunctionEvent;
 import me.eccentric_nz.tardis.api.event.TARDISMaterialisationEvent;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
@@ -55,13 +55,13 @@ import java.util.UUID;
  */
 public class TARDISMaterialseFromVortex implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private final Player player;
 	private final Location handbrake;
 	private final SpaceTimeThrottle spaceTimeThrottle;
 
-	public TARDISMaterialseFromVortex(TARDIS plugin, int id, Player player, Location handbrake, SpaceTimeThrottle spaceTimeThrottle) {
+	public TARDISMaterialseFromVortex(TARDISPlugin plugin, int id, Player player, Location handbrake, SpaceTimeThrottle spaceTimeThrottle) {
 		this.plugin = plugin;
 		this.id = id;
 		this.player = player;
@@ -86,7 +86,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
 		wherei.put("tardis_id", id);
 		ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			// get current location for back
 			HashMap<String, Object> wherecu = new HashMap<>();
 			wherecu.put("tardis_id", id);
@@ -150,14 +150,14 @@ public class TARDISMaterialseFromVortex implements Runnable {
 					boolean minecart = false;
 					boolean set_biome = true;
 					boolean bar = false;
-					int flight_mode = 1;
+					int flightMode = 1;
 					SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
 					if (rsp.resultSet()) {
 						minecart = rsp.isMinecartOn();
-						set_biome = rsp.isPoliceboxTexturesOn();
-						bar = rsp.isTravelbarOn();
-						flight_mode = rsp.getFlightMode();
-						if (flight_mode == 1 && !malfunction) {
+						set_biome = rsp.isPoliceBoxTexturesOn();
+						bar = rsp.isTravelBarOn();
+						flightMode = rsp.getFlightMode();
+						if (flightMode == 1 && !malfunction) {
 							spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
 						}
 					}
@@ -174,50 +174,50 @@ public class TARDISMaterialseFromVortex implements Runnable {
 					bd.setTexture(set_biome);
 					bd.setThrottle(spaceTimeThrottle);
 					// determine delay values
-					long flight_mode_delay;
+					long flightModeDelay;
 					long travel_time;
 					String landSFX;
 					switch (spaceTimeThrottle) {
 						case WARP -> {
-							flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 130L);
+							flightModeDelay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 130L);
 							travel_time = (malfunction) ? 400L : 94L;
 							landSFX = "tardis_land_warp";
 						}
 						case RAPID -> {
-							flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 259L);
+							flightModeDelay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 259L);
 							travel_time = (malfunction) ? 400L : 188L;
 							landSFX = "tardis_land_rapid";
 						}
 						case FASTER -> {
-							flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 388L);
+							flightModeDelay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 388L);
 							travel_time = (malfunction) ? 400L : 282L;
 							landSFX = "tardis_land_faster";
 						}
 						default -> { // NORMAL
-							flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 518L);
+							flightModeDelay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 518L);
 							travel_time = (malfunction) ? 400L : 375L;
 							landSFX = "tardis_land";
 						}
 					}
 					// remember flight data
 					plugin.getTrackerKeeper().getFlightData().put(uuid, bd);
-					long materialisation_delay = flight_mode_delay;
+					long materialisation_delay = flightModeDelay;
 					if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) && malfunction) {
 						materialisation_delay += 262L;
 						travel_time += 262L;
 					}
 					// flight mode
-					if (flight_mode == 2 || flight_mode == 3) {
+					if (flightMode == 2 || flightMode == 3) {
 						materialisation_delay += 650L;
 						travel_time += 650L;
-						Runnable runner = (flight_mode == 2) ? new TARDISRegulatorStarter(plugin, player, id) : new TARDISManualFlightStarter(plugin, player, id);
+						Runnable runner = (flightMode == 2) ? new TARDISRegulatorStarter(plugin, player, id) : new TARDISManualFlightStarter(plugin, player, id);
 						// start the flying mode (after demat if not in vortex already)
-						scheduler.scheduleSyncDelayedTask(plugin, runner, flight_mode_delay);
+						scheduler.scheduleSyncDelayedTask(plugin, runner, flightModeDelay);
 					}
 					if (bar) {
 						long tt = travel_time;
 						// start travel bar
-						scheduler.scheduleSyncDelayedTask(plugin, () -> new TARDISTravelBar(plugin).showTravelRemaining(player, tt, false), flight_mode_delay);
+						scheduler.scheduleSyncDelayedTask(plugin, () -> new TARDISTravelBar(plugin).showTravelRemaining(player, tt, false), flightModeDelay);
 					}
 					// cancel repeating sfx task
 					scheduler.scheduleSyncDelayedTask(plugin, () -> {
@@ -280,12 +280,12 @@ public class TARDISMaterialseFromVortex implements Runnable {
 							plugin.getQueryFactory().doUpdate("back", setback, whereback);
 							plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
 						}
-						if (plugin.getAchievementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getReset().contains(rscl.getWorld().getName())) {
+						if (plugin.getAdvancementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getReset().contains(rscl.getWorld().getName())) {
 							if (l.getWorld().equals(final_location.getWorld())) {
 								int distance = (int) l.distance(final_location);
-								if (distance > 0 && plugin.getAchievementConfig().getBoolean("travel.enabled")) {
-									TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.TRAVEL, 1);
-									taf.doAchievement(distance);
+								if (distance > 0 && plugin.getAdvancementConfig().getBoolean("travel.enabled")) {
+									TARDISAdvancementFactory taf = new TARDISAdvancementFactory(plugin, player, Advancement.TRAVEL, 1);
+									taf.doAdvancement(distance);
 								}
 							}
 						}
@@ -303,7 +303,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
 						now = System.currentTimeMillis();
 					}
 					HashMap<String, Object> set = new HashMap<>();
-					set.put("lastuse", now);
+					set.put("last_use", now);
 					HashMap<String, Object> whereh = new HashMap<>();
 					whereh.put("tardis_id", id);
 					plugin.getQueryFactory().doUpdate("tardis", set, whereh);

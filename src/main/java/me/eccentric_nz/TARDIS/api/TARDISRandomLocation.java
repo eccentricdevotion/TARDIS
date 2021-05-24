@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.api;
 
 import com.wimbli.WorldBorder.BorderData;
 import com.wimbli.WorldBorder.Config;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.Location;
@@ -33,13 +33,13 @@ import java.util.List;
  */
 class TARDISRandomLocation {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISRandomLocation(TARDIS plugin) {
+	TARDISRandomLocation(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
-	public Location getlocation() {
+	public Location getLocation() {
 		return null;
 	}
 
@@ -54,8 +54,8 @@ class TARDISRandomLocation {
 		return worlds;
 	}
 
-	WorldAndRange getWorldandRange(List<World> worlds) {
-		int listlen = worlds.size();
+	WorldAndRange getWorldAndRange(List<World> worlds) {
+		int listLength = worlds.size();
 		World w;
 		int minX;
 		int maxX;
@@ -64,7 +64,7 @@ class TARDISRandomLocation {
 		int rangeX;
 		int rangeZ;
 		// random world
-		w = worlds.get(TARDISConstants.RANDOM.nextInt(listlen));
+		w = worlds.get(TARDISConstants.RANDOM.nextInt(listLength));
 		World.Environment env = w.getEnvironment();
 		// set default by using config values
 		int cx = plugin.getConfig().getInt("travel.random_circuit.x");
@@ -110,7 +110,6 @@ class TARDISRandomLocation {
 		// get ranges
 		rangeX = Math.abs(minX) + maxX;
 		rangeZ = Math.abs(minZ) + maxZ;
-		// WorldAndRange(World w, int minX, int minZ,  int rangeX, int rangeZ)
 		return new WorldAndRange(w, minX, minZ, rangeX, rangeZ);
 	}
 }

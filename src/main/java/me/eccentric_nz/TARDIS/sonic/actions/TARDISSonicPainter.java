@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISMaterials;
 import org.bukkit.Material;
@@ -169,7 +169,7 @@ public class TARDISSonicPainter {
 		return PAINTABLE;
 	}
 
-	public static void paint(TARDIS plugin, Player player, Block b) {
+	public static void paint(TARDISPlugin plugin, Player player, Block b) {
 		// must be in tardis world
 		if (!plugin.getUtils().inTARDISWorld(player)) {
 			TARDISMessage.send(player, "UPDATE_IN_WORLD");

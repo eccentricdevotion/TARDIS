@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.element;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.chemistry.creative.CompoundsCreativeInventory;
 import me.eccentric_nz.tardis.chemistry.creative.ProductsCreativeInventory;
 import org.bukkit.ChatColor;
@@ -34,13 +34,13 @@ import java.util.*;
 
 public class ElementGUIListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<UUID, Integer> scroll = new HashMap<>();
 	private final List<UUID> scrolling = new ArrayList<>();
 	private final ItemStack[][] blocks;
 	private final int rows;
 
-	public ElementGUIListener(TARDIS plugin) {
+	public ElementGUIListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		rows = Element.values().length / 8 + 1;
 		blocks = getWallBlocks();

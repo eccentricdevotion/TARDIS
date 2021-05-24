@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,9 +32,9 @@ import java.util.UUID;
  */
 public class TARDISRecipeListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISRecipeListener(TARDIS plugin) {
+	public TARDISRecipeListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

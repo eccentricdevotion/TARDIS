@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -34,13 +34,13 @@ import java.util.List;
  */
 public class TARDISVaultChecker implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final List<Material> chests = Arrays.asList(Material.CHEST, Material.TRAPPED_CHEST);
 	private final String prefix;
 
-	public TARDISVaultChecker(TARDIS plugin) {
+	public TARDISVaultChecker(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}
@@ -59,9 +59,9 @@ public class TARDISVaultChecker implements Runnable {
 				while (rs.next()) {
 					Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
 					if (l != null && !chests.contains(l.getBlock().getType())) {
-						int id = rs.getInt("v_id");
+						int vaultId = rs.getInt("v_id");
 						HashMap<String, Object> where = new HashMap<>();
-						where.put("v_id", id);
+						where.put("v_id", vaultId);
 						plugin.getQueryFactory().doDelete("vaults", where);
 						i++;
 					}

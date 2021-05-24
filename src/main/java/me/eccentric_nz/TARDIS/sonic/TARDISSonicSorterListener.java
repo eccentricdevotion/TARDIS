@@ -25,7 +25,7 @@ import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISTownyChecker;
@@ -58,10 +58,10 @@ import java.util.List;
  */
 public class TARDISSonicSorterListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Material> sortables = new ArrayList<>();
 
-	public TARDISSonicSorterListener(TARDIS plugin) {
+	public TARDISSonicSorterListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		sortables.add(Material.BARREL);
 		sortables.add(Material.BLACK_SHULKER_BOX);

@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -43,13 +43,13 @@ import java.util.HashMap;
  */
 public class TARDISShellRoomConstructor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int[] orderx;
 	private final int[] orderz;
 	private final String GLASS = addQuotes(TARDISConstants.GLASS.getAsString());
 	private Block sign;
 
-	public TARDISShellRoomConstructor(TARDIS plugin) {
+	public TARDISShellRoomConstructor(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
 		orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
@@ -85,7 +85,7 @@ public class TARDISShellRoomConstructor {
 				TARDISMessage.send(player, "SHELL_MIN_BLOCKS");
 				return;
 			}
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			TARDISMessage.send(player, "PRESET_SCAN");
 			StringBuilder sb_blue_data = new StringBuilder("[");
 			StringBuilder sb_stain_data = new StringBuilder("[");

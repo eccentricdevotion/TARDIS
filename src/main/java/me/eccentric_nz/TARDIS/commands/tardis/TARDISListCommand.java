@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.messaging.TARDISLister;
@@ -30,9 +30,9 @@ import java.util.HashMap;
  */
 class TARDISListCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISListCommand(TARDIS plugin) {
+	TARDISListCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.database.data.Program;
 
@@ -37,8 +37,8 @@ public class ResultSetProgram {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
-	private final int pid;
+	private final TARDISPlugin plugin;
+	private final int programId;
 	private final String prefix;
 	private Program program;
 
@@ -46,11 +46,11 @@ public class ResultSetProgram {
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
 	 *
 	 * @param plugin an instance of the main class.
-	 * @param pid    a program_id to refine the search.
+	 * @param programId    a program_id to refine the search.
 	 */
-	public ResultSetProgram(TARDIS plugin, int pid) {
+	public ResultSetProgram(TARDISPlugin plugin, int programId) {
 		this.plugin = plugin;
-		this.pid = pid;
+		this.programId = programId;
 		prefix = this.plugin.getPrefix();
 	}
 
@@ -67,7 +67,7 @@ public class ResultSetProgram {
 		try {
 			service.testConnection(connection);
 			statement = connection.prepareStatement(query);
-			statement.setInt(1, pid);
+			statement.setInt(1, programId);
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				rs.next();

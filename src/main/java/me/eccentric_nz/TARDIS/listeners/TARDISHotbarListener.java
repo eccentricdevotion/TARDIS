@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import org.bukkit.Location;
@@ -39,9 +39,9 @@ import java.util.Objects;
  */
 public class TARDISHotbarListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISHotbarListener(TARDIS plugin) {
+	public TARDISHotbarListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -63,7 +63,7 @@ public class TARDISHotbarListener implements Listener {
 					ResultSetTardisID rs = new ResultSetTardisID(plugin);
 					if (rs.fromUUID(player.getUniqueId().toString())) {
 						HashMap<String, Object> wherecl = new HashMap<>();
-						wherecl.put("tardis_id", rs.getTardis_id());
+						wherecl.put("tardis_id", rs.getTardisId());
 						ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
 						if (!rsc.resultSet()) {
 							return;
@@ -72,9 +72,9 @@ public class TARDISHotbarListener implements Listener {
 						player.setCompassTarget(pb);
 					}
 				} else {
-					Location bedspawn = player.getBedSpawnLocation();
+					Location bedSpawn = player.getBedSpawnLocation();
 					// if player has bed spawn set
-					player.setCompassTarget(Objects.requireNonNullElseGet(bedspawn, () -> player.getWorld().getSpawnLocation()));
+					player.setCompassTarget(Objects.requireNonNullElseGet(bedSpawn, () -> player.getWorld().getSpawnLocation()));
 				}
 			}
 		}

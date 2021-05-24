@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.builders;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.ConsoleSize;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.Schematic;
@@ -33,10 +33,10 @@ import java.util.Locale;
  */
 public class TARDISConsoleLoader {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private boolean save = false;
 
-	public TARDISConsoleLoader(TARDIS plugin) {
+	public TARDISConsoleLoader(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

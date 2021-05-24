@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.custommodeldata.GUISonicGenerator;
 import me.eccentric_nz.tardis.database.data.Sonic;
@@ -36,12 +36,12 @@ import java.util.List;
  */
 class TARDISSonicGeneratorInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Sonic data;
 	private final Player player;
 	private final ItemStack[] generator;
 
-	public TARDISSonicGeneratorInventory(TARDIS plugin, Sonic data, Player player) {
+	public TARDISSonicGeneratorInventory(TARDISPlugin plugin, Sonic data, Player player) {
 		this.plugin = plugin;
 		this.data = data;
 		this.player = player;

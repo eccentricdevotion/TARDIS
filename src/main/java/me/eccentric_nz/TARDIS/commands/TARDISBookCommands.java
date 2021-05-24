@@ -17,10 +17,10 @@
 package me.eccentric_nz.tardis.commands;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.achievement.TARDISBook;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.advancement.TARDISBook;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.database.resultset.ResultSetAchievements;
+import me.eccentric_nz.tardis.database.resultset.ResultSetAdvancements;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -43,12 +43,12 @@ import java.util.*;
  */
 public class TARDISBookCommands extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final LinkedHashMap<String, String> books;
 	private final List<String> ROOT_SUBS;
 	private final List<String> DO_SUBS = ImmutableList.of("get", "start");
 
-	public TARDISBookCommands(TARDIS plugin) {
+	public TARDISBookCommands(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		books = getAchievements();
 		ROOT_SUBS = ImmutableList.copyOf(books.keySet());
@@ -102,18 +102,18 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
 					return true;
 				}
 				if (second.equals("start")) {
-					if (plugin.getAchievementConfig().getBoolean(first + ".auto")) {
+					if (plugin.getAdvancementConfig().getBoolean(first + ".auto")) {
 						TARDISMessage.send(player, "ACHIEVE_AUTO");
 						return true;
 					}
-					// check they have not already started the achievement
+					// check they have not already started the advancement
 					HashMap<String, Object> where = new HashMap<>();
 					where.put("uuid", player.getUniqueId().toString());
 					where.put("name", first);
-					ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
+					ResultSetAdvancements rsa = new ResultSetAdvancements(plugin, where, false);
 					if (rsa.resultSet()) {
 						if (rsa.isCompleted()) {
-							if (!plugin.getAchievementConfig().getBoolean(first + ".repeatable")) {
+							if (!plugin.getAdvancementConfig().getBoolean(first + ".repeatable")) {
 								TARDISMessage.send(player, "ACHIEVE_ONCE");
 								return true;
 							}
@@ -136,10 +136,10 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
 
 	private LinkedHashMap<String, String> getAchievements() {
 		LinkedHashMap<String, String> map = new LinkedHashMap<>();
-		Set<String> aset = plugin.getAchievementConfig().getRoot().getKeys(false);
+		Set<String> aset = plugin.getAdvancementConfig().getRoot().getKeys(false);
 		aset.forEach((a) -> {
-			if (plugin.getAchievementConfig().getBoolean(a + ".enabled")) {
-				String title_reward = plugin.getAchievementConfig().getString(a + ".name") + " - " + plugin.getAchievementConfig().getString(a + ".reward_type") + ":" + plugin.getAchievementConfig().getString(a + ".reward_amount");
+			if (plugin.getAdvancementConfig().getBoolean(a + ".enabled")) {
+				String title_reward = plugin.getAdvancementConfig().getString(a + ".name") + " - " + plugin.getAdvancementConfig().getString(a + ".reward_type") + ":" + plugin.getAdvancementConfig().getString(a + ".reward_amount");
 				map.put(a, title_reward);
 			}
 		});

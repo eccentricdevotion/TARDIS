@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.noteblock;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.entity.Player;
 
 public class TARDISPlayThemeCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISPlayThemeCommand(TARDIS plugin) {
+	public TARDISPlayThemeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

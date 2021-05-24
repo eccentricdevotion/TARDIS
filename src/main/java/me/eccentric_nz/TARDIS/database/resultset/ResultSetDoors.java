@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 
@@ -36,16 +36,16 @@ public class ResultSetDoors {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final boolean multiple;
 	private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
 	private final String prefix;
-	private int door_id;
-	private int tardis_id;
-	private int door_type;
-	private String door_location;
-	private COMPASS door_direction;
+	private int doorId;
+	private int tardisId;
+	private int doorType;
+	private String doorLocation;
+	private COMPASS doorDirection;
 	private boolean locked;
 
 	/**
@@ -56,7 +56,7 @@ public class ResultSetDoors {
 	 * @param multiple a boolean setting whether to retrieve more than on record, it true returns an ArrayList that can
 	 *                 be looped through later.
 	 */
-	public ResultSetDoors(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+	public ResultSetDoors(TARDISPlugin plugin, HashMap<String, Object> where, boolean multiple) {
 		this.plugin = plugin;
 		this.where = where;
 		this.multiple = multiple;
@@ -106,11 +106,11 @@ public class ResultSetDoors {
 						}
 						data.add(row);
 					}
-					door_id = rs.getInt("door_id");
-					tardis_id = rs.getInt("tardis_id");
-					door_type = rs.getInt("door_type");
-					door_location = rs.getString("door_location");
-					door_direction = COMPASS.valueOf(rs.getString("door_direction"));
+					doorId = rs.getInt("door_id");
+					tardisId = rs.getInt("tardis_id");
+					doorType = rs.getInt("door_type");
+					doorLocation = rs.getString("door_location");
+					doorDirection = COMPASS.valueOf(rs.getString("door_direction"));
 					locked = rs.getBoolean("locked");
 				}
 			} else {
@@ -134,24 +134,24 @@ public class ResultSetDoors {
 		return true;
 	}
 
-	public int getDoor_id() {
-		return door_id;
+	public int getDoorId() {
+		return doorId;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
-	public int getDoor_type() {
-		return door_type;
+	public int getDoorType() {
+		return doorType;
 	}
 
-	public String getDoor_location() {
-		return door_location;
+	public String getDoorLocation() {
+		return doorLocation;
 	}
 
-	public COMPASS getDoor_direction() {
-		return door_direction;
+	public COMPASS getDoorDirection() {
+		return doorDirection;
 	}
 
 	public boolean isLocked() {

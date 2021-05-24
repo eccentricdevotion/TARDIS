@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.update;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.tardis.database.QueryFactory;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -59,9 +59,9 @@ import java.util.UUID;
  */
 public class TARDISUpdateListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISUpdateListener(TARDIS plugin) {
+	public TARDISUpdateListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -96,7 +96,7 @@ public class TARDISUpdateListener implements Listener {
 			ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
 			if (rsc.resultSet()) {
 				HashMap<String, Object> whered = new HashMap<>();
-				whered.put("c_id", rsc.getC_id());
+				whered.put("cId", rsc.getcId());
 				new QueryFactory(plugin).doDelete("controls", whered);
 				TARDISMessage.send(player, "SEC_REMOVED");
 			} else {
@@ -136,8 +136,8 @@ public class TARDISUpdateListener implements Listener {
 				TARDISMessage.send(player, "NO_TARDIS");
 				return;
 			}
-			Tardis tardis = rs.getTardis();
-			int id = tardis.getTardis_id();
+			TARDIS tardis = rs.getTardis();
+			int id = tardis.getTardisId();
 			HashMap<String, Object> tid = new HashMap<>();
 			HashMap<String, Object> set = new HashMap<>();
 			tid.put("tardis_id", id);

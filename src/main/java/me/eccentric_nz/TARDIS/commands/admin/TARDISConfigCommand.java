@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -31,10 +31,10 @@ import java.util.Set;
  */
 class TARDISConfigCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> sections = new ArrayList<>();
 
-	TARDISConfigCommand(TARDIS plugin) {
+	TARDISConfigCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		sections.add("storage");
 		sections.add("creation");

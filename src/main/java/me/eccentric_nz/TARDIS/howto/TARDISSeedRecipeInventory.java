@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.howto;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -33,11 +33,11 @@ import java.util.Arrays;
  */
 class TARDISSeedRecipeInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ItemStack[] menu;
 	private final Material block;
 
-	TARDISSeedRecipeInventory(TARDIS plugin, Material block) {
+	TARDISSeedRecipeInventory(TARDISPlugin plugin, Material block) {
 		this.plugin = plugin;
 		this.block = block;
 		menu = getItemStack();

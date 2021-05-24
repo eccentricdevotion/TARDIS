@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -32,10 +32,10 @@ import java.util.UUID;
  */
 class TARDISToggleOnOffCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> was;
 
-	TARDISToggleOnOffCommand(TARDIS plugin) {
+	TARDISToggleOnOffCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		was = Arrays.asList("auto", "auto_powerup", "auto_siege", "beacon", "build", "ctm", "difficulty", "dnd", "eps", "farm", "font", "hads", "minecart", "renderer", "submarine", "travelbar", "telepathy");
 	}
@@ -68,7 +68,7 @@ class TARDISToggleOnOffCommand {
 				// get tardis id
 				ResultSetTardisID rsi = new ResultSetTardisID(plugin);
 				if (rsi.fromUUID(uuid.toString())) {
-					new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardis_id(), true);
+					new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), true);
 				}
 			}
 			String grammar = (was.contains(pref)) ? "PREF_WAS_ON" : "PREF_WERE_ON";
@@ -81,7 +81,7 @@ class TARDISToggleOnOffCommand {
 				// get tardis id
 				ResultSetTardisID rsi = new ResultSetTardisID(plugin);
 				if (rsi.fromUUID(uuid.toString())) {
-					new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardis_id(), false);
+					new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), false);
 				}
 			}
 			String grammar = (was.contains(pref)) ? "PREF_WAS_OFF" : "PREF_WERE_OFF";

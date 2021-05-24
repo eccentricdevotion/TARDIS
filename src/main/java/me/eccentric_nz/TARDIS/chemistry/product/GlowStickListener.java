@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.product;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -33,7 +33,7 @@ public class GlowStickListener implements Listener {
 
 	private final NamespacedKey namespacedKey;
 
-	public GlowStickListener(TARDIS plugin) {
+	public GlowStickListener(TARDISPlugin plugin) {
 		namespacedKey = new NamespacedKey(plugin, "glow_stick_time");
 	}
 

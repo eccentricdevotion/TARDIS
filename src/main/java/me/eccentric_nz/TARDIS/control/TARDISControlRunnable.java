@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetConsole;
 import me.eccentric_nz.tardis.database.resultset.ResultSetOccupied;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
@@ -30,10 +30,10 @@ import org.bukkit.block.Sign;
  */
 public class TARDISControlRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private int modulo = 0;
 
-	public TARDISControlRunnable(TARDIS plugin) {
+	public TARDISControlRunnable(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

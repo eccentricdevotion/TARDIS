@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -41,9 +41,9 @@ import java.util.*;
  */
 public class TARDISBiomeReaderListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBiomeReaderListener(TARDIS plugin) {
+	public TARDISBiomeReaderListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

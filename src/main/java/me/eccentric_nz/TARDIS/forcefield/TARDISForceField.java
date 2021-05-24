@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.forcefield;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetForcefield;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisCompanions;
 import org.bukkit.GameMode;
@@ -33,12 +33,12 @@ import java.util.UUID;
 
 public class TARDISForceField implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int range;
 	private final int doubleRange;
 	private int dust = 0;
 
-	public TARDISForceField(TARDIS plugin) {
+	public TARDISForceField(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		range = this.plugin.getConfig().getInt("allow.force_field");
 		plugin.debug("Starting force fields with a range of " + range + " blocks.");
@@ -60,9 +60,9 @@ public class TARDISForceField implements Runnable {
 	}
 
 	public static boolean addToTracker(Player player) {
-		ResultSetForcefield rsff = new ResultSetForcefield(TARDIS.plugin, player.getUniqueId().toString());
+		ResultSetForcefield rsff = new ResultSetForcefield(TARDISPlugin.plugin, player.getUniqueId().toString());
 		if (rsff.resultSet()) {
-			TARDIS.plugin.getTrackerKeeper().getActiveForceFields().put(rsff.getUuid(), rsff.getLocation());
+			TARDISPlugin.plugin.getTrackerKeeper().getActiveForceFields().put(rsff.getUuid(), rsff.getLocation());
 			return true;
 		}
 		return false;

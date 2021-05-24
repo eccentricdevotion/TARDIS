@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.ars;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISStringUtils;
@@ -45,7 +45,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
 	private List<Material> room_materials;
 	private List<String> room_names;
 
-	public TARDISARSListener(TARDIS plugin) {
+	public TARDISARSListener(TARDISPlugin plugin) {
 		super(plugin);
 		getRoomIdAndNames();
 	}
@@ -333,13 +333,13 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
 	 * @return a list of enabled custom room names
 	 */
 	private List<String> getCustomRoomNames() {
-		List<String> crooms = new ArrayList<>();
+		List<String> cRooms = new ArrayList<>();
 		Set<String> names = Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false);
 		names.forEach((cr) -> {
 			if (plugin.getRoomsConfig().getBoolean("rooms." + cr + ".user") && plugin.getRoomsConfig().getBoolean("rooms." + cr + ".enabled")) {
-				crooms.add(cr);
+				cRooms.add(cr);
 			}
 		});
-		return crooms;
+		return cRooms;
 	}
 }

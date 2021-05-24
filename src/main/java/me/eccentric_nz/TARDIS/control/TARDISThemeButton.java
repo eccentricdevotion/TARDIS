@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.desktop.TARDISThemeInventory;
 import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
@@ -32,13 +32,13 @@ import org.bukkit.inventory.ItemStack;
  */
 public class TARDISThemeButton {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 	private final Schematic current_console;
 	private final int level;
 	private final int id;
 
-	public TARDISThemeButton(TARDIS plugin, Player player, Schematic current_console, int level, int id) {
+	public TARDISThemeButton(TARDISPlugin plugin, Player player, Schematic current_console, int level, int id) {
 		this.plugin = plugin;
 		this.player = player;
 		this.current_console = current_console;
@@ -69,7 +69,7 @@ public class TARDISThemeButton {
 		int tid = 0;
 		ResultSetTardisID rs = new ResultSetTardisID(plugin);
 		if (rs.fromUUID(uuid)) {
-			tid = rs.getTardis_id();
+			tid = rs.getTardisId();
 		}
 		return tid;
 	}

@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.rooms;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
@@ -39,13 +39,13 @@ import java.util.Locale;
  */
 class TARDISRoomRemover {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String r;
 	private final Location l;
 	private final COMPASS d;
 	private final int id;
 
-	TARDISRoomRemover(TARDIS plugin, String r, Location l, COMPASS d, int id) {
+	TARDISRoomRemover(TARDISPlugin plugin, String r, Location l, COMPASS d, int id) {
 		this.plugin = plugin;
 		this.r = r;
 		this.l = l;

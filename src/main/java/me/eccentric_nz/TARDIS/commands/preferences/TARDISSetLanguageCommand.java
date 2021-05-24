@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.universaltranslator.Language;
 import me.eccentric_nz.tardis.utility.TARDISStringUtils;
@@ -48,7 +48,7 @@ class TARDISSetLanguageCommand {
 		setl.put(pref, l);
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("uuid", player.getUniqueId().toString());
-		TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setl, where);
+		TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", setl, where);
 		TARDISMessage.send(player, "PREF_SET", TARDISStringUtils.uppercaseFirst(pref));
 		return true;
 	}

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -32,10 +32,10 @@ import java.util.List;
  */
 public class TARDISBlocksUpdater {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final FileConfiguration blocks_config;
 
-	public TARDISBlocksUpdater(TARDIS plugin, FileConfiguration blocks_config) {
+	public TARDISBlocksUpdater(TARDISPlugin plugin, FileConfiguration blocks_config) {
 		this.plugin = plugin;
 		this.blocks_config = blocks_config;
 	}

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
@@ -36,10 +36,10 @@ import java.util.List;
  */
 public class TARDISTemporalListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> notthese = Arrays.asList("Fob Watch", "Vortex Manipulator");
 
-	public TARDISTemporalListener(TARDIS plugin) {
+	public TARDISTemporalListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

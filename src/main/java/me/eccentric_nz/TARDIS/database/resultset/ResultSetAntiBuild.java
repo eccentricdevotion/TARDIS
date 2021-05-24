@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -35,10 +35,10 @@ public class ResultSetAntiBuild {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String uuid;
 	private final String prefix;
-	private Integer tardis_id;
+	private Integer tardisId;
 
 	/**
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis &amp; travellers table.
@@ -46,7 +46,7 @@ public class ResultSetAntiBuild {
 	 * @param plugin an instance of the main class.
 	 * @param uuid   the uuid who is trying to build.
 	 */
-	public ResultSetAntiBuild(TARDIS plugin, UUID uuid) {
+	public ResultSetAntiBuild(TARDISPlugin plugin, UUID uuid) {
 		this.plugin = plugin;
 		this.uuid = uuid.toString();
 		prefix = this.plugin.getPrefix();
@@ -61,7 +61,7 @@ public class ResultSetAntiBuild {
 	public boolean resultSet() {
 		PreparedStatement statement = null;
 		ResultSet rs = null;
-		String query = "SELECT " + prefix + "tardis.tardis_id FROM " + prefix + "tardis, " + prefix + "travellers, " + prefix + "player_prefs WHERE " + prefix + "travellers.uuid = ? AND " + prefix + "tardis.uuid != ? AND " + prefix + "player_prefs.build_on = 0 AND " + prefix + "tardis.tardis_id = " + prefix + "travellers.tardis_id AND " + prefix + "tardis.uuid = " + prefix + "player_prefs.uuid";
+		String query = "SELECT " + prefix + "tardis.tardisId FROM " + prefix + "tardis, " + prefix + "travellers, " + prefix + "player_prefs WHERE " + prefix + "travellers.uuid = ? AND " + prefix + "tardis.uuid != ? AND " + prefix + "player_prefs.build_on = 0 AND " + prefix + "tardis.tardisId = " + prefix + "travellers.tardisId AND " + prefix + "tardis.uuid = " + prefix + "player_prefs.uuid";
 		try {
 			service.testConnection(connection);
 			statement = connection.prepareStatement(query);
@@ -70,7 +70,7 @@ public class ResultSetAntiBuild {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					tardis_id = rs.getInt("tardis_id");
+					tardisId = rs.getInt("tardisId");
 				}
 			} else {
 				return false;
@@ -93,7 +93,7 @@ public class ResultSetAntiBuild {
 		return true;
 	}
 
-	public Integer getTardis_id() {
-		return tardis_id;
+	public Integer getTardisId() {
+		return tardisId;
 	}
 }

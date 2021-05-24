@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.planets.*;
@@ -45,14 +45,14 @@ import java.util.*;
  */
 public class TARDISWorldCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> ROOT_SUBS = Arrays.asList("load", "unload", "gm", "rename");
 	private final List<String> WORLD_SUBS = new ArrayList<>();
 	private final List<String> TYPE_SUBS = new ArrayList<>();
 	private final List<String> ENV_SUBS = new ArrayList<>();
 	private final List<String> GM_SUBS = new ArrayList<>();
 
-	public TARDISWorldCommand(TARDIS plugin) {
+	public TARDISWorldCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		WORLD_SUBS.addAll(plugin.getTardisAPI().getWorlds());
 		for (WorldType wt : WorldType.values()) {

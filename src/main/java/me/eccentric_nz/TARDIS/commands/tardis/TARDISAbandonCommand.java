@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.event.TARDISAbandonEvent;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.TARDISBuilderUtility;
@@ -50,9 +50,9 @@ import java.util.HashMap;
  */
 public class TARDISAbandonCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISAbandonCommand(TARDIS plugin) {
+	TARDISAbandonCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -218,16 +218,16 @@ public class TARDISAbandonCommand {
 						TARDISMessage.send(player, "ABANDONED_NOT_JUNK");
 						return true;
 					}
-					int id = rs.getTardis_id();
-					if (rst.getTardis_id() != id) {
+					int id = rs.getTardisId();
+					if (rst.getTardisId() != id) {
 						TARDISMessage.send(player, "ABANDONED_OWN");
 						return true;
 					}
-					if (!rs.isTardis_init()) {
+					if (!rs.isTardisInit()) {
 						TARDISMessage.send(player, "ENERGY_NO_INIT");
 						return true;
 					}
-					if (!rs.isHandbrake_on()) {
+					if (!rs.isHandbrakeOn()) {
 						TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
 						return true;
 					}
@@ -240,9 +240,9 @@ public class TARDISAbandonCommand {
 						return true;
 					}
 					new TARDISAbandonUpdate(plugin, id, player.getUniqueId().toString()).run();
-					if (rs.isPowered_on()) {
+					if (rs.isPowered()) {
 						// power down tardis
-						new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), rs.isLights_on(), player.getLocation(), rs.getArtron_level(), rs.getSchematic().hasLanterns()).clickButton();
+						new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered(), rs.isHidden(), rs.isLightsOn(), player.getLocation(), rs.getArtronLevel(), rs.getSchematic().hasLanterns()).clickButton();
 					}
 					// close the door
 					new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();

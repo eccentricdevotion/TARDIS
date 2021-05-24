@@ -20,12 +20,12 @@ import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetThrottle;
@@ -57,9 +57,9 @@ import java.util.UUID;
  */
 class TARDISComehereCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISComehereCommand(TARDIS plugin) {
+	TARDISComehereCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -75,13 +75,13 @@ class TARDISComehereCommand {
 				return true;
 			}
 			if (plugin.getDifficulty().equals(Difficulty.EASY) || plugin.getUtils().inGracePeriod(player, true)) {
-				Tardis tardis = rs.getTardis();
-				int id = tardis.getTardis_id();
-				if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+				TARDIS tardis = rs.getTardis();
+				int id = tardis.getTardisId();
+				if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
 					TARDISMessage.send(player, "POWER_DOWN");
 					return true;
 				}
-				int level = tardis.getArtron_level();
+				int level = tardis.getArtronLevel();
 				boolean hidden = tardis.isHidden();
 				// get location
 				Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
@@ -156,11 +156,6 @@ class TARDISComehereCommand {
 					count = TARDISTimeTravel.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), player_d);
 				}
 				Block under = eyeLocation.getBlock().getRelative(BlockFace.DOWN);
-				if (plugin.getPM().isPluginEnabled("Lockette")) {
-					if (LocketteProAPI.isProtected(eyeLocation.getBlock()) || LocketteProAPI.isProtected(under)) {
-						count = 1;
-					}
-				}
 				if (plugin.getPM().isPluginEnabled("LockettePro")) {
 					if (LocketteProAPI.isProtected(eyeLocation.getBlock()) || LocketteProAPI.isProtected(under) || plugin.getUtils().checkSurrounding(under)) {
 						count = 1;

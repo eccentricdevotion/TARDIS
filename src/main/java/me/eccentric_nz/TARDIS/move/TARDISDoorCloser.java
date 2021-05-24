@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -38,11 +38,11 @@ import java.util.UUID;
  */
 public class TARDISDoorCloser {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final UUID uuid;
 	private final int id;
 
-	public TARDISDoorCloser(TARDIS plugin, UUID uuid, int id) {
+	public TARDISDoorCloser(TARDISPlugin plugin, UUID uuid, int id) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		this.id = id;

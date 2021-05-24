@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.universaltranslator;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -38,10 +38,10 @@ import java.util.Locale;
  */
 public class TARDISSayCommand implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String UT = ChatColor.GOLD + "[tardis Universal Translator]" + ChatColor.RESET + " ";
 
-	public TARDISSayCommand(TARDIS plugin) {
+	public TARDISSayCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

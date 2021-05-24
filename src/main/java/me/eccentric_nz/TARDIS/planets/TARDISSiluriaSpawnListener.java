@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -31,10 +31,10 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
  */
 public final class TARDISSiluriaSpawnListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISWeepingAngelsAPI twaAPI;
 
-	public TARDISSiluriaSpawnListener(TARDIS plugin) {
+	public TARDISSiluriaSpawnListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		twaAPI = TARDISAngelsAPI.getAPI(plugin);
 	}

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.Config;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.planets.TARDISWorlds;
@@ -31,9 +31,9 @@ import java.io.IOException;
  */
 class TARDISReloadCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISReloadCommand(TARDIS plugin) {
+	TARDISReloadCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -52,7 +52,7 @@ class TARDISReloadCommand {
 			Config config = Config.valueOf(args[1].toLowerCase());
 			File file = new File(plugin.getDataFolder(), config + ".yml");
 			switch (config) {
-				case achievements -> plugin.getAchievementConfig().load(file);
+				case achievements -> plugin.getAdvancementConfig().load(file);
 				case artron -> plugin.getArtronConfig().load(file);
 				case blocks -> plugin.getBlocksConfig().load(file);
 				case chameleon_guis -> plugin.getChameleonGuis().load(file);

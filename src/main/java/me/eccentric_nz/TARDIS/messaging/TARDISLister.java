@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.messaging;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.companionGUI.TARDISCompanionInventory;
 import me.eccentric_nz.tardis.database.data.Area;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
@@ -45,9 +45,9 @@ import java.util.Set;
  */
 public class TARDISLister {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISLister(TARDIS plugin) {
+	public TARDISLister(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -60,7 +60,7 @@ public class TARDISLister {
 	 */
 	public void list(Player p, String l) {
 		if (l.equals("rechargers")) {
-			Set<String> therechargers = TARDIS.plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
+			Set<String> therechargers = TARDISPlugin.plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
 			if (therechargers.size() < 1) {
 				TARDISMessage.send(p, "CHARGER_NONE");
 			}
@@ -77,13 +77,13 @@ public class TARDISLister {
 				if (!s.startsWith("rift")) {
 					String w;
 					if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-						w = plugin.getMVHelper().getAlias(TARDIS.plugin.getConfig().getString("rechargers." + s + ".world"));
+						w = plugin.getMVHelper().getAlias(TARDISPlugin.plugin.getConfig().getString("rechargers." + s + ".world"));
 					} else {
-						w = TARDISAliasResolver.getWorldAlias(TARDIS.plugin.getConfig().getString("rechargers." + s + ".world"));
+						w = TARDISAliasResolver.getWorldAlias(TARDISPlugin.plugin.getConfig().getString("rechargers." + s + ".world"));
 					}
-					String x = TARDIS.plugin.getConfig().getString("rechargers." + s + ".x");
-					String y = TARDIS.plugin.getConfig().getString("rechargers." + s + ".y");
-					String z = TARDIS.plugin.getConfig().getString("rechargers." + s + ".z");
+					String x = TARDISPlugin.plugin.getConfig().getString("rechargers." + s + ".x");
+					String y = TARDISPlugin.plugin.getConfig().getString("rechargers." + s + ".y");
+					String z = TARDISPlugin.plugin.getConfig().getString("rechargers." + s + ".z");
 					tg.addRow(ChatColor.GREEN + s + ChatColor.RESET, w, x, y, z);
 				}
 			}
@@ -92,7 +92,7 @@ public class TARDISLister {
 			}
 		}
 		if (l.equals("areas")) {
-			ResultSetAreas rsa = new ResultSetAreas(TARDIS.plugin, null, true, false);
+			ResultSetAreas rsa = new ResultSetAreas(TARDISPlugin.plugin, null, true, false);
 			int n = 1;
 			if (!rsa.resultSet()) {
 				TARDISMessage.send(p, "AREA_NONE");
@@ -107,10 +107,10 @@ public class TARDISLister {
 		} else {
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("uuid", p.getUniqueId().toString());
-			ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false, 0);
+			ResultSetTardis rst = new ResultSetTardis(TARDISPlugin.plugin, where, "", false, 0);
 			if (rst.resultSet()) {
-				Tardis tardis = rst.getTardis();
-				int id = tardis.getTardis_id();
+				TARDIS tardis = rst.getTardis();
+				int id = tardis.getTardisId();
 				// list tardis saves
 				if (l.equalsIgnoreCase("saves")) {
 					TableGenerator tg;
@@ -124,14 +124,14 @@ public class TARDISLister {
 					// get home
 					HashMap<String, Object> wherehl = new HashMap<>();
 					wherehl.put("tardis_id", id);
-					ResultSetHomeLocation rsh = new ResultSetHomeLocation(TARDIS.plugin, wherehl);
+					ResultSetHomeLocation rsh = new ResultSetHomeLocation(TARDISPlugin.plugin, wherehl);
 					rsh.resultSet();
 					tg.addRow(ChatColor.GREEN + plugin.getLanguage().getString("HOME") + ChatColor.RESET, rsh.getWorld().getName(), "" + rsh.getX(), "" + rsh.getY(), "" + rsh.getZ());
 					tg.addRow();
 					// list other saved destinations
 					HashMap<String, Object> whered = new HashMap<>();
 					whered.put("tardis_id", id);
-					ResultSetDestinations rsd = new ResultSetDestinations(TARDIS.plugin, whered, true);
+					ResultSetDestinations rsd = new ResultSetDestinations(TARDISPlugin.plugin, whered, true);
 					if (rsd.resultSet()) {
 						ArrayList<HashMap<String, String>> data = rsd.getData();
 						for (HashMap<String, String> map : data) {

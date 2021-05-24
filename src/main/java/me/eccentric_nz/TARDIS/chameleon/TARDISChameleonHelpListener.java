@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
@@ -36,9 +36,9 @@ import java.util.HashMap;
  */
 public class TARDISChameleonHelpListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISChameleonHelpListener(TARDIS plugin) {
+	public TARDISChameleonHelpListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}
@@ -65,7 +65,7 @@ public class TARDISChameleonHelpListener extends TARDISMenuListener implements L
 					wheres.put("uuid", player.getUniqueId().toString());
 					ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
 					if (rst.resultSet()) {
-						int id = rst.getTardis_id();
+						int id = rst.getTardisId();
 						HashMap<String, Object> where = new HashMap<>();
 						where.put("tardis_id", id);
 						ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);

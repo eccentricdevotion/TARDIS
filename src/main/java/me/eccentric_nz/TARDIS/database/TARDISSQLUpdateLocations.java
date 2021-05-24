@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +29,7 @@ import java.util.Map;
  */
 class TARDISSQLUpdateLocations implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final HashMap<String, Object> data;
@@ -45,7 +45,7 @@ class TARDISSQLUpdateLocations implements Runnable {
 	 * @param data   a HashMap<String, Object> of table fields and values to insert.
 	 * @param id     the tardis_id
 	 */
-	TARDISSQLUpdateLocations(TARDIS plugin, HashMap<String, Object> data, String biome, int id) {
+	TARDISSQLUpdateLocations(TARDISPlugin plugin, HashMap<String, Object> data, String biome, int id) {
 		this.plugin = plugin;
 		this.data = data;
 		this.biome = biome;

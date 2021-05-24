@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
 import org.bukkit.Effect;
@@ -35,18 +35,18 @@ import java.util.List;
  */
 class TARDISLampsRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Block> lamps;
 	private final long end;
 	private final BlockData light;
 	private final BlockData BLACK = TARDISConstants.BLACK;
 	private final BlockData MUSHROOM;
-	private final boolean use_wool;
-	private final boolean lights_on;
+	private final boolean useWool;
+	private final boolean lightsOn;
 	private int task;
-	private Location handbrake_loc;
+	private Location handbrakeLoc;
 
-	TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long end, Material light, boolean use_wool) {
+	TARDISLampsRunnable(TARDISPlugin plugin, List<Block> lamps, long end, Material light, boolean useWool) {
 		this.plugin = plugin;
 		this.lamps = lamps;
 		this.end = end;
@@ -55,16 +55,16 @@ class TARDISLampsRunnable implements Runnable {
 			Lightable lit = (Lightable) this.light;
 			lit.setLit(true);
 		}
-		this.use_wool = use_wool;
+		this.useWool = useWool;
 		MUSHROOM = (this.light.equals(Material.REDSTONE_LAMP)) ? this.plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(52)) : this.plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
-		lights_on = (lamps.get(0).getType().equals(this.light.getMaterial()));
+		lightsOn = (lamps.get(0).getType().equals(this.light.getMaterial()));
 	}
 
 	@Override
 	public void run() {
 		if (System.currentTimeMillis() > end) {
 			// set all lamps back to whatever they were when the malfunction happened
-			if (lights_on) {
+			if (lightsOn) {
 				lamps.forEach((b) -> {
 					if (b.getType().equals(Material.MUSHROOM_STEM) || b.getType().equals(Material.SPONGE) || b.getType().equals(Material.BLACK_WOOL)) {
 						b.setBlockData(light);
@@ -73,7 +73,7 @@ class TARDISLampsRunnable implements Runnable {
 			} else {
 				lamps.forEach((b) -> {
 					if (b.getType().equals(light.getMaterial())) {
-						if (use_wool) {
+						if (useWool) {
 							b.setBlockData(BLACK);
 						} else {
 							b.setBlockData(MUSHROOM);
@@ -85,11 +85,11 @@ class TARDISLampsRunnable implements Runnable {
 		} else {
 			// play smoke effect
 			for (int j = 0; j < 9; j++) {
-				handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE, j);
+				handbrakeLoc.getWorld().playEffect(handbrakeLoc, Effect.SMOKE, j);
 			}
 			lamps.forEach((b) -> {
 				if (b.getType().equals(light.getMaterial())) {
-					if (use_wool) {
+					if (useWool) {
 						b.setBlockData(BLACK);
 					} else {
 						b.setBlockData(MUSHROOM);
@@ -106,6 +106,6 @@ class TARDISLampsRunnable implements Runnable {
 	}
 
 	public void setHandbrake(Location handbrake_loc) {
-		this.handbrake_loc = handbrake_loc;
+		this.handbrakeLoc = handbrake_loc;
 	}
 }

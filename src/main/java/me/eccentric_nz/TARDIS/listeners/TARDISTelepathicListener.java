@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
@@ -44,9 +44,9 @@ import java.util.UUID;
  */
 public class TARDISTelepathicListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISTelepathicListener(TARDIS plugin) {
+	public TARDISTelepathicListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -66,7 +66,7 @@ public class TARDISTelepathicListener implements Listener {
 		where.put("location", location);
 		ResultSetControls rsc = new ResultSetControls(plugin, where, false);
 		if (rsc.resultSet()) {
-			int id = rsc.getTardis_id();
+			int id = rsc.getTardisId();
 			// get the Time Lord of this tardis
 			HashMap<String, Object> wheret = new HashMap<>();
 			wheret.put("tardis_id", id);

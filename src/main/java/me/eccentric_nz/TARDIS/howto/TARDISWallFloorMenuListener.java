@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.howto;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardis.rooms.TARDISWalls;
 import org.bukkit.ChatColor;
@@ -44,13 +44,13 @@ import java.util.UUID;
  */
 public class TARDISWallFloorMenuListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<UUID, Integer> scroll = new HashMap<>();
 	private final List<UUID> scrolling = new ArrayList<>();
 	private final ItemStack[][] blocks;
 	private final int rows;
 
-	public TARDISWallFloorMenuListener(TARDIS plugin) {
+	public TARDISWallFloorMenuListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 		rows = TARDISWalls.BLOCKS.size() / 8 + 1;

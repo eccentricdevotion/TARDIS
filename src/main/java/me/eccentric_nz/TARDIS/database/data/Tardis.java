@@ -27,9 +27,9 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class Tardis {
+public class TARDIS {
 
-	private final int tardis_id;
+	private final int tardisId;
 	private final UUID uuid;
 	private final String owner;
 	private final String lastKnownName;
@@ -41,27 +41,27 @@ public class Tardis {
 	private final PRESET preset;
 	private final PRESET demat;
 	private final Adaption adaption;
-	private final int artron_level;
+	private final int artronLevel;
 	private final String creeper;
 	private final String beacon;
-	private final boolean handbrake_on;
-	private final boolean tardis_init;
+	private final boolean handbrakeOn;
+	private final boolean tardisInit;
 	private final boolean recharging;
 	private final boolean hidden;
-	private final long lastuse;
-	private final boolean iso_on;
+	private final long lastUse;
+	private final boolean isoOn;
 	private final String eps;
 	private final String rail;
 	private final String renderer;
 	private final String zero;
 	private final UUID rotor;
-	private final boolean powered_on;
-	private final boolean lights_on;
-	private final boolean siege_on;
+	private final boolean powered;
+	private final boolean lightsOn;
+	private final boolean siegeOn;
 	private final int monsters;
 
-	public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, Schematic schematic, boolean abandoned, String companions, PRESET preset, PRESET demat, int adapt, int artron_level, String creeper, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String renderer, String zero, UUID rotor, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
-		this.tardis_id = tardis_id;
+	public TARDIS(int tardisId, UUID uuid, String owner, String lastKnownName, String chunk, int tips, Schematic schematic, boolean abandoned, String companions, PRESET preset, PRESET demat, int adapt, int artronLevel, String creeper, String beacon, boolean handbrakeOn, boolean tardisInit, boolean recharging, boolean hidden, long lastUse, boolean isoOn, String eps, String rail, String renderer, String zero, UUID rotor, boolean powered, boolean lightsOn, boolean siegeOn, int monsters) {
+		this.tardisId = tardisId;
 		this.uuid = uuid;
 		this.owner = owner;
 		this.lastKnownName = lastKnownName;
@@ -73,23 +73,23 @@ public class Tardis {
 		this.preset = preset;
 		this.demat = demat;
 		adaption = Adaption.values()[adapt];
-		this.artron_level = artron_level;
+		this.artronLevel = artronLevel;
 		this.creeper = creeper;
 		this.beacon = beacon;
-		this.handbrake_on = handbrake_on;
-		this.tardis_init = tardis_init;
+		this.handbrakeOn = handbrakeOn;
+		this.tardisInit = tardisInit;
 		this.recharging = recharging;
 		this.hidden = hidden;
-		this.lastuse = lastuse;
-		this.iso_on = iso_on;
+		this.lastUse = lastUse;
+		this.isoOn = isoOn;
 		this.eps = eps;
 		this.rail = rail;
 		this.renderer = renderer;
 		this.zero = zero;
 		this.rotor = rotor;
-		this.powered_on = powered_on;
-		this.lights_on = lights_on;
-		this.siege_on = siege_on;
+		this.powered = powered;
+		this.lightsOn = lightsOn;
+		this.siegeOn = siegeOn;
 		this.monsters = monsters;
 	}
 
@@ -98,8 +98,8 @@ public class Tardis {
 	 *
 	 * @return the tardis id
 	 */
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	/**
@@ -215,8 +215,8 @@ public class Tardis {
 	 *
 	 * @return the Artron Energy level
 	 */
-	public int getArtron_level() {
-		return artron_level;
+	public int getArtronLevel() {
+		return artronLevel;
 	}
 
 	/**
@@ -244,8 +244,8 @@ public class Tardis {
 	 *
 	 * @return true if on, false if off
 	 */
-	public boolean isHandbrake_on() {
-		return handbrake_on;
+	public boolean isHandbrakeOn() {
+		return handbrakeOn;
 	}
 
 	/**
@@ -253,8 +253,8 @@ public class Tardis {
 	 *
 	 * @return true if initialized, false if not
 	 */
-	public boolean isTardis_init() {
-		return tardis_init;
+	public boolean isTardisInit() {
+		return tardisInit;
 	}
 
 	/**
@@ -280,8 +280,8 @@ public class Tardis {
 	 *
 	 * @return the time in milliseconds, or if the player has the 'tardis.prune.bypass' permission Long.MAX_VALUE
 	 */
-	public long getLastuse() {
-		return lastuse;
+	public long getLastUse() {
+		return lastUse;
 	}
 
 	/**
@@ -289,8 +289,8 @@ public class Tardis {
 	 *
 	 * @return true if on, false if off
 	 */
-	public boolean isIso_on() {
-		return iso_on;
+	public boolean isIsoOn() {
+		return isoOn;
 	}
 
 	/**
@@ -348,8 +348,8 @@ public class Tardis {
 	 *
 	 * @return true if powered on, false if off
 	 */
-	public boolean isPowered_on() {
-		return powered_on;
+	public boolean isPowered() {
+		return powered;
 	}
 
 	/**
@@ -357,8 +357,8 @@ public class Tardis {
 	 *
 	 * @return true if on, false if off
 	 */
-	public boolean isLights_on() {
-		return lights_on;
+	public boolean isLightsOn() {
+		return lightsOn;
 	}
 
 	/**
@@ -366,8 +366,8 @@ public class Tardis {
 	 *
 	 * @return true if Siege Mode is on, false if off
 	 */
-	public boolean isSiege_on() {
-		return siege_on;
+	public boolean isSiegeOn() {
+		return siegeOn;
 	}
 
 	/**

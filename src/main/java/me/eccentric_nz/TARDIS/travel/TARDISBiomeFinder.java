@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.enumeration.Flag;
@@ -17,9 +17,9 @@ import java.util.HashMap;
 
 public class TARDISBiomeFinder {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBiomeFinder(TARDIS plugin) {
+	public TARDISBiomeFinder(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

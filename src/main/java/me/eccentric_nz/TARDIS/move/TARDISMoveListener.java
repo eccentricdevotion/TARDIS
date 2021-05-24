@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.control.TARDISPowerButton;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCompanions;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -47,9 +47,9 @@ import java.util.UUID;
  */
 public class TARDISMoveListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISMoveListener(TARDIS plugin) {
+	public TARDISMoveListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -105,7 +105,7 @@ public class TARDISMoveListener implements Listener {
 				boolean minecart = (hasPrefs) && rsp.isMinecartOn();
 				boolean userQuotes = (hasPrefs) && rsp.isQuotesOn();
 				boolean willFarm = (hasPrefs) && rsp.isFarmOn();
-				boolean canPowerUp = (hasPrefs) && (rsp.isAutoPowerUp() && !tpl.isAbandoned());
+				boolean canPowerUp = (hasPrefs) && (rsp.isAutoPowerupOn() && !tpl.isAbandoned());
 				// check for entities near the police box
 				TARDISPetsAndFollowers petsAndFollowers = null;
 				if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(p, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
@@ -145,9 +145,9 @@ public class TARDISMoveListener implements Listener {
 						where.put("tardis_id", id);
 						ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
 						if (rs.resultSet()) {
-							Tardis tardis = rs.getTardis();
-							if (!tardis.isPowered_on()) {
-								new TARDISPowerButton(plugin, id, p, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), p.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
+							TARDIS tardis = rs.getTardis();
+							if (!tardis.isPowered()) {
+								new TARDISPowerButton(plugin, id, p, tardis.getPreset(), false, tardis.isHidden(), tardis.isLightsOn(), p.getLocation(), tardis.getArtronLevel(), tardis.getSchematic().hasLanterns()).clickButton();
 							}
 						}
 					}, 20L);

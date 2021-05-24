@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -37,10 +37,10 @@ import java.util.List;
  */
 public class TARDISCircuitRepairListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<Integer, String> circuits = new HashMap<>();
 
-	public TARDISCircuitRepairListener(TARDIS plugin) {
+	public TARDISCircuitRepairListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		circuits.put(10001973, "ars");
 		circuits.put(10001966, "chameleon");

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -36,10 +36,10 @@ import java.util.List;
 
 public class LabGUIListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Integer> slots = Arrays.asList(18, 19, 20, 21, 22, 23);
 
-	public LabGUIListener(TARDIS plugin) {
+	public LabGUIListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}

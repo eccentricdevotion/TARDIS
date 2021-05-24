@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
@@ -38,9 +38,9 @@ import java.util.Set;
  */
 public class TARDISRandomiserCircuit {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISRandomiserCircuit(TARDIS plugin) {
+	public TARDISRandomiserCircuit(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

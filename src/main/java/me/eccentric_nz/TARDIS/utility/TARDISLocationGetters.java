@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisChunk;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.Chunk;
@@ -27,9 +27,9 @@ import org.bukkit.World;
  */
 public class TARDISLocationGetters {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISLocationGetters(TARDIS plugin) {
+	public TARDISLocationGetters(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

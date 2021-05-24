@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -32,9 +32,9 @@ import org.bukkit.event.block.BlockFadeEvent;
  */
 public class TARDISIceMeltListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISIceMeltListener(TARDIS plugin) {
+	public TARDISIceMeltListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

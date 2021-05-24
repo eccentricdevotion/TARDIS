@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.Storage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -33,10 +33,10 @@ import java.util.Set;
  */
 public class TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Integer> titles;
 
-	protected TARDISMenuListener(TARDIS plugin) {
+	protected TARDISMenuListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		titles = getTitleMap();
 	}

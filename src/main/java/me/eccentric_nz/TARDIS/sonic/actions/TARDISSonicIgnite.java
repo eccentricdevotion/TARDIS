@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -28,7 +28,7 @@ import org.bukkit.event.block.BlockIgniteEvent;
 
 public class TARDISSonicIgnite {
 
-	public static void ignite(TARDIS plugin, Block b, Player p) {
+	public static void ignite(TARDISPlugin plugin, Block b, Player p) {
 		if (TARDISSonicRespect.checkBlockRespect(plugin, p, b)) {
 			if (b.getType().equals(Material.CAMPFIRE)) {
 				Lightable lightable = (Lightable) b.getBlockData();

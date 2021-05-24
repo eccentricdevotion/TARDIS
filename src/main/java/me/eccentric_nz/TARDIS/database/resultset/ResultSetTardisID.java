@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -33,16 +33,16 @@ public class ResultSetTardisID {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String prefix;
-	private int tardis_id;
+	private int tardisId;
 
 	/**
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
 	 *
 	 * @param plugin an instance of the main class.
 	 */
-	public ResultSetTardisID(TARDIS plugin) {
+	public ResultSetTardisID(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}
@@ -65,7 +65,7 @@ public class ResultSetTardisID {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				tardis_id = rs.getInt("tardis_id");
+				tardisId = rs.getInt("tardis_id");
 				return true;
 			}
 			return false;
@@ -104,7 +104,7 @@ public class ResultSetTardisID {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				tardis_id = rs.getInt("tardis_id");
+				tardisId = rs.getInt("tardis_id");
 				return true;
 			}
 			return false;
@@ -125,7 +125,7 @@ public class ResultSetTardisID {
 		}
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 }

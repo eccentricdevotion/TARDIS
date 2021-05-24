@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.mobfarming;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.planets.TARDISAngelsAPI;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
@@ -31,9 +31,9 @@ import java.util.List;
 
 public class TARDISFollowerSpawner {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISFollowerSpawner(TARDIS plugin) {
+	public TARDISFollowerSpawner(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -51,7 +51,7 @@ public class TARDISFollowerSpawner {
 				default -> pl.add(-1, 0, 1);
 			}
 		}
-		TARDISWeepingAngelsAPI twa = TARDISAngelsAPI.getAPI(TARDIS.plugin);
+		TARDISWeepingAngelsAPI twa = TARDISAngelsAPI.getAPI(TARDISPlugin.plugin);
 		for (TARDISFollower follower : followers) {
 			plugin.setTardisSpawn(true);
 			ArmorStand stand = (ArmorStand) w.spawnEntity(pl, EntityType.ARMOR_STAND);

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
 import me.eccentric_nz.tardis.blueprints.BlueprintProcessor;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -51,10 +51,10 @@ import java.util.List;
  */
 public class TARDISCondenserListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> zero;
 
-	public TARDISCondenserListener(TARDIS plugin) {
+	public TARDISCondenserListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		zero = this.plugin.getBlocksConfig().getStringList("no_artron_value");
 	}
@@ -101,7 +101,7 @@ public class TARDISCondenserListener implements Listener {
 					ResultSetControls rsc = new ResultSetControls(plugin, where, false);
 					if (rsc.resultSet()) {
 						HashMap<String, Object> wheret = new HashMap<>();
-						wheret.put("tardis_id", rsc.getTardis_id());
+						wheret.put("tardis_id", rsc.getTardisId());
 						rs = new ResultSetTardis(plugin, wheret, "", false, 0);
 						isCondenser = rs.resultSet();
 					} else {
@@ -158,13 +158,13 @@ public class TARDISCondenserListener implements Listener {
 								} else {
 									amount += stack_size * plugin.getCondensables().get(item);
 								}
-								String block_data = is.getType().toString();
+								String blockData = is.getType().toString();
 								if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
-									if (item_counts.containsKey(block_data)) {
-										Integer add_this = (item_counts.get(block_data) + stack_size);
-										item_counts.put(block_data, add_this);
+									if (item_counts.containsKey(blockData)) {
+										Integer add_this = (item_counts.get(blockData) + stack_size);
+										item_counts.put(blockData, add_this);
 									} else {
-										item_counts.put(block_data, stack_size);
+										item_counts.put(blockData, stack_size);
 									}
 								}
 								inv.remove(is);
@@ -175,22 +175,22 @@ public class TARDISCondenserListener implements Listener {
 							}
 						}
 					}
-					Tardis tardis = rs.getTardis();
+					TARDIS tardis = rs.getTardis();
 					if (tardis != null) {
 						// process item_counts
 						if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
 							item_counts.forEach((key, value) -> {
 								// check if the tardis has condensed this material before
 								HashMap<String, Object> wherec = new HashMap<>();
-								wherec.put("tardis_id", tardis.getTardis_id());
+								wherec.put("tardis_id", tardis.getTardisId());
 								wherec.put("block_data", key);
 								ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
 								HashMap<String, Object> setc = new HashMap<>();
 								if (rsc.resultSet()) {
-									int new_stack_size = value + rsc.getBlock_count();
-									plugin.getQueryFactory().updateCondensedBlockCount(new_stack_size, tardis.getTardis_id(), key);
+									int new_stack_size = value + rsc.getBlockCount();
+									plugin.getQueryFactory().updateCondensedBlockCount(new_stack_size, tardis.getTardisId(), key);
 								} else {
-									setc.put("tardis_id", tardis.getTardis_id());
+									setc.put("tardis_id", tardis.getTardisId());
 									setc.put("block_data", key);
 									setc.put("block_count", value);
 									plugin.getQueryFactory().doInsert("condenser", setc);
@@ -200,20 +200,20 @@ public class TARDISCondenserListener implements Listener {
 						// halve it cause 1:1 is too much...
 						amount = Math.round(amount / 2.0F);
 						HashMap<String, Object> wheret = new HashMap<>();
-						wheret.put("tardis_id", tardis.getTardis_id());
+						wheret.put("tardis_id", tardis.getTardisId());
 						plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
 						if (amount > 0) {
-							// are we doing an achievement?
-							if (plugin.getAchievementConfig().getBoolean("energy.enabled")) {
+							// are we doing an advancement?
+							if (plugin.getAdvancementConfig().getBoolean("energy.enabled")) {
 								// determine the current percentage
-								int current_level = tardis.getArtron_level() + amount;
+								int current_level = tardis.getArtronLevel() + amount;
 								int fc = plugin.getArtronConfig().getInt("full_charge");
 								int percent = Math.round((current_level * 100F) / fc);
-								TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.ENERGY, 1);
-								if (percent >= plugin.getAchievementConfig().getInt("energy.required")) {
-									taf.doAchievement(percent);
+								TARDISAdvancementFactory taf = new TARDISAdvancementFactory(plugin, player, Advancement.ENERGY, 1);
+								if (percent >= plugin.getAdvancementConfig().getInt("energy.required")) {
+									taf.doAdvancement(percent);
 								} else {
-									taf.doAchievement(Math.round((amount * 100F) / fc));
+									taf.doAdvancement(Math.round((amount * 100F) / fc));
 								}
 							}
 							TARDISMessage.send(player, "ENERGY_CONDENSED", String.format("%d", amount));

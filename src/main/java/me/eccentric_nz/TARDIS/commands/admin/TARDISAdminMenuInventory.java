@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIConfiguration;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -31,10 +31,10 @@ import java.util.*;
  */
 public class TARDISAdminMenuInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ItemStack[] menu;
 
-	public TARDISAdminMenuInventory(TARDIS plugin) {
+	public TARDISAdminMenuInventory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		menu = getItemStack();
 	}

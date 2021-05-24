@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -38,11 +38,11 @@ import java.util.List;
  */
 public class TARDISGallifreyChunkPopulateListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<ChunkInfo> chunks = new ArrayList<>();
 	private long timeCheck;
 
-	public TARDISGallifreyChunkPopulateListener(TARDIS plugin) {
+	public TARDISGallifreyChunkPopulateListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		timeCheck = System.currentTimeMillis() + 3000;
 	}

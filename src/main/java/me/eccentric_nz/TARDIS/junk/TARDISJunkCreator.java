@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.builders.TARDISBuilderInner;
@@ -40,10 +40,10 @@ import java.util.HashMap;
  */
 class TARDISJunkCreator {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player p;
 
-	TARDISJunkCreator(TARDIS plugin, Player p) {
+	TARDISJunkCreator(TARDISPlugin plugin, Player p) {
 		this.plugin = plugin;
 		this.p = p;
 	}
@@ -78,7 +78,7 @@ class TARDISJunkCreator {
 		set.put("powered_on", 1);
 		set.put("chameleon_preset", "JUNK");
 		set.put("chameleon_demat", "JUNK");
-		set.put("lastuse", System.currentTimeMillis());
+		set.put("last_use", System.currentTimeMillis());
 		int lastInsertId = plugin.getQueryFactory().doSyncInsert("tardis", set);
 		// get wall floor prefs
 		Material wall_type = Material.ORANGE_WOOL;

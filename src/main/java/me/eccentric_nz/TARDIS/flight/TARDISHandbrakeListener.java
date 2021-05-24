@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
@@ -24,7 +24,7 @@ import me.eccentric_nz.tardis.artron.TARDISArtronIndicator;
 import me.eccentric_nz.tardis.artron.TARDISArtronLevels;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.TARDISTimeRotor;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.DiskCircuit;
@@ -39,6 +39,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -57,9 +58,9 @@ import java.util.UUID;
  */
 public class TARDISHandbrakeListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISHandbrakeListener(TARDIS plugin) {
+	public TARDISHandbrakeListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -100,7 +101,7 @@ public class TARDISHandbrakeListener implements Listener {
 					ResultSetControls rsc = new ResultSetControls(plugin, where, false);
 					if (rsc.resultSet()) {
 						found = true;
-						tmp_id = rsc.getTardis_id();
+						tmp_id = rsc.getTardisId();
 					}
 				} else {
 					where.put("uuid", uuid.toString());
@@ -108,7 +109,7 @@ public class TARDISHandbrakeListener implements Listener {
 					ResultSetJunk rsj = new ResultSetJunk(plugin, where);
 					if (rsj.resultSet()) {
 						found = true;
-						tmp_id = rsj.getTardis_id();
+						tmp_id = rsj.getTardisId();
 					}
 				}
 				if (found) {
@@ -135,18 +136,18 @@ public class TARDISHandbrakeListener implements Listener {
 					wherei.put("tardis_id", id);
 					ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
 					if (rs.resultSet()) {
-						Tardis tardis = rs.getTardis();
+						TARDIS tardis = rs.getTardis();
 						PRESET preset = tardis.getPreset();
 						if (preset.equals(PRESET.JUNK)) {
 							return;
 						}
 						UUID ownerUUID = tardis.getUuid();
-						if ((tardis.isIso_on() && !uuid.equals(ownerUUID) && event.isCancelled() && !TARDISPermission.hasPermission(player, "tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+						if ((tardis.isIsoOn() && !uuid.equals(ownerUUID) && event.useInteractedBlock().equals(Event.Result.DENY) && !TARDISPermission.hasPermission(player, "tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
 							// check if cancelled so we don't get double messages from the bind listener
 							TARDISMessage.send(player, "ISO_HANDS_OFF");
 							return;
 						}
-						if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+						if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
 							TARDISMessage.send(player, "POWER_DOWN");
 							return;
 						}
@@ -162,17 +163,17 @@ public class TARDISHandbrakeListener implements Listener {
 							SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
 							if (rsp.resultSet()) {
 								beac_on = rsp.isBeaconOn();
-								bar = rsp.isTravelbarOn();
+								bar = rsp.isTravelBarOn();
 								spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
 							}
 							if (action == Action.RIGHT_CLICK_BLOCK) {
-								if (tardis.isHandbrake_on()) {
+								if (tardis.isHandbrakeOn()) {
 									if (preset.equals(PRESET.JUNK_MODE) && !plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
 										TARDISMessage.send(player, "TRAVEL_NEED_DEST");
 										return;
 									}
 									// check there is enough power for at last random travel
-									if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtron_level() < plugin.getArtronConfig().getInt("random")) {
+									if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtronLevel() < plugin.getArtronConfig().getInt("random")) {
 										TARDISMessage.send(player, "ENERGY_NOT_ENOUGH");
 										return;
 									}
@@ -198,7 +199,7 @@ public class TARDISHandbrakeListener implements Listener {
 								}
 							}
 							if (action == Action.LEFT_CLICK_BLOCK) {
-								if (!tardis.isHandbrake_on()) {
+								if (!tardis.isHandbrakeOn()) {
 									// stop time rotor?
 									if (tardis.getRotor() != null) {
 										ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
@@ -260,7 +261,7 @@ public class TARDISHandbrakeListener implements Listener {
 		where.put("door_type", 1);
 		ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
 		if (rs.resultSet()) {
-			Block door = TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock();
+			Block door = TARDISStaticLocationGetters.getLocationFromDB(rs.getDoorLocation()).getBlock();
 			return TARDISStaticUtils.isDoorOpen(door);
 		}
 		return false;

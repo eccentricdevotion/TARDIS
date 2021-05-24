@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.flight.TARDISLand;
@@ -30,12 +30,12 @@ import java.util.HashMap;
  */
 public class TARDISFastReturnButton {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 	private final int id;
 	private final int level;
 
-	public TARDISFastReturnButton(TARDIS plugin, Player player, int id, int level) {
+	public TARDISFastReturnButton(TARDISPlugin plugin, Player player, int id, int level) {
 		this.plugin = plugin;
 		this.player = player;
 		this.id = id;

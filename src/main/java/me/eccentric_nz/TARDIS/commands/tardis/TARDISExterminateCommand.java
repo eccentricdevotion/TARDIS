@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.destroyers.TARDISExterminator;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -26,9 +26,9 @@ import org.bukkit.entity.Player;
  */
 class TARDISExterminateCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISExterminateCommand(TARDIS plugin) {
+	TARDISExterminateCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

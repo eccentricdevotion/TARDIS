@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.product;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,9 +34,9 @@ import java.util.Objects;
 
 public class BalloonListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public BalloonListener(TARDIS plugin) {
+	public BalloonListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

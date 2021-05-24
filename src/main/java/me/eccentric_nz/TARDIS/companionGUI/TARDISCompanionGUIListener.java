@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.companionGUI;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -43,10 +43,10 @@ import java.util.UUID;
  */
 public class TARDISCompanionGUIListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<UUID, Integer> selected_head = new HashMap<>();
 
-	public TARDISCompanionGUIListener(TARDIS plugin) {
+	public TARDISCompanionGUIListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}
@@ -80,8 +80,8 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
 								where.put("uuid", uuid.toString());
 								ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 								if (rs.resultSet()) {
-									Tardis tardis = rs.getTardis();
-									int id = tardis.getTardis_id();
+									TARDIS tardis = rs.getTardis();
+									int id = tardis.getTardisId();
 									String comps = tardis.getCompanions();
 									ItemStack h = view.getItem(selected_head.get(uuid));
 									ItemMeta m = h.getItemMeta();

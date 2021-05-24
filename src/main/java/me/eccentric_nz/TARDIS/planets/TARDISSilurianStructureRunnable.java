@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.planets;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
@@ -34,7 +34,7 @@ import java.io.File;
 
 public class TARDISSilurianStructureRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int startx, starty, startz;
 	private final String path;
 	private boolean running = false;
@@ -46,7 +46,7 @@ public class TARDISSilurianStructureRunnable implements Runnable {
 	private Material type;
 	private BlockData data;
 
-	TARDISSilurianStructureRunnable(TARDIS plugin, int startx, int starty, int startz, String path) {
+	TARDISSilurianStructureRunnable(TARDISPlugin plugin, int startx, int starty, int startz, String path) {
 		this.plugin = plugin;
 		this.startx = startx;
 		this.starty = starty;

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISVector3D;
 import org.bukkit.Location;
@@ -47,7 +47,7 @@ public class TARDISSonicFreeze {
 		return hit;
 	}
 
-	public static void immobilise(TARDIS plugin, Player player, Player target) {
+	public static void immobilise(TARDISPlugin plugin, Player player, Player target) {
 		// freeze the closest player
 		long cool = System.currentTimeMillis();
 		if ((!plugin.getTrackerKeeper().getCooldown().containsKey(player.getUniqueId()) || plugin.getTrackerKeeper().getCooldown().get(player.getUniqueId()) < cool)) {

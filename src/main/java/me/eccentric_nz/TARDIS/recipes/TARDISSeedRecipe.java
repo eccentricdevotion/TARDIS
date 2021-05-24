@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.TARDISSeedModel;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.Schematic;
@@ -37,11 +37,11 @@ import java.util.Locale;
 
 public class TARDISSeedRecipe {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<Schematic, ShapedRecipe> seedRecipes;
 	private final RecipeChoice.MaterialChoice choices;
 
-	public TARDISSeedRecipe(TARDIS plugin) {
+	public TARDISSeedRecipe(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		seedRecipes = new HashMap<>();
 		choices = new RecipeChoice.MaterialChoice(TARDISWalls.BLOCKS);

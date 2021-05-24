@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.desktop.TARDISRepair;
 import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
@@ -30,11 +30,11 @@ import java.util.UUID;
 
 public class SudoRepair {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final UUID uuid;
 	private final boolean clean;
 
-	public SudoRepair(TARDIS plugin, UUID uuid, boolean clean) {
+	public SudoRepair(TARDISPlugin plugin, UUID uuid, boolean clean) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		this.clean = clean;
@@ -50,10 +50,10 @@ public class SudoRepair {
 			TARDISMessage.send(player, "NO_TARDIS");
 			return false;
 		}
-		Tardis tardis = rs.getTardis();
+		TARDIS tardis = rs.getTardis();
 		// get player's current console
 		Schematic current_console = tardis.getSchematic();
-		int level = tardis.getArtron_level();
+		int level = tardis.getArtronLevel();
 		TARDISUpgradeData tud = new TARDISUpgradeData();
 		tud.setPrevious(current_console);
 		tud.setLevel(level);

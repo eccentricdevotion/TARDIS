@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
 import org.bukkit.Location;
@@ -31,11 +31,11 @@ import java.util.HashMap;
  */
 class TARDISArtronRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private int task;
 
-	TARDISArtronRunnable(TARDIS plugin, int id) {
+	TARDISArtronRunnable(TARDISPlugin plugin, int id) {
 		this.plugin = plugin;
 		this.id = id;
 	}

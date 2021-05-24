@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -36,10 +36,10 @@ import java.util.HashMap;
  */
 public class TARDISCreeperChecker {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 
-	public TARDISCreeperChecker(TARDIS plugin, int id) {
+	public TARDISCreeperChecker(TARDISPlugin plugin, int id) {
 		this.plugin = plugin;
 		this.id = id;
 	}
@@ -52,11 +52,11 @@ public class TARDISCreeperChecker {
 		wheret.put("tardis_id", id);
 		ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			// only if there is a saved creeper location
 			if (!tardis.getCreeper().isEmpty()) {
 				// only if the tardis has been initialised
-				if (tardis.isTardis_init()) {
+				if (tardis.isTardisInit()) {
 					World w = TARDISStaticLocationGetters.getWorld(tardis.getCreeper());
 					if (w != null) {
 						Location l = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());

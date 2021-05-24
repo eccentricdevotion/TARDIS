@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.*;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.api.event.TARDISDesktopThemeEvent;
@@ -29,7 +29,7 @@ import me.eccentric_nz.tardis.builders.TARDISTIPSData;
 import me.eccentric_nz.tardis.builders.TARDISTimeRotor;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.tardis.database.data.Archive;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetARS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -64,7 +64,7 @@ import java.util.*;
  */
 public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final UUID uuid;
 	private final TARDISUpgradeData tud;
 	private final List<Block> lampBlocks = new ArrayList<>();
@@ -112,7 +112,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 	private ConsoleSize size_next;
 	private ConsoleSize size_prev;
 
-	public TARDISFullThemeRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud) {
+	public TARDISFullThemeRunnable(TARDISPlugin plugin, UUID uuid, TARDISUpgradeData tud) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		this.tud = tud;
@@ -173,7 +173,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 				obj = TARDISSchematicGZip.unzip(path);
 				size_next = tud.getSchematic().getConsoleSize();
 			} else {
-				obj = archive_next.getJSON();
+				obj = archive_next.getJson();
 				size_next = archive_next.getConsoleSize();
 			}
 			// get previous schematic dimensions
@@ -194,7 +194,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 				pw = prevDimensions.get("width").getAsInt();
 				size_prev = tud.getPrevious().getConsoleSize();
 			} else {
-				JsonObject dimensions = archive_next.getJSON().get("dimensions").getAsJsonObject();
+				JsonObject dimensions = archive_next.getJson().get("dimensions").getAsJsonObject();
 				ph = dimensions.get("height").getAsInt();
 				pw = dimensions.get("width").getAsInt();
 				size_prev = archive_prev.getConsoleSize();
@@ -215,9 +215,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 				int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
 				plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
 			}
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			slot = tardis.getTIPS();
-			id = tardis.getTardis_id();
+			id = tardis.getTardisId();
 			chunk = TARDISStaticLocationGetters.getChunk(tardis.getChunk());
 			if (tud.getPrevious().getPermission().equals("ender")) {
 				// remove ender crystal
@@ -255,7 +255,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 				startx = pos.getCentreX();
 				startz = pos.getCentreZ();
 			} else {
-				int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+				int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
 				startx = gsl[0];
 				startz = gsl[2];
 			}

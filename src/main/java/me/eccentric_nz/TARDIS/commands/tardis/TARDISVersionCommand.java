@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.utility.TARDISUpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -31,9 +31,9 @@ import java.util.List;
  */
 class TARDISVersionCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISVersionCommand(TARDIS plugin) {
+	TARDISVersionCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

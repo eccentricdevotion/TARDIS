@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.blueprints;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlueprint;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -13,7 +13,7 @@ public class TARDISPermission {
 	public static boolean hasPermission(Player player, String node) {
 		if (player.hasPermission(node)) {
 			return true;
-		} else if (TARDIS.plugin.getConfig().getBoolean("blueprints.enabled")) {
+		} else if (TARDISPlugin.plugin.getConfig().getBoolean("blueprints.enabled")) {
 			// check database
 			return hasBlueprintPermission(player.getUniqueId().toString(), node);
 		} else {
@@ -27,14 +27,14 @@ public class TARDISPermission {
 	}
 
 	public static boolean hasPermission(UUID uuid, String node) {
-		Player player = TARDIS.plugin.getServer().getPlayer(uuid);
+		Player player = TARDISPlugin.plugin.getServer().getPlayer(uuid);
 		return player != null && hasPermission(player, node);
 	}
 
 	public static boolean hasPermission(CommandSender sender, String node) {
 		if (sender.hasPermission(node)) {
 			return true;
-		} else if (TARDIS.plugin.getConfig().getBoolean("blueprints.enabled") && sender instanceof Player) {
+		} else if (TARDISPlugin.plugin.getConfig().getBoolean("blueprints.enabled") && sender instanceof Player) {
 			// check database
 			return hasBlueprintPermission(((Player) sender).getUniqueId().toString(), node);
 		} else {
@@ -43,6 +43,6 @@ public class TARDISPermission {
 	}
 
 	private static boolean hasBlueprintPermission(String uuid, String node) {
-		return new ResultSetBlueprint(TARDIS.plugin).getPerm(uuid, node);
+		return new ResultSetBlueprint(TARDISPlugin.plugin).getPerm(uuid, node);
 	}
 }

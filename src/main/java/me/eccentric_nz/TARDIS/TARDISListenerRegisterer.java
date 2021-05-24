@@ -93,9 +93,9 @@ import me.eccentric_nz.tardis.update.TARDISUpdateListener;
  */
 class TARDISListenerRegisterer {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISListenerRegisterer(TARDIS plugin) {
+	TARDISListenerRegisterer(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

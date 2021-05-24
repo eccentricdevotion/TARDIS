@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
@@ -39,9 +39,9 @@ import java.util.UUID;
  */
 public class TARDISHandlesTeleportCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISHandlesTeleportCommand(TARDIS plugin) {
+	public TARDISHandlesTeleportCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -61,13 +61,13 @@ public class TARDISHandlesTeleportCommand {
 			TARDISMessage.handlesSend(player, "NO_TARDIS");
 			return;
 		}
-		Tardis tardis = rs.getTardis();
-		int id = tardis.getTardis_id();
-		if (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+		TARDIS tardis = rs.getTardis();
+		int id = tardis.getTardisId();
+		if (!tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
 			TARDISMessage.handlesSend(player, "NOT_WHILE_TRAVELLING");
 			return;
 		}
-		int level = tardis.getArtron_level();
+		int level = tardis.getArtronLevel();
 		int travel = plugin.getArtronConfig().getInt("travel");
 		if (level < travel) {
 			TARDISMessage.handlesSend(player, "NOT_ENOUGH_ENERGY");

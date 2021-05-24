@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
@@ -33,7 +33,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISDematerialisePoliceBox implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final DestroyData dd;
 	private final int loops;
 	private final PRESET preset;
@@ -42,7 +42,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
 	private ItemFrame frame;
 	private ItemStack is;
 
-	public TARDISDematerialisePoliceBox(TARDIS plugin, DestroyData dd, PRESET preset) {
+	public TARDISDematerialisePoliceBox(TARDISPlugin plugin, DestroyData dd, PRESET preset) {
 		this.plugin = plugin;
 		this.dd = dd;
 		loops = dd.getThrottle().getLoops();

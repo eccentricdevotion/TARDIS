@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
 import org.bukkit.Location;
@@ -30,13 +30,13 @@ public class ResultSetTransmat {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private final String name;
 	private final String prefix;
-	private int transmat_id;
-	private int tardis_id;
-	private String transmat_name;
+	private int transmatId;
+	private int tardisId;
+	private String transmatName;
 	private String world;
 	private float x;
 	private float y;
@@ -51,7 +51,7 @@ public class ResultSetTransmat {
 	 * @param id     the tardis id to refine the search.
 	 * @param name   the name of the transmat location to refine the search.
 	 */
-	public ResultSetTransmat(TARDIS plugin, int id, String name) {
+	public ResultSetTransmat(TARDISPlugin plugin, int id, String name) {
 		this.plugin = plugin;
 		this.id = id;
 		this.name = name;
@@ -76,9 +76,9 @@ public class ResultSetTransmat {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					transmat_id = rs.getInt("transmat_id");
-					tardis_id = rs.getInt("tardis_id");
-					transmat_name = rs.getString("name");
+					transmatId = rs.getInt("transmat_id");
+					tardisId = rs.getInt("tardis_id");
+					transmatName = rs.getString("name");
 					world = rs.getString("world");
 					x = rs.getFloat("x");
 					y = rs.getFloat("y");
@@ -107,16 +107,16 @@ public class ResultSetTransmat {
 		return true;
 	}
 
-	public int getTransmat_id() {
-		return transmat_id;
+	public int getTransmatId() {
+		return transmatId;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
-	public String getTransmat_name() {
-		return transmat_name;
+	public String getTransmatName() {
+		return transmatName;
 	}
 
 	public String getWorld() {

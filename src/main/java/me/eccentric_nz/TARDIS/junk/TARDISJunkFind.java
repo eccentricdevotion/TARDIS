@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -32,9 +32,9 @@ import java.util.HashMap;
  */
 class TARDISJunkFind {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISJunkFind(TARDIS plugin) {
+	TARDISJunkFind(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -49,7 +49,7 @@ class TARDISJunkFind {
 		if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
 			// get current location
 			HashMap<String, Object> wherec = new HashMap<>();
-			wherec.put("tardis_id", rs.getTardis_id());
+			wherec.put("tardis_id", rs.getTardisId());
 			ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
 			if (rsc.resultSet()) {
 				String world = TARDISAliasResolver.getWorldAlias(rsc.getWorld());

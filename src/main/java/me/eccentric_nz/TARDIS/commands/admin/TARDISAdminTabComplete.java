@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.admin;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.PRESET;
@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class TARDISAdminTabComplete extends TARDISCompleter implements TabCompleter {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
 	private final ImmutableList<String> COLOURS = ImmutableList.of("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
 	private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("worlds", "rechargers", "storage", "creation", "police_box", "travel", "preferences", "allow", "growth", "rooms");
@@ -64,7 +64,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
 	private final ImmutableList<String> ENTITY_SUBS;
 	private final List<String> BLUEPRINT_SUBS = new ArrayList<>();
 
-	public TARDISAdminTabComplete(TARDIS plugin) {
+	public TARDISAdminTabComplete(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		if (plugin.isWorldGuardOnServer()) {
 			FLAG_SUBS = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());

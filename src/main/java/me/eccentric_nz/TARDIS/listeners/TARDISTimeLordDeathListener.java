@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.arch.TARDISArchInventory;
 import me.eccentric_nz.tardis.arch.TARDISArchPersister;
 import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
@@ -26,7 +26,7 @@ import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
 import me.eccentric_nz.tardis.desktop.TARDISWallFloorRunnable;
@@ -66,9 +66,9 @@ import java.util.UUID;
  */
 public class TARDISTimeLordDeathListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISTimeLordDeathListener(TARDIS plugin) {
+	public TARDISTimeLordDeathListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -89,21 +89,21 @@ public class TARDISTimeLordDeathListener implements Listener {
 				ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 				// are they a time lord?
 				if (rs.resultSet()) {
-					Tardis tardis = rs.getTardis();
-					if (tardis.isPowered_on()) {
-						int id = tardis.getTardis_id();
+					TARDIS tardis = rs.getTardis();
+					if (tardis.isPowered()) {
+						int id = tardis.getTardisId();
 						String eps = tardis.getEps();
 						String creeper = tardis.getCreeper();
 						ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
 						if (rsp.resultSet()) {
 							SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
 							// do they have the autonomous circuit on?
-							if (rsp.isAutoOn() && !tardis.isSiege_on() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+							if (rsp.isAutoOn() && !tardis.isSiegeOn() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
 								// close doors
 								new TARDISDoorCloser(plugin, uuid, id).closeDoors();
 								Location death_loc = player.getLocation();
 								int amount = Math.round(plugin.getArtronConfig().getInt("autonomous") * spaceTimeThrottle.getArtronMultiplier());
-								if (tardis.getArtron_level() > amount) {
+								if (tardis.getArtronLevel() > amount) {
 									if (plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
 										// check if there are players in the tardis
 										HashMap<String, Object> wherev = new HashMap<>();
@@ -196,7 +196,7 @@ public class TARDISTimeLordDeathListener implements Listener {
 											tid.put("tardis_id", id);
 											if (!tardis.isHidden()) {
 												plugin.getPresetDestroyer().destroyPreset(dd);
-												plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisID());
+												plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisId());
 												plugin.getTrackerKeeper().getInVortex().add(id);
 												// play tardis_takeoff sfx
 												TARDISSounds.playTARDISSound(sl, "tardis_takeoff");

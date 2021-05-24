@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.files.TARDISFileCopier;
 
@@ -46,12 +46,12 @@ public class TARDISCustomPreset {
 		// ignore lines that start with a #
 		String[] custom_data = new String[6];
 		File custom_file;
-		if (!TARDIS.plugin.getConfig().getBoolean("conversions.custom_preset")) {
-			custom_file = TARDISFileCopier.copy(TARDIS.plugin.getDataFolder() + File.separator + "custom_preset.txt", TARDIS.plugin.getResource("custom_preset.txt"), true);
-			TARDIS.plugin.getConfig().set("conversions.custom_preset", true);
-			TARDIS.plugin.saveConfig();
+		if (!TARDISPlugin.plugin.getConfig().getBoolean("conversions.custom_preset")) {
+			custom_file = TARDISFileCopier.copy(TARDISPlugin.plugin.getDataFolder() + File.separator + "custom_preset.txt", TARDISPlugin.plugin.getResource("custom_preset.txt"), true);
+			TARDISPlugin.plugin.getConfig().set("conversions.custom_preset", true);
+			TARDISPlugin.plugin.saveConfig();
 		} else {
-			custom_file = TARDIS.plugin.getTardisCopier().copy("custom_preset.txt");
+			custom_file = TARDISPlugin.plugin.getTardisCopier().copy("custom_preset.txt");
 		}
 		BufferedReader bufRdr = null;
 		int i = 0;
@@ -66,13 +66,13 @@ public class TARDISCustomPreset {
 				}
 			}
 		} catch (IOException io) {
-			TARDIS.plugin.getConsole().sendMessage(TARDIS.plugin.getPluginName() + "Could not read custom preset file! " + io.getMessage());
+			TARDISPlugin.plugin.getConsole().sendMessage(TARDISPlugin.plugin.getPluginName() + "Could not read custom preset file! " + io.getMessage());
 		} finally {
 			if (bufRdr != null) {
 				try {
 					bufRdr.close();
 				} catch (IOException e) {
-					TARDIS.plugin.debug("Error closing custom preset reader! " + e.getMessage());
+					TARDISPlugin.plugin.debug("Error closing custom preset reader! " + e.getMessage());
 				}
 			}
 		}

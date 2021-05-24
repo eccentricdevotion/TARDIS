@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
@@ -39,9 +39,9 @@ import java.util.HashMap;
  */
 public class TARDISRenderRoomListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISRenderRoomListener(TARDIS plugin) {
+	public TARDISRenderRoomListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -65,14 +65,14 @@ public class TARDISRenderRoomListener implements Listener {
 		wherep.put("uuid", p.getUniqueId().toString());
 		ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
 		if (rst.resultSet()) {
-			int id = rst.getTardis_id();
+			int id = rst.getTardisId();
 			HashMap<String, Object> whered = new HashMap<>();
 			whered.put("tardis_id", id);
 			whered.put("door_type", 1);
 			ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
 			if (rsd.resultSet()) {
-				COMPASS d = rsd.getDoor_direction();
-				Location tp_loc = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location());
+				COMPASS d = rsd.getDoorDirection();
+				Location tp_loc = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoorLocation());
 				int getx = tp_loc.getBlockX();
 				int getz = tp_loc.getBlockZ();
 				switch (d) {

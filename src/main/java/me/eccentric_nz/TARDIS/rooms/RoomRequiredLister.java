@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -28,7 +28,7 @@ import java.util.Map;
 
 public class RoomRequiredLister {
 
-	public static void listCondensables(TARDIS plugin, String name, Player player) {
+	public static void listCondensables(TARDISPlugin plugin, String name, Player player) {
 		HashMap<String, Integer> blockTypes = plugin.getBuildKeeper().getRoomBlockCounts().get(name);
 		boolean hasPrefs = false;
 		String wall = "ORANGE_WOOL";
@@ -63,10 +63,10 @@ public class RoomRequiredLister {
 			for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
 				// get the amount of this block that the player has condensed
 				HashMap<String, Object> wherec = new HashMap<>();
-				wherec.put("tardis_id", rs.getTardis_id());
+				wherec.put("tardis_id", rs.getTardisId());
 				wherec.put("block_data", map.getKey());
 				ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
-				int has = (rsc.resultSet()) ? rsc.getBlock_count() : 0;
+				int has = (rsc.resultSet()) ? rsc.getBlockCount() : 0;
 				int required = map.getValue() - has;
 				if (required > 0) {
 					String line = map.getKey() + ", " + required;

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
@@ -31,9 +31,9 @@ import org.bukkit.entity.Player;
  */
 public class TARDISBlackWoolToggler {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBlackWoolToggler(TARDIS plugin) {
+	public TARDISBlackWoolToggler(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

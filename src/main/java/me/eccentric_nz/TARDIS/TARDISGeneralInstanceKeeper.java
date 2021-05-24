@@ -70,7 +70,7 @@ public class TARDISGeneralInstanceKeeper {
 	private final Set<String> sonicWires = new HashSet<>();
 	private final Set<UUID> junkTravellers = new HashSet<>();
 	private final Set<UUID> timeRotors = new HashSet<>();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDoorListener doorListener;
 	private final YamlConfiguration pluginYAML;
 	private boolean junkTravelling = false;
@@ -81,7 +81,7 @@ public class TARDISGeneralInstanceKeeper {
 	private TARDISRenderRoomListener rendererListener;
 	private TARDISTravelCommands tardisTravelCommand;
 
-	TARDISGeneralInstanceKeeper(TARDIS plugin) {
+	TARDISGeneralInstanceKeeper(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		roomArgs = buildRoomArgs();
 		transparent = buildTransparent();

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.bind;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -40,9 +40,9 @@ import java.util.HashMap;
  */
 public class TARDISBindCommands implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBindCommands(TARDIS plugin) {
+	public TARDISBindCommands(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -78,7 +78,7 @@ public class TARDISBindCommands implements CommandExecutor {
 				TARDISMessage.send(player, "NOT_A_TIMELORD");
 				return false;
 			}
-			int id = rs.getTardis_id();
+			int id = rs.getTardisId();
 			HashMap<String, Object> wheret = new HashMap<>();
 			wheret.put("uuid", player.getUniqueId().toString());
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);

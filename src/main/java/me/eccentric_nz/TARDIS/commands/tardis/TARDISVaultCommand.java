@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -34,9 +34,9 @@ import java.util.HashMap;
  */
 class TARDISVaultCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISVaultCommand(TARDIS plugin) {
+	TARDISVaultCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -52,7 +52,7 @@ class TARDISVaultCommand {
 			TARDISMessage.send(player, "NOT_A_TIMELORD");
 			return false;
 		}
-		int id = rs.getTardis_id();
+		int id = rs.getTardisId();
 		// get chest location
 		Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
 		if (!b.getType().equals(Material.CHEST) && !b.getType().equals(Material.TRAPPED_CHEST)) {
@@ -67,7 +67,7 @@ class TARDISVaultCommand {
 			TARDISMessage.send(player, "NOT_IN_TARDIS");
 			return false;
 		}
-		int thisid = rst.getTardis_id();
+		int thisid = rst.getTardisId();
 		if (thisid != id) {
 			TARDISMessage.send(player, "CMD_ONLY_TL");
 			return false;
@@ -100,7 +100,7 @@ class TARDISVaultCommand {
 		ResultSetVault rsv = new ResultSetVault(plugin, id);
 		if (rsv.resultSet()) {
 			HashMap<String, Object> where = new HashMap<>();
-			where.put("v_id", rsv.getVault_id());
+			where.put("v_id", rsv.getVaultId());
 			plugin.getQueryFactory().doUpdate("vaults", set, where);
 		} else {
 			plugin.getQueryFactory().doInsert("vaults", set);

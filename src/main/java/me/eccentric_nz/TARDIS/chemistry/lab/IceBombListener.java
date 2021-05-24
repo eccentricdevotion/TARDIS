@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.enumeration.Flag;
@@ -38,9 +38,9 @@ import java.util.Objects;
 
 public class IceBombListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public IceBombListener(TARDIS plugin) {
+	public IceBombListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

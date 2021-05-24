@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,11 +35,11 @@ import java.util.List;
  */
 public class TARDISGrowthListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int chance;
 	private final List<Material> plants = Arrays.asList(Material.AIR, Material.BEETROOTS, Material.CACTUS, Material.CARROTS, Material.COCOA, Material.WHEAT, Material.MELON_STEM, Material.NETHER_WART, Material.POTATOES, Material.PUMPKIN_STEM, Material.SUGAR_CANE);
 
-	public TARDISGrowthListener(TARDIS plugin) {
+	public TARDISGrowthListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		chance = this.plugin.getConfig().getInt("siege.growth");
 	}

@@ -39,7 +39,7 @@ public class ChunkInfo {
 			return false;
 		}
 		ChunkInfo chunkInfo = (ChunkInfo) o;
-		return x == chunkInfo.x && z == chunkInfo.z && Objects.equals(world, chunkInfo.world);
+		return x == chunkInfo.x && z == chunkInfo.z && world.equals(chunkInfo.world);
 	}
 
 	@Override

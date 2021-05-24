@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.custommodeldata.GUIChameleonPresets;
 import me.eccentric_nz.tardis.enumeration.PRESET;
@@ -38,11 +38,11 @@ import java.util.List;
 class TARDISPresetInventory {
 
 	private final ItemStack[] terminal;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 	private final List<Material> notThese = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
 
-	public TARDISPresetInventory(TARDIS plugin, Player player) {
+	public TARDISPresetInventory(TARDISPlugin plugin, Player player) {
 		this.plugin = plugin;
 		this.player = player;
 		terminal = getItemStack();

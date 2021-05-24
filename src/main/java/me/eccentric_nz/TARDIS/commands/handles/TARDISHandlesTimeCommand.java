@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -29,9 +29,9 @@ import java.util.Date;
  */
 class TARDISHandlesTimeCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISHandlesTimeCommand(TARDIS plugin) {
+	TARDISHandlesTimeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

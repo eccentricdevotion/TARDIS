@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.block.Block;
 
 import java.util.List;
 
 public class TARDISMushroomRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<MushroomBlock> mushrooms;
 	private int task;
 	private int i = 0;
 
-	public TARDISMushroomRunnable(TARDIS plugin, List<MushroomBlock> mushrooms) {
+	public TARDISMushroomRunnable(TARDISPlugin plugin, List<MushroomBlock> mushrooms) {
 		this.plugin = plugin;
 		this.mushrooms = mushrooms;
 	}

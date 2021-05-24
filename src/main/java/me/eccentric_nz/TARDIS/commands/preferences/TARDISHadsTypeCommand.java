@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.HADS;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -34,19 +34,19 @@ class TARDISHadsTypeCommand {
 			TARDISMessage.send(player, "HADS_NEED");
 			return false;
 		}
-		String hads_type = args[1].toUpperCase(Locale.ENGLISH);
+		String hadsType = args[1].toUpperCase(Locale.ENGLISH);
 		HADS go;
 		try {
-			go = HADS.valueOf(hads_type);
+			go = HADS.valueOf(hadsType);
 		} catch (IllegalArgumentException e) {
 			TARDISMessage.send(player, "HADS_NOT_VALID");
 			return false;
 		}
 		HashMap<String, Object> set = new HashMap<>();
-		set.put("hads_type", hads_type);
+		set.put("hads_type", hadsType);
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("uuid", player.getUniqueId().toString());
-		TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
+		TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
 		TARDISMessage.send(player, "HADS_SAVED");
 		return true;
 	}

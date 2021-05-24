@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.element;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -24,10 +24,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ElementInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ItemStack[] menu;
 
-	public ElementInventory(TARDIS plugin) {
+	public ElementInventory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		menu = getItemStack();
 	}

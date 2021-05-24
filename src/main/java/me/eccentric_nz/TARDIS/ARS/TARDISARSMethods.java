@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.tardis.database.resultset.*;
@@ -47,7 +47,7 @@ import java.util.*;
  */
 public class TARDISARSMethods {
 
-	final TARDIS plugin;
+	final TARDISPlugin plugin;
 	final HashMap<UUID, Integer> scroll_start = new HashMap<>();
 	final HashMap<UUID, Integer> selected_slot = new HashMap<>();
 	final HashMap<UUID, TARDISARSSaveData> save_map_data = new HashMap<>();
@@ -57,7 +57,7 @@ public class TARDISARSMethods {
 	final List<UUID> hasLoadedMap = new ArrayList<>();
 	private final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
 
-	TARDISARSMethods(TARDIS plugin) {
+	TARDISARSMethods(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -71,14 +71,14 @@ public class TARDISARSMethods {
 		String[][][] grid = new String[3][9][9];
 		JsonArray json = JsonParser.parseString(js).getAsJsonArray();
 		for (int y = 0; y < 3; y++) {
-			JsonArray jsonx = json.get(y).getAsJsonArray();
+			JsonArray jsonX = json.get(y).getAsJsonArray();
 			for (int x = 0; x < 9; x++) {
-				JsonArray jsonz = jsonx.get(x).getAsJsonArray();
+				JsonArray jsonZ = jsonX.get(x).getAsJsonArray();
 				for (int z = 0; z < 9; z++) {
-					if (jsonz.get(z).getAsString().equals("TNT")) {
+					if (jsonZ.get(z).getAsString().equals("TNT")) {
 						grid[y][x][z] = "STONE";
 					} else {
-						grid[y][x][z] = jsonz.get(z).getAsString();
+						grid[y][x][z] = jsonZ.get(z).getAsString();
 					}
 				}
 			}
@@ -100,9 +100,9 @@ public class TARDISARSMethods {
 		set.put("ars_z_south", md.getS());
 		set.put("ars_y_layer", md.getY());
 		set.put("json", json.toString());
-		HashMap<String, Object> wherea = new HashMap<>();
-		wherea.put("ars_id", md.getId());
-		plugin.getQueryFactory().doUpdate("ars", set, wherea);
+		HashMap<String, Object> whereA = new HashMap<>();
+		whereA.put("arsId", md.getId());
+		plugin.getQueryFactory().doUpdate("ars", set, whereA);
 	}
 
 	/**
@@ -116,9 +116,9 @@ public class TARDISARSMethods {
 		JsonArray json = JsonParser.parseString(gson.toJson(sd.getData())).getAsJsonArray();
 		HashMap<String, Object> set = new HashMap<>();
 		set.put("json", json.toString());
-		HashMap<String, Object> wherea = new HashMap<>();
-		wherea.put("ars_id", sd.getId());
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getQueryFactory().doUpdate("ars", set, wherea), 6L);
+		HashMap<String, Object> whereA = new HashMap<>();
+		whereA.put("ars_id", sd.getId());
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getQueryFactory().doUpdate("ars", set, whereA), 6L);
 	}
 
 	/**
@@ -131,14 +131,14 @@ public class TARDISARSMethods {
 	 */
 	private String[][] sliceGrid(String[][] layer, int x, int z) {
 		String[][] slice = new String[5][5];
-		int indexx = 0, indexz = 0;
+		int indexX = 0, indexZ = 0;
 		for (int xx = x; xx < (x + 5); xx++) {
 			for (int zz = z; zz < (z + 5); zz++) {
-				slice[indexx][indexz] = layer[xx][zz];
-				indexz++;
+				slice[indexX][indexZ] = layer[xx][zz];
+				indexZ++;
 			}
-			indexz = 0;
-			indexx++;
+			indexZ = 0;
+			indexX++;
 		}
 		return slice;
 	}
@@ -234,18 +234,18 @@ public class TARDISARSMethods {
 		String[][][] grid = md.getData();
 		int yy = md.getY();
 		int[] coords = getCoords(slot, md);
-		int newx = coords[0];
-		int newz = coords[1];
+		int newX = coords[0];
+		int newZ = coords[1];
 		if (material.equals("SANDSTONE")) {
 			if (yy < 2) {
-				grid[yy + 1][newx][newz] = material;
+				grid[yy + 1][newX][newZ] = material;
 			}
 		} else if (material.equals("MOSSY_COBBLESTONE")) {
 			if (yy > 0) {
-				grid[yy - 1][newx][newz] = material;
+				grid[yy - 1][newX][newZ] = material;
 			}
 		}
-		grid[yy][newx][newz] = material;
+		grid[yy][newX][newZ] = material;
 		md.setData(grid);
 		map_data.put(uuid, md);
 	}
@@ -414,17 +414,17 @@ public class TARDISARSMethods {
 		String[][][] grid = data.getData();
 		String[][] layer = grid[ul];
 		String[][] map = sliceGrid(layer, ue, us);
-		int indexx = 0, indexz = 0;
+		int indexX = 0, indexZ = 0;
 		for (int i = 4; i < 9; i++) {
 			for (int j = 0; j < 5; j++) {
 				int slot = i + (j * 9);
-				Material material = Material.valueOf(map[indexx][indexz]);
-				String name = TARDISARS.ARSFor(map[indexx][indexz]).getDescriptiveName();
+				Material material = Material.valueOf(map[indexX][indexZ]);
+				String name = TARDISARS.ARSFor(map[indexX][indexZ]).getDescriptiveName();
 				setSlot(view, slot, material, name, uuid, false);
-				indexz++;
+				indexZ++;
 			}
-			indexz = 0;
-			indexx++;
+			indexZ = 0;
+			indexX++;
 		}
 	}
 
@@ -507,12 +507,12 @@ public class TARDISARSMethods {
 			}
 		}
 		for (Map.Entry<String, Integer> blocks : item_counts.entrySet()) {
-			HashMap<String, Object> wherec = new HashMap<>();
-			wherec.put("tardis_id", id);
-			wherec.put("block_data", blocks.getKey());
-			ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
+			HashMap<String, Object> whereC = new HashMap<>();
+			whereC.put("tardis_id", id);
+			whereC.put("block_data", blocks.getKey());
+			ResultSetCondenser rsc = new ResultSetCondenser(plugin, whereC);
 			if (rsc.resultSet()) {
-				if (rsc.getBlock_count() < blocks.getValue()) {
+				if (rsc.getBlockCount() < blocks.getValue()) {
 					hasRequired = false;
 				}
 			} else {
@@ -528,7 +528,7 @@ public class TARDISARSMethods {
 		where.put("uuid", uuid);
 		ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
 		if (rs.resultSet()) {
-			id = rs.getTardis_id();
+			id = rs.getTardisId();
 		}
 		return id;
 	}

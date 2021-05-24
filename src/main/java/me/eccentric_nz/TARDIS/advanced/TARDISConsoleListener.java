@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.tardis.database.resultset.*;
@@ -49,10 +49,10 @@ import java.util.UUID;
  */
 public class TARDISConsoleListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Material> onlythese = new ArrayList<>();
 
-	public TARDISConsoleListener(TARDIS plugin) {
+	public TARDISConsoleListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		for (DiskCircuit dc : DiskCircuit.values()) {
 			if (!onlythese.contains(dc.getMaterial())) {
@@ -89,7 +89,7 @@ public class TARDISConsoleListener implements Listener {
 						BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
 						b.setBlockData(mushroom);
 					}
-					int id = rsc.getTardis_id();
+					int id = rsc.getTardisId();
 					// determine key item
 					ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
 					String key;

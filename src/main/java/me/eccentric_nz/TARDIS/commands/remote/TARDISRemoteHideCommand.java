@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.remote;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisPreset;
@@ -38,9 +38,9 @@ import java.util.UUID;
  */
 class TARDISRemoteHideCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISRemoteHideCommand(TARDIS plugin) {
+	TARDISRemoteHideCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -40,9 +40,9 @@ import java.util.HashMap;
  */
 public class TARDISAtmosphericExcitation {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISAtmosphericExcitation(TARDIS plugin) {
+	public TARDISAtmosphericExcitation(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

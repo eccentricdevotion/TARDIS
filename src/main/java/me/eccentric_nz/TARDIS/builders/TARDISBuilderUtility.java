@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import org.bukkit.Material;
@@ -34,23 +34,23 @@ public class TARDISBuilderUtility {
 		// remember the door location
 		String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
 		String doorStr = world.getBlockAt(x, y, z).getLocation().toString();
-		TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
+		TARDISPlugin.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisId());
 		// should insert the door when tardis is first made, and then update location there after!
 		HashMap<String, Object> whered = new HashMap<>();
 		whered.put("door_type", 0);
-		whered.put("tardis_id", bd.getTardisID());
-		ResultSetDoors rsd = new ResultSetDoors(TARDIS.plugin, whered, false);
+		whered.put("tardis_id", bd.getTardisId());
+		ResultSetDoors rsd = new ResultSetDoors(TARDISPlugin.plugin, whered, false);
 		HashMap<String, Object> setd = new HashMap<>();
 		setd.put("door_location", doorloc);
 		setd.put("door_direction", bd.getDirection().toString());
 		if (rsd.resultSet()) {
 			HashMap<String, Object> whereid = new HashMap<>();
-			whereid.put("door_id", rsd.getDoor_id());
-			TARDIS.plugin.getQueryFactory().doUpdate("doors", setd, whereid);
+			whereid.put("door_id", rsd.getDoorId());
+			TARDISPlugin.plugin.getQueryFactory().doUpdate("doors", setd, whereid);
 		} else {
-			setd.put("tardis_id", bd.getTardisID());
+			setd.put("tardis_id", bd.getTardisId());
 			setd.put("door_type", 0);
-			TARDIS.plugin.getQueryFactory().doInsert("doors", setd);
+			TARDISPlugin.plugin.getQueryFactory().doInsert("doors", setd);
 		}
 	}
 

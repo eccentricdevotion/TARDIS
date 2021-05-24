@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.api.event.TARDISDesktopThemeEvent;
@@ -28,7 +28,7 @@ import me.eccentric_nz.tardis.builders.TARDISTIPSData;
 import me.eccentric_nz.tardis.builders.TARDISTimeRotor;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.tardis.database.data.Archive;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.ConsoleSize;
 import me.eccentric_nz.tardis.enumeration.Schematic;
@@ -62,7 +62,7 @@ import java.util.*;
  */
 public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final UUID uuid;
 	private final TARDISUpgradeData tud;
 	private final List<Block> lampblocks = new ArrayList<>();
@@ -104,7 +104,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 	private Location ender = null;
 	private Archive archive;
 
-	TARDISThemeRepairRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud, boolean clean) {
+	TARDISThemeRepairRunnable(TARDISPlugin plugin, UUID uuid, TARDISUpgradeData tud, boolean clean) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		this.tud = tud;
@@ -149,7 +149,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 				// get JSON
 				obj = TARDISSchematicGZip.unzip(path);
 			} else {
-				obj = archive.getJSON();
+				obj = archive.getJson();
 			}
 			// get dimensions
 			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
@@ -164,9 +164,9 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 				// ?
 				return;
 			}
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			slot = tardis.getTIPS();
-			id = tardis.getTardis_id();
+			id = tardis.getTardisId();
 			Chunk chunk = TARDISStaticLocationGetters.getChunk(tardis.getChunk());
 			if (tud.getPrevious().getPermission().equals("ender")) {
 				// remove ender crystal
@@ -201,7 +201,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 				startx = pos.getCentreX();
 				startz = pos.getCentreZ();
 			} else {
-				int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+				int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
 				startx = gsl[0];
 				startz = gsl[2];
 			}
@@ -335,7 +335,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 				int amount = 0;
 				for (Map.Entry<String, Integer> entry : c_data.getBlockIDCount().entrySet()) {
 					HashMap<String, Object> whered = new HashMap<>();
-					whered.put("tardis_id", c_data.getTardis_id());
+					whered.put("tardis_id", c_data.getTardisId());
 					whered.put("block_data", entry.getKey());
 					plugin.getQueryFactory().alterCondenserBlockCount(entry.getValue(), whered);
 					amount += entry.getValue() * plugin.getCondensables().get(entry.getKey());

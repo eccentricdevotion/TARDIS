@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.utility;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -31,10 +31,10 @@ import java.net.URLConnection;
 
 public class TARDISUpdateChecker implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final CommandSender sender;
 
-	public TARDISUpdateChecker(TARDIS plugin, CommandSender sender) {
+	public TARDISUpdateChecker(TARDISPlugin plugin, CommandSender sender) {
 		this.plugin = plugin;
 		this.sender = sender;
 	}

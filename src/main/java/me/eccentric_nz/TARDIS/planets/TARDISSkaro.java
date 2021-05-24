@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISChecker;
 import org.bukkit.ChatColor;
@@ -30,9 +30,9 @@ import org.bukkit.plugin.Plugin;
  */
 public class TARDISSkaro {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSkaro(TARDIS plugin) {
+	public TARDISSkaro(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

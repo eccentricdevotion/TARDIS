@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.companionGUI.TARDISCompanionAddInventory;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Advancement;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -40,9 +40,9 @@ import java.util.UUID;
  */
 class TARDISAddCompanionCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISAddCompanionCommand(TARDIS plugin) {
+	TARDISAddCompanionCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -71,8 +71,8 @@ class TARDISAddCompanionCommand {
 				TARDISMessage.send(player, "NO_TARDIS");
 				return true;
 			} else {
-				Tardis tardis = rs.getTardis();
-				id = tardis.getTardis_id();
+				TARDIS tardis = rs.getTardis();
+				id = tardis.getTardisId();
 				comps = tardis.getCompanions();
 				data = tardis.getChunk();
 				owner = tardis.getOwner();
@@ -88,24 +88,24 @@ class TARDISAddCompanionCommand {
 				HashMap<String, Object> tid = new HashMap<>();
 				HashMap<String, Object> set = new HashMap<>();
 				if (addAll) {
-					tid.put("tardis_id", id);
+					tid.put("tardisID", id);
 					set.put("companions", "everyone");
 				} else {
 					// get player from name
-					UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
-					tid.put("tardis_id", id);
+					UUID offlineUUID = plugin.getServer().getOfflinePlayer(player.getUniqueId()).getUniqueId();
+					tid.put("tardisID", id);
 					if (comps != null && !comps.isEmpty() && !comps.equalsIgnoreCase("everyone")) {
 						// add to the list
-						String newList = comps + ":" + oluuid;
+						String newList = comps + ":" + offlineUUID;
 						set.put("companions", newList);
 					} else {
 						// make a list
-						set.put("companions", oluuid.toString());
+						set.put("companions", offlineUUID.toString());
 					}
-					// are we doing an achievement?
-					if (plugin.getAchievementConfig().getBoolean("friends.enabled")) {
-						TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.FRIENDS, 1);
-						taf.doAchievement(1);
+					// are we doing an advancement?
+					if (plugin.getAdvancementConfig().getBoolean("friends.enabled")) {
+						TARDISAdvancementFactory taf = new TARDISAdvancementFactory(plugin, player, Advancement.FRIENDS, 1);
+						taf.doAdvancement(1);
 					}
 				}
 				// if using WorldGuard, add them to the region membership

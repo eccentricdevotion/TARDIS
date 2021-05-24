@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -30,10 +30,10 @@ import java.util.Set;
  */
 public class TARDISCommandHelper {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> notThese = Arrays.asList("aliases", "description", "usage", "permission", "permission-message");
 
-	public TARDISCommandHelper(TARDIS plugin) {
+	public TARDISCommandHelper(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

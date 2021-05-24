@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPaperBag;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -33,12 +33,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class TARDISPaperBagListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISPaperBagListener(TARDIS plugin) {
+	public TARDISPaperBagListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -54,6 +55,7 @@ public class TARDISPaperBagListener implements Listener {
 				ItemStack is = event.getCurrentItem();
 				if (is != null && is.getType().equals(Material.PAPER) && is.hasItemMeta()) {
 					ItemMeta im = is.getItemMeta();
+					assert im != null;
 					if (im.hasDisplayName() && im.getDisplayName().equals("Paper Bag")) {
 						if (event.isRightClick()) {
 							event.setCancelled(true);
@@ -63,6 +65,7 @@ public class TARDISPaperBagListener implements Listener {
 								// create a random flavoured Jelly Baby
 								ItemStack jb = new ItemStack(Material.MELON_SLICE, 1);
 								ItemMeta jim = jb.getItemMeta();
+								assert jim != null;
 								jim.setDisplayName(flavour + " Jelly Baby");
 								jb.setItemMeta(jim);
 								int slot = inv.firstEmpty();
@@ -101,7 +104,7 @@ public class TARDISPaperBagListener implements Listener {
 								// get current paper bag contents
 								ResultSetPaperBag rs = new ResultSetPaperBag(plugin, player.getUniqueId());
 								if (rs.resultSet()) {
-									bagId = rs.getPaperBagID();
+									bagId = rs.getPaperBagId();
 									flavour1 = rs.getFlavour1();
 									flavour2 = rs.getFlavour2();
 									flavour3 = rs.getFlavour3();
@@ -189,7 +192,7 @@ public class TARDISPaperBagListener implements Listener {
 									if (entry.getValue() == 0) {
 										inv.clear(entry.getKey());
 									} else {
-										inv.getItem(entry.getKey()).setAmount(entry.getValue());
+										Objects.requireNonNull(inv.getItem(entry.getKey())).setAmount(entry.getValue());
 									}
 								}
 								player.updateInventory();

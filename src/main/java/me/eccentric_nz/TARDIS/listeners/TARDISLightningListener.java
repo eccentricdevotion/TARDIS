@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import org.bukkit.Location;
@@ -38,9 +38,9 @@ import java.util.HashMap;
  */
 public class TARDISLightningListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISLightningListener(TARDIS plugin) {
+	public TARDISLightningListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -60,9 +60,9 @@ public class TARDISLightningListener implements Listener {
 			World strikeworld = l.getWorld();
 			ResultSetTardis rs = new ResultSetTardis(plugin, new HashMap<>(), "", true, 0);
 			if (rs.resultSet()) {
-				for (Tardis t : rs.getData()) {
+				for (TARDIS t : rs.getData()) {
 					boolean charging = !t.isRecharging();
-					int id = t.getTardis_id();
+					int id = t.getTardisId();
 					if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
 						return;
 					}
@@ -76,7 +76,7 @@ public class TARDISLightningListener implements Listener {
 							Location loc = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
 							// only recharge if the tardis is within range
 							if (plugin.getUtils().compareLocations(loc, loc)) {
-								int amount = plugin.getArtronConfig().getInt("lightning_recharge") + t.getArtron_level();
+								int amount = plugin.getArtronConfig().getInt("lightning_recharge") + t.getArtronLevel();
 								HashMap<String, Object> set = new HashMap<>();
 								set.put("artron_level", amount);
 								HashMap<String, Object> where = new HashMap<>();

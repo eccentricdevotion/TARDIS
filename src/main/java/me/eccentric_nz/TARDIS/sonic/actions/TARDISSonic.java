@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -66,7 +66,7 @@ public class TARDISSonic {
 		distance.add(Material.WARPED_FENCE_GATE);
 	}
 
-	public static void standardSonic(TARDIS plugin, Player player, long now) {
+	public static void standardSonic(TARDISPlugin plugin, Player player, long now) {
 		Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
 		Material blockType = targetBlock.getType();
 		if (distance.contains(blockType)) {
@@ -147,6 +147,6 @@ public class TARDISSonic {
 	}
 
 	private static void powerSurroundingBlock(Block block) {
-		TARDIS.plugin.getTardisHelper().setPowerableBlockInteract(block);
+		TARDISPlugin.plugin.getTardisHelper().setPowerableBlockInteract(block);
 	}
 }

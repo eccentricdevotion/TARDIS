@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.arch.TARDISArchPersister;
 import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
 import me.eccentric_nz.tardis.artron.TARDISLampToggler;
 import me.eccentric_nz.tardis.artron.TARDISPoliceBoxLampToggler;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.PRESET;
@@ -41,9 +41,9 @@ import java.util.UUID;
  */
 public class TARDISQuitListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISQuitListener(TARDIS plugin) {
+	public TARDISQuitListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -55,9 +55,9 @@ public class TARDISQuitListener implements Listener {
 		wherep.put("uuid", uuid.toString());
 		ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			HashMap<String, Object> wherecl = new HashMap<>();
-			wherecl.put("tardis_id", tardis.getTardis_id());
+			wherecl.put("tardis_id", tardis.getTardisId());
 			ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
 			if (rsc.resultSet()) {
 				World w = rsc.getWorld();
@@ -69,16 +69,16 @@ public class TARDISQuitListener implements Listener {
 			// power down tardis
 			if (plugin.getConfig().getBoolean("allow.power_down") && plugin.getConfig().getBoolean("allow.power_down_on_quit")) {
 				// check if powered on
-				if (tardis.isPowered_on()) {
+				if (tardis.isPowered()) {
 					// not if flying or uninitialised
-					int id = tardis.getTardis_id();
-					if (!tardis.isTardis_init() || isTravelling(id) || !tardis.isHandbrake_on()) {
+					int id = tardis.getTardisId();
+					if (!tardis.isTardisInit() || isTravelling(id) || !tardis.isHandbrakeOn()) {
 						return;
 					}
 					// power off
 					PRESET preset = tardis.getPreset();
 					boolean hidden = tardis.isHidden();
-					boolean lights = tardis.isLights_on();
+					boolean lightsOn = tardis.isLightsOn();
 					// police box lamp, delay it incase the tardis needs rebuilding
 					long delay = 1L;
 					// if hidden, rebuild
@@ -90,7 +90,7 @@ public class TARDISQuitListener implements Listener {
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
 					}
 					// if lights are on, turn them off
-					if (lights) {
+					if (lightsOn) {
 						new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().hasLanterns());
 					}
 					// if beacon is on turn it off

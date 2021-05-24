@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -43,7 +43,7 @@ public class TARDISSonicUpgradeListener implements Listener {
 	private final HashMap<String, String> upgrades = new HashMap<>();
 	private final HashMap<Integer, String> customModelData = new HashMap<>();
 
-	public TARDISSonicUpgradeListener(TARDIS plugin) {
+	public TARDISSonicUpgradeListener(TARDISPlugin plugin) {
 		String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
 		sonicMaterial = Material.valueOf(split[0]);
 		upgrades.put("Admin Upgrade", "admin");
@@ -160,7 +160,7 @@ public class TARDISSonicUpgradeListener implements Listener {
 				TARDISMessage.send(event.getView().getPlayer(), "REMOTE_KEY");
 			}
 		} else if (recipe instanceof SmithingRecipe) {
-			TARDIS.plugin.debug("SmithingRecipe");
+			TARDISPlugin.plugin.debug("SmithingRecipe");
 		}
 	}
 }

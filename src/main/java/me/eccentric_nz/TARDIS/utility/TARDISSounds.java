@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -30,7 +30,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISSounds {
 
-	private static float VOLUME = TARDIS.plugin.getConfig().getInt("preferences.sfx_volume") / 10.0F;
+	private static float VOLUME = TARDISPlugin.plugin.getConfig().getInt("preferences.sfx_volume") / 10.0F;
 
 	/**
 	 * Plays the interior hum sound upon tardis entry.
@@ -38,7 +38,7 @@ public class TARDISSounds {
 	 * @param p the player to play the sound to
 	 */
 	public static void playTARDISHum(Player p) {
-		ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, p.getUniqueId().toString());
+		ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDISPlugin.plugin, p.getUniqueId().toString());
 		boolean userSFX;
 		String hum;
 		if (rsp.resultSet()) {
@@ -92,7 +92,7 @@ public class TARDISSounds {
 	 * @param d The delay time
 	 */
 	public static void playTARDISSound(Player p, String s, long d) {
-		TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> p.playSound(p.getLocation(), s, VOLUME, 1.0f), d);
+		TARDISPlugin.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDISPlugin.plugin, () -> p.playSound(p.getLocation(), s, VOLUME, 1.0f), d);
 	}
 
 	public static void setVolume(float v) {

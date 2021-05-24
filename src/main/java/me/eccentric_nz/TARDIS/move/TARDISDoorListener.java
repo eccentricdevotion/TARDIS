@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.api.event.TARDISEnterEvent;
 import me.eccentric_nz.tardis.api.event.TARDISExitEvent;
@@ -46,10 +46,10 @@ import java.util.UUID;
 public class TARDISDoorListener {
 
 	public final float[][] adjustYaw = new float[4][4];
-	final TARDIS plugin;
+	final TARDISPlugin plugin;
 	private final int player_artron;
 
-	public TARDISDoorListener(TARDIS plugin) {
+	public TARDISDoorListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		player_artron = this.plugin.getArtronConfig().getInt("player");
 		// yaw adjustments if inner and outer door directions are different
@@ -290,21 +290,21 @@ public class TARDISDoorListener {
 	/**
 	 * Get door location data for teleport entry and exit of the tardis.
 	 *
-	 * @param doortype a reference to the door_type field in the doors table
+	 * @param doorType a reference to the door_type field in the doors table
 	 * @param id       the unique tardis identifier i the database
 	 * @return an instance of the TARDISDoorLocation data class
 	 */
-	public TARDISDoorLocation getDoor(int doortype, int id) {
+	public TARDISDoorLocation getDoor(int doorType, int id) {
 		TARDISDoorLocation tdl = new TARDISDoorLocation();
 		// get door location
 		HashMap<String, Object> wherei = new HashMap<>();
-		wherei.put("door_type", doortype);
+		wherei.put("door_type", doorType);
 		wherei.put("tardis_id", id);
 		ResultSetDoors rsd = new ResultSetDoors(plugin, wherei, false);
 		if (rsd.resultSet()) {
-			COMPASS d = rsd.getDoor_direction();
+			COMPASS d = rsd.getDoorDirection();
 			tdl.setD(d);
-			String doorLocStr = rsd.getDoor_location();
+			String doorLocStr = rsd.getDoorLocation();
 			World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
 			tdl.setW(cw);
 			Location tmp_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);

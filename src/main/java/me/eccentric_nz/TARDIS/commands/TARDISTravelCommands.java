@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.*;
 import me.eccentric_nz.tardis.flight.TARDISLand;
@@ -61,12 +61,12 @@ import java.util.regex.Pattern;
  */
 public class TARDISTravelCommands implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> BIOME_SUBS = new ArrayList<>();
 	private final List<String> mustUseAdvanced = Arrays.asList("area", "biome", "dest");
 	private final List<String> costs = Arrays.asList("random", "random_circuit", "travel", "comehere", "hide", "rebuild", "autonomous", "backdoor");
 
-	public TARDISTravelCommands(TARDIS plugin) {
+	public TARDISTravelCommands(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		for (Biome bi : Biome.values()) {
 			if (!bi.equals(Biome.THE_VOID)) {
@@ -125,8 +125,8 @@ public class TARDISTravelCommands implements CommandExecutor {
 					TARDISMessage.send(player, "NO_TARDIS");
 					return true;
 				}
-				Tardis tardis = rs.getTardis();
-				int id = tardis.getTardis_id();
+				TARDIS tardis = rs.getTardis();
+				int id = tardis.getTardisId();
 				if (args[0].equalsIgnoreCase("cancel")) {
 					if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
 						plugin.getTrackerKeeper().getHasDestination().remove(id);
@@ -209,9 +209,9 @@ public class TARDISTravelCommands implements CommandExecutor {
 					plugin.getPresetBuilder().buildPreset(bd);
 					return true;
 				}
-				int level = tardis.getArtron_level();
-				boolean powered = tardis.isPowered_on();
-				if (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+				int level = tardis.getArtronLevel();
+				boolean powered = tardis.isPowered();
+				if (!tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
 					TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
 					return true;
 				}
@@ -222,8 +222,8 @@ public class TARDISTravelCommands implements CommandExecutor {
 					TARDISMessage.send(player, "NOT_IN_TARDIS");
 					return true;
 				}
-				int tardis_id = rst.getTardis_id();
-				if (tardis_id != id) {
+				int tardisId = rst.getTardisId();
+				if (tardisId != id) {
 					TARDISMessage.send(player, "CMD_ONLY_TL");
 					return true;
 				}
@@ -408,7 +408,7 @@ public class TARDISTravelCommands implements CommandExecutor {
 						}
 						// check the to player's DND status
 						ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, requested.getUniqueId().toString());
-						if (rspp.resultSet() && rspp.isDND()) {
+						if (rspp.resultSet() && rspp.isDndOn()) {
 							TARDISMessage.send(player, "DND", args[0]);
 							return true;
 						}
@@ -882,7 +882,7 @@ public class TARDISTravelCommands implements CommandExecutor {
 			}
 			// check the to player's DND status
 			ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, saved.getUniqueId().toString());
-			if (rspp.resultSet() && rspp.isDND()) {
+			if (rspp.resultSet() && rspp.isDndOn()) {
 				TARDISMessage.send(player, "DND", p);
 				return true;
 			}

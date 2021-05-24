@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -25,9 +25,9 @@ import java.util.HashMap;
 
 public class TARDISHandlesRemoveCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISHandlesRemoveCommand(TARDIS plugin) {
+	public TARDISHandlesRemoveCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -35,7 +35,7 @@ public class TARDISHandlesRemoveCommand {
 		ResultSetTardisID rs = new ResultSetTardisID(plugin);
 		if (rs.fromUUID(player.getUniqueId().toString())) {
 			HashMap<String, Object> whereh = new HashMap<>();
-			whereh.put("tardis_id", rs.getTardis_id());
+			whereh.put("tardis_id", rs.getTardisId());
 			whereh.put("type", 26);
 			plugin.getQueryFactory().doDelete("controls", whereh);
 			TARDISMessage.send(player, "HANDLES_DELETED");

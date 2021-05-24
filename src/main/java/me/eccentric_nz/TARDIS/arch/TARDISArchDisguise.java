@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.entity.Player;
 
 public class TARDISArchDisguise {
 
 	public static void disguise(Player player, String name) {
-		TARDIS.plugin.getTardisHelper().disguise(player, name);
+		TARDISPlugin.plugin.getTardisHelper().disguise(player, name);
 	}
 
 	public static void undisguise(Player player) {
-		TARDIS.plugin.getTardisHelper().reset(player);
+		TARDISPlugin.plugin.getTardisHelper().reset(player);
 	}
 }

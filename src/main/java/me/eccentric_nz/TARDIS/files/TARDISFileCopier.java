@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.ars.TARDISARS;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 
@@ -31,9 +31,9 @@ import java.util.Locale;
  */
 public class TARDISFileCopier {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISFileCopier(TARDIS plugin) {
+	public TARDISFileCopier(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

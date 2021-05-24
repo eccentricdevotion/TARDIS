@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -29,7 +29,7 @@ public class TARDISZeroRoomRunnable implements Runnable {
 
 	private final World zero_world;
 
-	public TARDISZeroRoomRunnable(TARDIS plugin) {
+	public TARDISZeroRoomRunnable(TARDISPlugin plugin) {
 		zero_world = plugin.getServer().getWorld("TARDIS_Zero_Room");
 	}
 

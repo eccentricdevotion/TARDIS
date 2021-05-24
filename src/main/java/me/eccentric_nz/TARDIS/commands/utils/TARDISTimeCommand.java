@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.enumeration.Time;
@@ -36,10 +36,10 @@ import java.util.List;
 
 public class TARDISTimeCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("day", "morning", "noon", "night", "midnight", "1AM", "2AM", "3AM", "4AM", "5AM", "6AM", "7AM", "8AM", "9AM", "10AM", "11AM", "12AM", "1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM", "9PM", "10PM", "11PM", "12PM");
 
-	public TARDISTimeCommand(TARDIS plugin) {
+	public TARDISTimeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

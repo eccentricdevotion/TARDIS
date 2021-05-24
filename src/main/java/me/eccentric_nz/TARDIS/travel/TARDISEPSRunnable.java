@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
@@ -39,7 +39,7 @@ import java.util.UUID;
  */
 public class TARDISEPSRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String message;
 	private final Player tl;
 	private final List<UUID> players;
@@ -47,7 +47,7 @@ public class TARDISEPSRunnable implements Runnable {
 	private final String eps;
 	private final String creeper;
 
-	public TARDISEPSRunnable(TARDIS plugin, String message, Player tl, List<UUID> players, int id, String eps, String creeper) {
+	public TARDISEPSRunnable(TARDISPlugin plugin, String message, Player tl, List<UUID> players, int id, String eps, String creeper) {
 		this.plugin = plugin;
 		this.message = message;
 		this.tl = tl;
@@ -131,8 +131,8 @@ public class TARDISEPSRunnable implements Runnable {
 			if (rsd.resultSet()) {
 				double x;
 				double z;
-				Location location = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location());
-				switch (rsd.getDoor_direction()) {
+				Location location = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoorLocation());
+				switch (rsd.getDoorDirection()) {
 					case NORTH -> {
 						x = 0.5;
 						z = -1.5;

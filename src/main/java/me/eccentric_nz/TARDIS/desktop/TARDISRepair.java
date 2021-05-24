@@ -18,11 +18,11 @@ package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -48,10 +48,10 @@ import java.util.UUID;
  */
 public class TARDISRepair {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 
-	public TARDISRepair(TARDIS plugin, Player player) {
+	public TARDISRepair(TARDISPlugin plugin, Player player) {
 		this.plugin = plugin;
 		this.player = player;
 	}
@@ -63,7 +63,7 @@ public class TARDISRepair {
 		where.put("uuid", uuid.toString());
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			String perm = tardis.getSchematic().getPermission();
 			boolean hasLava = tud.getPrevious().getPermission().equals("master") || tud.getPrevious().getPermission().equals("delta");
 			if (hasLava) {
@@ -111,9 +111,9 @@ public class TARDISRepair {
 			where.put("uuid", uuid);
 			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
 			if (rs.resultSet()) {
-				Tardis tardis = rs.getTardis();
+				TARDIS tardis = rs.getTardis();
 				int slot = tardis.getTIPS();
-				int id = tardis.getTardis_id();
+				int id = tardis.getTardisId();
 				int startx, startz;
 				if (slot != -1) { // default world - use TIPS
 					TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
@@ -121,7 +121,7 @@ public class TARDISRepair {
 					startx = pos.getCentreX();
 					startz = pos.getCentreZ();
 				} else {
-					int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+					int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
 					startx = gsl[0];
 					startz = gsl[2];
 				}
@@ -220,9 +220,9 @@ public class TARDISRepair {
 					wherec.put("block_data", map.getKey());
 					ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
 					if (rsc.resultSet()) {
-						if (rsc.getBlock_count() < map.getValue()) {
+						if (rsc.getBlockCount() < map.getValue()) {
 							hasRequired = false;
-							int diff = map.getValue() - rsc.getBlock_count();
+							int diff = map.getValue() - rsc.getBlockCount();
 							TARDISMessage.send(player, "CONDENSE_MORE", String.format("%d", diff), Material.getMaterial(map.getKey()).toString());
 						}
 					} else {
@@ -236,7 +236,7 @@ public class TARDISRepair {
 				}
 				TARDISCondenserData c_data = new TARDISCondenserData();
 				c_data.setBlockIDCount(blockTypeCount);
-				c_data.setTardis_id(id);
+				c_data.setTardisId(id);
 				plugin.getGeneralKeeper().getRoomCondenserData().put(player.getUniqueId(), c_data);
 				return true;
 			}
@@ -253,7 +253,7 @@ public class TARDISRepair {
 		where.put("uuid", uuid);
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			String perm = tardis.getSchematic().getPermission();
 			if (perm.equals("archive")) {
 				// try 1
@@ -262,7 +262,7 @@ public class TARDISRepair {
 				wherea.put("use", 1);
 				ResultSetArchive rsa = new ResultSetArchive(plugin, wherea);
 				if (rsa.resultSet()) {
-					obj = rsa.getArchive().getJSON();
+					obj = rsa.getArchive().getJson();
 				} else {
 					// try 2
 					HashMap<String, Object> wherea2 = new HashMap<>();
@@ -270,7 +270,7 @@ public class TARDISRepair {
 					wherea2.put("use", 2);
 					ResultSetArchive rsa2 = new ResultSetArchive(plugin, wherea2);
 					if (rsa2.resultSet()) {
-						obj = rsa2.getArchive().getJSON();
+						obj = rsa2.getArchive().getJson();
 						// set as active
 						new ArchiveUpdate(plugin, uuid, rsa2.getArchive().getName()).setInUse();
 					} else {
@@ -280,7 +280,7 @@ public class TARDISRepair {
 						wherea3.put("use", 0);
 						ResultSetArchive rsa3 = new ResultSetArchive(plugin, wherea3);
 						if (rsa3.resultSet()) {
-							obj = rsa2.getArchive().getJSON();
+							obj = rsa2.getArchive().getJson();
 							// set as active
 							new ArchiveUpdate(plugin, uuid, rsa3.getArchive().getName()).setInUse();
 						}

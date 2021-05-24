@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUISonicPreferences;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -34,10 +34,10 @@ import java.util.List;
  */
 public class TARDISSonicMenuInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ItemStack[] menu;
 
-	public TARDISSonicMenuInventory(TARDIS plugin) {
+	public TARDISSonicMenuInventory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		menu = getItemStack();
 	}

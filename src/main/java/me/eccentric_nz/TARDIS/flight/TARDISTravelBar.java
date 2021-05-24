@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
@@ -29,10 +29,10 @@ import org.bukkit.entity.Player;
  */
 class TARDISTravelBar {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private int taskID;
 
-	TARDISTravelBar(TARDIS plugin) {
+	TARDISTravelBar(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

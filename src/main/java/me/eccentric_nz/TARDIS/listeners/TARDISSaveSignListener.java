@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.database.resultset.*;
@@ -54,9 +54,9 @@ import java.util.UUID;
  */
 public class TARDISSaveSignListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSaveSignListener(TARDIS plugin) {
+	public TARDISSaveSignListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}
@@ -87,7 +87,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 				ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
 				if (rst.resultSet()) {
 					allow = true;
-					id = rst.getTardis_id();
+					id = rst.getTardisId();
 				}
 			}
 			if (!allow) {
@@ -266,7 +266,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 						// get player's tardis id
 						ResultSetTardisID rstid = new ResultSetTardisID(plugin);
 						if (rstid.fromUUID(uuid.toString())) {
-							ownId = rstid.getTardis_id();
+							ownId = rstid.getTardisId();
 						}
 					} else {
 						// get id of tardis player is in
@@ -336,7 +336,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 			wheres.put("uuid", uuid.toString());
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
 			if (rst.resultSet()) {
-				int id = rst.getTardis_id();
+				int id = rst.getTardisId();
 				ItemStack[] stack = event.getInventory().getContents();
 				int start = (isPageTwo) ? 0 : 1;
 				for (int i = start; i < 45; i++) {

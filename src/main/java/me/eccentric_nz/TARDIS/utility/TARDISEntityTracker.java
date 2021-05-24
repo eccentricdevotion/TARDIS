@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.control.TARDISScanner;
 import me.eccentric_nz.tardischunkgenerator.disguise.*;
 import org.bukkit.Bukkit;
@@ -32,9 +32,9 @@ import java.util.UUID;
  */
 public class TARDISEntityTracker {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISEntityTracker(TARDIS plugin) {
+	public TARDISEntityTracker(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

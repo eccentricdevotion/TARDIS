@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.custommodeldata.TARDISSeedModel;
 import me.eccentric_nz.tardis.enumeration.Consoles;
@@ -47,11 +47,11 @@ import java.util.*;
  */
 public class TARDISRecipeCommands implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, String> recipeItems = new HashMap<>();
 	private final HashMap<String, Material> t = new HashMap<>();
 
-	public TARDISRecipeCommands(TARDIS plugin) {
+	public TARDISRecipeCommands(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		recipeItems.put("seed", "");
 		recipeItems.put("tardis", "");

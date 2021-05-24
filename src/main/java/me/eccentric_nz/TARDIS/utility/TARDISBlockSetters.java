@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -62,8 +62,8 @@ public class TARDISBlockSetters {
 			}
 			default -> b.setBlockData(bd);
 		}
-		if (TARDIS.plugin.getBlockLogger().isLogging()) {
-			TARDIS.plugin.getBlockLogger().logPlacement(b);
+		if (TARDISPlugin.plugin.getBlockLogger().isLogging()) {
+			TARDISPlugin.plugin.getBlockLogger().logPlacement(b);
 		}
 	}
 
@@ -97,8 +97,8 @@ public class TARDISBlockSetters {
 			}
 			default -> b.setBlockData(data);
 		}
-		if (TARDIS.plugin.getBlockLogger().isLogging()) {
-			TARDIS.plugin.getBlockLogger().logPlacement(b);
+		if (TARDISPlugin.plugin.getBlockLogger().isLogging()) {
+			TARDISPlugin.plugin.getBlockLogger().logPlacement(b);
 		}
 	}
 
@@ -133,8 +133,8 @@ public class TARDISBlockSetters {
 			}
 			default -> b.setBlockData(blockData);
 		}
-		if (TARDIS.plugin.getBlockLogger().isLogging()) {
-			TARDIS.plugin.getBlockLogger().logPlacement(b);
+		if (TARDISPlugin.plugin.getBlockLogger().isLogging()) {
+			TARDISPlugin.plugin.getBlockLogger().logPlacement(b);
 		}
 	}
 
@@ -157,8 +157,8 @@ public class TARDISBlockSetters {
 		set.put("location", l);
 		set.put("data", b.getBlockData().getAsString());
 		set.put("police_box", 1);
-		TARDIS.plugin.getQueryFactory().doInsert("blocks", set);
-		TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
+		TARDISPlugin.plugin.getQueryFactory().doInsert("blocks", set);
+		TARDISPlugin.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
 		// set the block
 		b.setBlockData(data);
 	}
@@ -182,8 +182,8 @@ public class TARDISBlockSetters {
 		set.put("location", l);
 		set.put("data", b.getBlockData().getAsString());
 		set.put("police_box", 1);
-		TARDIS.plugin.getQueryFactory().doInsert("blocks", set);
-		TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
+		TARDISPlugin.plugin.getQueryFactory().doInsert("blocks", set);
+		TARDISPlugin.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
 		// set the block
 		b.setBlockData(material.createBlockData());
 	}
@@ -205,7 +205,7 @@ public class TARDISBlockSetters {
 		BlockData data = b.getBlockData();
 		set.put("data", data.getAsString());
 		set.put("police_box", type);
-		TARDIS.plugin.getQueryFactory().doInsert("blocks", set);
+		TARDISPlugin.plugin.getQueryFactory().doInsert("blocks", set);
 		// set the block
 		b.setBlockData(m.createBlockData(), true);
 	}
@@ -223,7 +223,7 @@ public class TARDISBlockSetters {
 	 */
 	public static void setUnderDoorBlock(World w, int x, int y, int z, int id, boolean portal) {
 		// List of blocks that a door cannot be placed on
-		List<String> ids = TARDIS.plugin.getBlocksConfig().getStringList("under_door_blocks");
+		List<String> ids = TARDISPlugin.plugin.getBlocksConfig().getStringList("under_door_blocks");
 		if (portal) {
 			ids.remove("CHEST");
 		}
@@ -237,8 +237,8 @@ public class TARDISBlockSetters {
 			set.put("location", l);
 			set.put("data", blockData.getAsString());
 			set.put("police_box", 1);
-			TARDIS.plugin.getQueryFactory().doInsert("blocks", set);
-			TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
+			TARDISPlugin.plugin.getQueryFactory().doInsert("blocks", set);
+			TARDISPlugin.plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
 			// set the block
 			b.setBlockData(Material.BARRIER.createBlockData());
 		}

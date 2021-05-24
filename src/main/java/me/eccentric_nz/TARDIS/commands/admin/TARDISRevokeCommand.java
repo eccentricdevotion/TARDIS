@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlueprint;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
@@ -10,9 +10,9 @@ import java.util.HashMap;
 
 public class TARDISRevokeCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISRevokeCommand(TARDIS plugin) {
+	public TARDISRevokeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

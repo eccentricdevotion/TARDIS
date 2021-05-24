@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility.recalculators;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
@@ -27,7 +27,7 @@ public class TARDISBedRecalculator {
 	public BlockData recalculate(BlockData data, COMPASS d) {
 		Directional bed = (Directional) data;
 		switch (bed.getFacing()) {
-			case WEST -> bed.setFacing(BlockFace.valueOf(TARDIS.plugin.getPresetBuilder().getOppositeFace(d).toString()));
+			case WEST -> bed.setFacing(BlockFace.valueOf(TARDISPlugin.plugin.getPresetBuilder().getOppositeFace(d).toString()));
 			case EAST -> bed.setFacing(BlockFace.valueOf(d.toString()));
 			case NORTH ->
 					// anticlockwise 90°

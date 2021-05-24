@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.siegemode.TARDISSiegeMode;
@@ -30,12 +30,12 @@ import java.util.UUID;
  */
 public class TARDISSiegeButton {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 	private final boolean powered;
 	private final int id;
 
-	public TARDISSiegeButton(TARDIS plugin, Player player, boolean powered, int id) {
+	public TARDISSiegeButton(TARDISPlugin plugin, Player player, boolean powered, int id) {
 		this.plugin = plugin;
 		this.player = player;
 		this.powered = powered;

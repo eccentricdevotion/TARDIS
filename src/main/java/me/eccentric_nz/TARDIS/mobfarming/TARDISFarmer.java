@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.mobfarming;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
 import me.eccentric_nz.tardis.database.data.Farm;
 import me.eccentric_nz.tardis.database.resultset.ResultSetFarming;
 import me.eccentric_nz.tardis.enumeration.Advancement;
@@ -46,9 +46,9 @@ import java.util.List;
  */
 public class TARDISFarmer {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISFarmer(TARDIS plugin) {
+	public TARDISFarmer(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -97,10 +97,10 @@ public class TARDISFarmer {
 			List<TARDISBee> bees = new ArrayList<>();
 			List<TARDISVillager> villagers = new ArrayList<>();
 			List<TARDISPanda> pandas = new ArrayList<>();
-			// are we doing an achievement?
-			TARDISAchievementFactory taf = null;
-			if (plugin.getAchievementConfig().getBoolean("farm.enabled")) {
-				taf = new TARDISAchievementFactory(plugin, p, Advancement.FARM, 14);
+			// are we doing an advancement?
+			TARDISAdvancementFactory taf = null;
+			if (plugin.getAdvancementConfig().getBoolean("farm.enabled")) {
+				taf = new TARDISAdvancementFactory(plugin, p, Advancement.FARM, 14);
 			}
 			// count total farm mobs
 			int farmtotal = 0;
@@ -143,7 +143,7 @@ public class TARDISFarmer {
 								entity.remove();
 							}
 							if (taf != null) {
-								taf.doAchievement("BEE");
+								taf.doAdvancement("BEE");
 							}
 							break;
 						case CHICKEN:
@@ -156,7 +156,7 @@ public class TARDISFarmer {
 								entity.remove();
 							}
 							if (taf != null) {
-								taf.doAchievement("CHICKEN");
+								taf.doAdvancement("CHICKEN");
 							}
 							farmtotal++;
 							break;
@@ -170,7 +170,7 @@ public class TARDISFarmer {
 								entity.remove();
 							}
 							if (taf != null) {
-								taf.doAchievement("COW");
+								taf.doAdvancement("COW");
 							}
 							farmtotal++;
 							break;
@@ -226,7 +226,7 @@ public class TARDISFarmer {
 								entity.remove();
 							}
 							if (taf != null) {
-								taf.doAchievement("HORSE");
+								taf.doAdvancement("HORSE");
 							}
 							break;
 						case LLAMA:
@@ -275,7 +275,7 @@ public class TARDISFarmer {
 								entity.remove();
 							}
 							if (taf != null) {
-								taf.doAchievement("LLAMA");
+								taf.doAdvancement("LLAMA");
 							}
 							break;
 						case PARROT:
@@ -310,7 +310,7 @@ public class TARDISFarmer {
 								entity.remove();
 							}
 							if (taf != null) {
-								taf.doAchievement("PARROT");
+								taf.doAdvancement("PARROT");
 							}
 							break;
 						case PANDA:
@@ -325,7 +325,7 @@ public class TARDISFarmer {
 								entity.remove();
 							}
 							if (taf != null) {
-								taf.doAchievement("PANDA");
+								taf.doAdvancement("PANDA");
 							}
 							break;
 						case PIG:
@@ -341,7 +341,7 @@ public class TARDISFarmer {
 								entity.remove();
 							}
 							if (taf != null) {
-								taf.doAchievement("PIG");
+								taf.doAdvancement("PIG");
 							}
 							farmtotal++;
 							break;
@@ -355,7 +355,7 @@ public class TARDISFarmer {
 								entity.remove();
 							}
 							if (taf != null) {
-								taf.doAchievement("POLAR_BEAR");
+								taf.doAdvancement("POLAR_BEAR");
 							}
 							break;
 						case RABBIT:
@@ -370,7 +370,7 @@ public class TARDISFarmer {
 								entity.remove();
 							}
 							if (taf != null) {
-								taf.doAchievement("RABBIT");
+								taf.doAdvancement("RABBIT");
 							}
 							break;
 						case SHEEP:
@@ -384,7 +384,7 @@ public class TARDISFarmer {
 								entity.remove();
 							}
 							if (taf != null) {
-								taf.doAchievement("SHEEP");
+								taf.doAdvancement("SHEEP");
 							}
 							farmtotal++;
 							break;
@@ -399,7 +399,7 @@ public class TARDISFarmer {
 								entity.remove();
 							}
 							if (taf != null) {
-								taf.doAchievement("MUSHROOM_COW");
+								taf.doAdvancement("MUSHROOM_COW");
 							}
 							farmtotal++;
 							break;

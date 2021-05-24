@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.FlightMode;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -56,7 +56,7 @@ public class TARDISSetFlightCommand {
 		setf.put("flying_mode", mode);
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("uuid", player.getUniqueId().toString());
-		TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
+		TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
 		TARDISMessage.send(player, "FLIGHT_SAVED");
 		return true;
 	}

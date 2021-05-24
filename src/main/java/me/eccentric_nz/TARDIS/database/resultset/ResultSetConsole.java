@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -38,8 +38,8 @@ public class ResultSetConsole {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
-	private final int tardis_id;
+	private final TARDISPlugin plugin;
+	private final int tardisId;
 	private final String prefix;
 	private Block sign;
 	private String preset;
@@ -52,11 +52,11 @@ public class ResultSetConsole {
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the blocks table.
 	 *
 	 * @param plugin    - an instance of the main class
-	 * @param tardis_id - the tardis_id to get the data for
+	 * @param tardisId - the tardis_id to get the data for
 	 */
-	public ResultSetConsole(TARDIS plugin, int tardis_id) {
+	public ResultSetConsole(TARDISPlugin plugin, int tardisId) {
 		this.plugin = plugin;
-		this.tardis_id = tardis_id;
+		this.tardisId = tardisId;
 		prefix = this.plugin.getPrefix();
 	}
 
@@ -73,7 +73,7 @@ public class ResultSetConsole {
 		try {
 			service.testConnection(connection);
 			statement = connection.prepareStatement(query);
-			statement.setInt(1, tardis_id);
+			statement.setInt(1, tardisId);
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				rs.next();
@@ -126,7 +126,7 @@ public class ResultSetConsole {
 		try {
 			service.testConnection(connection);
 			statement = connection.prepareStatement(query);
-			statement.setInt(1, tardis_id);
+			statement.setInt(1, tardisId);
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				rs.next();
@@ -161,8 +161,8 @@ public class ResultSetConsole {
 		return sign;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	public String getPreset() {

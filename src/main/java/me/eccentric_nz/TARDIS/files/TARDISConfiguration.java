@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.planets.TARDISWorlds;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -34,13 +34,13 @@ import java.util.Map;
  */
 public class TARDISConfiguration {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final FileConfiguration config;
 	private final HashMap<String, String> stringOptions = new HashMap<>();
 	private final HashMap<String, Integer> integerOptions = new HashMap<>();
 	private final HashMap<String, Boolean> booleanOptions = new HashMap<>();
 
-	public TARDISConfiguration(TARDIS plugin) {
+	public TARDISConfiguration(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		File configFile = new File(plugin.getDataFolder(), "config.yml");
 		config = YamlConfiguration.loadConfiguration(configFile);

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.QueryFactory;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
@@ -29,7 +29,7 @@ import java.util.HashMap;
 
 public class TARDISHandbrake {
 
-	public static void setLevers(Block block, boolean powered, boolean inside, String handbrake_loc, int id, TARDIS plugin) {
+	public static void setLevers(Block block, boolean powered, boolean inside, String handbrake_loc, int id, TARDISPlugin plugin) {
 		Switch lever = (Switch) block.getBlockData();
 		lever.setPowered(powered);
 		block.setBlockData(lever);

@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -13,9 +13,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class TARDISRecipeInventoryListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISRecipeInventoryListener(TARDIS plugin) {
+	public TARDISRecipeInventoryListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}

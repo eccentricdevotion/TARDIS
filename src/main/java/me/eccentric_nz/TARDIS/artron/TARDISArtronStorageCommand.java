@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
@@ -42,10 +42,10 @@ import java.util.Locale;
  */
 public class TARDISArtronStorageCommand implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> firstArgs = new ArrayList<>();
 
-	public TARDISArtronStorageCommand(TARDIS plugin) {
+	public TARDISArtronStorageCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		firstArgs.add("tardis");
 		firstArgs.add("timelord");

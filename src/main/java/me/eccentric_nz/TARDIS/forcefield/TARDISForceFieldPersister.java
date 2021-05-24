@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.forcefield;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -30,7 +30,7 @@ import java.util.UUID;
 
 public class TARDISForceFieldPersister {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final String prefix;
@@ -38,7 +38,7 @@ public class TARDISForceFieldPersister {
 	private ResultSet rs = null;
 	private int count = 0;
 
-	public TARDISForceFieldPersister(TARDIS plugin) {
+	public TARDISForceFieldPersister(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}

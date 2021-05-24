@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
 import org.bukkit.entity.Player;
 
@@ -27,7 +27,7 @@ public final class TARDISDesktopThemeEvent extends TARDISEvent {
 
 	private final TARDISUpgradeData upgradeData;
 
-	public TARDISDesktopThemeEvent(Player player, Tardis tardis, TARDISUpgradeData upgradeData) {
+	public TARDISDesktopThemeEvent(Player player, TARDIS tardis, TARDISUpgradeData upgradeData) {
 		super(player, tardis);
 		this.upgradeData = upgradeData;
 	}

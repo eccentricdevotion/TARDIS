@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
@@ -56,11 +56,11 @@ import java.util.Set;
  */
 public class TARDISTimeTravel {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int attempts;
 	private Location dest;
 
-	public TARDISTimeTravel(TARDIS plugin) {
+	public TARDISTimeTravel(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		// add good materials
 		attempts = plugin.getConfig().getInt("travel.random_attempts");
@@ -107,7 +107,7 @@ public class TARDISTimeTravel {
 					Material mat = block.getType();
 					if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
 						// check for siege cube
-						if (TARDIS.plugin.getConfig().getBoolean("siege.enabled") && mat.equals(Material.BROWN_MUSHROOM_BLOCK)) {
+						if (TARDISPlugin.plugin.getConfig().getBoolean("siege.enabled") && mat.equals(Material.BROWN_MUSHROOM_BLOCK)) {
 							MultipleFacing mf = (MultipleFacing) block.getBlockData();
 							if (!mf.getAsString().equals(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2))) {
 								count++;
@@ -326,7 +326,7 @@ public class TARDISTimeTravel {
 												wherep.put("uuid", p.getUniqueId().toString());
 												ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
 												if (rst.resultSet()) {
-													plugin.getTrackerKeeper().getSubmarine().add(rst.getTardis_id());
+													plugin.getTrackerKeeper().getSubmarine().add(rst.getTardisId());
 												}
 												return underwater;
 											} else {

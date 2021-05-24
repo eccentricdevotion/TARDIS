@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetJunk;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -34,9 +34,9 @@ import java.util.UUID;
  */
 class TARDISJunkPreference {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISJunkPreference(TARDIS plugin) {
+	TARDISJunkPreference(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -48,8 +48,8 @@ class TARDISJunkPreference {
 		where.put("uuid", ustr);
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
-			int id = tardis.getTardis_id();
+			TARDIS tardis = rs.getTardis();
+			int id = tardis.getTardisId();
 			// get current preset
 			String current = tardis.getPreset().toString();
 			// must be outside of the tardis

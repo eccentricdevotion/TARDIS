@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCount;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
@@ -30,15 +31,15 @@ import java.util.HashMap;
  */
 class TARDISPlayerCountCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISPlayerCountCommand(TARDIS plugin) {
+	TARDISPlayerCountCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
 	boolean countPlayers(CommandSender sender, String[] args) {
 		int max_count = plugin.getConfig().getInt("creation.count");
-		OfflinePlayer player = plugin.getServer().getOfflinePlayer(args[1]);
+		OfflinePlayer player = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId());
 		String uuid = player.getUniqueId().toString();
 		ResultSetCount rsc = new ResultSetCount(plugin, uuid);
 		if (rsc.resultSet()) {

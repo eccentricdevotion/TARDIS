@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTag;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
@@ -31,9 +31,9 @@ import java.util.concurrent.TimeUnit;
  */
 class TARDISTagCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISTagCommand(TARDIS plugin) {
+	TARDISTagCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

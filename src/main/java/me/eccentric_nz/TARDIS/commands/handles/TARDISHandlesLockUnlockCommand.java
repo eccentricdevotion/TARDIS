@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -31,9 +31,9 @@ import java.util.HashMap;
  */
 class TARDISHandlesLockUnlockCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISHandlesLockUnlockCommand(TARDIS plugin) {
+	TARDISHandlesLockUnlockCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

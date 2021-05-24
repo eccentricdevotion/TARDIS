@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.rooms;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.event.TARDISRoomGrowEvent;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -41,13 +41,13 @@ import java.util.Locale;
  */
 public class TARDISRoomBuilder {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String r;
 	private final Location l;
 	private final COMPASS d;
 	private final Player p;
 
-	public TARDISRoomBuilder(TARDIS plugin, String r, Location l, COMPASS d, Player p) {
+	public TARDISRoomBuilder(TARDISPlugin plugin, String r, Location l, COMPASS d, Player p) {
 		this.plugin = plugin;
 		this.r = r;
 		this.l = l;
@@ -68,7 +68,7 @@ public class TARDISRoomBuilder {
 		if (rs.fromUUID(p.getUniqueId().toString())) {
 			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
 			TARDISRoomData roomData = new TARDISRoomData();
-			roomData.setTardis_id(rs.getTardis_id());
+			roomData.setTardisId(rs.getTardisId());
 			// get wall data, default to orange wool if not set
 			Material wall_type, floor_type;
 			if (rsp.resultSet()) {

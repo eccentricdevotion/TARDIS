@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.schematic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -31,11 +31,11 @@ public class ResultSetArchiveName {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String name;
 	private final String prefix;
 
-	public ResultSetArchiveName(TARDIS plugin, String name) {
+	public ResultSetArchiveName(TARDISPlugin plugin, String name) {
 		this.plugin = plugin;
 		this.name = name;
 		prefix = this.plugin.getPrefix();

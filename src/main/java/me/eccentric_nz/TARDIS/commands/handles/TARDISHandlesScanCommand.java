@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
@@ -49,12 +49,12 @@ import static me.eccentric_nz.tardis.control.TARDISScanner.getNearbyEntities;
  */
 class TARDISHandlesScanCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 	private final int id;
 	private final boolean inTARDIS;
 
-	TARDISHandlesScanCommand(TARDIS plugin, Player player, int id) {
+	TARDISHandlesScanCommand(TARDISPlugin plugin, Player player, int id) {
 		this.plugin = plugin;
 		this.player = player;
 		this.id = id;

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -28,11 +28,11 @@ public class ResultSetKeyboard {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String where;
 	private final String prefix;
-	private int c_id;
-	private int tardis_id;
+	private int cId;
+	private int tardisId;
 	private int type;
 	private String location;
 	private int secondary;
@@ -43,7 +43,7 @@ public class ResultSetKeyboard {
 	 * @param plugin an instance of the main class.
 	 * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
 	 */
-	public ResultSetKeyboard(TARDIS plugin, String where) {
+	public ResultSetKeyboard(TARDISPlugin plugin, String where) {
 		this.plugin = plugin;
 		this.where = where;
 		prefix = this.plugin.getPrefix();
@@ -69,8 +69,8 @@ public class ResultSetKeyboard {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					c_id = rs.getInt("c_id");
-					tardis_id = rs.getInt("tardis_id");
+					cId = rs.getInt("cId");
+					tardisId = rs.getInt("tardisId");
 					type = rs.getInt("type");
 					location = rs.getString("location");
 					secondary = rs.getInt("secondary");
@@ -96,12 +96,12 @@ public class ResultSetKeyboard {
 		return true;
 	}
 
-	public int getC_id() {
-		return c_id;
+	public int getcId() {
+		return cId;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	public int getType() {

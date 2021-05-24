@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.commands.TARDISCommandHelper.ROOT_COMMAND;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -34,11 +34,11 @@ import java.util.Set;
  */
 public class TARDISQuestionTabComplete extends TARDISCompleter implements TabCompleter {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ImmutableList<String> ROOT_SUBS;
 	private final List<String> notThese = Arrays.asList("aliases", "description", "usage", "permission", "permission-message");
 
-	public TARDISQuestionTabComplete(TARDIS plugin) {
+	public TARDISQuestionTabComplete(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		List<String> roots = new ArrayList<>();
 		for (ROOT_COMMAND rc : TARDISCommandHelper.ROOT_COMMAND.values()) {

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -32,9 +32,9 @@ import java.util.List;
 
 public class TARDISSaveSign {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSaveSign(TARDIS plugin) {
+	public TARDISSaveSign(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.TARDISTimeRotor;
 import me.eccentric_nz.tardis.control.TARDISScannerMap;
@@ -50,9 +50,9 @@ import java.util.UUID;
  */
 public class TARDISItemFrameListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISItemFrameListener(TARDIS plugin) {
+	public TARDISItemFrameListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -71,7 +71,7 @@ public class TARDISItemFrameListener implements Listener {
 						TARDISMessage.send(player, "NO_TARDIS");
 						return;
 					}
-					int id = rst.getTardis_id();
+					int id = rst.getTardisId();
 					switch (control) {
 						case DIRECTION, FRAME, MAP -> {
 							if (control.equals(Control.MAP) && !TARDISPermission.hasPermission(player, "tardis.scanner.map")) {
@@ -120,7 +120,7 @@ public class TARDISItemFrameListener implements Listener {
 								ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
 								if (rscl.resultSet()) {
 									Location scan_loc = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-									new TARDISScannerMap(TARDIS.plugin, scan_loc, frame).setMap();
+									new TARDISScannerMap(TARDISPlugin.plugin, scan_loc, frame).setMap();
 								}
 							}
 							TARDISMessage.send(player, "FRAME_UPDATE", which);
@@ -148,7 +148,7 @@ public class TARDISItemFrameListener implements Listener {
 			ResultSetControls rs = new ResultSetControls(plugin, where, false);
 			if (rs.resultSet()) {
 				// it's a tardis direction frame
-				int id = rs.getTardis_id();
+				int id = rs.getTardisId();
 				// prevent other players from stealing the tripwire hook
 				HashMap<String, Object> wherep = new HashMap<>();
 				wherep.put("tardis_id", id);
@@ -159,7 +159,7 @@ public class TARDISItemFrameListener implements Listener {
 				}
 				// if the item frame has a tripwire hook in it
 				if (frame.getItem().getType().equals(Material.TRIPWIRE_HOOK)) {
-					if (plugin.getConfig().getBoolean("allow.power_down") && !rso.getTardis().isPowered_on()) {
+					if (plugin.getConfig().getBoolean("allow.power_down") && !rso.getTardis().isPowered()) {
 						TARDISMessage.send(player, "POWER_DOWN");
 						return;
 					}
@@ -299,12 +299,12 @@ public class TARDISItemFrameListener implements Listener {
 					if (rst.fromUUID(uuid.toString())) {
 						// check if they have a handles block
 						HashMap<String, Object> wherec = new HashMap<>();
-						wherec.put("tardis_id", rst.getTardis_id());
+						wherec.put("tardis_id", rst.getTardisId());
 						wherec.put("type", 26);
 						ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
 						if (!rsc.resultSet()) {
 							String newLocation = frame.getLocation().toString();
-							plugin.getQueryFactory().insertControl(rst.getTardis_id(), 26, newLocation, 0);
+							plugin.getQueryFactory().insertControl(rst.getTardisId(), 26, newLocation, 0);
 						} else {
 							event.setCancelled(true);
 							TARDISMessage.send(event.getPlayer(), "HANDLES_PLACED");
@@ -352,10 +352,10 @@ public class TARDISItemFrameListener implements Listener {
 					} else {
 						// is it the players handles?
 						ResultSetTardisID rst = new ResultSetTardisID(plugin);
-						if (rst.fromUUID(player.getUniqueId().toString()) && rsc.getTardis_id() == rst.getTardis_id()) {
+						if (rst.fromUUID(player.getUniqueId().toString()) && rsc.getTardisId() == rst.getTardisId()) {
 							// remove control record
 							HashMap<String, Object> wherec = new HashMap<>();
-							wherec.put("c_id", rsc.getC_id());
+							wherec.put("c_id", rsc.getcId());
 							plugin.getQueryFactory().doDelete("controls", wherec);
 						} else {
 							event.setCancelled(true);

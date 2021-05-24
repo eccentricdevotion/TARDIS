@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.utility.TARDISParticles;
 import org.bukkit.Location;
@@ -38,14 +38,14 @@ import java.util.List;
  */
 class TARDISExcitationRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Location location;
 	private final Player player;
 	private final List<Block> snow = new ArrayList<>();
 	public int task;
 	private int i = 0;
 
-	TARDISExcitationRunnable(TARDIS plugin, Location l, Player player) {
+	TARDISExcitationRunnable(TARDISPlugin plugin, Location l, Player player) {
 		this.plugin = plugin;
 		location = l;
 		this.player = player;

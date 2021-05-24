@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
@@ -31,9 +31,9 @@ import java.util.UUID;
  */
 public class TARDISArchCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISArchCommand(TARDIS plugin) {
+	public TARDISArchCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -56,7 +56,7 @@ public class TARDISArchCommand {
 		return true;
 	}
 
-	public boolean whois(CommandSender sender, String[] args) {
+	public boolean whoIs(CommandSender sender, String[] args) {
 		for (Player p : plugin.getServer().getOnlinePlayers()) {
 			if (ChatColor.stripColor(p.getPlayerListName()).equalsIgnoreCase(args[1])) {
 				TARDISMessage.send(sender, "ARCH_PLAYER", p.getName());
@@ -118,7 +118,7 @@ public class TARDISArchCommand {
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 				player.setDisplayName(player.getName());
 				player.setPlayerListName(player.getName());
-			}, 5L);            // remove player from arched table
+			}, 5L); // remove player from arched table
 			new TARDISArchPersister(plugin).removeArch(uuid);
 		}
 		return true;

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -33,9 +33,9 @@ import org.bukkit.event.block.BlockIgniteEvent;
  */
 public class TARDISFireListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISFireListener(TARDIS plugin) {
+	public TARDISFireListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

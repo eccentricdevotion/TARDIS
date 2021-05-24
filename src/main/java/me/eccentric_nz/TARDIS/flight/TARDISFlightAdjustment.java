@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.enumeration.Flag;
@@ -38,10 +38,10 @@ import java.util.List;
  */
 class TARDISFlightAdjustment {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Integer> angles;
 
-	TARDISFlightAdjustment(TARDIS plugin) {
+	TARDISFlightAdjustment(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		angles = Arrays.asList(0, 45, 90, 135, 180, 225, 270, 315);
 	}

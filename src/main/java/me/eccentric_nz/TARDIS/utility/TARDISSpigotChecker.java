@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.utility;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.ChatColor;
 
 import java.io.InputStream;
@@ -29,9 +29,9 @@ import java.net.URLConnection;
 
 public class TARDISSpigotChecker implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSpigotChecker(TARDIS plugin) {
+	public TARDISSpigotChecker(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

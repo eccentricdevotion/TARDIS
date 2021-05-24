@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.utils;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.control.TARDISAtmosphericExcitation;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -37,9 +37,9 @@ import java.util.HashMap;
 
 public class TARDISWeatherListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISWeatherListener(TARDIS plugin) {
+	public TARDISWeatherListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}
@@ -60,28 +60,28 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
 					wheres.put("uuid", player.getUniqueId().toString());
 					ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
 					if (rst.resultSet()) {
-						int id = rst.getTardis_id();
+						int id = rst.getTardisId();
 						HashMap<String, Object> where = new HashMap<>();
 						where.put("tardis_id", id);
 						ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 						if (rs.resultSet()) {
-							Tardis tardis = rs.getTardis();
+							TARDIS tardis = rs.getTardis();
 							// check they initialised
-							if (!tardis.isTardis_init()) {
+							if (!tardis.isTardisInit()) {
 								TARDISMessage.send(player, "ENERGY_NO_INIT");
 								return;
 							}
-							if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && slot != 6 && slot != 13 && slot != 20) {
+							if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered() && slot != 6 && slot != 13 && slot != 20) {
 								TARDISMessage.send(player, "POWER_DOWN");
 								return;
 							}
-							if (!tardis.isHandbrake_on()) {
+							if (!tardis.isHandbrakeOn()) {
 								TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
 								return;
 							}
 							// get current location
 							HashMap<String, Object> wherec = new HashMap<>();
-							wherec.put("tardis_id", tardis.getTardis_id());
+							wherec.put("tardis_id", tardis.getTardisId());
 							ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
 							if (!rsc.resultSet()) {
 								TARDISMessage.send(player, "CURRENT_NOT_FOUND");
@@ -124,7 +124,7 @@ public class TARDISWeatherListener extends TARDISMenuListener implements Listene
 										TARDISMessage.send(player, "CMD_EXCITE");
 										return;
 									}
-									new TARDISAtmosphericExcitation(plugin).excite(tardis.getTardis_id(), player);
+									new TARDISAtmosphericExcitation(plugin).excite(tardis.getTardisId(), player);
 									plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
 									close(player);
 									break;

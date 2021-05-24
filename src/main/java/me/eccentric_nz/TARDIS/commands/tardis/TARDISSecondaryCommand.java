@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -33,9 +33,9 @@ import java.util.UUID;
  */
 class TARDISSecondaryCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISSecondaryCommand(TARDIS plugin) {
+	TARDISSecondaryCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -52,7 +52,7 @@ class TARDISSecondaryCommand {
 				return false;
 			}
 			if (args[1].equalsIgnoreCase("remove")) {
-				plugin.getTrackerKeeper().getSecondaryRemovers().put(player.getUniqueId(), rs.getTardis_id());
+				plugin.getTrackerKeeper().getSecondaryRemovers().put(player.getUniqueId(), rs.getTardisId());
 				TARDISMessage.send(player, "SEC_REMOVE_CLICK_BLOCK");
 				return true;
 			}

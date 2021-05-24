@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,9 +32,9 @@ import java.util.UUID;
  */
 public class TARDISRespawnListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISRespawnListener(TARDIS plugin) {
+	public TARDISRespawnListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -49,9 +49,9 @@ public class TARDISRespawnListener implements Listener {
 		where.put("uuid", uuid.toString());
 		ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
 		if (rs.resultSet() && !plugin.getUtils().inTARDISWorld(player)) {
-			HashMap<String, Object> wheret = new HashMap<>();
-			wheret.put("uuid", uuid.toString());
-			plugin.getQueryFactory().doDelete("travellers", wheret);
+			HashMap<String, Object> whereT = new HashMap<>();
+			whereT.put("uuid", uuid.toString());
+			plugin.getQueryFactory().doDelete("travellers", whereT);
 		}
 	}
 }

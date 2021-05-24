@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -32,9 +32,9 @@ import java.util.HashMap;
  */
 class TARDISReorderSavedLocationCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISReorderSavedLocationCommand(TARDIS plugin) {
+	TARDISReorderSavedLocationCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -49,7 +49,7 @@ class TARDISReorderSavedLocationCommand {
 				TARDISMessage.send(player, "NO_TARDIS");
 				return false;
 			}
-			int id = rs.getTardis_id();
+			int id = rs.getTardisId();
 			HashMap<String, Object> whered = new HashMap<>();
 			whered.put("dest_name", args[1]);
 			whered.put("tardis_id", id);
@@ -73,12 +73,12 @@ class TARDISReorderSavedLocationCommand {
 			wheres.put("slot", slot);
 			ResultSetDestinations rss = new ResultSetDestinations(plugin, wheres, false);
 			if (rss.resultSet()) {
-				TARDISMessage.send(player, "DEST_SLOT", rss.getDest_name());
+				TARDISMessage.send(player, "DEST_SLOT", rss.getDestName());
 				return true;
 			}
-			int destID = rsd.getDest_id();
+			int destId = rsd.getDestId();
 			HashMap<String, Object> did = new HashMap<>();
-			did.put("dest_id", destID);
+			did.put("dest_id", destId);
 			HashMap<String, Object> set = new HashMap<>();
 			set.put("slot", slot);
 			plugin.getQueryFactory().doUpdate("destinations", set, did);

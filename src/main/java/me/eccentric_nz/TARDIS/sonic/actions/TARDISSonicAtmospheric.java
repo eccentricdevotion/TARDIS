@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.control.TARDISAtmosphericExcitation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -32,7 +32,7 @@ import java.util.HashMap;
 
 public class TARDISSonicAtmospheric {
 
-	public static void makeItSnow(TARDIS plugin, Player player, Block b) {
+	public static void makeItSnow(TARDISPlugin plugin, Player player, Block b) {
 		// check the text on the sign
 		Sign sign = (Sign) b.getState();
 		String line0 = ChatColor.stripColor(sign.getLine(0));
@@ -42,7 +42,7 @@ public class TARDISSonicAtmospheric {
 			// get tardis id
 			ResultSetTardisID rs = new ResultSetTardisID(plugin);
 			if (rs.fromUUID(player.getUniqueId().toString())) {
-				int tid = rs.getTardis_id();
+				int tid = rs.getTardisId();
 				Block blockbehind = null;
 				Directional directional = (Directional) b.getBlockData();
 				if (directional.getFacing().equals(BlockFace.WEST)) {
@@ -76,7 +76,7 @@ public class TARDISSonicAtmospheric {
 		}
 	}
 
-	private static boolean isPresetSign(TARDIS plugin, String l0, String l1, String l2) {
+	private static boolean isPresetSign(TARDISPlugin plugin, String l0, String l1, String l2) {
 		if (l0.equalsIgnoreCase("WEEPING") || l0.equalsIgnoreCase("$50,000")) {
 			return (plugin.getGeneralKeeper().getSign_lookup().containsKey(l0) && l1.equals(plugin.getGeneralKeeper().getSign_lookup().get(l0)));
 		} else {

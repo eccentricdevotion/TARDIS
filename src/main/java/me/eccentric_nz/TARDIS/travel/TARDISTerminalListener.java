@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.tardis.api.Parameters;
@@ -58,7 +58,7 @@ import java.util.*;
  */
 public class TARDISTerminalListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<UUID, ResultSetCurrentLocation> terminalUsers = new HashMap<>();
 	private final HashMap<UUID, String> terminalDestination = new HashMap<>();
 	private final HashMap<UUID, Integer> terminalStep = new HashMap<>();
@@ -66,7 +66,7 @@ public class TARDISTerminalListener implements Listener {
 	private final HashMap<UUID, Integer> terminalWorlds = new HashMap<>();
 	private final HashMap<UUID, Boolean> terminalSub = new HashMap<>();
 
-	public TARDISTerminalListener(TARDIS plugin) {
+	public TARDISTerminalListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -211,7 +211,7 @@ public class TARDISTerminalListener implements Listener {
 			where.put("uuid", uuid.toString());
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
 			if (rst.resultSet()) {
-				int id = rst.getTardis_id();
+				int id = rst.getTardisId();
 				HashMap<String, Object> wheret = new HashMap<>();
 				wheret.put("tardis_id", id);
 				ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wheret);
@@ -356,7 +356,7 @@ public class TARDISTerminalListener implements Listener {
 			HashMap<String, Object> set = new HashMap<>();
 			set.put("submarine_on", tf);
 			HashMap<String, Object> wheret = new HashMap<>();
-			wheret.put("pp_id", rsp.getPp_id());
+			wheret.put("pp_id", rsp.getPpId());
 			plugin.getQueryFactory().doUpdate("player_prefs", set, wheret);
 		}
 	}

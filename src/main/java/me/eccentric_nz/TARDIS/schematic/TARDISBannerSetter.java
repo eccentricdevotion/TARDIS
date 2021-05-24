@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.utility.TARDISBannerData;
 import org.bukkit.DyeColor;
 import org.bukkit.block.Banner;
@@ -53,8 +53,8 @@ public class TARDISBannerSetter {
 				}
 				banner.setPatterns(plist);
 				banner.update();
-				if (TARDIS.plugin.getBlockLogger().isLogging()) {
-					TARDIS.plugin.getBlockLogger().logPlacement(pbb);
+				if (TARDISPlugin.plugin.getBlockLogger().isLogging()) {
+					TARDISPlugin.plugin.getBlockLogger().logPlacement(pbb);
 				}
 			}
 		});

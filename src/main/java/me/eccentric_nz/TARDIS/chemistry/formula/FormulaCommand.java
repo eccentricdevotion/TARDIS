@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.formula;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.chemistry.compound.Compound;
 import me.eccentric_nz.tardis.chemistry.lab.Lab;
 import me.eccentric_nz.tardis.chemistry.product.Product;
@@ -25,9 +25,9 @@ import org.bukkit.entity.Player;
 
 public class FormulaCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public FormulaCommand(TARDIS plugin) {
+	public FormulaCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

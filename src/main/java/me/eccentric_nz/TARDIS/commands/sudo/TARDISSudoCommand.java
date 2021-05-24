@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -31,9 +31,9 @@ import java.util.UUID;
 
 public class TARDISSudoCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSudoCommand(TARDIS plugin) {
+	public TARDISSudoCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

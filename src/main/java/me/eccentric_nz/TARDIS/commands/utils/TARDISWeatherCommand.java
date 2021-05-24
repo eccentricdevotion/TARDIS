@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
@@ -37,10 +37,10 @@ import java.util.List;
 
 public class TARDISWeatherCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("clear", "c", "rain", "r", "thunder", "t", "sun", "s");
 
-	public TARDISWeatherCommand(TARDIS plugin) {
+	public TARDISWeatherCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.tardis.builders.BiomeSetter;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -47,21 +47,21 @@ import static me.eccentric_nz.tardis.destroyers.TARDISExterminator.deleteFolder;
  */
 public class TARDISDeleteCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISDeleteCommand(TARDIS plugin) {
+	TARDISDeleteCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
 	public static void cleanDatabase(int id) {
-		TARDISBlockLoader bl = new TARDISBlockLoader(TARDIS.plugin);
+		TARDISBlockLoader bl = new TARDISBlockLoader(TARDISPlugin.plugin);
 		bl.unloadProtectedBlocks(id);
 		List<String> tables = Arrays.asList("ars", "back", "blocks", "chunks", "controls", "current", "destinations", "doors", "gravity_well", "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults");
 		// remove record from database tables
 		tables.forEach((table) -> {
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("tardis_id", id);
-			TARDIS.plugin.getQueryFactory().doDelete(table, where);
+			TARDISPlugin.plugin.getQueryFactory().doDelete(table, where);
 		});
 	}
 
@@ -95,7 +95,8 @@ public class TARDISDeleteCommand {
 			if (junk) {
 				uuid = UUID.fromString("00000000-aaaa-bbbb-cccc-000000000000");
 			} else {
-				uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+				assert sender instanceof Player;
+				uuid = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId()).getUniqueId();
 			}
 			where.put("uuid", uuid.toString());
 		} else {
@@ -103,8 +104,8 @@ public class TARDISDeleteCommand {
 		}
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, abandoned);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
-			int id = tardis.getTardis_id();
+			TARDIS tardis = rs.getTardis();
+			int id = tardis.getTardisId();
 			int tips = tardis.getTIPS();
 			Schematic schm = tardis.getSchematic();
 			String chunkLoc = tardis.getChunk();
@@ -162,7 +163,7 @@ public class TARDISDeleteCommand {
 			// destroy the inner tardis
 			// give the tardis time to remove itself as it's not hidden
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-				if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || wname.contains("TARDIS_WORLD_")) {
+				if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || Objects.requireNonNull(wname).contains("TARDIS_WORLD_")) {
 					// delete tardis world
 					List<Player> players = cw.getPlayers();
 					players.forEach((p) -> p.kickPlayer("World scheduled for deletion!"));

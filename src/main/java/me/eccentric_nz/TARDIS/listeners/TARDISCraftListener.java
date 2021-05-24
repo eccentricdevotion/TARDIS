@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.DiskCircuit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -45,11 +45,11 @@ import java.util.logging.Level;
  */
 public class TARDISCraftListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<Material, String> t = new HashMap<>();
 	private final List<UUID> crafters = new ArrayList<>();
 
-	public TARDISCraftListener(TARDIS plugin) {
+	public TARDISCraftListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		// DELUXE, ELEVENTH, TWELFTH, ars & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
 		t.put(Material.BOOKSHELF, "PLANK"); // plank

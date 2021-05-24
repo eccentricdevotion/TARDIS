@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -40,9 +40,9 @@ import java.util.UUID;
  */
 public class TARDISGlassesListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISGlassesListener(TARDIS plugin) {
+	public TARDISGlassesListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		checkGlasses(this.plugin);
 	}
@@ -71,7 +71,7 @@ public class TARDISGlassesListener implements Listener {
 		}
 	}
 
-	private void checkGlasses(TARDIS plugin) {
+	private void checkGlasses(TARDISPlugin plugin) {
 		plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> plugin.getTrackerKeeper().getSpectacleWearers().forEach((uuid) -> {
 			Player p = plugin.getServer().getPlayer(uuid);
 			if (p != null && p.isOnline()) {

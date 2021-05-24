@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.creative;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.chemistry.element.ElementInventory;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -29,9 +29,9 @@ import java.util.Locale;
 
 public class CreativeCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public CreativeCommand(TARDIS plugin) {
+	public CreativeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.transmat;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUITransmat;
 import me.eccentric_nz.tardis.database.data.Transmat;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTransmatList;
@@ -30,10 +30,10 @@ import java.util.List;
 public class TARDISTransmatInventory {
 
 	private final ItemStack[] menu;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 
-	public TARDISTransmatInventory(TARDIS plugin, int id) {
+	public TARDISTransmatInventory(TARDISPlugin plugin, int id) {
 		this.plugin = plugin;
 		this.id = id;
 		menu = getItemStack();

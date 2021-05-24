@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.product;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -31,10 +31,10 @@ import java.util.Objects;
 
 public class GlowStickRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final NamespacedKey namespacedKey;
 
-	public GlowStickRunnable(TARDIS plugin) {
+	public GlowStickRunnable(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		namespacedKey = new NamespacedKey(this.plugin, "glow_stick_time");
 	}

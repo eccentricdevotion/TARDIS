@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
@@ -40,14 +40,14 @@ import java.util.HashMap;
  */
 public class TARDISSchematicBuilder {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final World w;
 	private final int id, sx, ex, sy, ey, sz, ez;
 	private final int[] controls = {0, 2, 3, 4, 5};
 	private final HashMap<String, Material> mushroom_stem = new HashMap<>();
 	private Location h;
 
-	public TARDISSchematicBuilder(TARDIS plugin, int id, World w, int sx, int ex, int sy, int ey, int sz, int ez) {
+	public TARDISSchematicBuilder(TARDISPlugin plugin, int id, World w, int sx, int ex, int sy, int ey, int sz, int ez) {
 		this.plugin = plugin;
 		this.id = id;
 		this.w = w;

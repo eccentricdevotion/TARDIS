@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -27,7 +27,7 @@ public final class TARDISMaterialisationEvent extends TARDISEvent {
 
 	private final Location location;
 
-	public TARDISMaterialisationEvent(Player player, Tardis tardis, Location location) {
+	public TARDISMaterialisationEvent(Player player, TARDIS tardis, Location location) {
 		super(player, tardis);
 		this.location = location;
 	}

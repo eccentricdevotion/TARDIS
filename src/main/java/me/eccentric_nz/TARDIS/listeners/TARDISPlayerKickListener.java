@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.utility.TARDISVoidFall;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -29,9 +29,9 @@ import org.bukkit.event.player.PlayerKickEvent;
  */
 public class TARDISPlayerKickListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISPlayerKickListener(TARDIS plugin) {
+	public TARDISPlayerKickListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

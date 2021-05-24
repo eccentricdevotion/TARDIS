@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
@@ -40,9 +40,9 @@ import java.util.HashMap;
  */
 public class TARDISExteriorRenderer {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISExteriorRenderer(TARDIS plugin) {
+	public TARDISExteriorRenderer(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

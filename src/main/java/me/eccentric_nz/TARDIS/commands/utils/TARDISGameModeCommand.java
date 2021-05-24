@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.GameMode;
@@ -30,10 +30,10 @@ import java.util.Locale;
 
 public class TARDISGameModeCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("SURVIVAL", "s", "CREATIVE", "c", "ADVENTURE", "a", "SPECTATOR", "sp");
 
-	public TARDISGameModeCommand(TARDIS plugin) {
+	public TARDISGameModeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

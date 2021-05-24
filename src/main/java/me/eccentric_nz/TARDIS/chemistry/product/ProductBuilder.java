@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.product;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -32,7 +32,7 @@ public class ProductBuilder {
 		im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		int which = 10000001 + product.ordinal();
 		im.setCustomModelData(which);
-		im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
+		im.getPersistentDataContainer().set(TARDISPlugin.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
 		is.setItemMeta(im);
 		return is;
 	}

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisPowered;
@@ -33,9 +33,9 @@ import java.util.UUID;
  */
 class TARDISRescueCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISRescueCommand(TARDIS plugin) {
+	TARDISRescueCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -73,8 +73,8 @@ class TARDISRescueCommand {
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 						TARDISRescue.RescueData rd = res.tryRescue(player, destPlayer.getUniqueId(), false);
 						if (rd.success()) {
-							if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
-								new TARDISLand(plugin, rd.getTardis_id(), player).exitVortex();
+							if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
+								new TARDISLand(plugin, rd.getTardisId(), player).exitVortex();
 							} else {
 								TARDISMessage.send(player, "REQUEST_RELEASE", destPlayer.getName());
 							}

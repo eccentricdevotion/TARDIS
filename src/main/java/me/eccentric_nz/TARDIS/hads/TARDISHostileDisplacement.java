@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.hads;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.api.event.TARDISHADSEvent;
 import me.eccentric_nz.tardis.builders.BuildData;
@@ -46,11 +46,11 @@ import java.util.*;
  */
 class TARDISHostileDisplacement {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Integer> angles;
 	private int count = 0;
 
-	TARDISHostileDisplacement(TARDIS plugin) {
+	TARDISHostileDisplacement(TARDISPlugin plugin) {
 		angles = Arrays.asList(0, 45, 90, 135, 180, 225, 270, 315);
 		this.plugin = plugin;
 	}

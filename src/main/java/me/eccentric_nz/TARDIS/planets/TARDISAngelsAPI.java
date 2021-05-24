@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
 import org.bukkit.entity.Skeleton;
@@ -34,7 +34,7 @@ public class TARDISAngelsAPI {
 	 * @param plugin - a tardis plugin instance
 	 * @return the TARDISWeepingAngelsAPI
 	 */
-	public static TARDISWeepingAngelsAPI getAPI(TARDIS plugin) {
+	public static TARDISWeepingAngelsAPI getAPI(TARDISPlugin plugin) {
 		Plugin p = plugin.getPM().getPlugin("TARDISWeepingAngels");
 		TARDISWeepingAngels twa = (TARDISWeepingAngels) p;
 		assert twa != null;

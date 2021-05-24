@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
@@ -29,9 +29,9 @@ import org.bukkit.command.CommandSender;
  */
 class TARDISJunkReturn {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISJunkReturn(TARDIS plugin) {
+	TARDISJunkReturn(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

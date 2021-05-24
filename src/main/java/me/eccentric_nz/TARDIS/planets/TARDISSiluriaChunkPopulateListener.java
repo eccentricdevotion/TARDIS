@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -38,11 +38,11 @@ import java.util.List;
  */
 public class TARDISSiluriaChunkPopulateListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<ChunkInfo> chunks = new ArrayList<>();
 	private boolean isBuilding = false;
 
-	public TARDISSiluriaChunkPopulateListener(TARDIS plugin) {
+	public TARDISSiluriaChunkPopulateListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

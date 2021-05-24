@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -30,9 +30,9 @@ import java.util.UUID;
  */
 class TARDISCubeCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISCubeCommand(TARDIS plugin) {
+	TARDISCubeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -44,7 +44,7 @@ class TARDISCubeCommand {
 				TARDISMessage.send(player, "NO_TARDIS");
 				return true;
 			}
-			int id = rs.getTardis_id();
+			int id = rs.getTardisId();
 			if (!plugin.getTrackerKeeper().getIsSiegeCube().contains(id)) {
 				TARDISMessage.send(player, "SIEGE_NOT_SIEGED");
 				return true;

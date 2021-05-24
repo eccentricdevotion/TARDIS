@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.commands.bind;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.Bind;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 public class BindRemove {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public BindRemove(TARDIS plugin) {
+	public BindRemove(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

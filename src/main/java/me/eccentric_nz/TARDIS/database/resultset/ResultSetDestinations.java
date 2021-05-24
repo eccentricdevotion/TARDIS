@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.*;
@@ -35,14 +35,14 @@ public class ResultSetDestinations {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final boolean multiple;
 	private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
 	private final String prefix;
-	private int dest_id;
-	private int tardis_id;
-	private String dest_name;
+	private int destId;
+	private int tardisId;
+	private String destName;
 	private String world;
 	private int x;
 	private int y;
@@ -59,7 +59,7 @@ public class ResultSetDestinations {
 	 * @param where    a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
 	 * @param multiple a boolean indicating whether multiple rows should be fetched
 	 */
-	public ResultSetDestinations(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+	public ResultSetDestinations(TARDISPlugin plugin, HashMap<String, Object> where, boolean multiple) {
 		this.plugin = plugin;
 		this.where = where;
 		this.multiple = multiple;
@@ -109,9 +109,9 @@ public class ResultSetDestinations {
 						}
 						data.add(row);
 					}
-					dest_id = rs.getInt("dest_id");
-					tardis_id = rs.getInt("tardis_id");
-					dest_name = rs.getString("dest_name");
+					destId = rs.getInt("dest_id");
+					tardisId = rs.getInt("tardis_id");
+					destName = rs.getString("dest_name");
 					world = rs.getString("world");
 					x = rs.getInt("x");
 					y = rs.getInt("y");
@@ -142,16 +142,16 @@ public class ResultSetDestinations {
 		return true;
 	}
 
-	public int getDest_id() {
-		return dest_id;
+	public int getDestId() {
+		return destId;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
-	public String getDest_name() {
-		return dest_name;
+	public String getDestName() {
+		return destName;
 	}
 
 	public String getWorld() {

@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardis.achievement;
+package me.eccentric_nz.tardis.advancement;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -38,9 +38,9 @@ import java.util.Scanner;
  */
 public class TARDISBook {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBook(TARDIS plugin) {
+	public TARDISBook(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -75,6 +75,7 @@ public class TARDISBook {
 		ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
 		BookMeta meta = (BookMeta) book.getItemMeta();
 		String[] title = title_reward.split(" - ");
+		assert meta != null;
 		meta.setTitle(title[0]);
 		meta.setAuthor(author);
 		meta.setPages(pages);

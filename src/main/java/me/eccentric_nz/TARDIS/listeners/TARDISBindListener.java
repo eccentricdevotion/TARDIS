@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBind;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTransmat;
@@ -30,6 +30,7 @@ import org.bukkit.Sound;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -50,10 +51,10 @@ import java.util.UUID;
  */
 public class TARDISBindListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Material> validBlocks = new ArrayList<>();
 
-	public TARDISBindListener(TARDIS plugin) {
+	public TARDISBindListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		validBlocks.addAll(Tag.SIGNS.getValues());
 		validBlocks.addAll(Tag.BUTTONS.getValues());
@@ -98,7 +99,7 @@ public class TARDISBindListener implements Listener {
 					whereb.put("location", l);
 					ResultSetBind rsb = new ResultSetBind(plugin, whereb);
 					if (rsb.resultSet()) {
-						where.put("bind_id", rsb.getBind_id());
+						where.put("bind_id", rsb.getBindId());
 						plugin.getQueryFactory().doDelete("bind", where);
 						TARDISMessage.send(player, "BIND_REMOVED", bind.toString());
 					} else {
@@ -110,28 +111,28 @@ public class TARDISBindListener implements Listener {
 					where.put("uuid", player.getUniqueId().toString());
 					ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
 					if (rst.resultSet()) {
-						int id = rst.getTardis_id();
+						int id = rst.getTardisId();
 						HashMap<String, Object> wheret = new HashMap<>();
 						wheret.put("tardis_id", id);
 						ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
 						if (rs.resultSet()) {
-							Tardis tardis = rs.getTardis();
+							TARDIS tardis = rs.getTardis();
 							UUID ownerUUID = tardis.getUuid();
 							HashMap<String, Object> whereb = new HashMap<>();
 							whereb.put("tardis_id", id);
 							whereb.put("location", l);
 							ResultSetBind rsb = new ResultSetBind(plugin, whereb);
 							if (rsb.resultSet()) {
-								if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+								if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
 									TARDISMessage.send(player, "POWER_DOWN");
 									return;
 								}
-								if ((tardis.isIso_on() && !player.getUniqueId().equals(ownerUUID) && !event.isCancelled()) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
+								if ((tardis.isIsoOn() && !player.getUniqueId().equals(ownerUUID) && event.useInteractedBlock().equals(Event.Result.ALLOW)) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
 									TARDISMessage.send(player, "ISO_HANDS_OFF");
 									return;
 								}
 								int type = rsb.getType();
-								if (type != 6 && !tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+								if (type != 6 && !tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
 									TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
 									return;
 								}

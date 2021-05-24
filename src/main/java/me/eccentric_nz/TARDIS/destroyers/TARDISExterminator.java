@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.enumeration.Schematic;
@@ -50,9 +50,9 @@ import java.util.*;
  */
 public class TARDISExterminator {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISExterminator(TARDIS plugin) {
+	public TARDISExterminator(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -63,7 +63,7 @@ public class TARDISExterminator {
 				if (f.isDirectory()) {
 					deleteFolder(f);
 				} else if (!f.delete()) {
-					TARDIS.plugin.debug("Could not delete file");
+					TARDISPlugin.plugin.debug("Could not delete file");
 				}
 			}
 		}
@@ -77,7 +77,7 @@ public class TARDISExterminator {
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
 		try {
 			if (rs.resultSet()) {
-				Tardis tardis = rs.getTardis();
+				TARDIS tardis = rs.getTardis();
 				boolean hid = tardis.isHidden();
 				String chunkLoc = tardis.getChunk();
 				String owner = tardis.getOwner();
@@ -173,7 +173,7 @@ public class TARDISExterminator {
 					TARDISMessage.send(player, "CURRENT_NOT_FOUND");
 					return false;
 				}
-				where.put("tardis_id", rsc.getTardis_id());
+				where.put("tardis_id", rsc.getTardisId());
 				rs = new ResultSetTardis(plugin, where, "", false, 2);
 			} else {
 				TARDISMessage.send(player, "CURRENT_NOT_FOUND");
@@ -184,8 +184,8 @@ public class TARDISExterminator {
 			rs = new ResultSetTardis(plugin, where, "", false, 0);
 		}
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
-			int id = tardis.getTardis_id();
+			TARDIS tardis = rs.getTardis();
+			int id = tardis.getTardisId();
 			String owner = tardis.getOwner();
 			String chunkLoc = tardis.getChunk();
 			int tips = tardis.getTIPS();

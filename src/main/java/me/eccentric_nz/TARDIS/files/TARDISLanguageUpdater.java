@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -34,9 +34,9 @@ import java.util.List;
  */
 public class TARDISLanguageUpdater {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISLanguageUpdater(TARDIS plugin) {
+	public TARDISLanguageUpdater(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.Updateable;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISStringUtils;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 public class TARDISUpdateBlocks {
 
 	public static void showOptions(Player player, Updateable updateable) {
-		TARDISMessage.message(player, TARDIS.plugin.getPluginName() + ChatColor.AQUA + "'" + updateable.getName() + "'" + ChatColor.RESET + " valid blocks:");
+		TARDISMessage.message(player, TARDISPlugin.plugin.getPluginName() + ChatColor.AQUA + "'" + updateable.getName() + "'" + ChatColor.RESET + " valid blocks:");
 		for (Material m : updateable.getMaterialChoice().getChoices()) {
 			String s = m.toString();
 			if (s.equals("SPAWNER")) {

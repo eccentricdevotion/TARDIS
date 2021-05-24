@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -32,7 +32,7 @@ import java.util.UUID;
  */
 class TARDISJunkItsDangerousRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Block t;
 	private final int minX;
 	private final int minZ;
@@ -41,7 +41,7 @@ class TARDISJunkItsDangerousRunnable implements Runnable {
 	private final Lightable lightable = (Lightable) Material.REDSTONE_TORCH.createBlockData();
 	private int c = 0;
 
-	TARDISJunkItsDangerousRunnable(TARDIS plugin, Location l) {
+	TARDISJunkItsDangerousRunnable(TARDISPlugin plugin, Location l) {
 		this.plugin = plugin;
 		t = l.clone().add(0.0d, 2.0d, -1.0d).getBlock();
 		minX = l.getBlockX() - 3;

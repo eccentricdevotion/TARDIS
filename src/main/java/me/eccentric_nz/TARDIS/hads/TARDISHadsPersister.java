@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.hads;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
@@ -35,7 +35,7 @@ import java.util.UUID;
  */
 public class TARDISHadsPersister {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final String prefix;
@@ -43,7 +43,7 @@ public class TARDISHadsPersister {
 	private ResultSet rs = null;
 	private int count = 0;
 
-	public TARDISHadsPersister(TARDIS plugin) {
+	public TARDISHadsPersister(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}
@@ -63,7 +63,7 @@ public class TARDISHadsPersister {
 				// get tardis_id
 				ResultSetTardisID rst = new ResultSetTardisID(plugin);
 				rst.fromUUID(uuid);
-				ps.setInt(6, rst.getTardis_id());
+				ps.setInt(6, rst.getTardisId());
 				count += ps.executeUpdate();
 			}
 			if (count > 0) {

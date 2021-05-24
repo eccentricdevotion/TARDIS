@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISMaterials;
@@ -47,12 +47,12 @@ import java.util.UUID;
  */
 public class TARDISMakePresetListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int[] orderx;
 	private final int[] orderz;
 	private final String GLASS = addQuotes(TARDISConstants.GLASS.getAsString());
 
-	public TARDISMakePresetListener(TARDIS plugin) {
+	public TARDISMakePresetListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
 		orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.commands.tardis.TARDISHandbrakeCommand;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -25,9 +25,9 @@ import org.bukkit.entity.Player;
 
 public class TARDISBrakeCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBrakeCommand(TARDIS plugin) {
+	public TARDISBrakeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -43,7 +43,7 @@ public class TARDISBrakeCommand {
 		}
 		ResultSetTardisID rs = new ResultSetTardisID(plugin);
 		if (rs.fromUUID(player.getUniqueId().toString())) {
-			return new TARDISHandbrakeCommand(plugin).toggle(player, rs.getTardis_id(), args, true);
+			return new TARDISHandbrakeCommand(plugin).toggle(player, rs.getTardisId(), args, true);
 		}
 		return true;
 	}

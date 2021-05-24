@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +29,7 @@ import java.util.Map;
  */
 class TARDISSQLInsertLocations implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final HashMap<String, Object> data;
@@ -46,7 +46,7 @@ class TARDISSQLInsertLocations implements Runnable {
 	 * @param biome  the Police Box biome type
 	 * @param id     the tardis_id
 	 */
-	TARDISSQLInsertLocations(TARDIS plugin, HashMap<String, Object> data, String biome, int id) {
+	TARDISSQLInsertLocations(TARDISPlugin plugin, HashMap<String, Object> data, String biome, int id) {
 		this.plugin = plugin;
 		this.data = data;
 		this.biome = biome;

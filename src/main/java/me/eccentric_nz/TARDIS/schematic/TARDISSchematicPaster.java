@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.rooms.TARDISPainting;
 import me.eccentric_nz.tardis.utility.TARDISBannerData;
@@ -44,7 +44,7 @@ import static me.eccentric_nz.tardis.schematic.TARDISBannerSetter.setBanners;
  */
 class TARDISSchematicPaster implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 	private final HashMap<Block, BlockData> postRedstoneTorches = new HashMap<>();
 	private final HashMap<Block, TARDISBannerData> postBanners = new HashMap<>();
@@ -57,7 +57,7 @@ class TARDISSchematicPaster implements Runnable {
 	private boolean running = false;
 	private BossBar bb;
 
-	TARDISSchematicPaster(TARDIS plugin, Player player) {
+	TARDISSchematicPaster(TARDISPlugin plugin, Player player) {
 		this.plugin = plugin;
 		this.player = player;
 		l = 0;
@@ -102,8 +102,8 @@ class TARDISSchematicPaster implements Runnable {
 		if (l == h && r == w - 1) {
 			for (Map.Entry<Block, BlockData> map : postRedstoneTorches.entrySet()) {
 				map.getKey().setBlockData(map.getValue());
-				if (TARDIS.plugin.getBlockLogger().isLogging()) {
-					TARDIS.plugin.getBlockLogger().logPlacement(map.getKey());
+				if (TARDISPlugin.plugin.getBlockLogger().isLogging()) {
+					TARDISPlugin.plugin.getBlockLogger().logPlacement(map.getKey());
 				}
 			}
 			setBanners(postBanners);

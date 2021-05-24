@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.TARDISAbandoned;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.enumeration.Consoles;
@@ -38,9 +38,9 @@ import java.util.Locale;
  */
 class TARDISAbandonedCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISAbandonedCommand(TARDIS plugin) {
+	TARDISAbandonedCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

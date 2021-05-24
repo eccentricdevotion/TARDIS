@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.companionGUI;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisCompanions;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
@@ -42,9 +42,9 @@ import java.util.List;
  */
 public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISCompanionAddGUIListener(TARDIS plugin) {
+	public TARDISCompanionAddGUIListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}
@@ -71,8 +71,8 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
 							wherea.put("uuid", player.getUniqueId().toString());
 							ResultSetTardis rsa = new ResultSetTardis(plugin, wherea, "", false, 0);
 							if (rsa.resultSet()) {
-								Tardis tardis = rsa.getTardis();
-								int id = tardis.getTardis_id();
+								TARDIS tardis = rsa.getTardis();
+								int id = tardis.getTardisId();
 								String comps = tardis.getCompanions();
 								addCompanion(id, comps, "everyone");
 								if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
@@ -93,8 +93,8 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
 							where.put("uuid", player.getUniqueId().toString());
 							ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 							if (rs.resultSet()) {
-								Tardis tardis = rs.getTardis();
-								int id = tardis.getTardis_id();
+								TARDIS tardis = rs.getTardis();
+								int id = tardis.getTardisId();
 								String comps = tardis.getCompanions();
 								ItemStack h = view.getItem(slot);
 								ItemMeta m = h.getItemMeta();

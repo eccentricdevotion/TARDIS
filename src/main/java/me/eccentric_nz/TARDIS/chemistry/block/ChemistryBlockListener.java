@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.block;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.chemistry.compound.CompoundInventory;
@@ -49,11 +49,11 @@ import java.util.Objects;
 
 public class ChemistryBlockListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, String> blocks = new HashMap<>();
 	private final HashMap<String, Integer> models = new HashMap<>();
 
-	public ChemistryBlockListener(TARDIS plugin) {
+	public ChemistryBlockListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=false,west=false]", "Atomic elements");
 		blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=false,west=true]", "Chemical compounds");

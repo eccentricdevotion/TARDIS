@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
 import me.eccentric_nz.tardis.arch.TARDISArchCommand;
 import me.eccentric_nz.tardis.builders.FractalFence;
 import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
@@ -61,9 +61,9 @@ public class TARDISAdminCommands implements CommandExecutor {
 	final HashMap<String, String> firstsBool = new HashMap<>();
 	final HashMap<String, String> firstsInt = new HashMap<>();
 	final List<String> firstsIntArtron = new ArrayList<>();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISAdminCommands(TARDIS plugin) {
+	public TARDISAdminCommands(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		// add first arguments
 		firstsStr.put("add_regions", "");
@@ -292,7 +292,7 @@ public class TARDISAdminCommands implements CommandExecutor {
 					}
 				}
 				if (first.equals("adv")) {
-					TARDISAchievementFactory.checkAdvancement(args[1]);
+					TARDISAdvancementFactory.checkAdvancement(args[1]);
 					return true;
 				}
 				if (first.equals("list")) {
@@ -322,7 +322,7 @@ public class TARDISAdminCommands implements CommandExecutor {
 					if (args.length > 2) {
 						return new TARDISArchCommand(plugin).force(sender, args);
 					} else {
-						return new TARDISArchCommand(plugin).whois(sender, args);
+						return new TARDISArchCommand(plugin).whoIs(sender, args);
 					}
 				}
 				if (first.equals("area")) {

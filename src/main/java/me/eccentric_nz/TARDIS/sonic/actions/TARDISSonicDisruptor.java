@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -30,7 +30,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class TARDISSonicDisruptor {
 
-	public static void breakBlock(TARDIS plugin, Player player, Block block) {
+	public static void breakBlock(TARDISPlugin plugin, Player player, Block block) {
 		// not protected blocks - WorldGuard / GriefPrevention / Lockette / Towny
 		if (TARDISSonicRespect.checkBlockRespect(plugin, player, block)) {
 			TARDISSonicSound.playSonicSound(plugin, player, System.currentTimeMillis(), 600L, "sonic_short");

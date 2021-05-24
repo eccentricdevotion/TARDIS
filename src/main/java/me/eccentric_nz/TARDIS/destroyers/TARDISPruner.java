@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -39,10 +39,10 @@ public class TARDISPruner {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String prefix;
 
-	public TARDISPruner(TARDIS plugin) {
+	public TARDISPruner(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}
@@ -50,7 +50,7 @@ public class TARDISPruner {
 	public void list(CommandSender sender, int days) {
 		long millis = getTime(days);
 		Timestamp prune = getTimestamp(millis);
-		String query = "SELECT * FROM " + prefix + "tardis WHERE lastuse < " + millis;
+		String query = "SELECT * FROM " + prefix + "tardis WHERE last_use < " + millis;
 		Statement statement = null;
 		ResultSet rs = null;
 		try {
@@ -70,8 +70,8 @@ public class TARDISPruner {
 						ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
 						if (rsc.resultSet()) {
 							// double check that this is an unused tardis
-							Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
-							if (lastuse.before(prune)) {
+							Timestamp lastUse = new Timestamp(rs.getLong("last_use"));
+							if (lastUse.before(prune)) {
 								String line = "Time Lord: " + rs.getString("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
 								// write line to file
 								bw.write(line);
@@ -106,7 +106,7 @@ public class TARDISPruner {
 	public void prune(CommandSender sender, int days) {
 		long millis = getTime(days);
 		Timestamp prune = getTimestamp(millis);
-		String query = "SELECT * FROM " + prefix + "tardis WHERE lastuse < " + millis;
+		String query = "SELECT * FROM " + prefix + "tardis WHERE last_use < " + millis;
 		Statement statement = null;
 		ResultSet rs = null;
 		try {
@@ -115,8 +115,8 @@ public class TARDISPruner {
 			TARDISExterminator te = new TARDISExterminator(plugin);
 			while (rs.next()) {
 				// double check that this is an unused tardis
-				Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
-				if (lastuse.before(prune)) {
+				Timestamp lastUse = new Timestamp(rs.getLong("last_use"));
+				if (lastUse.before(prune)) {
 					// remove the tardis
 					if (te.exterminate(rs.getInt("tardis_id"))) {
 						sender.sendMessage("Pruned " + rs.getString("owner") + "'s tardis");

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
@@ -40,10 +40,10 @@ import java.util.UUID;
  */
 public class TARDISHandlesSavedListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<UUID, Integer> selectedSlot = new HashMap<>();
 
-	public TARDISHandlesSavedListener(TARDIS plugin) {
+	public TARDISHandlesSavedListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}

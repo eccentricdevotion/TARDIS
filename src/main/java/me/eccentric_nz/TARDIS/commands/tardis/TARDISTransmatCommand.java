@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.tardis.database.TARDISBoundTransmatRemoval;
@@ -31,9 +31,9 @@ import java.util.HashMap;
 
 class TARDISTransmatCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISTransmatCommand(TARDIS plugin) {
+	TARDISTransmatCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -60,8 +60,8 @@ class TARDISTransmatCommand {
 			TARDISMessage.send(player, "NOT_IN_TARDIS");
 			return false;
 		}
-		int id = rs.getTardis_id();
-		int thisid = rst.getTardis_id();
+		int id = rs.getTardisId();
+		int thisid = rst.getTardisId();
 		if (thisid != id) {
 			TARDISMessage.send(player, "CMD_ONLY_TL");
 			return false;
@@ -158,7 +158,7 @@ class TARDISTransmatCommand {
 				ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, args[2]);
 				if (rsm.resultSet()) {
 					HashMap<String, Object> wherer = new HashMap<>();
-					wherer.put("transmat_id", rsm.getTransmat_id());
+					wherer.put("transmat_id", rsm.getTransmatId());
 					plugin.getQueryFactory().doDelete("transmats", wherer);
 					// check for bound transmat
 					HashMap<String, Object> whered = new HashMap<>();

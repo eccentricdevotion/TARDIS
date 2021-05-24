@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.custommodeldata.GUISaves;
@@ -38,13 +38,13 @@ import java.util.*;
  */
 public class TARDISSaveSignPageTwo {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ItemStack[] pageTwo;
 	private final List<Integer> slots = new LinkedList<>(Arrays.asList(45, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90));
 	private final int id;
 	private final Player player;
 
-	public TARDISSaveSignPageTwo(TARDIS plugin, int id, Player player) {
+	public TARDISSaveSignPageTwo(TARDISPlugin plugin, int id, Player player) {
 		this.plugin = plugin;
 		this.id = id;
 		this.player = player;
@@ -131,7 +131,7 @@ public class TARDISSaveSignPageTwo {
 			ResultSetTardisID rstid = new ResultSetTardisID(plugin);
 			if (rstid.fromUUID(player.getUniqueId().toString())) {
 				// add button to view own saves (if in another player's tardis)
-				if (rstid.getTardis_id() != id) {
+				if (rstid.getTardisId() != id) {
 					own = new ItemStack(GUISaves.LOAD_MY_SAVES.getMaterial(), 1);
 					ItemMeta saves = own.getItemMeta();
 					saves.setDisplayName(GUISaves.LOAD_MY_SAVES.getName());

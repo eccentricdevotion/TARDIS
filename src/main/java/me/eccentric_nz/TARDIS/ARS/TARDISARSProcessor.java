@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.ars;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
 import org.bukkit.Chunk;
 
@@ -30,14 +30,14 @@ import java.util.Map;
  */
 class TARDISARSProcessor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private final int limit;
 	private String error = "ENERGY_NOT_ENOUGH";
 	private HashMap<TARDISARSSlot, ARS> changed;
 	private HashMap<TARDISARSJettison, ARS> jettison;
 
-	public TARDISARSProcessor(TARDIS plugin, int id) {
+	public TARDISARSProcessor(TARDISPlugin plugin, int id) {
 		this.plugin = plugin;
 		this.id = id;
 		limit = this.plugin.getConfig().getInt("growth.ars_limit");

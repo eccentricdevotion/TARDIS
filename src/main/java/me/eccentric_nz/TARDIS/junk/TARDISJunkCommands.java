@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -33,10 +33,10 @@ import java.util.Locale;
  */
 public class TARDISJunkCommands implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> firstArgs = new ArrayList<>();
 
-	public TARDISJunkCommands(TARDIS plugin) {
+	public TARDISJunkCommands(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		firstArgs.add("create");
 		firstArgs.add("delete");

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.resultset.ResultSetRepeaters;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -37,7 +37,7 @@ import java.util.UUID;
 class TARDISManualFlightRunnable implements Runnable {
 
 	private static final int LOOPS = 10;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Location> target;
 	private final List<String> controls = Arrays.asList("Helmic Regulator", "Astrosextant Rectifier", "Gravitic Anomaliser", "Absolute Tesseractulator");
 	private final Player player;
@@ -45,7 +45,7 @@ class TARDISManualFlightRunnable implements Runnable {
 	private int taskID;
 	private int i = 0;
 
-	TARDISManualFlightRunnable(TARDIS plugin, Player player, int id) {
+	TARDISManualFlightRunnable(TARDISPlugin plugin, Player player, int id) {
 		this.plugin = plugin;
 		this.player = player;
 		target = getRepeaterList(id);

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -39,10 +39,10 @@ import java.util.List;
  */
 public class TARDISTeleportListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<TeleportCause> causes = new ArrayList<>();
 
-	public TARDISTeleportListener(TARDIS plugin) {
+	public TARDISTeleportListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		causes.add(TeleportCause.PLUGIN);
 		causes.add(TeleportCause.COMMAND);
@@ -89,7 +89,7 @@ public class TARDISTeleportListener implements Listener {
 				plugin.getQueryFactory().doDelete("travellers", wherer);
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 					HashMap<String, Object> wherei = new HashMap<>();
-					wherei.put("tardis_id", rsid.getTardis_id());
+					wherei.put("tardis_id", rsid.getTardisId());
 					wherei.put("uuid", uuid);
 					plugin.getQueryFactory().doInsert("travellers", wherei);
 				}, 2L);

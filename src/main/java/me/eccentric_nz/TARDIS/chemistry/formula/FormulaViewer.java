@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.formula;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.chemistry.compound.Compound;
 import me.eccentric_nz.tardis.chemistry.compound.CompoundBuilder;
 import me.eccentric_nz.tardis.chemistry.element.Element;
@@ -35,12 +35,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class FormulaViewer {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 	private final ItemStack[] stack = new ItemStack[27];
 	private String formula;
 
-	public FormulaViewer(TARDIS plugin, Player player) {
+	public FormulaViewer(TARDISPlugin plugin, Player player) {
 		this.plugin = plugin;
 		this.player = player;
 	}

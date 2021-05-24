@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,12 +26,12 @@ public class TARDISBoundTransmatRemoval {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private final String name;
 	private final String prefix;
 
-	public TARDISBoundTransmatRemoval(TARDIS plugin, int id, String name) {
+	public TARDISBoundTransmatRemoval(TARDISPlugin plugin, int id, String name) {
 		this.plugin = plugin;
 		this.id = id;
 		this.name = name;

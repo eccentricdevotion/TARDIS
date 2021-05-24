@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
@@ -38,9 +38,9 @@ import java.util.UUID;
  */
 class TARDISMakeHerBlueCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISMakeHerBlueCommand(TARDIS plugin) {
+	TARDISMakeHerBlueCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -67,8 +67,8 @@ class TARDISMakeHerBlueCommand {
 			TARDISMessage.send(player.getPlayer(), "NO_TARDIS");
 			return true;
 		}
-		Tardis tardis = rs.getTardis();
-		if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+		TARDIS tardis = rs.getTardis();
+		if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
 			TARDISMessage.send(player.getPlayer(), "POWER_DOWN");
 			return true;
 		}
@@ -76,7 +76,7 @@ class TARDISMakeHerBlueCommand {
 			TARDISMessage.send(player.getPlayer(), "INVISIBILITY_NOT");
 			return true;
 		}
-		int id = tardis.getTardis_id();
+		int id = tardis.getTardisId();
 		TARDISCircuitChecker tcc = null;
 		if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
 			tcc = new TARDISCircuitChecker(plugin, id);
@@ -101,7 +101,7 @@ class TARDISMakeHerBlueCommand {
 			return true;
 		}
 		HashMap<String, Object> wherecl = new HashMap<>();
-		wherecl.put("tardis_id", tardis.getTardis_id());
+		wherecl.put("tardis_id", tardis.getTardisId());
 		ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
 		if (!rsc.resultSet()) {
 			TARDISMessage.send(player.getPlayer(), "CURRENT_NOT_FOUND");
@@ -109,7 +109,7 @@ class TARDISMakeHerBlueCommand {
 			return true;
 		}
 		Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-		int level = tardis.getArtron_level();
+		int level = tardis.getArtronLevel();
 		int rebuild = plugin.getArtronConfig().getInt("random");
 		if (level < rebuild) {
 			TARDISMessage.send(player.getPlayer(), "ENERGY_NO_REBUILD");

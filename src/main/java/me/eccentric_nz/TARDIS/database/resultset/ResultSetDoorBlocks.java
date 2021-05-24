@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
@@ -38,7 +38,7 @@ public class ResultSetDoorBlocks {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private final String prefix;
 	private Block innerBlock;
@@ -52,7 +52,7 @@ public class ResultSetDoorBlocks {
 	 * @param plugin an instance of the main class.
 	 * @param id     the tardis id to get the doors for.
 	 */
-	public ResultSetDoorBlocks(TARDIS plugin, int id) {
+	public ResultSetDoorBlocks(TARDISPlugin plugin, int id) {
 		this.plugin = plugin;
 		this.id = id;
 		prefix = this.plugin.getPrefix();

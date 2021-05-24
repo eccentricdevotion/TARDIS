@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.ars;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIMap;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -31,9 +31,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISARSMap {
 
 	private final ItemStack[] map;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISARSMap(TARDIS plugin) {
+	public TARDISARSMap(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		map = getItemStack();
 	}

@@ -20,11 +20,11 @@ import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -53,9 +53,9 @@ import java.util.UUID;
  */
 class TARDISRemoteComehereCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISRemoteComehereCommand(TARDIS plugin) {
+	TARDISRemoteComehereCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -91,8 +91,8 @@ class TARDISRemoteComehereCommand {
 			TARDISMessage.send(player, "PLAYER_NO_TARDIS");
 			return true;
 		}
-		Tardis tardis = rs.getTardis();
-		int id = tardis.getTardis_id();
+		TARDIS tardis = rs.getTardis();
+		int id = tardis.getTardisId();
 		// check they are not in the tardis
 		HashMap<String, Object> wherettrav = new HashMap<>();
 		wherettrav.put("uuid", player.getUniqueId().toString());

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Location;
@@ -32,7 +32,7 @@ public class TARDISGriefPreventionChecker {
 
 	private final GriefPrevention griefprevention;
 
-	public TARDISGriefPreventionChecker(TARDIS plugin) {
+	public TARDISGriefPreventionChecker(TARDISPlugin plugin) {
 		griefprevention = (GriefPrevention) plugin.getPM().getPlugin("GriefPrevention");
 	}
 

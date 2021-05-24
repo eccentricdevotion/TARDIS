@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.event.EventHandler;
@@ -29,9 +29,9 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
  */
 public class TARDISSleepListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSleepListener(TARDIS plugin) {
+	public TARDISSleepListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

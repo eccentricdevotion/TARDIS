@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.transmat;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
@@ -37,10 +37,10 @@ import java.util.UUID;
 
 public class TARDISTransmatGUIListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<UUID, String> selectedLocation = new HashMap<>();
 
-	public TARDISTransmatGUIListener(TARDIS plugin) {
+	public TARDISTransmatGUIListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}
@@ -67,7 +67,7 @@ public class TARDISTransmatGUIListener extends TARDISMenuListener implements Lis
 					wheres.put("uuid", player.getUniqueId().toString());
 					ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
 					if (rst.resultSet()) {
-						int id = rst.getTardis_id();
+						int id = rst.getTardisId();
 						switch (slot) {
 							case 17:
 								if (!selectedLocation.containsKey(player.getUniqueId())) {
@@ -96,7 +96,7 @@ public class TARDISTransmatGUIListener extends TARDISMenuListener implements Lis
 									ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, selectedLocation.get(player.getUniqueId()));
 									if (rsm.resultSet()) {
 										HashMap<String, Object> wherer = new HashMap<>();
-										wherer.put("transmat_id", rsm.getTransmat_id());
+										wherer.put("transmat_id", rsm.getTransmatId());
 										plugin.getQueryFactory().doDelete("transmats", wherer);
 										TARDISMessage.send(player, "TRANSMAT_REMOVED");
 										close(player);

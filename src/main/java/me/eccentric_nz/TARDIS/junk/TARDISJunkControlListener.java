@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
@@ -52,12 +52,12 @@ import java.util.UUID;
  */
 public class TARDISJunkControlListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<Integer, Integer> repeaterMap = new HashMap<>();
 	private final List<String> worlds;
 	private final HashMap<UUID, Integer> worldMap = new HashMap<>();
 
-	public TARDISJunkControlListener(TARDIS plugin) {
+	public TARDISJunkControlListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		repeaterMap.put(1, 1);
 		repeaterMap.put(2, 10);
@@ -86,7 +86,7 @@ public class TARDISJunkControlListener implements Listener {
 				where.put("type", 0);
 				ResultSetControls rsh = new ResultSetControls(plugin, where, false);
 				if (rsh.resultSet()) {
-					int id = rsh.getTardis_id();
+					int id = rsh.getTardisId();
 					// is it the Junk tardis?
 					ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
 					if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
@@ -139,7 +139,7 @@ public class TARDISJunkControlListener implements Listener {
 				where.put("type", 4);
 				ResultSetControls rst = new ResultSetControls(plugin, where, false);
 				if (rst.resultSet()) {
-					int id = rst.getTardis_id();
+					int id = rst.getTardisId();
 					// is it the Junk tardis?
 					ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
 					if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
@@ -157,7 +157,7 @@ public class TARDISJunkControlListener implements Listener {
 				where.put("type", 1);
 				ResultSetControls rsh = new ResultSetControls(plugin, where, false);
 				if (rsh.resultSet()) {
-					int id = rsh.getTardis_id();
+					int id = rsh.getTardisId();
 					// is it the Junk tardis?
 					ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
 					if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
@@ -175,7 +175,7 @@ public class TARDISJunkControlListener implements Listener {
 				where.put("type", 6);
 				ResultSetControls rsh = new ResultSetControls(plugin, where, false);
 				if (rsh.resultSet()) {
-					int id = rsh.getTardis_id();
+					int id = rsh.getTardisId();
 					// is it the Junk tardis?
 					ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
 					if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.tardis.api.event.TARDISZeroRoomEnterEvent;
@@ -26,7 +26,7 @@ import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.chameleon.TARDISShellRoomConstructor;
 import me.eccentric_nz.tardis.commands.utils.TARDISWeatherInventory;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.*;
 import me.eccentric_nz.tardis.forcefield.TARDISForceField;
@@ -72,11 +72,11 @@ import java.util.*;
  */
 public class TARDISControlListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Material> validBlocks = new ArrayList<>();
 	private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33, 35, 38, 39, 40, 41, 42, 43);
 
-	public TARDISControlListener(TARDIS plugin) {
+	public TARDISControlListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		validBlocks.add(Material.COMPARATOR);
 		validBlocks.add(Material.DISPENSER);
@@ -115,7 +115,7 @@ public class TARDISControlListener implements Listener {
 				where.put("location", blockLocation.toString());
 				ResultSetControls rsc = new ResultSetControls(plugin, where, false);
 				if (rsc.resultSet()) {
-					int id = rsc.getTardis_id();
+					int id = rsc.getTardisId();
 					int type = rsc.getType();
 					if (plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId()) && type != 13) {
 						TARDISMessage.send(player, "ISO_HANDS_OFF");
@@ -129,21 +129,21 @@ public class TARDISControlListener implements Listener {
 					whereid.put("tardis_id", id);
 					ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
 					if (rs.resultSet()) {
-						Tardis tardis = rs.getTardis();
+						TARDIS tardis = rs.getTardis();
 						if (tardis.getPreset().equals(PRESET.JUNK)) {
 							return;
 						}
 						// check they initialised
-						if (!tardis.isTardis_init()) {
+						if (!tardis.isTardisInit()) {
 							TARDISMessage.send(player, "ENERGY_NO_INIT");
 							return;
 						}
 						// check isomorphic controls
-						if (tardis.isIso_on() && !player.getUniqueId().equals(tardis.getUuid())) {
+						if (tardis.isIsoOn() && !player.getUniqueId().equals(tardis.getUuid())) {
 							TARDISMessage.send(player, "ISO_HANDS_OFF");
 							return;
 						}
-						if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && !control.allowUnpowered()) {
+						if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered() && !control.allowUnpowered()) {
 							TARDISMessage.send(player, "POWER_DOWN");
 							return;
 						}
@@ -151,13 +151,13 @@ public class TARDISControlListener implements Listener {
 							TARDISMessage.send(player, "SIEGE_NO_CONTROL");
 							return;
 						}
-						boolean lights = tardis.isLights_on();
-						if (!lights && type == 12 && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+						boolean lightsOn = tardis.isLightsOn();
+						if (!lightsOn && type == 12 && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
 							TARDISMessage.send(player, "POWER_DOWN");
 							return;
 						}
-						int level = tardis.getArtron_level();
-						boolean hb = tardis.isHandbrake_on();
+						int level = tardis.getArtronLevel();
+						boolean hb = tardis.isHandbrakeOn();
 						UUID ownerUUID = tardis.getUuid();
 						TARDISCircuitChecker tcc = null;
 						if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
@@ -260,7 +260,7 @@ public class TARDISControlListener implements Listener {
 									player.openInventory(tmpl);
 									break;
 								case 12: // Control room light switch
-									new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().hasLanterns()).flickSwitch();
+									new TARDISLightSwitch(plugin, id, lightsOn, player, tardis.getSchematic().hasLanterns()).flickSwitch();
 									break;
 								case 13: // TIS
 									new TARDISInfoMenuButton(plugin, player).clickButton();
@@ -360,7 +360,7 @@ public class TARDISControlListener implements Listener {
 										TARDISMessage.send(player, "NO_MAT_CIRCUIT");
 										return;
 									}
-									new TARDISSiegeButton(plugin, player, tardis.isPowered_on(), id).clickButton();
+									new TARDISSiegeButton(plugin, player, tardis.isPowered(), id).clickButton();
 									break;
 								case 22:
 									if (player.isSneaking()) {
@@ -401,7 +401,7 @@ public class TARDISControlListener implements Listener {
 										if (disk != null && disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
 											ItemMeta dim = disk.getItemMeta();
 											if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
-												// get the program_id from the disk
+												// get the programId from the disk
 												int pid = TARDISNumberParsers.parseInt(dim.getLore().get(1));
 												// query the database
 												ResultSetProgram rsp = new ResultSetProgram(plugin, pid);
@@ -412,7 +412,7 @@ public class TARDISControlListener implements Listener {
 													HashMap<String, Object> set = new HashMap<>();
 													set.put("checked", 0);
 													HashMap<String, Object> wherep = new HashMap<>();
-													wherep.put("program_id", pid);
+													wherep.put("programId", pid);
 													plugin.getQueryFactory().doUpdate("programs", set, wherep);
 													player.getInventory().setItemInMainHand(null);
 												}
@@ -571,7 +571,7 @@ public class TARDISControlListener implements Listener {
 						ResultSetJunk rsj = new ResultSetJunk(plugin, wherej);
 						if (rsj.resultSet()) {
 							// save_sign
-							new TARDISSaveSign(plugin).openGUI(player, rsj.getTardis_id());
+							new TARDISSaveSign(plugin).openGUI(player, rsj.getTardisId());
 						}
 					}
 				}

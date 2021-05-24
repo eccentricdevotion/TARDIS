@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -34,7 +34,7 @@ public class TARDISSonicSound {
 
 	private static final HashMap<UUID, Long> timeout = new HashMap<>();
 
-	public static void playSonicSound(TARDIS plugin, Player player, long now, long cooldown, String sound) {
+	public static void playSonicSound(TARDISPlugin plugin, Player player, long now, long cooldown, String sound) {
 		if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
 			ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
 			im.addEnchant(Enchantment.DURABILITY, 1, true);
@@ -60,7 +60,7 @@ public class TARDISSonicSound {
 		}
 	}
 
-	private static void removeSonicEnchant(TARDIS plugin, PlayerInventory inv) {
+	private static void removeSonicEnchant(TARDISPlugin plugin, PlayerInventory inv) {
 		String result = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result");
 		Material sonic = Material.valueOf(result);
 		int first = inv.first(sonic);

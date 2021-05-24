@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.schematic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -40,13 +40,13 @@ public class ResultSetArchiveButtons {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String uuid;
 	private final ItemStack[] buttons;
 	private final String prefix;
 	private final Material[] terracotta = {Material.WHITE_TERRACOTTA, Material.ORANGE_TERRACOTTA, Material.MAGENTA_TERRACOTTA, Material.LIGHT_BLUE_TERRACOTTA, Material.YELLOW_TERRACOTTA, Material.LIME_TERRACOTTA, Material.PINK_TERRACOTTA, Material.GRAY_TERRACOTTA, Material.LIGHT_GRAY_TERRACOTTA, Material.CYAN_TERRACOTTA, Material.PURPLE_TERRACOTTA, Material.BLUE_TERRACOTTA, Material.BROWN_TERRACOTTA, Material.GREEN_TERRACOTTA, Material.RED_TERRACOTTA, Material.BLACK_TERRACOTTA};
 
-	public ResultSetArchiveButtons(TARDIS plugin, String uuid) {
+	public ResultSetArchiveButtons(TARDISPlugin plugin, String uuid) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		prefix = this.plugin.getPrefix();

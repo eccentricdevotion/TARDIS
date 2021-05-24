@@ -27,8 +27,8 @@ public final class TARDISHADSEvent extends TARDISLocationEvent {
 
 	private final HADS hadsType;
 
-	public TARDISHADSEvent(Player player, int tardis_id, Location location, HADS hadsType) {
-		super(player, tardis_id, location);
+	public TARDISHADSEvent(Player player, int tardisId, Location location, HADS hadsType) {
+		super(player, tardisId, location);
 		this.hadsType = hadsType;
 	}
 

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
@@ -40,7 +40,7 @@ import java.util.UUID;
  */
 public class TARDISRandomButton {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 	private final int id;
 	private final int level;
@@ -49,7 +49,7 @@ public class TARDISRandomButton {
 	private final String comps;
 	private final UUID ownerUUID;
 
-	public TARDISRandomButton(TARDIS plugin, Player player, int id, int level, int secondary, String comps, UUID ownerUUID) {
+	public TARDISRandomButton(TARDISPlugin plugin, Player player, int id, int level, int secondary, String comps, UUID ownerUUID) {
 		this.plugin = plugin;
 		this.player = player;
 		this.id = id;

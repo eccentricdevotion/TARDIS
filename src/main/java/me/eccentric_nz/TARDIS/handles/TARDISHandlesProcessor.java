@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.tardis.api.Parameters;
@@ -28,7 +28,7 @@ import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.commands.handles.TARDISHandlesTeleportCommand;
 import me.eccentric_nz.tardis.control.TARDISPowerButton;
 import me.eccentric_nz.tardis.database.data.Program;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
 import me.eccentric_nz.tardis.enumeration.*;
@@ -66,12 +66,12 @@ import java.util.UUID;
  */
 public class TARDISHandlesProcessor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Program program;
 	private final Player player;
 	private final int pid;
 
-	public TARDISHandlesProcessor(TARDIS plugin, Program program, Player player, int pid) {
+	public TARDISHandlesProcessor(TARDISPlugin plugin, Program program, Player player, int pid) {
 		this.plugin = plugin;
 		this.program = program;
 		this.player = player;
@@ -128,8 +128,8 @@ public class TARDISHandlesProcessor {
 					where.put("uuid", uuid.toString());
 					ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
 					if (rs.resultSet()) {
-						Tardis tardis = rs.getTardis();
-						int id = tardis.getTardis_id();
+						TARDIS tardis = rs.getTardis();
+						int id = tardis.getTardisId();
 						switch (thb) {
 							case DOOR:
 								switch (next) {
@@ -158,23 +158,23 @@ public class TARDISHandlesProcessor {
 								break;
 							case LIGHTS:
 								boolean onoff = next.equals(TARDISHandlesBlock.ON);
-								if ((onoff && !tardis.isLights_on()) || (!onoff && tardis.isLights_on())) {
+								if ((onoff && !tardis.isLightsOn()) || (!onoff && tardis.isLightsOn())) {
 									new TARDISLampToggler(plugin).flickSwitch(id, uuid, onoff, tardis.getSchematic().hasLanterns());
 								}
 								break;
 							case POWER:
 								switch (next) {
 									case ON:
-										if (!tardis.isPowered_on()) {
+										if (!tardis.isPowered()) {
 											if (plugin.getConfig().getBoolean("allow.power_down")) {
-												new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
+												new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLightsOn(), player.getLocation(), tardis.getArtronLevel(), tardis.getSchematic().hasLanterns()).clickButton();
 											}
 										}
 										break;
 									case OFF:
-										if (tardis.isPowered_on()) {
+										if (tardis.isPowered()) {
 											if (plugin.getConfig().getBoolean("allow.power_down")) {
-												new TARDISPowerButton(plugin, id, player, tardis.getPreset(), true, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
+												new TARDISPowerButton(plugin, id, player, tardis.getPreset(), true, tardis.isHidden(), tardis.isLightsOn(), player.getLocation(), tardis.getArtronLevel(), tardis.getSchematic().hasLanterns()).clickButton();
 											}
 										}
 										break;
@@ -200,7 +200,7 @@ public class TARDISHandlesProcessor {
 								}
 								break;
 							case SIEGE:
-								if ((next.equals(TARDISHandlesBlock.ON) && !tardis.isSiege_on()) || (next.equals(TARDISHandlesBlock.OFF) && tardis.isSiege_on())) {
+								if ((next.equals(TARDISHandlesBlock.ON) && !tardis.isSiegeOn()) || (next.equals(TARDISHandlesBlock.OFF) && tardis.isSiegeOn())) {
 									new TARDISSiegeMode(plugin).toggleViaSwitch(id, player);
 								}
 								break;
@@ -408,7 +408,7 @@ public class TARDISHandlesProcessor {
 													UUID toUUID = to.getUniqueId();
 													// check the to player's DND status
 													ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, toUUID.toString());
-													if (rspp.resultSet() && rspp.isDND()) {
+													if (rspp.resultSet() && rspp.isDndOn()) {
 														TARDISMessage.handlesSend(player, "DND", first);
 														continue;
 													}
@@ -486,7 +486,7 @@ public class TARDISHandlesProcessor {
 												tid.put("tardis_id", id);
 												if (!tardis.isHidden()) {
 													plugin.getPresetDestroyer().destroyPreset(dd);
-													plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisID());
+													plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisId());
 													plugin.getTrackerKeeper().getInVortex().add(id);
 													// play tardis_takeoff sfx
 													TARDISSounds.playTARDISSound(current, "tardis_takeoff");

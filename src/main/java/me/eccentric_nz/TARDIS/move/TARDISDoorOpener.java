@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPortals;
@@ -43,11 +43,11 @@ import java.util.UUID;
  */
 public class TARDISDoorOpener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final UUID uuid;
 	private final int id;
 
-	public TARDISDoorOpener(TARDIS plugin, UUID uuid, int id) {
+	public TARDISDoorOpener(TARDISPlugin plugin, UUID uuid, int id) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		this.id = id;
@@ -82,7 +82,7 @@ public class TARDISDoorOpener {
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("tardis_id", id);
 				ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-				Tardis tardis = null;
+				TARDIS tardis = null;
 				PRESET preset = null;
 				boolean abandoned = false;
 				if (rs.resultSet()) {

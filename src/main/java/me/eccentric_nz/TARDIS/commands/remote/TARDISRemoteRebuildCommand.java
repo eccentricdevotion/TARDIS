@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.remote;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisPreset;
@@ -34,9 +34,9 @@ import java.util.HashMap;
  */
 class TARDISRemoteRebuildCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISRemoteRebuildCommand(TARDIS plugin) {
+	TARDISRemoteRebuildCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -35,10 +35,10 @@ import java.util.Set;
  */
 public class TARDISShapelessRecipe {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, ShapelessRecipe> shapelessRecipes;
 
-	public TARDISShapelessRecipe(TARDIS plugin) {
+	public TARDISShapelessRecipe(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		shapelessRecipes = new HashMap<>();
 	}

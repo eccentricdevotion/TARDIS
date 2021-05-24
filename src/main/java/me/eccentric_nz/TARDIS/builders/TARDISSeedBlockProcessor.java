@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
 import me.eccentric_nz.tardis.api.event.TARDISCreationEvent;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.*;
@@ -50,9 +50,9 @@ import java.util.Locale;
  */
 public class TARDISSeedBlockProcessor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSeedBlockProcessor(TARDIS plugin) {
+	public TARDISSeedBlockProcessor(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -158,7 +158,7 @@ public class TARDISSeedBlockProcessor {
 				} else {
 					now = System.currentTimeMillis();
 				}
-				set.put("lastuse", now);
+				set.put("last_use", now);
 				// set preset if default is not 'FACTORY'
 				String preset = plugin.getConfig().getString("police_box.default_preset").toUpperCase(Locale.ENGLISH);
 				set.put("chameleon_preset", preset);
@@ -218,7 +218,7 @@ public class TARDISSeedBlockProcessor {
 						plugin.getPresetBuilder().buildPreset(bd);
 						l.getBlock().setBlockData(TARDISConstants.AIR);
 					}, schm.getConsoleSize().getDelay());
-					// set achievement completed
+					// set advancement completed
 					if (TARDISPermission.hasPermission(player, "tardis.book")) {
 						HashMap<String, Object> seta = new HashMap<>();
 						seta.put("completed", 1);
@@ -227,7 +227,7 @@ public class TARDISSeedBlockProcessor {
 						wherea.put("name", "tardis");
 						plugin.getQueryFactory().doUpdate("achievements", seta, wherea);
 						// award advancement
-						TARDISAchievementFactory.grantAdvancement(Advancement.TARDIS, player);
+						TARDISAdvancementFactory.grantAdvancement(Advancement.TARDIS, player);
 					}
 					if (max_count > 0) {
 						TARDISMessage.send(player, "COUNT", String.format("%d", (player_count + 1)), String.format("%d", max_count));
@@ -252,7 +252,7 @@ public class TARDISSeedBlockProcessor {
 				}
 			} else {
 				HashMap<String, Object> wherecl = new HashMap<>();
-				wherecl.put("tardis_id", rs.getTardis_id());
+				wherecl.put("tardis_id", rs.getTardisId());
 				ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
 				if (rscl.resultSet()) {
 					TARDISMessage.send(player, "TARDIS_HAVE", rscl.getWorld().getName() + " at x:" + rscl.getX() + " y:" + rscl.getY() + " z:" + rscl.getZ());

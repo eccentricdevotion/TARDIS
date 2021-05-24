@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.builders.TARDISInstantPoliceBox;
 import me.eccentric_nz.tardis.builders.TARDISInstantPreset;
@@ -47,7 +47,7 @@ import java.util.UUID;
  */
 public class TARDISVortexPersister {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final String prefix;
@@ -55,7 +55,7 @@ public class TARDISVortexPersister {
 	private ResultSet rs = null;
 	private int count = 0;
 
-	public TARDISVortexPersister(TARDIS plugin) {
+	public TARDISVortexPersister(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}

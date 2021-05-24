@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -38,9 +38,9 @@ import java.util.HashMap;
  */
 public class TARDISHandlesListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISHandlesListener(TARDIS plugin) {
+	public TARDISHandlesListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -72,7 +72,7 @@ public class TARDISHandlesListener implements Listener {
 		b.getWorld().dropItemNaturally(b.getLocation(), is);
 		// remove control record
 		HashMap<String, Object> wherec = new HashMap<>();
-		wherec.put("c_id", rsc.getC_id());
+		wherec.put("c_id", rsc.getcId());
 		plugin.getQueryFactory().doDelete("controls", wherec);
 	}
 

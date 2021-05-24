@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
@@ -29,9 +29,9 @@ import java.util.HashMap;
  */
 class TARDISHandlesRemindCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISHandlesRemindCommand(TARDIS plugin) {
+	TARDISHandlesRemindCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetSonic;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -46,10 +46,10 @@ import java.util.List;
  */
 public class TARDISSonicActivatorListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<ItemStack> stacks;
 
-	public TARDISSonicActivatorListener(TARDIS plugin) {
+	public TARDISSonicActivatorListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 		stacks = getStacks();

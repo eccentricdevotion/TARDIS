@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetLamps;
@@ -35,11 +35,11 @@ import java.util.UUID;
  */
 public class TARDISLampToggler {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final BlockData lamp;
 	private final BlockData sea;
 
-	public TARDISLampToggler(TARDIS plugin) {
+	public TARDISLampToggler(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		lamp = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(52));
 		sea = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
@@ -56,7 +56,7 @@ public class TARDISLampToggler {
 			if (rsp.resultSet()) {
 				// only use player preference if the tardis id of the timelord/companion is the same as the tardis id they are in
 				ResultSetTardisID rs = new ResultSetTardisID(plugin);
-				if (rs.fromUUID(uuid.toString()) && rs.getTardis_id() == id) {
+				if (rs.fromUUID(uuid.toString()) && rs.getTardisId() == id) {
 					lantern = rsp.isLanternsOn();
 					use_wool = rsp.isWoolLightsOn();
 				} else {

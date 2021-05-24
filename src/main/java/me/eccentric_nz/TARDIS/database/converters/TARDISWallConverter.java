@@ -3,7 +3,7 @@ package me.eccentric_nz.tardis.database.converters;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import org.apache.commons.lang.StringUtils;
 
@@ -17,14 +17,14 @@ import java.util.List;
 public class TARDISWallConverter {
 
 	private final String[] find = new String[]{"east=false", "east=true", "north=false", "north=true", "south=false", "south=true", "west=false", "west=true"};
-	private final String[] repl = new String[]{"east=none", "east=low", "north=none", "north=low", "south=none", "south=low", "west=none", "west=low"};
+	private final String[] replace = new String[]{"east=none", "east=low", "north=none", "north=low", "south=none", "south=low", "west=none", "west=low"};
 	private final List<String> walls = new ArrayList<>();
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String prefix;
 
-	public TARDISWallConverter(TARDIS plugin) {
+	public TARDISWallConverter(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 		walls.add("cobblestone_wall");
@@ -51,7 +51,7 @@ public class TARDISWallConverter {
 		// "minecraft:cobblestone_wall[east=true,north=false,south=false,up=true,waterlogged=false,west=false]"
 		// changes to ==>
 		// "minecraft:cobblestone_wall[east=low,north=none,south=none,up=true,waterlogged=false,west=none]"
-		return StringUtils.replaceEach(text, find, repl);
+		return StringUtils.replaceEach(text, find, replace);
 	}
 
 	public void processArchives() {

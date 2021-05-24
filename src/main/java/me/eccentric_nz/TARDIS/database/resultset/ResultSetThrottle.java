@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 
@@ -35,7 +35,7 @@ public class ResultSetThrottle {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String prefix;
 
 	/**
@@ -43,7 +43,7 @@ public class ResultSetThrottle {
 	 *
 	 * @param plugin an instance of the main class.
 	 */
-	public ResultSetThrottle(TARDIS plugin) {
+	public ResultSetThrottle(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}

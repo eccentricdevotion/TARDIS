@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import org.bukkit.Location;
 import org.bukkit.entity.Ageable;
@@ -32,10 +32,10 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
  */
 public class TARDISBreedingListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int chance;
 
-	public TARDISBreedingListener(TARDIS plugin) {
+	public TARDISBreedingListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		chance = this.plugin.getConfig().getInt("siege.breeding");
 	}

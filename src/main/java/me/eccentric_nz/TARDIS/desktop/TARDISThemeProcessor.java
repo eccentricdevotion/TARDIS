@@ -17,11 +17,11 @@
 package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.ars.TARDISARSMethods;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.data.Archive;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetARS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -42,11 +42,11 @@ import java.util.UUID;
  */
 class TARDISThemeProcessor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final UUID uuid;
 	private Archive archive_next;
 
-	TARDISThemeProcessor(TARDIS plugin, UUID uuid) {
+	TARDISThemeProcessor(TARDISPlugin plugin, UUID uuid) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 	}
@@ -60,11 +60,11 @@ class TARDISThemeProcessor {
 			wheret.put("uuid", uuid.toString());
 			ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
 			rs.resultSet();
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			// check if the player has a Handles placed
 			HashMap<String, Object> whereh = new HashMap<>();
 			whereh.put("type", 26);
-			whereh.put("tardis_id", tardis.getTardis_id());
+			whereh.put("tardis_id", tardis.getTardisId());
 			ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
 			if (rsc.resultSet()) {
 				TARDISMessage.send(player, "UPGRADE_REMOVE_HANDLES");
@@ -82,7 +82,7 @@ class TARDISThemeProcessor {
 			ResultSetArchive rs = new ResultSetArchive(plugin, where);
 			if (rs.resultSet()) {
 				archive_next = rs.getArchive();
-				JsonObject dimensions = archive_next.getJSON().get("dimensions").getAsJsonObject();
+				JsonObject dimensions = archive_next.getJson().get("dimensions").getAsJsonObject();
 				h = dimensions.get("height").getAsInt();
 				w = dimensions.get("width").getAsInt();
 				size_next = archive_next.getConsoleSize();
@@ -117,7 +117,7 @@ class TARDISThemeProcessor {
 			where.put("use", 2);
 			ResultSetArchive rs = new ResultSetArchive(plugin, where);
 			if (rs.resultSet()) {
-				JsonObject dimensions = rs.getArchive().getJSON().get("dimensions").getAsJsonObject();
+				JsonObject dimensions = rs.getArchive().getJson().get("dimensions").getAsJsonObject();
 				ph = dimensions.get("height").getAsInt();
 				pw = dimensions.get("width").getAsInt();
 				size_prev = rs.getArchive().getConsoleSize();

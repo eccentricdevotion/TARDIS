@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
@@ -35,10 +35,10 @@ import java.util.List;
  */
 public class TARDISSiegeRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int deplete;
 
-	public TARDISSiegeRunnable(TARDIS plugin) {
+	public TARDISSiegeRunnable(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		deplete = -this.plugin.getArtronConfig().getInt("siege_deplete");
 	}
@@ -51,8 +51,8 @@ public class TARDISSiegeRunnable implements Runnable {
 			where.put("tardis_id", id);
 			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
 			if (rs.resultSet()) {
-				Tardis tardis = rs.getTardis();
-				int level = tardis.getArtron_level();
+				TARDIS tardis = rs.getTardis();
+				int level = tardis.getArtronLevel();
 				if (level > deplete) {
 					// remove some energy
 					HashMap<String, Object> whered = new HashMap<>();

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.data.Program;
 import me.eccentric_nz.tardis.database.resultset.ResultSetProgram;
 import org.bukkit.Material;
@@ -28,13 +28,13 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISHandlesProgramInventory {
 
-	private final TARDIS plugin;
-	private final int program_id;
+	private final TARDISPlugin plugin;
+	private final int programId;
 	private final ItemStack[] handles;
 
-	public TARDISHandlesProgramInventory(TARDIS plugin, int program_id) {
+	public TARDISHandlesProgramInventory(TARDISPlugin plugin, int programId) {
 		this.plugin = plugin;
-		this.program_id = program_id;
+		this.programId = programId;
 		handles = getItemStack();
 	}
 
@@ -47,9 +47,9 @@ public class TARDISHandlesProgramInventory {
 
 		ItemStack[] stack = new ItemStack[54];
 		int i = 0;
-		if (program_id != 0) {
+		if (programId != 0) {
 			// retrieve the program from the database
-			ResultSetProgram rsp = new ResultSetProgram(plugin, program_id);
+			ResultSetProgram rsp = new ResultSetProgram(plugin, programId);
 			if (rsp.resultSet()) {
 				Program p = rsp.getProgram();
 				for (ItemStack is : p.getInventory()) {

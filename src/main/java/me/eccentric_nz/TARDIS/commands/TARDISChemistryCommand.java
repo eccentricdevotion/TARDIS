@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.chemistry.block.ChemistryBlock;
 import me.eccentric_nz.tardis.chemistry.block.RecipeData;
@@ -44,10 +44,10 @@ import java.util.List;
 
 public class TARDISChemistryCommand implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> GUIS = Arrays.asList("creative", "construct", "compound", "reduce", "product", "lab");
 
-	public TARDISChemistryCommand(TARDIS plugin) {
+	public TARDISChemistryCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

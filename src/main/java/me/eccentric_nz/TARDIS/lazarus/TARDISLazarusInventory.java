@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.lazarus;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIGeneticManipulator;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -38,10 +38,10 @@ import java.util.List;
 class TARDISLazarusInventory {
 
 	private final ItemStack[] terminal;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Material> disguises = new ArrayList<>();
 
-	TARDISLazarusInventory(TARDIS plugin) {
+	TARDISLazarusInventory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		// maximum number of eggs is 45
 		disguises.add(Material.BAT_SPAWN_EGG);

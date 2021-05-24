@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import org.bukkit.Location;
@@ -30,9 +30,9 @@ import java.util.HashMap;
  */
 public class TARDISVoidFall {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISVoidFall(TARDIS plugin) {
+	public TARDISVoidFall(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -45,8 +45,8 @@ public class TARDISVoidFall {
 		wherei.put("tardis_id", id);
 		ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
 		if (rsi.resultSet()) {
-			COMPASS innerD = rsi.getDoor_direction();
-			String doorLocStr = rsi.getDoor_location();
+			COMPASS innerD = rsi.getDoorDirection();
+			String doorLocStr = rsi.getDoorLocation();
 			World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
 			Location tardis_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
 			int getx = tardis_loc.getBlockX();

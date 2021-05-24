@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.ars.TARDISARSMethods;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.TARDISTimeRotor;
 import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.tardis.database.data.Farm;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetARS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetFarming;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -49,9 +49,9 @@ import java.util.Locale;
  */
 class TARDISUpdateCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISUpdateCommand(TARDIS plugin) {
+	TARDISUpdateCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -84,8 +84,8 @@ class TARDISUpdateCommand {
 				TARDISMessage.send(player, "NOT_A_TIMELORD");
 				return false;
 			}
-			Tardis tardis = rs.getTardis();
-			int ownerid = tardis.getTardis_id();
+			TARDIS tardis = rs.getTardis();
+			int ownerid = tardis.getTardisId();
 			String tardis_block = TARDISStringUtils.toScoredUppercase(args[1]);
 			Updateable updateable;
 			try {
@@ -102,7 +102,7 @@ class TARDISUpdateCommand {
 				TARDISMessage.send(player, "SIEGE_DISABLED");
 				return true;
 			}
-			if (updateable.equals(Updateable.BEACON) && !tardis.isPowered_on()) {
+			if (updateable.equals(Updateable.BEACON) && !tardis.isPowered()) {
 				TARDISMessage.send(player, "UPDATE_BEACON");
 				return true;
 			}
@@ -250,7 +250,7 @@ class TARDISUpdateCommand {
 					TARDISMessage.send(player, "NOT_IN_TARDIS");
 					return false;
 				}
-				int thisid = rst.getTardis_id();
+				int thisid = rst.getTardisId();
 				if (thisid != ownerid) {
 					TARDISMessage.send(player, "CMD_ONLY_TL");
 					return false;

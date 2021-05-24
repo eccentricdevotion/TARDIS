@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.data.Area;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
@@ -41,9 +41,9 @@ import java.util.Objects;
  */
 class TARDISAreaDisks {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISAreaDisks(TARDIS plugin) {
+	TARDISAreaDisks(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

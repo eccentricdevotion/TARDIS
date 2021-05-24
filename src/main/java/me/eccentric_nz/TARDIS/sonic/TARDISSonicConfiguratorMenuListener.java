@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.data.ConfiguredSonic;
 import me.eccentric_nz.tardis.database.resultset.ResultSetConfiguredSonic;
 import me.eccentric_nz.tardis.enumeration.SonicConfig;
@@ -25,10 +25,10 @@ import java.util.UUID;
 
 public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<UUID, ConfiguredSonic> sonics = new HashMap<>();
 
-	public TARDISSonicConfiguratorMenuListener(TARDIS plugin) {
+	public TARDISSonicConfiguratorMenuListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}
@@ -170,8 +170,8 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 		option.setItemMeta(im);
 	}
 
-	private ConfiguredSonic getConfiguredSonic(UUID sonic_uuid, ItemMeta im) {
-		ResultSetConfiguredSonic rscs = new ResultSetConfiguredSonic(plugin, sonic_uuid);
+	private ConfiguredSonic getConfiguredSonic(UUID sonicUuid, ItemMeta im) {
+		ResultSetConfiguredSonic rscs = new ResultSetConfiguredSonic(plugin, sonicUuid);
 		if (rscs.resultSet()) {
 			ConfiguredSonic configuredSonic = rscs.getConfiguredSonic();
 			// check if there are any new upgrades
@@ -272,7 +272,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 			set.put("arrow", arr);
 			set.put("knockback", kno);
 			HashMap<String, Object> where = new HashMap<>();
-			where.put("sonic_id", configuredSonic.getSonic_id());
+			where.put("sonicId", configuredSonic.getSonicId());
 			plugin.getQueryFactory().doUpdate("sonic", set, where);
 			// set sonic lore
 			ItemStack sonic = view.getItem(18);
@@ -314,9 +314,9 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 			int arrow = lore != null && lore.contains("Pickup Arrows Upgrade") ? 1 : 0;
 			int knockback = lore != null && lore.contains("Knockback Upgrade") ? 1 : 0;
 			// create a new UUID
-			UUID sonic_uuid = UUID.randomUUID();
+			UUID sonicUuid = UUID.randomUUID();
 			// set the UUID to the sonic
-			im.getPersistentDataContainer().set(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID(), sonic_uuid);
+			im.getPersistentDataContainer().set(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID(), sonicUuid);
 			is.setItemMeta(im);
 			// prepare data for database insertion
 			HashMap<String, Object> set = new HashMap<>();
@@ -329,11 +329,11 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener impl
 			set.put("ignite", ignite);
 			set.put("arrow", arrow);
 			set.put("knockback", knockback);
-			set.put("sonic_uuid", sonic_uuid.toString());
+			set.put("sonic_uuid", sonicUuid.toString());
 			// insert into database
 			int id = plugin.getQueryFactory().doSyncInsert("sonic", set);
 			// create  the configured sonic
-			return new ConfiguredSonic(id, uuid, bio, diamond, emerald, redstone, painter, ignite, arrow, knockback, sonic_uuid);
+			return new ConfiguredSonic(id, uuid, bio, diamond, emerald, redstone, painter, ignite, arrow, knockback, sonicUuid);
 		}
 		return null;
 	}

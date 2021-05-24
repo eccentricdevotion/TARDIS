@@ -18,11 +18,11 @@ package me.eccentric_nz.tardis.chameleon;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -62,7 +62,7 @@ import java.util.UUID;
  */
 public class TARDISChameleonConstructorListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Material> doors = new ArrayList<>();
 	private final List<Material> lamps = new ArrayList<>();
 	private final HashMap<UUID, Integer> currentDoor = new HashMap<>();
@@ -70,7 +70,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
 	private final int dn;
 	private final int ln;
 
-	public TARDISChameleonConstructorListener(TARDIS plugin) {
+	public TARDISChameleonConstructorListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 		doors.addAll(Tag.DOORS.getValues());
@@ -108,12 +108,12 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
 					wheres.put("uuid", player.getUniqueId().toString());
 					ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
 					if (rst.resultSet()) {
-						int id = rst.getTardis_id();
+						int id = rst.getTardisId();
 						HashMap<String, Object> where = new HashMap<>();
 						where.put("tardis_id", id);
 						ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 						if (rs.resultSet()) {
-							Tardis tardis = rs.getTardis();
+							TARDIS tardis = rs.getTardis();
 							UUID uuid = player.getUniqueId();
 							PRESET preset = tardis.getPreset();
 							Adaption adapt = tardis.getAdaption();

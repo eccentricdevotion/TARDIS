@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.ars;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -50,7 +50,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
 
 	private final HashMap<UUID, String> selectedLocation = new HashMap<>();
 
-	public TARDISARSMapListener(TARDIS plugin) {
+	public TARDISARSMapListener(TARDISPlugin plugin) {
 		super(plugin);
 	}
 
@@ -159,7 +159,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
 			where.put("tardis_id", id);
 			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 			if (rs.resultSet()) {
-				Tardis tardis = rs.getTardis();
+				TARDIS tardis = rs.getTardis();
 				int pos = tardis.getTIPS();
 				int tx = 0, tz = 0;
 				if (pos != -1) {

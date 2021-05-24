@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
@@ -42,9 +42,9 @@ import java.util.Locale;
  */
 class TARDISHomeCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISHomeCommand(TARDIS plugin) {
+	TARDISHomeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -55,7 +55,7 @@ class TARDISHomeCommand {
 				TARDISMessage.send(player, "NOT_A_TIMELORD");
 				return false;
 			}
-			int id = rs.getTardis_id();
+			int id = rs.getTardisId();
 			if (args.length == 3 && args[1].equalsIgnoreCase("set")) {
 				// set the PRESET for the home location
 				String which;

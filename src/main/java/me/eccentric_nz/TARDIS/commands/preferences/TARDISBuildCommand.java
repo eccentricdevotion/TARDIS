@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardis.commands.preferences;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISAntiBuild;
@@ -32,9 +32,9 @@ import java.util.HashMap;
  */
 class TARDISBuildCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISBuildCommand(TARDIS plugin) {
+	TARDISBuildCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -52,8 +52,8 @@ class TARDISBuildCommand {
 			TARDISMessage.send(player, "NO_TARDIS");
 			return true;
 		}
-		Tardis tardis = rs.getTardis();
-		Integer id = tardis.getTardis_id();
+		TARDIS tardis = rs.getTardis();
+		Integer id = tardis.getTardisId();
 		HashMap<String, Object> setp = new HashMap<>();
 		HashMap<String, Object> wherep = new HashMap<>();
 		wherep.put("uuid", player.getUniqueId().toString());

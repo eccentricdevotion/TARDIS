@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.rooms;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisTimeLord;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
@@ -39,14 +39,14 @@ import java.util.Locale;
 
 public class TARDISRoomPersister {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final String prefix;
 	private PreparedStatement ps = null;
 	private int count = 0;
 
-	public TARDISRoomPersister(TARDIS plugin) {
+	public TARDISRoomPersister(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}
@@ -60,7 +60,7 @@ public class TARDISRoomPersister {
 				Location location = rd.getLocation();
 				String l = location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
 				ps.setString(3, l);
-				ps.setInt(4, rd.getTardis_id());
+				ps.setInt(4, rd.getTardisId());
 				ps.setInt(5, rd.getRow());
 				ps.setInt(6, rd.getColumn());
 				ps.setInt(7, rd.getLevel());
@@ -89,7 +89,7 @@ public class TARDISRoomPersister {
 		PreparedStatement delete = null;
 		ResultSet rs = null;
 		try {
-			delete = connection.prepareStatement("DELETE FROM " + prefix + "room_progress WHERE progress_id = ?");
+			delete = connection.prepareStatement("DELETE FROM " + prefix + "room_progress WHERE progressId = ?");
 			ps = connection.prepareStatement("SELECT * FROM " + prefix + "room_progress");
 			rs = ps.executeQuery();
 			if (rs.isBeforeFirst()) {
@@ -105,7 +105,7 @@ public class TARDISRoomPersister {
 					Location location = TARDISStaticLocationGetters.getLocationFromDB(rs.getString("location"));
 					rd.setLocation(location);
 					int id = rs.getInt("tardis_id");
-					rd.setTardis_id(id);
+					rd.setTardisId(id);
 					rd.setRow(rs.getInt("progress_row"));
 					rd.setColumn(rs.getInt("progress_column"));
 					rd.setLevel(rs.getInt("progress_level"));
@@ -115,7 +115,7 @@ public class TARDISRoomPersister {
 					List<String> postBlocks = new ArrayList<>(Arrays.asList(rs.getString("post_blocks").split("@")));
 					rd.setPostBlocks(postBlocks);
 					long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
-					// get the player who's tardis this is
+					// get the player whose tardis this is
 					ResultSetTardisTimeLord rst = new ResultSetTardisTimeLord(plugin);
 					if (rst.fromID(id)) {
 						Player player = plugin.getServer().getPlayer(rst.getUuid());
@@ -126,7 +126,7 @@ public class TARDISRoomPersister {
 						// resume tracking progress
 						plugin.getTrackerKeeper().getRoomTasks().put(taskID, rd);
 						// delete record
-						delete.setInt(1, rs.getInt("progress_id"));
+						delete.setInt(1, rs.getInt("progressId"));
 						delete.executeUpdate();
 					}
 				}

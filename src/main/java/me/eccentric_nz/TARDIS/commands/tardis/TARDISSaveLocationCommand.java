@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
@@ -31,9 +31,9 @@ import java.util.HashMap;
  */
 class TARDISSaveLocationCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISSaveLocationCommand(TARDIS plugin) {
+	TARDISSaveLocationCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -57,7 +57,7 @@ class TARDISSaveLocationCommand {
 				TARDISMessage.send(player, "SAVE_RESERVED");
 				return false;
 			} else {
-				int id = rs.getTardis().getTardis_id();
+				int id = rs.getTardis().getTardisId();
 				// check has unique name
 				HashMap<String, Object> wherename = new HashMap<>();
 				wherename.put("tardis_id", id);

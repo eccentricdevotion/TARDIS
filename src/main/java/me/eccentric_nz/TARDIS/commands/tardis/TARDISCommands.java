@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.tardis.arch.TARDISArchCommand;
 import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
@@ -38,6 +38,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -50,9 +51,9 @@ import java.util.UUID;
  */
 public class TARDISCommands implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISCommands(TARDIS plugin) {
+	public TARDISCommands(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -92,7 +93,7 @@ public class TARDISCommands implements CommandExecutor {
 				TARDISMessage.send(player, "NOT_A_TIMELORD");
 				return true;
 			}
-			if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardis_id()) && tc.noSiege()) {
+			if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardisId()) && tc.noSiege()) {
 				TARDISMessage.send(player, "SIEGE_NO_CMD");
 				return true;
 			}
@@ -112,7 +113,7 @@ public class TARDISCommands implements CommandExecutor {
 				case arsremove:
 					return new TARDISARSRemoveCommand(plugin).resetARS(player);
 				case bell:
-					return new TARDISBellCommand(plugin).toggle(rs.getTardis_id(), player, args);
+					return new TARDISBellCommand(plugin).toggle(rs.getTardisId(), player, args);
 				case check_loc:
 					return new TARDISCheckLocCommand(plugin).doACheckLocation(player);
 				case colourise:
@@ -150,7 +151,7 @@ public class TARDISCommands implements CommandExecutor {
 				case find:
 					return new TARDISFindCommand(plugin).findTARDIS(player);
 				case handbrake:
-					return new TARDISHandbrakeCommand(plugin).toggle(player, rs.getTardis_id(), args, false);
+					return new TARDISHandbrakeCommand(plugin).toggle(player, rs.getTardisId(), args, false);
 				case hide:
 					return new TARDISHideCommand(plugin).hide(player);
 				case home:
@@ -238,7 +239,7 @@ public class TARDISCommands implements CommandExecutor {
 			complexBool = true;
 		} else if (!is.hasItemMeta()) {
 			complexBool = true;
-		} else if (!is.getItemMeta().hasDisplayName()) {
+		} else if (!Objects.requireNonNull(is.getItemMeta()).hasDisplayName()) {
 			complexBool = true;
 		} else if (!is.getItemMeta().getDisplayName().equals(dn)) {
 			complexBool = true;

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -31,9 +31,9 @@ import java.io.IOException;
  */
 class TARDISCondenserCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISCondenserCommand(TARDIS plugin) {
+	TARDISCondenserCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

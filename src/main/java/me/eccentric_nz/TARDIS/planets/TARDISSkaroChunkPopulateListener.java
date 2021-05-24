@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -37,11 +37,11 @@ import java.util.List;
  */
 public class TARDISSkaroChunkPopulateListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<ChunkInfo> chunks = new ArrayList<>();
 	private long timeCheck;
 
-	public TARDISSkaroChunkPopulateListener(TARDIS plugin) {
+	public TARDISSkaroChunkPopulateListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		timeCheck = System.currentTimeMillis() + 3000;
 	}

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -34,9 +34,9 @@ import java.util.UUID;
  */
 class TARDISDesiegeCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISDesiegeCommand(TARDIS plugin) {
+	TARDISDesiegeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -52,7 +52,7 @@ class TARDISDesiegeCommand {
 				TARDISMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
 				return true;
 			}
-			int id = rs.getTardis_id();
+			int id = rs.getTardisId();
 			// turn off siege mode
 			HashMap<String, Object> wheres = new HashMap<>();
 			wheres.put("tardis_id", id);

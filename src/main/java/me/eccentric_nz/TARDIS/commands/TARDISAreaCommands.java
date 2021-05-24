@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.data.Area;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
@@ -50,9 +50,9 @@ import java.util.Locale;
 public class TARDISAreaCommands implements CommandExecutor {
 
 	public static final BlockData SNOW = Material.SNOW_BLOCK.createBlockData();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISAreaCommands(TARDIS plugin) {
+	public TARDISAreaCommands(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

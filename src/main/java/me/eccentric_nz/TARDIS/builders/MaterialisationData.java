@@ -95,7 +95,7 @@ public class MaterialisationData {
 		this.siege = siege;
 	}
 
-	public int getTardisID() {
+	public int getTardisId() {
 		return tardisID;
 	}
 

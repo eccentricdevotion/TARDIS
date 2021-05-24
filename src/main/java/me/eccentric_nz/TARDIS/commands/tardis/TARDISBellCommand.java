@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.hads.TARDISCloisterBell;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 public class TARDISBellCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBellCommand(TARDIS plugin) {
+	public TARDISBellCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

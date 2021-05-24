@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
@@ -50,9 +50,9 @@ import java.util.UUID;
  */
 public class TARDISMinecartListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISMinecartListener(TARDIS plugin) {
+	public TARDISMinecartListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -92,12 +92,12 @@ public class TARDISMinecartListener implements Listener {
 								return;
 							}
 							// get RAIL room location
-							id = rsd.getTardis_id();
+							id = rsd.getTardisId();
 							HashMap<String, Object> whereid = new HashMap<>();
 							whereid.put("tardis_id", id);
 							ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
 							if (rs.resultSet() && !plugin.getTrackerKeeper().getMinecart().contains(id)) {
-								Tardis tardis = rs.getTardis();
+								TARDIS tardis = rs.getTardis();
 								data = tardis.getRail().split(":");
 								playerUUID = tardis.getUuid();
 								plugin.getTrackerKeeper().getMinecart().add(id);
@@ -115,9 +115,9 @@ public class TARDISMinecartListener implements Listener {
 						wherep.put("rail", db_loc);
 						ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
 						if (rsp.resultSet()) {
-							Tardis tardis = rsp.getTardis();
+							TARDIS tardis = rsp.getTardis();
 							playerUUID = tardis.getUuid();
-							id = tardis.getTardis_id();
+							id = tardis.getTardisId();
 							HashMap<String, Object> whereinner = new HashMap<>();
 							whereinner.put("tardis_id", id);
 							whereinner.put("door_type", 1);
@@ -130,8 +130,8 @@ public class TARDISMinecartListener implements Listener {
 							whered.put("door_type", 0);
 							ResultSetDoors rspb = new ResultSetDoors(plugin, whered, false);
 							if (rspb.resultSet()) {
-								data = rspb.getDoor_location().split(":");
-								d = switchDirection(rspb.getDoor_direction());
+								data = rspb.getDoorLocation().split(":");
+								d = switchDirection(rspb.getDoorDirection());
 								plugin.getTrackerKeeper().getMinecart().remove(id);
 							}
 						}

@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.database.data.ReplacedBlock;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
@@ -48,9 +48,9 @@ import java.util.UUID;
  */
 public class TARDISBlockDamageListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBlockDamageListener(TARDIS plugin) {
+	public TARDISBlockDamageListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -71,7 +71,7 @@ public class TARDISBlockDamageListener implements Listener {
 			if (rsb.resultSet()) {
 				Player p = event.getPlayer();
 				ReplacedBlock rb = rsb.getReplacedBlock();
-				int id = rb.getTardis_id();
+				int id = rb.getTardisId();
 				if (TARDISPermission.hasPermission(p, "tardis.sonic.admin")) {
 					String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
 					Material sonic = Material.valueOf(split[0]);
@@ -90,7 +90,7 @@ public class TARDISBlockDamageListener implements Listener {
 							isDoor = true;
 						}
 					}
-					if (!isDoor && rb.getPolice_box() == 1) {
+					if (!isDoor && rb.getPoliceBox() == 1) {
 						plugin.getTrackerKeeper().getDamage().put(id, damage + 1);
 						if (damage == plugin.getConfig().getInt("preferences.hads_damage")) {
 							new TARDISHostileAction(plugin).processAction(id, p);
@@ -121,17 +121,17 @@ public class TARDISBlockDamageListener implements Listener {
 		where.put("tardis_id", id);
 		ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 0);
 		if (rst.resultSet()) {
-			Tardis tardis = rst.getTardis();
-			if (!tardis.isTardis_init()) {
+			TARDIS tardis = rst.getTardis();
+			if (!tardis.isTardisInit()) {
 				return false;
 			}
 			UUID ownerUUID = tardis.getUuid();
 			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, ownerUUID.toString());
-			boolean hads_on = true;
+			boolean hadsOn = true;
 			if (rsp.resultSet()) {
-				hads_on = rsp.isHadsOn();
+				hadsOn = rsp.isHadsOn();
 			}
-			return (plugin.getServer().getOfflinePlayer(ownerUUID).isOnline() && hads_on);
+			return (plugin.getServer().getOfflinePlayer(ownerUUID).isOnline() && hadsOn);
 		} else {
 			return false;
 		}

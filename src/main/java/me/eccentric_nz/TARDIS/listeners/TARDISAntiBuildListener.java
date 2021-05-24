@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAntiBuild;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -49,12 +49,12 @@ import java.util.Objects;
  */
 public class TARDISAntiBuildListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Material> no_place = new ArrayList<>();
 	private final List<Material> allow_interact = new ArrayList<>();
 	private final List<Material> no_flower_pot = new ArrayList<>();
 
-	public TARDISAntiBuildListener(TARDIS plugin) {
+	public TARDISAntiBuildListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		no_place.add(Material.ACACIA_BOAT);
 		no_place.add(Material.BAT_SPAWN_EGG);
@@ -171,11 +171,11 @@ public class TARDISAntiBuildListener implements Listener {
 			return;
 		}
 		ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
-		if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardis_id())) {
+		if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardisId())) {
 			return;
 		}
 		Vector v = event.getBlock().getLocation().toVector();
-		TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardis_id());
+		TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardisId());
 		if (v.isInAABB(tab.getMin(), tab.getMax())) {
 			event.setCancelled(true);
 			TARDISMessage.send(p, "ANTIBUILD_TIMELORD", tab.getTimelord());
@@ -189,11 +189,11 @@ public class TARDISAntiBuildListener implements Listener {
 			return;
 		}
 		ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
-		if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardis_id())) {
+		if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardisId())) {
 			return;
 		}
 		Vector v = event.getBlock().getLocation().toVector();
-		TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardis_id());
+		TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardisId());
 		if (v.isInAABB(tab.getMin(), tab.getMax())) {
 			event.setCancelled(true);
 			TARDISMessage.send(p, "ANTIBUILD_TIMELORD", tab.getTimelord());
@@ -211,7 +211,7 @@ public class TARDISAntiBuildListener implements Listener {
 			return;
 		}
 		ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
-		if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardis_id())) {
+		if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardisId())) {
 			return;
 		}
 		EquipmentSlot hand = event.getHand();
@@ -249,11 +249,11 @@ public class TARDISAntiBuildListener implements Listener {
 			return;
 		}
 		ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
-		if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardis_id())) {
+		if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardisId())) {
 			return;
 		}
 		Vector v = event.getRightClicked().getLocation().toVector();
-		TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardis_id());
+		TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardisId());
 		if (v.isInAABB(tab.getMin(), tab.getMax())) {
 			event.setCancelled(true);
 			TARDISMessage.send(p, "ANTIBUILD_TIMELORD", tab.getTimelord());
@@ -267,11 +267,11 @@ public class TARDISAntiBuildListener implements Listener {
 				return;
 			}
 			ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
-			if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardis_id())) {
+			if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardisId())) {
 				return;
 			}
 			Vector v = event.getEntity().getLocation().toVector();
-			TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardis_id());
+			TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardisId());
 			if (v.isInAABB(tab.getMin(), tab.getMax())) {
 				event.setCancelled(true);
 				TARDISMessage.send(p, "ANTIBUILD_TIMELORD", tab.getTimelord());
@@ -286,11 +286,11 @@ public class TARDISAntiBuildListener implements Listener {
 				return;
 			}
 			ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
-			if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardis_id())) {
+			if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardisId())) {
 				return;
 			}
 			Vector v = event.getEntity().getLocation().toVector();
-			TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardis_id());
+			TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardisId());
 			if (v.isInAABB(tab.getMin(), tab.getMax())) {
 				event.setCancelled(true);
 				TARDISMessage.send(p, "ANTIBUILD_TIMELORD", tab.getTimelord());

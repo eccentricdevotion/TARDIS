@@ -9,16 +9,16 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="jdk" jdkName="16" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-lang:commons-lang:2.6" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.guava:guava:21.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: net.md-5:bungeecord-chat:1.16-R0.4" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.yaml:snakeyaml:1.27" level="project" />
+    <orderEntry type="library" name="Maven: org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:21.0" level="project" />
+    <orderEntry type="library" name="Maven: net.md-5:bungeecord-chat:1.16-R0.4" level="project" />
+    <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.27" level="project" />
     <orderEntry type="library" name="Maven: io.papermc:paperlib:1.0.6" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: me.eccentric_nz.tardischunkgenerator:TARDISChunkGenerator:4.6.1" level="project" />
+    <orderEntry type="library" name="Maven: me.eccentric_nz.tardischunkgenerator:TARDISChunkGenerator:4.6.1" level="project" />
     <orderEntry type="library" name="Maven: me.eccentric_nz.tardisweepingangels:TARDISWeepingAngels:3.3.3" level="project" />
     <orderEntry type="library" name="Maven: com.sk89q.worldedit:worldedit-bukkit:7.2.5" level="project" />
     <orderEntry type="library" name="Maven: com.sk89q.worldedit:worldedit-core:7.2.5" level="project" />
@@ -35,8 +35,8 @@
     <orderEntry type="library" name="Maven: org.antlr:antlr4-runtime:4.9.1" level="project" />
     <orderEntry type="library" name="Maven: com.sk89q.worldedit.worldedit-libs:bukkit:7.2.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.logging.log4j:log4j-api:2.8.1" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.bstats:bstats-bukkit:2.1.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.bstats:bstats-base:2.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.bstats:bstats-bukkit:2.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.bstats:bstats-base:2.1.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: it.unimi.dsi:fastutil:8.2.1" level="project" />
     <orderEntry type="library" name="Maven: com.sk89q.worldguard:worldguard-bukkit:7.0.5-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.sk89q.worldguard:worldguard-core:7.0.5-SNAPSHOT" level="project" />
@@ -44,28 +44,51 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.flywaydb:flyway-core:3.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.sk89q:commandbook:2.3" level="project" />
     <orderEntry type="library" name="Maven: com.github.TownyAdvanced:Towny:0.97.0.0" level="project" />
-    <orderEntry type="library" name="Maven: com.wimbli.WorldBorder:WorldBorder:2.1.2" level="project" />
+    <orderEntry type="library" name="Maven: com.github.PryPurity:WorldBorder:2.1.2" level="project" />
     <orderEntry type="library" name="Maven: com.onarandombox.multiversecore:Multiverse-Core:4.2.3-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.onarandombox.multiverseinventories:Multiverse-Inventories:4.2.3-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: com.onarandombox.multiverseadventure:Multiverse-Adventure:2.5.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: com.onarandombox.multiverseportals:Multiverse-Portals:2.5.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: uk.co.tggl.pluckerpluck:MultiInv:3.3.10" level="project" />
-    <orderEntry type="library" name="Maven: me.ebonjaeger:perworldinventory-kt:2.3.2" level="project" />
-    <orderEntry type="library" name="Maven: multiworld:MultiWorld:5.2.8" level="project" />
+    <orderEntry type="library" name="Maven: com.onarandombox.multiverseadventure:Multiverse-Adventure:2.5" level="project" />
+    <orderEntry type="library" name="Maven: org.bukkit:bukkit:1.4.5-R0.3-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.onarandombox.multiverseportals:Multiverse-Portals:2.5" level="project" />
+    <orderEntry type="library" name="Maven: com.github.EbonJaeger:perworldinventory-kt:v2.3.2" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.71" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.3.71" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.3.71" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.71" level="project" />
+    <orderEntry type="library" name="Maven: co.aikar:acf-paper:0.5.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: ch.jalu:configme:1.1.0" level="project" />
+    <orderEntry type="library" name="Maven: ch.jalu:injector:1.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" name="Maven: javax.annotation:javax.annotation-api:1.3.1" level="project" />
+    <orderEntry type="library" name="Maven: com.dumptruckman.minecraft:JsonConfiguration:1.1" level="project" />
+    <orderEntry type="library" name="Maven: net.minidev:json-smart:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: com.massivecraft.factions:Factions:3.3.0" level="project" />
     <orderEntry type="library" name="Maven: com.massivecraft.massivecore:MassiveCore:3.3.2" level="project" />
-    <orderEntry type="library" name="Maven: org.yi.acru.bukkit.lockette:Lockette:1.8.33" level="project" />
     <orderEntry type="library" name="Maven: me.crafter.mc:lockettepro:2.10.10" level="project" />
-    <orderEntry type="library" name="Maven: me.ryanhamshire:GriefPrevention:16.17.1" level="project" />
-    <orderEntry type="library" name="Maven: nl.rutgerkok.blocklocker:BlockLocker:1.9.3" level="project" />
+    <orderEntry type="library" name="Maven: com.github.TechFortress:GriefPrevention:16.17.1" level="project" />
+    <orderEntry type="library" name="Maven: nl.rutgerkok:blocklocker:1.9.3-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.griefcraft.lwc:LWCX:2.2.7" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.49" level="project" />
     <orderEntry type="library" name="Maven: com.comphenix.protocol:ProtocolLib:4.6.0" level="project" />
-    <orderEntry type="library" name="Maven: me.libraryaddict.disguise:LibsDisguises:10.0.24" level="project" />
-    <orderEntry type="library" name="Maven: net.ess3.essentials:EssentialsX:2.18.2.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: me.clip:placeholderapi:2.10.9" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jetbrains:annotations:19.0.0" level="project" />
-    <orderEntry type="library" name="Maven: br.net.fabiozumbi12.RedProtect:RedProtect:7.7.2-b357-Universal" level="project" />
-    <orderEntry type="library" name="Maven: net.coreprotect:CoreProtect:19.5" level="project" />
+    <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.10.16" level="project" />
+    <orderEntry type="library" name="Maven: LibsDisguises:LibsDisguises:10.0.24" level="project" />
+    <orderEntry type="library" name="Maven: net.ess3:EssentialsX:2.18.2" level="project" />
+    <orderEntry type="library" name="Maven: net.ess3:BaseProviders:2.18.2" level="project" />
+    <orderEntry type="library" name="Maven: net.ess3:NMSReflectionProvider:2.18.2" level="project" />
+    <orderEntry type="library" name="Maven: net.ess3:PaperProvider:2.18.2" level="project" />
+    <orderEntry type="library" name="Maven: net.ess3:1_8Provider:2.18.2" level="project" />
+    <orderEntry type="library" name="Maven: me.clip:placeholderapi:2.10.9" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:19.0.0" level="project" />
+    <orderEntry type="library" name="Maven: br.net.fabiozumbi12.RedProtect:RedProtect-Core:7.7.3" level="project" />
+    <orderEntry type="library" name="Maven: org.spongepowered:configurate-yaml:3.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.spongepowered:configurate-hocon:3.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.spongepowered:configurate-core:3.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.checkerframework:checker-qual:2.4.0" level="project" />
+    <orderEntry type="library" name="Maven: com.typesafe:config:1.3.1" level="project" />
+    <orderEntry type="library" name="Maven: br.net.fabiozumbi12.RedProtect:RedProtect-Spigot:7.7.3" level="project" />
+    <orderEntry type="library" name="Maven: br.net.fabiozumbi12.RedProtect:RedProtect-Spigot:javadoc:7.7.3" level="project" />
+    <orderEntry type="library" name="Maven: net.coreprotect:coreprotect:19.5" level="project" />
+    <orderEntry type="library" name="Maven: org.dynmap:dynmap-api:2.0" level="project" />
     <orderEntry type="library" name="Maven: org.rauschig:jarchivelib:1.2.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.20" level="project" />
     <orderEntry type="library" name="Maven: org.swinglabs:swing-layout:1.0.3" level="project" />

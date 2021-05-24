@@ -17,10 +17,10 @@
 package me.eccentric_nz.tardis.commands.tardis;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetChunks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetLamps;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
@@ -47,9 +47,9 @@ import java.util.HashMap;
  */
 class TARDISLampsCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISLampsCommand(TARDIS plugin) {
+	TARDISLampsCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -70,8 +70,8 @@ class TARDISLampsCommand {
 		where.put("uuid", owner.getUniqueId().toString());
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
-			int id = tardis.getTardis_id();
+			TARDIS tardis = rs.getTardis();
+			int id = tardis.getTardisId();
 			// check if they have already got lamp records
 			HashMap<String, Object> wherel = new HashMap<>();
 			wherel.put("tardis_id", id);

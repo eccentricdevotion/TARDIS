@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -36,9 +36,9 @@ import java.util.HashMap;
  */
 public class TARDISVillageTravel {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISVillageTravel(TARDIS plugin) {
+	public TARDISVillageTravel(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,9 +29,9 @@ import java.util.Locale;
  */
 public class TARDISQuestionMarkCommand implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISQuestionMarkCommand(TARDIS plugin) {
+	public TARDISQuestionMarkCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

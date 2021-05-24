@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.TARDISEmergencyRelocation;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.enumeration.PRESET;
@@ -63,7 +63,7 @@ import java.util.UUID;
  */
 public class TARDISAnyoneDoorListener extends TARDISDoorListener implements Listener {
 
-	public TARDISAnyoneDoorListener(TARDIS plugin) {
+	public TARDISAnyoneDoorListener(TARDISPlugin plugin) {
 		super(plugin);
 	}
 
@@ -111,7 +111,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 						if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
 							return;
 						}
-						int id = rsd.getTardis_id();
+						int id = rsd.getTardisId();
 						if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
 							TARDISMessage.send(player, "NOT_WHILE_MAT");
 							return;
@@ -120,9 +120,9 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 							TARDISMessage.send(player, "LOST_IN_VORTEX");
 							return;
 						}
-						COMPASS dd = rsd.getDoor_direction();
-						int doortype = rsd.getDoor_type();
-						int end_doortype = switch (doortype) {
+						COMPASS dd = rsd.getDoorDirection();
+						int doorType = rsd.getDoorType();
+						int endDoorType = switch (doorType) {
 							case 0 -> // outside preset door
 									1;
 							case 2 -> // outside backdoor
@@ -153,7 +153,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 							// must be the owner
 							ResultSetTardisID rs = new ResultSetTardisID(plugin);
 							if (rs.fromUUID(playerUUID.toString())) {
-								if (rs.getTardis_id() != id) {
+								if (rs.getTardisId() != id) {
 									TARDISMessage.send(player, "DOOR_LOCK_UNLOCK");
 									return;
 								}
@@ -167,13 +167,13 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 									HashMap<String, Object> setl = new HashMap<>();
 									setl.put("locked", locked);
 									HashMap<String, Object> wherel = new HashMap<>();
-									wherel.put("tardis_id", rsd.getTardis_id());
+									wherel.put("tardis_id", rsd.getTardisId());
 									// always lock / unlock both doors
 									plugin.getQueryFactory().doUpdate("doors", setl, wherel);
 									TARDISMessage.send(player, "DOOR_LOCK", message);
 								} else if (material.isAir()) { // knock with hand
 									// only outside the tardis
-									if (doortype == 0) {
+									if (doorType == 0) {
 										// only if companion
 										ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
 										if (rsc.getCompanions().contains(playerUUID)) {
@@ -213,7 +213,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 							tid.put("tardis_id", id);
 							ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
 							if (rs.resultSet()) {
-								if (!rs.getTardis().isHandbrake_on()) {
+								if (!rs.getTardis().isHandbrakeOn()) {
 									TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
 									return;
 								}
@@ -221,11 +221,11 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 									boolean isPoliceBox = (rs.getTardis().getPreset().isColoured());
 									// toggle the door open/closed
 									if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR) && isPoliceBox)) {
-										if (doortype == 0 || doortype == 1) {
+										if (doorType == 0 || doorType == 1) {
 											boolean open = TARDISStaticUtils.isDoorOpen(block);
 											boolean toggle = true;
 											// must use key to open the outer door
-											if (doortype == 0 && !open) {
+											if (doorType == 0 && !open) {
 												if (material.equals(m)) {
 													// must be Time Lord or companion
 													ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
@@ -246,7 +246,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 												TARDISMessage.send(player, "ABANDONED_DOOR");
 												return;
 											}
-											if (plugin.getTrackerKeeper().getHasClickedHandbrake().contains(id) && doortype == 1) {
+											if (plugin.getTrackerKeeper().getHasClickedHandbrake().contains(id) && doorType == 1) {
 												plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id));
 												// toggle handbrake && dematerialise
 												new TARDISTakeoff(plugin).run(id, player, rs.getTardis().getBeacon());
@@ -257,7 +257,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 												if (isPoliceBox) {
 													new TARDISCustomModelDataChanger(plugin, block, player, id).toggleOuterDoor();
 												} else {
-													if (doortype == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {
+													if (doorType == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {
 														new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
 													} else {
 														new TARDISInnerDoorOpener(plugin, playerUUID, id).openDoor();
@@ -278,7 +278,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 								}
 							}
 						} else if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
-							if (!material.equals(m) && doortype == 0) {
+							if (!material.equals(m) && doorType == 0) {
 								// must use key to open and close the outer door
 								TARDISMessage.send(player, "NOT_KEY", key);
 								return;
@@ -295,21 +295,21 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 							tid.put("tardis_id", id);
 							ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
 							if (rs.resultSet()) {
-								Tardis tardis = rs.getTardis();
-								if (!tardis.isHandbrake_on()) {
+								TARDIS tardis = rs.getTardis();
+								if (!tardis.isHandbrakeOn()) {
 									TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
 									return;
 								}
-								int artron = tardis.getArtron_level();
+								int artron = tardis.getArtronLevel();
 								int required = plugin.getArtronConfig().getInt("backdoor");
 								UUID tlUUID = tardis.getUuid();
 								PRESET preset = tardis.getPreset();
 								float yaw = player.getLocation().getYaw();
 								float pitch = player.getLocation().getPitch();
 								String companions = tardis.getCompanions();
-								boolean hb = tardis.isHandbrake_on();
+								boolean hb = tardis.isHandbrakeOn();
 								HashMap<String, Object> wherecl = new HashMap<>();
-								wherecl.put("tardis_id", tardis.getTardis_id());
+								wherecl.put("tardis_id", tardis.getTardisId());
 								ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
 								if (!rsc.resultSet()) {
 									// emergency tardis relocation
@@ -330,14 +330,14 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 								COMPASS d;
 								HashMap<String, Object> other = new HashMap<>();
 								other.put("tardis_id", id);
-								other.put("door_type", end_doortype);
+								other.put("door_type", endDoorType);
 								ResultSetDoors rse = new ResultSetDoors(plugin, other, false);
 								if (rse.resultSet()) {
-									d = rse.getDoor_direction();
+									d = rse.getDoorDirection();
 								} else {
 									d = d_backup;
 								}
-								switch (doortype) {
+								switch (doorType) {
 									case 1:
 									case 4:
 										// is the tardis materialising?
@@ -357,7 +357,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 										door_bottom = (door.getHalf().equals(Bisected.Half.TOP)) ? block.getRelative(BlockFace.DOWN) : block;
 										boolean opened = TARDISStaticUtils.isDoorOpen(door_bottom);
 										if (opened && preset.hasDoor()) {
-											exitLoc = TARDISStaticLocationGetters.getLocationFromDB(rse.getDoor_location());
+											exitLoc = TARDISStaticLocationGetters.getLocationFromDB(rse.getDoorLocation());
 										} else {
 											exitLoc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), yaw, pitch);
 										}

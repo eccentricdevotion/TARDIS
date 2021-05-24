@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.builders;
 
 import com.google.gson.*;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
@@ -57,7 +57,7 @@ import java.util.*;
  */
 class TARDISBuildAbandoned implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Block> lampblocks = new ArrayList<>();
 	private final Schematic schm;
 	private final World world;
@@ -102,7 +102,7 @@ class TARDISBuildAbandoned implements Runnable {
 	 * @param dbID   the unique key of the record for this tardis in the database.
 	 * @param player the player to show the progress bar to, may be null.
 	 */
-	TARDISBuildAbandoned(TARDIS plugin, Schematic schm, World world, int dbID, Player player) {
+	TARDISBuildAbandoned(TARDISPlugin plugin, Schematic schm, World world, int dbID, Player player) {
 		this.plugin = plugin;
 		this.schm = schm;
 		this.world = world;

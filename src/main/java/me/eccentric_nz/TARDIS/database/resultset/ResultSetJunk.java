@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 
@@ -39,13 +39,13 @@ public class ResultSetJunk {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final String prefix;
 	private int id;
 	private UUID uuid;
-	private int tardis_id;
-	private String save_sign;
+	private int tardisId;
+	private String saveSign;
 	private String handbrake;
 	private String wall;
 	private String floor;
@@ -57,7 +57,7 @@ public class ResultSetJunk {
 	 * @param plugin an instance of the main class.
 	 * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
 	 */
-	public ResultSetJunk(TARDIS plugin, HashMap<String, Object> where) {
+	public ResultSetJunk(TARDISPlugin plugin, HashMap<String, Object> where) {
 		this.plugin = plugin;
 		this.where = where;
 		prefix = this.plugin.getPrefix();
@@ -99,8 +99,8 @@ public class ResultSetJunk {
 				while (rs.next()) {
 					id = rs.getInt("id");
 					uuid = UUID.fromString(rs.getString("uuid"));
-					tardis_id = rs.getInt("tardis_id");
-					save_sign = rs.getString("save_sign");
+					tardisId = rs.getInt("tardis_id");
+					saveSign = rs.getString("save_sign");
 					handbrake = rs.getString("handbrake");
 					wall = rs.getString("wall");
 					floor = rs.getString("floor");
@@ -139,12 +139,12 @@ public class ResultSetJunk {
 		return uuid;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
-	public String getSave_sign() {
-		return save_sign;
+	public String getSaveSign() {
+		return saveSign;
 	}
 
 	public String getHandbrake() {

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,9 +31,9 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISSelectWatchListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSelectWatchListener(TARDIS plugin) {
+	public TARDISSelectWatchListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -53,6 +53,7 @@ public class TARDISSelectWatchListener implements Listener {
 			return;
 		}
 		ItemMeta im = is.getItemMeta();
+		assert im != null;
 		if (!im.hasDisplayName() || !im.getDisplayName().equals("Fob Watch")) {
 			return;
 		}

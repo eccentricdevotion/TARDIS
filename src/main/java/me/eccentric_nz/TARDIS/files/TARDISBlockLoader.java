@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.files;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetGravity;
@@ -41,9 +41,9 @@ import java.util.HashMap;
  */
 public class TARDISBlockLoader {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBlockLoader(TARDIS plugin) {
+	public TARDISBlockLoader(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -54,7 +54,7 @@ public class TARDISBlockLoader {
 	public void loadProtectedBlocks() {
 		ResultSetBlocks rsb = new ResultSetBlocks(plugin, null, true);
 		if (rsb.resultSet()) {
-			rsb.getData().forEach((rb) -> plugin.getGeneralKeeper().getProtectBlockMap().put(rb.getStrLocation(), rb.getTardis_id()));
+			rsb.getData().forEach((rb) -> plugin.getGeneralKeeper().getProtectBlockMap().put(rb.getStrLocation(), rb.getTardisId()));
 		}
 	}
 

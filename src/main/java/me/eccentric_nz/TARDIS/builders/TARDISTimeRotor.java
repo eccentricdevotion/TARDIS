@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -55,7 +55,7 @@ public class TARDISTimeRotor {
 		// save itemFrame UUID
 		UUID uuid = itemFrame.getUniqueId();
 		updateRotorRecord(id, uuid.toString());
-		TARDIS.plugin.getGeneralKeeper().getTimeRotors().add(uuid);
+		TARDISPlugin.plugin.getGeneralKeeper().getTimeRotors().add(uuid);
 	}
 
 	public static void updateRotorRecord(int id, String uuid) {
@@ -63,7 +63,7 @@ public class TARDISTimeRotor {
 		where.put("tardis_id", id);
 		HashMap<String, Object> set = new HashMap<>();
 		set.put("rotor", uuid);
-		TARDIS.plugin.getQueryFactory().doUpdate("tardis", set, where);
+		TARDISPlugin.plugin.getQueryFactory().doUpdate("tardis", set, where);
 	}
 
 	public static void setRotor(int which, ItemFrame itemFrame, boolean animated) {

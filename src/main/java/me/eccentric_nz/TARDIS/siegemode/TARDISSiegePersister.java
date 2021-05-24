@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetSiege;
 import org.bukkit.Chunk;
@@ -32,7 +32,7 @@ import java.util.*;
  */
 public class TARDISSiegePersister {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final String prefix;
@@ -40,7 +40,7 @@ public class TARDISSiegePersister {
 	private ResultSet rs = null;
 	private int count = 0;
 
-	public TARDISSiegePersister(TARDIS plugin) {
+	public TARDISSiegePersister(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}

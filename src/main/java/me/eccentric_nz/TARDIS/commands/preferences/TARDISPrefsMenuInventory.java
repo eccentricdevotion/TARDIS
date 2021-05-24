@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIPlayerPreferences;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.FlightMode;
@@ -37,11 +37,11 @@ import java.util.*;
  */
 public class TARDISPrefsMenuInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final UUID uuid;
 	private final ItemStack[] menu;
 
-	public TARDISPrefsMenuInventory(TARDIS plugin, UUID uuid) {
+	public TARDISPrefsMenuInventory(TARDISPlugin plugin, UUID uuid) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		menu = getItemStack();
@@ -70,7 +70,7 @@ public class TARDISPrefsMenuInventory {
 		values.add(rsp.isAutoSiegeOn());
 		values.add(rsp.isAutoRescueOn());
 		values.add(rsp.isBeaconOn());
-		values.add(rsp.isDND());
+		values.add(rsp.isDndOn());
 		values.add(rsp.isEpsOn());
 		values.add(rsp.isHadsOn());
 		values.add(rsp.getHadsType().equals(HADS.DISPERSAL));
@@ -83,8 +83,8 @@ public class TARDISPrefsMenuInventory {
 		values.add(rsp.isWoolLightsOn());
 		values.add(rsp.isCtmOn());
 		values.add(rsp.isSignOn());
-		values.add(rsp.isTravelbarOn());
-		values.add(rsp.isPoliceboxTexturesOn());
+		values.add(rsp.isTravelBarOn());
+		values.add(rsp.isPoliceBoxTexturesOn());
 		values.add(rsp.isFarmOn());
 		values.add(rsp.isTelepathyOn());
 		// get preset
@@ -96,15 +96,15 @@ public class TARDISPrefsMenuInventory {
 		} else {
 			values.add(false);
 		}
-		values.add(rsp.isAutoPowerUp());
+		values.add(rsp.isAutoPowerupOn());
 		values.add(plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid));
 		values.add(rsp.isLanternsOn());
 		values.add(rsp.isMinecartOn());
-		values.add(rsp.isEasyDifficulty());
+		values.add(rsp.isDifficulty());
 		values.add(rsp.useCustomFont());
 
 		// get tardis preset
-		Tardis tardis = null;
+		TARDIS tardis = null;
 		HashMap<String, Object> wherej = new HashMap<>();
 		wherej.put("uuid", uuid.toString());
 		ResultSetTardis rs = new ResultSetTardis(plugin, wherej, "", false, 0);
@@ -157,7 +157,7 @@ public class TARDISPrefsMenuInventory {
 		ItemStack hand = new ItemStack(Material.LEVER, 1);
 		ItemMeta brake = hand.getItemMeta();
 		brake.setDisplayName("Handbrake");
-		brake.setLore(Collections.singletonList((tardis != null && tardis.isHandbrake_on()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF")));
+		brake.setLore(Collections.singletonList((tardis != null && tardis.isHandbrakeOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF")));
 		brake.setCustomModelData(GUIPlayerPreferences.HANDBRAKE.getCustomModelData());
 		hand.setItemMeta(brake);
 		stack[31] = hand;

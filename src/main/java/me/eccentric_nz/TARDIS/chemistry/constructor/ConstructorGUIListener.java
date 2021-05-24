@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.constructor;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.chemistry.element.Element;
 import me.eccentric_nz.tardis.chemistry.element.ElementBuilder;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
@@ -35,7 +35,7 @@ import java.util.Objects;
 
 public class ConstructorGUIListener extends TARDISMenuListener implements Listener {
 
-	public ConstructorGUIListener(TARDIS plugin) {
+	public ConstructorGUIListener(TARDISPlugin plugin) {
 		super(plugin);
 	}
 

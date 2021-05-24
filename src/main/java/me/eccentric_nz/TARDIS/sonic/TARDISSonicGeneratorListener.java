@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.data.Sonic;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
@@ -53,9 +53,9 @@ import java.util.UUID;
  */
 public class TARDISSonicGeneratorListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSonicGeneratorListener(TARDIS plugin) {
+	public TARDISSonicGeneratorListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -233,7 +233,7 @@ public class TARDISSonicGeneratorListener implements Listener {
 			ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
 			if (rs.resultSet()) {
 				// add/update control and activate it
-				plugin.getQueryFactory().insertSyncControl(rs.getTardis_id(), 24, l, 0);
+				plugin.getQueryFactory().insertSyncControl(rs.getTardisId(), 24, l, 0);
 				// do they have a sonic record?
 				HashMap<String, Object> wheres = new HashMap<>();
 				wheres.put("uuid", event.getPlayer().getUniqueId().toString());

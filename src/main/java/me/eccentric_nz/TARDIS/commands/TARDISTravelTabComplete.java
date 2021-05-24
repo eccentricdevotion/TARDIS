@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
@@ -38,7 +38,7 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
 	private final List<String> BIOME_SUBS = new ArrayList<>();
 	private final List<String> AREA_SUBS = new ArrayList<>();
 
-	public TARDISTravelTabComplete(TARDIS plugin) {
+	public TARDISTravelTabComplete(TARDISPlugin plugin) {
 		for (Biome bi : org.bukkit.block.Biome.values()) {
 			if (!bi.equals(Biome.THE_VOID)) {
 				BIOME_SUBS.add(bi.toString());

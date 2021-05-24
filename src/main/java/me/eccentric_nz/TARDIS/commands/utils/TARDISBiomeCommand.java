@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.commands.utils;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.planets.TARDISBiome;
 import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
@@ -13,9 +13,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class TARDISBiomeCommand implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBiomeCommand(TARDIS plugin) {
+	public TARDISBiomeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

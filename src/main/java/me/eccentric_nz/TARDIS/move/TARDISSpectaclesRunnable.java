@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
@@ -33,11 +33,11 @@ import java.util.HashMap;
  */
 public class TARDISSpectaclesRunnable implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<COMPASS, Door> lower = new HashMap<>();
 	private final Door upper;
 
-	public TARDISSpectaclesRunnable(TARDIS plugin) {
+	public TARDISSpectaclesRunnable(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		Door door = (Door) Material.IRON_DOOR.createBlockData();
 		door.setHalf(Bisected.Half.BOTTOM);
@@ -61,7 +61,7 @@ public class TARDISSpectaclesRunnable implements Runnable {
 					ResultSetTardisID rs = new ResultSetTardisID(plugin);
 					if (rs.fromUUID(key.toString())) {
 						HashMap<String, Object> wherec = new HashMap<>();
-						wherec.put("tardis_id", rs.getTardis_id());
+						wherec.put("tardis_id", rs.getTardisId());
 						ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
 						if (rsc.resultSet()) {
 							p.sendBlockChange(value.getLocation(), lower.get(rsc.getDirection()));

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISChatPaginator;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
@@ -33,10 +33,10 @@ import java.util.Locale;
  */
 class TARDISSetIntegerCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> TIPS_SUBS = Arrays.asList("400", "800", "1200", "1600");
 
-	TARDISSetIntegerCommand(TARDIS plugin) {
+	TARDISSetIntegerCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

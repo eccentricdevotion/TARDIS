@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.chameleon.TARDISChameleonCircuit;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Adaption;
@@ -49,18 +49,18 @@ import java.util.HashMap;
  */
 public class TARDISPresetDestroyerFactory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISPresetDestroyerFactory(TARDIS plugin) {
+	public TARDISPresetDestroyerFactory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
 	public void destroyPreset(DestroyData dd) {
 		HashMap<String, Object> where = new HashMap<>();
-		where.put("tardis_id", dd.getTardisID());
+		where.put("tardis_id", dd.getTardisId());
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			PRESET demat = tardis.getDemat();
 			PRESET preset = tardis.getPreset();
 			// load the chunk if unloaded
@@ -96,10 +96,10 @@ public class TARDISPresetDestroyerFactory {
 					int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
 					runnable.setTask(taskID);
 				} else {
-					plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisID());
+					plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisId());
 					if (demat.equals(PRESET.SWAMP)) {
 						// remove door
-						destroyDoor(dd.getTardisID());
+						destroyDoor(dd.getTardisId());
 					}
 					int taskID;
 					if (demat.isColoured()) {
@@ -124,7 +124,7 @@ public class TARDISPresetDestroyerFactory {
 		where.put("door_type", 0);
 		ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
 		if (rsd.resultSet()) {
-			String dl = rsd.getDoor_location();
+			String dl = rsd.getDoorLocation();
 			if (dl != null) {
 				Location l = TARDISStaticLocationGetters.getLocationFromDB(dl);
 				if (l != null) {

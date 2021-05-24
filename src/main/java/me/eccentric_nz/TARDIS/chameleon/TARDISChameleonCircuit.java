@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
@@ -33,9 +33,9 @@ import org.bukkit.block.BlockFace;
  */
 public class TARDISChameleonCircuit {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISChameleonCircuit(TARDIS plugin) {
+	public TARDISChameleonCircuit(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

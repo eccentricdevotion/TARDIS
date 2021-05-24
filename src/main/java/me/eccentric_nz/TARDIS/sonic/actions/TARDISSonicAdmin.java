@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -35,7 +35,7 @@ import java.util.UUID;
 
 public class TARDISSonicAdmin {
 
-	public static void displayInfo(TARDIS plugin, Player player, Block block) {
+	public static void displayInfo(TARDISPlugin plugin, Player player, Block block) {
 		TARDISSonicSound.playSonicSound(plugin, player, System.currentTimeMillis(), 600L, "sonic_short");
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 			HashMap<String, Object> wheredoor = new HashMap<>();
@@ -55,16 +55,16 @@ public class TARDISSonicAdmin {
 			wheredoor.put("door_type", 0);
 			ResultSetDoors rsd = new ResultSetDoors(plugin, wheredoor, false);
 			if (rsd.resultSet()) {
-				int id = rsd.getTardis_id();
+				int id = rsd.getTardisId();
 				// get the tardis owner's name
 				HashMap<String, Object> wheren = new HashMap<>();
 				wheren.put("tardis_id", id);
 				ResultSetTardis rsn = new ResultSetTardis(plugin, wheren, "", false, 0);
 				if (rsn.resultSet()) {
-					Tardis tardis = rsn.getTardis();
+					TARDIS tardis = rsn.getTardis();
 					String name = plugin.getServer().getOfflinePlayer(tardis.getUuid()).getName();
 					TARDISMessage.send(player, "TARDIS_WHOSE", name);
-					int percent = Math.round((tardis.getArtron_level() * 100F) / plugin.getArtronConfig().getInt("full_charge"));
+					int percent = Math.round((tardis.getArtronLevel() * 100F) / plugin.getArtronConfig().getInt("full_charge"));
 					TARDISMessage.send(player, "ENERGY_LEVEL", String.format("%d", percent));
 					HashMap<String, Object> whereb = new HashMap<>();
 					whereb.put("tardis_id", id);

@@ -39,7 +39,7 @@ public class TARDISRoomData {
 	private Location location;
 	private Block block;
 	private JsonObject schematic;
-	private int tardis_id;
+	private int tardisId;
 	private int row;
 	private int column;
 	private int level;
@@ -109,12 +109,12 @@ public class TARDISRoomData {
 		this.floorType = floorType;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
-	public void setTardis_id(int tardis_id) {
-		this.tardis_id = tardis_id;
+	public void setTardisId(int tardisId) {
+		this.tardisId = tardisId;
 	}
 
 	public int getRow() {

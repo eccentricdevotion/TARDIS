@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.mobfarming;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.resultset.ResultSetApiaries;
 import org.bukkit.Chunk;
@@ -29,9 +29,9 @@ import org.bukkit.entity.Bee;
 
 public class TARDISBeeWaker implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBeeWaker(TARDIS plugin) {
+	public TARDISBeeWaker(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

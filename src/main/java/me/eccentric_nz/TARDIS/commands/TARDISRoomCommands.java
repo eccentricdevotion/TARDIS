@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.files.TARDISRoomMap;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -48,9 +48,9 @@ import java.util.regex.Pattern;
  */
 public class TARDISRoomCommands implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISRoomCommands(TARDIS plugin) {
+	public TARDISRoomCommands(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

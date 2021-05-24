@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.schematic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,10 +35,10 @@ import java.util.UUID;
 
 public class TARDISSchematicListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Material wand;
 
-	public TARDISSchematicListener(TARDIS plugin) {
+	public TARDISSchematicListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		wand = getWand();
 	}

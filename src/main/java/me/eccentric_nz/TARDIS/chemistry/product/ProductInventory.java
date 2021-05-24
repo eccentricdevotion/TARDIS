@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.product;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -28,9 +28,9 @@ import java.util.Arrays;
 public class ProductInventory {
 
 	private final ItemStack[] menu;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public ProductInventory(TARDIS plugin) {
+	public ProductInventory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		menu = getItemStack();
 	}

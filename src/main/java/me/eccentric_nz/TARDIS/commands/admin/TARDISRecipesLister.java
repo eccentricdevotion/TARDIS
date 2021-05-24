@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.TARDISSeedModel;
 import me.eccentric_nz.tardis.enumeration.RecipeItem;
 import me.eccentric_nz.tardis.enumeration.Schematic;
@@ -14,9 +14,9 @@ import java.util.Map;
 
 class TARDISRecipesLister {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISRecipesLister(TARDIS plugin) {
+	TARDISRecipesLister(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

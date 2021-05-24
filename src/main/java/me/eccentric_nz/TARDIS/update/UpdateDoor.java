@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.update;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -31,9 +31,9 @@ import java.util.HashMap;
 
 public class UpdateDoor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public UpdateDoor(TARDIS plugin) {
+	public UpdateDoor(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

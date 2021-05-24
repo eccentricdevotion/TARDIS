@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -39,7 +39,7 @@ public class TARDISAnvilListener implements Listener {
 
 	private final HashMap<String, Material> disallow = new HashMap<>();
 
-	public TARDISAnvilListener(TARDIS plugin) {
+	public TARDISAnvilListener(TARDISPlugin plugin) {
 		Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("shaped")).getKeys(false).forEach((r) -> {
 			String[] result = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped." + r + ".result")).split(":");
 			disallow.put(r, Material.valueOf(result[0]));

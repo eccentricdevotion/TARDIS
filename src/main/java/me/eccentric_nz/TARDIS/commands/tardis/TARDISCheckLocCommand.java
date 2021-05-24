@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
@@ -33,9 +33,9 @@ import java.util.HashMap;
  */
 class TARDISCheckLocCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISCheckLocCommand(TARDIS plugin) {
+	TARDISCheckLocCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -53,7 +53,7 @@ class TARDISCheckLocCommand {
 			return true;
 		}
 		HashMap<String, Object> wherecl = new HashMap<>();
-		wherecl.put("tardis_id", rs.getTardis_id());
+		wherecl.put("tardis_id", rs.getTardisId());
 		ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
 		if (!rsc.resultSet()) {
 			TARDISMessage.send(player, "DIRECTION_NOT_FOUND");

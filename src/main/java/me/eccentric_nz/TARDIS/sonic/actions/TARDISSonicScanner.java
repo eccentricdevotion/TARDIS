@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -39,7 +39,7 @@ import static me.eccentric_nz.tardis.control.TARDISScanner.getNearbyEntities;
 
 public class TARDISSonicScanner {
 
-	public static void scan(TARDIS plugin, Location scan_loc, Player player) {
+	public static void scan(TARDISPlugin plugin, Location scan_loc, Player player) {
 		// record nearby entities
 		HashMap<EntityType, Integer> scannedentities = new HashMap<>();
 		List<String> playernames = new ArrayList<>();
@@ -55,7 +55,7 @@ public class TARDISSonicScanner {
 						visible = false;
 					}
 				}
-				if (TARDIS.plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+				if (TARDISPlugin.plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
 					if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
 						EntityEquipment ee = ((LivingEntity) k).getEquipment();
 						if (ee.getHelmet() != null) {

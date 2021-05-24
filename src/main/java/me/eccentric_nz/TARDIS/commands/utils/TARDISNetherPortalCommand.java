@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
 import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -54,10 +54,10 @@ import java.util.List;
  */
 public class TARDISNetherPortalCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ImmutableList<String> ENVIRON_SUBS = ImmutableList.of("overworld", "nether");
 
-	public TARDISNetherPortalCommand(TARDIS plugin) {
+	public TARDISNetherPortalCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

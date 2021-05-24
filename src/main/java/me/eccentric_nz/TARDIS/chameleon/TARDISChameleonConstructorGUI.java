@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIChameleonConstructor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -27,10 +27,10 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 class TARDISChameleonConstructorGUI {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ItemStack[] construct;
 
-	TARDISChameleonConstructorGUI(TARDIS plugin) {
+	TARDISChameleonConstructorGUI(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		construct = getItemStack();
 	}

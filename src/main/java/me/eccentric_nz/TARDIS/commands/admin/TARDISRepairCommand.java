@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCount;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
@@ -30,9 +31,9 @@ import java.util.HashMap;
  */
 class TARDISRepairCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISRepairCommand(TARDIS plugin) {
+	TARDISRepairCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -42,7 +43,7 @@ class TARDISRepairCommand {
 			return true;
 		}
 		// Look up this player's UUID
-		OfflinePlayer op = plugin.getServer().getOfflinePlayer(args[1]);
+		OfflinePlayer op = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId());
 		String uuid = op.getUniqueId().toString();
 		ResultSetCount rs = new ResultSetCount(plugin, uuid);
 		if (!rs.resultSet()) {

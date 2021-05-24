@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.hads;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.api.event.TARDISHADSEvent;
 import me.eccentric_nz.tardis.builders.BiomeSetter;
@@ -53,10 +53,10 @@ import java.util.UUID;
  */
 class TARDISHostileDispersal {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Material> replace_with_barrier;
 
-	TARDISHostileDispersal(TARDIS plugin) {
+	TARDISHostileDispersal(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		replace_with_barrier = buildList();
 	}

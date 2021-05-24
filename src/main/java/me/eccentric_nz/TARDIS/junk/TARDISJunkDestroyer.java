@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDIS;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
@@ -36,15 +36,16 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
  */
 public class TARDISJunkDestroyer implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final DestroyData pdd;
-	private final int sx, ex, sy, ey, sz, ez;
+	private final int startX, endX, startY, endY, startZ, endZ;
 	private final Location junkLoc;
 	private final Location effectsLoc;
 	private final World world;
@@ -54,17 +55,17 @@ public class TARDISJunkDestroyer implements Runnable {
 	private Location vortexJunkLoc;
 	private int fryTask;
 
-	public TARDISJunkDestroyer(TARDIS plugin, DestroyData pdd) {
+	public TARDISJunkDestroyer(TARDISPlugin plugin, DestroyData pdd) {
 		this.plugin = plugin;
 		this.pdd = pdd;
 		junkLoc = this.pdd.getLocation();
 		effectsLoc = junkLoc.clone().add(0.5d, 0, 0.5d);
-		ex = junkLoc.getBlockX() + 2;
-		sx = junkLoc.getBlockX() - 3;
-		sy = junkLoc.getBlockY();
-		ey = junkLoc.getBlockY() + 5;
-		ez = junkLoc.getBlockZ() + 3;
-		sz = junkLoc.getBlockZ() - 2;
+		startX = junkLoc.getBlockX() - 3;
+		endX = junkLoc.getBlockX() + 2;
+		startY = junkLoc.getBlockY();
+		endY = junkLoc.getBlockY() + 5;
+		startZ = junkLoc.getBlockZ() - 2;
+		endZ = junkLoc.getBlockZ() + 3;
 		world = junkLoc.getWorld();
 		biome = this.pdd.getTardisBiome();
 	}
@@ -90,7 +91,7 @@ public class TARDISJunkDestroyer implements Runnable {
 				ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
 				if (rs.resultSet()) {
 					// teleport players to vortex
-					vortexJunkLoc = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getTardis().getCreeper()).add(3.0d, 0.0d, 2.0d);
+					vortexJunkLoc = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getTardis().getCreeper())).add(3.0d, 0.0d, 2.0d);
 					getJunkTravellers().forEach((e) -> {
 						if (e instanceof Player p) {
 							Location relativeLoc = getRelativeLocation(p);
@@ -98,37 +99,38 @@ public class TARDISJunkDestroyer implements Runnable {
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(relativeLoc), 2L);
 						}
 					});
-					TARDISJunkVortexRunnable runnable = new TARDISJunkVortexRunnable(plugin, vortexJunkLoc, pdd.getPlayer(), pdd.getTardisID());
+					TARDISJunkVortexRunnable runnable = new TARDISJunkVortexRunnable(plugin, vortexJunkLoc, pdd.getPlayer(), pdd.getTardisId());
 					int jvrtask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 1L, 20L);
 					runnable.setTask(jvrtask);
 				}
 				// what biome?
-				Biome b = null;
-				if (biome.getKey().getNamespace().equalsIgnoreCase("minecraft")) {
+				Biome biome = null;
+				if (this.biome.getKey().getNamespace().equalsIgnoreCase("minecraft")) {
 					try {
-						b = Biome.valueOf(biome.name());
+						biome = Biome.valueOf(this.biome.name());
 					} catch (IllegalArgumentException e) {
 						// ignore
 					}
 				}
 				List<Chunk> chunks = new ArrayList<>();
 				// remove blocks
-				for (int level = ey; level >= sy; level--) {
-					for (int row = ex; row >= sx; row--) {
-						for (int col = sz; col <= ez; col++) {
-							Block block = world.getBlockAt(row, level, col);
+				for (int l = startX; l <= endX; l++) {
+					for (int h = startY; h <= endY; h++) {
+						for (int w = startZ; w <= endZ; w++) {
+							Block block = world.getBlockAt(l, h, w);
 							block.setBlockData(TARDISConstants.AIR);
 							TARDISBiome tardisBiome = TARDISStaticUtils.getBiomeAt(block.getLocation());
-							if (level == sy && ((tardisBiome.equals(TARDISBiome.THE_END) && !junkLoc.getWorld().getEnvironment().equals(Environment.THE_END)) || tardisBiome.equals(TARDISBiome.THE_VOID)) && biome != null) {
+							if (h == startY && (tardisBiome.equals(TARDISBiome.THE_END) && !Objects.requireNonNull(junkLoc.getWorld()).getEnvironment().equals(Environment.THE_END) || tardisBiome.equals(TARDISBiome.THE_VOID))) {
 								if (!chunks.contains(block.getChunk())) {
 									chunks.add(block.getChunk());
 								}
 								// reset the biome
 								try {
-									world.setBiome(row, col, b);
+									assert biome != null;
+									world.setBiome(l, h, w, biome);
 								} catch (NullPointerException e) {
 									// remove tardis from tracker
-									plugin.getTrackerKeeper().getDematerialising().remove(pdd.getTardisID());
+									plugin.getTrackerKeeper().getDematerialising().remove(pdd.getTardisId());
 								}
 							}
 						}
@@ -137,11 +139,11 @@ public class TARDISJunkDestroyer implements Runnable {
 						chunks.clear();
 					}
 				}
-				plugin.getTrackerKeeper().getDematerialising().remove(pdd.getTardisID());
-				plugin.getTrackerKeeper().getInVortex().remove(pdd.getTardisID());
+				plugin.getTrackerKeeper().getDematerialising().remove(pdd.getTardisId());
+				plugin.getTrackerKeeper().getInVortex().remove(pdd.getTardisId());
 				// check protected blocks if has block id and data stored then put the block back!
 				HashMap<String, Object> tid = new HashMap<>();
-				tid.put("tardis_id", pdd.getTardisID());
+				tid.put("tardis_id", pdd.getTardisId());
 				ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);
 				if (rsb.resultSet()) {
 					rsb.getData().forEach((rp) -> {
@@ -152,7 +154,7 @@ public class TARDISJunkDestroyer implements Runnable {
 					});
 				}
 				// remove block protection
-				plugin.getPresetDestroyer().removeBlockProtection(pdd.getTardisID());
+				plugin.getPresetDestroyer().removeBlockProtection(pdd.getTardisId());
 				plugin.getServer().getScheduler().cancelTask(fryTask);
 				plugin.getServer().getScheduler().cancelTask(task);
 				task = 0;
@@ -181,7 +183,7 @@ public class TARDISJunkDestroyer implements Runnable {
 
 	private List<Entity> getJunkTravellers() {
 		// spawn an entity
-		Entity orb = junkLoc.getWorld().spawnEntity(junkLoc, EntityType.EXPERIENCE_ORB);
+		Entity orb = Objects.requireNonNull(junkLoc.getWorld()).spawnEntity(junkLoc, EntityType.EXPERIENCE_ORB);
 		List<Entity> ents = orb.getNearbyEntities(4.0, 4.0, 4.0);
 		orb.remove();
 		return ents;

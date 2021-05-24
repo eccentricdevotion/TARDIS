@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUISonicActivator;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -32,10 +32,10 @@ import java.util.Set;
  */
 class TARDISSonicActivatorInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ItemStack[] activator;
 
-	TARDISSonicActivatorInventory(TARDIS plugin) {
+	TARDISSonicActivatorInventory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		activator = getItemStack();
 	}

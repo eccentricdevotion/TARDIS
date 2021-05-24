@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDIS;
 import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.planets.TARDISBiome;
 import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
 import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
@@ -36,6 +36,7 @@ public class BiomeSetter {
 	public static void setBiome(BuildData bd, boolean umbrella, int loops) {
 		World world = bd.getLocation().getWorld();
 		int x = bd.getLocation().getBlockX();
+		int y = bd.getLocation().getBlockY();
 		int z = bd.getLocation().getBlockZ();
 		List<Chunk> chunks = new ArrayList<>();
 		Chunk chunk = bd.getLocation().getChunk();
@@ -44,72 +45,76 @@ public class BiomeSetter {
 		int cx = bd.getLocation().getBlockX() >> 4;
 		int cz = bd.getLocation().getBlockZ() >> 4;
 		assert world != null;
-		if (!world.loadChunk(cx, cz, false)) {
+		if (!(world).loadChunk(cx, cz, false)) {
 			world.loadChunk(cx, cz, true);
 		}
 		while (!chunk.isLoaded()) {
 			world.loadChunk(chunk);
 		}
 		// set the biome
-		for (int c = -3; c < 4; c++) {
-			for (int r = -3; r < 4; r++) {
-				world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
-				// TODO check re-adding umbrella if rebuilding
-				if (umbrella && TARDISConstants.NO_RAIN.contains(bd.getTardisBiome())) {
-					// add an invisible roof
-					if (loops == 3) {
-						TARDISBlockSetters.setBlock(world, x + c, 255, z + r, Material.BARRIER);
-					} else {
-						TARDISBlockSetters.setBlockAndRemember(world, x + c, 255, z + r, Material.BARRIER, bd.getTardisID());
+		for (int l = -3; l < 4; l++) {
+			for (int w = -3; w < 4; w++) {
+				for (int h = -1; h < 5; h++) {
+					world.setBiome(x + l, y + h, z + w, Biome.DEEP_OCEAN);
+					// TODO check re-adding umbrella if rebuilding
+					if (umbrella && TARDISConstants.NO_RAIN.contains(bd.getTardisBiome())) {
+						// add an invisible roof
+						if (loops == 3) {
+							TARDISBlockSetters.setBlock(world, x + l, 255, z + w, Material.BARRIER);
+						} else {
+							TARDISBlockSetters.setBlockAndRemember(world, x + l, 255, z + w, Material.BARRIER, bd.getTardisId());
+						}
 					}
-				}
-				Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
-				if (!chunks.contains(tmp_chunk)) {
-					chunks.add(tmp_chunk);
+					Chunk tmpChunk = world.getChunkAt(new Location(world, x + l, 64, z + w));
+					if (!chunks.contains(tmpChunk)) {
+						chunks.add(tmpChunk);
+					}
 				}
 			}
 		}
 		// refresh the chunks
-		chunks.forEach((c) -> TARDIS.plugin.getTardisHelper().refreshChunk(c));
+		chunks.forEach((c) -> TARDISPlugin.plugin.getTardisHelper().refreshChunk(c));
 	}
 
-	public static boolean restoreBiome(Location l, TARDISBiome tardisBiome) {
+	public static boolean restoreBiome(Location location, TARDISBiome tardisBiome) {
 		Biome biome = null;
 		if (tardisBiome != null && tardisBiome.getKey().getNamespace().equalsIgnoreCase("minecraft")) {
 			try {
 				biome = Biome.valueOf(tardisBiome.name());
-			} catch (IllegalArgumentException e) {
-				// ignore
+			} catch (IllegalArgumentException ignored) {
 			}
 		}
-		if (l != null && biome != null) {
-			int sbx = l.getBlockX();
-			int sbz = l.getBlockZ();
-			World w = l.getWorld();
+		if (location != null && biome != null) {
+			int sbx = location.getBlockX();
+			int sby = location.getBlockY();
+			int sbz = location.getBlockZ();
+			World world = location.getWorld();
 			List<Chunk> chunks = new ArrayList<>();
-			Chunk chunk = l.getChunk();
+			Chunk chunk = location.getChunk();
 			chunks.add(chunk);
 			// reset biome and it's not The End
-			TARDISBiome blockBiome = TARDISStaticUtils.getBiomeAt(l);
-			if (blockBiome.equals(TARDISBiome.DEEP_OCEAN) || blockBiome.equals(TARDISBiome.THE_VOID) || (blockBiome.equals(TARDISBiome.THE_END) && !Objects.requireNonNull(l.getWorld()).getEnvironment().equals(World.Environment.THE_END))) {
+			TARDISBiome blockBiome = TARDISStaticUtils.getBiomeAt(location);
+			if (blockBiome.equals(TARDISBiome.DEEP_OCEAN) || blockBiome.equals(TARDISBiome.THE_VOID) || (blockBiome.equals(TARDISBiome.THE_END) && !Objects.requireNonNull(location.getWorld()).getEnvironment().equals(World.Environment.THE_END))) {
 				// reset the biome
-				for (int c = -3; c < 4; c++) {
-					for (int r = -3; r < 4; r++) {
-						try {
-							assert w != null;
-							w.setBiome(sbx + c, sbz + r, biome);
-							Chunk tmp_chunk = w.getChunkAt(new Location(w, sbx + c, 64, sbz + r));
-							if (!chunks.contains(tmp_chunk)) {
-								chunks.add(tmp_chunk);
+				for (int l = -1; l < 2; l++) {
+					for (int w = -1; w < 2; w++) {
+						for (int h = 0; h < 4; h++) {
+							try {
+								assert world != null;
+								world.setBiome(sbx + l, sby + h, sbz + w, biome);
+								Chunk tmp_chunk = world.getChunkAt(new Location(world, sbx + l, 64, sbz + w));
+								if (!chunks.contains(tmp_chunk)) {
+									chunks.add(tmp_chunk);
+								}
+							} catch (NullPointerException e) {
+								e.printStackTrace();
+								return false;
 							}
-						} catch (NullPointerException e) {
-							e.printStackTrace();
-							return false;
 						}
 					}
 				}
 				// refresh the chunks
-				chunks.forEach((c) -> TARDIS.plugin.getTardisHelper().refreshChunk(c));
+				chunks.forEach((c) -> TARDISPlugin.plugin.getTardisHelper().refreshChunk(c));
 			}
 			return true;
 		}

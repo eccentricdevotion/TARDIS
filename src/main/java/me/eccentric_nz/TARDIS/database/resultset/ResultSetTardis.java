@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 
@@ -38,14 +38,14 @@ public class ResultSetTardis {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final String limit;
 	private final boolean multiple;
-	private final List<Tardis> data = new ArrayList<>();
+	private final List<TARDIS> data = new ArrayList<>();
 	private final String prefix;
 	private final int abandoned;
-	private Tardis tardis;
+	private TARDIS tardis;
 
 	/**
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
@@ -56,7 +56,7 @@ public class ResultSetTardis {
 	 * @param multiple  a boolean indicating whether multiple rows should be fetched
 	 * @param abandoned whether to select TARDISes that are abandoned (1) or not (0)
 	 */
-	public ResultSetTardis(TARDIS plugin, HashMap<String, Object> where, String limit, boolean multiple, int abandoned) {
+	public ResultSetTardis(TARDISPlugin plugin, HashMap<String, Object> where, String limit, boolean multiple, int abandoned) {
 		this.plugin = plugin;
 		this.where = where;
 		this.limit = limit;
@@ -136,7 +136,7 @@ public class ResultSetTardis {
 					} catch (IllegalArgumentException e) {
 						demat = PRESET.FACTORY;
 					}
-					tardis = new Tardis(rs.getInt("tardis_id"), UUID.fromString(uuid), rs.getString("owner"), rs.getString("last_known_name"), rs.getString("chunk"), rs.getInt("tips"), Consoles.schematicFor(rs.getString("size").toLowerCase(Locale.ENGLISH)), rs.getBoolean("abandoned"), companions, preset, demat, rs.getInt("adapti_on"), rs.getInt("artron_level"), rs.getString("creeper"), rs.getString("beacon"), rs.getBoolean("handbrake_on"), rs.getBoolean("tardis_init"), rs.getBoolean("recharging"), rs.getBoolean("hidden"), rs.getLong("lastuse"), rs.getBoolean("iso_on"), rs.getString("eps"), rs.getString("rail"), rs.getString("renderer"), zero, frame, rs.getBoolean("powered_on"), rs.getBoolean("lights_on"), rs.getBoolean("siege_on"), rs.getInt("monsters"));
+					tardis = new TARDIS(rs.getInt("tardis_id"), UUID.fromString(uuid), rs.getString("owner"), rs.getString("last_known_name"), rs.getString("chunk"), rs.getInt("tips"), Consoles.schematicFor(rs.getString("size").toLowerCase(Locale.ENGLISH)), rs.getBoolean("abandoned"), companions, preset, demat, rs.getInt("adapti_on"), rs.getInt("artron_level"), rs.getString("creeper"), rs.getString("beacon"), rs.getBoolean("handbrake_on"), rs.getBoolean("tardis_init"), rs.getBoolean("recharging"), rs.getBoolean("hidden"), rs.getLong("last_use"), rs.getBoolean("iso_on"), rs.getString("eps"), rs.getString("rail"), rs.getString("renderer"), zero, frame, rs.getBoolean("powered_on"), rs.getBoolean("lights_on"), rs.getBoolean("siege_on"), rs.getInt("monsters"));
 					if (multiple) {
 						data.add(tardis);
 					}
@@ -162,11 +162,11 @@ public class ResultSetTardis {
 		return true;
 	}
 
-	public Tardis getTardis() {
+	public TARDIS getTardis() {
 		return tardis;
 	}
 
-	public List<Tardis> getData() {
+	public List<TARDIS> getData() {
 		return data;
 	}
 }

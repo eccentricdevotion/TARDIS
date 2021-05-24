@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.perms;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -36,12 +36,12 @@ import java.util.List;
  */
 public class TARDISPermissionsExHandler {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final File permissionsFile;
 	private final LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<>();
 	private String group;
 
-	public TARDISPermissionsExHandler(TARDIS plugin) {
+	public TARDISPermissionsExHandler(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		permissionsFile = new File(plugin.getDataFolder(), "permissions.txt");
 	}

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.*;
@@ -35,13 +35,13 @@ public class ResultSetChunks {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final boolean multiple;
 	private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
 	private final String prefix;
-	private int chunk_id;
-	private int tardis_id;
+	private int chunkId;
+	private int tardisId;
 	private String world;
 	private int x;
 	private int z;
@@ -53,7 +53,7 @@ public class ResultSetChunks {
 	 * @param where    a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
 	 * @param multiple a boolean indicating whether multiple rows should be fetched
 	 */
-	public ResultSetChunks(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+	public ResultSetChunks(TARDISPlugin plugin, HashMap<String, Object> where, boolean multiple) {
 		this.plugin = plugin;
 		this.where = where;
 		this.multiple = multiple;
@@ -103,8 +103,8 @@ public class ResultSetChunks {
 						}
 						data.add(row);
 					}
-					chunk_id = rs.getInt("chunk_id");
-					tardis_id = rs.getInt("tardis_id");
+					chunkId = rs.getInt("chunkId");
+					tardisId = rs.getInt("tardisId");
 					world = rs.getString("world");
 					x = rs.getInt("x");
 					z = rs.getInt("z");
@@ -130,12 +130,12 @@ public class ResultSetChunks {
 		return true;
 	}
 
-	public int getChunk_id() {
-		return chunk_id;
+	public int getChunkId() {
+		return chunkId;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	public String getWorld() {

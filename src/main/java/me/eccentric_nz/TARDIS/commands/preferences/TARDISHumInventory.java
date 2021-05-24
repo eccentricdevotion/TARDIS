@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIInteriorSounds;
 import me.eccentric_nz.tardis.enumeration.Hum;
 import org.bukkit.Material;
@@ -34,10 +34,10 @@ import java.util.List;
  */
 class TARDISHumInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ItemStack[] sounds;
 
-	TARDISHumInventory(TARDIS plugin) {
+	TARDISHumInventory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		sounds = getItemStack();
 	}

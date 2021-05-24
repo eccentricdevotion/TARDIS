@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -31,6 +31,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The architectural reconfiguration system is a component of the Doctor's tardis in the shape of a tree that, according
@@ -42,9 +43,9 @@ import java.util.List;
  */
 public class TARDISAdminMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISAdminMenuListener(TARDIS plugin) {
+	public TARDISAdminMenuListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

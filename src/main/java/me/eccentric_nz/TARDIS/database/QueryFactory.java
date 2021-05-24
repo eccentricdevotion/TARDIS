@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -34,12 +34,12 @@ import java.util.UUID;
  */
 public class QueryFactory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final String prefix;
 
-	public QueryFactory(TARDIS plugin) {
+	public QueryFactory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}
@@ -296,11 +296,11 @@ public class QueryFactory {
 	 *
 	 * @param new_size   the newly calculated total number of blocks condensed
 	 * @param id         the tardis_id of the record to update
-	 * @param block_data the block_data of the record to update
+	 * @param blockData the block_data of the record to update
 	 */
-	public void updateCondensedBlockCount(int new_size, int id, String block_data) {
+	public void updateCondensedBlockCount(int new_size, int id, String blockData) {
 		Statement statement = null;
-		String query = "UPDATE " + prefix + "condenser SET block_count = " + new_size + " WHERE tardis_id = " + id + " AND block_data = '" + block_data + "'";
+		String query = "UPDATE " + prefix + "condenser SET block_count = " + new_size + " WHERE tardis_id = " + id + " AND block_data = '" + blockData + "'";
 		try {
 			service.testConnection(connection);
 			statement = connection.createStatement();
@@ -388,7 +388,7 @@ public class QueryFactory {
 		where.put("uuid", uuid);
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 		if (!rs.resultSet()) {
-			String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, abandoned = 0 , tardis_init = 1, powered_on = 1, lastuse = ? WHERE tardis_id = ?";
+			String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, abandoned = 0 , tardis_init = 1, powered_on = 1, last_use = ? WHERE tardis_id = ?";
 			try {
 				service.testConnection(connection);
 				long now;

@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.remote;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
@@ -25,7 +25,7 @@ import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
 import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.tardis.commands.tardis.TARDISRebuildCommand;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
@@ -53,7 +53,7 @@ import java.util.*;
  */
 public class TARDISRemoteCommands extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("travel", "comehere", "chameleon", "hide", "rebuild");
 	private final List<String> CHAM_SUBS = new ArrayList<>();
 	private final ImmutableList<String> TRAVEL_SUBS = ImmutableList.of("home", "area");
@@ -61,7 +61,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 
 	//[player] [travel|comehere|chameleon|hide|rebuild] [home|area|coords]
 
-	public TARDISRemoteCommands(TARDIS plugin) {
+	public TARDISRemoteCommands(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		for (PRESET p : PRESET.values()) {
 			CHAM_SUBS.add(p.toString());
@@ -80,23 +80,23 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 				new TARDISCommandHelper(plugin).getCommand("tardisremote", sender);
 				return true;
 			}
-			UUID uuid = plugin.getServer().getOfflinePlayer(args[0]).getUniqueId();
+			UUID uuid = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId()).getUniqueId();
 			// check the player has a tardis
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("uuid", uuid.toString());
 			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 			if (rs.resultSet()) {
-				Tardis tardis = rs.getTardis();
+				TARDIS tardis = rs.getTardis();
 				// not in siege mode
-				if (plugin.getTrackerKeeper().getInSiegeMode().contains(tardis.getTardis_id())) {
+				if (plugin.getTrackerKeeper().getInSiegeMode().contains(tardis.getTardisId())) {
 					TARDISMessage.send(sender, "SIEGE_NO_CMD");
 					return true;
 				}
 				// we're good to go
-				int id = tardis.getTardis_id();
+				int id = tardis.getTardisId();
 				boolean hidden = tardis.isHidden();
-				boolean handbrake = tardis.isHandbrake_on();
-				int level = tardis.getArtron_level();
+				boolean handbrake = tardis.isHandbrakeOn();
+				int level = tardis.getArtronLevel();
 				if (sender instanceof Player && !sender.hasPermission("tardis.admin")) {
 					HashMap<String, Object> wheret = new HashMap<>();
 					wheret.put("uuid", ((Player) sender).getUniqueId().toString());
@@ -105,13 +105,13 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 						TARDISMessage.send(sender, "NOT_A_TIMELORD");
 						return true;
 					}
-					Tardis t = rst.getTardis();
-					int tardis_id = t.getTardis_id();
-					if (tardis_id != id) {
+					TARDIS t = rst.getTardis();
+					int tardisId = t.getTardisId();
+					if (tardisId != id) {
 						TARDISMessage.send(sender, "CMD_ONLY_TL_REMOTE");
 						return true;
 					}
-					if (plugin.getConfig().getBoolean("allow.power_down") && !t.isPowered_on()) {
+					if (plugin.getConfig().getBoolean("allow.power_down") && !t.isPowered()) {
 						TARDISMessage.send(sender, "POWER_DOWN");
 						return true;
 					}

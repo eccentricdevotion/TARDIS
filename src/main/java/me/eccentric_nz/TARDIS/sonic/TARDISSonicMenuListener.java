@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -39,7 +39,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISSonicMenuListener extends TARDISMenuListener implements Listener {
 
-	public TARDISSonicMenuListener(TARDIS plugin) {
+	public TARDISSonicMenuListener(TARDISPlugin plugin) {
 		super(plugin);
 	}
 

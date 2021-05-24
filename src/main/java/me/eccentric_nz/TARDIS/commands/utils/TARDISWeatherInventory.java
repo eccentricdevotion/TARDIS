@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.utils;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIWeather;
 import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.inventory.ItemStack;
@@ -24,10 +24,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISWeatherInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ItemStack[] weather;
 
-	public TARDISWeatherInventory(TARDIS plugin) {
+	public TARDISWeatherInventory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		weather = getItemStack();
 	}

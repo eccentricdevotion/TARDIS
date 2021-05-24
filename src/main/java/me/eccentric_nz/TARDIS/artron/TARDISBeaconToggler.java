@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.desktop.TARDISBlockScannerData;
 import me.eccentric_nz.tardis.desktop.TARDISUpgradeBlockScanner;
@@ -37,9 +37,9 @@ import java.util.UUID;
  */
 public class TARDISBeaconToggler {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBeaconToggler(TARDIS plugin) {
+	public TARDISBeaconToggler(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -48,7 +48,7 @@ public class TARDISBeaconToggler {
 		whereb.put("tardis_id", id);
 		ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false, 2);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			Schematic schm = tardis.getSchematic();
 			if (Consoles.getNO_BEACON().contains(schm)) {
 				// doesn't have a beacon!
@@ -66,7 +66,7 @@ public class TARDISBeaconToggler {
 					}
 					b.setBlockData((on) ? TARDISConstants.GLASS : TARDISConstants.POWER);
 					if (!plugin.getGeneralKeeper().getProtectBlockMap().containsKey(bl.toString())) {
-						plugin.getGeneralKeeper().getProtectBlockMap().put(bl.toString(), tardis.getTardis_id());
+						plugin.getGeneralKeeper().getProtectBlockMap().put(bl.toString(), tardis.getTardisId());
 					}
 				} else {
 					updateBeacon(schm, uuid);

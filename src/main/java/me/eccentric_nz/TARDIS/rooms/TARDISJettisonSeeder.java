@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -46,9 +46,9 @@ import java.util.UUID;
  */
 public class TARDISJettisonSeeder implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISJettisonSeeder(TARDIS plugin) {
+	public TARDISJettisonSeeder(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -99,7 +99,7 @@ public class TARDISJettisonSeeder implements Listener {
 				// get the tardis id
 				ResultSetTardisID rs = new ResultSetTardisID(plugin);
 				if (rs.fromUUID(player.getUniqueId().toString())) {
-					int id = rs.getTardis_id();
+					int id = rs.getTardisId();
 					TARDISRoomRemover remover = new TARDISRoomRemover(plugin, r, l, d, id);
 					if (remover.remove()) {
 						plugin.getTrackerKeeper().getJettison().remove(uuid);

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -42,7 +42,7 @@ public class ResultSetRepeaters {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private final int secondary;
 	private final int[] diodes = new int[4];
@@ -56,7 +56,7 @@ public class ResultSetRepeaters {
 	 * @param id        the tardis id to search for.
 	 * @param secondary the level of control to look for.
 	 */
-	public ResultSetRepeaters(TARDIS plugin, int id, int secondary) {
+	public ResultSetRepeaters(TARDISPlugin plugin, int id, int secondary) {
 		this.plugin = plugin;
 		this.id = id;
 		this.secondary = secondary;

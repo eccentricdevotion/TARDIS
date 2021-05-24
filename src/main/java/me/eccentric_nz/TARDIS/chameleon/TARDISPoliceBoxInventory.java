@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.custommodeldata.GUIChameleonPoliceBoxes;
 import org.bukkit.Material;
@@ -38,10 +38,10 @@ class TARDISPoliceBoxInventory {
 
 	final List<String> colours = Arrays.asList("Blue", "White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Brown", "Green", "Red", "Black");
 	private final ItemStack[] boxes;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 
-	public TARDISPoliceBoxInventory(TARDIS plugin, Player player) {
+	public TARDISPoliceBoxInventory(TARDISPlugin plugin, Player player) {
 		this.plugin = plugin;
 		this.player = player;
 		boxes = getItemStack();

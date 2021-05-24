@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -39,9 +39,9 @@ import java.util.UUID;
  */
 public class TARDISRebuildCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISRebuildCommand(TARDIS plugin) {
+	public TARDISRebuildCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -64,8 +64,8 @@ public class TARDISRebuildCommand {
 				TARDISMessage.send(player.getPlayer(), "NO_TARDIS");
 				return true;
 			}
-			Tardis tardis = rs.getTardis();
-			if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+			TARDIS tardis = rs.getTardis();
+			if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
 				TARDISMessage.send(player.getPlayer(), "POWER_DOWN");
 				return true;
 			}
@@ -73,7 +73,7 @@ public class TARDISRebuildCommand {
 				TARDISMessage.send(player.getPlayer(), "INVISIBILITY_ENGAGED");
 				return true;
 			}
-			int id = tardis.getTardis_id();
+			int id = tardis.getTardisId();
 			TARDISCircuitChecker tcc = null;
 			if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player.getPlayer(), true)) {
 				tcc = new TARDISCircuitChecker(plugin, id);
@@ -103,7 +103,7 @@ public class TARDISRebuildCommand {
 				return true;
 			}
 			HashMap<String, Object> wherecl = new HashMap<>();
-			wherecl.put("tardis_id", tardis.getTardis_id());
+			wherecl.put("tardis_id", tardis.getTardisId());
 			ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
 			if (!rsc.resultSet()) {
 				TARDISMessage.send(player.getPlayer(), "CURRENT_NOT_FOUND");
@@ -111,7 +111,7 @@ public class TARDISRebuildCommand {
 				return true;
 			}
 			Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-			int level = tardis.getArtron_level();
+			int level = tardis.getArtronLevel();
 			int rebuild = plugin.getArtronConfig().getInt("random");
 			if (level < rebuild) {
 				TARDISMessage.send(player.getPlayer(), "ENERGY_NO_REBUILD");

@@ -22,7 +22,7 @@
  */
 package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +35,7 @@ import java.util.UUID;
 public class TARDISArchInventory {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final String prefix = TARDIS.plugin.getPrefix();
+	private final String prefix = TARDISPlugin.plugin.getPrefix();
 
 	void switchInventories(Player p, int arch) {
 		String uuid = p.getUniqueId().toString();
@@ -99,8 +99,8 @@ public class TARDISArchInventory {
 				p.getInventory().setHelmet(null);
 				// give a fob watch if it is the Chameleon Arch inventory
 				if (arch == 0) {
-					TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-						ShapedRecipe recipe = TARDIS.plugin.getFigura().getShapedRecipes().get("Fob Watch");
+					TARDISPlugin.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDISPlugin.plugin, () -> {
+						ShapedRecipe recipe = TARDISPlugin.plugin.getFigura().getShapedRecipes().get("Fob Watch");
 						ItemStack result = recipe.getResult();
 						result.setAmount(1);
 						p.getInventory().addItem(result);

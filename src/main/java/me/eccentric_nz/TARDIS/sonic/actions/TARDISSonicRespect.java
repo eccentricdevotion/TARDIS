@@ -20,7 +20,7 @@ import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.utility.TARDISFactionsChecker;
 import me.eccentric_nz.tardis.utility.TARDISGriefPreventionChecker;
 import me.eccentric_nz.tardis.utility.TARDISRedProtectChecker;
@@ -28,7 +28,6 @@ import me.eccentric_nz.tardis.utility.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import me.crafter.mc.lockettepro.LocketteProAPI;
 
 public class TARDISSonicRespect {
 
@@ -40,7 +39,7 @@ public class TARDISSonicRespect {
 	 * @param block  the block to check
 	 * @return true if the player has permission to alter the block, otherwise false
 	 */
-	public static boolean checkBlockRespect(TARDIS plugin, Player player, Block block) {
+	public static boolean checkBlockRespect(TARDISPlugin plugin, Player player, Block block) {
 		// WorldGuard is probably on server + possibly another protection plugin
 		if (plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canBuild(player, block.getLocation())) {
 			return false;

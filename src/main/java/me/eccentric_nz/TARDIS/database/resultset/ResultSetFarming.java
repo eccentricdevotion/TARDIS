@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.database.data.Farm;
 
@@ -35,8 +35,8 @@ public class ResultSetFarming {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
-	private final int tardis_id;
+	private final TARDISPlugin plugin;
+	private final int tardisId;
 	private final String prefix;
 	private Farm data;
 
@@ -44,11 +44,11 @@ public class ResultSetFarming {
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the farming table.
 	 *
 	 * @param plugin    an instance of the main class.
-	 * @param tardis_id the id of the tardis to get the farm locations for.
+	 * @param tardisId the id of the tardis to get the farm locations for.
 	 */
-	public ResultSetFarming(TARDIS plugin, int tardis_id) {
+	public ResultSetFarming(TARDISPlugin plugin, int tardisId) {
 		this.plugin = plugin;
-		this.tardis_id = tardis_id;
+		this.tardisId = tardisId;
 		prefix = this.plugin.getPrefix();
 	}
 
@@ -66,7 +66,7 @@ public class ResultSetFarming {
 		try {
 			service.testConnection(connection);
 			statement = connection.prepareStatement(query);
-			statement.setInt(1, tardis_id);
+			statement.setInt(1, tardisId);
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				rs.next();

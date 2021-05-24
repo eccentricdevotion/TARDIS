@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIArchive;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisSize;
 import me.eccentric_nz.tardis.enumeration.ConsoleSize;
@@ -40,10 +40,10 @@ import java.util.Arrays;
 class TARDISArchiveInventory {
 
 	private final ItemStack[] menu;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 
-	TARDISArchiveInventory(TARDIS plugin, Player player) {
+	TARDISArchiveInventory(TARDISPlugin plugin, Player player) {
 		this.plugin = plugin;
 		this.player = player;
 		menu = getItemStack();

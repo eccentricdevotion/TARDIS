@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.creative;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.chemistry.element.ElementInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -32,9 +32,9 @@ import java.util.Objects;
 
 public class CreativeGUIListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public CreativeGUIListener(TARDIS plugin) {
+	public CreativeGUIListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

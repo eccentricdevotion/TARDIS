@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 
 /**
@@ -76,14 +76,14 @@ public final class BuildData extends MaterialisationData {
 	public void setPlayerDefaults(String uuid) {
 		if (uuid == null) {
 			// sane defaults
-			texture = TARDIS.plugin.getConfig().getBoolean("police_box.set_biome");
+			texture = TARDISPlugin.plugin.getConfig().getBoolean("police_box.set_biome");
 			addSign = true;
 			CTM = true;
 			minecartSounds = false;
 		} else {
-			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, uuid);
+			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDISPlugin.plugin, uuid);
 			if (rsp.resultSet()) {
-				texture = rsp.isPoliceboxTexturesOn();
+				texture = rsp.isPoliceBoxTexturesOn();
 				addSign = rsp.isSignOn();
 				CTM = rsp.isCtmOn();
 				minecartSounds = rsp.isMinecartOn();

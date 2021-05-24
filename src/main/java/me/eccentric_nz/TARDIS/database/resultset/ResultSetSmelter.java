@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.SmelterChest;
 import me.eccentric_nz.tardis.rooms.smelter.Smelter;
@@ -46,11 +46,11 @@ public class ResultSetSmelter {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String where;
 	private final String prefix;
-	private int smelter_id;
-	private int tardis_id;
+	private int smelterId;
+	private int tardisId;
 	private String location;
 	private SmelterChest type;
 	private List<Chest> fuelChests;
@@ -62,7 +62,7 @@ public class ResultSetSmelter {
 	 * @param plugin an instance of the main class.
 	 * @param where  the location of the smelter chest.
 	 */
-	public ResultSetSmelter(TARDIS plugin, String where) {
+	public ResultSetSmelter(TARDISPlugin plugin, String where) {
 		this.plugin = plugin;
 		this.where = where;
 		prefix = this.plugin.getPrefix();
@@ -85,8 +85,8 @@ public class ResultSetSmelter {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
-					smelter_id = rs.getInt("v_id");
-					tardis_id = rs.getInt("tardis_id");
+					smelterId = rs.getInt("v_id");
+					tardisId = rs.getInt("tardis_id");
 					location = rs.getString("location");
 					type = SmelterChest.valueOf(rs.getString("chest_type"));
 					fuelChests = getChests(location, true);
@@ -113,12 +113,12 @@ public class ResultSetSmelter {
 		return true;
 	}
 
-	public int getSmelter_id() {
-		return smelter_id;
+	public int getSmelterId() {
+		return smelterId;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	public String getLocation() {

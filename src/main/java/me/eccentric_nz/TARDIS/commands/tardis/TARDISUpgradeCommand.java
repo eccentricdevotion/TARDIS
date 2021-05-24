@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.desktop.TARDISThemeInventory;
 import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
@@ -39,9 +39,9 @@ import java.util.HashMap;
  */
 class TARDISUpgradeCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISUpgradeCommand(TARDIS plugin) {
+	TARDISUpgradeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -58,7 +58,7 @@ class TARDISUpgradeCommand {
 			TARDISMessage.send(player, "NO_TARDIS");
 			return false;
 		}
-		Tardis tardis = rs.getTardis();
+		TARDIS tardis = rs.getTardis();
 		// console must in a tardis world
 		if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
 			TARDISMessage.send(player, "UPGRADE_ABORT_WORLD");
@@ -87,7 +87,7 @@ class TARDISUpgradeCommand {
 		}
 		// get player's current console
 		Schematic current_console = tardis.getSchematic();
-		int level = tardis.getArtron_level();
+		int level = tardis.getArtronLevel();
 		TARDISUpgradeData tud = new TARDISUpgradeData();
 		tud.setPrevious(current_console);
 		tud.setLevel(level);

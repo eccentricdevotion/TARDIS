@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.event.TARDISCreationEvent;
 import me.eccentric_nz.tardis.enumeration.*;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
@@ -39,9 +39,9 @@ import java.util.UUID;
  */
 public class TARDISAbandoned {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISAbandoned(TARDIS plugin) {
+	public TARDISAbandoned(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -60,7 +60,7 @@ public class TARDISAbandoned {
 		set.put("chunk", chun);
 		set.put("size", schm.getPermission().toUpperCase(Locale.ENGLISH));
 		set.put("abandoned", 1);
-		set.put("lastuse", Long.MAX_VALUE);
+		set.put("last_use", Long.MAX_VALUE);
 		set.put("chameleon_preset", preset.toString());
 		set.put("chameleon_demat", preset.toString());
 		int lastInsertId = plugin.getQueryFactory().doSyncInsert("tardis", set);
@@ -90,7 +90,7 @@ public class TARDISAbandoned {
 		builder.setTask(task);
 		// delay building exterior
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-			plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
+			plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisId());
 			if (preset.isColoured()) {
 				TARDISMaterialisePoliceBox runnable = new TARDISMaterialisePoliceBox(plugin, bd, preset);
 				int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);

@@ -7,7 +7,7 @@
  */
 package me.eccentric_nz.tardis.messaging;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -87,7 +87,7 @@ public class TableGenerator {
 		if (sender instanceof ConsoleCommandSender) {
 			return true;
 		} else if (sender instanceof Player) {
-			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, ((Player) sender).getUniqueId().toString());
+			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDISPlugin.plugin, ((Player) sender).getUniqueId().toString());
 			if (rsp.resultSet()) {
 				return rsp.useCustomFont();
 			}

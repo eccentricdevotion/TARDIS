@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -28,9 +28,9 @@ import java.util.HashMap;
  */
 class TARDISSetDifficultyCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISSetDifficultyCommand(TARDIS plugin) {
+	TARDISSetDifficultyCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

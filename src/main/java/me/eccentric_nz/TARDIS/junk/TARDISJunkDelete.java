@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.commands.admin.TARDISDeleteCommand;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -37,9 +37,9 @@ import java.util.HashMap;
  */
 class TARDISJunkDelete {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISJunkDelete(TARDIS plugin) {
+	TARDISJunkDelete(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -50,7 +50,7 @@ class TARDISJunkDelete {
 		}
 		ResultSetTardisID rs = new ResultSetTardisID(plugin);
 		if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
-			int id = rs.getTardis_id();
+			int id = rs.getTardisId();
 			// get the current location
 			Location bb_loc = null;
 			HashMap<String, Object> wherecl = new HashMap<>();

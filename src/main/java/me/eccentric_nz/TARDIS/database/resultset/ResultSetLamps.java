@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -42,7 +42,7 @@ public class ResultSetLamps {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final boolean multiple;
 	private final List<Block> data = new ArrayList<>();
@@ -55,7 +55,7 @@ public class ResultSetLamps {
 	 * @param where    a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
 	 * @param multiple a boolean indicating whether multiple rows should be fetched
 	 */
-	public ResultSetLamps(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+	public ResultSetLamps(TARDISPlugin plugin, HashMap<String, Object> where, boolean multiple) {
 		this.plugin = plugin;
 		this.where = where;
 		this.multiple = multiple;

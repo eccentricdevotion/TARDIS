@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.chameleon.TARDISChameleonInventory;
 import me.eccentric_nz.tardis.enumeration.Adaption;
@@ -30,9 +30,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class TARDISChameleonControl {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISChameleonControl(TARDIS plugin) {
+	public TARDISChameleonControl(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

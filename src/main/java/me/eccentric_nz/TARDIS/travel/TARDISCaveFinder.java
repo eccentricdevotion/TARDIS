@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -30,15 +30,16 @@ import org.bukkit.entity.Player;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
  */
 public class TARDISCaveFinder {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISCaveFinder(TARDIS plugin) {
+	public TARDISCaveFinder(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -55,7 +56,7 @@ public class TARDISCaveFinder {
 			// Assume all non-nether/non-end world environments are NORMAL
 			boolean hoth = (w.getGenerator() != null && w.getGenerator().getClass().getName().contains("hothgenerator"));
 			if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END) && !hoth) {
-				if (!w.getWorldType().equals(WorldType.FLAT) && worldCheck(w)) {
+				if (!Objects.equals(w.getWorldType(), WorldType.FLAT) && worldCheck(w)) {
 					int plusx = startx + 2000;
 					int plusz = startz + 2000;
 					int minusx = startx - 2000;

@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.admin;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISWorldGuardFlag;
 import org.bukkit.command.CommandSender;
@@ -29,11 +29,11 @@ import java.util.Locale;
  */
 class TARDISSetRespectCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ImmutableList<String> regions = ImmutableList.of("none", "wilderness", "town", "nation");
 	private final ImmutableList<String> flags = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
 
-	TARDISSetRespectCommand(TARDIS plugin) {
+	TARDISSetRespectCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

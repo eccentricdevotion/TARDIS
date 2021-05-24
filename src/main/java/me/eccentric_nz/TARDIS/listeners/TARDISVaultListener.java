@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetVault;
 import me.eccentric_nz.tardis.sonic.TARDISSonicSorterListener;
 import org.bukkit.Location;
@@ -38,9 +38,9 @@ import java.util.List;
 
 public class TARDISVaultListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISVaultListener(TARDIS plugin) {
+	public TARDISVaultListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

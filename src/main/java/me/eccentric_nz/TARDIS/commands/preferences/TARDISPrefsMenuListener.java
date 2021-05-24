@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.tardis.ars.TARDISARSMap;
@@ -24,7 +24,7 @@ import me.eccentric_nz.tardis.artron.TARDISArtronLevels;
 import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.commands.admin.TARDISAdminMenuInventory;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.DiskCircuit;
@@ -54,10 +54,10 @@ import java.util.UUID;
  */
 public class TARDISPrefsMenuListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, String> lookup = new HashMap<>();
 
-	public TARDISPrefsMenuListener(TARDIS plugin) {
+	public TARDISPrefsMenuListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 		lookup.put("Auto Power Up", "auto_powerup_on");
@@ -168,7 +168,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 							// get this player's tardis
 							ResultSetTardisID rs = new ResultSetTardisID(plugin);
 							if (rs.fromUUID(uuid.toString())) {
-								int id = rs.getTardis_id();
+								int id = rs.getTardisId();
 								// must not be in the vortex or materialising
 								if (!plugin.getTrackerKeeper().getMaterialising().contains(id) && !plugin.getTrackerKeeper().getInVortex().contains(id)) {
 									// set the handbrake to ON
@@ -289,7 +289,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 							wherep.put("uuid", uuid.toString());
 							ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
 							if (rsp.resultSet()) {
-								Tardis tardis = rsp.getTardis();
+								TARDIS tardis = rsp.getTardis();
 								String current = tardis.getPreset().toString();
 								// make sure is opposite
 								if (current.equals("JUNK_MODE") && !bool) {
@@ -300,7 +300,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 									TARDISMessage.send(p, "JUNK_ALREADY_OFF");
 									return;
 								}
-								int id = tardis.getTardis_id();
+								int id = tardis.getTardisId();
 								String cham_set;
 								HashMap<String, Object> setj = new HashMap<>();
 								if (has) {
@@ -379,7 +379,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 						// get tardis id
 						ResultSetTardisID rsi = new ResultSetTardisID(plugin);
 						if (rsi.fromUUID(uuid.toString())) {
-							new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardis_id(), !bool);
+							new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), !bool);
 						}
 					}
 				}

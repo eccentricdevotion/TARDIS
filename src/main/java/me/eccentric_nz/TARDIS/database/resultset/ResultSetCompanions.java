@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -39,7 +39,7 @@ public class ResultSetCompanions {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private final List<UUID> companions = new ArrayList<>();
 	private final String prefix;
@@ -50,7 +50,7 @@ public class ResultSetCompanions {
 	 * @param plugin an instance of the main class.
 	 * @param id     the tardis id to get the companions for.
 	 */
-	public ResultSetCompanions(TARDIS plugin, int id) {
+	public ResultSetCompanions(TARDISPlugin plugin, int id) {
 		this.plugin = plugin;
 		this.id = id;
 		prefix = this.plugin.getPrefix();

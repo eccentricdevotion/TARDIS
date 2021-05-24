@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
@@ -29,9 +29,9 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
  */
 public class TARDISPistonHarvesterListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISPistonHarvesterListener(TARDIS plugin) {
+	public TARDISPistonHarvesterListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

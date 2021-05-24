@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetGravity;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -48,11 +48,11 @@ import java.util.UUID;
  */
 public class TARDISGravityWellListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<Double, Material> woolType = new HashMap<>();
 	private final HashMap<Double, String> woolColour = new HashMap<>();
 
-	public TARDISGravityWellListener(TARDIS plugin) {
+	public TARDISGravityWellListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		woolType.put(0D, Material.PINK_WOOL);
 		woolType.put(1D, Material.LIME_WOOL);
@@ -210,7 +210,7 @@ public class TARDISGravityWellListener implements Listener {
 					TARDISMessage.send(player, "NOT_A_TIMELORD");
 					return;
 				}
-				int id = rs.getTardis_id();
+				int id = rs.getTardisId();
 				String loc = b.getLocation().toString();
 				if (values[0] == 6) {
 					// find record and delete it
@@ -220,7 +220,7 @@ public class TARDISGravityWellListener implements Listener {
 					ResultSetGravity rsg = new ResultSetGravity(plugin, whereg, false);
 					if (rsg.resultSet()) {
 						HashMap<String, Object> whered = new HashMap<>();
-						whered.put("g_id", rsg.getGravity_id());
+						whered.put("g_id", rsg.getGravityId());
 						if (plugin.getQueryFactory().doSyncDelete("gravity_well", whered)) {
 							switch (rsg.getDirection()) {
 								case 1 -> plugin.getGeneralKeeper().getGravityUpList().remove(loc);

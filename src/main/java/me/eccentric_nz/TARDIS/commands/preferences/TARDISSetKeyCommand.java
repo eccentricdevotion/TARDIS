@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,10 +31,10 @@ import java.util.Locale;
  */
 class TARDISSetKeyCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Material> keys = new ArrayList<>();
 
-	TARDISSetKeyCommand(TARDIS plugin) {
+	TARDISSetKeyCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		plugin.getBlocksConfig().getStringList("keys").forEach((m) -> {
 			try {

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -29,7 +29,7 @@ public class LabBuilder {
 		assert im != null;
 		im.setDisplayName(lab.toString().replace("_", " "));
 		im.setCustomModelData(10000000 + lab.getCustomModelData());
-		im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, lab.getCustomModelData());
+		im.getPersistentDataContainer().set(TARDISPlugin.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, lab.getCustomModelData());
 		is.setItemMeta(im);
 		return is;
 	}

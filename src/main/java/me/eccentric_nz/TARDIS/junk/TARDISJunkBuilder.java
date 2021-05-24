@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.junk;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
@@ -45,7 +45,7 @@ import java.util.HashMap;
  */
 public class TARDISJunkBuilder implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final BuildData bd;
 	private final int sx, sy, sz;
 	private final Location loc;
@@ -55,7 +55,7 @@ public class TARDISJunkBuilder implements Runnable {
 	private int fryTask;
 	private int i = 0;
 
-	public TARDISJunkBuilder(TARDIS plugin, BuildData bd) {
+	public TARDISJunkBuilder(TARDISPlugin plugin, BuildData bd) {
 		this.plugin = plugin;
 		this.bd = bd;
 		loc = this.bd.getLocation();
@@ -68,7 +68,7 @@ public class TARDISJunkBuilder implements Runnable {
 
 	@Override
 	public void run() {
-		if (!plugin.getTrackerKeeper().getDematerialising().contains(bd.getTardisID())) {
+		if (!plugin.getTrackerKeeper().getDematerialising().contains(bd.getTardisId())) {
 			// get relative locations
 			if (i < 24) {
 				i++;
@@ -125,38 +125,38 @@ public class TARDISJunkBuilder implements Runnable {
 									 * so we can use it as the handbrake!
 									 */
 									String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-									plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 0, handbrakeloc, 0);
+									plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 0, handbrakeloc, 0);
 								}
 								if (type.equals(Material.STONE_BUTTON)) {
 									// remember location 1
 									String stone_button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-									plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 1, stone_button, 0);
+									plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 1, stone_button, 0);
 								}
 								if (type.equals(Material.OAK_BUTTON)) {
 									// remember location 6
 									String wood_button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-									plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 6, wood_button, 0);
+									plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 6, wood_button, 0);
 								}
 								if (type.equals(Material.REPEATER)) {
 									// remember location 3
 									String repeater = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-									plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 2, repeater, 0);
+									plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 2, repeater, 0);
 								}
 								if (type.equals(Material.COMPARATOR)) {
 									// remember location 2
 									String comparator = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-									plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 3, comparator, 0);
+									plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 3, comparator, 0);
 								}
 								if (TARDISMaterials.infested.contains(type)) {
 									// insert / update control 9
-									plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 9, (new Location(world, x, y, z)).toString(), 0);
+									plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 9, (new Location(world, x, y, z)).toString(), 0);
 									// remember block
 									postTerminalBlock = world.getBlockAt(x, y, z);
 								}
 								if (type.equals(Material.TRIPWIRE_HOOK)) {
 									// remember location 4
 									String trip = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-									plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 4, trip, 0);
+									plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 4, trip, 0);
 								}
 								switch (type) {
 									case SPONGE, AIR -> TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
@@ -165,7 +165,7 @@ public class TARDISJunkBuilder implements Runnable {
 										Switch lever = (Switch) handbrake;
 										lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
 										lever.setFacing(BlockFace.SOUTH);
-										TARDISBlockSetters.setBlockAndRemember(world, x, y, z, lever, bd.getTardisID());
+										TARDISBlockSetters.setBlockAndRemember(world, x, y, z, lever, bd.getTardisId());
 									}
 									case ORANGE_WOOL -> {
 										BlockData stem;
@@ -174,10 +174,10 @@ public class TARDISJunkBuilder implements Runnable {
 										} else {
 											stem = wall_type.createBlockData();
 										}
-										TARDISBlockSetters.setBlockAndRemember(world, x, y, z, stem, bd.getTardisID());
+										TARDISBlockSetters.setBlockAndRemember(world, x, y, z, stem, bd.getTardisId());
 									}
-									case LIGHT_GRAY_WOOL -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
-									default -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
+									case LIGHT_GRAY_WOOL -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisId());
+									default -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisId());
 								}
 							}
 						}
@@ -201,8 +201,8 @@ public class TARDISJunkBuilder implements Runnable {
 					});
 				}
 			} else {
-				plugin.getTrackerKeeper().getMaterialising().remove(bd.getTardisID());
-				plugin.getTrackerKeeper().getInVortex().remove(bd.getTardisID());
+				plugin.getTrackerKeeper().getMaterialising().remove(bd.getTardisId());
+				plugin.getTrackerKeeper().getInVortex().remove(bd.getTardisId());
 				plugin.getServer().getScheduler().cancelTask(fryTask);
 				plugin.getServer().getScheduler().cancelTask(task);
 				task = 0;
@@ -213,7 +213,7 @@ public class TARDISJunkBuilder implements Runnable {
 				plugin.getGeneralKeeper().getJunkTravellers().clear();
 				// update current location
 				HashMap<String, Object> where = new HashMap<>();
-				where.put("tardis_id", bd.getTardisID());
+				where.put("tardis_id", bd.getTardisId());
 				HashMap<String, Object> set = new HashMap<>();
 				set.put("world", loc.getWorld().getName());
 				set.put("x", loc.getBlockX());

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Material;
 
 public enum GUIMap {
@@ -48,6 +48,6 @@ public enum GUIMap {
 
 	public String getName() {
 		String s = toString();
-		return (this == EMPTY_SLOT) ? "Empty Slot" : TARDIS.plugin.getLanguage().getString(s);
+		return (this == EMPTY_SLOT) ? "Empty Slot" : TARDISPlugin.plugin.getLanguage().getString(s);
 	}
 }

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
@@ -30,9 +30,9 @@ import java.util.Locale;
  */
 class TARDISSetSizeCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISSetSizeCommand(TARDIS plugin) {
+	TARDISSetSizeCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

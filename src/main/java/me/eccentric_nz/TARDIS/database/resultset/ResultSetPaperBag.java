@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -32,11 +32,11 @@ public class ResultSetPaperBag {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final UUID uuid;
 	private final List<Integer> flavours = Arrays.asList(1, 2, 3, 4);
 	private final String prefix;
-	private int paperBagID;
+	private int paperBagId;
 	private String flavour1;
 	private int amount1;
 	private String flavour2;
@@ -52,7 +52,7 @@ public class ResultSetPaperBag {
 	 * @param plugin an instance of the main class.
 	 * @param uuid   a player's UUID to refine the search.
 	 */
-	public ResultSetPaperBag(TARDIS plugin, UUID uuid) {
+	public ResultSetPaperBag(TARDISPlugin plugin, UUID uuid) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		prefix = this.plugin.getPrefix();
@@ -75,7 +75,7 @@ public class ResultSetPaperBag {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				paperBagID = rs.getInt("paper_bag_id");
+				paperBagId = rs.getInt("paper_bag_id");
 				flavour1 = rs.getString("flavour_1");
 				amount1 = rs.getInt("amount_1");
 				flavour2 = rs.getString("flavour_2");
@@ -156,8 +156,8 @@ public class ResultSetPaperBag {
 		return null;
 	}
 
-	public int getPaperBagID() {
-		return paperBagID;
+	public int getPaperBagId() {
+		return paperBagId;
 	}
 
 	public UUID getUuid() {

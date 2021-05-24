@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.formula;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.chemistry.compound.Compound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,9 +37,9 @@ import java.util.UUID;
 public class FormulaViewerListener implements Listener {
 
 	private final List<UUID> viewers = new ArrayList<>();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public FormulaViewerListener(TARDIS plugin) {
+	public FormulaViewerListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

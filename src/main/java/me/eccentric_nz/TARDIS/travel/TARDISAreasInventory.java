@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.custommodeldata.GUIArea;
@@ -38,11 +38,11 @@ import java.util.List;
  */
 public class TARDISAreasInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ItemStack[] terminal;
 	private final Player p;
 
-	public TARDISAreasInventory(TARDIS plugin, Player p) {
+	public TARDISAreasInventory(TARDISPlugin plugin, Player p) {
 		this.plugin = plugin;
 		this.p = p;
 		terminal = getItemStack();

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import org.bukkit.Chunk;
@@ -35,10 +35,10 @@ import java.io.File;
  */
 class TARDISBuildSilurianStructure {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String[] paths;
 
-	TARDISBuildSilurianStructure(TARDIS plugin) {
+	TARDISBuildSilurianStructure(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		paths = new String[]{plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_large.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_cross.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_north_south.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_east_west.tschm"};
 	}

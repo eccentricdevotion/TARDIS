@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.reducer;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -26,10 +26,10 @@ import java.util.Arrays;
 
 public class ReducerInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ItemStack[] menu;
 
-	public ReducerInventory(TARDIS plugin) {
+	public ReducerInventory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		menu = getItemStack();
 	}

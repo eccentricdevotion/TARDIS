@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
@@ -26,9 +26,9 @@ import org.bukkit.command.CommandSender;
  */
 class TARDISDefaultWorldNameCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISDefaultWorldNameCommand(TARDIS plugin) {
+	TARDISDefaultWorldNameCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

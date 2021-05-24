@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.database.data.Program;
 
@@ -39,7 +39,7 @@ public class ResultSetPrograms {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String uuid;
 	private final String prefix;
 	private final List<Program> programs;
@@ -50,7 +50,7 @@ public class ResultSetPrograms {
 	 * @param plugin an instance of the main class.
 	 * @param uuid   a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
 	 */
-	public ResultSetPrograms(TARDIS plugin, String uuid) {
+	public ResultSetPrograms(TARDISPlugin plugin, String uuid) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		prefix = this.plugin.getPrefix();

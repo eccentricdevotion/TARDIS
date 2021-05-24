@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.admin;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.*;
 import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.enumeration.Consoles;
@@ -47,7 +47,7 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
 	private final ImmutableList<String> MUSHROOM_SUBS = ImmutableList.of("the_moment", "siege_cube", "ars", "bigger", "budget", "coral", "deluxe", "eleventh", "ender", "plank", "pyramid", "redstone", "steampunk", "thirteenth", "factory", "tom", "twelfth", "war", "small", "medium", "tall", "legacy_bigger", "legacy_budget", "legacy_deluxe", "legacy_eleventh", "legacy_redstone", "pandorica", "master", "creative", "compound", "reducer", "constructor", "lab", "product", "blue_lamp_on", "green_lamp_on", "purple_lamp_on", "red_lamp_on", "blue_lamp", "green_lamp", "purple_lamp", "red_lamp", "heat_block", "custom", "hexagon", "roundel", "roundel_offset", "cog", "advanced_console", "disk_storage", "lamp_off", "lantern_off", "blue_box", "grow");
 	private final List<String> MAT_SUBS = new ArrayList<>();
 
-	public TARDISGiveTabComplete(TARDIS plugin) {
+	public TARDISGiveTabComplete(TARDISPlugin plugin) {
 		GIVE_SUBS.add("artron");
 		GIVE_SUBS.add("blueprint");
 		GIVE_SUBS.add("kit");

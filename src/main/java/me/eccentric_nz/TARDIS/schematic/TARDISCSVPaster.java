@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.schematic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -33,9 +33,9 @@ import java.io.IOException;
  */
 class TARDISCSVPaster {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISCSVPaster(TARDIS plugin) {
+	TARDISCSVPaster(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

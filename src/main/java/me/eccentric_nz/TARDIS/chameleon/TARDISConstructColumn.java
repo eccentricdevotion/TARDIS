@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.chameleon;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 
@@ -29,12 +29,12 @@ import java.util.HashMap;
  */
 public class TARDISConstructColumn {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private final String field;
 	private final COMPASS d;
 
-	public TARDISConstructColumn(TARDIS plugin, int id, String field, COMPASS d) {
+	public TARDISConstructColumn(TARDISPlugin plugin, int id, String field, COMPASS d) {
 		this.plugin = plugin;
 		this.id = id;
 		this.field = field;

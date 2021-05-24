@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
@@ -24,9 +24,9 @@ import org.bukkit.entity.Player;
 
 public class TARDISDisguiseCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISDisguiseCommand(TARDIS plugin) {
+	public TARDISDisguiseCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

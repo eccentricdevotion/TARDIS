@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.RecipeCategory;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardis.utility.TARDISStringUtils;
@@ -16,9 +16,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISRecipeCategoryListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISRecipeCategoryListener(TARDIS plugin) {
+	public TARDISRecipeCategoryListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}

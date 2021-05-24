@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.Advancement;
 import org.bukkit.ChatColor;
 
@@ -27,16 +27,16 @@ import java.io.*;
  */
 public class TARDISChecker {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISChecker(TARDIS plugin) {
+	public TARDISChecker(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
 	public static boolean hasDimension(String dimension) {
 		boolean exists = true;
-		File container = TARDIS.plugin.getServer().getWorldContainer();
-		String s_world = TARDIS.plugin.getServer().getWorlds().get(0).getName();
+		File container = TARDISPlugin.plugin.getServer().getWorldContainer();
+		String s_world = TARDISPlugin.plugin.getServer().getWorlds().get(0).getName();
 		String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator;
 		// check if directories exist
 		String dimensionRoot = dataPacksRoot + dimension + File.separator + "data" + File.separator + "tardis" + File.separator;
@@ -114,8 +114,8 @@ public class TARDISChecker {
 	}
 
 	public static void updateDimension(String dimension) {
-		File container = TARDIS.plugin.getServer().getWorldContainer();
-		String s_world = TARDIS.plugin.getServer().getWorlds().get(0).getName();
+		File container = TARDISPlugin.plugin.getServer().getWorldContainer();
+		String s_world = TARDISPlugin.plugin.getServer().getWorlds().get(0).getName();
 		String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator;
 		// check if directories exist
 		String dimensionRoot = dataPacksRoot + dimension + File.separator + "data" + File.separator + "tardis" + File.separator;
@@ -162,7 +162,7 @@ public class TARDISChecker {
 	public static void copy(String filename, File file) {
 		InputStream in = null;
 		try {
-			in = TARDIS.plugin.getResource(filename);
+			in = TARDISPlugin.plugin.getResource(filename);
 			OutputStream out = new FileOutputStream(file);
 			byte[] buf = new byte[1024];
 			int len;

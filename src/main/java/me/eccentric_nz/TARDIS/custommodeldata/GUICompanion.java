@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
@@ -50,7 +50,7 @@ public enum GUICompanion {
 	public String getName() {
 		String s = toString();
 		if (s.startsWith("BUTTON")) {
-			TARDIS.plugin.getLanguage().getString("s");
+			TARDISPlugin.plugin.getLanguage().getString("s");
 		}
 		return TARDISStringUtils.sentenceCase(s);
 	}

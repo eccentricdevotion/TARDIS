@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardis;
 
 import io.papermc.lib.PaperLib;
-import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.tardis.api.TARDII;
+import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
+import me.eccentric_nz.tardis.api.TARDISes;
 import me.eccentric_nz.tardis.arch.TARDISArchPersister;
 import me.eccentric_nz.tardis.ars.ARSConverter;
 import me.eccentric_nz.tardis.artron.TARDISArtronFurnaceParticle;
@@ -97,9 +97,9 @@ import java.util.regex.Pattern;
  *
  * @author eccentric_nz
  */
-public class TARDIS extends JavaPlugin {
+public class TARDISPlugin extends JavaPlugin {
 
-	public static TARDIS plugin;
+	public static TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final TARDISArea tardisArea = new TARDISArea(this);
 	private final TARDISBuilderInstanceKeeper buildKeeper = new TARDISBuilderInstanceKeeper();
@@ -168,7 +168,7 @@ public class TARDIS extends JavaPlugin {
 	private int updateNumber = 0;
 	private TARDISBlockLogger blockLogger;
 
-	public TARDIS() {
+	public TARDISPlugin() {
 		worldGuardOnServer = false;
 		invManager = InventoryManager.NONE;
 		versions.put("dynmap", "3.1-beta-5");
@@ -496,7 +496,7 @@ public class TARDIS extends JavaPlugin {
 			startRecorderTask();
 			getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISControlRunnable(this), 200L, 200L);
 			getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
-				if (!TARDISAchievementFactory.checkAdvancement("tardis")) {
+				if (!TARDISAdvancementFactory.checkAdvancement("tardis")) {
 					getConsole().sendMessage(getPluginName() + getLanguage().getString("ADVANCEMENT_RELOAD"));
 					getServer().reloadData();
 				}
@@ -637,7 +637,7 @@ public class TARDIS extends JavaPlugin {
 	 * Loads the custom configuration files.
 	 */
 	private void loadCustomConfigs() {
-		List<String> files = Arrays.asList("achievements.yml", "artron.yml", "blocks.yml", "rooms.yml", "planets.yml", "handles.yml", "tag.yml", "recipes.yml", "kits.yml", "condensables.yml", "custom_consoles.yml");
+		List<String> files = Arrays.asList("advancements.yml", "artron.yml", "blocks.yml", "rooms.yml", "planets.yml", "handles.yml", "tag.yml", "recipes.yml", "kits.yml", "condensables.yml", "custom_consoles.yml");
 		for (String f : files) {
 			tardisCopier.copy(f);
 		}
@@ -655,7 +655,7 @@ public class TARDIS extends JavaPlugin {
 		new TARDISCondensablesUpdater(this).checkCondensables();
 		customConsolesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_consoles.yml"));
 		kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));
-		achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
+		achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "advancements.yml"));
 		tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
 		handlesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "handles.yml"));
 	}
@@ -1065,7 +1065,7 @@ public class TARDIS extends JavaPlugin {
 		}
 	}
 
-	public FileConfiguration getAchievementConfig() {
+	public FileConfiguration getAdvancementConfig() {
 		return achievementConfig;
 	}
 
@@ -1241,8 +1241,8 @@ public class TARDIS extends JavaPlugin {
 		return tardisCopier;
 	}
 
-	public TARDII getTardisAPI() {
-		return new TARDII();
+	public TARDISes getTardisAPI() {
+		return new TARDISes();
 	}
 
 	public BukkitTask getStandbyTask() {

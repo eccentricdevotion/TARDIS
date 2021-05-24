@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.DiskCircuit;
 import me.eccentric_nz.tardis.enumeration.RecipeItem;
@@ -42,14 +42,14 @@ import java.util.*;
  */
 public class TARDISShapedRecipe {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, ShapedRecipe> shapedRecipes;
 	private final HashMap<String, ChatColor> sonic_colour_lookup = new HashMap<>();
 	private final HashMap<String, ChatColor> key_colour_lookup = new HashMap<>();
 	private ChatColor keyDisplay;
 	private ChatColor sonicDisplay;
 
-	public TARDISShapedRecipe(TARDIS plugin) {
+	public TARDISShapedRecipe(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		shapedRecipes = new HashMap<>();
 		sonic_colour_lookup.put("mark_1", ChatColor.DARK_GRAY);

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.PRESET;
@@ -37,24 +37,24 @@ public class ResultSetTardisAbandoned {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String prefix;
-	private int tardis_id;
-	private int artron_level;
+	private int tardisId;
+	private int artronLevel;
 	private Schematic schematic;
 	private PRESET preset;
-	private boolean handbrake_on;
+	private boolean handbrakeOn;
 	private boolean hidden;
-	private boolean tardis_init;
-	private boolean powered_on;
-	private boolean lights_on;
+	private boolean tardisInit;
+	private boolean powered;
+	private boolean lightsOn;
 
 	/**
 	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
 	 *
 	 * @param plugin an instance of the main class.
 	 */
-	public ResultSetTardisAbandoned(TARDIS plugin) {
+	public ResultSetTardisAbandoned(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}
@@ -77,19 +77,19 @@ public class ResultSetTardisAbandoned {
 			rs = statement.executeQuery();
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				tardis_id = rs.getInt("tardis_id");
-				artron_level = rs.getInt("artron_level");
+				tardisId = rs.getInt("tardis_id");
+				artronLevel = rs.getInt("artron_level");
 				schematic = Consoles.schematicFor(rs.getString("size").toLowerCase(Locale.ENGLISH));
 				try {
 					preset = PRESET.valueOf(rs.getString("chameleon_preset"));
 				} catch (IllegalArgumentException e) {
 					preset = PRESET.FACTORY;
 				}
-				handbrake_on = rs.getBoolean("handbrake_on");
+				handbrakeOn = rs.getBoolean("handbrake_on");
 				hidden = rs.getBoolean("hidden");
-				tardis_init = rs.getBoolean("tardis_init");
-				powered_on = rs.getBoolean("powered_on");
-				lights_on = rs.getBoolean("lights_on");
+				tardisInit = rs.getBoolean("tardis_init");
+				powered = rs.getBoolean("powered_on");
+				lightsOn = rs.getBoolean("lights_on");
 				return true;
 			}
 			return false;
@@ -110,12 +110,12 @@ public class ResultSetTardisAbandoned {
 		}
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
-	public int getArtron_level() {
-		return artron_level;
+	public int getArtronLevel() {
+		return artronLevel;
 	}
 
 	public Schematic getSchematic() {
@@ -126,23 +126,23 @@ public class ResultSetTardisAbandoned {
 		return preset;
 	}
 
-	public boolean isHandbrake_on() {
-		return handbrake_on;
+	public boolean isHandbrakeOn() {
+		return handbrakeOn;
 	}
 
 	public boolean isHidden() {
 		return hidden;
 	}
 
-	public boolean isTardis_init() {
-		return tardis_init;
+	public boolean isTardisInit() {
+		return tardisInit;
 	}
 
-	public boolean isPowered_on() {
-		return powered_on;
+	public boolean isPowered() {
+		return powered;
 	}
 
-	public boolean isLights_on() {
-		return lights_on;
+	public boolean isLightsOn() {
+		return lightsOn;
 	}
 }

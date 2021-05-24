@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
@@ -53,7 +53,7 @@ import java.util.UUID;
  */
 public class TARDISAuthorisedControlDisk {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final UUID uuid;
 	private final List<String> lore;
 	private final int id;
@@ -61,7 +61,7 @@ public class TARDISAuthorisedControlDisk {
 	private final String eps;
 	private final String creeper;
 
-	TARDISAuthorisedControlDisk(TARDIS plugin, UUID uuid, List<String> lore, int id, Player player, String eps, String creeper) {
+	TARDISAuthorisedControlDisk(TARDISPlugin plugin, UUID uuid, List<String> lore, int id, Player player, String eps, String creeper) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		this.lore = lore;

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -42,13 +42,13 @@ import java.util.UUID;
  */
 public class TARDISHandlesProgramListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<UUID, Integer> scroll_start = new HashMap<>();
 	private final HashMap<UUID, List<TARDISHandlesBlock>> scroll_list = new HashMap<>();
 	private final HashMap<UUID, TARDISHandlesCategory> scroll_category = new HashMap<>();
 	private final List<Material> allowed = Arrays.asList(Material.MUSIC_DISC_CHIRP, Material.MUSIC_DISC_WAIT, Material.MUSIC_DISC_CAT, Material.MUSIC_DISC_BLOCKS);
 
-	public TARDISHandlesProgramListener(TARDIS plugin) {
+	public TARDISHandlesProgramListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

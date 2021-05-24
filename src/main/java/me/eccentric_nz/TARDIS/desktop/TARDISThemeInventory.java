@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.custommodeldata.GUIUpgrade;
 import me.eccentric_nz.tardis.enumeration.Consoles;
@@ -41,12 +41,12 @@ import java.util.List;
 public class TARDISThemeInventory {
 
 	private final ItemStack[] menu;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 	private final String current_console;
 	private final int level;
 
-	public TARDISThemeInventory(TARDIS plugin, Player player, String current_console, int level) {
+	public TARDISThemeInventory(TARDISPlugin plugin, Player player, String current_console, int level) {
 		this.plugin = plugin;
 		this.player = player;
 		this.current_console = current_console;

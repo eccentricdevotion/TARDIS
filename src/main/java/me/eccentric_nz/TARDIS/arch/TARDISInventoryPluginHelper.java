@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.arch;
 
 import com.onarandombox.MultiverseCore.exceptions.PropertyDoesNotExistException;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.tardis.utility.TARDISPerWorldInventoryChecker;
 import org.bukkit.entity.Player;
@@ -33,9 +33,9 @@ import java.util.UUID;
  */
 public class TARDISInventoryPluginHelper implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISInventoryPluginHelper(TARDIS plugin) {
+	public TARDISInventoryPluginHelper(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

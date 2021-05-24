@@ -1,10 +1,10 @@
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.control.TARDISPowerButton;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCompanions;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
@@ -35,7 +35,7 @@ import java.util.UUID;
 
 public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements Listener {
 
-	public TARDISPoliceBoxDoorListener(TARDIS plugin) {
+	public TARDISPoliceBoxDoorListener(TARDISPlugin plugin) {
 		super(plugin);
 	}
 
@@ -61,7 +61,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 						ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
 						if (rsd.resultSet()) {
 							event.setCancelled(true);
-							int id = rsd.getTardis_id();
+							int id = rsd.getTardisId();
 							boolean open = cmd < 1002;
 							if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
 								TARDISMessage.send(player, "SIEGE_NO_EXIT");
@@ -76,8 +76,8 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 							tid.put("tardis_id", id);
 							ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
 							if (rs.resultSet()) {
-								Tardis tardis = rs.getTardis();
-								if (!tardis.isHandbrake_on()) {
+								TARDIS tardis = rs.getTardis();
+								if (!tardis.isHandbrakeOn()) {
 									TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
 									return;
 								}
@@ -94,7 +94,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 											if (rspref.resultSet()) {
 												key = (!rspref.getKey().isEmpty()) ? rspref.getKey() : plugin.getConfig().getString("preferences.key");
 												willFarm = rspref.isFarmOn();
-												if (rspref.isAutoPowerUp() && plugin.getConfig().getBoolean("allow.power_down")) {
+												if (rspref.isAutoPowerupOn() && plugin.getConfig().getBoolean("allow.power_down")) {
 													// check tardis is not abandoned
 													canPowerUp = !tardis.isAbandoned();
 												}
@@ -110,7 +110,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 													Location tardis_loc = idl.getL();
 													World cw = idl.getW();
 													COMPASS innerD = idl.getD();
-													COMPASS d = rsd.getDoor_direction();
+													COMPASS d = rsd.getDoorDirection();
 													COMPASS pd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
 													World playerWorld = location.getWorld();
 													// check for entities near the police box
@@ -147,9 +147,9 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 															new TARDISResourcePackChanger(plugin).changeRP(player, rspref.getTextureIn());
 														}
 													}
-													if (canPowerUp && !tardis.isPowered_on() && !tardis.isAbandoned()) {
+													if (canPowerUp && !tardis.isPowered() && !tardis.isAbandoned()) {
 														// power up the tardis
-														plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton(), 20L);
+														plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLightsOn(), player.getLocation(), tardis.getArtronLevel(), tardis.getSchematic().hasLanterns()).clickButton(), 20L);
 													}
 													// put player into travellers table
 													// remove them first as they may have exited incorrectly and we only want them listed once

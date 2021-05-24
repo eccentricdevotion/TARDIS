@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.lazarus;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.libraryaddict.disguise.DisguiseAPI;
@@ -52,7 +52,7 @@ public class TARDISLazarusLibs {
 
 	public static void runImmortalityGate(Player player) {
 		PlayerDisguise playerDisguise = new PlayerDisguise(player.getName());
-		TARDIS.plugin.getServer().getOnlinePlayers().forEach((p) -> {
+		TARDISPlugin.plugin.getServer().getOnlinePlayers().forEach((p) -> {
 			if (!p.equals(player)) {
 				DisguiseAPI.disguiseToAll(p, playerDisguise);
 			}

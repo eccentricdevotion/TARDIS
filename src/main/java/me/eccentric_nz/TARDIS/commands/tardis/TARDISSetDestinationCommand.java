@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
@@ -37,9 +37,9 @@ import java.util.HashMap;
  */
 class TARDISSetDestinationCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISSetDestinationCommand(TARDIS plugin) {
+	TARDISSetDestinationCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -61,7 +61,7 @@ class TARDISSetDestinationCommand {
 				TARDISMessage.send(player, "SAVE_RESERVED");
 				return false;
 			} else {
-				int id = rs.getTardis_id();
+				int id = rs.getTardisId();
 				TARDISCircuitChecker tcc = null;
 				if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
 					tcc = new TARDISCircuitChecker(plugin, id);

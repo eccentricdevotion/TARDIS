@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
@@ -36,9 +36,9 @@ import java.util.HashMap;
  */
 public class TARDISTakeoff {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISTakeoff(TARDIS plugin) {
+	public TARDISTakeoff(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -92,11 +92,11 @@ public class TARDISTakeoff {
 			SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
 			if (rsp.resultSet()) {
 				beac_on = rsp.isBeaconOn();
-				bar = rsp.isTravelbarOn();
+				bar = rsp.isTravelBarOn();
 				spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
 			}
 			// set the handbrake
-			TARDISHandbrake.setLevers(handbrake.getBlock(), false, true, rs.getLocation(), rs.getTardis_id(), plugin);
+			TARDISHandbrake.setLevers(handbrake.getBlock(), false, true, rs.getLocation(), rs.getTardisId(), plugin);
 			if (plugin.getConfig().getBoolean("circuits.damage")) {
 				plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
 			}

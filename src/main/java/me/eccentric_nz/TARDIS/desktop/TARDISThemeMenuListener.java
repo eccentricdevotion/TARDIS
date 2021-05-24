@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCount;
 import me.eccentric_nz.tardis.enumeration.Consoles;
@@ -43,9 +43,9 @@ import java.util.HashMap;
  */
 public class TARDISThemeMenuListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISThemeMenuListener(TARDIS plugin) {
+	public TARDISThemeMenuListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}

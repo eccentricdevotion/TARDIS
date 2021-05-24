@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.forcefield;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -24,10 +24,10 @@ import org.bukkit.World;
 
 public class TARDISForceFieldVisualiser {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final double SPACE = 1.0d;
 
-	public TARDISForceFieldVisualiser(TARDIS plugin) {
+	public TARDISForceFieldVisualiser(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

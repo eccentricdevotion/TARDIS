@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -42,9 +42,9 @@ import java.util.HashMap;
  */
 class TARDISListCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISListCommand(TARDIS plugin) {
+	TARDISListCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -56,15 +56,15 @@ class TARDISListCommand {
 					String file = plugin.getDataFolder() + File.separator + "TARDIS_list.txt";
 					try {
 						try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
-							for (Tardis t : rsl.getData()) {
+							for (TARDIS t : rsl.getData()) {
 								HashMap<String, Object> wherecl = new HashMap<>();
-								wherecl.put("tardis_id", t.getTardis_id());
+								wherecl.put("tardis_id", t.getTardisId());
 								ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
 								if (!rsc.resultSet()) {
 									TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
 									return true;
 								}
-								String line = "ID: " + t.getTardis_id() + ", Time Lord: " + t.getOwner() + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
+								String line = "ID: " + t.getTardisId() + ", Time Lord: " + t.getOwner() + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
 								bw.write(line);
 								bw.newLine();
 							}
@@ -115,15 +115,15 @@ class TARDISListCommand {
 				}
 				tg.addRow(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "ID", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Time Lord", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "World", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "X", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Y", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Z");
 				tg.addRow();
-				for (Tardis t : rsl.getData()) {
+				for (TARDIS t : rsl.getData()) {
 					HashMap<String, Object> wherecl = new HashMap<>();
-					wherecl.put("tardis_id", t.getTardis_id());
+					wherecl.put("tardis_id", t.getTardisId());
 					ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
 					if (!rsc.resultSet()) {
 						TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
 						return true;
 					}
-					tg.addRow("" + t.getTardis_id(), t.getOwner(), rsc.getWorld().getName(), "" + rsc.getX(), "" + rsc.getY(), "" + rsc.getZ());
+					tg.addRow("" + t.getTardisId(), t.getOwner(), rsc.getWorld().getName(), "" + rsc.getX(), "" + rsc.getY(), "" + rsc.getZ());
 				}
 				for (String line : tg.generate(sender instanceof Player ? Receiver.CLIENT : Receiver.CONSOLE, true, true)) {
 					sender.sendMessage(line);

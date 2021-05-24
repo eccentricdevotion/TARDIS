@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -31,12 +31,12 @@ import org.bukkit.scoreboard.*;
  */
 public class TARDISArtronIndicator {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ScoreboardManager manager;
 	private final int fc;
 	private final Material filter;
 
-	public TARDISArtronIndicator(TARDIS plugin) {
+	public TARDISArtronIndicator(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		manager = plugin.getServer().getScoreboardManager();
 		fc = plugin.getArtronConfig().getInt("full_charge");

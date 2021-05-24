@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.schematic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -31,12 +31,12 @@ public class ArchiveReset {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String uuid;
 	private final int use;
 	private final String prefix;
 
-	public ArchiveReset(TARDIS plugin, String uuid, int use) {
+	public ArchiveReset(TARDISPlugin plugin, String uuid, int use) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		this.use = use;

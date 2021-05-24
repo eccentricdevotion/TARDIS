@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import com.onarandombox.MultiverseCore.exceptions.PropertyDoesNotExistException;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.chameleon.TARDISChameleonCircuit;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.destroyers.TARDISDeinstantPreset;
 import me.eccentric_nz.tardis.enumeration.Adaption;
@@ -50,11 +49,11 @@ import java.util.List;
 public class TARDISPresetBuilderFactory {
 
 	final List<PRESET> no_block_under_door;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<COMPASS, BlockFace[]> face_map = new HashMap<>();
 	private final List<PRESET> notSubmarinePresets;
 
-	public TARDISPresetBuilderFactory(TARDIS plugin) {
+	public TARDISPresetBuilderFactory(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		face_map.put(COMPASS.SOUTH, new BlockFace[]{BlockFace.SOUTH_WEST, BlockFace.SOUTH_SOUTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_SOUTH_EAST, BlockFace.SOUTH_EAST});
 		face_map.put(COMPASS.EAST, new BlockFace[]{BlockFace.SOUTH_EAST, BlockFace.EAST_SOUTH_EAST, BlockFace.EAST, BlockFace.EAST_NORTH_EAST, BlockFace.NORTH_EAST});
@@ -83,10 +82,10 @@ public class TARDISPresetBuilderFactory {
 	 */
 	public void buildPreset(BuildData bd) {
 		HashMap<String, Object> where = new HashMap<>();
-		where.put("tardis_id", bd.getTardisID());
+		where.put("tardis_id", bd.getTardisId());
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
+			TARDIS tardis = rs.getTardis();
 			PRESET preset = tardis.getPreset();
 			TARDISBiome biome;
 			// keep the chunk this Police box is in loaded
@@ -107,7 +106,7 @@ public class TARDISPresetBuilderFactory {
 			bd.setTardisBiome(biome);
 			if (plugin.getConfig().getBoolean("police_box.set_biome") && !bd.isRebuild()) {
 				// remember the current biome (unless rebuilding)
-				plugin.getQueryFactory().saveBiome(tardis.getTardis_id(), biome.getKey().toString());
+				plugin.getQueryFactory().saveBiome(tardis.getTardisId(), biome.getKey().toString());
 			}
 			if (tardis.getAdaption().equals(Adaption.BIOME)) {
 				preset = adapt(biome, tardis.getAdaption());
@@ -148,7 +147,7 @@ public class TARDISPresetBuilderFactory {
 					TARDISDeinstantPreset deinsta = new TARDISDeinstantPreset(plugin);
 					deinsta.instaDestroyPreset(bd, false, demat);
 				}
-				plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
+				plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisId());
 				int taskID;
 				if (preset.isColoured()) {
 					TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, preset);
@@ -164,7 +163,7 @@ public class TARDISPresetBuilderFactory {
 					TARDISSounds.playTARDISSound(bd.getPlayer().getPlayer().getLocation(), "tardis_land_fast");
 				}
 			} else if (!preset.equals(PRESET.INVISIBLE)) {
-				plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
+				plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisId());
 				if (preset.equals(PRESET.JUNK)) {
 					TARDISJunkBuilder runnable = new TARDISJunkBuilder(plugin, bd);
 					int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
@@ -185,13 +184,13 @@ public class TARDISPresetBuilderFactory {
 				Material material = chameleonMaterial;
 				// delay by the usual time so handbrake message shows after materialisation sound
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-					plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
+					plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisId());
 					new TARDISInstantPreset(plugin, bd, PRESET.INVISIBLE, material.createBlockData(), false).buildPreset();
 				}, 375L);
 			}
 			// update demat so it knows about the current preset after it has changed
 			HashMap<String, Object> whered = new HashMap<>();
-			whered.put("tardis_id", bd.getTardisID());
+			whered.put("tardis_id", bd.getTardisId());
 			HashMap<String, Object> set = new HashMap<>();
 			set.put("chameleon_demat", preset.toString());
 			plugin.getQueryFactory().doUpdate("tardis", set, whered);

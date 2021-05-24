@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Material;
 
 public enum GUIWallFloor {
@@ -48,6 +48,6 @@ public enum GUIWallFloor {
 
 	public String getName() {
 		String s = toString();
-		return TARDIS.plugin.getLanguage().getString(s);
+		return TARDISPlugin.plugin.getLanguage().getString(s);
 	}
 }

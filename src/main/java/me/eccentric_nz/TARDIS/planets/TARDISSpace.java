@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.planets;
 
 import com.onarandombox.multiverseinventories.MultiverseInventories;
 import com.onarandombox.multiverseinventories.WorldGroup;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.InventoryManager;
 import me.eccentric_nz.tardis.perms.TARDISGroupManagerHandler;
 import me.eccentric_nz.tardis.perms.TARDISPermissionsExHandler;
@@ -40,10 +40,10 @@ import java.util.List;
  */
 public class TARDISSpace {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private World tardisWorld = null;
 
-	public TARDISSpace(TARDIS plugin) {
+	public TARDISSpace(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

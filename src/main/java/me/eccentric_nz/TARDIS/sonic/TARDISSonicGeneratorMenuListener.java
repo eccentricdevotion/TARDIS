@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUISonicGenerator;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
@@ -48,12 +48,12 @@ import java.util.List;
  */
 public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Integer> costs;
 	private final HashMap<String, String> fields;
 	private Location location;
 
-	public TARDISSonicGeneratorMenuListener(TARDIS plugin) {
+	public TARDISSonicGeneratorMenuListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 		costs = getCosts();

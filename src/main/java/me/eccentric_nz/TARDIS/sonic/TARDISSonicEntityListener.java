@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.sonic.actions.TARDISSonicSound;
@@ -43,10 +43,10 @@ import java.util.List;
  */
 public class TARDISSonicEntityListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Material sonic;
 
-	public TARDISSonicEntityListener(TARDIS plugin) {
+	public TARDISSonicEntityListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
 		sonic = Material.valueOf(split[0]);

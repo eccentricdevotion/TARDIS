@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -47,9 +47,9 @@ import java.util.UUID;
  */
 public class TARDISDirectionCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISDirectionCommand(TARDIS plugin) {
+	public TARDISDirectionCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -67,12 +67,12 @@ public class TARDISDirectionCommand {
 				TARDISMessage.send(player, "NO_TARDIS");
 				return false;
 			}
-			Tardis tardis = rs.getTardis();
-			if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+			TARDIS tardis = rs.getTardis();
+			if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
 				TARDISMessage.send(player, "POWER_DOWN");
 				return true;
 			}
-			int id = tardis.getTardis_id();
+			int id = tardis.getTardisId();
 			TARDISCircuitChecker tcc = null;
 			if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
 				tcc = new TARDISCircuitChecker(plugin, id);
@@ -82,7 +82,7 @@ public class TARDISDirectionCommand {
 				TARDISMessage.send(player, "NO_MAT_CIRCUIT");
 				return true;
 			}
-			int level = tardis.getArtron_level();
+			int level = tardis.getArtronLevel();
 			int amount = plugin.getArtronConfig().getInt("random");
 			if (level < amount) {
 				TARDISMessage.send(player, "ENERGY_NO_DIRECTION");

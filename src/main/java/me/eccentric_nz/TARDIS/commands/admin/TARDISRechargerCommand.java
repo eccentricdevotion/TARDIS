@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
@@ -32,9 +32,9 @@ import java.util.HashMap;
  */
 class TARDISRechargerCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISRechargerCommand(TARDIS plugin) {
+	TARDISRechargerCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

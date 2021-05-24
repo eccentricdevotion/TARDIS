@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUIChameleonPresets;
 import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
 import me.eccentric_nz.tardis.enumeration.RecipeCategory;
@@ -18,12 +18,12 @@ import java.util.HashMap;
 
 public class TARDISRecipeInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final ItemStack[] menu;
 	private final RecipeCategory category;
 	private final HashMap<String, String> recipeItems = new HashMap<>();
 
-	TARDISRecipeInventory(TARDIS plugin, RecipeCategory category) {
+	TARDISRecipeInventory(TARDISPlugin plugin, RecipeCategory category) {
 
 		for (RecipeItem recipeItem : RecipeItem.values()) {
 			if (recipeItem.getCategory() != RecipeCategory.UNUSED && recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE) {

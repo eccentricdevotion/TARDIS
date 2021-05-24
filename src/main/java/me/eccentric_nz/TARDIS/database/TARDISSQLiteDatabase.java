@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -35,11 +35,11 @@ public class TARDISSQLiteDatabase {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String prefix;
 	private Statement statement = null;
 
-	public TARDISSQLiteDatabase(TARDIS plugin) {
+	public TARDISSQLiteDatabase(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}
@@ -193,14 +193,14 @@ public class TARDISSQLiteDatabase {
 			statement.executeUpdate(querySonic);
 
 			// reset storage table
-			String s_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "storage'";
-			ResultSet rss = statement.executeQuery(s_query);
-			if (rss.next()) {
-				String sd_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "storage' AND sql LIKE '%console%'";
-				ResultSet rssd = statement.executeQuery(sd_query);
-				if (!rssd.next()) {
-					String s_drop = "DROP TABLE storage";
-					statement.executeUpdate(s_drop);
+			String sQuery = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "storage'";
+			ResultSet rsS = statement.executeQuery(sQuery);
+			if (rsS.next()) {
+				String sdQuery = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "storage' AND sql LIKE '%console%'";
+				ResultSet rsSd = statement.executeQuery(sdQuery);
+				if (!rsSd.next()) {
+					String sDrop = "DROP TABLE storage";
+					statement.executeUpdate(sDrop);
 				}
 			}
 			// Table structure for table 'storage'
@@ -212,7 +212,7 @@ public class TARDISSQLiteDatabase {
 			statement.executeUpdate(queryTag);
 
 			// Table structure for table 'tardis'
-			String queryTARDIS = "CREATE TABLE IF NOT EXISTS " + prefix + "tardis (tardis_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', owner TEXT COLLATE NOCASE DEFAULT '', last_known_name TEXT COLLATE NOCASE DEFAULT '', chunk TEXT, tips INTEGER DEFAULT '-1', replaced TEXT DEFAULT '', companions TEXT, chameleon_preset TEXT DEFAULT 'FACTORY', chameleon_demat TEXT DEFAULT 'FACTORY', adapti_on INTEGER DEFAULT 0, size TEXT DEFAULT '', abandoned INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, creeper TEXT DEFAULT '', handbrake_on INTEGER DEFAULT 1, tardis_init INTEGER DEFAULT 0, recharging INTEGER DEFAULT 0, hidden INTEGER DEFAULT 0, powered_on INTEGER DEFAULT 0, lights_on INTEGER DEFAULT 1, siege_on INTEGER DEFAULT 0, lastuse INTEGER DEFAULT (strftime('%s', 'now')), iso_on INTEGER DEFAULT 0, beacon TEXT DEFAULT '', eps TEXT DEFAULT '', rail TEXT DEFAULT '', renderer TEXT DEFAULT '', zero TEXT DEFAULT '', rotor TEXT DEFAULT '', monsters INTEGER DEFAULT 0)";
+			String queryTARDIS = "CREATE TABLE IF NOT EXISTS " + prefix + "tardis (tardis_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', owner TEXT COLLATE NOCASE DEFAULT '', last_known_name TEXT COLLATE NOCASE DEFAULT '', chunk TEXT, tips INTEGER DEFAULT '-1', replaced TEXT DEFAULT '', companions TEXT, chameleon_preset TEXT DEFAULT 'FACTORY', chameleon_demat TEXT DEFAULT 'FACTORY', adapti_on INTEGER DEFAULT 0, size TEXT DEFAULT '', abandoned INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, creeper TEXT DEFAULT '', handbrake_on INTEGER DEFAULT 1, tardis_init INTEGER DEFAULT 0, recharging INTEGER DEFAULT 0, hidden INTEGER DEFAULT 0, powered_on INTEGER DEFAULT 0, lights_on INTEGER DEFAULT 1, siege_on INTEGER DEFAULT 0, last_use INTEGER DEFAULT (strftime('%s', 'now')), iso_on INTEGER DEFAULT 0, beacon TEXT DEFAULT '', eps TEXT DEFAULT '', rail TEXT DEFAULT '', renderer TEXT DEFAULT '', zero TEXT DEFAULT '', rotor TEXT DEFAULT '', monsters INTEGER DEFAULT 0)";
 			statement.executeUpdate(queryTARDIS);
 
 			// Table structure for table 'transmats'
@@ -228,8 +228,8 @@ public class TARDISSQLiteDatabase {
 			statement.executeUpdate(queryTravellers);
 
 			// Table structure for table 't_count'
-			String queryT_Counts = "CREATE TABLE IF NOT EXISTS " + prefix + "t_count (t_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', count INTEGER DEFAULT 0, grace INTEGER DEFAULT 0, repair INTEGER DEFAULT 0)";
-			statement.executeUpdate(queryT_Counts);
+			String queryTCounts = "CREATE TABLE IF NOT EXISTS " + prefix + "t_count (t_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', count INTEGER DEFAULT 0, grace INTEGER DEFAULT 0, repair INTEGER DEFAULT 0)";
+			statement.executeUpdate(queryTCounts);
 
 			// Table structure for table 'vaults'
 			String queryVaults = "CREATE TABLE IF NOT EXISTS " + prefix + "vaults (v_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', chest_type TEXT COLLATE NOCASE DEFAULT 'DROP', x INTEGER DEFAULT 0, y INTEGER DEFAULT 0, z INTEGER DEFAULT 0)";

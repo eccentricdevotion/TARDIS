@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.move.TARDISMoveSession;
 import org.bukkit.GameMode;
@@ -50,10 +50,10 @@ import java.util.Objects;
  */
 public class TARDISAcidWater implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Player> burningPlayers = new ArrayList<>();
 
-	public TARDISAcidWater(TARDIS plugin) {
+	public TARDISAcidWater(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

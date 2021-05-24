@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
 import me.eccentric_nz.tardis.enumeration.Advancement;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -35,9 +35,9 @@ import java.util.UUID;
  */
 public class TARDISZeroRoomBuilder {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISZeroRoomBuilder(TARDIS plugin) {
+	public TARDISZeroRoomBuilder(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -80,16 +80,16 @@ public class TARDISZeroRoomBuilder {
 				TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
 				c_data.getBlockIDCount().forEach((key, value) -> {
 					HashMap<String, Object> wherec = new HashMap<>();
-					wherec.put("tardis_id", c_data.getTardis_id());
+					wherec.put("tardis_id", c_data.getTardisId());
 					wherec.put("block_data", key);
 					plugin.getQueryFactory().alterCondenserBlockCount(value, wherec);
 				});
 				plugin.getGeneralKeeper().getRoomCondenserData().remove(uuid);
 			}
-			// are we doing an achievement?
-			if (plugin.getAchievementConfig().getBoolean("rooms.enabled")) {
-				TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, Advancement.ROOMS, plugin.getBuildKeeper().getSeeds().size());
-				taf.doAchievement("ZERO");
+			// are we doing an advancement?
+			if (plugin.getAdvancementConfig().getBoolean("rooms.enabled")) {
+				TARDISAdvancementFactory taf = new TARDISAdvancementFactory(plugin, p, Advancement.ROOMS, plugin.getBuildKeeper().getSeeds().size());
+				taf.doAdvancement("ZERO");
 			}
 		}
 		return true;

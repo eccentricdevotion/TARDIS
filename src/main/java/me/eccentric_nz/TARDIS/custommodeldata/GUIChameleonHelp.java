@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.Material;
 
 public enum GUIChameleonHelp {
@@ -58,11 +58,11 @@ public enum GUIChameleonHelp {
 	public String getName() {
 		String s = toString();
 		if (s.startsWith("INFO")) {
-			return TARDIS.plugin.getChameleonGuis().getString("INFO");
+			return TARDISPlugin.plugin.getChameleonGuis().getString("INFO");
 		} else if (s.startsWith("COL") || s.startsWith("ROW")) {
 			return number;
 		} else {
-			return TARDIS.plugin.getChameleonGuis().getString(s);
+			return TARDISPlugin.plugin.getChameleonGuis().getString(s);
 		}
 	}
 }

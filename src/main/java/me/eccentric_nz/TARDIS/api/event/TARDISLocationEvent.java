@@ -29,12 +29,12 @@ public class TARDISLocationEvent extends Event {
 
 	private static final HandlerList HANDLERS = new HandlerList();
 	private final Player player;
-	private final int tardis_id;
+	private final int tardisId;
 	private final Location location;
 
-	TARDISLocationEvent(Player player, int tardisid, Location location) {
+	TARDISLocationEvent(Player player, int tardisId, Location location) {
 		this.player = player;
-		tardis_id = tardisid;
+		this.tardisId = tardisId;
 		this.location = location;
 	}
 
@@ -52,12 +52,12 @@ public class TARDISLocationEvent extends Event {
 	}
 
 	/**
-	 * Returns the tardis_id of the tardis in the database.
+	 * Returns the tardisId of the tardis in the database.
 	 *
 	 * @return the tardis location
 	 */
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	/**

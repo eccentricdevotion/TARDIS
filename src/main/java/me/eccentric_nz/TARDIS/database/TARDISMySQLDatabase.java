@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.tool.SQL;
 
 import java.sql.Connection;
@@ -35,10 +35,10 @@ public class TARDISMySQLDatabase {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private Statement statement = null;
 
-	public TARDISMySQLDatabase(TARDIS plugin) {
+	public TARDISMySQLDatabase(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

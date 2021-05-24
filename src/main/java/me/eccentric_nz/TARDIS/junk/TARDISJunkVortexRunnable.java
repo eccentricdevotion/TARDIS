@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
@@ -36,7 +36,7 @@ import java.util.List;
 class TARDISJunkVortexRunnable implements Runnable {
 
 	private static final int LOOPS = 12;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Location vortexJunkLoc;
 	private final Location effectsLoc;
 	private final Location destJunkLoc;
@@ -46,7 +46,7 @@ class TARDISJunkVortexRunnable implements Runnable {
 	private int task;
 	private int fryTask;
 
-	TARDISJunkVortexRunnable(TARDIS plugin, Location vortexJunkLoc, OfflinePlayer player, int id) {
+	TARDISJunkVortexRunnable(TARDISPlugin plugin, Location vortexJunkLoc, OfflinePlayer player, int id) {
 		this.plugin = plugin;
 		this.vortexJunkLoc = vortexJunkLoc;
 		effectsLoc = this.vortexJunkLoc.clone().add(0.5d, 0, 0.5d);

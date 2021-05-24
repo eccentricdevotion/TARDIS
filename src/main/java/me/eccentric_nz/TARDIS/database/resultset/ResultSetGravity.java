@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.*;
@@ -35,13 +35,13 @@ public class ResultSetGravity {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, Object> where;
 	private final boolean multiple;
 	private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
 	private final String prefix;
-	private int gravity_id;
-	private int tardis_id;
+	private int gravityId;
+	private int tardisId;
 	private String location;
 	private int direction;
 	private double distance;
@@ -54,7 +54,7 @@ public class ResultSetGravity {
 	 * @param where    a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
 	 * @param multiple boolean determining whether to return multiple records
 	 */
-	public ResultSetGravity(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+	public ResultSetGravity(TARDISPlugin plugin, HashMap<String, Object> where, boolean multiple) {
 		this.plugin = plugin;
 		this.where = where;
 		this.multiple = multiple;
@@ -112,8 +112,8 @@ public class ResultSetGravity {
 						}
 						data.add(row);
 					}
-					gravity_id = rs.getInt("g_id");
-					tardis_id = rs.getInt("tardis_id");
+					gravityId = rs.getInt("g_id");
+					tardisId = rs.getInt("tardis_id");
 					location = rs.getString("location");
 					direction = rs.getInt("direction");
 					distance = rs.getDouble("distance");
@@ -140,12 +140,12 @@ public class ResultSetGravity {
 		return true;
 	}
 
-	public int getGravity_id() {
-		return gravity_id;
+	public int getGravityId() {
+		return gravityId;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	public String getLocation() {

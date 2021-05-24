@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.enumeration.Flag;
@@ -42,7 +42,7 @@ import java.util.Set;
 
 public class SuperFertisliserListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<Material, TreeType> TREE_LOOKUP = new HashMap<>() {
 		{
 			put(Material.OAK_SAPLING, TreeType.TREE);
@@ -60,7 +60,7 @@ public class SuperFertisliserListener implements Listener {
 	};
 	private final Set<Material> TREES = new HashSet<>();
 
-	public SuperFertisliserListener(TARDIS plugin) {
+	public SuperFertisliserListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		TREES.add(Material.OAK_SAPLING);
 		TREES.add(Material.DARK_OAK_SAPLING);

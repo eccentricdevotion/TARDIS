@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.howto;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.custommodeldata.GUISeeds;
 import me.eccentric_nz.tardis.enumeration.Consoles;
@@ -40,10 +40,10 @@ import java.util.List;
 public class TARDISSeedsInventory {
 
 	private final ItemStack[] menu;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 
-	public TARDISSeedsInventory(TARDIS plugin, Player player) {
+	public TARDISSeedsInventory(TARDISPlugin plugin, Player player) {
 		this.plugin = plugin;
 		this.player = player;
 		menu = getItemStack();

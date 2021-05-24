@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.builders.MaterialisationData;
@@ -48,9 +48,9 @@ import java.util.HashMap;
  */
 public class TARDISDeinstantPreset {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISDeinstantPreset(TARDIS plugin) {
+	public TARDISDeinstantPreset(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -64,7 +64,7 @@ public class TARDISDeinstantPreset {
 	public void instaDestroyPreset(MaterialisationData dd, boolean hide, PRESET preset) {
 		Location l = dd.getLocation();
 		COMPASS d = dd.getDirection();
-		int id = dd.getTardisID();
+		int id = dd.getTardisId();
 		boolean sub = dd.isSubmarine();
 		TARDISBiome biome = dd.getTardisBiome();
 		if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {

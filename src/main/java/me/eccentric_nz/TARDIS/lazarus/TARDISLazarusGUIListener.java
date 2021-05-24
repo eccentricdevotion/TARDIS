@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.lazarus;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.event.TARDISGeneticManipulatorDisguiseEvent;
 import me.eccentric_nz.tardis.api.event.TARDISGeneticManipulatorUndisguiseEvent;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
@@ -48,7 +48,7 @@ import java.util.*;
  */
 public class TARDISLazarusGUIListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<UUID, Boolean> snowmen = new HashMap<>();
 	private final HashMap<UUID, Integer> cats = new HashMap<>();
 	private final HashMap<UUID, Integer> foxes = new HashMap<>();
@@ -69,7 +69,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 	private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "DALEK", "EMPTY CHILD", "ICE WARRIOR", "JUDOON", "K9", "OOD", "SILENT", "SILURIAN", "SONTARAN", "STRAX", "TOCLAFANE", "VASHTA NERADA", "ZYGON");
 	private final List<String> twaHelmets = Arrays.asList("Weeping Angel Head", "Cyberman Head", "Dalek Head", "Empty Child Head", "Ice Warrior Head", "Judoon Head", "K9 Head", "Ood Head", "Silent Head", "Silurian Head", "Sontaran Head", "Strax Head", "Toclafane", "Vashta Nerada Head", "Zygon Head");
 
-	public TARDISLazarusGUIListener(TARDIS plugin) {
+	public TARDISLazarusGUIListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}

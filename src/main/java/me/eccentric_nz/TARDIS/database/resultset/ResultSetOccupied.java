@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -40,7 +40,7 @@ public class ResultSetOccupied {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Integer> data = new ArrayList<>();
 	private final String prefix;
 
@@ -49,7 +49,7 @@ public class ResultSetOccupied {
 	 *
 	 * @param plugin an instance of the main class.
 	 */
-	public ResultSetOccupied(TARDIS plugin) {
+	public ResultSetOccupied(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 	}
@@ -62,7 +62,7 @@ public class ResultSetOccupied {
 		Statement statement = null;
 		ResultSet rs = null;
 		long time = System.currentTimeMillis() - 86400000;
-		String query = "SELECT DISTINCT " + prefix + "travellers.tardis_id FROM " + prefix + "travellers, " + prefix + "tardis WHERE " + prefix + "tardis.lastuse > " + time + " AND " + prefix + "tardis.tardis_id = " + prefix + "travellers.tardis_id";
+		String query = "SELECT DISTINCT " + prefix + "travellers.tardis_id FROM " + prefix + "travellers, " + prefix + "tardis WHERE " + prefix + "tardis.last_use > " + time + " AND " + prefix + "tardis.tardis_id = " + prefix + "travellers.tardis_id";
 		try {
 			service.testConnection(connection);
 			statement = connection.createStatement();

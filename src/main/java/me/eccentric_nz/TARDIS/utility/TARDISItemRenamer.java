@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -33,11 +33,11 @@ import java.util.ArrayList;
  */
 public class TARDISItemRenamer {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Player player;
 	private final ItemStack itemStack;
 
-	public TARDISItemRenamer(TARDIS plugin, Player player, ItemStack itemStack) {
+	public TARDISItemRenamer(TARDISPlugin plugin, Player player, ItemStack itemStack) {
 		this.plugin = plugin;
 		this.player = player;
 		this.itemStack = itemStack;
@@ -52,7 +52,7 @@ public class TARDISItemRenamer {
 	public void setName(String name, boolean setlore) {
 		ItemMeta im = itemStack.getItemMeta();
 		if (im == null) {
-			TARDIS.plugin.debug("ItemMeta was null for ItemStack: " + itemStack);
+			TARDISPlugin.plugin.debug("ItemMeta was null for ItemStack: " + itemStack);
 		} else {
 			im.setDisplayName(name);
 			if (setlore) {

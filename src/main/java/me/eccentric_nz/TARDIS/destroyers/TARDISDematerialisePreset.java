@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.tardis.chameleon.TARDISConstructColumn;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
@@ -47,7 +47,7 @@ import java.util.List;
  */
 class TARDISDematerialisePreset implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final DestroyData dd;
 	private final int loops;
 	private final PRESET preset;
@@ -69,7 +69,7 @@ class TARDISDematerialisePreset implements Runnable {
 	 * @param preset  the Chameleon preset currently in use by the tardis
 	 * @param cham_id the chameleon block id for the police box
 	 */
-	TARDISDematerialisePreset(TARDIS plugin, DestroyData dd, PRESET preset, BlockData cham_id) {
+	TARDISDematerialisePreset(TARDISPlugin plugin, DestroyData dd, PRESET preset, BlockData cham_id) {
 		this.plugin = plugin;
 		this.dd = dd;
 		loops = dd.getThrottle().getLoops();
@@ -77,9 +77,9 @@ class TARDISDematerialisePreset implements Runnable {
 		i = 0;
 		this.cham_id = cham_id;
 		if (this.preset.equals(PRESET.CONSTRUCT)) {
-			column = new TARDISConstructColumn(plugin, dd.getTardisID(), "blueprintData", dd.getDirection()).getColumn();
-			stained_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "stainData", dd.getDirection()).getColumn();
-			glass_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "glassData", dd.getDirection()).getColumn();
+			column = new TARDISConstructColumn(plugin, dd.getTardisId(), "blueprintData", dd.getDirection()).getColumn();
+			stained_column = new TARDISConstructColumn(plugin, dd.getTardisId(), "stainData", dd.getDirection()).getColumn();
+			glass_column = new TARDISConstructColumn(plugin, dd.getTardisId(), "glassData", dd.getDirection()).getColumn();
 		} else {
 			column = plugin.getPresets().getColumn(preset, dd.getDirection());
 			stained_column = plugin.getPresets().getStained(preset, dd.getDirection());
@@ -157,7 +157,7 @@ class TARDISDematerialisePreset implements Runnable {
 					case JAIL:
 					case TOPSYTURVEY:
 						// destroy door
-						plugin.getPresetDestroyer().destroyDoor(dd.getTardisID());
+						plugin.getPresetDestroyer().destroyDoor(dd.getTardisId());
 					case MESA:
 						// remove dead bushes
 						int deadx;
@@ -222,7 +222,7 @@ class TARDISDematerialisePreset implements Runnable {
 						world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
 					}
 				}
-				getColours(dd.getTardisID(), preset);
+				getColours(dd.getTardisId(), preset);
 			} else if (preset.equals(PRESET.JUNK_MODE) && plugin.getConfig().getBoolean("junk.particles")) {
 				// animate particles
 				plugin.getUtils().getJunkTravellers(dd.getLocation()).forEach((e) -> {
@@ -437,7 +437,7 @@ class TARDISDematerialisePreset implements Runnable {
 		ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
 		if (rs.resultSet()) {
 			try {
-				Block b = TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock();
+				Block b = TARDISStaticLocationGetters.getLocationFromDB(rs.getDoorLocation()).getBlock();
 				if (p.equals(PRESET.FLOWER)) {
 					the_colour = b.getRelative(BlockFace.UP, 3).getBlockData();
 					String[] split = the_colour.getMaterial().toString().toLowerCase().split("_");

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -27,21 +27,18 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
  */
 public class TARDISInnerDoorCloser {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final UUID uuid;
 	private final int id;
 
-	public TARDISInnerDoorCloser(TARDIS plugin, UUID uuid, int id) {
+	public TARDISInnerDoorCloser(TARDISPlugin plugin, UUID uuid, int id) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		this.id = id;
@@ -94,6 +91,7 @@ public class TARDISInnerDoorCloser {
 			}
 			// get locations
 			// interior portal
+			assert block != null;
 			Location inportal = block.getLocation();
 			// exterior portal (from current location)
 			HashMap<String, Object> where_exportal = new HashMap<>();

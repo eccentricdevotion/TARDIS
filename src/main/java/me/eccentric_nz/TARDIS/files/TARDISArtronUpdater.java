@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -30,14 +30,14 @@ import java.util.Map;
  */
 public class TARDISArtronUpdater {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final FileConfiguration artron_config;
 	private final HashMap<String, Boolean> booleanOptions = new HashMap<>();
 	private final HashMap<String, String> stringOptions = new HashMap<>();
 	private final HashMap<String, Double> doubleOptions = new HashMap<>();
 	private final HashMap<String, Integer> integerOptions = new HashMap<>();
 
-	public TARDISArtronUpdater(TARDIS plugin) {
+	public TARDISArtronUpdater(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		artron_config = plugin.getArtronConfig();
 		// boolean

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
@@ -38,9 +38,9 @@ import java.util.HashMap;
  */
 class TARDISHandlesTakeoffCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISHandlesTakeoffCommand(TARDIS plugin) {
+	public TARDISHandlesTakeoffCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -56,11 +56,11 @@ class TARDISHandlesTakeoffCommand {
 			wherei.put("tardis_id", id);
 			ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
 			if (rs.resultSet()) {
-				Tardis tardis = rs.getTardis();
+				TARDIS tardis = rs.getTardis();
 				if (tardis.getPreset().equals(PRESET.JUNK)) {
 					return true;
 				}
-				if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+				if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
 					TARDISMessage.handlesSend(player, "POWER_DOWN");
 					return true;
 				}
@@ -73,9 +73,9 @@ class TARDISHandlesTakeoffCommand {
 				whereh.put("tardis_id", id);
 				ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
 				if (rsc.resultSet()) {
-					if (tardis.isHandbrake_on()) {
+					if (tardis.isHandbrakeOn()) {
 						// check there is enough power for at last random travel
-						if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtron_level() < plugin.getArtronConfig().getInt("random")) {
+						if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtronLevel() < plugin.getArtronConfig().getInt("random")) {
 							TARDISMessage.handlesSend(player, "ENERGY_NOT_ENOUGH");
 							return true;
 						}
@@ -96,7 +96,7 @@ class TARDISHandlesTakeoffCommand {
 						SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
 						if (rsp.resultSet()) {
 							beac_on = rsp.isBeaconOn();
-							bar = rsp.isTravelbarOn();
+							bar = rsp.isTravelBarOn();
 							spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
 						}
 						new TARDISTakeoff(plugin).run(id, handbrake, location, player, beac_on, tardis.getBeacon(), bar, spaceTimeThrottle);
@@ -115,7 +115,7 @@ class TARDISHandlesTakeoffCommand {
 		where.put("door_type", 1);
 		ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
 		if (rs.resultSet()) {
-			Openable door = (Openable) TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock().getBlockData();
+			Openable door = (Openable) TARDISStaticLocationGetters.getLocationFromDB(rs.getDoorLocation()).getBlock().getBlockData();
 			return door.isOpen();
 		}
 		return false;

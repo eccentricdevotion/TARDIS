@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.database.data.ReplacedBlock;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
@@ -44,7 +44,7 @@ import java.util.UUID;
 
 public class TARDISMaterialisePoliceBox implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final BuildData bd;
 	private final int loops;
 	private final PRESET preset;
@@ -53,7 +53,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 	private ItemFrame frame;
 	private ItemStack is;
 
-	public TARDISMaterialisePoliceBox(TARDIS plugin, BuildData bd, PRESET preset) {
+	public TARDISMaterialisePoliceBox(TARDISPlugin plugin, BuildData bd, PRESET preset) {
 		this.plugin = plugin;
 		this.bd = bd;
 		loops = this.bd.getThrottle().getLoops();
@@ -63,7 +63,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 
 	@Override
 	public void run() {
-		if (!plugin.getTrackerKeeper().getDematerialising().contains(bd.getTardisID())) {
+		if (!plugin.getTrackerKeeper().getDematerialising().contains(bd.getTardisId())) {
 			World world = bd.getLocation().getWorld();
 			if (i < loops) {
 				i++;
@@ -78,7 +78,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 				// first run
 				if (i == 1) {
 					TARDISBuilderUtility.saveDoorLocation(bd);
-					plugin.getGeneralKeeper().getProtectBlockMap().put(bd.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString(), bd.getTardisID());
+					plugin.getGeneralKeeper().getProtectBlockMap().put(bd.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString(), bd.getTardisId());
 					boolean found = false;
 					for (Entity e : world.getNearbyEntities(bd.getLocation(), 1.0d, 1.0d, 1.0d)) {
 						if (e instanceof ItemFrame) {
@@ -91,7 +91,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 						Block block = bd.getLocation().getBlock();
 						Block under = block.getRelative(BlockFace.DOWN);
 						block.setBlockData(TARDISConstants.AIR);
-						TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
+						TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisId(), false);
 						// spawn item frame
 						frame = (ItemFrame) world.spawnEntity(bd.getLocation(), EntityType.ITEM_FRAME);
 					}
@@ -128,18 +128,18 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 				frame.setVisible(false);
 			} else {
 				// remove trackers
-				plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
-				plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisID()));
+				plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisId()));
+				plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisId()));
 				plugin.getServer().getScheduler().cancelTask(task);
 				task = 0;
-				plugin.getTrackerKeeper().getMalfunction().remove(bd.getTardisID());
-				if (plugin.getTrackerKeeper().getDidDematToVortex().contains(bd.getTardisID())) {
-					plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(bd.getTardisID()));
+				plugin.getTrackerKeeper().getMalfunction().remove(bd.getTardisId());
+				if (plugin.getTrackerKeeper().getDidDematToVortex().contains(bd.getTardisId())) {
+					plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(bd.getTardisId()));
 				}
-				if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(bd.getTardisID())) {
-					int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(bd.getTardisID());
+				if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(bd.getTardisId())) {
+					int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(bd.getTardisId());
 					plugin.getServer().getScheduler().cancelTask(taskID);
-					plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
+					plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisId());
 				}
 				if (!bd.isRebuild()) {
 					plugin.getTrackerKeeper().getActiveForceFields().remove(bd.getPlayer().getPlayer().getUniqueId());
@@ -147,7 +147,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 				// message travellers in tardis
 				if (loops > 3) {
 					HashMap<String, Object> where = new HashMap<>();
-					where.put("tardis_id", bd.getTardisID());
+					where.put("tardis_id", bd.getTardisId());
 					ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
 					if (rst.resultSet()) {
 						List<UUID> travellers = rst.getData();
@@ -165,19 +165,19 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 					}
 					// restore beacon up block if present
 					HashMap<String, Object> whereb = new HashMap<>();
-					whereb.put("tardis_id", bd.getTardisID());
+					whereb.put("tardis_id", bd.getTardisId());
 					whereb.put("police_box", 2);
 					ResultSetBlocks rs = new ResultSetBlocks(plugin, whereb, false);
 					if (rs.resultSet()) {
 						ReplacedBlock rb = rs.getReplacedBlock();
 						TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlockData());
 						HashMap<String, Object> whered = new HashMap<>();
-						whered.put("tardis_id", bd.getTardisID());
+						whered.put("tardis_id", bd.getTardisId());
 						whered.put("police_box", 2);
 						plugin.getQueryFactory().doDelete("blocks", whered);
 					}
 					// tardis has moved so remove HADS damage count
-					plugin.getTrackerKeeper().getDamage().remove(bd.getTardisID());
+					plugin.getTrackerKeeper().getDamage().remove(bd.getTardisId());
 				}
 			}
 		}

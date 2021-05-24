@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.product;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -34,10 +34,10 @@ import java.util.HashMap;
 
 public class SparklerListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final HashMap<String, BlockData> colours = new HashMap<>();
 
-	public SparklerListener(TARDIS plugin) {
+	public SparklerListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		colours.put("Orange Sparkler", Material.ORANGE_WOOL.createBlockData());
 		colours.put("Blue Sparkler", Material.BLUE_WOOL.createBlockData());

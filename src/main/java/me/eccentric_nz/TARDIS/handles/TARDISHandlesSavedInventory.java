@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.GUISavedPrograms;
 import me.eccentric_nz.tardis.database.data.Program;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPrograms;
@@ -33,11 +33,11 @@ import java.util.Arrays;
  */
 class TARDISHandlesSavedInventory {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String uuid;
 	private final ItemStack[] programs;
 
-	TARDISHandlesSavedInventory(TARDIS plugin, String uuid) {
+	TARDISHandlesSavedInventory(TARDISPlugin plugin, String uuid) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		programs = getItemStack();
@@ -62,9 +62,9 @@ class TARDISHandlesSavedInventory {
 				im.setDisplayName("Handles Program Disk");
 				String checked = (p.isCheckedOut()) ? "Checked OUT" : "Checked IN";
 				if (!p.getParsed().isEmpty()) {
-					im.setLore(Arrays.asList(p.getName(), p.getProgram_id() + "", checked, ChatColor.AQUA + "Running"));
+					im.setLore(Arrays.asList(p.getName(), p.getProgramId() + "", checked, ChatColor.AQUA + "Running"));
 				} else {
-					im.setLore(Arrays.asList(p.getName(), p.getProgram_id() + "", checked));
+					im.setLore(Arrays.asList(p.getName(), p.getProgramId() + "", checked));
 				}
 				im.addItemFlags(ItemFlag.values());
 				im.setCustomModelData(10000001);

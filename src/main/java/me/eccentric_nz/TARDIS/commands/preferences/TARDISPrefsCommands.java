@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
 import me.eccentric_nz.tardis.database.resultset.ResultSetArtronLevel;
@@ -49,10 +49,10 @@ import java.util.Locale;
  */
 public class TARDISPrefsCommands implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> firstArgs = new ArrayList<>();
 
-	public TARDISPrefsCommands(TARDIS plugin) {
+	public TARDISPrefsCommands(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		firstArgs.add("auto");
 		firstArgs.add("auto_powerup");

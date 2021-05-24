@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
-import me.eccentric_nz.tardis.achievement.TARDISBook;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.advancement.TARDISBook;
 import me.eccentric_nz.tardis.arch.TARDISArchPersister;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -45,15 +45,15 @@ import java.util.HashMap;
  */
 public class TARDISJoinListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISJoinListener(TARDIS plugin) {
+	public TARDISJoinListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
 	/**
 	 * Listens for a player joining the server. If the player has tardis permissions (ie not a guest), then check
-	 * whether they have achieved the building of a tardis. If not then insert an achievement record and give them the
+	 * whether they have achieved the building of a tardis. If not then insert an advancement record and give them the
 	 * tardis book.
 	 *
 	 * @param event a player joining the server
@@ -68,7 +68,7 @@ public class TARDISJoinListener implements Listener {
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("uuid", uuid);
 				where.put("name", "joinkit");
-				ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
+				ResultSetAdvancements rsa = new ResultSetAdvancements(plugin, where, false);
 				if (!rsa.resultSet()) {
 					//add a record
 					HashMap<String, Object> set = new HashMap<>();
@@ -87,7 +87,7 @@ public class TARDISJoinListener implements Listener {
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("uuid", uuid);
 				where.put("name", "tardis");
-				ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
+				ResultSetAdvancements rsa = new ResultSetAdvancements(plugin, where, false);
 				if (!rsa.resultSet()) {
 					//add a record
 					HashMap<String, Object> set = new HashMap<>();
@@ -130,10 +130,10 @@ public class TARDISJoinListener implements Listener {
 		wherep.put("uuid", player.getUniqueId().toString());
 		ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
-			int id = tardis.getTardis_id();
+			TARDIS tardis = rs.getTardis();
+			int id = tardis.getTardisId();
 			String owner = tardis.getOwner();
-			String last_known_name = tardis.getLastKnownName();
+			String lastKnownName = tardis.getLastKnownName();
 			HashMap<String, Object> wherecl = new HashMap<>();
 			wherecl.put("tardis_id", id);
 			ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -154,9 +154,9 @@ public class TARDISJoinListener implements Listener {
 				now = System.currentTimeMillis();
 			}
 			HashMap<String, Object> set = new HashMap<>();
-			set.put("lastuse", now);
+			set.put("last_use", now);
 			set.put("monsters", 0);
-			if (!last_known_name.equals(player.getName())) {
+			if (!lastKnownName.equals(player.getName())) {
 				// update the player's name WG region as it may have changed
 				if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
 					World cw = TARDISStaticLocationGetters.getWorld(tardis.getChunk());

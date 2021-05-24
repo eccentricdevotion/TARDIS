@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetRepeaters;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.utility.TARDISFirework;
@@ -38,14 +38,14 @@ import java.util.List;
  */
 public class TARDISMalfunctionExplosion implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int id;
 	private final long end;
 	private boolean started = false;
 	private List<Location> locations;
 	private int task;
 
-	public TARDISMalfunctionExplosion(TARDIS plugin, int id, long end) {
+	public TARDISMalfunctionExplosion(TARDISPlugin plugin, int id, long end) {
 		this.plugin = plugin;
 		this.id = id;
 		this.end = end;
@@ -58,8 +58,8 @@ public class TARDISMalfunctionExplosion implements Runnable {
 			where.put("tardis_id", id);
 			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
 			if (rs.resultSet()) {
-				Tardis tardis = rs.getTardis();
-				ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, tardis.getTardis_id(), 0);
+				TARDIS tardis = rs.getTardis();
+				ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, tardis.getTardisId(), 0);
 				if (rsr.resultSet()) {
 					locations = rsr.getLocations();
 				}

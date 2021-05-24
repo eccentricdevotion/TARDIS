@@ -174,7 +174,7 @@ public final class TARDISBiome implements Keyed {
 		if (!(o instanceof TARDISBiome biome)) {
 			return false;
 		}
-		return Objects.equals(key, biome.key);
+		return key.equals(biome.key);
 	}
 
 	@Override

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCreeper;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
@@ -44,9 +44,9 @@ import java.util.HashMap;
  */
 public class TARDISExplosionListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISExplosionListener(TARDIS plugin) {
+	public TARDISExplosionListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

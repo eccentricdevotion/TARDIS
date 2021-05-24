@@ -17,12 +17,12 @@
 package me.eccentric_nz.tardis.builders;
 
 import com.google.gson.*;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.tardis.database.resultset.ResultSetAchievements;
+import me.eccentric_nz.tardis.database.resultset.ResultSetAdvancements;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import me.eccentric_nz.tardis.enumeration.UseClay;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -61,7 +61,7 @@ import java.util.Map;
  */
 public class TARDISBuilderInner implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Block> lampBlocks = new ArrayList<>();
 	private final List<Block> fractalBlocks = new ArrayList<>();
 	private final Schematic schm;
@@ -118,7 +118,7 @@ public class TARDISBuilderInner implements Runnable {
 	 * @param tips       a boolean determining where this tardis will be built -------- false:own world, underground -
 	 *                   true:default world--------
 	 */
-	public TARDISBuilderInner(TARDIS plugin, Schematic schm, World world, int dbID, Player player, Material wall_type, Material floor_type, boolean tips) {
+	public TARDISBuilderInner(TARDISPlugin plugin, Schematic schm, World world, int dbID, Player player, Material wall_type, Material floor_type, boolean tips) {
 		this.plugin = plugin;
 		this.schm = schm;
 		this.world = world;
@@ -336,7 +336,7 @@ public class TARDISBuilderInner implements Runnable {
 					HashMap<String, Object> wherek = new HashMap<>();
 					wherek.put("uuid", playerUUID);
 					wherek.put("name", "createkit");
-					ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherek, false);
+					ResultSetAdvancements rsa = new ResultSetAdvancements(plugin, wherek, false);
 					if (!rsa.resultSet()) {
 						//add a record
 						HashMap<String, Object> setk = new HashMap<>();

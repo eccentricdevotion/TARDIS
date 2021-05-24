@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -32,9 +32,9 @@ import java.util.Locale;
  */
 class TARDISJettisonCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISJettisonCommand(TARDIS plugin) {
+	TARDISJettisonCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -51,8 +51,8 @@ class TARDISJettisonCommand {
 			if (!plugin.getGeneralKeeper().getRoomArgs().contains(room)) {
 				StringBuilder buf = new StringBuilder(args[1]);
 				plugin.getGeneralKeeper().getRoomArgs().forEach((rl) -> buf.append(rl).append(", "));
-				String roomlist = buf.substring(0, buf.length() - 2);
-				TARDISMessage.send(player, "ROOM_NOT_VALID", roomlist);
+				String roomList = buf.substring(0, buf.length() - 2);
+				TARDISMessage.send(player, "ROOM_NOT_VALID", roomList);
 				return true;
 			}
 			ResultSetTardisID rs = new ResultSetTardisID(plugin);
@@ -60,7 +60,7 @@ class TARDISJettisonCommand {
 				TARDISMessage.send(player, "NOT_A_TIMELORD");
 				return true;
 			}
-			int id = rs.getTardis_id();
+			int id = rs.getTardisId();
 			// check they are in the tardis
 			HashMap<String, Object> wheret = new HashMap<>();
 			wheret.put("uuid", player.getUniqueId().toString());

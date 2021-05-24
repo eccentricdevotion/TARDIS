@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetSmelter;
 import me.eccentric_nz.tardis.rooms.smelter.TARDISSmelterDrop;
 import me.eccentric_nz.tardis.rooms.smelter.TARDISSmelterFuel;
@@ -34,9 +34,9 @@ import java.util.List;
 
 public class TARDISSmelterListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSmelterListener(TARDIS plugin) {
+	public TARDISSmelterListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

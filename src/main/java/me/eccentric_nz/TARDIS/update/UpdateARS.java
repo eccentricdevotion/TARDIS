@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetARS;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import org.bukkit.Tag;
@@ -31,9 +31,9 @@ import java.util.HashMap;
 
 public class UpdateARS {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public UpdateARS(TARDIS plugin) {
+	public UpdateARS(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

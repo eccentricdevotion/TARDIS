@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.custommodeldata.TARDISSeedModel;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.RecipeCategory;
@@ -52,11 +52,11 @@ import java.util.*;
  */
 public class TARDISGiveCommand implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int full;
 	private final HashMap<String, String> items = new HashMap<>();
 
-	public TARDISGiveCommand(TARDIS plugin) {
+	public TARDISGiveCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		full = this.plugin.getArtronConfig().getInt("full_charge");
 		items.put("artron", "");
@@ -181,10 +181,6 @@ public class TARDISGiveCommand implements CommandExecutor {
 					return true;
 				}
 				if (item.equals("artron")) {
-					if (plugin.getServer().getOfflinePlayer(args[0]) == null) {
-						TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-						return true;
-					}
 					return giveArtron(sender, args[0], amount);
 				} else {
 					Player player = null;
@@ -306,39 +302,35 @@ public class TARDISGiveCommand implements CommandExecutor {
 
 	private boolean giveArtron(CommandSender sender, String player, int amount) {
 		// Look up this player's UUID
-		UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
-		if (uuid != null) {
-			HashMap<String, Object> where = new HashMap<>();
-			where.put("uuid", uuid.toString());
-			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-			if (rs.resultSet()) {
-				Tardis tardis = rs.getTardis();
-				int id = tardis.getTardis_id();
-				int level = tardis.getArtron_level();
-				int set_level;
-				if (amount == 0) {
-					set_level = 0;
-				} else {
-					// always fill to full and no more
-					if (level >= full && amount > 0) {
-						TARDISMessage.send(sender, "GIVE_FULL", player);
-						return true;
-					}
-					if ((full - level) < amount) {
-						set_level = full;
-					} else {
-						set_level = level + amount;
-					}
+		UUID uuid = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId()).getUniqueId();
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("uuid", uuid.toString());
+		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+		if (rs.resultSet()) {
+			TARDIS tardis = rs.getTardis();
+			int id = tardis.getTardisId();
+			int level = tardis.getArtronLevel();
+			int set_level;
+			if (amount == 0) {
+				set_level = 0;
+			} else {
+				// always fill to full and no more
+				if (level >= full && amount > 0) {
+					TARDISMessage.send(sender, "GIVE_FULL", player);
+					return true;
 				}
-				HashMap<String, Object> set = new HashMap<>();
-				set.put("artron_level", set_level);
-				HashMap<String, Object> wheret = new HashMap<>();
-				wheret.put("tardis_id", id);
-				plugin.getQueryFactory().doUpdate("tardis", set, wheret);
-				sender.sendMessage(plugin.getPluginName() + player + "'s Artron Energy Level was set to " + set_level);
+				if ((full - level) < amount) {
+					set_level = full;
+				} else {
+					set_level = level + amount;
+				}
 			}
-		} else {
-			TARDISMessage.send(sender, "UUID_NOT_FOUND", player);
+			HashMap<String, Object> set = new HashMap<>();
+			set.put("artron_level", set_level);
+			HashMap<String, Object> wheret = new HashMap<>();
+			wheret.put("tardis_id", id);
+			plugin.getQueryFactory().doUpdate("tardis", set, wheret);
+			sender.sendMessage(plugin.getPluginName() + player + "'s Artron Energy Level was set to " + set_level);
 		}
 		return true;
 	}
@@ -440,17 +432,9 @@ public class TARDISGiveCommand implements CommandExecutor {
 			TARDISMessage.send(sender, "RECIPE_VORTEX");
 			return true;
 		}
-		if (plugin.getServer().getOfflinePlayer(player) == null) {
-			TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-			return true;
-		}
 		// Look up this player's UUID
-		UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
-		if (uuid != null) {
-			plugin.getServer().dispatchCommand(sender, "vmg " + uuid + " " + amount);
-		} else {
-			TARDISMessage.send(sender, "UUID_NOT_FOUND", player);
-		}
+		UUID uuid = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId()).getUniqueId();
+		plugin.getServer().dispatchCommand(sender, "vmg " + uuid + " " + amount);
 		return true;
 	}
 

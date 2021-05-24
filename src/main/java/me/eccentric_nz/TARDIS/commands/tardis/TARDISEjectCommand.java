@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -30,9 +30,9 @@ import java.util.HashMap;
  */
 class TARDISEjectCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISEjectCommand(TARDIS plugin) {
+	TARDISEjectCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -52,7 +52,7 @@ class TARDISEjectCommand {
 			TARDISMessage.send(player, "NOT_A_TIMELORD");
 			return false;
 		}
-		int ownerid = rs.getTardis_id();
+		int ownerid = rs.getTardisId();
 		HashMap<String, Object> wheret = new HashMap<>();
 		wheret.put("uuid", player.getUniqueId().toString());
 		ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -60,7 +60,7 @@ class TARDISEjectCommand {
 			TARDISMessage.send(player, "NOT_IN_TARDIS");
 			return false;
 		}
-		int thisid = rst.getTardis_id();
+		int thisid = rst.getTardisId();
 		// must be timelord of the tardis
 		if (thisid != ownerid) {
 			TARDISMessage.send(player, "CMD_ONLY_TL");

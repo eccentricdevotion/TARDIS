@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.destroyers.TARDISPruner;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
@@ -30,9 +30,9 @@ import java.io.File;
  */
 class TARDISPruneCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISPruneCommand(TARDIS plugin) {
+	TARDISPruneCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

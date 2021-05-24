@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 
 import java.util.HashMap;
@@ -26,9 +26,9 @@ import java.util.HashMap;
  */
 public class TARDISJunkPlayerPersister {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISJunkPlayerPersister(TARDIS plugin) {
+	public TARDISJunkPlayerPersister(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -37,7 +37,7 @@ public class TARDISJunkPlayerPersister {
 		where.put("chameleon_preset", "JUNK_MODE");
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", true, 2);
 		if (rs.resultSet()) {
-			rs.getData().forEach((t) -> plugin.getTrackerKeeper().getJunkPlayers().put(t.getUuid(), t.getTardis_id()));
+			rs.getData().forEach((t) -> plugin.getTrackerKeeper().getJunkPlayers().put(t.getUuid(), t.getTardisId()));
 		}
 	}
 }

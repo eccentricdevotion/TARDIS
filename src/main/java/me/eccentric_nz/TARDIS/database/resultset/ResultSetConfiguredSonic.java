@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardis.database.data.ConfiguredSonic;
 
@@ -36,7 +36,7 @@ public class ResultSetConfiguredSonic {
 
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final UUID where;
 	private final String prefix;
 	private ConfiguredSonic configuredSonic;
@@ -47,7 +47,7 @@ public class ResultSetConfiguredSonic {
 	 * @param plugin an instance of the main class.
 	 * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
 	 */
-	public ResultSetConfiguredSonic(TARDIS plugin, UUID where) {
+	public ResultSetConfiguredSonic(TARDISPlugin plugin, UUID where) {
 		this.plugin = plugin;
 		this.where = where;
 		prefix = this.plugin.getPrefix();

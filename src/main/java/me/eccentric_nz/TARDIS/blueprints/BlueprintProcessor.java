@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.blueprints;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class BlueprintProcessor {
 
-	public static void addPermission(TARDIS plugin, ItemStack is, Player player) {
+	public static void addPermission(TARDISPlugin plugin, ItemStack is, Player player) {
 		ItemMeta im = is.getItemMeta();
 		if (im != null) {
 			PersistentDataContainer pdc = im.getPersistentDataContainer();

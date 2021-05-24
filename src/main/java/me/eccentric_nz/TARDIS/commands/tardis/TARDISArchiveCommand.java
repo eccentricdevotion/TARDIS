@@ -17,13 +17,13 @@
 package me.eccentric_nz.tardis.commands.tardis;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.tardis.builders.TARDISTIPSData;
 import me.eccentric_nz.tardis.database.data.Archive;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
@@ -46,10 +46,10 @@ import java.util.Locale;
  */
 class TARDISArchiveCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> subs = Arrays.asList("add", "description", "remove", "scan", "update", "y");
 
-	TARDISArchiveCommand(TARDIS plugin) {
+	TARDISArchiveCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -123,14 +123,14 @@ class TARDISArchiveCommand {
 			wheret.put("uuid", uuid);
 			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
 			if (rst.resultSet()) {
-				int id = rst.getTardis_id();
+				int id = rst.getTardisId();
 				// must be the owner of the tardis
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("tardis_id", id);
 				where.put("uuid", uuid);
 				ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
 				if (rs.resultSet()) {
-					Tardis tardis = rs.getTardis();
+					TARDIS tardis = rs.getTardis();
 					Schematic current = tardis.getSchematic();
 					// get the schematic start location, width, length and height
 					JsonObject obj = null;
@@ -141,7 +141,7 @@ class TARDISArchiveCommand {
 						ResultSetArchive rsa = new ResultSetArchive(plugin, wherean);
 						if (rsa.resultSet()) {
 							Archive archive = rsa.getArchive();
-							obj = archive.getJSON();
+							obj = archive.getJson();
 						}
 					} else {
 						String directory = (current.isCustom()) ? "user_schematics" : "schematics";
@@ -161,13 +161,13 @@ class TARDISArchiveCommand {
 						int w = dimensions.get("width").getAsInt() - 1;
 						int c = dimensions.get("length").getAsInt() - 1;
 						// get console size
-						ConsoleSize console_size = ConsoleSize.getByWidthAndHeight(w, h);
+						ConsoleSize consoleSize = ConsoleSize.getByWidthAndHeight(w, h);
 						if (((args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("update")) && args.length == 4) || (args[1].equalsIgnoreCase("scan") && args.length == 3)) {
 							// size from args[2/3]
 							try {
 								String size = (args[1].equalsIgnoreCase("scan")) ? args[2] : args[3];
-								console_size = ConsoleSize.valueOf(size.toUpperCase(Locale.ENGLISH));
-								switch (console_size) {
+								consoleSize = ConsoleSize.valueOf(size.toUpperCase(Locale.ENGLISH));
+								switch (consoleSize) {
 									case MASSIVE -> {
 										h = 31;
 										w = 47;
@@ -196,7 +196,7 @@ class TARDISArchiveCommand {
 						}
 						// calculate startx, starty, startz
 						int slot = tardis.getTIPS();
-						id = tardis.getTardis_id();
+						id = tardis.getTardisId();
 						int sx, sz;
 						if (slot != -1) { // default world - use TIPS
 							TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
@@ -204,7 +204,7 @@ class TARDISArchiveCommand {
 							sx = pos.getCentreX();
 							sz = pos.getCentreZ();
 						} else {
-							int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+							int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
 							sx = gsl[0];
 							sz = gsl[2];
 						}
@@ -216,7 +216,7 @@ class TARDISArchiveCommand {
 						}
 						HashMap<String, Object> set = new HashMap<>();
 						set.put("data", ad.getJSON().toString());
-						set.put("console_size", console_size.toString());
+						set.put("console_size", consoleSize.toString());
 						set.put("beacon", ad.getBeacon());
 						// get lanterns preference
 						int lanterns = 0;

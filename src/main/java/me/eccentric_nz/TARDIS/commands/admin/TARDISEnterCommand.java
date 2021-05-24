@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
@@ -38,9 +38,9 @@ import java.util.UUID;
  */
 class TARDISEnterCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISEnterCommand(TARDIS plugin) {
+	TARDISEnterCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -66,7 +66,7 @@ class TARDISEnterCommand {
 		HashMap<String, Object> where = new HashMap<>();
 		if (tmp == -1) {
 			// Look up this player's UUID
-			UUID uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+			UUID uuid = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId()).getUniqueId();
 			where.put("uuid", uuid.toString());
 			where.put("abandoned", 0);
 		} else {
@@ -74,16 +74,16 @@ class TARDISEnterCommand {
 		}
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
 		if (rs.resultSet()) {
-			Tardis tardis = rs.getTardis();
-			int id = tardis.getTardis_id();
+			TARDIS tardis = rs.getTardis();
+			int id = tardis.getTardisId();
 			String owner = tardis.getOwner();
 			HashMap<String, Object> wherei = new HashMap<>();
 			wherei.put("door_type", 1);
 			wherei.put("tardis_id", id);
 			ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
 			if (rsi.resultSet()) {
-				COMPASS innerD = rsi.getDoor_direction();
-				String doorLocStr = rsi.getDoor_location();
+				COMPASS innerD = rsi.getDoorDirection();
+				String doorLocStr = rsi.getDoorLocation();
 				World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
 				Location tardis_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
 				int getx = tardis_loc.getBlockX();

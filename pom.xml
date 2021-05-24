@@ -8,6 +8,9 @@
 	<name>TARDIS</name>
 	<description>A Doctor Who plugin</description>
 	<url>https://github.com/eccentricdevotion/TARDIS</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 	<repositories>
 		<repository>
 			<id>spigot-repo</id>
@@ -26,7 +29,7 @@
 			<url>http://tardisjenkins.duckdns.org:8080/plugin/repository/everything/</url>
 		</repository>
 		<repository>
-			<id>worldedit-repo</id>
+			<id>worldedit-worldguard-repo</id>
 			<url>https://maven.sk89q.com/repo</url>
 		</repository>
 		<repository>
@@ -36,6 +39,34 @@
 		<repository>
 			<id>multiverse-repo</id>
 			<url>http://repo.onarandombox.com/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>codemc-repo</id>
+			<url>https://repo.codemc.org/repository/maven-public/</url>
+		</repository>
+		<repository>
+			<id>ender-zone-repo</id>
+			<url>https://ci.ender.zone/plugin/repository/everything/</url>
+		</repository>
+		<repository>
+			<id>dmulloy2-repo</id>
+			<url>https://repo.dmulloy2.net/repository/public/</url>
+		</repository>
+		<repository>
+			<id>md_5-public</id>
+			<url>https://repo.md-5.net/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>essentialsx-repo</id>
+			<url>https://repo.essentialsx.net/releases/</url>
+		</repository>
+		<repository>
+			<id>redprotect-repo</id>
+			<url>https://raw.githubusercontent.com/FabioZumbi12/RedProtect/mvn-repo/</url>
+		</repository>
+		<repository>
+			<id>coreprotect-repo</id>
+			<url>https://maven.playpro.com</url>
 		</repository>
 		<repository>
 			<id>dynmap-repo</id>
@@ -50,8 +81,8 @@
 		<system>jenkins</system>
 		<url>http://tardisjenkins.duckdns.org:8080</url>
 	</ciManagement>
-	<!-- Profiles are used to detect whether this is a local or Jenkins build and adjust the build number accordingly -->
 	<profiles>
+		<!-- Profiles are used to detect whether this is a local or Jenkins build and adjust the build number accordingly -->
 		<profile>
 			<id>local</id>
 			<activation>
@@ -79,10 +110,6 @@
 								<goals>
 									<goal>create-timestamp</goal>
 								</goals>
-								<configuration>
-									<timestampFormat>dd.MM.yy-HH:mm</timestampFormat>
-									<!-- formats the timestamp all together like 04.12.16-14:17 and puts it in the ${myBuildNumber} buildProperty -->
-								</configuration>
 							</execution>
 						</executions>
 					</plugin>
@@ -99,7 +126,6 @@
 			<properties>
 				<!-- Get the build number from Jenkins -->
 				<project.build.number>${env.BUILD_NUMBER}</project.build.number>
-				<javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
 			</properties>
 			<build>
 				<plugins>
@@ -108,8 +134,7 @@
 						<artifactId>maven-javadoc-plugin</artifactId>
 						<version>3.2.0</version>
 						<configuration>
-							<quiet/>
-							<excludePackageNames>com.*:org.*</excludePackageNames>
+							<javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
 						</configuration>
 						<executions>
 							<execution>
@@ -136,10 +161,25 @@
 				<configuration>
 					<source>16</source>
 					<target>16</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
-			<!-- Insert the build number into plugin.yml -->
 			<plugin>
+				<!-- Attach sources -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<!-- Insert the build number into plugin.yml -->
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>maven-replacer-plugin</artifactId>
 				<version>1.4.1</version>
@@ -156,17 +196,17 @@
 					<replacements>
 						<replacement>
 							<token>maven-version-number</token>
-							<value>${project.version}-${project.buildNumber}</value>
+							<value>\${project.version}-\${project.buildNumber}</value>
 						</replacement>
 						<replacement>
 							<token>maven-build-number</token>
-							<value>${project.buildNumber}</value>
+							<value>\${project.buildNumber}</value>
 						</replacement>
 					</replacements>
 				</configuration>
 			</plugin>
-			<!-- Shade all Libs -->
 			<plugin>
+				<!-- Shade all Libs -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>3.2.4</version>
@@ -177,27 +217,19 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
-							<minimizeJar>true</minimizeJar>
-							<createDependencyReducedPom>false</createDependencyReducedPom>
-							<artifactSet>
-								<includes>
-									<include>org.rauschig:jarchivelib</include>
-									<include>org.apache.commons:commons-compress</include>
-									<include>io.papermc:paperlib</include>
-								</includes>
-							</artifactSet>
+							<dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
 							<relocations>
 								<relocation>
-									<pattern>org.apache.commons:commons-compress</pattern>
-									<shadedPattern>lib:commons-compress</shadedPattern>
+									<pattern>org.apache.commons.commons-compress</pattern>
+									<shadedPattern>me.eccentric_nz.tardis.lib.commons-compress</shadedPattern>
 								</relocation>
 								<relocation>
-									<pattern>org.rauschig:jarchivelib</pattern>
-									<shadedPattern>lib:jarchivelib</shadedPattern>
+									<pattern>org.rauschig.jarchivelib</pattern>
+									<shadedPattern>me.eccentric_nz.tardis.lib.jarchivelib</shadedPattern>
 								</relocation>
 								<relocation>
-									<pattern>io.papermc:lib</pattern>
-									<shadedPattern>lib:paperlib</shadedPattern>
+									<pattern>io.papermc.lib</pattern>
+									<shadedPattern>me.eccentric_nz.tardis.lib.paperlib</shadedPattern>
 								</relocation>
 							</relocations>
 							<filters>
@@ -212,8 +244,8 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- Manifest generation for database conversion tool -->
 			<plugin>
+				<!-- Manifest generation for database conversion tool -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>3.2.0</version>
@@ -262,7 +294,7 @@
 			<artifactId>spigot-api</artifactId>
 			<version>1.16.5-R0.1-SNAPSHOT</version>
 			<type>jar</type>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.papermc</groupId>
@@ -276,7 +308,7 @@
 			<artifactId>TARDISChunkGenerator</artifactId>
 			<version>4.6.1</version>
 			<type>jar</type>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>me.eccentric_nz.tardisweepingangels</groupId>
@@ -335,9 +367,9 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>me.ebonjaeger</groupId>
+			<groupId>com.github.EbonJaeger</groupId>
 			<artifactId>perworldinventory-kt</artifactId>
-			<version>2.3.2</version>
+			<version>v2.3.2</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -370,9 +402,9 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>nl.rutgerkok.blocklocker</groupId>
-			<artifactId>BlockLocker</artifactId>
-			<version>1.9.3</version>
+			<groupId>nl.rutgerkok</groupId>
+			<artifactId>blocklocker</artifactId>
+			<version>1.9.3-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -392,16 +424,16 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>me.libraryaddict.disguise</groupId>
+			<groupId>LibsDisguises</groupId>
 			<artifactId>LibsDisguises</artifactId>
 			<version>10.0.24</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.ess3.essentials</groupId>
+			<groupId>net.ess3</groupId>
 			<artifactId>EssentialsX</artifactId>
-			<version>2.18.2.0</version>
+			<version>2.18.2</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -409,18 +441,30 @@
 			<groupId>me.clip</groupId>
 			<artifactId>placeholderapi</artifactId>
 			<version>2.10.9</version>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>br.net.fabiozumbi12.RedProtect</groupId>
-			<artifactId>RedProtect</artifactId>
-			<version>7.7.2-b357-Universal</version>
+			<artifactId>RedProtect-Core</artifactId>
+			<version>7.7.3</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>br.net.fabiozumbi12.RedProtect</groupId>
+			<artifactId>RedProtect-Spigot</artifactId>
+			<version>7.7.3</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.net.fabiozumbi12.RedProtect</groupId>
+			<artifactId>RedProtect-Spigot</artifactId>
+			<version>7.7.3</version>
+			<classifier>javadoc</classifier>
+		</dependency>
+		<dependency>
 			<groupId>net.coreprotect</groupId>
-			<artifactId>CoreProtect</artifactId>
+			<artifactId>coreprotect</artifactId>
 			<version>19.5</version>
 			<type>jar</type>
 			<scope>compile</scope>

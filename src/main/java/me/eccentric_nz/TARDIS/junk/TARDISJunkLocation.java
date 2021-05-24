@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -30,13 +30,13 @@ import java.util.HashMap;
  */
 class TARDISJunkLocation {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private Location current;
 	private Location home;
 	private int id;
 	private TARDISBiome tardisBiome;
 
-	TARDISJunkLocation(TARDIS plugin) {
+	TARDISJunkLocation(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -44,7 +44,7 @@ class TARDISJunkLocation {
 		// check the Junk tardis is not home already
 		ResultSetTardisID rs = new ResultSetTardisID(plugin);
 		if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
-			id = rs.getTardis_id();
+			id = rs.getTardisId();
 			// get current location
 			HashMap<String, Object> wherec = new HashMap<>();
 			wherec.put("tardis_id", id);

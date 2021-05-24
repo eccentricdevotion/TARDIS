@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISMaterials;
 import org.bukkit.Material;
@@ -45,9 +45,9 @@ import java.util.UUID;
  */
 public class TARDISBeaconColouringListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISBeaconColouringListener(TARDIS plugin) {
+	public TARDISBeaconColouringListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

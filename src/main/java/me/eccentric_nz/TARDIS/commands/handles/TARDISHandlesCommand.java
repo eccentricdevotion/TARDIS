@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.handles.TARDISHandlesWeirdness;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
@@ -33,9 +33,9 @@ import java.util.UUID;
  */
 public class TARDISHandlesCommand implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISHandlesCommand(TARDIS plugin) {
+	public TARDISHandlesCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

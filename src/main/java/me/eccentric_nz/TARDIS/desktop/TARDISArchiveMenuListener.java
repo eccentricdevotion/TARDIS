@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.control.TARDISThemeButton;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.ConsoleSize;
 import me.eccentric_nz.tardis.enumeration.Consoles;
@@ -47,9 +47,9 @@ import java.util.*;
  */
 public class TARDISArchiveMenuListener extends TARDISMenuListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISArchiveMenuListener(TARDIS plugin) {
+	public TARDISArchiveMenuListener(TARDISPlugin plugin) {
 		super(plugin);
 		this.plugin = plugin;
 	}
@@ -70,10 +70,10 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
 						where.put("uuid", p.getUniqueId().toString());
 						ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
 						rs.resultSet();
-						Tardis tardis = rs.getTardis();
+						TARDIS tardis = rs.getTardis();
 						// return to Desktop Theme GUI
 						close(p);
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtron_level(), tardis.getTardis_id()).clickButton(), 2L);
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtronLevel(), tardis.getTardisId()).clickButton(), 2L);
 					}
 					case 18 -> {
 						// size

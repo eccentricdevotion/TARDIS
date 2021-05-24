@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -25,9 +25,9 @@ import org.bukkit.entity.Player;
 
 public class TARDISDoorCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISDoorCommand(TARDIS plugin) {
+	public TARDISDoorCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -48,7 +48,7 @@ public class TARDISDoorCommand {
 		}
 		boolean open = (args[1].equalsIgnoreCase("close"));
 		// toggle the door
-		new TARDISDoorToggler(plugin, player.getLocation().getBlock(), player, false, open, rs.getTardis_id()).toggleDoors();
+		new TARDISDoorToggler(plugin, player.getLocation().getBlock(), player, false, open, rs.getTardisId()).toggleDoors();
 		return true;
 	}
 }

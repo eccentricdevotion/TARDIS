@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.data.StandbyData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetStandby;
@@ -33,10 +33,10 @@ import java.util.HashMap;
  */
 public class TARDISStandbyMode implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final int amount;
 
-	public TARDISStandbyMode(TARDIS plugin) {
+	public TARDISStandbyMode(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		amount = this.plugin.getArtronConfig().getInt("standby");
 	}
@@ -85,7 +85,7 @@ public class TARDISStandbyMode implements Runnable {
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
 					}
 					// if lights are on, turn them off
-					if (standbyData.isLights()) {
+					if (standbyData.isLightsOn()) {
 						new TARDISLampToggler(plugin).flickSwitch(id, standbyData.getUuid(), true, standbyData.isLanterns());
 					}
 					// if beacon is on turn it off

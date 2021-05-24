@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.tardis.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.tardis.commands.tardis.TARDISRebuildCommand;
-import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -52,10 +52,10 @@ import java.util.HashMap;
  */
 public class TARDISRemoteKeyListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Material rkey;
 
-	public TARDISRemoteKeyListener(TARDIS plugin) {
+	public TARDISRemoteKeyListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		rkey = Material.valueOf(this.plugin.getRecipesConfig().getString("shaped.tardis Remote Key.result"));
 	}
@@ -84,9 +84,9 @@ public class TARDISRemoteKeyListener implements Listener {
 			if (!rs.resultSet()) {
 				return;
 			}
-			Tardis tardis = rs.getTardis();
-			int id = tardis.getTardis_id();
-			boolean powered = tardis.isPowered_on();
+			TARDIS tardis = rs.getTardis();
+			int id = tardis.getTardisId();
+			boolean powered = tardis.isPowered();
 			PRESET preset = tardis.getPreset();
 			if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
 				TARDISMessage.send(player, "SIEGE_NO_CONTROL");
@@ -132,7 +132,7 @@ public class TARDISRemoteKeyListener implements Listener {
 				ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
 				if (rsd.resultSet()) {
 					// get inner door block
-					Block block = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location()).getBlock();
+					Block block = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoorLocation()).getBlock();
 					boolean open = TARDISStaticUtils.isDoorOpen(block);
 					// toggle door / portals
 					new TARDISDoorToggler(plugin, block, player, false, open, id).toggleDoors();

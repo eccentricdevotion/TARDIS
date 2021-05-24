@@ -26,15 +26,15 @@ import java.io.IOException;
  */
 public class Program {
 
-	private final int program_id;
+	private final int programId;
 	private final String uuid;
 	private final String name;
 	private final ItemStack[] inventory;
 	private final String parsed;
 	private final boolean checkedOut;
 
-	public Program(int program_id, String uuid, String name, String inventory, String parsed, boolean checkedOut) {
-		this.program_id = program_id;
+	public Program(int programId, String uuid, String name, String inventory, String parsed, boolean checkedOut) {
+		this.programId = programId;
 		this.uuid = uuid;
 		this.name = name;
 		this.inventory = createInventory(inventory);
@@ -52,8 +52,8 @@ public class Program {
 		return stack;
 	}
 
-	public int getProgram_id() {
-		return program_id;
+	public int getProgramId() {
+		return programId;
 	}
 
 	public String getUuid() {

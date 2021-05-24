@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -30,14 +30,14 @@ import java.util.UUID;
  */
 public class TARDISDoorToggler {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final Block block;
 	private final Player player;
 	private final boolean minecart;
 	private final boolean open;
 	private final int id;
 
-	public TARDISDoorToggler(TARDIS plugin, Block block, Player player, boolean minecart, boolean open, int id) {
+	public TARDISDoorToggler(TARDISPlugin plugin, Block block, Player player, boolean minecart, boolean open, int id) {
 		this.plugin = plugin;
 		this.block = block;
 		this.player = player;

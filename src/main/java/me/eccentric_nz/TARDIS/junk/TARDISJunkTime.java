@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
@@ -25,9 +25,9 @@ import org.bukkit.command.CommandSender;
  */
 class TARDISJunkTime {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISJunkTime(TARDIS plugin) {
+	TARDISJunkTime(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

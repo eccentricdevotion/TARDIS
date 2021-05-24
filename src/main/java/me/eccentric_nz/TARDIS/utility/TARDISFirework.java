@@ -18,7 +18,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.*;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.entity.Firework;
@@ -102,7 +102,7 @@ public class TARDISFirework {
 		return f;
 	}
 
-	public void displayEffects(TARDIS plugin, Location l) {
+	public void displayEffects(TARDISPlugin plugin, Location l) {
 		Firework f = launch(l);
 		new BukkitRunnable() {
 			@Override

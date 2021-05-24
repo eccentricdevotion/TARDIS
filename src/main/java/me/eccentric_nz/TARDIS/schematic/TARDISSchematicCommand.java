@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
@@ -47,9 +47,9 @@ import java.util.UUID;
 
 public class TARDISSchematicCommand implements CommandExecutor {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	public TARDISSchematicCommand(TARDIS plugin) {
+	public TARDISSchematicCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

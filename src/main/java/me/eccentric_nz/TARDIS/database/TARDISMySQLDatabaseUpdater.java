@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.ChatColor;
 
 import java.sql.ResultSet;
@@ -35,22 +35,22 @@ import java.util.Map;
  */
 class TARDISMySQLDatabaseUpdater {
 
-	private final List<String> areaupdates = new ArrayList<>();
-	private final List<String> tardisupdates = new ArrayList<>();
-	private final List<String> prefsupdates = new ArrayList<>();
-	private final List<String> destsupdates = new ArrayList<>();
-	private final List<String> countupdates = new ArrayList<>();
-	private final List<String> portalsupdates = new ArrayList<>();
-	private final List<String> inventoryupdates = new ArrayList<>();
-	private final List<String> chameleonupdates = new ArrayList<>();
-	private final List<String> farmingupdates = new ArrayList<>();
-	private final List<String> sonicupdates = new ArrayList<>();
+	private final List<String> areaUpdates = new ArrayList<>();
+	private final List<String> tardisUpdates = new ArrayList<>();
+	private final List<String> prefsUpdates = new ArrayList<>();
+	private final List<String> destsUpdates = new ArrayList<>();
+	private final List<String> countUpdates = new ArrayList<>();
+	private final List<String> portalsUpdates = new ArrayList<>();
+	private final List<String> inventoryUpdates = new ArrayList<>();
+	private final List<String> chameleonUpdates = new ArrayList<>();
+	private final List<String> farmingUpdates = new ArrayList<>();
+	private final List<String> sonicUpdates = new ArrayList<>();
 	private final HashMap<String, String> uuidUpdates = new HashMap<>();
 	private final Statement statement;
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final String prefix;
 
-	TARDISMySQLDatabaseUpdater(TARDIS plugin, Statement statement) {
+	TARDISMySQLDatabaseUpdater(TARDISPlugin plugin, Statement statement) {
 		this.plugin = plugin;
 		prefix = this.plugin.getPrefix();
 		this.statement = statement;
@@ -61,60 +61,60 @@ class TARDISMySQLDatabaseUpdater {
 		uuidUpdates.put("t_count", "t_id");
 		uuidUpdates.put("tardis", "tardis_id");
 		uuidUpdates.put("travellers", "tardis_id");
-		areaupdates.add("parking_distance int(2) DEFAULT '2'");
-		areaupdates.add("invisibility varchar(32) DEFAULT 'ALLOW'");
-		areaupdates.add("direction varchar(5) DEFAULT ''");
-		tardisupdates.add("last_known_name varchar(32) DEFAULT ''");
-		tardisupdates.add("lights_on int(1) DEFAULT '1'");
-		tardisupdates.add("monsters int(2) DEFAULT '0'");
-		tardisupdates.add("abandoned int(1) DEFAULT '0'");
-		tardisupdates.add("powered_on int(1) DEFAULT '0'");
-		tardisupdates.add("renderer varchar(512) DEFAULT ''");
-		tardisupdates.add("rotor varchar(48) DEFAULT ''");
-		tardisupdates.add("siege_on int(1) DEFAULT '0'");
-		tardisupdates.add("zero varchar(512) DEFAULT ''");
-		prefsupdates.add("auto_rescue_on int(1) DEFAULT '0'");
-		prefsupdates.add("auto_siege_on int(1) DEFAULT '0'");
-		prefsupdates.add("build_on int(1) DEFAULT '1'");
-		prefsupdates.add("ctm_on int(1) DEFAULT '0'");
-		prefsupdates.add("difficulty int(1) DEFAULT '0'");
-		prefsupdates.add("dnd_on int(1) DEFAULT '0'");
-		prefsupdates.add("farm_on int(1) DEFAULT '0'");
-		prefsupdates.add("flying_mode int(1) DEFAULT '1'");
-		prefsupdates.add("throttle int(1) DEFAULT '4'");
-		prefsupdates.add("font_on int(1) DEFAULT '0'");
-		prefsupdates.add("hads_type varchar(12) DEFAULT 'DISPLACEMENT'");
-		prefsupdates.add("hum varchar(24) DEFAULT ''");
-		prefsupdates.add("language varchar(32) DEFAULT 'ENGLISH'");
-		prefsupdates.add("lanterns_on int(1) DEFAULT '0'");
-		prefsupdates.add("minecart_on int(1) DEFAULT '0'");
-		prefsupdates.add("policebox_textures_on int(1) DEFAULT '1'");
-		prefsupdates.add("renderer_on int(1) DEFAULT '1'");
-		prefsupdates.add("siege_floor varchar(64) DEFAULT 'BLACK_TERRACOTTA'");
-		prefsupdates.add("siege_wall varchar(64) DEFAULT 'GRAY_TERRACOTTA'");
-		prefsupdates.add("sign_on int(1) DEFAULT '1'");
-		prefsupdates.add("telepathy_on int(1) DEFAULT '0'");
-		prefsupdates.add("travelbar_on int(1) DEFAULT '0'");
-		prefsupdates.add("wool_lights_on int(1) DEFAULT '0'");
-		prefsupdates.add("auto_powerup_on int(1) DEFAULT '0'");
-		destsupdates.add("preset varchar(32) DEFAULT ''");
-		destsupdates.add("slot int(1) DEFAULT '-1'");
-		destsupdates.add("icon varchar(64) DEFAULT ''");
-		countupdates.add("grace int(3) DEFAULT '0'");
-		portalsupdates.add("abandoned int(1) DEFAULT '0'");
-		inventoryupdates.add("attributes text");
-		inventoryupdates.add("armour_attributes text");
-		chameleonupdates.add("line1 varchar(48) DEFAULT ''");
-		chameleonupdates.add("line2 varchar(48) DEFAULT ''");
-		chameleonupdates.add("line3 varchar(48) DEFAULT ''");
-		chameleonupdates.add("line4 varchar(48) DEFAULT ''");
-		chameleonupdates.add("asymmetric int(1) DEFAULT '0'");
-		farmingupdates.add("apiary varchar(512) DEFAULT ''");
-		farmingupdates.add("bamboo varchar(512) DEFAULT ''");
-		sonicupdates.add("arrow int(1) DEFAULT '0'");
-		sonicupdates.add("knockback int(1) DEFAULT '0'");
-		sonicupdates.add("model int(11) DEFAULT '10000011'");
-		sonicupdates.add("sonic_uuid varchar(48) DEFAULT ''");
+		areaUpdates.add("parking_distance int(2) DEFAULT '2'");
+		areaUpdates.add("invisibility varchar(32) DEFAULT 'ALLOW'");
+		areaUpdates.add("direction varchar(5) DEFAULT ''");
+		tardisUpdates.add("last_known_name varchar(32) DEFAULT ''");
+		tardisUpdates.add("lights_on int(1) DEFAULT '1'");
+		tardisUpdates.add("monsters int(2) DEFAULT '0'");
+		tardisUpdates.add("abandoned int(1) DEFAULT '0'");
+		tardisUpdates.add("powered_on int(1) DEFAULT '0'");
+		tardisUpdates.add("renderer varchar(512) DEFAULT ''");
+		tardisUpdates.add("rotor varchar(48) DEFAULT ''");
+		tardisUpdates.add("siege_on int(1) DEFAULT '0'");
+		tardisUpdates.add("zero varchar(512) DEFAULT ''");
+		prefsUpdates.add("auto_rescue_on int(1) DEFAULT '0'");
+		prefsUpdates.add("auto_siege_on int(1) DEFAULT '0'");
+		prefsUpdates.add("build_on int(1) DEFAULT '1'");
+		prefsUpdates.add("ctm_on int(1) DEFAULT '0'");
+		prefsUpdates.add("difficulty int(1) DEFAULT '0'");
+		prefsUpdates.add("dnd_on int(1) DEFAULT '0'");
+		prefsUpdates.add("farm_on int(1) DEFAULT '0'");
+		prefsUpdates.add("flying_mode int(1) DEFAULT '1'");
+		prefsUpdates.add("throttle int(1) DEFAULT '4'");
+		prefsUpdates.add("font_on int(1) DEFAULT '0'");
+		prefsUpdates.add("hads_type varchar(12) DEFAULT 'DISPLACEMENT'");
+		prefsUpdates.add("hum varchar(24) DEFAULT ''");
+		prefsUpdates.add("language varchar(32) DEFAULT 'ENGLISH'");
+		prefsUpdates.add("lanterns_on int(1) DEFAULT '0'");
+		prefsUpdates.add("minecart_on int(1) DEFAULT '0'");
+		prefsUpdates.add("policebox_textures_on int(1) DEFAULT '1'");
+		prefsUpdates.add("renderer_on int(1) DEFAULT '1'");
+		prefsUpdates.add("siege_floor varchar(64) DEFAULT 'BLACK_TERRACOTTA'");
+		prefsUpdates.add("siege_wall varchar(64) DEFAULT 'GRAY_TERRACOTTA'");
+		prefsUpdates.add("sign_on int(1) DEFAULT '1'");
+		prefsUpdates.add("telepathy_on int(1) DEFAULT '0'");
+		prefsUpdates.add("travelbar_on int(1) DEFAULT '0'");
+		prefsUpdates.add("wool_lights_on int(1) DEFAULT '0'");
+		prefsUpdates.add("auto_powerup_on int(1) DEFAULT '0'");
+		destsUpdates.add("preset varchar(32) DEFAULT ''");
+		destsUpdates.add("slot int(1) DEFAULT '-1'");
+		destsUpdates.add("icon varchar(64) DEFAULT ''");
+		countUpdates.add("grace int(3) DEFAULT '0'");
+		portalsUpdates.add("abandoned int(1) DEFAULT '0'");
+		inventoryUpdates.add("attributes text");
+		inventoryUpdates.add("armour_attributes text");
+		chameleonUpdates.add("line1 varchar(48) DEFAULT ''");
+		chameleonUpdates.add("line2 varchar(48) DEFAULT ''");
+		chameleonUpdates.add("line3 varchar(48) DEFAULT ''");
+		chameleonUpdates.add("line4 varchar(48) DEFAULT ''");
+		chameleonUpdates.add("asymmetric int(1) DEFAULT '0'");
+		farmingUpdates.add("apiary varchar(512) DEFAULT ''");
+		farmingUpdates.add("bamboo varchar(512) DEFAULT ''");
+		sonicUpdates.add("arrow int(1) DEFAULT '0'");
+		sonicUpdates.add("knockback int(1) DEFAULT '0'");
+		sonicUpdates.add("model int(11) DEFAULT '10000011'");
+		sonicUpdates.add("sonic_uuid varchar(48) DEFAULT ''");
 	}
 
 	/**
@@ -123,203 +123,203 @@ class TARDISMySQLDatabaseUpdater {
 	void updateTables() {
 		int i = 0;
 		try {
-			for (Map.Entry<String, String> u : uuidUpdates.entrySet()) {
-				String u_query = "SHOW COLUMNS FROM " + prefix + u.getKey() + " LIKE 'uuid'";
-				ResultSet rsu = statement.executeQuery(u_query);
-				if (!rsu.next()) {
+			for (Map.Entry<String, String> uuid : uuidUpdates.entrySet()) {
+				String uuidQuery = "SHOW COLUMNS FROM " + prefix + uuid.getKey() + " LIKE 'uuid'";
+				ResultSet rsUuid = statement.executeQuery(uuidQuery);
+				if (!rsUuid.next()) {
 					i++;
-					String u_alter = "ALTER TABLE " + prefix + u.getKey() + " ADD uuid VARCHAR(48) DEFAULT '' AFTER " + u.getValue();
-					statement.executeUpdate(u_alter);
+					String uuidAlter = "ALTER TABLE " + prefix + uuid.getKey() + " ADD uuid VARCHAR(48) DEFAULT '' AFTER " + uuid.getValue();
+					statement.executeUpdate(uuidAlter);
 				}
 			}
-			for (String a : areaupdates) {
-				String[] asplit = a.split(" ");
-				String a_query = "SHOW COLUMNS FROM " + prefix + "areas LIKE '" + asplit[0] + "'";
-				ResultSet rsa = statement.executeQuery(a_query);
-				if (!rsa.next()) {
+			for (String area : areaUpdates) {
+				String[] areaSplit = area.split(" ");
+				String areaQuery = "SHOW COLUMNS FROM " + prefix + "areas LIKE '" + areaSplit[0] + "'";
+				ResultSet rsArea = statement.executeQuery(areaQuery);
+				if (!rsArea.next()) {
 					i++;
-					String a_alter = "ALTER TABLE " + prefix + "areas ADD " + a;
-					statement.executeUpdate(a_alter);
+					String areaAlter = "ALTER TABLE " + prefix + "areas ADD " + area;
+					statement.executeUpdate(areaAlter);
 				}
 			}
-			for (String t : tardisupdates) {
-				String[] tsplit = t.split(" ");
-				String t_query = "SHOW COLUMNS FROM " + prefix + "tardis LIKE '" + tsplit[0] + "'";
-				ResultSet rst = statement.executeQuery(t_query);
-				if (!rst.next()) {
+			for (String tardis : tardisUpdates) {
+				String[] tardisSplit = tardis.split(" ");
+				String tardisQuery = "SHOW COLUMNS FROM " + prefix + "tardis LIKE '" + tardisSplit[0] + "'";
+				ResultSet rsTardis = statement.executeQuery(tardisQuery);
+				if (!rsTardis.next()) {
 					i++;
-					String t_alter = "ALTER TABLE " + prefix + "tardis ADD " + t;
-					statement.executeUpdate(t_alter);
+					String tardisAlter = "ALTER TABLE " + prefix + "tardis ADD " + tardis;
+					statement.executeUpdate(tardisAlter);
 				}
 			}
-			for (String p : prefsupdates) {
-				String[] psplit = p.split(" ");
-				String p_query = "SHOW COLUMNS FROM " + prefix + "player_prefs LIKE '" + psplit[0] + "'";
-				ResultSet rsp = statement.executeQuery(p_query);
-				if (!rsp.next()) {
+			for (String pref : prefsUpdates) {
+				String[] prefSplit = pref.split(" ");
+				String prefQuery = "SHOW COLUMNS FROM " + prefix + "player_prefs LIKE '" + prefSplit[0] + "'";
+				ResultSet rsPref = statement.executeQuery(prefQuery);
+				if (!rsPref.next()) {
 					i++;
-					String p_alter = "ALTER TABLE " + prefix + "player_prefs ADD " + p;
-					statement.executeUpdate(p_alter);
+					String prefAlter = "ALTER TABLE " + prefix + "player_prefs ADD " + pref;
+					statement.executeUpdate(prefAlter);
 				}
 			}
-			for (String d : destsupdates) {
-				String[] dsplit = d.split(" ");
-				String d_query = "SHOW COLUMNS FROM " + prefix + "destinations LIKE '" + dsplit[0] + "'";
-				ResultSet rsd = statement.executeQuery(d_query);
-				if (!rsd.next()) {
+			for (String dest : destsUpdates) {
+				String[] destSplit = dest.split(" ");
+				String destQuery = "SHOW COLUMNS FROM " + prefix + "destinations LIKE '" + destSplit[0] + "'";
+				ResultSet rsDest = statement.executeQuery(destQuery);
+				if (!rsDest.next()) {
 					i++;
-					String d_alter = "ALTER TABLE " + prefix + "destinations ADD " + d;
-					statement.executeUpdate(d_alter);
+					String destAlter = "ALTER TABLE " + prefix + "destinations ADD " + dest;
+					statement.executeUpdate(destAlter);
 				}
 			}
-			for (String c : countupdates) {
-				String[] csplit = c.split(" ");
-				String c_query = "SHOW COLUMNS FROM " + prefix + "t_count LIKE '" + csplit[0] + "'";
-				ResultSet rsc = statement.executeQuery(c_query);
-				if (!rsc.next()) {
+			for (String count : countUpdates) {
+				String[] countSplit = count.split(" ");
+				String countQuery = "SHOW COLUMNS FROM " + prefix + "t_count LIKE '" + countSplit[0] + "'";
+				ResultSet rsCount = statement.executeQuery(countQuery);
+				if (!rsCount.next()) {
 					i++;
-					String c_alter = "ALTER TABLE " + prefix + "t_count ADD " + c;
-					statement.executeUpdate(c_alter);
+					String countAlter = "ALTER TABLE " + prefix + "t_count ADD " + count;
+					statement.executeUpdate(countAlter);
 				}
 			}
-			for (String o : portalsupdates) {
-				String[] osplit = o.split(" ");
-				String o_query = "SHOW COLUMNS FROM " + prefix + "portals LIKE '" + osplit[0] + "'";
-				ResultSet rso = statement.executeQuery(o_query);
-				if (!rso.next()) {
+			for (String portal : portalsUpdates) {
+				String[] portalSplit = portal.split(" ");
+				String portalQuery = "SHOW COLUMNS FROM " + prefix + "portals LIKE '" + portalSplit[0] + "'";
+				ResultSet rsPortal = statement.executeQuery(portalQuery);
+				if (!rsPortal.next()) {
 					i++;
-					String o_alter = "ALTER TABLE " + prefix + "portals ADD " + o;
-					statement.executeUpdate(o_alter);
+					String portalAlter = "ALTER TABLE " + prefix + "portals ADD " + portal;
+					statement.executeUpdate(portalAlter);
 				}
 			}
-			for (String v : inventoryupdates) {
-				String[] vsplit = v.split(" ");
-				String v_query = "SHOW COLUMNS FROM " + prefix + "inventories LIKE '" + vsplit[0] + "'";
-				ResultSet rsv = statement.executeQuery(v_query);
-				if (!rsv.next()) {
+			for (String inventory : inventoryUpdates) {
+				String[] inventorySplit = inventory.split(" ");
+				String inventoryQuery = "SHOW COLUMNS FROM " + prefix + "inventories LIKE '" + inventorySplit[0] + "'";
+				ResultSet rsInventory = statement.executeQuery(inventoryQuery);
+				if (!rsInventory.next()) {
 					i++;
-					String v_alter = "ALTER TABLE " + prefix + "inventories ADD " + v;
-					statement.executeUpdate(v_alter);
+					String inventoryAlter = "ALTER TABLE " + prefix + "inventories ADD " + inventory;
+					statement.executeUpdate(inventoryAlter);
 				}
 			}
-			for (String h : chameleonupdates) {
-				String[] hsplit = h.split(" ");
-				String h_query = "SHOW COLUMNS FROM " + prefix + "chameleon LIKE '" + hsplit[0] + "'";
-				ResultSet rsh = statement.executeQuery(h_query);
-				if (!rsh.next()) {
+			for (String chameleon : chameleonUpdates) {
+				String[] chameleonSplit = chameleon.split(" ");
+				String chameleonQuery = "SHOW COLUMNS FROM " + prefix + "chameleon LIKE '" + chameleonSplit[0] + "'";
+				ResultSet rsChameleon = statement.executeQuery(chameleonQuery);
+				if (!rsChameleon.next()) {
 					i++;
-					String h_alter = "ALTER TABLE " + prefix + "chameleon ADD " + h;
-					statement.executeUpdate(h_alter);
+					String chameleonAlter = "ALTER TABLE " + prefix + "chameleon ADD " + chameleon;
+					statement.executeUpdate(chameleonAlter);
 				}
 			}
-			for (String f : farmingupdates) {
-				String[] fsplit = f.split(" ");
-				String f_query = "SHOW COLUMNS FROM " + prefix + "farming LIKE '" + fsplit[0] + "'";
-				ResultSet fsa = statement.executeQuery(f_query);
-				if (!fsa.next()) {
+			for (String farming : farmingUpdates) {
+				String[] farmingSplit = farming.split(" ");
+				String farmingQuery = "SHOW COLUMNS FROM " + prefix + "farming LIKE '" + farmingSplit[0] + "'";
+				ResultSet rsFarming = statement.executeQuery(farmingQuery);
+				if (!rsFarming.next()) {
 					i++;
-					String f_alter = "ALTER TABLE " + prefix + "farming ADD " + f;
-					statement.executeUpdate(f_alter);
+					String farmingAlter = "ALTER TABLE " + prefix + "farming ADD " + farming;
+					statement.executeUpdate(farmingAlter);
 				}
 			}
-			for (String s : sonicupdates) {
-				String[] ssplit = s.split(" ");
-				String s_query = "SHOW COLUMNS FROM " + prefix + "sonic LIKE '" + ssplit[0] + "'";
-				ResultSet ssa = statement.executeQuery(s_query);
-				if (!ssa.next()) {
+			for (String sonic : sonicUpdates) {
+				String[] sonicSplit = sonic.split(" ");
+				String sonicQuery = "SHOW COLUMNS FROM " + prefix + "sonic LIKE '" + sonicSplit[0] + "'";
+				ResultSet rsSonic = statement.executeQuery(sonicQuery);
+				if (!rsSonic.next()) {
 					i++;
-					String s_alter = "ALTER TABLE " + prefix + "sonic ADD " + s;
-					statement.executeUpdate(s_alter);
+					String sonicAlter = "ALTER TABLE " + prefix + "sonic ADD " + sonic;
+					statement.executeUpdate(sonicAlter);
 				}
 			}
 			// update data type for `data` in blocks
-			String blockdata_check = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "blocks' AND COLUMN_NAME = 'data'";
-			ResultSet rsbdc = statement.executeQuery(blockdata_check);
-			if (rsbdc.next() && !rsbdc.getString("DATA_TYPE").equalsIgnoreCase("text")) {
-				String blockdata_query = "ALTER TABLE " + prefix + "blocks CHANGE `data` `data` TEXT";
-				statement.executeUpdate(blockdata_query);
+			String blockDataCheck = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "blocks' AND COLUMN_NAME = 'data'";
+			ResultSet rsBlockDataCheck = statement.executeQuery(blockDataCheck);
+			if (rsBlockDataCheck.next() && !rsBlockDataCheck.getString("DATA_TYPE").equalsIgnoreCase("text")) {
+				String blockDataQuery = "ALTER TABLE " + prefix + "blocks CHANGE `data` `data` TEXT";
+				statement.executeUpdate(blockDataQuery);
 			}
 			// update data type for `time` in tag
-			String tagtime_check = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "blocks' AND COLUMN_NAME = 'data'";
-			ResultSet rsttc = statement.executeQuery(tagtime_check);
-			if (rsttc.next() && !rsttc.getString("DATA_TYPE").equalsIgnoreCase("int")) {
-				String tagtime_query = "ALTER TABLE " + prefix + "tag CHANGE `time` `time` BIGINT NULL DEFAULT '0'";
-				statement.executeUpdate(tagtime_query);
+			String tagTimeCheck = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "blocks' AND COLUMN_NAME = 'data'";
+			ResultSet rsTagTimeCheck = statement.executeQuery(tagTimeCheck);
+			if (rsTagTimeCheck.next() && !rsTagTimeCheck.getString("DATA_TYPE").equalsIgnoreCase("int")) {
+				String tagTimeQuery = "ALTER TABLE " + prefix + "tag CHANGE `time` `time` BIGINT NULL DEFAULT '0'";
+				statement.executeUpdate(tagTimeQuery);
 			}
 			// add biome to current location
-			String bio_query = "SHOW COLUMNS FROM " + prefix + "current LIKE 'biome'";
-			ResultSet rsbio = statement.executeQuery(bio_query);
-			if (!rsbio.next()) {
+			String bioQuery = "SHOW COLUMNS FROM " + prefix + "current LIKE 'biome'";
+			ResultSet rsBio = statement.executeQuery(bioQuery);
+			if (!rsBio.next()) {
 				i++;
-				String bio_alter = "ALTER TABLE " + prefix + "current ADD biome varchar(64) DEFAULT ''";
-				statement.executeUpdate(bio_alter);
+				String bioAlter = "ALTER TABLE " + prefix + "current ADD biome varchar(64) DEFAULT ''";
+				statement.executeUpdate(bioAlter);
 			}
 			// add preset to homes
-			String preset_query = "SHOW COLUMNS FROM " + prefix + "homes LIKE 'biome'";
-			ResultSet rspreset = statement.executeQuery(preset_query);
-			if (!rspreset.next()) {
+			String presetQuery = "SHOW COLUMNS FROM " + prefix + "homes LIKE 'biome'";
+			ResultSet rsPreset = statement.executeQuery(presetQuery);
+			if (!rsPreset.next()) {
 				i++;
-				String preset_alter = "ALTER TABLE " + prefix + "homes ADD preset varchar(64) DEFAULT ''";
-				statement.executeUpdate(preset_alter);
+				String presetAlter = "ALTER TABLE " + prefix + "homes ADD preset varchar(64) DEFAULT ''";
+				statement.executeUpdate(presetAlter);
 			}
 			// add tardis_id to dispersed
-			String dispersed_query = "SHOW COLUMNS FROM " + prefix + "dispersed LIKE 'tardis_id'";
-			ResultSet rsdispersed = statement.executeQuery(dispersed_query);
-			if (!rsdispersed.next()) {
+			String dispersedQuery = "SHOW COLUMNS FROM " + prefix + "dispersed LIKE 'tardis_id'";
+			ResultSet rsDispersed = statement.executeQuery(dispersedQuery);
+			if (!rsDispersed.next()) {
 				i++;
-				String dispersed_alter = "ALTER TABLE " + prefix + "dispersed ADD tardis_id int(11)";
-				statement.executeUpdate(dispersed_alter);
+				String dispersedAlter = "ALTER TABLE " + prefix + "dispersed ADD tardis_id int(11)";
+				statement.executeUpdate(dispersedAlter);
 				// update tardis_id column for existing records
-				new TARDISDispersalUpdater(plugin).updateTardis_ids();
+				new TARDISDispersalUpdater(plugin).updateTardisIds();
 			}
 			// add repair to t_count
-			String rep_query = "SHOW COLUMNS FROM " + prefix + "t_count LIKE 'repair'";
-			ResultSet rsrep = statement.executeQuery(rep_query);
-			if (!rsrep.next()) {
+			String repQuery = "SHOW COLUMNS FROM " + prefix + "t_count LIKE 'repair'";
+			ResultSet rsRep = statement.executeQuery(repQuery);
+			if (!rsRep.next()) {
 				i++;
-				String rep_alter = "ALTER TABLE " + prefix + "t_count ADD repair int(3) DEFAULT '0'";
-				statement.executeUpdate(rep_alter);
+				String repAlter = "ALTER TABLE " + prefix + "t_count ADD repair int(3) DEFAULT '0'";
+				statement.executeUpdate(repAlter);
 			}
 			// add task to vortex
-			String vortex_query = "SHOW COLUMNS FROM " + prefix + "vortex LIKE 'task'";
-			ResultSet rsvortex = statement.executeQuery(vortex_query);
-			if (!rsvortex.next()) {
+			String vortexQuery = "SHOW COLUMNS FROM " + prefix + "vortex LIKE 'task'";
+			ResultSet rsVortex = statement.executeQuery(vortexQuery);
+			if (!rsVortex.next()) {
 				i++;
-				String vortex_alter = "ALTER TABLE " + prefix + "vortex ADD task int(11) DEFAULT '0'";
-				statement.executeUpdate(vortex_alter);
+				String vortexAlter = "ALTER TABLE " + prefix + "vortex ADD task int(11) DEFAULT '0'";
+				statement.executeUpdate(vortexAlter);
 			}
 			// add post_blocks to room_progress
-			String post_query = "SHOW COLUMNS FROM " + prefix + "room_progress LIKE 'post_blocks'";
-			ResultSet rspost = statement.executeQuery(post_query);
-			if (!rspost.next()) {
+			String postQuery = "SHOW COLUMNS FROM " + prefix + "room_progress LIKE 'post_blocks'";
+			ResultSet rsPost = statement.executeQuery(postQuery);
+			if (!rsPost.next()) {
 				i++;
-				String post_alter = "ALTER TABLE " + prefix + "room_progress ADD post_blocks text NULL";
-				statement.executeUpdate(post_alter);
+				String postAlter = "ALTER TABLE " + prefix + "room_progress ADD post_blocks text NULL";
+				statement.executeUpdate(postAlter);
 			}
 			// add chest_type to vaults
-			String vct_query = "SHOW COLUMNS FROM " + prefix + "vaults LIKE 'chest_type'";
-			ResultSet rsvct = statement.executeQuery(vct_query);
-			if (!rsvct.next()) {
+			String vctQuery = "SHOW COLUMNS FROM " + prefix + "vaults LIKE 'chest_type'";
+			ResultSet rsVct = statement.executeQuery(vctQuery);
+			if (!rsVct.next()) {
 				i++;
-				String vct_alter = "ALTER TABLE " + prefix + "vaults ADD chest_type varchar(8) DEFAULT 'DROP'";
-				statement.executeUpdate(vct_alter);
+				String vctAlter = "ALTER TABLE " + prefix + "vaults ADD chest_type varchar(8) DEFAULT 'DROP'";
+				statement.executeUpdate(vctAlter);
 			}
 			// add y to archive
-			String y_query = "SHOW COLUMNS FROM " + prefix + "archive LIKE 'y'";
-			ResultSet rsy = statement.executeQuery(y_query);
-			if (!rsy.next()) {
+			String yQuery = "SHOW COLUMNS FROM " + prefix + "archive LIKE 'y'";
+			ResultSet rsY = statement.executeQuery(yQuery);
+			if (!rsY.next()) {
 				i++;
-				String y_alter = "ALTER TABLE " + prefix + "archive ADD y int(3) DEFAULT '64'";
-				statement.executeUpdate(y_alter);
+				String yAlter = "ALTER TABLE " + prefix + "archive ADD y int(3) DEFAULT '64'";
+				statement.executeUpdate(yAlter);
 			}
 			// transfer `void` data to `thevoid`, then remove `void` table
 			String voidQuery = "SHOW TABLES LIKE '" + prefix + "void'";
-			ResultSet rsvoid = statement.executeQuery(voidQuery);
-			if (rsvoid.next()) {
+			ResultSet rsVoid = statement.executeQuery(voidQuery);
+			if (rsVoid.next()) {
 				String getVoid = "SELECT * FROM '" + prefix + "void'";
-				ResultSet rsv = statement.executeQuery(getVoid);
-				while (rsv.next()) {
-					String transfer = "INSERT IGNORE INTO " + prefix + "thevoid (tardis_id) VALUES (" + rsv.getInt("tardis_id") + ")";
+				ResultSet rsV = statement.executeQuery(getVoid);
+				while (rsV.next()) {
+					String transfer = "INSERT IGNORE INTO " + prefix + "thevoid (tardis_id) VALUES (" + rsV.getInt("tardis_id") + ")";
 					statement.executeUpdate(transfer);
 				}
 				String delVoid = "DROP TABLE '" + prefix + "void'";
@@ -329,7 +329,7 @@ class TARDISMySQLDatabaseUpdater {
 			plugin.debug("MySQL database add fields error: " + e.getMessage() + " " + e.getErrorCode());
 		}
 		if (i > 0) {
-			plugin.getConsole().sendMessage(TARDIS.plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the MySQL database!");
+			plugin.getConsole().sendMessage(TARDISPlugin.plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the MySQL database!");
 		}
 	}
 }

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISItemRenamer;
@@ -29,9 +29,9 @@ import org.bukkit.inventory.ItemStack;
  */
 class TARDISNameKeyCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISNameKeyCommand(TARDIS plugin) {
+	TARDISNameKeyCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

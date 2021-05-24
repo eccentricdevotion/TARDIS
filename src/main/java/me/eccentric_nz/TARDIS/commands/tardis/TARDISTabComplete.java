@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.tardis;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import me.eccentric_nz.tardis.enumeration.TardisCommand;
@@ -37,7 +37,7 @@ import java.util.List;
  */
 public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<String> ROOT_SUBS = new ArrayList<>();
 	private final List<String> ON_OFF_SUBS = ImmutableList.of("on", "off");
 	private final List<String> DOOR_SUBS = ImmutableList.of("open", "close");
@@ -55,7 +55,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
 	private final List<String> MAT_SUBS = new ArrayList<>();
 	private final List<String> PRESET_SUBS = new ArrayList<>();
 
-	public TARDISTabComplete(TARDIS plugin) {
+	public TARDISTabComplete(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		for (TardisCommand tc : TardisCommand.values()) {
 			ROOT_SUBS.add(tc.toString());

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -30,9 +30,9 @@ import java.util.HashMap;
  */
 class TARDISRemoveSavedLocationCommand {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 
-	TARDISRemoveSavedLocationCommand(TARDIS plugin) {
+	TARDISRemoveSavedLocationCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -47,7 +47,7 @@ class TARDISRemoveSavedLocationCommand {
 				TARDISMessage.send(player, "NO_TARDIS");
 				return false;
 			}
-			int id = rs.getTardis_id();
+			int id = rs.getTardisId();
 			HashMap<String, Object> whered = new HashMap<>();
 			whered.put("dest_name", args[1]);
 			whered.put("tardis_id", id);
@@ -56,7 +56,7 @@ class TARDISRemoveSavedLocationCommand {
 				TARDISMessage.send(player, "SAVE_NOT_FOUND");
 				return false;
 			}
-			int destID = rsd.getDest_id();
+			int destID = rsd.getDestId();
 			HashMap<String, Object> did = new HashMap<>();
 			did.put("dest_id", destID);
 			plugin.getQueryFactory().doDelete("destinations", did);

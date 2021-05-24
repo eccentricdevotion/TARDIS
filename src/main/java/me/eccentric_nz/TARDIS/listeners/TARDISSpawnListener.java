@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.planets.TARDISAngelsAPI;
 import me.eccentric_nz.tardis.planets.TARDISBiome;
@@ -40,11 +40,11 @@ import java.util.List;
  */
 public class TARDISSpawnListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<SpawnReason> good_spawns = new ArrayList<>();
 	private final List<TARDISBiome> biomes = new ArrayList<>();
 
-	public TARDISSpawnListener(TARDIS plugin) {
+	public TARDISSpawnListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		good_spawns.add(SpawnReason.BEEHIVE);
 		good_spawns.add(SpawnReason.BREEDING);

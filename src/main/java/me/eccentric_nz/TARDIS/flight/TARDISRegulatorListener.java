@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -40,10 +40,10 @@ import java.util.UUID;
  */
 public class TARDISRegulatorListener extends TARDISRegulatorSlot implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<Integer> directions = Arrays.asList(16, 24, 26, 34);
 
-	public TARDISRegulatorListener(TARDIS plugin) {
+	public TARDISRegulatorListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 

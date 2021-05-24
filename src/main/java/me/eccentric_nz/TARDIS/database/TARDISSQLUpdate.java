@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,7 +30,7 @@ import java.util.UUID;
  */
 class TARDISSQLUpdate implements Runnable {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
 	private final Connection connection = service.getConnection();
 	private final String table;
@@ -47,7 +47,7 @@ class TARDISSQLUpdate implements Runnable {
 	 * @param data   a HashMap<String, Object> of table fields and values update.
 	 * @param where  a HashMap<String, Object> of table fields and values to select the records to update.
 	 */
-	TARDISSQLUpdate(TARDIS plugin, String table, HashMap<String, Object> data, HashMap<String, Object> where) {
+	TARDISSQLUpdate(TARDISPlugin plugin, String table, HashMap<String, Object> data, HashMap<String, Object> where) {
 		this.plugin = plugin;
 		this.table = table;
 		this.data = data;

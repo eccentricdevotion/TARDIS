@@ -51,10 +51,10 @@ import java.io.File;
  */
 class TARDISCommandSetter {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final TARDISInformationSystemListener info;
 
-	TARDISCommandSetter(TARDIS plugin, TARDISInformationSystemListener info) {
+	TARDISCommandSetter(TARDISPlugin plugin, TARDISInformationSystemListener info) {
 		this.plugin = plugin;
 		this.info = info;
 	}

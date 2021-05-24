@@ -25,27 +25,27 @@ import org.bukkit.block.data.BlockData;
 public class ReplacedBlock {
 
 	private final int id;
-	private final int tardis_id;
+	private final int tardisId;
 	private final Location location;
 	private final String strLocation;
 	private final BlockData blockData;
-	private final int police_box;
+	private final int policeBox;
 
-	public ReplacedBlock(int id, int tardis_id, Location location, String strLocation, BlockData blockData, int police_box) {
+	public ReplacedBlock(int id, int tardisId, Location location, String strLocation, BlockData blockData, int policeBox) {
 		this.id = id;
-		this.tardis_id = tardis_id;
+		this.tardisId = tardisId;
 		this.location = location;
 		this.strLocation = strLocation;
 		this.blockData = blockData;
-		this.police_box = police_box;
+		this.policeBox = policeBox;
 	}
 
 	public int getId() {
 		return id;
 	}
 
-	public int getTardis_id() {
-		return tardis_id;
+	public int getTardisId() {
+		return tardisId;
 	}
 
 	public Location getLocation() {
@@ -60,7 +60,7 @@ public class ReplacedBlock {
 		return blockData;
 	}
 
-	public int getPolice_box() {
-		return police_box;
+	public int getPoliceBox() {
+		return policeBox;
 	}
 }

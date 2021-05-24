@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.BiomeLookup;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -40,10 +40,10 @@ import java.util.List;
  */
 public class TARDISDiskCraftListener implements Listener {
 
-	private final TARDIS plugin;
+	private final TARDISPlugin plugin;
 	private final List<InventoryAction> actions = new ArrayList<>();
 
-	public TARDISDiskCraftListener(TARDIS plugin) {
+	public TARDISDiskCraftListener(TARDISPlugin plugin) {
 		this.plugin = plugin;
 		actions.add(InventoryAction.PLACE_ALL);
 		actions.add(InventoryAction.PLACE_ONE);
