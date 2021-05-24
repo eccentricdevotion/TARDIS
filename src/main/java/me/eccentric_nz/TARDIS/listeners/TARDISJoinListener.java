@@ -69,7 +69,7 @@ public class TARDISJoinListener implements Listener {
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("uuid", uuid);
 				where.put("name", "joinkit");
-				ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
+				ResultSetAdvancements rsa = new ResultSetAdvancements(plugin, where, false);
 				if (!rsa.resultSet()) {
 					//add a record
 					HashMap<String, Object> set = new HashMap<>();
@@ -88,7 +88,7 @@ public class TARDISJoinListener implements Listener {
 				HashMap<String, Object> where = new HashMap<>();
 				where.put("uuid", uuid);
 				where.put("name", "tardis");
-				ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
+				ResultSetAdvancements rsa = new ResultSetAdvancements(plugin, where, false);
 				if (!rsa.resultSet()) {
 					//add a record
 					HashMap<String, Object> set = new HashMap<>();
