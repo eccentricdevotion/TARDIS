@@ -1,5 +1,5 @@
 tardis:
-  name: Get transport
+  name: Get Transport
   description: Create a TARDIS
   required: 1
   reward_type: TARDIS
@@ -10,7 +10,7 @@ tardis:
   message: The time vortex awaits!
   icon: LAPIS_BLOCK
 rooms:
-  name: Room freak
+  name: Room Freak
   description: Grow all room types
   required: 1
   reward_type: XP
@@ -21,7 +21,7 @@ rooms:
   message: Grew a truckload of rooms
   icon: BOOKSHELF
 kill:
-  name: Lucky hunter
+  name: Lucky Hunter
   description: Kill a charged creeper
   required: 1
   reward_type: DIAMOND_HELMET
@@ -32,7 +32,7 @@ kill:
   message: Best hunter of the hour
   icon: BEACON
 energy:
-  name: Power hungry
+  name: Power Hungry
   description: Overcharge the Artron Energy Capacitor
   required: 1000
   reward_type: XP
@@ -43,7 +43,7 @@ energy:
   message: East my dust, Energiser bunny
   icon: REDSTONE_BLOCK
 friends:
-  name: The host with the most
+  name: The Host with the Most
   description: Add companions to your TARDIS
   required: 10
   reward_type: DIAMOND
@@ -54,7 +54,7 @@ friends:
   message: Life of the party!
   icon: POPPY
 travel:
-  name: Got the travel bug
+  name: Got the Travel Bug
   description: Travel in your TARDIS
   required: 100000
   reward_type: XP
@@ -65,7 +65,7 @@ travel:
   message: There and back again!
   icon: DIAMOND_BLOCK
 farm:
-  name: Old MacDonald had a farm
+  name: Old MacDonald had a Farm
   description: Farm all allowed animal types
   required: 1
   reward_type: XP

@@ -7,7 +7,7 @@
 ## Next version `4.7`
 
 1. Update documentation...
-2. 13th Doctor'secondary and Factory TARDIS console
+2. 13th Doctor's and Factory TARDIS console
 	* Add advanced console and disk storage to schematics
 3. Set Master button to ON (In Lazarus GUI) when it is in use
 4. Use the Vortex Manipulator to teleport past force fields
