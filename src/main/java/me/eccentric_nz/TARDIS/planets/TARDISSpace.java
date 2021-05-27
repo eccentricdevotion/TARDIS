@@ -23,7 +23,7 @@ import me.eccentric_nz.tardis.enumeration.InventoryManager;
 import me.eccentric_nz.tardis.perms.TARDISGroupManagerHandler;
 import me.eccentric_nz.tardis.perms.TARDISPermissionsExHandler;
 import me.eccentric_nz.tardis.perms.TARDISbPermissionsHandler;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
+import me.eccentric_nz.tardishelper.TARDISChunkGenerator;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.World.Environment;

@@ -58,7 +58,7 @@ import java.util.logging.Level;
 /**
  * @author eccentric_nz
  */
-public class TARDISes implements TardisAPI {
+public class TARDISes implements TARDISAPI {
 
 	private static final WeightedChoice<Environment> weightedChoice = new WeightedChoice<Environment>().add(70, Environment.NORMAL).add(15, Environment.NETHER).add(15, Environment.THE_END);
 	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();

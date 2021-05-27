@@ -242,9 +242,6 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
 				if (chat.equalsIgnoreCase("R")) {
 					processKey(p, TARDISInfoMenu.REMOTE);
 				}
-				if (chat.equalsIgnoreCase("u")) {
-					processKey(p, TARDISInfoMenu.FURNACE);
-				}
 				if (chat.equalsIgnoreCase("G")) {
 					processKey(p, TARDISInfoMenu.GENERATOR);
 				}
@@ -630,14 +627,6 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
 				}
 				if (chat.equalsIgnoreCase("R")) {
 					showRecipe(p, TARDISInfoMenu.R_KEY_RECIPE);
-				}
-				break;
-			case FURNACE:
-				if (chat.equalsIgnoreCase("I")) {
-					showInfo(p, TARDISInfoMenu.FURNACE_INFO);
-				}
-				if (chat.equalsIgnoreCase("R")) {
-					showRecipe(p, TARDISInfoMenu.FURNACE_RECIPE);
 				}
 				break;
 			case GENERATOR:

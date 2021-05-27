@@ -32,7 +32,7 @@ import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
 import me.eccentric_nz.tardis.utility.TARDISParticles;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
 import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
+import me.eccentric_nz.tardishelper.TARDISChunkGenerator;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;

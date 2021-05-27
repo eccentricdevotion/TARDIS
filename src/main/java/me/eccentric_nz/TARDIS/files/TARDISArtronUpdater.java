@@ -31,7 +31,7 @@ import java.util.Map;
 public class TARDISArtronUpdater {
 
 	private final TARDISPlugin plugin;
-	private final FileConfiguration artron_config;
+	private final FileConfiguration artronConfig;
 	private final HashMap<String, Boolean> booleanOptions = new HashMap<>();
 	private final HashMap<String, String> stringOptions = new HashMap<>();
 	private final HashMap<String, Double> doubleOptions = new HashMap<>();
@@ -39,15 +39,8 @@ public class TARDISArtronUpdater {
 
 	public TARDISArtronUpdater(TARDISPlugin plugin) {
 		this.plugin = plugin;
-		artron_config = plugin.getArtronConfig();
-		// boolean
-		booleanOptions.put("artron_furnace.particles", false);
-		booleanOptions.put("artron_furnace.set_biome", true);
-		// double
-		doubleOptions.put("artron_furnace.burn_time", 0.5);
-		doubleOptions.put("artron_furnace.cook_time", 0.5);
+		artronConfig = plugin.getArtronConfig();
 		// integer
-		integerOptions.put("artron_furnace.burn_limit", 100000);
 		integerOptions.put("autonomous", 100);
 		integerOptions.put("backdoor", 100);
 		integerOptions.put("comehere", 400);
@@ -124,34 +117,34 @@ public class TARDISArtronUpdater {
 		int i = 0;
 		// boolean values
 		for (Map.Entry<String, Boolean> entry : booleanOptions.entrySet()) {
-			if (!artron_config.contains(entry.getKey())) {
-				artron_config.set(entry.getKey(), entry.getValue());
+			if (!artronConfig.contains(entry.getKey())) {
+				artronConfig.set(entry.getKey(), entry.getValue());
 				i++;
 			}
 		}
 		// double values
 		for (Map.Entry<String, Double> entry : doubleOptions.entrySet()) {
-			if (!artron_config.contains(entry.getKey())) {
-				artron_config.set(entry.getKey(), entry.getValue());
+			if (!artronConfig.contains(entry.getKey())) {
+				artronConfig.set(entry.getKey(), entry.getValue());
 				i++;
 			}
 		}
 		// int values
 		for (Map.Entry<String, Integer> entry : integerOptions.entrySet()) {
-			if (!artron_config.contains(entry.getKey())) {
-				artron_config.set(entry.getKey(), entry.getValue());
+			if (!artronConfig.contains(entry.getKey())) {
+				artronConfig.set(entry.getKey(), entry.getValue());
 				i++;
 			}
 		}
 		// string values
 		for (Map.Entry<String, String> entry : stringOptions.entrySet()) {
-			if (!artron_config.contains(entry.getKey())) {
-				artron_config.set(entry.getKey(), entry.getValue());
+			if (!artronConfig.contains(entry.getKey())) {
+				artronConfig.set(entry.getKey(), entry.getValue());
 				i++;
 			}
 		}
 		try {
-			artron_config.save(new File(plugin.getDataFolder(), "artron.yml"));
+			artronConfig.save(new File(plugin.getDataFolder(), "artron.yml"));
 			if (i > 0) {
 				plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to artron.yml");
 			}

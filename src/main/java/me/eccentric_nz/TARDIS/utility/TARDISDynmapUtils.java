@@ -2,7 +2,7 @@ package me.eccentric_nz.tardis.utility;
 
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.TARDISData;
-import me.eccentric_nz.tardis.api.TardisAPI;
+import me.eccentric_nz.tardis.api.TARDISAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.dynmap.DynmapAPI;
@@ -20,7 +20,7 @@ public class TARDISDynmapUtils {
 	private final String INFO = "<div class=\"regioninfo\"><div class=\"infowindow\"><span style=\"font-weight:bold;\">Time Lord:</span> %owner%<br/><span style=\"font-weight:bold;\">Console type:</span> %console%<br/><span style=\"font-weight:bold;\">Chameleon circuit:</span> %chameleon%<br/><span style=\"font-weight:bold;\">Location:</span> %location%<br/><span style=\"font-weight:bold;\">Door:</span> %door%<br/><span style=\"font-weight:bold;\">Powered on:</span> %powered%<br/><span style=\"font-weight:bold;\">Siege mode:</span> %siege%<br/><span style=\"font-weight:bold;\">Occupants:</span> %occupants%</div></div>";
 	private DynmapAPI api;
 	private MarkerAPI markerAPI;
-	private TardisAPI tardisAPI;
+	private TARDISAPI tardisAPI;
 	private boolean reload = false;
 	private boolean stop;
 	private Layer tardisLayer;

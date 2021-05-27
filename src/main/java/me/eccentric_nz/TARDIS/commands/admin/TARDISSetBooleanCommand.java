@@ -57,27 +57,18 @@ class TARDISSetBooleanCommand {
 				plugin.debug("Could not save planets.yml, " + ex.getMessage());
 			}
 		}
-		if (first.equals("artron_furnace.particles")) {
-			plugin.getArtronConfig().set(first, bool);
-			try {
-				plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
-			} catch (IOException ex) {
-				plugin.debug("Could not save artron.yml, " + ex.getMessage());
+		if (first.equals("abandon")) {
+			if (tf.equals("true") && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
+				TARDISMessage.message(sender, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
+				return true;
 			}
+			plugin.getConfig().set("abandon.enabled", bool);
+		} else if (first.equals("archive") || first.equals("blueprints")) {
+			plugin.getConfig().set(first + ".enabled", bool);
 		} else {
-			if (first.equals("abandon")) {
-				if (tf.equals("true") && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
-					TARDISMessage.message(sender, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
-					return true;
-				}
-				plugin.getConfig().set("abandon.enabled", bool);
-			} else if (first.equals("archive") || first.equals("blueprints")) {
-				plugin.getConfig().set(first + ".enabled", bool);
-			} else {
-				plugin.getConfig().set(first, bool);
-			}
-			plugin.saveConfig();
+			plugin.getConfig().set(first, bool);
 		}
+		plugin.saveConfig();
 		TARDISMessage.send(sender, "CONFIG_UPDATED");
 		if (require_restart.contains(tolower)) {
 			TARDISMessage.send(sender, "RESTART");

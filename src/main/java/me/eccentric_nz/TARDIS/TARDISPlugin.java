@@ -21,7 +21,6 @@ import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
 import me.eccentric_nz.tardis.api.TARDISes;
 import me.eccentric_nz.tardis.arch.TARDISArchPersister;
 import me.eccentric_nz.tardis.ars.ARSConverter;
-import me.eccentric_nz.tardis.artron.TARDISArtronFurnaceParticle;
 import me.eccentric_nz.tardis.artron.TARDISCondensables;
 import me.eccentric_nz.tardis.artron.TARDISStandbyMode;
 import me.eccentric_nz.tardis.builders.TARDISConsoleLoader;
@@ -67,7 +66,7 @@ import me.eccentric_nz.tardis.travel.TARDISArea;
 import me.eccentric_nz.tardis.travel.TARDISPluginRespect;
 import me.eccentric_nz.tardis.utility.*;
 import me.eccentric_nz.tardis.utility.logging.TARDISBlockLogger;
-import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
+import me.eccentric_nz.tardishelper.TARDISHelperPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -149,7 +148,7 @@ public class TARDISPlugin extends JavaPlugin {
 	private InventoryManager invManager;
 	private PluginManager pm;
 	private TARDISGeneralInstanceKeeper generalKeeper;
-	private TARDISHelper tardisHelper = null;
+	private TARDISHelperPlugin tardisHelper = null;
 	private TARDISMultiverseHelper mvHelper = null;
 	private TARDISDynmapUtils tardisDynmapUtils = null;
 	private String prefix;
@@ -302,14 +301,16 @@ public class TARDISPlugin extends JavaPlugin {
 		// check server version
 		if (serverVersion.compareTo(minVersion) >= 0) {
 			if (getServer().getBukkitVersion().startsWith("git-Bukkit-")) {
-				console.sendMessage(pluginName + ChatColor.RED + "TARDIS no longer supports servers running CraftBukkit. Please use Spigot or Paper instead!)");
+				console.sendMessage(pluginName + ChatColor.RED +
+									"TARDIS no longer supports servers running CraftBukkit. Please use Spigot or Paper instead!)");
 				hasVersion = false;
 				pm.disablePlugin(this);
 				return;
 			}
 			// TARDISChunkGenerator needs to be enabled
 			if (!loadTardisHelper()) {
-				console.sendMessage(pluginName + ChatColor.RED + "This plugin requires TARDISChunkGenerator to function, disabling...");
+				console.sendMessage(pluginName + ChatColor.RED +
+									"This plugin requires TARDISChunkGenerator to function, disabling...");
 				hasVersion = false;
 				pm.disablePlugin(this);
 				return;
@@ -317,7 +318,9 @@ public class TARDISPlugin extends JavaPlugin {
 			hasVersion = true;
 			for (Map.Entry<String, String> plg : versions.entrySet()) {
 				if (!checkPluginVersion(plg.getKey(), plg.getValue())) {
-					console.sendMessage(pluginName + ChatColor.RED + "This plugin requires " + plg.getKey() + " to be v" + plg.getValue() + " or higher, disabling...");
+					console.sendMessage(
+							pluginName + ChatColor.RED + "This plugin requires " + plg.getKey() + " to be v" +
+							plg.getValue() + " or higher, disabling...");
 					hasVersion = false;
 					pm.disablePlugin(this);
 					return;
@@ -421,7 +424,9 @@ public class TARDISPlugin extends JavaPlugin {
 					alwaysNight.keepNight();
 				}
 			}
-			if (!getConfig().getBoolean("conversions.condenser_materials") || !getConfig().getBoolean("conversions.player_prefs_materials") || !getConfig().getBoolean("conversions.block_materials")) {
+			if (!getConfig().getBoolean("conversions.condenser_materials") ||
+				!getConfig().getBoolean("conversions.player_prefs_materials") ||
+				!getConfig().getBoolean("conversions.block_materials")) {
 				TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(this);
 				tmic.checkCondenserData();
 				tmic.checkPlayerPrefsData();
@@ -488,9 +493,6 @@ public class TARDISPlugin extends JavaPlugin {
 			cond.makeCondensables();
 			condensables = cond.getCondensables();
 			checkDropChests();
-			if (artronConfig.getBoolean("artron_furnace.particles")) {
-				new TARDISArtronFurnaceParticle(this).addParticles();
-			}
 			if (getConfig().getBoolean("junk.enabled") && getConfig().getLong("junk.return") > 0) {
 				generalKeeper.setJunkTime(System.currentTimeMillis());
 				long delay = getConfig().getLong("junk.return") * 20L;
@@ -527,7 +529,9 @@ public class TARDISPlugin extends JavaPlugin {
 				blockLogger.enableLogger();
 			}
 		} else {
-			console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minVersion.get() + " or higher, disabling...");
+			console.sendMessage(
+					pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minVersion.get() +
+					" or higher, disabling...");
 			pm.disablePlugin(this);
 		}
 	}
@@ -584,7 +588,8 @@ public class TARDISPlugin extends JavaPlugin {
 			}
 		}
 		// always copy English default
-		TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"), true);
+		TARDISFileCopier.copy(
+				getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"), true);
 		// get configured language
 		String lang = getConfig().getString("preferences.language");
 		// check file exists
@@ -611,7 +616,8 @@ public class TARDISPlugin extends JavaPlugin {
 		file = new File(getDataFolder() + File.separator + "language" + File.separator + "signs.yml");
 		if (!file.exists()) {
 			// copy sign file
-			TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "signs.yml", getResource("signs.yml"), true);
+			TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator +
+								  "signs.yml", getResource("signs.yml"), true);
 			file = new File(getDataFolder() + File.separator + "language" + File.separator + "signs.yml");
 		}
 		// load the language
@@ -628,7 +634,8 @@ public class TARDISPlugin extends JavaPlugin {
 		file = new File(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml");
 		if (!file.exists()) {
 			// copy sign file
-			TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml", getResource("chameleon_guis.yml"), true);
+			TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator +
+								  "chameleon_guis.yml", getResource("chameleon_guis.yml"), true);
 			file = new File(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml");
 		}
 		// load the language
@@ -687,7 +694,9 @@ public class TARDISPlugin extends JavaPlugin {
 			}
 		}
 		Set<String> booknames = achievementConfig.getKeys(false);
-		booknames.forEach((b) -> TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false));
+		booknames.forEach((b) -> TARDISFileCopier.copy(
+				getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(
+						b + ".txt"), false));
 	}
 
 	/**
@@ -806,13 +815,13 @@ public class TARDISPlugin extends JavaPlugin {
 		Plugin tcg = pm.getPlugin("TARDISChunkGenerator");
 		if (tcg != null && tcg.isEnabled()) {
 			debug("Hooking into TARDISChunkGenerator!");
-			tardisHelper = (TARDISHelper) getPM().getPlugin("TARDISChunkGenerator");
+			tardisHelper = (TARDISHelperPlugin) getPM().getPlugin("TARDISChunkGenerator");
 			return true;
 		}
 		return false;
 	}
 
-	public TARDISHelper getTardisHelper() {
+	public TARDISHelperPlugin getTardisHelper() {
 		return tardisHelper;
 	}
 
@@ -842,11 +851,13 @@ public class TARDISPlugin extends JavaPlugin {
 	 * GroupManager and bPermissions (as they have per world config files).
 	 */
 	private void loadPerms() {
-		if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null || pm.getPlugin("PermissionsEx") != null) {
+		if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null ||
+			pm.getPlugin("PermissionsEx") != null) {
 			// copy default permissions file if not present
 			tardisCopier.copy("permissions.txt");
 			if (getConfig().getBoolean("creation.create_worlds")) {
-				console.sendMessage(pluginName + "World specific permissions plugin detected please edit plugins/tardis/permissions.txt");
+				console.sendMessage(pluginName +
+									"World specific permissions plugin detected please edit plugins/tardis/permissions.txt");
 			}
 		}
 	}
@@ -922,23 +933,27 @@ public class TARDISPlugin extends JavaPlugin {
 			if (getConfig().getBoolean("abandon.enabled")) {
 				getConfig().set("abandon.enabled", false);
 				saveConfig();
-				console.sendMessage(pluginName + ChatColor.RED + "Abandoned TARDISes were disabled as create_worlds is true!");
+				console.sendMessage(
+						pluginName + ChatColor.RED + "Abandoned TARDISes were disabled as create_worlds is true!");
 			}
 			if (getConfig().getBoolean("creation.default_world")) {
 				getConfig().set("creation.default_world", false);
 				saveConfig();
-				console.sendMessage(pluginName + ChatColor.RED + "default_world was disabled as create_worlds is true!");
+				console.sendMessage(
+						pluginName + ChatColor.RED + "default_world was disabled as create_worlds is true!");
 			}
 			if (pm.getPlugin("TARDISChunkGenerator") == null) {
 				getConfig().set("creation.create_worlds", false);
 				saveConfig();
-				console.sendMessage(pluginName + ChatColor.RED + "Create Worlds was disabled as it requires TARDISChunkGenerator!");
+				console.sendMessage(
+						pluginName + ChatColor.RED + "Create Worlds was disabled as it requires TARDISChunkGenerator!");
 			}
 		}
 		if (getConfig().getBoolean("creation.create_worlds_with_perms") && getConfig().getBoolean("abandon.enabled")) {
 			getConfig().set("abandon.enabled", false);
 			saveConfig();
-			console.sendMessage(pluginName + ChatColor.RED + "Abandoned TARDISes were disabled as create_worlds_with_perms is true!");
+			console.sendMessage(pluginName + ChatColor.RED +
+								"Abandoned TARDISes were disabled as create_worlds_with_perms is true!");
 		}
 	}
 
@@ -1029,7 +1044,8 @@ public class TARDISPlugin extends JavaPlugin {
 		String defWorld = getConfig().getString("creation.default_world_name");
 		assert defWorld != null;
 		if (getServer().getWorld(defWorld) == null) {
-			console.sendMessage(pluginName + "Default world specified, but it doesn't exist! Trying to create it now...");
+			console.sendMessage(
+					pluginName + "Default world specified, but it doesn't exist! Trying to create it now...");
 			new TARDISSpace(this).createDefaultWorld(defWorld);
 		}
 	}

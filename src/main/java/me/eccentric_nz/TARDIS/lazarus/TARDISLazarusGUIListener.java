@@ -24,7 +24,7 @@ import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
-import me.eccentric_nz.tardischunkgenerator.disguise.*;
+import me.eccentric_nz.tardishelper.disguise.*;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;

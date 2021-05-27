@@ -55,7 +55,6 @@ public class TARDISGeneralInstanceKeeper {
 	private final HashMap<String, String> sign_lookup;
 	private final HashMap<UUID, TARDISCondenserData> roomCondenserData = new HashMap<>();
 	private final Set<Material> transparent;
-	private final Set<Block> artronFurnaces = new HashSet<>();
 	private final Set<Block> doorPistons = new HashSet<>();
 	private final List<BlockFace> blockFaces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST, BlockFace.UP, BlockFace.DOWN);
 	private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
@@ -105,10 +104,6 @@ public class TARDISGeneralInstanceKeeper {
 
 	public void setQuotes(ArrayList<String> quotes) {
 		this.quotes = quotes;
-	}
-
-	public Set<Block> getArtronFurnaces() {
-		return artronFurnaces;
 	}
 
 	public List<BlockFace> getFaces() {

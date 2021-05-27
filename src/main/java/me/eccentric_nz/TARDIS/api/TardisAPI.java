@@ -38,7 +38,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public interface TardisAPI {
+public interface TARDISAPI {
 
 	/**
 	 * Fetches a map of tardis owners and ids.

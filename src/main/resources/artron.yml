@@ -63,13 +63,6 @@ upgrades:
     medium: 2500
     tall: 3333
 just_wall_floor: 50
-# artron furnace
-artron_furnace:
-  burn_limit: 100000
-  burn_time: 0.5
-  cook_time: 0.5
-  set_biome: true
-  particles: true
 # Sonic Generator costs (as a percentage of full charge)
 sonic_generator:
   standard: 10

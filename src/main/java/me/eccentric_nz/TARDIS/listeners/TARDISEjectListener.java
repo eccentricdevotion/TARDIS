@@ -318,7 +318,8 @@ public class TARDISEjectListener implements Listener {
 			}
 			case WOLF -> {
 				Tameable wtamed = (Tameable) ent;
-				if (wtamed.isTamed() && Objects.requireNonNull(wtamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
+				if (wtamed.isTamed() &&
+					Objects.requireNonNull(wtamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
 					Wolf w = (Wolf) ent;
 					Wolf wolf = (Wolf) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.WOLF);
 					wolf.setTicksLived(w.getTicksLived());
@@ -338,7 +339,8 @@ public class TARDISEjectListener implements Listener {
 			}
 			case CAT -> {
 				Tameable otamed = (Tameable) ent;
-				if (otamed.isTamed() && Objects.requireNonNull(otamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
+				if (otamed.isTamed() &&
+					Objects.requireNonNull(otamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
 					Cat o = (Cat) ent;
 					Cat cat = (Cat) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.CAT);
 					cat.setTicksLived(o.getTicksLived());

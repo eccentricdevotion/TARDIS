@@ -845,20 +845,6 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shapeless.Pickup Arrows Upgrade.lore", "");
 			i++;
 		}
-		if (!recipes_config.contains("shaped.tardis Artron Furnace")) {
-			recipes_config.set("shaped.tardis Artron Furnace.easy_shape", "---,OFO,RRR");
-			recipes_config.set("shaped.tardis Artron Furnace.easy_ingredients.O", "OBSIDIAN");
-			recipes_config.set("shaped.tardis Artron Furnace.easy_ingredients.F", "FURNACE");
-			recipes_config.set("shaped.tardis Artron Furnace.easy_ingredients.R", "REDSTONE");
-			recipes_config.set("shaped.tardis Artron Furnace.hard_shape", "---,OFO,RRR");
-			recipes_config.set("shaped.tardis Artron Furnace.hard_ingredients.O", "OBSIDIAN");
-			recipes_config.set("shaped.tardis Artron Furnace.hard_ingredients.F", "FURNACE");
-			recipes_config.set("shaped.tardis Artron Furnace.hard_ingredients.R", "REDSTONE");
-			recipes_config.set("shaped.tardis Artron Furnace.result", "FURNACE");
-			recipes_config.set("shaped.tardis Artron Furnace.amount", 1);
-			recipes_config.set("shaped.tardis Artron Furnace.lore", "");
-			i++;
-		}
 		if (!recipes_config.contains("smithing.Admin Repair")) {
 			recipes_config.set("smithing.Admin Repair.base", "BLAZE_ROD");
 			recipes_config.set("smithing.Admin Repair.addition", "GLOWSTONE_DUST=Server Admin Circuit");

@@ -82,9 +82,7 @@ public abstract class YandexTranslatorAPI {
 			}
 			return result;
 		} finally {
-			if (uc != null) {
-				uc.disconnect();
-			}
+			uc.disconnect();
 		}
 	}
 

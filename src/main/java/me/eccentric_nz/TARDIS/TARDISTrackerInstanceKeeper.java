@@ -104,7 +104,6 @@ public class TARDISTrackerInstanceKeeper {
 	private final HashMap<UUID, UUID> chat = new HashMap<>();
 	private final HashMap<UUID, UUID> telepathicRescue = new HashMap<>();
 	private final HashMap<UUID, UUID> telepaths = new HashMap<>();
-	private final Set<String> artronFurnaces = new HashSet<>();
 	private final Set<String> heatBlocks = new HashSet<>();
 	private final Set<String> reset = new HashSet<>();
 	private final Set<Integer> dematerialising = new HashSet<>();
@@ -379,10 +378,6 @@ public class TARDISTrackerInstanceKeeper {
 
 	public HashMap<UUID, UUID> getTelepaths() {
 		return telepaths;
-	}
-
-	public Set<String> getArtronFurnaces() {
-		return artronFurnaces;
 	}
 
 	public Set<String> getHeatBlocks() {

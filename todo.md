@@ -20,7 +20,7 @@
 
 ## Resource Pack / TARDISWeepingAngels
 
-0. Check paper bag, bowl of custard, artron furnace, telepathic circuit, keyboard editor
+0. Check paper bag, bowl of custard, telepathic circuit, keyboard editor
 1. Re-skin mobs for Resource pack, and add new mob sounds
 	* Clockwork Droid
 	* Hath _started_

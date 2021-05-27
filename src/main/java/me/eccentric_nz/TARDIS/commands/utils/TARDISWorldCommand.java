@@ -22,7 +22,7 @@ import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.planets.*;
 import me.eccentric_nz.tardis.utility.TARDISStringUtils;
-import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
+import me.eccentric_nz.tardishelper.helpers.TARDISPlanetData;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
