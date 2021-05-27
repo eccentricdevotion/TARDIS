@@ -47,8 +47,8 @@ public class TARDISSpigotChecker implements Runnable {
                 return;
             }
             int name = spigotBuild.getAsJsonPrimitive("name").getAsInt();
-            // 2855 is the latest 1.16.2 build (as of 11-08-2020)
-            if (name > 2855) {
+            // 3083 is the latest 1.16.5 build (as of 23-05-2021)
+            if (name > 3083) {
                 JsonObject refs = spigotBuild.get("refs").getAsJsonObject();
                 if (refs.has("Spigot")) {
                     String spigot = refs.get("Spigot").getAsString().substring(0, 7);

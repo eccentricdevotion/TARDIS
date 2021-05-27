@@ -99,7 +99,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.2.0</version>
+                        <version>3.3.0</version>
                         <configuration>
                             <!--<additionalparam>-Xdoclint:none</additionalparam>-->
                             <quiet/>
@@ -136,8 +136,8 @@
             <!-- Insert the build number into plugin.yml -->
             <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
-                <artifactId>maven-replacer-plugin</artifactId>
-                <version>1.4.1</version>
+                <artifactId>replacer</artifactId>
+                <version>1.5.3</version>
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
@@ -426,6 +426,13 @@
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/CoreProtect.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.dynmap</groupId>
+            <artifactId>dynmap-api</artifactId>
+            <version>3.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/dynmap-api.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.rauschig</groupId>

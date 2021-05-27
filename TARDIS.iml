@@ -26,7 +26,7 @@
     <orderEntry type="library" name="Maven: net.md-5:bungeecord-chat:1.16-R0.4" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.27" level="project" />
     <orderEntry type="library" name="Maven: io.papermc:paperlib:1.0.6" level="project" />
-    <orderEntry type="library" name="Maven: me.eccentric_nz.tardischunkgenerator:TARDISChunkGenerator:4.6.1" level="project" />
+    <orderEntry type="library" name="Maven: me.eccentric_nz.tardischunkgenerator:TARDISChunkGenerator:4.6.2" level="project" />
     <orderEntry type="library" name="Maven: me.eccentric_nz.tardisweepingangels:TARDISWeepingAngels:3.3.3" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: com.sk89q:worldguard:7.0.5">
@@ -191,7 +191,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: net.ess3:EssentialsX:2.18.1.32">
+      <library name="Maven: net.ess3:EssentialsX:2.19.0">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/EssentialsX.jar!/" />
         </CLASSES>
@@ -214,6 +214,15 @@
       <library name="Maven: net.coreprotect:CoreProtect:19.5">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/CoreProtect.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.dynmap:dynmap-api:3.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/dynmap-api.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

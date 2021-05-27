@@ -39,6 +39,7 @@ import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.converters.*;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
+import me.eccentric_nz.TARDIS.dynmap.TARDISDynmap;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
 import me.eccentric_nz.TARDIS.enumeration.Language;
@@ -167,10 +168,12 @@ public class TARDIS extends JavaPlugin {
     private int buildNumber = 0;
     private int updateNumber = 0;
     private TARDISBlockLogger blockLogger;
+    private TARDISDynmap tardisDynmap;
 
     public TARDIS() {
         worldGuardOnServer = false;
         invManager = InventoryManager.NONE;
+//        versions.put("dynmap", "3.0.1");
         versions.put("GriefPrevention", "16.13");
         versions.put("LibsDisguises", "10.0.14");
         versions.put("MultiWorld", "5.2");
@@ -241,6 +244,9 @@ public class TARDIS extends JavaPlugin {
     @Override
     public void onDisable() {
         if (hasVersion) {
+            if (tardisDynmap != null) {
+                tardisDynmap.disable();
+            }
             // force TARDISes to materialise (next restart) if interrupted
             for (int id : getTrackerKeeper().getDematerialising()) {
                 if (getTrackerKeeper().getHasDestination().containsKey(id)) {
@@ -299,7 +305,7 @@ public class TARDIS extends JavaPlugin {
         Version minversion = new Version("1.16.2");
         // check server version
         if (serverVersion.compareTo(minversion) >= 0) {
-            if (getServer().getBukkitVersion().startsWith("git-Bukkit-")) {
+            if (!PaperLib.isPaper() && !PaperLib.isSpigot()) {
                 console.sendMessage(pluginName + ChatColor.RED + "TARDIS no longer supports servers running CraftBukkit. Please use Spigot or Paper instead!)");
                 hasVersion = false;
                 pm.disablePlugin(this);
@@ -417,6 +423,11 @@ public class TARDIS extends JavaPlugin {
                 if (getConfig().getBoolean("creation.keep_night")) {
                     alwaysNight.keepNight();
                 }
+            }
+            if (pm.isPluginEnabled("dynmap")) {
+                tardisDynmap = new TARDISDynmap(this);
+                tardisDynmap.enable();
+                debug("Creating markers for Dynmap.");
             }
             if (!getConfig().getBoolean("conversions.condenser_materials") || !getConfig().getBoolean("conversions.player_prefs_materials") || !getConfig().getBoolean("conversions.block_materials")) {
                 TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(this);
