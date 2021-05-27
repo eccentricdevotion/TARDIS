@@ -4,11 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.eccentric_nz.tardis</groupId>
 	<artifactId>TARDIS</artifactId>
-	<version>4.6.2-SNAPSHOT</version>
+	<version>${project.plainVersion}-SNAPSHOT</version>
 	<name>TARDIS</name>
 	<description>A Doctor Who plugin</description>
 	<url>https://github.com/eccentricdevotion/TARDIS</url>
 	<properties>
+		<project.plainVersion>4.6.2</project.plainVersion>
+		<build.number>SNAPSHOT</build.number>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>16</maven.compiler.source>
 		<maven.compiler.target>16</maven.compiler.target>
@@ -108,13 +110,11 @@
 		<profile>
 			<id>local</id>
 			<activation>
-				<property>
-					<name>!env.BUILD_NUMBER</name>
-				</property>
+				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
 				<!-- Set the build number to the date and time of the build -->
-				<project.buildNumber>${timestamp}</project.buildNumber>
+				<build.number>${timestamp}</build.number>
 			</properties>
 			<build>
 				<plugins>
@@ -127,11 +127,14 @@
 						</configuration>
 						<executions>
 							<execution>
-								<id>buildnumber</id>
+								<id>create-timestamp-id</id>
 								<phase>validate</phase>
 								<goals>
-									<goal>create</goal>
+									<goal>create-timestamp</goal>
 								</goals>
+								<configuration>
+									<timestampFormat>yyyy.MM.dd-HH.mm.ss</timestampFormat>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
@@ -147,11 +150,12 @@
 			</activation>
 			<properties>
 				<!-- Get the build number from Jenkins -->
-				<project.buildNumber>${env.BUILD_NUMBER}</project.buildNumber>
+				<build.number>${env.BUILD_NUMBER}</build.number>
 			</properties>
 			<build>
 				<plugins>
 					<plugin>
+						<!-- Attach Javadocs -->
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
 						<version>3.3.0</version>
@@ -173,9 +177,10 @@
 		</profile>
 	</profiles>
 	<build>
-		<finalName>${project.artifactId}-${project.version}-${project.buildNumber}</finalName>
-		<defaultGoal>clean package</defaultGoal>
+		<finalName>${project.artifactId}-${project.plainVersion}-b${build.number}</finalName>
+		<defaultGoal>clean package install</defaultGoal>
 		<plugins>
+			<!-- Compile -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -201,7 +206,7 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<!-- Insert the build number into plugin.yml -->
+				<!-- Insert the version and build numbers into plugin.yml -->
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>maven-replacer-plugin</artifactId>
 				<version>1.4.1</version>
@@ -218,17 +223,17 @@
 					<replacements>
 						<replacement>
 							<token>maven-version-number</token>
-							<value>\${project.version}-\${project.buildNumber}</value>
+							<value>\${project.plainVersion}-\${build.number}</value>
 						</replacement>
 						<replacement>
 							<token>maven-build-number</token>
-							<value>\${project.buildNumber}</value>
+							<value>\${build.number}</value>
 						</replacement>
 					</replacements>
 				</configuration>
 			</plugin>
 			<plugin>
-				<!-- Shade all Libs -->
+				<!-- Shade all libs -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>3.3.0-SNAPSHOT</version>
@@ -239,6 +244,7 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
+							<createDependencyReducedPom>false</createDependencyReducedPom>
 							<relocations>
 								<relocation>
 									<pattern>org.apache.commons.commons-compress</pattern>
@@ -265,13 +271,15 @@
 				<configuration>
 					<archive>
 						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>fully.qualified.MainClass</mainClass>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 						</manifest>
 						<manifestEntries>
 							<Main-Class>me.eccentric_nz.tardis.database.tool.Main</Main-Class>
 							<Implementation-Title>${project.name}</Implementation-Title>
 							<Implementation-Version>${project.version}</Implementation-Version>
-							<Implementation-Build>${project.buildNumber}</Implementation-Build>
+							<Implementation-Build>${build.number}</Implementation-Build>
 						</manifestEntries>
 					</archive>
 				</configuration>
@@ -303,6 +311,7 @@
 			<groupId>com.sk89q.worldedit</groupId>
 			<artifactId>worldedit-core</artifactId>
 			<version>7.3.0-SNAPSHOT</version>
+			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -315,6 +324,13 @@
 		<dependency>
 			<groupId>com.sk89q.worldguard</groupId>
 			<artifactId>worldguard-bukkit</artifactId>
+			<version>7.0.5-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sk89q.worldguard</groupId>
+			<artifactId>worldguard-core</artifactId>
 			<version>7.0.5-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
@@ -362,18 +378,20 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.massivecraft.factions</groupId>
-			<artifactId>Factions</artifactId>
-			<version>2.14.0</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.massivecraft.massivecore</groupId>
 			<artifactId>MassiveCore</artifactId>
-			<version>2.14.0</version>
+			<version>3.3.3</version>
 			<type>jar</type>
-			<scope>compile</scope>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/MassiveCore.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.massivecraft.factions</groupId>
+			<artifactId>Factions</artifactId>
+			<version>3.3.3</version>
+			<type>jar</type>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/Factions.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>me.crafter.mc</groupId>
@@ -429,6 +447,7 @@
 			<groupId>me.clip</groupId>
 			<artifactId>placeholderapi</artifactId>
 			<version>2.10.9</version>
+			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -442,12 +461,15 @@
 			<groupId>br.net.fabiozumbi12.RedProtect</groupId>
 			<artifactId>RedProtect-Spigot</artifactId>
 			<version>7.7.3</version>
+			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>br.net.fabiozumbi12.RedProtect</groupId>
 			<artifactId>RedProtect-Spigot</artifactId>
 			<version>7.7.3</version>
+			<type>jar</type>
+			<scope>compile</scope>
 			<classifier>javadoc</classifier>
 		</dependency>
 		<dependency>
@@ -458,9 +480,10 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.dynmap</groupId>
+			<groupId>com.github.webbukkit.dynmap</groupId>
 			<artifactId>dynmap-api</artifactId>
-			<version>2.0</version>
+			<version>v3.1-beta-7</version>
+			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -502,17 +525,28 @@
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-shade-plugin</artifactId>
 			<version>3.3.0-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>me.eccentric_nz.tardischunkgenerator</groupId>
 			<artifactId>TARDISChunkGenerator</artifactId>
 			<version>4.6.2-SNAPSHOT</version>
+			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>me.eccentric_nz.tardisweepingangels</groupId>
 			<artifactId>TARDISWeepingAngels</artifactId>
 			<version>3.3.3-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
+			<version>3.3.0</version>
+			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
