@@ -19,12 +19,13 @@ Listed below is a selection of TARDIS items that you can craft. You can use the 
 
 #### Accessories
 
-| Fob Watch | `/tardisrecipe fob-watch` |
-| Handles | `/tardisrecipe handles` |
-| Rift Manipulator | `/tardisrecipe rift-manipulator` |
-| Tardis Communicator | `/tardisrecipe communicator` |
-| Red Bow Tie | `/tardisrecipe bow-tie` |
-| Three D Glasses | `/tardisrecipe 3-d-glasses` |
+------------ | -------------
+Fob Watch | `/tardisrecipe fob-watch`
+Handles | `/tardisrecipe handles`
+Rift Manipulator | `/tardisrecipe rift-manipulator`
+Tardis Communicator | `/tardisrecipe communicator`
+Red Bow Tie | `/tardisrecipe bow-tie`
+Three D Glasses | `/tardisrecipe 3-d-glasses`
 
 #### Console circuits
 
