@@ -18,6 +18,7 @@ Listed below is a selection of TARDIS items that you can craft. You can use the 
 **Tip:** You can also use tab key completion to see a full list in-game.
 
 #### Accessories
+
 | Fob Watch | `/tardisrecipe fob-watch` |
 | Handles | `/tardisrecipe handles` |
 | Rift Manipulator | `/tardisrecipe rift-manipulator` |
@@ -26,6 +27,7 @@ Listed below is a selection of TARDIS items that you can craft. You can use the 
 | Three D Glasses | `/tardisrecipe 3-d-glasses` |
 
 #### Console circuits
+
 | Tardis Ars Circuit | `/tardisrecipe ars-circuit` |
 | Tardis Chameleon Circuit | `/tardisrecipe chameleon-circuit` |
 | Tardis Input Circuit | `/tardisrecipe input-circuit` |
@@ -38,6 +40,7 @@ Listed below is a selection of TARDIS items that you can craft. You can use the 
 | Tardis Temporal Circuit | `/tardisrecipe temporal-circuit` |
 
 #### Food
+
 | Custard Cream | `/tardisrecipe custard-cream` |
 | Fish Finger | `/tardisrecipe fish-finger` |
 | Jammy Dodger | `/tardisrecipe jammy-dodger` |
@@ -46,6 +49,7 @@ Listed below is a selection of TARDIS items that you can craft. You can use the 
 | Orange Jelly Baby | `/tardisrecipe jelly-baby` |
 
 #### Item circuits
+
 | Perception Circuit | `/tardisrecipe perception-circuit` |
 | Rift Circuit | `/tardisrecipe rift-circuit` |
 | Sonic Generator | `/tardisrecipe sonic-generator` |
@@ -54,6 +58,7 @@ Listed below is a selection of TARDIS items that you can craft. You can use the 
 | Tardis Stattenheim Circuit | `/tardisrecipe stattenheim-circuit` |
 
 #### Items
+
 | Artron Storage Cell | `/tardisrecipe artron-storage-cell` |
 | Perception Filter | `/tardisrecipe perception-filter` |
 | Sonic Screwdriver | `/tardisrecipe sonic-screwdriver` |
@@ -65,12 +70,14 @@ Listed below is a selection of TARDIS items that you can craft. You can use the 
 | Tardis Remote Key | `/tardisrecipe remote-key` |
 
 #### Rotors
+
 | Time Rotor Early | `/tardisrecipe time-rotor-early` |
 | Time Rotor Tenth | `/tardisrecipe time-rotor-tenth` |
 | Time Rotor Eleventh | `/tardisrecipe time-rotor-eleventh` |
 | Time Rotor Twelfth | `/tardisrecipe time-rotor-twelfth` |
 
 #### Sonic circuits
+
 | Bio Scanner Circuit | `/tardisrecipe bio-scanner-circuit` |
 | Diamond Disruptor Circuit | `/tardisrecipe diamond-disruptor-circuit` |
 | Emerald Environment Circuit | `/tardisrecipe emerald-environment-circuit` |
@@ -82,6 +89,7 @@ Listed below is a selection of TARDIS items that you can craft. You can use the 
 | Server Admin Circuit | `/tardisrecipe server-admin-circuit` |
 
 #### Sonic upgrades
+
 | Admin Upgrade | `/tardisrecipe admin-upgrade` |
 | Bio Scanner Upgrade | `/tardisrecipe bio-scanner-upgrade` |
 | Redstone Upgrade | `/tardisrecipe redstone-upgrade` |
@@ -93,6 +101,7 @@ Listed below is a selection of TARDIS items that you can craft. You can use the 
 | Knockback Upgrade | `/tardisrecipe knockback-upgrade` |
 
 #### Storage disks
+
 | Authorised Control Disk | `/tardisrecipe authorised-control-disk` |
 | Blank Storage Disk | `/tardisrecipe blank-storage-disk` |
 | Biome Storage Disk | `/tardisrecipe biome-storage-disk` |
@@ -101,6 +110,7 @@ Listed below is a selection of TARDIS items that you can craft. You can use the 
 | Save Storage Disk | `/tardisrecipe save-storage-disk` |
 
 #### Misc
+
 | Acid Battery | `/tardisrecipe acid-battery` |
 | Rust Plague Sword | `/tardisrecipe rust-plague-sword` |
 | Tardis Schematic Wand | `/tardisrecipe schematic-wand` |
