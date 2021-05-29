@@ -269,7 +269,7 @@ public class TARDISAbandonCommand {
                         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                         plugin.getPM().callEvent(new TARDISAbandonEvent(player, id, current));
                         // always clear sign
-                        if (preset.isColoured()) {
+                        if (preset.usesItemFrame()) {
                             World world = rsc.getWorld();
                             // remove name from the item frame item
                             ItemFrame frame = null;

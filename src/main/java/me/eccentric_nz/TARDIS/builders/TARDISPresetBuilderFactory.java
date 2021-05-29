@@ -149,7 +149,7 @@ public class TARDISPresetBuilderFactory {
                 }
                 plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
                 int taskID;
-                if (preset.isColoured()) {
+                if (preset.usesItemFrame()) {
                     TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, preset);
                     taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
                     frame.setTask(taskID);
@@ -170,7 +170,7 @@ public class TARDISPresetBuilderFactory {
                     runnable.setTask(taskID);
                 } else {
                     int taskID;
-                    if (preset.isColoured()) {
+                    if (preset.usesItemFrame()) {
                         TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, preset);
                         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
                         frame.setTask(taskID);

@@ -150,7 +150,7 @@ public class TARDISVortexPersister {
                                 location.getChunk().load();
                             }
                             plugin.getTrackerKeeper().getMaterialising().add(id);
-                            if (rs.getTardis().getPreset().isColoured()) {
+                            if (rs.getTardis().getPreset().usesItemFrame()) {
                                 new TARDISInstantPoliceBox(plugin, bd, rs.getTardis().getPreset()).buildPreset();
                             } else {
                                 new TARDISInstantPreset(plugin, bd, rs.getTardis().getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();

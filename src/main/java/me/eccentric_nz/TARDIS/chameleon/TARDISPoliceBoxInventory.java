@@ -69,6 +69,13 @@ class TARDISPoliceBoxInventory {
             }
             i++;
         }
+        // weeping angel
+        ItemStack is = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
+        ItemMeta im = is.getItemMeta();
+        im.setDisplayName("Weeping Angel");
+        im.setCustomModelData(1001);
+        is.setItemMeta(im);
+        boxes[i] = is;
         // page one
         ItemStack page = new ItemStack(Material.ARROW, 1);
         ItemMeta one = page.getItemMeta();

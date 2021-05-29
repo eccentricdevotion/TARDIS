@@ -79,7 +79,7 @@ public class TARDISDeinstantPreset {
         while (!chunk.isLoaded()) {
             chunk.load();
         }
-        if (preset.isColoured()) {
+        if (preset.usesItemFrame()) {
             // remove item frame
             for (Entity e : w.getNearbyEntities(dd.getLocation(), 1.0d, 1.0d, 1.0d)) {
                 if (e instanceof ItemFrame) {

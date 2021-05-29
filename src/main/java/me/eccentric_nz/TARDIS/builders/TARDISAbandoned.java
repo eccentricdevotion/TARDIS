@@ -90,7 +90,7 @@ public class TARDISAbandoned {
         // delay building exterior
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
-            if (preset.isColoured()) {
+            if (preset.usesItemFrame()) {
                 TARDISMaterialisePoliceBox runnable = new TARDISMaterialisePoliceBox(plugin, bd, preset);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
