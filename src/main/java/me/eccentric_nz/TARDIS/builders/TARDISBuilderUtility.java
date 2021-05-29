@@ -26,7 +26,7 @@ import java.util.HashMap;
 
 public class TARDISBuilderUtility {
 
-    public static void saveDoorLocation(BuildData bd) {
+    static void saveDoorLocation(BuildData bd) {
         World world = bd.getLocation().getWorld();
         int x = bd.getLocation().getBlockX();
         int y = bd.getLocation().getBlockY();
@@ -55,8 +55,21 @@ public class TARDISBuilderUtility {
     }
 
     public static Material getDyeMaterial(PRESET preset) {
-        String split = preset.toString().replace("POLICE_BOX_", "");
-        String dye = split + "_DYE";
-        return Material.valueOf(dye);
+        if (preset.equals(PRESET.WEEPING_ANGEL)) {
+            return Material.GRAY_STAINED_GLASS_PANE;
+        } else {
+            String split = preset.toString().replace("POLICE_BOX_", "");
+            String dye = split + "_DYE";
+            return Material.valueOf(dye);
+        }
+    }
+
+    public static void updateChameleonDemat(String preset, int id) {
+        // update demat field in database
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("chameleon_demat", preset);
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        TARDIS.plugin.getQueryFactory().doUpdate("tardis", set, where);
     }
 }

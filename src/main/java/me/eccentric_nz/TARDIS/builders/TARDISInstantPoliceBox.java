@@ -70,6 +70,7 @@ public class TARDISInstantPoliceBox {
             plugin.getTrackerKeeper().getRescue().remove(bd.getTardisID());
         }
         TARDISBuilderUtility.saveDoorLocation(bd);
+        TARDISBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisID());
         plugin.getGeneralKeeper().getProtectBlockMap().put(bd.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString(), bd.getTardisID());
         ItemFrame frame = null;
         boolean found = false;
@@ -95,7 +96,8 @@ public class TARDISInstantPoliceBox {
         ItemMeta im = is.getItemMeta();
         im.setCustomModelData(1001);
         if (bd.shouldAddSign()) {
-            im.setDisplayName(bd.getPlayer().getName() + "'s Police Box");
+            String pb = (preset.equals(PRESET.WEEPING_ANGEL)) ? "Weeping Angel" : "Police Box";
+            im.setDisplayName(bd.getPlayer().getName() + "'s " + pb);
         }
         is.setItemMeta(im);
         frame.setItem(is, false);

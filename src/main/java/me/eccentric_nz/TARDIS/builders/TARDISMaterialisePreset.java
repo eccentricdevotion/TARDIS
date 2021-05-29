@@ -722,7 +722,7 @@ class TARDISMaterialisePreset implements Runnable {
                             case SPRUCE_TRAPDOOR:
                             case WARPED_DOOR:
                             case WARPED_TRAPDOOR:
-                                if (preset.isColoured() || preset.equals(PRESET.PANDORICA)) {
+                                if (preset.usesItemFrame() || preset.equals(PRESET.PANDORICA)) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                     // remember the door location
                                     saveDoorLocation(world, xx, y, yy, zz);
@@ -855,6 +855,8 @@ class TARDISMaterialisePreset implements Runnable {
                     }
                     // tardis has moved so remove HADS damage count
                     plugin.getTrackerKeeper().getDamage().remove(bd.getTardisID());
+                    // update demat field in database
+                    TARDISBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisID());
                 }
             }
         }
