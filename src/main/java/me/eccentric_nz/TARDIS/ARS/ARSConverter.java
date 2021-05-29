@@ -63,7 +63,7 @@ public class ARSConverter {
                     if (rs.wasNull()) {
                         continue;
                     }
-                    if (!js.contains("0")) {
+                    if (!js.contains("1")) { // default empty slot is stone - id: 1
                         // no IDs found, already converted
                         continue;
                     }
