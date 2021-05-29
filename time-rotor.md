@@ -53,7 +53,7 @@ DYE       | REDSTONE | DYE
 GLASSPANE | CLOCK    | GLASSPANE
 GLASSPANE | REDSTONE | GLASSPANE
 ```
-Chage the dye colours for each rotor:
+Change the dye colours for each rotor:
 
 * Early &mdash; Gray ![#666](https://via.placeholder.com/15/666/000000?text=+)
 * Tenth &mdash; Cyan ![#0099cc](https://via.placeholder.com/15/0099cc/000000?text=+)
@@ -62,6 +62,6 @@ Chage the dye colours for each rotor:
 
 Use the command:
 ```
-/tardisrecipe rotor_[early|tenth|eleventh|twelfth]
+/tardisrecipe time-rotor-[early|tenth|eleventh|twelfth]
 ```
 to see the recipes in game.
