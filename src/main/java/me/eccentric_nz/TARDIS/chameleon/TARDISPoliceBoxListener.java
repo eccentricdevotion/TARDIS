@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -36,6 +37,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -43,6 +45,7 @@ import java.util.HashMap;
 public class TARDISPoliceBoxListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
+    private final HashMap<UUID, String> current = new HashMap<>();
 
     public TARDISPoliceBoxListener(TARDIS plugin) {
         super(plugin);
@@ -77,169 +80,46 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
-                            String preset = tardis.getPreset().toString();
-                            HashMap<String, Object> set = new HashMap<>();
                             HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", id);
-                            TARDISChameleonFrame tcf = new TARDISChameleonFrame(plugin);
-                            String chameleon = "";
+                            wherec.put("type", Control.CHAMELEON.getId());
+                            ResultSetControls rsc = new ResultSetControls(plugin, wherec, true);
+                            boolean hasSign = rsc.resultSet();
+                            HashMap<String, Object> wheref = new HashMap<>();
+                            wheref.put("tardis_id", id);
+                            wheref.put("type", Control.FRAME.getId());
+                            ResultSetControls rsf = new ResultSetControls(plugin, wheref, true);
+                            boolean hasFrame = rsf.resultSet();
                             // set the Chameleon Circuit sign(s)
-                            HashMap<String, Object> whereh = new HashMap<>();
-                            whereh.put("tardis_id", id);
-                            whereh.put("type", 31);
-                            ResultSetControls rsc = new ResultSetControls(plugin, whereh, true);
-                            boolean hasChameleonSign = false;
-                            if (rsc.resultSet()) {
-                                hasChameleonSign = true;
-                                for (HashMap<String, String> map : rsc.getData()) {
-                                    chameleon = map.get("location");
-                                }
-                            }
-                            String last_line = TARDISStaticUtils.getLastLine(chameleon);
+                            HashMap<String, Object> set = new HashMap<>();
                             switch (slot) {
                                 case 0:
-                                    // blue
-                                    if (!last_line.equals("BLUE")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_BLUE");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "BLUE", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_BLUE);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Blue Police Box");
-                                    break;
                                 case 1:
-                                    // white
-                                    if (!last_line.equals("WHITE")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_WHITE");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "WHITE", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_WHITE);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "White Police Box");
-                                    break;
                                 case 2:
-                                    // orange
-                                    if (!last_line.equals("ORANGE")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_ORANGE");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "ORANGE", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_ORANGE);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Orange Police Box");
-                                    break;
                                 case 3:
-                                    // magenta
-                                    if (!last_line.equals("MAGENTA")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_MAGENTA");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "MAGENTA", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_MAGENTA);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Magenta Police Box");
-                                    break;
                                 case 4:
-                                    // light blue
-                                    if (!last_line.equals("LIGHTBLUE")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_LIGHT_BLUE");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "LIGHTBLUE", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_LIGHT_BLUE);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Light Blue Police Box");
-                                    break;
                                 case 5:
-                                    // yellow
-                                    if (!last_line.equals("YELLOW")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_YELLOW");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "YELLOW", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_YELLOW);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Yellow Police Box");
-                                    break;
                                 case 6:
-                                    // lime
-                                    if (!last_line.equals("LIME")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_LIME");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "LIME", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_LIME);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Lime Police Box");
-                                    break;
                                 case 7:
-                                    // pink
-                                    if (!last_line.equals("PINK")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_PINK");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "PINK", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_PINK);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Pink Police Box");
-                                    break;
                                 case 8:
-                                    // gray
-                                    if (!last_line.equals("GRAY")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_GRAY");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "GRAY", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_GRAY);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Gray Police Box");
-                                    break;
                                 case 9:
-                                    // light gray
-                                    if (!last_line.equals("LIGHTGRAY")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_LIGHT_GRAY");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "LIGHTGRAY", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_LIGHT_GRAY);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Light Gray Police Box");
-                                    break;
                                 case 10:
-                                    // cyan
-                                    if (!last_line.equals("CYAN")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_CYAN");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "CYAN", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_CYAN);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Cyan Police Box");
-                                    break;
                                 case 11:
-                                    // purple
-                                    if (!last_line.equals("PURPLE")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_PURPLE");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "PURPLE", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_PURPLE);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Purple Police Box");
-                                    break;
                                 case 12:
-                                    // brown
-                                    if (!last_line.equals("BROWN")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_BROWN");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "BROWN", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_BROWN);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Brown Police Box");
-                                    break;
                                 case 13:
-                                    // green
-                                    if (!last_line.equals("GREEN")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_GREEN");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "GREEN", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_GREEN);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Green Police Box");
-                                    break;
                                 case 14:
-                                    // red
-                                    if (!last_line.equals("RED")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_RED");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "RED", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_RED);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Red Police Box");
-                                    break;
                                 case 15:
-                                    // black
-                                    if (!last_line.equals("BLACK")) {
-                                        set.put("chameleon_preset", "POLICE_BOX_BLACK");
-                                        updateChameleonSign(hasChameleonSign, rsc.getData(), "BLACK", player);
-                                        tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_BLACK);
+                                case 16:
+                                    // item frame preset
+                                    PRESET selected = PRESET.getItemFramePresetBySlot(slot);
+                                    set.put("chameleon_preset", selected.toString());
+                                    if (hasSign) {
+                                        updateChameleonSign(rsc.getData(), selected.toString(), player);
                                     }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Black Police Box");
+                                    if (hasFrame) {
+                                        new TARDISChameleonFrame(plugin).updateChameleonFrame(id, selected, rsf.getLocation());
+                                    }
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + selected.getDisplayName());
                                     break;
                                 case 24:
                                     // go to page one (regular presets)
@@ -266,8 +146,9 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                             }
                             if (set.size() > 0) {
                                 set.put("adapti_on", 0);
-                                set.put("chameleon_demat", preset);
-                                plugin.getQueryFactory().doUpdate("tardis", set, wherec);
+                                HashMap<String, Object> wheret = new HashMap<>();
+                                wheret.put("tardis_id", id);
+                                plugin.getQueryFactory().doUpdate("tardis", set, wheret);
                             }
                         }
                     }
@@ -276,11 +157,9 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
         }
     }
 
-    private void updateChameleonSign(boolean update, ArrayList<HashMap<String, String>> map, String preset, Player player) {
-        if (update) {
-            for (HashMap<String, String> entry : map) {
-                TARDISStaticUtils.setSign(entry.get("location"), 3, preset, player);
-            }
+    private void updateChameleonSign(ArrayList<HashMap<String, String>> map, String preset, Player player) {
+        for (HashMap<String, String> entry : map) {
+            TARDISStaticUtils.setSign(entry.get("location"), 3, preset, player);
         }
     }
 }

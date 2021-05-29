@@ -20,6 +20,8 @@ import com.google.common.collect.Maps;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,7 +57,7 @@ public enum PRESET {
     NETHER(Material.NETHERRACK, Material.NETHER_BRICKS, 2, "", "", true, true, "Nether Fortress"),
     NEW(Material.STONE_SLAB, Material.BLUE_WOOL, 0, "POLICE", "BOX", true, true, "New Police Box"),
     OLD(Material.BLUE_WOOL, Material.LIGHT_BLUE_WOOL, 3, "POLICE", "BOX", true, true, "Old Police Box"),
-    PANDORICA(Material.COAL, Material.BEDROCK, 40, "PANDORICA", "", false, false),
+    PANDORICA(Material.COAL, Material.BLACKSTONE, 40, "PANDORICA", "", false, false),
     PARTY(Material.FIREWORK_ROCKET, Material.GREEN_WOOL, 5, "PARTY", "TENT", true, true),
     PEANUT(Material.TERRACOTTA, 20, "JAR OF", "PEANUT BUTTER", true, false, "Peanut Butter Jar"),
     PINE(Material.SPRUCE_LEAVES, Material.SPRUCE_LEAVES, 26, "PINE", "TREE", false, false),
@@ -110,13 +112,24 @@ public enum PRESET {
     POLICE_BOX_BROWN(Material.BROWN_CONCRETE_POWDER, 12, "", "", false, false, "Brown Police Box"),
     POLICE_BOX_GREEN(Material.GREEN_CONCRETE_POWDER, 13, "", "", false, false, "Green Police Box"),
     POLICE_BOX_RED(Material.RED_CONCRETE_POWDER, 14, "", "", false, false, "Red Police Box"),
-    POLICE_BOX_BLACK(Material.BLACK_CONCRETE_POWDER, 15, "", "", false, false, "Black Police Box");
+    POLICE_BOX_BLACK(Material.BLACK_CONCRETE_POWDER, 15, "", "", false, false, "Black Police Box"),
+    WEEPING_ANGEL(Material.GRAY_CONCRETE, 16, "", "", false, false, "Weeping Angel");
 
     private final static Map<Material, PRESET> BY_MATERIAL = Maps.newHashMap();
+    private final static Map<Integer, PRESET> BY_SLOT = Maps.newHashMap();
+    private final static Map<Integer, PRESET> IF_BY_SLOT = Maps.newHashMap();
+    public final static List<Material> NOT_THESE = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
 
     static {
         for (PRESET preset : values()) {
-            BY_MATERIAL.put(preset.getCraftMaterial(), preset);
+            if (!NOT_THESE.contains(preset.getCraftMaterial())) {
+                BY_MATERIAL.put(preset.getCraftMaterial(), preset);
+                if (preset.usesItemFrame()) {
+                    IF_BY_SLOT.put(preset.getSlot(), preset);
+                } else {
+                    BY_SLOT.put(preset.getSlot(), preset);
+                }
+            }
         }
     }
 
@@ -177,6 +190,14 @@ public enum PRESET {
         return BY_MATERIAL.get(mat);
     }
 
+    public static PRESET getItemFramePresetBySlot(int slot) {
+        return IF_BY_SLOT.get(slot);
+    }
+
+    public static PRESET getPresetBySlot(int slot) {
+        return BY_SLOT.get(slot);
+    }
+
     public Material getCraftMaterial() {
         return craftMaterial;
     }
@@ -209,7 +230,7 @@ public enum PRESET {
         return displayName;
     }
 
-    public boolean isColoured() {
+    public boolean usesItemFrame() {
         switch (this) {
             case POLICE_BOX_BLUE:
             case POLICE_BOX_WHITE:
@@ -227,6 +248,7 @@ public enum PRESET {
             case POLICE_BOX_GREEN:
             case POLICE_BOX_RED:
             case POLICE_BOX_BLACK:
+            case WEEPING_ANGEL:
                 return true;
             default:
                 return false;
