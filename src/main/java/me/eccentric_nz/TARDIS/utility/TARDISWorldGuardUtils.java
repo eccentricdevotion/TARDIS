@@ -25,6 +25,7 @@ import com.sk89q.worldguard.internal.platform.WorldGuardPlatform;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.Flags;
+import com.sk89q.worldguard.protection.flags.RegionGroup;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.managers.RegionManager;
@@ -452,6 +453,46 @@ public class TARDISWorldGuardUtils {
                 rm.save();
             } catch (StorageException e) {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard Protection for abandoned TARDIS claim! " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Sets a player's CHEST_ACCESS flag to DENY in their TARDIS region.
+     *
+     * @param world the world the region is located in
+     * @param owner the player whose region it is
+     */
+    public void lockContainers(World world, String owner) {
+        RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
+        if (rm.hasRegion("TARDIS_" + owner)) {
+            ProtectedRegion region = rm.getRegion("TARDIS_" + owner);
+            region.setFlag(Flags.CHEST_ACCESS, State.DENY);
+            region.setFlag(Flags.CHEST_ACCESS.getRegionGroupFlag(), RegionGroup.MEMBERS);
+            try {
+                rm.save();
+            } catch (StorageException e) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not set WorldGuard CHEST_ACCESS flag to DENY! " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Sets a player's CHEST_ACCESS flag to ALLOW in their TARDIS region.
+     *
+     * @param world the world the region is located in
+     * @param owner the player whose region it is
+     */
+    public void unlockContainers(World world, String owner) {
+        RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
+        if (rm.hasRegion("TARDIS_" + owner)) {
+            ProtectedRegion region = rm.getRegion("TARDIS_" + owner);
+            region.setFlag(Flags.CHEST_ACCESS, State.ALLOW);
+            region.setFlag(Flags.CHEST_ACCESS.getRegionGroupFlag(), RegionGroup.ALL);
+            try {
+                rm.save();
+            } catch (StorageException e) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not set WorldGuard CHEST_ACCESS flag to ALLOW! " + e.getMessage());
             }
         }
     }
