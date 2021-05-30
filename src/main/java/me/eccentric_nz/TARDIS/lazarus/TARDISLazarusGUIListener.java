@@ -120,8 +120,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 ItemMeta im = is.getItemMeta();
                 if (TARDISPermission.hasPermission(player, "tardis.themaster")) {
                     if (plugin.getTrackerKeeper().getImmortalityGate().equals("")) {
-                        String onoff = (im.getLore().get(0).equals(plugin.getLanguage().getString("SET_OFF"))) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
+                        boolean isOff = im.getLore().get(0).equals(plugin.getLanguage().getString("SET_OFF"));
+                        String onoff = isOff ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
                         im.setLore(Collections.singletonList(onoff));
+                        int cmd = isOff ? 2 : 3;
+                        im.setCustomModelData(cmd);
                     } else {
                         im.setLore(Arrays.asList("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
                     }
