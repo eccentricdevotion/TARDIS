@@ -30,8 +30,12 @@ These are the travel configuration options.
 | &nbsp; | Sets whether the TARDIS key is given when changing worlds (and using a multi-world inventory plugin). |
 | &nbsp;&nbsp;&nbsp;&nbsp;`the_end` | boolean | `false` |
 | &nbsp; | Sets whether the TARDIS is allowed to travel to The End worlds. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`allow_end_after_visit` | boolean | `false` |
+| &nbsp; | If enabled, players may only fly to The End in the TARDIS if they've already been there once without it (i.e. End Portal) **Note:** End travel must be enabled (`the_end: true`) for this to take effect. |
 | &nbsp;&nbsp;&nbsp;&nbsp;`nether` | boolean | `false` |
 | &nbsp; | Sets whether the TARDIS is allowed to travel to Nether worlds. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`allow_nether_after_visit` | boolean | `false` |
+| &nbsp; | If enabled, players may only fly to the Nether in the TARDIS if they've already been there once without it (i.e. Nether Portal). **Note:** Nether travel must be enabled (`nether: true`) for this to take effect. |
 | &nbsp;&nbsp;&nbsp;&nbsp;`land_on_water` | boolean | `true` |
 | &nbsp; | Sets whether the TARDIS will land on water in the Overworld. |
 | &nbsp;&nbsp;&nbsp;&nbsp;`timeout` | integer | `5` |
