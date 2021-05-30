@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.sudo;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
+import me.eccentric_nz.TARDIS.commands.preferences.TARDISIsomorphicCommand;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.OfflinePlayer;
@@ -31,9 +32,12 @@ import java.util.UUID;
 public class TARDISSudoCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
+    private final List<String> SUDOS = new ArrayList<>();
 
     public TARDISSudoCommand(TARDIS plugin) {
         this.plugin = plugin;
+        SUDOS.add("isomorphic");
+        SUDOS.add("deadlock");
     }
 
     @Override
@@ -68,8 +72,21 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                         TARDISMessage.send(sender, "PLAYER_NO_TARDIS");
                         return true;
                     }
-                    TARDISSudoTracker.SUDOERS.put(uuid, offlinePlayer.getUniqueId());
-                    TARDISMessage.send(sender, "SUDO_ON", offlinePlayer.getName());
+                    if (args.length == 1) {
+                        TARDISSudoTracker.SUDOERS.put(uuid, offlinePlayer.getUniqueId());
+                        TARDISMessage.send(sender, "SUDO_ON", offlinePlayer.getName());
+                    } else if (args.length == 2) {
+                        String which = args[1].toLowerCase();
+                        if (SUDOS.contains(which)) {
+                            if (which.equals("isomorphic")) {
+                                // toggle isomorphic
+                                return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(offlinePlayer.getUniqueId(), sender);
+                            } else {
+                                // toggle door deadlocks
+                                return new SudoDeadlock(plugin).toggleDeadlock(offlinePlayer.getUniqueId(), sender);
+                            }
+                        }
+                    }
                 }
             } else {
                 TARDISMessage.send(sender, "CMD_ADMIN");
@@ -88,6 +105,9 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                 SUBS.add(p.getName());
             }
             return partial(args[0], SUBS);
+        }
+        if (args.length == 2) {
+            return partial(args[1], SUDOS);
         }
         return null;
     }
