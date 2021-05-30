@@ -282,7 +282,7 @@ public class TARDISAbandonCommand {
                                 }
                             }
                             if (found) {
-                                Material dye = TARDISBuilderUtility.getDyeMaterial(preset);
+                                Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
                                 ItemStack is = new ItemStack(dye, 1);
                                 ItemMeta im = is.getItemMeta();
                                 im.setCustomModelData(1001);

@@ -54,7 +54,7 @@ public class TARDISBuilderUtility {
         }
     }
 
-    public static Material getDyeMaterial(PRESET preset) {
+    public static Material getMaterialForItemFrame(PRESET preset) {
         if (preset.equals(PRESET.WEEPING_ANGEL)) {
             return Material.GRAY_STAINED_GLASS_PANE;
         } else {
@@ -64,7 +64,7 @@ public class TARDISBuilderUtility {
         }
     }
 
-    public static void updateChameleonDemat(String preset, int id) {
+    static void updateChameleonDemat(String preset, int id) {
         // update demat field in database
         HashMap<String, Object> set = new HashMap<>();
         set.put("chameleon_demat", preset);

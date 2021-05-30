@@ -101,7 +101,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     }
                     frame.setFacingDirection(BlockFace.UP);
                     frame.setRotation(bd.getDirection().getRotation());
-                    Material dye = TARDISBuilderUtility.getDyeMaterial(preset);
+                    Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
                     is = new ItemStack(dye, 1);
                     if (bd.isOutside()) {
                         if (!bd.useMinecartSounds()) {

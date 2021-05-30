@@ -91,7 +91,7 @@ public class TARDISInstantPoliceBox {
         }
         frame.setFacingDirection(BlockFace.UP);
         frame.setRotation(bd.getDirection().getRotation());
-        Material dye = TARDISBuilderUtility.getDyeMaterial(preset);
+        Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
         ItemStack is = new ItemStack(dye, 1);
         ItemMeta im = is.getItemMeta();
         im.setCustomModelData(1001);
