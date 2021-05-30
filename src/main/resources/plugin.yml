@@ -1280,7 +1280,7 @@ commands:
     aliases: [ tsudo ]
     description: Used by TARDIS admins to run commands as another Time Lord. Currently only works for the /tardis theme [clean|repair] command.
     permission: tardis.admin
-    usage: /<command> [player|off]
+    usage: /<command> [player|off] [isomorphic|deadlock]
     permission-message: You don't have the permission <permission> to use this command
   tardisweather:
     aliases: tweather
