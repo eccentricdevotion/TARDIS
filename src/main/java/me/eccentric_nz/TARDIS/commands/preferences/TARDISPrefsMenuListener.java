@@ -130,7 +130,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         }
                         return;
                     }
-                    if (slot == 28 && im.getDisplayName().equals("Flight Mode")) {
+                    if (slot == 29 && im.getDisplayName().equals("Flight Mode")) {
                         List<String> lore = im.getLore();
                         // cycle through flight modes
                         FlightMode flight = FlightMode.valueOf(lore.get(0));
@@ -149,7 +149,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         plugin.getQueryFactory().doUpdate("player_prefs", setf, wheref);
                         return;
                     }
-                    if (slot == 29 && im.getDisplayName().equals("Interior Hum Sound")) {
+                    if (slot == 30 && im.getDisplayName().equals("Interior Hum Sound")) {
                         // close this gui and load the sounds GUI
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             Inventory hum_inv = plugin.getServer().createInventory(p, 18, ChatColor.DARK_RED + "TARDIS Interior Sounds");
@@ -357,6 +357,13 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                             args[0] = "";
                             args[1] = value;
                             new TARDISBuildCommand(plugin).toggleCompanionBuilding(p, args);
+                            break;
+                        case "Lock Containers":
+                            if (bool) {
+                                plugin.getWorldGuardUtils().unlockContainers(p.getWorld(), p.getName());
+                            } else {
+                                plugin.getWorldGuardUtils().lockContainers(p.getWorld(), p.getName());
+                            }
                             break;
                         default: {
                             HashMap<String, Object> set = new HashMap<>();

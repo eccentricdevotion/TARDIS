@@ -498,6 +498,25 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
+     * Gets the state of a player's CHEST_ACCESS flag in their TARDIS region.
+     *
+     * @param world the world the region is located in
+     * @param owner the player whose region it is
+     * @return true if containers are accessible
+     */
+    public boolean queryContainers(World world, String owner) {
+        RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
+        if (rm.hasRegion("TARDIS_" + owner)) {
+            plugin.debug("has region");
+            ProtectedRegion region = rm.getRegion("TARDIS_" + owner);
+            State state = region.getFlag(Flags.CHEST_ACCESS);
+            plugin.debug(state == null ? "no chest access flag found! return true" : "chest access set to " + state + " return " + state.equals(State.ALLOW));
+            return state == null ? true : state.equals(State.ALLOW);
+        }
+        return true;
+    }
+
+    /**
      * Turns a location object into a BlockVector.
      *
      * @param location the Location to convert to BlockVector

@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.enumeration.FlightMode;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -102,6 +103,14 @@ public class TARDISPrefsMenuInventory {
         values.add(rsp.isMinecartOn());
         values.add(rsp.isEasyDifficulty());
         values.add(rsp.useCustomFont());
+        if (plugin.isWorldGuardOnServer()) {
+            String chunk = rst.getTardis().getChunk();
+            String[] split = chunk.split(":");
+            World world = plugin.getServer().getWorld(split[0]);
+            values.add(!plugin.getWorldGuardUtils().queryContainers(world, plugin.getServer().getPlayer(uuid).getName()));
+        } else {
+            values.add(false);
+        }
 
         // get TARDIS preset
         Tardis tardis = null;
@@ -135,6 +144,9 @@ public class TARDISPrefsMenuInventory {
                 stack[pref.getSlot()] = is;
             }
         }
+        if (!plugin.isWorldGuardOnServer()) {
+            stack[28] = null;
+        }
         // flight mode
         ItemStack fli = new ItemStack(Material.ELYTRA, 1);
         ItemMeta ght_im = fli.getItemMeta();
@@ -143,7 +155,7 @@ public class TARDISPrefsMenuInventory {
         ght_im.setLore(Collections.singletonList(mode_value));
         ght_im.setCustomModelData(GUIPlayerPreferences.FLIGHT_MODE.getCustomModelData());
         fli.setItemMeta(ght_im);
-        stack[28] = fli;
+        stack[29] = fli;
         // interior hum sound
         ItemStack hum = new ItemStack(Material.BOWL, 1);
         ItemMeta hum_im = hum.getItemMeta();
@@ -152,7 +164,7 @@ public class TARDISPrefsMenuInventory {
         hum_im.setLore(Collections.singletonList(hum_value));
         hum_im.setCustomModelData(GUIPlayerPreferences.INTERIOR_HUM_SOUND.getCustomModelData());
         hum.setItemMeta(hum_im);
-        stack[29] = hum;
+        stack[30] = hum;
         // handbrake
         ItemStack hand = new ItemStack(Material.LEVER, 1);
         ItemMeta brake = hand.getItemMeta();
