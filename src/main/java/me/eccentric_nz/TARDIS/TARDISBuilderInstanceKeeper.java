@@ -100,13 +100,14 @@ public class TARDISBuilderInstanceKeeper {
         BLOCK_CONVERSION.put("POTTED_WITHER_ROSE", "WITHER_ROSE");
         // precious blocks
         PRECIOUS.add(Material.BEACON);
+        PRECIOUS.add(Material.BEDROCK);
+        PRECIOUS.add(Material.CONDUIT);
         PRECIOUS.add(Material.DIAMOND_BLOCK);
         PRECIOUS.add(Material.EMERALD_BLOCK);
         PRECIOUS.add(Material.GOLD_BLOCK);
         PRECIOUS.add(Material.IRON_BLOCK);
         PRECIOUS.add(Material.NETHERITE_BLOCK);
         PRECIOUS.add(Material.REDSTONE_BLOCK);
-        PRECIOUS.add(Material.BEDROCK);
     }
 
     private final HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<>();

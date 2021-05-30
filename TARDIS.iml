@@ -26,7 +26,7 @@
     <orderEntry type="library" name="Maven: net.md-5:bungeecord-chat:1.16-R0.4" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.27" level="project" />
     <orderEntry type="library" name="Maven: io.papermc:paperlib:1.0.6" level="project" />
-    <orderEntry type="library" name="Maven: me.eccentric_nz.tardischunkgenerator:TARDISChunkGenerator:4.6.2" level="project" />
+    <orderEntry type="library" name="Maven: me.eccentric_nz.tardischunkgenerator:TARDISChunkGenerator:4.6.3" level="project" />
     <orderEntry type="library" name="Maven: me.eccentric_nz.tardisweepingangels:TARDISWeepingAngels:3.3.3" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: com.sk89q:worldguard:7.0.5">

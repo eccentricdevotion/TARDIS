@@ -141,7 +141,7 @@ public class TARDISJunkDestroyer implements Runnable {
                 }
                 plugin.getTrackerKeeper().getDematerialising().remove(pdd.getTardisID());
                 plugin.getTrackerKeeper().getInVortex().remove(pdd.getTardisID());
-                // check protected blocks if has block id and data stored then put the block back!
+                // check protected blocks if has block material and data stored then put the block back!
                 HashMap<String, Object> tid = new HashMap<>();
                 tid.put("tardis_id", pdd.getTardisID());
                 ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);

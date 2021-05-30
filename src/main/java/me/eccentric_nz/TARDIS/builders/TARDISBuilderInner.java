@@ -620,7 +620,7 @@ public class TARDISBuilderInner implements Runnable {
                  */
                 ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
             }
-            // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
+            // if it's an iron/gold/diamond/emerald/beacon/redstone/bedrock/conduit/netherite block put it in the blocks table
             if (TARDISBuilderInstanceKeeper.getPrecious().contains(type)) {
                 HashMap<String, Object> setpb = new HashMap<>();
                 String loc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);

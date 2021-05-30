@@ -507,10 +507,8 @@ public class TARDISWorldGuardUtils {
     public boolean queryContainers(World world, String owner) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         if (rm.hasRegion("TARDIS_" + owner)) {
-            plugin.debug("has region");
             ProtectedRegion region = rm.getRegion("TARDIS_" + owner);
             State state = region.getFlag(Flags.CHEST_ACCESS);
-            plugin.debug(state == null ? "no chest access flag found! return true" : "chest access set to " + state + " return " + state.equals(State.ALLOW));
             return state == null ? true : state.equals(State.ALLOW);
         }
         return true;
