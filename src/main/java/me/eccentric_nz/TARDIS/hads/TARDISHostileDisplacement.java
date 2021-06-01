@@ -86,7 +86,8 @@ class TARDISHostileDisplacement {
 				y = TARDISStaticLocationGetters.getHighestYIn3x3(l.getWorld(), wx, wz);
 			}
 			l.setY(y);
-			if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !rsc.isSubmarine()) {
+			if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() &&
+				!plugin.getConfig().getBoolean("travel.land_on_water") && !rsc.isSubmarine()) {
 				bool = false;
 			}
 			Player player = plugin.getServer().getPlayer(uuid);
@@ -98,7 +99,8 @@ class TARDISHostileDisplacement {
 					safe = (sub != null);
 				} else {
 					int[] start = TARDISTimeTravel.getStartLocation(l, d);
-					safe = (TARDISTimeTravel.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1);
+					safe = (TARDISTimeTravel.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) <
+							1);
 				}
 				if (safe) {
 					Location fl = (rsc.isSubmarine()) ? sub : l;
@@ -153,12 +155,17 @@ class TARDISHostileDisplacement {
 						bd.setSubmarine(rsc.isSubmarine());
 						bd.setTardisId(id);
 						bd.setThrottle(SpaceTimeThrottle.NORMAL);
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd),
+								delay * 2);
 						// message time lord
-						String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem " + plugin.getLanguage().getString("HADS_ENGAGED");
+						String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " +
+										 ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" +
+										 ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET +
+										 "ystem " + plugin.getLanguage().getString("HADS_ENGAGED");
 						assert player != null;
 						player.sendMessage(message);
-						String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
+						String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" +
+									  fl.getBlockZ();
 						TARDISMessage.send(player, "HADS_LOC", hads);
 						if (player != hostile) {
 							hostile.sendMessage(message);

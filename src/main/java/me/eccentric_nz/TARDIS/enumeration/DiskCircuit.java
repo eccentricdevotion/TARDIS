@@ -27,7 +27,26 @@ import java.util.List;
  */
 public enum DiskCircuit {
 
-	AREA("Area Storage Disk", Material.MUSIC_DISC_BLOCKS), ARS("tardis ars Circuit", Material.GLOWSTONE_DUST), BIOME("Biome Storage Disk", Material.MUSIC_DISC_CAT), BLANK("Blank Storage Disk", Material.MUSIC_DISC_STRAD), BLUEPRINT("Blueprint Disk", Material.MUSIC_DISC_MELLOHI), CHAMELEON("tardis Chameleon Circuit", Material.GLOWSTONE_DUST), CONTROL("Authorised Control Disk", Material.MUSIC_DISC_FAR), HANDLES("Handles Program Disk", Material.MUSIC_DISC_WARD), INPUT("tardis Input Circuit", Material.GLOWSTONE_DUST), INVISIBILITY("tardis Invisibility Circuit", Material.GLOWSTONE_DUST), KEY("tardis Key", Material.valueOf(TARDISPlugin.plugin.getRecipesConfig().getString("shaped.tardis Key.result"))), MATERIALISATION("tardis Materialisation Circuit", Material.GLOWSTONE_DUST), MEMORY("tardis Memory Circuit", Material.GLOWSTONE_DUST), PLAYER("Player Storage Disk", Material.MUSIC_DISC_WAIT), PRESET("Preset Storage Disk", Material.MUSIC_DISC_MALL), RANDOMISER("tardis Randomiser Circuit", Material.GLOWSTONE_DUST), SAVE("Save Storage Disk", Material.MUSIC_DISC_CHIRP), SCANNER("tardis Scanner Circuit", Material.GLOWSTONE_DUST), SONIC("Sonic Screwdriver", Material.valueOf(TARDISPlugin.plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result"))), TEMPORAL("tardis Temporal Circuit", Material.GLOWSTONE_DUST);
+	AREA("Area Storage Disk", Material.MUSIC_DISC_BLOCKS),
+	ARS("tardis ars Circuit", Material.GLOWSTONE_DUST),
+	BIOME("Biome Storage Disk", Material.MUSIC_DISC_CAT),
+	BLANK("Blank Storage Disk", Material.MUSIC_DISC_STRAD),
+	BLUEPRINT("Blueprint Disk", Material.MUSIC_DISC_MELLOHI),
+	CHAMELEON("tardis Chameleon Circuit", Material.GLOWSTONE_DUST),
+	CONTROL("Authorised Control Disk", Material.MUSIC_DISC_FAR),
+	HANDLES("Handles Program Disk", Material.MUSIC_DISC_WARD),
+	INPUT("tardis Input Circuit", Material.GLOWSTONE_DUST),
+	INVISIBILITY("tardis Invisibility Circuit", Material.GLOWSTONE_DUST),
+	KEY("tardis Key", Material.valueOf(TARDISPlugin.plugin.getRecipesConfig().getString("shaped.tardis Key.result"))),
+	MATERIALISATION("tardis Materialisation Circuit", Material.GLOWSTONE_DUST),
+	MEMORY("tardis Memory Circuit", Material.GLOWSTONE_DUST),
+	PLAYER("Player Storage Disk", Material.MUSIC_DISC_WAIT),
+	PRESET("Preset Storage Disk", Material.MUSIC_DISC_MALL),
+	RANDOMISER("tardis Randomiser Circuit", Material.GLOWSTONE_DUST),
+	SAVE("Save Storage Disk", Material.MUSIC_DISC_CHIRP),
+	SCANNER("tardis Scanner Circuit", Material.GLOWSTONE_DUST),
+	SONIC("Sonic Screwdriver", Material.valueOf(TARDISPlugin.plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result"))),
+	TEMPORAL("tardis Temporal Circuit", Material.GLOWSTONE_DUST);
 
 	static final List<String> circuitNames = new ArrayList<>();
 	static final List<DiskCircuit> tardisCircuits = new ArrayList<>();

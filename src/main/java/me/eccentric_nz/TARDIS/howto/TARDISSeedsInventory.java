@@ -59,7 +59,8 @@ public class TARDISSeedsInventory {
 		int i = 0;
 		// get consoles
 		for (Schematic a : Consoles.getBY_NAMES().values()) {
-			if (TARDISPermission.hasPermission(player, "tardis." + a.getPermission()) && !a.getSeedMaterial().equals(Material.COBBLESTONE)) {
+			if (TARDISPermission.hasPermission(player, "tardis." + a.getPermission()) &&
+				!a.getSeedMaterial().equals(Material.COBBLESTONE)) {
 				Material m = Material.getMaterial(a.getSeed());
 				assert m != null;
 				ItemStack is = new ItemStack(m, 1);

@@ -97,7 +97,8 @@ class TARDISThemeProcessor {
 			}
 		} else {
 			String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
-			String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
+			String path = plugin.getDataFolder() + File.separator + directory + File.separator +
+						  tud.getSchematic().getPermission() + ".tschm";
 			File file = new File(path);
 			if (!file.exists()) {
 				plugin.debug("Could not find a schematic with that name!");
@@ -133,7 +134,8 @@ class TARDISThemeProcessor {
 			}
 		} else {
 			String directory = (tud.getPrevious().isCustom()) ? "user_schematics" : "schematics";
-			String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getPrevious().getPermission() + ".tschm";
+			String path = plugin.getDataFolder() + File.separator + directory + File.separator +
+						  tud.getPrevious().getPermission() + ".tschm";
 			File file = new File(path);
 			if (!file.exists()) {
 				plugin.debug("Could not find a schematic with that name!");
@@ -156,8 +158,10 @@ class TARDISThemeProcessor {
 				return;
 			} else if (!check.allow()) {
 				Player cp = plugin.getServer().getPlayer(uuid);
-				TARDISMessage.send(cp, "UPGRADE_PERCENT_BLOCKS", plugin.getConfig().getInt("desktop.block_change_percent") + "");
-				TARDISMessage.send(cp, "UPGRADE_PERCENT_EXPLAIN", check.getCount() + "", check.getVolume() + "", check.getChanged() + "");
+				TARDISMessage.send(cp, "UPGRADE_PERCENT_BLOCKS",
+						plugin.getConfig().getInt("desktop.block_change_percent") + "");
+				TARDISMessage.send(cp, "UPGRADE_PERCENT_EXPLAIN",
+						check.getCount() + "", check.getVolume() + "", check.getChanged() + "");
 				TARDISMessage.send(cp, "UPGRADE_PERCENT_REASON");
 				if (tud.getPrevious().getPermission().equals("archive")) {
 					// reset archive use back to 1
@@ -196,10 +200,13 @@ class TARDISThemeProcessor {
 		// take the Artron Energy
 		HashMap<String, Object> wherea = new HashMap<>();
 		wherea.put("uuid", uuid.toString());
-		String config_path = (archive_next != null) ? "upgrades.archive." + archive_next.getConsoleSize().getConfigPath() : "upgrades." + tud.getSchematic().getPermission().toLowerCase(Locale.ENGLISH);
+		String config_path = (archive_next != null) ?
+				"upgrades.archive." + archive_next.getConsoleSize().getConfigPath() :
+				"upgrades." + tud.getSchematic().getPermission().toLowerCase(Locale.ENGLISH);
 		int amount = plugin.getArtronConfig().getInt(config_path);
 		TARDISThemeRunnable ttr;
-		boolean hasLava = tud.getPrevious().getPermission().equals("master") || tud.getPrevious().getPermission().equals("delta");
+		boolean hasLava =
+				tud.getPrevious().getPermission().equals("master") || tud.getPrevious().getPermission().equals("delta");
 		if (tud.getPrevious().equals(tud.getSchematic()) && archive_next == null) {
 			// reduce the cost of the theme change
 			amount = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * amount);
@@ -232,11 +239,23 @@ class TARDISThemeProcessor {
 				case SMALL:
 					switch (next) {
 						case MEDIUM:
-							return (!grid[1][4][5].equals("STONE") || !grid[1][5][4].equals("STONE") || !grid[1][5][5].equals("STONE"));
+							return (!grid[1][4][5].equals("STONE") || !grid[1][5][4].equals("STONE") ||
+									!grid[1][5][5].equals("STONE"));
 						case TALL:
-							return (!grid[1][4][5].equals("STONE") || !grid[1][5][4].equals("STONE") || !grid[1][5][5].equals("STONE") || !grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE"));
+							return (!grid[1][4][5].equals("STONE") || !grid[1][5][4].equals("STONE") ||
+									!grid[1][5][5].equals("STONE") || !grid[2][4][4].equals("STONE") ||
+									!grid[2][4][5].equals("STONE") || !grid[2][5][4].equals("STONE") ||
+									!grid[2][5][5].equals("STONE"));
 						case MASSIVE:
-							return (!grid[1][4][5].equals("STONE") || !grid[1][4][6].equals("STONE") || !grid[1][5][4].equals("STONE") || !grid[1][5][5].equals("STONE") || !grid[1][5][6].equals("STONE") || !grid[1][6][4].equals("STONE") || !grid[1][6][5].equals("STONE") || !grid[1][6][6].equals("STONE") || !grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][4][6].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE") || !grid[2][5][6].equals("STONE") || !grid[2][6][4].equals("STONE") || !grid[2][6][5].equals("STONE") || !grid[2][6][6].equals("STONE"));
+							return (!grid[1][4][5].equals("STONE") || !grid[1][4][6].equals("STONE") ||
+									!grid[1][5][4].equals("STONE") || !grid[1][5][5].equals("STONE") ||
+									!grid[1][5][6].equals("STONE") || !grid[1][6][4].equals("STONE") ||
+									!grid[1][6][5].equals("STONE") || !grid[1][6][6].equals("STONE") ||
+									!grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") ||
+									!grid[2][4][6].equals("STONE") || !grid[2][5][4].equals("STONE") ||
+									!grid[2][5][5].equals("STONE") || !grid[2][5][6].equals("STONE") ||
+									!grid[2][6][4].equals("STONE") || !grid[2][6][5].equals("STONE") ||
+									!grid[2][6][6].equals("STONE"));
 						default:
 							// same size do nothing
 					}
@@ -244,9 +263,16 @@ class TARDISThemeProcessor {
 				case MEDIUM:
 					switch (next) {
 						case TALL:
-							return (!grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE"));
+							return (!grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") ||
+									!grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE"));
 						case MASSIVE:
-							return (!grid[1][4][6].equals("STONE") || !grid[1][5][6].equals("STONE") || !grid[1][6][4].equals("STONE") || !grid[1][6][5].equals("STONE") || !grid[1][6][6].equals("STONE") || !grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][4][6].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE") || !grid[2][5][6].equals("STONE") || !grid[2][6][4].equals("STONE") || !grid[2][6][5].equals("STONE") || !grid[2][6][6].equals("STONE"));
+							return (!grid[1][4][6].equals("STONE") || !grid[1][5][6].equals("STONE") ||
+									!grid[1][6][4].equals("STONE") || !grid[1][6][5].equals("STONE") ||
+									!grid[1][6][6].equals("STONE") || !grid[2][4][4].equals("STONE") ||
+									!grid[2][4][5].equals("STONE") || !grid[2][4][6].equals("STONE") ||
+									!grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE") ||
+									!grid[2][5][6].equals("STONE") || !grid[2][6][4].equals("STONE") ||
+									!grid[2][6][5].equals("STONE") || !grid[2][6][6].equals("STONE"));
 						default:
 							// same or smaller size do nothing
 					}
@@ -254,7 +280,11 @@ class TARDISThemeProcessor {
 				case TALL:
 					// same or smaller size do nothing
 					if (next == ConsoleSize.MASSIVE) {
-						return (!grid[1][4][6].equals("STONE") || !grid[1][5][6].equals("STONE") || !grid[1][6][4].equals("STONE") || !grid[1][6][5].equals("STONE") || !grid[1][6][6].equals("STONE") || !grid[2][4][6].equals("STONE") || !grid[2][5][6].equals("STONE") || !grid[2][6][4].equals("STONE") || !grid[2][6][5].equals("STONE") || !grid[2][6][6].equals("STONE"));
+						return (!grid[1][4][6].equals("STONE") || !grid[1][5][6].equals("STONE") ||
+								!grid[1][6][4].equals("STONE") || !grid[1][6][5].equals("STONE") ||
+								!grid[1][6][6].equals("STONE") || !grid[2][4][6].equals("STONE") ||
+								!grid[2][5][6].equals("STONE") || !grid[2][6][4].equals("STONE") ||
+								!grid[2][6][5].equals("STONE") || !grid[2][6][6].equals("STONE"));
 					}
 					break;
 				default:

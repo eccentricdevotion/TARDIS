@@ -48,7 +48,8 @@ public class HeatBlockRunnable implements Runnable {
 			Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(s);
 			if (location != null) {
 				BlockData blockData = location.getBlock().getBlockData();
-				if (blockData.getMaterial().equals(Material.MUSHROOM_STEM) && blockData.getAsString().equals("minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=true]")) {
+				if (blockData.getMaterial().equals(Material.MUSHROOM_STEM) &&
+					blockData.getAsString().equals("minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=true]")) {
 					// it's a heat block
 					meltBlock(location);
 				}

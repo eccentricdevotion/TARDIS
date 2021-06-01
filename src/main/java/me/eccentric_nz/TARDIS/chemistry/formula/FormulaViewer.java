@@ -144,7 +144,8 @@ public class FormulaViewer {
 		close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
 		close.setItemMeta(close_im);
 		stack[26] = close;
-		Inventory viewer = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + formula.replace("_", " ") + " Formula");
+		Inventory viewer = plugin.getServer().createInventory(player, 27,
+				ChatColor.DARK_RED + formula.replace("_", " ") + " Formula");
 		viewer.setContents(stack);
 		player.openInventory(viewer);
 	}

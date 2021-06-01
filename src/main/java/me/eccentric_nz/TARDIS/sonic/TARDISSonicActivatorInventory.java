@@ -54,8 +54,10 @@ class TARDISSonicActivatorInventory {
 		lore.add("items to this inventory:");
 		// get the Sonic Generator recipe
 		String difficulty = (Objects.requireNonNull(plugin.getConfig().getString("preferences.difficulty")).equalsIgnoreCase("hard")) ? "hard" : "easy";
-		Set<String> ingredients = Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("shaped.Sonic Generator." + difficulty + "_ingredients")).getKeys(false);
-		ingredients.forEach((s) -> lore.add(ChatColor.AQUA + plugin.getRecipesConfig().getString("shaped.Sonic Generator." + difficulty + "_ingredients." + s)));
+		Set<String> ingredients = Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection(
+				"shaped.Sonic Generator." + difficulty + "_ingredients")).getKeys(false);
+		ingredients.forEach((s) -> lore.add(ChatColor.AQUA + plugin.getRecipesConfig().getString(
+				"shaped.Sonic Generator." + difficulty + "_ingredients." + s)));
 		lore.add(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + "Then close the GUI.");
 		// info
 		ItemStack info = new ItemStack(Material.BOOK, 1);

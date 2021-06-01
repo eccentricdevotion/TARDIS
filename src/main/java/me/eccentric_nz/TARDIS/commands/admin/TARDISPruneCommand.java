@@ -46,7 +46,8 @@ class TARDISPruneCommand {
 			TARDISMessage.send(sender, "BACKUP_DB");
 			// backup database
 			File oldFile = new File(plugin.getDataFolder() + File.separator + "tardis.db");
-			File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
+			File newFile = new File(
+					plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
 			// back up the file
 			FileUtil.copy(oldFile, newFile);
 			int days = Integer.parseInt(args[1]);

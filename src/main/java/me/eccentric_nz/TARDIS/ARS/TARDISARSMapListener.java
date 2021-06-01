@@ -242,7 +242,8 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
 					}
 				}
 			}
-			return (a != null) ? new Location(a.getChunk().getWorld(), a.getX(), a.getY(), a.getZ()).add(3.5d, 5.0d, 8.5d) : null;
+			return (a !=
+					null) ? new Location(a.getChunk().getWorld(), a.getX(), a.getY(), a.getZ()).add(3.5d, 5.0d, 8.5d) : null;
 		}
 		// should never get here
 		return null;

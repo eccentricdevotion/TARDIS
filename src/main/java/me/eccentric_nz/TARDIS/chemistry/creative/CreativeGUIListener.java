@@ -53,7 +53,8 @@ public class CreativeGUIListener implements Listener {
 						close(p);
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 							ItemStack[] emenu = new ElementInventory(plugin).getMenu();
-							Inventory elements = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Atomic elements");
+							Inventory elements = plugin.getServer().createInventory(p, 54,
+									ChatColor.DARK_RED + "Atomic elements");
 							elements.setContents(emenu);
 							p.openInventory(elements);
 						}, 2L);
@@ -65,7 +66,8 @@ public class CreativeGUIListener implements Listener {
 						// switch to compounds or products
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 							ItemStack[] stacks = (molecular) ? new ProductsCreativeInventory(plugin).getMenu() : new CompoundsCreativeInventory(plugin).getMenu();
-							Inventory inventory = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + (molecular ? "Products" : "Molecular compounds"));
+							Inventory inventory = plugin.getServer().createInventory(p, 54,
+									ChatColor.DARK_RED + (molecular ? "Products" : "Molecular compounds"));
 							inventory.setContents(stacks);
 							p.openInventory(inventory);
 						}, 2L);
@@ -88,7 +90,8 @@ public class CreativeGUIListener implements Listener {
 				}
 			} else {
 				ClickType click = event.getClick();
-				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) ||
+					click.equals(ClickType.DOUBLE_CLICK)) {
 					event.setCancelled(true);
 				}
 			}

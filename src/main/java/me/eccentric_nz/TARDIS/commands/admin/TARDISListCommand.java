@@ -50,7 +50,10 @@ class TARDISListCommand {
 	}
 
 	boolean listStuff(CommandSender sender, String[] args) {
-		if (args.length > 1 && (args[1].equalsIgnoreCase("save") || args[1].equalsIgnoreCase("portals") || args[1].equalsIgnoreCase("abandoned") || args[1].equalsIgnoreCase("preset_perms") || args[1].equalsIgnoreCase("perms") || args[1].equalsIgnoreCase("recipes") || args[1].equalsIgnoreCase("blueprints"))) {
+		if (args.length > 1 && (args[1].equalsIgnoreCase("save") || args[1].equalsIgnoreCase("portals") ||
+								args[1].equalsIgnoreCase("abandoned") || args[1].equalsIgnoreCase("preset_perms") ||
+								args[1].equalsIgnoreCase("perms") || args[1].equalsIgnoreCase("recipes") ||
+								args[1].equalsIgnoreCase("blueprints"))) {
 			if (args[1].equalsIgnoreCase("save")) {
 				ResultSetTardis rsl = new ResultSetTardis(plugin, new HashMap<>(), "", true, 1);
 				if (rsl.resultSet()) {
@@ -65,7 +68,10 @@ class TARDISListCommand {
 									TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
 									return true;
 								}
-								String line = "ID: " + t.getTardisId() + ", Time Lord: " + t.getOwner() + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
+								String line =
+										"ID: " + t.getTardisId() + ", Time Lord: " + t.getOwner() + ", Location: " +
+										rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" +
+										rsc.getZ();
 								bw.write(line);
 								bw.newLine();
 							}
@@ -77,7 +83,8 @@ class TARDISListCommand {
 				TARDISMessage.send(sender, "FILE_SAVED");
 				return true;
 			} else if (args[1].equalsIgnoreCase("portals")) {
-				plugin.getTrackerKeeper().getPortals().forEach((key, value) -> sender.sendMessage("TARDIS id: " + value.getTardisId() + " has a portal open at: " + key.toString()));
+				plugin.getTrackerKeeper().getPortals().forEach((key, value) -> sender.sendMessage(
+						"TARDIS id: " + value.getTardisId() + " has a portal open at: " + key.toString()));
 				return true;
 			} else if (args[1].equalsIgnoreCase("abandoned")) {
 				new TARDISAbandonLister(plugin).list(sender);
@@ -125,7 +132,8 @@ class TARDISListCommand {
 					TextComponent tct = new TextComponent(String.format("%s %s", t.getTardisId(), t.getOwner()));
 					tct.setColor(ChatColor.GREEN);
 					tct.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, rsc.getX(), rsc.getY(), rsc.getZ()))));
-					tct.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisadmin enter " + t.getTardisId()));
+					tct.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
+							"/tardisadmin enter " + t.getTardisId()));
 					sender.spigot().sendMessage(tct);
 				}
 				if (rsl.getData().size() > 18) {

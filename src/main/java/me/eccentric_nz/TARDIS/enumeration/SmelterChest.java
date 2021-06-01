@@ -18,5 +18,7 @@ package me.eccentric_nz.tardis.enumeration;
 
 public enum SmelterChest {
 
-	DROP, FUEL, SMELT
+	DROP,
+	FUEL,
+	SMELT
 }

@@ -76,7 +76,8 @@ public class TARDISVaultListener implements Listener {
 							Block b = w.getBlockAt(x, y, z);
 							String blocation = b.getLocation().toString();
 							// check if it is a chest (but not the drop chest)
-							if ((b.getType().equals(Material.CHEST) || b.getType().equals(Material.TRAPPED_CHEST)) && !chestLocations.contains(blocation)) {
+							if ((b.getType().equals(Material.CHEST) || b.getType().equals(Material.TRAPPED_CHEST)) &&
+								!chestLocations.contains(blocation)) {
 								org.bukkit.block.Chest c = (org.bukkit.block.Chest) b.getState();
 								Chest chestdata = (Chest) c.getBlockData();
 								Chest.Type chestType = chestdata.getType();

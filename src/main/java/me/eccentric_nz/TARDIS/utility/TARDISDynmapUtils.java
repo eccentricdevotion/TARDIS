@@ -1,8 +1,8 @@
 package me.eccentric_nz.tardis.utility;
 
 import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.api.TARDISData;
 import me.eccentric_nz.tardis.api.TARDISAPI;
+import me.eccentric_nz.tardis.api.TARDISData;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.dynmap.DynmapAPI;
@@ -78,7 +78,8 @@ public class TARDISDynmapUtils {
 		window = window.replace("%owner%", who);
 		window = window.replace("%console%", data.getConsole());
 		window = window.replace("%chameleon%", data.getChameleon());
-		String l = "x: " + data.getLocation().getBlockX() + ", y: " + data.getLocation().getBlockY() + ", z: " + data.getLocation().getBlockZ();
+		String l = "x: " + data.getLocation().getBlockX() + ", y: " + data.getLocation().getBlockY() + ", z: " +
+				   data.getLocation().getBlockZ();
 		window = window.replace("%location%", l);
 		window = window.replace("%powered%", data.getPowered());
 		window = window.replace("%door%", data.getDoor());

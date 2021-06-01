@@ -82,7 +82,8 @@ class TARDISTransmatCommand {
 					TextComponent tce = new TextComponent(" < Transmat > ");
 					tce.setColor(ChatColor.AQUA);
 					tce.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Transmat to this location")));
-					tce.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis transmat tp " + t.getName()));
+					tce.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
+							"/tardis transmat tp " + t.getName()));
 					tcg.addExtra(tcl);
 					tcg.addExtra(tce);
 					player.spigot().sendMessage(tcg);

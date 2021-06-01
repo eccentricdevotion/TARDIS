@@ -63,7 +63,8 @@ public class TARDISSonicReplant implements Runnable {
 				}
 				break;
 			case CACTUS:
-				if (dirt.contains(under.getType()) || Tag.SAND.isTagged(under.getType()) && block.getType().equals(air)) {
+				if (dirt.contains(under.getType()) ||
+					Tag.SAND.isTagged(under.getType()) && block.getType().equals(air)) {
 					block.setBlockData(Material.CACTUS.createBlockData());
 				} else {
 					block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.CACTUS));
@@ -120,7 +121,8 @@ public class TARDISSonicReplant implements Runnable {
 				}
 				break;
 			case SUGAR_CANE:
-				if (dirt.contains(under.getType()) || Tag.SAND.isTagged(under.getType()) && block.getType().equals(air)) {
+				if (dirt.contains(under.getType()) ||
+					Tag.SAND.isTagged(under.getType()) && block.getType().equals(air)) {
 					block.setBlockData(Material.SUGAR_CANE.createBlockData());
 				} else {
 					block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.SUGAR_CANE));

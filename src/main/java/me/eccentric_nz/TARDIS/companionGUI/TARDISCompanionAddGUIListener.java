@@ -75,7 +75,8 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
 								int id = tardis.getTardisId();
 								String comps = tardis.getCompanions();
 								addCompanion(id, comps, "everyone");
-								if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+								if (plugin.isWorldGuardOnServer() &&
+									plugin.getConfig().getBoolean("preferences.use_worldguard")) {
 									// remove all members
 									String[] data = tardis.getChunk().split(":");
 									plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISAliasResolver.getWorldFromAlias(data[0]), player.getName());
@@ -104,7 +105,8 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
 								assert l != null;
 								String u = l.get(0);
 								addCompanion(id, comps, u);
-								if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+								if (plugin.isWorldGuardOnServer() &&
+									plugin.getConfig().getBoolean("preferences.use_worldguard")) {
 									String[] data = tardis.getChunk().split(":");
 									addToRegion(data[0], tardis.getOwner(), m.getDisplayName());
 									// set entry and exit flags to allow

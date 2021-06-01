@@ -132,7 +132,8 @@ class TARDISRoomCommand {
 				} else {
 					blockId = bid;
 				}
-				int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
+				int tmp = Math.round(
+						(entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
 				int required = (tmp > 0) ? tmp : 1;
 				if (item_counts.containsKey(blockId)) {
 					item_counts.put(blockId, item_counts.get(blockId) + required);
@@ -181,7 +182,8 @@ class TARDISRoomCommand {
 		ResultSetControls rsc = new ResultSetControls(plugin, wherea, false);
 		sd.setARS(rsc.resultSet());
 		plugin.getTrackerKeeper().getRoomSeed().put(uuid, sd);
-		TARDISMessage.send(player, "ROOM_SEED_INFO", room, plugin.getRoomsConfig().getString("rooms." + room + ".seed"));
+		TARDISMessage.send(player, "ROOM_SEED_INFO", room, plugin.getRoomsConfig().getString(
+				"rooms." + room + ".seed"));
 		return true;
 	}
 }

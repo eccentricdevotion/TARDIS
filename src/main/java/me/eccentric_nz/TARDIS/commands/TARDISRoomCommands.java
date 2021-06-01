@@ -86,7 +86,8 @@ public class TARDISRoomCommands implements CommandExecutor {
 									bw.newLine();
 								}
 							} catch (IOException e) {
-								plugin.debug("Could not create and write to " + r + "_block_list.txt! " + e.getMessage());
+								plugin.debug(
+										"Could not create and write to " + r + "_block_list.txt! " + e.getMessage());
 							}
 							TARDISMessage.send(sender, "ROOM_FILE_SAVED", r);
 						});
@@ -110,12 +111,14 @@ public class TARDISRoomCommands implements CommandExecutor {
 						TARDISMessage.send(sender, "ROOM_BLOCKS", name);
 						for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
 							String mat;
-							if (hasPrefs && (entry.getKey().equals("ORANGE_WOOL") || entry.getKey().equals("LIGHT_GRAY_WOOL"))) {
+							if (hasPrefs &&
+								(entry.getKey().equals("ORANGE_WOOL") || entry.getKey().equals("LIGHT_GRAY_WOOL"))) {
 								mat = (entry.getKey().equals("ORANGE_WOOL")) ? wall : floor;
 							} else {
 								mat = entry.getKey();
 							}
-							int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
+							int tmp = Math.round((entry.getValue() / 100.0F) *
+												 plugin.getConfig().getInt("growth.rooms_condenser_percent"));
 							int amount = (tmp > 0) ? tmp : 1;
 							String line = mat + ", " + amount;
 							sender.sendMessage(line);
@@ -161,7 +164,9 @@ public class TARDISRoomCommands implements CommandExecutor {
 						return true;
 					}
 					String lower = name.toLowerCase(Locale.ENGLISH);
-					String filepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + lower + ".tschm";
+					String filepath =
+							plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + lower +
+							".tschm";
 					File file = new File(filepath);
 					if (!file.exists()) {
 						TARDISMessage.send(sender, "ROOM_SCHEMATIC_INFO", lower);
@@ -198,7 +203,9 @@ public class TARDISRoomCommands implements CommandExecutor {
 					if (option.equals("true") || option.equals("false")) {
 						// boolean enable/disable
 						// check that the other options have been set first
-						if (!plugin.getRoomsConfig().contains("rooms." + name + ".cost") || !plugin.getRoomsConfig().contains("rooms." + name + ".seed") || !plugin.getRoomsConfig().contains("rooms." + name + ".offset")) {
+						if (!plugin.getRoomsConfig().contains("rooms." + name + ".cost") ||
+							!plugin.getRoomsConfig().contains("rooms." + name + ".seed") ||
+							!plugin.getRoomsConfig().contains("rooms." + name + ".offset")) {
 							TARDISMessage.send(sender, "ROOM_NO_ENABLE");
 							return true;
 						}
@@ -246,7 +253,8 @@ public class TARDISRoomCommands implements CommandExecutor {
 							}
 							// check seed material is not already in use
 							for (String m : Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false)) {
-								if (setMaterial.equalsIgnoreCase(plugin.getRoomsConfig().getString("rooms." + m + ".seed"))) {
+								if (setMaterial.equalsIgnoreCase(plugin.getRoomsConfig().getString(
+										"rooms." + m + ".seed"))) {
 									TARDISMessage.send(sender, "ROOM_SEED_EXISTS");
 									return true;
 								}

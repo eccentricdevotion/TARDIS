@@ -102,7 +102,8 @@ public class TARDISSonicMenuListener extends TARDISMenuListener implements Liste
 				}
 			} else {
 				ClickType click = event.getClick();
-				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) ||
+					click.equals(ClickType.DOUBLE_CLICK)) {
 					event.setCancelled(true);
 				}
 			}

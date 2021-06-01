@@ -72,7 +72,8 @@ class TARDISXPRewarder {
 		xpTotalToReachLevel = new int[maxLevel];
 
 		for (int i = 0; i < xpTotalToReachLevel.length; i++) {
-			xpTotalToReachLevel[i] = i >= 30 ? (int) (3.5 * i * i - 151.5 * i + 2220) : i >= 16 ? (int) (1.5 * i * i - 29.5 * i + 360) : 17 * i;
+			xpTotalToReachLevel[i] = i >= 30 ? (int) (3.5 * i * i - 151.5 * i + 2220) :
+					i >= 16 ? (int) (1.5 * i * i - 29.5 * i + 360) : 17 * i;
 		}
 	}
 
@@ -203,7 +204,9 @@ class TARDISXPRewarder {
 	 * @throws IllegalArgumentException if the level is less than 0 or greater than the current hard maximum
 	 */
 	private int getXpForLevel(int level) {
-		Validate.isTrue(level >= 0 && level <= hardMaxLevel, "Invalid level " + level + "(must be in range 0.." + hardMaxLevel + ")");
+		Validate.isTrue(
+				level >= 0 && level <= hardMaxLevel,
+				"Invalid level " + level + "(must be in range 0.." + hardMaxLevel + ")");
 		if (level >= xpTotalToReachLevel.length) {
 			initLookupTables(level * 2);
 		}

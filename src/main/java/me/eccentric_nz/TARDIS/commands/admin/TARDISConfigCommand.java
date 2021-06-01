@@ -51,11 +51,15 @@ class TARDISConfigCommand {
 			options.forEach((o) -> {
 				if (o.equals("mysql")) {
 					sender.sendMessage("    " + ChatColor.GREEN + o + "mysql:");
-					sender.sendMessage("        " + ChatColor.GREEN + o + "url: " + plugin.getConfig().getString(section + ".mysql.url"));
-					sender.sendMessage("        " + ChatColor.GREEN + o + "user: " + plugin.getConfig().getString(section + ".mysql.user"));
-					sender.sendMessage("        " + ChatColor.GREEN + o + "password: " + plugin.getConfig().getString(section + ".mysql.password"));
+					sender.sendMessage("        " + ChatColor.GREEN + o + "url: " +
+									   plugin.getConfig().getString(section + ".mysql.url"));
+					sender.sendMessage("        " + ChatColor.GREEN + o + "user: " +
+									   plugin.getConfig().getString(section + ".mysql.user"));
+					sender.sendMessage("        " + ChatColor.GREEN + o + "password: " +
+									   plugin.getConfig().getString(section + ".mysql.password"));
 				} else {
-					sender.sendMessage("    " + ChatColor.GREEN + o + ": " + plugin.getConfig().getString(section + "." + o));
+					sender.sendMessage(
+							"    " + ChatColor.GREEN + o + ": " + plugin.getConfig().getString(section + "." + o));
 				}
 			});
 			return true;
@@ -74,7 +78,8 @@ class TARDISConfigCommand {
 			Set<String> chargerNames = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("rechargers")).getKeys(false);
 			chargerNames.forEach((charname) -> {
 				sender.sendMessage("    " + ChatColor.GREEN + charname + ":");
-				sender.sendMessage("        world: " + plugin.getConfig().getString("rechargers." + charname + ".world"));
+				sender.sendMessage(
+						"        world: " + plugin.getConfig().getString("rechargers." + charname + ".world"));
 				sender.sendMessage("        x: " + plugin.getConfig().getString("rechargers." + charname + ".x"));
 				sender.sendMessage("        y: " + plugin.getConfig().getString("rechargers." + charname + ".y"));
 				sender.sendMessage("        z: " + plugin.getConfig().getString("rechargers." + charname + ".z"));

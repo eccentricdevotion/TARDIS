@@ -176,7 +176,8 @@ public class TARDISSiegeListener implements Listener {
 			TARDISMessage.send(p, "SIEGE_NO_TARDIS");
 			return;
 		}
-		if (!plugin.getPlanetsConfig().getBoolean("planets." + Objects.requireNonNull(p.getLocation().getWorld()).getName() + ".time_travel")) {
+		if (!plugin.getPlanetsConfig().getBoolean(
+				"planets." + Objects.requireNonNull(p.getLocation().getWorld()).getName() + ".time_travel")) {
 			event.setCancelled(true);
 			TARDISMessage.send(p, "SIEGE_NO_WORLD");
 			return;
@@ -322,7 +323,8 @@ public class TARDISSiegeListener implements Listener {
 				return;
 			}
 		}
-		int min = (plugin.getArtronConfig().getInt("full_charge") / 100) * plugin.getArtronConfig().getInt("siege_transfer");
+		int min = (plugin.getArtronConfig().getInt("full_charge") / 100) *
+				  plugin.getArtronConfig().getInt("siege_transfer");
 		if (!p.isSneaking()) {
 			// attempt to transfer Time Lord energy to the TARDIS
 			// check player has a prefs record
@@ -400,6 +402,7 @@ public class TARDISSiegeListener implements Listener {
 	}
 
 	private boolean hasSiegeCubeName(ItemStack is) {
-		return (is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName() && is.getItemMeta().getDisplayName().equals("tardis Siege Cube"));
+		return (is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName() &&
+				is.getItemMeta().getDisplayName().equals("tardis Siege Cube"));
 	}
 }

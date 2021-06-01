@@ -82,7 +82,8 @@ class TARDISRescueCommand {
 						}
 					}, 2L);
 				} else {
-					TARDISMessage.send(destPlayer, "RESCUE_REQUEST", who, ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET);
+					TARDISMessage.send(destPlayer, "RESCUE_REQUEST", who,
+							ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET);
 					plugin.getTrackerKeeper().getChat().put(savedUUID, player.getUniqueId());
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 						if (plugin.getTrackerKeeper().getChat().containsKey(savedUUID)) {

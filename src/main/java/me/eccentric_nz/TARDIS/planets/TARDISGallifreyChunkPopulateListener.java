@@ -82,7 +82,8 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 			// create structure
 			if (TARDISConstants.RANDOM.nextBoolean()) {
-				TARDISBuildGallifreyanStructure tbgs = new TARDISBuildGallifreyanStructure(plugin, chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
+				TARDISBuildGallifreyanStructure tbgs = new TARDISBuildGallifreyanStructure(plugin,
+						chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
 				int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tbgs, 1L, 1L);
 				tbgs.setTask(task);
 			}

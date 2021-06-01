@@ -51,7 +51,9 @@ public class IceBombListener implements Listener {
 			ProjectileSource shooter = snowball.getShooter();
 			if (shooter instanceof Player player) {
 				ItemStack is = player.getInventory().getItemInMainHand();
-				if (is.getType() == Material.SNOWBALL && is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName() && is.getItemMeta().getDisplayName().equals("Ice Bomb")) {
+				if (is.getType() == Material.SNOWBALL && is.hasItemMeta() &&
+					Objects.requireNonNull(is.getItemMeta()).hasDisplayName() &&
+					is.getItemMeta().getDisplayName().equals("Ice Bomb")) {
 					snowball.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, "Ice_Bomb");
 				}
 			}
@@ -61,7 +63,8 @@ public class IceBombListener implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onIceBombHit(ProjectileHitEvent event) {
 		Entity entity = event.getEntity();
-		if (entity instanceof Snowball && entity.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
+		if (entity instanceof Snowball &&
+			entity.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
 			Block block = event.getHitBlock();
 			if (block != null) {
 				Block up = block.getRelative(BlockFace.UP);

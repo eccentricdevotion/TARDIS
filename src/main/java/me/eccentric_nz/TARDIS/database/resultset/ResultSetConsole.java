@@ -69,7 +69,12 @@ public class ResultSetConsole {
 	public boolean locationData() {
 		PreparedStatement statement = null;
 		ResultSet rs = null;
-		String query = "SELECT " + prefix + "tardis.chameleon_preset, " + prefix + "current.*, " + prefix + "controls.location " + "FROM " + prefix + "tardis, " + prefix + "current, " + prefix + "controls " + "WHERE " + prefix + "controls.type = 22 AND " + prefix + "tardis.tardis_id = ? AND " + prefix + "tardis.abandoned = 0 " + "AND " + prefix + "tardis.tardis_id = " + prefix + "current.tardis_id " + "AND " + prefix + "tardis.tardis_id = " + prefix + "controls.tardis_id";
+		String query = "SELECT " + prefix + "tardis.chameleon_preset, " + prefix + "current.*, " + prefix +
+					   "controls.location " + "FROM " + prefix + "tardis, " + prefix + "current, " + prefix +
+					   "controls " + "WHERE " + prefix + "controls.type = 22 AND " + prefix +
+					   "tardis.tardis_id = ? AND " + prefix + "tardis.abandoned = 0 " + "AND " + prefix +
+					   "tardis.tardis_id = " + prefix + "current.tardis_id " + "AND " + prefix + "tardis.tardis_id = " +
+					   prefix + "controls.tardis_id";
 		try {
 			service.testConnection(connection);
 			statement = connection.prepareStatement(query);
@@ -122,7 +127,10 @@ public class ResultSetConsole {
 	public boolean artronData() {
 		PreparedStatement statement = null;
 		ResultSet rs = null;
-		String query = "SELECT " + prefix + "tardis.artron_level, " + prefix + "controls.location " + "FROM " + prefix + "tardis, " + prefix + "controls " + "WHERE " + prefix + "controls.type = 22 AND " + prefix + "tardis.tardis_id = ? AND " + prefix + "tardis.abandoned = 0 " + "AND " + prefix + "tardis.tardis_id = " + prefix + "controls.tardis_id";
+		String query = "SELECT " + prefix + "tardis.artron_level, " + prefix + "controls.location " + "FROM " + prefix +
+					   "tardis, " + prefix + "controls " + "WHERE " + prefix + "controls.type = 22 AND " + prefix +
+					   "tardis.tardis_id = ? AND " + prefix + "tardis.abandoned = 0 " + "AND " + prefix +
+					   "tardis.tardis_id = " + prefix + "controls.tardis_id";
 		try {
 			service.testConnection(connection);
 			statement = connection.prepareStatement(query);

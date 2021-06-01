@@ -97,7 +97,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 								TARDISMessage.send(player, "ENERGY_NO_INIT");
 								return;
 							}
-							if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered() && slot != 6 && slot != 13 && slot != 20) {
+							if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered() && slot != 6 &&
+								slot != 13 && slot != 20) {
 								TARDISMessage.send(player, "POWER_DOWN");
 								return;
 							}
@@ -137,7 +138,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 										TARDISMessage.send(player, "SIEGE_NO_CONTROL");
 										return;
 									}
-									if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
+									if (tcc != null && !tcc.hasInput() &&
+										!plugin.getUtils().inGracePeriod(player, false)) {
 										TARDISMessage.send(player, "INPUT_MISSING");
 										return;
 									}
@@ -161,12 +163,14 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 										TARDISMessage.send(player, "NO_PERM_ROOMS");
 										return;
 									}
-									if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
+									if (tcc != null && !tcc.hasARS() &&
+										!plugin.getUtils().inGracePeriod(player, true)) {
 										TARDISMessage.send(player, "ARS_MISSING");
 										return;
 									}
 									ItemStack[] tars = new TARDISARSInventory(plugin).getARS();
-									Inventory ars = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
+									Inventory ars = plugin.getServer().createInventory(player, 54,
+											ChatColor.DARK_RED + "Architectural Reconfiguration");
 									ars.setContents(tars);
 									player.openInventory(ars);
 									break;
@@ -186,7 +190,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 									}
 									// open Chameleon Circuit GUI
 									ItemStack[] cc = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
-									Inventory cc_gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
+									Inventory cc_gui = plugin.getServer().createInventory(player, 27,
+											ChatColor.DARK_RED + "Chameleon Circuit");
 									cc_gui.setContents(cc);
 									player.openInventory(cc_gui);
 									break;
@@ -231,7 +236,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 									}
 									TARDISSaveSignInventory tssi = new TARDISSaveSignInventory(plugin, tardis.getTardisId(), player);
 									ItemStack[] saves = tssi.getTerminal();
-									Inventory saved = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves");
+									Inventory saved = plugin.getServer().createInventory(player, 54,
+											ChatColor.DARK_RED + "tardis saves");
 									saved.setContents(saves);
 									player.openInventory(saved);
 									break;
@@ -263,7 +269,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 									break;
 								case 17:
 									//player prefs
-									Inventory ppm = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "Player Prefs Menu");
+									Inventory ppm = plugin.getServer().createInventory(player, 36,
+											ChatColor.DARK_RED + "Player Prefs Menu");
 									ppm.setContents(new TARDISPrefsMenuInventory(plugin, player.getUniqueId()).getMenu());
 									player.openInventory(ppm);
 									break;
@@ -273,7 +280,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 										TARDISMessage.send(player, "SIEGE_NO_CONTROL");
 										return;
 									}
-									if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
+									if (tcc != null && !tcc.hasInput() &&
+										!plugin.getUtils().inGracePeriod(player, false)) {
 										TARDISMessage.send(player, "INPUT_MISSING");
 										return;
 									}
@@ -313,7 +321,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 									}
 									String[] companionData = comps.split(":");
 									ItemStack[] heads = new TARDISCompanionInventory(plugin, companionData).getSkulls();
-									Inventory companions = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Companions");
+									Inventory companions = plugin.getServer().createInventory(player, 54,
+											ChatColor.DARK_RED + "Companions");
 									companions.setContents(heads);
 									player.openInventory(companions);
 									break;
@@ -329,7 +338,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 									}
 									TARDISAreasInventory tai = new TARDISAreasInventory(plugin, player);
 									ItemStack[] areas = tai.getTerminal();
-									Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis areas");
+									Inventory areainv = plugin.getServer().createInventory(player, 54,
+											ChatColor.DARK_RED + "tardis areas");
 									areainv.setContents(areas);
 									player.openInventory(areainv);
 									break;
@@ -339,7 +349,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 										TARDISMessage.send(player, "SIEGE_NO_CONTROL");
 										return;
 									}
-									if (!lightsOn && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
+									if (!lightsOn && plugin.getConfig().getBoolean("allow.power_down") &&
+										!tardis.isPowered()) {
 										TARDISMessage.send(player, "POWER_DOWN");
 										return;
 									}
@@ -358,7 +369,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 								case 33:
 									// transmat
 									ItemStack[] tran = new TARDISTransmatInventory(plugin, id).getMenu();
-									Inventory smat = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis transmats");
+									Inventory smat = plugin.getServer().createInventory(player, 54,
+											ChatColor.DARK_RED + "tardis transmats");
 									smat.setContents(tran);
 									player.openInventory(smat);
 									break;
@@ -372,12 +384,14 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 										TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
 										return;
 									}
-									if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
+									if (tcc != null && !tcc.hasInput() &&
+										!plugin.getUtils().inGracePeriod(player, false)) {
 										TARDISMessage.send(player, "INPUT_MISSING");
 										return;
 									}
 									ItemStack[] items = new TARDISTerminalInventory(plugin).getTerminal();
-									Inventory aec = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Destination Terminal");
+									Inventory aec = plugin.getServer().createInventory(player, 54,
+											ChatColor.DARK_RED + "Destination Terminal");
 									aec.setContents(items);
 									player.openInventory(aec);
 									break;
@@ -420,7 +434,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 									break;
 								case 47:
 									// tardis map
-									Inventory new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis Map");
+									Inventory new_inv = plugin.getServer().createInventory(player, 54,
+											ChatColor.DARK_RED + "tardis Map");
 									// open new inventory
 									new_inv.setContents(new TARDISARSMap(plugin).getMap());
 									player.openInventory(new_inv);
@@ -431,12 +446,14 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
 										TARDISMessage.send(player, "NO_PERM_TEMPORAL");
 										return;
 									}
-									if (tcc != null && !tcc.hasTemporal() && !plugin.getUtils().inGracePeriod(player, false)) {
+									if (tcc != null && !tcc.hasTemporal() &&
+										!plugin.getUtils().inGracePeriod(player, false)) {
 										TARDISMessage.send(player, "TEMP_MISSING");
 										return;
 									}
 									ItemStack[] clocks = new TARDISTemporalLocatorInventory(plugin).getTemporal();
-									Inventory tmpl = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Temporal Locator");
+									Inventory tmpl = plugin.getServer().createInventory(player, 27,
+											ChatColor.DARK_RED + "Temporal Locator");
 									tmpl.setContents(clocks);
 									player.openInventory(tmpl);
 									break;

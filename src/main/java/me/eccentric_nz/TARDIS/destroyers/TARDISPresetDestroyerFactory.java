@@ -70,7 +70,8 @@ public class TARDISPresetDestroyerFactory {
 			}
 			if (!demat.equals(PRESET.INVISIBLE)) {
 				Material cham_id = Material.LIGHT_GRAY_TERRACOTTA;
-				if ((tardis.getAdaption().equals(Adaption.BIOME) && demat.equals(PRESET.FACTORY)) || demat.equals(PRESET.SUBMERGED) || tardis.getAdaption().equals(Adaption.BLOCK)) {
+				if ((tardis.getAdaption().equals(Adaption.BIOME) && demat.equals(PRESET.FACTORY)) ||
+					demat.equals(PRESET.SUBMERGED) || tardis.getAdaption().equals(Adaption.BLOCK)) {
 					Block chameleonBlock;
 					// chameleon circuit is on - get block under tardis
 					if (dd.getLocation().getBlock().getType() == Material.SNOW) {
@@ -85,7 +86,8 @@ public class TARDISPresetDestroyerFactory {
 				int loops = dd.getThrottle().getLoops();
 				if (loops == 3) {
 					TARDISSounds.playTARDISSound(dd.getLocation(), "tardis_takeoff_fast");
-					if (dd.getPlayer() != null && dd.getPlayer().getPlayer() != null && plugin.getUtils().inTARDISWorld(dd.getPlayer().getPlayer())) {
+					if (dd.getPlayer() != null && dd.getPlayer().getPlayer() != null &&
+						plugin.getUtils().inTARDISWorld(dd.getPlayer().getPlayer())) {
 						TARDISSounds.playTARDISSound(dd.getPlayer().getPlayer().getLocation(), "tardis_takeoff_fast");
 					}
 				}
@@ -249,7 +251,8 @@ public class TARDISPresetDestroyerFactory {
 			default -> 2;
 		};
 		assert w != null;
-		TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, Material.AIR);
+		TARDISBlockSetters.setBlock(w,
+				l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, Material.AIR);
 		if (p.equals(PRESET.SWAMP)) {
 			TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, Material.AIR);
 		}

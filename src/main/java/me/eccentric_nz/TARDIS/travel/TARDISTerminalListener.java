@@ -124,22 +124,26 @@ public class TARDISTerminalListener implements Listener {
 							break;
 						case 36:
 							// current world
-							terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
+							terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ?
+									terminalWorlds.get(uuid) + 1 : 0);
 							setCurrent(view, player, 36);
 							break;
 						case 38:
 							// normal
-							terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
+							terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ?
+									terminalWorlds.get(uuid) + 1 : 0);
 							setCurrent(view, player, 38);
 							break;
 						case 40:
 							// nether
-							terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
+							terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ?
+									terminalWorlds.get(uuid) + 1 : 0);
 							setCurrent(view, player, 40);
 							break;
 						case 42:
 							// the end
-							terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ? terminalWorlds.get(uuid) + 1 : 0);
+							terminalWorlds.put(uuid, terminalWorlds.containsKey(uuid) ?
+									terminalWorlds.get(uuid) + 1 : 0);
 							setCurrent(view, player, 42);
 							break;
 						case 44:
@@ -173,7 +177,9 @@ public class TARDISTerminalListener implements Listener {
 									new TARDISLand(plugin, terminalIDs.get(uuid), player).exitVortex();
 								}
 								// damage the circuit if configured
-								if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.input") > 0) {
+								if (plugin.getConfig().getBoolean("circuits.damage") &&
+									!plugin.getDifficulty().equals(Difficulty.EASY) &&
+									plugin.getConfig().getInt("circuits.uses.input") > 0) {
 									TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, terminalIDs.get(uuid));
 									tcc.getCircuits();
 									// decrement uses
@@ -326,7 +332,8 @@ public class TARDISTerminalListener implements Listener {
 						break;
 					case 40:
 						// get a nether world
-						if (plugin.getConfig().getBoolean("travel.nether") || !plugin.getConfig().getBoolean("travel.terminal.redefine")) {
+						if (plugin.getConfig().getBoolean("travel.nether") ||
+							!plugin.getConfig().getBoolean("travel.terminal.redefine")) {
 							lore = Collections.singletonList(getWorld("NETHER", current, p));
 						} else {
 							lore = Collections.singletonList(getWorld(plugin.getConfig().getString("travel.terminal.nether"), current, p));
@@ -334,7 +341,8 @@ public class TARDISTerminalListener implements Listener {
 						break;
 					case 42:
 						// get an end world
-						if (plugin.getConfig().getBoolean("travel.the_end") || !plugin.getConfig().getBoolean("travel.terminal.redefine")) {
+						if (plugin.getConfig().getBoolean("travel.the_end") ||
+							!plugin.getConfig().getBoolean("travel.terminal.redefine")) {
 							lore = Collections.singletonList(getWorld("THE_END", current, p));
 						} else {
 							lore = Collections.singletonList(getWorld(plugin.getConfig().getString("travel.terminal.the_end"), current, p));
@@ -379,7 +387,8 @@ public class TARDISTerminalListener implements Listener {
 			if (ww != null) {
 				String env = ww.getEnvironment().toString();
 				if (e.equalsIgnoreCase(env)) {
-					if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
+					if (plugin.getConfig().getBoolean("travel.include_default_world") ||
+						!plugin.getConfig().getBoolean("creation.default_world")) {
 						if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
 							allowedWorlds.add(o);
 						}
@@ -390,11 +399,13 @@ public class TARDISTerminalListener implements Listener {
 					}
 				}
 				// remove the world the Police Box is in
-				if (this_world != null && (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + this_world + ".time_travel"))) {
+				if (this_world != null && (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean(
+						"planets." + this_world + ".time_travel"))) {
 					allowedWorlds.remove(this_world);
 				}
 				// remove the world if the player doesn't have permission
-				if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !TARDISPermission.hasPermission(p, "tardis.travel." + o)) {
+				if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") &&
+					!TARDISPermission.hasPermission(p, "tardis.travel." + o)) {
 					allowedWorlds.remove(this_world);
 				}
 			}
@@ -417,7 +428,8 @@ public class TARDISTerminalListener implements Listener {
 	private void checkSettings(InventoryView view, Player p) {
 		UUID uuid = p.getUniqueId();
 		// get x, z, m settings
-		int slotm = getValue(34, getSlot(view, 28, 34), false, uuid) * plugin.getConfig().getInt("travel.terminal_step");
+		int slotm =
+				getValue(34, getSlot(view, 28, 34), false, uuid) * plugin.getConfig().getInt("travel.terminal_step");
 		int slotx = getValue(16, getSlot(view, 10, 16), true, uuid) * slotm;
 		int slotz = getValue(25, getSlot(view, 19, 25), true, uuid) * slotm;
 		List<String> lore = new ArrayList<>();
@@ -473,7 +485,8 @@ public class TARDISTerminalListener implements Listener {
 							break;
 						case NETHER:
 							if (tt.safeNether(w, slotx, slotz, d, p)) {
-								String save = world + ":" + slotx + ":" + plugin.getUtils().getHighestNetherBlock(w, slotx, slotz) + ":" + slotz;
+								String save = world + ":" + slotx + ":" +
+											  plugin.getUtils().getHighestNetherBlock(w, slotx, slotz) + ":" + slotz;
 								terminalDestination.put(uuid, save);
 								lore.add(save);
 								lore.add("is a valid destination!");
@@ -495,7 +508,8 @@ public class TARDISTerminalListener implements Listener {
 							ItemMeta subim = Objects.requireNonNull(view.getItem(44)).getItemMeta();
 							loc.setY(starty);
 							assert subim != null;
-							if (subim.hasLore() && Objects.requireNonNull(subim.getLore()).get(0).equals("true") && TARDISStaticUtils.isOceanBiome(TARDISStaticUtils.getBiomeAt(loc))) {
+							if (subim.hasLore() && Objects.requireNonNull(subim.getLore()).get(0).equals("true") &&
+								TARDISStaticUtils.isOceanBiome(TARDISStaticUtils.getBiomeAt(loc))) {
 								Location subloc = tt.submarine(loc.getBlock(), d);
 								if (subloc != null) {
 									safe = 0;

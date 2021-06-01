@@ -142,7 +142,8 @@ public class TARDISHandlesProcessor {
 										whered.put("door_type", 0);
 										ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
 										if (rsd.resultSet()) {
-											if ((next.equals(TARDISHandlesBlock.LOCK) && !rsd.isLocked()) || (next.equals(TARDISHandlesBlock.UNLOCK) && rsd.isLocked())) {
+											if ((next.equals(TARDISHandlesBlock.LOCK) && !rsd.isLocked()) ||
+												(next.equals(TARDISHandlesBlock.UNLOCK) && rsd.isLocked())) {
 												String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
 												int locked = (rsd.isLocked()) ? 0 : 1;
 												HashMap<String, Object> setl = new HashMap<>();
@@ -202,7 +203,8 @@ public class TARDISHandlesProcessor {
 								}
 								break;
 							case SIEGE:
-								if ((next.equals(TARDISHandlesBlock.ON) && !tardis.isSiegeOn()) || (next.equals(TARDISHandlesBlock.OFF) && tardis.isSiegeOn())) {
+								if ((next.equals(TARDISHandlesBlock.ON) && !tardis.isSiegeOn()) ||
+									(next.equals(TARDISHandlesBlock.OFF) && tardis.isSiegeOn())) {
 									new TARDISSiegeMode(plugin).toggleViaSwitch(id, player);
 								}
 								break;
@@ -331,10 +333,14 @@ public class TARDISHandlesProcessor {
 												wherea.put("area_name", first);
 												ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
 												if (!rsa.resultSet()) {
-													TARDISMessage.handlesSend(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+													TARDISMessage.handlesSend(player, "AREA_NOT_FOUND",
+															ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
 													continue;
 												}
-												if ((!TARDISPermission.hasPermission(player, "tardis.area." + first) && !TARDISPermission.hasPermission(player, "tardis.area.*")) || (!player.isPermissionSet("tardis.area." + first) && !player.isPermissionSet("tardis.area.*"))) {
+												if ((!TARDISPermission.hasPermission(player, "tardis.area." + first) &&
+													 !TARDISPermission.hasPermission(player, "tardis.area.*")) ||
+													(!player.isPermissionSet("tardis.area." + first) &&
+													 !player.isPermissionSet("tardis.area.*"))) {
 													TARDISMessage.handlesSend(player, "TRAVEL_NO_AREA_PERM", first);
 													continue;
 												}
@@ -388,7 +394,8 @@ public class TARDISHandlesProcessor {
 													int[] start_loc = TARDISTimeTravel.getStartLocation(nsob, direction);
 													int tmp_y = nsob.getBlockY();
 													for (int up = 0; up < 10; up++) {
-														int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], nsob.getWorld(), direction);
+														int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y +
+																												up, start_loc[2], start_loc[1], start_loc[3], nsob.getWorld(), direction);
 														if (count == 0) {
 															nsob.setY(tmp_y + up);
 															break;
@@ -420,19 +427,24 @@ public class TARDISHandlesProcessor {
 													}
 													Location player_loc = to.getLocation();
 													if (!plugin.getTardisArea().areaCheckInExisting(player_loc)) {
-														TARDISMessage.handlesSend(player, "PLAYER_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
+														TARDISMessage.handlesSend(player, "PLAYER_IN_AREA",
+																ChatColor.AQUA + "/tardistravel area [area name]");
 														continue;
 													}
 													if (!plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, Flag.getDefaultFlags()))) {
 														continue;
 													}
-													if (!plugin.getPlanetsConfig().getBoolean("planets." + Objects.requireNonNull(player_loc.getWorld()).getName() + ".time_travel")) {
+													if (!plugin.getPlanetsConfig().getBoolean("planets." +
+																							  Objects.requireNonNull(player_loc.getWorld()).getName() +
+																							  ".time_travel")) {
 														TARDISMessage.handlesSend(player, "NO_WORLD_TRAVEL");
 														continue;
 													}
 													World w = player_loc.getWorld();
 													int[] start_loc = TARDISTimeTravel.getStartLocation(player_loc, direction);
-													int count = TARDISTimeTravel.safeLocation(start_loc[0] - 3, player_loc.getBlockY(), start_loc[2], start_loc[1] - 3, start_loc[3], w, direction);
+													int count = TARDISTimeTravel.safeLocation(
+															start_loc[0] - 3, player_loc.getBlockY(), start_loc[2],
+															start_loc[1] - 3, start_loc[3], w, direction);
 													if (count > 0) {
 														TARDISMessage.handlesSend(player, "RESCUE_NOT_SAFE");
 														continue;
@@ -448,7 +460,8 @@ public class TARDISHandlesProcessor {
 													int sx = TARDISNumberParsers.parseInt(lore.get(2));
 													int sy = TARDISNumberParsers.parseInt(lore.get(3));
 													int sz = TARDISNumberParsers.parseInt(lore.get(4));
-													if (Objects.requireNonNull(current.getWorld()).getName().equals(lore.get(1)) && current.getBlockX() == sx && current.getBlockZ() == sz) {
+													if (Objects.requireNonNull(current.getWorld()).getName().equals(lore.get(1)) &&
+														current.getBlockX() == sx && current.getBlockZ() == sz) {
 														continue;
 													}
 													TARDISMessage.handlesSend(player, "LOC_SET");
@@ -464,7 +477,10 @@ public class TARDISHandlesProcessor {
 										if (goto_loc != null) {
 											plugin.getTrackerKeeper().getHasDestination().put(id, travel);
 											plugin.getTrackerKeeper().getRescue().remove(id);
-											if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
+											if (plugin.getConfig().getBoolean("circuits.damage") &&
+												!plugin.getDifficulty().equals(Difficulty.EASY) &&
+												plugin.getConfig().getInt("circuits.uses.memory") > 0 &&
+												!plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
 												plugin.getTrackerKeeper().getHasNotClickedHandbrake().add(id);
 												TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
 												tcc.getCircuits();
@@ -563,7 +579,8 @@ public class TARDISHandlesProcessor {
 								player.performCommand("tardis rebuild");
 								break;
 							case SCAN:
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id);
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"handles scan " + uuid + " " + id);
 								break;
 							case COMEHERE:
 								new TARDISHandlesTeleportCommand(plugin).beamMeUp(player);
@@ -571,11 +588,13 @@ public class TARDISHandlesProcessor {
 							case TAKE_OFF:
 								// player must be in TARDIS
 								if (plugin.getUtils().inTARDISWorld(player.getLocation())) {
-									plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid + " " + id);
+									plugin.getServer().dispatchCommand(plugin.getConsole(),
+											"handles takeoff " + uuid + " " + id);
 								}
 								break;
 							case LAND:
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "handles land " + uuid + " " + id);
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"handles land " + uuid + " " + id);
 								break;
 						}
 					}
@@ -657,7 +676,8 @@ public class TARDISHandlesProcessor {
 		ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
 		if (rsa.resultSet()) {
 			String area = rsa.getArea().getAreaName();
-			if (!TARDISPermission.hasPermission(player, "tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
+			if (!TARDISPermission.hasPermission(player, "tardis.area." + area) ||
+				!player.isPermissionSet("tardis.area." + area)) {
 				return null;
 			}
 			l = plugin.getTardisArea().getNextSpot(area);

@@ -106,7 +106,8 @@ class TARDISHandlesScanCommand {
 					}
 				}
 				if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-					if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
+					if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) ||
+						et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
 						EntityEquipment ee = ((LivingEntity) k).getEquipment();
 						assert ee != null;
 						if (ee.getHelmet() != null) {
@@ -146,7 +147,9 @@ class TARDISHandlesScanCommand {
 							}
 						}
 					}
-					if (et.equals(EntityType.ENDERMAN) && k.getPassengers().size() > 0 && k.getPassengers().get(0) != null && k.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
+					if (et.equals(EntityType.ENDERMAN) && k.getPassengers().size() > 0 &&
+						k.getPassengers().get(0) != null &&
+						k.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
 						// silent
 						et = EntityType.SPLASH_POTION;
 					}
@@ -194,7 +197,8 @@ class TARDISHandlesScanCommand {
 			worldname = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());
 		}
 		TARDISMessage.handlesSend(player, "SCAN_WORLD", worldname);
-		TARDISMessage.handlesSend(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
+		TARDISMessage.handlesSend(player, "SONIC_COORDS",
+				scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
 		BukkitScheduler bsched = plugin.getServer().getScheduler();
 		bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_DIRECTION", tardisDirection.toString()), 20L);
 		// get biome
@@ -213,7 +217,8 @@ class TARDISHandlesScanCommand {
 		}
 		String biome = tmb.name();
 		bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "BIOME_TYPE", biome), 40L);
-		bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_TIME", daynight + " / " + time), 60L);
+		bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.handlesSend(player, "SCAN_TIME",
+				daynight + " / " + time), 60L);
 		// get weather
 		String weather = switch (biome) {
 			case "DESERT", "DESERT_HILLS", "DESERT_LAKES", "SAVANNA", "SAVANNA_PLATEAU", "SHATTERED_SAVANNA", "SHATTERED_SAVANNA_PLATEAU", "BADLANDS", "BADLANDS_PLATEAU", "ERODED_BADLANDS", "MODIFIED_BADLANDS_PLATEAU", "MODIFIED_WOODED_BADLANDS_PLATEAU", "WOODED_BADLANDS_PLATEAU" -> plugin.getLanguage().getString("WEATHER_DRY");
@@ -257,7 +262,8 @@ class TARDISHandlesScanCommand {
 				TARDISMessage.handlesSend(player, "SCAN_NONE");
 			}
 			// damage the circuit if configured
-			if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
+			if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) &&
+				plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
 				TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
 				tcc.getCircuits();
 				// decrement uses

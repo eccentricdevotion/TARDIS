@@ -55,21 +55,27 @@ public class TARDISBlockPhysicsListener implements Listener {
 			if (state instanceof TrapDoor) {
 				Block blockBehind = getBlockBehindAttachable(block, ((TrapDoor) state).getFacing());
 				if (blockBehind != null) {
-					if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || TARDISMaterials.stained_glass.contains(blockBehind.getType())) {
+					if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) ||
+						TARDISMaterials.stained_glass.contains(blockBehind.getType())) {
 						event.setCancelled(true);
 					}
 				}
 			}
 			if (state instanceof Door) {
 				Block blockBelow = getBlockBelow(block);
-				if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || Tag.DOORS.isTagged(blockBelow.getType()) || TARDISMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().isAir() || blockBelow.getType().equals(Material.SEA_LANTERN)) {
+				if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) ||
+					Tag.DOORS.isTagged(blockBelow.getType()) ||
+					TARDISMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().isAir() ||
+					blockBelow.getType().equals(Material.SEA_LANTERN)) {
 					event.setCancelled(true);
 				}
 			}
 			if (block.getType().equals(Material.VINE)) {
 				event.setCancelled(true);
 			}
-		} else if (block.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || block.getType().equals(Material.RED_MUSHROOM_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
+		} else if (block.getType().equals(Material.BROWN_MUSHROOM_BLOCK) ||
+				   block.getType().equals(Material.RED_MUSHROOM_BLOCK) ||
+				   block.getType().equals(Material.MUSHROOM_STEM)) {
 			event.setCancelled(true);
 			event.getBlock().getState().update(true, false);
 		}

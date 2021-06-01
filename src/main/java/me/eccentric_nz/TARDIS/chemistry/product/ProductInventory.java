@@ -42,7 +42,10 @@ public class ProductInventory {
 		ItemMeta info_im = info.getItemMeta();
 		assert info_im != null;
 		info_im.setDisplayName("Info");
-		info_im.setLore(Arrays.asList("Combine elements and compounds", "to create sparklers, balloons,", "lamps, and glow sticks.", "To see a product formula", "use the " + ChatColor.GREEN + ChatColor.ITALIC + "/tardischemistry formula" + ChatColor.DARK_PURPLE + ChatColor.ITALIC + " command.", "Place items like you would", "in a crafting table", "in the 9 left slots."));
+		info_im.setLore(Arrays.asList("Combine elements and compounds", "to create sparklers, balloons,", "lamps, and glow sticks.", "To see a product formula",
+				"use the " + ChatColor.GREEN + ChatColor.ITALIC + "/tardischemistry formula" + ChatColor.DARK_PURPLE +
+				ChatColor.ITALIC +
+				" command.", "Place items like you would", "in a crafting table", "in the 9 left slots."));
 		info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
 		info.setItemMeta(info_im);
 		stack[8] = info;

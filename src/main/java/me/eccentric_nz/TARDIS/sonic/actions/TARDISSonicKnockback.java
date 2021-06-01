@@ -42,8 +42,10 @@ public class TARDISSonicKnockback {
 				TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
 				TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
 				TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
-				if (target != player && TARDISSonicFreeze.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
-					if (hit == null || hit.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
+				if (target != player &&
+					TARDISSonicFreeze.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
+					if (hit == null || hit.getLocation().distanceSquared(observerPos) >
+									   target.getLocation().distanceSquared(observerPos)) {
 						hit = target;
 					}
 				}

@@ -122,7 +122,8 @@ public class TARDISWallConverter {
 			if (i > 0) {
 				ps.executeBatch();
 				connection.commit();
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " archive wall block data records");
+				plugin.getConsole().sendMessage(
+						plugin.getPluginName() + "Converted " + i + " archive wall block data records");
 			}
 			plugin.getConfig().set("conversions.archive_wall_data", true);
 			plugin.saveConfig();

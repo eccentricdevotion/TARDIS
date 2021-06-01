@@ -97,14 +97,16 @@ class TARDISDematerialisePreset implements Runnable {
 		}
 		BlockData[][] data;
 		// get relative locations
-		int x = dd.getLocation().getBlockX(), plusx = dd.getLocation().getBlockX() + 1, minusx = dd.getLocation().getBlockX() - 1;
+		int x = dd.getLocation().getBlockX(), plusx = dd.getLocation().getBlockX() + 1, minusx =
+				dd.getLocation().getBlockX() - 1;
 		int y;
 		if (preset.equals(PRESET.SUBMERGED)) {
 			y = dd.getLocation().getBlockY() - 1;
 		} else {
 			y = dd.getLocation().getBlockY();
 		}
-		int z = dd.getLocation().getBlockZ(), plusz = dd.getLocation().getBlockZ() + 1, minusz = dd.getLocation().getBlockZ() - 1;
+		int z = dd.getLocation().getBlockZ(), plusz = dd.getLocation().getBlockZ() + 1, minusz =
+				dd.getLocation().getBlockZ() - 1;
 		World world = dd.getLocation().getWorld();
 		if (i < loops) {
 			i++;
@@ -224,7 +226,8 @@ class TARDISDematerialisePreset implements Runnable {
 							sound = "junk_takeoff";
 						} else {
 							sound = switch (spaceTimeThrottle) {
-								case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
+								case WARP, RAPID, FASTER -> "tardis_takeoff_" +
+															spaceTimeThrottle.toString().toLowerCase();
 								default -> // NORMAL
 										"tardis_takeoff";
 							};
@@ -379,7 +382,8 @@ class TARDISDematerialisePreset implements Runnable {
 							case WARPED_DOOR:
 							case WARPED_TRAPDOOR:
 							case WARPED_WALL_SIGN:
-								if (preset.equals(PRESET.SWAMP) || preset.equals(PRESET.TOPSYTURVEY) || preset.equals(PRESET.JAIL)) {
+								if (preset.equals(PRESET.SWAMP) || preset.equals(PRESET.TOPSYTURVEY) ||
+									preset.equals(PRESET.JAIL)) {
 									assert world != null;
 									TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.AIR);
 								}

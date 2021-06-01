@@ -20,7 +20,10 @@ import org.bukkit.Bukkit;
 
 public enum WorldManager {
 
-	MULTIVERSE, MULTIWORLD, MYWORLDS, NONE;
+	MULTIVERSE,
+	MULTIWORLD,
+	MYWORLDS,
+	NONE;
 
 	public static WorldManager getWorldManager() {
 		if (Bukkit.getPluginManager().isPluginEnabled("Multiverse-Core")) {

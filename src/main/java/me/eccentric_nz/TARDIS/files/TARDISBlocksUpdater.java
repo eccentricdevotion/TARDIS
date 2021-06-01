@@ -178,7 +178,9 @@ public class TARDISBlocksUpdater {
 		try {
 			blocks_config.save(new File(plugin.getDataFolder(), "blocks.yml"));
 			if (i > 0) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to blocks.yml");
+				plugin.getConsole().sendMessage(
+						plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET +
+						" new items to blocks.yml");
 			}
 		} catch (IOException io) {
 			plugin.debug("Could not save blocks.yml, " + io.getMessage());

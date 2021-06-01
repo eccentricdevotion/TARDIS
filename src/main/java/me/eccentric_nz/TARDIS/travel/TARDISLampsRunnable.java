@@ -67,7 +67,8 @@ class TARDISLampsRunnable implements Runnable {
 			// set all lamps back to whatever they were when the malfunction happened
 			if (lightsOn) {
 				lamps.forEach((b) -> {
-					if (b.getType().equals(Material.MUSHROOM_STEM) || b.getType().equals(Material.SPONGE) || b.getType().equals(Material.BLACK_WOOL)) {
+					if (b.getType().equals(Material.MUSHROOM_STEM) || b.getType().equals(Material.SPONGE) ||
+						b.getType().equals(Material.BLACK_WOOL)) {
 						b.setBlockData(light);
 					}
 				});
@@ -95,7 +96,8 @@ class TARDISLampsRunnable implements Runnable {
 					} else {
 						b.setBlockData(MUSHROOM);
 					}
-				} else if (b.getType().equals(Material.MUSHROOM_STEM) || b.getType().equals(Material.SPONGE) || b.getType().equals(Material.BLACK_WOOL)) {
+				} else if (b.getType().equals(Material.MUSHROOM_STEM) || b.getType().equals(Material.SPONGE) ||
+						   b.getType().equals(Material.BLACK_WOOL)) {
 					b.setBlockData(light);
 				}
 			});

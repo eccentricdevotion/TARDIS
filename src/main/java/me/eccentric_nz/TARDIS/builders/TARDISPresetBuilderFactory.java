@@ -114,7 +114,8 @@ public class TARDISPresetBuilderFactory {
 			}
 			PRESET demat = tardis.getDemat();
 			Material chameleonMaterial = Material.LIGHT_GRAY_TERRACOTTA;
-			if ((tardis.getAdaption().equals(Adaption.BIOME) && preset.equals(PRESET.FACTORY)) || tardis.getAdaption().equals(Adaption.BLOCK) || preset.equals(PRESET.SUBMERGED)) {
+			if ((tardis.getAdaption().equals(Adaption.BIOME) && preset.equals(PRESET.FACTORY)) ||
+				tardis.getAdaption().equals(Adaption.BLOCK) || preset.equals(PRESET.SUBMERGED)) {
 				Block chameleonBlock;
 				// chameleon circuit is on - get block under tardis
 				if (bd.getLocation().getBlock().getType() == Material.SNOW) {

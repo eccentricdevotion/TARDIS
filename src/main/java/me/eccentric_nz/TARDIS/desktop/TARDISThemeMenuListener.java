@@ -90,7 +90,8 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
 								Schematic schm = Consoles.schematicFor(perm);
 								TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
 								int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
-								int needed = (tud.getPrevious().getPermission().equals(schm.getPermission())) ? upgrade / 2 : upgrade;
+								int needed = (tud.getPrevious().getPermission().equals(schm.getPermission())) ?
+										upgrade / 2 : upgrade;
 								if (tud.getLevel() >= needed) {
 									tud.setSchematic(schm);
 									plugin.getTrackerKeeper().getUpgrades().put(p.getUniqueId(), tud);
@@ -106,7 +107,8 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
 				}
 			} else {
 				ClickType click = event.getClick();
-				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) ||
+					click.equals(ClickType.DOUBLE_CLICK)) {
 					event.setCancelled(true);
 				}
 			}

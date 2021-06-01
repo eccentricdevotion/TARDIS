@@ -51,7 +51,8 @@ public class RoomRequiredLister {
 				} else {
 					bkey = entry.getKey();
 				}
-				int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
+				int tmp = Math.round(
+						(entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
 				int amount = (tmp > 0) ? tmp : 1;
 				if (item_counts.containsKey(bkey)) {
 					item_counts.put(bkey, item_counts.get(bkey) + amount);
@@ -77,7 +78,8 @@ public class RoomRequiredLister {
 			if (total == 0) {
 				TARDISMessage.send(player, "CONDENSE_NONE");
 			}
-			TARDISMessage.send(player, "ROOM_ENERGY", name, plugin.getRoomsConfig().getString("rooms." + name + ".cost"));
+			TARDISMessage.send(player, "ROOM_ENERGY", name, plugin.getRoomsConfig().getString(
+					"rooms." + name + ".cost"));
 		} else {
 			TARDISMessage.send(player, "ID_NOT_FOUND");
 		}

@@ -96,7 +96,8 @@ public class BalloonListener implements Listener {
 
 	@EventHandler(ignoreCancelled = true)
 	public void onPlayerMoveBalloon(InventoryClickEvent event) {
-		if (isBalloon(event.getCursor()) || isBalloon(event.getCurrentItem()) || event.getClick() == ClickType.NUMBER_KEY) {
+		if (isBalloon(event.getCursor()) || isBalloon(event.getCurrentItem()) ||
+			event.getClick() == ClickType.NUMBER_KEY) {
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 				Player player = (Player) event.getWhoClicked();
 				int factor = 1;
@@ -117,7 +118,9 @@ public class BalloonListener implements Listener {
 	}
 
 	private boolean isBalloon(ItemStack is) {
-		return is != null && is.getType().equals(Material.CORNFLOWER) && is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasCustomModelData() && isInDataRange(is.getItemMeta().getCustomModelData());
+		return is != null && is.getType().equals(Material.CORNFLOWER) && is.hasItemMeta() &&
+			   Objects.requireNonNull(is.getItemMeta()).hasCustomModelData() &&
+			   isInDataRange(is.getItemMeta().getCustomModelData());
 	}
 
 	private boolean isInDataRange(int custom) {

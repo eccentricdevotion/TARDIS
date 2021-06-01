@@ -128,7 +128,8 @@ public class TARDISDematerialiseToVortex implements Runnable {
 				if (!minecart) {
 					if (!preset.equals(PRESET.JUNK_MODE)) {
 						String sound;
-						if (plugin.getTrackerKeeper().getMalfunction().get(id) && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+						if (plugin.getTrackerKeeper().getMalfunction().get(id) &&
+							plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
 							sound = "tardis_malfunction_takeoff";
 						} else {
 							sound = switch (spaceTimeThrottle) {

@@ -72,17 +72,20 @@ public class TARDISRescue {
 			TARDISMessage.send(player, "PLAYER_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
 			return false;
 		}
-		if (!request && !plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, Flag.getDefaultFlags()))) {
+		if (!request &&
+			!plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, Flag.getDefaultFlags()))) {
 			return false;
 		}
-		if (!plugin.getPlanetsConfig().getBoolean("planets." + Objects.requireNonNull(player_loc.getWorld()).getName() + ".time_travel")) {
+		if (!plugin.getPlanetsConfig().getBoolean(
+				"planets." + Objects.requireNonNull(player_loc.getWorld()).getName() + ".time_travel")) {
 			TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 			return false;
 		}
 		World w = player_loc.getWorld();
 		int[] start_loc = TARDISTimeTravel.getStartLocation(player_loc, d);
 		int move = (rescue) ? 0 : 3;
-		int count = TARDISTimeTravel.safeLocation(start_loc[0] - move, player_loc.getBlockY(), start_loc[2], start_loc[1] - move, start_loc[3], w, d);
+		int count = TARDISTimeTravel.safeLocation(
+				start_loc[0] - move, player_loc.getBlockY(), start_loc[2], start_loc[1] - move, start_loc[3], w, d);
 		if (count > 0) {
 			TARDISMessage.send(player, "RESCUE_NOT_SAFE");
 			return false;
@@ -119,7 +122,9 @@ public class TARDISRescue {
 	 * @return true if rescue was successful
 	 */
 	public RescueData tryRescue(Player player, UUID saved, boolean request) {
-		if (TARDISPermission.hasPermission(player, "tardis.timetravel") && !(TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile"))) {
+		if (TARDISPermission.hasPermission(player, "tardis.timetravel") &&
+			!(TARDISPermission.hasPermission(player, "tardis.exile") &&
+			  plugin.getConfig().getBoolean("travel.exile"))) {
 			// get tardis data
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("uuid", player.getUniqueId().toString());

@@ -91,7 +91,8 @@ class SongPlayer {
 		song.getLayerHashMap().values().forEach((l) -> {
 			Note note = l.getNote(tick);
 			if (note != null) {
-				p.playSound(p.getEyeLocation(), NoteBlockInstrument.getInstrument(note.getInstrument()), l.getVolume() * 100, NotePitch.getPitch(note.getKey() - 33));
+				p.playSound(p.getEyeLocation(), NoteBlockInstrument.getInstrument(note.getInstrument()),
+						l.getVolume() * 100, NotePitch.getPitch(note.getKey() - 33));
 			}
 		});
 	}

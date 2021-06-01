@@ -67,19 +67,24 @@ public class TARDISArtronIndicator {
 				if (used == 0) {
 					Score max = objective.getScore(ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":");
 					max.setScore(fc);
-					Score timelord = objective.getScore(ChatColor.YELLOW + plugin.getLanguage().getString("ARTRON_TL") + ":");
+					Score timelord = objective.getScore(
+							ChatColor.YELLOW + plugin.getLanguage().getString("ARTRON_TL") + ":");
 					ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
 					if (rsp.resultSet()) {
 						timelord.setScore(rsp.getArtronLevel());
 					}
 				}
-				Score current = objective.getScore(ChatColor.GREEN + plugin.getLanguage().getString("ARTRON_REMAINING") + ":");
-				Score percentage = objective.getScore(ChatColor.LIGHT_PURPLE + plugin.getLanguage().getString("ARTRON_PERCENT") + ":");
+				Score current = objective.getScore(
+						ChatColor.GREEN + plugin.getLanguage().getString("ARTRON_REMAINING") + ":");
+				Score percentage = objective.getScore(
+						ChatColor.LIGHT_PURPLE + plugin.getLanguage().getString("ARTRON_PERCENT") + ":");
 				if (used > 0) {
-					Score amount_used = objective.getScore(ChatColor.RED + plugin.getLanguage().getString("ARTRON_USED") + ":");
+					Score amount_used = objective.getScore(
+							ChatColor.RED + plugin.getLanguage().getString("ARTRON_USED") + ":");
 					amount_used.setScore(used);
 				} else if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-					Score amount_used = objective.getScore(ChatColor.RED + plugin.getLanguage().getString("ARTRON_COST") + ":");
+					Score amount_used = objective.getScore(
+							ChatColor.RED + plugin.getLanguage().getString("ARTRON_COST") + ":");
 					amount_used.setScore(plugin.getTrackerKeeper().getHasDestination().get(id));
 				}
 				current.setScore(current_level);

@@ -60,7 +60,8 @@ public class TARDISExteriorRenderer {
 		int ipby = TARDISNumberParsers.parseInt(idata[2]) + 2;
 		int ipbz = TARDISNumberParsers.parseInt(idata[3]);
 		Location location = new Location(iw, ipbx, ipby, ipbz);
-		if (plugin.getTrackerKeeper().getRenderer().containsKey(id) && plugin.getTrackerKeeper().getRenderer().get(id).equals(isRendered)) {
+		if (plugin.getTrackerKeeper().getRenderer().containsKey(id) &&
+			plugin.getTrackerKeeper().getRenderer().get(id).equals(isRendered)) {
 			TARDISMessage.send(p, "DEST_NO_CHANGE");
 		} else {
 			TARDISMessage.send(p, "RENDER_START");

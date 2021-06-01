@@ -84,8 +84,10 @@ public class TARDISRoomBuilder {
 			Block b = l.getBlock();
 			roomData.setBlock(b);
 			roomData.setDirection(d);
-			String directory = (plugin.getRoomsConfig().getBoolean("rooms." + r + ".user")) ? "user_schematics" : "schematics";
-			String path = plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase(Locale.ENGLISH) + ".tschm";
+			String directory = (plugin.getRoomsConfig().getBoolean(
+					"rooms." + r + ".user")) ? "user_schematics" : "schematics";
+			String path = plugin.getDataFolder() + File.separator + directory + File.separator +
+						  r.toLowerCase(Locale.ENGLISH) + ".tschm";
 			// get JSON
 			JsonObject obj = TARDISSchematicGZip.unzip(path);
 			assert obj != null;

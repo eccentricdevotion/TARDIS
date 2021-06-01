@@ -22,7 +22,11 @@ import org.bukkit.Material;
 public enum GUIWallFloor {
 
 	// tardis Wall & Floor Menu
-	BUTTON_SCROLL_U(3, 8, Material.ARROW), BUTTON_SCROLL_D(2, 17, Material.ARROW), WALL(136, 26, Material.BOWL), FLOOR(137, 35, Material.BOWL), BUTTON_ABORT(2, 53, Material.BOWL);
+	BUTTON_SCROLL_U(3, 8, Material.ARROW),
+	BUTTON_SCROLL_D(2, 17, Material.ARROW),
+	WALL(136, 26, Material.BOWL),
+	FLOOR(137, 35, Material.BOWL),
+	BUTTON_ABORT(2, 53, Material.BOWL);
 
 	private final int customModelData;
 	private final int slot;

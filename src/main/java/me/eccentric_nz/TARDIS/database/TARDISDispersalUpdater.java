@@ -56,7 +56,8 @@ class TARDISDispersalUpdater {
 			// insert values from tardis table
 			if (rs.isBeforeFirst()) {
 				ps_select = connection.prepareStatement("SELECT tardis_id FROM " + prefix + "tardis WHERE uuid = ?");
-				ps_update = connection.prepareStatement("UPDATE " + prefix + "dispersed SET tardis_id = ? WHERE d_id = ?");
+				ps_update = connection.prepareStatement(
+						"UPDATE " + prefix + "dispersed SET tardis_id = ? WHERE d_id = ?");
 				while (rs.next()) {
 					ps_select.setString(1, rs.getString("uuid"));
 					rst = ps_select.executeQuery();

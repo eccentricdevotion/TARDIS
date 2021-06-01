@@ -75,7 +75,8 @@ public class TARDISStandbyMode implements Runnable {
 					long delay = 0;
 					// if hidden, rebuild
 					if (standbyData.isHidden()) {
-						plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
+						plugin.getServer().dispatchCommand(plugin.getConsole(),
+								"tardisremote " + player.getName() + " rebuild");
 						if (player.isOnline()) {
 							TARDISMessage.send(player.getPlayer(), "POWER_FAIL");
 						}
@@ -101,7 +102,10 @@ public class TARDISStandbyMode implements Runnable {
 	}
 
 	private boolean isTravelling(int id) {
-		return (plugin.getTrackerKeeper().getDematerialising().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+		return (plugin.getTrackerKeeper().getDematerialising().contains(id) ||
+				plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+				plugin.getTrackerKeeper().getInVortex().contains(id) ||
+				plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
 	}
 
 	/**

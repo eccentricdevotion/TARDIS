@@ -89,7 +89,8 @@ public class TARDISSonicGeneratorListener implements Listener {
 						} else {
 							// open GUI
 							ItemStack[] items = new TARDISSonicGeneratorInventory(plugin, s, player).getGenerator();
-							Inventory sgc = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Sonic Generator");
+							Inventory sgc = plugin.getServer().createInventory(player, 54,
+									ChatColor.DARK_RED + "Sonic Generator");
 							sgc.setContents(items);
 							plugin.getTrackerKeeper().getSonicGenerators().put(uuid, block.getLocation());
 							player.openInventory(sgc);
@@ -113,7 +114,8 @@ public class TARDISSonicGeneratorListener implements Listener {
 			int level = rs.getArtronLevel();
 			ItemStack sonic = new ItemStack(Material.BLAZE_ROD, 1);
 			ItemMeta screw = sonic.getItemMeta();
-			String dn = (s.getSonicType().equals(ChatColor.RESET)) ? "Sonic Screwdriver" : s.getSonicType() + "Sonic Screwdriver";
+			String dn = (s.getSonicType().equals(ChatColor.RESET)) ? "Sonic Screwdriver" :
+					s.getSonicType() + "Sonic Screwdriver";
 			assert screw != null;
 			screw.setDisplayName(dn);
 			List<String> upgrades = new ArrayList<>();

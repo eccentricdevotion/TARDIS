@@ -157,7 +157,9 @@ public class TARDISTownyChecker {
 	 */
 	private enum TownyRegion {
 
-		wilderness, town, nation
+		wilderness,
+		town,
+		nation
 	}
 
 	/**

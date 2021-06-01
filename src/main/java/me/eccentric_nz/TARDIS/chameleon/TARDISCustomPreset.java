@@ -47,7 +47,8 @@ public class TARDISCustomPreset {
 		String[] custom_data = new String[6];
 		File custom_file;
 		if (!TARDISPlugin.plugin.getConfig().getBoolean("conversions.custom_preset")) {
-			custom_file = TARDISFileCopier.copy(TARDISPlugin.plugin.getDataFolder() + File.separator + "custom_preset.txt", TARDISPlugin.plugin.getResource("custom_preset.txt"), true);
+			custom_file = TARDISFileCopier.copy(TARDISPlugin.plugin.getDataFolder() + File.separator +
+												"custom_preset.txt", TARDISPlugin.plugin.getResource("custom_preset.txt"), true);
 			TARDISPlugin.plugin.getConfig().set("conversions.custom_preset", true);
 			TARDISPlugin.plugin.saveConfig();
 		} else {
@@ -66,7 +67,8 @@ public class TARDISCustomPreset {
 				}
 			}
 		} catch (IOException io) {
-			TARDISPlugin.plugin.getConsole().sendMessage(TARDISPlugin.plugin.getPluginName() + "Could not read custom preset file! " + io.getMessage());
+			TARDISPlugin.plugin.getConsole().sendMessage(
+					TARDISPlugin.plugin.getPluginName() + "Could not read custom preset file! " + io.getMessage());
 		} finally {
 			if (bufRdr != null) {
 				try {

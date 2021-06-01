@@ -300,7 +300,8 @@ public class TARDISJunkControlListener implements Listener {
 	}
 
 	private int getActualHighestY(Location l) {
-		int startx = l.getBlockX() - 3, resetx = startx, starty = l.getBlockY(), startz = l.getBlockZ() - 2, resetz = startz, level, row, col;
+		int startx = l.getBlockX() - 3, resetx = startx, starty = l.getBlockY(), startz =
+				l.getBlockZ() - 2, resetz = startz, level, row, col;
 		for (level = 0; level < 5; level++) {
 			boolean found = false;
 			for (row = 0; row < 6; row++) {

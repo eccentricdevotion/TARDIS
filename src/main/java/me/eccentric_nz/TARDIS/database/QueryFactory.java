@@ -78,7 +78,9 @@ public class QueryFactory {
 		questions = sbq.substring(0, sbq.length() - 1);
 		try {
 			service.testConnection(connection);
-			ps = connection.prepareStatement("INSERT INTO " + prefix + table + " (" + fields + ") VALUES (" + questions + ")", PreparedStatement.RETURN_GENERATED_KEYS);
+			ps = connection.prepareStatement(
+					"INSERT INTO " + prefix + table + " (" + fields + ") VALUES (" + questions +
+					")", PreparedStatement.RETURN_GENERATED_KEYS);
 			int i = 1;
 			for (Map.Entry<String, Object> entry : data.entrySet()) {
 				if (entry.getValue() instanceof String || entry.getValue() instanceof UUID) {
@@ -242,16 +244,20 @@ public class QueryFactory {
 		try {
 			service.testConnection(connection);
 			statement = connection.createStatement();
-			String select = "SELECT c_id FROM " + prefix + "controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + s;
+			String select = "SELECT c_id FROM " + prefix + "controls WHERE tardis_id = " + id + " AND type = " + type +
+							" AND secondary = " + s;
 			ResultSet rs = statement.executeQuery(select);
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				// update
-				String update = "UPDATE " + prefix + "controls SET location = '" + l + "' WHERE c_id = " + rs.getInt("c_id");
+				String update =
+						"UPDATE " + prefix + "controls SET location = '" + l + "' WHERE c_id = " + rs.getInt("c_id");
 				statement.executeUpdate(update);
 			} else {
 				// insert
-				String insert = "INSERT INTO " + prefix + "controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + l + "', " + s + ")";
+				String insert =
+						"INSERT INTO " + prefix + "controls (tardis_id, type, location, secondary) VALUES (" + id +
+						", " + type + ", '" + l + "', " + s + ")";
 				statement.executeUpdate(insert);
 			}
 		} catch (SQLException e) {
@@ -300,7 +306,8 @@ public class QueryFactory {
 	 */
 	public void updateCondensedBlockCount(int new_size, int id, String blockData) {
 		Statement statement = null;
-		String query = "UPDATE " + prefix + "condenser SET block_count = " + new_size + " WHERE tardis_id = " + id + " AND block_data = '" + blockData + "'";
+		String query = "UPDATE " + prefix + "condenser SET block_count = " + new_size + " WHERE tardis_id = " + id +
+					   " AND block_data = '" + blockData + "'";
 		try {
 			service.testConnection(connection);
 			statement = connection.createStatement();
@@ -388,7 +395,8 @@ public class QueryFactory {
 		where.put("uuid", uuid);
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
 		if (!rs.resultSet()) {
-			String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, abandoned = 0 , tardis_init = 1, powered_on = 1, last_use = ? WHERE tardis_id = ?";
+			String query = "UPDATE " + prefix +
+						   "tardis SET uuid = ?, owner = ?, last_known_name = ?, abandoned = 0 , tardis_init = 1, powered_on = 1, last_use = ? WHERE tardis_id = ?";
 			try {
 				service.testConnection(connection);
 				long now;

@@ -123,7 +123,8 @@ public class TARDISChemistryCommand implements CommandExecutor {
 			default -> // lab
 					Material.COAL;
 		};
-		Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chemistry " + which + " recipe");
+		Inventory inv = plugin.getServer().createInventory(player, 27,
+				ChatColor.DARK_RED + "Chemistry " + which + " recipe");
 		ItemStack ingredient = new ItemStack(surround, 1);
 		inv.setItem(0, ingredient);
 		inv.setItem(1, ingredient);

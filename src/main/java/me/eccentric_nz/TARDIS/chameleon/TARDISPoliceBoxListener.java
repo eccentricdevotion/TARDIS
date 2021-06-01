@@ -246,7 +246,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 											TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
 											ItemStack[] items = tpi.getPresets();
-											Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Presets");
+											Inventory presetinv = plugin.getServer().createInventory(player, 54,
+													ChatColor.DARK_RED + "Chameleon Presets");
 											presetinv.setContents(items);
 											player.openInventory(presetinv);
 										}, 2L);
@@ -254,7 +255,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 										// return to Chameleon Circuit GUI
 										plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 											ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
-											Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
+											Inventory gui = plugin.getServer().createInventory(player, 27,
+													ChatColor.DARK_RED + "Chameleon Circuit");
 											gui.setContents(stacks);
 											player.openInventory(gui);
 										}, 2L);

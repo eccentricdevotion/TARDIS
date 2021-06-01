@@ -79,7 +79,8 @@ public class TARDISHideCommand {
 			}
 			id = tardis.getTardisId();
 			TARDISCircuitChecker tcc = null;
-			if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player.getPlayer(), true)) {
+			if (!plugin.getDifficulty().equals(Difficulty.EASY) &&
+				!plugin.getUtils().inGracePeriod(player.getPlayer(), true)) {
 				tcc = new TARDISCircuitChecker(plugin, id);
 				tcc.getCircuits();
 			}
@@ -98,7 +99,9 @@ public class TARDISHideCommand {
 				TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
 				return true;
 			}
-			if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+			if (plugin.getTrackerKeeper().getInVortex().contains(id) ||
+				plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+				plugin.getTrackerKeeper().getDematerialising().contains(id)) {
 				TARDISMessage.send(player.getPlayer(), "NOT_WHILE_MAT");
 				return true;
 			}
@@ -133,7 +136,8 @@ public class TARDISHideCommand {
 			dd.setThrottle(SpaceTimeThrottle.REBUILD);
 			plugin.getPresetDestroyer().destroyPreset(dd);
 			plugin.getTrackerKeeper().getInVortex().add(id);
-			TARDISMessage.send(player.getPlayer(), "TARDIS_HIDDEN", ChatColor.GREEN + "/tardis rebuild " + ChatColor.RESET);
+			TARDISMessage.send(player.getPlayer(), "TARDIS_HIDDEN",
+					ChatColor.GREEN + "/tardis rebuild " + ChatColor.RESET);
 			HashMap<String, Object> wheret = new HashMap<>();
 			wheret.put("tardis_id", id);
 			plugin.getQueryFactory().alterEnergyLevel("tardis", -hide, wheret, player.getPlayer());

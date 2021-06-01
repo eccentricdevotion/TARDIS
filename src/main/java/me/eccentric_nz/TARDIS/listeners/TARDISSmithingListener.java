@@ -78,7 +78,8 @@ public class TARDISSmithingListener implements Listener {
 				boolean found = false;
 				String upgrade = "";
 				ItemStack glowstone = inventory.getItem(1);
-				if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
+				if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) &&
+					glowstone.hasItemMeta()) {
 					ItemMeta rm = glowstone.getItemMeta();
 					assert rm != null;
 					upgrade = customModelData.get(rm.getCustomModelData());

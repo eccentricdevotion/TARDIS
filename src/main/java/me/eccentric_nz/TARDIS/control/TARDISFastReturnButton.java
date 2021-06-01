@@ -72,7 +72,9 @@ public class TARDISFastReturnButton {
 					if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
 						new TARDISLand(plugin, id, player).exitVortex();
 					}
-					TARDISMessage.send(player, "PREV_SET", rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+					TARDISMessage.send(player, "PREV_SET",
+							rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" +
+							rsb.getZ(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
 				} else {
 					TARDISMessage.send(player, "TRAVEL_NO_BACK");
 				}
@@ -83,6 +85,7 @@ public class TARDISFastReturnButton {
 	}
 
 	private boolean compareCurrentToBack(ResultSetCurrentLocation c, ResultSetBackLocation b) {
-		return (c.getWorld().equals(b.getWorld()) && c.getX() == b.getX() && c.getY() == b.getY() && c.getZ() == b.getZ());
+		return (c.getWorld().equals(b.getWorld()) && c.getX() == b.getX() && c.getY() == b.getY() &&
+				c.getZ() == b.getZ());
 	}
 }

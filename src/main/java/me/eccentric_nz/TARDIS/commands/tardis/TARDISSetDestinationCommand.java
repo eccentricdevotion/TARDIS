@@ -58,7 +58,8 @@ class TARDISSetDestinationCommand {
 			if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
 				TARDISMessage.send(player, "DEST_NAME_NOT_VALID");
 				return false;
-			} else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
+			} else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") ||
+					   args[1].equalsIgnoreCase("home")) {
 				TARDISMessage.send(player, "SAVE_RESERVED");
 				return false;
 			} else {
@@ -89,7 +90,9 @@ class TARDISSetDestinationCommand {
 					return true;
 				}
 				String world = Objects.requireNonNull(l.getWorld()).getName();
-				if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+				if (!plugin.getConfig().getBoolean("travel.include_default_world") &&
+					plugin.getConfig().getBoolean("creation.default_world") &&
+					world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
 					TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 					return true;
 				}
@@ -101,7 +104,8 @@ class TARDISSetDestinationCommand {
 				if (!plugin.getPluginRespect().getRespect(l, new Parameters(player, Flag.getDefaultFlags()))) {
 					return true;
 				}
-				if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
+				if (TARDISPermission.hasPermission(player, "tardis.exile") &&
+					plugin.getConfig().getBoolean("travel.exile")) {
 					String areaPerm = plugin.getTardisArea().getExileArea(player);
 					if (plugin.getTardisArea().areaCheckInExile(areaPerm, l)) {
 						TARDISMessage.send(player, "EXILE_NO_TRAVEL");

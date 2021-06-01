@@ -146,7 +146,8 @@ public class TARDISAreaCommands implements CommandExecutor {
 					wherea.put("area_name", args[1]);
 					ResultSetAreas rsaShow = new ResultSetAreas(plugin, wherea, false, false);
 					if (!rsaShow.resultSet()) {
-						TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+						TARDISMessage.send(player, "AREA_NOT_FOUND",
+								ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
 						return false;
 					}
 					Area a = rsaShow.getArea();
@@ -184,7 +185,8 @@ public class TARDISAreaCommands implements CommandExecutor {
 							TARDISMessage.send(player, "ARG_MATERIAL");
 							return true;
 						}
-						if (!fill.getMaterial().isBlock() || !dock.getMaterial().isBlock() || !fill.getMaterial().isSolid() || !dock.getMaterial().isSolid()) {
+						if (!fill.getMaterial().isBlock() || !dock.getMaterial().isBlock() ||
+							!fill.getMaterial().isSolid() || !dock.getMaterial().isSolid()) {
 							TARDISMessage.send(player, "ARG_NOT_BLOCK");
 							return true;
 						}
@@ -193,7 +195,8 @@ public class TARDISAreaCommands implements CommandExecutor {
 					yardWhere.put("area_name", args[1]);
 					ResultSetAreas rsaYard = new ResultSetAreas(plugin, yardWhere, false, false);
 					if (!rsaYard.resultSet()) {
-						TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+						TARDISMessage.send(player, "AREA_NOT_FOUND",
+								ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
 						return false;
 					}
 					Area yardArea = rsaYard.getArea();
@@ -227,7 +230,8 @@ public class TARDISAreaCommands implements CommandExecutor {
 					invisWhere.put("area_name", args[1]);
 					ResultSetAreas rsaInvis = new ResultSetAreas(plugin, invisWhere, false, false);
 					if (!rsaInvis.resultSet()) {
-						TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+						TARDISMessage.send(player, "AREA_NOT_FOUND",
+								ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
 						return false;
 					}
 					String value = args[2].toUpperCase(Locale.ENGLISH);
@@ -259,7 +263,8 @@ public class TARDISAreaCommands implements CommandExecutor {
 					dirWhere.put("area_name", args[1]);
 					ResultSetAreas rsaDir = new ResultSetAreas(plugin, dirWhere, false, false);
 					if (!rsaDir.resultSet()) {
-						TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+						TARDISMessage.send(player, "AREA_NOT_FOUND",
+								ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
 						return false;
 					}
 					String dir = args[2].toUpperCase(Locale.ENGLISH);

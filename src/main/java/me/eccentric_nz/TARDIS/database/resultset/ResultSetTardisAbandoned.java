@@ -69,7 +69,9 @@ public class ResultSetTardisAbandoned {
 	public boolean fromUUID(String uuid) {
 		PreparedStatement statement = null;
 		ResultSet rs = null;
-		String query = "SELECT tardis_id, artron_level, size, chameleon_preset, handbrake_on, hidden, tardis_init, powered_on, lights_on FROM " + prefix + "tardis WHERE uuid = ? AND abandoned = 0";
+		String query =
+				"SELECT tardis_id, artron_level, size, chameleon_preset, handbrake_on, hidden, tardis_init, powered_on, lights_on FROM " +
+				prefix + "tardis WHERE uuid = ? AND abandoned = 0";
 		try {
 			service.testConnection(connection);
 			statement = connection.prepareStatement(query);

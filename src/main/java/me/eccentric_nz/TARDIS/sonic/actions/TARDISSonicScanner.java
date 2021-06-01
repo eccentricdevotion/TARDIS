@@ -57,7 +57,8 @@ public class TARDISSonicScanner {
 					}
 				}
 				if (TARDISPlugin.plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-					if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
+					if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) ||
+						et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
 						EntityEquipment ee = ((LivingEntity) k).getEquipment();
 						assert ee != null;
 						if (ee.getHelmet() != null) {
@@ -97,7 +98,9 @@ public class TARDISSonicScanner {
 							}
 						}
 					}
-					if (et.equals(EntityType.ENDERMAN) && k.getPassengers().size() > 0 && k.getPassengers().get(0) != null && k.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
+					if (et.equals(EntityType.ENDERMAN) && k.getPassengers().size() > 0 &&
+						k.getPassengers().get(0) != null &&
+						k.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
 						// silent
 						et = EntityType.SPLASH_POTION;
 					}
@@ -144,13 +147,15 @@ public class TARDISSonicScanner {
 		BukkitScheduler bsched = plugin.getServer().getScheduler();
 		bsched.scheduleSyncDelayedTask(plugin, () -> {
 			TARDISMessage.send(player, "SCAN_WORLD", wn);
-			TARDISMessage.send(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
+			TARDISMessage.send(player, "SONIC_COORDS",
+					scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
 		}, 20L);
 		// get biome
 		TARDISBiome tardisBiome = TARDISStaticUtils.getBiomeAt(scan_loc);
 		String biome = tardisBiome.name();
 		bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome), 40L);
-		bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_TIME", daynight + " / " + time), 60L);
+		bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_TIME",
+				daynight + " / " + time), 60L);
 		// get weather
 		String weather = switch (biome) {
 			case "BADLANDS", "BADLANDS_PLATEAU", "DESERT", "DESERT_HILLS", "DESERT_LAKES", "ERODED_BADLANDS", "MODIFIED_BADLANDS_PLATEAU", "MODIFIED_WOODED_BADLANDS_PLATEAU", "SAVANNA", "SAVANNA_PLATEAU", "SHATTERED_SAVANNA", "SHATTERED_SAVANNA_PLATEAU", "WOODED_BADLANDS_PLATEAU" -> plugin.getLanguage().getString("WEATHER_DRY");

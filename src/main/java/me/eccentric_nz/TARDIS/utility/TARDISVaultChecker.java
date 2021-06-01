@@ -68,7 +68,8 @@ public class TARDISVaultChecker implements Runnable {
 				}
 			}
 			if (i > 0) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed " + i + " unused vault room drop chests!");
+				plugin.getConsole().sendMessage(
+						plugin.getPluginName() + "Removed " + i + " unused vault room drop chests!");
 			}
 		} catch (SQLException e) {
 			plugin.debug("ResultSet error for vaults table! " + e.getMessage());

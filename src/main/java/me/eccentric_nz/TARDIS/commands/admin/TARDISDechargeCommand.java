@@ -34,7 +34,8 @@ class TARDISDechargeCommand {
 
 	boolean removeChragerStatus(CommandSender sender, String[] args) {
 		if (!plugin.getConfig().contains("rechargers." + args[1])) {
-			TARDISMessage.send(sender, "CHARGER_NOT_FOUND", ChatColor.AQUA + " /tardis list rechargers" + ChatColor.RESET + " first.");
+			TARDISMessage.send(sender, "CHARGER_NOT_FOUND",
+					ChatColor.AQUA + " /tardis list rechargers" + ChatColor.RESET + " first.");
 			return true;
 		}
 		if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {

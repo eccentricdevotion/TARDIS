@@ -99,7 +99,8 @@ public class TARDISConsoleLoader {
 					continue;
 				}
 				// check seed material
-				String seed = Objects.requireNonNull(plugin.getCustomConsolesConfig().getString(console + ".seed")).toUpperCase(Locale.ENGLISH);
+				String seed = Objects.requireNonNull(plugin.getCustomConsolesConfig().getString(
+						console + ".seed")).toUpperCase(Locale.ENGLISH);
 				try {
 					Material.valueOf(seed);
 				} catch (IllegalArgumentException e) {

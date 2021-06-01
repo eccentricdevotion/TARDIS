@@ -51,7 +51,8 @@ public class TARDISQuestionTabComplete extends TARDISCompleter implements TabCom
 			return partial(args[0], ROOT_SUBS);
 		} else if (args.length == 2) {
 			String sub = args[0];
-			return partial(lastArg, removeUnwanted(Objects.requireNonNull(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands." + sub)).getKeys(false)));
+			return partial(lastArg, removeUnwanted(Objects.requireNonNull(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection(
+					"commands." + sub)).getKeys(false)));
 		}
 		return ImmutableList.of();
 	}

@@ -125,7 +125,8 @@ class TARDISBuildSkaroStructure implements Runnable {
 								container.setLootTable(TARDISConstants.LOOT.get(TARDISConstants.RANDOM.nextInt(11)));
 								container.update();
 							} catch (ClassCastException e) {
-								plugin.debug("Could not cast " + chest.getType() + "to Skaroan Chest." + e.getMessage());
+								plugin.debug(
+										"Could not cast " + chest.getType() + "to Skaroan Chest." + e.getMessage());
 							}
 						}
 					}

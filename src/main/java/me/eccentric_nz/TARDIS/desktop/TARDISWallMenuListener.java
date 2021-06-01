@@ -61,7 +61,8 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
 	@EventHandler
 	public void onWallMenuOpen(InventoryOpenEvent event) {
 		String name = event.getView().getTitle();
-		if (name.equals(ChatColor.DARK_RED + "tardis Wall Menu") || name.equals(ChatColor.DARK_RED + "tardis Floor Menu")) {
+		if (name.equals(ChatColor.DARK_RED + "tardis Wall Menu") ||
+			name.equals(ChatColor.DARK_RED + "tardis Floor Menu")) {
 			Player p = (Player) event.getPlayer();
 			scroll.put(p.getUniqueId(), 0);
 		}
@@ -71,7 +72,8 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
 	public void onWallMenuClick(InventoryClickEvent event) {
 		InventoryView view = event.getView();
 		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "tardis Wall Menu") || name.equals(ChatColor.DARK_RED + "tardis Floor Menu")) {
+		if (name.equals(ChatColor.DARK_RED + "tardis Wall Menu") ||
+			name.equals(ChatColor.DARK_RED + "tardis Floor Menu")) {
 			boolean isWall = (name.equals(ChatColor.DARK_RED + "tardis Wall Menu"));
 			Player p = (Player) event.getWhoClicked();
 			UUID uuid = p.getUniqueId();
@@ -117,7 +119,8 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
 				}
 			} else {
 				ClickType click = event.getClick();
-				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) ||
+					click.equals(ClickType.DOUBLE_CLICK)) {
 					event.setCancelled(true);
 				}
 			}

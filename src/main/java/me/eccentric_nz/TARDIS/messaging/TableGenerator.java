@@ -39,7 +39,8 @@ public class TableGenerator {
 			throw new IllegalArgumentException("Must at least provide 1 alignment.");
 		}
 		TableGenerator.char1 = char1;
-		regex = Pattern.compile(char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1);
+		regex = Pattern.compile(char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1 + "(?:§r)?(\\s*)" + "(?:§r§8)?" + char1 +
+								"(?:§r)?(\\s*)" + "(?:§r§8)?" + char1);
 		columns = alignments.length;
 		this.alignments = alignments;
 	}
@@ -221,12 +222,15 @@ public class TableGenerator {
 
 	public enum Receiver {
 
-		CONSOLE, CLIENT
+		CONSOLE,
+		CLIENT
 	}
 
 	public enum Alignment {
 
-		CENTER, LEFT, RIGHT
+		CENTER,
+		LEFT,
+		RIGHT
 	}
 
 	public class Row {

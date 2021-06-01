@@ -42,7 +42,8 @@ public class TARDISGallifrey {
 		if (!TARDISChecker.hasDimension("gallifrey")) {
 			plugin.getServer().reloadData();
 			// message console to restart server
-			TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Gallifrey data pack has been installed, please restart the server to enable the world.");
+			TARDISMessage.message(plugin.getConsole(), ChatColor.RED +
+													   "Gallifrey data pack has been installed, please restart the server to enable the world.");
 			// get default server world
 			// add world to config
 			if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_gallifrey.time_travel")) {

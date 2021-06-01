@@ -58,8 +58,10 @@ class TARDISSetBooleanCommand {
 			}
 		}
 		if (first.equals("abandon")) {
-			if (tf.equals("true") && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
-				TARDISMessage.message(sender, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
+			if (tf.equals("true") && (plugin.getConfig().getBoolean("creation.create_worlds") ||
+									  plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
+				TARDISMessage.message(sender, ChatColor.RED +
+											  "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
 				return true;
 			}
 			plugin.getConfig().set("abandon.enabled", bool);

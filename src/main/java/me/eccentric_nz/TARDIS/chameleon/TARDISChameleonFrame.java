@@ -66,6 +66,7 @@ public class TARDISChameleonFrame {
 	}
 
 	private boolean compareLocations(Location one, Location two) {
-		return one.getBlockX() == two.getBlockX() && one.getBlockY() == two.getBlockY() && one.getBlockZ() == two.getBlockZ();
+		return one.getBlockX() == two.getBlockX() && one.getBlockY() == two.getBlockY() &&
+			   one.getBlockZ() == two.getBlockZ();
 	}
 }

@@ -170,7 +170,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
 						scroll_start.put(uuid, startl);
 						for (int i = 0; i < 9; i++) {
 							// setSlot(Inventory inv, int slot, int id, String room, UUID uuid, boolean update)
-							setSlot(view, (45 + i), room_materials.get(startl + i), room_names.get(startl + i), uuid, false);
+							setSlot(view, (45 + i), room_materials.get(startl + i), room_names.get(
+									startl + i), uuid, false);
 						}
 						break;
 					case 38:
@@ -187,7 +188,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
 						scroll_start.put(uuid, startr);
 						for (int i = 0; i < 9; i++) {
 							// setSlot(Inventory inv, int slot, int id, String room, UUID uuid, boolean update)
-							setSlot(view, (45 + i), room_materials.get(startr + i), room_names.get(startr + i), uuid, false);
+							setSlot(view, (45 + i), room_materials.get(startr + i), room_names.get(
+									startr + i), uuid, false);
 						}
 						break;
 					case 39:
@@ -226,7 +228,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
 								assert ris != null;
 								String displayName = Objects.requireNonNull(ris.getItemMeta()).getDisplayName();
 								String room = TARDISARS.ARSFor(ris.getType().toString()).getConfigPath();
-								if (!TARDISPermission.hasPermission(player, "tardis.room." + room.toLowerCase(Locale.ENGLISH))) {
+								if (!TARDISPermission.hasPermission(player,
+										"tardis.room." + room.toLowerCase(Locale.ENGLISH))) {
 									setLore(view, slot, plugin.getLanguage().getString("NO_PERM_ROOM_TYPE"));
 									break;
 								}
@@ -336,7 +339,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
 		List<String> cRooms = new ArrayList<>();
 		Set<String> names = Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false);
 		names.forEach((cr) -> {
-			if (plugin.getRoomsConfig().getBoolean("rooms." + cr + ".user") && plugin.getRoomsConfig().getBoolean("rooms." + cr + ".enabled")) {
+			if (plugin.getRoomsConfig().getBoolean("rooms." + cr + ".user") &&
+				plugin.getRoomsConfig().getBoolean("rooms." + cr + ".enabled")) {
 				cRooms.add(cr);
 			}
 		});

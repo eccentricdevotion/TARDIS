@@ -106,7 +106,8 @@ public class TARDISRandomButton {
 				if (repeaters[0] == 1) { // first position
 					environment = "THIS";
 					// check tardis travel is allowed in this world
-					if (!plugin.getPlanetsConfig().getBoolean("planets." + rscl.getWorld().getName() + ".time_travel")) {
+					if (!plugin.getPlanetsConfig().getBoolean(
+							"planets." + rscl.getWorld().getName() + ".time_travel")) {
 						TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 						return;
 					}
@@ -120,7 +121,8 @@ public class TARDISRandomButton {
 						TARDISMessage.send(player, "ANCIENT", "Nether");
 					} else if (!TARDISPermission.hasPermission(player, "tardis.nether")) {    // nether permission
 						TARDISMessage.send(player, "NO_PERM_TRAVEL", "Nether");
-					} else if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(player.getUniqueId().toString(), "NETHER")) { // check if they need to visit nether first
+					} else if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") &&
+							   !new ResultSetTravelledTo(plugin).resultSet(player.getUniqueId().toString(), "NETHER")) { // check if they need to visit nether first
 						TARDISMessage.send(player, "TRAVEL_NOT_VISITED", "Nether");
 					} else if (level < nether_min) {    // check if they have enough artron to travel to the nether
 						TARDISMessage.send(player, "NOT_ENOUGH_TRAVEL_ENERGY", String.format("%d", nether_min), "Nether");
@@ -134,7 +136,8 @@ public class TARDISRandomButton {
 						TARDISMessage.send(player, "ANCIENT", "End");
 					} else if (!TARDISPermission.hasPermission(player, "tardis.end")) {    // end permission
 						TARDISMessage.send(player, "NO_PERM_TRAVEL", "End");
-					} else if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(player.getUniqueId().toString(), "THE_END")) { // check if they need to visit the end first
+					} else if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") &&
+							   !new ResultSetTravelledTo(plugin).resultSet(player.getUniqueId().toString(), "THE_END")) { // check if they need to visit the end first
 						TARDISMessage.send(player, "TRAVEL_NOT_VISITED", "End");
 					} else if (level < the_end_min) {    // check if they have enough artron to travel to the end
 						TARDISMessage.send(player, "NOT_ENOUGH_TRAVEL_ENERGY", String.format("%d", the_end_min), "End");
@@ -147,7 +150,8 @@ public class TARDISRandomButton {
 				Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, rscl.getWorld(), false, cl);
 				if (rand != null) {
 					// double check tardis travel is allowed in this world
-					if (!plugin.getPlanetsConfig().getBoolean("planets." + Objects.requireNonNull(rand.getWorld()).getName() + ".time_travel")) {
+					if (!plugin.getPlanetsConfig().getBoolean(
+							"planets." + Objects.requireNonNull(rand.getWorld()).getName() + ".time_travel")) {
 						TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 						return;
 					}
@@ -164,7 +168,8 @@ public class TARDISRandomButton {
 					} else {
 						worldname = TARDISAliasResolver.getWorldAlias(rand.getWorld());
 					}
-					String dchat = worldname + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
+					String dchat = worldname + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " +
+								   rand.getBlockZ();
 					boolean isTL = true;
 					if (comps != null && !comps.isEmpty()) {
 						String[] companions = comps.split(":");

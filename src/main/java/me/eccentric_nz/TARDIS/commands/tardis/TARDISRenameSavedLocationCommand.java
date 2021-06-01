@@ -59,7 +59,8 @@ class TARDISRenameSavedLocationCommand {
 			if (!args[2].matches("[A-Za-z0-9_]{2,16}")) {
 				TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
 				return false;
-			} else if (args[2].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
+			} else if (args[2].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") ||
+					   args[1].equalsIgnoreCase("home")) {
 				TARDISMessage.send(player, "SAVE_RESERVED");
 				return false;
 			} else {

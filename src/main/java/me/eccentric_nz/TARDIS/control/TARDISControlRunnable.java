@@ -56,7 +56,8 @@ public class TARDISControlRunnable implements Runnable {
 								sign.setLine(1, ChatColor.DARK_PURPLE + "time vortex...");
 								sign.setLine(2, "");
 							} else {
-								String worldname = (rsc.getWorld() != null) ? TARDISAliasResolver.getWorldAlias(rsc.getWorld()) : "";
+								String worldname = (rsc.getWorld() !=
+													null) ? TARDISAliasResolver.getWorldAlias(rsc.getWorld()) : "";
 								if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldname.equals("")) {
 									worldname = plugin.getMVHelper().getAlias(worldname);
 								}
@@ -78,9 +79,13 @@ public class TARDISControlRunnable implements Runnable {
 							Sign sign = (Sign) rsc.getSign().getState();
 							// update the data
 							sign.setLine(0, ChatColor.BLACK + plugin.getLanguage().getString("ARTRON_DISPLAY"));
-							sign.setLine(1, ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":" + plugin.getArtronConfig().getInt("full_charge"));
-							sign.setLine(2, ChatColor.GREEN + plugin.getLanguage().getString("ARTRON_REMAINING") + ":" + current_level);
-							sign.setLine(3, ChatColor.LIGHT_PURPLE + plugin.getLanguage().getString("ARTRON_PERCENT") + ":" + percent + "%");
+							sign.setLine(1, ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":" +
+											plugin.getArtronConfig().getInt("full_charge"));
+							sign.setLine(2, ChatColor.GREEN + plugin.getLanguage().getString("ARTRON_REMAINING") + ":" +
+											current_level);
+							sign.setLine(3,
+									ChatColor.LIGHT_PURPLE + plugin.getLanguage().getString("ARTRON_PERCENT") + ":" +
+									percent + "%");
 							sign.update();
 						}
 					}

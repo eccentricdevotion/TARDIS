@@ -98,7 +98,8 @@ public class TARDISSeedBlockProcessor {
 				}
 				Schematic schm = seed.getSchematic();
 				// check perms
-				if (!schm.getPermission().equals("budget") && !TARDISPermission.hasPermission(player, "tardis." + schm.getPermission())) {
+				if (!schm.getPermission().equals("budget") &&
+					!TARDISPermission.hasPermission(player, "tardis." + schm.getPermission())) {
 					TARDISMessage.send(player, "NO_PERM_TARDIS_TYPE", schm.getPermission().toUpperCase(Locale.ENGLISH));
 					return false;
 				}
@@ -108,14 +109,17 @@ public class TARDISSeedBlockProcessor {
 				World chunkworld;
 				boolean tips = false;
 				// TODO name worlds without player name
-				if (plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
+				if (plugin.getConfig().getBoolean("creation.create_worlds") &&
+					!plugin.getConfig().getBoolean("creation.default_world")) {
 					// create a new world to store this tardis
 					cw = "TARDIS_WORLD_" + playerNameStr;
 					TARDISSpace space = new TARDISSpace(plugin);
 					chunkworld = space.getTardisWorld(cw);
 					cx = 0;
 					cz = 0;
-				} else if (plugin.getConfig().getBoolean("creation.default_world") && plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(player, "tardis.create_world")) {
+				} else if (plugin.getConfig().getBoolean("creation.default_world") &&
+						   plugin.getConfig().getBoolean("creation.create_worlds_with_perms") &&
+						   TARDISPermission.hasPermission(player, "tardis.create_world")) {
 					// create a new world to store this tardis
 					cw = "TARDIS_WORLD_" + playerNameStr;
 					TARDISSpace space = new TARDISSpace(plugin);
@@ -167,7 +171,8 @@ public class TARDISSeedBlockProcessor {
 				// determine wall block material from HashMap
 				setpp.put("wall", wall_type.toString());
 				setpp.put("floor", floor_type.toString());
-				setpp.put("lanterns_on", (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? 1 : 0);
+				setpp.put("lanterns_on", (schm.getPermission().equals("eleventh") ||
+										  schm.getPermission().equals("twelfth")) ? 1 : 0);
 				int lastInsertId = plugin.getQueryFactory().doSyncInsert("tardis", set);
 				// insert/update player prefs
 				ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
@@ -231,7 +236,8 @@ public class TARDISSeedBlockProcessor {
 						TARDISAdvancementFactory.grantAdvancement(Advancement.TARDIS, player);
 					}
 					if (max_count > 0) {
-						TARDISMessage.send(player, "COUNT", String.format("%d", (player_count + 1)), String.format("%d", max_count));
+						TARDISMessage.send(player, "COUNT", String.format("%d", (player_count +
+																				 1)), String.format("%d", max_count));
 					}
 					HashMap<String, Object> setc = new HashMap<>();
 					setc.put("count", player_count + 1);
@@ -256,7 +262,9 @@ public class TARDISSeedBlockProcessor {
 				wherecl.put("tardis_id", rs.getTardisId());
 				ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
 				if (rscl.resultSet()) {
-					TARDISMessage.send(player, "TARDIS_HAVE", rscl.getWorld().getName() + " at x:" + rscl.getX() + " y:" + rscl.getY() + " z:" + rscl.getZ());
+					TARDISMessage.send(player, "TARDIS_HAVE",
+							rscl.getWorld().getName() + " at x:" + rscl.getX() + " y:" + rscl.getY() + " z:" +
+							rscl.getZ());
 				} else {
 					TARDISMessage.send(player, "HAVE_TARDIS");
 				}

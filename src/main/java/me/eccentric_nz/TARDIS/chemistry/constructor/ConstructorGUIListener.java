@@ -108,7 +108,8 @@ public class ConstructorGUIListener extends TARDISMenuListener implements Listen
 				}
 			} else {
 				ClickType click = event.getClick();
-				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) ||
+					click.equals(ClickType.DOUBLE_CLICK)) {
 					event.setCancelled(true);
 				}
 			}
@@ -183,7 +184,8 @@ public class ConstructorGUIListener extends TARDISMenuListener implements Listen
 		int neutrons = getCount(view, 9);
 		int electrons = getCount(view, 18);
 		for (Element element : Element.values()) {
-			if (protons == element.getAtomicNumber() && neutrons == element.getNeutrons() && electrons == element.getAtomicNumber()) {
+			if (protons == element.getAtomicNumber() && neutrons == element.getNeutrons() &&
+				electrons == element.getAtomicNumber()) {
 				ItemStack is = ElementBuilder.getElement(element);
 				view.setItem(17, is);
 				return;

@@ -52,7 +52,8 @@ public class TARDISShapelessRecipe {
          amount: 1
          lore: ""
          */
-		String[] ingredients = Objects.requireNonNull(plugin.getRecipesConfig().getString("shapeless." + s + ".recipe")).split(",");
+		String[] ingredients = Objects.requireNonNull(plugin.getRecipesConfig().getString(
+				"shapeless." + s + ".recipe")).split(",");
 		String result = plugin.getRecipesConfig().getString("shapeless." + s + ".result");
 		Material mat = Material.valueOf(result);
 		int amount = plugin.getRecipesConfig().getInt("shapeless." + s + ".amount");
@@ -61,7 +62,8 @@ public class TARDISShapelessRecipe {
 		assert im != null;
 		im.setDisplayName(s);
 		if (!Objects.equals(plugin.getRecipesConfig().getString("shapeless." + s + ".lore"), "")) {
-			im.setLore(Arrays.asList(Objects.requireNonNull(plugin.getRecipesConfig().getString("shapeless." + s + ".lore")).split("~")));
+			im.setLore(Arrays.asList(Objects.requireNonNull(plugin.getRecipesConfig().getString(
+					"shapeless." + s + ".lore")).split("~")));
 		}
 		im.setCustomModelData(RecipeItem.getByName(s).getCustomModelData());
 		is.setItemMeta(im);

@@ -1,6 +1,6 @@
 ---
-name: 'Suggestion'
-about: 'Suggest an idea for TARDIS'
+name: Suggestion
+about: Suggest an idea for TARDIS
 title: ''
 labels: ''
 assignees: ''

@@ -4,18 +4,37 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.eccentric_nz.tardis</groupId>
 	<artifactId>TARDIS</artifactId>
-	<version>${project.plainVersion}-SNAPSHOT</version>
+	<version>4.6.2</version>
+	<packaging>jar</packaging>
 	<name>TARDIS</name>
 	<description>A Doctor Who plugin</description>
 	<url>https://github.com/eccentricdevotion/TARDIS</url>
+	<inceptionYear>2012</inceptionYear>
 	<properties>
-		<project.plainVersion>4.6.2</project.plainVersion>
-		<build.number>SNAPSHOT</build.number>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>16</maven.compiler.source>
 		<maven.compiler.target>16</maven.compiler.target>
 		<java.version>16</java.version>
 	</properties>
+	<licenses>
+		<license>
+			<name>GNU General Public License v3.0</name>
+			<url>https://github.com/eccentricdevotion/TARDIS/blob/master/LICENSE</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/eccentricdevotion/TARDIS/issues</url>
+	</issueManagement>
+	<scm>
+		<connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
+		<developerConnection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</developerConnection>
+	</scm>
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>http://tardisjenkins.duckdns.org:8080</url>
+	</ciManagement>
 	<repositories>
 		<repository>
 			<!-- Spigot API -->
@@ -97,14 +116,6 @@
 			<url>https://repo.mikeprimm.com/</url>
 		</repository>
 	</repositories>
-	<scm>
-		<connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
-		<developerConnection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</developerConnection>
-	</scm>
-	<ciManagement>
-		<system>jenkins</system>
-		<url>http://tardisjenkins.duckdns.org:8080</url>
-	</ciManagement>
 	<profiles>
 		<!-- Profiles are used to detect whether this is a local or Jenkins build and adjust the build number accordingly -->
 		<profile>
@@ -114,7 +125,7 @@
 			</activation>
 			<properties>
 				<!-- Set the build number to the date and time of the build -->
-				<build.number>${timestamp}</build.number>
+				<project.build.number>${timestamp}</project.build.number>
 			</properties>
 			<build>
 				<plugins>
@@ -177,7 +188,7 @@
 		</profile>
 	</profiles>
 	<build>
-		<finalName>${project.artifactId}-${project.plainVersion}-b${build.number}</finalName>
+		<finalName>${project.artifactId}-${project.version}</finalName>
 		<defaultGoal>clean package install</defaultGoal>
 		<plugins>
 			<!-- Compile -->
@@ -208,8 +219,8 @@
 			<plugin>
 				<!-- Insert the version and build numbers into plugin.yml -->
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
-				<artifactId>maven-replacer-plugin</artifactId>
-				<version>1.4.1</version>
+				<artifactId>replacer</artifactId>
+				<version>1.5.3</version>
 				<executions>
 					<execution>
 						<phase>prepare-package</phase>
@@ -223,11 +234,11 @@
 					<replacements>
 						<replacement>
 							<token>maven-version-number</token>
-							<value>\${project.plainVersion}-\${build.number}</value>
+							<value>${project.version}-${project.build.number}</value>
 						</replacement>
 						<replacement>
 							<token>maven-build-number</token>
-							<value>\${build.number}</value>
+							<value>${project.build.number}</value>
 						</replacement>
 					</replacements>
 				</configuration>
@@ -279,7 +290,7 @@
 							<Main-Class>me.eccentric_nz.tardis.database.tool.Main</Main-Class>
 							<Implementation-Title>${project.name}</Implementation-Title>
 							<Implementation-Version>${project.version}</Implementation-Version>
-							<Implementation-Build>${build.number}</Implementation-Build>
+							<Implementation-Build>${project.build.number}</Implementation-Build>
 						</manifestEntries>
 					</archive>
 				</configuration>
@@ -531,14 +542,14 @@
 		<dependency>
 			<groupId>me.eccentric_nz.tardischunkgenerator</groupId>
 			<artifactId>TARDISChunkGenerator</artifactId>
-			<version>4.6.2-SNAPSHOT</version>
+			<version>4.6.2</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>me.eccentric_nz.tardisweepingangels</groupId>
 			<artifactId>TARDISWeepingAngels</artifactId>
-			<version>3.3.3-SNAPSHOT</version>
+			<version>3.3.3</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>

@@ -54,7 +54,8 @@ public class TARDISRoomLister {
 			if (value.size() > 0) {
 				value.forEach((s) -> {
 					TextComponent tcr = new TextComponent("    " + s);
-					ChatColor colour = (TARDISPermission.hasPermission(player, "tardis.room." + s.toLowerCase())) ? ChatColor.GREEN : ChatColor.RED;
+					ChatColor colour = (TARDISPermission.hasPermission(player,
+							"tardis.room." + s.toLowerCase())) ? ChatColor.GREEN : ChatColor.RED;
 					tcr.setColor(colour);
 					tcr.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
 					tcr.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tardis room " + s));

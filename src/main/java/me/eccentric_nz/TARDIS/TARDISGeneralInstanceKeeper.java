@@ -258,7 +258,8 @@ public class TARDISGeneralInstanceKeeper {
 		if (plugin.getConfig().isConfigurationSection("rechargers")) {
 			Set<String> therechargers = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("rechargers")).getKeys(false);
 			therechargers.forEach((s) -> {
-				World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + s + ".world"));
+				World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString(
+						"rechargers." + s + ".world"));
 				if (w != null) {
 					int x = plugin.getConfig().getInt("rechargers." + s + ".x");
 					int y = plugin.getConfig().getInt("rechargers." + s + ".y");

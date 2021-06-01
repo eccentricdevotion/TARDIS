@@ -76,7 +76,8 @@ public class TARDISBlockPlaceListener implements Listener {
 			TARDISMessage.send(player, "NO_PLACE");
 		}
 		ItemStack is = event.getItemInHand();
-		if ((is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM))) {
+		if ((is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || is.getType().equals(Material.RED_MUSHROOM_BLOCK) ||
+			 is.getType().equals(Material.MUSHROOM_STEM))) {
 			if (is.hasItemMeta()) {
 				ItemMeta im = is.getItemMeta();
 				boolean light = false;

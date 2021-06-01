@@ -77,6 +77,8 @@ public class GlowStickRunnable implements Runnable {
 	}
 
 	private boolean isGlowStick(ItemStack glowStick) {
-		return glowStick != null && GlowStickMaterial.isCorrectMaterial(glowStick.getType()) && glowStick.hasItemMeta() && Objects.requireNonNull(glowStick.getItemMeta()).hasCustomModelData() && glowStick.containsEnchantment(Enchantment.LOYALTY);
+		return glowStick != null && GlowStickMaterial.isCorrectMaterial(glowStick.getType()) &&
+			   glowStick.hasItemMeta() && Objects.requireNonNull(glowStick.getItemMeta()).hasCustomModelData() &&
+			   glowStick.containsEnchantment(Enchantment.LOYALTY);
 	}
 }

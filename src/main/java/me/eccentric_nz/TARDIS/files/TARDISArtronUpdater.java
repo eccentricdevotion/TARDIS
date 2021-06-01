@@ -146,7 +146,9 @@ public class TARDISArtronUpdater {
 		try {
 			artronConfig.save(new File(plugin.getDataFolder(), "artron.yml"));
 			if (i > 0) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to artron.yml");
+				plugin.getConsole().sendMessage(
+						plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET +
+						" new items to artron.yml");
 			}
 		} catch (IOException io) {
 			plugin.debug("Could not save artron.yml, " + io.getMessage());

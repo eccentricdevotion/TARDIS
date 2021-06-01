@@ -128,7 +128,8 @@ public class TARDISHandlesProgramListener implements Listener {
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 						TARDISHandlesSavedInventory thsi = new TARDISHandlesSavedInventory(plugin, uuid.toString());
 						ItemStack[] items = thsi.getPrograms();
-						Inventory programsinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Saved Programs");
+						Inventory programsinv = plugin.getServer().createInventory(player, 54,
+								ChatColor.DARK_RED + "Saved Programs");
 						programsinv.setContents(items);
 						player.openInventory(programsinv);
 					}, 2L);

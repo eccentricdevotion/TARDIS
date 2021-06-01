@@ -99,7 +99,9 @@ public class TARDISControlListener implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onControlInteract(PlayerInteractEvent event) {
 		Action action = event.getAction();
-		if ((event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND) || TARDISKeyboardListener.isKeyboardEditor(event.getPlayer().getInventory().getItemInMainHand())) && action != Action.PHYSICAL) {
+		if ((event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND) ||
+			 TARDISKeyboardListener.isKeyboardEditor(event.getPlayer().getInventory().getItemInMainHand())) &&
+			action != Action.PHYSICAL) {
 			return;
 		}
 		Player player = event.getPlayer();
@@ -143,7 +145,8 @@ public class TARDISControlListener implements Listener {
 							TARDISMessage.send(player, "ISO_HANDS_OFF");
 							return;
 						}
-						if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered() && !control.allowUnpowered()) {
+						if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered() &&
+							!control.allowUnpowered()) {
 							TARDISMessage.send(player, "POWER_DOWN");
 							return;
 						}
@@ -152,7 +155,8 @@ public class TARDISControlListener implements Listener {
 							return;
 						}
 						boolean lights = tardis.isLightsOn();
-						if (!lights && type == 12 && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
+						if (!lights && type == 12 && plugin.getConfig().getBoolean("allow.power_down") &&
+							!tardis.isPowered()) {
 							TARDISMessage.send(player, "POWER_DOWN");
 							return;
 						}
@@ -167,7 +171,10 @@ public class TARDISControlListener implements Listener {
 						if (action == Action.RIGHT_CLICK_BLOCK) {
 							switch (type) {
 								case 1: // random location button
-									if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
+									if (plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+										plugin.getTrackerKeeper().getDematerialising().contains(id) ||
+										(!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ||
+										plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
 										TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
 										return;
 									}
@@ -177,7 +184,10 @@ public class TARDISControlListener implements Listener {
 									new TARDISRandomButton(plugin, player, id, level, rsc.getSecondary(), tardis.getCompanions(), tardis.getUuid()).clickButton();
 									break;
 								case 8: // fast return button
-									if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
+									if (plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+										plugin.getTrackerKeeper().getDematerialising().contains(id) ||
+										(!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ||
+										plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
 										TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
 										return;
 									}
@@ -187,7 +197,10 @@ public class TARDISControlListener implements Listener {
 									new TARDISFastReturnButton(plugin, player, id, level).clickButton();
 									break;
 								case 9: // terminal sign
-									if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
+									if (plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+										plugin.getTrackerKeeper().getDematerialising().contains(id) ||
+										(!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ||
+										plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
 										TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
 										return;
 									}
@@ -198,12 +211,14 @@ public class TARDISControlListener implements Listener {
 										TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
 										return;
 									}
-									if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
+									if (tcc != null && !tcc.hasInput() &&
+										!plugin.getUtils().inGracePeriod(player, false)) {
 										TARDISMessage.send(player, "INPUT_MISSING");
 										return;
 									}
 									ItemStack[] items = new TARDISTerminalInventory(plugin).getTerminal();
-									Inventory aec = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Destination Terminal");
+									Inventory aec = plugin.getServer().createInventory(player, 54,
+											ChatColor.DARK_RED + "Destination Terminal");
 									aec.setContents(items);
 									player.openInventory(aec);
 									break;
@@ -223,7 +238,8 @@ public class TARDISControlListener implements Listener {
 											TARDISMessage.send(player, "NO_PERM_UPGRADE");
 											return;
 										}
-										if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
+										if (tcc != null && !tcc.hasARS() &&
+											!plugin.getUtils().inGracePeriod(player, true)) {
 											TARDISMessage.send(player, "ARS_MISSING");
 											return;
 										}
@@ -235,12 +251,14 @@ public class TARDISControlListener implements Listener {
 											TARDISMessage.send(player, "NO_PERM_ROOMS");
 											return;
 										}
-										if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
+										if (tcc != null && !tcc.hasARS() &&
+											!plugin.getUtils().inGracePeriod(player, true)) {
 											TARDISMessage.send(player, "ARS_MISSING");
 											return;
 										}
 										ItemStack[] tars = new TARDISARSInventory(plugin).getARS();
-										Inventory ars = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
+										Inventory ars = plugin.getServer().createInventory(player, 54,
+												ChatColor.DARK_RED + "Architectural Reconfiguration");
 										ars.setContents(tars);
 										player.openInventory(ars);
 									}
@@ -250,12 +268,14 @@ public class TARDISControlListener implements Listener {
 										TARDISMessage.send(player, "NO_PERM_TEMPORAL");
 										return;
 									}
-									if (tcc != null && !tcc.hasTemporal() && !plugin.getUtils().inGracePeriod(player, false)) {
+									if (tcc != null && !tcc.hasTemporal() &&
+										!plugin.getUtils().inGracePeriod(player, false)) {
 										TARDISMessage.send(player, "TEMP_MISSING");
 										return;
 									}
 									ItemStack[] clocks = new TARDISTemporalLocatorInventory(plugin).getTemporal();
-									Inventory tmpl = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Temporal Locator");
+									Inventory tmpl = plugin.getServer().createInventory(player, 27,
+											ChatColor.DARK_RED + "Temporal Locator");
 									tmpl.setContents(clocks);
 									player.openInventory(tmpl);
 									break;
@@ -316,7 +336,9 @@ public class TARDISControlListener implements Listener {
 																im.setCustomModelData(87);
 																is.setType(Material.BOWL);
 																is.setItemMeta(im);
-															} else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasCustomModelData() && im.getDisplayName().equals("Circuits")) {
+															} else if (is.getType().equals(Material.GLOWSTONE_DUST) &&
+																	   !im.hasCustomModelData() &&
+																	   im.getDisplayName().equals("Circuits")) {
 																im.setCustomModelData(10001985);
 															}
 															is.setItemMeta(im);
@@ -370,7 +392,8 @@ public class TARDISControlListener implements Listener {
 									} else {
 										// controls GUI
 										ItemStack[] controls = new TARDISControlInventory(plugin, player.getUniqueId()).getControls();
-										Inventory cgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Control Menu");
+										Inventory cgui = plugin.getServer().createInventory(player, 54,
+												ChatColor.DARK_RED + "TARDIS Control Menu");
 										cgui.setContents(controls);
 										player.openInventory(cgui);
 									}
@@ -393,7 +416,8 @@ public class TARDISControlListener implements Listener {
 									if (player.isSneaking()) {
 										// open programming GUI
 										ItemStack[] handles = new TARDISHandlesProgramInventory(plugin, 0).getHandles();
-										Inventory hgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Handles Program");
+										Inventory hgui = plugin.getServer().createInventory(player, 54,
+												ChatColor.DARK_RED + "Handles Program");
 										hgui.setContents(handles);
 										player.openInventory(hgui);
 									} else {
@@ -402,7 +426,8 @@ public class TARDISControlListener implements Listener {
 										if (disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
 											ItemMeta dim = disk.getItemMeta();
 											assert dim != null;
-											if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
+											if (dim.hasDisplayName() &&
+												ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
 												// get the program_id from the disk
 												int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(dim.getLore()).get(1));
 												// query the database
@@ -492,7 +517,8 @@ public class TARDISControlListener implements Listener {
 								case 38:
 									// weather menu
 									ItemStack[] weather = new TARDISWeatherInventory(plugin).getWeatherButtons();
-									Inventory forecast = plugin.getServer().createInventory(player, 9, ChatColor.DARK_RED + "TARDIS Weather Menu");
+									Inventory forecast = plugin.getServer().createInventory(player, 9,
+											ChatColor.DARK_RED + "TARDIS Weather Menu");
 									forecast.setContents(weather);
 									player.openInventory(forecast);
 									break;

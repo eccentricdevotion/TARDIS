@@ -52,7 +52,8 @@ public class TARDISHadsPersister {
 	public void save() {
 		try {
 			// save the dispersed police boxes
-			ps = connection.prepareStatement("INSERT INTO " + prefix + "dispersed (uuid, world, x, y, z, tardis_id) VALUES (?, ?, ?, ?, ?, ?)");
+			ps = connection.prepareStatement(
+					"INSERT INTO " + prefix + "dispersed (uuid, world, x, y, z, tardis_id) VALUES (?, ?, ?, ?, ?, ?)");
 			for (Map.Entry<UUID, Location> map : plugin.getTrackerKeeper().getDispersed().entrySet()) {
 				Location l = map.getValue();
 				String uuid = map.getKey().toString();
@@ -101,7 +102,8 @@ public class TARDISHadsPersister {
 				}
 			}
 			if (count > 0) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " dispersed Police Boxes.");
+				plugin.getConsole().sendMessage(
+						plugin.getPluginName() + "Loaded " + count + " dispersed Police Boxes.");
 			}
 			ps = connection.prepareStatement("DELETE FROM " + prefix + "dispersed");
 			ps.executeUpdate();

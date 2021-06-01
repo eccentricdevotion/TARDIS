@@ -38,7 +38,8 @@ public class TARDISSiluria {
 		if (!TARDISChecker.hasDimension("siluria")) {
 			plugin.getServer().reloadData();
 			// message console to restart server
-			TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Siluria data pack has been installed, please restart the server to enable the world.");
+			TARDISMessage.message(plugin.getConsole(), ChatColor.RED +
+													   "Siluria data pack has been installed, please restart the server to enable the world.");
 			// get default server world
 			// add world to config
 			if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.time_travel")) {

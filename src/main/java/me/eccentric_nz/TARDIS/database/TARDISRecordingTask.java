@@ -67,7 +67,8 @@ public class TARDISRecordingTask implements Runnable {
 				}
 				// Connection valid, proceed
 				connection.setAutoCommit(false);
-				s = connection.prepareStatement("INSERT INTO " + prefix + "blocks (tardis_id, location, data, police_box) VALUES (?, ?, ?, 1)");
+				s = connection.prepareStatement(
+						"INSERT INTO " + prefix + "blocks (tardis_id, location, data, police_box) VALUES (?, ?, ?, 1)");
 				int i = 0;
 				while (!TARDISRecordingQueue.getQUEUE().isEmpty()) {
 					if (connection.isClosed()) {
@@ -91,7 +92,8 @@ public class TARDISRecordingTask implements Runnable {
 					}
 					// Break out of the loop and just commit what we have
 					if (i >= perBatch) {
-						plugin.debug("Recorder: Batch max exceeded, running insert. Queue remaining: " + TARDISRecordingQueue.getQUEUE().size());
+						plugin.debug("Recorder: Batch max exceeded, running insert. Queue remaining: " +
+									 TARDISRecordingQueue.getQUEUE().size());
 						break;
 					}
 					i++;

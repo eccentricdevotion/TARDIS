@@ -104,7 +104,8 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 								sound = "junk_land";
 							} else {
 								sound = switch (bd.getThrottle()) {
-									case WARP, RAPID, FASTER -> "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+									case WARP, RAPID, FASTER -> "tardis_land_" +
+																bd.getThrottle().toString().toLowerCase();
 									default -> // NORMAL
 											"tardis_land";
 								};

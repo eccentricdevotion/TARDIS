@@ -72,7 +72,9 @@ public class TARDISSiegeButton {
 			TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
 			return;
 		}
-		if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+		if (plugin.getTrackerKeeper().getInVortex().contains(id) ||
+			plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+			plugin.getTrackerKeeper().getDematerialising().contains(id)) {
 			TARDISMessage.send(player, "NOT_WHILE_MAT");
 			return;
 		}

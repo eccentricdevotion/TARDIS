@@ -35,7 +35,8 @@ public class TARDISHangingListener implements Listener {
 	public void onHangingBreak(HangingBreakEvent event) {
 		Entity entity = event.getEntity();
 		if (entity instanceof ItemFrame) {
-			if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(event.getEntity().getLocation().getBlock().getLocation().toString()) || plugin.getGeneralKeeper().getTimeRotors().contains(entity.getUniqueId())) {
+			if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(event.getEntity().getLocation().getBlock().getLocation().toString()) ||
+				plugin.getGeneralKeeper().getTimeRotors().contains(entity.getUniqueId())) {
 				event.setCancelled(true);
 			}
 		}

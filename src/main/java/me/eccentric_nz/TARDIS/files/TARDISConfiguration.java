@@ -281,7 +281,8 @@ public class TARDISConfiguration {
 			i++;
 		}
 		if (i > 0) {
-			plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
+			plugin.getConsole().sendMessage(
+					plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
 		}
 		// worlds
 		new TARDISWorlds(plugin).doWorlds();

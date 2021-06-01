@@ -215,7 +215,8 @@ class TARDISSonicGeneratorInventory {
 		// players preferred sonic
 		ItemStack sonic = new ItemStack(Material.BLAZE_ROD, 1);
 		ItemMeta screw = sonic.getItemMeta();
-		String dn = (data.getSonicType().equals(ChatColor.RESET)) ? "Sonic Screwdriver" : data.getSonicType() + "Sonic Screwdriver";
+		String dn = (data.getSonicType().equals(ChatColor.RESET)) ? "Sonic Screwdriver" :
+				data.getSonicType() + "Sonic Screwdriver";
 		assert screw != null;
 		screw.setDisplayName(dn);
 		screw.setCustomModelData(data.getCustomModelData());

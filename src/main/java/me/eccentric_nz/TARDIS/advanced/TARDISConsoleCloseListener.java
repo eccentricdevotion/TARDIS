@@ -96,7 +96,9 @@ public class TARDISConsoleCloseListener implements Listener {
 					TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
 					tcc.getCircuits();
 					// if no materialisation circuit exit
-					if (!tcc.hasMaterialisation() && (inv.contains(Material.MUSIC_DISC_CAT) || inv.contains(Material.MUSIC_DISC_BLOCKS) || inv.contains(Material.MUSIC_DISC_CHIRP) || inv.contains(Material.MUSIC_DISC_WAIT))) {
+					if (!tcc.hasMaterialisation() &&
+						(inv.contains(Material.MUSIC_DISC_CAT) || inv.contains(Material.MUSIC_DISC_BLOCKS) ||
+						 inv.contains(Material.MUSIC_DISC_CHIRP) || inv.contains(Material.MUSIC_DISC_WAIT))) {
 						TARDISMessage.send(p, "MAT_MISSING");
 						return;
 					}
@@ -137,10 +139,14 @@ public class TARDISConsoleCloseListener implements Listener {
 											wherea.put("area_name", first);
 											ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
 											if (!rsa.resultSet()) {
-												TARDISMessage.send(p, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+												TARDISMessage.send(p, "AREA_NOT_FOUND",
+														ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
 												continue;
 											}
-											if ((!TARDISPermission.hasPermission(p, "tardis.area." + first) && !TARDISPermission.hasPermission(p, "tardis.area.*")) || (!p.isPermissionSet("tardis.area." + first) && !p.isPermissionSet("tardis.area.*"))) {
+											if ((!TARDISPermission.hasPermission(p, "tardis.area." + first) &&
+												 !TARDISPermission.hasPermission(p, "tardis.area.*")) ||
+												(!p.isPermissionSet("tardis.area." + first) &&
+												 !p.isPermissionSet("tardis.area.*"))) {
 												TARDISMessage.send(p, "TRAVEL_NO_AREA_PERM", first);
 												continue;
 											}
@@ -205,7 +211,8 @@ public class TARDISConsoleCloseListener implements Listener {
 												int[] start_loc = TARDISTimeTravel.getStartLocation(nsob, rsc.getDirection());
 												int tmp_y = nsob.getBlockY();
 												for (int up = 0; up < 10; up++) {
-													int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], nsob.getWorld(), rsc.getDirection());
+													int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y +
+																											up, start_loc[2], start_loc[1], start_loc[3], nsob.getWorld(), rsc.getDirection());
 													if (count == 0) {
 														nsob.setY(tmp_y + up);
 														break;
@@ -257,7 +264,8 @@ public class TARDISConsoleCloseListener implements Listener {
 												int x = TARDISNumberParsers.parseInt(lore.get(2));
 												int y = TARDISNumberParsers.parseInt(lore.get(3));
 												int z = TARDISNumberParsers.parseInt(lore.get(4));
-												if (Objects.requireNonNull(current.getWorld()).getName().equals(world) && current.getBlockX() == x && current.getBlockZ() == z) {
+												if (Objects.requireNonNull(current.getWorld()).getName().equals(world) &&
+													current.getBlockX() == x && current.getBlockZ() == z) {
 													continue;
 												}
 												// read the lore from the disk
@@ -300,7 +308,10 @@ public class TARDISConsoleCloseListener implements Listener {
 									if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
 										new TARDISLand(plugin, id, p).exitVortex();
 									}
-									if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
+									if (plugin.getConfig().getBoolean("circuits.damage") &&
+										!plugin.getDifficulty().equals(Difficulty.EASY) &&
+										plugin.getConfig().getInt("circuits.uses.memory") > 0 &&
+										!plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
 										plugin.getTrackerKeeper().getHasNotClickedHandbrake().add(id);
 										TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
 										tcc.getCircuits();
@@ -312,7 +323,9 @@ public class TARDISConsoleCloseListener implements Listener {
 									TARDISMessage.send(p, "ADV_BLANK");
 								}
 							}
-						} else if (mat.equals(Material.GLOWSTONE_DUST) && is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Randomiser Circuit")) {
+						} else if (mat.equals(Material.GLOWSTONE_DUST) && is.hasItemMeta() &&
+								   Objects.requireNonNull(is.getItemMeta()).hasDisplayName() &&
+								   is.getItemMeta().getDisplayName().equals("TARDIS Randomiser Circuit")) {
 							// Randomiser Circuit
 							Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(p, rsc.getDirection());
 							if (l != null) {
@@ -334,7 +347,9 @@ public class TARDISConsoleCloseListener implements Listener {
 								if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
 									new TARDISLand(plugin, id, p).exitVortex();
 								}
-								if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.randomiser") > 0) {
+								if (plugin.getConfig().getBoolean("circuits.damage") &&
+									!plugin.getDifficulty().equals(Difficulty.EASY) &&
+									plugin.getConfig().getInt("circuits.uses.randomiser") > 0) {
 									TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
 									tcc.getCircuits();
 									// decrement uses

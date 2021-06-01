@@ -72,7 +72,9 @@ public class TARDISTemporalLocatorListener extends TARDISMenuListener implements
 					plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), time);
 					TARDISMessage.send(player, "TEMPORAL_SET", String.format("%d", time));
 					// damage the circuit if configured
-					if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
+					if (plugin.getConfig().getBoolean("circuits.damage") &&
+						!plugin.getDifficulty().equals(Difficulty.EASY) &&
+						plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
 						int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId());
 						TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
 						tcc.getCircuits();

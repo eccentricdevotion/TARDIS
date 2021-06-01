@@ -78,7 +78,8 @@ public class TARDISJoinListener implements Listener {
 					plugin.getQueryFactory().doInsert("achievements", set);
 					// give the join kit
 					String kit = plugin.getKitsConfig().getString("give.join.kit");
-					plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisgive " + player.getName() + " kit " + kit);
+					plugin.getServer().dispatchCommand(plugin.getConsole(),
+							"tardisgive " + player.getName() + " kit " + kit);
 				}
 			}
 		}
@@ -101,7 +102,11 @@ public class TARDISJoinListener implements Listener {
 				}
 			}
 		}
-		if (!plugin.getDifficulty().equals(Difficulty.EASY) && ((plugin.getConfig().getBoolean("allow.player_difficulty") && TARDISPermission.hasPermission(player, "tardis.difficulty")) || (plugin.getConfig().getInt("travel.grace_period") > 0 && TARDISPermission.hasPermission(player, "tardis.create")))) {
+		if (!plugin.getDifficulty().equals(Difficulty.EASY) &&
+			((plugin.getConfig().getBoolean("allow.player_difficulty") &&
+			  TARDISPermission.hasPermission(player, "tardis.difficulty")) ||
+			 (plugin.getConfig().getInt("travel.grace_period") > 0 &&
+			  TARDISPermission.hasPermission(player, "tardis.create")))) {
 			// check if they have t_count record - create one if not
 			ResultSetCount rsc = new ResultSetCount(plugin, uuid);
 			if (!rsc.resultSet()) {
@@ -111,7 +116,8 @@ public class TARDISJoinListener implements Listener {
 				plugin.getQueryFactory().doInsert("t_count", setc);
 			}
 		}
-		if (plugin.getConfig().getBoolean("allow.tp_switch") && TARDISPermission.hasPermission(player, "tardis.texture")) {
+		if (plugin.getConfig().getBoolean("allow.tp_switch") &&
+			TARDISPermission.hasPermission(player, "tardis.texture")) {
 			// are they in the TARDIS?
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("uuid", uuid);

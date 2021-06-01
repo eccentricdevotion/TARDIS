@@ -32,7 +32,8 @@ class TARDISForceFieldVisualiser {
 
 	void showBorder(Location location, int d) {
 
-		TARDISForceFieldLocation tffl = new TARDISForceFieldLocation(location, plugin.getConfig().getDouble("allow.force_field") - 1.0d);
+		TARDISForceFieldLocation tffl = new TARDISForceFieldLocation(location,
+				plugin.getConfig().getDouble("allow.force_field") - 1.0d);
 
 		World world = location.getWorld();
 		for (int i = 0; i < 14; i++) {

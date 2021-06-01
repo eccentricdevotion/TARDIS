@@ -109,7 +109,8 @@ public class TARDISForceField implements Runnable {
 	}
 
 	private double offset(Entity entity, Location location) {
-		return (entity.getWorld() != location.getWorld()) ? range + 999.0d : entity.getLocation().toVector().subtract(location.toVector()).length();
+		return (entity.getWorld() != location.getWorld()) ?
+				range + 999.0d : entity.getLocation().toVector().subtract(location.toVector()).length();
 	}
 
 	private boolean isCompanion(Player other, Player player) {

@@ -41,11 +41,13 @@ public class TARDISAnvilListener implements Listener {
 
 	public TARDISAnvilListener(TARDISPlugin plugin) {
 		Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("shaped")).getKeys(false).forEach((r) -> {
-			String[] result = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped." + r + ".result")).split(":");
+			String[] result = Objects.requireNonNull(plugin.getRecipesConfig().getString(
+					"shaped." + r + ".result")).split(":");
 			disallow.put(r, Material.valueOf(result[0]));
 		});
 		Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("shapeless")).getKeys(false).forEach((q) -> {
-			String[] result = Objects.requireNonNull(plugin.getRecipesConfig().getString("shapeless." + q + ".result")).split(":");
+			String[] result = Objects.requireNonNull(plugin.getRecipesConfig().getString(
+					"shapeless." + q + ".result")).split(":");
 			disallow.put(q, Material.valueOf(result[0]));
 		});
 	}
@@ -65,7 +67,8 @@ public class TARDISAnvilListener implements Listener {
 					ItemStack two = inv.getItem(1);
 					if (checkRepair(one, two)) {
 						assert im != null;
-						if (im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getType() == disallow.get(im.getDisplayName())) {
+						if (im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) &&
+							is.getType() == disallow.get(im.getDisplayName())) {
 							TARDISMessage.send(player, "NO_RENAME");
 							event.setCancelled(true);
 						}

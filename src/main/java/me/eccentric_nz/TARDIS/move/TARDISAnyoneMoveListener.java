@@ -74,7 +74,8 @@ public class TARDISAnyoneMoveListener implements Listener {
 			int id = tpl.getTardisId();
 			Location to = tpl.getLocation();
 			boolean exit;
-			if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(Objects.requireNonNull(plugin.getServer().getPlayer(uuid)), "tardis.create_world")) {
+			if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") &&
+				TARDISPermission.hasPermission(Objects.requireNonNull(plugin.getServer().getPlayer(uuid)), "tardis.create_world")) {
 				exit = !(Objects.requireNonNull(to.getWorld()).getName().contains("tardis"));
 			} else if (plugin.getConfig().getBoolean("creation.default_world")) {
 				// check default world name
@@ -96,7 +97,9 @@ public class TARDISAnyoneMoveListener implements Listener {
 			boolean willFarm = (hasPrefs) && rsp.isFarmOn();
 			// check for entities near the police box
 			TARDISPetsAndFollowers petsAndFollowers = null;
-			if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(p, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
+			if (plugin.getConfig().getBoolean("allow.mob_farming") &&
+				TARDISPermission.hasPermission(p, "tardis.farm") &&
+				!plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
 				plugin.getTrackerKeeper().getFarming().add(uuid);
 				TARDISFarmer tf = new TARDISFarmer(plugin);
 				petsAndFollowers = tf.farmAnimals(l, d, id, p, Objects.requireNonNull(tpl.getLocation().getWorld()).getName(), Objects.requireNonNull(l.getWorld()).getName());

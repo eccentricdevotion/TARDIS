@@ -93,7 +93,10 @@ public class TARDISSonic {
 						}
 						// is it a tardis door?
 						HashMap<String, Object> where = new HashMap<>();
-						String doorloc = Objects.requireNonNull(lowerdoor.getLocation().getWorld()).getName() + ":" + lowerdoor.getLocation().getBlockX() + ":" + lowerdoor.getLocation().getBlockY() + ":" + lowerdoor.getLocation().getBlockZ();
+						String doorloc = Objects.requireNonNull(lowerdoor.getLocation().getWorld()).getName() + ":" +
+										 lowerdoor.getLocation().getBlockX() + ":" +
+										 lowerdoor.getLocation().getBlockY() + ":" +
+										 lowerdoor.getLocation().getBlockZ();
 						where.put("door_location", doorloc);
 						ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
 						if (rs.resultSet()) {

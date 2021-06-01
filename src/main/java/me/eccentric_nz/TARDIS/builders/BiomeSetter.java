@@ -62,7 +62,8 @@ public class BiomeSetter {
 						if (loops == 3) {
 							TARDISBlockSetters.setBlock(world, x + l, 255, z + w, Material.BARRIER);
 						} else {
-							TARDISBlockSetters.setBlockAndRemember(world, x + l, 255, z + w, Material.BARRIER, bd.getTardisId());
+							TARDISBlockSetters.setBlockAndRemember(world,
+									x + l, 255, z + w, Material.BARRIER, bd.getTardisId());
 						}
 					}
 					Chunk tmpChunk = world.getChunkAt(new Location(world, x + l, 64, z + w));
@@ -94,7 +95,9 @@ public class BiomeSetter {
 			chunks.add(chunk);
 			// reset biome and it's not The End
 			TARDISBiome blockBiome = TARDISStaticUtils.getBiomeAt(location);
-			if (blockBiome.equals(TARDISBiome.DEEP_OCEAN) || blockBiome.equals(TARDISBiome.THE_VOID) || (blockBiome.equals(TARDISBiome.THE_END) && !Objects.requireNonNull(location.getWorld()).getEnvironment().equals(World.Environment.THE_END))) {
+			if (blockBiome.equals(TARDISBiome.DEEP_OCEAN) || blockBiome.equals(TARDISBiome.THE_VOID) ||
+				(blockBiome.equals(TARDISBiome.THE_END) &&
+				 !Objects.requireNonNull(location.getWorld()).getEnvironment().equals(World.Environment.THE_END))) {
 				// reset the biome
 				for (int l = -1; l < 2; l++) {
 					for (int w = -1; w < 2; w++) {

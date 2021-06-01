@@ -129,7 +129,8 @@ public class TARDISBuilderInner implements Runnable {
 	@Override
 	public void run() {
 		if (!running) {
-			if (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
+			if (!plugin.getConfig().getBoolean("creation.create_worlds") &&
+				!plugin.getConfig().getBoolean("creation.default_world")) {
 				TARDISMessage.send(player, "CONFIG_CREATION_WORLD");
 				plugin.getServer().getScheduler().cancelTask(task);
 				task = -1;
@@ -141,7 +142,8 @@ public class TARDISBuilderInner implements Runnable {
 				starty = 64;
 			}
 			String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
-			String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
+			String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() +
+						  ".tschm";
 			File file = new File(path);
 			if (!file.exists()) {
 				plugin.debug("Could not find a schematic with that name!");
@@ -304,7 +306,8 @@ public class TARDISBuilderInner implements Runnable {
 					int pz = rel.get("z").getAsInt();
 					Art art = Art.valueOf(painting.get("art").getAsString());
 					BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-					Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, starty + py, resetz + pz));
+					Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world,
+							resetx + px, starty + py, resetz + pz));
 					Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
 					ent.teleport(pl);
 					ent.setFacingDirection(facing, true);
@@ -343,7 +346,8 @@ public class TARDISBuilderInner implements Runnable {
 						plugin.getQueryFactory().doInsert("achievements", setk);
 						// give the join kit
 						String kit = plugin.getKitsConfig().getString("give.create.kit");
-						plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisgive " + player.getName() + " kit " + kit);
+						plugin.getServer().dispatchCommand(plugin.getConsole(),
+								"tardisgive " + player.getName() + " kit " + kit);
 					}
 				}
 			}
@@ -430,7 +434,8 @@ public class TARDISBuilderInner implements Runnable {
 						data = Objects.requireNonNull(Material.getMaterial(m)).createBlockData();
 				}
 			}
-			if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && schm.getPermission().equals("delta")) {
+			if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) &&
+				schm.getPermission().equals("delta")) {
 				fractalBlocks.add(world.getBlockAt(x, y, z));
 			}
 			if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
@@ -565,7 +570,10 @@ public class TARDISBuilderInner implements Runnable {
 				setlb.put("location", lloc);
 				plugin.getQueryFactory().doInsert("lamps", setlb);
 			}
-			if (type.equals(Material.COMMAND_BLOCK) || ((schm.getPermission().equals("bigger") || schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
+			if (type.equals(Material.COMMAND_BLOCK) ||
+				((schm.getPermission().equals("bigger") || schm.getPermission().equals("coral") ||
+				  schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) &&
+				 type.equals(Material.BEACON))) {
 				/*
 				 * command block - remember it to spawn the creeper on.
 				 * could also be a beacon block, as the creeper sits
@@ -616,7 +624,8 @@ public class TARDISBuilderInner implements Runnable {
 				plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
 			}
 			// if it's the door, don't set it just remember its block then do it at the end
-			if (type.equals(Material.HONEYCOMB_BLOCK) && (schm.getPermission().equals("delta") || schm.getPermission().equals("rotor"))) {
+			if (type.equals(Material.HONEYCOMB_BLOCK) &&
+				(schm.getPermission().equals("delta") || schm.getPermission().equals("rotor"))) {
 				/*
 				 * spawn an item frame and place the time rotor in it
 				 */
@@ -626,7 +635,8 @@ public class TARDISBuilderInner implements Runnable {
 				postDoorBlocks.put(world.getBlockAt(x, y, z), data);
 			} else if (type.equals(Material.REDSTONE_TORCH) || type.equals(Material.REDSTONE_WALL_TORCH)) {
 				postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
-			} else if (type.equals(Material.TORCH) || type.equals(Material.WALL_TORCH) || type.equals(Material.SOUL_TORCH) || type.equals(Material.SOUL_WALL_TORCH)) {
+			} else if (type.equals(Material.TORCH) || type.equals(Material.WALL_TORCH) ||
+					   type.equals(Material.SOUL_TORCH) || type.equals(Material.SOUL_WALL_TORCH)) {
 				postTorchBlocks.put(world.getBlockAt(x, y, z), data);
 			} else if (type.equals(Material.STICKY_PISTON)) {
 				postStickyPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);

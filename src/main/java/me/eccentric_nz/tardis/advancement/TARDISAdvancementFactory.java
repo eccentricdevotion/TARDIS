@@ -72,11 +72,13 @@ public class TARDISAdvancementFactory {
 		if (a != null) {
 			AdvancementProgress avp = player.getAdvancementProgress(a);
 			if (!avp.isDone()) {
-				TARDISPlugin.plugin.getServer().dispatchCommand(TARDISPlugin.plugin.getConsole(), "advancement grant " + player.getName() + " only tardis:" + adv.getConfigName());
+				TARDISPlugin.plugin.getServer().dispatchCommand(TARDISPlugin.plugin.getConsole(),
+						"advancement grant " + player.getName() + " only tardis:" + adv.getConfigName());
 			}
 		} else {
 			player.sendMessage(ChatColor.YELLOW + "Advancement Made!");
-			player.sendMessage(ChatColor.WHITE + TARDISPlugin.plugin.getAdvancementConfig().getString(adv.getConfigName() + ".message"));
+			player.sendMessage(ChatColor.WHITE +
+							   TARDISPlugin.plugin.getAdvancementConfig().getString(adv.getConfigName() + ".message"));
 		}
 	}
 
@@ -112,8 +114,10 @@ public class TARDISAdvancementFactory {
 				}
 				if (achieved) {
 					// award advancement!
-					int reward_amount = plugin.getAdvancementConfig().getInt(advancement.getConfigName() + ".reward_amount");
-					String reward_type = plugin.getAdvancementConfig().getString(advancement.getConfigName() + ".reward_type");
+					int reward_amount = plugin.getAdvancementConfig().getInt(
+							advancement.getConfigName() + ".reward_amount");
+					String reward_type = plugin.getAdvancementConfig().getString(
+							advancement.getConfigName() + ".reward_type");
 					// display a proper advancement if possible
 					grantAdvancement(advancement, player);
 					assert reward_type != null;

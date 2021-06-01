@@ -161,7 +161,8 @@ public class TARDISPrefsMenuInventory {
 		ItemMeta brake = hand.getItemMeta();
 		assert brake != null;
 		brake.setDisplayName("Handbrake");
-		brake.setLore(Collections.singletonList((tardis != null && tardis.isHandbrakeOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF")));
+		brake.setLore(Collections.singletonList((tardis != null &&
+												 tardis.isHandbrakeOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF")));
 		brake.setCustomModelData(GUIPlayerPreferences.HANDBRAKE.getCustomModelData());
 		hand.setItemMeta(brake);
 		stack[31] = hand;

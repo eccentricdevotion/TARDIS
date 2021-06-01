@@ -69,7 +69,8 @@ public class TARDISDiskCraftListener implements Listener {
 						if (is != null && is.hasItemMeta()) {
 							ItemMeta im = is.getItemMeta();
 							assert im != null;
-							if (im.hasDisplayName() && im.getDisplayName().equals("Biome Storage Disk") && im.hasLore()) {
+							if (im.hasDisplayName() && im.getDisplayName().equals("Biome Storage Disk") &&
+								im.hasLore()) {
 								List<String> lore = im.getLore();
 								int ladder = inv.first(Material.LADDER);
 								assert lore != null;
@@ -136,7 +137,8 @@ public class TARDISDiskCraftListener implements Listener {
 						if (is != null && is.hasItemMeta()) {
 							ItemMeta im = is.getItemMeta();
 							assert im != null;
-							if (im.hasDisplayName() && im.getDisplayName().equals("Preset Storage Disk") && im.hasLore()) {
+							if (im.hasDisplayName() && im.getDisplayName().equals("Preset Storage Disk") &&
+								im.hasLore()) {
 								List<String> lore = im.getLore();
 								assert lore != null;
 								if (lore.get(0).equals("Blank")) {

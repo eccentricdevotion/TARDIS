@@ -89,7 +89,8 @@ public class TARDISItemCommand {
 								TARDISMessage.message(player, "Filled Map!");
 								GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
 								if (glowstone != null) {
-									TARDISMessage.message(player, "Found '" + glowstone.getDisplayName() + "' converting to GLOWSTONE_DUST");
+									TARDISMessage.message(player,
+											"Found '" + glowstone.getDisplayName() + "' converting to GLOWSTONE_DUST");
 									is.setType(Material.GLOWSTONE_DUST);
 									i++;
 								} else {

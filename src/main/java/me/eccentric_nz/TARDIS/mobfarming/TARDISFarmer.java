@@ -143,7 +143,8 @@ public class TARDISFarmer {
 							tmbee.setBaby(!((Bee) entity).isAdult());
 							tmbee.setName(entity.getCustomName());
 							bees.add(tmbee);
-							if (!apiary.isEmpty() || (apiary.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+							if (!apiary.isEmpty() ||
+								(apiary.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
 								entity.remove();
 							}
 							if (taf != null) {
@@ -156,7 +157,8 @@ public class TARDISFarmer {
 							tmchk.setBaby(!((Chicken) entity).isAdult());
 							tmchk.setName(entity.getCustomName());
 							chickens.add(tmchk);
-							if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+							if (!farm.isEmpty() ||
+								(farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
 								entity.remove();
 							}
 							if (taf != null) {
@@ -170,7 +172,8 @@ public class TARDISFarmer {
 							tmcow.setBaby(!((Cow) entity).isAdult());
 							tmcow.setName(entity.getCustomName());
 							cows.add(tmcow);
-							if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+							if (!farm.isEmpty() ||
+								(farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
 								entity.remove();
 							}
 							if (taf != null) {
@@ -206,7 +209,8 @@ public class TARDISFarmer {
 							}
 							tmhor.setHorseVariant(entity.getType());
 							tmhor.setTamed(brokenin.isTamed());
-							if (entity.getType().equals(EntityType.DONKEY) || entity.getType().equals(EntityType.MULE)) {
+							if (entity.getType().equals(EntityType.DONKEY) ||
+								entity.getType().equals(EntityType.MULE)) {
 								ChestedHorse ch = (ChestedHorse) horse;
 								if (ch.isCarryingChest()) {
 									tmhor.setHasChest(true);
@@ -226,7 +230,8 @@ public class TARDISFarmer {
 								}
 							}
 							horses.add(tmhor);
-							if (!stable.isEmpty() || (stable.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+							if (!stable.isEmpty() ||
+								(stable.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
 								entity.remove();
 							}
 							if (taf != null) {
@@ -275,7 +280,8 @@ public class TARDISFarmer {
 							LlamaInventory llinv = llama.getInventory();
 							tmlla.setDecor(llinv.getDecor());
 							llamas.add(tmlla);
-							if (!stall.isEmpty() || (stall.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+							if (!stall.isEmpty() ||
+								(stall.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
 								entity.remove();
 							}
 							if (taf != null) {
@@ -310,7 +316,8 @@ public class TARDISFarmer {
 							} else {
 								parrots.add(tmpet);
 							}
-							if (timeLordIsOwner || !birdcage.isEmpty() || (birdcage.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+							if (timeLordIsOwner || !birdcage.isEmpty() ||
+								(birdcage.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
 								entity.remove();
 							}
 							if (taf != null) {
@@ -325,7 +332,8 @@ public class TARDISFarmer {
 							tmpanda.setMainGene(((Panda) entity).getMainGene());
 							tmpanda.setHiddenGene(((Panda) entity).getHiddenGene());
 							pandas.add(tmpanda);
-							if (!bamboo.isEmpty() || (bamboo.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+							if (!bamboo.isEmpty() ||
+								(bamboo.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
 								entity.remove();
 							}
 							if (taf != null) {
@@ -341,7 +349,8 @@ public class TARDISFarmer {
 							// eject any passengers
 							entity.eject();
 							pigs.add(tmpig);
-							if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+							if (!farm.isEmpty() ||
+								(farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
 								entity.remove();
 							}
 							if (taf != null) {
@@ -355,7 +364,8 @@ public class TARDISFarmer {
 							tmbear.setBaby(!((PolarBear) entity).isAdult());
 							tmbear.setName(entity.getCustomName());
 							polarbears.add(tmbear);
-							if (!igloo.isEmpty() || (igloo.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+							if (!igloo.isEmpty() ||
+								(igloo.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
 								entity.remove();
 							}
 							if (taf != null) {
@@ -370,7 +380,8 @@ public class TARDISFarmer {
 							tmrabbit.setName(rabbit.getCustomName());
 							tmrabbit.setBunnyType(rabbit.getRabbitType());
 							rabbits.add(tmrabbit);
-							if (!hutch.isEmpty() || (hutch.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+							if (!hutch.isEmpty() ||
+								(hutch.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
 								entity.remove();
 							}
 							if (taf != null) {
@@ -384,7 +395,8 @@ public class TARDISFarmer {
 							tmshp.setColour(((Sheep) entity).getColor());
 							tmshp.setName(entity.getCustomName());
 							sheep.add(tmshp);
-							if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+							if (!farm.isEmpty() ||
+								(farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
 								entity.remove();
 							}
 							if (taf != null) {
@@ -399,7 +411,8 @@ public class TARDISFarmer {
 							tmshr.setVariant(((MushroomCow) entity).getVariant());
 							tmshr.setName(entity.getCustomName());
 							mooshrooms.add(tmshr);
-							if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+							if (!farm.isEmpty() ||
+								(farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
 								entity.remove();
 							}
 							if (taf != null) {
@@ -421,7 +434,8 @@ public class TARDISFarmer {
 							tv.setExperience(v.getVillagerExperience());
 							tv.setWilling(plugin.getTardisHelper().getVillagerWilling(v));
 							villagers.add(tv);
-							if (!village.isEmpty() || (village.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+							if (!village.isEmpty() ||
+								(village.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
 								entity.remove();
 							}
 							break;
@@ -468,7 +482,9 @@ public class TARDISFarmer {
 						fish.setPatternColour(fbim.getPatternColor());
 					}
 				}
-				if (bees.size() > 0 || farmtotal > 0 || horses.size() > 0 || villagers.size() > 0 || pets.size() > 0 || polarbears.size() > 0 || llamas.size() > 0 || parrots.size() > 0 || pandas.size() > 0 || rabbits.size() > 0 || fish != null || followers.size() > 0) {
+				if (bees.size() > 0 || farmtotal > 0 || horses.size() > 0 || villagers.size() > 0 || pets.size() > 0 ||
+					polarbears.size() > 0 || llamas.size() > 0 || parrots.size() > 0 || pandas.size() > 0 ||
+					rabbits.size() > 0 || fish != null || followers.size() > 0) {
 					boolean canfarm = switch (plugin.getInvManager()) {
 						case MULTIVERSE -> TARDISMultiverseInventoriesChecker.checkWorldsCanShare(from, to);
 						case PER_WORLD -> TARDISPerWorldInventoryChecker.checkWorldsCanShare(from, to);
@@ -732,7 +748,8 @@ public class TARDISFarmer {
 							pony.setColor(e.getHorseColour());
 							pony.setStyle(e.getHorseStyle());
 						}
-						if ((e.getHorseVariant().equals(EntityType.DONKEY) || e.getHorseVariant().equals(EntityType.MULE)) && e.hasChest()) {
+						if ((e.getHorseVariant().equals(EntityType.DONKEY) ||
+							 e.getHorseVariant().equals(EntityType.MULE)) && e.hasChest()) {
 							ChestedHorse ch = (ChestedHorse) equine;
 							ch.setCarryingChest(true);
 						}
@@ -950,9 +967,11 @@ public class TARDISFarmer {
 		List<TARDISFollower> followers = new ArrayList<>();
 		List<Entity> mobs = player.getNearbyEntities(3.5D, 3.5D, 3.5D);
 		for (Entity entity : mobs) {
-			if (entity.getType().equals(EntityType.CAT) || entity.getType().equals(EntityType.WOLF) || entity.getType().equals(EntityType.PARROT)) {
+			if (entity.getType().equals(EntityType.CAT) || entity.getType().equals(EntityType.WOLF) ||
+				entity.getType().equals(EntityType.PARROT)) {
 				Tameable tamed = (Tameable) entity;
-				if (tamed.isTamed() && Objects.requireNonNull(tamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
+				if (tamed.isTamed() &&
+					Objects.requireNonNull(tamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
 					TARDISPet pet = new TARDISPet();
 					pet.setType(entity.getType());
 					String pet_name = entity.getCustomName();
@@ -994,7 +1013,8 @@ public class TARDISFarmer {
 					pets.add(pet);
 					entity.remove();
 				}
-			} else if (entity.getType().equals(EntityType.ARMOR_STAND) && plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+			} else if (entity.getType().equals(EntityType.ARMOR_STAND) &&
+					   plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
 				TARDISFollower follower = new TARDISFollower(entity, player.getUniqueId());
 				if (follower.isValid()) {
 					followers.add(follower);

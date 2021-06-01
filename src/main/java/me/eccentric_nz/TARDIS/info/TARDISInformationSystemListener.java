@@ -1351,7 +1351,8 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
 		// do stuff
 		String[] r = item.toString().split("_");
 		String recipe = (r.length == 3) ? r[0] + "-" + r[1] : r[0];
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.performCommand("tardisrecipe " + recipe));
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.performCommand(
+				"tardisrecipe " + recipe));
 		exit(p);
 	}
 
@@ -1367,11 +1368,14 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
 		String desc;
 		String usage;
 		if (c.length > 1) {
-			desc = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + "." + c[1] + ".description");
-			usage = Objects.requireNonNull(plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + "." + c[1] + ".usage")).replace("<command>", c[0]);
+			desc = plugin.getGeneralKeeper().getPluginYAML().getString(
+					"commands." + c[0] + "." + c[1] + ".description");
+			usage = Objects.requireNonNull(plugin.getGeneralKeeper().getPluginYAML().getString(
+					"commands." + c[0] + "." + c[1] + ".usage")).replace("<command>", c[0]);
 		} else {
 			desc = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".description");
-			usage = Objects.requireNonNull(plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".usage")).replace("<command>", c[0]);
+			usage = Objects.requireNonNull(plugin.getGeneralKeeper().getPluginYAML().getString(
+					"commands." + c[0] + ".usage")).replace("<command>", c[0]);
 		}
 		p.sendMessage("---");
 		p.sendMessage("[" + item.getName() + "]");

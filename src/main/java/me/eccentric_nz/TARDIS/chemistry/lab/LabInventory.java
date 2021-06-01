@@ -42,7 +42,9 @@ public class LabInventory {
 		ItemMeta info_im = info.getItemMeta();
 		assert info_im != null;
 		info_im.setDisplayName("Info");
-		info_im.setLore(Arrays.asList("Combine elements and compounds", "to create bleach, ice bombs", "heat blocks and fertiliser.", "To see a lab table formula", "use the " + ChatColor.GREEN + ChatColor.ITALIC + "/tardischemistry formula" + ChatColor.DARK_PURPLE + ChatColor.ITALIC + " command.", "Place items in the bottom", "row from left to right."));
+		info_im.setLore(Arrays.asList("Combine elements and compounds", "to create bleach, ice bombs", "heat blocks and fertiliser.", "To see a lab table formula",
+				"use the " + ChatColor.GREEN + ChatColor.ITALIC + "/tardischemistry formula" + ChatColor.DARK_PURPLE +
+				ChatColor.ITALIC + " command.", "Place items in the bottom", "row from left to right."));
 		info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
 		info.setItemMeta(info_im);
 		stack[8] = info;

@@ -287,7 +287,8 @@ public class TARDISRoomRunnable implements Runnable {
 					int minusY = aquaSpawn.getBlockY() - 1;
 					for (int ax = plusX; ax < plusX + 5; ax++) {
 						for (int az = plusZ; az < plusZ + 5; az++) {
-							if (world.getBlockAt(ax, minusY, az).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
+							if (world.getBlockAt(ax, minusY, az).getType().equals(Material.SAND) &&
+								TARDISConstants.RANDOM.nextInt(100) < 66) {
 								BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
 								switch (f.getMaterial()) {
 									case KELP -> {
@@ -311,7 +312,8 @@ public class TARDISRoomRunnable implements Runnable {
 					}
 					for (int bx = minusX; bx > minusX - 5; bx--) {
 						for (int bz = plusZ; bz < plusZ + 5; bz++) {
-							if (world.getBlockAt(bx, minusY, bz).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
+							if (world.getBlockAt(bx, minusY, bz).getType().equals(Material.SAND) &&
+								TARDISConstants.RANDOM.nextInt(100) < 66) {
 								BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
 								switch (f.getMaterial()) {
 									case KELP -> {
@@ -335,7 +337,8 @@ public class TARDISRoomRunnable implements Runnable {
 					}
 					for (int cx = minusX; cx > minusX - 5; cx--) {
 						for (int cz = minusZ; cz > minusZ - 5; cz--) {
-							if (world.getBlockAt(cx, minusY, cz).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
+							if (world.getBlockAt(cx, minusY, cz).getType().equals(Material.SAND) &&
+								TARDISConstants.RANDOM.nextInt(100) < 66) {
 								BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
 								switch (f.getMaterial()) {
 									case KELP -> {
@@ -359,7 +362,8 @@ public class TARDISRoomRunnable implements Runnable {
 					}
 					for (int dx = plusX; dx < plusX + 5; dx++) {
 						for (int dz = minusZ; dz > minusZ - 5; dz--) {
-							if (world.getBlockAt(dx, minusY, dz).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
+							if (world.getBlockAt(dx, minusY, dz).getType().equals(Material.SAND) &&
+								TARDISConstants.RANDOM.nextInt(100) < 66) {
 								BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
 								switch (f.getMaterial()) {
 									case KELP -> {
@@ -393,7 +397,8 @@ public class TARDISRoomRunnable implements Runnable {
 						int pz = rel.get("z").getAsInt();
 						Art art = Art.valueOf(painting.get("art").getAsString());
 						BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-						Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetX + px, resetY + py, resetZ + pz));
+						Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world,
+								resetX + px, resetY + py, resetZ + pz));
 						try {
 							Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
 							ent.teleport(pl);
@@ -518,7 +523,9 @@ public class TARDISRoomRunnable implements Runnable {
 					data = gw.createBlockData();
 				}
 				if (type.equals(Material.ORANGE_WOOL)) {
-					if (wallType.equals(Material.ORANGE_WOOL) || ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && (wallType.equals(Material.LIME_WOOL) || wallType.equals(Material.PINK_WOOL)))) {
+					if (wallType.equals(Material.ORANGE_WOOL) ||
+						((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) &&
+						 (wallType.equals(Material.LIME_WOOL) || wallType.equals(Material.PINK_WOOL)))) {
 						if (ow.equals(Material.ORANGE_WOOL)) {
 							data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
 						} else {
@@ -529,7 +536,9 @@ public class TARDISRoomRunnable implements Runnable {
 					}
 				}
 				if (type.equals(Material.LIGHT_GRAY_WOOL)) {
-					if (floorType.equals(Material.LIGHT_GRAY_WOOL) || ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && (floorType.equals(Material.LIME_WOOL) || floorType.equals(Material.PINK_WOOL)))) {
+					if (floorType.equals(Material.LIGHT_GRAY_WOOL) ||
+						((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) &&
+						 (floorType.equals(Material.LIME_WOOL) || floorType.equals(Material.PINK_WOOL)))) {
 						data = lgw.createBlockData();
 					} else {
 						data = floorType.createBlockData();
@@ -557,7 +566,8 @@ public class TARDISRoomRunnable implements Runnable {
 					plugin.getQueryFactory().insertControl(tardisId, 34, new Location(world, startX, startY, startZ).toString(), 1);
 				}
 				// set drop chest
-				if (type.equals(Material.TRAPPED_CHEST) && room.equals("VAULT") && player != null && TARDISPermission.hasPermission(player, "tardis.vault")) {
+				if (type.equals(Material.TRAPPED_CHEST) && room.equals("VAULT") && player != null &&
+					TARDISPermission.hasPermission(player, "tardis.vault")) {
 					// determine the min x, y, z coords
 					int mx = startX % 16;
 					if (mx < 0) {
@@ -606,9 +616,13 @@ public class TARDISRoomRunnable implements Runnable {
 					plugin.getQueryFactory().insertControl(tardisId, 19, plate, 0);
 				}
 				// set stable
-				if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE"))) {
+				if (type.equals(Material.SOUL_SAND) &&
+					(room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") ||
+					 room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") ||
+					 room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE"))) {
 					HashMap<String, Object> sets = new HashMap<>();
-					sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startX + ":" + startY + ":" + startZ);
+					sets.put(room.toLowerCase(Locale.ENGLISH),
+							world.getName() + ":" + startX + ":" + startY + ":" + startZ);
 					HashMap<String, Object> wheres = new HashMap<>();
 					wheres.put("tardis_id", tardisId);
 					if (room.equals("RENDERER") || room.equals("ZERO")) {
@@ -636,7 +650,8 @@ public class TARDISRoomRunnable implements Runnable {
 						default -> {
 							data = TARDISConstants.BLACK;
 							// add WorldGuard region
-							if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+							if (plugin.isWorldGuardOnServer() &&
+								plugin.getConfig().getBoolean("preferences.use_worldguard")) {
 								String name = "";
 								if (player == null) {
 									ResultSetTardisTimeLordName rsn = new ResultSetTardisTimeLordName(plugin);
@@ -661,7 +676,8 @@ public class TARDISRoomRunnable implements Runnable {
 						}
 					}
 				}
-				if ((type.equals(Material.SOUL_SAND) || type.equals(Material.CARVED_PUMPKIN)) && room.equals("SMELTER")) {
+				if ((type.equals(Material.SOUL_SAND) || type.equals(Material.CARVED_PUMPKIN)) &&
+					room.equals("SMELTER")) {
 					String pos = new Location(world, startX, startY, startZ).toString();
 					HashMap<String, Object> setsm = new HashMap<>();
 					setsm.put("tardis_id", tardisId);
@@ -698,13 +714,15 @@ public class TARDISRoomRunnable implements Runnable {
 				if (type.equals(Material.OAK_DOOR) && (room.equals("VILLAGE") || room.equals("SHELL"))) {
 					Block door = world.getBlockAt(startX, startY, startZ);
 					doorBlocks.put(door, data);
-					rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + data.getAsString());
+					rd.getPostBlocks().add(
+							world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + data.getAsString());
 				}
 				// remember torches
 				if (type.equals(Material.TORCH)) {
 					Block torch = world.getBlockAt(startX, startY, startZ);
 					torchBlocks.put(torch, data);
-					rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + data.getAsString());
+					rd.getPostBlocks().add(
+							world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + data.getAsString());
 				}
 				// remember torches
 				if (type.equals(Material.LEVER)) {
@@ -715,7 +733,8 @@ public class TARDISRoomRunnable implements Runnable {
 				if (type.equals(Material.REDSTONE_TORCH)) {
 					Block torch = world.getBlockAt(startX, startY, startZ);
 					redstoneTorchBlocks.put(torch, data);
-					rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + data.getAsString());
+					rd.getPostBlocks().add(
+							world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + data.getAsString());
 				}
 				// remember banners
 				if (TARDISStaticUtils.isBanner(type)) {
@@ -729,50 +748,58 @@ public class TARDISRoomRunnable implements Runnable {
 				if (type.equals(Material.FARMLAND)) {
 					Block farmland = world.getBlockAt(startX, startY, startZ);
 					farmlandBlocks.add(farmland);
-					rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + Material.FARMLAND.createBlockData().getAsString());
+					rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" +
+										   Material.FARMLAND.createBlockData().getAsString());
 				}
 				if (room.equals("ARBORETUM") || room.equals("GREENHOUSE")) {
 					// remember sugar cane
 					if (type.equals(Material.SUGAR_CANE)) {
 						Block cane = world.getBlockAt(startX, startY, startZ);
 						caneBlocks.add(cane);
-						rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + Material.SUGAR_CANE.createBlockData().getAsString());
+						rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" +
+											   Material.SUGAR_CANE.createBlockData().getAsString());
 					}
 					// remember cocoa
 					if (type.equals(Material.COCOA)) {
 						Block cocoa = world.getBlockAt(startX, startY, startZ);
 						cocoaBlocks.put(cocoa, data);
-						rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + Material.COCOA.createBlockData().getAsString());
+						rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" +
+											   Material.COCOA.createBlockData().getAsString());
 					}
 					// remember wheat
 					if (type.equals(Material.WHEAT)) {
 						Block crops = world.getBlockAt(startX, startY, startZ);
 						wheatBlocks.add(crops);
-						rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + Material.WHEAT.createBlockData().getAsString());
+						rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" +
+											   Material.WHEAT.createBlockData().getAsString());
 					}
 					// remember melon
 					if (type.equals(Material.MELON_STEM)) {
 						Block melon = world.getBlockAt(startX, startY, startZ);
 						melonBlocks.add(melon);
-						rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + Material.MELON_STEM.createBlockData().getAsString());
+						rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" +
+											   Material.MELON_STEM.createBlockData().getAsString());
 					}
 					// remember pumpkin
 					if (type.equals(Material.PUMPKIN_STEM)) {
 						Block pumpkin = world.getBlockAt(startX, startY, startZ);
 						pumpkinBlocks.add(pumpkin);
-						rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + Material.PUMPKIN_STEM.createBlockData().getAsString());
+						rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" +
+											   Material.PUMPKIN_STEM.createBlockData().getAsString());
 					}
 					// remember carrots
 					if (type.equals(Material.CARROTS)) {
 						Block carrot = world.getBlockAt(startX, startY, startZ);
 						carrotBlocks.add(carrot);
-						rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + Material.CARROTS.createBlockData().getAsString());
+						rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" +
+											   Material.CARROTS.createBlockData().getAsString());
 					}
 					// remember potatoes
 					if (type.equals(Material.POTATOES)) {
 						Block potato = world.getBlockAt(startX, startY, startZ);
 						potatoBlocks.add(potato);
-						rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + Material.POTATOES.createBlockData().getAsString());
+						rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" +
+											   Material.POTATOES.createBlockData().getAsString());
 					}
 					if (level == 4 && room.equals("GREENHOUSE")) {
 						// set all the ice to water
@@ -790,7 +817,8 @@ public class TARDISRoomRunnable implements Runnable {
 					plugin.getQueryFactory().doUpdate("tardis", set, where);
 				}
 				// always replace bedrock (the door space in ars rooms)
-				if ((type.equals(Material.BEDROCK) && !room.equals("SHELL")) || (type.equals(Material.SOUL_SAND) && room.equals("SHELL"))) {
+				if ((type.equals(Material.BEDROCK) && !room.equals("SHELL")) ||
+					(type.equals(Material.SOUL_SAND) && room.equals("SHELL"))) {
 					if (checkRoomNextDoor(world.getBlockAt(startX, startY, startZ))) {
 						data = TARDISConstants.AIR;
 					} else {
@@ -823,7 +851,8 @@ public class TARDISRoomRunnable implements Runnable {
 					data = TARDISConstants.AIR;
 				} else {
 					Block existing = world.getBlockAt(startX, startY, startZ);
-					if (!existing.getType().isAir() && !(room.equals("BAMBOO") && existing.getType().equals(Material.BAMBOO))) {
+					if (!existing.getType().isAir() &&
+						!(room.equals("BAMBOO") && existing.getType().equals(Material.BAMBOO))) {
 						if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
 							switch (type) {
 								case AIR:
@@ -855,7 +884,8 @@ public class TARDISRoomRunnable implements Runnable {
 				if ((type.equals(Material.WATER) || type.equals(Material.ICE)) && !room.equals("IGLOO")) {
 					Block icy = world.getBlockAt(startX, startY, startZ);
 					iceBlocks.add(icy);
-					rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + Material.ICE.createBlockData().getAsString());
+					rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" +
+										   Material.ICE.createBlockData().getAsString());
 				}
 				// remember lamp blocks
 				if (type.equals(Material.REDSTONE_LAMP)) {
@@ -873,7 +903,8 @@ public class TARDISRoomRunnable implements Runnable {
 						task = 0;
 						return;
 					}
-					rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + TARDISConstants.LAMP.getAsString());
+					rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" +
+										   TARDISConstants.LAMP.getAsString());
 				}
 				if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
 					String loc;
@@ -979,7 +1010,8 @@ public class TARDISRoomRunnable implements Runnable {
 			// abort room growing task
 			plugin.getServer().getScheduler().cancelTask(task);
 			task = 0;
-			String message = ChatColor.RED + "Resumption of room growing was aborted due to: " + ChatColor.RESET + e.getMessage();
+			String message = ChatColor.RED + "Resumption of room growing was aborted due to: " + ChatColor.RESET +
+							 e.getMessage();
 			if (player != null) {
 				TARDISMessage.message(player, message);
 			}

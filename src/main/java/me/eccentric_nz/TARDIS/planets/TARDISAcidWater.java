@@ -135,13 +135,22 @@ public class TARDISAcidWater implements Listener {
 					if (player.isDead()) {
 						burningPlayers.remove(player);
 						cancel();
-					} else if ((player.getLocation().getBlock().isLiquid() || player.getLocation().getBlock().getRelative(BlockFace.UP).isLiquid()) && Objects.requireNonNull(player.getLocation().getWorld()).getName().equalsIgnoreCase(s_world + "_tardis_skaro")) {
+					} else if ((player.getLocation().getBlock().isLiquid() ||
+								player.getLocation().getBlock().getRelative(BlockFace.UP).isLiquid()) &&
+							   Objects.requireNonNull(player.getLocation().getWorld()).getName().equalsIgnoreCase(
+									   s_world + "_tardis_skaro")) {
 						// Apply additional potion effects
-						if (!plugin.getPlanetsConfig().getStringList("planets." + s_world + "_tardis_skaro.acid_potions").isEmpty()) {
-							plugin.getPlanetsConfig().getStringList("planets." + s_world + "_tardis_skaro.acid_potions").forEach((t) -> {
+						if (!plugin.getPlanetsConfig().getStringList(
+								"planets." + s_world + "_tardis_skaro.acid_potions").isEmpty()) {
+							plugin.getPlanetsConfig().getStringList(
+									"planets." + s_world + "_tardis_skaro.acid_potions").forEach((t) -> {
 								PotionEffectType pet = PotionEffectType.getByName(t);
 								if (pet != null) {
-									if (pet.equals(PotionEffectType.BLINDNESS) || pet.equals(PotionEffectType.CONFUSION) || pet.equals(PotionEffectType.HUNGER) || pet.equals(PotionEffectType.SLOW) || pet.equals(PotionEffectType.SLOW_DIGGING) || pet.equals(PotionEffectType.WEAKNESS)) {
+									if (pet.equals(PotionEffectType.BLINDNESS) ||
+										pet.equals(PotionEffectType.CONFUSION) || pet.equals(PotionEffectType.HUNGER) ||
+										pet.equals(PotionEffectType.SLOW) ||
+										pet.equals(PotionEffectType.SLOW_DIGGING) ||
+										pet.equals(PotionEffectType.WEAKNESS)) {
 										player.addPotionEffect(new PotionEffect(pet, 200, 1));
 									} else {
 										// Poison
@@ -151,7 +160,8 @@ public class TARDISAcidWater implements Listener {
 							});
 						}
 						// Apply damage if there is any
-						double ad = plugin.getPlanetsConfig().getDouble("planets." + s_world + "_tardis_skaro.acid_damage");
+						double ad = plugin.getPlanetsConfig().getDouble(
+								"planets." + s_world + "_tardis_skaro.acid_damage");
 						if (ad > 0d) {
 							double health = player.getHealth() - (ad - ad * getDamageReduced(player));
 							if (health < 0D) {

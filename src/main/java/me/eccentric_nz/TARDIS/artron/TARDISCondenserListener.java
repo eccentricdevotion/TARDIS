@@ -72,7 +72,8 @@ public class TARDISCondenserListener implements Listener {
 		InventoryHolder holder = event.getInventory().getHolder();
 		String title = view.getTitle();
 		if (holder instanceof Chest) {
-			if (title.equals(ChatColor.DARK_RED + "Artron Condenser") || title.equals(ChatColor.DARK_RED + "Server Condenser")) {
+			if (title.equals(ChatColor.DARK_RED + "Artron Condenser") ||
+				title.equals(ChatColor.DARK_RED + "Server Condenser")) {
 				Player player = (Player) event.getPlayer();
 				Chest chest = (Chest) holder;
 				Location loc = chest.getLocation();
@@ -90,7 +91,9 @@ public class TARDISCondenserListener implements Listener {
 								}
 								break;
 							case NONE:
-								if (Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + Objects.requireNonNull(loc.getWorld()).getName() + ".gamemode")).equalsIgnoreCase("CREATIVE")) {
+								if (Objects.requireNonNull(plugin.getPlanetsConfig().getString(
+										"planets." + Objects.requireNonNull(loc.getWorld()).getName() +
+										".gamemode")).equalsIgnoreCase("CREATIVE")) {
 									TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
 									return;
 								}
@@ -111,7 +114,9 @@ public class TARDISCondenserListener implements Listener {
 				} else {
 					where.put("uuid", player.getUniqueId().toString());
 					rs = new ResultSetTardis(plugin, where, "", false, 0);
-					isCondenser = (plugin.getArtronConfig().contains("condenser") && Objects.equals(plugin.getArtronConfig().getString("condenser"), chest_loc) && rs.resultSet());
+					isCondenser = (plugin.getArtronConfig().contains("condenser") &&
+								   Objects.equals(plugin.getArtronConfig().getString("condenser"), chest_loc) &&
+								   rs.resultSet());
 				}
 				if (isCondenser) {
 					player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 0.5f, 1);
@@ -130,28 +135,36 @@ public class TARDISCondenserListener implements Listener {
 									amount += plugin.getArtronConfig().getDouble("sonic_generator.standard") * full;
 									assert lore != null;
 									if (lore.contains("Bio-scanner Upgrade")) {
-										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
+										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") *
+														 full);
 									}
 									if (lore.contains("Diamond Upgrade")) {
-										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.diamond") * full);
+										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.diamond") *
+														 full);
 									}
 									if (lore.contains("Emerald Upgrade")) {
-										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.emerald") * full);
+										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.emerald") *
+														 full);
 									}
 									if (lore.contains("Redstone Upgrade")) {
-										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
+										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") *
+														 full);
 									}
 									if (lore.contains("Painter Upgrade")) {
-										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.painter") * full);
+										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.painter") *
+														 full);
 									}
 									if (lore.contains("Ignite Upgrade")) {
-										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full);
+										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") *
+														 full);
 									}
 									if (lore.contains("Pickup Arrows Upgrade")) {
-										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full);
+										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") *
+														 full);
 									}
 									if (lore.contains("Knockback Upgrade")) {
-										amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full);
+										amount += (int) (
+												plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full);
 									}
 								} else if (item.equals("MUSIC_DISC_MELLOHI") && isBlueprint(is)) {
 									// blueprint disk
@@ -161,7 +174,8 @@ public class TARDISCondenserListener implements Listener {
 									amount += stack_size * plugin.getCondensables().get(item);
 								}
 								String blockData = is.getType().toString();
-								if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
+								if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") ||
+									plugin.getConfig().getBoolean("allow.repair")) {
 									if (item_counts.containsKey(blockData)) {
 										Integer add_this = (item_counts.get(blockData) + stack_size);
 										item_counts.put(blockData, add_this);
@@ -180,7 +194,8 @@ public class TARDISCondenserListener implements Listener {
 					TARDIS tardis = rs.getTardis();
 					if (tardis != null) {
 						// process item_counts
-						if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
+						if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") ||
+							plugin.getConfig().getBoolean("allow.repair")) {
 							item_counts.forEach((key, value) -> {
 								// check if the tardis has condensed this material before
 								HashMap<String, Object> wherec = new HashMap<>();

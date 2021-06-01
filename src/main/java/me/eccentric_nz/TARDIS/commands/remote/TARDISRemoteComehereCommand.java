@@ -61,7 +61,9 @@ class TARDISRemoteComehereCommand {
 
 	boolean doRemoteComeHere(Player player, UUID uuid) {
 		Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
-		if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && Objects.requireNonNull(eyeLocation.getWorld()).getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
+		if (!plugin.getConfig().getBoolean("travel.include_default_world") &&
+			plugin.getConfig().getBoolean("creation.default_world") &&
+			Objects.requireNonNull(eyeLocation.getWorld()).getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
 			TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 			return true;
 		}
@@ -69,7 +71,8 @@ class TARDISRemoteComehereCommand {
 			return true;
 		}
 		if (!plugin.getTardisArea().areaCheckInExisting(eyeLocation)) {
-			TARDISMessage.send(player, "AREA_NO_COMEHERE", ChatColor.AQUA + "/tardisremote [player] travel area [area name]");
+			TARDISMessage.send(player, "AREA_NO_COMEHERE",
+					ChatColor.AQUA + "/tardisremote [player] travel area [area name]");
 			return true;
 		}
 		Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();
@@ -102,7 +105,9 @@ class TARDISRemoteComehereCommand {
 			TARDISMessage.send(player, "NO_PB_IN_TARDIS");
 			return true;
 		}
-		if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+		if (plugin.getTrackerKeeper().getInVortex().contains(id) ||
+			plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+			plugin.getTrackerKeeper().getDematerialising().contains(id)) {
 			TARDISMessage.send(player, "NOT_WHILE_MAT");
 			return true;
 		}
@@ -137,7 +142,8 @@ class TARDISRemoteComehereCommand {
 			}
 		}
 		if (plugin.getPM().isPluginEnabled("LockettePro")) {
-			if (LocketteProAPI.isProtected(eyeLocation.getBlock()) || LocketteProAPI.isProtected(under) || plugin.getUtils().checkSurrounding(under)) {
+			if (LocketteProAPI.isProtected(eyeLocation.getBlock()) || LocketteProAPI.isProtected(under) ||
+				plugin.getUtils().checkSurrounding(under)) {
 				count = 1;
 			}
 		}
@@ -151,7 +157,8 @@ class TARDISRemoteComehereCommand {
 			if (protectionCache != null) {
 				Protection protection = protectionCache.getProtection(eyeLocation.getBlock());
 				Protection underProtection = protectionCache.getProtection(under);
-				if (protection != null && !protection.isOwner(player) || underProtection != null && !underProtection.isOwner(player)) {
+				if (protection != null && !protection.isOwner(player) ||
+					underProtection != null && !underProtection.isOwner(player)) {
 					count = 1;
 				}
 			}
@@ -237,7 +244,8 @@ class TARDISRemoteComehereCommand {
 		bd.setSubmarine(sub);
 		bd.setTardisId(id);
 		bd.setThrottle(SpaceTimeThrottle.NORMAL);
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd),
+				delay * 2);
 		plugin.getTrackerKeeper().getHasDestination().remove(id);
 		plugin.getTrackerKeeper().getRescue().remove(id);
 		return true;

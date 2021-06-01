@@ -43,7 +43,8 @@ public class TARDISBindConverter {
 			connection.setAutoCommit(false);
 			statement = connection.createStatement();
 			// transfer bound locations to `bind` table
-			String destinationQuery = "SELECT tardis_id, type, bind, dest_name, preset FROM " + prefix + "destinations WHERE bind != ''";
+			String destinationQuery =
+					"SELECT tardis_id, type, bind, dest_name, preset FROM " + prefix + "destinations WHERE bind != ''";
 			String bindInsert = "INSERT INTO " + prefix + "bind (tardis_id, type, location, name) VALUES (?, ?, ?, ?)";
 			ps = connection.prepareStatement(bindInsert);
 			connection.setAutoCommit(false);
@@ -85,7 +86,8 @@ public class TARDISBindConverter {
 				}
 			}
 		} catch (SQLException e) {
-			plugin.debug("Conversion error for destinations/bind tables (converting old bind records)! " + e.getMessage());
+			plugin.debug(
+					"Conversion error for destinations/bind tables (converting old bind records)! " + e.getMessage());
 		} finally {
 			try {
 				if (ps != null) {

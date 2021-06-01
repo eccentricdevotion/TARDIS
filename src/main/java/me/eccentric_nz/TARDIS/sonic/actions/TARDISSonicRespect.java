@@ -46,7 +46,8 @@ public class TARDISSonicRespect {
 		} else { // keep checking
 
 			// Factions
-			if (plugin.getPM().isPluginEnabled("Factions") && plugin.getConfig().getBoolean("preferences.respect_factions")) {
+			if (plugin.getPM().isPluginEnabled("Factions") &&
+				plugin.getConfig().getBoolean("preferences.respect_factions")) {
 				return TARDISFactionsChecker.isInFaction(player, block.getLocation());
 			}
 			// Towny

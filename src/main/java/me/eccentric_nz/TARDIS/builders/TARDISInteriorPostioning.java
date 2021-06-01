@@ -234,7 +234,9 @@ public class TARDISInteriorPostioning {
 							for (int y = 0; y < 16; y++) {
 								for (int col = 0; col < 16; col++) {
 									for (int row = 0; row < 16; row++) {
-										w.getBlockAt(slot.getX() + row, slot.getY() + y, slot.getZ() + col).setBlockData(TARDISConstants.AIR);
+										w.getBlockAt(
+												slot.getX() + row,
+												slot.getY() + y, slot.getZ() + col).setBlockData(TARDISConstants.AIR);
 									}
 								}
 							}

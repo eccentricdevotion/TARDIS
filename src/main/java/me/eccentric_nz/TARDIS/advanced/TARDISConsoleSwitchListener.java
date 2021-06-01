@@ -91,23 +91,28 @@ public class TARDISConsoleSwitchListener implements Listener {
 									Inventory new_inv = null;
 									switch (cmd) { // Chameleon circuit
 										case 10001966, 20001966 -> {
-											new_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Chameleon Circuit");
+											new_inv = plugin.getServer().createInventory(p, 27,
+													ChatColor.DARK_RED + "Chameleon Circuit");
 											stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
 										} // ars circuit
 										case 10001973, 20001973 -> {
-											new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
+											new_inv = plugin.getServer().createInventory(p, 54,
+													ChatColor.DARK_RED + "Architectural Reconfiguration");
 											stack = new TARDISARSInventory(plugin).getARS();
 										} // Temporal circuit
 										case 10001974, 20001974 -> {
-											new_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Temporal Locator");
+											new_inv = plugin.getServer().createInventory(p, 27,
+													ChatColor.DARK_RED + "Temporal Locator");
 											stack = new TARDISTemporalLocatorInventory(plugin).getTemporal();
 										} // Memory circuit (saves/areas)
 										case 10001975, 20001975 -> {
-											new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis saves");
+											new_inv = plugin.getServer().createInventory(p, 54,
+													ChatColor.DARK_RED + "tardis saves");
 											stack = new TARDISSaveSignInventory(plugin, tardis.getTardisId(), p).getTerminal();
 										} // Input circuit (terminal)
 										case 10001976, 20001976 -> {
-											new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Destination Terminal");
+											new_inv = plugin.getServer().createInventory(p, 54,
+													ChatColor.DARK_RED + "Destination Terminal");
 											stack = new TARDISTerminalInventory(plugin).getTerminal();
 										}
 										default -> // scanner circuit

@@ -127,7 +127,8 @@ public class TARDISRoomSeeder implements Listener {
 						int cx = c.getX();
 						int cy = block.getY();
 						int cz = c.getZ();
-						if ((cx >= sd.getMinx() && cx <= sd.getMaxx()) && (cy >= 48 && cy <= 96) && (cz >= sd.getMinz() && cz <= sd.getMaxz())) {
+						if ((cx >= sd.getMinx() && cx <= sd.getMaxx()) && (cy >= 48 && cy <= 96) &&
+							(cz >= sd.getMinz() && cz <= sd.getMaxz())) {
 							TARDISMessage.send(player, "ROOM_USE_ARS");
 							plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
 							return;

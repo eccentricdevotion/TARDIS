@@ -21,5 +21,16 @@ package me.eccentric_nz.tardis.enumeration;
  */
 public enum Hum {
 
-	ALIEN, ATMOSPHERE, COMPUTER, COPPER, CORAL, GALAXY, LEARNING, MIND, NEON, SLEEPING, VOID, RANDOM
+	ALIEN,
+	ATMOSPHERE,
+	COMPUTER,
+	COPPER,
+	CORAL,
+	GALAXY,
+	LEARNING,
+	MIND,
+	NEON,
+	SLEEPING,
+	VOID,
+	RANDOM
 }

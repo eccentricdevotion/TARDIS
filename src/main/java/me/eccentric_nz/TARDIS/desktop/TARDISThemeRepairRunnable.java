@@ -138,7 +138,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 			JsonObject obj;
 			if (archive == null) {
 				String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
-				String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
+				String path = plugin.getDataFolder() + File.separator + directory + File.separator +
+							  tud.getSchematic().getPermission() + ".tschm";
 				File file = new File(path);
 				if (!file.exists()) {
 					plugin.debug("Could not find a schematic with that name!");
@@ -283,7 +284,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 				}
 			}
 			lampBlocks.forEach((lamp) -> {
-				BlockData l = (tud.getSchematic().hasLanterns() || (archive != null && archive.isLanterns())) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
+				BlockData l = (tud.getSchematic().hasLanterns() || (archive != null &&
+																	archive.isLanterns())) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
 				lamp.setBlockData(l);
 			});
 			lampBlocks.clear();
@@ -311,7 +313,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 				// reset archive use back to 0
 				new ArchiveReset(plugin, uuid.toString(), 0).resetUse();
 			}
-			if (tud.getSchematic().getPermission().equals("coral") && tud.getPrevious().getConsoleSize().equals(ConsoleSize.TALL)) {
+			if (tud.getSchematic().getPermission().equals("coral") &&
+				tud.getPrevious().getConsoleSize().equals(ConsoleSize.TALL)) {
 				// clean up space above coral console
 				int tidy = starty + h;
 				int plus = 32 - h;
@@ -388,7 +391,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 				if (type.equals(Material.BLUE_WOOL)) {
 					data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
 				}
-				if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && tud.getSchematic().getPermission().equals("delta")) {
+				if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) &&
+					tud.getSchematic().getPermission().equals("delta")) {
 					fractalBlocks.add(world.getBlockAt(x, y, z));
 				}
 				if (type.equals(Material.WHITE_STAINED_GLASS) && tud.getSchematic().getPermission().equals("war")) {
@@ -460,7 +464,11 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 					setlb.put("location", lloc);
 					plugin.getQueryFactory().doInsert("lamps", setlb);
 				}
-				if (type.equals(Material.COMMAND_BLOCK) || ((tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("coral") || tud.getSchematic().getPermission().equals("deluxe") || tud.getSchematic().getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
+				if (type.equals(Material.COMMAND_BLOCK) || ((tud.getSchematic().getPermission().equals("bigger") ||
+															 tud.getSchematic().getPermission().equals("coral") ||
+															 tud.getSchematic().getPermission().equals("deluxe") ||
+															 tud.getSchematic().getPermission().equals("twelfth")) &&
+															type.equals(Material.BEACON))) {
 					/*
 					 * command block - remember it to spawn the creeper on.
 					 * could also be a beacon block, as the creeper sits over
@@ -510,19 +518,22 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
 					plugin.getGeneralKeeper().getProtectBlockMap().put(loc, id);
 				}
 				// if it's the door, don't set it just remember its block then do it at the end
-				if (type.equals(Material.HONEYCOMB_BLOCK) && (tud.getSchematic().getPermission().equals("delta") || tud.getSchematic().getPermission().equals("rotor"))) {
+				if (type.equals(Material.HONEYCOMB_BLOCK) && (tud.getSchematic().getPermission().equals("delta") ||
+															  tud.getSchematic().getPermission().equals("rotor"))) {
 					/*
 					 * spawn an item frame and place the time rotor in it
 					 */
 					TARDISBlockSetters.setBlock(world, x, y, z, (tud.getSchematic().getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
-					TARDISTimeRotor.setItemFrame(tud.getSchematic().getPermission(), new Location(world, x, y + 1, z), id);
+					TARDISTimeRotor.setItemFrame(tud.getSchematic().getPermission(), new Location(world, x,
+							y + 1, z), id);
 				} else if (type.equals(Material.IRON_DOOR)) { // doors
 					postDoorBlocks.put(world.getBlockAt(x, y, z), data);
 				} else if (type.equals(Material.LEVER)) {
 					postLeverBlocks.put(world.getBlockAt(x, y, z), data);
 				} else if (type.equals(Material.REDSTONE_TORCH) || type.equals(Material.REDSTONE_WALL_TORCH)) {
 					postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
-				} else if (type.equals(Material.TORCH) || type.equals(Material.WALL_TORCH) || type.equals(Material.SOUL_TORCH) || type.equals(Material.SOUL_WALL_TORCH)) {
+				} else if (type.equals(Material.TORCH) || type.equals(Material.WALL_TORCH) ||
+						   type.equals(Material.SOUL_TORCH) || type.equals(Material.SOUL_WALL_TORCH)) {
 					postTorchBlocks.put(world.getBlockAt(x, y, z), data);
 				} else if (type.equals(Material.STICKY_PISTON)) {
 					postStickyPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);

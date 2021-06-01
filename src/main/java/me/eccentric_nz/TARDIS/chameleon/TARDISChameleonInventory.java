@@ -124,7 +124,9 @@ public class TARDISChameleonInventory {
 		boolean isFactoryOff = preset.equals(PRESET.FACTORY) && adapt.equals(Adaption.OFF);
 		ItemStack fac = isFactoryOff ? on.clone() : off.clone();
 		ItemMeta tory = fac.getItemMeta();
-		String donoff = isFactoryOff ? ChatColor.RED + plugin.getLanguage().getString("DISABLED") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
+		String donoff = isFactoryOff ?
+				ChatColor.RED + plugin.getLanguage().getString("DISABLED") :
+				ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
 		assert tory != null;
 		tory.setDisplayName(donoff);
 		fac.setItemMeta(tory);
@@ -139,7 +141,9 @@ public class TARDISChameleonInventory {
 		if (plugin.getConfig().getBoolean("allow.invisibility")) {
 			not = (preset.equals(PRESET.INVISIBLE)) ? on.clone() : off.clone();
 			ItemMeta blue = not.getItemMeta();
-			String ionoff = (preset.equals(PRESET.INVISIBLE)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+			String ionoff = (preset.equals(PRESET.INVISIBLE)) ?
+					ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") :
+					ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
 			assert blue != null;
 			blue.setDisplayName(ionoff);
 			not.setItemMeta(blue);
@@ -147,17 +151,21 @@ public class TARDISChameleonInventory {
 			not = null;
 		}
 		// Shorted out radio button
-		boolean isNotFactoryInvisibleOrConstruct = !preset.equals(PRESET.INVISIBLE) && !preset.equals(PRESET.FACTORY) && !preset.equals(PRESET.CONSTRUCT);
+		boolean isNotFactoryInvisibleOrConstruct =
+				!preset.equals(PRESET.INVISIBLE) && !preset.equals(PRESET.FACTORY) && !preset.equals(PRESET.CONSTRUCT);
 		ItemStack pre = isNotFactoryInvisibleOrConstruct ? on.clone() : off.clone();
 		ItemMeta set = pre.getItemMeta();
-		String sonoff = isNotFactoryInvisibleOrConstruct ? ChatColor.GREEN + preset.toString() : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+		String sonoff = isNotFactoryInvisibleOrConstruct ?
+				ChatColor.GREEN + preset.toString() : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
 		assert set != null;
 		set.setDisplayName(sonoff);
 		pre.setItemMeta(set);
 		// Construct radio button
 		ItemStack bui = (preset.equals(PRESET.CONSTRUCT)) ? on.clone() : off.clone();
 		ItemMeta lder = bui.getItemMeta();
-		String conoff = (preset.equals(PRESET.CONSTRUCT)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+		String conoff = (preset.equals(PRESET.CONSTRUCT)) ?
+				ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") :
+				ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
 		assert lder != null;
 		lder.setDisplayName(conoff);
 		bui.setItemMeta(lder);

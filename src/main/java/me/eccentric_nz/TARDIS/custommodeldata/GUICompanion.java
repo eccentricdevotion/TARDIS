@@ -23,7 +23,9 @@ import org.bukkit.Material;
 public enum GUICompanion {
 
 	// Add Companion
-	INFO(1, 45, Material.BOOK), LIST_COMPANIONS(1, 47, Material.WRITABLE_BOOK), BUTTON_CLOSE(1, 53, Material.BOWL);
+	INFO(1, 45, Material.BOOK),
+	LIST_COMPANIONS(1, 47, Material.WRITABLE_BOOK),
+	BUTTON_CLOSE(1, 53, Material.BOWL);
 
 	private final int customModelData;
 	private final int slot;

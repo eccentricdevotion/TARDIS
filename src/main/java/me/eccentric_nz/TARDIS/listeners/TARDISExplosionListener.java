@@ -64,17 +64,21 @@ public class TARDISExplosionListener implements Listener {
 		}
 		Location explode = e.getLocation();
 		// check if the explosion is in a tardis world
-		if ((Objects.requireNonNull(explode.getWorld()).getName().contains("tardis") || explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) && e.getEntity() instanceof Creeper) {
+		if ((Objects.requireNonNull(explode.getWorld()).getName().contains("tardis") ||
+			 explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) &&
+			e.getEntity() instanceof Creeper) {
 			e.setCancelled(true);
 			// check it is not the Artron creeper
-			String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" + (explode.getBlockY() - 1) + ":" + (explode.getBlockZ() + 0.5f);
+			String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" +
+							 (explode.getBlockY() - 1) + ":" + (explode.getBlockZ() + 0.5f);
 			if (!new ResultSetCreeper(plugin, loc_chk).resultSet()) {
 				// create a new explosion that doesn't destroy blocks or set fire
 				explode.getWorld().createExplosion(explode.getX(), explode.getY(), explode.getZ(), 4.0f, false, false);
 			}
 		} else {
 			Environment env = explode.getWorld().getEnvironment();
-			if ((env.equals(Environment.THE_END) && !plugin.getConfig().getBoolean("travel.the_end")) || (env.equals(Environment.NETHER) && !plugin.getConfig().getBoolean("travel.nether"))) {
+			if ((env.equals(Environment.THE_END) && !plugin.getConfig().getBoolean("travel.the_end")) ||
+				(env.equals(Environment.NETHER) && !plugin.getConfig().getBoolean("travel.nether"))) {
 				return;
 			}
 			for (String str : plugin.getGeneralKeeper().getProtectBlockMap().keySet()) {

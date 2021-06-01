@@ -147,7 +147,8 @@ public class TARDISMinecartListener implements Listener {
 						default -> false;
 					};
 					if (shouldPrevent) {
-						if (playerUUID != null && Objects.requireNonNull(plugin.getServer().getPlayer(playerUUID)).isOnline()) {
+						if (playerUUID != null &&
+							Objects.requireNonNull(plugin.getServer().getPlayer(playerUUID)).isOnline()) {
 							TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
 						}
 						plugin.getTrackerKeeper().getMinecart().remove(id);

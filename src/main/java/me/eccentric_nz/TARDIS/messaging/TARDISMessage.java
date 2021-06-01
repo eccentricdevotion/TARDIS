@@ -29,8 +29,11 @@ import org.bukkit.entity.Player;
  */
 public class TARDISMessage {
 
-	public static final String JENKINS_UPDATE_READY = ChatColor.RED + "There is a new tardis build! You are using " + ChatColor.GOLD + "#%s" + ChatColor.RED + ", the latest build is " + ChatColor.GOLD + "#%s" + ChatColor.RED + "!";
-	public static final String UPDATE_COMMAND = ChatColor.GOLD + "Visit http://tardisjenkins.duckdns.org:8080/job/TARDIS/ or run the '/tardisadmin update_plugins' command";
+	public static final String JENKINS_UPDATE_READY =
+			ChatColor.RED + "There is a new tardis build! You are using " + ChatColor.GOLD + "#%s" + ChatColor.RED +
+			", the latest build is " + ChatColor.GOLD + "#%s" + ChatColor.RED + "!";
+	public static final String UPDATE_COMMAND = ChatColor.GOLD +
+												"Visit http://tardisjenkins.duckdns.org:8080/job/TARDIS/ or run the '/tardisadmin update_plugins' command";
 	private static final String HANDLES = ChatColor.BLUE + "[Handles] " + ChatColor.RESET;
 
 	/**
@@ -101,9 +104,11 @@ public class TARDISMessage {
 	public static void send(Player p, String key, boolean handbrake) {
 		String local = TARDISPlugin.plugin.getLanguage().getString(key);
 		if (handbrake) {
-			message(p, TARDISPlugin.plugin.getPluginName() + local + " " + TARDISPlugin.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+			message(p, TARDISPlugin.plugin.getPluginName() + local + " " +
+					   TARDISPlugin.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
 		} else {
-			message(p, TARDISPlugin.plugin.getPluginName() + local + " " + TARDISPlugin.plugin.getLanguage().getString("LEAVING_VORTEX"));
+			message(p, TARDISPlugin.plugin.getPluginName() + local + " " +
+					   TARDISPlugin.plugin.getLanguage().getString("LEAVING_VORTEX"));
 		}
 	}
 
@@ -111,9 +116,11 @@ public class TARDISMessage {
 		String local = TARDISPlugin.plugin.getLanguage().getString(key);
 		assert local != null;
 		if (handbrake) {
-			message(p, TARDISPlugin.plugin.getPluginName() + String.format(local, sub) + " " + TARDISPlugin.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+			message(p, TARDISPlugin.plugin.getPluginName() + String.format(local, sub) + " " +
+					   TARDISPlugin.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
 		} else {
-			message(p, TARDISPlugin.plugin.getPluginName() + String.format(local, sub) + " " + TARDISPlugin.plugin.getLanguage().getString("LEAVING_VORTEX"));
+			message(p, TARDISPlugin.plugin.getPluginName() + String.format(local, sub) + " " +
+					   TARDISPlugin.plugin.getLanguage().getString("LEAVING_VORTEX"));
 		}
 	}
 

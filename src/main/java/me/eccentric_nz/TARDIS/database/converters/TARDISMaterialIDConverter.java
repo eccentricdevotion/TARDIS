@@ -793,7 +793,8 @@ public class TARDISMaterialIDConverter {
 				if (i > 0) {
 					ps.executeBatch();
 					connection.commit();
-					plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " condenser IDs to material names");
+					plugin.getConsole().sendMessage(
+							plugin.getPluginName() + "Converted " + i + " condenser IDs to material names");
 				}
 			}
 			plugin.getConfig().set("conversions.condenser_materials", true);
@@ -824,7 +825,8 @@ public class TARDISMaterialIDConverter {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		String query = "SELECT pp_id, wall, floor, siege_wall, siege_floor FROM " + prefix + "player_prefs";
-		String update = "UPDATE " + prefix + "player_prefs SET wall = ?, floor = ?, siege_wall = ?, siege_floor = ? WHERE pp_id = ?";
+		String update = "UPDATE " + prefix +
+						"player_prefs SET wall = ?, floor = ?, siege_wall = ?, siege_floor = ? WHERE pp_id = ?";
 		int i = 0;
 		try {
 			service.testConnection(connection);
@@ -879,7 +881,8 @@ public class TARDISMaterialIDConverter {
 							newSiegeFloor = mat;
 						}
 					}
-					if (!wall.equals(newWall) || !floor.equals(newFloor) || !siegeWall.equals(newSiegeWall) || !siegeFloor.equals(newSiegeFloor)) {
+					if (!wall.equals(newWall) || !floor.equals(newFloor) || !siegeWall.equals(newSiegeWall) ||
+						!siegeFloor.equals(newSiegeFloor)) {
 						int ppId = rs.getInt("pp_id");
 						// update the record
 						ps.setString(1, newWall);
@@ -894,7 +897,8 @@ public class TARDISMaterialIDConverter {
 				if (i > 0) {
 					ps.executeBatch();
 					connection.commit();
-					plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " player_prefs IDs to material names");
+					plugin.getConsole().sendMessage(
+							plugin.getPluginName() + "Converted " + i + " player_prefs IDs to material names");
 				}
 			}
 			plugin.getConfig().set("conversions.player_prefs_materials", true);
@@ -925,7 +929,10 @@ public class TARDISMaterialIDConverter {
 		PreparedStatement statement = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String check = (Objects.equals(plugin.getConfig().getString("storage.database"), "sqlite")) ? "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "blocks' AND sql LIKE '%block INTEGER DEFAULT 0%'" : "SHOW COLUMNS FROM " + prefix + "blocks LIKE 'block'";
+		String check = (Objects.equals(plugin.getConfig().getString("storage.database"), "sqlite")) ?
+				"SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix +
+				"blocks' AND sql LIKE '%block INTEGER DEFAULT 0%'" :
+				"SHOW COLUMNS FROM " + prefix + "blocks LIKE 'block'";
 		String query = "SELECT b_id, block, data FROM " + prefix + "blocks";
 		String update = "UPDATE " + prefix + "blocks SET data = ? WHERE b_id = ?";
 		int i = 0;
@@ -968,7 +975,8 @@ public class TARDISMaterialIDConverter {
 					if (i > 0) {
 						ps.executeBatch();
 						connection.commit();
-						plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " blocks IDs to material names");
+						plugin.getConsole().sendMessage(
+								plugin.getPluginName() + "Converted " + i + " blocks IDs to material names");
 					}
 				}
 			}

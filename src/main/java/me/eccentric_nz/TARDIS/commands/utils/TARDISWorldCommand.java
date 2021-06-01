@@ -95,7 +95,8 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
 					plugin.getServer().unloadWorld(world, true);
 					plugin.getTardisHelper().setLevelName(args[1], args[2]);
 					// rename the planet in planets.yml
-					ConfigurationSection section = plugin.getPlanetsConfig().getConfigurationSection("planets." + args[1]);
+					ConfigurationSection section = plugin.getPlanetsConfig().getConfigurationSection(
+							"planets." + args[1]);
 					if (section != null) {
 						Map<String, Object> map = section.getValues(true);
 						plugin.getPlanetsConfig().set("planets." + args[2], map);
@@ -161,18 +162,22 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
 							default -> new TARDISSkaro(plugin).loadDalekWorld();
 						}
 						FileConfiguration pConfig = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "planets_template.yml"));
-						ConfigurationSection section = pConfig.getConfigurationSection("planets." + TARDISStringUtils.uppercaseFirst(name));
-						ConfigurationSection rules = pConfig.getConfigurationSection("planets." + TARDISStringUtils.uppercaseFirst(name) + ".gamerules");
+						ConfigurationSection section = pConfig.getConfigurationSection(
+								"planets." + TARDISStringUtils.uppercaseFirst(name));
+						ConfigurationSection rules = pConfig.getConfigurationSection(
+								"planets." + TARDISStringUtils.uppercaseFirst(name) + ".gamerules");
 						String s_world = plugin.getServer().getWorlds().get(0).getName();
 						name = s_world + "_tardis_" + name;
 						assert section != null;
 						plugin.getPlanetsConfig().createSection("planets." + name, section.getValues(true));
 						plugin.getPlanetsConfig().set("planets." + name + "gamerules", null);
 						assert rules != null;
-						plugin.getPlanetsConfig().createSection("planets." + name + ".gamerules", rules.getValues(true));
+						plugin.getPlanetsConfig().createSection(
+								"planets." + name + ".gamerules", rules.getValues(true));
 						plugin.getPlanetsConfig().set("planets." + name + ".time_travel", true);
 						if (name.equals(s_world + "_tardis_skaro")) {
-							plugin.getPlanetsConfig().set("planets." + name + ".acid_potions", Arrays.asList("WEAKNESS", "POISON"));
+							plugin.getPlanetsConfig().set(
+									"planets." + name + ".acid_potions", Arrays.asList("WEAKNESS", "POISON"));
 						}
 					} else {
 						// try to load the world
@@ -216,7 +221,8 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
 					plugin.getPlanetsConfig().set("planets." + name + ".gamemode", "SURVIVAL");
 					plugin.getPlanetsConfig().set("planets." + name + ".world_type", worldType.toString());
 					plugin.getPlanetsConfig().set("planets." + name + ".environment", environment.toString());
-					plugin.getPlanetsConfig().set("planets." + name + ".generator", args.length > 4 ? args[4] : "DEFAULT");
+					plugin.getPlanetsConfig().set(
+							"planets." + name + ".generator", args.length > 4 ? args[4] : "DEFAULT");
 					plugin.savePlanetsConfig();
 				} else {
 					TARDISMessage.send(sender, "WORLD_UNLOADED", args[1]);

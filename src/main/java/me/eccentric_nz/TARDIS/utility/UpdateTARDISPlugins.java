@@ -63,7 +63,8 @@ public class UpdateTARDISPlugins {
 					new BukkitRunnable() {
 						@Override
 						public void run() {
-							sender.sendMessage(plugin.getPluginName() + ChatColor.AQUA + "Update success! Restart the server to finish the update.");
+							sender.sendMessage(plugin.getPluginName() + ChatColor.AQUA +
+											   "Update success! Restart the server to finish the update.");
 						}
 					}.runTask(plugin);
 				} catch (Exception ex) {
@@ -71,7 +72,8 @@ public class UpdateTARDISPlugins {
 					new BukkitRunnable() {
 						@Override
 						public void run() {
-							sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "Update failed, " + ex.getMessage());
+							sender.sendMessage(
+									plugin.getPluginName() + ChatColor.RED + "Update failed, " + ex.getMessage());
 						}
 					}.runTask(plugin);
 				} finally {

@@ -120,7 +120,9 @@ public class TARDISJunkDestroyer implements Runnable {
 							Block block = world.getBlockAt(l, h, w);
 							block.setBlockData(TARDISConstants.AIR);
 							TARDISBiome tardisBiome = TARDISStaticUtils.getBiomeAt(block.getLocation());
-							if (h == startY && (tardisBiome.equals(TARDISBiome.THE_END) && !Objects.requireNonNull(junkLoc.getWorld()).getEnvironment().equals(Environment.THE_END) || tardisBiome.equals(TARDISBiome.THE_VOID))) {
+							if (h == startY && (tardisBiome.equals(TARDISBiome.THE_END) &&
+												!Objects.requireNonNull(junkLoc.getWorld()).getEnvironment().equals(Environment.THE_END) ||
+												tardisBiome.equals(TARDISBiome.THE_VOID))) {
 								if (!chunks.contains(block.getChunk())) {
 									chunks.add(block.getChunk());
 								}

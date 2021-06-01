@@ -68,7 +68,8 @@ class TARDISArchiveCommand {
 		}
 		String uuid = player.getUniqueId().toString();
 		String name = (args.length > 2) ? args[2].toUpperCase(Locale.ENGLISH) : "ARCHIVE";
-		if (sub.equals("add") || sub.equals("description") || sub.equals("remove") || sub.equals("update") || sub.equals("y")) {
+		if (sub.equals("add") || sub.equals("description") || sub.equals("remove") || sub.equals("update") ||
+			sub.equals("y")) {
 			if (args.length < 3) {
 				TARDISMessage.send(player, "SCHM_NAME");
 				return true;
@@ -80,7 +81,8 @@ class TARDISArchiveCommand {
 					TARDISMessage.send(player, "ARCHIVE_EXIST", name);
 					return true;
 				}
-				if ((sub.equals("description") || sub.equals("remove") || sub.equals("update") || sub.equals("y")) && !exists) {
+				if ((sub.equals("description") || sub.equals("remove") || sub.equals("update") || sub.equals("y")) &&
+					!exists) {
 					TARDISMessage.send(player, "ARCHIVE_NOT_EXIST", name);
 					return true;
 				}
@@ -145,7 +147,8 @@ class TARDISArchiveCommand {
 						}
 					} else {
 						String directory = (current.isCustom()) ? "user_schematics" : "schematics";
-						String path = plugin.getDataFolder() + File.separator + directory + File.separator + current.getPermission() + ".tschm";
+						String path = plugin.getDataFolder() + File.separator + directory + File.separator +
+									  current.getPermission() + ".tschm";
 						File file = new File(path);
 						if (!file.exists()) {
 							plugin.debug("Could not find a schematic with that name!");
@@ -162,7 +165,8 @@ class TARDISArchiveCommand {
 						int c = dimensions.get("length").getAsInt() - 1;
 						// get console size
 						ConsoleSize console_size = ConsoleSize.getByWidthAndHeight(w, h);
-						if (((args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("update")) && args.length == 4) || (args[1].equalsIgnoreCase("scan") && args.length == 3)) {
+						if (((args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("update")) &&
+							 args.length == 4) || (args[1].equalsIgnoreCase("scan") && args.length == 3)) {
 							// size from args[2/3]
 							try {
 								String size = (args[1].equalsIgnoreCase("scan")) ? args[2] : args[3];
@@ -209,7 +213,8 @@ class TARDISArchiveCommand {
 							sz = gsl[2];
 						}
 						int sy = TARDISConstants.HIGHER.contains(current.getPermission()) ? 65 : 64;
-						ArchiveData ad = new TARDISSchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c).build();
+						ArchiveData ad = new TARDISSchematicBuilder(plugin, id, player.getLocation().getWorld(), sx,
+								sx + w, sy, sy + h, sz, sz + c).build();
 						if (sub.equals("scan")) {
 							TARDISMessage.send(player, "ARCHIVE_SCAN");
 							return true;

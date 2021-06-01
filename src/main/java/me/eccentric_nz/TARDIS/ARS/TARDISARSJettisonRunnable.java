@@ -86,7 +86,8 @@ class TARDISARSJettisonRunnable implements Runnable {
 		}
 		// give them their energy!
 		if (room != TARDISARS.SLOT) {
-			int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
+			int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) *
+									plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
 			if (r.equals("GRAVITY") || r.equals("ANTIGRAVITY")) {
 				// halve it because they have to jettison top and bottom
 				amount /= 2;
@@ -143,7 +144,9 @@ class TARDISARSJettisonRunnable implements Runnable {
 				}
 			}
 			// remove mob farming locations
-			if (r.equals("FARM") || r.equals("APIARY") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("RAIL") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE") || r.equals("BIRDCAGE") || r.equals("AQUARIUM") || r.equals("BAMBOO")) {
+			if (r.equals("FARM") || r.equals("APIARY") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("RAIL") ||
+				r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE") || r.equals("BIRDCAGE") ||
+				r.equals("AQUARIUM") || r.equals("BAMBOO")) {
 				HashMap<String, Object> wheref = new HashMap<>();
 				wheref.put("tardis_id", id);
 				HashMap<String, Object> setf = new HashMap<>();

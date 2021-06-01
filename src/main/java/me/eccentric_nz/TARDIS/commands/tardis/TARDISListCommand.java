@@ -45,7 +45,8 @@ class TARDISListCommand {
 				TARDISMessage.send(player, "NO_TARDIS");
 				return false;
 			}
-			if (args.length < 2 || (!args[1].equalsIgnoreCase("saves") && !args[1].equalsIgnoreCase("companions") && !args[1].equalsIgnoreCase("areas") && !args[1].equalsIgnoreCase("rechargers"))) {
+			if (args.length < 2 || (!args[1].equalsIgnoreCase("saves") && !args[1].equalsIgnoreCase("companions") &&
+									!args[1].equalsIgnoreCase("areas") && !args[1].equalsIgnoreCase("rechargers"))) {
 				TARDISMessage.send(player, "LIST_NEED");
 				return false;
 			}

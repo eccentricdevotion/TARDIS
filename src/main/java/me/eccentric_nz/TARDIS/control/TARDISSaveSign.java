@@ -49,9 +49,11 @@ class TARDISSaveSign {
 			TARDISMessage.send(player, "NO_MEM_CIRCUIT");
 			return;
 		}
-		if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(player.getUniqueId()) && plugin.getDifficulty().equals(Difficulty.HARD)) {
+		if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(player.getUniqueId()) &&
+			plugin.getDifficulty().equals(Difficulty.HARD)) {
 			ItemStack disk = player.getInventory().getItemInMainHand();
-			if (disk.hasItemMeta() && Objects.requireNonNull(disk.getItemMeta()).hasDisplayName() && disk.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
+			if (disk.hasItemMeta() && Objects.requireNonNull(disk.getItemMeta()).hasDisplayName() &&
+				disk.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
 				List<String> lore = disk.getItemMeta().getLore();
 				assert lore != null;
 				if (!lore.get(0).equals("Blank")) {

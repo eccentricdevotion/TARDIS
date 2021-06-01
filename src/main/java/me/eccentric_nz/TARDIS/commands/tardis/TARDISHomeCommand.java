@@ -79,7 +79,9 @@ class TARDISHomeCommand {
 				Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
 				String world = Objects.requireNonNull(eyeLocation.getWorld()).getName();
 				COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
-				if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+				if (!plugin.getConfig().getBoolean("travel.include_default_world") &&
+					plugin.getConfig().getBoolean("creation.default_world") &&
+					world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
 					TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 					return true;
 				}
@@ -101,7 +103,8 @@ class TARDISHomeCommand {
 					return true;
 				}
 				TARDISCircuitChecker tcc = null;
-				if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
+				if (!plugin.getDifficulty().equals(Difficulty.EASY) &&
+					!plugin.getUtils().inGracePeriod(player, false)) {
 					tcc = new TARDISCircuitChecker(plugin, id);
 					tcc.getCircuits();
 				}

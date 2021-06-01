@@ -66,7 +66,8 @@ class TARDISFlightAdjustment {
 				y = adjusted_location.getWorld().getHighestBlockAt(adjusted_location).getY();
 			}
 			adjusted_location.setY(y);
-			if (adjusted_location.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !bd.isSubmarine()) {
+			if (adjusted_location.getBlock().getRelative(BlockFace.DOWN).isLiquid() &&
+				!plugin.getConfig().getBoolean("travel.land_on_water") && !bd.isSubmarine()) {
 				bool = false;
 			}
 			if (bool) {
@@ -77,7 +78,8 @@ class TARDISFlightAdjustment {
 					safe = (sub != null);
 				} else {
 					int[] start = TARDISTimeTravel.getStartLocation(adjusted_location, bd.getDirection());
-					safe = (TARDISTimeTravel.safeLocation(start[0], y, start[2], start[1], start[3], adjusted_location.getWorld(), bd.getDirection()) < 1);
+					safe = (TARDISTimeTravel.safeLocation(start[0], y, start[2], start[1], start[3], adjusted_location.getWorld(), bd.getDirection()) <
+							1);
 				}
 				if (safe) {
 					final_location = (bd.isSubmarine()) ? sub : adjusted_location;

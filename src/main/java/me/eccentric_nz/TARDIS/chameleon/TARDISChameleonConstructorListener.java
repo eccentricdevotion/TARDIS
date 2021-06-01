@@ -120,7 +120,8 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
 									plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 										TARDISChameleonInventory tci = new TARDISChameleonInventory(plugin, adapt, preset);
 										ItemStack[] items = tci.getMenu();
-										Inventory chaminv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
+										Inventory chaminv = plugin.getServer().createInventory(player, 27,
+												ChatColor.DARK_RED + "Chameleon Circuit");
 										chaminv.setContents(items);
 										player.openInventory(chaminv);
 									}, 2L);
@@ -130,7 +131,8 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
 									plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 										TARDISChameleonHelpGUI tci = new TARDISChameleonHelpGUI(plugin);
 										ItemStack[] items = tci.getHelp();
-										Inventory chaminv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Help");
+										Inventory chaminv = plugin.getServer().createInventory(player, 54,
+												ChatColor.DARK_RED + "Chameleon Help");
 										chaminv.setContents(items);
 										player.openInventory(chaminv);
 									}, 2L);
@@ -164,7 +166,9 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
 											ItemStack d = view.getItem(s + c);
 											if (d != null) {
 												Material type = d.getType();
-												if ((!plugin.getConfig().getBoolean("allow.all_blocks") && TARDISMaterials.precious.contains(type)) || Tag.CARPETS.isTagged(type)) {
+												if ((!plugin.getConfig().getBoolean("allow.all_blocks") &&
+													 TARDISMaterials.precious.contains(type)) ||
+													Tag.CARPETS.isTagged(type)) {
 													TARDISMessage.send(player, "CHAM_NOT_CUSTOM");
 													// return items
 													player.getWorld().dropItemNaturally(player.getLocation(), d);
@@ -190,7 +194,8 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
 													blue[first][second] = dataStr;
 													stain[first][second] = dataStr;
 													glass[first][second] = dataStr;
-												} else if (mat.equals(Material.TORCH) || mat.equals(Material.REDSTONE_TORCH)) {
+												} else if (mat.equals(Material.TORCH) ||
+														   mat.equals(Material.REDSTONE_TORCH)) {
 													// check block under torch
 													if (view.getItem(35) == null) {
 														blue[first][second] = air;
@@ -282,7 +287,8 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
 				}
 			} else {
 				ClickType click = event.getClick();
-				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) ||
+					click.equals(ClickType.DOUBLE_CLICK)) {
 					event.setCancelled(true);
 				}
 			}
@@ -337,7 +343,8 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
 		plugin.getTrackerKeeper().getConstructors().remove(player.getUniqueId());
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> close(player), 2L);
 		// damage the circuit if configured
-		if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
+		if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) &&
+			plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
 			TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
 			tcc.getCircuits();
 			// decrement uses

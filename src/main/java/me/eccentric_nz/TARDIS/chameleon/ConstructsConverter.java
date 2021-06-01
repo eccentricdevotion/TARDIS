@@ -57,8 +57,10 @@ public class ConstructsConverter {
 		try {
 			service.testConnection(connection);
 			connection.setAutoCommit(false);
-			query = connection.prepareStatement("SELECT chameleon_id, blueprintID, blueprintData, glassID FROM " + prefix + "chameleon");
-			update = connection.prepareStatement("UPDATE " + prefix + "chameleon set blueprintID = '', blueprintData = ?, stainID = '', stainData = ?, glassID = '', glassData = ? WHERE chameleon_id = ?");
+			query = connection.prepareStatement(
+					"SELECT chameleon_id, blueprintID, blueprintData, glassID FROM " + prefix + "chameleon");
+			update = connection.prepareStatement("UPDATE " + prefix +
+												 "chameleon set blueprintID = '', blueprintData = ?, stainID = '', stainData = ?, glassID = '', glassData = ? WHERE chameleon_id = ?");
 			rs = query.executeQuery();
 			Pattern p = Pattern.compile("^\\[\\[[0-9]+");
 			if (rs.isBeforeFirst()) {
@@ -177,7 +179,8 @@ public class ConstructsConverter {
 			if (i > 0) {
 				update.executeBatch();
 				connection.commit();
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " Chameleon Construct records");
+				plugin.getConsole().sendMessage(
+						plugin.getPluginName() + "Converted " + i + " Chameleon Construct records");
 			}
 			plugin.getConfig().set("conversions.constructs", true);
 			plugin.saveConfig();

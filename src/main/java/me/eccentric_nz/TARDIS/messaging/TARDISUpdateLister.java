@@ -48,7 +48,8 @@ public class TARDISUpdateLister {
 					TextComponent tcu = new TextComponent(updateable.getName());
 					tcu.setColor(category.getColour());
 					tcu.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(updateable.getDescription())));
-					tcu.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tardis update " + updateable.getName()));
+					tcu.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+							"/tardis update " + updateable.getName()));
 					player.spigot().sendMessage(tcu);
 				}
 			}

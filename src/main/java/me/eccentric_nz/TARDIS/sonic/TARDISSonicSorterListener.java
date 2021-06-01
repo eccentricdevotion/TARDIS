@@ -108,7 +108,9 @@ public class TARDISSonicSorterListener implements Listener {
 						if (item1.getItemMeta() instanceof Damageable d1) {
 							Damageable d2 = (Damageable) item2.getItemMeta();
 							assert d2 != null;
-							if (d1.getDamage() == d2.getDamage() && item1.getEnchantments().equals(item2.getEnchantments()) && item1.getItemMeta().equals(item2.getItemMeta())) {
+							if (d1.getDamage() == d2.getDamage() &&
+								item1.getEnchantments().equals(item2.getEnchantments()) &&
+								item1.getItemMeta().equals(item2.getItemMeta())) {
 								if (item2.getAmount() > needed) {
 									item1.setAmount(maxStackSize);
 									item2.setAmount(item2.getAmount() - needed);
@@ -120,7 +122,8 @@ public class TARDISSonicSorterListener implements Listener {
 								}
 							}
 						} else {
-							if (item1.getEnchantments().equals(item2.getEnchantments()) && Objects.equals(item1.getItemMeta(), item2.getItemMeta())) {
+							if (item1.getEnchantments().equals(item2.getEnchantments()) &&
+								Objects.equals(item1.getItemMeta(), item2.getItemMeta())) {
 								if (item2.getAmount() > needed) {
 									item1.setAmount(maxStackSize);
 									item2.setAmount(item2.getAmount() - needed);
@@ -150,7 +153,8 @@ public class TARDISSonicSorterListener implements Listener {
 			return;
 		}
 		Player player = event.getPlayer();
-		if (event.getAction() == Action.LEFT_CLICK_BLOCK && TARDISPermission.hasPermission(player, "tardis.sonic.sort")) {
+		if (event.getAction() == Action.LEFT_CLICK_BLOCK &&
+			TARDISPermission.hasPermission(player, "tardis.sonic.sort")) {
 			ItemStack is = player.getInventory().getItemInMainHand();
 			if (is.hasItemMeta()) {
 				ItemMeta im = is.getItemMeta();

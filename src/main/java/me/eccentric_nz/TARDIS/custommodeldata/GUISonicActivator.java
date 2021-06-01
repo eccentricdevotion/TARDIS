@@ -22,7 +22,8 @@ import org.bukkit.Material;
 public enum GUISonicActivator {
 
 	// Sonic Activator
-	INSTRUCTIONS(1, 7, Material.BOOK), CLOSE(1, 8, Material.BOWL);
+	INSTRUCTIONS(1, 7, Material.BOOK),
+	CLOSE(1, 8, Material.BOWL);
 
 	private final int customModelData;
 	private final int slot;

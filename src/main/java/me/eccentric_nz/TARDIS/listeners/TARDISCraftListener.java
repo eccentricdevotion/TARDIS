@@ -114,7 +114,8 @@ public class TARDISCraftListener implements Listener {
 			CraftingInventory ci = event.getInventory();
 			if (is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName()) {
 				String dn = is.getItemMeta().getDisplayName();
-				if ((is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM)) && dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
+				if ((is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM)) &&
+					dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
 					ItemMeta im = is.getItemMeta();
 					List<String> lore = im.getLore();
 					assert lore != null;
@@ -132,7 +133,10 @@ public class TARDISCraftListener implements Listener {
 						// set the second line of lore
 						ItemMeta im = is.getItemMeta();
 						List<String> lore;
-						String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses." + which), "0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+						String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses." + which), "0") ||
+									   !plugin.getConfig().getBoolean("circuits.damage")) ?
+								ChatColor.YELLOW + "unlimited" :
+								ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
 						if (im.hasLore()) {
 							lore = im.getLore();
 							assert lore != null;
@@ -148,7 +152,8 @@ public class TARDISCraftListener implements Listener {
 					// enchant the result
 					is.addEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
 					ci.setResult(is);
-				} else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses") || dn.equals("TARDIS Communicator")) {
+				} else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses") ||
+						   dn.equals("TARDIS Communicator")) {
 					LeatherArmorMeta lam = (LeatherArmorMeta) is.getItemMeta();
 					lam.setColor(Color.WHITE);
 					is.setItemMeta(lam);

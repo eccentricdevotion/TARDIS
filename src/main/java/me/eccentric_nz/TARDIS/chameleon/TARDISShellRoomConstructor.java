@@ -179,7 +179,8 @@ public class TARDISShellRoomConstructor {
 		// take their artron energy
 		HashMap<String, Object> wheree = new HashMap<>();
 		wheree.put("tardis_id", id);
-		plugin.getQueryFactory().alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("shell") * -1, wheree, player);
+		plugin.getQueryFactory().alterEnergyLevel("tardis",
+				plugin.getArtronConfig().getInt("shell") * -1, wheree, player);
 		TARDISMessage.send(player, "PRESET_CONSTRUCTED");
 		// update tardis table
 		HashMap<String, Object> sett = new HashMap<>();
@@ -203,7 +204,8 @@ public class TARDISShellRoomConstructor {
 		// rebuild
 		player.performCommand("tardis rebuild");
 		// damage the circuit if configured
-		if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
+		if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) &&
+			plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
 			TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
 			tcc.getCircuits();
 			// decrement uses

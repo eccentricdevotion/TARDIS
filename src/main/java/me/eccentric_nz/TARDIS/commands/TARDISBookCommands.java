@@ -139,7 +139,9 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
 		Set<String> aset = Objects.requireNonNull(plugin.getAdvancementConfig().getRoot()).getKeys(false);
 		aset.forEach((a) -> {
 			if (plugin.getAdvancementConfig().getBoolean(a + ".enabled")) {
-				String title_reward = plugin.getAdvancementConfig().getString(a + ".name") + " - " + plugin.getAdvancementConfig().getString(a + ".reward_type") + ":" + plugin.getAdvancementConfig().getString(a + ".reward_amount");
+				String title_reward = plugin.getAdvancementConfig().getString(a + ".name") + " - " +
+									  plugin.getAdvancementConfig().getString(a + ".reward_type") + ":" +
+									  plugin.getAdvancementConfig().getString(a + ".reward_amount");
 				map.put(a, title_reward);
 			}
 		});

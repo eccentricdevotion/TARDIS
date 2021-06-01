@@ -133,11 +133,13 @@ class TARDISHandlesLandCommand {
 							}
 							// damage the circuit if configured
 							TARDISCircuitChecker tcc = null;
-							if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
+							if (!plugin.getDifficulty().equals(Difficulty.EASY) &&
+								!plugin.getUtils().inGracePeriod(player, true)) {
 								tcc = new TARDISCircuitChecker(plugin, id);
 								tcc.getCircuits();
 							}
-							if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+							if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") &&
+								plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
 								// decrement uses
 								int uses_left = tcc.getMaterialisationUses();
 								new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();

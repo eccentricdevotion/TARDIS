@@ -60,7 +60,8 @@ public class TARDISKeyboardListener implements Listener {
 		if (is != null && is.getType().equals(Material.OAK_SIGN) && is.hasItemMeta()) {
 			ItemMeta im = is.getItemMeta();
 			assert im != null;
-			return im.hasDisplayName() && im.getDisplayName().equals("tardis Keyboard Editor") && im.hasCustomModelData();
+			return im.hasDisplayName() && im.getDisplayName().equals("tardis Keyboard Editor") &&
+				   im.hasCustomModelData();
 		}
 		return false;
 	}
@@ -80,7 +81,8 @@ public class TARDISKeyboardListener implements Listener {
 			ResultSetControls rs = new ResultSetControls(plugin, where, false);
 			if (rs.resultSet()) {
 				TARDISCircuitChecker tcc = null;
-				if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
+				if (!plugin.getDifficulty().equals(Difficulty.EASY) &&
+					!plugin.getUtils().inGracePeriod(player, false)) {
 					tcc = new TARDISCircuitChecker(plugin, rs.getTardisId());
 					tcc.getCircuits();
 				}
@@ -113,14 +115,16 @@ public class TARDISKeyboardListener implements Listener {
 			if (plugin.getServer().getPlayer(Objects.requireNonNull(event.getLine(0))) != null) {
 				// set location player
 				p.performCommand("tardistravel " + event.getLine(0));
-				plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel " + event.getLine(0));
+				plugin.getConsole().sendMessage(
+						p.getName() + " issued server command: /tardistravel " + event.getLine(0));
 				removeTracker(id);
 				return;
 			}
 			// location?
 			if (TARDISAliasResolver.getWorldFromAlias(event.getLine(0)) != null) {
 				// set location to coords
-				String command = event.getLine(0) + " " + event.getLine(1) + " " + event.getLine(2) + " " + event.getLine(3);
+				String command =
+						event.getLine(0) + " " + event.getLine(1) + " " + event.getLine(2) + " " + event.getLine(3);
 				p.performCommand("tardistravel " + command);
 				plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel " + command);
 				removeTracker(id);
@@ -152,13 +156,16 @@ public class TARDISKeyboardListener implements Listener {
 				removeTracker(id);
 				return;
 			}
-			if (Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase("cave") && TARDISPermission.hasPermission(p, "tardis.timetravel.cave")) {
+			if (Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase("cave") &&
+				TARDISPermission.hasPermission(p, "tardis.timetravel.cave")) {
 				p.performCommand("tardistravel cave");
 				plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel cave");
 				removeTracker(id);
 				return;
 			}
-			if (Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase("village") && plugin.getConfig().getBoolean("allow.village_travel") && TARDISPermission.hasPermission(p, "tardis.timetravel.village")) {
+			if (Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase("village") &&
+				plugin.getConfig().getBoolean("allow.village_travel") &&
+				TARDISPermission.hasPermission(p, "tardis.timetravel.village")) {
 				p.performCommand("tardistravel village");
 				plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel village");
 				removeTracker(id);
@@ -170,7 +177,8 @@ public class TARDISKeyboardListener implements Listener {
 				Biome.valueOf(upper);
 				if (!upper.equals("HELL") && !upper.equals("SKY") && !upper.equals("VOID")) {
 					p.performCommand("tardistravel biome " + upper);
-					plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel biome " + upper);
+					plugin.getConsole().sendMessage(
+							p.getName() + " issued server command: /tardistravel biome " + upper);
 					removeTracker(id);
 					return;
 				}
@@ -183,7 +191,8 @@ public class TARDISKeyboardListener implements Listener {
 			ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
 			if (rsd.resultSet()) {
 				p.performCommand("tardistravel dest " + event.getLine(0));
-				plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel dest " + event.getLine(0));
+				plugin.getConsole().sendMessage(
+						p.getName() + " issued server command: /tardistravel dest " + event.getLine(0));
 				removeTracker(id);
 				return;
 			}
@@ -193,7 +202,8 @@ public class TARDISKeyboardListener implements Listener {
 			ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
 			if (rsa.resultSet()) {
 				p.performCommand("tardistravel area " + event.getLine(0));
-				plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel area " + event.getLine(0));
+				plugin.getConsole().sendMessage(
+						p.getName() + " issued server command: /tardistravel area " + event.getLine(0));
 				removeTracker(id);
 				return;
 			}

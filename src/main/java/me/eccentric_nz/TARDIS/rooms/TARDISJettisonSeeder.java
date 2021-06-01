@@ -109,7 +109,8 @@ public class TARDISJettisonSeeder implements Listener {
 							block.setBlockData(TARDISConstants.AIR);
 							Objects.requireNonNull(l.getWorld()).playEffect(l, Effect.POTION_BREAK, 9);
 							// ok they clicked it, so give them their energy!
-							int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
+							int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) *
+													plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
 							HashMap<String, Object> set = new HashMap<>();
 							set.put("uuid", player.getUniqueId().toString());
 							plugin.getQueryFactory().alterEnergyLevel("tardis", amount, set, player);
@@ -122,14 +123,16 @@ public class TARDISJettisonSeeder implements Listener {
 								plugin.getQueryFactory().doDelete("controls", del);
 							}
 							if (r.equals("RENDERER")) {
-								if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+								if (plugin.isWorldGuardOnServer() &&
+									plugin.getConfig().getBoolean("preferences.use_worldguard")) {
 									// remove WorldGuard protection
 									plugin.getWorldGuardUtils().removeRoomRegion(l.getWorld(), playerNameStr, "renderer");
 								}
 							}
 							if (plugin.getConfig().getBoolean("growth.return_room_seed")) {
 								// give the player back the room seed block
-								ItemStack is = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(plugin.getRoomsConfig().getString("rooms." + r + ".seed")))));
+								ItemStack is = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(plugin.getRoomsConfig().getString(
+										"rooms." + r + ".seed")))));
 								Inventory inv = player.getInventory();
 								inv.addItem(is);
 								player.updateInventory();

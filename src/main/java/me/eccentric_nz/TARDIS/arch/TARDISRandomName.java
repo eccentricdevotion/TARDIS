@@ -32,7 +32,8 @@ class TARDISRandomName {
 	public static String name() {
 		String name = "12345678901234567";
 		while (name.length() > 16) {
-			name = FIRSTNAMES.get(TARDISConstants.RANDOM.nextInt(FIRSTNAMES.size())) + "_" + LASTNAMES.get(TARDISConstants.RANDOM.nextInt(LASTNAMES.size()));
+			name = FIRSTNAMES.get(TARDISConstants.RANDOM.nextInt(FIRSTNAMES.size())) + "_" +
+				   LASTNAMES.get(TARDISConstants.RANDOM.nextInt(LASTNAMES.size()));
 		}
 		return name;
 	}

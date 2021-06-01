@@ -80,7 +80,8 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
 			}
 			Storage store = Storage.valueOf(tmp);
 			saveCurrentStorage(event.getInventory(), store.getTable(), (Player) event.getPlayer());
-		} else if (!title.equals(ChatColor.DARK_RED + "tardis Console") && !title.equals(ChatColor.DARK_RED + "Handles Program")) {
+		} else if (!title.equals(ChatColor.DARK_RED + "tardis Console") &&
+				   !title.equals(ChatColor.DARK_RED + "Handles Program")) {
 			// scan the inventory for area disks and spit them out
 			for (int i = 0; i < event.getInventory().getSize(); i++) {
 				ItemStack stack = view.getItem(i);
@@ -274,7 +275,8 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
 									im.setCustomModelData(87);
 									is.setType(Material.BOWL);
 									is.setItemMeta(im);
-								} else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasCustomModelData() && im.getDisplayName().equals("Circuits")) {
+								} else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasCustomModelData() &&
+										   im.getDisplayName().equals("Circuits")) {
 									im.setCustomModelData(10001985);
 								}
 								is.setItemMeta(im);

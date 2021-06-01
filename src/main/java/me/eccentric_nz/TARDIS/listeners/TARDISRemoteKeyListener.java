@@ -76,7 +76,8 @@ public class TARDISRemoteKeyListener implements Listener {
 		if (!is.getType().equals(rkey)) {
 			return;
 		}
-		if (is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName() && is.getItemMeta().getDisplayName().equals("tardis Remote Key")) {
+		if (is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName() &&
+			is.getItemMeta().getDisplayName().equals("tardis Remote Key")) {
 			String uuid = player.getUniqueId().toString();
 			// has tardis?
 			HashMap<String, Object> where = new HashMap<>();

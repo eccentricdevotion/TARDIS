@@ -51,7 +51,8 @@ public class TARDISGravityWellRunnable implements Runnable {
 	public void run() {
 		switch (dir) {
 			case 1:
-				if (p.getLocation().getY() < end && p.getLocation().getBlockX() == x && p.getLocation().getBlockZ() == z) {
+				if (p.getLocation().getY() < end && p.getLocation().getBlockX() == x &&
+					p.getLocation().getBlockZ() == z) {
 					p.setVelocity(new Vector(0.0D, up, 0.0D));
 				} else {
 					p.setFallDistance(0.0F);

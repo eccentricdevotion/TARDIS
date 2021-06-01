@@ -67,7 +67,9 @@ public class TARDISGiveCommand implements CommandExecutor {
 		items.put("seed", "");
 		items.put("tachyon", "");
 		for (RecipeItem recipeItem : RecipeItem.values()) {
-			if (recipeItem.getCategory() != RecipeCategory.SONIC_UPGRADES && recipeItem.getCategory() != RecipeCategory.UNUSED && recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE) {
+			if (recipeItem.getCategory() != RecipeCategory.SONIC_UPGRADES &&
+				recipeItem.getCategory() != RecipeCategory.UNUSED &&
+				recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE) {
 				items.put(recipeItem.toTabCompletionString(), recipeItem.toRecipeString());
 			}
 		}
@@ -124,7 +126,8 @@ public class TARDISGiveCommand implements CommandExecutor {
 				}
 				if (item.equals("seed")) {
 					String seed = args[2].toUpperCase(Locale.ENGLISH);
-					if (Consoles.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
+					if (Consoles.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") &&
+						!seed.equals("TALL") && !seed.equals("ARCHIVE")) {
 						if (args.length > 3 && args[3].equalsIgnoreCase("knowledge")) {
 							Player sp = plugin.getServer().getPlayer(args[0]);
 							if (sp == null) { // player must be online
@@ -229,7 +232,9 @@ public class TARDISGiveCommand implements CommandExecutor {
 		}
 		String item_to_give = items.get(item);
 		ItemStack result;
-		if (item.equals("save-storage-disk") || item.equals("preset-storage-disk") || item.equals("biome-storage-disk") || item.equals("player-storage-disk") || item.equals("bowl-of-custard") || item.equals("jelly-baby") || item.equals("schematic-wand")) {
+		if (item.equals("save-storage-disk") || item.equals("preset-storage-disk") ||
+			item.equals("biome-storage-disk") || item.equals("player-storage-disk") || item.equals("bowl-of-custard") ||
+			item.equals("jelly-baby") || item.equals("schematic-wand")) {
 			ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(item_to_give);
 			result = recipe.getResult();
 		} else {
@@ -241,13 +246,18 @@ public class TARDISGiveCommand implements CommandExecutor {
 			ItemMeta im = result.getItemMeta();
 			assert im != null;
 			List<String> lore = im.getLore();
-			String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses.invisibility"), "0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+			String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses.invisibility"), "0") ||
+						   !plugin.getConfig().getBoolean("circuits.damage")) ?
+					ChatColor.YELLOW + "unlimited" :
+					ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
 			assert lore != null;
 			lore.set(1, uses);
 			im.setLore(lore);
 			result.setItemMeta(im);
 		}
-		if (item.equals("blank") || item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("blaster") || item.equals("control")) {
+		if (item.equals("blank") || item.equals("save-disk") || item.equals("preset-disk") ||
+			item.equals("biome-disk") || item.equals("player-disk") || item.equals("blaster") ||
+			item.equals("control")) {
 			ItemMeta im = result.getItemMeta();
 			assert im != null;
 			im.addItemFlags(ItemFlag.values());
@@ -286,7 +296,8 @@ public class TARDISGiveCommand implements CommandExecutor {
 			if (result.hasItemMeta()) {
 				ItemMeta im = result.getItemMeta();
 				assert im != null;
-				if (im.hasDisplayName() && (im.getDisplayName().contains("Key") || im.getDisplayName().contains("Authorised Control Disk"))) {
+				if (im.hasDisplayName() &&
+					(im.getDisplayName().contains("Key") || im.getDisplayName().contains("Authorised Control Disk"))) {
 					im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
 					if (im.hasLore()) {
 						List<String> lore = im.getLore();
@@ -408,7 +419,8 @@ public class TARDISGiveCommand implements CommandExecutor {
 				int model = TARDISSeedModel.modelByString(type);
 				if (Consoles.getBY_NAMES().get(type).isCustom()) {
 					is = new ItemStack(Material.MUSHROOM_STEM, 1);
-				} else if (type.equalsIgnoreCase("DELTA") || type.equalsIgnoreCase("ROTOR") || type.equalsIgnoreCase("COPPER")) {
+				} else if (type.equalsIgnoreCase("DELTA") || type.equalsIgnoreCase("ROTOR") ||
+						   type.equalsIgnoreCase("COPPER")) {
 					is = new ItemStack(Material.MUSHROOM_STEM, 1);
 				} else {
 					is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);

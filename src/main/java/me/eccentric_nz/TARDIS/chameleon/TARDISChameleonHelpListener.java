@@ -76,7 +76,8 @@ public class TARDISChameleonHelpListener extends TARDISMenuListener implements L
 									plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 										TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
 										ItemStack[] items = tci.getConstruct();
-										Inventory chamcon = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Construction");
+										Inventory chamcon = plugin.getServer().createInventory(player, 54,
+												ChatColor.DARK_RED + "Chameleon Construction");
 										chamcon.setContents(items);
 										player.openInventory(chamcon);
 									}, 2L);
@@ -86,7 +87,8 @@ public class TARDISChameleonHelpListener extends TARDISMenuListener implements L
 									plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 										TARDISChameleonTemplateGUI tci = new TARDISChameleonTemplateGUI(plugin);
 										ItemStack[] items = tci.getTemplate();
-										Inventory chamtmp = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Template");
+										Inventory chamtmp = plugin.getServer().createInventory(player, 54,
+												ChatColor.DARK_RED + "Chameleon Template");
 										chamtmp.setContents(items);
 										player.openInventory(chamtmp);
 									}, 2L);

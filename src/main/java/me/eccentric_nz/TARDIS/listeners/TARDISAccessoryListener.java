@@ -45,7 +45,8 @@ public class TARDISAccessoryListener implements Listener {
 			InventoryType inventoryType = inv.getType();
 			if (inventoryType == InventoryType.PLAYER && event.getRawSlot() == 5) {
 				ItemStack cursor = event.getCursor();
-				if (cursor != null && cursor.getType() == Material.LEATHER_HELMET && cursor.hasItemMeta() && isNullOrAir(event.getCurrentItem())) {
+				if (cursor != null && cursor.getType() == Material.LEATHER_HELMET && cursor.hasItemMeta() &&
+					isNullOrAir(event.getCurrentItem())) {
 					ItemMeta im = cursor.getItemMeta();
 					assert im != null;
 					if (im.hasCustomModelData()) {
@@ -63,7 +64,9 @@ public class TARDISAccessoryListener implements Listener {
 							}, 1L);
 						}
 					}
-				} else if (isNullOrAir(cursor) && Objects.requireNonNull(event.getCurrentItem()).getType() == Material.BIRCH_BUTTON && event.getCurrentItem().hasItemMeta()) {
+				} else if (isNullOrAir(cursor) &&
+						   Objects.requireNonNull(event.getCurrentItem()).getType() == Material.BIRCH_BUTTON &&
+						   event.getCurrentItem().hasItemMeta()) {
 					ItemStack current = event.getCurrentItem();
 					ItemMeta im = current.getItemMeta();
 					assert im != null;

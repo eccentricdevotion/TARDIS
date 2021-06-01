@@ -60,7 +60,8 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
 							close(p);
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 								ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
-								Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "tardis Seeds Menu");
+								Inventory gui = plugin.getServer().createInventory(p, 27,
+										ChatColor.DARK_RED + "tardis Seeds Menu");
 								gui.setContents(seeds);
 								p.openInventory(gui);
 							}, 2L);
@@ -71,7 +72,8 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
 							close(p);
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 								ItemStack[] recipe = new TARDISHowToWallsInventory(plugin).getMenu();
-								Inventory gui = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis Wall & Floor Menu");
+								Inventory gui = plugin.getServer().createInventory(p, 54,
+										ChatColor.DARK_RED + "tardis Wall & Floor Menu");
 								gui.setContents(recipe);
 								p.openInventory(gui);
 							}, 2L);
@@ -86,7 +88,8 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
 				}
 			} else {
 				ClickType click = event.getClick();
-				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) ||
+					click.equals(ClickType.DOUBLE_CLICK)) {
 					event.setCancelled(true);
 				}
 			}

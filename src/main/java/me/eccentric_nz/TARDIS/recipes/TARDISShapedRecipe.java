@@ -122,11 +122,15 @@ public class TARDISShapedRecipe {
 				String which = split[1].toLowerCase(Locale.ENGLISH);
 				// set the second line of lore
 				List<String> lore;
-				String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses." + which), "0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+				String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses." + which), "0") ||
+							   !plugin.getConfig().getBoolean("circuits.damage")) ?
+						ChatColor.YELLOW + "unlimited" :
+						ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
 				lore = Arrays.asList("Uses left", uses);
 				im.setLore(lore);
 			} else {
-				im.setLore(Arrays.asList(Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped." + s + ".lore")).split("~")));
+				im.setLore(Arrays.asList(Objects.requireNonNull(plugin.getRecipesConfig().getString(
+						"shaped." + s + ".lore")).split("~")));
 			}
 		}
 		if (s.endsWith("Bow Tie") || s.equals("3-D Glasses") || s.equals("tardis Communicator")) {
@@ -143,7 +147,8 @@ public class TARDISShapedRecipe {
 		// get shape
 		String difficulty = (plugin.getDifficulty().equals(Difficulty.MEDIUM)) ? "easy" : Objects.requireNonNull(plugin.getConfig().getString("preferences.difficulty")).toLowerCase(Locale.ENGLISH);
 		try {
-			String[] shape_tmp = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_shape")).split(",");
+			String[] shape_tmp = Objects.requireNonNull(plugin.getRecipesConfig().getString(
+					"shaped." + s + "." + difficulty + "_shape")).split(",");
 			String[] shape = new String[shape_tmp.length];
 			for (int i = 0; i < shape_tmp.length; i++) {
 				shape[i] = shape_tmp[i].replaceAll("-", " ");
@@ -153,7 +158,8 @@ public class TARDISShapedRecipe {
 			} else {
 				r.shape(shape[0], shape[1]);
 			}
-			Set<String> ingredients = Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("shaped." + s + "." + difficulty + "_ingredients")).getKeys(false);
+			Set<String> ingredients = Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection(
+					"shaped." + s + "." + difficulty + "_ingredients")).getKeys(false);
 			ingredients.forEach((g) -> {
 				char c = g.charAt(0);
 				String i = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_ingredients." + g);
@@ -173,7 +179,10 @@ public class TARDISShapedRecipe {
 						String which = split[1].toLowerCase(Locale.ENGLISH);
 						// set the second line of lore
 						List<String> lore;
-						String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses." + which), "0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+						String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses." + which), "0") ||
+									   !plugin.getConfig().getBoolean("circuits.damage")) ?
+								ChatColor.YELLOW + "unlimited" :
+								ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
 						lore = Arrays.asList("Uses left", uses);
 						em.setLore(lore);
 					}
@@ -217,7 +226,9 @@ public class TARDISShapedRecipe {
 				}
 			});
 		} catch (IllegalArgumentException e) {
-			plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + s + " recipe failed! " + ChatColor.RESET + "Check the recipe config file!");
+			plugin.getConsole().sendMessage(
+					plugin.getPluginName() + ChatColor.RED + s + " recipe failed! " + ChatColor.RESET +
+					"Check the recipe config file!");
 		}
 		if (s.contains("Bow Tie")) {
 			r.setGroup("Bow Ties");

@@ -63,11 +63,14 @@ public class TARDISAreaListener implements Listener {
 		UUID uuid = player.getUniqueId();
 		Block block = event.getClickedBlock();
 		if (block != null) {
-			if (plugin.getTrackerKeeper().getArea().containsKey(uuid) && !plugin.getTrackerKeeper().getBlock().containsKey(uuid)) {
+			if (plugin.getTrackerKeeper().getArea().containsKey(uuid) &&
+				!plugin.getTrackerKeeper().getBlock().containsKey(uuid)) {
 				Location block_loc = block.getLocation();
 				// check if block is in an already defined area
 				if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
-					String locStr = Objects.requireNonNull(block_loc.getWorld()).getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
+					String locStr =
+							Objects.requireNonNull(block_loc.getWorld()).getName() + ":" + block_loc.getBlockX() + ":" +
+							block_loc.getBlockY() + ":" + block_loc.getBlockZ();
 					plugin.getTrackerKeeper().getBlock().put(uuid, locStr);
 					TARDISMessage.send(player, "AREA_END_INFO", ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET);
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -77,7 +80,8 @@ public class TARDISAreaListener implements Listener {
 				} else {
 					TARDISMessage.send(player, "AREA_INSIDE");
 				}
-			} else if (plugin.getTrackerKeeper().getBlock().containsKey(uuid) && plugin.getTrackerKeeper().getEnd().containsKey(uuid)) {
+			} else if (plugin.getTrackerKeeper().getBlock().containsKey(uuid) &&
+					   plugin.getTrackerKeeper().getEnd().containsKey(uuid)) {
 				Location block_loc = block.getLocation();
 				// check if block is in an already defined area
 				if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {

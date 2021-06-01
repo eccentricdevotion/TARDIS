@@ -115,7 +115,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
 			if (args.length == 0) {
 				// open recipe GUI
 				ItemStack[] emenu = new TARDISRecipeCategoryInventory().getMenu();
-				Inventory categories = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Recipe Categories");
+				Inventory categories = plugin.getServer().createInventory(player, 27,
+						ChatColor.DARK_RED + "Recipe Categories");
 				categories.setContents(emenu);
 				player.openInventory(categories);
 				return true;
@@ -210,12 +211,17 @@ public class TARDISRecipeCommands implements CommandExecutor {
 		if (str.equals("tardis Invisibility Circuit")) {
 			// set the second line of lore
 			List<String> lore = im.getLore();
-			String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses.invisibility"), "0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+			String uses = (Objects.equals(plugin.getConfig().getString("circuits.uses.invisibility"), "0") ||
+						   !plugin.getConfig().getBoolean("circuits.damage")) ?
+					ChatColor.YELLOW + "unlimited" :
+					ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
 			assert lore != null;
 			lore.set(1, uses);
 			im.setLore(lore);
 		}
-		if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
+		if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") ||
+			str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") ||
+			str.equals("Authorised Control Disk")) {
 			im.addItemFlags(ItemFlag.values());
 		}
 		result.setAmount(1);
@@ -258,7 +264,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
 		ItemMeta im = result.getItemMeta();
 		assert im != null;
 		im.setDisplayName(str);
-		if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
+		if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") ||
+			str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") ||
+			str.equals("Authorised Control Disk")) {
 			im.addItemFlags(ItemFlag.values());
 		}
 		RecipeItem recipeItem = RecipeItem.getByName(str);
@@ -277,7 +285,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
 
 	private void showTARDISRecipe(Player player, String type) {
 		plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
-		Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "tardis " + type.toUpperCase(Locale.ENGLISH) + " seed recipe");
+		Inventory inv = plugin.getServer().createInventory(player, 27,
+				ChatColor.DARK_RED + "tardis " + type.toUpperCase(Locale.ENGLISH) + " seed recipe");
 		// redstone torch
 		ItemStack red = new ItemStack(Material.REDSTONE_TORCH, 1);
 		// lapis block

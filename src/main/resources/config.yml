@@ -186,7 +186,7 @@ archive:
   limit: 3
 blueprints:
   enabled: false
-rechargers: { }
+rechargers: {}
 display:
   all: '&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%'
 # don't touch

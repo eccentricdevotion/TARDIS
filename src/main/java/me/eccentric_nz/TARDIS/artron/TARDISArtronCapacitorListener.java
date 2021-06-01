@@ -156,7 +156,10 @@ public class TARDISArtronCapacitorListener implements Listener {
 												}
 												break;
 											case NONE:
-												if (Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + Objects.requireNonNull(block.getLocation().getWorld()).getName() + ".gamemode")).equalsIgnoreCase("CREATIVE")) {
+												if (Objects.requireNonNull(plugin.getPlanetsConfig().getString(
+														"planets." +
+														Objects.requireNonNull(block.getLocation().getWorld()).getName() +
+														".gamemode")).equalsIgnoreCase("CREATIVE")) {
 													TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
 													return;
 												}
@@ -265,7 +268,8 @@ public class TARDISArtronCapacitorListener implements Listener {
 									}
 									// transfer player artron energy into the capacitor
 									int ten_percent = Math.round(fc * 0.1F);
-									if (current_level >= ten_percent && plugin.getConfig().getBoolean("creation.create_worlds")) {
+									if (current_level >= ten_percent &&
+										plugin.getConfig().getBoolean("creation.create_worlds")) {
 										TARDISMessage.send(player, "ENERGY_UNDER_10");
 										return;
 									}
@@ -334,7 +338,8 @@ public class TARDISArtronCapacitorListener implements Listener {
 				if (sign != null) {
 					String player_name = TARDISStaticUtils.getNick(player);
 					String owner;
-					if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
+					if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) ||
+						preset.equals(PRESET.ROBOT)) {
 						owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
 					} else {
 						owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";

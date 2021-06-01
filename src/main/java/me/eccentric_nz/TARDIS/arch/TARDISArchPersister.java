@@ -48,7 +48,8 @@ public class TARDISArchPersister {
 	public void saveAll() {
 		try {
 			// save the arched players
-			ps = connection.prepareStatement("INSERT INTO " + prefix + "arched (uuid, arch_name, arch_time) VALUES (?, ?, ?)");
+			ps = connection.prepareStatement(
+					"INSERT INTO " + prefix + "arched (uuid, arch_name, arch_time) VALUES (?, ?, ?)");
 			for (Map.Entry<UUID, TARDISWatchData> map : plugin.getTrackerKeeper().getJohnSmith().entrySet()) {
 				ps = connection.prepareStatement("SELECT uuid FROM " + prefix + "arched WHERE uuid = ?");
 				ps.setString(1, map.getKey().toString());
@@ -62,13 +63,15 @@ public class TARDISArchPersister {
 				}
 				if (rs.next()) {
 					// update the existing record
-					ps = connection.prepareStatement("UPDATE " + prefix + "arched SET arch_name = ?, arch_time = ? WHERE uuid = ?");
+					ps = connection.prepareStatement(
+							"UPDATE " + prefix + "arched SET arch_name = ?, arch_time = ? WHERE uuid = ?");
 					ps.setString(1, twd.getName());
 					ps.setLong(2, time);
 					ps.setString(3, map.getKey().toString());
 				} else {
 					// save the arched player
-					ps = connection.prepareStatement("INSERT INTO " + prefix + "arched (uuid, arch_name, arch_time) VALUES (?, ?, ?)");
+					ps = connection.prepareStatement(
+							"INSERT INTO " + prefix + "arched (uuid, arch_name, arch_time) VALUES (?, ?, ?)");
 					ps.setString(1, map.getKey().toString());
 					ps.setString(2, twd.getName());
 					ps.setLong(3, time);
@@ -106,13 +109,15 @@ public class TARDISArchPersister {
 			}
 			if (rs.next()) {
 				// update the existing record
-				ps = connection.prepareStatement("UPDATE " + prefix + "arched SET arch_name = ?, arch_time = ? WHERE uuid = ?");
+				ps = connection.prepareStatement(
+						"UPDATE " + prefix + "arched SET arch_name = ?, arch_time = ? WHERE uuid = ?");
 				ps.setString(1, twd.getName());
 				ps.setLong(2, time);
 				ps.setString(3, uuid.toString());
 			} else {
 				// save the arched player
-				ps = connection.prepareStatement("INSERT INTO " + prefix + "arched (uuid, arch_name, arch_time) VALUES (?, ?, ?)");
+				ps = connection.prepareStatement(
+						"INSERT INTO " + prefix + "arched (uuid, arch_name, arch_time) VALUES (?, ?, ?)");
 				ps.setString(1, uuid.toString());
 				ps.setString(2, twd.getName());
 				ps.setLong(3, time);

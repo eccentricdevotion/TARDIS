@@ -104,7 +104,9 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
 									player.performCommand("tardis rebuild");
 									close(player);
 									// damage the circuit if configured
-									if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
+									if (plugin.getConfig().getBoolean("circuits.damage") &&
+										!plugin.getDifficulty().equals(Difficulty.EASY) &&
+										plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
 										TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
 										tcc.getCircuits();
 										// decrement uses
@@ -173,13 +175,16 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
 										TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
 										tcc.getCircuits();
 										if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
-											if (!plugin.getUtils().inGracePeriod(player, false) && !tcc.hasInvisibility()) {
+											if (!plugin.getUtils().inGracePeriod(player, false) &&
+												!tcc.hasInvisibility()) {
 												close(player);
 												TARDISMessage.send(player, "INVISIBILITY_MISSING");
 												break;
 											}
 										}
-										if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
+										if (plugin.getConfig().getBoolean("circuits.damage") &&
+											!plugin.getDifficulty().equals(Difficulty.EASY) &&
+											plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
 											// decrement uses
 											int uses_left = tcc.getInvisibilityUses();
 											new TARDISCircuitDamager(plugin, DiskCircuit.INVISIBILITY, uses_left, id, player).damage();
@@ -202,7 +207,8 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
 									plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 										TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
 										ItemStack[] items = tpi.getPresets();
-										Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Presets");
+										Inventory presetinv = plugin.getServer().createInventory(player, 54,
+												ChatColor.DARK_RED + "Chameleon Presets");
 										presetinv.setContents(items);
 										player.openInventory(presetinv);
 									}, 2L);
@@ -212,7 +218,8 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
 									plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 										TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
 										ItemStack[] items = tci.getConstruct();
-										Inventory chamcon = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Construction");
+										Inventory chamcon = plugin.getServer().createInventory(player, 54,
+												ChatColor.DARK_RED + "Chameleon Construction");
 										chamcon.setContents(items);
 										player.openInventory(chamcon);
 									}, 2L);

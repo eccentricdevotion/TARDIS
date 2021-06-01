@@ -202,7 +202,9 @@ public class TARDISInstantPreset {
 						change = false;
 						TARDISBlockSetters.setBlockAndRemember(world, xx, y, zz, rail.getBlockData(), bd.getTardisId());
 					}
-					if (world.getEnvironment().equals(World.Environment.NETHER) || world.getEnvironment().equals(World.Environment.THE_END) || world.getGenerator() instanceof TARDISChunkGenerator) {
+					if (world.getEnvironment().equals(World.Environment.NETHER) ||
+						world.getEnvironment().equals(World.Environment.THE_END) ||
+						world.getGenerator() instanceof TARDISChunkGenerator) {
 						TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), false);
 					}
 				}
@@ -211,7 +213,8 @@ public class TARDISInstantPreset {
 				}
 				Material mat = colData[yy].getMaterial();
 				// update door location if invisible
-				if (yy == 0 && (i == 1 || i == 3 || i == 5 || i == 7) && preset.equals(PRESET.INVISIBLE) && mat.isAir()) {
+				if (yy == 0 && (i == 1 || i == 3 || i == 5 || i == 7) && preset.equals(PRESET.INVISIBLE) &&
+					mat.isAir()) {
 					String invisible_door = world.getName() + ":" + xx + ":" + y + ":" + zz;
 					processDoor(invisible_door);
 					// if tardis is in the air add under door
@@ -225,10 +228,12 @@ public class TARDISInstantPreset {
 						break;
 					case BEDROCK:
 						if (preset.equals(PRESET.THEEND)) {
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
+							TARDISBlockSetters.setBlockAndRemember(world, xx, (y +
+																			   yy), zz, colData[yy], bd.getTardisId());
 							world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
 						} else {
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
+							TARDISBlockSetters.setBlockAndRemember(world, xx, (y +
+																			   yy), zz, colData[yy], bd.getTardisId());
 						}
 						break;
 					case WHITE_WOOL:
@@ -247,17 +252,23 @@ public class TARDISInstantPreset {
 					case GREEN_WOOL:
 					case RED_WOOL:
 					case BLACK_WOOL:
-						if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisId());
+						if (preset.equals(PRESET.PARTY) ||
+							(preset.equals(PRESET.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
+							TARDISBlockSetters.setBlockAndRemember(world, xx, (y +
+																			   yy), zz, random_colour, bd.getTardisId());
 						}
-						if (bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && isPoliceBox && plugin.getConfig().getBoolean("police_box.set_biome")) {
+						if (bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 &&
+							isPoliceBox && plugin.getConfig().getBoolean("police_box.set_biome")) {
 							// set an observer block instead
 							Directional directional = (Directional) Material.OBSERVER.createBlockData();
 							directional.setFacing(BlockFace.valueOf(bd.getDirection().toString()));
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, directional, bd.getTardisId());
+							TARDISBlockSetters.setBlockAndRemember(world, xx, (y +
+																			   yy), zz, directional, bd.getTardisId());
 						}
-						if ((preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.JUNK)) && mat.equals(Material.ORANGE_WOOL)) {
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)), bd.getTardisId());
+						if ((preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.JUNK)) &&
+							mat.equals(Material.ORANGE_WOOL)) {
+							TARDISBlockSetters.setBlockAndRemember(world, xx, (y +
+																			   yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)), bd.getTardisId());
 						}
 						break;
 					case TORCH: // lamps, glowstone and torches
@@ -276,7 +287,8 @@ public class TARDISInstantPreset {
 								lit.setLit(true);
 								TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, lit, bd.getTardisId());
 							} else {
-								TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, light, bd.getTardisId());
+								TARDISBlockSetters.setBlockAndRemember(world, xx, (y +
+																				   yy), zz, light, bd.getTardisId());
 							}
 						}
 						break;
@@ -320,7 +332,8 @@ public class TARDISInstantPreset {
 									Block sponge = world.getBlockAt(xx, sy, zz);
 									plugin.getWorldGuardUtils().sponge(sponge, true);
 								} else if (!plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-									TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), false);
+									TARDISBlockSetters.setUnderDoorBlock(world, xx, (y -
+																					 1), zz, bd.getTardisId(), false);
 								}
 							}
 						} else {
@@ -330,7 +343,8 @@ public class TARDISInstantPreset {
 						if (mat.equals(Material.RAIL)) {
 							do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colData[yy]));
 						} else {
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
+							TARDISBlockSetters.setBlockAndRemember(world, xx, (y +
+																			   yy), zz, colData[yy], bd.getTardisId());
 						}
 						break;
 					case ACACIA_SIGN:
@@ -372,10 +386,13 @@ public class TARDISInstantPreset {
 											player_name = ChatColor.stripColor(user.getNick(false));
 										}
 										String owner;
-										if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
-											owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
+										if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) ||
+											preset.equals(PRESET.ROBOT)) {
+											owner = (player_name.length() >
+													 14) ? player_name.substring(0, 14) : player_name;
 										} else {
-											owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
+											owner = (player_name.length() > 14) ?
+													player_name.substring(0, 12) + "'s" : player_name + "'s";
 										}
 										switch (preset) {
 											case GRAVESTONE -> s.setLine(3, owner);
@@ -418,7 +435,8 @@ public class TARDISInstantPreset {
 										// get sign text from database
 										ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, bd.getTardisId());
 										if (rscs.resultSet()) {
-											if (rscs.getLine1().isEmpty() && rscs.getLine2().isEmpty() && rscs.getLine3().isEmpty() && rscs.getLine4().isEmpty()) {
+											if (rscs.getLine1().isEmpty() && rscs.getLine2().isEmpty() &&
+												rscs.getLine3().isEmpty() && rscs.getLine4().isEmpty()) {
 												s.setLine(1, sign_colour + line1);
 												s.setLine(2, sign_colour + line2);
 											} else {
@@ -445,7 +463,8 @@ public class TARDISInstantPreset {
 						}
 						break;
 					case NETHER_PORTAL:
-						TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy + 1), zz, Material.OBSIDIAN, bd.getTardisId());
+						TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy +
+																		   1), zz, Material.OBSIDIAN, bd.getTardisId());
 						TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
 						break;
 					case SKELETON_SKULL:
@@ -454,7 +473,8 @@ public class TARDISInstantPreset {
 						} else {
 							Rotatable rotatable = (Rotatable) colData[yy];
 							rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection()));
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisId());
+							TARDISBlockSetters.setBlockAndRemember(world, xx, (y +
+																			   yy), zz, rotatable, bd.getTardisId());
 						}
 						break;
 					case WHITE_TERRACOTTA:
@@ -478,10 +498,12 @@ public class TARDISInstantPreset {
 						break;
 					default: // everything else
 						if (change) {
-							if (mat.equals(Material.LEVER) || mat.equals(Material.STONE_BUTTON) || mat.equals(Material.OAK_BUTTON)) {
+							if (mat.equals(Material.LEVER) || mat.equals(Material.STONE_BUTTON) ||
+								mat.equals(Material.OAK_BUTTON)) {
 								do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colData[yy]));
 							} else {
-								TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
+								TARDISBlockSetters.setBlockAndRemember(world, xx, (y +
+																				   yy), zz, colData[yy], bd.getTardisId());
 							}
 						}
 						break;

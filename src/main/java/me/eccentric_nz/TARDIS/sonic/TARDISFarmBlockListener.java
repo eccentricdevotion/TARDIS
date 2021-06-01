@@ -73,7 +73,8 @@ public class TARDISFarmBlockListener implements Listener {
 		if (stack.getType().equals(sonic) && stack.hasItemMeta()) {
 			ItemMeta im = stack.getItemMeta();
 			assert im != null;
-			if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver") && im.hasLore() && Objects.requireNonNull(im.getLore()).contains("Emerald Upgrade")) {
+			if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver") &&
+				im.hasLore() && Objects.requireNonNull(im.getLore()).contains("Emerald Upgrade")) {
 				if ((material.equals(sc)) && player.getInventory().contains(sc)) {
 					// SUGAR_CANE
 					processHarvest(player, sc, block);

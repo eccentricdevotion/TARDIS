@@ -62,16 +62,20 @@ class TARDISSQLInsertControl implements Runnable {
 		try {
 			service.testConnection(connection);
 			statement = connection.createStatement();
-			String select = "SELECT c_id FROM " + prefix + "controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + secondary;
+			String select = "SELECT c_id FROM " + prefix + "controls WHERE tardis_id = " + id + " AND type = " + type +
+							" AND secondary = " + secondary;
 			ResultSet rs = statement.executeQuery(select);
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				// update
-				String update = "UPDATE " + prefix + "controls SET location = '" + location + "' WHERE c_id = " + rs.getInt("c_id");
+				String update = "UPDATE " + prefix + "controls SET location = '" + location + "' WHERE c_id = " +
+								rs.getInt("c_id");
 				statement.executeUpdate(update);
 			} else {
 				// insert
-				String insert = "INSERT INTO " + prefix + "controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + location + "', " + secondary + ")";
+				String insert =
+						"INSERT INTO " + prefix + "controls (tardis_id, type, location, secondary) VALUES (" + id +
+						", " + type + ", '" + location + "', " + secondary + ")";
 				statement.executeUpdate(insert);
 			}
 		} catch (SQLException e) {

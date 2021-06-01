@@ -37,7 +37,9 @@ public class TARDISRedstoneListener implements Listener {
 	@EventHandler
 	public void onRedstoneChange(BlockRedstoneEvent event) {
 		String block = event.getBlock().getLocation().toString();
-		if (plugin.getGeneralKeeper().getSonicWires().contains(block) || plugin.getGeneralKeeper().getSonicLamps().contains(block) || plugin.getGeneralKeeper().getSonicRails().contains(block)) {
+		if (plugin.getGeneralKeeper().getSonicWires().contains(block) ||
+			plugin.getGeneralKeeper().getSonicLamps().contains(block) ||
+			plugin.getGeneralKeeper().getSonicRails().contains(block)) {
 			event.setNewCurrent(event.getOldCurrent());
 		}
 	}

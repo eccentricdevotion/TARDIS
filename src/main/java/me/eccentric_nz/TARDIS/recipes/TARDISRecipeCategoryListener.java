@@ -56,7 +56,8 @@ public class TARDISRecipeCategoryListener extends TARDISMenuListener implements 
 					RecipeCategory category = RecipeCategory.valueOf(cat);
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 						ItemStack[] items = new TARDISRecipeInventory(plugin, category).getMenu();
-						Inventory recipes = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "tardis Recipes");
+						Inventory recipes = plugin.getServer().createInventory(player, 27,
+								ChatColor.DARK_RED + "tardis Recipes");
 						recipes.setContents(items);
 						player.openInventory(recipes);
 					}, 2L);

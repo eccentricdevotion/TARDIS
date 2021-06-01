@@ -51,7 +51,8 @@ public class TARDISInventoryPluginHelper implements Listener {
 			case PER_WORLD -> !TARDISPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
 			default ->
 					// GAMEMODE
-					(plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
+					(plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) !=
+					 plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
 		};
 		if (shouldSwitch) {
 			// switch to non-fobbed inventory before inventory manager
@@ -75,7 +76,8 @@ public class TARDISInventoryPluginHelper implements Listener {
 			case PER_WORLD -> !TARDISPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
 			default ->
 					// GAMEMODE
-					(plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
+					(plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) !=
+					 plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
 		};
 		if (shouldSwitch) {
 			// switch to back to fobbed inventory after MVI and MI

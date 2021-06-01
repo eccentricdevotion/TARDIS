@@ -22,7 +22,12 @@ import org.bukkit.Material;
 public enum GUIChameleonConstructor {
 
 	// Chameleon Constructor
-	BACK_TO_CHAMELEON_CIRCUIT(8, 0, Material.ARROW), HELP(55, 2, Material.BOWL), INFO(57, 3, Material.BOWL), ABORT(2, 5, Material.BOWL), USE_LAST_SAVED_CONSTRUCT(82, 7, Material.BOWL), SAVE_CONSTRUCT(74, 8, Material.BOWL);
+	BACK_TO_CHAMELEON_CIRCUIT(8, 0, Material.ARROW),
+	HELP(55, 2, Material.BOWL),
+	INFO(57, 3, Material.BOWL),
+	ABORT(2, 5, Material.BOWL),
+	USE_LAST_SAVED_CONSTRUCT(82, 7, Material.BOWL),
+	SAVE_CONSTRUCT(74, 8, Material.BOWL);
 
 	private final int customModelData;
 	private final int slot;

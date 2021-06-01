@@ -160,7 +160,8 @@ public class TARDISARSMethods {
 		im.setDisplayName(room);
 		if (!room.equals("Empty slot")) {
 			String config_path = TARDISARS.ARSFor(material.toString()).getConfigPath();
-			List<String> lore = Collections.singletonList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost"));
+			List<String> lore = Collections.singletonList(
+					"Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost"));
 			im.setLore(lore);
 		} else {
 			im.setLore(null);
@@ -312,7 +313,8 @@ public class TARDISARSMethods {
 					if (changed && tap.checkCosts(tap.getChanged(), tap.getJettison())) {
 						if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
 							if (!hasCondensables(uuid.toString(), tap.getChanged(), ids.get(uuid))) {
-								String message = (tap.getChanged().size() > 1) ? "ARS_CONDENSE_MULTIPLE" : "ARS_CONDENSE";
+								String message = (tap.getChanged().size() >
+												  1) ? "ARS_CONDENSE_MULTIPLE" : "ARS_CONDENSE";
 								TARDISMessage.send(p, message);
 								if (tap.getChanged().size() == 1) {
 									RoomRequiredLister.listCondensables(plugin, tap.getChanged().entrySet().iterator().next().getValue().toString(), p);
@@ -342,7 +344,9 @@ public class TARDISARSMethods {
 							delay += period;
 						}
 						// damage the circuit if configured
-						if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
+						if (plugin.getConfig().getBoolean("circuits.damage") &&
+							!plugin.getDifficulty().equals(Difficulty.EASY) &&
+							plugin.getConfig().getInt("circuits.uses.ars") > 0) {
 							// get the id of the tardis this player is in
 							int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(uuid);
 							TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
@@ -497,7 +501,8 @@ public class TARDISARSMethods {
 				} else {
 					bkey = bid;
 				}
-				int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
+				int tmp = Math.round(
+						(entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
 				int required = (tmp > 0) ? tmp : 1;
 				if (item_counts.containsKey(bkey)) {
 					item_counts.put(bkey, (item_counts.get(bkey) + required));

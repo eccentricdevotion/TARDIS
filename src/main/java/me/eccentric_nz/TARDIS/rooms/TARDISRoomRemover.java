@@ -67,8 +67,11 @@ class TARDISRoomRemover {
 		// get start locations
 		int sx, sy, sz, ex, ey, ez, downy, upy;
 		// calculate values for downy and upy from schematic dimensions / config
-		String directory = (plugin.getRoomsConfig().getBoolean("rooms." + r + ".user")) ? "user_schematics" : "schematics";
-		String path = plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase(Locale.ENGLISH) + ".tschm";
+		String directory = (plugin.getRoomsConfig().getBoolean(
+				"rooms." + r + ".user")) ? "user_schematics" : "schematics";
+		String path =
+				plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase(Locale.ENGLISH) +
+				".tschm";
 		// get JSON
 		JsonObject obj = TARDISSchematicGZip.unzip(path);
 		// get dimensions
@@ -118,7 +121,9 @@ class TARDISRoomRemover {
 				}
 			}
 		}
-		if (r.equals("FARM") || r.equals("APIARY") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("RAIL") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE") || r.equals("BIRDCAGE") || r.equals("AQUARIUM") || r.equals("BAMBOO")) {
+		if (r.equals("FARM") || r.equals("APIARY") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("RAIL") ||
+			r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE") || r.equals("BIRDCAGE") ||
+			r.equals("AQUARIUM") || r.equals("BAMBOO")) {
 			// remove stored location from the database
 			HashMap<String, Object> set = new HashMap<>();
 			set.put(r.toLowerCase(Locale.ENGLISH), "");

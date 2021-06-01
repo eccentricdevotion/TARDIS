@@ -82,7 +82,8 @@ public class TARDISSchematicCommand implements CommandExecutor {
 			}
 			if (args.length == 1 && args[0].equalsIgnoreCase("pastecsv")) {
 				Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
-				String path = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + "legacy_budget.csv";
+				String path = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator +
+							  "legacy_budget.csv";
 				File csv = new File(path);
 				if (csv.exists()) {
 					TARDISCSVPaster paster = new TARDISCSVPaster(plugin);
@@ -140,7 +141,8 @@ public class TARDISSchematicCommand implements CommandExecutor {
 				TARDISMessage.send(player, "SCHM_NAME");
 				return true;
 			}
-			if (!args[0].equalsIgnoreCase("load") && !args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("replace")) {
+			if (!args[0].equalsIgnoreCase("load") && !args[0].equalsIgnoreCase("save") &&
+				!args[0].equalsIgnoreCase("replace")) {
 				return false;
 			}
 			if (args[0].equalsIgnoreCase("save")) {
@@ -261,13 +263,16 @@ public class TARDISSchematicCommand implements CommandExecutor {
 				if (paintings.size() > 0) {
 					schematic.add("paintings", paintings);
 				}
-				String output = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".json";
+				String output = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] +
+								".json";
 				File file = new File(output);
 				try {
 					try (BufferedWriter bw = new BufferedWriter(new FileWriter(file), 16 * 1024)) {
 						bw.write(schematic.toString());
 					}
-					TARDISSchematicGZip.zip(output, plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".tschm");
+					TARDISSchematicGZip.zip(output,
+							plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] +
+							".tschm");
 					file.delete();
 					TARDISMessage.send(player, "SCHM_SAVED", args[1]);
 				} catch (IOException e) {
@@ -276,7 +281,8 @@ public class TARDISSchematicCommand implements CommandExecutor {
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("load")) {
-				String instr = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".tschm";
+				String instr = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] +
+							   ".tschm";
 				File file = new File(instr);
 				if (!file.exists()) {
 					TARDISMessage.send(player, "SCHM_NOT_VALID");

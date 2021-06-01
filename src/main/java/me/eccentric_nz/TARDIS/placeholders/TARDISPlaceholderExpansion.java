@@ -121,7 +121,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
 								OfflinePlayer offlinePlayer = plugin.getServer().getPlayer(split[2]);
 								if (offlinePlayer != null) {
 									rsti = new ResultSetTardisID(plugin);
-									if (rsti.fromUUID(offlinePlayer.getUniqueId().toString()) && rsti.getTardisId() == rsv.getTardisId()) {
+									if (rsti.fromUUID(offlinePlayer.getUniqueId().toString()) &&
+										rsti.getTardisId() == rsv.getTardisId()) {
 										result = "true";
 									}
 								}
@@ -152,7 +153,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
 					case "artron_percent":
 						rsl = new ResultSetArtronLevel(plugin, uuid);
 						if (rsl.resultset()) {
-							result = String.format("%s%%", Math.round(rsl.getArtronLevel() * 100.0d / plugin.getArtronConfig().getDouble("full_charge")));
+							result = String.format("%s%%", Math.round(
+									rsl.getArtronLevel() * 100.0d / plugin.getArtronConfig().getDouble("full_charge")));
 						} else {
 							result = "0%";
 						}
@@ -181,7 +183,8 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
 							where.put("tardis_id", rsti.getTardisId());
 							rscl = new ResultSetCurrentLocation(plugin, where);
 							if (rscl.resultSet()) {
-								result = "tardis was left at " + rscl.getWorld().getName() + " at " + "x: " + rscl.getX() + " y: " + rscl.getY() + " z: " + rscl.getZ();
+								result = "tardis was left at " + rscl.getWorld().getName() + " at " + "x: " +
+										 rscl.getX() + " y: " + rscl.getY() + " z: " + rscl.getZ();
 							} else {
 								result = "";
 							}

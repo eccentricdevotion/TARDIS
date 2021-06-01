@@ -141,7 +141,8 @@ class TARDISUpdateCommand {
 					block.setBlockData(mushroom, true);
 				}
 			}
-			if (updateable.equals(Updateable.FORCEFIELD) && !TARDISPermission.hasPermission(player, "tardis.forcefield")) {
+			if (updateable.equals(Updateable.FORCEFIELD) &&
+				!TARDISPermission.hasPermission(player, "tardis.forcefield")) {
 				TARDISMessage.send(player, "NO_PERM_FF");
 				return true;
 			}
@@ -223,7 +224,9 @@ class TARDISUpdateCommand {
 					return true;
 				}
 			}
-			if (updateable.equals(Updateable.FARM) || updateable.equals(Updateable.IGLOO) || updateable.equals(Updateable.STABLE) || updateable.equals(Updateable.STALL) || updateable.equals(Updateable.VILLAGE)) {
+			if (updateable.equals(Updateable.FARM) || updateable.equals(Updateable.IGLOO) ||
+				updateable.equals(Updateable.STABLE) || updateable.equals(Updateable.STALL) ||
+				updateable.equals(Updateable.VILLAGE)) {
 				if (!TARDISPermission.hasPermission(player, "tardis.farm")) {
 					TARDISMessage.send(player, "UPDATE_NO_PERM", tardis_block);
 					return true;
@@ -273,7 +276,9 @@ class TARDISUpdateCommand {
 				}
 			}
 			if (updateable.equals(Updateable.WEATHER)) {
-				if (!TARDISPermission.hasPermission(player, "tardis.weather.clear") && !TARDISPermission.hasPermission(player, "tardis.weather.rain") && !TARDISPermission.hasPermission(player, "tardis.weather.thunder")) {
+				if (!TARDISPermission.hasPermission(player, "tardis.weather.clear") &&
+					!TARDISPermission.hasPermission(player, "tardis.weather.rain") &&
+					!TARDISPermission.hasPermission(player, "tardis.weather.thunder")) {
 					TARDISMessage.send(player, "NO_PERMS");
 					return true;
 				}

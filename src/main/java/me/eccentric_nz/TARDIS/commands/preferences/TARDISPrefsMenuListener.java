@@ -162,7 +162,8 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 						if (im.getDisplayName().equals("Interior Hum Sound")) {
 							// close this gui and load the sounds GUI
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-								Inventory hum_inv = plugin.getServer().createInventory(p, 18, ChatColor.DARK_RED + "tardis Interior Sounds");
+								Inventory hum_inv = plugin.getServer().createInventory(p, 18,
+										ChatColor.DARK_RED + "tardis Interior Sounds");
 								// close inventory
 								p.closeInventory();
 								// open new inventory
@@ -184,7 +185,8 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 								if (rs.fromUUID(uuid.toString())) {
 									int id = rs.getTardisId();
 									// must not be in the vortex or materialising
-									if (!plugin.getTrackerKeeper().getMaterialising().contains(id) && !plugin.getTrackerKeeper().getInVortex().contains(id)) {
+									if (!plugin.getTrackerKeeper().getMaterialising().contains(id) &&
+										!plugin.getTrackerKeeper().getInVortex().contains(id)) {
 										// set the handbrake to ON
 										HashMap<String, Object> wheret = new HashMap<>();
 										wheret.put("tardis_id", id);
@@ -209,12 +211,14 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 											plugin.getTrackerKeeper().getHasRandomised().removeAll(Collections.singleton(id));
 										}
 										TARDISCircuitChecker tcc = null;
-										if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(p, true)) {
+										if (!plugin.getDifficulty().equals(Difficulty.EASY) &&
+											!plugin.getUtils().inGracePeriod(p, true)) {
 											tcc = new TARDISCircuitChecker(plugin, id);
 											tcc.getCircuits();
 										}
 										// damage the circuit if configured
-										if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+										if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") &&
+											plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
 											// decrement uses
 											int uses_left = tcc.getMaterialisationUses();
 											new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, p).damage();
@@ -241,7 +245,8 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 							if (rs.resultSet()) {
 								// close this gui and load the tardis map
 								plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-									Inventory new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis Map");
+									Inventory new_inv = plugin.getServer().createInventory(p, 54,
+											ChatColor.DARK_RED + "tardis Map");
 									// close inventory
 									p.closeInventory();
 									// open new inventory
@@ -259,7 +264,8 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 						if (im.getDisplayName().equals("Sonic Configurator")) {
 							// close this gui and load the Sonic Configurator
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-								Inventory sonic_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Sonic Configurator");
+								Inventory sonic_inv = plugin.getServer().createInventory(p, 27,
+										ChatColor.DARK_RED + "Sonic Configurator");
 								// close inventory
 								p.closeInventory();
 								// open new inventory
@@ -274,7 +280,8 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 						if (im.getDisplayName().equals("Admin Menu")) {
 							// close this gui and load the Admin Menu
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-								Inventory menu = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
+								Inventory menu = plugin.getServer().createInventory(p, 54,
+										ChatColor.DARK_RED + "Admin Menu");
 								menu.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
 								p.openInventory(menu);
 							}, 1L);

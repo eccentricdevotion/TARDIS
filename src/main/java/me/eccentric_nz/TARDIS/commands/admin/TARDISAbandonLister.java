@@ -67,7 +67,8 @@ public class TARDISAbandonLister {
 						TextComponent tce = new TextComponent(" < Enter > ");
 						tce.setColor(ChatColor.GREEN);
 						tce.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to enter this TARDIS")));
-						tce.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisadmin enter " + t.getTardisId()));
+						tce.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
+								"/tardisadmin enter " + t.getTardisId()));
 						tcg.addExtra(tce);
 						sender.spigot().sendMessage(tcg);
 					} else {

@@ -51,7 +51,8 @@ public class TARDISFireListener implements Listener {
 		for (BlockFace bf : plugin.getGeneralKeeper().getBlockFaces()) {
 			Block chkBlock = b.getRelative(bf);
 			String l = chkBlock.getLocation().toString();
-			if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l) && !chkBlock.getType().equals(Material.BEDROCK)) {
+			if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l) &&
+				!chkBlock.getType().equals(Material.BEDROCK)) {
 				event.setCancelled(true);
 				break;
 			}

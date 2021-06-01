@@ -54,7 +54,8 @@ class TARDISJunkCreator {
 			TARDISMessage.send(p, "CMD_ADMIN");
 			return true;
 		}
-		if (!plugin.getConfig().getBoolean("junk.enabled") || !plugin.getConfig().getBoolean("creation.default_world")) {
+		if (!plugin.getConfig().getBoolean("junk.enabled") ||
+			!plugin.getConfig().getBoolean("creation.default_world")) {
 			TARDISMessage.send(p, "JUNK_DISABLED");
 			return true;
 		}

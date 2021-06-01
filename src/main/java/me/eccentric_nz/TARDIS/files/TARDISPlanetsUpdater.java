@@ -55,7 +55,8 @@ public class TARDISPlanetsUpdater {
 					planets_config.set("planets." + w + ".gamemode", data.getGameMode().toString());
 					planets_config.set("planets." + w + ".world_type", data.getWorldType().toString());
 					planets_config.set("planets." + w + ".environment", data.getEnvironment().toString());
-					if (w.startsWith("TARDIS_") || w.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+					if (w.startsWith("TARDIS_") ||
+						w.equals(plugin.getConfig().getString("creation.default_world_name"))) {
 						planets_config.set("planets." + w + ".generator", "TARDISChunkGenerator");
 					} else {
 						planets_config.set("planets." + w + ".generator", "DEFAULT");
@@ -78,7 +79,8 @@ public class TARDISPlanetsUpdater {
 			planets_config.set("planets." + dn + ".enabled", true);
 			planets_config.set("planets." + dn + ".time_travel", false);
 			planets_config.set("planets." + dn + ".resource_pack", "default");
-			planets_config.set("planets." + dn + ".gamemode", Objects.requireNonNull(plugin.getConfig().getString("creation.gamemode")).toUpperCase(Locale.ENGLISH));
+			planets_config.set("planets." + dn +
+							   ".gamemode", Objects.requireNonNull(plugin.getConfig().getString("creation.gamemode")).toUpperCase(Locale.ENGLISH));
 			planets_config.set("planets." + dn + ".world_type", "FLAT");
 			planets_config.set("planets." + dn + ".environment", "NORMAL");
 			planets_config.set("planets." + dn + ".generator", "TARDISChunkGenerator");
@@ -121,7 +123,8 @@ public class TARDISPlanetsUpdater {
 			planets_config.set("planets.TARDIS_Zero_Room.gamerules.announceAdvancements", false);
 			save++;
 		}
-		if (planets_config.contains("default_resource_pack") && Objects.requireNonNull(planets_config.getString("default_resource_pack")).equalsIgnoreCase("https://dl.dropboxusercontent.com/u/53758864/rp/Default.zip")) {
+		if (planets_config.contains("default_resource_pack") &&
+			Objects.requireNonNull(planets_config.getString("default_resource_pack")).equalsIgnoreCase("https://dl.dropboxusercontent.com/u/53758864/rp/Default.zip")) {
 			planets_config.set("default_resource_pack", "https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1");
 			save++;
 		}
@@ -139,7 +142,9 @@ public class TARDISPlanetsUpdater {
 			try {
 				String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
 				planets_config.save(new File(planetsPath));
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + save + ChatColor.RESET + " new items to planets.yml");
+				plugin.getConsole().sendMessage(
+						plugin.getPluginName() + "Added " + ChatColor.AQUA + save + ChatColor.RESET +
+						" new items to planets.yml");
 			} catch (IOException io) {
 				plugin.debug("Could not save planets.yml, " + io.getMessage());
 			}

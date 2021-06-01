@@ -89,7 +89,8 @@ public class TARDISSonicUpgradeListener implements Listener {
 				assert im != null;
 				String upgrade = im.getDisplayName();
 				for (ItemStack glowstone : ci.getContents()) {
-					if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
+					if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) &&
+						glowstone.hasItemMeta()) {
 						ItemMeta rm = glowstone.getItemMeta();
 						assert rm != null;
 						upgrade = customModelData.get(rm.getCustomModelData());
@@ -156,12 +157,14 @@ public class TARDISSonicUpgradeListener implements Listener {
 				}
 			}
 		} else if (recipe instanceof ShapedRecipe) {
-			if (is == null || !is.hasItemMeta() || !Objects.requireNonNull(is.getItemMeta()).hasDisplayName() || !is.getItemMeta().getDisplayName().equals("tardis Remote Key")) {
+			if (is == null || !is.hasItemMeta() || !Objects.requireNonNull(is.getItemMeta()).hasDisplayName() ||
+				!is.getItemMeta().getDisplayName().equals("tardis Remote Key")) {
 				return;
 			}
 			ItemStack key = ci.getItem(5);
 			assert key != null;
-			if (!key.hasItemMeta() || !Objects.requireNonNull(key.getItemMeta()).hasDisplayName() || !ChatColor.stripColor(key.getItemMeta().getDisplayName()).equals("tardis Key")) {
+			if (!key.hasItemMeta() || !Objects.requireNonNull(key.getItemMeta()).hasDisplayName() ||
+				!ChatColor.stripColor(key.getItemMeta().getDisplayName()).equals("tardis Key")) {
 				ci.setResult(null);
 				TARDISMessage.send(event.getView().getPlayer(), "REMOTE_KEY");
 			}

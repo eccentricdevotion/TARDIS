@@ -83,7 +83,9 @@ public class TARDISLanguageUpdater {
 			plugin.debug("Could not save language config file after removing entries! " + ex.getMessage());
 		}
 		if (i > 0) {
-			plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new messages to " + lang + ".yml");
+			plugin.getConsole().sendMessage(
+					plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new messages to " +
+					lang + ".yml");
 			// sort language file alphabetically if additions were made
 			try {
 				List<String> lineList;
@@ -105,7 +107,8 @@ public class TARDISLanguageUpdater {
 			}
 		}
 		if (j > 0) {
-			plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed " + ChatColor.AQUA + j + ChatColor.RESET + " redundant messages from " + lang + ".yml");
+			plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed " + ChatColor.AQUA + j + ChatColor.RESET +
+											" redundant messages from " + lang + ".yml");
 		}
 	}
 }

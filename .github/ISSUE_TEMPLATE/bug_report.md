@@ -1,8 +1,8 @@
 ---
-name: 'Bug report'
-about: 'Report a TARDIS error'
+name: Bug report
+about: Report a TARDIS error
 title: ''
-labels: 'bug'
+labels: bug
 assignees: ''
 ---
 

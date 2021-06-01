@@ -78,7 +78,8 @@ public class TARDISHandbrakeListener implements Listener {
 	 */
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND) || event.getPlayer().isSneaking()) {
+		if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND) ||
+			event.getPlayer().isSneaking()) {
 			return;
 		}
 		Player player = event.getPlayer();
@@ -117,7 +118,8 @@ public class TARDISHandbrakeListener implements Listener {
 					event.setCancelled(true);
 					int id = tmp_id;
 					TARDISCircuitChecker tcc = null;
-					if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, event.getAction().equals(Action.LEFT_CLICK_BLOCK))) {
+					if (!plugin.getDifficulty().equals(Difficulty.EASY) &&
+						!plugin.getUtils().inGracePeriod(player, event.getAction().equals(Action.LEFT_CLICK_BLOCK))) {
 						tcc = new TARDISCircuitChecker(plugin, id);
 						tcc.getCircuits();
 					}
@@ -143,7 +145,10 @@ public class TARDISHandbrakeListener implements Listener {
 							return;
 						}
 						UUID ownerUUID = tardis.getUuid();
-						if ((tardis.isIsoOn() && !uuid.equals(ownerUUID) && event.useInteractedBlock().equals(Event.Result.DENY) && !TARDISPermission.hasPermission(player, "tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+						if ((tardis.isIsoOn() && !uuid.equals(ownerUUID) &&
+							 event.useInteractedBlock().equals(Event.Result.DENY) &&
+							 !TARDISPermission.hasPermission(player, "tardis.skeletonkey")) ||
+							plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
 							// check if cancelled so we don't get double messages from the bind listener
 							TARDISMessage.send(player, "ISO_HANDS_OFF");
 							return;
@@ -153,7 +158,11 @@ public class TARDISHandbrakeListener implements Listener {
 							return;
 						}
 						String beacon = tardis.getBeacon();
-						if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDidDematToVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+						if (plugin.getTrackerKeeper().getInVortex().contains(id) ||
+							plugin.getTrackerKeeper().getDidDematToVortex().contains(id) ||
+							plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) ||
+							plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+							plugin.getTrackerKeeper().getDematerialising().contains(id)) {
 							TARDISMessage.send(player, "HANDBRAKE_IN_VORTEX");
 						} else {
 							Action action = event.getAction();
@@ -169,12 +178,14 @@ public class TARDISHandbrakeListener implements Listener {
 							}
 							if (action == Action.RIGHT_CLICK_BLOCK) {
 								if (tardis.isHandbrakeOn()) {
-									if (preset.equals(PRESET.JUNK_MODE) && !plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+									if (preset.equals(PRESET.JUNK_MODE) &&
+										!plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
 										TARDISMessage.send(player, "TRAVEL_NEED_DEST");
 										return;
 									}
 									// check there is enough power for at last random travel
-									if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtronLevel() < plugin.getArtronConfig().getInt("random")) {
+									if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) &&
+										tardis.getArtronLevel() < plugin.getArtronConfig().getInt("random")) {
 										TARDISMessage.send(player, "ENERGY_NOT_ENOUGH");
 										return;
 									}
@@ -219,7 +230,8 @@ public class TARDISHandbrakeListener implements Listener {
 									// Remove energy from TARDIS and sets database
 									TARDISMessage.send(player, "HANDBRAKE_ON");
 									if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-										int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id) * spaceTimeThrottle.getArtronMultiplier());
+										int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id) *
+																spaceTimeThrottle.getArtronMultiplier());
 										HashMap<String, Object> wheret = new HashMap<>();
 										wheret.put("tardis_id", id);
 										plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
@@ -235,7 +247,8 @@ public class TARDISHandbrakeListener implements Listener {
 										plugin.getTrackerKeeper().getHasRandomised().removeAll(Collections.singleton(id));
 									}
 									// damage the circuit if configured
-									if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+									if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") &&
+										plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
 										// decrement uses
 										int uses_left = tcc.getMaterialisationUses();
 										new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();

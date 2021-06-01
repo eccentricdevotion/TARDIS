@@ -103,7 +103,8 @@ public class TARDISMalfunction {
 		if (rsl.resultSet()) {
 			// should we damage circuits?
 			int malfunctionDamage = plugin.getConfig().getInt("circuits.malfunction_damage");
-			if (plugin.getConfig().getBoolean("circuits.damage") && malfunctionDamage > 0 && !plugin.getDifficulty().equals(Difficulty.EASY)) {
+			if (plugin.getConfig().getBoolean("circuits.damage") && malfunctionDamage > 0 &&
+				!plugin.getDifficulty().equals(Difficulty.EASY)) {
 				// choose a random circuit
 				DiskCircuit circuit = DiskCircuit.getTardisCircuits().get(TARDISConstants.RANDOM.nextInt(DiskCircuit.getTardisCircuits().size()));
 				// is the circuit in the advanced console?

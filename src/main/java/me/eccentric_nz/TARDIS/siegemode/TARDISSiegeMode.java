@@ -83,7 +83,8 @@ public class TARDISSiegeMode {
 		HashMap<String, Object> set = new HashMap<>();
 		if (tardis.isSiegeOn()) {
 			// must have at least 10% power
-			int min = (plugin.getArtronConfig().getInt("full_charge") / 100) * plugin.getArtronConfig().getInt("siege_transfer");
+			int min = (plugin.getArtronConfig().getInt("full_charge") / 100) *
+					  plugin.getArtronConfig().getInt("siege_transfer");
 			if (min > tardis.getArtronLevel()) {
 				TARDISMessage.send(p, "SIEGE_POWER");
 				return;
@@ -141,7 +142,8 @@ public class TARDISSiegeMode {
 			TARDISMessage.send(p, "SIEGE_OFF");
 		} else {
 			// make sure TARDIS is not dispersed
-			if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id)) {
+			if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id) ||
+				plugin.getTrackerKeeper().getInVortex().contains(id)) {
 				TARDISMessage.send(p, "NOT_WHILE_DISPERSED");
 				return;
 			}
@@ -173,7 +175,8 @@ public class TARDISSiegeMode {
 							Location cl = ent.getLocation();
 							Location dbl = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
 							assert dbl != null;
-							if (cl.getBlockX() == dbl.getBlockX() && cl.getBlockY() == dbl.getBlockY() && cl.getBlockZ() == dbl.getBlockZ()) {
+							if (cl.getBlockX() == dbl.getBlockX() && cl.getBlockY() == dbl.getBlockY() &&
+								cl.getBlockZ() == dbl.getBlockZ()) {
 								continue;
 							}
 						}

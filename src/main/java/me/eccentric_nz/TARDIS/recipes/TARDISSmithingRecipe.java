@@ -60,7 +60,8 @@ public class TARDISSmithingRecipe {
 		Material bm = Material.valueOf(plugin.getRecipesConfig().getString("smithing." + s + ".base"));
 		RecipeChoice base = new RecipeChoice.MaterialChoice(bm);
 		// addition material to use
-		String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString("smithing." + s + ".addition")).split("=");
+		String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString(
+				"smithing." + s + ".addition")).split("=");
 		Material am = Material.valueOf(split[0]);
 		ItemStack isa = new ItemStack(am, 1);
 		ItemMeta im = isa.getItemMeta();

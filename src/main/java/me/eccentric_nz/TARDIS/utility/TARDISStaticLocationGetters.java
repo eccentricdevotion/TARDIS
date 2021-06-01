@@ -128,7 +128,8 @@ public class TARDISStaticLocationGetters {
 	 * @return a String in the style of org.bukkit.Location.toString() e.g. Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
 	 */
 	public static String makeLocationStr(World w, int x, int y, int z) {
-		return "Location{world=CraftWorld{name=" + w.getName() + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
+		return "Location{world=CraftWorld{name=" + w.getName() + "},x=" + x + ".0,y=" + y + ".0,z=" + z +
+			   ".0,pitch=0.0,yaw=0.0}";
 	}
 
 	/**
@@ -138,7 +139,8 @@ public class TARDISStaticLocationGetters {
 	 * @return a String in the style of world:x:y:z
 	 */
 	public static String makeLocationStr(Location location) {
-		return Objects.requireNonNull(location.getWorld()).getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+		return Objects.requireNonNull(location.getWorld()).getName() + ":" + location.getBlockX() + ":" +
+			   location.getBlockY() + ":" + location.getBlockZ();
 	}
 
 	/**
@@ -163,7 +165,8 @@ public class TARDISStaticLocationGetters {
 				// need to +1 due to Spigot change
 				int tmp = world.getHighestBlockYAt(x + xx, z + zz) + 1;
 				y = Math.max(tmp, y);
-				if (world.getName().equals("Siluria") && world.getBlockAt(x, y - 1, z).getType().equals(Material.BAMBOO)) {
+				if (world.getName().equals("Siluria") &&
+					world.getBlockAt(x, y - 1, z).getType().equals(Material.BAMBOO)) {
 					y--;
 					while (world.getBlockAt(x, y, z).getType().equals(Material.BAMBOO)) {
 						y--;

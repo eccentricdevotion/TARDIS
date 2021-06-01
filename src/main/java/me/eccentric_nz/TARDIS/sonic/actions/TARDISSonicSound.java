@@ -47,7 +47,8 @@ public class TARDISSonicSound {
 				ItemStack is = player.getInventory().getItemInMainHand();
 				if (is.hasItemMeta()) {
 					ItemMeta im1 = is.getItemMeta();
-					if (im1.hasDisplayName() && ChatColor.stripColor(im1.getDisplayName()).equals("Sonic Screwdriver")) {
+					if (im1.hasDisplayName() &&
+						ChatColor.stripColor(im1.getDisplayName()).equals("Sonic Screwdriver")) {
 						player.getInventory().getItemInMainHand().getEnchantments().keySet().forEach((e) -> player.getInventory().getItemInMainHand().removeEnchantment(e));
 					} else {
 						// find the screwdriver in the player's inventory

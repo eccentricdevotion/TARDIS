@@ -41,7 +41,9 @@ public final class Translate extends YandexTranslatorAPI {
 	 */
 	public static String execute(String text, Language from, Language to) throws Exception {
 		validateServiceState(text);
-		String params = PARAM_API_KEY + URLEncoder.encode(apiKey, ENCODING) + PARAM_LANG_PAIR + URLEncoder.encode(from.toString(), ENCODING) + URLEncoder.encode("-", ENCODING) + URLEncoder.encode(to.toString(), ENCODING) + PARAM_TEXT + URLEncoder.encode(text, ENCODING);
+		String params = PARAM_API_KEY + URLEncoder.encode(apiKey, ENCODING) + PARAM_LANG_PAIR +
+						URLEncoder.encode(from.toString(), ENCODING) + URLEncoder.encode("-", ENCODING) +
+						URLEncoder.encode(to.toString(), ENCODING) + PARAM_TEXT + URLEncoder.encode(text, ENCODING);
 		URL url = new URL(SERVICE_URL + params);
 		return retrievePropArrString(url, TRANSLATION_LABEL).trim();
 	}

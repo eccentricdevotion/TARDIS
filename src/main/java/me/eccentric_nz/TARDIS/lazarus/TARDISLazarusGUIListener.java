@@ -126,7 +126,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 						String onOff = (Objects.requireNonNull(im.getLore()).get(0).equals(plugin.getLanguage().getString("SET_OFF"))) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
 						im.setLore(Collections.singletonList(onOff));
 					} else {
-						im.setLore(Arrays.asList("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
+						im.setLore(Arrays.asList("The Master Race is already",
+								" set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
 					}
 				} else {
 					assert im != null;
@@ -148,7 +149,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 					setSlotFourtyEight(view, disguises.get(uuid), uuid);
 				}
 			}
-			if (slot == 49) { // Tamed / Flying / Blazing / Powered / Beaming / Aggressive / Decorated / Chest carrying : TRUE | FALSE
+			if (slot ==
+				49) { // Tamed / Flying / Blazing / Powered / Beaming / Aggressive / Decorated / Chest carrying : TRUE | FALSE
 				ItemStack is = view.getItem(slot);
 				assert is != null;
 				ItemMeta im = is.getItemMeta();
@@ -156,7 +158,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 				List<String> lore = im.getLore();
 				assert lore != null;
 				int pos = lore.size() - 1;
-				String trueFalse = (ChatColor.stripColor(lore.get(pos)).equals("FALSE")) ? ChatColor.GREEN + "TRUE" : ChatColor.RED + "FALSE";
+				String trueFalse = (ChatColor.stripColor(lore.get(pos)).equals("FALSE")) ?
+						ChatColor.GREEN + "TRUE" : ChatColor.RED + "FALSE";
 				lore.set(pos, trueFalse);
 				im.setLore(lore);
 				is.setItemMeta(im);
@@ -210,7 +213,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 						} else {
 							TARDISLazarusDisguise.runImmortalityGate(player);
 						}
-						plugin.getServer().broadcastMessage(plugin.getPluginName() + "The Master (aka " + player.getName() + ") has cloned his genetic template to all players. Behold the Master Race!");
+						plugin.getServer().broadcastMessage(
+								plugin.getPluginName() + "The Master (aka " + player.getName() +
+								") has cloned his genetic template to all players. Behold the Master Race!");
 						plugin.getPM().callEvent(new TARDISGeneticManipulatorDisguiseEvent(player, player.getName()));
 						// schedule a delayed task to remove the disguise
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -221,7 +226,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 									TARDISLazarusDisguise.removeDisguise(p);
 								}
 							});
-							plugin.getServer().broadcastMessage(plugin.getPluginName() + "Lord Rassilon has reset the Master Race back to human form.");
+							plugin.getServer().broadcastMessage(plugin.getPluginName() +
+																"Lord Rassilon has reset the Master Race back to human form.");
 							plugin.getTrackerKeeper().setImmortalityGate("");
 							plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
 						}, 3600L);
@@ -231,49 +237,64 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 						twaOff(player);
 						if (twaMonsters.contains(disguise)) {
 							if (disguise.equals("WEEPING ANGEL")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise WEEPING_ANGEL on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise WEEPING_ANGEL on " + player.getUniqueId());
 							}
 							if (disguise.equals("CYBERMAN")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise CYBERMAN on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise CYBERMAN on " + player.getUniqueId());
 							}
 							if (disguise.equals("DALEK")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise DALEK on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise DALEK on " + player.getUniqueId());
 							}
 							if (disguise.equals("EMPTY CHILD")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise EMPTY_CHILD on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise EMPTY_CHILD on " + player.getUniqueId());
 							}
 							if (disguise.equals("ICE WARRIOR")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise ICE_WARRIOR on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise ICE_WARRIOR on " + player.getUniqueId());
 							}
 							if (disguise.equals("JUDOON")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise JUDOON on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise JUDOON on " + player.getUniqueId());
 							}
 							if (disguise.equals("K9")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise K9 on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise K9 on " + player.getUniqueId());
 							}
 							if (disguise.equals("OOD")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise OOD on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise OOD on " + player.getUniqueId());
 							}
 							if (disguise.equals("SILENT")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise SILENT on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise SILENT on " + player.getUniqueId());
 							}
 							if (disguise.equals("SILURIAN")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise SILURIAN on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise SILURIAN on " + player.getUniqueId());
 							}
 							if (disguise.equals("SONTARAN")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise SONTARAN on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise SONTARAN on " + player.getUniqueId());
 							}
 							if (disguise.equals("STRAX")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise STRAX on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise STRAX on " + player.getUniqueId());
 							}
 							if (disguise.equals("TOCLAFANE")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise TOCLAFANE on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise TOCLAFANE on " + player.getUniqueId());
 							}
 							if (disguise.equals("VASHTA NERADA")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise VASHTA on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise VASHTA on " + player.getUniqueId());
 							}
 							if (disguise.equals("ZYGON")) {
-								plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise ZYGON on " + player.getUniqueId());
+								plugin.getServer().dispatchCommand(plugin.getConsole(),
+										"twa disguise ZYGON on " + player.getUniqueId());
 							}
 						} else {
 							EntityType dt = EntityType.valueOf(disguise);
@@ -297,9 +318,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 								case MULE:
 								case PIG:
 									if (plugin.isDisguisesOnServer()) {
-										new TARDISLazarusLibs(player, disguise, null, getBoolean(view), (!getBoolean(view) && getBaby(view))).createDisguise();
+										new TARDISLazarusLibs(player, disguise, null, getBoolean(view), (
+												!getBoolean(view) && getBaby(view))).createDisguise();
 									} else {
-										options = new Object[]{getBoolean(view), AGE.getFromBoolean(!getBoolean(view) && getBaby(view))};
+										options = new Object[]{getBoolean(view), AGE.getFromBoolean(
+												!getBoolean(view) && getBaby(view))};
 									}
 									break;
 								case PILLAGER:
@@ -330,9 +353,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 									break;
 								case LLAMA:
 									if (plugin.isDisguisesOnServer()) {
-										new TARDISLazarusLibs(player, disguise, getLlamaColor(view), getBoolean(view), (!getBoolean(view) && getBaby(view))).createDisguise();
+										new TARDISLazarusLibs(player, disguise, getLlamaColor(view), getBoolean(view), (
+												!getBoolean(view) && getBaby(view))).createDisguise();
 									} else {
-										options = new Object[]{getLlamaColor(view), getBoolean(view), AGE.getFromBoolean(!getBoolean(view) && getBaby(view))};
+										options = new Object[]{getLlamaColor(view), getBoolean(view), AGE.getFromBoolean(
+												!getBoolean(view) && getBaby(view))};
 									}
 									break;
 								case OCELOT:
@@ -449,7 +474,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 	public void onLazarusClose(InventoryCloseEvent event) {
 		String name = event.getView().getTitle();
 		UUID uuid = event.getPlayer().getUniqueId();
-		if (name.equals(ChatColor.DARK_RED + "Genetic Manipulator") && !plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
+		if (name.equals(ChatColor.DARK_RED + "Genetic Manipulator") &&
+			!plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
 			Block b = plugin.getTrackerKeeper().getLazarus().get(event.getPlayer().getUniqueId());
 			if (b.getRelative(BlockFace.SOUTH).getType().equals(Material.COBBLESTONE_WALL)) {
 				b.getRelative(BlockFace.SOUTH).setType(Material.AIR);
@@ -786,7 +812,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 		if (helmet != null && helmet.hasItemMeta() && Objects.requireNonNull(helmet.getItemMeta()).hasDisplayName()) {
 			String metaName = helmet.getItemMeta().getDisplayName();
 			if (twaHelmets.contains(metaName)) {
-				plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise WEEPING_ANGEL off " + player.getUniqueId());
+				plugin.getServer().dispatchCommand(plugin.getConsole(),
+						"twa disguise WEEPING_ANGEL off " + player.getUniqueId());
 			}
 		}
 	}

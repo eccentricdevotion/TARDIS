@@ -53,7 +53,8 @@ public class BindAdd {
 				whered.put("name", which);
 				ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
 				if (!rsd.resultSet()) {
-					TARDISMessage.send(player, "SAVE_NOT_FOUND", ChatColor.GREEN + "/tardis list saves" + ChatColor.RESET);
+					TARDISMessage.send(player, "SAVE_NOT_FOUND",
+							ChatColor.GREEN + "/tardis list saves" + ChatColor.RESET);
 					return true;
 				} else {
 					set.put("type", 0);
@@ -87,10 +88,12 @@ public class BindAdd {
 				wherea.put("area_name", which);
 				ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
 				if (!rsa.resultSet()) {
-					TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+					TARDISMessage.send(player, "AREA_NOT_FOUND",
+							ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
 					return true;
 				}
-				if (!TARDISPermission.hasPermission(player, "tardis.area." + which) || !player.isPermissionSet("tardis.area." + which)) {
+				if (!TARDISPermission.hasPermission(player, "tardis.area." + which) ||
+					!player.isPermissionSet("tardis.area." + which)) {
 					TARDISMessage.send(player, "BIND_NO_AREA_PERM", which);
 					return true;
 				}

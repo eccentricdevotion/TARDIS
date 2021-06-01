@@ -98,7 +98,8 @@ class TARDISCommandSetter {
 		Objects.requireNonNull(plugin.getCommand("tardisroom")).setExecutor(new TARDISRoomCommands(plugin));
 		Objects.requireNonNull(plugin.getCommand("tardisroom")).setTabCompleter(new TARDISRoomTabComplete(plugin));
 		Objects.requireNonNull(plugin.getCommand("tardisschematic")).setExecutor(new TARDISSchematicCommand(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisschematic")).setTabCompleter(new TARDISSchematicTabComplete(new File(plugin.getDataFolder() + File.separator + "user_schematics")));
+		Objects.requireNonNull(plugin.getCommand("tardisschematic")).setTabCompleter(new TARDISSchematicTabComplete(new File(
+				plugin.getDataFolder() + File.separator + "user_schematics")));
 		TARDISTeleportCommand tardisTP = new TARDISTeleportCommand(plugin);
 		Objects.requireNonNull(plugin.getCommand("tardisteleport")).setExecutor(tardisTP);
 		Objects.requireNonNull(plugin.getCommand("tardisteleport")).setTabCompleter(tardisTP);

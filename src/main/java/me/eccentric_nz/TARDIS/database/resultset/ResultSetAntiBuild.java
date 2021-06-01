@@ -61,7 +61,11 @@ public class ResultSetAntiBuild {
 	public boolean resultSet() {
 		PreparedStatement statement = null;
 		ResultSet rs = null;
-		String query = "SELECT " + prefix + "tardis.tardisId FROM " + prefix + "tardis, " + prefix + "travellers, " + prefix + "player_prefs WHERE " + prefix + "travellers.uuid = ? AND " + prefix + "tardis.uuid != ? AND " + prefix + "player_prefs.build_on = 0 AND " + prefix + "tardis.tardisId = " + prefix + "travellers.tardisId AND " + prefix + "tardis.uuid = " + prefix + "player_prefs.uuid";
+		String query =
+				"SELECT " + prefix + "tardis.tardisId FROM " + prefix + "tardis, " + prefix + "travellers, " + prefix +
+				"player_prefs WHERE " + prefix + "travellers.uuid = ? AND " + prefix + "tardis.uuid != ? AND " +
+				prefix + "player_prefs.build_on = 0 AND " + prefix + "tardis.tardisId = " + prefix +
+				"travellers.tardisId AND " + prefix + "tardis.uuid = " + prefix + "player_prefs.uuid";
 		try {
 			service.testConnection(connection);
 			statement = connection.prepareStatement(query);

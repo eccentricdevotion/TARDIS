@@ -57,7 +57,8 @@ class TARDISAddRegionsCommand {
 			return true;
 		}
 		if (!plugin.getConfig().getBoolean("creation.default_world")) {
-			sender.sendMessage(plugin.getPluginName() + "This command only works if TARDISes are created in a default world!");
+			sender.sendMessage(
+					plugin.getPluginName() + "This command only works if TARDISes are created in a default world!");
 			return true;
 		}
 		// get default world name

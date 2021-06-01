@@ -118,7 +118,10 @@ public class TARDISBlockLoader {
 		Statement statement = null;
 		ResultSet rs = null;
 		String prefix = plugin.getPrefix();
-		String query = "SELECT " + prefix + "tardis.tardis_id, " + prefix + "tardis.owner, " + prefix + "tardis.chunk FROM " + prefix + "tardis, " + prefix + "player_prefs WHERE " + prefix + "player_prefs.build_on = 0 AND " + prefix + "player_prefs.uuid = " + prefix + "tardis.uuid";
+		String query =
+				"SELECT " + prefix + "tardis.tardis_id, " + prefix + "tardis.owner, " + prefix + "tardis.chunk FROM " +
+				prefix + "tardis, " + prefix + "player_prefs WHERE " + prefix + "player_prefs.build_on = 0 AND " +
+				prefix + "player_prefs.uuid = " + prefix + "tardis.uuid";
 		try {
 			service.testConnection(connection);
 			statement = connection.createStatement();

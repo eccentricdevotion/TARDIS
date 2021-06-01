@@ -52,7 +52,8 @@ public class TARDISDestroyerInner {
 	 */
 	public void destroyInner(Schematic schematic, int id, World w, int slot) {
 		// destroy tardis
-		if (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
+		if (!plugin.getConfig().getBoolean("creation.create_worlds") &&
+			!plugin.getConfig().getBoolean("creation.default_world")) {
 			plugin.debug(TARDISPlugin.plugin.getLanguage().getString("CONFIG_CREATION_WORLD"));
 			return;
 		}

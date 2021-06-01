@@ -62,7 +62,8 @@ public class TARDISAreasInventory {
 			// cycle through areas
 			for (Area a : rsa.getData()) {
 				String name = a.getAreaName();
-				if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
+				if (TARDISPermission.hasPermission(p, "tardis.area." + name) ||
+					TARDISPermission.hasPermission(p, "tardis.area.*")) {
 					ItemStack is = new ItemStack(TARDISConstants.GUI_IDS.get(i), 1);
 					ItemMeta im = is.getItemMeta();
 					assert im != null;

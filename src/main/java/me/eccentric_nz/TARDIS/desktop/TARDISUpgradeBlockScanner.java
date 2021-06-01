@@ -57,7 +57,8 @@ public class TARDISUpgradeBlockScanner {
 
 	public TARDISBlockScannerData check() {
 		String directory = (tud.getPrevious().isCustom()) ? "user_schematics" : "schematics";
-		String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getPrevious().getPermission() + ".tschm";
+		String path = plugin.getDataFolder() + File.separator + directory + File.separator +
+					  tud.getPrevious().getPermission() + ".tschm";
 		File file = new File(path);
 		if (!file.exists()) {
 			plugin.debug("Could not find a schematic with that name!");
@@ -162,7 +163,8 @@ public class TARDISUpgradeBlockScanner {
 							}
 							switch (type) {
 								case ORANGE_WOOL:
-									if (wall_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Orange Wool / Terracotta
+									if (wall_type ==
+										Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Orange Wool / Terracotta
 										type = switch (use_clay) {
 											case TERRACOTTA -> Material.ORANGE_TERRACOTTA;
 											case CONCRETE -> Material.ORANGE_CONCRETE;
@@ -174,7 +176,8 @@ public class TARDISUpgradeBlockScanner {
 									break;
 								case LIGHT_GRAY_WOOL:
 									if (!tud.getSchematic().getPermission().equals("eleventh")) {
-										if (floor_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Light Grey Wool / Terracotta
+										if (floor_type ==
+											Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Light Grey Wool / Terracotta
 											type = switch (use_clay) {
 												case TERRACOTTA -> Material.LIGHT_GRAY_TERRACOTTA;
 												case CONCRETE -> Material.LIGHT_GRAY_CONCRETE;

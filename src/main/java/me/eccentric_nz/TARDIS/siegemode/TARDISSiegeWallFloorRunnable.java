@@ -100,7 +100,8 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
 			JsonObject obj;
 			if (archive == null) {
 				String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
-				String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
+				String path = plugin.getDataFolder() + File.separator + directory + File.separator +
+							  tud.getSchematic().getPermission() + ".tschm";
 				File file = new File(path);
 				if (!file.exists()) {
 					plugin.debug("Could not find a schematic with that name!");

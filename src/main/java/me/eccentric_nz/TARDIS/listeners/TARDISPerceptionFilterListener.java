@@ -94,7 +94,8 @@ public class TARDISPerceptionFilterListener implements Listener {
 						ItemMeta im = is.getItemMeta();
 						assert im != null;
 						if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
-							if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.PLACE_ALL)) {
+							if (event.getAction().equals(InventoryAction.PICKUP_ALL) ||
+								event.getAction().equals(InventoryAction.PLACE_ALL)) {
 								plugin.getFilter().removePerceptionFilter((Player) event.getWhoClicked());
 							}
 						}

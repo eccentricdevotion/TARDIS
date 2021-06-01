@@ -71,7 +71,8 @@ class TARDISSQLInsertLocations implements Runnable {
 		try {
 			service.testConnection(connection);
 			for (String s : tables) {
-				ps = connection.prepareStatement("INSERT INTO " + prefix + s + " (" + fields + ") VALUES (" + questions + ")");
+				ps = connection.prepareStatement(
+						"INSERT INTO " + prefix + s + " (" + fields + ") VALUES (" + questions + ")");
 				int i = 1;
 				for (Map.Entry<String, Object> entry : data.entrySet()) {
 					if (entry.getValue() instanceof String) {

@@ -236,7 +236,8 @@ public class TARDISRoomsUpdater {
 		}
 		// int values
 		for (Map.Entry<String, Integer> entry : integerOptions.entrySet()) {
-			if (!rooms_config.contains(entry.getKey()) || (entry.getKey().equals("rooms.RAIL.offset")) && rooms_config.getInt("rooms.RAIL.offset") == -2) {
+			if (!rooms_config.contains(entry.getKey()) ||
+				(entry.getKey().equals("rooms.RAIL.offset")) && rooms_config.getInt("rooms.RAIL.offset") == -2) {
 				rooms_config.set(entry.getKey(), entry.getValue());
 				i++;
 			}
@@ -267,7 +268,9 @@ public class TARDISRoomsUpdater {
 		try {
 			rooms_config.save(new File(plugin.getDataFolder(), "rooms.yml"));
 			if (i > 0) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to rooms.yml");
+				plugin.getConsole().sendMessage(
+						plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET +
+						" new items to rooms.yml");
 			}
 		} catch (IOException io) {
 			plugin.debug("Could not save rooms.yml, " + io.getMessage());

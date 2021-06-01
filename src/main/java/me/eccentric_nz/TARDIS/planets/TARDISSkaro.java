@@ -42,7 +42,8 @@ public class TARDISSkaro {
 		if (!TARDISChecker.hasDimension("skaro")) {
 			plugin.getServer().reloadData();
 			// message console to restart server
-			TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Skaro data pack has been installed, please restart the server to enable the world.");
+			TARDISMessage.message(plugin.getConsole(), ChatColor.RED +
+													   "Skaro data pack has been installed, please restart the server to enable the world.");
 			// get default server world
 			// add world to config
 			if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.time_travel")) {

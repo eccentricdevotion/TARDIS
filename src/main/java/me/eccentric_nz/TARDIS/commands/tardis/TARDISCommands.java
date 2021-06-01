@@ -75,7 +75,8 @@ public class TARDISCommands implements CommandExecutor {
 			try {
 				tc = TardisCommand.valueOf(args[0].toLowerCase(Locale.ENGLISH));
 			} catch (IllegalArgumentException e) {
-				sender.sendMessage(plugin.getPluginName() + "That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
+				sender.sendMessage(plugin.getPluginName() + "That command wasn't recognised type " + ChatColor.GREEN +
+								   "/tardis help" + ChatColor.RESET + " to see the commands");
 				return false;
 			}
 			if (args[0].equalsIgnoreCase("version")) {
@@ -128,7 +129,8 @@ public class TARDISCommands implements CommandExecutor {
 				case desktop:
 				case upgrade:
 				case theme:
-					if (args.length > 1 && (args[1].equalsIgnoreCase("clean") || args[1].equalsIgnoreCase("repair")) && TARDISSudoTracker.isSudo(sender)) {
+					if (args.length > 1 && (args[1].equalsIgnoreCase("clean") || args[1].equalsIgnoreCase("repair")) &&
+						TARDISSudoTracker.isSudo(sender)) {
 						UUID uuid = TARDISSudoTracker.getSudoPlayer(sender);
 						return new SudoRepair(plugin, uuid, args[1].equalsIgnoreCase("clean")).repair();
 					} else {
@@ -215,8 +217,10 @@ public class TARDISCommands implements CommandExecutor {
 					if (itemStack.getType().equals(Material.MUSIC_DISC_FAR)) {
 						return new TARDISDiskWriterCommand(plugin).writeSaveToControlDisk(player, args);
 					} else {
-						if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-							if (plugin.getDifficulty().equals(Difficulty.HARD) && heldDiskIsWrong(itemStack, "Save Storage Disk")) {
+						if (!plugin.getDifficulty().equals(Difficulty.EASY) &&
+							!plugin.getUtils().inGracePeriod(player, true)) {
+							if (plugin.getDifficulty().equals(Difficulty.HARD) &&
+								heldDiskIsWrong(itemStack, "Save Storage Disk")) {
 								TARDISMessage.send(player, "DISK_HAND_SAVE");
 								return true;
 							}

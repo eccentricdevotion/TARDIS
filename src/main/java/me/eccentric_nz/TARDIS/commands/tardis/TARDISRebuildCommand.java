@@ -75,7 +75,8 @@ public class TARDISRebuildCommand {
 			}
 			int id = tardis.getTardisId();
 			TARDISCircuitChecker tcc = null;
-			if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player.getPlayer(), true)) {
+			if (!plugin.getDifficulty().equals(Difficulty.EASY) &&
+				!plugin.getUtils().inGracePeriod(player.getPlayer(), true)) {
 				tcc = new TARDISCircuitChecker(plugin, id);
 				tcc.getCircuits();
 			}
@@ -94,7 +95,9 @@ public class TARDISRebuildCommand {
 				TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
 				return true;
 			}
-			if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+			if (plugin.getTrackerKeeper().getInVortex().contains(id) ||
+				plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+				plugin.getTrackerKeeper().getDematerialising().contains(id)) {
 				TARDISMessage.send(player.getPlayer(), "NOT_WHILE_MAT");
 				return true;
 			}

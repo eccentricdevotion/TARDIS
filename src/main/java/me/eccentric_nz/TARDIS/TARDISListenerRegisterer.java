@@ -285,14 +285,16 @@ class TARDISListenerRegisterer {
 			if (plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.acid")) {
 				plugin.getPM().registerEvents(new TARDISAcidWater(plugin), plugin);
 			}
-			if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && Objects.requireNonNull(plugin.getPM().getPlugin("TARDISWeepingAngels")).isEnabled()) {
+			if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null &&
+				Objects.requireNonNull(plugin.getPM().getPlugin("TARDISWeepingAngels")).isEnabled()) {
 				plugin.getPM().registerEvents(new TARDISSkaroSpawnListener(plugin), plugin);
 			}
 		}
 		if (plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.enabled")) {
 			plugin.debug("Siluria enabled, registering planet event listeners");
 			plugin.getPM().registerEvents(new TARDISSiluriaChunkPopulateListener(plugin), plugin);
-			if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && Objects.requireNonNull(plugin.getPM().getPlugin("TARDISWeepingAngels")).isEnabled()) {
+			if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null &&
+				Objects.requireNonNull(plugin.getPM().getPlugin("TARDISWeepingAngels")).isEnabled()) {
 				plugin.getPM().registerEvents(new TARDISSiluriaSpawnListener(plugin), plugin);
 			}
 		}
@@ -325,7 +327,8 @@ class TARDISListenerRegisterer {
 			plugin.getPM().registerEvents(new BalloonListener(plugin), plugin);
 			plugin.getPM().registerEvents(new InventoryHelper(plugin), plugin);
 		}
-		if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") || plugin.getConfig().getBoolean("travel.allow_nether_after_visit")) {
+		if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") ||
+			plugin.getConfig().getBoolean("travel.allow_nether_after_visit")) {
 			plugin.getPM().registerEvents(new TARDISWorldChangeListener(plugin), plugin);
 		}
 		plugin.getPM().registerEvents(new TARDISWeatherListener(plugin), plugin);

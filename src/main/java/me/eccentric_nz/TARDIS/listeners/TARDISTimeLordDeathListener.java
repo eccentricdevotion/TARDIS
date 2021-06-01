@@ -95,11 +95,13 @@ public class TARDISTimeLordDeathListener implements Listener {
 						if (rsp.resultSet()) {
 							SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
 							// do they have the autonomous circuit on?
-							if (rsp.isAutoOn() && !tardis.isSiegeOn() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+							if (rsp.isAutoOn() && !tardis.isSiegeOn() &&
+								!plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
 								// close doors
 								new TARDISDoorCloser(plugin, uuid, id).closeDoors();
 								Location death_loc = player.getLocation();
-								int amount = Math.round(plugin.getArtronConfig().getInt("autonomous") * spaceTimeThrottle.getArtronMultiplier());
+								int amount = Math.round(plugin.getArtronConfig().getInt("autonomous") *
+														spaceTimeThrottle.getArtronMultiplier());
 								if (tardis.getArtronLevel() > amount) {
 									if (plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
 										// check if there are players in the tardis
@@ -154,7 +156,8 @@ public class TARDISTimeLordDeathListener implements Listener {
 										Location recharger = getRecharger(death_world, player);
 										if (recharger != null) {
 											// which is closer?
-											boolean closer = death_loc.distanceSquared(home_loc) > death_loc.distanceSquared(recharger);
+											boolean closer = death_loc.distanceSquared(home_loc) >
+															 death_loc.distanceSquared(recharger);
 											goto_loc = (closer) ? recharger : home_loc;
 											if (!closer) {
 												going_home = true;
@@ -168,7 +171,8 @@ public class TARDISTimeLordDeathListener implements Listener {
 									// if the tardis is already at the home location, do nothing
 									if (!compareCurrentToHome(rsc, rsh)) {
 										// check for creation area
-										if (!Objects.equals(plugin.getConfig().getString("creation.area"), "none") && plugin.getTardisArea().areaCheckLocPlayer(player, goto_loc)) {
+										if (!Objects.equals(plugin.getConfig().getString("creation.area"), "none") &&
+											plugin.getTardisArea().areaCheckLocPlayer(player, goto_loc)) {
 											plugin.getTrackerKeeper().getPerm().remove(player.getUniqueId());
 											return;
 										}
@@ -272,7 +276,8 @@ public class TARDISTimeLordDeathListener implements Listener {
 											// power down
 											setp.put("powered_on", 0);
 											// police box lamp, delay it incase the tardis needs rebuilding
-											if (tardis.getPreset().equals(PRESET.NEW) || tardis.getPreset().equals(PRESET.OLD)) {
+											if (tardis.getPreset().equals(PRESET.NEW) ||
+												tardis.getPreset().equals(PRESET.OLD)) {
 												plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), 1L);
 											}
 											// if lights are on, turn them off
@@ -320,7 +325,8 @@ public class TARDISTimeLordDeathListener implements Listener {
 									// track this siege block
 									plugin.getTrackerKeeper().getInSiegeMode().add(id);
 									set.put("siege_on", 1);
-									if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
+									if (plugin.getConfig().getInt("siege.breeding") > 0 ||
+										plugin.getConfig().getInt("siege.growth") > 0) {
 										Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
 										TARDISSiegeArea tsa = new TARDISSiegeArea(id, c);
 										if (plugin.getConfig().getInt("siege.breeding") > 0) {
@@ -368,7 +374,8 @@ public class TARDISTimeLordDeathListener implements Listener {
 			}
 		}
 		// save arched status
-		if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+		if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled") &&
+			plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
 			new TARDISArchPersister(plugin).save(uuid);
 			if (plugin.getConfig().getBoolean("arch.clear_inv_on_death")) {
 				// clear inventories
@@ -384,7 +391,8 @@ public class TARDISTimeLordDeathListener implements Listener {
 		ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
 		if (rsa.resultSet()) {
 			String area = rsa.getArea().getAreaName();
-			if (!TARDISPermission.hasPermission(player, "tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
+			if (!TARDISPermission.hasPermission(player, "tardis.area." + area) ||
+				!player.isPermissionSet("tardis.area." + area)) {
 				return null;
 			}
 			l = plugin.getTardisArea().getNextSpot(area);
@@ -393,6 +401,7 @@ public class TARDISTimeLordDeathListener implements Listener {
 	}
 
 	private boolean compareCurrentToHome(ResultSetCurrentLocation c, ResultSetHomeLocation h) {
-		return (c.getWorld().equals(h.getWorld()) && c.getX() == h.getX() && c.getY() == h.getY() && c.getZ() == h.getZ());
+		return (c.getWorld().equals(h.getWorld()) && c.getX() == h.getX() && c.getY() == h.getY() &&
+				c.getZ() == h.getZ());
 	}
 }

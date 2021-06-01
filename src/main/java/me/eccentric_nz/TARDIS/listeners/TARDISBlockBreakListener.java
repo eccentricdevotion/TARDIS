@@ -83,7 +83,8 @@ public class TARDISBlockBreakListener implements Listener {
 		}
 		Block block = event.getBlock();
 		Material blockType = block.getType();
-		if (player.getGameMode().equals(GameMode.CREATIVE) && TARDISBuilderInstanceKeeper.getPrecious().contains(blockType)) {
+		if (player.getGameMode().equals(GameMode.CREATIVE) &&
+			TARDISBuilderInstanceKeeper.getPrecious().contains(blockType)) {
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("uuid", player.getUniqueId().toString());
 			ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
@@ -112,8 +113,10 @@ public class TARDISBlockBreakListener implements Listener {
 					// check it is their tardis
 					plugin.getTrackerKeeper().getExterminate().put(uuid, block);
 					long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");
-					TARDISMessage.send(player, "Q_DELETE", ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET, String.format("%d", timeout));
-					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getExterminate().remove(uuid), timeout * 20);
+					TARDISMessage.send(player, "Q_DELETE",
+							ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET, String.format("%d", timeout));
+					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getExterminate().remove(uuid),
+							timeout * 20);
 				} else {
 					TARDISMessage.send(player, "NO_PERM_DELETE");
 				}
@@ -129,14 +132,16 @@ public class TARDISBlockBreakListener implements Listener {
 			for (String r : Objects.requireNonNull(plugin.getConfig().getConfigurationSection("rechargers")).getKeys(false)) {
 				if (r.startsWith("rift")) {
 					// get the location
-					World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + r + ".world"));
+					World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString(
+							"rechargers." + r + ".world"));
 					int x = plugin.getConfig().getInt("rechargers." + r + ".x");
 					int y = plugin.getConfig().getInt("rechargers." + r + ".y");
 					int z = plugin.getConfig().getInt("rechargers." + r + ".z");
 					assert w != null;
 					String l = w.getName() + "," + x + "," + y + "," + z;
 					if (l.equals(b)) {
-						if (Objects.equals(plugin.getConfig().getString("rechargers." + r + ".uuid"), player.getUniqueId().toString())) {
+						if (Objects.equals(plugin.getConfig().getString(
+								"rechargers." + r + ".uuid"), player.getUniqueId().toString())) {
 							plugin.getConfig().set("rechargers." + r, null);
 							TARDISMessage.send(player, "RIFT_REMOVED");
 							event.setCancelled(true);
@@ -161,9 +166,11 @@ public class TARDISBlockBreakListener implements Listener {
 
 	private boolean isPresetSign(String l0, String l1, String l2) {
 		if (l0.equalsIgnoreCase("WEEPING") || l0.equalsIgnoreCase("$50,000")) {
-			return (plugin.getGeneralKeeper().getSign_lookup().containsKey(l0) && l1.equals(plugin.getGeneralKeeper().getSign_lookup().get(l0)));
+			return (plugin.getGeneralKeeper().getSign_lookup().containsKey(l0) &&
+					l1.equals(plugin.getGeneralKeeper().getSign_lookup().get(l0)));
 		} else {
-			return (plugin.getGeneralKeeper().getSign_lookup().containsKey(l1) && l2.equals(plugin.getGeneralKeeper().getSign_lookup().get(l1)));
+			return (plugin.getGeneralKeeper().getSign_lookup().containsKey(l1) &&
+					l2.equals(plugin.getGeneralKeeper().getSign_lookup().get(l1)));
 		}
 	}
 }

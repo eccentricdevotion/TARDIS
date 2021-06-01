@@ -128,7 +128,9 @@ class TARDISMySQLDatabaseUpdater {
 				ResultSet rsUuid = statement.executeQuery(uuidQuery);
 				if (!rsUuid.next()) {
 					i++;
-					String uuidAlter = "ALTER TABLE " + prefix + uuid.getKey() + " ADD uuid VARCHAR(48) DEFAULT '' AFTER " + uuid.getValue();
+					String uuidAlter =
+							"ALTER TABLE " + prefix + uuid.getKey() + " ADD uuid VARCHAR(48) DEFAULT '' AFTER " +
+							uuid.getValue();
 					statement.executeUpdate(uuidAlter);
 				}
 			}
@@ -233,14 +235,16 @@ class TARDISMySQLDatabaseUpdater {
 				}
 			}
 			// update data type for `data` in blocks
-			String blockDataCheck = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "blocks' AND COLUMN_NAME = 'data'";
+			String blockDataCheck = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix +
+									"blocks' AND COLUMN_NAME = 'data'";
 			ResultSet rsBlockDataCheck = statement.executeQuery(blockDataCheck);
 			if (rsBlockDataCheck.next() && !rsBlockDataCheck.getString("DATA_TYPE").equalsIgnoreCase("text")) {
 				String blockDataQuery = "ALTER TABLE " + prefix + "blocks CHANGE `data` `data` TEXT";
 				statement.executeUpdate(blockDataQuery);
 			}
 			// update data type for `time` in tag
-			String tagTimeCheck = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "blocks' AND COLUMN_NAME = 'data'";
+			String tagTimeCheck = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix +
+								  "blocks' AND COLUMN_NAME = 'data'";
 			ResultSet rsTagTimeCheck = statement.executeQuery(tagTimeCheck);
 			if (rsTagTimeCheck.next() && !rsTagTimeCheck.getString("DATA_TYPE").equalsIgnoreCase("int")) {
 				String tagTimeQuery = "ALTER TABLE " + prefix + "tag CHANGE `time` `time` BIGINT NULL DEFAULT '0'";
@@ -319,7 +323,9 @@ class TARDISMySQLDatabaseUpdater {
 				String getVoid = "SELECT * FROM '" + prefix + "void'";
 				ResultSet rsV = statement.executeQuery(getVoid);
 				while (rsV.next()) {
-					String transfer = "INSERT IGNORE INTO " + prefix + "thevoid (tardis_id) VALUES (" + rsV.getInt("tardis_id") + ")";
+					String transfer =
+							"INSERT IGNORE INTO " + prefix + "thevoid (tardis_id) VALUES (" + rsV.getInt("tardis_id") +
+							")";
 					statement.executeUpdate(transfer);
 				}
 				String delVoid = "DROP TABLE '" + prefix + "void'";
@@ -329,7 +335,9 @@ class TARDISMySQLDatabaseUpdater {
 			plugin.debug("MySQL database add fields error: " + e.getMessage() + " " + e.getErrorCode());
 		}
 		if (i > 0) {
-			plugin.getConsole().sendMessage(TARDISPlugin.plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the MySQL database!");
+			plugin.getConsole().sendMessage(
+					TARDISPlugin.plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET +
+					" fields to the MySQL database!");
 		}
 	}
 }

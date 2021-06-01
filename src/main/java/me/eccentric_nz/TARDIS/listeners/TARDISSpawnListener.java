@@ -107,7 +107,8 @@ public class TARDISSpawnListener implements Listener {
 				plugin.setTardisSpawn(false);
 				return;
 			}
-			if (spawnReason.equals(SpawnReason.BEEHIVE) || (spawnReason.equals(SpawnReason.DEFAULT) && event.getEntity() instanceof Bee)) {
+			if (spawnReason.equals(SpawnReason.BEEHIVE) ||
+				(spawnReason.equals(SpawnReason.DEFAULT) && event.getEntity() instanceof Bee)) {
 				int random = TARDISConstants.RANDOM.nextInt(1200) + 1200;
 				((Bee) event.getEntity()).setCannotEnterHiveTicks(random);
 				return;
@@ -116,7 +117,8 @@ public class TARDISSpawnListener implements Listener {
 			if (!good_spawns.contains(spawnReason)) {
 				event.setCancelled(true);
 			}
-			if (spawnReason.equals(SpawnReason.BUILD_SNOWMAN) && plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+			if (spawnReason.equals(SpawnReason.BUILD_SNOWMAN) &&
+				plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
 				if (TARDISConstants.RANDOM.nextInt(100) < 3) {
 					// spawn a Dalek instead
 					LivingEntity le = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);

@@ -121,14 +121,17 @@ public class TARDISStattenheimListener implements Listener {
 					}
 					if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
 						Location remoteLocation = b.getLocation();
-						if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && Objects.requireNonNull(remoteLocation.getWorld()).getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
+						if (!plugin.getConfig().getBoolean("travel.include_default_world") &&
+							plugin.getConfig().getBoolean("creation.default_world") &&
+							Objects.requireNonNull(remoteLocation.getWorld()).getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
 							TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 							return;
 						}
 						if (!plugin.getPluginRespect().getRespect(remoteLocation, new Parameters(player, Flag.getDefaultFlags()))) {
 							return;
 						}
-						if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
+						if (TARDISPermission.hasPermission(player, "tardis.exile") &&
+							plugin.getConfig().getBoolean("travel.exile")) {
 							String areaPerm = plugin.getTardisArea().getExileArea(player);
 							if (plugin.getTardisArea().areaCheckInExile(areaPerm, remoteLocation)) {
 								TARDISMessage.send(player, "EXILE_NO_TRAVEL");
@@ -136,7 +139,8 @@ public class TARDISStattenheimListener implements Listener {
 							}
 						}
 						if (!plugin.getTardisArea().areaCheckInExisting(remoteLocation)) {
-							TARDISMessage.send(player, "AREA_NO_STAT", ChatColor.AQUA + "/tardistravel area [area name]");
+							TARDISMessage.send(player, "AREA_NO_STAT",
+									ChatColor.AQUA + "/tardistravel area [area name]");
 							return;
 						}
 						if (!useless.contains(m)) {
@@ -154,7 +158,8 @@ public class TARDISStattenheimListener implements Listener {
 							return;
 						}
 						TARDISCircuitChecker tcc = null;
-						if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
+						if (!plugin.getDifficulty().equals(Difficulty.EASY) &&
+							!plugin.getUtils().inGracePeriod(player, true)) {
 							tcc = new TARDISCircuitChecker(plugin, id);
 							tcc.getCircuits();
 						}
@@ -173,7 +178,9 @@ public class TARDISStattenheimListener implements Listener {
 							TARDISMessage.send(player, "NO_PB_IN_TARDIS");
 							return;
 						}
-						if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+						if (plugin.getTrackerKeeper().getInVortex().contains(id) ||
+							plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+							plugin.getTrackerKeeper().getDematerialising().contains(id)) {
 							TARDISMessage.send(player, "NOT_WHILE_MAT");
 							return;
 						}
@@ -202,12 +209,14 @@ public class TARDISStattenheimListener implements Listener {
 						}
 						Block under = remoteLocation.getBlock().getRelative(BlockFace.DOWN);
 						if (plugin.getPM().isPluginEnabled("LockettePro")) {
-							if (LocketteProAPI.isProtected(remoteLocation.getBlock()) || LocketteProAPI.isProtected(under) || plugin.getUtils().checkSurrounding(under)) {
+							if (LocketteProAPI.isProtected(remoteLocation.getBlock()) ||
+								LocketteProAPI.isProtected(under) || plugin.getUtils().checkSurrounding(under)) {
 								count = 1;
 							}
 						}
 						if (plugin.getPM().isPluginEnabled("BlockLocker")) {
-							if (BlockLockerAPIv2.isProtected(remoteLocation.getBlock()) || BlockLockerAPIv2.isProtected(under)) {
+							if (BlockLockerAPIv2.isProtected(remoteLocation.getBlock()) ||
+								BlockLockerAPIv2.isProtected(under)) {
 								count = 1;
 							}
 						}
@@ -216,7 +225,8 @@ public class TARDISStattenheimListener implements Listener {
 							if (protectionCache != null) {
 								Protection protection = protectionCache.getProtection(remoteLocation.getBlock());
 								Protection underProtection = protectionCache.getProtection(under);
-								if (protection != null && !protection.isOwner(player) || underProtection != null && !underProtection.isOwner(player)) {
+								if (protection != null && !protection.isOwner(player) ||
+									underProtection != null && !underProtection.isOwner(player)) {
 									count = 1;
 								}
 							}
@@ -226,7 +236,8 @@ public class TARDISStattenheimListener implements Listener {
 							return;
 						}
 						SpaceTimeThrottle spaceTimeThrottle = new ResultSetThrottle(plugin).getSpeed(uuid.toString());
-						int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
+						int ch = Math.round(
+								plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
 						if (level < ch) {
 							TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
 							return;
@@ -309,7 +320,8 @@ public class TARDISStattenheimListener implements Listener {
 						bd.setSubmarine(sub);
 						bd.setTardisId(id);
 						bd.setThrottle(spaceTimeThrottle);
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd),
+								delay * 2);
 						// remove energy from tardis
 						HashMap<String, Object> wheret = new HashMap<>();
 						wheret.put("tardis_id", id);

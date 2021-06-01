@@ -183,7 +183,9 @@ class TARDISHandlesValidator {
 			return false;
 		}
 		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(op.getItemMeta()).getDisplayName());
-		return thb.equals(TARDISHandlesBlock.ASSIGNMENT) || thb.equals(TARDISHandlesBlock.EQUALS) || thb.equals(TARDISHandlesBlock.OPEN) || thb.equals(TARDISHandlesBlock.CLOSE) || thb.equals(TARDISHandlesBlock.LOCK) || thb.equals(TARDISHandlesBlock.UNLOCK);
+		return thb.equals(TARDISHandlesBlock.ASSIGNMENT) || thb.equals(TARDISHandlesBlock.EQUALS) ||
+			   thb.equals(TARDISHandlesBlock.OPEN) || thb.equals(TARDISHandlesBlock.CLOSE) ||
+			   thb.equals(TARDISHandlesBlock.LOCK) || thb.equals(TARDISHandlesBlock.UNLOCK);
 	}
 
 	private boolean validateOnOff(int start) {
@@ -192,7 +194,8 @@ class TARDISHandlesValidator {
 			return false;
 		}
 		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(op.getItemMeta()).getDisplayName());
-		return thb.equals(TARDISHandlesBlock.ASSIGNMENT) || thb.equals(TARDISHandlesBlock.EQUALS) || thb.equals(TARDISHandlesBlock.ON) || thb.equals(TARDISHandlesBlock.OFF);
+		return thb.equals(TARDISHandlesBlock.ASSIGNMENT) || thb.equals(TARDISHandlesBlock.EQUALS) ||
+			   thb.equals(TARDISHandlesBlock.ON) || thb.equals(TARDISHandlesBlock.OFF);
 	}
 
 	private boolean validatePower(int start) {
@@ -201,7 +204,9 @@ class TARDISHandlesValidator {
 			return false;
 		}
 		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(op.getItemMeta()).getDisplayName());
-		return thb.equals(TARDISHandlesBlock.ASSIGNMENT) || thb.equals(TARDISHandlesBlock.EQUALS) || thb.equals(TARDISHandlesBlock.ON) || thb.equals(TARDISHandlesBlock.OFF) || thb.equals(TARDISHandlesBlock.SHOW) || thb.equals(TARDISHandlesBlock.REDSTONE);
+		return thb.equals(TARDISHandlesBlock.ASSIGNMENT) || thb.equals(TARDISHandlesBlock.EQUALS) ||
+			   thb.equals(TARDISHandlesBlock.ON) || thb.equals(TARDISHandlesBlock.OFF) ||
+			   thb.equals(TARDISHandlesBlock.SHOW) || thb.equals(TARDISHandlesBlock.REDSTONE);
 	}
 
 	private boolean validateTravel(int start) {
@@ -211,7 +216,11 @@ class TARDISHandlesValidator {
 		}
 		TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(op.getItemMeta()).getDisplayName());
 		Material record = op.getType();
-		return thb.equals(TARDISHandlesBlock.HOME) || thb.equals(TARDISHandlesBlock.RECHARGER) || thb.equals(TARDISHandlesBlock.X) || thb.equals(TARDISHandlesBlock.Y) || thb.equals(TARDISHandlesBlock.Z) || thb.equals(TARDISHandlesBlock.RANDOM) || record.equals(Material.MUSIC_DISC_CHIRP) || record.equals(Material.MUSIC_DISC_WAIT) || record.equals(Material.MUSIC_DISC_CAT) || record.equals(Material.MUSIC_DISC_BLOCKS);
+		return thb.equals(TARDISHandlesBlock.HOME) || thb.equals(TARDISHandlesBlock.RECHARGER) ||
+			   thb.equals(TARDISHandlesBlock.X) || thb.equals(TARDISHandlesBlock.Y) ||
+			   thb.equals(TARDISHandlesBlock.Z) || thb.equals(TARDISHandlesBlock.RANDOM) ||
+			   record.equals(Material.MUSIC_DISC_CHIRP) || record.equals(Material.MUSIC_DISC_WAIT) ||
+			   record.equals(Material.MUSIC_DISC_CAT) || record.equals(Material.MUSIC_DISC_BLOCKS);
 	}
 
 	private boolean validateFor(int start) {
@@ -282,7 +291,9 @@ class TARDISHandlesValidator {
 			TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(is.getItemMeta()).getDisplayName());
 			switch (i - start) {
 				case 0: // must be an event, variable or selector
-					if (!thb.getCategory().equals(TARDISHandlesCategory.VARIABLE) && !thb.getCategory().equals(TARDISHandlesCategory.SELECTOR) && !thb.getCategory().equals(TARDISHandlesCategory.EVENT)) {
+					if (!thb.getCategory().equals(TARDISHandlesCategory.VARIABLE) &&
+						!thb.getCategory().equals(TARDISHandlesCategory.SELECTOR) &&
+						!thb.getCategory().equals(TARDISHandlesCategory.EVENT)) {
 						return false;
 					}
 					break;
@@ -292,7 +303,9 @@ class TARDISHandlesValidator {
 					}
 					break;
 				case 2: // must be a number or event or variable
-					if (!thb.getCategory().equals(TARDISHandlesCategory.NUMBER) && !thb.getCategory().equals(TARDISHandlesCategory.EVENT) && !thb.getCategory().equals(TARDISHandlesCategory.VARIABLE)) {
+					if (!thb.getCategory().equals(TARDISHandlesCategory.NUMBER) &&
+						!thb.getCategory().equals(TARDISHandlesCategory.EVENT) &&
+						!thb.getCategory().equals(TARDISHandlesCategory.VARIABLE)) {
 						return false;
 					}
 					break;
@@ -307,7 +320,9 @@ class TARDISHandlesValidator {
 					}
 					break;
 				case 4: // must be an event, variable or selector if twoConditions
-					if (twoConditions && (!thb.getCategory().equals(TARDISHandlesCategory.VARIABLE) && !thb.getCategory().equals(TARDISHandlesCategory.SELECTOR) && !thb.getCategory().equals(TARDISHandlesCategory.EVENT))) {
+					if (twoConditions && (!thb.getCategory().equals(TARDISHandlesCategory.VARIABLE) &&
+										  !thb.getCategory().equals(TARDISHandlesCategory.SELECTOR) &&
+										  !thb.getCategory().equals(TARDISHandlesCategory.EVENT))) {
 						return false;
 					} else {
 						if (thb.equals(TARDISHandlesBlock.IF)) {
@@ -335,7 +350,9 @@ class TARDISHandlesValidator {
 					}
 					break;
 				case 6: // must be a number or event or variable if twoConditions
-					if (twoConditions && (!thb.getCategory().equals(TARDISHandlesCategory.NUMBER) && !thb.getCategory().equals(TARDISHandlesCategory.EVENT) && !thb.getCategory().equals(TARDISHandlesCategory.VARIABLE))) {
+					if (twoConditions && (!thb.getCategory().equals(TARDISHandlesCategory.NUMBER) &&
+										  !thb.getCategory().equals(TARDISHandlesCategory.EVENT) &&
+										  !thb.getCategory().equals(TARDISHandlesCategory.VARIABLE))) {
 						return false;
 					} else {
 						if (thb.equals(TARDISHandlesBlock.IF)) {

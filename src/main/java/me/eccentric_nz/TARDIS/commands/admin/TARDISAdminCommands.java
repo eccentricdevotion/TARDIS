@@ -249,7 +249,8 @@ public class TARDISAdminCommands implements CommandExecutor {
 					return true;
 				}
 				String first = args[0].toLowerCase(Locale.ENGLISH);
-				if (!firstsStr.containsKey(first) && !firstsBool.containsKey(first) && !firstsInt.containsKey(first) && !firstsIntArtron.contains(first) && !firstsStrArtron.contains(first)) {
+				if (!firstsStr.containsKey(first) && !firstsBool.containsKey(first) && !firstsInt.containsKey(first) &&
+					!firstsIntArtron.contains(first) && !firstsStrArtron.contains(first)) {
 					TARDISMessage.send(sender, "ARG_NOT_VALID");
 					return false;
 				}
@@ -414,7 +415,8 @@ public class TARDISAdminCommands implements CommandExecutor {
 					return new TARDISSetRespectCommand(plugin).setFlag(sender, args);
 				}
 				if (first.equals("difficulty")) {
-					if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("medium") && !args[1].equalsIgnoreCase("hard")) {
+					if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("medium") &&
+						!args[1].equalsIgnoreCase("hard")) {
 						TARDISMessage.send(sender, "ARG_DIFF");
 						return true;
 					}
@@ -446,7 +448,8 @@ public class TARDISAdminCommands implements CommandExecutor {
 					}
 					// get default world name
 					String defWorld = plugin.getConfig().getString("creation.default_world_name");
-					plugin.getPlanetsConfig().set("planets." + defWorld + ".gamemode", args[1].toUpperCase(Locale.ENGLISH));
+					plugin.getPlanetsConfig().set(
+							"planets." + defWorld + ".gamemode", args[1].toUpperCase(Locale.ENGLISH));
 					plugin.getPlanetsConfig().set("planets.TARDIS_Zero_Room.gamemode", args[1].toUpperCase(Locale.ENGLISH));
 					plugin.savePlanetsConfig();
 					return true;

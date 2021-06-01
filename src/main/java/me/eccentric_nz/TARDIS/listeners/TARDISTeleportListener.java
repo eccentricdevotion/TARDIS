@@ -71,7 +71,8 @@ public class TARDISTeleportListener implements Listener {
 				ResultSetTardisID rsid = new ResultSetTardisID(plugin);
 				// if TIPS determine tardis_id from player location
 				if (plugin.getConfig().getBoolean("creation.default_world")) {
-					if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && p.hasPermission("tardis.create_world")) {
+					if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") &&
+						p.hasPermission("tardis.create_world")) {
 						if (!rsid.fromUUID(uuid)) {
 							return;
 						}

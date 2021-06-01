@@ -79,9 +79,11 @@ public class TARDISSonicAtmospheric {
 
 	private static boolean isPresetSign(TARDISPlugin plugin, String l0, String l1, String l2) {
 		if (l0.equalsIgnoreCase("WEEPING") || l0.equalsIgnoreCase("$50,000")) {
-			return (plugin.getGeneralKeeper().getSign_lookup().containsKey(l0) && l1.equals(plugin.getGeneralKeeper().getSign_lookup().get(l0)));
+			return (plugin.getGeneralKeeper().getSign_lookup().containsKey(l0) &&
+					l1.equals(plugin.getGeneralKeeper().getSign_lookup().get(l0)));
 		} else {
-			return (plugin.getGeneralKeeper().getSign_lookup().containsKey(l1) && l2.equals(plugin.getGeneralKeeper().getSign_lookup().get(l1)));
+			return (plugin.getGeneralKeeper().getSign_lookup().containsKey(l1) &&
+					l2.equals(plugin.getGeneralKeeper().getSign_lookup().get(l1)));
 		}
 	}
 }

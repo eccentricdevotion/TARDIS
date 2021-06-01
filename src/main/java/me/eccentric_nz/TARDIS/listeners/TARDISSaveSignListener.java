@@ -97,7 +97,8 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 				int slot = event.getRawSlot();
 				if (plugin.getTrackerKeeper().getArrangers().contains(uuid)) {
 					if (((slot >= 1 || (slot == 0 && isSecondPage)) && slot < 45) || slot == 47) {
-						if (event.getClick().equals(ClickType.SHIFT_LEFT) || event.getClick().equals(ClickType.SHIFT_RIGHT)) {
+						if (event.getClick().equals(ClickType.SHIFT_LEFT) ||
+							event.getClick().equals(ClickType.SHIFT_RIGHT)) {
 							event.setCancelled(true);
 							return;
 						}
@@ -173,7 +174,9 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 									wheresave.put("z", lore.get(3));
 									ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheresave);
 									if (rsz.resultSet()) {
-										TARDISMessage.send(player, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
+										TARDISMessage.send(player, "TARDIS_IN_SPOT",
+												ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET +
+												" command instead.");
 										close(player);
 										return;
 									}
@@ -182,7 +185,8 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 									wheret.put("tardis_id", id);
 									ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, wheret, "", false, 2);
 									if (resultSetTardis.resultSet()) {
-										if (invisibility.equals("DENY") && resultSetTardis.getTardis().getPreset().equals(PRESET.INVISIBLE)) {
+										if (invisibility.equals("DENY") &&
+											resultSetTardis.getTardis().getPreset().equals(PRESET.INVISIBLE)) {
 											// check preset
 											TARDISMessage.send(player, "AREA_NO_INVISIBLE");
 											return;
@@ -199,7 +203,8 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 										}
 									}
 								}
-								if (!save_dest.equals(current) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+								if (!save_dest.equals(current) ||
+									plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
 									HashMap<String, Object> set = new HashMap<>();
 									set.put("world", lore.get(0));
 									set.put("x", TARDISNumberParsers.parseInt(lore.get(1)));
@@ -207,7 +212,8 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 									set.put("z", TARDISNumberParsers.parseInt(lore.get(3)));
 									int l_size = lore.size();
 									if (l_size >= 5) {
-										if (!lore.get(4).isEmpty() && !lore.get(4).equals(ChatColor.GOLD + "Current location")) {
+										if (!lore.get(4).isEmpty() &&
+											!lore.get(4).equals(ChatColor.GOLD + "Current location")) {
 											set.put("direction", lore.get(4));
 										}
 										if (l_size > 5 && !lore.get(5).isEmpty() && lore.get(5).equals("true")) {
@@ -284,11 +290,13 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 							if (isSecondPage) {
 								TARDISSaveSignPageTwo sst = new TARDISSaveSignPageTwo(plugin, saveId, player);
 								items = sst.getPageTwo();
-								inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves 2");
+								inv = plugin.getServer().createInventory(player, 54,
+										ChatColor.DARK_RED + "TARDIS saves 2");
 							} else {
 								TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, saveId, player);
 								items = sst.getTerminal();
-								inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
+								inv = plugin.getServer().createInventory(player, 54,
+										ChatColor.DARK_RED + "TARDIS saves");
 							}
 							inv.setContents(items);
 							player.openInventory(inv);
@@ -319,7 +327,8 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 						TARDISAreasInventory sst = new TARDISAreasInventory(plugin, player);
 						ItemStack[] items = sst.getTerminal();
-						Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS areas");
+						Inventory areainv = plugin.getServer().createInventory(player, 54,
+								ChatColor.DARK_RED + "TARDIS areas");
 						areainv.setContents(items);
 						player.openInventory(areainv);
 					}, 2L);

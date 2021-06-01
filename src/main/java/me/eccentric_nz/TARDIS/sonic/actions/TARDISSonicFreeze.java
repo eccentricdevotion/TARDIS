@@ -39,7 +39,8 @@ public class TARDISSonicFreeze {
 			TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
 			TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
 			if (target != player && hasIntersection(observerStart, observerEnd, minimum, maximum)) {
-				if (hit == null || hit.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
+				if (hit == null || hit.getLocation().distanceSquared(observerPos) >
+								   target.getLocation().distanceSquared(observerPos)) {
 					hit = target;
 				}
 			}
@@ -50,8 +51,10 @@ public class TARDISSonicFreeze {
 	public static void immobilise(TARDISPlugin plugin, Player player, Player target) {
 		// freeze the closest player
 		long cool = System.currentTimeMillis();
-		if ((!plugin.getTrackerKeeper().getCooldown().containsKey(player.getUniqueId()) || plugin.getTrackerKeeper().getCooldown().get(player.getUniqueId()) < cool)) {
-			plugin.getTrackerKeeper().getCooldown().put(player.getUniqueId(), cool + (plugin.getConfig().getInt("preferences.freeze_cooldown") * 1000L));
+		if ((!plugin.getTrackerKeeper().getCooldown().containsKey(player.getUniqueId()) ||
+			 plugin.getTrackerKeeper().getCooldown().get(player.getUniqueId()) < cool)) {
+			plugin.getTrackerKeeper().getCooldown().put(player.getUniqueId(),
+					cool + (plugin.getConfig().getInt("preferences.freeze_cooldown") * 1000L));
 			TARDISMessage.send(target, "FREEZE", player.getName());
 			UUID uuid = target.getUniqueId();
 			plugin.getTrackerKeeper().getFrozenPlayers().add(uuid);

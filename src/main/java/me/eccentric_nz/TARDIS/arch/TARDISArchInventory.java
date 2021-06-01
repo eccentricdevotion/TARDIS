@@ -51,19 +51,22 @@ public class TARDISArchInventory {
 			service.testConnection(connection);
 			statement = connection.createStatement();
 			// get their current inventory from database
-			String getQuery = "SELECT id FROM " + prefix + "inventories WHERE uuid = '" + uuid + "' AND arch = '" + arch + "'";
+			String getQuery =
+					"SELECT id FROM " + prefix + "inventories WHERE uuid = '" + uuid + "' AND arch = '" + arch + "'";
 			rsInv = statement.executeQuery(getQuery);
 			if (rsInv.next()) {
 				// update it with their current inventory
 				int id = rsInv.getInt("id");
-				String updateQuery = "UPDATE " + prefix + "inventories SET inventory = ?, armour = ?, attributes = ?, armour_attributes = ? WHERE id = ?";
+				String updateQuery = "UPDATE " + prefix +
+									 "inventories SET inventory = ?, armour = ?, attributes = ?, armour_attributes = ? WHERE id = ?";
 				ps = connection.prepareStatement(updateQuery);
 				ps.setString(1, inv);
 				ps.setString(2, arm);
 				ps.setInt(5, id);
 			} else {
 				// they haven't got an inventory saved yet so make one with their current inventory
-				String insertQuery = "INSERT INTO " + prefix + "inventories (uuid, player, arch, inventory, armour, attributes, armour_attributes) VALUES (?, ?, ?, ?, ?, ?, ?)";
+				String insertQuery = "INSERT INTO " + prefix +
+									 "inventories (uuid, player, arch, inventory, armour, attributes, armour_attributes) VALUES (?, ?, ?, ?, ?, ?, ?)";
 				ps = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setString(1, uuid);
 				ps.setString(2, name);
@@ -76,7 +79,8 @@ public class TARDISArchInventory {
 			rsInv.close();
 			// check if they have an inventory for the apposing chameleon arch state
 			int to = (arch == 0) ? 1 : 0;
-			String getToQuery = "SELECT * FROM " + prefix + "inventories WHERE uuid = '" + uuid + "' AND arch = '" + to + "'";
+			String getToQuery =
+					"SELECT * FROM " + prefix + "inventories WHERE uuid = '" + uuid + "' AND arch = '" + to + "'";
 			rsToInv = statement.executeQuery(getToQuery);
 			if (rsToInv.next()) {
 				// set their inventory to the saved one

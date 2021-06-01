@@ -152,7 +152,8 @@ public class TARDISDoorListener {
 		boolean bool = false;
 		switch (plugin.getWorldManager()) {
 			case MULTIVERSE -> bool = plugin.getMVHelper().isWorldSurvival(world);
-			case NONE -> bool = Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + world.getName() + ".gamemode")).equalsIgnoreCase("SURVIVAL");
+			case NONE -> bool = Objects.requireNonNull(plugin.getPlanetsConfig().getString(
+					"planets." + world.getName() + ".gamemode")).equalsIgnoreCase("SURVIVAL");
 		}
 		return bool;
 	}

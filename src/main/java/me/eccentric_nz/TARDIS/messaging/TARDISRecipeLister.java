@@ -49,7 +49,8 @@ public class TARDISRecipeLister {
 						TextComponent tci = new TextComponent(item.toTabCompletionString());
 						tci.setColor(category.getColour());
 						tci.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(item.toRecipeString())));
-						tci.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisrecipe " + item.toTabCompletionString()));
+						tci.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
+								"/tardisrecipe " + item.toTabCompletionString()));
 						sender.spigot().sendMessage(tci);
 					}
 				}

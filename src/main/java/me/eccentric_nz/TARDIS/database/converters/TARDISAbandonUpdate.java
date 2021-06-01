@@ -50,7 +50,8 @@ public class TARDISAbandonUpdate {
 		try {
 			service.testConnection(connection);
 			// tardis table
-			query = "UPDATE " + prefix + "tardis SET abandoned = 1, powered_on = 0, companions = '' WHERE tardis_id = ?";
+			query = "UPDATE " + prefix +
+					"tardis SET abandoned = 1, powered_on = 0, companions = '' WHERE tardis_id = ?";
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, id);
 			ps.executeUpdate();
@@ -60,7 +61,8 @@ public class TARDISAbandonUpdate {
 			ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
 			if (rs.resultSet()) {
 				// back
-				query = "UPDATE " + prefix + "back SET world = ?, x = ?, y = ?, z = ?, direction = ?, submarine = ? WHERE tardis_id = ?";
+				query = "UPDATE " + prefix +
+						"back SET world = ?, x = ?, y = ?, z = ?, direction = ?, submarine = ? WHERE tardis_id = ?";
 				ps = connection.prepareStatement(query);
 				ps.setString(1, rs.getWorld().getName());
 				ps.setInt(2, rs.getX());
@@ -71,7 +73,8 @@ public class TARDISAbandonUpdate {
 				ps.setInt(7, id);
 				ps.executeUpdate();
 				// home
-				query = "UPDATE " + prefix + "homes SET world = ?, x = ?, y = ?, z = ?, direction = ?, submarine = ? WHERE tardis_id = ?";
+				query = "UPDATE " + prefix +
+						"homes SET world = ?, x = ?, y = ?, z = ?, direction = ?, submarine = ? WHERE tardis_id = ?";
 				ps = connection.prepareStatement(query);
 				ps.setString(1, rs.getWorld().getName());
 				ps.setInt(2, rs.getX());
@@ -98,7 +101,8 @@ public class TARDISAbandonUpdate {
 			ps.setInt(1, id);
 			ps.executeUpdate();
 			// t_count
-			if (plugin.getConfig().getInt("creation.count") > 0 && plugin.getConfig().getBoolean("abandon.reduce_count")) {
+			if (plugin.getConfig().getInt("creation.count") > 0 &&
+				plugin.getConfig().getBoolean("abandon.reduce_count")) {
 				query = "UPDATE " + prefix + "t_count SET count = (count - 1) WHERE uuid = ?";
 				ps = connection.prepareStatement(query);
 				ps.setString(1, uuid);

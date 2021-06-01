@@ -85,14 +85,17 @@ class TARDISComehereCommand {
 				boolean hidden = tardis.isHidden();
 				// get location
 				Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
-				if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && Objects.requireNonNull(eyeLocation.getWorld()).getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
+				if (!plugin.getConfig().getBoolean("travel.include_default_world") &&
+					plugin.getConfig().getBoolean("creation.default_world") &&
+					Objects.requireNonNull(eyeLocation.getWorld()).getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
 					TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 					return true;
 				}
 				if (!plugin.getPluginRespect().getRespect(eyeLocation, new Parameters(player, Flag.getDefaultFlags()))) {
 					return true;
 				}
-				if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
+				if (TARDISPermission.hasPermission(player, "tardis.exile") &&
+					plugin.getConfig().getBoolean("travel.exile")) {
 					String areaPerm = plugin.getTardisArea().getExileArea(player);
 					if (plugin.getTardisArea().areaCheckInExile(areaPerm, eyeLocation)) {
 						TARDISMessage.send(player, "EXILE_NO_TRAVEL");
@@ -127,7 +130,9 @@ class TARDISComehereCommand {
 					TARDISMessage.send(player, "NO_PB_IN_TARDIS");
 					return true;
 				}
-				if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+				if (plugin.getTrackerKeeper().getInVortex().contains(id) ||
+					plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+					plugin.getTrackerKeeper().getDematerialising().contains(id)) {
 					TARDISMessage.send(player, "NOT_WHILE_MAT");
 					return true;
 				}
@@ -157,7 +162,8 @@ class TARDISComehereCommand {
 				}
 				Block under = eyeLocation.getBlock().getRelative(BlockFace.DOWN);
 				if (plugin.getPM().isPluginEnabled("LockettePro")) {
-					if (LocketteProAPI.isProtected(eyeLocation.getBlock()) || LocketteProAPI.isProtected(under) || plugin.getUtils().checkSurrounding(under)) {
+					if (LocketteProAPI.isProtected(eyeLocation.getBlock()) || LocketteProAPI.isProtected(under) ||
+						plugin.getUtils().checkSurrounding(under)) {
 						count = 1;
 					}
 				}
@@ -171,7 +177,8 @@ class TARDISComehereCommand {
 					if (protectionCache != null) {
 						Protection protection = protectionCache.getProtection(eyeLocation.getBlock());
 						Protection underProtection = protectionCache.getProtection(under);
-						if (protection != null && !protection.isOwner(player) || underProtection != null && !underProtection.isOwner(player)) {
+						if (protection != null && !protection.isOwner(player) ||
+							underProtection != null && !underProtection.isOwner(player)) {
 							count = 1;
 						}
 					}
@@ -182,7 +189,8 @@ class TARDISComehereCommand {
 				}
 				// get space time throttle
 				SpaceTimeThrottle spaceTimeThrottle = new ResultSetThrottle(plugin).getSpeed(uuid.toString());
-				int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
+				int ch = Math.round(
+						plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
 				if (level < ch) {
 					TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
 					return true;
@@ -264,7 +272,8 @@ class TARDISComehereCommand {
 				bd.setSubmarine(sub);
 				bd.setTardisId(id);
 				bd.setThrottle(spaceTimeThrottle);
-				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd),
+						delay * 2);
 				// remove energy from tardis
 				HashMap<String, Object> wheret = new HashMap<>();
 				wheret.put("tardis_id", id);
@@ -272,7 +281,8 @@ class TARDISComehereCommand {
 				plugin.getTrackerKeeper().getHasDestination().remove(id);
 				plugin.getTrackerKeeper().getRescue().remove(id);
 			} else {
-				TARDISMessage.send(player, "DIFF_HARD_REMOTE", ChatColor.AQUA + "/tardisrecipe remote" + ChatColor.RESET);
+				TARDISMessage.send(player, "DIFF_HARD_REMOTE",
+						ChatColor.AQUA + "/tardisrecipe remote" + ChatColor.RESET);
 			}
 			return true;
 		} else {

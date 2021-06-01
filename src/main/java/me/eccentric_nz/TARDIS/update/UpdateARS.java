@@ -55,7 +55,8 @@ public class UpdateARS {
 				}
 			}
 			String controlBlock = schm.getSeedMaterial().toString();
-			if (schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("eleventh") || schm.getPermission().equals("master")) {
+			if (schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") ||
+				schm.getPermission().equals("eleventh") || schm.getPermission().equals("master")) {
 				empty[0][4][4] = controlBlock;
 				empty[0][4][5] = controlBlock;
 				empty[0][5][4] = controlBlock;
@@ -63,7 +64,8 @@ public class UpdateARS {
 				empty[1][4][5] = controlBlock;
 				empty[1][5][4] = controlBlock;
 				empty[1][5][5] = controlBlock;
-			} else if (schm.getPermission().equals("bigger") || schm.getPermission().equals("redstone") || schm.getPermission().equals("twelfth") || schm.getPermission().equals("thirteenth")) {
+			} else if (schm.getPermission().equals("bigger") || schm.getPermission().equals("redstone") ||
+					   schm.getPermission().equals("twelfth") || schm.getPermission().equals("thirteenth")) {
 				empty[1][4][5] = controlBlock;
 				empty[1][5][4] = controlBlock;
 				empty[1][5][5] = controlBlock;

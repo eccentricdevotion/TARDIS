@@ -50,14 +50,16 @@ public class CreativeCommand {
 		switch (creative) {
 			case elements -> {
 				ItemStack[] emenu = new ElementInventory(plugin).getMenu();
-				Inventory elements = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Atomic elements");
+				Inventory elements = plugin.getServer().createInventory(player, 54,
+						ChatColor.DARK_RED + "Atomic elements");
 				elements.setContents(emenu);
 				player.openInventory(elements);
 				return true;
 			}
 			case compounds -> {
 				ItemStack[] cmenu = new CompoundsCreativeInventory(plugin).getMenu();
-				Inventory compounds = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Molecular compounds");
+				Inventory compounds = plugin.getServer().createInventory(player, 54,
+						ChatColor.DARK_RED + "Molecular compounds");
 				compounds.setContents(cmenu);
 				player.openInventory(compounds);
 				return true;

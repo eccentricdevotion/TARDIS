@@ -80,9 +80,11 @@ public class TARDISLister {
 				if (!s.startsWith("rift")) {
 					String w;
 					if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-						w = plugin.getMVHelper().getAlias(TARDISPlugin.plugin.getConfig().getString("rechargers." + s + ".world"));
+						w = plugin.getMVHelper().getAlias(TARDISPlugin.plugin.getConfig().getString(
+								"rechargers." + s + ".world"));
 					} else {
-						w = TARDISAliasResolver.getWorldAlias(TARDISPlugin.plugin.getConfig().getString("rechargers." + s + ".world"));
+						w = TARDISAliasResolver.getWorldAlias(TARDISPlugin.plugin.getConfig().getString(
+								"rechargers." + s + ".world"));
 					}
 					String x = TARDISPlugin.plugin.getConfig().getString("rechargers." + s + ".x");
 					String y = TARDISPlugin.plugin.getConfig().getString("rechargers." + s + ".y");
@@ -110,7 +112,8 @@ public class TARDISLister {
 					TARDISMessage.message(player, "");
 				}
 				TextComponent tca = new TextComponent(n + ". [" + a.getAreaName() + "] in world: " + a.getWorld());
-				if (TARDISPermission.hasPermission(player, "tardis.area." + a.getAreaName()) || TARDISPermission.hasPermission(player, "tardis.area.*")) {
+				if (TARDISPermission.hasPermission(player, "tardis.area." + a.getAreaName()) ||
+					TARDISPermission.hasPermission(player, "tardis.area.*")) {
 					tca.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to /tardistravel here")));
 					tca.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/tardistravel area %s", a.getAreaName())));
 				}
@@ -126,7 +129,8 @@ public class TARDISLister {
 				int id = tardis.getTardisId();
 				// list TARDIS saves
 				if (list.equalsIgnoreCase("saves")) {
-					TARDISMessage.message(player, ChatColor.GOLD + "" + ChatColor.UNDERLINE + "TARDIS " + plugin.getLanguage().getString("SAVES"));
+					TARDISMessage.message(player, ChatColor.GOLD + "" + ChatColor.UNDERLINE + "TARDIS " +
+												  plugin.getLanguage().getString("SAVES"));
 					TARDISMessage.message(player, "Hover to see location (world x, y, z)");
 					TARDISMessage.message(player, "Click to /tardistravel");
 					TARDISMessage.message(player, "");
@@ -153,7 +157,8 @@ public class TARDISLister {
 								TextComponent tcd = new TextComponent(map.get("dest_name"));
 								tcd.setColor(ChatColor.GREEN);
 								tcd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, map.get("x"), map.get("y"), map.get("z")))));
-								tcd.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardistravel save " + map.get("dest_name")));
+								tcd.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
+										"/tardistravel save " + map.get("dest_name")));
 								player.spigot().sendMessage(tcd);
 							}
 						}
@@ -166,7 +171,8 @@ public class TARDISLister {
 						String[] companionData = comps.split(":");
 						ItemStack[] heads = new TARDISCompanionInventory(plugin, companionData).getSkulls();
 						// open the GUI
-						Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Companions");
+						Inventory inv = plugin.getServer().createInventory(player, 54,
+								ChatColor.DARK_RED + "Companions");
 						inv.setContents(heads);
 						player.openInventory(inv);
 					} else {

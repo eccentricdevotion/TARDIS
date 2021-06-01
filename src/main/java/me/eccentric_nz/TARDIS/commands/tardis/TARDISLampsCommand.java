@@ -96,7 +96,9 @@ class TARDISLampsCommand {
 					lampon = Material.SEA_LANTERN;
 				}
 				String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
-				String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
+				String path =
+						plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() +
+						".tschm";
 				// get JSON
 				JsonObject obj = TARDISSchematicGZip.unzip(path);
 				// get dimensions

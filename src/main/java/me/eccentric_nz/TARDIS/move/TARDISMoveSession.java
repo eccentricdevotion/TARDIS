@@ -50,7 +50,8 @@ public class TARDISMoveSession {
 	void setStaleLocation(Location loc) {
 
 		// If the player has not moved, they have a stale location
-		if (getLocation().getBlockX() == loc.getBlockX() && getLocation().getBlockY() == loc.getBlockY() && getLocation().getBlockZ() == loc.getBlockZ()) {
+		if (getLocation().getBlockX() == loc.getBlockX() && getLocation().getBlockY() == loc.getBlockY() &&
+			getLocation().getBlockZ() == loc.getBlockZ()) {
 			setStaleLocation(true);
 		} else {
 			// Update the Players Session to the new Location.

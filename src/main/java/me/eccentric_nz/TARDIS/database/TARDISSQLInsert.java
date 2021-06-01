@@ -67,7 +67,8 @@ class TARDISSQLInsert implements Runnable {
 		questions = sbq.substring(0, sbq.length() - 1);
 		try {
 			service.testConnection(connection);
-			ps = connection.prepareStatement("INSERT INTO " + prefix + table + " (" + fields + ") VALUES (" + questions + ")");
+			ps = connection.prepareStatement(
+					"INSERT INTO " + prefix + table + " (" + fields + ") VALUES (" + questions + ")");
 			int i = 1;
 			for (Map.Entry<String, Object> entry : data.entrySet()) {
 				if (entry.getValue() instanceof String || entry.getValue() instanceof UUID) {

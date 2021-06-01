@@ -22,7 +22,9 @@ import org.bukkit.Material;
 public enum GUIChameleonPoliceBoxes {
 
 	// Chameleon Police Boxes
-	GO_TO_PAGE_1(11, 24, Material.ARROW), BACK(8, 25, Material.BOWL), CLOSE(1, 26, Material.BOWL);
+	GO_TO_PAGE_1(11, 24, Material.ARROW),
+	BACK(8, 25, Material.BOWL),
+	CLOSE(1, 26, Material.BOWL);
 
 	private final int customModelData;
 	private final int slot;

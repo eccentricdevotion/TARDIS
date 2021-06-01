@@ -66,7 +66,8 @@ public class TARDISScanner {
 		for (int chX = -chunkRadius; chX <= chunkRadius; chX++) {
 			for (int chZ = -chunkRadius; chZ <= chunkRadius; chZ++) {
 				int x = (int) l.getX(), y = (int) l.getY(), z = (int) l.getZ();
-				for (Entity e : new Location(l.getWorld(), x + (chX * 16), y, z + (chZ * 16)).getChunk().getEntities()) {
+				for (Entity e : new Location(l.getWorld(),
+						x + (chX * 16), y, z + (chZ * 16)).getChunk().getEntities()) {
 					if (e.getLocation().distance(l) <= radius && e.getLocation().getBlock() != l.getBlock()) {
 						radiusEntities.add(e);
 					}
@@ -121,7 +122,8 @@ public class TARDISScanner {
 					}
 				}
 				if (TARDISPlugin.plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-					if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
+					if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) ||
+						et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
 						EntityEquipment ee = ((LivingEntity) k).getEquipment();
 						assert ee != null;
 						if (ee.getHelmet() != null) {
@@ -161,7 +163,9 @@ public class TARDISScanner {
 							}
 						}
 					}
-					if (et.equals(EntityType.ENDERMAN) && k.getPassengers().size() > 0 && k.getPassengers().get(0) != null && k.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
+					if (et.equals(EntityType.ENDERMAN) && k.getPassengers().size() > 0 &&
+						k.getPassengers().get(0) != null &&
+						k.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
 						// silent
 						et = EntityType.SPLASH_POTION;
 					}
@@ -235,7 +239,8 @@ public class TARDISScanner {
 			worldName = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());
 		}
 		TARDISMessage.send(player, "SCAN_WORLD", worldName);
-		TARDISMessage.send(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
+		TARDISMessage.send(player, "SONIC_COORDS",
+				scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
 		bsched.scheduleSyncDelayedTask(TARDISPlugin.plugin, () -> TARDISMessage.send(player, "SCAN_DIRECTION", tardisDirection.toString()), 20L);
 		// get biome
 		TARDISBiome tmb;
@@ -254,7 +259,8 @@ public class TARDISScanner {
 		String biome = tmb.name();
 		data.setScannedBiome(biome);
 		bsched.scheduleSyncDelayedTask(TARDISPlugin.plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome), 40L);
-		bsched.scheduleSyncDelayedTask(TARDISPlugin.plugin, () -> TARDISMessage.send(player, "SCAN_TIME", dayNight + " / " + time), 60L);
+		bsched.scheduleSyncDelayedTask(TARDISPlugin.plugin, () -> TARDISMessage.send(player, "SCAN_TIME",
+				dayNight + " / " + time), 60L);
 		// get weather
 		String weather = switch (biome) {
 			case "DESERT", "DESERT_HILLS", "DESERT_LAKES", "SAVANNA", "SAVANNA_PLATEAU", "SHATTERED_SAVANNA", "SHATTERED_SAVANNA_PLATEAU", "BADLANDS", "BADLANDS_PLATEAU", "ERODED_BADLANDS", "MODIFIED_BADLANDS_PLATEAU", "MODIFIED_WOODED_BADLANDS_PLATEAU", "WOODED_BADLANDS_PLATEAU" -> TARDISPlugin.plugin.getLanguage().getString("WEATHER_DRY");
@@ -332,7 +338,9 @@ public class TARDISScanner {
 				TARDISMessage.send(player, "SCAN_NONE");
 			}
 			// damage the circuit if configured
-			if (TARDISPlugin.plugin.getConfig().getBoolean("circuits.damage") && !TARDISPlugin.plugin.getDifficulty().equals(Difficulty.EASY) && TARDISPlugin.plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
+			if (TARDISPlugin.plugin.getConfig().getBoolean("circuits.damage") &&
+				!TARDISPlugin.plugin.getDifficulty().equals(Difficulty.EASY) &&
+				TARDISPlugin.plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
 				TARDISCircuitChecker tcc = new TARDISCircuitChecker(TARDISPlugin.plugin, id);
 				tcc.getCircuits();
 				// decrement uses

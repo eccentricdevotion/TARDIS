@@ -69,7 +69,8 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
 						case 48: // add
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 								ItemStack[] items = new TARDISCompanionAddInventory(plugin, player).getPlayers();
-								Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
+								Inventory presetinv = plugin.getServer().createInventory(player, 54,
+										ChatColor.DARK_RED + "Add Companion");
 								presetinv.setContents(items);
 								player.openInventory(presetinv);
 							}, 2L);
@@ -91,7 +92,8 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
 									assert l != null;
 									String u = l.get(0);
 									removeCompanion(id, comps, u, player);
-									if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+									if (plugin.isWorldGuardOnServer() &&
+										plugin.getConfig().getBoolean("preferences.use_worldguard")) {
 										if (!comps.equalsIgnoreCase("everyone")) {
 											String[] data = tardis.getChunk().split(":");
 											removeFromRegion(data[0], tardis.getOwner(), m.getDisplayName());

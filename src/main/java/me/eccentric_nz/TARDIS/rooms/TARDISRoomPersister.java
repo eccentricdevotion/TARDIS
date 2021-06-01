@@ -50,12 +50,14 @@ public class TARDISRoomPersister {
 
 	public void saveProgress() {
 		try {
-			ps = connection.prepareStatement("INSERT INTO " + prefix + "room_progress (`direction`, `room`, `location`, `tardis_id`, `progress_row`, `progress_column`, `progress_level`, `middle_type`, `floor_type`, `post_blocks`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			ps = connection.prepareStatement("INSERT INTO " + prefix +
+											 "room_progress (`direction`, `room`, `location`, `tardis_id`, `progress_row`, `progress_column`, `progress_level`, `middle_type`, `floor_type`, `post_blocks`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			for (TARDISRoomData rd : plugin.getTrackerKeeper().getRoomTasks().values()) {
 				ps.setString(1, rd.getDirection().toString());
 				ps.setString(2, rd.getRoom());
 				Location location = rd.getLocation();
-				String l = Objects.requireNonNull(location.getWorld()).getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+				String l = Objects.requireNonNull(location.getWorld()).getName() + ":" + location.getBlockX() + ":" +
+						   location.getBlockY() + ":" + location.getBlockZ();
 				ps.setString(3, l);
 				ps.setInt(4, rd.getTardisId());
 				ps.setInt(5, rd.getRow());
@@ -67,7 +69,8 @@ public class TARDISRoomPersister {
 				count += ps.executeUpdate();
 			}
 			if (count > 0) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " room building tasks to resume later.");
+				plugin.getConsole().sendMessage(
+						plugin.getPluginName() + "Saved " + count + " room building tasks to resume later.");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -92,8 +95,10 @@ public class TARDISRoomPersister {
 			if (rs.isBeforeFirst()) {
 				while (rs.next()) {
 					String whichroom = rs.getString("room");
-					String directory = (plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user")) ? "user_schematics" : "schematics";
-					String path = plugin.getDataFolder() + File.separator + directory + File.separator + whichroom.toLowerCase(Locale.ENGLISH) + ".tschm";
+					String directory = (plugin.getRoomsConfig().getBoolean(
+							"rooms." + whichroom + ".user")) ? "user_schematics" : "schematics";
+					String path = plugin.getDataFolder() + File.separator + directory + File.separator +
+								  whichroom.toLowerCase(Locale.ENGLISH) + ".tschm";
 					// get JSON
 					JsonObject obj = TARDISSchematicGZip.unzip(path);
 					TARDISRoomData rd = new TARDISRoomData();

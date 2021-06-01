@@ -39,7 +39,8 @@ public class TARDISMultiverseInventoriesChecker {
 			for (WorldGroup wgp : profiles) {
 				if (wgp.containsWorld(to)) {
 					Shares shares = wgp.getShares();
-					if (!shares.isSharing(Sharables.INVENTORY) && !shares.isSharing(Sharables.ALL_INVENTORY) && !shares.isSharing(Sharables.ALL_DEFAULT)) {
+					if (!shares.isSharing(Sharables.INVENTORY) && !shares.isSharing(Sharables.ALL_INVENTORY) &&
+						!shares.isSharing(Sharables.ALL_DEFAULT)) {
 						return false;
 					}
 				} else {

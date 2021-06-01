@@ -43,7 +43,8 @@ public class TARDISSelectWatchListener implements Listener {
 		if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
 			return;
 		}
-		if (plugin.getTrackerKeeper().getJohnSmith().get(player.getUniqueId()).getTime() <= System.currentTimeMillis()) {
+		if (plugin.getTrackerKeeper().getJohnSmith().get(player.getUniqueId()).getTime() <=
+			System.currentTimeMillis()) {
 			return;
 		}
 		int slot = event.getNewSlot();

@@ -23,7 +23,11 @@ import org.bukkit.ChatColor;
  */
 public enum ChameleonOption {
 
-	FACTORY(20, "DISABLED", ChatColor.RED, "SET_ON", ChatColor.GREEN), ADAPTIVE(21, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED), INVISIBLE(22, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED), PRESET(23, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED), CONSTRUCT(24, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED);
+	FACTORY(20, "DISABLED", ChatColor.RED, "SET_ON", ChatColor.GREEN),
+	ADAPTIVE(21, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
+	INVISIBLE(22, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
+	PRESET(23, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
+	CONSTRUCT(24, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED);
 
 	private final int slot;
 	private final String on;

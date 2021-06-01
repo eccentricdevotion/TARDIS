@@ -23,7 +23,9 @@ import org.bukkit.ChatColor;
  */
 public enum Adaption {
 
-	OFF(ChatColor.RED), BIOME(ChatColor.GREEN), BLOCK(ChatColor.AQUA);
+	OFF(ChatColor.RED),
+	BIOME(ChatColor.GREEN),
+	BLOCK(ChatColor.AQUA);
 
 	private final ChatColor colour;
 

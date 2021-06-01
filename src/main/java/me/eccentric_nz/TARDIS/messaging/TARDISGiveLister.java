@@ -59,7 +59,8 @@ public class TARDISGiveLister {
 			TextComponent tcd = new TextComponent(entry.getKey());
 			tcd.setColor(net.md_5.bungee.api.ChatColor.YELLOW);
 			tcd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(entry.getValue())));
-			tcd.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tardisgive [player] " + entry.getKey() + " "));
+			tcd.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+					"/tardisgive [player] " + entry.getKey() + " "));
 			sender.spigot().sendMessage(tcd);
 		}
 		TARDISMessage.message(sender, "");
@@ -71,7 +72,8 @@ public class TARDISGiveLister {
 						TextComponent tci = new TextComponent(item.toTabCompletionString());
 						tci.setColor(category.getColour());
 						tci.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(item.toRecipeString())));
-						tci.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tardisgive [player] " + item.toTabCompletionString() + " "));
+						tci.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+								"/tardisgive [player] " + item.toTabCompletionString() + " "));
 						sender.spigot().sendMessage(tci);
 					}
 				}

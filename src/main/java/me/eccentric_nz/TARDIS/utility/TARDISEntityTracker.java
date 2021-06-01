@@ -90,7 +90,8 @@ public class TARDISEntityTracker {
 						options = new Object[]{((Horse) e).getColor(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
 						break;
 					case LLAMA:
-						options = new Object[]{((Llama) e).getColor(), ((Llama) e).getInventory().getDecor() != null, AGE.getFromBoolean(!((Ageable) e).isAdult())};
+						options = new Object[]{((Llama) e).getColor(), ((Llama) e).getInventory().getDecor() !=
+																	   null, AGE.getFromBoolean(!((Ageable) e).isAdult())};
 						break;
 					case OCELOT:
 						options = new Object[]{((Tameable) e).isTamed(), AGE.getFromBoolean(!((Ageable) e).isAdult())};

@@ -71,13 +71,15 @@ class TARDISUpgradeCommand {
 		String current_world = Objects.requireNonNull(pl.getWorld()).getName();
 		String[] split = tardis.getChunk().split(":");
 		if (plugin.getConfig().getBoolean("creation.default_world")) {
-			if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(player, "tardis.create_world")) {
+			if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") &&
+				TARDISPermission.hasPermission(player, "tardis.create_world")) {
 				own = (current_world.equals(split[0]));
 			} else {
 				// get if player is in TIPS area for their tardis
 				TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
 				TARDISTIPSData pos = tintpos.getTIPSData(tardis.getTIPS());
-				own = (pl.getBlockX() > pos.getMinX() && pl.getBlockZ() > pos.getMinZ() && pl.getBlockX() < pos.getMaxX() && pl.getBlockZ() < pos.getMaxZ());
+				own = (pl.getBlockX() > pos.getMinX() && pl.getBlockZ() > pos.getMinZ() &&
+					   pl.getBlockX() < pos.getMaxX() && pl.getBlockZ() < pos.getMaxZ());
 			}
 		} else {
 			own = (current_world.equals(split[0]));

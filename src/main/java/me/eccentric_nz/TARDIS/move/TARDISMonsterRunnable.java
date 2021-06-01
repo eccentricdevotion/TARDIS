@@ -126,7 +126,8 @@ public class TARDISMonsterRunnable implements Runnable {
 						case ENDERMAN:
 							Enderman enderman = (Enderman) e;
 							tm.setCarried(enderman.getCarriedBlock());
-							if (twa && e.getPassengers().size() > 0 && e.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
+							if (twa && e.getPassengers().size() > 0 &&
+								e.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
 								dn = "Silent";
 							}
 							break;
@@ -135,7 +136,9 @@ public class TARDISMonsterRunnable implements Runnable {
 							tm.setAggressive(pigzombie.isAngry());
 							tm.setAnger(pigzombie.getAnger());
 							tm.setEquipment(pigzombie.getEquipment());
-							if (twa && Objects.requireNonNull(pigzombie.getEquipment()).getHelmet() != null && Objects.requireNonNull(pigzombie.getEquipment().getHelmet()).hasItemMeta() && Objects.requireNonNull(pigzombie.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
+							if (twa && Objects.requireNonNull(pigzombie.getEquipment()).getHelmet() != null &&
+								Objects.requireNonNull(pigzombie.getEquipment().getHelmet()).hasItemMeta() &&
+								Objects.requireNonNull(pigzombie.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
 								String name = pigzombie.getEquipment().getHelmet().getItemMeta().getDisplayName();
 								if (name.equals("Ice Warrior Head") || name.equals("Strax Head")) {
 									dn = name.substring(0, name.length() - 5);
@@ -149,9 +152,12 @@ public class TARDISMonsterRunnable implements Runnable {
 						case WITHER_SKELETON:
 							Skeleton skeleton = (Skeleton) e;
 							tm.setEquipment(skeleton.getEquipment());
-							if (twa && Objects.requireNonNull(skeleton.getEquipment()).getHelmet() != null && Objects.requireNonNull(skeleton.getEquipment().getHelmet()).hasItemMeta() && Objects.requireNonNull(skeleton.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
+							if (twa && Objects.requireNonNull(skeleton.getEquipment()).getHelmet() != null &&
+								Objects.requireNonNull(skeleton.getEquipment().getHelmet()).hasItemMeta() &&
+								Objects.requireNonNull(skeleton.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
 								String name = skeleton.getEquipment().getHelmet().getItemMeta().getDisplayName();
-								if (name.equals("Dalek Head") || name.equals("Silurian Head") || name.equals("Weeping Angel Head")) {
+								if (name.equals("Dalek Head") || name.equals("Silurian Head") ||
+									name.equals("Weeping Angel Head")) {
 									dn = name.substring(0, name.length() - 5);
 								}
 							}
@@ -169,9 +175,13 @@ public class TARDISMonsterRunnable implements Runnable {
 							Zombie zombie = (Zombie) e;
 							tm.setBaby(!zombie.isAdult());
 							tm.setEquipment(zombie.getEquipment());
-							if (twa && Objects.requireNonNull(zombie.getEquipment()).getHelmet() != null && Objects.requireNonNull(zombie.getEquipment().getHelmet()).hasItemMeta() && Objects.requireNonNull(zombie.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
+							if (twa && Objects.requireNonNull(zombie.getEquipment()).getHelmet() != null &&
+								Objects.requireNonNull(zombie.getEquipment().getHelmet()).hasItemMeta() &&
+								Objects.requireNonNull(zombie.getEquipment().getHelmet().getItemMeta()).hasDisplayName()) {
 								String name = zombie.getEquipment().getHelmet().getItemMeta().getDisplayName();
-								if (name.equals("Cyberman Head") || name.equals("Empty Child Head") || name.equals("Sontaran Head") || name.equals("Vashta Nerada Head") || name.equals("Zygon Head")) {
+								if (name.equals("Cyberman Head") || name.equals("Empty Child Head") ||
+									name.equals("Sontaran Head") || name.equals("Vashta Nerada Head") ||
+									name.equals("Zygon Head")) {
 									dn = name.substring(0, name.length() - 5);
 								}
 							}
@@ -206,11 +216,13 @@ public class TARDISMonsterRunnable implements Runnable {
 			if (!found && plugin.getConfig().getBoolean("preferences.spawn_random_monsters")) {
 				// spawn a random mob inside tardis?
 				// 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
-				if (TARDISConstants.RANDOM.nextInt(4) == 0 && canSpawn(map.getKey(), TARDISConstants.RANDOM.nextInt(4))) {
+				if (TARDISConstants.RANDOM.nextInt(4) == 0 &&
+					canSpawn(map.getKey(), TARDISConstants.RANDOM.nextInt(4))) {
 					HashMap<String, Object> wheret = new HashMap<>();
 					wheret.put("tardis_id", map.getValue().getTardisId());
 					ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
-					if (rs.resultSet() && rs.getTardis().getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
+					if (rs.resultSet() &&
+						rs.getTardis().getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
 						TARDISMonster rtm = new TARDISMonster();
 						// choose a random monster
 						EntityType type = random_monsters.get(TARDISConstants.RANDOM.nextInt(random_monsters.size()));
@@ -435,7 +447,8 @@ public class TARDISMonsterRunnable implements Runnable {
 				ent.setCustomName(m.getName());
 			}
 			if (m.getPassenger() != null) {
-				if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels") && m.getPassenger().equals(EntityType.GUARDIAN)) {
+				if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels") &&
+					m.getPassenger().equals(EntityType.GUARDIAN)) {
 					TARDISAngelsAPI.getAPI(plugin).setSilentEquipment((LivingEntity) ent);
 				} else {
 					Entity passenger = loc.getWorld().spawnEntity(loc, m.getPassenger());

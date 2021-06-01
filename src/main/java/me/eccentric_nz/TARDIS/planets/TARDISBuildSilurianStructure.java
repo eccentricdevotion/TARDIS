@@ -40,7 +40,11 @@ class TARDISBuildSilurianStructure {
 
 	TARDISBuildSilurianStructure(TARDISPlugin plugin) {
 		this.plugin = plugin;
-		paths = new String[]{plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_large.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_cross.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_north_south.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_east_west.tschm"};
+		paths = new String[]{
+				plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_large.tschm",
+				plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_cross.tschm",
+				plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_north_south.tschm",
+				plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_east_west.tschm"};
 	}
 
 	/**

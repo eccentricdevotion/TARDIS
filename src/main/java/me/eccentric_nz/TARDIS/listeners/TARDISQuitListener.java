@@ -67,7 +67,8 @@ public class TARDISQuitListener implements Listener {
 				}
 			}
 			// power down TARDIS
-			if (plugin.getConfig().getBoolean("allow.power_down") && plugin.getConfig().getBoolean("allow.power_down_on_quit")) {
+			if (plugin.getConfig().getBoolean("allow.power_down") &&
+				plugin.getConfig().getBoolean("allow.power_down_on_quit")) {
 				// check if powered on
 				if (tardis.isPowered()) {
 					// not if flying or uninitialised
@@ -83,7 +84,8 @@ public class TARDISQuitListener implements Listener {
 					long delay = 1L;
 					// if hidden, rebuild
 					if (hidden) {
-						plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + event.getPlayer().getName() + " rebuild");
+						plugin.getServer().dispatchCommand(plugin.getConsole(),
+								"tardisremote " + event.getPlayer().getName() + " rebuild");
 						delay = 20L;
 					}
 					if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
@@ -107,7 +109,8 @@ public class TARDISQuitListener implements Listener {
 			}
 			// save arched status
 			if (plugin.isDisguisesOnServer()) {
-				if (plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+				if (plugin.getConfig().getBoolean("arch.enabled") &&
+					plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
 					new TARDISArchPersister(plugin).save(uuid);
 				}
 				plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
@@ -116,6 +119,8 @@ public class TARDISQuitListener implements Listener {
 	}
 
 	private boolean isTravelling(int id) {
-		return (plugin.getTrackerKeeper().getDematerialising().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id));
+		return (plugin.getTrackerKeeper().getDematerialising().contains(id) ||
+				plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+				plugin.getTrackerKeeper().getInVortex().contains(id));
 	}
 }

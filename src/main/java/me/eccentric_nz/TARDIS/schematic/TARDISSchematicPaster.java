@@ -70,7 +70,8 @@ class TARDISSchematicPaster implements Runnable {
 		if (!running) {
 			UUID uuid = player.getUniqueId();
 			if (!plugin.getTrackerKeeper().getPastes().containsKey(uuid)) {
-				player.sendMessage(plugin.getPluginName() + "No schematic loaded! " + ChatColor.GREEN + "/ts load [name]");
+				player.sendMessage(
+						plugin.getPluginName() + "No schematic loaded! " + ChatColor.GREEN + "/ts load [name]");
 				plugin.getServer().getScheduler().cancelTask(task);
 				task = -1;
 				return;
@@ -118,7 +119,8 @@ class TARDISSchematicPaster implements Runnable {
 					int pz = rel.get("z").getAsInt();
 					Art art = Art.valueOf(painting.get("art").getAsString());
 					BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-					Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));
+					Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world,
+							x + px, y + py, z + pz));
 					try {
 						Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
 						ent.teleport(pl);

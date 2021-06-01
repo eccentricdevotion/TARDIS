@@ -60,7 +60,8 @@ public class TARDISPluginRespect {
 	 */
 	public boolean getRespect(Location location, Parameters flag) {
 		boolean bool = true;
-		if (plugin.getConfig().getBoolean("allow.admin_bypass") && flag.getPlayer() != null && flag.getPlayer().hasPermission("tardis.admin")) {
+		if (plugin.getConfig().getBoolean("allow.admin_bypass") && flag.getPlayer() != null &&
+			flag.getPlayer().hasPermission("tardis.admin")) {
 			return true;
 		}
 		if (plugin.getConfig().getBoolean("travel.per_world_perms")) {
@@ -73,7 +74,8 @@ public class TARDISPluginRespect {
 			}
 		}
 		// nether travel
-		if (flag.permsNether() && Objects.requireNonNull(location.getWorld()).getEnvironment().equals(Environment.NETHER)) {
+		if (flag.permsNether() &&
+			Objects.requireNonNull(location.getWorld()).getEnvironment().equals(Environment.NETHER)) {
 			// check if nether enabled
 			if (!plugin.getConfig().getBoolean("travel.nether")) {
 				if (flag.messagePlayer()) {
@@ -89,7 +91,8 @@ public class TARDISPluginRespect {
 				bool = false;
 			}
 			// check if player has to visit first
-			if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(flag.getPlayer().getUniqueId().toString(), "NETHER")) {
+			if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") &&
+				!new ResultSetTravelledTo(plugin).resultSet(flag.getPlayer().getUniqueId().toString(), "NETHER")) {
 				if (flag.messagePlayer()) {
 					TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "Nether");
 				}
@@ -97,7 +100,8 @@ public class TARDISPluginRespect {
 			}
 		}
 		// end travel
-		if (flag.permsTheEnd() && Objects.requireNonNull(location.getWorld()).getEnvironment().equals(Environment.THE_END)) {
+		if (flag.permsTheEnd() &&
+			Objects.requireNonNull(location.getWorld()).getEnvironment().equals(Environment.THE_END)) {
 			// check if end enabled
 			if (!plugin.getConfig().getBoolean("travel.the_end")) {
 				if (flag.messagePlayer()) {
@@ -113,20 +117,24 @@ public class TARDISPluginRespect {
 				bool = false;
 			}
 			// check if player has to visit first
-			if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(flag.getPlayer().getUniqueId().toString(), "THE_END")) {
+			if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") &&
+				!new ResultSetTravelledTo(plugin).resultSet(flag.getPlayer().getUniqueId().toString(), "THE_END")) {
 				if (flag.messagePlayer()) {
 					TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "End");
 				}
 				bool = false;
 			}
 		}
-		if (flag.respectWorldGuard() && plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canLand(flag.getPlayer(), location)) {
+		if (flag.respectWorldGuard() && plugin.isWorldGuardOnServer() &&
+			!plugin.getWorldGuardUtils().canLand(flag.getPlayer(), location)) {
 			if (flag.messagePlayer()) {
 				TARDISMessage.send(flag.getPlayer(), "WORLDGUARD");
 			}
 			bool = false;
 		}
-		if (flag.respectTowny() && townyOnServer && !Objects.equals(plugin.getConfig().getString("preferences.respect_towny"), "none") && !tychk.checkTowny(flag.getPlayer(), location)) {
+		if (flag.respectTowny() && townyOnServer &&
+			!Objects.equals(plugin.getConfig().getString("preferences.respect_towny"), "none") &&
+			!tychk.checkTowny(flag.getPlayer(), location)) {
 			if (flag.messagePlayer()) {
 				TARDISMessage.send(flag.getPlayer(), "TOWNY");
 			}
@@ -142,26 +150,33 @@ public class TARDISPluginRespect {
 					bool = false;
 				}
 			}
-			if (borderOnServer && plugin.getConfig().getBoolean("preferences.respect_worldborder") && !borderchk.isInBorder(location)) {
+			if (borderOnServer && plugin.getConfig().getBoolean("preferences.respect_worldborder") &&
+				!borderchk.isInBorder(location)) {
 				if (flag.messagePlayer()) {
 					TARDISMessage.send(flag.getPlayer(), "WORLDBORDER");
 				}
 				bool = false;
 			}
 		}
-		if (flag.respectFactions() && factionsOnServer && plugin.getConfig().getBoolean("preferences.respect_factions") && !TARDISFactionsChecker.isInFaction(flag.getPlayer(), location)) {
+		if (flag.respectFactions() && factionsOnServer &&
+			plugin.getConfig().getBoolean("preferences.respect_factions") &&
+			!TARDISFactionsChecker.isInFaction(flag.getPlayer(), location)) {
 			if (flag.messagePlayer()) {
 				TARDISMessage.send(flag.getPlayer(), "FACTIONS");
 			}
 			bool = false;
 		}
-		if (flag.respectGriefPrevention() && griefPreventionOnServer && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && griefchk.isInClaim(flag.getPlayer(), location)) {
+		if (flag.respectGriefPrevention() && griefPreventionOnServer &&
+			plugin.getConfig().getBoolean("preferences.respect_grief_prevention") &&
+			griefchk.isInClaim(flag.getPlayer(), location)) {
 			if (flag.messagePlayer()) {
 				TARDISMessage.send(flag.getPlayer(), "GRIEFPREVENTION");
 			}
 			bool = false;
 		}
-		if (flag.respectRedProtect() && redProtectOnServer && plugin.getConfig().getBoolean("preferences.respect_red_protect") && !TARDISRedProtectChecker.canBuild(flag.getPlayer(), location)) {
+		if (flag.respectRedProtect() && redProtectOnServer &&
+			plugin.getConfig().getBoolean("preferences.respect_red_protect") &&
+			!TARDISRedProtectChecker.canBuild(flag.getPlayer(), location)) {
 			if (flag.messagePlayer()) {
 				TARDISMessage.send(flag.getPlayer(), "REDPROTECT");
 			}

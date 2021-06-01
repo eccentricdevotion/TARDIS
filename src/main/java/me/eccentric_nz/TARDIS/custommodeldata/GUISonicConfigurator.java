@@ -22,7 +22,23 @@ import org.bukkit.Material;
 public enum GUISonicConfigurator {
 
 	// Sonic Configurator
-	BIO_SCANNER_UPGRADE(9, 0, Material.BOWL, ""), DIAMOND_UPGRADE(50, 1, Material.BOWL, ""), EMERALD_UPGRADE(51, 2, Material.BOWL, ""), REDSTONE_UPGRADE(71, 3, Material.BOWL, ""), PAINTER_UPGRADE(67, 4, Material.BOWL, ""), IGNITE_UPGRADE(56, 5, Material.BOWL, ""), PICKUP_ARROWS_UPGRADE(68, 6, Material.BOWL, ""), KNOCKBACK_UPGRADE(134, 7, Material.BOWL, ""), INSTRUCTIONS_1_OF_2(1, 23, Material.BOOK, "Place your sonic screwdriver~in the bottom left slot.~Click on the upgrades you~want to enable/disable."), INSTRUCTIONS_2_OF_2(1, 24, Material.BOOK, "Click the 'Save' button~to apply your selections.~Click 'Close' to exit~without saving."), NOT_UPGRADED(1, -1, Material.GRAY_WOOL, ""), ENABLED(2, -1, Material.LIME_WOOL, ""), DISABLED(2, -1, Material.RED_WOOL, ""), PLACE_SONIC(2, -1, Material.GRAY_WOOL, ""), WAITING(3, -1, Material.GRAY_WOOL, ""), SAVE(74, 25, Material.BOWL, "Click to save the current configuration."), CLOSE(1, 26, Material.BOWL, "Close the menu~without saving.");
+	BIO_SCANNER_UPGRADE(9, 0, Material.BOWL, ""),
+	DIAMOND_UPGRADE(50, 1, Material.BOWL, ""),
+	EMERALD_UPGRADE(51, 2, Material.BOWL, ""),
+	REDSTONE_UPGRADE(71, 3, Material.BOWL, ""),
+	PAINTER_UPGRADE(67, 4, Material.BOWL, ""),
+	IGNITE_UPGRADE(56, 5, Material.BOWL, ""),
+	PICKUP_ARROWS_UPGRADE(68, 6, Material.BOWL, ""),
+	KNOCKBACK_UPGRADE(134, 7, Material.BOWL, ""),
+	INSTRUCTIONS_1_OF_2(1, 23, Material.BOOK, "Place your sonic screwdriver~in the bottom left slot.~Click on the upgrades you~want to enable/disable."),
+	INSTRUCTIONS_2_OF_2(1, 24, Material.BOOK, "Click the 'Save' button~to apply your selections.~Click 'Close' to exit~without saving."),
+	NOT_UPGRADED(1, -1, Material.GRAY_WOOL, ""),
+	ENABLED(2, -1, Material.LIME_WOOL, ""),
+	DISABLED(2, -1, Material.RED_WOOL, ""),
+	PLACE_SONIC(2, -1, Material.GRAY_WOOL, ""),
+	WAITING(3, -1, Material.GRAY_WOOL, ""),
+	SAVE(74, 25, Material.BOWL, "Click to save the current configuration."),
+	CLOSE(1, 26, Material.BOWL, "Close the menu~without saving.");
 
 	private final int customModelData;
 	private final int slot;

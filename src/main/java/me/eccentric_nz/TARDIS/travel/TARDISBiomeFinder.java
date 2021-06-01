@@ -72,7 +72,8 @@ public class TARDISBiomeFinder {
 		int[] start_loc = TARDISTimeTravel.getStartLocation(tb, direction);
 		int tmp_y = tb.getBlockY();
 		for (int up = 0; up < 10; up++) {
-			int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], tb.getWorld(), direction);
+			int count = TARDISTimeTravel.safeLocation(start_loc[0],
+					tmp_y + up, start_loc[2], start_loc[1], start_loc[3], tb.getWorld(), direction);
 			if (count == 0) {
 				tb.setY(tmp_y + up);
 				break;

@@ -59,7 +59,8 @@ public class TARDISSeedMenuListener extends TARDISMenuListener implements Listen
 					if (slot != 26) {
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 							ItemStack[] recipe = new TARDISSeedRecipeInventory(plugin, is.getType()).getMenu();
-							Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "tardis Seed Recipe");
+							Inventory gui = plugin.getServer().createInventory(p, 27,
+									ChatColor.DARK_RED + "tardis Seed Recipe");
 							gui.setContents(recipe);
 							p.openInventory(gui);
 						}, 2L);
@@ -67,7 +68,8 @@ public class TARDISSeedMenuListener extends TARDISMenuListener implements Listen
 				}
 			} else {
 				ClickType click = event.getClick();
-				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) ||
+					click.equals(ClickType.DOUBLE_CLICK)) {
 					event.setCancelled(true);
 				}
 			}

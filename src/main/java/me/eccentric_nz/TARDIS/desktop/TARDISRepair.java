@@ -66,7 +66,8 @@ public class TARDISRepair {
 		if (rs.resultSet()) {
 			TARDIS tardis = rs.getTardis();
 			String perm = tardis.getSchematic().getPermission();
-			boolean hasLava = tud.getPrevious().getPermission().equals("master") || tud.getPrevious().getPermission().equals("delta");
+			boolean hasLava = tud.getPrevious().getPermission().equals("master") ||
+							  tud.getPrevious().getPermission().equals("delta");
 			if (hasLava) {
 				new TARDISDelavafier(plugin, uuid).swap();
 			}
@@ -197,7 +198,8 @@ public class TARDISRepair {
 					String bid = entry.getKey();
 					String bkey;
 					String block_id;
-					if (hasPrefs && (entry.getKey().equals("ORANGE_WOOL") || entry.getKey().equals("LIGHT_GRAY_WOOL"))) {
+					if (hasPrefs &&
+						(entry.getKey().equals("ORANGE_WOOL") || entry.getKey().equals("LIGHT_GRAY_WOOL"))) {
 						bkey = (entry.getKey().equals("ORANGE_WOOL")) ? wall : floor;
 						block_id = (entry.getKey().equals("ORANGE_WOOL")) ? wall : floor;
 					} else {

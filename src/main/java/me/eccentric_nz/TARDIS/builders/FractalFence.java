@@ -78,7 +78,8 @@ public class FractalFence {
 			for (int k = 1; k < points.size(); k++) {
 				Vector a = points.get(j);
 				Vector b = points.get(k);
-				int diff = Math.abs(a.getBlockX() - b.getBlockX()) + Math.abs(a.getBlockY() - b.getBlockY()) + Math.abs(a.getBlockZ() - b.getBlockZ());
+				int diff = Math.abs(a.getBlockX() - b.getBlockX()) + Math.abs(a.getBlockY() - b.getBlockY()) +
+						   Math.abs(a.getBlockZ() - b.getBlockZ());
 				if (diff == 1) {
 					adjacent.add(new Location(world, a.getBlockX(), a.getBlockY(), a.getBlockZ()));
 				}

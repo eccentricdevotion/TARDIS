@@ -120,7 +120,8 @@ public class TARDISTerminalInventory {
 		// nether
 		ItemStack r;
 		String ndn;
-		if (plugin.getConfig().getBoolean("travel.nether") || !plugin.getConfig().getBoolean("travel.terminal.redefine")) {
+		if (plugin.getConfig().getBoolean("travel.nether") ||
+			!plugin.getConfig().getBoolean("travel.terminal.redefine")) {
 			r = new ItemStack(Material.NETHERRACK, 1);
 			ndn = "Nether";
 		} else {
@@ -134,7 +135,8 @@ public class TARDISTerminalInventory {
 		// the end
 		ItemStack e;
 		String edn;
-		if (plugin.getConfig().getBoolean("travel.the_end") || !plugin.getConfig().getBoolean("travel.terminal.redefine")) {
+		if (plugin.getConfig().getBoolean("travel.the_end") ||
+			!plugin.getConfig().getBoolean("travel.terminal.redefine")) {
 			e = new ItemStack(Material.END_STONE, 1);
 			edn = "The End";
 		} else {

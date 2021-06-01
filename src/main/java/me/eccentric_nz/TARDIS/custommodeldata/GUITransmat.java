@@ -21,7 +21,10 @@ import org.bukkit.Material;
 
 public enum GUITransmat {
 
-	INFO(57, 8, Material.BOWL), TRANSMAT(133, 26, Material.BOWL), DELETE(1, 35, Material.BUCKET), CLOSE(1, 53, Material.BOWL);
+	INFO(57, 8, Material.BOWL),
+	TRANSMAT(133, 26, Material.BOWL),
+	DELETE(1, 35, Material.BUCKET),
+	CLOSE(1, 53, Material.BOWL);
 
 	private final int customModelData;
 	private final int slot;

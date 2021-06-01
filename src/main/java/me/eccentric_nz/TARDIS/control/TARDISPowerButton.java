@@ -77,7 +77,8 @@ public class TARDISPowerButton {
 			long delay = 0;
 			// if hidden, rebuild
 			if (hidden) {
-				plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
+				plugin.getServer().dispatchCommand(plugin.getConsole(),
+						"tardisremote " + player.getName() + " rebuild");
 				TARDISMessage.send(player, "POWER_FAIL");
 				delay = 20L;
 			}
@@ -129,6 +130,8 @@ public class TARDISPowerButton {
 	}
 
 	private boolean isTravelling(int id) {
-		return (plugin.getTrackerKeeper().getDematerialising().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id));
+		return (plugin.getTrackerKeeper().getDematerialising().contains(id) ||
+				plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+				plugin.getTrackerKeeper().getInVortex().contains(id));
 	}
 }

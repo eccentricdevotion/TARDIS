@@ -67,7 +67,8 @@ public class TARDISCustardCreamDispenser {
 			// take their artron energy
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("tardis_id", id);
-			plugin.getQueryFactory().alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("custard_cream") * -1, where, player);
+			plugin.getQueryFactory().alterEnergyLevel("tardis",
+					plugin.getArtronConfig().getInt("custard_cream") * -1, where, player);
 		}
 	}
 }

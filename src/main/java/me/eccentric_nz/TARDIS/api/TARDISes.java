@@ -147,7 +147,8 @@ public class TARDISes implements TARDISAPI {
 			String chameleon = tardis.getPreset().toString();
 			String door = "Closed";
 			for (Map.Entry<Location, TARDISTeleportLocation> map : TARDISPlugin.plugin.getTrackerKeeper().getPortals().entrySet()) {
-				if (!Objects.requireNonNull(map.getKey().getWorld()).getName().contains("TARDIS") && !map.getValue().isAbandoned()) {
+				if (!Objects.requireNonNull(map.getKey().getWorld()).getName().contains("TARDIS") &&
+					!map.getValue().isAbandoned()) {
 					if (id == map.getValue().getTardisId()) {
 						door = "Open";
 						break;
@@ -169,7 +170,10 @@ public class TARDISes implements TARDISAPI {
 			// choose random environment - weighted towards normal!
 			environment = weightedChoice.next();
 			// check if environment is enabled
-			if ((environment.equals(Environment.NETHER) && !TARDISPlugin.plugin.getConfig().getBoolean("travel.nether")) || (environment.equals(Environment.THE_END) && !TARDISPlugin.plugin.getConfig().getBoolean("travel.the_end"))) {
+			if ((environment.equals(Environment.NETHER) &&
+				 !TARDISPlugin.plugin.getConfig().getBoolean("travel.nether")) ||
+				(environment.equals(Environment.THE_END) &&
+				 !TARDISPlugin.plugin.getConfig().getBoolean("travel.the_end"))) {
 				environment = Environment.NORMAL;
 			}
 		}
@@ -241,7 +245,8 @@ public class TARDISes implements TARDISAPI {
 		List<String> worlds = new ArrayList<>();
 		Bukkit.getWorlds().forEach((w) -> {
 			String name = w.getName();
-			if (TARDISPlugin.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel") && !w.getEnvironment().equals(Environment.NETHER) && !w.getEnvironment().equals(Environment.THE_END)) {
+			if (TARDISPlugin.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel") &&
+				!w.getEnvironment().equals(Environment.NETHER) && !w.getEnvironment().equals(Environment.THE_END)) {
 				if (TARDISPlugin.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
 					worlds.add(TARDISPlugin.plugin.getMVHelper().getAlias(name));
 				} else {
@@ -419,7 +424,9 @@ public class TARDISes implements TARDISAPI {
 	@Override
 	public ItemStack getTARDISShapeItem(String item, Player player) {
 		ItemStack result;
-		if (item.equals("Save Storage Disk") || item.equals("Preset Storage Disk") || item.equals("Biome Storage Disk") || item.equals("Player Storage Disk") || item.equals("Bowl of Custard") || item.endsWith("Jelly Baby")) {
+		if (item.equals("Save Storage Disk") || item.equals("Preset Storage Disk") ||
+			item.equals("Biome Storage Disk") || item.equals("Player Storage Disk") || item.equals("Bowl of Custard") ||
+			item.endsWith("Jelly Baby")) {
 			ShapelessRecipe recipe = TARDISPlugin.plugin.getIncomposita().getShapelessRecipes().get(item);
 			result = recipe.getResult();
 		} else {
@@ -434,13 +441,19 @@ public class TARDISes implements TARDISAPI {
 			ItemMeta im = result.getItemMeta();
 			assert im != null;
 			List<String> lore = im.getLore();
-			String uses = (Objects.equals(TARDISPlugin.plugin.getConfig().getString("circuits.uses.invisibility"), "0") || !TARDISPlugin.plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + TARDISPlugin.plugin.getConfig().getString("circuits.uses.invisibility");
+			String uses = (
+					Objects.equals(TARDISPlugin.plugin.getConfig().getString("circuits.uses.invisibility"), "0") ||
+					!TARDISPlugin.plugin.getConfig().getBoolean("circuits.damage")) ?
+					ChatColor.YELLOW + "unlimited" :
+					ChatColor.YELLOW + TARDISPlugin.plugin.getConfig().getString("circuits.uses.invisibility");
 			assert lore != null;
 			lore.set(1, uses);
 			im.setLore(lore);
 			result.setItemMeta(im);
 		}
-		if (item.equals("Blank Storage Disk") || item.equals("Save Storage Disk") || item.equals("Preset Storage Disk") || item.equals("Biome Storage Disk") || item.equals("Player Storage Disk") || item.equals("Authorised Control Disk")) {
+		if (item.equals("Blank Storage Disk") || item.equals("Save Storage Disk") ||
+			item.equals("Preset Storage Disk") || item.equals("Biome Storage Disk") ||
+			item.equals("Player Storage Disk") || item.equals("Authorised Control Disk")) {
 			ItemMeta im = result.getItemMeta();
 			assert im != null;
 			im.addItemFlags(ItemFlag.values());
@@ -476,7 +489,8 @@ public class TARDISes implements TARDISAPI {
 			int model = TARDISSeedModel.modelByString(schematic);
 			if (Consoles.getBY_NAMES().get(schematic).isCustom()) {
 				is = new ItemStack(Material.MUSHROOM_STEM, 1);
-			} else if (schematic.equalsIgnoreCase("DELTA") || schematic.equalsIgnoreCase("ROTOR") || schematic.equalsIgnoreCase("COPPER")) {
+			} else if (schematic.equalsIgnoreCase("DELTA") || schematic.equalsIgnoreCase("ROTOR") ||
+					   schematic.equalsIgnoreCase("COPPER")) {
 				is = new ItemStack(Material.MUSHROOM_STEM, 1);
 			} else {
 				is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
@@ -663,7 +677,8 @@ public class TARDISes implements TARDISAPI {
 	public boolean setChameleonPreset(int id, PRESET preset, boolean rebuild) {
 		// check not travelling
 		TARDISTrackerInstanceKeeper keeper = TARDISPlugin.plugin.getTrackerKeeper();
-		if (keeper.getDematerialising().contains(id) || keeper.getMaterialising().contains(id) || keeper.getDestinationVortex().containsKey(id) || keeper.getInVortex().contains(id)) {
+		if (keeper.getDematerialising().contains(id) || keeper.getMaterialising().contains(id) ||
+			keeper.getDestinationVortex().containsKey(id) || keeper.getInVortex().contains(id)) {
 			return false;
 		}
 		HashMap<String, Object> where = new HashMap<>();

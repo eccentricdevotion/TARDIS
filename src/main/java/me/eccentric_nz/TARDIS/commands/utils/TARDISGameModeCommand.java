@@ -137,7 +137,8 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
 	@Override
 	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 		if (args.length <= 1) {
-			if (label.equalsIgnoreCase("tgms") || label.equalsIgnoreCase("tgmc") || label.equalsIgnoreCase("tgma") || label.equalsIgnoreCase("tgmsp")) {
+			if (label.equalsIgnoreCase("tgms") || label.equalsIgnoreCase("tgmc") || label.equalsIgnoreCase("tgma") ||
+				label.equalsIgnoreCase("tgmsp")) {
 				return null;
 			} else {
 				return partial(args[0], ROOT_SUBS);

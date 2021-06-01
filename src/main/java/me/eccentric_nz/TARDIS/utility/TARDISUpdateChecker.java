@@ -66,13 +66,16 @@ public class TARDISUpdateChecker implements Runnable {
 		plugin.setBuildNumber(buildNumber);
 		plugin.setUpdateNumber(newBuildNumber);
 		if (sender == null) {
-			plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(TARDISMessage.JENKINS_UPDATE_READY, buildNumber, newBuildNumber));
+			plugin.getConsole().sendMessage(plugin.getPluginName() +
+											String.format(TARDISMessage.JENKINS_UPDATE_READY, buildNumber, newBuildNumber));
 			plugin.getConsole().sendMessage(plugin.getPluginName() + TARDISMessage.UPDATE_COMMAND);
 		} else {
 			if (buildNumber == newBuildNumber) {
 				sender.sendMessage(plugin.getPluginName() + "You are running the latest version!");
 			} else {
-				sender.sendMessage(plugin.getPluginName() + "You are " + (newBuildNumber - buildNumber) + " builds behind! Type " + ChatColor.AQUA + "/tadmin update_plugins" + ChatColor.RESET + " to update!");
+				sender.sendMessage(
+						plugin.getPluginName() + "You are " + (newBuildNumber - buildNumber) + " builds behind! Type " +
+						ChatColor.AQUA + "/tadmin update_plugins" + ChatColor.RESET + " to update!");
 			}
 		}
 	}

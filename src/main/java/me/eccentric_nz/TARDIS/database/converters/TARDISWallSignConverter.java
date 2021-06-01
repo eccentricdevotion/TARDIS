@@ -41,7 +41,8 @@ public class TARDISWallSignConverter {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		String query = "SELECT b_id, data FROM " + prefix + "blocks WHERE data LIKE 'minecraft:wall_sign%'";
-		String update = "UPDATE " + prefix + "blocks SET data = 'minecraft:oak_wall_sign[facing=north,waterlogged=false]' WHERE b_id = ?";
+		String update = "UPDATE " + prefix +
+						"blocks SET data = 'minecraft:oak_wall_sign[facing=north,waterlogged=false]' WHERE b_id = ?";
 		int i = 0;
 		try {
 			service.testConnection(connection);
@@ -57,7 +58,8 @@ public class TARDISWallSignConverter {
 					if (i > 0) {
 						ps.executeBatch();
 						connection.commit();
-						plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " legacy wall signs to oak wall signs");
+						plugin.getConsole().sendMessage(
+								plugin.getPluginName() + "Converted " + i + " legacy wall signs to oak wall signs");
 					}
 				}
 			}

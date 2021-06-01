@@ -52,7 +52,8 @@ public class TARDISLazarusListener implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onInteract(PlayerInteractEvent event) {
 		Action a = event.getAction();
-		if (a.equals(Action.PHYSICAL) && Objects.requireNonNull(event.getClickedBlock()).getType().equals(Material.OAK_PRESSURE_PLATE)) {
+		if (a.equals(Action.PHYSICAL) &&
+			Objects.requireNonNull(event.getClickedBlock()).getType().equals(Material.OAK_PRESSURE_PLATE)) {
 			Player player = event.getPlayer();
 			if (plugin.getTrackerKeeper().getLazarus().containsKey(player.getUniqueId())) {
 				return;
@@ -80,7 +81,8 @@ public class TARDISLazarusListener implements Listener {
 					b.getRelative(BlockFace.SOUTH).setBlockData(WALL);
 					b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setBlockData(WALL);
 					// open the GUI
-					Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
+					Inventory inv = plugin.getServer().createInventory(player, 54,
+							ChatColor.DARK_RED + "Genetic Manipulator");
 					if (player.isSneaking()) {
 						inv.setContents(new TARDISLazarusExtraInventory(plugin).getTerminal());
 					} else {

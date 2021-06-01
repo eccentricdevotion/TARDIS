@@ -56,12 +56,14 @@ class TARDISFindCommand {
 					if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
 						world = plugin.getMVHelper().getAlias(rsc.getWorld());
 					}
-					TARDISMessage.send(player, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
+					TARDISMessage.send(player, "TARDIS_FIND",
+							world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
 				} else {
 					TARDISMessage.send(player, "CURRENT_NOT_FOUND");
 				}
 			} else {
-				TARDISMessage.send(player, "DIFF_HARD_FIND", ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET);
+				TARDISMessage.send(player, "DIFF_HARD_FIND",
+						ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET);
 			}
 			return true;
 		} else {

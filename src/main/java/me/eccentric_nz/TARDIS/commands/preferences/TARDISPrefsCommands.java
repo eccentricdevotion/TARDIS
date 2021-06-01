@@ -118,7 +118,8 @@ public class TARDISPrefsCommands implements CommandExecutor {
 					if (pref.equals("sonic")) {
 						// open sonic prefs menu
 						ItemStack[] sonics = new TARDISSonicMenuInventory(plugin).getMenu();
-						Inventory sim = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Sonic Prefs Menu");
+						Inventory sim = plugin.getServer().createInventory(player, 27,
+								ChatColor.DARK_RED + "Sonic Prefs Menu");
 						sim.setContents(sonics);
 						player.openInventory(sim);
 						return true;
@@ -126,7 +127,8 @@ public class TARDISPrefsCommands implements CommandExecutor {
 					if (pref.equals("key_menu")) {
 						// open sonic prefs menu
 						ItemStack[] keys = new TARDISKeyMenuInventory().getMenu();
-						Inventory sim = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "tardis Key Prefs Menu");
+						Inventory sim = plugin.getServer().createInventory(player, 27,
+								ChatColor.DARK_RED + "tardis Key Prefs Menu");
 						sim.setContents(keys);
 						player.openInventory(sim);
 						return true;
@@ -163,11 +165,13 @@ public class TARDISPrefsCommands implements CommandExecutor {
 						case "siege_floor":
 							return new TARDISFloorCommand().setFloorOrWallBlock(player, args);
 						default:
-							if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
+							if (args.length < 2 ||
+								(!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
 								TARDISMessage.send(player, "PREF_ON_OFF", pref);
 								return false;
 							}
-							if (pref.equals("forcefield") && TARDISPermission.hasPermission(player, "tardis.forcefield")) {
+							if (pref.equals("forcefield") &&
+								TARDISPermission.hasPermission(player, "tardis.forcefield")) {
 								// add tardis + location
 								if (args[1].equalsIgnoreCase("on")) {
 									// check power

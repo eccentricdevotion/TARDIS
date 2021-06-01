@@ -228,7 +228,8 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 									wherea.put("area_name", args[3]);
 									ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
 									if (!rsa.resultSet()) {
-										TARDISMessage.send(sender, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+										TARDISMessage.send(sender, "AREA_NOT_FOUND",
+												ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
 										return true;
 									}
 									if (!sender.hasPermission("tardis.admin") || sender instanceof BlockCommandSender) {
@@ -239,7 +240,8 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 										}
 										// check permission
 										String perm = "tardis.area." + args[3];
-										if ((!TARDISPermission.hasPermission(p, perm) && !TARDISPermission.hasPermission(p, "tardis.area.*"))) {
+										if ((!TARDISPermission.hasPermission(p, perm) &&
+											 !TARDISPermission.hasPermission(p, "tardis.area.*"))) {
 											TARDISMessage.send(sender, "TRAVEL_NO_AREA_PERM", args[3]);
 											return true;
 										}
@@ -292,11 +294,14 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 										TARDISMessage.send(sender, "WORLD_NOT_FOUND");
 										return true;
 									}
-									if (!plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".time_travel")) {
+									if (!plugin.getPlanetsConfig().getBoolean(
+											"planets." + w.getName() + ".time_travel")) {
 										TARDISMessage.send(sender, "NO_WORLD_TRAVEL");
 										return true;
 									}
-									if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && args[2].equals(plugin.getConfig().getString("creation.default_world_name"))) {
+									if (!plugin.getConfig().getBoolean("travel.include_default_world") &&
+										plugin.getConfig().getBoolean("creation.default_world") &&
+										args[2].equals(plugin.getConfig().getString("creation.default_world_name"))) {
 										TARDISMessage.send(sender, "NO_WORLD_TRAVEL");
 										return true;
 									}
@@ -310,7 +315,8 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
 									Location location = new Location(w, x, y, z);
 									// check location
 									if (!plugin.getTardisArea().areaCheckInExisting(location)) {
-										TARDISMessage.send(sender, "TRAVEL_IN_AREA", ChatColor.AQUA + "/tardisremote [player] travel area [area name]");
+										TARDISMessage.send(sender, "TRAVEL_IN_AREA",
+												ChatColor.AQUA + "/tardisremote [player] travel area [area name]");
 										return true;
 									}
 									// check respect if not admin

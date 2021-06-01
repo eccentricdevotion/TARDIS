@@ -51,7 +51,8 @@ public class TARDISSeedBlockPersister {
 	public void save() {
 		try {
 			// save the seed blocks
-			ps = connection.prepareStatement("INSERT INTO " + prefix + "seeds (schematic, wall, floor, location) VALUES (?,?,?,?)");
+			ps = connection.prepareStatement(
+					"INSERT INTO " + prefix + "seeds (schematic, wall, floor, location) VALUES (?,?,?,?)");
 			for (Map.Entry<Location, TARDISBuildData> map : plugin.getBuildKeeper().getTrackTARDISSeed().entrySet()) {
 				TARDISBuildData data = map.getValue();
 				ps.setString(1, data.getSchematic().getPermission());

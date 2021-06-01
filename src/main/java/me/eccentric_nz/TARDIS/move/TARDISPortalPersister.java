@@ -51,7 +51,8 @@ public class TARDISPortalPersister {
 	public void save() {
 		try {
 			// save the portals
-			ps = connection.prepareStatement("INSERT INTO " + prefix + "portals (portal, teleport, direction, tardis_id, abandoned) VALUES (?,?,?,?,?)");
+			ps = connection.prepareStatement("INSERT INTO " + prefix +
+											 "portals (portal, teleport, direction, tardis_id, abandoned) VALUES (?,?,?,?,?)");
 			for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
 				TARDISTeleportLocation ttpl = map.getValue();
 				ps.setString(1, map.getKey().toString());

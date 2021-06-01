@@ -52,13 +52,19 @@ class TARDISRegionFlagCommand {
 		List<String> world_regions = plugin.getWorldGuardUtils().getTARDISRegions(TARDISAliasResolver.getWorldFromAlias(world_name));
 		world_regions.forEach((region_id) -> {
 			if (flag.endsWith("entry")) {
-				plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world_name);
-				plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " entry -w " + world_name + " -g nonmembers deny");
+				plugin.getServer().dispatchCommand(plugin.getConsole(),
+						"rg flag " + region_id + " exit -w " + world_name);
+				plugin.getServer().dispatchCommand(plugin.getConsole(),
+						"rg flag " + region_id + " entry -w " + world_name + " -g nonmembers deny");
 			} else {
-				plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " entry -w " + world_name);
-				plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world_name + " -g everyone deny");
-				plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " use -w " + world_name + " allow");
-				plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " chest-access -w " + world_name);
+				plugin.getServer().dispatchCommand(plugin.getConsole(),
+						"rg flag " + region_id + " entry -w " + world_name);
+				plugin.getServer().dispatchCommand(plugin.getConsole(),
+						"rg flag " + region_id + " exit -w " + world_name + " -g everyone deny");
+				plugin.getServer().dispatchCommand(plugin.getConsole(),
+						"rg flag " + region_id + " use -w " + world_name + " allow");
+				plugin.getServer().dispatchCommand(plugin.getConsole(),
+						"rg flag " + region_id + " chest-access -w " + world_name);
 			}
 		});
 		return true;

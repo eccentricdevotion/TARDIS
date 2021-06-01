@@ -18,7 +18,9 @@ package me.eccentric_nz.tardis.enumeration;
 
 public enum Weather {
 
-	CLEAR, RAIN, THUNDER;
+	CLEAR,
+	RAIN,
+	THUNDER;
 
 	public static Weather fromString(String s) {
 		String lower = s.toLowerCase();

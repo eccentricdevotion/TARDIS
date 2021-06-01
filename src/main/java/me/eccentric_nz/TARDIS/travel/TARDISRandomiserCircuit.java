@@ -52,7 +52,8 @@ public class TARDISRandomiserCircuit {
 		worldlist.forEach((o) -> {
 			World ww = TARDISAliasResolver.getWorldFromAlias(o);
 			if (ww != null) {
-				if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
+				if (plugin.getConfig().getBoolean("travel.include_default_world") ||
+					!plugin.getConfig().getBoolean("creation.default_world")) {
 					if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
 						allowedWorlds.add(o);
 					}
@@ -64,7 +65,8 @@ public class TARDISRandomiserCircuit {
 					}
 				}
 				// remove the world if the player doesn't have permission
-				if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !TARDISPermission.hasPermission(p, "tardis.travel." + o)) {
+				if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") &&
+					!TARDISPermission.hasPermission(p, "tardis.travel." + o)) {
 					allowedWorlds.remove(o);
 				}
 			}

@@ -87,7 +87,8 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
 				while (!world.getChunkAt(spawn).isLoaded()) {
 					world.getChunkAt(spawn).load();
 				}
-				int highest = (world.getEnvironment() == Environment.NETHER) ? spawn.getBlockY() - 1 : world.getHighestBlockYAt(spawn);
+				int highest = (world.getEnvironment() == Environment.NETHER) ?
+						spawn.getBlockY() - 1 : world.getHighestBlockYAt(spawn);
 				float yaw = player.getLocation().getYaw();
 				float pitch = player.getLocation().getPitch();
 				spawn.setYaw(yaw);

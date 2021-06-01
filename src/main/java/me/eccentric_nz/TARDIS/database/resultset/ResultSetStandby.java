@@ -51,7 +51,9 @@ public class ResultSetStandby {
 		HashMap<Integer, StandbyData> ids = new HashMap<>();
 		PreparedStatement statement = null;
 		ResultSet rs = null;
-		String query = "SELECT tardis_id, artron_level, chameleon_preset, size, hidden, lights_on, uuid FROM " + prefix + "tardis WHERE powered_on = 1 AND abandoned = 0";
+		String query =
+				"SELECT tardis_id, artron_level, chameleon_preset, size, hidden, lights_on, uuid FROM " + prefix +
+				"tardis WHERE powered_on = 1 AND abandoned = 0";
 		try {
 			service.testConnection(connection);
 			statement = connection.prepareStatement(query);

@@ -71,7 +71,9 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 						UUID playerUUID = player.getUniqueId();
 						// get tardis from location
 						Location location = frame.getLocation();
-						String doorloc = Objects.requireNonNull(location.getWorld()).getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+						String doorloc =
+								Objects.requireNonNull(location.getWorld()).getName() + ":" + location.getBlockX() +
+								":" + location.getBlockY() + ":" + location.getBlockZ();
 						HashMap<String, Object> where = new HashMap<>();
 						where.put("door_location", doorloc);
 						where.put("door_type", 0);
@@ -84,7 +86,9 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 								TARDISMessage.send(player, "SIEGE_NO_EXIT");
 								return;
 							}
-							if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+							if (plugin.getTrackerKeeper().getInVortex().contains(id) ||
+								plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+								plugin.getTrackerKeeper().getDematerialising().contains(id)) {
 								TARDISMessage.send(player, "NOT_WHILE_MAT");
 								return;
 							}
@@ -111,7 +115,8 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 											if (rspref.resultSet()) {
 												key = (!rspref.getKey().isEmpty()) ? rspref.getKey() : plugin.getConfig().getString("preferences.key");
 												willFarm = rspref.isFarmOn();
-												if (rspref.isAutoPowerupOn() && plugin.getConfig().getBoolean("allow.power_down")) {
+												if (rspref.isAutoPowerupOn() &&
+													plugin.getConfig().getBoolean("allow.power_down")) {
 													// check tardis is not abandoned
 													canPowerUp = !tardis.isAbandoned();
 												}
@@ -132,13 +137,18 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 													World playerWorld = location.getWorld();
 													// check for entities near the police box
 													TARDISPetsAndFollowers petsAndFollowers = null;
-													if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(playerUUID) && willFarm) {
+													if (plugin.getConfig().getBoolean("allow.mob_farming") &&
+														TARDISPermission.hasPermission(player, "tardis.farm") &&
+														!plugin.getTrackerKeeper().getFarming().contains(playerUUID) &&
+														willFarm) {
 														plugin.getTrackerKeeper().getFarming().add(playerUUID);
 														TARDISFarmer tf = new TARDISFarmer(plugin);
 														petsAndFollowers = tf.farmAnimals(location, d, id, player.getPlayer(), Objects.requireNonNull(tardis_loc.getWorld()).getName(), playerWorld.getName());
 													}
 													// if WorldGuard is on the server check for tardis region protection and add admin as member
-													if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
+													if (plugin.isWorldGuardOnServer() &&
+														plugin.getConfig().getBoolean("preferences.use_worldguard") &&
+														TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
 														plugin.getWorldGuardUtils().addMemberToRegion(cw, tardis.getOwner(), player.getName());
 													}
 													// enter tardis!
@@ -159,7 +169,8 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 															new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tardis_loc, player, d, true);
 														}
 													}
-													if (plugin.getConfig().getBoolean("allow.tp_switch") && rspref.isTextureOn()) {
+													if (plugin.getConfig().getBoolean("allow.tp_switch") &&
+														rspref.isTextureOn()) {
 														if (!rspref.getTextureIn().isEmpty()) {
 															new TARDISResourcePackChanger(plugin).changeRP(player, rspref.getTextureIn());
 														}

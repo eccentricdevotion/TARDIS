@@ -248,7 +248,8 @@ public class TARDISDiskWriterCommand {
 		if (is.hasItemMeta()) {
 			ItemMeta im = is.getItemMeta();
 			assert im != null;
-			if (im.hasDisplayName() && im.getDisplayName().equals("Authorised Control Disk") && im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
+			if (im.hasDisplayName() && im.getDisplayName().equals("Authorised Control Disk") &&
+				im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
 				if (args.length < 2) {
 					TARDISMessage.send(player, "TOO_FEW_ARGS");
 					return false;
@@ -268,7 +269,8 @@ public class TARDISDiskWriterCommand {
 						wherename.put("type", 0);
 						ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
 						if (!rsd.resultSet()) {
-							TARDISMessage.send(player, "SAVE_NOT_FOUND", ChatColor.GREEN + "/tardis list saves" + ChatColor.RESET);
+							TARDISMessage.send(player, "SAVE_NOT_FOUND",
+									ChatColor.GREEN + "/tardis list saves" + ChatColor.RESET);
 							return true;
 						}
 						save = args[1];

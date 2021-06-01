@@ -62,7 +62,9 @@ public class ResultSetOccupied {
 		Statement statement = null;
 		ResultSet rs = null;
 		long time = System.currentTimeMillis() - 86400000;
-		String query = "SELECT DISTINCT " + prefix + "travellers.tardis_id FROM " + prefix + "travellers, " + prefix + "tardis WHERE " + prefix + "tardis.last_use > " + time + " AND " + prefix + "tardis.tardis_id = " + prefix + "travellers.tardis_id";
+		String query = "SELECT DISTINCT " + prefix + "travellers.tardis_id FROM " + prefix + "travellers, " + prefix +
+					   "tardis WHERE " + prefix + "tardis.last_use > " + time + " AND " + prefix +
+					   "tardis.tardis_id = " + prefix + "travellers.tardis_id";
 		try {
 			service.testConnection(connection);
 			statement = connection.createStatement();

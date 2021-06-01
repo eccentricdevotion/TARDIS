@@ -60,7 +60,8 @@ class TARDISSetKeyCommand {
 			TARDISMessage.send(player, "KEY_NO_BLOCK");
 			return true;
 		}
-		if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks") && !keys.contains(go)) {
+		if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks") &&
+			!keys.contains(go)) {
 			TARDISMessage.send(player, "MATERIAL_NOT_VALID");
 			return true;
 		}

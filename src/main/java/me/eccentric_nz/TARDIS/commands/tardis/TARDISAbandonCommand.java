@@ -176,7 +176,8 @@ public class TARDISAbandonCommand {
 	}
 
 	boolean doAbandon(CommandSender sender, boolean list) {
-		if (TARDISPermission.hasPermission(sender, "tardis.abandon") && plugin.getConfig().getBoolean("abandon.enabled")) {
+		if (TARDISPermission.hasPermission(sender, "tardis.abandon") &&
+			plugin.getConfig().getBoolean("abandon.enabled")) {
 			if (list) {
 				// list abandoned TARDISes
 				if (sender.hasPermission("tardis.admin")) {
@@ -235,7 +236,9 @@ public class TARDISAbandonCommand {
 						TARDISMessage.send(player, "NOT_IN_VORTEX");
 						return true;
 					}
-					if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+					if (plugin.getTrackerKeeper().getInVortex().contains(id) ||
+						plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+						plugin.getTrackerKeeper().getDematerialising().contains(id)) {
 						TARDISMessage.send(player, "NOT_WHILE_MAT");
 						return true;
 					}

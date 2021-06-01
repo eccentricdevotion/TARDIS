@@ -96,14 +96,16 @@ public class TARDISEPSRunnable implements Runnable {
 				players.forEach((p) -> {
 					Player pp = plugin.getServer().getPlayer(p);
 					if (pp != null) {
-						TARDISMessage.message(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + message);
+						TARDISMessage.message(pp,
+								ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + message);
 					}
 				});
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 					players.forEach((p) -> {
 						Player pp = plugin.getServer().getPlayer(p);
 						if (pp != null) {
-							TARDISMessage.message(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + plugin.getLanguage().getString("EP1_BYE"));
+							TARDISMessage.message(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET +
+													  plugin.getLanguage().getString("EP1_BYE"));
 						}
 					});
 					plugin.getTardisHelper().removeNPC(npcID, l.getWorld());
@@ -123,7 +125,8 @@ public class TARDISEPSRunnable implements Runnable {
 			return TARDISStaticLocationGetters.getLocationFromDB(eps);
 		} else if (plugin.getConfig().getBoolean("creation.create_worlds")) {
 			// get world spawn location
-			return Objects.requireNonNull(plugin.getServer().getWorld("TARDIS_WORLD_" + tl.getName())).getSpawnLocation();
+			return Objects.requireNonNull(plugin.getServer().getWorld(
+					"TARDIS_WORLD_" + tl.getName())).getSpawnLocation();
 		} else {
 			HashMap<String, Object> where = new HashMap<>();
 			where.put("tardis_id", id);

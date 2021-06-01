@@ -81,19 +81,22 @@ public class TARDISGrowthListener implements Listener {
 						case PUMPKIN_STEM:
 							// fully grown is 7
 							if (data < 6) {
-								plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ageable.setAge(data + 2), 3L);
+								plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ageable.setAge(
+										data + 2), 3L);
 							}
 							break;
 						case COCOA:
 							// fully grown is 3
 							if (data < 4 && TARDISConstants.RANDOM.nextInt(100) < 25) {
-								plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ageable.setAge(data + 8), 3L);
+								plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ageable.setAge(
+										data + 8), 3L);
 							}
 							break;
 						default: // NETHER_WARTS
 							// fully grown is 3
 							if (data < 2 && TARDISConstants.RANDOM.nextInt(100) < 33) {
-								plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ageable.setAge(data + 2), 3L);
+								plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ageable.setAge(
+										data + 2), 3L);
 							}
 							break;
 					}

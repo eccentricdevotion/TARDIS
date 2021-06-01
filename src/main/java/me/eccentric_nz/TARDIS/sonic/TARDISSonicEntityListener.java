@@ -70,16 +70,19 @@ public class TARDISSonicEntityListener implements Listener {
 				Entity ent = event.getRightClicked();
 				if (ent instanceof Player scanned) {
 					TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
-					if (TARDISPermission.hasPermission(player, "tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade") && player.isSneaking()) {
+					if (TARDISPermission.hasPermission(player, "tardis.sonic.admin") && lore != null &&
+						lore.contains("Admin Upgrade") && player.isSneaking()) {
 						TARDISMessage.send(player, "SONIC_INV");
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 							PlayerInventory pinv = scanned.getInventory();
 							ItemStack[] items = pinv.getStorageContents();
-							Inventory menu = plugin.getServer().createInventory(player, items.length, ChatColor.DARK_RED + "" + scanned.getName() + "'s Inventory");
+							Inventory menu = plugin.getServer().createInventory(player, items.length,
+									ChatColor.DARK_RED + "" + scanned.getName() + "'s Inventory");
 							menu.setContents(items);
 							player.openInventory(menu);
 						}, 40L);
-					} else if (TARDISPermission.hasPermission(player, "tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
+					} else if (TARDISPermission.hasPermission(player, "tardis.sonic.bio") && lore != null &&
+							   lore.contains("Bio-scanner Upgrade")) {
 						TARDISMessage.send(player, "SONIC_PLAYER");
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 							// getHealth() / getMaxHealth() * getHealthScale()

@@ -51,7 +51,9 @@ public class TARDISRenderRoomListener implements Listener {
 		Player player = event.getPlayer();
 		if (plugin.getTrackerKeeper().getRenderRoomOccupants().contains(player.getUniqueId())) {
 			event.setCancelled(true);
-			if (Objects.equals(event.getHand(), EquipmentSlot.HAND) && (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR))) {
+			if (Objects.equals(event.getHand(), EquipmentSlot.HAND) &&
+				(event.getAction().equals(Action.RIGHT_CLICK_BLOCK) ||
+				 event.getAction().equals(Action.RIGHT_CLICK_AIR))) {
 				// tp the player back to the tardis console
 				transmat(player);
 				player.updateInventory();

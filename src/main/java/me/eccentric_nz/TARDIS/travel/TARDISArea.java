@@ -60,7 +60,8 @@ public class TARDISArea {
 		if (rsa.resultSet()) {
 			for (Area a : rsa.getData()) {
 				// is clicked block within a defined tardis area?
-				if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
+				if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() &&
+					l.getZ() >= a.getMinZ()) {
 					chk = false;
 					break;
 				}
@@ -84,7 +85,8 @@ public class TARDISArea {
 		if (rsa.resultSet()) {
 			for (Area a : rsa.getData()) {
 				// is clicked block within a defined tardis area?
-				if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
+				if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() &&
+					l.getZ() >= a.getMinZ()) {
 					return new TARDISAreaCheck(a, true);
 				}
 			}
@@ -108,7 +110,9 @@ public class TARDISArea {
 			Area a = rsa.getArea();
 			String lw = Objects.requireNonNull(l.getWorld()).getName();
 			// is clicked block within a defined tardis area?
-			if (a.getWorld().equals(lw) && (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ())) {
+			if (a.getWorld().equals(lw) &&
+				(l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() &&
+				 l.getZ() >= a.getMinZ())) {
 				chk = false;
 			}
 		}
@@ -132,9 +136,11 @@ public class TARDISArea {
 			for (Area a : rsa.getData()) {
 				String n = a.getAreaName();
 				// is time travel destination within a defined tardis area?
-				if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
+				if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() &&
+					l.getZ() >= a.getMinZ()) {
 					// does the player have permission to travel here
-					if (!TARDISPermission.hasPermission(p, "tardis.area." + n) || !p.isPermissionSet("tardis.area." + n)) {
+					if (!TARDISPermission.hasPermission(p, "tardis.area." + n) ||
+						!p.isPermissionSet("tardis.area." + n)) {
 						plugin.getTrackerKeeper().getPerm().put(p.getUniqueId(), "tardis.area." + n);
 						chk = true;
 						break;

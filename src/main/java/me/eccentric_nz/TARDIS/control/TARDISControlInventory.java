@@ -86,7 +86,8 @@ public class TARDISControlInventory {
 		ItemStack ran = new ItemStack(Material.BOWL, 1);
 		ItemMeta dom = ran.getItemMeta();
 		assert dom != null;
-		dom.setDisplayName(ChatColor.MAGIC + "ran" + ChatColor.RESET + plugin.getLanguage().getString("BUTTON_RANDOM") + ChatColor.MAGIC + "dom");
+		dom.setDisplayName(ChatColor.MAGIC + "ran" + ChatColor.RESET + plugin.getLanguage().getString("BUTTON_RANDOM") +
+						   ChatColor.MAGIC + "dom");
 		dom.setCustomModelData(GUIControlCentre.BUTTON_RANDOM.getCustomModelData());
 		ran.setItemMeta(dom);
 		// Saves

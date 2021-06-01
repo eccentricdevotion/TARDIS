@@ -80,12 +80,9 @@ class TARDISBuildAbandoned implements Runnable {
 	private Block postBedrock = null;
 	private boolean running;
 	private TARDISTIPSData pos;
-	private JsonObject obj;
 	private JsonArray arr;
 	private int task, h, w, d, level = 0, row = 0, startx, starty, startz, j = 2;
 	private Location ender = null;
-	private Material type;
-	private BlockData data;
 	private UseClay use_clay;
 	private int counter = 0;
 	private double div = 1.0d;
@@ -119,14 +116,15 @@ class TARDISBuildAbandoned implements Runnable {
 				starty = 64;
 			}
 			String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
-			String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
+			String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() +
+						  ".tschm";
 			File file = new File(path);
 			if (!file.exists()) {
 				plugin.debug("Could not find a schematic with that name!");
 				return;
 			}
 			// get JSON
-			obj = TARDISSchematicGZip.unzip(path);
+			JsonObject obj = TARDISSchematicGZip.unzip(path);
 			// get dimensions
 			assert obj != null;
 			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
@@ -247,8 +245,8 @@ class TARDISBuildAbandoned implements Runnable {
 			int x = startx + row;
 			int y = starty + level;
 			int z = startz + col;
-			data = plugin.getServer().createBlockData(c.get("data").getAsString());
-			type = data.getMaterial();
+			BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
+			Material type = data.getMaterial();
 			if (type.equals(Material.NOTE_BLOCK)) {
 				// remember the location of this Disk Storage
 				String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
@@ -259,7 +257,8 @@ class TARDISBuildAbandoned implements Runnable {
 			if (Tag.WOOL.isTagged(type)) {
 				switch (type) {
 					case ORANGE_WOOL:
-						if (wall_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Orange Wool / Terracotta
+						if (wall_type ==
+							Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Orange Wool / Terracotta
 							switch (use_clay) {
 								case TERRACOTTA -> data = Material.ORANGE_TERRACOTTA.createBlockData();
 								case CONCRETE -> data = Material.ORANGE_CONCRETE.createBlockData();
@@ -271,7 +270,8 @@ class TARDISBuildAbandoned implements Runnable {
 						break;
 					case LIGHT_GRAY_WOOL:
 						if (!schm.getPermission().equals("eleventh")) {
-							if (floor_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Light Grey Wool / Terracotta
+							if (floor_type ==
+								Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Light Grey Wool / Terracotta
 								switch (use_clay) {
 									case TERRACOTTA -> data = Material.LIGHT_GRAY_TERRACOTTA.createBlockData();
 									case CONCRETE -> data = Material.LIGHT_GRAY_CONCRETE.createBlockData();
@@ -432,7 +432,10 @@ class TARDISBuildAbandoned implements Runnable {
 				setlb.put("location", lloc);
 				plugin.getQueryFactory().doInsert("lamps", setlb);
 			}
-			if (type.equals(Material.COMMAND_BLOCK) || ((schm.getPermission().equals("bigger") || schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
+			if (type.equals(Material.COMMAND_BLOCK) ||
+				((schm.getPermission().equals("bigger") || schm.getPermission().equals("coral") ||
+				  schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) &&
+				 type.equals(Material.BEACON))) {
 				/*
 				 * command block - remember it to spawn the creeper on.
 				 * could also be a beacon block, as the creeper sits
@@ -483,7 +486,8 @@ class TARDISBuildAbandoned implements Runnable {
 				plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
 			}
 			// if it's the door, don't set it just remember its block then do it at the end
-			if (type.equals(Material.HONEYCOMB_BLOCK) && (schm.getPermission().equals("delta") || schm.getPermission().equals("rotor"))) {
+			if (type.equals(Material.HONEYCOMB_BLOCK) &&
+				(schm.getPermission().equals("delta") || schm.getPermission().equals("rotor"))) {
 				/*
 				 * spawn an item frame and place the time rotor in it
 				 */
@@ -493,7 +497,8 @@ class TARDISBuildAbandoned implements Runnable {
 				postDoorBlocks.put(world.getBlockAt(x, y, z), data);
 			} else if (type.equals(Material.REDSTONE_TORCH) || type.equals(Material.REDSTONE_WALL_TORCH)) {
 				postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
-			} else if (type.equals(Material.TORCH) || type.equals(Material.WALL_TORCH) || type.equals(Material.SOUL_TORCH) || type.equals(Material.SOUL_WALL_TORCH)) {
+			} else if (type.equals(Material.TORCH) || type.equals(Material.WALL_TORCH) ||
+					   type.equals(Material.SOUL_TORCH) || type.equals(Material.SOUL_WALL_TORCH)) {
 				postTorchBlocks.put(world.getBlockAt(x, y, z), data);
 			} else if (type.equals(Material.STICKY_PISTON)) {
 				postStickyPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);

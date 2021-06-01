@@ -163,7 +163,9 @@ public class TARDISDeleteCommand {
 			// destroy the inner tardis
 			// give the tardis time to remove itself as it's not hidden
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-				if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || Objects.requireNonNull(wname).contains("TARDIS_WORLD_")) {
+				if ((plugin.getConfig().getBoolean("creation.create_worlds") &&
+					 !plugin.getConfig().getBoolean("creation.default_world")) ||
+					Objects.requireNonNull(wname).contains("TARDIS_WORLD_")) {
 					// delete tardis world
 					List<Player> players = cw.getPlayers();
 					players.forEach((p) -> p.kickPlayer("World scheduled for deletion!"));
@@ -181,7 +183,8 @@ public class TARDISDeleteCommand {
 						plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + wname + " clear");
 					}
 					plugin.getServer().unloadWorld(cw, true);
-					File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + wname + File.separator);
+					File world_folder = new File(
+							plugin.getServer().getWorldContainer() + File.separator + wname + File.separator);
 					if (!deleteFolder(world_folder)) {
 						plugin.debug("Could not delete world <" + wname + ">");
 					}

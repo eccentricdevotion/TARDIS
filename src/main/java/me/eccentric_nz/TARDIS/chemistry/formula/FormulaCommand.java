@@ -52,7 +52,8 @@ public class FormulaCommand {
 					new FormulaViewer(plugin, player).getLabFormula(lab);
 					return true;
 				} catch (IllegalArgumentException le) {
-					TARDISMessage.message(player, "Could not find a formula for '" + args[1] + "' make sure you typed it correctly.");
+					TARDISMessage.message(player,
+							"Could not find a formula for '" + args[1] + "' make sure you typed it correctly.");
 					return true;
 				}
 			}

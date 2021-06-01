@@ -65,7 +65,8 @@ public class TARDISItemFrameListener implements Listener {
 			// did they run the `/tardis update direction|frame|rotor|map` command?
 			if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {
 				Control control = Control.valueOf(plugin.getTrackerKeeper().getPlayers().get(uuid).toUpperCase());
-				if (control.equals(Control.DIRECTION) || control.equals(Control.FRAME) || control.equals(Control.ROTOR) || control.equals(Control.MAP)) {
+				if (control.equals(Control.DIRECTION) || control.equals(Control.FRAME) ||
+					control.equals(Control.ROTOR) || control.equals(Control.MAP)) {
 					// check they have a tardis
 					ResultSetTardisID rst = new ResultSetTardisID(plugin);
 					if (!rst.fromUUID(uuid.toString())) {
@@ -75,7 +76,8 @@ public class TARDISItemFrameListener implements Listener {
 					int id = rst.getTardisId();
 					switch (control) {
 						case DIRECTION, FRAME, MAP -> {
-							if (control.equals(Control.MAP) && !TARDISPermission.hasPermission(player, "tardis.scanner.map")) {
+							if (control.equals(Control.MAP) &&
+								!TARDISPermission.hasPermission(player, "tardis.scanner.map")) {
 								plugin.getTrackerKeeper().getPlayers().remove(uuid);
 								TARDISMessage.send(player, "NO_PERM_MAP");
 								return;
@@ -176,7 +178,8 @@ public class TARDISItemFrameListener implements Listener {
 							default -> "WEST";
 						};
 						player.performCommand("tardis direction " + direction);
-						plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardis direction " + direction);
+						plugin.getConsole().sendMessage(
+								player.getName() + " issued server command: /tardis direction " + direction);
 					} else {
 						Rotation r;
 						// set the rotation
@@ -203,7 +206,8 @@ public class TARDISItemFrameListener implements Listener {
 					}
 				} else {
 					// are they placing a tripwire hook?
-					if (frame.getItem().getType().isAir() && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
+					if (frame.getItem().getType().isAir() &&
+						player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
 						// get current tardis direction
 						HashMap<String, Object> wherec = new HashMap<>();
 						wherec.put("tardis_id", id);
@@ -255,7 +259,8 @@ public class TARDISItemFrameListener implements Listener {
 					if (player.isSneaking()) {
 						// open programming GUI
 						ItemStack[] handles = new TARDISHandlesProgramInventory(plugin, 0).getHandles();
-						Inventory hgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Handles Program");
+						Inventory hgui = plugin.getServer().createInventory(player, 54,
+								ChatColor.DARK_RED + "Handles Program");
 						hgui.setContents(handles);
 						player.openInventory(hgui);
 					} else {
@@ -264,7 +269,8 @@ public class TARDISItemFrameListener implements Listener {
 						if (disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
 							ItemMeta dim = disk.getItemMeta();
 							assert dim != null;
-							if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
+							if (dim.hasDisplayName() &&
+								ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
 								// get the program_id from the disk
 								int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(dim.getLore()).get(1));
 								// query the database

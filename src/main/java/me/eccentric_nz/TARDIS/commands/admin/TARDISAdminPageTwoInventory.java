@@ -50,7 +50,10 @@ class TARDISAdminPageTwoInventory {
 		config.forEach((c) -> {
 			String value = plugin.getConfig().getString(c);
 			assert value != null;
-			if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && (c.startsWith("circuits") || c.startsWith("creation") || c.startsWith("debug") || c.startsWith("desktop") || c.startsWith("junk") || c.startsWith("siege") || c.startsWith("travel") || c.startsWith("abandon") || c.startsWith("blueprints"))) {
+			if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) &&
+				(c.startsWith("circuits") || c.startsWith("creation") || c.startsWith("debug") ||
+				 c.startsWith("desktop") || c.startsWith("junk") || c.startsWith("siege") || c.startsWith("travel") ||
+				 c.startsWith("abandon") || c.startsWith("blueprints"))) {
 				ItemStack is = new ItemStack(Material.REPEATER, 1);
 				ItemMeta im = is.getItemMeta();
 				assert im != null;

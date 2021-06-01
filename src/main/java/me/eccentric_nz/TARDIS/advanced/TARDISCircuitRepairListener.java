@@ -66,7 +66,8 @@ public class TARDISCircuitRepairListener implements Listener {
 			ItemStack[] items = anvil.getContents();
 			ItemStack first = items[0];
 			// is it a redstone with item meta?
-			if (first != null && first.getType().equals(Material.GLOWSTONE_DUST) && first.hasItemMeta() && first.getAmount() == 1) {
+			if (first != null && first.getType().equals(Material.GLOWSTONE_DUST) && first.hasItemMeta() &&
+				first.getAmount() == 1) {
 				// get the item meta
 				ItemMeta fim = first.getItemMeta();
 				assert fim != null;

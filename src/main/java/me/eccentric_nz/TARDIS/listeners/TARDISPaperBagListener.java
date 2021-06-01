@@ -147,7 +147,8 @@ public class TARDISPaperBagListener implements Listener {
 														adjustments.put(entry.getKey(), amount);
 													} else if (flavour2.equals(flavour) && amount2 < 64) {
 														adjust = amount2 + amount;
-														adjustments.put(entry.getKey(), (adjust < 65) ? 0 : 64 - amount2);
+														adjustments.put(entry.getKey(), (adjust < 65) ? 0 :
+																64 - amount2);
 														amount2 = (adjust < 65) ? adjust : 64;
 													} else {
 														if (flavour3.isEmpty()) {
@@ -156,7 +157,8 @@ public class TARDISPaperBagListener implements Listener {
 															adjustments.put(entry.getKey(), amount);
 														} else if (flavour3.equals(flavour) && amount3 < 64) {
 															adjust = amount3 + amount;
-															adjustments.put(entry.getKey(), (adjust < 65) ? 0 : 64 - amount3);
+															adjustments.put(entry.getKey(), (adjust < 65) ? 0 :
+																	64 - amount3);
 															amount3 = (adjust < 65) ? adjust : 64;
 														} else {
 															if (flavour4.isEmpty()) {
@@ -165,7 +167,8 @@ public class TARDISPaperBagListener implements Listener {
 																adjustments.put(entry.getKey(), amount);
 															} else if (flavour4.equals(flavour) && amount4 < 64) {
 																adjust = amount4 + amount;
-																adjustments.put(entry.getKey(), (adjust < 65) ? 0 : 64 - amount4);
+																adjustments.put(entry.getKey(), (adjust < 65) ? 0 :
+																		64 - amount4);
 																amount4 = (adjust < 65) ? adjust : 64;
 															}
 														}

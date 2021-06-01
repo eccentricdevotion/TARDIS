@@ -85,8 +85,10 @@ class TARDISARSRunnable implements Runnable {
 			// get start locations
 			Location l = new Location(w, slot.getX(), slot.getY(), slot.getZ());
 			roomData.setDirection(COMPASS.SOUTH);
-			String directory = (plugin.getRoomsConfig().getBoolean("rooms." + whichRoom + ".user")) ? "user_schematics" : "schematics";
-			String path = plugin.getDataFolder() + File.separator + directory + File.separator + whichRoom.toLowerCase(Locale.ENGLISH) + ".tschm";
+			String directory = (plugin.getRoomsConfig().getBoolean(
+					"rooms." + whichRoom + ".user")) ? "user_schematics" : "schematics";
+			String path = plugin.getDataFolder() + File.separator + directory + File.separator +
+						  whichRoom.toLowerCase(Locale.ENGLISH) + ".tschm";
 			// get JSON
 			JsonObject obj = TARDISSchematicGZip.unzip(path);
 			// set y offset - this needs to be how many BLOCKS above ground 0 of the 16x16x16 chunk the room starts
@@ -142,7 +144,8 @@ class TARDISARSRunnable implements Runnable {
 			} else {
 				bData = bid;
 			}
-			int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
+			int tmp = Math.round(
+					(entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
 			int required = (tmp > 0) ? tmp : 1;
 			if (blockIDCount.containsKey(bData)) {
 				blockIDCount.put(bData, (blockIDCount.get(bData) + required));

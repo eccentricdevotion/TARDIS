@@ -104,7 +104,8 @@ public class TARDISTimeTravel {
 					Material mat = block.getType();
 					if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
 						// check for siege cube
-						if (TARDISPlugin.plugin.getConfig().getBoolean("siege.enabled") && mat.equals(Material.BROWN_MUSHROOM_BLOCK)) {
+						if (TARDISPlugin.plugin.getConfig().getBoolean("siege.enabled") &&
+							mat.equals(Material.BROWN_MUSHROOM_BLOCK)) {
 							MultipleFacing mf = (MultipleFacing) block.getBlockData();
 							if (!mf.getAsString().equals(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2))) {
 								count++;
@@ -185,7 +186,8 @@ public class TARDISTimeTravel {
 		Set<String> worldlist = Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false);
 		List<World> allowedWorlds = new ArrayList<>();
 
-		if (e.equals("THIS") && plugin.getPlanetsConfig().getBoolean("planets." + this_world.getName() + ".time_travel")) {
+		if (e.equals("THIS") &&
+			plugin.getPlanetsConfig().getBoolean("planets." + this_world.getName() + ".time_travel")) {
 			allowedWorlds.add(this_world);
 		} else {
 			worldlist.forEach((o) -> {
@@ -197,25 +199,29 @@ public class TARDISTimeTravel {
 						env = "NORMAL";
 					}
 					if (e.equalsIgnoreCase(env)) {
-						if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
+						if (plugin.getConfig().getBoolean("travel.include_default_world") ||
+							!plugin.getConfig().getBoolean("creation.default_world")) {
 							// malfunction only ever true for NETHER & THE_END worlds
 							if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel") || malfunction) {
 								allowedWorlds.add(ww);
 							}
 						} else {
 							if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-								if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel") || malfunction) {
+								if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel") ||
+									malfunction) {
 									allowedWorlds.add(ww);
 								}
 							}
 						}
 					}
 					// remove the world the Police Box is in
-					if (this_world != null && (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + this_world.getName() + ".time_travel"))) {
+					if (this_world != null && (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean(
+							"planets." + this_world.getName() + ".time_travel"))) {
 						allowedWorlds.remove(this_world);
 					}
 					// remove the world if the player doesn't have permission
-					if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !TARDISPermission.hasPermission(p, "tardis.travel." + o)) {
+					if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") &&
+						!TARDISPermission.hasPermission(p, "tardis.travel." + o)) {
 						allowedWorlds.remove(ww);
 					}
 				}
@@ -250,7 +256,8 @@ public class TARDISTimeTravel {
 					wherez -= 120;
 					// get the spawn point
 					Location endSpawn = randworld.getSpawnLocation();
-					highest = TARDISStaticLocationGetters.getHighestYIn3x3(randworld, endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
+					highest = TARDISStaticLocationGetters.getHighestYIn3x3(randworld,
+							endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
 					if (highest > 40) {
 						Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
 						Location chunk_loc = currentBlock.getLocation();
@@ -307,11 +314,13 @@ public class TARDISTimeTravel {
 							highest = TARDISStaticLocationGetters.getHighestYIn3x3(randworld, wherex, wherez);
 							if (highest > 3) {
 								Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
-								if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && !plugin.getConfig().getBoolean("travel.land_on_water")) {
+								if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) &&
+									!plugin.getConfig().getBoolean("travel.land_on_water")) {
 									// check if submarine is on
 									ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
 									if (rsp.resultSet()) {
-										if (rsp.isSubmarineOn() && TARDISStaticUtils.isOceanBiome(TARDISStaticUtils.getBiomeAt(currentBlock.getLocation()))) {
+										if (rsp.isSubmarineOn() &&
+											TARDISStaticUtils.isOceanBiome(TARDISStaticUtils.getBiomeAt(currentBlock.getLocation()))) {
 											// get submarine location
 											TARDISMessage.send(p, "SUB_SEARCH");
 											Location underwater = submarine(currentBlock, d);
@@ -461,7 +470,8 @@ public class TARDISTimeTravel {
 			air++;
 		}
 		Material mat = startBlock.getType();
-		if (air >= 4 && (plugin.getGeneralKeeper().getGoodNether().contains(mat) || plugin.getPlanetsConfig().getBoolean("planets." + nether.getName() + ".false_nether"))) {
+		if (air >= 4 && (plugin.getGeneralKeeper().getGoodNether().contains(mat) ||
+						 plugin.getPlanetsConfig().getBoolean("planets." + nether.getName() + ".false_nether"))) {
 			Location netherLocation = startBlock.getLocation();
 			netherLocation.setY(netherLocation.getY() + 1);
 			if (plugin.getPluginRespect().getRespect(netherLocation, new Parameters(p, Flag.getNoMessageFlags()))) {

@@ -37,7 +37,9 @@ public class TARDISItemSpawnListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void onBedDrop(ItemSpawnEvent event) {
-		if ((plugin.getTrackerKeeper().getMaterialising().size() > 0 || plugin.getTrackerKeeper().getDematerialising().size() > 0) && items.contains(event.getEntity().getItemStack().getType())) {
+		if ((plugin.getTrackerKeeper().getMaterialising().size() > 0 ||
+			 plugin.getTrackerKeeper().getDematerialising().size() > 0) &&
+			items.contains(event.getEntity().getItemStack().getType())) {
 			event.setCancelled(true);
 		}
 	}

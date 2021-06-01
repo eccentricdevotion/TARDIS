@@ -98,7 +98,8 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
 					if (rs.resultSet()) {
 						TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardisId(), player);
 						ItemStack[] items = sst.getTerminal();
-						Inventory saveinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves");
+						Inventory saveinv = plugin.getServer().createInventory(player, 54,
+								ChatColor.DARK_RED + "tardis saves");
 						saveinv.setContents(items);
 						player.openInventory(saveinv);
 					}

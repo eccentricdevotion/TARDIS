@@ -143,7 +143,8 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shapeless.Pickup Arrows Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Pickup Arrows Circuit");
 			recipes_config.set("shapeless.Preset Storage Disk.recipe", "MUSIC_DISC_STRAD,GLOWSTONE_DUST=tardis Chameleon Circuit");
 			recipes_config.set("shapeless.Redstone Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Redstone Activator Circuit");
-			plugin.getConsole().sendMessage(plugin.getPluginName() + "All tardis and sonic screwdriver circuit recipes have changed!");
+			plugin.getConsole().sendMessage(
+					plugin.getPluginName() + "All tardis and sonic screwdriver circuit recipes have changed!");
 			i++;
 		}
 		// update for 1.13
@@ -297,7 +298,9 @@ public class TARDISRecipesUpdater {
 			}
 			i++;
 		}
-		if (Objects.requireNonNull(recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L")).contains(":") || Objects.requireNonNull(recipes_config.getString("shaped.Painter Circuit.easy_ingredients.I")).contains("INK_SAC") || Objects.requireNonNull(recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L")).contains("LAPIS_LAZULI")) {
+		if (Objects.requireNonNull(recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L")).contains(":") ||
+			Objects.requireNonNull(recipes_config.getString("shaped.Painter Circuit.easy_ingredients.I")).contains("INK_SAC") ||
+			Objects.requireNonNull(recipes_config.getString("shaped.Stattenheim Remote.easy_ingredients.L")).contains("LAPIS_LAZULI")) {
 			recipes_config.set("shaped.tardis Locator Circuit.easy_ingredients.L", "BLUE_DYE");
 			recipes_config.set("shaped.tardis Locator Circuit.hard_ingredients.L", "BLUE_DYE");
 			recipes_config.set("shaped.tardis Materialisation Circuit.easy_ingredients.L", "BLUE_DYE");
@@ -313,7 +316,8 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
 			i++;
 		}
-		if (!recipes_config.contains("shaped.Paper Bag") || !recipes_config.contains("shaped.Paper Bag.hard_ingredients.C")) {
+		if (!recipes_config.contains("shaped.Paper Bag") ||
+			!recipes_config.contains("shaped.Paper Bag.hard_ingredients.C")) {
 			recipes_config.set("shaped.Paper Bag.easy_shape", "---,PLP,-P-");
 			recipes_config.set("shaped.Paper Bag.easy_ingredients.P", "PAPER");
 			recipes_config.set("shaped.Paper Bag.easy_ingredients.L", "LAPIS_BLOCK");
@@ -579,7 +583,9 @@ public class TARDISRecipesUpdater {
 		} else if (Objects.equals(recipes_config.getString("shaped.tardis Remote Key.easy_ingredients.T"), "REDSTONE_TORCH")) {
 			recipes_config.set("shaped.tardis Remote Key.easy_ingredients.T", "REDSTONE_TORCH");
 		}
-		if (!recipes_config.contains("shaped.White Bow Tie") || Objects.requireNonNull(recipes_config.getString("shaped.White Bow Tie.easy_ingredients.W")).contains(":") || Objects.equals(recipes_config.getString("shaped.White Bow Tie.result"), "LEATHER_CHESTPLATE")) {
+		if (!recipes_config.contains("shaped.White Bow Tie") ||
+			Objects.requireNonNull(recipes_config.getString("shaped.White Bow Tie.easy_ingredients.W")).contains(":") ||
+			Objects.equals(recipes_config.getString("shaped.White Bow Tie.result"), "LEATHER_CHESTPLATE")) {
 			for (Map.Entry<String, String> map : colours.entrySet()) {
 				recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_shape", "---,SWS,---");
 				recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_ingredients.S", "STRING");
@@ -626,7 +632,8 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shaped.Fob Watch.lore", "");
 			i++;
 		}
-		if (!recipes_config.contains("shaped.tardis Biome Reader") || Objects.equals(recipes_config.getString("shaped.tardis Biome Reader.result"), "CLAY_BRICK")) {
+		if (!recipes_config.contains("shaped.tardis Biome Reader") ||
+			Objects.equals(recipes_config.getString("shaped.tardis Biome Reader.result"), "CLAY_BRICK")) {
 			recipes_config.set("shaped.tardis Biome Reader.easy_shape", "---,-C-,SDT");
 			recipes_config.set("shaped.tardis Biome Reader.easy_ingredients.C", "GLOWSTONE_DUST=Emerald Environment Circuit");
 			recipes_config.set("shaped.tardis Biome Reader.easy_ingredients.S", "SAND");
@@ -645,7 +652,8 @@ public class TARDISRecipesUpdater {
 			recipes_config.set("shaped.tardis Biome Reader.lore", "");
 			i++;
 		}
-		if (!recipes_config.contains("shaped.Jammy Dodger") || Objects.equals(recipes_config.getString("shaped.Jammy Dodger.easy_ingredients.R"), "RED_DYE")) {
+		if (!recipes_config.contains("shaped.Jammy Dodger") ||
+			Objects.equals(recipes_config.getString("shaped.Jammy Dodger.easy_ingredients.R"), "RED_DYE")) {
 			recipes_config.set("shaped.Jammy Dodger.easy_shape", "---,WRW,---");
 			recipes_config.set("shaped.Jammy Dodger.easy_ingredients.W", "WHEAT");
 			recipes_config.set("shaped.Jammy Dodger.easy_ingredients.R", "SWEET_BERRIES");
@@ -695,16 +703,21 @@ public class TARDISRecipesUpdater {
 		} else {
 			recipes_config.set("shapeless.tardis Schematic Wand.lore", "Right-click start~Left-click end");
 		}
-		if (!recipes_config.contains("shapeless.Bowl of Custard") || Objects.requireNonNull(recipes_config.getString("shapeless.Bowl of Custard.result")).contains("SOUP")) {
+		if (!recipes_config.contains("shapeless.Bowl of Custard") ||
+			Objects.requireNonNull(recipes_config.getString("shapeless.Bowl of Custard.result")).contains("SOUP")) {
 			recipes_config.set("shapeless.Bowl of Custard.recipe", "BOWL,MILK_BUCKET,EGG");
 			recipes_config.set("shapeless.Bowl of Custard.result", "MUSHROOM_STEW");
 			recipes_config.set("shapeless.Bowl of Custard.amount", 1);
 			recipes_config.set("shapeless.Bowl of Custard.lore", "");
 			i++;
 		}
-		if (!recipes_config.contains("shapeless.Vanilla Jelly Baby") || Objects.requireNonNull(recipes_config.getString("shapeless.Vanilla Jelly Baby.recipe")).contains(":") || Objects.equals(recipes_config.getString("shapeless.Vanilla Jelly Baby.result"), "MELON") || Objects.equals(recipes_config.getString("shapeless.Vanilla Jelly Baby.recipe"), "SUGAR,SLIME_BALL,BONE_MEAL")) {
+		if (!recipes_config.contains("shapeless.Vanilla Jelly Baby") ||
+			Objects.requireNonNull(recipes_config.getString("shapeless.Vanilla Jelly Baby.recipe")).contains(":") ||
+			Objects.equals(recipes_config.getString("shapeless.Vanilla Jelly Baby.result"), "MELON") ||
+			Objects.equals(recipes_config.getString("shapeless.Vanilla Jelly Baby.recipe"), "SUGAR,SLIME_BALL,BONE_MEAL")) {
 			for (Map.Entry<String, String> map : flavours.entrySet()) {
-				recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.recipe", "SUGAR,SLIME_BALL," + map.getValue());
+				recipes_config.set(
+						"shapeless." + map.getKey() + " Jelly Baby.recipe", "SUGAR,SLIME_BALL," + map.getValue());
 				recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.result", "MELON_SLICE");
 				recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.amount", 4);
 				recipes_config.set("shapeless." + map.getKey() + " Jelly Baby.lore", "");
@@ -887,16 +900,21 @@ public class TARDISRecipesUpdater {
 		try {
 			recipes_config.save(new File(plugin.getDataFolder(), "recipes.yml"));
 			if (i > 0) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to recipes.yml");
+				plugin.getConsole().sendMessage(
+						plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET +
+						" new items to recipes.yml");
 			}
 			String key = recipes_config.getString("shaped.tardis Key.result");
 			assert key != null;
 			if (!key.equals(plugin.getConfig().getString("preferences.key"))) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "The tardis Key recipe result (recipes.yml) does not match the configured key preference (config.yml)");
+				plugin.getConsole().sendMessage(plugin.getPluginName() +
+												"The tardis Key recipe result (recipes.yml) does not match the configured key preference (config.yml)");
 			}
 			String r_key_5 = recipes_config.getString("shaped.tardis Remote Key.easy_ingredients.K");
 			if (r_key_5 != null && !key.equals(r_key_5)) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "The tardis Key ingredient (" + r_key_5 + ") in the 'tardis Remote Key' recipe does not match the crafting result of the 'tardis Key' recipe (" + key + ") - they should be the same!");
+				plugin.getConsole().sendMessage(plugin.getPluginName() + "The tardis Key ingredient (" + r_key_5 +
+												") in the 'tardis Remote Key' recipe does not match the crafting result of the 'tardis Key' recipe (" +
+												key + ") - they should be the same!");
 			}
 		} catch (IOException io) {
 			plugin.debug("Could not save recipes.yml, " + io);

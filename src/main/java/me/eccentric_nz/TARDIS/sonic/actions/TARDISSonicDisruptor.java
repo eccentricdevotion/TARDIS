@@ -42,7 +42,8 @@ public class TARDISSonicDisruptor {
 				Location l = block.getLocation();
 				if (mat.equals(Material.SNOW)) {
 					Snow snow = (Snow) block.getBlockData();
-					Objects.requireNonNull(block.getLocation().getWorld()).dropItemNaturally(block.getLocation(), new ItemStack(Material.SNOWBALL, 1 + snow.getLayers()));
+					Objects.requireNonNull(block.getLocation().getWorld()).dropItemNaturally(block.getLocation(), new ItemStack(Material.SNOWBALL,
+							1 + snow.getLayers()));
 				} else {
 					Objects.requireNonNull(l.getWorld()).dropItemNaturally(l, new ItemStack(block.getType(), 1));
 				}

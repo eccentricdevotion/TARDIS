@@ -65,7 +65,11 @@ class TARDISHandlesTakeoffCommand {
 					TARDISMessage.handlesSend(player, "POWER_DOWN");
 					return true;
 				}
-				if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDidDematToVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+				if (plugin.getTrackerKeeper().getInVortex().contains(id) ||
+					plugin.getTrackerKeeper().getDidDematToVortex().contains(id) ||
+					plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) ||
+					plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+					plugin.getTrackerKeeper().getDematerialising().contains(id)) {
 					TARDISMessage.handlesSend(player, "HANDBRAKE_IN_VORTEX");
 					return true;
 				}
@@ -76,7 +80,8 @@ class TARDISHandlesTakeoffCommand {
 				if (rsc.resultSet()) {
 					if (tardis.isHandbrakeOn()) {
 						// check there is enough power for at last random travel
-						if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtronLevel() < plugin.getArtronConfig().getInt("random")) {
+						if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) &&
+							tardis.getArtronLevel() < plugin.getArtronConfig().getInt("random")) {
 							TARDISMessage.handlesSend(player, "ENERGY_NOT_ENOUGH");
 							return true;
 						}

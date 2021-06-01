@@ -160,7 +160,8 @@ public class TARDISUtils {
 			air++;
 		}
 		Material mat = startBlock.getType();
-		if (air >= 4 && (plugin.getGeneralKeeper().getGoodNether().contains(mat) || plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".false_nether"))) {
+		if (air >= 4 && (plugin.getGeneralKeeper().getGoodNether().contains(mat) ||
+						 plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".false_nether"))) {
 			y = startBlock.getLocation().getBlockY() + 1;
 		}
 		return y;
@@ -185,7 +186,8 @@ public class TARDISUtils {
 						set.put("grace", (grace_count + 1));
 						plugin.getQueryFactory().doUpdate("t_count", set, where);
 					}
-				} else if (plugin.getConfig().getBoolean("allow.player_difficulty") && TARDISPermission.hasPermission(p, "tardis.difficulty")) {
+				} else if (plugin.getConfig().getBoolean("allow.player_difficulty") &&
+						   TARDISPermission.hasPermission(p, "tardis.difficulty")) {
 					// check player difficulty preference
 					ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
 					if (rsp.resultSet()) {
@@ -193,7 +195,8 @@ public class TARDISUtils {
 					}
 				}
 			}
-		} else if (plugin.getConfig().getBoolean("allow.player_difficulty") && TARDISPermission.hasPermission(p, "tardis.difficulty")) {
+		} else if (plugin.getConfig().getBoolean("allow.player_difficulty") &&
+				   TARDISPermission.hasPermission(p, "tardis.difficulty")) {
 			// check player difficulty preference
 			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
 			if (rsp.resultSet()) {
@@ -239,7 +242,8 @@ public class TARDISUtils {
 
 	public String getFacing(Player player) {
 		double yaw = player.getLocation().getYaw();
-		if (yaw >= 337.5 || (yaw <= 22.5 && yaw >= 0.0) || (yaw >= -22.5 && yaw <= 0.0) || (yaw <= -337.5 && yaw <= 0.0)) {
+		if (yaw >= 337.5 || (yaw <= 22.5 && yaw >= 0.0) || (yaw >= -22.5 && yaw <= 0.0) ||
+			(yaw <= -337.5 && yaw <= 0.0)) {
 			return "S";
 		}
 		if ((yaw >= 22.5 && yaw <= 67.5) || (yaw <= -292.5 && yaw >= -337.5)) {

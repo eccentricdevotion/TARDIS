@@ -54,7 +54,8 @@ public class TARDISSiegePersister {
 					if (rs.getBoolean("siege_on")) {
 						int id = rs.getInt("tardis_id");
 						plugin.getTrackerKeeper().getInSiegeMode().add(id);
-						if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
+						if (plugin.getConfig().getInt("siege.breeding") > 0 ||
+							plugin.getConfig().getInt("siege.growth") > 0) {
 							Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
 							TARDISSiegeArea tsa = new TARDISSiegeArea(id, c);
 							if (plugin.getConfig().getInt("siege.breeding") > 0) {
@@ -79,7 +80,8 @@ public class TARDISSiegePersister {
 				}
 			}
 			if (count > 0) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " TARDISes in Siege Mode.");
+				plugin.getConsole().sendMessage(
+						plugin.getPluginName() + "Loaded " + count + " TARDISes in Siege Mode.");
 			}
 		} catch (SQLException ex) {
 			plugin.debug("ResultSet error for tardis table: " + ex.getMessage());

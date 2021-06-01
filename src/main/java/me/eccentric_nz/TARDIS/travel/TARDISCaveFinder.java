@@ -52,8 +52,10 @@ public class TARDISCaveFinder {
 			int startz = rsc.getZ();
 			COMPASS d = rsc.getDirection();
 			// Assume all non-nether/non-end world environments are NORMAL
-			boolean hoth = (w.getGenerator() != null && w.getGenerator().getClass().getName().contains("hothgenerator"));
-			if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END) && !hoth) {
+			boolean hoth = (w.getGenerator() != null &&
+							w.getGenerator().getClass().getName().contains("hothgenerator"));
+			if (!w.getEnvironment().equals(World.Environment.NETHER) &&
+				!w.getEnvironment().equals(World.Environment.THE_END) && !hoth) {
 				if (worldCheck(w)) {
 					int plusx = startx + 2000;
 					int plusz = startz + 2000;
@@ -131,27 +133,41 @@ public class TARDISCaveFinder {
 				// check there is enough height for the police box
 				if (yy <= y - 3 && !w.getBlockAt(x - 1, yy - 1, z - 1).getType().equals(Material.STONE)) {
 					// check there is room for the police box
-					if (w.getBlockAt(x - 1, yy, z - 1).getType().isAir() && w.getBlockAt(x - 1, yy, z).getType().isAir() && w.getBlockAt(x - 1, yy, z + 1).getType().isAir() && w.getBlockAt(x, yy, z - 1).getType().isAir() && w.getBlockAt(x, yy, z + 1).getType().isAir() && w.getBlockAt(x + 1, yy, z - 1).getType().isAir() && w.getBlockAt(x + 1, yy, z).getType().isAir() && w.getBlockAt(x + 1, yy, z + 1).getType().isAir()) {
+					if (w.getBlockAt(x - 1, yy, z - 1).getType().isAir() &&
+						w.getBlockAt(x - 1, yy, z).getType().isAir() &&
+						w.getBlockAt(x - 1, yy, z + 1).getType().isAir() &&
+						w.getBlockAt(x, yy, z - 1).getType().isAir() && w.getBlockAt(x, yy, z + 1).getType().isAir() &&
+						w.getBlockAt(x + 1, yy, z - 1).getType().isAir() &&
+						w.getBlockAt(x + 1, yy, z).getType().isAir() &&
+						w.getBlockAt(x + 1, yy, z + 1).getType().isAir()) {
 						// finally check there is space to exit the police box
 						boolean safe = false;
 						switch (d) {
 							case NORTH:
-								if (w.getBlockAt(x - 1, yy, z + 2).getType().isAir() && w.getBlockAt(x, yy, z + 2).getType().isAir() && w.getBlockAt(x + 1, yy, z + 2).getType().isAir()) {
+								if (w.getBlockAt(x - 1, yy, z + 2).getType().isAir() &&
+									w.getBlockAt(x, yy, z + 2).getType().isAir() &&
+									w.getBlockAt(x + 1, yy, z + 2).getType().isAir()) {
 									safe = true;
 								}
 								break;
 							case WEST:
-								if (w.getBlockAt(x + 2, yy, z - 1).getType().isAir() && w.getBlockAt(x + 2, yy, z).getType().isAir() && w.getBlockAt(x + 2, yy, z + 1).getType().isAir()) {
+								if (w.getBlockAt(x + 2, yy, z - 1).getType().isAir() &&
+									w.getBlockAt(x + 2, yy, z).getType().isAir() &&
+									w.getBlockAt(x + 2, yy, z + 1).getType().isAir()) {
 									safe = true;
 								}
 								break;
 							case SOUTH:
-								if (w.getBlockAt(x - 1, yy, z - 2).getType().isAir() && w.getBlockAt(x, yy, z - 2).getType().isAir() && w.getBlockAt(x + 1, yy, z - 2).getType().isAir()) {
+								if (w.getBlockAt(x - 1, yy, z - 2).getType().isAir() &&
+									w.getBlockAt(x, yy, z - 2).getType().isAir() &&
+									w.getBlockAt(x + 1, yy, z - 2).getType().isAir()) {
 									safe = true;
 								}
 								break;
 							default:
-								if (w.getBlockAt(x - 2, yy, z - 1).getType().isAir() && w.getBlockAt(x - 2, yy, z).getType().isAir() && w.getBlockAt(x - 2, yy, z + 1).getType().isAir()) {
+								if (w.getBlockAt(x - 2, yy, z - 1).getType().isAir() &&
+									w.getBlockAt(x - 2, yy, z).getType().isAir() &&
+									w.getBlockAt(x - 2, yy, z + 1).getType().isAir()) {
 									safe = true;
 								}
 								break;

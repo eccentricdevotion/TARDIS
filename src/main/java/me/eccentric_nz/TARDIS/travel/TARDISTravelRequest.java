@@ -73,7 +73,8 @@ public class TARDISTravelRequest {
 				bool = false;
 			}
 			// check if player has to visit first
-			if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(p.getUniqueId().toString(), "NETHER")) {
+			if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") &&
+				!new ResultSetTravelledTo(plugin).resultSet(p.getUniqueId().toString(), "NETHER")) {
 				TARDISMessage.send(p, "TRAVEL_NOT_VISITED", "Nether");
 				bool = false;
 			}
@@ -91,7 +92,8 @@ public class TARDISTravelRequest {
 				bool = false;
 			}
 			// check if player has to visit first
-			if (plugin.getConfig().getBoolean("allow_end_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(p.getUniqueId().toString(), "THE_END")) {
+			if (plugin.getConfig().getBoolean("allow_end_after_visit") &&
+				!new ResultSetTravelledTo(plugin).resultSet(p.getUniqueId().toString(), "THE_END")) {
 				TARDISMessage.send(p, "TRAVEL_NOT_VISITED", "End");
 				bool = false;
 			}
@@ -100,23 +102,33 @@ public class TARDISTravelRequest {
 			TARDISMessage.send(p, "WORLDGUARD");
 			bool = false;
 		}
-		if (plugin.getPluginRespect().isTownyOnServer() && !Objects.equals(plugin.getConfig().getString("preferences.respect_towny"), "none") && !plugin.getPluginRespect().getTychk().checkTowny(to, l)) {
+		if (plugin.getPluginRespect().isTownyOnServer() &&
+			!Objects.equals(plugin.getConfig().getString("preferences.respect_towny"), "none") &&
+			!plugin.getPluginRespect().getTychk().checkTowny(to, l)) {
 			TARDISMessage.send(p, "TOWNY");
 			bool = false;
 		}
-		if (plugin.getPluginRespect().isBorderOnServer() && plugin.getConfig().getBoolean("preferences.respect_worldborder") && !plugin.getPluginRespect().getBorderchk().isInBorder(l)) {
+		if (plugin.getPluginRespect().isBorderOnServer() &&
+			plugin.getConfig().getBoolean("preferences.respect_worldborder") &&
+			!plugin.getPluginRespect().getBorderchk().isInBorder(l)) {
 			TARDISMessage.send(p, "WORLDBORDER");
 			bool = false;
 		}
-		if (plugin.getPluginRespect().isFactionsOnServer() && plugin.getConfig().getBoolean("preferences.respect_factions") && !TARDISFactionsChecker.isInFaction(to, l)) {
+		if (plugin.getPluginRespect().isFactionsOnServer() &&
+			plugin.getConfig().getBoolean("preferences.respect_factions") &&
+			!TARDISFactionsChecker.isInFaction(to, l)) {
 			TARDISMessage.send(p, "FACTIONS");
 			bool = false;
 		}
-		if (plugin.getPluginRespect().isGriefPreventionOnServer() && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && !plugin.getPluginRespect().getGriefchk().isInClaim(to, l)) {
+		if (plugin.getPluginRespect().isGriefPreventionOnServer() &&
+			plugin.getConfig().getBoolean("preferences.respect_grief_prevention") &&
+			!plugin.getPluginRespect().getGriefchk().isInClaim(to, l)) {
 			TARDISMessage.send(p, "GRIEFPREVENTION");
 			bool = false;
 		}
-		if (plugin.getPluginRespect().isRedProtectOnServer() && plugin.getConfig().getBoolean("preferences.respect_red_protect") && !TARDISRedProtectChecker.canBuild(to, l)) {
+		if (plugin.getPluginRespect().isRedProtectOnServer() &&
+			plugin.getConfig().getBoolean("preferences.respect_red_protect") &&
+			!TARDISRedProtectChecker.canBuild(to, l)) {
 			TARDISMessage.send(p, "REDPROTECT");
 			bool = false;
 		}

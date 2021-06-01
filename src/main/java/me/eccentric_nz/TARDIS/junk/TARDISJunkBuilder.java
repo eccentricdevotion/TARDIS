@@ -98,7 +98,8 @@ public class TARDISJunkBuilder implements Runnable {
 					BlockData data;
 					Block postTerminalBlock = null;
 					// get JSON
-					String path = plugin.getDataFolder() + File.separator + "schematics" + File.separator + "junk.tschm";
+					String path =
+							plugin.getDataFolder() + File.separator + "schematics" + File.separator + "junk.tschm";
 					JsonObject obj = TARDISSchematicGZip.unzip(path);
 					// get dimensions
 					assert obj != null;

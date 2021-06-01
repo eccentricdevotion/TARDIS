@@ -78,7 +78,8 @@ public class ResultSetArchiveButtons {
 						}
 					}
 					// add cost
-					int cost = plugin.getArtronConfig().getInt("upgrades.archive." + rs.getString("console_size").toLowerCase(Locale.ENGLISH));
+					int cost = plugin.getArtronConfig().getInt(
+							"upgrades.archive." + rs.getString("console_size").toLowerCase(Locale.ENGLISH));
 					lore.add("Cost: " + cost);
 					// add current
 					if (rs.getInt("use") == 1) {

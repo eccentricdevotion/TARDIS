@@ -153,7 +153,8 @@ public class ChemistryBlockListener implements Listener {
 						}
 						break;
 				}
-				inventory = plugin.getServer().createInventory(player, (name.equals("Atomic elements") ? 54 : 27), ChatColor.DARK_RED + name);
+				inventory = plugin.getServer().createInventory(player, (name.equals("Atomic elements") ? 54 : 27),
+						ChatColor.DARK_RED + name);
 				inventory.setContents(menu);
 				player.openInventory(inventory);
 			}
@@ -192,7 +193,9 @@ public class ChemistryBlockListener implements Listener {
 	public void onChemistryBlockPlace(BlockPlaceEvent event) {
 		ItemStack is = event.getItemInHand();
 		Material material = event.getBlock().getType();
-		if (is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER) && !isMushroomBlock(material)) {
+		if (is.hasItemMeta() &&
+			Objects.requireNonNull(is.getItemMeta()).getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER) &&
+			!isMushroomBlock(material)) {
 			event.setCancelled(true);
 		}
 	}

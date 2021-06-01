@@ -78,7 +78,8 @@ public class TARDISGravityWellListener implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerMove(PlayerMoveEvent event) {
 		World world = Objects.requireNonNull(event.getTo()).getWorld();
-		Location l = new Location(world, event.getTo().getBlockX(), event.getTo().getBlockY() - 1, event.getTo().getBlockZ(), 0.0F, 0.0F);
+		Location l = new Location(world, event.getTo().getBlockX(),
+				event.getTo().getBlockY() - 1, event.getTo().getBlockZ(), 0.0F, 0.0F);
 		String loc = l.toString();
 		Double[] values;
 		double end;

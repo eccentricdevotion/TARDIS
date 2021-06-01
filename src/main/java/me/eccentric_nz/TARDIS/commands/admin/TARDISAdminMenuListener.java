@@ -62,13 +62,15 @@ public class TARDISAdminMenuListener implements Listener {
 					// close this gui and load the previous / next page
 					if (option.equals("Previous page")) {
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-							Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
+							Inventory ppm = plugin.getServer().createInventory(p, 54,
+									ChatColor.DARK_RED + "Admin Menu");
 							ppm.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
 							p.openInventory(ppm);
 						}, 1L);
 					} else {
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-							Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
+							Inventory ppm = plugin.getServer().createInventory(p, 54,
+									ChatColor.DARK_RED + "Admin Menu");
 							ppm.setContents(new TARDISAdminPageTwoInventory(plugin).getMenu());
 							p.openInventory(ppm);
 						}, 1L);
@@ -79,7 +81,8 @@ public class TARDISAdminMenuListener implements Listener {
 					Player p = (Player) event.getWhoClicked();
 					// close this gui and load the Player Prefs Menu
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-						Inventory ppm = plugin.getServer().createInventory(p, 36, ChatColor.DARK_RED + "Player Prefs Menu");
+						Inventory ppm = plugin.getServer().createInventory(p, 36,
+								ChatColor.DARK_RED + "Player Prefs Menu");
 						ppm.setContents(new TARDISPrefsMenuInventory(plugin, p.getUniqueId()).getMenu());
 						p.openInventory(ppm);
 					}, 1L);
@@ -87,9 +90,12 @@ public class TARDISAdminMenuListener implements Listener {
 				}
 				if (!option.isEmpty()) {
 					boolean bool = plugin.getConfig().getBoolean(option);
-					if (option.equals("abandon.enabled") && !bool && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
+					if (option.equals("abandon.enabled") && !bool &&
+						(plugin.getConfig().getBoolean("creation.create_worlds") ||
+						 plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
 						Player p = (Player) event.getWhoClicked();
-						TARDISMessage.message(p, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
+						TARDISMessage.message(p, ChatColor.RED +
+												 "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
 						return;
 					}
 					plugin.getConfig().set(option, !bool);

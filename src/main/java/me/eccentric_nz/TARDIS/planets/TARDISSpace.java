@@ -83,7 +83,8 @@ public class TARDISSpace {
 			}
 			if (plugin.getPM().isPluginEnabled("WorldBorder")) {
 				// wb <world> set <radius> <x> <z>
-				plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " set " + plugin.getConfig().getInt("creation.border_radius") + " 0 0");
+				plugin.getServer().dispatchCommand(plugin.getConsole(),
+						"wb " + name + " set " + plugin.getConfig().getInt("creation.border_radius") + " 0 0");
 			}
 			if (plugin.getConfig().getBoolean("creation.add_perms")) {
 				if (plugin.getPM().isPluginEnabled("GroupManager")) {

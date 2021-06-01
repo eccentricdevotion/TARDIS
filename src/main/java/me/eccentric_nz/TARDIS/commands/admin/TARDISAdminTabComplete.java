@@ -160,7 +160,9 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
 			if (sub.equals("use_clay")) {
 				return partial(lastArg, USE_CLAY_SUBS);
 			}
-			if (sub.equals("arch") || sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege") || sub.equals("repair") || sub.equals("revoke") || sub.equals("set_size") || sub.equals("undisguise")) {
+			if (sub.equals("arch") || sub.equals("delete") || sub.equals("enter") || sub.equals("purge") ||
+				sub.equals("desiege") || sub.equals("repair") || sub.equals("revoke") || sub.equals("set_size") ||
+				sub.equals("undisguise")) {
 				// return null to default to online player name matching
 				return null;
 			} else {
@@ -187,7 +189,11 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
 	}
 
 	private List<String> combineLists() {
-		List<String> newList = new ArrayList<>(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStr.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsBool.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsInt.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsStrArtron.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsIntArtron.size());
+		List<String> newList = new ArrayList<>(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStr.size() +
+											   plugin.getGeneralKeeper().getTardisAdminCommand().firstsBool.size() +
+											   plugin.getGeneralKeeper().getTardisAdminCommand().firstsInt.size() +
+											   plugin.getGeneralKeeper().getTardisAdminCommand().firstsStrArtron.size() +
+											   plugin.getGeneralKeeper().getTardisAdminCommand().firstsIntArtron.size());
 		newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStr.keySet());
 		newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsBool.keySet());
 		newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsInt.keySet());

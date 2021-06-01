@@ -23,7 +23,16 @@ import java.util.Locale;
  */
 public enum Advancement {
 
-	CRAFT, DEFENDER, ENERGY, FARM, FRIENDS, KILL, ROOMS, ROOT, TARDIS, TRAVEL;
+	CRAFT,
+	DEFENDER,
+	ENERGY,
+	FARM,
+	FRIENDS,
+	KILL,
+	ROOMS,
+	ROOT,
+	TARDIS,
+	TRAVEL;
 
 	public String getConfigName() {
 		return toString().toLowerCase(Locale.ENGLISH);

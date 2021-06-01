@@ -82,7 +82,8 @@ public class TARDISMaterialseFromVortex implements Runnable {
 		}
 		Location exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
 		boolean is_next_sub = rsn.isSubmarine();
-		boolean malfunction = (plugin.getTrackerKeeper().getMalfunction().containsKey(id) && plugin.getTrackerKeeper().getMalfunction().get(id));
+		boolean malfunction = (plugin.getTrackerKeeper().getMalfunction().containsKey(id) &&
+							   plugin.getTrackerKeeper().getMalfunction().get(id));
 		HashMap<String, Object> wherei = new HashMap<>();
 		wherei.put("tardis_id", id);
 		ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
@@ -110,7 +111,8 @@ public class TARDISMaterialseFromVortex implements Runnable {
 						setsave.put("submarine", 0);
 						plugin.getQueryFactory().doSyncUpdate("next", setsave, wheress);
 						if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-							int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id) * spaceTimeThrottle.getArtronMultiplier());
+							int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id) *
+													spaceTimeThrottle.getArtronMultiplier());
 							HashMap<String, Object> wheret = new HashMap<>();
 							wheret.put("tardis_id", id);
 							plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
@@ -211,7 +213,8 @@ public class TARDISMaterialseFromVortex implements Runnable {
 					if (flightMode == 2 || flightMode == 3) {
 						materialisation_delay += 650L;
 						travel_time += 650L;
-						Runnable runner = (flightMode == 2) ? new TARDISRegulatorStarter(plugin, player, id) : new TARDISManualFlightStarter(plugin, player, id);
+						Runnable runner = (flightMode ==
+										   2) ? new TARDISRegulatorStarter(plugin, player, id) : new TARDISManualFlightStarter(plugin, player, id);
 						// start the flying mode (after demat if not in vortex already)
 						scheduler.scheduleSyncDelayedTask(plugin, runner, flightModeDelay);
 					}
@@ -281,7 +284,8 @@ public class TARDISMaterialseFromVortex implements Runnable {
 							plugin.getQueryFactory().doUpdate("back", setback, whereback);
 							plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
 						}
-						if (plugin.getAdvancementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getReset().contains(rscl.getWorld().getName())) {
+						if (plugin.getAdvancementConfig().getBoolean("travel.enabled") &&
+							!plugin.getTrackerKeeper().getReset().contains(rscl.getWorld().getName())) {
 							if (Objects.equals(l.getWorld(), final_location.getWorld())) {
 								int distance = (int) l.distance(final_location);
 								if (distance > 0 && plugin.getAdvancementConfig().getBoolean("travel.enabled")) {

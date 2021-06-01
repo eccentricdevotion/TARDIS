@@ -55,7 +55,8 @@ public class TARDISDirectionCommand {
 
 	public boolean changeDirection(Player player, String[] args) {
 		if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
-			if (args.length < 2 || (!args[1].equalsIgnoreCase("north") && !args[1].equalsIgnoreCase("west") && !args[1].equalsIgnoreCase("south") && !args[1].equalsIgnoreCase("east"))) {
+			if (args.length < 2 || (!args[1].equalsIgnoreCase("north") && !args[1].equalsIgnoreCase("west") &&
+									!args[1].equalsIgnoreCase("south") && !args[1].equalsIgnoreCase("east"))) {
 				TARDISMessage.send(player, "DIRECTION_NEED");
 				return false;
 			}
@@ -92,7 +93,9 @@ public class TARDISDirectionCommand {
 				TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
 				return true;
 			}
-			if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+			if (plugin.getTrackerKeeper().getInVortex().contains(id) ||
+				plugin.getTrackerKeeper().getMaterialising().contains(id) ||
+				plugin.getTrackerKeeper().getDematerialising().contains(id)) {
 				TARDISMessage.send(player, "NOT_WHILE_MAT");
 				return true;
 			}

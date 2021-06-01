@@ -54,7 +54,8 @@ public class TARDISSkaroSpawnListener implements Listener {
 		// get default server world
 		String s_world = plugin.getServer().getWorlds().get(0).getName();
 		// if configured prevent spawns (unless from spawners and plugins)
-		if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.spawn_other_mobs") && spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
+		if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.spawn_other_mobs") &&
+			spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
 			event.setCancelled(true);
 			return;
 		}
@@ -65,7 +66,8 @@ public class TARDISSkaroSpawnListener implements Listener {
 			LivingEntity le = event.getEntity();
 			// it's a Dalek - disguise it!
 			twaAPI.setDalekEquipment(le, false);
-			if (plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.flying_daleks") && TARDISConstants.RANDOM.nextInt(100) < 10) {
+			if (plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.flying_daleks") &&
+				TARDISConstants.RANDOM.nextInt(100) < 10) {
 				// make the Dalek fly
 				EntityEquipment ee = le.getEquipment();
 				assert ee != null;

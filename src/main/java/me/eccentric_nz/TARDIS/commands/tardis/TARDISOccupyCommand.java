@@ -58,7 +58,8 @@ class TARDISOccupyCommand {
 			} else if (plugin.getUtils().inTARDISWorld(player)) {
 				ResultSetTardisID rsid = new ResultSetTardisID(plugin);
 				// if TIPS determine tardis_id from player location
-				if (plugin.getConfig().getBoolean("creation.default_world") && !player.hasPermission("tardis.create_world")) {
+				if (plugin.getConfig().getBoolean("creation.default_world") &&
+					!player.hasPermission("tardis.create_world")) {
 					int slot = TARDISInteriorPostioning.getTIPSSlot(player.getLocation());
 					if (!rsid.fromTIPSSlot(slot)) {
 						TARDISMessage.send(player, "OCCUPY_MUST_BE_IN");

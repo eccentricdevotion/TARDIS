@@ -221,12 +221,16 @@ public class TARDISAntiBuildListener implements Listener {
 		ItemStack t = (hand.equals(EquipmentSlot.HAND)) ? p.getInventory().getItemInMainHand() : p.getInventory().getItemInOffHand();
 		Material m;
 		m = t.getType();
-		if ((hand.equals(EquipmentSlot.HAND) && no_place.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_place.contains(m)) && !allow_interact.contains(Objects.requireNonNull(event.getClickedBlock()).getType())) {
+		if ((hand.equals(EquipmentSlot.HAND) && no_place.contains(m)) ||
+			(hand.equals(EquipmentSlot.OFF_HAND) && no_place.contains(m)) &&
+			!allow_interact.contains(Objects.requireNonNull(event.getClickedBlock()).getType())) {
 			event.setUseItemInHand(Result.DENY);
 			event.setCancelled(true);
 			TARDISMessage.send(p, "ANTIBUILD");
 		}
-		if (Objects.requireNonNull(event.getClickedBlock()).getType().equals(Material.FLOWER_POT) && (hand.equals(EquipmentSlot.HAND) && no_flower_pot.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_flower_pot.contains(m))) {
+		if (Objects.requireNonNull(event.getClickedBlock()).getType().equals(Material.FLOWER_POT) &&
+			(hand.equals(EquipmentSlot.HAND) && no_flower_pot.contains(m)) ||
+			(hand.equals(EquipmentSlot.OFF_HAND) && no_flower_pot.contains(m))) {
 			event.setUseItemInHand(Result.DENY);
 			event.setCancelled(true);
 			Block b = event.getClickedBlock();

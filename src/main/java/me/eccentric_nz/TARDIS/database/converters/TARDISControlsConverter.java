@@ -93,12 +93,14 @@ public class TARDISControlsConverter {
 				if (i > 0) {
 					ps.executeBatch();
 					connection.commit();
-					plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " old tardis control records");
+					plugin.getConsole().sendMessage(
+							plugin.getPluginName() + "Converted " + i + " old tardis control records");
 				}
 				connection.setAutoCommit(true);
 			}
 		} catch (SQLException e) {
-			plugin.debug("Conversion error for tardis/controls tables (converting old tardis controls)! " + e.getMessage());
+			plugin.debug(
+					"Conversion error for tardis/controls tables (converting old tardis controls)! " + e.getMessage());
 		} finally {
 			try {
 				if (ps != null) {
@@ -110,7 +112,8 @@ public class TARDISControlsConverter {
 				// reset auto commit
 				connection.setAutoCommit(true);
 			} catch (SQLException e) {
-				plugin.debug("Error closing tardis/controls tables (converting old tardis controls)! " + e.getMessage());
+				plugin.debug(
+						"Error closing tardis/controls tables (converting old tardis controls)! " + e.getMessage());
 			}
 		}
 	}
