@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS;
 
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
-import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
+import me.eccentric_nz.TARDIS.commands.config.TARDISConfigCommand;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
@@ -77,7 +77,7 @@ public class TARDISGeneralInstanceKeeper {
     private List<String> quotes = new ArrayList<>();
     private Location junkDestination = null;
     private long junkTime;
-    private TARDISAdminCommands tardisAdminCommand;
+    private TARDISConfigCommand tardisConfigCommand;
     private TARDISRenderRoomListener rendererListener;
     private TARDISTravelCommands tardisTravelCommand;
 
@@ -170,12 +170,12 @@ public class TARDISGeneralInstanceKeeper {
         return doorPistons;
     }
 
-    public TARDISAdminCommands getTardisAdminCommand() {
-        return tardisAdminCommand;
+    public TARDISConfigCommand getTardisConfigCommand() {
+        return tardisConfigCommand;
     }
 
-    void setTardisAdminCommand(TARDISAdminCommands tardisAdminCommand) {
-        this.tardisAdminCommand = tardisAdminCommand;
+    void setTardisConfigCommand(TARDISConfigCommand tardisConfigCommand) {
+        this.tardisConfigCommand = tardisConfigCommand;
     }
 
     public TARDISDoorListener getDoorListener() {

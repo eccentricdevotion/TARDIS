@@ -113,7 +113,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 if (args[0].equalsIgnoreCase("gm")) {
                     if (args.length == 3) {
                         try {
-                            GameMode gm = GameMode.valueOf(args[2]);
+                            GameMode gm = GameMode.valueOf(args[2].toUpperCase());
                             plugin.getTardisHelper().setWorldGameMode(args[1], gm);
                             plugin.getPlanetsConfig().set("planets." + args[1] + ".gamemode", gm.toString());
                             plugin.savePlanetsConfig();

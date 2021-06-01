@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIConfiguration;
@@ -29,12 +29,12 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISAdminMenuInventory {
+public class TARDISConfigMenuInventory {
 
     private final TARDIS plugin;
     private final ItemStack[] menu;
 
-    public TARDISAdminMenuInventory(TARDIS plugin) {
+    public TARDISConfigMenuInventory(TARDIS plugin) {
         this.plugin = plugin;
         menu = getItemStack();
     }

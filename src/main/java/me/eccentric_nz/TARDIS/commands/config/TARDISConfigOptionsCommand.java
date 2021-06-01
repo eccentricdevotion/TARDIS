@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -29,12 +29,12 @@ import java.util.Set;
 /**
  * @author eccentric_nz
  */
-class TARDISConfigCommand {
+class TARDISConfigOptionsCommand {
 
     private final TARDIS plugin;
     private final List<String> sections = new ArrayList<>();
 
-    TARDISConfigCommand(TARDIS plugin) {
+    TARDISConfigOptionsCommand(TARDIS plugin) {
         this.plugin = plugin;
         sections.add("storage");
         sections.add("creation");

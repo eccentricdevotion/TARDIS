@@ -191,7 +191,7 @@ public class TARDISPrefsMenuInventory {
             // admin
             ItemStack ad = new ItemStack(Material.NETHER_STAR, 1);
             ItemMeta min = ad.getItemMeta();
-            min.setDisplayName("Admin Menu");
+            min.setDisplayName("Admin Config Menu");
             min.setCustomModelData(GUIPlayerPreferences.ADMIN_MENU.getCustomModelData());
             ad.setItemMeta(min);
             stack[35] = ad;

@@ -14,44 +14,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * @author eccentric_nz
  */
-class TARDISPowerDownCommand {
+class TARDISSignColourCommand {
 
     private final TARDIS plugin;
+    private final List<String> COLOURS = Arrays.asList("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
 
-    TARDISPowerDownCommand(TARDIS plugin) {
+    TARDISSignColourCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean togglePowerDown(CommandSender sender, String[] args) {
-        // check they typed true of false
-        String tf = args[1].toLowerCase(Locale.ENGLISH);
-        if (!tf.equals("true") && !tf.equals("false")) {
-            TARDISMessage.send(sender, "TRUE_FALSE");
-            return false;
+    boolean setColour(CommandSender sender, String[] args) {
+        String colour = args[1].toUpperCase(Locale.ENGLISH);
+        if (!COLOURS.contains(colour)) {
+            TARDISMessage.send(sender, "ARG_COLOUR");
+            return true;
         }
-        plugin.getConfig().set("allow.power_down", Boolean.valueOf(tf));
+        plugin.getConfig().set("police_box.sign_colour", colour);
         plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
-        if (tf.equals("false")) {
-            // if false, stop the repeating task
-            plugin.getStandbyTask().cancel();
-            TARDISMessage.send(sender, "STANDBY_STOP");
-        } else {
-            // if true, start the repeating task
-            plugin.startStandBy();
-            TARDISMessage.send(sender, "STANDBY_START");
-        }
         return true;
     }
 }

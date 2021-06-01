@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
@@ -40,11 +40,11 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISAdminMenuListener implements Listener {
+public class TARDISConfigMenuListener implements Listener {
 
     private final TARDIS plugin;
 
-    public TARDISAdminMenuListener(TARDIS plugin) {
+    public TARDISConfigMenuListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -52,7 +52,7 @@ public class TARDISAdminMenuListener implements Listener {
     public void onAdminMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Admin Menu")) {
+        if (name.equals(ChatColor.DARK_RED + "Admin Config Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             if (slot < 54) {
@@ -62,14 +62,14 @@ public class TARDISAdminMenuListener implements Listener {
                     // close this gui and load the previous / next page
                     if (option.equals("Previous page")) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
-                            ppm.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
+                            Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Config Menu");
+                            ppm.setContents(new TARDISConfigMenuInventory(plugin).getMenu());
                             p.openInventory(ppm);
                         }, 1L);
                     } else {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
-                            ppm.setContents(new TARDISAdminPageTwoInventory(plugin).getMenu());
+                            Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Config Menu");
+                            ppm.setContents(new TARDISConfigPageTwoInventory(plugin).getMenu());
                             p.openInventory(ppm);
                         }, 1L);
                     }

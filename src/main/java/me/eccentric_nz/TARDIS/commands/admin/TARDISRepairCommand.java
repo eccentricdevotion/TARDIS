@@ -63,7 +63,7 @@ class TARDISRepairCommand {
         HashMap<String, Object> set = new HashMap<>();
         set.put("repair", r);
         plugin.getQueryFactory().doUpdate("t_count", set, where);
-        TARDISMessage.send(sender, "REPAIR_SET", args[1], args[2]);
+        TARDISMessage.send(sender, "REPAIR_SET", args[1], "" + r);
         return true;
     }
 }

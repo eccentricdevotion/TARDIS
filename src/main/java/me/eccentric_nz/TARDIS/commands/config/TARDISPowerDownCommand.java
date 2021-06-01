@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import org.bukkit.command.CommandSender;
 
 import java.util.Locale;
@@ -26,28 +25,32 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISSetZeroRoomCommand {
+class TARDISPowerDownCommand {
 
     private final TARDIS plugin;
 
-    TARDISSetZeroRoomCommand(TARDIS plugin) {
+    TARDISPowerDownCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean setConfigZero(CommandSender sender, String[] args) {
+    boolean togglePowerDown(CommandSender sender, String[] args) {
         // check they typed true of false
         String tf = args[1].toLowerCase(Locale.ENGLISH);
         if (!tf.equals("true") && !tf.equals("false")) {
             TARDISMessage.send(sender, "TRUE_FALSE");
             return false;
         }
-        plugin.getConfig().set("allow.zero_room", Boolean.valueOf(tf));
+        plugin.getConfig().set("allow.power_down", Boolean.valueOf(tf));
         plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
-        if (tf.equals("true") && plugin.getServer().getWorld("TARDIS_Zero_Room") == null) {
-            TARDISMessage.send(sender, "ZERO_CREATE");
-            new TARDISSpace(plugin).createDefaultWorld("TARDIS_Zero_Room");
-            TARDISMessage.send(sender, "ZERO_RESTART");
+        if (tf.equals("false")) {
+            // if false, stop the repeating task
+            plugin.getStandbyTask().cancel();
+            TARDISMessage.send(sender, "STANDBY_STOP");
+        } else {
+            // if true, start the repeating task
+            plugin.startStandBy();
+            TARDISMessage.send(sender, "STANDBY_START");
         }
         return true;
     }

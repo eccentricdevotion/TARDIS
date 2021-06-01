@@ -41,7 +41,7 @@ import me.eccentric_nz.TARDIS.chemistry.product.GlowStickListener;
 import me.eccentric_nz.TARDIS.chemistry.product.ProductGUIListener;
 import me.eccentric_nz.TARDIS.chemistry.product.SparklerListener;
 import me.eccentric_nz.TARDIS.chemistry.reducer.ReducerGUIListener;
-import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuListener;
+import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISHumListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISKeyMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuListener;
@@ -128,7 +128,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(buttonListener, plugin);
         plugin.getPM().registerEvents(new TARDISARSListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISARSMapListener(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISAdminMenuListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISConfigMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAnvilListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAreaListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAreaSignListener(plugin), plugin);

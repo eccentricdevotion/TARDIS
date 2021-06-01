@@ -14,37 +14,41 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import org.bukkit.command.CommandSender;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
 /**
  * @author eccentric_nz
  */
-class TARDISSignColourCommand {
+class TARDISSetZeroRoomCommand {
 
     private final TARDIS plugin;
-    private final List<String> COLOURS = Arrays.asList("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
 
-    TARDISSignColourCommand(TARDIS plugin) {
+    TARDISSetZeroRoomCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean setColour(CommandSender sender, String[] args) {
-        String colour = args[1].toUpperCase(Locale.ENGLISH);
-        if (!COLOURS.contains(colour)) {
-            TARDISMessage.send(sender, "ARG_COLOUR");
-            return true;
+    boolean setConfigZero(CommandSender sender, String[] args) {
+        // check they typed true of false
+        String tf = args[1].toLowerCase(Locale.ENGLISH);
+        if (!tf.equals("true") && !tf.equals("false")) {
+            TARDISMessage.send(sender, "TRUE_FALSE");
+            return false;
         }
-        plugin.getConfig().set("police_box.sign_colour", colour);
+        plugin.getConfig().set("allow.zero_room", Boolean.valueOf(tf));
         plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
+        if (tf.equals("true") && plugin.getServer().getWorld("TARDIS_Zero_Room") == null) {
+            TARDISMessage.send(sender, "ZERO_CREATE");
+            new TARDISSpace(plugin).createDefaultWorld("TARDIS_Zero_Room");
+            TARDISMessage.send(sender, "ZERO_RESTART");
+        }
         return true;
     }
 }

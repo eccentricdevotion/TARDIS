@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
+import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuInventory;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
@@ -248,11 +248,11 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         }, 1L);
                         return;
                     }
-                    if (slot == 35 && im.getDisplayName().equals("Admin Menu")) {
+                    if (slot == 35 && im.getDisplayName().equals("Admin Config Menu")) {
                         // close this gui and load the Admin Menu
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            Inventory menu = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Menu");
-                            menu.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
+                            Inventory menu = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Config Menu");
+                            menu.setContents(new TARDISConfigMenuInventory(plugin).getMenu());
                             p.openInventory(menu);
                         }, 1L);
                         return;

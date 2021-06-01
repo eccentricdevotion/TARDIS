@@ -68,7 +68,7 @@ public class TARDISMenuListener implements Listener {
     private HashMap<String, Integer> getTitleMap() {
         HashMap<String, Integer> map = new HashMap<>();
         map.put(ChatColor.DARK_RED + "Add Companion", 54);
-        map.put(ChatColor.DARK_RED + "Admin Menu", 54);
+        map.put(ChatColor.DARK_RED + "Admin Config Menu", 54);
         map.put(ChatColor.DARK_RED + "Architectural Reconfiguration", 54);
         map.put(ChatColor.DARK_RED + "Chameleon Circuit", 27);
         map.put(ChatColor.DARK_RED + "Chameleon Construction", 18);

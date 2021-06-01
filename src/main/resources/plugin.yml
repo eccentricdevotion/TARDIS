@@ -768,16 +768,13 @@ commands:
       permission: tardis.timetravel
   tardisadmin:
     aliases: tadmin
-    description: Set TARDIS configuration options and perform TARDIS administration tasks.
-    usage: /<command> [option] [value]
+    description: Perform TARDIS administration tasks.
+    usage: /<command> [sub command] [...]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
     list:
-      description: List all TARDISs and their locations.
-      usage: /<command> list
-    reload:
-      description: Reload the TARDIS config from disk.
-      usage: /<command> reload
+      description: List TARDISs and their locations (or save them to file), plus list open portals / abandoned TARDISes.
+      usage: /<command> list [page no.|save|portals|abandoned]
     chunks:
       description: List chunks that are being kept loaded by TARDIS.
       usage: /<command> chunks
@@ -799,12 +796,6 @@ commands:
     desiege:
       description: Force a player's TARDIS out of Siege Mode.
       usage: /<command> desiege [player]
-    include:
-      description: Set whether the specified world is included in time travel destinations.
-      usage: /<command> include [world]
-    exclude:
-      description: Set whether the specified world is excluded from time travel destinations.
-      usage: /<command> exclude [world]
     arch:
       description: View an 'arched' player's real name, or with the 'force' argument, toggle arch status.
       usage: /<command> arch [player] (force)
@@ -823,10 +814,34 @@ commands:
     convert_database:
       description: Convert an SQLite database to MySQL.
       usage: /<command> convert_database
+  tardisconfig:
+    aliases: tconfig
+    description: Set TARDIS configuration options and world inclusion.
+    usage: /<command> [option] [value]
+    permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
+    options:
+      description: List the TARDIS config options and values in chat.
+      usage: /<command> options
+    reload:
+      description: Reload the TARDIS config from disk.
+      usage: /<command> reload [config name]
+    include:
+      description: Set whether the specified world is included in time travel destinations.
+      usage: /<command> include [world]
+    exclude:
+      description: Set whether the specified world is excluded from time travel destinations.
+      usage: /<command> exclude [world]
+  tardisdev:
+    aliases: tdev
+      description: Commands used by eccentric_nz to help with coding and documenting the TARDIS plugin.
+      usage: /<command> [add_regions|advancements|tree|list] [preset_perms|perms|recipes|blueprints]
+      permission: tardis.admin
+      permission-message: You don't have the permission <permission> to use this command
   tardisgive:
     aliases: tgive
-    description: Give TARDIS items or Artron energy to a player.
-    usage: /<command> [player] [item|artron] [amount]
+    description: Give TARDIS items, Artron energy, Seed blocks, kits, knowledge books, recipe discoveries or mushroom blocks to a player.
+    usage: /<command> [player] [item|artron|kit|seed|knowledge|recipe|mushroom] [amount|recipe|...]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisroom:

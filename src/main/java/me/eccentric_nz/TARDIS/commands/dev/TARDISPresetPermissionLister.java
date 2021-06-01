@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.ChatColor;

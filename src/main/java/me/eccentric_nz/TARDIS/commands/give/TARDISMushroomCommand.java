@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.TARDIS.commands.give;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
@@ -35,7 +35,7 @@ public class TARDISMushroomCommand {
     private final List<String> stemBlockNames = Arrays.asList("", "Blue Lamp", "Red Lamp", "Purple Lamp", "Green Lamp", "Blue Lamp On", "Red Lamp On", "Purple Lamp On", "Green Lamp On", "Heat Block", "Custom", "Hexagon", "Roundel", "Roundel Offset", "Cog", "Advanced Console", "Disk Storage", "Lamp Off", "Lantern Off", "Blue Police Box", "Seed Block Grow");
     private final List<String> stemSubs = Arrays.asList("", "blue_lamp", "red_lamp", "purple_lamp", "green_lamp", "blue_lamp_on", "red_lamp_on", "purple_lamp_on", "green_lamp_on", "heat_block", "rotor", "custom", "hexagon", "roundel", "roundel_offset", "cog", "advanced_console", "disk_storage", "lamp_off", "lantern_off", "blue_box", "grow");
 
-    public TARDISMushroomCommand(TARDIS plugin) {
+    TARDISMushroomCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
