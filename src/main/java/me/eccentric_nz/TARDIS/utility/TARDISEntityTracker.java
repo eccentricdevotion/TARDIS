@@ -103,10 +103,10 @@ public class TARDISEntityTracker {
 						options = new Object[]{((Rabbit) e).getRabbitType(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
 						break;
 					case VILLAGER:
-						options = new Object[]{PROFESSION.getFromVillagerProfression(((Villager) e).getProfession()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+						options = new Object[]{PROFESSION.getFromVillagerProfession(((Villager) e).getProfession()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
 						break;
 					case ZOMBIE_VILLAGER:
-						options = new Object[]{PROFESSION.getFromVillagerProfression(Objects.requireNonNull(((ZombieVillager) e).getVillagerProfession())), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+						options = new Object[]{PROFESSION.getFromVillagerProfession(Objects.requireNonNull(((ZombieVillager) e).getVillagerProfession())), AGE.getFromBoolean(!((Ageable) e).isAdult())};
 						break;
 					case SLIME:
 					case MAGMA_CUBE:
