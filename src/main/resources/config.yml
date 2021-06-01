@@ -19,7 +19,6 @@ creation:
   default_world_name: TARDIS_TimeVortex
   tips_limit: 400
   border_radius: 256
-  gamemode: survival
   keep_night: true
   inventory_group: 0
   add_perms: true
