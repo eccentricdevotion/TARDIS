@@ -26,6 +26,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -197,7 +198,7 @@ public class TARDISConfigCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         // If the player typed /tardisadmin then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisconfig")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {

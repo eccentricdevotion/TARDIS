@@ -25,6 +25,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -45,7 +46,7 @@ public class TARDISSayCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardissay")) {
             if (!TARDISPermission.hasPermission(sender, "tardis.translate")) {
                 TARDISMessage.send(sender, "NO_PERMS");

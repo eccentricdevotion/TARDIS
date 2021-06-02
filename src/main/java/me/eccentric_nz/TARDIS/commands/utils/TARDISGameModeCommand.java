@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.GameMode;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Locale;
@@ -37,7 +38,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisgamemode")) {
             if (label.equalsIgnoreCase("tgms")) {
                 // set survival
@@ -140,7 +141,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length <= 1) {
             if (label.equalsIgnoreCase("tgms") || label.equalsIgnoreCase("tgmc") || label.equalsIgnoreCase("tgma") || label.equalsIgnoreCase("tgmsp")) {
                 return null;

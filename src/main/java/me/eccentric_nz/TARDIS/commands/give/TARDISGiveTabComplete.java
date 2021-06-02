@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -95,7 +96,7 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         String lastArg = args[args.length - 1];
         if (args.length <= 1) {
             return null;
@@ -115,7 +116,7 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
             return partial(lastArg, GIVE_KNOWLEDGE);
         } else if (args.length == 4 && args[1].equalsIgnoreCase("mushroom")) {
             return partial(lastArg, MUSHROOM_SUBS);
-        } else if (args.length >= 4 && args[1].equalsIgnoreCase("seed")) {
+        } else if (args[1].equalsIgnoreCase("seed")) {
             return partial(lastArg, MAT_SUBS);
         }
         return ImmutableList.of();

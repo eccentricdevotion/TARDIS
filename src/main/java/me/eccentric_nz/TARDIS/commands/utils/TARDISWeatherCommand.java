@@ -30,6 +30,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +45,7 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisweather")) {
             if (args.length < 1) {
                 TARDISMessage.send(sender, "TOO_FEW_ARGS");
@@ -91,7 +92,7 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 1) {
             return partial(args[0], ROOT_SUBS);
         }

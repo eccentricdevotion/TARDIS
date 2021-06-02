@@ -43,6 +43,7 @@ import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.KnowledgeBookMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -73,7 +74,7 @@ public class TARDISGiveCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         // If the player typed /tardisgive then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisgive")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {

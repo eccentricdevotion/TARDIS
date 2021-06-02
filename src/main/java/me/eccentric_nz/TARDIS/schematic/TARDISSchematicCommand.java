@@ -35,6 +35,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -53,7 +54,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisschematic")) {
             if (args.length < 1) {
                 TARDISMessage.send(sender, "TOO_FEW_ARGS");

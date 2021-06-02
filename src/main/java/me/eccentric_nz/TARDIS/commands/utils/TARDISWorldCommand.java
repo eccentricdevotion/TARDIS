@@ -33,6 +33,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.*;
@@ -66,7 +67,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisworld")) {
             if (sender == null) {
                 plugin.debug("Sender was null!");
@@ -237,7 +238,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
 //    Function<String, Boolean> hasUpperCase = s -> s.chars().filter(c -> Character.isUpperCase(c)).count() > 0;
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         String lastArg = args[args.length - 1];
         if (args.length <= 1) {
             List<String> part = partial(args[0], ROOT_SUBS);

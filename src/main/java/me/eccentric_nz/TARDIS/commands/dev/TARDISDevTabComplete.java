@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints");
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         String lastArg = args[args.length - 1];
         if (args.length <= 1) {
             return partial(args[0], ROOT_SUBS);
