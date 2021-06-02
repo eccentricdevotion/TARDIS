@@ -834,10 +834,10 @@ commands:
       usage: /<command> exclude [world]
   tardisdev:
     aliases: tdev
-      description: Commands used by eccentric_nz to help with coding and documenting the TARDIS plugin.
-      usage: /<command> [add_regions|advancements|tree|list] [preset_perms|perms|recipes|blueprints]
-      permission: tardis.admin
-      permission-message: You don't have the permission <permission> to use this command
+    description: Commands used by eccentric_nz to help with coding and documenting the TARDIS plugin.
+    usage: /<command> [add_regions|advancements|tree|list] [preset_perms|perms|recipes|blueprints]
+    permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
   tardisgive:
     aliases: tgive
     description: Give TARDIS items, Artron energy, Seed blocks, kits, knowledge books, recipe discoveries or mushroom blocks to a player.
