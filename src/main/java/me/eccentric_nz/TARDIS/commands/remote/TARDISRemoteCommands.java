@@ -44,6 +44,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -53,18 +54,14 @@ import java.util.*;
 public class TARDISRemoteCommands extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("travel", "comehere", "chameleon", "hide", "rebuild");
-    private final List<String> CHAM_SUBS = new ArrayList<>();
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("travel", "comehere", "hide", "rebuild", "back");
     private final ImmutableList<String> TRAVEL_SUBS = ImmutableList.of("home", "area");
     private final List<String> AREA_SUBS = new ArrayList<>();
 
-    //[player] [travel|comehere|chameleon|hide|rebuild] [home|area|coords]
+    //[player] [travel|comehere|hide|rebuild|back] [home|area|coords]
 
     public TARDISRemoteCommands(TARDIS plugin) {
         this.plugin = plugin;
-        for (PRESET p : PRESET.values()) {
-            CHAM_SUBS.add(p.toString());
-        }
         ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
         if (rsa.resultSet()) {
             AREA_SUBS.addAll(rsa.getNames());
@@ -72,7 +69,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         // If the player/console typed /tardisremote then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisremote") && TARDISPermission.hasPermission(sender, "tardis.remote")) {
             if (args.length < 2) {
@@ -365,13 +362,11 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 1) {
             return null;
         } else if (args.length == 2) {
             return partial(args[1], ROOT_SUBS);
-        } else if (args.length == 3 && args[1].equalsIgnoreCase("chameleon")) {
-            return partial(args[2], CHAM_SUBS);
         } else if (args.length == 3 && args[1].equalsIgnoreCase("travel")) {
             return partial(args[2], TRAVEL_SUBS);
         } else if (args.length == 4 && args[2].equalsIgnoreCase("area")) {

@@ -21,8 +21,6 @@ import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.commands.sudo.SudoRepair;
-import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
@@ -35,9 +33,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
-import java.util.UUID;
 
 /**
  * Command /tardis [arguments].
@@ -56,7 +54,7 @@ public class TARDISCommands implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         // If the player typed /tardis then do the following...
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardis")) {
@@ -126,12 +124,7 @@ public class TARDISCommands implements CommandExecutor {
                 case desktop:
                 case upgrade:
                 case theme:
-                    if (args.length > 1 && (args[1].equalsIgnoreCase("clean") || args[1].equalsIgnoreCase("repair")) && TARDISSudoTracker.isSudo(sender)) {
-                        UUID uuid = TARDISSudoTracker.getSudoPlayer(sender);
-                        return new SudoRepair(plugin, uuid, args[1].equalsIgnoreCase("clean")).repair();
-                    } else {
-                        return new TARDISUpgradeCommand(plugin).openUpgradeGUI(player);
-                    }
+                    return new TARDISUpgradeCommand(plugin).openUpgradeGUI(player);
                 case direction:
                     return new TARDISDirectionCommand(plugin).changeDirection(player, args);
                 case door:

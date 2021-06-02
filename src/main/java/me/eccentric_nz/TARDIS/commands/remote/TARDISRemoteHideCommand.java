@@ -36,15 +36,15 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISRemoteHideCommand {
+public class TARDISRemoteHideCommand {
 
     private final TARDIS plugin;
 
-    TARDISRemoteHideCommand(TARDIS plugin) {
+    public TARDISRemoteHideCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doRemoteHide(CommandSender sender, int id) {
+    public boolean doRemoteHide(CommandSender sender, int id) {
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             TARDISMessage.send(sender, "NOT_IN_VORTEX");
             return true;

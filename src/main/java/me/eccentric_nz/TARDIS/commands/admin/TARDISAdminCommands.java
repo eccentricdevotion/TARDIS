@@ -31,6 +31,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -60,10 +61,9 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("convert_database");
         firstsStr.add("decharge");
         firstsStr.add("delete");
-        firstsStr.add("desiege");
         firstsStr.add("disguise");
+        firstsStr.add("dispersed");
         firstsStr.add("enter");
-        firstsStr.add("handbrake");
         firstsStr.add("list");
         firstsStr.add("make_preset");
         firstsStr.add("maze");
@@ -84,7 +84,7 @@ public class TARDISAdminCommands implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         // If the player typed /tardisadmin then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisadmin")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
@@ -150,10 +150,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                 }
                 if (first.equals("assemble")) {
-                    return new TARDISAssembleCommand(plugin).assemble(sender, args[1]);
-                }
-                if (first.equals("desiege")) {
-                    return new TARDISDesiegeCommand(plugin).restore(sender, args);
+                    return new TARDISDispersedCommand(plugin).assemble(sender, args[1]);
                 }
                 if (first.equals("set_size")) {
                     return new TARDISSetSizeCommand(plugin).overwrite(sender, args);
@@ -184,9 +181,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("disguise")) {
                     return new TARDISDisguiseCommand(plugin).disguise(sender, args);
-                }
-                if (first.equals("handbrake")) {
-                    return new TARDISBrakeCommand(plugin).toggle(sender, args);
                 }
                 if (first.equals("enter")) {
                     return new TARDISEnterCommand(plugin).enterTARDIS(sender, args);

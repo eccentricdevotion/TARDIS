@@ -27,6 +27,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.EntityType;
 import org.bukkit.permissions.Permission;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +37,14 @@ import java.util.List;
  */
 public class TARDISAdminTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("arch", "assemble", "condenser", "config", "convert_database", "decharge", "delete", "desiege", "disguise", "enter", "handbrake", "list", "make_preset", "maze", "playercount", "prune", "prunelist", "purge", "purge_portals", "recharger", "region_flag", "reload", "repair", "revoke", "set_size", "spawn_abandoned", "undisguise", "update_plugins");
-    private final ImmutableList<String> PRESETS;
-    private final ImmutableList<String> LIST_SUBS = ImmutableList.of("abandoned", "portals", "save", "preset_perms", "perms", "recipes", "blueprints");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("arch", "condenser", "config", "convert_database", "decharge", "delete", "disguise", "dispersed", "enter", "list", "make_preset", "maze", "playercount", "prune", "prunelist", "purge", "purge_portals", "recharger", "region_flag", "reload", "repair", "revoke", "set_size", "spawn_abandoned", "undisguise", "update_plugins");
+    private final ImmutableList<String> ASS_SUBS = ImmutableList.of("clear", "list");
     private final ImmutableList<String> COMPASS_SUBS = ImmutableList.of("NORTH", "EAST", "SOUTH", "WEST");
-    private final ImmutableList<String> WORLD_SUBS;
-    private final ImmutableList<String> SEED_SUBS = ImmutableList.copyOf(Consoles.getBY_NAMES().keySet());
     private final ImmutableList<String> ENTITY_SUBS;
+    private final ImmutableList<String> LIST_SUBS = ImmutableList.of("abandoned", "portals", "save", "preset_perms", "perms", "recipes", "blueprints");
+    private final ImmutableList<String> PRESETS;
+    private final ImmutableList<String> SEED_SUBS = ImmutableList.copyOf(Consoles.getBY_NAMES().keySet());
+    private final ImmutableList<String> WORLD_SUBS;
     private final List<String> BLUEPRINT_SUBS = new ArrayList<>();
 
     public TARDISAdminTabComplete(TARDIS plugin) {
@@ -67,30 +69,36 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         String lastArg = args[args.length - 1];
         if (args.length <= 1) {
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
-            String sub = args[0];
+            String sub = args[0].toLowerCase();
+            if (sub.equals("dispersed")) {
+                return partial(lastArg, ASS_SUBS);
+            }
             if (sub.equals("disguise")) {
                 return partial(lastArg, ENTITY_SUBS);
             }
             if (sub.equals("list")) {
                 return partial(lastArg, LIST_SUBS);
             }
-            if (sub.equals("arch") || sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege") || sub.equals("repair") || sub.equals("revoke") || sub.equals("set_size") || sub.equals("undisguise")) {
+            if (sub.equals("arch") || sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("repair") || sub.equals("revoke") || sub.equals("set_size") || sub.equals("undisguise")) {
                 // return null to default to online player name matching
                 return null;
             }
         } else if (args.length == 3) {
             if (args[0].equalsIgnoreCase("spawn_abandoned")) {
                 return partial(lastArg, PRESETS);
-            } else if (args[0].equalsIgnoreCase("set_size")) {
+            }
+            if (args[0].equalsIgnoreCase("set_size")) {
                 return partial(lastArg, SEED_SUBS);
-            } else if (args[0].equalsIgnoreCase("disguise") || args[0].equalsIgnoreCase("handbrake")) {
+            }
+            if (args[0].equalsIgnoreCase("disguise")) {
                 return null;
-            } else if (args[0].equalsIgnoreCase("revoke")) {
+            }
+            if (args[0].equalsIgnoreCase("revoke")) {
                 return partial(lastArg, BLUEPRINT_SUBS);
             }
         } else if (args.length == 4) {

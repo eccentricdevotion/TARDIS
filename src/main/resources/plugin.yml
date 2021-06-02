@@ -500,7 +500,7 @@ permissions:
 commands:
   tardis:
     aliases: tt
-    description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, etc).
+    description: Manipulate TARDISs (TARDISes?) with various arguments (list, save, find, help, etc).
     bell:
       description: Toggle the TARDIS Cloister Bell on and off.
       usage: /<command> bell [on|off]
@@ -809,8 +809,8 @@ commands:
       description: Check or set a player's TARDIS count.
       usage: /<command> playercount [player] [count]
     assemble:
-      description: Make a player's TARDIS reassemble itself after a HADS dispersal.
-      usage: /<command> assemble [player]
+      description: Clear HADS dispersal trackers or list dispered TARDISes.
+      usage: /<command> assemble [clear|list]
     convert_database:
       description: Convert an SQLite database to MySQL.
       usage: /<command> convert_database
@@ -843,6 +843,12 @@ commands:
     description: Give TARDIS items, Artron energy, Seed blocks, kits, knowledge books, recipe discoveries or mushroom blocks to a player.
     usage: /<command> [player] [item|artron|kit|seed|knowledge|recipe|mushroom] [amount|recipe|...]
     permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
+  tardissudo:
+    aliases: [ tsudo ]
+    description: Used by TARDIS admins to run commands as another Time Lord or fix players' TARDISes.
+    permission: tardis.admin
+    usage: /<command> [player] [ars|assemble|back|chameleon|clean|comehere|deadlock|desiege|handbrake|hide|isomorphic|rebuild|repair|travel|update] [...]
     permission-message: You don't have the permission <permission> to use this command
   tardisroom:
     aliases: troom
@@ -1128,7 +1134,7 @@ commands:
   tardisremote:
     aliases: tremote
     description: Remote control a TARDIS.
-    usage: /<command> [player] [travel|comehere|chameleon|hide|rebuild] [home|area|coords]
+    usage: /<command> [player] [travel|comehere|hide|rebuild|back] [home|area|coords]
     permission: tardis.remote
     permission-message: You don't have the permission <permission> to use this command
   tardisschematic:
@@ -1290,12 +1296,6 @@ commands:
     description: Internal command used by the TARDIS Information System.
     usage: /<command> [letter]
     permission: tardis.help
-    permission-message: You don't have the permission <permission> to use this command
-  tardissudo:
-    aliases: [ tsudo ]
-    description: Used by TARDIS admins to run commands as another Time Lord. Currently only works for the /tardis theme [clean|repair] command.
-    permission: tardis.admin
-    usage: /<command> [player|off] [isomorphic|deadlock]
     permission-message: You don't have the permission <permission> to use this command
   tardisweather:
     aliases: tweather

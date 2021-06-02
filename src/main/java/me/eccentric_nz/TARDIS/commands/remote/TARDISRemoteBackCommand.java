@@ -34,15 +34,15 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISRemoteBackCommand {
+public class TARDISRemoteBackCommand {
 
     private final TARDIS plugin;
 
-    TARDISRemoteBackCommand(TARDIS plugin) {
+    public TARDISRemoteBackCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean sendBack(CommandSender sender, int id, OfflinePlayer player) {
+    public boolean sendBack(CommandSender sender, int id, OfflinePlayer player) {
 
         // get fast return location
         HashMap<String, Object> wherebl = new HashMap<>();

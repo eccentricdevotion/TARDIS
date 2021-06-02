@@ -623,6 +623,7 @@ NOT_ENOUGH_DOOR_ENERGY: "You don't have enough Artron Energy to use the back doo
 NOT_ENOUGH_ENERGY: "The TARDIS does not have enough Artron Energy to make this trip!"
 NOT_ENOUGH_TRAVEL_ENERGY: "You need at least %s Artron Energy to travel to the %s! Overworld selected."
 NOT_ENOUGH_ZERO_ENERGY: "The TARDIS does not have enough Artron Energy for the Zero Room!"
+NOT_IMPLEMENTED: "That feature or command has not been implemented yet!"
 NOT_IN_TARDIS: "You are not inside your TARDIS. You need to be to use this feature!"
 NOT_IN_VORTEX: "You cannot do that when the TARDIS is in the time vortex!"
 NOT_IN_ZERO: "You cannot do that in the Zero Room!"

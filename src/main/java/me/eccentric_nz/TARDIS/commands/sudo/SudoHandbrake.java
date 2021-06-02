@@ -14,36 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.TARDIS.commands.sudo;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHandbrakeCommand;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
-public class TARDISBrakeCommand {
+import java.util.UUID;
+
+public class SudoHandbrake {
 
     private final TARDIS plugin;
 
-    public TARDISBrakeCommand(TARDIS plugin) {
+    SudoHandbrake(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean toggle(CommandSender sender, String[] args) {
+    public boolean toggle(CommandSender sender, String[] args, UUID uuid) {
         if (args.length < 3) {
             TARDISMessage.send(sender, "TOO_FEW_ARGS");
             return true;
         }
-        Player player = plugin.getServer().getPlayer(args[2]);
-        if (player == null) {
-            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-            return true;
-        }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (rs.fromUUID(player.getUniqueId().toString())) {
-            return new TARDISHandbrakeCommand(plugin).toggle(player, rs.getTardis_id(), args, true);
+        if (rs.fromUUID(uuid.toString())) {
+            return new TARDISHandbrakeCommand(plugin).toggle(null, rs.getTardis_id(), args, true);
         }
         return true;
     }
