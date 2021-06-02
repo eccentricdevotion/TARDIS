@@ -58,7 +58,7 @@ class TARDISJunkItsDangerousRunnable implements Runnable {
         List<UUID> remove = new ArrayList<>();
         plugin.getGeneralKeeper().getJunkTravellers().forEach((uuid) -> {
             Player p = plugin.getServer().getPlayer(uuid);
-            if (p.isOnline() && !isInside(p.getLocation())) {
+            if (p != null && p.isOnline() && !isInside(p.getLocation())) {
                 p.setHealth(0);
                 remove.add(uuid);
             }
