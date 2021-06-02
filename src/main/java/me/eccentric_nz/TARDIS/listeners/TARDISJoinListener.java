@@ -117,7 +117,7 @@ public class TARDISJoinListener implements Listener {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
             if (rst.resultSet()) {
                 // is texture switching on?
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                 if (rsp.resultSet()) {
                     if (rsp.isTextureOn()) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn()), 50L);
@@ -127,7 +127,7 @@ public class TARDISJoinListener implements Listener {
         }
         // load and remember the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<>();
-        wherep.put("uuid", player.getUniqueId().toString());
+        wherep.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
@@ -182,6 +182,12 @@ public class TARDISJoinListener implements Listener {
             if (player.getLocation().getWorld().getName().equals("TARDIS_Zero_Room")) {
                 plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
             }
+        }
+        // teleport players that rejoined after logging out while in Junk TARDIS
+        if (plugin.getTrackerKeeper().getJunkRelog().containsKey(player.getUniqueId())) {
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                player.teleport(plugin.getTrackerKeeper().getJunkRelog().get(player.getUniqueId()));
+            }, 2L);
         }
         // notify updates
         if (plugin.getConfig().getBoolean("preferences.notify_update") && plugin.isUpdateFound() && player.isOp()) {
