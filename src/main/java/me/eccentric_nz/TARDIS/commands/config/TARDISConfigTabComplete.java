@@ -34,28 +34,29 @@ import java.util.List;
 public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
+    private final ImmutableList<String> ROOT_SUBS;
     private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
     private final ImmutableList<String> COLOURS = ImmutableList.of("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
     private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("worlds", "rechargers", "storage", "creation", "police_box", "travel", "preferences", "allow", "growth", "rooms");
     private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
     private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "medium", "hard");
+    private final ImmutableList<String> FILE_SUBS = ImmutableList.of("achievements", "artron", "blocks", "chameleon_guis", "condensables", "handles", "kits", "rooms", "signs", "tag");
     private final ImmutableList<String> FLAG_SUBS;
     private final ImmutableList<String> KEYS = ImmutableList.of("first", "second", "third", "fifth", "seventh", "ninth", "tenth", "eleventh", "susan", "rose", "sally", "perception", "gold");
     private final ImmutableList<String> LANG_SUBS = ImmutableList.of("ar", "bg", "ca", "zh", "cs", "da", "nl", "en", "et", "fi", "fr", "de", "el", "ht", "he", "hi", "mww", "hu", "id", "it", "ja", "ko", "lv", "lt", "ms", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sl", "es", "sv", "th", "tr", "uk", "ur", "vi");
     private final ImmutableList<String> PRESETS;
     private final ImmutableList<String> REGION_SUBS = ImmutableList.of("entry", "exit");
-    private final ImmutableList<String> ROOT_SUBS;
-    private final ImmutableList<String> USE_CLAY_SUBS = ImmutableList.of("WOOL", "TERRACOTTA", "CONCRETE");
     private final ImmutableList<String> SIEGE_SUBS = ImmutableList.of("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture", "true", "false");
     private final ImmutableList<String> SONICS = ImmutableList.of("mark_1", "mark_2", "mark_3", "mark_4", "eighth", "ninth", "ninth_open", "tenth", "tenth_open", "eleventh", "eleventh_open", "master", "sarah_jane", "river_song", "war", "twelfth");
     private final ImmutableList<String> TIPS_SUBS = ImmutableList.of("400", "800", "1200", "1600");
     private final ImmutableList<String> TOWNY_SUBS = ImmutableList.of("none", "wilderness", "town", "nation");
+    private final ImmutableList<String> USE_CLAY_SUBS = ImmutableList.of("WOOL", "TERRACOTTA", "CONCRETE");
     private final ImmutableList<String> VORTEX_SUBS = ImmutableList.of("kill", "teleport");
-    private final ImmutableList<String> FILE_SUBS = ImmutableList.of("achievements", "artron", "blocks", "chameleon_guis", "condensables", "handles", "kits", "rooms", "signs", "tag");
     private final ImmutableList<String> WORLD_SUBS;
 
     public TARDISConfigTabComplete(TARDIS plugin) {
         this.plugin = plugin;
+        ROOT_SUBS = ImmutableList.copyOf(combineLists());
         if (plugin.isWorldGuardOnServer()) {
             FLAG_SUBS = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
         } else {
@@ -66,7 +67,6 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
             tmpPresets.add(p.toString());
         }
         PRESETS = ImmutableList.copyOf(tmpPresets);
-        ROOT_SUBS = ImmutableList.copyOf(combineLists());
         List<String> worlds = new ArrayList<>();
         plugin.getServer().getWorlds().forEach((w) -> worlds.add(w.getName()));
         WORLD_SUBS = ImmutableList.copyOf(worlds);
@@ -137,7 +137,13 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
     }
 
     private List<String> combineLists() {
-        List<String> newList = new ArrayList<>(plugin.getGeneralKeeper().getTardisConfigCommand().firstsStr.size() + plugin.getGeneralKeeper().getTardisConfigCommand().firstsBool.size() + plugin.getGeneralKeeper().getTardisConfigCommand().firstsInt.size() + plugin.getGeneralKeeper().getTardisConfigCommand().firstsStrArtron.size() + plugin.getGeneralKeeper().getTardisConfigCommand().firstsIntArtron.size());
+        List<String> newList = new ArrayList<>(
+                plugin.getGeneralKeeper().getTardisConfigCommand().firstsStr.size()
+                        + plugin.getGeneralKeeper().getTardisConfigCommand().firstsBool.size()
+                        + plugin.getGeneralKeeper().getTardisConfigCommand().firstsInt.size()
+                        + plugin.getGeneralKeeper().getTardisConfigCommand().firstsStrArtron.size()
+                        + plugin.getGeneralKeeper().getTardisConfigCommand().firstsIntArtron.size()
+        );
         newList.addAll(plugin.getGeneralKeeper().getTardisConfigCommand().firstsStr.keySet());
         newList.addAll(plugin.getGeneralKeeper().getTardisConfigCommand().firstsBool.keySet());
         newList.addAll(plugin.getGeneralKeeper().getTardisConfigCommand().firstsInt.keySet());

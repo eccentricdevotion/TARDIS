@@ -73,11 +73,11 @@ class TARDISCommandSetter {
         plugin.getCommand("tardisadmin").setExecutor(new TARDISAdminCommands(plugin));
         plugin.getCommand("tardisadmin").setTabCompleter(new TARDISAdminTabComplete(plugin));
         TARDISConfigCommand tardisConfigCommand = new TARDISConfigCommand(plugin);
+        plugin.getGeneralKeeper().setTardisConfigCommand(tardisConfigCommand);
         plugin.getCommand("tardisconfig").setExecutor(tardisConfigCommand);
         plugin.getCommand("tardisconfig").setTabCompleter(new TARDISConfigTabComplete(plugin));
         plugin.getCommand("tardisdev").setExecutor(new TARDISDevCommand(plugin));
         plugin.getCommand("tardisdev").setTabCompleter(new TARDISDevTabComplete());
-        plugin.getGeneralKeeper().setTardisConfigCommand(tardisConfigCommand);
         plugin.getCommand("tardisarea").setExecutor(new TARDISAreaCommands(plugin));
         plugin.getCommand("tardisarea").setTabCompleter(new TARDISAreaTabComplete());
         plugin.getCommand("tardisartron").setExecutor(new TARDISArtronStorageCommand(plugin));
