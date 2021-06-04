@@ -200,10 +200,13 @@ public class TARDISInteriorPostioning {
         where.put("tardis_id", id);
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {
+            // get the exit location
+            TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
+            Location exitLocation = dl.getL();
             String[][][] json = TARDISARSMethods.getGridFromJSON(rs.getJson());
             Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
             for (Entity e : c.getEntities()) {
-                e.remove();
+                removeEntity(e, exitLocation);
             }
             for (int l = 0; l < 3; l++) {
                 for (int x = 0; x < 9; x++) {
@@ -218,19 +221,7 @@ public class TARDISInteriorPostioning {
                             Chunk tipsChunk = w.getBlockAt(slot.getX(), slot.getY(), slot.getZ()).getChunk();
                             // remove mobs
                             for (Entity e : tipsChunk.getEntities()) {
-                                if (e instanceof Player) {
-                                    Player p = (Player) e;
-                                    // get the exit location
-                                    TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
-                                    Location location = dl.getL();
-                                    // teleport player and remove from travellers table
-                                    plugin.getGeneralKeeper().getDoorListener().movePlayer(p, location, true, p.getWorld(), false, 0, true);
-                                    HashMap<String, Object> wheret = new HashMap<>();
-                                    wheret.put("uuid", p.getUniqueId().toString());
-                                    plugin.getQueryFactory().doDelete("travellers", wheret);
-                                } else {
-                                    e.remove();
-                                }
+                                removeEntity(e, exitLocation);
                             }
                             for (int y = 0; y < 16; y++) {
                                 for (int col = 0; col < 16; col++) {
@@ -252,6 +243,23 @@ public class TARDISInteriorPostioning {
                 e.remove();
             }
         }
+    }
+
+    private void removeEntity(Entity entity, Location exit) {
+        if (entity instanceof Player) {
+            Player p = (Player) entity;
+            // teleport player and remove from travellers table
+            teleportPlayerToExit(p, exit);
+        } else {
+            entity.remove();
+        }
+    }
+
+    private void teleportPlayerToExit(Player player, Location exit) {
+        plugin.getGeneralKeeper().getDoorListener().movePlayer(player, exit, true, player.getWorld(), false, 0, true);
+        HashMap<String, Object> wheret = new HashMap<>();
+        wheret.put("uuid", player.getUniqueId().toString());
+        plugin.getQueryFactory().doDelete("travellers", wheret);
     }
 
     public void reclaimZeroChunk(World w, TARDISTIPSData data) {
