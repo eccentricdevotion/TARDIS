@@ -16,20 +16,35 @@
  */
 package me.eccentric_nz.TARDIS.commands.sudo;
 
+import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.UUID;
 
 /**
+ * During his exile on Earth, the Third Doctor altered the TARDIS' Architectural Configuration software to relocate the
+ * console outside the ship (as it was too big to go through the doors), allowing him to work on it in his lab.
+ *
  * @author eccentric_nz
  */
-public class SudoARS {
+class SudoARS {
 
     private final TARDIS plugin;
 
-    public SudoARS(TARDIS plugin) {
+    SudoARS(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean showARS() {
+    boolean showARS(Player player, UUID uuid) {
+        TARDISSudoTracker.SUDOERS.put(player.getUniqueId(), uuid);
+        ItemStack[] tars = new TARDISARSInventory(plugin).getARS();
+        Inventory ars = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
+        ars.setContents(tars);
+        player.openInventory(ars);
         return true;
     }
 }

@@ -280,6 +280,7 @@ CHAM_NOT_CUSTOM: "You cannot customise the Chameleon Circuit with that kind of b
 CHAM_NOT_EMPTY: "You cannot construct an empty Chameleon preset!"
 CHAM_NOT_ENGAGE: "Bummer, the TARDIS could not engage the Chameleon Circuit!"
 CHAM_NOT_FOUND: "Could not find the Chameleon Circuit!"
+CHAM_NOT_VALID: "You cannot remotely set the TARDIS exterior to that Chameleon preset!"
 CHAM_NOT_SHORT: "You cannot short out the Chameleon Circuit with that kind of block!"
 CHAM_NO_SAVE: "There is no saved Chameleon Construct!"
 CHAM_OFF: "The Chameleon Circuit was turned OFF."

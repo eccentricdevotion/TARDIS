@@ -17,11 +17,13 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.InventoryView;
 
@@ -63,6 +65,16 @@ public class TARDISMenuListener implements Listener {
                 event.setCancelled(true);
             }
         });
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onMenuClose(InventoryCloseEvent event) {
+        InventoryView view = event.getView();
+        String title = view.getTitle();
+        if (!titles.containsKey(title)) {
+            return;
+        }
+        TARDISSudoTracker.SUDOERS.remove(event.getPlayer().getUniqueId());
     }
 
     private HashMap<String, Integer> getTitleMap() {

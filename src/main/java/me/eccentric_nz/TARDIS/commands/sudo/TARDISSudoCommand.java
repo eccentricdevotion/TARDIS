@@ -85,16 +85,20 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                                 TARDISMessage.send(sender, "CMD_NO_CONSOLE");
                                 return true;
                             }
-                            return new SudoARS(plugin).showARS();
+                            return new SudoARS(plugin).showARS((Player) sender, uuid);
                         case "assemble":
                             return new SudoAssemble(plugin).restore(sender, uuid, offlinePlayer.getName());
                         case "back":
                             return new TARDISRemoteBackCommand(plugin).sendBack(sender, rs.getTardis_id(), offlinePlayer);
                         case "chameleon":
-                            return new SudoChameleon(plugin).setPreset();
+                            return new SudoChameleon(plugin).setPreset(sender, rs.getTardis_id(), args, offlinePlayer);
                         case "clean":
                             return new SudoRepair(plugin, uuid, true).repair();
                         case "comehere":
+                            if (sender instanceof ConsoleCommandSender) {
+                                TARDISMessage.send(sender, "CMD_NO_CONSOLE");
+                                return true;
+                            }
                             return new TARDISRemoteComehereCommand(plugin).doRemoteComeHere((Player) sender, uuid);
                         case "deadlock":
                             // toggle door deadlocks
@@ -125,7 +129,11 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                             }
                             return plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + offlinePlayer.getName() + " travel" + sb);
                         default: // update
-                            return new SudoUpdate(plugin).initiate();
+                            if (sender instanceof ConsoleCommandSender) {
+                                TARDISMessage.send(sender, "CMD_NO_CONSOLE");
+                                return true;
+                            }
+                            return new SudoUpdate(plugin).initiate((Player) sender, args, rs.getTardis_id(), uuid);
                     }
                 }
             } else {

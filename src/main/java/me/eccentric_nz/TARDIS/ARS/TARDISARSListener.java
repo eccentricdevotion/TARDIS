@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.ARS;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
@@ -63,10 +64,16 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
         if (name.equals(ChatColor.DARK_RED + "Architectural Reconfiguration")) {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
-            UUID uuid = player.getUniqueId();
-            ids.put(uuid, getTardisId(player.getUniqueId().toString()));
+            UUID playerUUID = player.getUniqueId();
+            UUID uuid;
+            if (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) {
+                uuid = TARDISSudoTracker.SUDOERS.get(playerUUID);
+            } else {
+                uuid = playerUUID;
+            }
+            ids.put(playerUUID, getTardisId(uuid.toString()));
             int slot = event.getRawSlot();
-            if (slot != 10 && !hasLoadedMap.contains(uuid)) {
+            if (slot != 10 && !hasLoadedMap.contains(playerUUID)) {
                 TARDISMessage.send(player, "ARS_LOAD");
                 return;
             }
@@ -77,7 +84,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     case 11:
                     case 19:
                         // up
-                        moveMap(uuid, view, slot);
+                        moveMap(playerUUID, view, slot);
                         break;
                     case 4:
                     case 5:
@@ -106,12 +113,12 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     case 44:
                         if (!checkSlotForConsole(view, slot, uuid.toString())) {
                             // select slot
-                            selected_slot.put(uuid, slot);
+                            selected_slot.put(playerUUID, slot);
                         }
                         break;
                     case 10:
                         // load map
-                        loadMap(view, uuid);
+                        loadMap(view, playerUUID);
                         break;
                     case 12:
                         // reconfigure
@@ -125,10 +132,10 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     case 28:
                     case 29:
                         // switch level
-                        if (map_data.containsKey(uuid)) {
-                            switchLevel(view, slot, uuid);
-                            TARDISARSMapData md = map_data.get(uuid);
-                            setMap(md.getY(), md.getE(), md.getS(), uuid, view);
+                        if (map_data.containsKey(playerUUID)) {
+                            switchLevel(view, slot, playerUUID);
+                            TARDISARSMapData md = map_data.get(playerUUID);
+                            setMap(md.getY(), md.getE(), md.getS(), playerUUID, view);
                             setLore(view, slot, null);
                         } else {
                             setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
@@ -136,9 +143,9 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         break;
                     case 30:
                         // reset selected slot to empty
-                        if (selected_slot.containsKey(uuid)) {
+                        if (selected_slot.containsKey(playerUUID)) {
                             // check whether original loaded slot was a room - as it will need to be jettisoned, not reset
-                            if (checkSavedGrid(uuid, selected_slot.get(uuid), 0)) {
+                            if (checkSavedGrid(playerUUID, selected_slot.get(playerUUID), 0)) {
                                 setLore(view, slot, plugin.getLanguage().getString("ARS_RESET_SLOT"));
                                 break;
                             } else {
@@ -147,7 +154,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                 s1.setDisplayName("Empty slot");
                                 s1.setCustomModelData(1);
                                 stone.setItemMeta(s1);
-                                setSlot(view, selected_slot.get(uuid), stone, uuid, true);
+                                setSlot(view, selected_slot.get(playerUUID), stone, playerUUID, true);
                                 setLore(view, slot, null);
                             }
                         } else {
@@ -158,47 +165,47 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         // scroll left
                         int startl;
                         int max = room_materials.size() - 9;
-                        if (scroll_start.containsKey(uuid)) {
-                            startl = scroll_start.get(uuid) + 1;
+                        if (scroll_start.containsKey(playerUUID)) {
+                            startl = scroll_start.get(playerUUID) + 1;
                             if (startl >= max) {
                                 startl = max;
                             }
                         } else {
                             startl = 1;
                         }
-                        scroll_start.put(uuid, startl);
+                        scroll_start.put(playerUUID, startl);
                         for (int i = 0; i < 9; i++) {
                             // setSlot(Inventory inv, int slot, int id, String room, UUID uuid, boolean update)
-                            setSlot(view, (45 + i), room_materials.get(startl + i), room_names.get(startl + i), uuid, false);
+                            setSlot(view, (45 + i), room_materials.get(startl + i), room_names.get(startl + i), playerUUID, false);
                         }
                         break;
                     case 38:
                         // scroll right
                         int startr;
-                        if (scroll_start.containsKey(uuid)) {
-                            startr = scroll_start.get(uuid) - 1;
+                        if (scroll_start.containsKey(playerUUID)) {
+                            startr = scroll_start.get(playerUUID) - 1;
                             if (startr <= 0) {
                                 startr = 0;
                             }
                         } else {
                             startr = 0;
                         }
-                        scroll_start.put(uuid, startr);
+                        scroll_start.put(playerUUID, startr);
                         for (int i = 0; i < 9; i++) {
                             // setSlot(Inventory inv, int slot, int id, String room, UUID uuid, boolean update)
-                            setSlot(view, (45 + i), room_materials.get(startr + i), room_names.get(startr + i), uuid, false);
+                            setSlot(view, (45 + i), room_materials.get(startr + i), room_names.get(startr + i), playerUUID, false);
                         }
                         break;
                     case 39:
                         // jettison
-                        if (selected_slot.containsKey(uuid)) {
+                        if (selected_slot.containsKey(playerUUID)) {
                             // need to check for gravity wells, and jettison both layers...
                             ItemStack tnt = new ItemStack(Material.TNT, 1);
                             ItemMeta j = tnt.getItemMeta();
                             j.setDisplayName("Jettison");
                             j.setCustomModelData(1);
                             tnt.setItemMeta(j);
-                            setSlot(view, selected_slot.get(uuid), tnt, uuid, true);
+                            setSlot(view, selected_slot.get(playerUUID), tnt, playerUUID, true);
                             setLore(view, slot, null);
                         } else {
                             setLore(view, slot, plugin.getLanguage().getString("ARS_NO_SLOT"));
@@ -214,9 +221,9 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     case 52:
                     case 53:
                         // put room in selected slot
-                        if (selected_slot.containsKey(uuid)) {
+                        if (selected_slot.containsKey(playerUUID)) {
                             // check whether original loaded slot was a room - as it will need to be jettisoned, not reset
-                            if (checkSavedGrid(uuid, selected_slot.get(uuid), 0)) {
+                            if (checkSavedGrid(playerUUID, selected_slot.get(playerUUID), 0)) {
                                 setLore(view, slot, "Jettison existing room first!");
                                 break;
                             } else {
@@ -229,18 +236,18 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                 }
                                 if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                                     int updown = (room.equals("GRAVITY")) ? -1 : 1;
-                                    if (checkSavedGrid(uuid, selected_slot.get(uuid), updown)) {
+                                    if (checkSavedGrid(playerUUID, selected_slot.get(playerUUID), updown)) {
                                         setLore(view, slot, plugin.getLanguage().getString("ARS_GRAVITY"));
                                         break;
                                     }
                                 }
-                                if (room.equals("RENDERER") && hasRenderer(uuid)) {
+                                if (room.equals("RENDERER") && hasRenderer(playerUUID)) {
                                     setLore(view, slot, plugin.getLanguage().getString("ARS_HAS_RENDERER"));
                                     break;
                                 }
                                 // setSlot(Inventory inv, int slot, ItemStack is, String player, boolean update)
-                                setSlot(view, selected_slot.get(uuid), ris, uuid, true);
-                                setSlot(view, slot, ris.getType(), displayName, uuid, false);
+                                setSlot(view, selected_slot.get(playerUUID), ris, playerUUID, true);
+                                setSlot(view, slot, ris.getType(), displayName, playerUUID, false);
                             }
                         } else {
                             setLore(view, slot, plugin.getLanguage().getString("ARS_NO_SLOT"));
@@ -256,14 +263,14 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
     /**
      * Checks the saved map to see whether the selected slot can be reset.
      *
-     * @param uuid   the UUID of the player using the GUI
-     * @param slot   the slot that was clicked
-     * @param updown the type id of the block in the slot
+     * @param playerUUID the UUID of the player using the GUI
+     * @param slot       the slot that was clicked
+     * @param updown     the type id of the block in the slot
      * @return true or false
      */
-    private boolean checkSavedGrid(UUID uuid, int slot, int updown) {
-        TARDISARSMapData md = map_data.get(uuid);
-        TARDISARSSaveData sd = save_map_data.get(uuid);
+    private boolean checkSavedGrid(UUID playerUUID, int slot, int updown) {
+        TARDISARSMapData md = map_data.get(playerUUID);
+        TARDISARSSaveData sd = save_map_data.get(playerUUID);
         String[][][] grid = sd.getData();
         int yy = md.getY() + updown;
         // avoid ArrayIndexOutOfBoundsException if gravity well extends beyond ARS area

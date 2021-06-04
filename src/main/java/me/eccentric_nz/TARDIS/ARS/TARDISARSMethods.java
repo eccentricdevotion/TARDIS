@@ -23,6 +23,7 @@ import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
@@ -89,10 +90,10 @@ public class TARDISARSMethods {
     /**
      * Saves the current ARS data to the database.
      *
-     * @param uuid the UUID of the player who is using the ARS GUI
+     * @param playerUUID the UUID of the player who is using the ARS GUI
      */
-    private void saveAll(UUID uuid) {
-        TARDISARSMapData md = map_data.get(uuid);
+    private void saveAll(UUID playerUUID) {
+        TARDISARSMapData md = map_data.get(playerUUID);
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         JsonArray json = new JsonParser().parse(gson.toJson(md.getData())).getAsJsonArray();
         HashMap<String, Object> set = new HashMap<>();
@@ -108,10 +109,10 @@ public class TARDISARSMethods {
     /**
      * Saves the current ARS data to the database.
      *
-     * @param uuid the UUID of the player who is using the ARS GUI
+     * @param playerUUID the UUID of the player who is using the ARS GUI
      */
-    private void revert(UUID uuid) {
-        TARDISARSSaveData sd = save_map_data.get(uuid);
+    private void revert(UUID playerUUID) {
+        TARDISARSSaveData sd = save_map_data.get(playerUUID);
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         JsonArray json = new JsonParser().parse(gson.toJson(sd.getData())).getAsJsonArray();
         HashMap<String, Object> set = new HashMap<>();
@@ -146,14 +147,14 @@ public class TARDISARSMethods {
     /**
      * Sets an ItemStack to the specified inventory slot updating the display name and removing any lore.
      *
-     * @param view     the inventory to update
-     * @param slot     the slot number to update
-     * @param material the item (material) type to set the item stack to
-     * @param room     the room type associated with the block type
-     * @param uuid     the player using the GUI
-     * @param update   whether to update the grid display
+     * @param view       the inventory to update
+     * @param slot       the slot number to update
+     * @param material   the item (material) type to set the item stack to
+     * @param room       the room type associated with the block type
+     * @param playerUUID the player using the GUI
+     * @param update     whether to update the grid display
      */
-    void setSlot(InventoryView view, int slot, Material material, String room, UUID uuid, boolean update) {
+    void setSlot(InventoryView view, int slot, Material material, String room, UUID playerUUID, boolean update) {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(room);
@@ -168,24 +169,24 @@ public class TARDISARSMethods {
         is.setItemMeta(im);
         view.setItem(slot, is);
         if (update) {
-            updateGrid(uuid, slot, material.toString());
+            updateGrid(playerUUID, slot, material.toString());
         }
     }
 
     /**
      * Sets an ItemStack to the specified inventory slot.
      *
-     * @param view   the inventory to update
-     * @param slot   the slot number to update
-     * @param is     the item stack to set
-     * @param uuid   the player using the GUI
-     * @param update whether to update the grid display
+     * @param view       the inventory to update
+     * @param slot       the slot number to update
+     * @param is         the item stack to set
+     * @param playerUUID the player using the GUI
+     * @param update     whether to update the grid display
      */
-    void setSlot(InventoryView view, int slot, ItemStack is, UUID uuid, boolean update) {
+    void setSlot(InventoryView view, int slot, ItemStack is, UUID playerUUID, boolean update) {
         view.setItem(slot, is);
         String material = is.getType().toString();
         if (update) {
-            updateGrid(uuid, slot, material);
+            updateGrid(playerUUID, slot, material);
         }
     }
 
@@ -224,12 +225,12 @@ public class TARDISARSMethods {
     /**
      * Saves the current map to the TARDISARSMapData instance associated with the player using the GUI.
      *
-     * @param uuid     the UUID of the player using the GUI
-     * @param slot     the slot that was clicked
-     * @param material the type id of the block in the slot
+     * @param playerUUID the UUID of the player using the GUI
+     * @param slot       the slot that was clicked
+     * @param material   the type id of the block in the slot
      */
-    private void updateGrid(UUID uuid, int slot, String material) {
-        TARDISARSMapData md = map_data.get(uuid);
+    private void updateGrid(UUID playerUUID, int slot, String material) {
+        TARDISARSMapData md = map_data.get(playerUUID);
         String[][][] grid = md.getData();
         int yy = md.getY();
         int[] coords = getCoords(slot, md);
@@ -246,7 +247,7 @@ public class TARDISARSMethods {
         }
         grid[yy][newx][newz] = material;
         md.setData(grid);
-        map_data.put(uuid, md);
+        map_data.put(playerUUID, md);
     }
 
     /**
@@ -267,64 +268,64 @@ public class TARDISARSMethods {
     /**
      * Switches the indicator block for the map level.
      *
-     * @param view the inventory to update
-     * @param slot the slot to update
-     * @param uuid the UUID of the player using the GUI
+     * @param view       the inventory to update
+     * @param slot       the slot to update
+     * @param playerUUID the UUID of the player using the GUI
      */
-    void switchLevel(InventoryView view, int slot, UUID uuid) {
-        TARDISARSMapData md = map_data.get(uuid);
+    void switchLevel(InventoryView view, int slot, UUID playerUUID) {
+        TARDISARSMapData md = map_data.get(playerUUID);
         for (int i = 27; i < 30; i++) {
             Material material = Material.WHITE_WOOL;
             if (i == slot) {
                 material = Material.YELLOW_WOOL;
                 md.setY(i - 27);
-                map_data.put(uuid, md);
+                map_data.put(playerUUID, md);
             }
             ItemStack is = new ItemStack(material, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(levels[i - 27]);
             im.setCustomModelData(i - 26);
             is.setItemMeta(im);
-            setSlot(view, i, is, uuid, false);
+            setSlot(view, i, is, playerUUID, false);
         }
     }
 
     /**
      * Closes the inventory.
      *
-     * @param p the player using the GUI
+     * @param player the player using the GUI
      */
-    void close(Player p) {
-        UUID uuid = p.getUniqueId();
+    void close(Player player) {
+        UUID playerUUID = player.getUniqueId();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            scroll_start.remove(uuid);
-            selected_slot.remove(uuid);
-            hasLoadedMap.remove(uuid);
-            if (map_data.containsKey(uuid)) {
-                if (playerIsOwner(p.getUniqueId().toString(), ids.get(uuid))) {
-                    saveAll(uuid);
-                    TARDISARSProcessor tap = new TARDISARSProcessor(plugin, ids.get(uuid));
-                    boolean changed = tap.compare3DArray(save_map_data.get(uuid).getData(), map_data.get(uuid).getData());
+            scroll_start.remove(playerUUID);
+            selected_slot.remove(playerUUID);
+            hasLoadedMap.remove(playerUUID);
+            if (map_data.containsKey(playerUUID)) {
+                if (playerIsOwner(playerUUID, ids.get(playerUUID))) {
+                    saveAll(playerUUID);
+                    TARDISARSProcessor tap = new TARDISARSProcessor(plugin, ids.get(playerUUID));
+                    boolean changed = tap.compare3DArray(save_map_data.get(playerUUID).getData(), map_data.get(playerUUID).getData());
                     if (changed && tap.checkCosts(tap.getChanged(), tap.getJettison())) {
                         if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                            if (!hasCondensables(uuid.toString(), tap.getChanged(), ids.get(uuid))) {
+                            if (!TARDISSudoTracker.SUDOERS.containsKey(playerUUID) && !hasCondensables(playerUUID.toString(), tap.getChanged(), ids.get(playerUUID))) {
                                 String message = (tap.getChanged().size() > 1) ? "ARS_CONDENSE_MULTIPLE" : "ARS_CONDENSE";
-                                TARDISMessage.send(p, message);
+                                TARDISMessage.send(player, message);
                                 if (tap.getChanged().size() == 1) {
-                                    RoomRequiredLister.listCondensables(plugin, tap.getChanged().entrySet().iterator().next().getValue().toString(), p);
+                                    RoomRequiredLister.listCondensables(plugin, tap.getChanged().entrySet().iterator().next().getValue().toString(), player);
                                 }
-                                revert(uuid);
-                                p.closeInventory();
+                                revert(playerUUID);
+                                player.closeInventory();
                                 return;
                             }
                         }
-                        TARDISMessage.send(p, "ARS_START");
+                        TARDISMessage.send(player, "ARS_START");
                         // do all jettisons first
                         if (tap.getJettison().size() > 0) {
-                            TARDISMessage.send(p, "ROOM_JETT", String.format("%d", tap.getJettison().size()));
+                            TARDISMessage.send(player, "ROOM_JETT", String.format("%d", tap.getJettison().size()));
                             long del = 5L;
                             for (Map.Entry<TARDISARSJettison, ARS> map : tap.getJettison().entrySet()) {
-                                TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(uuid), p);
+                                TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(playerUUID), player);
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, jr, del);
                                 del += 5L;
                             }
@@ -333,55 +334,55 @@ public class TARDISARSMethods {
                         long period = 2400L * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed")));
                         long delay = 20L;
                         for (Map.Entry<TARDISARSSlot, ARS> map : tap.getChanged().entrySet()) {
-                            TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p, ids.get(uuid));
+                            TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), player, ids.get(playerUUID));
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, delay);
                             delay += period;
                         }
                         // damage the circuit if configured
                         if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
                             // get the id of the TARDIS this player is in
-                            int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(uuid);
+                            int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(playerUUID);
                             TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                             tcc.getCircuits();
                             // decrement uses
                             int uses_left = tcc.getArsUses();
-                            new TARDISCircuitDamager(plugin, DiskCircuit.ARS, uses_left, id, p).damage();
+                            new TARDISCircuitDamager(plugin, DiskCircuit.ARS, uses_left, id, player).damage();
                         }
                     } else {
                         // reset map to the previous version
-                        revert(uuid);
+                        revert(playerUUID);
                         if (tap.getError().equals("ARS_LIMIT")) {
-                            TARDISMessage.send(p, tap.getError(), plugin.getConfig().getString("growth.ars_limit"));
+                            TARDISMessage.send(player, tap.getError(), plugin.getConfig().getString("growth.ars_limit"));
                         } else {
-                            TARDISMessage.send(p, tap.getError());
+                            TARDISMessage.send(player, tap.getError());
                         }
                     }
                 } else {
-                    TARDISMessage.send(p, "ROOM_ONLY_TL");
-                    revert(uuid);
+                    TARDISMessage.send(player, "ROOM_ONLY_TL");
+                    revert(playerUUID);
                 }
-                map_data.remove(uuid);
-                save_map_data.remove(uuid);
-                ids.remove(uuid);
+                map_data.remove(playerUUID);
+                save_map_data.remove(playerUUID);
+                ids.remove(playerUUID);
             }
-            p.closeInventory();
+            player.closeInventory();
         }, 1L);
     }
 
     /**
      * Loads the map from the database ready for use in the GUI.
      *
-     * @param view the inventory to load the map into
-     * @param uuid the UUID of the player using the GUI
+     * @param view       the inventory to load the map into
+     * @param playerUUID the UUID of the player using the GUI
      */
-    void loadMap(InventoryView view, UUID uuid) {
+    void loadMap(InventoryView view, UUID playerUUID) {
         if (view.getItem(10).getItemMeta().hasLore()) {
             setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_ERROR"));
             return;
         }
         setLore(view, 10, "Loading...");
         HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", ids.get(uuid));
+        where.put("tardis_id", ids.get(playerUUID));
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {
             TARDISARSSaveData sd = new TARDISARSSaveData();
@@ -395,18 +396,18 @@ public class TARDISARSMethods {
             md.setS(rs.getSouth());
             md.setY(rs.getLayer());
             md.setId(rs.getId());
-            save_map_data.put(uuid, sd);
-            map_data.put(uuid, md);
-            setMap(rs.getLayer(), rs.getEast(), rs.getSouth(), uuid, view);
-            saveAll(uuid);
-            hasLoadedMap.add(uuid);
+            save_map_data.put(playerUUID, sd);
+            map_data.put(playerUUID, md);
+            setMap(rs.getLayer(), rs.getEast(), rs.getSouth(), playerUUID, view);
+            saveAll(playerUUID);
+            hasLoadedMap.add(playerUUID);
             setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_LOADED"));
-            switchLevel(view, (27 + rs.getLayer()), uuid);
+            switchLevel(view, (27 + rs.getLayer()), playerUUID);
         }
     }
 
-    void setMap(int ul, int ue, int us, UUID uuid, InventoryView view) {
-        TARDISARSMapData data = map_data.get(uuid);
+    void setMap(int ul, int ue, int us, UUID playerUUID, InventoryView view) {
+        TARDISARSMapData data = map_data.get(playerUUID);
         String[][][] grid = data.getData();
         String[][] layer = grid[ul];
         String[][] map = sliceGrid(layer, ue, us);
@@ -416,7 +417,7 @@ public class TARDISARSMethods {
                 int slot = i + (j * 9);
                 Material material = Material.valueOf(map[indexx][indexz]);
                 String name = TARDISARS.ARSFor(map[indexx][indexz]).getDescriptiveName();
-                setSlot(view, slot, material, name, uuid, false);
+                setSlot(view, slot, material, name, playerUUID, false);
                 indexz++;
             }
             indexz = 0;
@@ -427,13 +428,13 @@ public class TARDISARSMethods {
     /**
      * Move the map to a new position.
      *
-     * @param uuid the UUID of the player using the GUI
-     * @param view the inventory to update
-     * @param slot the slot number to update
+     * @param playerUUID the UUID of the player using the GUI
+     * @param view       the inventory to update
+     * @param slot       the slot number to update
      */
-    void moveMap(UUID uuid, InventoryView view, int slot) {
-        if (map_data.containsKey(uuid)) {
-            TARDISARSMapData md = map_data.get(uuid);
+    void moveMap(UUID playerUUID, InventoryView view, int slot) {
+        if (map_data.containsKey(playerUUID)) {
+            TARDISARSMapData md = map_data.get(playerUUID);
             int ue, us;
             switch (slot) {
                 case 1:
@@ -453,11 +454,11 @@ public class TARDISARSMethods {
                     us = ((md.getS() - 1) >= 0) ? md.getS() - 1 : md.getS();
                     break;
             }
-            setMap(md.getY(), ue, us, uuid, view);
+            setMap(md.getY(), ue, us, playerUUID, view);
             setLore(view, slot, null);
             md.setE(ue);
             md.setS(us);
-            map_data.put(uuid, md);
+            map_data.put(playerUUID, md);
         } else {
             setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD"));
         }
@@ -529,9 +530,9 @@ public class TARDISARSMethods {
         return id;
     }
 
-    boolean hasRenderer(UUID uuid) {
+    boolean hasRenderer(UUID playerUUID) {
         HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", ids.get(uuid));
+        where.put("tardis_id", ids.get(playerUUID));
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             return !rs.getTardis().getRenderer().isEmpty();
@@ -562,10 +563,14 @@ public class TARDISARSMethods {
         return (consoleBlocks.contains(m.toString()));
     }
 
-    private boolean playerIsOwner(String uuid, int id) {
+    private boolean playerIsOwner(UUID uuid, int id) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        where.put("uuid", uuid);
+        if (TARDISSudoTracker.SUDOERS.containsKey(uuid)) {
+            where.put("uuid", TARDISSudoTracker.SUDOERS.get(uuid).toString());
+        } else {
+            where.put("uuid", uuid.toString());
+        }
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         return rs.resultSet();
     }
