@@ -7,7 +7,7 @@ title: Configuration
 
 The configuration files (config.yml, artron.yml, rooms.yml, recipes.yml) are generated automatically, you can find them in _plugins/TARDIS/_
 
-All configuration options can be set via in game commands or in the console, see the [Admin Commands](admin-commands.html) page.
+All configuration options can be set via in game commands or in the console, see the [Admin Config Commands](config-commands.html) page.
 
 Choose a configuration page from below:
 

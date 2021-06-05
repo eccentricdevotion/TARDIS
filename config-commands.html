@@ -36,10 +36,10 @@
 		</ul>
 	</header>
 	<section>
-		<h1>Admin commands</h1>
-		<h3><code>/tardisadmin</code></h3>
+		<h1>Config commands</h1>
+		<h3><code>/tardisconfig</code></h3>
 		<p>To view specific TARDIS plugin configuration options:</p>
-		<pre><code>/tardisadmin config [configuration section]</code></pre>
+		<pre><code>/tardisconfig options [configuration section]</code></pre>
 		<p>Where <code>[configuration section]</code> is one of:</p>
 		<ul>
 			<li>worlds</li>
@@ -61,10 +61,10 @@
 			<li>String values e.g. the names of things, like the TARDIS key</li>
 			<li>Integer values e.g. numbers, like the cost of a room</li>
 		</ol>
-		<p>To use the <code>/tardisadmin</code> command to set config options, you use the syntax:</p>
-		<pre><code>/tardisadmin [config option] [value]</code></pre>
+		<p>To use the <code>/tardisconfig</code> command to set config options, you use the syntax:</p>
+		<pre><code>/tardisconfig [config option] [value]</code></pre>
 		<p>For example, to set the TARDIS to never land on water you would type:</p>
-		<pre><code>/tardisadmin land_on_water false</code></pre>
+		<pre><code>/tardisconfig land_on_water false</code></pre>
 		<h3>Config options:</h3>
 		<p>The following values will be set in <em>config.yml</em>:</p>
 		<style type="text/css">
@@ -178,20 +178,6 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td colspan="2">Sets the distance of the WorldBorder barrier (only used if the plugin is installed on the server).</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>gamemode</code></td>
-				<td class="noborder">string</td>
-				<td class="noborder"><code>suvival</code></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2">Sets the gamemode of TARDIS worlds when they are created.</td>
-			</tr>
-			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>keep_night</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -729,7 +715,7 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">Sets whether players can grow a Zero room. If this is set to true using the <code>/tardisadmin zero_room true</code> command, the plugin wil attempt to create the <code>TARDIS_Zero_Room</code> world if it doesn&rsquo;t yet exist.</td>
+				<td colspan="2">Sets whether players can grow a Zero room. If this is set to true using the <code>/tardisconfig zero_room true</code> command, the plugin wil attempt to create the <code>TARDIS_Zero_Room</code> world if it doesn&rsquo;t yet exist.</td>
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>external_gravity</code></td>
@@ -932,45 +918,14 @@
 				<td colspan="2">Sets the cost to enter the Zero room.</td>
 			</tr>
 		</table>
-		<h3>Reloading the config</h3>
-		<p>If you have made changes to the config file by manually editing it, you should use the reload command to reload the changes. Type:</p>
-		<pre><code>/tardisadmin reload</code></pre>
-		<p><strong>Note:</strong> Do not use the server <code>/reload</code> command or the manual changes you have made will be overwritten when the TARDIS config is saved when it is disabled.</p>
-		<h2>Other admin commands</h2>
-		<p>Enter a player&rsquo;s TARDIS (by direct teleport instead of the door).</p>
-		<pre><code>/tardisadmin desiege [player]</code></pre>
-		<p>Force a player&rsquo;s TARDIS out of Siege Mode.</p>
-		<pre><code>/tardisadmin assemble [player]</code></pre>
-		<p>Make a player&rsquo;s TARDIS reassemble itself after a HADS dispersal.</p>
-		<pre><code>/tardisadmin enter [player]</code></pre>
-		<p>Set the beacon block you are targeting in game, as a TARDIS recharge station.</p>
-		<pre><code>/tardisadmin recharger [name]</code></pre>
-		<p>Remove the specified beacon recharger from the config.</p>
-		<pre><code>/tardisadmin decharge [name]</code></pre>
+		<h3>Other config options</h3>
 		<p>Set whether a specified world is included or excluded from random time travel destinations.</p>
 		<pre><code>/tardisadmin include [world]
 /tardisadmin exclude [world]</code></pre>
-		<p>List all TARDISs and their locations.</p>
-		<pre><code>/tardisadmin list</code></pre>
-		<p>Remove a specified player&rsquo;s TARDIS.</p>
-		<pre><code>/tardisadmin delete [player]</code></pre>
-		<p>List TARDISes that haven&rsquo;t been used for an extended period.</p>
-		<pre><code>/tardisadmin prunelist [number of days]</code></pre>
-		<p>Remove TARDISes that haven&rsquo;t been used for an extended period. See the <a href="prune.html">Prune</a> page for more details.</p>
-		<pre><code>/tardisadmin prune [number of days]</code></pre>
-		<p>Check or set a player&rsquo;s TARDIS count.</p>
-		<pre><code>/tardisadmin playercount [player]
-/tardisadmin playercount [player] [count]</code></pre>
-		<p>Delete a player&rsquo;s TARDIS database records (will not remove any blocks in game).</p>
-		<pre><code>/tardisadmin purge [player]</code></pre>
-		<p>List chunks that are being kept loaded by TARDIS &mdash; either for room growing or Police Box locations.</p>
-		<pre><code>/tardisadmin chunks</code></pre>
-        <h2>Chameleon Arch commands</h2>
-        <p><em>See also the <a href="chameleon-arch.html">Chameleon Arch</a> page.</em></p>
-		<p>View an &lsquo;arched&rsquo; player&rsquo;s real name.</p>
-		<pre><code>/tardisadmin arch [player]</code></pre>
-		<p>Force toggle a player&rsquo;s &lsquo;arched&rsquo; status.</p>
-		<pre><code>/tardisadmin arch [player] force</code></pre>
+		<h3>Reloading the config</h3>
+		<p>If you have made changes to the config file by manually editing it, you should use the reload command to reload the changes. Type:</p>
+		<pre><code>/tardisconfig reload</code></pre>
+		<p><strong>Note:</strong> Do not use the server <code>/reload</code> command or the manual changes you have made will be overwritten when the TARDIS config is saved when it is disabled.</p>
 	</section>
 </div>
 <footer>

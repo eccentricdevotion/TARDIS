@@ -27,9 +27,13 @@ You can view descriptions, usage and permissions for all commands in-game using 
 
 `/tardisrecipe` - [View recipes for TARDIS items](recipe-commands.html)
 
-`/tardisadmin` - [Change the TARDIS plugin configuration](admin-commands.html)
+`/tardisadmin` - [Perform TARDIS administration tasks](admin-commands.html)
+
+`/tardisconfig` - [Change the TARDIS plugin configuration](config-commands.html)
 
 `/tardisgive` - [Give TARDIS items to players](give-commands.html)
+
+`/tardissudo` - [Admin super user commands](sudo-commands.html)
 
 `/tardisarea` - [Set up predefined TARDIS travel areas](area-commands.html)
 
@@ -44,8 +48,6 @@ You can view descriptions, usage and permissions for all commands in-game using 
 `/tardisnetherportal` - [Get coordinates for linking Nether Portals](netherportal-command.html)
 
 `/tardisjunk` - [Junk TARDIS related commands](junk-tardis.html)
-
-`/tardissudo` - [Admin super user commands](sudo-commands.html)
 
 `/handles` - [Handles related commands](handles.html)
 

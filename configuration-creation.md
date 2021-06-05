@@ -28,8 +28,6 @@ These are the creation configuration options.
 | &nbsp; | Sets the name of the default world. This is only used if `default_world` is true. |
 | &nbsp;&nbsp;&nbsp;&nbsp;`border_radius` | integer | `256` |
 | &nbsp; | Sets the distance of the WorldBorder barrier (only used if the plugin is installed on the server). |
-| &nbsp;&nbsp;&nbsp;&nbsp;`gamemode` | string | `suvival` |
-| &nbsp; | Sets the gamemode of TARDIS worlds when they are created. |
 | &nbsp;&nbsp;&nbsp;&nbsp;`keep_night` | boolean | `true` |
 | &nbsp; | Sets whether to keep the TARDIS world in perpetual night. |
 | &nbsp;&nbsp;&nbsp;&nbsp;`inventory_group` | string | `'0'` |
