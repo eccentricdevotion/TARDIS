@@ -74,7 +74,7 @@ class SudoUpdate {
         // get TARDIS data
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 1);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             if (updateable.equals(Updateable.HINGE)) {
@@ -105,7 +105,7 @@ class SudoUpdate {
                 }
             }
             if (new TARDISUpdateChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {
-                if (updateable.equals(Updateable.ROTOR) && args.length == 3 && args[2].equalsIgnoreCase("unlock")) {
+                if (updateable.equals(Updateable.ROTOR) && args.length == 4 && args[3].equalsIgnoreCase("unlock")) {
                     // get Time Rotor frame location
                     ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                     if (itemFrame != null) {

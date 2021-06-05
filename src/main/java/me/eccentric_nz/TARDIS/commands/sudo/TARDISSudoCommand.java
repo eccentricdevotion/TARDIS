@@ -17,6 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.sudo;
 
 import com.google.common.collect.ImmutableList;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISIsomorphicCommand;
@@ -24,19 +28,20 @@ import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteBackCommand;
 import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteComehereCommand;
 import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteHideCommand;
 import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteRebuildCommand;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisConsole;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class TARDISSudoCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
@@ -45,6 +50,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
     private final List<String> CHAM_SUBS = new ArrayList<>();
     private final ImmutableList<String> TRAVEL_SUBS = ImmutableList.of("home", "area", "back");
     private final List<String> AREA_SUBS = new ArrayList<>();
+    private final List<String> UPD_SUBS = new ArrayList<>();
 
     public TARDISSudoCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -54,6 +60,9 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
         ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
         if (rsa.resultSet()) {
             AREA_SUBS.addAll(rsa.getNames());
+        }
+        for (Updateable u : Updateable.values()) {
+            UPD_SUBS.add(u.getName());
         }
     }
 
@@ -84,6 +93,48 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                             if (sender instanceof ConsoleCommandSender) {
                                 TARDISMessage.send(sender, "CMD_NO_CONSOLE");
                                 return true;
+                            }
+                            // does the player have an ARS record yet?
+                            HashMap<String, Object> wherer = new HashMap<>();
+                            wherer.put("tardis_id", rs.getTardis_id());
+                            ResultSetARS rsa = new ResultSetARS(plugin, wherer);
+                            if (!rsa.resultSet()) {
+                                // create default json
+                                String[][][] empty = new String[3][9][9];
+                                for (int y = 0; y < 3; y++) {
+                                    for (int x = 0; x < 9; x++) {
+                                        for (int z = 0; z < 9; z++) {
+                                            empty[y][x][z] = "STONE";
+                                        }
+                                    }
+                                }
+                                // get TARDIS console size
+                                ResultSetTardisConsole rstc = new ResultSetTardisConsole(plugin);
+                                if (rstc.fromUUID(uuid.toString())) {
+                                    Schematic schm = rstc.getSchematic();
+                                    String controlBlock = schm.getSeedMaterial().toString();
+                                    if (schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("eleventh") || schm.getPermission().equals("master")) {
+                                        empty[0][4][4] = controlBlock;
+                                        empty[0][4][5] = controlBlock;
+                                        empty[0][5][4] = controlBlock;
+                                        empty[0][5][5] = controlBlock;
+                                        empty[1][4][5] = controlBlock;
+                                        empty[1][5][4] = controlBlock;
+                                        empty[1][5][5] = controlBlock;
+                                    } else if (schm.getPermission().equals("bigger") || schm.getPermission().equals("redstone") || schm.getPermission().equals("twelfth") || schm.getPermission().equals("thirteenth")) {
+                                        empty[1][4][5] = controlBlock;
+                                        empty[1][5][4] = controlBlock;
+                                        empty[1][5][5] = controlBlock;
+                                    }
+                                    empty[1][4][4] = controlBlock;
+                                    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                                    JsonArray json = new JsonParser().parse(gson.toJson(empty)).getAsJsonArray();
+                                    HashMap<String, Object> seta = new HashMap<>();
+                                    seta.put("tardis_id", rs.getTardis_id());
+                                    seta.put("uuid", uuid);
+                                    seta.put("json", json.toString());
+                                    plugin.getQueryFactory().doInsert("ars", seta);
+                                }
                             }
                             return new SudoARS(plugin).showARS((Player) sender, uuid);
                         case "assemble":
@@ -155,6 +206,8 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
             return partial(args[2], CHAM_SUBS);
         } else if (args.length == 3 && args[1].equalsIgnoreCase("travel")) {
             return partial(args[2], TRAVEL_SUBS);
+        } else if (args.length == 3 && args[1].equalsIgnoreCase("update")) {
+            return partial(args[2], UPD_SUBS);
         } else if (args.length == 4 && args[2].equalsIgnoreCase("area")) {
             return partial(args[3], AREA_SUBS);
         }
