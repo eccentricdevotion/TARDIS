@@ -176,7 +176,7 @@ public class TARDISWorldGuardUtils {
         dd.addPlayer(p);
         region.setOwners(dd);
         HashMap<Flag<?>, Object> flags = new HashMap<>();
-        if (!p.equals("junk") && p.length() != 36) {
+        if (!p.equals("junk") && p.length() != 36 && !plugin.getConfig().getBoolean("preferences.open_door_policy")) {
             flags.put(Flags.ENTRY, State.DENY);
         }
         flags.put(Flags.FIRE_SPREAD, State.DENY);

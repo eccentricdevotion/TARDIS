@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -109,7 +110,7 @@ public class TARDISAnyoneMoveListener implements Listener {
                 set.put("uuid", uuid.toString());
                 plugin.getQueryFactory().doSyncInsert("travellers", set);
                 // if WorldGuard is on the server check for TARDIS region protection and add player as member
-                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && isCompanion(uuid, id)) {
                     // get owner of TARDIS
                     HashMap<String, Object> whereo = new HashMap<>();
                     whereo.put("tardis_id", id);
@@ -133,7 +134,7 @@ public class TARDISAnyoneMoveListener implements Listener {
                 TARDISMessage.send(p, "DOOR_REMIND");
             }
             // if WorldGuard is on the server check for TARDIS region protection and remove player as member
-            if (exit && plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+            if (exit && plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && isCompanion(uuid, id)) {
                 // get owner of TARDIS
                 HashMap<String, Object> whereo = new HashMap<>();
                 whereo.put("tardis_id", id);
@@ -143,5 +144,19 @@ public class TARDISAnyoneMoveListener implements Listener {
                 }
             }
         }
+    }
+
+    private boolean isCompanion(UUID uuid, int id) {
+        // get companions
+        ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
+        if (!rsc.getCompanions().isEmpty()) {
+            // check if they are a companion
+            for (UUID cuuid : rsc.getCompanions()) {
+                if (cuuid.equals(uuid)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
