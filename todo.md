@@ -2,7 +2,8 @@
 
 ## Current version `4.6.3`
 
-1. Check Biome Reader in data pack worlds with custom biomes
+1. Remove Artron Furnace code, config options & recipe
+2. Allow furnaces/blast furnaces/smokers to use Artron Cells?
 
 ## Next version `4.7`
 
@@ -10,13 +11,12 @@
 2. Update documentation...
 3. 13th Doctor's and Factory TARDIS console
     * Add advanced console and disk storage to schematics
-4. Remove biome setting + umbrella code for Optifine Chameleon presets.
-5. Use the Vortex Manipulator to teleport past force fields
-6. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
-7. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
-8. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-9. TCG API - use Police Box location instead of player location?
-10. All the things...
+4. Use the Vortex Manipulator to teleport past force fields
+5. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
+6. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
+7. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
+8. TCG API - use Police Box location instead of player location?
+9. All the things...
 
 ## Resource Pack / TARDISWeepingAngels
 

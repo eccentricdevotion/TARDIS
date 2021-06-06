@@ -19,11 +19,11 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
+import me.eccentric_nz.TARDIS.enumeration.Storage;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Material;
-import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -82,7 +82,7 @@ public class TARDISBiomeReaderListener implements Listener {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Biome Reader")) {
                 TARDISBiome biome = TARDISStaticUtils.getBiomeAt(event.getClickedBlock().getLocation());
-                if (biome.equals(Biome.THE_VOID)) {
+                if (biome.equals(TARDISBiome.THE_VOID)) {
                     TARDISMessage.send(player, "BIOME_READER_NOT_VALID");
                     return;
                 }
@@ -93,9 +93,19 @@ public class TARDISBiomeReaderListener implements Listener {
                 ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
                 if (rs.resultSet()) {
                     try {
-                        ItemStack[] disks1 = TARDISSerializeInventory.itemStacksFromString(rs.getBiomesOne());
+                        ItemStack[] disks1;
+                        if (!rs.getBiomesOne().isEmpty()) {
+                            disks1 = TARDISSerializeInventory.itemStacksFromString(rs.getBiomesOne());
+                        } else {
+                            disks1 = TARDISSerializeInventory.itemStacksFromString(Storage.BIOME_1.getEmpty());
+                        }
                         if (!hasBiomeDisk(disks1, biome.name())) {
-                            ItemStack[] disks2 = TARDISSerializeInventory.itemStacksFromString(rs.getBiomesTwo());
+                            ItemStack[] disks2;
+                            if (!rs.getBiomesOne().isEmpty()) {
+                                disks2 = TARDISSerializeInventory.itemStacksFromString(rs.getBiomesTwo());
+                            } else {
+                                disks2 = TARDISSerializeInventory.itemStacksFromString(Storage.BIOME_2.getEmpty());
+                            }
                             if (!hasBiomeDisk(disks2, biome.name())) {
                                 ItemStack bd = new ItemStack(Material.MUSIC_DISC_CAT, 1);
                                 ItemMeta dim = bd.getItemMeta();
