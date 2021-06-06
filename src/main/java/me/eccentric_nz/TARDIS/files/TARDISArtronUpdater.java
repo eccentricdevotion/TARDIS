@@ -42,7 +42,6 @@ public class TARDISArtronUpdater {
         artron_config = plugin.getArtronConfig();
         // boolean
         booleanOptions.put("artron_furnace.particles", false);
-        booleanOptions.put("artron_furnace.set_biome", true);
         // double
         doubleOptions.put("artron_furnace.burn_time", 0.5);
         doubleOptions.put("artron_furnace.cook_time", 0.5);
@@ -149,6 +148,9 @@ public class TARDISArtronUpdater {
                 artron_config.set(entry.getKey(), entry.getValue());
                 i++;
             }
+        }
+        if (artron_config.contains("artron_furnace.set_biome")) {
+            plugin.getConfig().set("artron_furnace.set_biome", null);
         }
         try {
             artron_config.save(new File(plugin.getDataFolder(), "artron.yml"));

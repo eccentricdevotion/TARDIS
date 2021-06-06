@@ -21,18 +21,13 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.Furnace;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -135,22 +130,21 @@ public class TARDISArtronFurnaceListener implements Listener {
         if (!event.getItemInHand().getItemMeta().getDisplayName().equals("TARDIS Artron Furnace")) {
             return;
         }
-        if (TARDISPermission.hasPermission(event.getPlayer(), "tardis.furnace")) {
+        Player player = event.getPlayer();
+        if (plugin.getUtils().inTARDISWorld(player)) {
+            event.setCancelled(true);
+            // only in TARDIS
+            TARDISMessage.send(player, "NOT_IN_TARDIS");
+        }
+        if (TARDISPermission.hasPermission(player, "tardis.furnace")) {
             Block b = event.getBlock();
             if (plugin.getArtronConfig().getBoolean("artron_furnace.particles")) {
                 plugin.getGeneralKeeper().getArtronFurnaces().add(b);
             }
             plugin.getTardisHelper().nameFurnaceGUI(b, "TARDIS Artron Furnace");
-            if (plugin.getArtronConfig().getBoolean("artron_furnace.set_biome")) {
-                Location l = b.getLocation();
-                // set biome
-                l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), Biome.DEEP_OCEAN);
-                Chunk c = l.getChunk();
-                plugin.getTardisHelper().refreshChunk(c);
-            }
         } else {
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), "NO_PERM_FURNACE");
+            TARDISMessage.send(player, "NO_PERM_FURNACE");
         }
     }
 
@@ -172,29 +166,6 @@ public class TARDISArtronFurnaceListener implements Listener {
             is.setItemMeta(im);
             block.setBlockData(TARDISConstants.AIR);
             block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);
-            if (plugin.getArtronConfig().getBoolean("artron_furnace.set_biome")) {
-                // reset biome
-                TARDISBiome b = TARDISBiome.DEEP_OCEAN;
-                if (TARDISStaticUtils.getBiomeAt(block.getLocation()).equals(TARDISBiome.DEEP_OCEAN)) {
-                    for (BlockFace f : plugin.getGeneralKeeper().getSurrounding()) {
-                        b = TARDISStaticUtils.getBiomeAt(block.getRelative(f).getLocation());
-                        if (!b.equals(TARDISBiome.DEEP_OCEAN)) {
-                            break;
-                        }
-                    }
-                    Location l = block.getLocation();
-                    if (b.getKey().getNamespace().equalsIgnoreCase("minecraft")) {
-                        try {
-                            Biome biome = Biome.valueOf(b.name());
-                            l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), biome);
-                            Chunk c = l.getChunk();
-                            plugin.getTardisHelper().refreshChunk(c);
-                        } catch (IllegalArgumentException e) {
-                            plugin.debug("Could not get biome for post Artron Furnace breakage!");
-                        }
-                    }
-                }
-            }
         }
     }
 }

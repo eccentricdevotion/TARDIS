@@ -2,8 +2,7 @@
 
 ## Current version `4.6.3`
 
-1. Remove Artron Furnace code, config options & recipe
-2. Allow furnaces/blast furnaces/smokers to use Artron Cells?
+1. Update SHELL room - remove Police Box and Pandorica
 
 ## Next version `4.7`
 
