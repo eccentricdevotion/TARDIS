@@ -38,7 +38,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -238,26 +237,7 @@ public class TARDISScanner {
         TARDISMessage.send(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "SCAN_DIRECTION", tardisDirection.toString()), 20L);
         // get biome
-        TARDISBiome tmb;
-        if (whereIsIt.equals(TARDIS.plugin.getLanguage().getString("SCAN_CURRENT"))) {
-            // adjust for current location as it will always return DEEP_OCEAN if set_biome is true
-            switch (tardisDirection) {
-                case NORTH:
-                    tmb = TARDISStaticUtils.getBiomeAt(scan_loc.getBlock().getRelative(BlockFace.SOUTH, 6).getLocation());
-                    break;
-                case WEST:
-                    tmb = TARDISStaticUtils.getBiomeAt(scan_loc.getBlock().getRelative(BlockFace.EAST, 6).getLocation());
-                    break;
-                case SOUTH:
-                    tmb = TARDISStaticUtils.getBiomeAt(scan_loc.getBlock().getRelative(BlockFace.NORTH, 6).getLocation());
-                    break;
-                default:
-                    tmb = TARDISStaticUtils.getBiomeAt(scan_loc.getBlock().getRelative(BlockFace.WEST, 6).getLocation());
-                    break;
-            }
-        } else {
-            tmb = TARDISStaticUtils.getBiomeAt(scan_loc);
-        }
+        TARDISBiome tmb = TARDISStaticUtils.getBiomeAt(scan_loc);
         String biome = tmb.name();
         data.setScannedBiome(biome);
         bsched.scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome), 40L);
