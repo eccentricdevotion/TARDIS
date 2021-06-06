@@ -23,47 +23,47 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISPoliceBoxPreset extends TARDISPreset {
+class TARDISAdaptivePreset extends TARDISPreset {
 
-    TARDISPoliceBoxPreset() {
+    TARDISAdaptivePreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:blue_wool";
         blueprintData[0][1] = "minecraft:blue_wool";
         blueprintData[0][2] = "minecraft:blue_wool";
-        blueprintData[0][3] = "minecraft:air";
+        blueprintData[0][3] = "minecraft:stone_slab[type=bottom]";
         blueprintData[1][0] = "minecraft:blue_wool";
         blueprintData[1][1] = "minecraft:blue_wool";
         blueprintData[1][2] = "minecraft:blue_wool";
-        blueprintData[1][3] = "minecraft:air";
+        blueprintData[1][3] = "minecraft:stone_slab[type=bottom]";
         blueprintData[2][0] = "minecraft:blue_wool";
         blueprintData[2][1] = "minecraft:blue_wool";
         blueprintData[2][2] = "minecraft:blue_wool";
-        blueprintData[2][3] = "minecraft:air";
+        blueprintData[2][3] = "minecraft:stone_slab[type=bottom]";
         blueprintData[3][0] = "minecraft:blue_wool";
         blueprintData[3][1] = "minecraft:blue_wool";
         blueprintData[3][2] = "minecraft:blue_wool";
-        blueprintData[3][3] = "minecraft:air";
+        blueprintData[3][3] = "minecraft:stone_slab[type=bottom]";
         blueprintData[4][0] = "minecraft:blue_wool";
         blueprintData[4][1] = "minecraft:blue_wool";
         blueprintData[4][2] = "minecraft:blue_wool";
-        blueprintData[4][3] = "minecraft:air";
+        blueprintData[4][3] = "minecraft:stone_slab[type=bottom]";
         blueprintData[5][0] = "minecraft:blue_wool";
         blueprintData[5][1] = "minecraft:blue_wool";
         blueprintData[5][2] = "minecraft:blue_wool";
-        blueprintData[5][3] = "minecraft:air";
+        blueprintData[5][3] = "minecraft:stone_slab[type=bottom]";
         blueprintData[6][0] = "minecraft:blue_wool";
         blueprintData[6][1] = "minecraft:blue_wool";
         blueprintData[6][2] = "minecraft:blue_wool";
-        blueprintData[6][3] = "minecraft:air";
+        blueprintData[6][3] = "minecraft:stone_slab[type=bottom]";
         blueprintData[7][0] = "minecraft:iron_door[half=lower,hinge=right,facing=east,open=false]";
         blueprintData[7][1] = "minecraft:iron_door[half=upper,hinge=right,facing=east,open=false]";
         blueprintData[7][2] = "minecraft:blue_wool";
-        blueprintData[7][3] = "minecraft:air";
+        blueprintData[7][3] = "minecraft:stone_slab[type=bottom]";
         blueprintData[8][0] = "minecraft:air";
         blueprintData[8][1] = "minecraft:air";
-        blueprintData[8][2] = "minecraft:blue_wool";
-        blueprintData[8][3] = "minecraft:torch";
+        blueprintData[8][2] = "minecraft:redstone_block";
+        blueprintData[8][3] = "minecraft:redstone_lamp[lit=true]";
         blueprintData[9][0] = "minecraft:air";
         blueprintData[9][1] = "minecraft:air";
         blueprintData[9][2] = "minecraft:oak_wall_sign[facing=west]";
@@ -74,39 +74,39 @@ class TARDISPoliceBoxPreset extends TARDISPreset {
         stainedData[0][0] = "minecraft:blue_stained_glass";
         stainedData[0][1] = "minecraft:blue_stained_glass";
         stainedData[0][2] = "minecraft:blue_stained_glass";
-        stainedData[0][3] = "minecraft:air";
+        stainedData[0][3] = "minecraft:blue_stained_glass";
         stainedData[1][0] = "minecraft:blue_stained_glass";
         stainedData[1][1] = "minecraft:blue_stained_glass";
         stainedData[1][2] = "minecraft:blue_stained_glass";
-        stainedData[1][3] = "minecraft:air";
+        stainedData[1][3] = "minecraft:blue_stained_glass";
         stainedData[2][0] = "minecraft:blue_stained_glass";
         stainedData[2][1] = "minecraft:blue_stained_glass";
         stainedData[2][2] = "minecraft:blue_stained_glass";
-        stainedData[2][3] = "minecraft:air";
+        stainedData[2][3] = "minecraft:blue_stained_glass";
         stainedData[3][0] = "minecraft:blue_stained_glass";
         stainedData[3][1] = "minecraft:blue_stained_glass";
         stainedData[3][2] = "minecraft:blue_stained_glass";
-        stainedData[3][3] = "minecraft:air";
+        stainedData[3][3] = "minecraft:blue_stained_glass";
         stainedData[4][0] = "minecraft:blue_stained_glass";
         stainedData[4][1] = "minecraft:blue_stained_glass";
         stainedData[4][2] = "minecraft:blue_stained_glass";
-        stainedData[4][3] = "minecraft:air";
+        stainedData[4][3] = "minecraft:blue_stained_glass";
         stainedData[5][0] = "minecraft:blue_stained_glass";
         stainedData[5][1] = "minecraft:blue_stained_glass";
         stainedData[5][2] = "minecraft:blue_stained_glass";
-        stainedData[5][3] = "minecraft:air";
+        stainedData[5][3] = "minecraft:blue_stained_glass";
         stainedData[6][0] = "minecraft:blue_stained_glass";
         stainedData[6][1] = "minecraft:blue_stained_glass";
         stainedData[6][2] = "minecraft:blue_stained_glass";
-        stainedData[6][3] = "minecraft:air";
+        stainedData[6][3] = "minecraft:blue_stained_glass";
         stainedData[7][0] = "minecraft:iron_door[half=lower,hinge=right,facing=east,open=false]";
         stainedData[7][1] = "minecraft:iron_door[half=upper,hinge=right,facing=east,open=false]";
         stainedData[7][2] = "minecraft:blue_stained_glass";
-        stainedData[7][3] = "minecraft:air";
+        stainedData[7][3] = "minecraft:blue_stained_glass";
         stainedData[8][0] = "minecraft:air";
         stainedData[8][1] = "minecraft:air";
         stainedData[8][2] = "minecraft:blue_stained_glass";
-        stainedData[8][3] = "minecraft:air";
+        stainedData[8][3] = "minecraft:redstone_lamp[lit=false]";
         stainedData[9][0] = "minecraft:air";
         stainedData[9][1] = "minecraft:air";
         stainedData[9][2] = "minecraft:oak_wall_sign[facing=west]";
@@ -149,7 +149,7 @@ class TARDISPoliceBoxPreset extends TARDISPreset {
         glassData[8][0] = "minecraft:air";
         glassData[8][1] = "minecraft:air";
         glassData[8][2] = "minecraft:glass";
-        glassData[8][3] = "minecraft:air";
+        glassData[8][3] = "minecraft:redstone_lamp[lit=false]";
         glassData[9][0] = "minecraft:air";
         glassData[9][1] = "minecraft:air";
         glassData[9][2] = "minecraft:oak_wall_sign[facing=west]";

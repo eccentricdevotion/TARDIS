@@ -91,7 +91,6 @@ public class TARDISVoidUpdate {
                     }
                 }
             }
-            plugin.getTardisHelper().refreshChunk(chunk);
             idx++;
             if (idx == 81) {
                 plugin.getServer().getScheduler().cancelTask(taskID);

@@ -201,7 +201,7 @@ public class Converter implements Runnable {
                                         sb.append(str);
                                         break;
                                     case player_prefs:
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("pp_id"), rs.getString("uuid"), rs.getString("player"), rs.getString("key"), rs.getInt("sfx_on"), rs.getInt("quotes_on"), rs.getInt("artron_level"), rs.getString("wall"), rs.getString("floor"), rs.getString("siege_wall"), rs.getString("siege_floor"), rs.getInt("auto_on"), rs.getInt("beacon_on"), rs.getInt("hads_on"), rs.getString("hads_type"), rs.getInt("build_on"), rs.getInt("eps_on"), rs.getString("eps_message").replace("'", "\\'"), rs.getString("language"), rs.getInt("texture_on"), rs.getString("texture_in"), rs.getString("texture_out"), rs.getInt("submarine_on"), rs.getInt("dnd_on"), rs.getInt("minecart_on"), rs.getInt("renderer_on"), rs.getInt("wool_lights_on"), rs.getInt("ctm_on"), rs.getInt("sign_on"), rs.getInt("telepathy_on"), rs.getInt("travelbar_on"), rs.getInt("farm_on"), rs.getInt("lanterns_on"), rs.getInt("policebox_textures_on"), rs.getInt("auto_siege_on"), rs.getInt("flying_mode"), rs.getInt("throttle"), rs.getInt("difficulty"), rs.getInt("auto_powerup_on"), rs.getInt("auto_rescue_on"), rs.getInt("font_on"), rs.getString("hum")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("pp_id"), rs.getString("uuid"), rs.getString("player"), rs.getString("key"), rs.getInt("sfx_on"), rs.getInt("quotes_on"), rs.getInt("artron_level"), rs.getString("wall"), rs.getString("floor"), rs.getString("siege_wall"), rs.getString("siege_floor"), rs.getInt("auto_on"), rs.getInt("beacon_on"), rs.getInt("hads_on"), rs.getString("hads_type"), rs.getInt("build_on"), rs.getInt("eps_on"), rs.getString("eps_message").replace("'", "\\'"), rs.getString("language"), rs.getInt("texture_on"), rs.getString("texture_in"), rs.getString("texture_out"), rs.getInt("submarine_on"), rs.getInt("dnd_on"), rs.getInt("minecart_on"), rs.getInt("renderer_on"), rs.getInt("wool_lights_on"), rs.getInt("sign_on"), rs.getInt("telepathy_on"), rs.getInt("travelbar_on"), rs.getInt("farm_on"), rs.getInt("lanterns_on"), rs.getInt("auto_siege_on"), rs.getInt("flying_mode"), rs.getInt("throttle"), rs.getInt("difficulty"), rs.getInt("auto_powerup_on"), rs.getInt("auto_rescue_on"), rs.getString("hum")) + end;
                                         sb.append(str);
                                         break;
                                     case portals:
@@ -321,7 +321,7 @@ public class Converter implements Runnable {
         TARDISMessage.message(sender, plugin.getPluginName() + "***** Your SQLite database has been converted to MySQL!");
     }
 
-    public Connection getSQLiteConnection() throws Exception {
+    private Connection getSQLiteConnection() throws Exception {
         try {
             Class.forName("org.sqlite.JDBC");
             String path = plugin.getDataFolder() + File.separator + "TARDIS.db";

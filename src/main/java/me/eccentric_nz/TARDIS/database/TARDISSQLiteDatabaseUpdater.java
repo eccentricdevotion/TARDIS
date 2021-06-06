@@ -79,7 +79,6 @@ class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("auto_siege_on INTEGER DEFAULT 0");
         prefsupdates.add("beacon_on INTEGER DEFAULT 1");
         prefsupdates.add("build_on INTEGER DEFAULT 1");
-        prefsupdates.add("ctm_on INTEGER DEFAULT 0");
         prefsupdates.add("difficulty INTEGER DEFAULT 0");
         prefsupdates.add("dnd_on INTEGER DEFAULT 0");
         prefsupdates.add("eps_message TEXT DEFAULT ''");
@@ -89,14 +88,12 @@ class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("flying_mode INTEGER DEFAULT 1");
         prefsupdates.add("throttle INTEGER DEFAULT 4");
         prefsupdates.add("hads_on INTEGER DEFAULT 1");
-        prefsupdates.add("font_on INTEGER DEFAULT 0");
         prefsupdates.add("hads_type TEXT DEFAULT 'DISPLACEMENT'");
         prefsupdates.add("hum TEXT DEFAULT ''");
         prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("language TEXT DEFAULT 'ENGLISH'");
         prefsupdates.add("lanterns_on INTEGER DEFAULT 0");
         prefsupdates.add("minecart_on INTEGER DEFAULT 0");
-        prefsupdates.add("policebox_textures_on INTEGER DEFAULT 1");
         prefsupdates.add("renderer_on INTEGER DEFAULT 1");
         prefsupdates.add("siege_floor TEXT DEFAULT 'BLACK_TERRACOTTA'");
         prefsupdates.add("siege_wall TEXT DEFAULT 'GRAY_TERRACOTTA'");

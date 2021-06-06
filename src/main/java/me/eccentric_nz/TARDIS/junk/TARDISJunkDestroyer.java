@@ -22,11 +22,13 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISParticles;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -120,23 +122,7 @@ public class TARDISJunkDestroyer implements Runnable {
                         for (int col = sz; col <= ez; col++) {
                             Block block = world.getBlockAt(row, level, col);
                             block.setBlockData(TARDISConstants.AIR);
-                            TARDISBiome tardisBiome = TARDISStaticUtils.getBiomeAt(block.getLocation());
-                            if (level == sy && ((tardisBiome.equals(TARDISBiome.THE_END) && !junkLoc.getWorld().getEnvironment().equals(Environment.THE_END)) || tardisBiome.equals(TARDISBiome.THE_VOID)) && biome != null) {
-                                if (!chunks.contains(block.getChunk())) {
-                                    chunks.add(block.getChunk());
-                                }
-                                // reset the biome
-                                try {
-                                    world.setBiome(row, col, b);
-                                } catch (NullPointerException e) {
-                                    // remove TARDIS from tracker
-                                    plugin.getTrackerKeeper().getDematerialising().remove(pdd.getTardisID());
-                                }
-                            }
                         }
-                        // refresh the chunks
-                        chunks.forEach((chink) -> plugin.getTardisHelper().refreshChunk(chink));
-                        chunks.clear();
                     }
                 }
                 plugin.getTrackerKeeper().getDematerialising().remove(pdd.getTardisID());

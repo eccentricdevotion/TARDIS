@@ -104,10 +104,6 @@ public class TARDISPresetBuilderFactory {
                 }
             }
             bd.setTardisBiome(biome);
-            if (plugin.getConfig().getBoolean("police_box.set_biome") && !bd.isRebuild()) {
-                // remember the current biome (unless rebuilding)
-                plugin.getQueryFactory().saveBiome(tardis.getTardis_id(), biome.getKey().toString());
-            }
             if (tardis.getAdaption().equals(Adaption.BIOME)) {
                 preset = adapt(biome, tardis.getAdaption());
             }
@@ -159,7 +155,7 @@ public class TARDISPresetBuilderFactory {
                     runnable.setTask(taskID);
                 }
                 TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");
-                if (plugin.getUtils().inTARDISWorld(bd.getPlayer().getPlayer())) {
+                if (bd.getPlayer().getPlayer() != null && plugin.getUtils().inTARDISWorld(bd.getPlayer().getPlayer())) {
                     TARDISSounds.playTARDISSound(bd.getPlayer().getPlayer().getLocation(), "tardis_land_fast");
                 }
             } else if (!preset.equals(PRESET.INVISIBLE)) {
@@ -199,7 +195,7 @@ public class TARDISPresetBuilderFactory {
 
     private PRESET adapt(TARDISBiome biome, Adaption adaption) {
         if (adaption.equals(Adaption.BLOCK)) {
-            return PRESET.OLD;
+            return PRESET.ADAPTIVE;
         } else {
             switch (biome.name()) {
                 case "BEACH":

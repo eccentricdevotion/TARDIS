@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuInventory;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIPlayerPreferences;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
@@ -66,7 +67,6 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
         lookup.put("Autonomous", "auto_on");
         lookup.put("Beacon", "beacon_on");
         lookup.put("Companion Build", "build_on");
-        lookup.put("Connected Textures", "ctm_on");
         lookup.put("Do Not Disturb", "dnd_on");
         lookup.put("Easy Difficulty", "difficulty");
         lookup.put("Emergency Programme One", "eps_on");
@@ -76,13 +76,11 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
         lookup.put("Lanterns", "lanterns_on");
         lookup.put("Minecart Sounds", "minecart_on");
         lookup.put("Mob Farming", "farm_on");
-        lookup.put("Police Box Textures", "policebox_textures_on");
         lookup.put("Preset Sign", "sign_on");
         lookup.put("Resource Pack Switching", "texture_on");
         lookup.put("Submarine Mode", "submarine_on");
         lookup.put("Telepathic Circuit", "telepathy_on");
         lookup.put("Travel Bar", "travelbar_on");
-        lookup.put("Unicode Font", "font_on");
         lookup.put("Who Quotes", "quotes_on");
         lookup.put("Wool For Lights Off", "wool_lights_on");
     }
@@ -100,7 +98,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                     Player p = (Player) event.getWhoClicked();
                     UUID uuid = p.getUniqueId();
                     ItemMeta im = is.getItemMeta();
-                    if (slot == 23 && im.getDisplayName().equals("Force Field")) {
+                    if (slot == GUIPlayerPreferences.FORCE_FIELD.getSlot() && im.getDisplayName().equals("Force Field")) {
                         // toggle force field on / off
                         if (TARDISPermission.hasPermission(p, "tardis.forcefield")) {
                             List<String> lore = im.getLore();
@@ -130,7 +128,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         }
                         return;
                     }
-                    if (slot == 29 && im.getDisplayName().equals("Flight Mode")) {
+                    if (slot == GUIPlayerPreferences.FLIGHT_MODE.getSlot() && im.getDisplayName().equals("Flight Mode")) {
                         List<String> lore = im.getLore();
                         // cycle through flight modes
                         FlightMode flight = FlightMode.valueOf(lore.get(0));
@@ -149,7 +147,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         plugin.getQueryFactory().doUpdate("player_prefs", setf, wheref);
                         return;
                     }
-                    if (slot == 30 && im.getDisplayName().equals("Interior Hum Sound")) {
+                    if (slot == GUIPlayerPreferences.INTERIOR_HUM_SOUND.getSlot() && im.getDisplayName().equals("Interior Hum Sound")) {
                         // close this gui and load the sounds GUI
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             Inventory hum_inv = plugin.getServer().createInventory(p, 18, ChatColor.DARK_RED + "TARDIS Interior Sounds");
@@ -161,7 +159,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         }, 1L);
                         return;
                     }
-                    if (slot == 31 && im.getDisplayName().equals("Handbrake")) {
+                    if (slot == GUIPlayerPreferences.HANDBRAKE.getSlot() && im.getDisplayName().equals("Handbrake")) {
                         // you can only set it to ON!
                         List<String> lore = im.getLore();
                         if (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF"))) {
@@ -216,7 +214,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         }
                         return;
                     }
-                    if (slot == 32 && im.getDisplayName().equals("TARDIS Map")) {
+                    if (slot == GUIPlayerPreferences.TARDIS_MAP.getSlot() && im.getDisplayName().equals("TARDIS Map")) {
                         // must be in the TARDIS
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", uuid.toString());
@@ -236,7 +234,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         }
                         return;
                     }
-                    if (slot == 33 && im.getDisplayName().equals("Sonic Configurator")) {
+                    if (slot == GUIPlayerPreferences.SONIC_CONFIGURATOR.getSlot() && im.getDisplayName().equals("Sonic Configurator")) {
                         // close this gui and load the Sonic Configurator
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             Inventory sonic_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Sonic Configurator");
@@ -248,7 +246,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
                         }, 1L);
                         return;
                     }
-                    if (slot == 35 && im.getDisplayName().equals("Admin Config Menu")) {
+                    if (slot == GUIPlayerPreferences.ADMIN_MENU.getSlot() && im.getDisplayName().equals("Admin Config Menu")) {
                         // close this gui and load the Admin Menu
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             Inventory menu = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Config Menu");

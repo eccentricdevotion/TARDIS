@@ -930,9 +930,6 @@ commands:
     beacon:
       description: Toggle whether the TARDIS beacon is only on while travelling.
       usage: /<command> beacon [on|off]
-    ctm:
-      description: Toggle the Police Box telephone sign on and off.
-      usage: /<command> ctm [on|off]
     difficulty:
       description: Change your personal difficulty level.
       usage: /<command> difficulty [easy|medium|hard]
@@ -966,9 +963,6 @@ commands:
     minecart:
       description: Toggle default Minecraft SFX on and off.
       usage: /<command> minecart [on|off]
-    policebox_textures:
-      description: Toggle Police Box textures on and off.
-      usage: /<command> policebox_textures [on|off]
     renderer:
       description: Toggle entering the Renderer room after scanning on and off.
       usage: /<command> renderer [on|off]
@@ -999,9 +993,6 @@ commands:
     forcefield:
       description: Toggle the TARDIS forcefield on and off.
       usage: /<command> forcefield [on|off]
-    font:
-      description: Toggle whether to use the TARDIS-Resource-Pack unicode space font on and off.
-      usage: /<command> font [on|off]
   tardisarea:
     aliases: tarea
     description: Set up predefined TARDIS travel areas.

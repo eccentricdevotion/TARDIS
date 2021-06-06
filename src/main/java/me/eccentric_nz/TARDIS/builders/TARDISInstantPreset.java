@@ -36,10 +36,12 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
-import org.bukkit.block.data.*;
+import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Bisected.Half;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Lightable;
+import org.bukkit.block.data.Rotatable;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -105,11 +107,6 @@ public class TARDISInstantPreset {
         minusz = (bd.getLocation().getBlockZ() - 1);
         World world = bd.getLocation().getWorld();
         int signx = 0, signz = 0;
-        // if configured and it's a Whovian preset set biome
-        boolean isPoliceBox = preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD);
-        if (plugin.getConfig().getBoolean("police_box.set_biome") && isPoliceBox && bd.useTexture()) {
-            BiomeSetter.setBiome(bd, true, 1);
-        }
         // rescue player?
         if (plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisID())) {
             UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisID());
@@ -249,12 +246,6 @@ public class TARDISInstantPreset {
                     case BLACK_WOOL:
                         if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisID());
-                        }
-                        if (bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && isPoliceBox && plugin.getConfig().getBoolean("police_box.set_biome")) {
-                            // set an observer block instead
-                            Directional directional = (Directional) Material.OBSERVER.createBlockData();
-                            directional.setFacing(BlockFace.valueOf(bd.getDirection().toString()));
-                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, directional, bd.getTardisID());
                         }
                         if ((preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.JUNK)) && mat.equals(Material.ORANGE_WOOL)) {
                             TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)), bd.getTardisID());

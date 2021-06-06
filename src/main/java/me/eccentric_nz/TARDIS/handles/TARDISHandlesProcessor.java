@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTeleportCommand;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
@@ -498,8 +497,6 @@ public class TARDISHandlesProcessor {
                                                 } else {
                                                     plugin.getPresetDestroyer().removeBlockProtection(id);
                                                     set.put("hidden", 0);
-                                                    // restore biome
-                                                    BiomeSetter.restoreBiome(current, biome);
                                                 }
                                                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
                                             }

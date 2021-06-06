@@ -60,8 +60,8 @@ public class TARDISConfiguration {
         booleanOptions.put("allow.mob_farming", true);
         booleanOptions.put("allow.perception_filter", true);
         booleanOptions.put("allow.player_difficulty", true);
-        booleanOptions.put("allow.power_down_on_quit", false);
         booleanOptions.put("allow.power_down", true);
+        booleanOptions.put("allow.power_down_on_quit", false);
         booleanOptions.put("allow.repair", true);
         booleanOptions.put("allow.sfx", true);
         booleanOptions.put("allow.spawn_eggs", true);
@@ -78,31 +78,31 @@ public class TARDISConfiguration {
         booleanOptions.put("circuits.damage", false);
         booleanOptions.put("conversions.archive_wall_data", false);
         booleanOptions.put("conversions.ars_materials", false);
-        booleanOptions.put("conversions.condenser_materials", false);
-        booleanOptions.put("conversions.player_prefs_materials", false);
+        booleanOptions.put("conversions.bind", false);
         booleanOptions.put("conversions.block_materials", false);
         booleanOptions.put("conversions.block_wall_signs", false);
+        booleanOptions.put("conversions.condenser_materials", false);
         booleanOptions.put("conversions.constructs", false);
         booleanOptions.put("conversions.controls", false);
-        booleanOptions.put("conversions.bind", false);
-        booleanOptions.put("conversions.icons", false);
-        booleanOptions.put("conversions.datapacks", false);
         booleanOptions.put("conversions.custom_preset", false);
+        booleanOptions.put("conversions.datapacks", false);
+        booleanOptions.put("conversions.icons", false);
+        booleanOptions.put("conversions.player_prefs_materials", false);
+        booleanOptions.put("conversions.restore_biomes", false);
         booleanOptions.put("creation.add_perms", true);
-        booleanOptions.put("creation.create_worlds_with_perms", false);
         booleanOptions.put("creation.create_worlds", false);
+        booleanOptions.put("creation.create_worlds_with_perms", false);
         booleanOptions.put("creation.custom_schematic", false);
         booleanOptions.put("creation.default_world", true);
         booleanOptions.put("creation.enable_legacy", true);
         booleanOptions.put("creation.keep_night", true);
         booleanOptions.put("debug", false);
-        booleanOptions.put("growth.return_room_seed", true);
         booleanOptions.put("desktop.check_blocks_before_upgrade", false);
+        booleanOptions.put("growth.return_room_seed", true);
         booleanOptions.put("growth.rooms_require_blocks", false);
         booleanOptions.put("junk.enabled", true);
         booleanOptions.put("junk.particles", true);
         booleanOptions.put("police_box.name_tardis", false);
-        booleanOptions.put("police_box.set_biome", true);
         booleanOptions.put("preferences.nerf_pistons.enabled", false);
         booleanOptions.put("preferences.nerf_pistons.only_tardis_worlds", true);
         booleanOptions.put("preferences.no_coords", false);
@@ -118,8 +118,8 @@ public class TARDISConfiguration {
         booleanOptions.put("preferences.strike_lightning", true);
         booleanOptions.put("preferences.use_default_condensables", true);
         booleanOptions.put("preferences.use_worldguard", true);
-        booleanOptions.put("preferences.walk_in_tardis", true);
         booleanOptions.put("preferences.wake_bees", true);
+        booleanOptions.put("preferences.walk_in_tardis", true);
         booleanOptions.put("siege.butcher", false);
         booleanOptions.put("siege.creeper", false);
         booleanOptions.put("siege.enabled", true);
@@ -166,9 +166,9 @@ public class TARDISConfiguration {
         integerOptions.put("preferences.hads_damage", 10);
         integerOptions.put("preferences.hads_distance", 10);
         integerOptions.put("preferences.heal_speed", 200);
+        integerOptions.put("preferences.malfunction", 3);
         integerOptions.put("preferences.malfunction_end", 3);
         integerOptions.put("preferences.malfunction_nether", 3);
-        integerOptions.put("preferences.malfunction", 3);
         integerOptions.put("preferences.sfx_volume", 10);
         integerOptions.put("preferences.spawn_limit", 10);
         integerOptions.put("siege.breeding", 0);
@@ -180,8 +180,8 @@ public class TARDISConfiguration {
         integerOptions.put("travel.random_circuit.x", 5000);
         integerOptions.put("travel.random_circuit.z", 5000);
         integerOptions.put("travel.terminal_step", 1);
-        integerOptions.put("travel.timeout_height", 135);
         integerOptions.put("travel.timeout", 5);
+        integerOptions.put("travel.timeout_height", 135);
         integerOptions.put("travel.tp_radius", 500);
         // string
         stringOptions.put("creation.area", "none");
@@ -227,6 +227,9 @@ public class TARDISConfiguration {
         }
         if (config.contains("preferences.wand")) {
             plugin.getConfig().set("preferences.wand", null);
+        }
+        if (config.contains("police_box.set_biome")) {
+            plugin.getConfig().set("police_box.set_biome", null);
         }
         if (config.contains("creation.sky_biome")) {
             plugin.getConfig().set("creation.sky_biome", null);

@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
+import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -120,7 +120,7 @@ public class TARDISRemoteKeyListener implements Listener {
                     plugin.getQueryFactory().doUpdate("doors", setl, wherel);
                     String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
                     TARDISMessage.send(player, "DOOR_LOCK", message);
-                    TARDISPoliceBoxLampToggler tpblt = new TARDISPoliceBoxLampToggler(plugin);
+                    TARDISAdaptiveBoxLampToggler tpblt = new TARDISAdaptiveBoxLampToggler(plugin);
                     TARDISSounds.playTARDISSound(l, "tardis_lock");
                     tpblt.toggleLamp(id, !powered);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> tpblt.toggleLamp(id, powered), 6L);

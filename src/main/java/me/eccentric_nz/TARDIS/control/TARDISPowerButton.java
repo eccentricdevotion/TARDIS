@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -63,7 +63,7 @@ public class TARDISPowerButton {
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("tardis_id", id);
         HashMap<String, Object> setp = new HashMap<>();
-        boolean isNewOrOld = preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD);
+        boolean isAdaptive = preset.equals(PRESET.ADAPTIVE);
         UUID uuid = player.getUniqueId();
         if (powered) {
             if (isTravelling(id)) {
@@ -82,8 +82,8 @@ public class TARDISPowerButton {
                 delay = 20L;
             }
             // police box lamp, delay it incase the TARDIS needs rebuilding
-            if (isNewOrOld) {
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
+            if (isAdaptive) {
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), delay);
             }
             // if lights are on, turn them off
             if (lights) {
@@ -121,8 +121,8 @@ public class TARDISPowerButton {
                 new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
             }
             // police box lamp
-            if (isNewOrOld) {
-                new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, true);
+            if (isAdaptive) {
+                new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true);
             }
         }
         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);

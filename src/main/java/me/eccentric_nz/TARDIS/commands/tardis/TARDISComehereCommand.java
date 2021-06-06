@@ -23,7 +23,6 @@ import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -231,8 +230,6 @@ class TARDISComehereCommand {
                     HashMap<String, Object> ttid = new HashMap<>();
                     ttid.put("tardis_id", id);
                     plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
-                    // restore biome
-                    BiomeSetter.restoreBiome(oldSave, biome);
                 }
                 plugin.getQueryFactory().doUpdate("current", set, tid);
                 TARDISMessage.send(player, "TARDIS_COMING");

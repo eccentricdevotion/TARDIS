@@ -68,7 +68,6 @@ artron_furnace:
   burn_limit: 100000
   burn_time: 0.5
   cook_time: 0.5
-  set_biome: true
   particles: true
 # Sonic Generator costs (as a percentage of full charge)
 sonic_generator:

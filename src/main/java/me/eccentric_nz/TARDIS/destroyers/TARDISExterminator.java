@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.destroyers;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -244,9 +243,6 @@ public class TARDISExterminator {
                 if (!tardis.isHidden()) {
                     // remove Police Box
                     plugin.getPresetDestroyer().destroyPreset(dd);
-                } else {
-                    // restore biome
-                    BiomeSetter.restoreBiome(bb_loc, tardisBiome);
                 }
                 World cw = TARDISStaticLocationGetters.getWorld(chunkLoc);
                 if (cw == null) {

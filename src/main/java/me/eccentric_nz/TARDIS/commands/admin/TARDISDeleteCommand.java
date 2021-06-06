@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -155,9 +154,6 @@ public class TARDISDeleteCommand {
                 dd.setTardisBiome(biome);
                 dd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getPresetDestroyer().destroyPreset(dd);
-            } else {
-                // restore biome
-                BiomeSetter.restoreBiome(bb_loc, biome);
             }
             // destroy the inner TARDIS
             // give the TARDIS time to remove itself as it's not hidden

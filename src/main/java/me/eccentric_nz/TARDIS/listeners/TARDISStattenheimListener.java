@@ -23,11 +23,10 @@ import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -279,8 +278,6 @@ public class TARDISStattenheimListener implements Listener {
                             set.put("hidden", 0);
                             tid.put("tardis_id", id);
                             plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                            // restore biome
-                            BiomeSetter.restoreBiome(oldSave, biome);
                         }
                         TARDISMessage.send(player, "TARDIS_COMING");
                         long delay = 10L;
@@ -350,8 +347,8 @@ public class TARDISStattenheimListener implements Listener {
                             new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
                         }
                         // police box lamp
-                        if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
-                            new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, true);
+                        if (preset.equals(PRESET.ADAPTIVE)) {
+                            new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true);
                         }
                         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
                     }

@@ -134,10 +134,10 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         }
                                         TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Factory Fresh");
                                     } else {
-                                        set.put("chameleon_preset", "NEW");
+                                        set.put("chameleon_preset", "POLICE_BOX_BLUE");
                                         toggleOthers(ChameleonOption.PRESET, view);
                                         if (hasFrame) {
-                                            tcf.updateChameleonFrame(id, PRESET.NEW, rsf.getLocation());
+                                            tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_BLUE, rsf.getLocation());
                                         }
                                         setDefault(view, player, chameleon);
                                     }
@@ -151,10 +151,10 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     Adaption a = Adaption.values()[ca];
                                     if (a.equals(Adaption.OFF)) {
                                         // default to Blue Police Box
-                                        set.put("chameleon_preset", "NEW");
+                                        set.put("chameleon_preset", "POLICE_BOX_BLUE");
                                         toggleOthers(ChameleonOption.PRESET, view);
                                         if (hasFrame) {
-                                            tcf.updateChameleonFrame(id, PRESET.NEW, rsf.getLocation());
+                                            tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_BLUE, rsf.getLocation());
                                         }
                                         setDefault(view, player, chameleon);
                                     } else {
@@ -205,9 +205,9 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     } else {
                                         toggleOthers(ChameleonOption.PRESET, view);
                                         // default to Blue Police Box
-                                        set.put("chameleon_preset", "NEW");
+                                        set.put("chameleon_preset", "POLICE_BOX_BLUE");
                                         if (hasFrame) {
-                                            tcf.updateChameleonFrame(id, PRESET.NEW, rsf.getLocation());
+                                            tcf.updateChameleonFrame(id, PRESET.POLICE_BOX_BLUE, rsf.getLocation());
                                         }
                                         setDefault(view, player, chameleon);
                                     }
@@ -257,10 +257,10 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
         // set preset lore
         ItemStack p = view.getItem(23);
         ItemMeta pim = p.getItemMeta();
-        pim.setDisplayName(ChatColor.GREEN + "NEW");
+        pim.setDisplayName(ChatColor.GREEN + "POLICE_BOX_BLUE");
         p.setItemMeta(pim);
-        TARDISStaticUtils.setSign(chameleon, 3, "NEW", player);
-        TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "New Police Box");
+        TARDISStaticUtils.setSign(chameleon, 3, "POLICE_BOX_BLUE", player);
+        TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Blue Police Box");
     }
 
     private void toggleOthers(ChameleonOption c, InventoryView view) {

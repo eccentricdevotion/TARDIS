@@ -60,7 +60,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("auto_siege");
         firstArgs.add("beacon");
         firstArgs.add("build");
-        firstArgs.add("ctm");
         firstArgs.add("difficulty");
         firstArgs.add("dnd");
         firstArgs.add("eps");
@@ -68,7 +67,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("farm");
         firstArgs.add("flight");
         firstArgs.add("floor");
-        firstArgs.add("font");
         firstArgs.add("forcefield");
         firstArgs.add("hads");
         firstArgs.add("hads_type");
@@ -81,7 +79,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("lanterns");
         firstArgs.add("lock_containers");
         firstArgs.add("minecart");
-        firstArgs.add("policebox_textures");
         firstArgs.add("quotes");
         firstArgs.add("renderer");
         firstArgs.add("sfx");

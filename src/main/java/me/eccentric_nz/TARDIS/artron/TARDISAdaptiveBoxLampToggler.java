@@ -29,11 +29,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISPoliceBoxLampToggler {
+public class TARDISAdaptiveBoxLampToggler {
 
     private final TARDIS plugin;
 
-    public TARDISPoliceBoxLampToggler(TARDIS plugin) {
+    public TARDISAdaptiveBoxLampToggler(TARDIS plugin) {
         this.plugin = plugin;
     }
 

@@ -148,13 +148,11 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     COMPASS sd = rsn.getDirection();
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                     boolean minecart = false;
-                    boolean set_biome = true;
                     boolean bar = false;
                     int flight_mode = 1;
                     SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
                     if (rsp.resultSet()) {
                         minecart = rsp.isMinecartOn();
-                        set_biome = rsp.isPoliceboxTexturesOn();
                         bar = rsp.isTravelbarOn();
                         flight_mode = rsp.getFlightMode();
                         if (flight_mode == 1 && !malfunction) {
@@ -171,7 +169,6 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     bd.setRebuild(false);
                     bd.setSubmarine(is_next_sub);
                     bd.setTardisID(id);
-                    bd.setTexture(set_biome);
                     bd.setThrottle(spaceTimeThrottle);
                     // determine delay values
                     long flight_mode_delay;

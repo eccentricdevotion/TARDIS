@@ -19,13 +19,11 @@ package me.eccentric_nz.TARDIS.hads;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -101,11 +99,6 @@ class TARDISHostileDispersal {
             sby = l.getBlockY();
         }
         int sbz = l.getBlockZ() - 1;
-        // reset biome and it's not The End
-        if (!BiomeSetter.restoreBiome(l, TARDISBiome.get(rsc.getBiomeKey()))) {
-            // remove TARDIS from tracker
-            plugin.getTrackerKeeper().getDematerialising().remove(id);
-        }
         // remove problem blocks first
         switch (preset) {
             case GRAVESTONE:

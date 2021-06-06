@@ -19,11 +19,10 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchInventory;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
+import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -208,8 +207,6 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             } else {
                                                 plugin.getPresetDestroyer().removeBlockProtection(id);
                                                 set.put("hidden", 0);
-                                                // restore biome
-                                                BiomeSetter.restoreBiome(sl, biome);
                                             }
                                             plugin.getQueryFactory().doUpdate("tardis", set, tid);
                                         }
@@ -275,8 +272,8 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             // power down
                                             setp.put("powered_on", 0);
                                             // police box lamp, delay it incase the TARDIS needs rebuilding
-                                            if (tardis.getPreset().equals(PRESET.NEW) || tardis.getPreset().equals(PRESET.OLD)) {
-                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), 1L);
+                                            if (tardis.getPreset().equals(PRESET.ADAPTIVE)) {
+                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), 1L);
                                             }
                                             // if lights are on, turn them off
                                             new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, tardis.getSchematic().hasLanterns());

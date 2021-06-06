@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
+import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -98,8 +98,8 @@ public class TARDISQuitListener implements Listener {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
                         delay = 20L;
                     }
-                    if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
+                    if (preset.equals(PRESET.ADAPTIVE)) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), delay);
                     }
                     // if lights are on, turn them off
                     if (lights) {

@@ -188,7 +188,7 @@ public class TARDISBindListener implements Listener {
                                         switch (name) {
                                             case "OFF":
                                                 set.put("adapti_on", 0);
-                                                set.put("chameleon_preset", "NEW");
+                                                set.put("chameleon_preset", "POLICE_BOX_BLUE");
                                                 break;
                                             case "ADAPT":
                                                 set.put("adapti_on", 1);

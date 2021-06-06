@@ -47,8 +47,6 @@ public class ResultSetPlayerPrefs {
     private boolean autoSiegeOn;
     private boolean beaconOn;
     private boolean buildOn;
-    private boolean ctmOn;
-    private boolean customFont;
     private boolean DND;
     private boolean easyDifficulty;
     private boolean epsOn;
@@ -56,7 +54,6 @@ public class ResultSetPlayerPrefs {
     private boolean hadsOn;
     private boolean lanternsOn;
     private boolean minecartOn;
-    private boolean policeboxTexturesOn;
     private boolean quotesOn;
     private boolean rendererOn;
     private boolean sfxOn;
@@ -149,14 +146,11 @@ public class ResultSetPlayerPrefs {
                 minecartOn = rs.getBoolean("minecart_on");
                 rendererOn = rs.getBoolean("renderer_on");
                 woolLightsOn = rs.getBoolean("wool_lights_on");
-                ctmOn = rs.getBoolean("ctm_on");
-                customFont = rs.getBoolean("font_on");
                 signOn = rs.getBoolean("sign_on");
                 telepathyOn = rs.getBoolean("telepathy_on");
                 travelbarOn = rs.getBoolean("travelbar_on");
                 farmOn = rs.getBoolean("farm_on");
                 lanternsOn = rs.getBoolean("lanterns_on");
-                policeboxTexturesOn = rs.getBoolean("policebox_textures_on");
                 flightMode = rs.getInt("flying_mode");
                 throttle = rs.getInt("throttle");
                 easyDifficulty = rs.getBoolean("difficulty");
@@ -290,15 +284,7 @@ public class ResultSetPlayerPrefs {
     public boolean isWoolLightsOn() {
         return woolLightsOn;
     }
-
-    public boolean isCtmOn() {
-        return ctmOn;
-    }
-
-    public boolean useCustomFont() {
-        return customFont;
-    }
-
+    
     public boolean isSignOn() {
         return signOn;
     }
@@ -317,10 +303,6 @@ public class ResultSetPlayerPrefs {
 
     public boolean isLanternsOn() {
         return lanternsOn;
-    }
-
-    public boolean isPoliceboxTexturesOn() {
-        return policeboxTexturesOn;
     }
 
     public int getFlightMode() {

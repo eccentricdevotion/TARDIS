@@ -35,7 +35,6 @@ police_box:
   materialise: true
   confirm_timeout: 15
   sign_colour: WHITE
-  set_biome: true
   rebuild_cooldown: 10000
 # travel settings
 travel:
@@ -202,3 +201,4 @@ conversions:
   bind: true
   icons: true
   datapacks: true
+  restore_biomes: true

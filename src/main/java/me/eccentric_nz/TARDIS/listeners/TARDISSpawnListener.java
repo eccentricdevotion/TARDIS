@@ -42,7 +42,6 @@ public class TARDISSpawnListener implements Listener {
 
     private final TARDIS plugin;
     private final List<SpawnReason> good_spawns = new ArrayList<>();
-    private final List<TARDISBiome> biomes = new ArrayList<>();
 
     public TARDISSpawnListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -54,6 +53,7 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.CURED);
         good_spawns.add(SpawnReason.CUSTOM);
         good_spawns.add(SpawnReason.DISPENSE_EGG);
+        good_spawns.add(SpawnReason.DROWNED);
         good_spawns.add(SpawnReason.EGG);
         good_spawns.add(SpawnReason.ENDER_PEARL);
         good_spawns.add(SpawnReason.INFECTION);
@@ -62,6 +62,8 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.MOUNT);
         good_spawns.add(SpawnReason.NETHER_PORTAL);
         good_spawns.add(SpawnReason.OCELOT_BABY);
+        good_spawns.add(SpawnReason.PATROL);
+        good_spawns.add(SpawnReason.PIGLIN_ZOMBIFIED);
         good_spawns.add(SpawnReason.RAID);
         good_spawns.add(SpawnReason.REINFORCEMENTS);
         good_spawns.add(SpawnReason.SHEARED);
@@ -71,19 +73,6 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.SPAWNER_EGG);
         good_spawns.add(SpawnReason.VILLAGE_DEFENSE);
         good_spawns.add(SpawnReason.VILLAGE_INVASION);
-        biomes.add(TARDISBiome.DEEP_OCEAN);
-        biomes.add(TARDISBiome.END_BARRENS);
-        biomes.add(TARDISBiome.END_HIGHLANDS);
-        biomes.add(TARDISBiome.END_MIDLANDS);
-        biomes.add(TARDISBiome.MUSHROOM_FIELD_SHORE);
-        biomes.add(TARDISBiome.MUSHROOM_FIELDS);
-        biomes.add(TARDISBiome.NETHER_WASTES);
-        biomes.add(TARDISBiome.SOUL_SAND_VALLEY);
-        biomes.add(TARDISBiome.CRIMSON_FOREST);
-        biomes.add(TARDISBiome.WARPED_FOREST);
-        biomes.add(TARDISBiome.BASALT_DELTAS);
-        biomes.add(TARDISBiome.SMALL_END_ISLANDS);
-        biomes.add(TARDISBiome.THE_END);
     }
 
     /**
@@ -124,53 +113,6 @@ public class TARDISSpawnListener implements Listener {
                 }
             }
         } else {
-            // only if configured
-            if (!plugin.getConfig().getBoolean("police_box.set_biome")) {
-                return;
-            }
-            if (!event.getEntityType().isAlive()) {
-                return;
-            }
-            // only natural spawning
-            if (!spawnReason.equals(SpawnReason.NATURAL)) {
-                return;
-            }
-            // only in DEEP_OCEAN, MUSHROOM_ISLAND, NETHER & THE END
-            if (!biomes.contains(TARDISStaticUtils.getBiomeAt(l))) {
-                return;
-            }
-            // only monsters
-            if (!TARDISConstants.MONSTER_TYPES.contains(event.getEntity().getType())) {
-                return;
-            }
-            // always deny MUSHROOM, HELL and SKY biomes
-            switch (TARDISStaticUtils.getBiomeAt(l).name()) {
-                case "MUSHROOM_FIELDS":
-                case "NETHER_WASTES":
-                case "SOUL_SAND_VALLEY":
-                case "CRIMSON_FOREST":
-                case "WARPED_FOREST":
-                case "BASALT_DELTAS":
-                    if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
-                        event.setCancelled(true);
-                        return;
-                    }
-                    return;
-                case "THE_END":
-                    if (!event.getEntity().getType().equals(EntityType.ENDERMAN)) {
-                        event.setCancelled(true);
-                        return;
-                    }
-                    break;
-                case "MUSHROOM_FIELD_SHORE":
-                    if (!event.getEntity().getType().equals(EntityType.SQUID)) {
-                        event.setCancelled(true);
-                        return;
-                    }
-                    break;
-                default:
-                    break;
-            }
             // only TARDIS locations
             if (isTARDISBiome(l)) {
                 event.setCancelled(true);

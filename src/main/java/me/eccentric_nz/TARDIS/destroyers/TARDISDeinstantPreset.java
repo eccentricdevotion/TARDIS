@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.BiomeSetter;
 import me.eccentric_nz.TARDIS.builders.MaterialisationData;
 import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
@@ -100,11 +99,6 @@ public class TARDISDeinstantPreset {
                 sby = l.getBlockY();
             }
             int sbz = l.getBlockZ() - 1;
-            // reset biome and it's not The End
-            if (!BiomeSetter.restoreBiome(l, biome)) {
-                // remove TARDIS from tracker
-                plugin.getTrackerKeeper().getDematerialising().remove(id);
-            }
             // remove problem blocks first
             switch (preset) {
                 case GRAVESTONE:
@@ -205,8 +199,6 @@ public class TARDISDeinstantPreset {
             BlockData blockData = plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
             siege.setBlockData(blockData);
         }
-        // refresh chunk
-        plugin.getTardisHelper().refreshChunk(chunk);
         plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(id));
         plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(id));
     }

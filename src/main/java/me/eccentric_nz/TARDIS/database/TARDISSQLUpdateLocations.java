@@ -76,16 +76,6 @@ class TARDISSQLUpdateLocations implements Runnable {
                 ps.setInt(7, id);
                 ps.executeUpdate();
             }
-            // set the biome if necessary
-            if (plugin.getConfig().getBoolean("police_box.set_biome")) {
-                // remember the current biome
-                String query = "UPDATE " + prefix + "current SET biome = ? WHERE tardis_id = ?";
-                service.testConnection(connection);
-                ps = connection.prepareStatement(query);
-                ps.setString(1, biome);
-                ps.setInt(2, id);
-                ps.executeUpdate();
-            }
             data.clear();
         } catch (SQLException e) {
             plugin.debug("Update error for travel stop locations! " + e.getMessage());

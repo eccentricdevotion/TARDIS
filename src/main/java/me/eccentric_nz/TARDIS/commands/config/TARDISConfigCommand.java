@@ -128,7 +128,6 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("respect_worldborder", "preferences");
         firstsBool.put("return_room_seed", "growth");
         firstsBool.put("rooms_require_blocks", "growth");
-        firstsBool.put("set_biome", "police_box");
         firstsBool.put("sfx", "allow");
         firstsBool.put("spawn_eggs", "allow");
         firstsBool.put("spawn_random_monsters", "preferences");
