@@ -2,20 +2,16 @@
 
 ## Current version `4.6.3`
 
-1. Update SHELL room - remove Police Box and Pandorica
-
 ## Next version `4.7`
 
 1. Update to Spigot-API 1.17.0
 2. Update documentation...
-3. 13th Doctor's and Factory TARDIS console
-    * Add advanced console and disk storage to schematics
-4. Use the Vortex Manipulator to teleport past force fields
-5. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
-6. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
-7. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-8. TCG API - use Police Box location instead of player location?
-9. All the things...
+3. Use the Vortex Manipulator to teleport past force fields
+4. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
+5. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
+6. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
+7. TCG API - use Police Box location instead of player location?
+8. All the things...
 
 ## Resource Pack / TARDISWeepingAngels
 
