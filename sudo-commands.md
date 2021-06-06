@@ -32,5 +32,5 @@ The command has the follwing functions:
 ### Permission
 
 ```
-tardis. |admin
+tardis.admin
 ```
