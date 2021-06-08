@@ -55,7 +55,7 @@ public class TARDISDeinstantPreset {
 	}
 
 	/**
-	 * Destroys the tardis Police Box. A 3 x 3 x 3 block area.
+	 * Destroys the TARDIS Police Box. A 3 x 3 x 3 block area.
 	 *
 	 * @param dd     the MaterialisationData
 	 * @param hide   boolean determining whether to forget the protected Police Box blocks.
@@ -80,7 +80,7 @@ public class TARDISDeinstantPreset {
 		while (!chunk.isLoaded()) {
 			chunk.load();
 		}
-		if (preset.isColoured()) {
+		if (preset.usesItemFrame()) {
 			// remove item frame
 			for (Entity e : w.getNearbyEntities(dd.getLocation(), 1.0d, 1.0d, 1.0d)) {
 				if (e instanceof ItemFrame frame) {
@@ -102,7 +102,7 @@ public class TARDISDeinstantPreset {
 			int sbz = l.getBlockZ() - 1;
 			// reset biome and it's not The End
 			if (!BiomeSetter.restoreBiome(l, biome)) {
-				// remove tardis from tracker
+				// remove TARDIS from tracker
 				plugin.getTrackerKeeper().getDematerialising().remove(id);
 			}
 			// remove problem blocks first

@@ -200,7 +200,7 @@ public class TARDISAbandonCommand {
 					TARDISMessage.send(sender, "ABANDON_POWER_DOWN");
 					return true;
 				}
-				// abandon tardis
+				// abandon TARDIS
 				ResultSetTardisAbandoned rs = new ResultSetTardisAbandoned(plugin);
 				if (!rs.fromUUID(player.getUniqueId().toString())) {
 					TARDISMessage.send(player, "NO_TARDIS");
@@ -244,7 +244,7 @@ public class TARDISAbandonCommand {
 					}
 					new TARDISAbandonUpdate(plugin, id, player.getUniqueId().toString()).run();
 					if (rs.isPowered()) {
-						// power down tardis
+						// power down TARDIS
 						new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered(), rs.isHidden(), rs.isLightsOn(), player.getLocation(), rs.getArtronLevel(), rs.getSchematic().hasLanterns()).clickButton();
 					}
 					// close the door
@@ -257,7 +257,7 @@ public class TARDISAbandonCommand {
 						Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
 						plugin.getPM().callEvent(new TARDISAbandonEvent(player, id, current));
 						// always clear sign
-						if (preset.isColoured()) {
+						if (preset.usesItemFrame()) {
 							World world = rsc.getWorld();
 							// remove name from the item frame item
 							ItemFrame frame = null;
@@ -270,7 +270,7 @@ public class TARDISAbandonCommand {
 								}
 							}
 							if (found) {
-								Material dye = TARDISBuilderUtility.getDyeMaterial(preset);
+								Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
 								ItemStack is = new ItemStack(dye, 1);
 								ItemMeta im = is.getItemMeta();
 								assert im != null;

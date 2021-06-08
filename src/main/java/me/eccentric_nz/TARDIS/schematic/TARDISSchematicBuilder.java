@@ -97,15 +97,21 @@ public class TARDISSchematicBuilder {
 		ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false, 2);
 		int bx = 0, by = 0, bz = 0, cx = 0, cy = 0, cz = 0;
 		if (rs.resultSet()) {
-			String[] split = rs.getTardis().getBeacon().split(":");
-			bx = TARDISNumberParsers.parseInt(split[1]);
-			by = TARDISNumberParsers.parseInt(split[2]);
-			bz = TARDISNumberParsers.parseInt(split[3]);
+			String beacon = rs.getTardis().getBeacon();
+			if (!beacon.isEmpty()) {
+				String[] split = beacon.split(":");
+				bx = TARDISNumberParsers.parseInt(split[1]);
+				by = TARDISNumberParsers.parseInt(split[2]);
+				bz = TARDISNumberParsers.parseInt(split[3]);
+			}
 			// and the creeper location...
-			String[] csplit = rs.getTardis().getCreeper().split(":");
-			cx = TARDISNumberParsers.parseInt(csplit[1].substring(0, csplit[1].length() - 2));
-			cy = TARDISNumberParsers.parseInt(csplit[2]);
-			cz = TARDISNumberParsers.parseInt(csplit[3].substring(0, csplit[3].length() - 2));
+			String creeper = rs.getTardis().getCreeper();
+			if (!creeper.isEmpty()) {
+				String[] csplit = creeper.split(":");
+				cx = TARDISNumberParsers.parseInt(csplit[1].substring(0, csplit[1].length() - 2));
+				cy = TARDISNumberParsers.parseInt(csplit[2]);
+				cz = TARDISNumberParsers.parseInt(csplit[3].substring(0, csplit[3].length() - 2));
+			}
 		}
 
 		// get the min & max coords
@@ -142,7 +148,7 @@ public class TARDISSchematicBuilder {
 					Block b = w.getBlockAt(r, l, c);
 					BlockData data = b.getBlockData();
 					Material m = data.getMaterial();
-					// set ars block
+					// set ARS block
 					if (ars && m.isAir()) {
 						data = Material.INFESTED_COBBLESTONE.createBlockData();
 						ars = false;
@@ -175,10 +181,10 @@ public class TARDISSchematicBuilder {
 						default:
 							break;
 					}
-					if (l == by && r == bx && c == bz) {
+					if (bx != 0 && l == by && r == bx && c == bz) {
 						data = Material.BEDROCK.createBlockData();
 					}
-					if (l == cy && r == cx && c == cz) {
+					if (cx != 0 && l == cy && r == cx && c == cz) {
 						data = (m.equals(Material.BEACON)) ? Material.BEACON.createBlockData() : Material.COMMAND_BLOCK.createBlockData();
 						beacon = (m.equals(Material.BEACON)) ? 1 : 0;
 					}

@@ -104,10 +104,10 @@ public class TARDISJunkDestroyer implements Runnable {
 					runnable.setTask(jvrtask);
 				}
 				// what biome?
-				Biome biome = null;
-				if (this.biome.getKey().getNamespace().equalsIgnoreCase("minecraft")) {
+				Biome b = null;
+				if (biome.getKey().getNamespace().equalsIgnoreCase("minecraft")) {
 					try {
-						biome = Biome.valueOf(this.biome.name());
+						b = Biome.valueOf(biome.name());
 					} catch (IllegalArgumentException e) {
 						// ignore
 					}
@@ -128,10 +128,10 @@ public class TARDISJunkDestroyer implements Runnable {
 								}
 								// reset the biome
 								try {
-									assert biome != null;
-									world.setBiome(l, h, w, biome);
+									assert b != null;
+									world.setBiome(l, h, w, b);
 								} catch (NullPointerException e) {
-									// remove tardis from tracker
+									// remove TARDIS from tracker
 									plugin.getTrackerKeeper().getDematerialising().remove(pdd.getTardisId());
 								}
 							}
@@ -143,7 +143,7 @@ public class TARDISJunkDestroyer implements Runnable {
 				}
 				plugin.getTrackerKeeper().getDematerialising().remove(pdd.getTardisId());
 				plugin.getTrackerKeeper().getInVortex().remove(pdd.getTardisId());
-				// check protected blocks if has block id and data stored then put the block back!
+				// check protected blocks if has block material and data stored then put the block back!
 				HashMap<String, Object> tid = new HashMap<>();
 				tid.put("tardis_id", pdd.getTardisId());
 				ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);

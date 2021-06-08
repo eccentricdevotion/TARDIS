@@ -44,7 +44,7 @@ public class TARDISEmergencyRelocation {
 
 	public void relocate(int id, Player p) {
 		TARDISMessage.send(p, "EMERGENCY");
-		// get the tardis
+		// get the TARDIS
 		HashMap<String, Object> where = new HashMap<>();
 		where.put("tardis_id", id);
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -61,7 +61,7 @@ public class TARDISEmergencyRelocation {
 				bd.setSubmarine(false);
 				bd.setThrottle(SpaceTimeThrottle.REBUILD);
 				TARDIS tardis = rs.getTardis();
-				if (tardis.getPreset().isColoured()) {
+				if (tardis.getPreset().usesItemFrame()) {
 					new TARDISInstantPoliceBox(plugin, bd, tardis.getPreset()).buildPreset();
 				} else {
 					new TARDISInstantPreset(plugin, bd, tardis.getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();

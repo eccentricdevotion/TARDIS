@@ -25,9 +25,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Time travel is, as the name suggests, the (usually controlled) process of travelling through time, even in a
  * non-linear direction. In the 26th century individuals who time travel are sometimes known as persons of meta-temporal
@@ -40,7 +37,6 @@ class TARDISPresetInventory {
 	private final ItemStack[] terminal;
 	private final TARDISPlugin plugin;
 	private final Player player;
-	private final List<Material> notThese = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
 
 	TARDISPresetInventory(TARDISPlugin plugin, Player player) {
 		this.plugin = plugin;
@@ -57,7 +53,7 @@ class TARDISPresetInventory {
 		ItemStack[] stacks = new ItemStack[54];
 
 		for (PRESET preset : PRESET.values()) {
-			if (!notThese.contains(preset.getCraftMaterial()) && !preset.isColoured()) {
+			if (!PRESET.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesItemFrame()) {
 				if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
 					ItemStack is = new ItemStack(preset.getGuiDisplay(), 1);
 					ItemMeta im = is.getItemMeta();

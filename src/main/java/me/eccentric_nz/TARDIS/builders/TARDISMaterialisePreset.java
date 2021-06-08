@@ -32,7 +32,7 @@ import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
 import me.eccentric_nz.tardis.utility.TARDISParticles;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
 import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
-import me.eccentric_nz.tardishelper.TARDISChunkGenerator;
+import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -144,14 +144,17 @@ class TARDISMaterialisePreset implements Runnable {
 					datas = column.getBlockData();
 				} else {
 					// determine preset to use
-					datas = switch (i % 3) {
-						case 2 -> // stained
-								stained_column.getBlockData();
-						case 1 -> // glass
-								glass_column.getBlockData();
-						default -> // preset
-								column.getBlockData();
-					};
+					switch (i % 3) {
+						case 2: // stained
+							datas = stained_column.getBlockData();
+							break;
+						case 1: // glass
+							datas = glass_column.getBlockData();
+							break;
+						default: // preset
+							datas = column.getBlockData();
+							break;
+					}
 				}
 				// rescue player?
 				if (i == 10 && plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisId())) {
@@ -183,11 +186,16 @@ class TARDISMaterialisePreset implements Runnable {
 							if (preset.equals(PRESET.JUNK_MODE)) {
 								sound = "junk_land";
 							} else {
-								sound = switch (bd.getThrottle()) {
-									case WARP, RAPID, FASTER -> "tardis_land_" +
-																bd.getThrottle().toString().toLowerCase();
-									default -> "tardis_land";
-								};
+								switch (bd.getThrottle()) {
+									case WARP:
+									case RAPID:
+									case FASTER:
+										sound = "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+										break;
+									default:
+										sound = "tardis_land";
+										break;
+								}
 							}
 							TARDISSounds.playTARDISSound(bd.getLocation(), sound);
 						} else {
@@ -196,71 +204,71 @@ class TARDISMaterialisePreset implements Runnable {
 					}
 					// get direction player is facing from yaw place block under door if block is in list of blocks an iron door cannot go on
 					switch (bd.getDirection()) {
-						case SOUTH -> {
+						case SOUTH:
 							// if (yaw >= 315 || yaw < 45)
 							signx = x;
 							signz = (minusz - 1);
-						}
-						case EAST -> {
+							break;
+						case EAST:
 							// if (yaw >= 225 && yaw < 315)
 							signx = (minusx - 1);
 							signz = z;
-						}
-						case NORTH -> {
+							break;
+						case NORTH:
 							// if (yaw >= 135 && yaw < 225)
 							signx = x;
 							signz = (plusz + 1);
-						}
-						case WEST -> {
+							break;
+						case WEST:
 							// if (yaw >= 45 && yaw < 135)
 							signx = (plusx + 1);
 							signz = z;
-						}
+							break;
 					}
 					int xx, zz;
 					for (int n = 0; n < 10; n++) {
 						BlockData[] colData = datas[n];
 						switch (n) {
-							case 0 -> {
+							case 0:
 								xx = minusx;
 								zz = minusz;
-							}
-							case 1 -> {
+								break;
+							case 1:
 								xx = x;
 								zz = minusz;
-							}
-							case 2 -> {
+								break;
+							case 2:
 								xx = plusx;
 								zz = minusz;
-							}
-							case 3 -> {
+								break;
+							case 3:
 								xx = plusx;
 								zz = z;
-							}
-							case 4 -> {
+								break;
+							case 4:
 								xx = plusx;
 								zz = plusz;
-							}
-							case 5 -> {
+								break;
+							case 5:
 								xx = x;
 								zz = plusz;
-							}
-							case 6 -> {
+								break;
+							case 6:
 								xx = minusx;
 								zz = plusz;
-							}
-							case 7 -> {
+								break;
+							case 7:
 								xx = minusx;
 								zz = z;
-							}
-							case 8 -> {
+								break;
+							case 8:
 								xx = x;
 								zz = z;
-							}
-							default -> {
+								break;
+							default:
 								xx = signx;
 								zz = signz;
-							}
+								break;
 						}
 						for (int yy = 0; yy < 4; yy++) {
 							boolean change = true;
@@ -450,9 +458,16 @@ class TARDISMaterialisePreset implements Runnable {
 																player_name + "'s";
 													}
 													switch (preset) {
-														case GRAVESTONE -> s.setLine(3, owner);
-														case ANGEL, JAIL -> s.setLine(2, owner);
-														default -> s.setLine(0, owner);
+														case GRAVESTONE:
+															s.setLine(3, owner);
+															break;
+														case ANGEL:
+														case JAIL:
+															s.setLine(2, owner);
+															break;
+														default:
+															s.setLine(0, owner);
+															break;
 													}
 												}
 											}
@@ -555,7 +570,8 @@ class TARDISMaterialisePreset implements Runnable {
 				if (preset.equals(PRESET.JUNK_MODE) && plugin.getConfig().getBoolean("junk.particles")) {
 					// animate particles
 					plugin.getUtils().getJunkTravellers(bd.getLocation()).forEach((e) -> {
-						if (e instanceof Player p) {
+						if (e instanceof Player) {
+							Player p = (Player) e;
 							Location effectsLoc = bd.getLocation().clone().add(0.5d, 0, 0.5d);
 							TARDISParticles.sendVortexParticles(effectsLoc, p);
 						}
@@ -566,46 +582,46 @@ class TARDISMaterialisePreset implements Runnable {
 				for (int n = 0; n < 9; n++) {
 					BlockData[] coldatas = datas[n];
 					switch (n) {
-						case 0 -> {
+						case 0:
 							xx = minusx;
 							zz = minusz;
-						}
-						case 1 -> {
+							break;
+						case 1:
 							xx = x;
 							zz = minusz;
-						}
-						case 2 -> {
+							break;
+						case 2:
 							xx = plusx;
 							zz = minusz;
-						}
-						case 3 -> {
+							break;
+						case 3:
 							xx = plusx;
 							zz = z;
-						}
-						case 4 -> {
+							break;
+						case 4:
 							xx = plusx;
 							zz = plusz;
-						}
-						case 5 -> {
+							break;
+						case 5:
 							xx = x;
 							zz = plusz;
-						}
-						case 6 -> {
+							break;
+						case 6:
 							xx = minusx;
 							zz = plusz;
-						}
-						case 7 -> {
+							break;
+						case 7:
 							xx = minusx;
 							zz = z;
-						}
-						case 8 -> {
+							break;
+						case 8:
 							xx = x;
 							zz = z;
-						}
-						default -> {
+							break;
+						default:
 							xx = signx;
 							zz = signz;
-						}
+							break;
 					}
 					for (int yy = 0; yy < 4; yy++) {
 						boolean change = true;
@@ -711,7 +727,8 @@ class TARDISMaterialisePreset implements Runnable {
 									light = mat;
 								}
 								BlockData lamp = light.createBlockData();
-								if (lamp instanceof Lightable lightable) {
+								if (lamp instanceof Lightable) {
+									Lightable lightable = (Lightable) lamp;
 									lightable.setLit(true);
 									TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, lightable);
 								} else {
@@ -735,7 +752,7 @@ class TARDISMaterialisePreset implements Runnable {
 							case SPRUCE_TRAPDOOR:
 							case WARPED_DOOR:
 							case WARPED_TRAPDOOR:
-								if (preset.isColoured() || preset.equals(PRESET.PANDORICA)) {
+								if (preset.usesItemFrame() || preset.equals(PRESET.PANDORICA)) {
 									TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
 									// remember the door location
 									saveDoorLocation(world, xx, y, yy, zz);
@@ -870,6 +887,8 @@ class TARDISMaterialisePreset implements Runnable {
 					}
 					// tardis has moved so remove HADS damage count
 					plugin.getTrackerKeeper().getDamage().remove(bd.getTardisId());
+					// update demat field in database
+					TARDISBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisId());
 				}
 			}
 		}

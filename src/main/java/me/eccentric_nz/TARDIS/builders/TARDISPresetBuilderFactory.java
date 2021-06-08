@@ -77,9 +77,9 @@ public class TARDISPresetBuilderFactory {
 	}
 
 	/**
-	 * Builds the tardis Police Box.
+	 * Builds the TARDIS Police Box.
 	 *
-	 * @param bd the tardis build data
+	 * @param bd the TARDIS build data
 	 */
 	public void buildPreset(BuildData bd) {
 		HashMap<String, Object> where = new HashMap<>();
@@ -117,7 +117,7 @@ public class TARDISPresetBuilderFactory {
 			if ((tardis.getAdaption().equals(Adaption.BIOME) && preset.equals(PRESET.FACTORY)) ||
 				tardis.getAdaption().equals(Adaption.BLOCK) || preset.equals(PRESET.SUBMERGED)) {
 				Block chameleonBlock;
-				// chameleon circuit is on - get block under tardis
+				// chameleon circuit is on - get block under TARDIS
 				if (bd.getLocation().getBlock().getType() == Material.SNOW) {
 					chameleonBlock = bd.getLocation().getBlock();
 				} else {
@@ -151,7 +151,7 @@ public class TARDISPresetBuilderFactory {
 				}
 				plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisId());
 				int taskID;
-				if (preset.isColoured()) {
+				if (preset.usesItemFrame()) {
 					TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, preset);
 					taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
 					frame.setTask(taskID);
@@ -172,7 +172,7 @@ public class TARDISPresetBuilderFactory {
 					runnable.setTask(taskID);
 				} else {
 					int taskID;
-					if (preset.isColoured()) {
+					if (preset.usesItemFrame()) {
 						TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, preset);
 						taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
 						frame.setTask(taskID);

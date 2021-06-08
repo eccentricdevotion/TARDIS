@@ -27,10 +27,7 @@ import me.eccentric_nz.tardis.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.enumeration.Adaption;
-import me.eccentric_nz.tardis.enumeration.Difficulty;
-import me.eccentric_nz.tardis.enumeration.DiskCircuit;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.*;
 import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISMaterials;
@@ -329,14 +326,20 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
 		// update the Chameleon Circuit sign(s)
 		HashMap<String, Object> wherec = new HashMap<>();
 		wherec.put("tardis_id", id);
-		wherec.put("type", 31);
+		wherec.put("type", Control.CHAMELEON.getId());
 		ResultSetControls rsc = new ResultSetControls(plugin, wherec, true);
 		if (rsc.resultSet()) {
 			for (HashMap<String, String> map : rsc.getData()) {
 				TARDISStaticUtils.setSign(map.get("location"), 3, "CONSTRUCT", player);
 			}
 		}
-		new TARDISChameleonFrame(plugin).updateChameleonFrame(id, PRESET.CONSTRUCT);
+		HashMap<String, Object> where = new HashMap<>();
+		where.put("tardis_id", id);
+		where.put("type", Control.FRAME.getId());
+		ResultSetControls rsf = new ResultSetControls(plugin, where, false);
+		if (rsf.resultSet()) {
+			new TARDISChameleonFrame(plugin).updateChameleonFrame(id, PRESET.CONSTRUCT, rsf.getLocation());
+		}
 		TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Construct");
 		// rebuild
 		player.performCommand("tardis rebuild");

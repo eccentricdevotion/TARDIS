@@ -24,7 +24,7 @@ import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
-import me.eccentric_nz.tardishelper.disguise.*;
+import me.eccentric_nz.tardischunkgenerator.disguise.*;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -75,7 +75,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 	}
 
 	/**
-	 * Listens for player clicking inside an inventory. If the inventory is a tardis GUI, then the click is processed
+	 * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
 	 * accordingly.
 	 *
 	 * @param event a player clicking an inventory slot
@@ -123,8 +123,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 				if (TARDISPermission.hasPermission(player, "tardis.themaster")) {
 					assert im != null;
 					if (plugin.getTrackerKeeper().getImmortalityGate().equals("")) {
-						String onOff = (Objects.requireNonNull(im.getLore()).get(0).equals(plugin.getLanguage().getString("SET_OFF"))) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
+						boolean isOff = Objects.requireNonNull(im.getLore()).get(0).equals(plugin.getLanguage().getString("SET_OFF"));
+						String onOff = isOff ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
 						im.setLore(Collections.singletonList(onOff));
+						int cmd = isOff ? 2 : 3;
+						im.setCustomModelData(cmd);
 					} else {
 						im.setLore(Arrays.asList("The Master Race is already",
 								" set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
@@ -140,8 +143,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
 				assert is != null;
 				ItemMeta im = is.getItemMeta();
 				assert im != null;
-				String onoff = (Objects.requireNonNull(im.getLore()).get(0).equals("ADULT")) ? "BABY" : "ADULT";
-				im.setLore(Collections.singletonList(onoff));
+				String onOff = (Objects.requireNonNull(im.getLore()).get(0).equals("ADULT")) ? "BABY" : "ADULT";
+				im.setLore(Collections.singletonList(onOff));
 				is.setItemMeta(im);
 			}
 			if (slot == 48) { // type / colour

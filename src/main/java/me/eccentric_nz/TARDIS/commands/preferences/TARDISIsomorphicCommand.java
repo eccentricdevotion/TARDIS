@@ -20,26 +20,32 @@ import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
  */
-class TARDISIsomorphicCommand {
+public class TARDISIsomorphicCommand {
 
 	private final TARDISPlugin plugin;
 
-	TARDISIsomorphicCommand(TARDISPlugin plugin) {
+	public TARDISIsomorphicCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
 	boolean toggleIsomorphicControls(Player player) {
+		return toggleIsomorphicControls(player.getUniqueId(), player);
+	}
+
+	public boolean toggleIsomorphicControls(UUID uuid, CommandSender sender) {
 		HashMap<String, Object> where = new HashMap<>();
-		where.put("uuid", player.getUniqueId().toString());
+		where.put("uuid", uuid.toString());
 		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-		// does the player have a tardis
+		// does the player have a TARDIS
 		if (rs.resultSet()) {
 			TARDIS tardis = rs.getTardis();
 			int iso = (tardis.isIsoOn()) ? 0 : 1;
@@ -50,9 +56,9 @@ class TARDISIsomorphicCommand {
 			HashMap<String, Object> wheret = new HashMap<>();
 			wheret.put("tardis_id", id);
 			plugin.getQueryFactory().doUpdate("tardis", seti, wheret);
-			TARDISMessage.send(player, onoff);
+			TARDISMessage.send(sender, onoff);
 		} else {
-			TARDISMessage.send(player, "NO_TARDIS");
+			TARDISMessage.send(sender, "NO_TARDIS");
 		}
 		return true;
 	}

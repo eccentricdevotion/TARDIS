@@ -20,6 +20,8 @@ import com.google.common.collect.Maps;
 import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,7 +57,7 @@ public enum PRESET {
 	NETHER(Material.NETHERRACK, Material.NETHER_BRICKS, 2, "", "", true, true, "Nether Fortress"),
 	NEW(Material.STONE_SLAB, Material.BLUE_WOOL, 0, "POLICE", "BOX", true, true, "New Police Box"),
 	OLD(Material.BLUE_WOOL, Material.LIGHT_BLUE_WOOL, 3, "POLICE", "BOX", true, true, "Old Police Box"),
-	PANDORICA(Material.COAL, Material.BEDROCK, 40, "PANDORICA", "", false, false),
+	PANDORICA(Material.COAL, Material.BLACKSTONE, 40, "PANDORICA", "", false, false),
 	PARTY(Material.FIREWORK_ROCKET, Material.GREEN_WOOL, 5, "PARTY", "TENT", true, true),
 	PEANUT(Material.TERRACOTTA, 20, "JAR OF", "PEANUT BUTTER", true, false, "Peanut Butter Jar"),
 	PINE(Material.SPRUCE_LEAVES, Material.SPRUCE_LEAVES, 26, "PINE", "TREE", false, false),
@@ -81,7 +83,8 @@ public enum PRESET {
 	CUSTOM(Material.OBSIDIAN, Material.ENDER_CHEST, 48, "", "", false, false, "Custom"),
 	JUNK(Material.BARRIER, -1, "", "", false, false, "Junk"),
 	JUNK_MODE(Material.BARRIER, -1, "", "", false, false, "Junk Mode"),
-	CONSTRUCT(Material.BARRIER, "CONSTRUCT", "", true, true), // biome adaptive
+	CONSTRUCT(Material.BARRIER, "CONSTRUCT", "", true, true),
+	// biome adaptive
 	EXTREME_HILLS(Material.BARRIER, "EXTREME_HILLS", "", true, true),
 	FOREST(Material.BARRIER, "FOREST", "", true, true),
 	ICE_FLATS(Material.BARRIER, "ICE_FLATS", "", true, true),
@@ -92,7 +95,8 @@ public enum PRESET {
 	SAVANNA(Material.BARRIER, "SAVANNA", "", true, true),
 	TAIGA(Material.BARRIER, "TAIGA", "", true, true),
 	COLD_TAIGA(Material.BARRIER, "COLD_TAIGA", "", true, true),
-	BOAT(Material.BARRIER, "BOAT", "", false, false), // coloured police boxes
+	BOAT(Material.BARRIER, "BOAT", "", false, false),
+	// coloured police boxes
 	POLICE_BOX_BLUE(Material.BLUE_CONCRETE_POWDER, 0, "", "", false, true, "Blue Police Box"),
 	POLICE_BOX_WHITE(Material.WHITE_CONCRETE_POWDER, 1, "", "", false, false, "White Police Box"),
 	POLICE_BOX_ORANGE(Material.ORANGE_CONCRETE_POWDER, 2, "", "", false, false, "Orange Police Box"),
@@ -108,13 +112,24 @@ public enum PRESET {
 	POLICE_BOX_BROWN(Material.BROWN_CONCRETE_POWDER, 12, "", "", false, false, "Brown Police Box"),
 	POLICE_BOX_GREEN(Material.GREEN_CONCRETE_POWDER, 13, "", "", false, false, "Green Police Box"),
 	POLICE_BOX_RED(Material.RED_CONCRETE_POWDER, 14, "", "", false, false, "Red Police Box"),
-	POLICE_BOX_BLACK(Material.BLACK_CONCRETE_POWDER, 15, "", "", false, false, "Black Police Box");
+	POLICE_BOX_BLACK(Material.BLACK_CONCRETE_POWDER, 15, "", "", false, false, "Black Police Box"),
+	WEEPING_ANGEL(Material.GRAY_CONCRETE, 16, "", "", false, false, "Weeping Angel");
 
+	public final static List<Material> NOT_THESE = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
 	private final static Map<Material, PRESET> BY_MATERIAL = Maps.newHashMap();
+	private final static Map<Integer, PRESET> BY_SLOT = Maps.newHashMap();
+	private final static Map<Integer, PRESET> IF_BY_SLOT = Maps.newHashMap();
 
 	static {
 		for (PRESET preset : values()) {
-			BY_MATERIAL.put(preset.getCraftMaterial(), preset);
+			if (!NOT_THESE.contains(preset.getCraftMaterial())) {
+				BY_MATERIAL.put(preset.getCraftMaterial(), preset);
+				if (preset.usesItemFrame()) {
+					IF_BY_SLOT.put(preset.getSlot(), preset);
+				} else {
+					BY_SLOT.put(preset.getSlot(), preset);
+				}
+			}
 		}
 	}
 
@@ -179,6 +194,14 @@ public enum PRESET {
 		return BY_MATERIAL.get(mat);
 	}
 
+	public static PRESET getItemFramePresetBySlot(int slot) {
+		return IF_BY_SLOT.get(slot);
+	}
+
+	public static PRESET getPresetBySlot(int slot) {
+		return BY_SLOT.get(slot);
+	}
+
 	public Material getCraftMaterial() {
 		return craftMaterial;
 	}
@@ -211,9 +234,9 @@ public enum PRESET {
 		return displayName;
 	}
 
-	public boolean isColoured() {
+	public boolean usesItemFrame() {
 		return switch (this) {
-			case POLICE_BOX_BLUE, POLICE_BOX_WHITE, POLICE_BOX_ORANGE, POLICE_BOX_MAGENTA, POLICE_BOX_LIGHT_BLUE, POLICE_BOX_YELLOW, POLICE_BOX_LIME, POLICE_BOX_PINK, POLICE_BOX_GRAY, POLICE_BOX_LIGHT_GRAY, POLICE_BOX_CYAN, POLICE_BOX_PURPLE, POLICE_BOX_BROWN, POLICE_BOX_GREEN, POLICE_BOX_RED, POLICE_BOX_BLACK -> true;
+			case POLICE_BOX_BLUE, POLICE_BOX_WHITE, POLICE_BOX_ORANGE, POLICE_BOX_MAGENTA, POLICE_BOX_LIGHT_BLUE, POLICE_BOX_YELLOW, POLICE_BOX_LIME, POLICE_BOX_PINK, POLICE_BOX_GRAY, POLICE_BOX_LIGHT_GRAY, POLICE_BOX_CYAN, POLICE_BOX_PURPLE, POLICE_BOX_BROWN, POLICE_BOX_GREEN, POLICE_BOX_RED, POLICE_BOX_BLACK, WEEPING_ANGEL -> true;
 			default -> false;
 		};
 	}

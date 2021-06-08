@@ -117,7 +117,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 											return;
 										}
 										if (TARDISForceField.addToTracker(p)) {
-											TARDISMessage.send(p, "PREF_WAS_ON", "The tardis force field");
+											TARDISMessage.send(p, "PREF_WAS_ON", "The TARDIS force field");
 										}
 									} else {
 										TARDISMessage.send(p, "POWER_LEVEL");
@@ -125,7 +125,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 									}
 								} else {
 									plugin.getTrackerKeeper().getActiveForceFields().remove(p.getUniqueId());
-									TARDISMessage.send(p, "PREF_WAS_OFF", "The tardis force field");
+									TARDISMessage.send(p, "PREF_WAS_OFF", "The TARDIS force field");
 								}
 								close(p);
 							} else {
@@ -134,7 +134,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 							return;
 						}
 					}
-					if (slot == 28) {
+					if (slot == 29) {
 						assert im != null;
 						if (im.getDisplayName().equals("Flight Mode")) {
 							List<String> lore = im.getLore();
@@ -157,13 +157,13 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 							return;
 						}
 					}
-					if (slot == 29) {
+					if (slot == 30) {
 						assert im != null;
 						if (im.getDisplayName().equals("Interior Hum Sound")) {
 							// close this gui and load the sounds GUI
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 								Inventory hum_inv = plugin.getServer().createInventory(p, 18,
-										ChatColor.DARK_RED + "tardis Interior Sounds");
+										ChatColor.DARK_RED + "TARDIS Interior Sounds");
 								// close inventory
 								p.closeInventory();
 								// open new inventory
@@ -180,7 +180,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 							List<String> lore = im.getLore();
 							assert lore != null;
 							if (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF"))) {
-								// get this player's tardis
+								// get this player's TARDIS
 								ResultSetTardisID rs = new ResultSetTardisID(plugin);
 								if (rs.fromUUID(uuid.toString())) {
 									int id = rs.getTardisId();
@@ -198,7 +198,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 										// Check if it's at a recharge point
 										TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
 										tal.recharge(id);
-										// Remove energy from tardis and sets database
+										// Remove energy from TARDIS and sets database
 										TARDISMessage.send(p, "HANDBRAKE_ON");
 										if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
 											int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
@@ -237,16 +237,16 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 					}
 					if (slot == 32) {
 						assert im != null;
-						if (im.getDisplayName().equals("tardis Map")) {
-							// must be in the tardis
+						if (im.getDisplayName().equals("TARDIS Map")) {
+							// must be in the TARDIS
 							HashMap<String, Object> where = new HashMap<>();
 							where.put("uuid", uuid.toString());
 							ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
 							if (rs.resultSet()) {
-								// close this gui and load the tardis map
+								// close this gui and load the TARDIS map
 								plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 									Inventory new_inv = plugin.getServer().createInventory(p, 54,
-											ChatColor.DARK_RED + "tardis Map");
+											ChatColor.DARK_RED + "TARDIS Map");
 									// close inventory
 									p.closeInventory();
 									// open new inventory
@@ -295,8 +295,8 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 					String value = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
 					int b = (bool) ? 0 : 1;
 					switch (im.getDisplayName()) {
-						case "Junk tardis" -> {
-							// must be outside of the tardis
+						case "Junk TARDIS": {
+							// must be outside of the TARDIS
 							HashMap<String, Object> wheret = new HashMap<>();
 							wheret.put("uuid", uuid);
 							ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -383,14 +383,22 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 								TARDISMessage.send(p, message);
 								p.performCommand("tardis rebuild");
 							}
+							break;
 						}
-						case "Companion Build" -> {
+						case "Companion Build":
 							String[] args = new String[2];
 							args[0] = "";
 							args[1] = value;
 							new TARDISBuildCommand(plugin).toggleCompanionBuilding(p, args);
-						}
-						default -> {
+							break;
+						case "Lock Containers":
+							if (bool) {
+								plugin.getWorldGuardUtils().unlockContainers(p.getWorld(), p.getName());
+							} else {
+								plugin.getWorldGuardUtils().lockContainers(p.getWorld(), p.getName());
+							}
+							break;
+						default: {
 							HashMap<String, Object> set = new HashMap<>();
 							HashMap<String, Object> where = new HashMap<>();
 							where.put("uuid", uuid.toString());
@@ -401,6 +409,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
 								set.put(lookup.get(im.getDisplayName()), b);
 							}
 							plugin.getQueryFactory().doUpdate("player_prefs", set, where);
+							break;
 						}
 					}
 					lore.set(0, value);

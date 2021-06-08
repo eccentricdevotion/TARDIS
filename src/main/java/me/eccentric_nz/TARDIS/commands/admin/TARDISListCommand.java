@@ -93,7 +93,7 @@ class TARDISListCommand {
 				new TARDISPermissionLister(plugin).listPerms(sender);
 				return true;
 			} else if (args[1].equalsIgnoreCase("recipes")) {
-				new TARDISRecipesLister(plugin).listRecipes(sender);
+				new TARDISRecipesLister(plugin).listRecipes(sender, args);
 				return true;
 			} else if (args[1].equalsIgnoreCase("blueprints")) {
 				new TARDISBlueprintsLister().listBlueprints(sender);

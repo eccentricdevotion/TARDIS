@@ -25,6 +25,7 @@ import me.eccentric_nz.tardis.enumeration.FlightMode;
 import me.eccentric_nz.tardis.enumeration.HADS;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -102,8 +103,16 @@ public class TARDISPrefsMenuInventory {
 		values.add(rsp.isMinecartOn());
 		values.add(rsp.isDifficulty());
 		values.add(rsp.useCustomFont());
+		if (plugin.isWorldGuardOnServer()) {
+			String chunk = rst.getTardis().getChunk();
+			String[] split = chunk.split(":");
+			World world = plugin.getServer().getWorld(split[0]);
+			values.add(!plugin.getWorldGuardUtils().queryContainers(world, Objects.requireNonNull(plugin.getServer().getPlayer(uuid)).getName()));
+		} else {
+			values.add(false);
+		}
 
-		// get tardis preset
+		// get TARDIS preset
 		TARDIS tardis = null;
 		HashMap<String, Object> wherej = new HashMap<>();
 		wherej.put("uuid", uuid.toString());
@@ -136,6 +145,9 @@ public class TARDISPrefsMenuInventory {
 				stack[pref.getSlot()] = is;
 			}
 		}
+		if (!plugin.isWorldGuardOnServer()) {
+			stack[28] = null;
+		}
 		// flight mode
 		ItemStack fli = new ItemStack(Material.ELYTRA, 1);
 		ItemMeta ght_im = fli.getItemMeta();
@@ -145,7 +157,7 @@ public class TARDISPrefsMenuInventory {
 		ght_im.setLore(Collections.singletonList(mode_value));
 		ght_im.setCustomModelData(GUIPlayerPreferences.FLIGHT_MODE.getCustomModelData());
 		fli.setItemMeta(ght_im);
-		stack[28] = fli;
+		stack[29] = fli;
 		// interior hum sound
 		ItemStack hum = new ItemStack(Material.BOWL, 1);
 		ItemMeta hum_im = hum.getItemMeta();
@@ -155,7 +167,7 @@ public class TARDISPrefsMenuInventory {
 		hum_im.setLore(Collections.singletonList(hum_value));
 		hum_im.setCustomModelData(GUIPlayerPreferences.INTERIOR_HUM_SOUND.getCustomModelData());
 		hum.setItemMeta(hum_im);
-		stack[29] = hum;
+		stack[30] = hum;
 		// handbrake
 		ItemStack hand = new ItemStack(Material.LEVER, 1);
 		ItemMeta brake = hand.getItemMeta();
@@ -170,7 +182,7 @@ public class TARDISPrefsMenuInventory {
 		ItemStack tt = new ItemStack(Material.MAP, 1);
 		ItemMeta map = tt.getItemMeta();
 		assert map != null;
-		map.setDisplayName("tardis Map");
+		map.setDisplayName("TARDIS Map");
 		map.setCustomModelData(GUIPlayerPreferences.TARDIS_MAP.getCustomModelData());
 		tt.setItemMeta(map);
 		stack[32] = tt;

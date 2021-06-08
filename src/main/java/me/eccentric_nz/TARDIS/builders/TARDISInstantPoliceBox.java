@@ -49,7 +49,7 @@ public class TARDISInstantPoliceBox {
 	}
 
 	/**
-	 * Builds the tardis Preset.
+	 * Builds the TARDIS Preset.
 	 */
 	public void buildPreset() {
 		World world = bd.getLocation().getWorld();
@@ -70,6 +70,7 @@ public class TARDISInstantPoliceBox {
 			plugin.getTrackerKeeper().getRescue().remove(bd.getTardisId());
 		}
 		TARDISBuilderUtility.saveDoorLocation(bd);
+		TARDISBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisId());
 		plugin.getGeneralKeeper().getProtectBlockMap().put(bd.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString(), bd.getTardisId());
 		ItemFrame frame = null;
 		boolean found = false;
@@ -91,13 +92,14 @@ public class TARDISInstantPoliceBox {
 		}
 		frame.setFacingDirection(BlockFace.UP);
 		frame.setRotation(bd.getDirection().getRotation());
-		Material dye = TARDISBuilderUtility.getDyeMaterial(preset);
+		Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
 		ItemStack is = new ItemStack(dye, 1);
 		ItemMeta im = is.getItemMeta();
 		assert im != null;
 		im.setCustomModelData(1001);
 		if (bd.shouldAddSign()) {
-			im.setDisplayName(bd.getPlayer().getName() + "'s Police Box");
+			String pb = (preset.equals(PRESET.WEEPING_ANGEL)) ? "Weeping Angel" : "Police Box";
+			im.setDisplayName(bd.getPlayer().getName() + "'s " + pb);
 		}
 		is.setItemMeta(im);
 		frame.setItem(is, false);

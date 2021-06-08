@@ -63,7 +63,7 @@ public class ARSConverter {
 					if (rs.wasNull()) {
 						continue;
 					}
-					if (!js.contains("0")) {
+					if (!js.contains("1")) { // default empty slot is stone - id: 1
 						// no IDs found, already converted
 						continue;
 					}
@@ -93,7 +93,7 @@ public class ARSConverter {
 			if (i > 0) {
 				update.executeBatch();
 				connection.commit();
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " ars records");
+				plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " ARS records");
 			}
 			plugin.getConfig().set("conversions.ars_materials", true);
 			plugin.saveConfig();

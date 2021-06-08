@@ -73,7 +73,7 @@ public class TARDISPresetDestroyerFactory {
 				if ((tardis.getAdaption().equals(Adaption.BIOME) && demat.equals(PRESET.FACTORY)) ||
 					demat.equals(PRESET.SUBMERGED) || tardis.getAdaption().equals(Adaption.BLOCK)) {
 					Block chameleonBlock;
-					// chameleon circuit is on - get block under tardis
+					// chameleon circuit is on - get block under TARDIS
 					if (dd.getLocation().getBlock().getType() == Material.SNOW) {
 						chameleonBlock = dd.getLocation().getBlock();
 					} else {
@@ -105,7 +105,7 @@ public class TARDISPresetDestroyerFactory {
 						destroyDoor(dd.getTardisId());
 					}
 					int taskID;
-					if (demat.isColoured()) {
+					if (demat.usesItemFrame()) {
 						TARDISDematerialisePoliceBox frame = new TARDISDematerialisePoliceBox(plugin, dd, demat);
 						taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
 						frame.setTask(taskID);

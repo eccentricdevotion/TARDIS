@@ -164,7 +164,7 @@ public class TARDISDoorOpener {
 						exdirection = COMPASS.valueOf(map.get("door_direction"));
 						// adjust for teleport
 						assert preset != null;
-						if (preset.isColoured()) {
+						if (preset.usesItemFrame()) {
 							switch (rsc.getDirection()) {
 								case NORTH -> exdoor.add(0.5d, 0.0d, 1.0d);
 								case WEST -> exdoor.add(1.0d, 0.0d, 0.5d);

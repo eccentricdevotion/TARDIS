@@ -73,7 +73,7 @@ public class TARDISAbandoned {
 		setlocs.put("z", l.getBlockZ());
 		setlocs.put("direction", d.toString());
 		plugin.getQueryFactory().insertLocations(setlocs, TARDISStaticUtils.getBiomeAt(l).getKey().toString(), lastInsertId);
-		// turn the block stack into a tardis
+		// turn the block stack into a TARDIS
 		BuildData bd = new BuildData(null);
 		bd.setDirection(d);
 		bd.setLocation(l);
@@ -91,7 +91,7 @@ public class TARDISAbandoned {
 		// delay building exterior
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 			plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisId());
-			if (preset.isColoured()) {
+			if (preset.usesItemFrame()) {
 				TARDISMaterialisePoliceBox runnable = new TARDISMaterialisePoliceBox(plugin, bd, preset);
 				int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
 				runnable.setTask(taskID);

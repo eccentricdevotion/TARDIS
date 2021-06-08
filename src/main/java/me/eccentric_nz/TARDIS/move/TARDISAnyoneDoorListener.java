@@ -68,8 +68,8 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 	}
 
 	/**
-	 * Listens for player interaction with tardis doors. If the door is right-clicked with the tardis key (configurable)
-	 * it will teleport the player either into or out of the tardis.
+	 * Listens for player interaction with TARDIS doors. If the door is right-clicked with the TARDIS key (configurable)
+	 * it will teleport the player either into or out of the TARDIS.
 	 *
 	 * @param event a player clicking a block
 	 */
@@ -122,15 +122,15 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 							return;
 						}
 						COMPASS dd = rsd.getDoorDirection();
-						int doorType = rsd.getDoorType();
-						int endDoorType = switch (doorType) {
+						int door_type = rsd.getDoorType();
+						int end_door_type = switch (door_type) {
 							case 0 -> // outside preset door
 									1;
 							case 2 -> // outside backdoor
 									3;
 							case 3 -> // inside backdoor
 									2;
-							default -> // 1, 4 tardis inside door, secondary inside door
+							default -> // 1, 4 TARDIS inside door, secondary inside door
 									0;
 						};
 						ItemStack stack = player.getInventory().getItemInMainHand();
@@ -162,7 +162,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 								if (material.equals(m)) {
 									if (stack.hasItemMeta() &&
 										Objects.requireNonNull(stack.getItemMeta()).hasDisplayName() &&
-										stack.getItemMeta().getDisplayName().equals("tardis Remote Key")) {
+										stack.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
 										return;
 									}
 									int locked = (rsd.isLocked()) ? 0 : 1;
@@ -175,8 +175,8 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 									plugin.getQueryFactory().doUpdate("doors", setl, wherel);
 									TARDISMessage.send(player, "DOOR_LOCK", message);
 								} else if (material.isAir()) { // knock with hand
-									// only outside the tardis
-									if (doorType == 0) {
+									// only outside the TARDIS
+									if (door_type == 0) {
 										// only if companion
 										ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
 										if (rsc.getCompanions().contains(playerUUID)) {
@@ -223,15 +223,15 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 									return;
 								}
 								if (!rsd.isLocked()) {
-									boolean isPoliceBox = (rs.getTardis().getPreset().isColoured());
+									boolean isPoliceBox = (rs.getTardis().getPreset().usesItemFrame());
 									// toggle the door open/closed
 									if (Tag.DOORS.isTagged(blockType) ||
 										(blockType.equals(Material.OAK_TRAPDOOR) && isPoliceBox)) {
-										if (doorType == 0 || doorType == 1) {
+										if (door_type == 0 || door_type == 1) {
 											boolean open = TARDISStaticUtils.isDoorOpen(block);
 											boolean toggle = true;
 											// must use key to open the outer door
-											if (doorType == 0 && !open) {
+											if (door_type == 0 && !open) {
 												if (material.equals(m)) {
 													// must be Time Lord or companion
 													ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
@@ -254,7 +254,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 												return;
 											}
 											if (plugin.getTrackerKeeper().getHasClickedHandbrake().contains(id) &&
-												doorType == 1) {
+												door_type == 1) {
 												plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id));
 												// toggle handbrake && dematerialise
 												new TARDISTakeoff(plugin).run(id, player, rs.getTardis().getBeacon());
@@ -265,7 +265,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 												if (isPoliceBox) {
 													new TARDISCustomModelDataChanger(plugin, block, player, id).toggleOuterDoor();
 												} else {
-													if (doorType == 1 ||
+													if (door_type == 1 ||
 														!plugin.getPM().isPluginEnabled("RedProtect") ||
 														TARDISRedProtectChecker.shouldToggleDoor(block)) {
 														new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
@@ -288,7 +288,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 								}
 							}
 						} else if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
-							if (!material.equals(m) && doorType == 0) {
+							if (!material.equals(m) && door_type == 0) {
 								// must use key to open and close the outer door
 								TARDISMessage.send(player, "NOT_KEY", key);
 								return;
@@ -322,7 +322,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 								wherecl.put("tardis_id", tardis.getTardisId());
 								ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
 								if (!rsc.resultSet()) {
-									// emergency tardis relocation
+									// emergency TARDIS relocation
 									new TARDISEmergencyRelocation(plugin).relocate(id, player);
 									return;
 								}
@@ -340,17 +340,17 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 								COMPASS d;
 								HashMap<String, Object> other = new HashMap<>();
 								other.put("tardis_id", id);
-								other.put("door_type", endDoorType);
+								other.put("door_type", end_door_type);
 								ResultSetDoors rse = new ResultSetDoors(plugin, other, false);
 								if (rse.resultSet()) {
 									d = rse.getDoorDirection();
 								} else {
 									d = d_backup;
 								}
-								switch (doorType) {
+								switch (door_type) {
 									case 1:
 									case 4:
-										// is the tardis materialising?
+										// is the TARDIS materialising?
 										if (plugin.getTrackerKeeper().getInVortex().contains(id) ||
 											plugin.getTrackerKeeper().getMaterialising().contains(id) ||
 											plugin.getTrackerKeeper().getDematerialising().contains(id)) {
@@ -363,7 +363,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 											return;
 										}
 										Location exitLoc;
-										// player is in the tardis - always exit to current location
+										// player is in the TARDIS - always exit to current location
 										Block door_bottom;
 										Door door = (Door) block.getBlockData();
 										door_bottom = (door.getHalf().equals(Bisected.Half.TOP)) ? block.getRelative(BlockFace.DOWN) : block;
@@ -406,7 +406,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 													}
 												}
 											}
-											// exit tardis!
+											// exit TARDIS!
 											movePlayer(player, exitLoc, true, playerWorld, userQuotes, 2, minecart);
 											if (plugin.getConfig().getBoolean("allow.mob_farming") &&
 												TARDISPermission.hasPermission(player, "tardis.farm")) {
@@ -431,7 +431,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 										}
 										break;
 									case 0:
-										// is the tardis materialising?
+										// is the TARDIS materialising?
 										if (plugin.getTrackerKeeper().getInVortex().contains(id) ||
 											plugin.getTrackerKeeper().getMaterialising().contains(id) ||
 											plugin.getTrackerKeeper().getDematerialising().contains(id)) {
@@ -458,7 +458,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 										if (playerUUID.equals(tlUUID) || chkCompanion ||
 											TARDISPermission.hasPermission(player, "tardis.skeletonkey") ||
 											tardis.isAbandoned()) {
-											// get INNER tardis location
+											// get INNER TARDIS location
 											TARDISDoorLocation idl = getDoor(1, id);
 											Location tardis_loc = idl.getL();
 											World cw = idl.getW();
@@ -474,13 +474,13 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
 												assert playerWorld != null;
 												petsAndFollowers = tf.farmAnimals(block_loc, d, id, player.getPlayer(), Objects.requireNonNull(tardis_loc.getWorld()).getName(), playerWorld.getName());
 											}
-											// if WorldGuard is on the server check for tardis region protection and add admin as member
+											// if WorldGuard is on the server check for TARDIS region protection and add admin as member
 											if (plugin.isWorldGuardOnServer() &&
 												plugin.getConfig().getBoolean("preferences.use_worldguard") &&
 												TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
 												plugin.getWorldGuardUtils().addMemberToRegion(cw, tardis.getOwner(), player.getName());
 											}
-											// enter tardis!
+											// enter TARDIS!
 											cw.getChunkAt(tardis_loc).load();
 											tardis_loc.setPitch(pitch);
 											// get inner door direction so we can adjust yaw if necessary

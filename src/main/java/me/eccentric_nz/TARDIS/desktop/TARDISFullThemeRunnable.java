@@ -112,7 +112,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 	private ConsoleSize size_next;
 	private ConsoleSize size_prev;
 
-	public TARDISFullThemeRunnable(TARDISPlugin plugin, UUID uuid, TARDISUpgradeData tud) {
+	TARDISFullThemeRunnable(TARDISPlugin plugin, UUID uuid, TARDISUpgradeData tud) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		this.tud = tud;
@@ -717,8 +717,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 					 */
 					ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
 				}
-				// if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
-				if (TARDISBuilderInstanceKeeper.getPrecious().contains(type) || type.equals(Material.BEDROCK)) {
+				// if it's an iron/gold/diamond/emerald/beacon/redstone/bedrock/conduit/netherite block put it in the blocks table
+				if (TARDISBuilderInstanceKeeper.getPrecious().contains(type)) {
 					HashMap<String, Object> setpb = new HashMap<>();
 					String loc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
 					setpb.put("tardis_id", id);

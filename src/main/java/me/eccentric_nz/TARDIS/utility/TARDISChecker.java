@@ -219,7 +219,7 @@ public class TARDISChecker {
 		for (Advancement advancement : Advancement.values()) {
 			String json = advancement.getConfigName() + ".json";
 			File jfile = new File(dataPacksRoot, json);
-			if (!jfile.exists() || (advancement == Advancement.DEFENDER && jfile.lastModified() < 1593067877851L)) {
+			if (!jfile.exists()) {
 				plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED +
 												String.format(Objects.requireNonNull(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND")), json));
 				plugin.getConsole().sendMessage(plugin.getPluginName() +

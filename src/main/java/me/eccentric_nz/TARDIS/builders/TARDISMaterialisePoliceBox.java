@@ -50,7 +50,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 	private ItemFrame frame;
 	private ItemStack is;
 
-	public TARDISMaterialisePoliceBox(TARDISPlugin plugin, BuildData bd, PRESET preset) {
+	TARDISMaterialisePoliceBox(TARDISPlugin plugin, BuildData bd, PRESET preset) {
 		this.plugin = plugin;
 		this.bd = bd;
 		loops = this.bd.getThrottle().getLoops();
@@ -95,7 +95,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 					}
 					frame.setFacingDirection(BlockFace.UP);
 					frame.setRotation(bd.getDirection().getRotation());
-					Material dye = TARDISBuilderUtility.getDyeMaterial(preset);
+					Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
 					is = new ItemStack(dye, 1);
 					if (bd.isOutside()) {
 						if (!bd.useMinecartSounds()) {
@@ -120,7 +120,8 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 				assert im != null;
 				im.setCustomModelData(cmd);
 				if (bd.shouldAddSign()) {
-					im.setDisplayName(bd.getPlayer().getName() + "'s Police Box");
+					String pb = (preset.equals(PRESET.WEEPING_ANGEL)) ? "Weeping Angel" : "Police Box";
+					im.setDisplayName(bd.getPlayer().getName() + "'s " + pb);
 				}
 				is.setItemMeta(im);
 				frame.setItem(is, false);
@@ -178,6 +179,8 @@ public class TARDISMaterialisePoliceBox implements Runnable {
 					}
 					// tardis has moved so remove HADS damage count
 					plugin.getTrackerKeeper().getDamage().remove(bd.getTardisId());
+					// update demat field in database
+					TARDISBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisId());
 				}
 			}
 		}
