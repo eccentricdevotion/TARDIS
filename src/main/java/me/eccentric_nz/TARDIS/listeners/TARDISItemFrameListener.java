@@ -59,8 +59,7 @@ public class TARDISItemFrameListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onItemFrameClick(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
-        if (event.getRightClicked() instanceof ItemFrame) {
-            ItemFrame frame = (ItemFrame) event.getRightClicked();
+        if (event.getRightClicked() instanceof ItemFrame frame) {
             UUID uuid = player.getUniqueId();
             // did they run the `/tardis update direction|frame|rotor|map` command?
             if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {

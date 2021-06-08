@@ -74,8 +74,7 @@ public class TARDISJunkBuilder implements Runnable {
                 i++;
                 if (i == 2) {
                     plugin.getUtils().getJunkTravellers(loc).forEach((e) -> {
-                        if (e instanceof Player) {
-                            Player p = (Player) e;
+                        if (e instanceof Player p) {
                             TARDISSounds.playTARDISSound(p, "junk_land", 5L);
                         }
                     });
@@ -203,8 +202,7 @@ public class TARDISJunkBuilder implements Runnable {
                 } else if (plugin.getConfig().getBoolean("junk.particles")) {
                     // just animate particles
                     plugin.getUtils().getJunkTravellers(loc).forEach((e) -> {
-                        if (e instanceof Player) {
-                            Player p = (Player) e;
+                        if (e instanceof Player p) {
                             TARDISParticles.sendVortexParticles(effectsLoc, p);
                         }
                     });

@@ -50,13 +50,11 @@ public class TARDISHorseListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(EntityInteractEvent event) {
         Entity e = event.getEntity();
-        if (e instanceof AbstractHorse && !(e instanceof Llama)) {
-            AbstractHorse h = (AbstractHorse) e;
+        if (e instanceof AbstractHorse h && !(e instanceof Llama)) {
             Material m = event.getBlock().getType();
             Entity passenger = (h.getPassengers().size() > 0) ? h.getPassengers().get(0) : null;
             if (passenger != null && m.equals(Material.OAK_PRESSURE_PLATE)) {
-                if (passenger instanceof Player) {
-                    Player p = (Player) passenger;
+                if (passenger instanceof Player p) {
                     String pworld = p.getLocation().getWorld().getName();
                     HashMap<String, Object> wherep = new HashMap<>();
                     wherep.put("uuid", p.getUniqueId().toString());
@@ -105,8 +103,7 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setHorseVariant(e.getType());
                         tmhor.setName(h.getCustomName());
                         tmhor.setTamed(true);
-                        if (h instanceof ChestedHorse) {
-                            ChestedHorse ch = (ChestedHorse) h;
+                        if (h instanceof ChestedHorse ch) {
                             if (ch.isCarryingChest()) {
                                 tmhor.setHasChest(true);
                             }

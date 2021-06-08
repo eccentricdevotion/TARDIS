@@ -49,8 +49,7 @@ public class TARDISVaultListener implements Listener {
     public void onVaultDropChestClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();
-        if (holder instanceof org.bukkit.block.Chest) {
-            org.bukkit.block.Chest chest = (org.bukkit.block.Chest) holder;
+        if (holder instanceof org.bukkit.block.Chest chest) {
             Location l = chest.getLocation();
             if (plugin.getUtils().inTARDISWorld(l)) {
                 String loc = l.toString();

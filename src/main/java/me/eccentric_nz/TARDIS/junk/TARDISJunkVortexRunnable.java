@@ -64,8 +64,7 @@ class TARDISJunkVortexRunnable implements Runnable {
             }
             if (plugin.getConfig().getBoolean("junk.particles")) {
                 plugin.getUtils().getJunkTravellers(vortexJunkLoc).forEach((e) -> {
-                    if (e instanceof Player) {
-                        Player p = (Player) e;
+                    if (e instanceof Player p) {
                         TARDISParticles.sendVortexParticles(effectsLoc, p);
                     }
                 });
@@ -91,8 +90,7 @@ class TARDISJunkVortexRunnable implements Runnable {
             if (i == LOOPS) {
                 // teleport players
                 getJunkTravellers().forEach((e) -> {
-                    if (e instanceof Player) {
-                        Player p = (Player) e;
+                    if (e instanceof Player p) {
                         Location relativeLoc = getRelativeLocation(p);
                         p.teleport(relativeLoc);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(relativeLoc), 2L);

@@ -58,8 +58,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onItemFrameClick(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
-        if (event.getRightClicked() instanceof ItemFrame) {
-            ItemFrame frame = (ItemFrame) event.getRightClicked();
+        if (event.getRightClicked() instanceof ItemFrame frame) {
             UUID uuid = player.getUniqueId();
             ItemStack dye = frame.getItem();
             if (dye != null && TARDISConstants.DYES.contains(dye.getType()) && dye.hasItemMeta()) {

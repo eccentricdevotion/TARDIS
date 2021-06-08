@@ -45,11 +45,9 @@ public class IceBombListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onIceBombThrow(ProjectileLaunchEvent event) {
         Entity entity = event.getEntity();
-        if (entity instanceof Snowball) {
-            Snowball snowball = (Snowball) entity;
+        if (entity instanceof Snowball snowball) {
             ProjectileSource shooter = snowball.getShooter();
-            if (shooter instanceof Player) {
-                Player player = (Player) shooter;
+            if (shooter instanceof Player player) {
                 ItemStack is = player.getInventory().getItemInMainHand();
                 if (is != null && is.getType() == Material.SNOWBALL && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Ice Bomb")) {
                     snowball.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, "Ice_Bomb");

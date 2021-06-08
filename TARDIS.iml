@@ -9,7 +9,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_16">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -182,7 +182,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: LibsDisguises:LibsDisguises:10.0.24">
+      <library name="Maven: LibsDisguises:LibsDisguises:10.0.25">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/LibsDisguises.jar!/" />
         </CLASSES>

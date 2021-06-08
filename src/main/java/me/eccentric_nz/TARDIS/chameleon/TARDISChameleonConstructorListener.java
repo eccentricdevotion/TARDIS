@@ -202,8 +202,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                         glass[first][second] = TARDISConstants.GLASS.getAsString();
                                                         stain[first][second] = (mat.equals(Material.TORCH)) ? Material.YELLOW_STAINED_GLASS.createBlockData().getAsString() : Material.RED_STAINED_GLASS.createBlockData().getAsString();
                                                     }
-                                                } else if (blockData instanceof Directional) {
-                                                    Directional directional = (Directional) blockData;
+                                                } else if (blockData instanceof Directional directional) {
                                                     directional.setFacing(BlockFace.WEST);
                                                     blue[first][second] = directional.getAsString();
                                                     glass[first][second] = TARDISConstants.GLASS.getAsString();

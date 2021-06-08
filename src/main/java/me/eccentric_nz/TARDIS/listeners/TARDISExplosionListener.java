@@ -89,8 +89,7 @@ public class TARDISExplosionListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onEntityDamage(EntityDamageByEntityEvent e) {
-        if (e.getEntity() instanceof ItemFrame && e.getDamager() instanceof Player) {
-            ItemFrame frame = (ItemFrame) e.getEntity();
+        if (e.getEntity() instanceof ItemFrame frame && e.getDamager() instanceof Player) {
             // check if it is a TARDIS Chameleon item frame
             String l = frame.getLocation().toString();
             HashMap<String, Object> where = new HashMap<>();

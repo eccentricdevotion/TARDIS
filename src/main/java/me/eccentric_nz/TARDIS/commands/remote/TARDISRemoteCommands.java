@@ -150,8 +150,8 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                 }
                             case COMEHERE:
                                 // NOT non-admin players, command blocks or the console
-                                if (sender instanceof Player && sender.hasPermission("tardis.admin")) {
-                                    return new TARDISRemoteComehereCommand(plugin).doRemoteComeHere((Player) sender, uuid);
+                                if (sender instanceof Player player && sender.hasPermission("tardis.admin")) {
+                                    return new TARDISRemoteComehereCommand(plugin).doRemoteComeHere(player, uuid);
                                 } else {
                                     TARDISMessage.send(sender, "NO_PERMS");
                                     return true;

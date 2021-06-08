@@ -65,8 +65,7 @@ public class TARDISSonicEntityListener implements Listener {
             if (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
                 List<String> lore = im.getLore();
                 Entity ent = event.getRightClicked();
-                if (ent instanceof Player) {
-                    Player scanned = (Player) ent;
+                if (ent instanceof Player scanned) {
                     TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                     if (TARDISPermission.hasPermission(player, "tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade") && player.isSneaking()) {
                         TARDISMessage.send(player, "SONIC_INV");

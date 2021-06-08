@@ -29,8 +29,7 @@ public class TARDISDisplayCommand extends TARDISCompleter implements CommandExec
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        if (sender instanceof Player) {
-            Player p = (Player) sender;
+        if (sender instanceof Player p) {
             UUID uuid = p.getUniqueId();
             if (args.length == 0) {
                 if (p.hasPermission("tardis.display")) {

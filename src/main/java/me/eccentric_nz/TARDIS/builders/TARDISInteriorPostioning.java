@@ -246,8 +246,7 @@ public class TARDISInteriorPostioning {
     }
 
     private void removeEntity(Entity entity, Location exit) {
-        if (entity instanceof Player) {
-            Player p = (Player) entity;
+        if (entity instanceof Player p) {
             // teleport player and remove from travellers table
             teleportPlayerToExit(p, exit);
         } else {

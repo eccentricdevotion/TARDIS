@@ -104,8 +104,7 @@ public class TARDISTagListener implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onTagPlayerInteractTagPlayer(PlayerInteractEntityEvent event) {
-        if (event.getRightClicked() instanceof Player && eggcal.after(plugin.getBeforeCal()) && eggcal.before(plugin.getAfterCal())) {
-            Player clicked = (Player) event.getRightClicked();
+        if (event.getRightClicked() instanceof Player clicked && eggcal.after(plugin.getBeforeCal()) && eggcal.before(plugin.getAfterCal())) {
             String p = clicked.getName();
             if (clicked.getName().equals(plugin.getTagConfig().getString("it"))) {
                 Player newit = event.getPlayer();

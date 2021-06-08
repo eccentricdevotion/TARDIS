@@ -78,8 +78,7 @@ public class TARDISJunkDestroyer implements Runnable {
             i++;
             if (i == 1) {
                 getJunkTravellers().forEach((e) -> {
-                    if (e instanceof Player) {
-                        Player p = (Player) e;
+                    if (e instanceof Player p) {
                         plugin.getGeneralKeeper().getJunkTravellers().add(p.getUniqueId());
                     }
                 });
@@ -95,8 +94,7 @@ public class TARDISJunkDestroyer implements Runnable {
                     // teleport players to vortex
                     vortexJunkLoc = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getTardis().getCreeper()).add(3.0d, 0.0d, 2.0d);
                     getJunkTravellers().forEach((e) -> {
-                        if (e instanceof Player) {
-                            Player p = (Player) e;
+                        if (e instanceof Player p) {
                             Location relativeLoc = getRelativeLocation(p);
                             p.teleport(relativeLoc);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(relativeLoc), 2L);
@@ -147,8 +145,7 @@ public class TARDISJunkDestroyer implements Runnable {
             } else if (plugin.getConfig().getBoolean("junk.particles")) {
                 // just animate particles
                 plugin.getUtils().getJunkTravellers(junkLoc).forEach((e) -> {
-                    if (e instanceof Player) {
-                        Player p = (Player) e;
+                    if (e instanceof Player p) {
                         TARDISParticles.sendVortexParticles(effectsLoc, p);
                     }
                 });

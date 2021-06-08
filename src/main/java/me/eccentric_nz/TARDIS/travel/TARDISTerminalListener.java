@@ -205,8 +205,8 @@ public class TARDISTerminalListener implements Listener {
         Inventory inv = event.getInventory();
         InventoryView view = event.getView();
         InventoryHolder holder = inv.getHolder();
-        if (holder instanceof Player && view.getTitle().equals(ChatColor.DARK_RED + "Destination Terminal")) {
-            UUID uuid = ((Player) holder).getUniqueId();
+        if (holder instanceof Player player && view.getTitle().equals(ChatColor.DARK_RED + "Destination Terminal")) {
+            UUID uuid = player.getUniqueId();
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
@@ -219,10 +219,9 @@ public class TARDISTerminalListener implements Listener {
                     terminalUsers.put(uuid, rsc);
                     terminalIDs.put(uuid, id);
                 } else {
-                    Player p = (Player) holder;
                     // emergency TARDIS relocation
-                    new TARDISEmergencyRelocation(plugin).relocate(id, p);
-                    close(p);
+                    new TARDISEmergencyRelocation(plugin).relocate(id, player);
+                    close(player);
                     return;
                 }
             }

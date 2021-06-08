@@ -55,8 +55,7 @@ public class TARDISCreeperDeathListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onCreeperDeath(EntityDeathEvent e) {
         LivingEntity ent = e.getEntity();
-        if (ent instanceof Creeper) {
-            Creeper c = (Creeper) ent;
+        if (ent instanceof Creeper c) {
             if (c.isPowered()) {
                 Player p = c.getKiller();
                 if (p != null) {

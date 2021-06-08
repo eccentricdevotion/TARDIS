@@ -46,8 +46,7 @@ public class TARDISHandbrake {
                         if (location != null) {
                             Block other = location.getBlock();
                             BlockData blockData = other.getBlockData();
-                            if (blockData instanceof Switch) {
-                                Switch brake = (Switch) blockData;
+                            if (blockData instanceof Switch brake) {
                                 brake.setPowered(powered);
                                 other.setBlockData(brake);
                             } else {

@@ -48,10 +48,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player p)) {
             return true;
         }
-        Player p = (Player) sender;
         UUID uuid = p.getUniqueId();
         if (plugin.getTrackerKeeper().getInfoMenu().containsKey(uuid)) {
             if (args[0].equalsIgnoreCase("E")) {

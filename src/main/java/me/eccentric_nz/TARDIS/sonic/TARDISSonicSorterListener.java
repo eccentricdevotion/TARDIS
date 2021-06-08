@@ -105,8 +105,7 @@ public class TARDISSonicSorterListener implements Listener {
                         continue;
                     }
                     if (item2.getType() == item1.getType()) {
-                        if (item1.getItemMeta() instanceof Damageable) {
-                            Damageable d1 = (Damageable) item1.getItemMeta();
+                        if (item1.getItemMeta() instanceof Damageable d1) {
                             Damageable d2 = (Damageable) item2.getItemMeta();
                             if (d1.getDamage() == d2.getDamage() && item1.getEnchantments().equals(item2.getEnchantments()) && item1.getItemMeta().equals(item2.getItemMeta())) {
                                 if (item2.getAmount() > needed) {

@@ -174,8 +174,7 @@ public class TARDISDirectionCommand {
                         chunk.load();
                     }
                     for (Entity e : chunk.getEntities()) {
-                        if (e instanceof ItemFrame && e.getLocation().toString().equals(locToCheck)) {
-                            ItemFrame frame = (ItemFrame) e;
+                        if (e instanceof ItemFrame frame && e.getLocation().toString().equals(locToCheck)) {
                             Rotation r;
                             switch (d) {
                                 case EAST:
