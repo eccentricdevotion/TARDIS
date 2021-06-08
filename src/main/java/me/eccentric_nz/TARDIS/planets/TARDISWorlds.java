@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.planets;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
-import me.eccentric_nz.tardishelper.helpers.TARDISPlanetData;
+import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 

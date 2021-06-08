@@ -161,7 +161,7 @@ public class TARDISJoinListener implements Listener {
 				now = System.currentTimeMillis();
 			}
 			HashMap<String, Object> set = new HashMap<>();
-			set.put("lastuse", now);
+			set.put("last_use", now);
 			set.put("monsters", 0);
 			if (!last_known_name.equals(player.getName())) {
 				// update the player's name WG region as it may have changed

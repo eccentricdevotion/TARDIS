@@ -38,6 +38,7 @@ import me.eccentric_nz.tardis.database.*;
 import me.eccentric_nz.tardis.database.converters.*;
 import me.eccentric_nz.tardis.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.tardis.destroyers.TARDISPresetDestroyerFactory;
+import me.eccentric_nz.tardis.dynmap.TARDISDynmap;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.InventoryManager;
 import me.eccentric_nz.tardis.enumeration.Language;
@@ -66,7 +67,7 @@ import me.eccentric_nz.tardis.travel.TARDISArea;
 import me.eccentric_nz.tardis.travel.TARDISPluginRespect;
 import me.eccentric_nz.tardis.utility.*;
 import me.eccentric_nz.tardis.utility.logging.TARDISBlockLogger;
-import me.eccentric_nz.tardishelper.TARDISHelperPlugin;
+import me.eccentric_nz.tardischunkgenerator.TARDISHelperPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -90,7 +91,7 @@ import java.util.regex.Pattern;
 /**
  * The main class where everything is enabled and disabled.
  * <p>
- * "tardis" is an acronym meaning "Time And Relative Dimension In Space". TARDISes move through time and space by
+ * "TARDIS" is an acronym meaning "Time And Relative Dimension In Space". TARDISes move through time and space by
  * "disappearing there and reappearing here", a process known as "de- and re-materialisation". TARDISes are used for the
  * observation of various places and times.
  *
@@ -113,8 +114,8 @@ public class TARDISPlugin extends JavaPlugin {
 	private Calendar afterCal;
 	private Calendar beforeCal;
 	private ConsoleCommandSender console;
-	private File quotesFile = null;
-	private FileConfiguration achievementConfig;
+	private File quotesfile = null;
+	private FileConfiguration advancementConfig;
 	private FileConfiguration artronConfig;
 	private FileConfiguration blocksConfig;
 	private FileConfiguration condensablesConfig;
@@ -150,11 +151,9 @@ public class TARDISPlugin extends JavaPlugin {
 	private TARDISGeneralInstanceKeeper generalKeeper;
 	private TARDISHelperPlugin tardisHelper = null;
 	private TARDISMultiverseHelper mvHelper = null;
-	private TARDISDynmapUtils tardisDynmapUtils = null;
 	private String prefix;
 	private Difficulty difficulty;
 	private WorldManager worldManager;
-	private BukkitTask recordingTask;
 	private NamespacedKey oldBlockKey;
 	private NamespacedKey customBlockKey;
 	private NamespacedKey timeLordUuidKey;
@@ -166,11 +165,12 @@ public class TARDISPlugin extends JavaPlugin {
 	private int buildNumber = 0;
 	private int updateNumber = 0;
 	private TARDISBlockLogger blockLogger;
+	private TARDISDynmap tardisDynmap;
 
 	public TARDISPlugin() {
 		worldGuardOnServer = false;
 		invManager = InventoryManager.NONE;
-		versions.put("dynmap", "3.1-beta-5");
+		//        versions.put("dynmap", "3.0.1");
 		versions.put("GriefPrevention", "16.13");
 		versions.put("LibsDisguises", "10.0.14");
 		versions.put("MultiWorld", "5.2");
@@ -180,7 +180,7 @@ public class TARDISPlugin extends JavaPlugin {
 		versions.put("MultiInv", "3.3.6");
 		versions.put("My_Worlds", "1.16.1");
 		versions.put("PerWorldInventory", "2.3.0");
-		versions.put("TARDISChunkGenerator", "4.6.2");
+		versions.put("TARDISChunkGenerator", "4.6.3");
 		versions.put("Towny", "0.95");
 		versions.put("WorldBorder", "1.9.0");
 		versions.put("WorldGuard", "7.0.0");
@@ -207,7 +207,7 @@ public class TARDISPlugin extends JavaPlugin {
 	private boolean checkPluginVersion(String plg, String min) {
 		if (pm.isPluginEnabled(plg)) {
 			Plugin check = pm.getPlugin(plg);
-			Version minVersion = new Version(min);
+			Version minver = new Version(min);
 			assert check != null;
 			String preSplit = check.getDescription().getVersion();
 			String[] split = preSplit.split("-");
@@ -226,7 +226,7 @@ public class TARDISPlugin extends JavaPlugin {
 				} else {
 					ver = new Version(split[0]);
 				}
-				return (ver.compareTo(minVersion) >= 0);
+				return (ver.compareTo(minver) >= 0);
 			} catch (IllegalArgumentException e) {
 				getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the version for {0}.", plg);
 				getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
@@ -242,6 +242,9 @@ public class TARDISPlugin extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		if (hasVersion) {
+			if (tardisDynmap != null) {
+				tardisDynmap.disable();
+			}
 			// force TARDISes to materialise (next restart) if interrupted
 			for (int id : getTrackerKeeper().getDematerialising()) {
 				if (getTrackerKeeper().getHasDestination().containsKey(id)) {
@@ -297,10 +300,10 @@ public class TARDISPlugin extends JavaPlugin {
 		persistentDataTypeUUID = new TARDISUUIDDataType();
 		console = getServer().getConsoleSender();
 		Version serverVersion = getServerVersion(getServer().getVersion());
-		Version minVersion = new Version("1.16.2");
+		Version minversion = new Version("1.16.2");
 		// check server version
-		if (serverVersion.compareTo(minVersion) >= 0) {
-			if (getServer().getBukkitVersion().startsWith("git-Bukkit-")) {
+		if (serverVersion.compareTo(minversion) >= 0) {
+			if (!PaperLib.isPaper() && !PaperLib.isSpigot()) {
 				console.sendMessage(pluginName + ChatColor.RED +
 									"TARDIS no longer supports servers running CraftBukkit. Please use Spigot or Paper instead!)");
 				hasVersion = false;
@@ -308,7 +311,7 @@ public class TARDISPlugin extends JavaPlugin {
 				return;
 			}
 			// TARDISChunkGenerator needs to be enabled
-			if (!loadTardisHelper()) {
+			if (!loadHelper()) {
 				console.sendMessage(pluginName + ChatColor.RED +
 									"This plugin requires TARDISChunkGenerator to function, disabling...");
 				hasVersion = false;
@@ -414,7 +417,6 @@ public class TARDISPlugin extends JavaPlugin {
 			startReminders();
 			loadWorldGuard();
 			loadPluginRespect();
-			loadDynmap();
 			startZeroHealing();
 			startBeeTicks();
 			startSiegeTicks();
@@ -423,6 +425,11 @@ public class TARDISPlugin extends JavaPlugin {
 				if (getConfig().getBoolean("creation.keep_night")) {
 					alwaysNight.keepNight();
 				}
+			}
+			if (pm.isPluginEnabled("dynmap")) {
+				tardisDynmap = new TARDISDynmap(this);
+				tardisDynmap.enable();
+				debug("Creating markers for Dynmap.");
 			}
 			if (!getConfig().getBoolean("conversions.condenser_materials") ||
 				!getConfig().getBoolean("conversions.player_prefs_materials") ||
@@ -506,7 +513,7 @@ public class TARDISPlugin extends JavaPlugin {
 					getServer().reloadData();
 				}
 			}, 199L);
-			// check tardis build
+			// check TARDIS build
 			if (getConfig().getBoolean("preferences.notify_update")) {
 				getServer().getScheduler().runTaskAsynchronously(this, new TARDISUpdateChecker(this, null));
 			}
@@ -530,7 +537,7 @@ public class TARDISPlugin extends JavaPlugin {
 			}
 		} else {
 			console.sendMessage(
-					pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minVersion.get() +
+					pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion.get() +
 					" or higher, disabling...");
 			pm.disablePlugin(this);
 		}
@@ -544,11 +551,11 @@ public class TARDISPlugin extends JavaPlugin {
 	 * Sets up the database.
 	 */
 	private void loadDatabase() {
-		String dbType = getConfig().getString("storage.database");
+		String dbtype = getConfig().getString("storage.database");
 		try {
-			assert dbType != null;
-			if (dbType.equals("sqlite")) {
-				String path = getDataFolder() + File.separator + "tardis.db";
+			assert dbtype != null;
+			if (dbtype.equals("sqlite")) {
+				String path = getDataFolder() + File.separator + "TARDIS.db";
 				service.setConnection(path);
 				TARDISSQLiteDatabase sqlite = new TARDISSQLiteDatabase(this);
 				sqlite.createTables();
@@ -647,7 +654,7 @@ public class TARDISPlugin extends JavaPlugin {
 	 * Loads the custom configuration files.
 	 */
 	private void loadCustomConfigs() {
-		List<String> files = Arrays.asList("advancements.yml", "artron.yml", "blocks.yml", "rooms.yml", "planets.yml", "handles.yml", "tag.yml", "recipes.yml", "kits.yml", "condensables.yml", "custom_consoles.yml");
+		List<String> files = Arrays.asList("achievements.yml", "artron.yml", "blocks.yml", "rooms.yml", "planets.yml", "handles.yml", "tag.yml", "recipes.yml", "kits.yml", "condensables.yml", "custom_consoles.yml");
 		for (String f : files) {
 			tardisCopier.copy(f);
 		}
@@ -665,7 +672,7 @@ public class TARDISPlugin extends JavaPlugin {
 		new TARDISCondensablesUpdater(this).checkCondensables();
 		customConsolesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_consoles.yml"));
 		kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));
-		achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "advancements.yml"));
+		advancementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
 		tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
 		handlesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "handles.yml"));
 	}
@@ -676,11 +683,11 @@ public class TARDISPlugin extends JavaPlugin {
 	private void loadFiles() {
 		tardisCopier.copyFiles();
 		new TARDISRoomMap(this).load();
-		quotesFile = tardisCopier.copy("quotes.txt");
+		quotesfile = tardisCopier.copy("quotes.txt");
 	}
 
 	/**
-	 * Saves the default book files to the /plugins/tardis/books directory.
+	 * Saves the default book files to the /plugins/TARDIS/books directory.
 	 */
 	private void loadBooks() {
 		// copy book files
@@ -693,14 +700,14 @@ public class TARDISPlugin extends JavaPlugin {
 				console.sendMessage(pluginName + "Created books directory.");
 			}
 		}
-		Set<String> booknames = achievementConfig.getKeys(false);
+		Set<String> booknames = advancementConfig.getKeys(false);
 		booknames.forEach((b) -> TARDISFileCopier.copy(
 				getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(
 						b + ".txt"), false));
 	}
 
 	/**
-	 * Starts a repeating task that plays tardis sound effects to players while they are inside the tardis.
+	 * Starts a repeating task that plays TARDIS sound effects to players while they are inside the TARDIS.
 	 */
 	private void startSound() {
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> new TARDISHumSounds().playTARDISHum(), 60L, 1500L);
@@ -716,7 +723,7 @@ public class TARDISPlugin extends JavaPlugin {
 	}
 
 	/**
-	 * Starts a repeating task that removes Artron Energy from the tardis while it is in standby mode (ie not
+	 * Starts a repeating task that removes Artron Energy from the TARDIS while it is in standby mode (ie not
 	 * travelling). Only runs if `standby_time` in artron.yml is greater than 0 (the default is 6000 or every 5
 	 * minutes).
 	 */
@@ -731,7 +738,7 @@ public class TARDISPlugin extends JavaPlugin {
 	}
 
 	/**
-	 * Starts a repeating task that removes Artron Energy from the tardis while it is in Siege Mode. Only runs if
+	 * Starts a repeating task that removes Artron Energy from the TARDIS while it is in Siege Mode. Only runs if
 	 * `siege_ticks` in artron.yml is greater than 0 (the default is 1500 or every 1 minute 15 seconds).
 	 */
 	private void startSiegeTicks() {
@@ -798,9 +805,9 @@ public class TARDISPlugin extends JavaPlugin {
 	 */
 	private void loadMultiverse() {
 		if (worldManager.equals(WorldManager.MULTIVERSE)) {
-			Plugin mvPlugin = pm.getPlugin("Multiverse-Core");
+			Plugin mvplugin = pm.getPlugin("Multiverse-Core");
 			debug("Hooking into Multiverse-Core!");
-			mvHelper = new TARDISMultiverseHelper(mvPlugin);
+			mvHelper = new TARDISMultiverseHelper(mvplugin);
 		}
 	}
 
@@ -811,7 +818,7 @@ public class TARDISPlugin extends JavaPlugin {
 	/**
 	 * Checks if the TARDISChunkGenerator plugin is available, and loads support if it is.
 	 */
-	private boolean loadTardisHelper() {
+	private boolean loadHelper() {
 		Plugin tcg = pm.getPlugin("TARDISChunkGenerator");
 		if (tcg != null && tcg.isEnabled()) {
 			debug("Hooking into TARDISChunkGenerator!");
@@ -825,18 +832,6 @@ public class TARDISPlugin extends JavaPlugin {
 		return tardisHelper;
 	}
 
-	/**
-	 * Checks if the Dynmap plugin is available, and loads support if it is.
-	 */
-	private boolean loadDynmap() {
-		if (pm.getPlugin("dynmap") != null) {
-			tardisDynmapUtils = new TARDISDynmapUtils();
-			tardisDynmapUtils.load();
-			return true;
-		}
-		return false;
-	}
-
 	private void loadPluginRespect() {
 		pluginRespect = new TARDISPluginRespect(this);
 		pluginRespect.loadFactions();
@@ -847,7 +842,7 @@ public class TARDISPlugin extends JavaPlugin {
 	}
 
 	/**
-	 * Loads the permissions handler for tardis worlds if the relevant permissions plugin is enabled. Currently supports
+	 * Loads the permissions handler for TARDIS worlds if the relevant permissions plugin is enabled. Currently supports
 	 * GroupManager and bPermissions (as they have per world config files).
 	 */
 	private void loadPerms() {
@@ -857,7 +852,7 @@ public class TARDISPlugin extends JavaPlugin {
 			tardisCopier.copy("permissions.txt");
 			if (getConfig().getBoolean("creation.create_worlds")) {
 				console.sendMessage(pluginName +
-									"World specific permissions plugin detected please edit plugins/tardis/permissions.txt");
+									"World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
 			}
 		}
 	}
@@ -869,10 +864,10 @@ public class TARDISPlugin extends JavaPlugin {
 	 */
 	private ArrayList<String> quotes() {
 		ArrayList<String> quotes = new ArrayList<>();
-		if (quotesFile != null) {
+		if (quotesfile != null) {
 			BufferedReader bufRdr = null;
 			try {
-				bufRdr = new BufferedReader(new FileReader(quotesFile));
+				bufRdr = new BufferedReader(new FileReader(quotesfile));
 				String line;
 				//read each line of text file
 				while ((line = bufRdr.readLine()) != null) {
@@ -1085,7 +1080,7 @@ public class TARDISPlugin extends JavaPlugin {
 	}
 
 	public FileConfiguration getAdvancementConfig() {
-		return achievementConfig;
+		return advancementConfig;
 	}
 
 	public FileConfiguration getArtronConfig() {
@@ -1287,14 +1282,12 @@ public class TARDISPlugin extends JavaPlugin {
 	private void startRecorderTask() {
 		int recorder_tick_delay = 5;
 		// we schedule it once, it will reschedule itself
-		recordingTask = getServer().getScheduler().runTaskLaterAsynchronously(this, new TARDISRecordingTask(this), recorder_tick_delay);
+		getServer().getScheduler().runTaskLaterAsynchronously(this, new TARDISRecordingTask(this), recorder_tick_delay);
 	}
 
 	public void setRecordingTask(BukkitTask recordingTask) {
-		this.recordingTask = recordingTask;
 	}
 
-	@Deprecated
 	public NamespacedKey getOldBlockKey() {
 		return oldBlockKey;
 	}
