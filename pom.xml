@@ -92,7 +92,7 @@
             <properties>
                 <!-- Get the build number from Jenkins -->
                 <project.build.number>${env.BUILD_NUMBER}</project.build.number>
-                <javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
+                <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
             </properties>
             <repositories>
                 <repository>
