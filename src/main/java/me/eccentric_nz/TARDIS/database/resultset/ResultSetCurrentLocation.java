@@ -117,8 +117,11 @@ public class ResultSetCurrentLocation {
                         } else {
                             biomeKey = new NamespacedKey(split[0], split[1]);
                         }
-                    } else {
+                    } else if (!key.isBlank()) {
                         biomeKey = NamespacedKey.minecraft(key.toLowerCase(Locale.ROOT));
+                    } else {
+                        // biome column can be null now that we're not tracking police box biome
+                        biomeKey = null;
                     }
                 }
             } else {
