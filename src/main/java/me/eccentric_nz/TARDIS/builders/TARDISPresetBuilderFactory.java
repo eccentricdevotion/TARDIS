@@ -103,7 +103,6 @@ public class TARDISPresetBuilderFactory {
                     TARDISMessage.send(bd.getPlayer().getPlayer(), "FORCE_FIELD", "OFF");
                 }
             }
-            bd.setTardisBiome(biome);
             if (tardis.getAdaption().equals(Adaption.BIOME)) {
                 preset = adapt(biome, tardis.getAdaption());
             }

@@ -33,7 +33,6 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -185,7 +184,6 @@ public class TARDISStattenheimListener implements Listener {
                         if (!rsc.resultSet()) {
                             hidden = true;
                         }
-                        TARDISBiome biome = TARDISBiome.get(rsc.getBiomeKey());
                         COMPASS d = rsc.getDirection();
                         COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
@@ -292,7 +290,6 @@ public class TARDISStattenheimListener implements Listener {
                             dd.setOutside(true);
                             dd.setSubmarine(rsc.isSubmarine());
                             dd.setTardisID(id);
-                            dd.setTardisBiome(biome);
                             dd.setThrottle(spaceTimeThrottle);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 if (!hid) {

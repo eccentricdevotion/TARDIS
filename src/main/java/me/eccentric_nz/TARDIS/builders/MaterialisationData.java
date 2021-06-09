@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
@@ -29,7 +28,6 @@ import org.bukkit.OfflinePlayer;
  */
 public class MaterialisationData {
 
-    private TARDISBiome tardisBiome;
     private COMPASS direction;
     private Location location;
     private OfflinePlayer player;
@@ -38,14 +36,6 @@ public class MaterialisationData {
     private boolean siege;
     private int tardisID;
     private SpaceTimeThrottle throttle;
-
-    public TARDISBiome getTardisBiome() {
-        return tardisBiome;
-    }
-
-    public void setTardisBiome(TARDISBiome tardisBiome) {
-        this.tardisBiome = tardisBiome;
-    }
 
     public COMPASS getDirection() {
         return direction;

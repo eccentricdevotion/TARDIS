@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import org.bukkit.Location;
 
 import java.util.HashMap;
@@ -34,7 +33,6 @@ class TARDISJunkLocation {
     private Location current;
     private Location home;
     private int id;
-    private TARDISBiome tardisBiome;
 
     TARDISJunkLocation(TARDIS plugin) {
         this.plugin = plugin;
@@ -50,7 +48,6 @@ class TARDISJunkLocation {
             wherec.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
             if (rsc.resultSet()) {
-                tardisBiome = TARDISBiome.get(rsc.getBiomeKey());
                 // get home location
                 HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
@@ -76,9 +73,5 @@ class TARDISJunkLocation {
 
     public int getId() {
         return id;
-    }
-
-    public TARDISBiome getTardisBiome() {
-        return tardisBiome;
     }
 }

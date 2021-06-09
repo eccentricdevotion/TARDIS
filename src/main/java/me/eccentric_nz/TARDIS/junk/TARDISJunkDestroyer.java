@@ -21,21 +21,17 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,7 +46,6 @@ public class TARDISJunkDestroyer implements Runnable {
     private final Location junkLoc;
     private final Location effectsLoc;
     private final World world;
-    private final TARDISBiome biome;
     private int task;
     private int i = 0;
     private Location vortexJunkLoc;
@@ -68,7 +63,6 @@ public class TARDISJunkDestroyer implements Runnable {
         ez = junkLoc.getBlockZ() + 3;
         sz = junkLoc.getBlockZ() - 2;
         world = junkLoc.getWorld();
-        biome = this.pdd.getTardisBiome();
     }
 
     @Override
@@ -104,16 +98,6 @@ public class TARDISJunkDestroyer implements Runnable {
                     int jvrtask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 1L, 20L);
                     runnable.setTask(jvrtask);
                 }
-                // what biome?
-                Biome b = null;
-                if (biome.getKey().getNamespace().equalsIgnoreCase("minecraft")) {
-                    try {
-                        b = Biome.valueOf(biome.name());
-                    } catch (IllegalArgumentException e) {
-                        // ignore
-                    }
-                }
-                List<Chunk> chunks = new ArrayList<>();
                 // remove blocks
                 for (int level = ey; level >= sy; level--) {
                     for (int row = ex; row >= sx; row--) {

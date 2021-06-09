@@ -35,7 +35,6 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.move.TARDISDoorOpener;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeMode;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -480,8 +479,6 @@ public class TARDISHandlesProcessor {
                                                 dd.setOutside(false);
                                                 dd.setSubmarine(rsc.isSubmarine());
                                                 dd.setTardisID(id);
-                                                TARDISBiome biome = TARDISBiome.get(rsc.getBiomeKey());
-                                                dd.setTardisBiome(biome);
                                                 dd.setThrottle(SpaceTimeThrottle.NORMAL);
                                                 // set handbrake off
                                                 HashMap<String, Object> set = new HashMap<>();

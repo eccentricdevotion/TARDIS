@@ -35,7 +35,6 @@ import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
@@ -139,7 +138,6 @@ class TARDISComehereCommand {
                 }
                 COMPASS d = rsc.getDirection();
                 COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
-                TARDISBiome biome = TARDISBiome.get(rsc.getBiomeKey());
                 TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                 int count;
                 boolean sub = false;
@@ -245,7 +243,6 @@ class TARDISComehereCommand {
                     dd.setOutside(true);
                     dd.setSubmarine(rsc.isSubmarine());
                     dd.setTardisID(id);
-                    dd.setTardisBiome(biome);
                     dd.setThrottle(spaceTimeThrottle);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         if (!hid) {

@@ -30,7 +30,6 @@ import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -123,21 +122,16 @@ public class TARDISDeleteCommand {
             // get the current location
             Location bb_loc = null;
             COMPASS d = COMPASS.EAST;
-            TARDISBiome biome = null;
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (rsc.resultSet()) {
                 bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 d = rsc.getDirection();
-                biome = TARDISBiome.get(rsc.getBiomeKey());
             }
             if (bb_loc == null) {
                 TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
                 return true;
-            }
-            if (biome == null) {
-                biome = TARDISBiome.PLAINS;
             }
             plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, tardis.getOwner()));
             // destroy outer TARDIS
@@ -151,7 +145,6 @@ public class TARDISDeleteCommand {
                 dd.setOutside(false);
                 dd.setSubmarine(rsc.isSubmarine());
                 dd.setTardisID(id);
-                dd.setTardisBiome(biome);
                 dd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getPresetDestroyer().destroyPreset(dd);
             }

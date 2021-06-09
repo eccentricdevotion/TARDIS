@@ -194,7 +194,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                     bd.setRebuild(true);
                     bd.setSubmarine(rsh.isSubmarine());
                     bd.setTardisID(id);
-                    bd.setTardisBiome(biome);
                     bd.setThrottle(SpaceTimeThrottle.REBUILD);
                     if (!rsh.getPreset().isEmpty()) {
                         // set the chameleon preset

@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 
 import java.sql.Connection;
@@ -28,7 +27,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -52,7 +50,6 @@ public class ResultSetCurrentLocation {
     private int z;
     private COMPASS direction;
     private boolean submarine;
-    private NamespacedKey biomeKey;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
@@ -108,18 +105,6 @@ public class ResultSetCurrentLocation {
                     z = rs.getInt("z");
                     direction = COMPASS.valueOf(rs.getString("direction"));
                     submarine = rs.getBoolean("submarine");
-                    String key = rs.getString("biome");
-                    if (key.contains(":")) {
-                        String[] split = key.split(":");
-                        if (key.contains("{")) {
-                            String fixed = split[1].substring(0, split[1].length() - 1);
-                            biomeKey = NamespacedKey.minecraft(fixed);
-                        } else {
-                            biomeKey = new NamespacedKey(split[0], split[1]);
-                        }
-                    } else {
-                        biomeKey = NamespacedKey.minecraft(key.toLowerCase(Locale.ROOT));
-                    }
                 }
             } else {
                 return false;
@@ -172,9 +157,5 @@ public class ResultSetCurrentLocation {
 
     public boolean isSubmarine() {
         return submarine;
-    }
-
-    public NamespacedKey getBiomeKey() {
-        return biomeKey;
     }
 }
