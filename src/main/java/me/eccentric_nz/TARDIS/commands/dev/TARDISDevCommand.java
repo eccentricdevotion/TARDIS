@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.dev;
+package me.eccentric_nz.tardis.commands.dev;
 
 import com.google.common.collect.Sets;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.builders.FractalFence;
-import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
+import me.eccentric_nz.tardis.builders.FractalFence;
+import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
@@ -47,9 +47,9 @@ import java.util.Set;
 public class TARDISDevCommand implements CommandExecutor {
 
     private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "list", "tree");
-    private final TARDIS plugin;
+    private final TARDISPlugin plugin;
 
-    public TARDISDevCommand(TARDIS plugin) {
+    public TARDISDevCommand(TARDISPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -73,7 +73,7 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                 }
                 if (first.equals("advancements")) {
-                    TARDISAchievementFactory.checkAdvancement(args[1]);
+                    TARDISAdvancementFactory.checkAdvancement(args[1]);
                     return true;
                 }
                 if (first.equals("list")) {

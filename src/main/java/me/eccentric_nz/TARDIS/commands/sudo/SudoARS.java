@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.sudo;
+package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.ars.TARDISARSInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -33,9 +33,9 @@ import java.util.UUID;
  */
 class SudoARS {
 
-    private final TARDIS plugin;
+    private final TARDISPlugin plugin;
 
-    SudoARS(TARDIS plugin) {
+    SudoARS(TARDISPlugin plugin) {
         this.plugin = plugin;
     }
 

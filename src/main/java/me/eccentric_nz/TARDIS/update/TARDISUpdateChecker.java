@@ -1,16 +1,16 @@
-package me.eccentric_nz.TARDIS.update;
+package me.eccentric_nz.tardis.update;
 
 import com.google.common.collect.Sets;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.data.Farm;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.ars.TARDISARSMethods;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.database.data.Farm;
+import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetARS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetFarming;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.enumeration.Updateable;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -18,10 +18,10 @@ import java.util.Set;
 
 public class TARDISUpdateChecker {
 
-    private final TARDIS plugin;
+    private final TARDISPlugin plugin;
     private final Updateable updateable;
     private final Player player;
-    private final Tardis tardis;
+    private final TARDIS tardis;
     private final String tardis_block;
 
     private final Set<Updateable> mustGrowRoom = Sets.newHashSet(
@@ -35,7 +35,7 @@ public class TARDISUpdateChecker {
             Updateable.VILLAGE
     );
 
-    public TARDISUpdateChecker(TARDIS plugin, Updateable updateable, Player player, Tardis tardis, String tardis_block) {
+    public TARDISUpdateChecker(TARDISPlugin plugin, Updateable updateable, Player player, TARDIS tardis, String tardis_block) {
         this.plugin = plugin;
         this.updateable = updateable;
         this.player = player;
@@ -48,7 +48,7 @@ public class TARDISUpdateChecker {
             TARDISMessage.send(player, "SIEGE_DISABLED");
             return false;
         }
-        if (updateable.equals(Updateable.BEACON) && !tardis.isPowered_on()) {
+        if (updateable.equals(Updateable.BEACON) && !tardis.isPowered()) {
             TARDISMessage.send(player, "UPDATE_BEACON");
             return false;
         }
@@ -82,7 +82,7 @@ public class TARDISUpdateChecker {
         // check ARS for room type
         if (mustGrowRoom.contains(updateable)) {
             HashMap<String, Object> wherea = new HashMap<>();
-            wherea.put("tardis_id", tardis.getTardis_id());
+            wherea.put("tardis_id", tardis.getTardisId());
             ResultSetARS rsa = new ResultSetARS(plugin, wherea);
             if (rsa.resultSet()) {
                 // check for rooms
@@ -144,7 +144,7 @@ public class TARDISUpdateChecker {
                 return false;
             }
             // must grow a room first
-            ResultSetFarming rsf = new ResultSetFarming(plugin, tardis.getTardis_id());
+            ResultSetFarming rsf = new ResultSetFarming(plugin, tardis.getTardisId());
             if (rsf.resultSet()) {
                 Farm farming = rsf.getFarming();
                 if (updateable.equals(Updateable.FARM) && farming.getFarm().isEmpty() && !hasFarm) {
@@ -201,8 +201,8 @@ public class TARDISUpdateChecker {
                 TARDISMessage.send(player, "NOT_IN_TARDIS");
                 return false;
             }
-            int thisid = rst.getTardis_id();
-            if (thisid != tardis.getTardis_id()) {
+            int thisid = rst.getTardisId();
+            if (thisid != tardis.getTardisId()) {
                 TARDISMessage.send(player, "CMD_ONLY_TL");
                 return false;
             }

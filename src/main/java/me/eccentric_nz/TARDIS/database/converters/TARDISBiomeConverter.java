@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.converters;
+package me.eccentric_nz.tardis.database.converters;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteRebuildCommand;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.planets.TARDISBiome;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.commands.remote.TARDISRemoteRebuildCommand;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -37,10 +37,10 @@ public class TARDISBiomeConverter {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
+    private final TARDISPlugin plugin;
     private final String prefix;
 
-    public TARDISBiomeConverter(TARDIS plugin) {
+    public TARDISBiomeConverter(TARDISPlugin plugin) {
         this.plugin = plugin;
         prefix = plugin.getPrefix();
     }

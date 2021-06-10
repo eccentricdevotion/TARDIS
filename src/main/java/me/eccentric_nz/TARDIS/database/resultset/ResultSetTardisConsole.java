@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.database.resultset;
+package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.enumeration.Consoles;
+import me.eccentric_nz.tardis.enumeration.Schematic;
 import org.bukkit.Material;
 
 import java.sql.Connection;
@@ -39,7 +39,7 @@ public class ResultSetTardisConsole {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDIS plugin;
+    private final TARDISPlugin plugin;
     private final String prefix;
     private Schematic schematic = Consoles.schematicFor(Material.IRON_BLOCK);
 
@@ -48,7 +48,7 @@ public class ResultSetTardisConsole {
      *
      * @param plugin an instance of the main class.
      */
-    public ResultSetTardisConsole(TARDIS plugin) {
+    public ResultSetTardisConsole(TARDISPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }

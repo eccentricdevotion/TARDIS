@@ -115,7 +115,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
 											if (rspref.resultSet()) {
 												key = (!rspref.getKey().isEmpty()) ? rspref.getKey() : plugin.getConfig().getString("preferences.key");
 												willFarm = rspref.isFarmOn();
-												if (rspref.isAutoPowerupOn() &&
+												if (rspref.isAutoPowerUpOn() &&
 													plugin.getConfig().getBoolean("allow.power_down")) {
 													// check tardis is not abandoned
 													canPowerUp = !tardis.isAbandoned();

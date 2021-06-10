@@ -114,7 +114,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
 						hasPrefs = true;
 						key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
 						willFarm = rsp.isFarmOn();
-						canPowerUp = (rsp.isAutoPowerupOn() && plugin.getConfig().getBoolean("allow.power_down"));
+						canPowerUp = (rsp.isAutoPowerUpOn() && plugin.getConfig().getBoolean("allow.power_down"));
 					} else {
 						key = plugin.getConfig().getString("preferences.key");
 					}

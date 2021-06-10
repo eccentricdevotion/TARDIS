@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.sudo;
+package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
-import me.eccentric_nz.TARDIS.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.messaging.TARDISUpdateLister;
-import me.eccentric_nz.TARDIS.update.TARDISUpdateChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.builders.TARDISTimeRotor;
+import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.enumeration.Updateable;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TARDISUpdateLister;
+import me.eccentric_nz.tardis.update.TARDISUpdateChecker;
+import me.eccentric_nz.tardis.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -48,9 +48,9 @@ import java.util.UUID;
  */
 class SudoUpdate {
 
-    private final TARDIS plugin;
+    private final TARDISPlugin plugin;
 
-    SudoUpdate(TARDIS plugin) {
+    SudoUpdate(TARDISPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -76,7 +76,7 @@ class SudoUpdate {
         wheret.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
         if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+            TARDIS tardis = rs.getTardis();
             if (updateable.equals(Updateable.HINGE)) {
                 Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
                 if (block.getType().equals(Material.IRON_DOOR)) {

@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.config;
+package me.eccentric_nz.tardis.commands.config;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardFlag;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.commands.TARDISCompleter;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.utility.TARDISWorldGuardFlag;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final TARDIS plugin;
+    private final TARDISPlugin plugin;
     private final ImmutableList<String> ROOT_SUBS;
     private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
     private final ImmutableList<String> COLOURS = ImmutableList.of("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
@@ -55,7 +55,7 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
     private final ImmutableList<String> VORTEX_SUBS = ImmutableList.of("kill", "teleport");
     private final ImmutableList<String> WORLD_SUBS;
 
-    public TARDISConfigTabComplete(TARDIS plugin) {
+    public TARDISConfigTabComplete(TARDISPlugin plugin) {
         this.plugin = plugin;
         ROOT_SUBS = ImmutableList.copyOf(combineLists());
         if (plugin.isWorldGuardOnServer()) {
@@ -138,13 +138,7 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
     }
 
     private List<String> combineLists() {
-        List<String> newList = new ArrayList<>(
-                plugin.getGeneralKeeper().getTardisConfigCommand().firstsStr.size()
-                        + plugin.getGeneralKeeper().getTardisConfigCommand().firstsBool.size()
-                        + plugin.getGeneralKeeper().getTardisConfigCommand().firstsInt.size()
-                        + plugin.getGeneralKeeper().getTardisConfigCommand().firstsStrArtron.size()
-                        + plugin.getGeneralKeeper().getTardisConfigCommand().firstsIntArtron.size()
-        );
+        List<String> newList = new ArrayList<>(plugin.getGeneralKeeper().getTardisConfigCommand().firstsStr.size() + plugin.getGeneralKeeper().getTardisConfigCommand().firstsBool.size() + plugin.getGeneralKeeper().getTardisConfigCommand().firstsInt.size() + plugin.getGeneralKeeper().getTardisConfigCommand().firstsStrArtron.size() + plugin.getGeneralKeeper().getTardisConfigCommand().firstsIntArtron.size());
         newList.addAll(plugin.getGeneralKeeper().getTardisConfigCommand().firstsStr.keySet());
         newList.addAll(plugin.getGeneralKeeper().getTardisConfigCommand().firstsBool.keySet());
         newList.addAll(plugin.getGeneralKeeper().getTardisConfigCommand().firstsInt.keySet());

@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.sudo;
+package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteRebuildCommand;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.commands.remote.TARDISRemoteRebuildCommand;
+import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
@@ -34,9 +34,9 @@ import java.util.HashMap;
  */
 public class SudoChameleon {
 
-    private final TARDIS plugin;
+    private final TARDISPlugin plugin;
 
-    SudoChameleon(TARDIS plugin) {
+    SudoChameleon(TARDISPlugin plugin) {
         this.plugin = plugin;
     }
 

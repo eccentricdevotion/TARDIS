@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.dev;
+package me.eccentric_nz.tardis.commands.dev;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardis.TARDISPlugin;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -24,9 +24,9 @@ import org.bukkit.command.CommandSender;
  */
 class TARDISDevListCommand {
 
-    private final TARDIS plugin;
+    private final TARDISPlugin plugin;
 
-    TARDISDevListCommand(TARDIS plugin) {
+    TARDISDevListCommand(TARDISPlugin plugin) {
         this.plugin = plugin;
     }
 

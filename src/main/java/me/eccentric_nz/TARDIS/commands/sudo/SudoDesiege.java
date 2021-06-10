@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.sudo;
+package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.builders.BuildData;
+import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
+import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
@@ -32,9 +32,9 @@ import java.util.UUID;
  */
 class SudoDesiege {
 
-    private final TARDIS plugin;
+    private final TARDISPlugin plugin;
 
-    SudoDesiege(TARDIS plugin) {
+    SudoDesiege(TARDISPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -74,7 +74,7 @@ class SudoDesiege {
             bd.setPlayer(plugin.getServer().getPlayer(uuid));
             bd.setRebuild(true);
             bd.setSubmarine(rsh.isSubmarine());
-            bd.setTardisID(id);
+            bd.setTardisId(id);
             bd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getPresetBuilder().buildPreset(bd);
             TARDISMessage.send(sender, "SIEGE_REBUILT");

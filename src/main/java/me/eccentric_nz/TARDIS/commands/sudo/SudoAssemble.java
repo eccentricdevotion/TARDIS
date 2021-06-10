@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.sudo;
+package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
@@ -30,9 +30,9 @@ import java.util.UUID;
  */
 class SudoAssemble {
 
-    private final TARDIS plugin;
+    private final TARDISPlugin plugin;
 
-    SudoAssemble(TARDIS plugin) {
+    SudoAssemble(TARDISPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -44,9 +44,9 @@ class SudoAssemble {
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
-            while (plugin.getTrackerKeeper().getDispersedTARDII().contains(tardis.getTardis_id())) {
-                plugin.getTrackerKeeper().getDispersedTARDII().remove(tardis.getTardis_id());
+            TARDIS tardis = rs.getTardis();
+            while (plugin.getTrackerKeeper().getDispersedTARDII().contains(tardis.getTardisId())) {
+                plugin.getTrackerKeeper().getDispersedTARDII().remove(tardis.getTardisId());
             }
             TARDISMessage.send(sender, "ASSEMBLE_PLAYER", player);
         }

@@ -1,2 +1,71 @@
-package me.eccentric_nz.tardis.artron;public class TARDISArtronFurnaceParticle {
+/*
+ * Copyright (C) 2021 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package me.eccentric_nz.tardis.artron;
+
+import me.eccentric_nz.tardis.TARDISPlugin;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.block.Block;
+import org.bukkit.block.Furnace;
+import org.bukkit.inventory.Inventory;
+
+public class TARDISArtronFurnaceParticle {
+
+    private final TARDISPlugin plugin;
+
+    public TARDISArtronFurnaceParticle(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
+
+    public void addParticles() {
+
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> plugin.getServer().getOnlinePlayers().forEach((player) -> {
+            Location loc = player.getLocation();
+            loc.subtract(10.0d, 10.0d, 10.0d);
+            for (double y = 0.0d; y < 20.0d; y += 1.0d) {
+                for (double x = 0.0d; x < 20.0d; x += 1.0d) {
+                    for (double z = 0.0d; z < 20.0d; z += 1.0d) {
+                        loc.add(x, y, z);
+                        if (isArtronFurnace(loc.getBlock())) {
+                            player.spawnParticle(Particle.WATER_SPLASH, loc.getBlock().getLocation().add(0.5d, 1.0d, 0.5d), 10);
+                        }
+                        loc.subtract(x, y, z);
+                    }
+                }
+            }
+        }), 60L, 10L);
+    }
+
+    private boolean isArtronFurnace(Block b) {
+        try {
+            if (b == null || !b.getType().equals(Material.FURNACE)) {
+                return false;
+            }
+            Furnace furnace = (Furnace) b.getState();
+            if (furnace != null) {
+                Inventory inv = furnace.getInventory();
+                if (inv != null) {
+                    return (plugin.getTardisHelper().isArtronFurnace(b));
+                }
+            }
+        } catch (NullPointerException e) {
+            return false;
+        }
+        return false;
+    }
 }

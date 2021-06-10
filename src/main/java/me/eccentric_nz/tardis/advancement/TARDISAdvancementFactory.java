@@ -42,118 +42,114 @@ import java.util.Locale;
  */
 public class TARDISAdvancementFactory {
 
-	private final TARDISPlugin plugin;
-	private final Player player;
-	private final Advancement advancement;
-	private final int size;
+    private final TARDISPlugin plugin;
+    private final Player player;
+    private final Advancement advancement;
+    private final int size;
 
-	public TARDISAdvancementFactory(TARDISPlugin plugin, Player player, Advancement advancement, int size) {
-		this.plugin = plugin;
-		this.player = player;
-		this.advancement = advancement;
-		this.size = size;
-	}
+    public TARDISAdvancementFactory(TARDISPlugin plugin, Player player, Advancement advancement, int size) {
+        this.plugin = plugin;
+        this.player = player;
+        this.advancement = advancement;
+        this.size = size;
+    }
 
-	public static boolean checkAdvancement(String adv) {
-		NamespacedKey nsk = new NamespacedKey(TARDISPlugin.plugin, adv.toLowerCase(Locale.ENGLISH));
-		org.bukkit.advancement.Advancement a = TARDISPlugin.plugin.getServer().getAdvancement(nsk);
-		if (a != null) {
-			TARDISPlugin.plugin.debug("Advancement 'tardis:" + adv + "' exists :)");
-			return true;
-		} else {
-			TARDISPlugin.plugin.debug("There is no advancement with that key; try running /minecraft:reload");
-			return false;
-		}
-	}
+    public static boolean checkAdvancement(String adv) {
+        NamespacedKey nsk = new NamespacedKey(TARDISPlugin.plugin, adv.toLowerCase(Locale.ENGLISH));
+        org.bukkit.advancement.Advancement a = TARDISPlugin.plugin.getServer().getAdvancement(nsk);
+        if (a != null) {
+            TARDISPlugin.plugin.debug("Advancement 'tardis:" + adv + "' exists :)");
+            return true;
+        } else {
+            TARDISPlugin.plugin.debug("There is no advancement with that key; try running /minecraft:reload");
+            return false;
+        }
+    }
 
-	public static void grantAdvancement(Advancement adv, Player player) {
-		NamespacedKey nsk = new NamespacedKey(TARDISPlugin.plugin, adv.getConfigName());
-		org.bukkit.advancement.Advancement a = TARDISPlugin.plugin.getServer().getAdvancement(nsk);
-		if (a != null) {
-			AdvancementProgress avp = player.getAdvancementProgress(a);
-			if (!avp.isDone()) {
-				TARDISPlugin.plugin.getServer().dispatchCommand(TARDISPlugin.plugin.getConsole(),
-						"advancement grant " + player.getName() + " only tardis:" + adv.getConfigName());
-			}
-		} else {
-			player.sendMessage(ChatColor.YELLOW + "Advancement Made!");
-			player.sendMessage(ChatColor.WHITE +
-							   TARDISPlugin.plugin.getAdvancementConfig().getString(adv.getConfigName() + ".message"));
-		}
-	}
+    public static void grantAdvancement(Advancement adv, Player player) {
+        NamespacedKey nsk = new NamespacedKey(TARDISPlugin.plugin, adv.getConfigName());
+        org.bukkit.advancement.Advancement a = TARDISPlugin.plugin.getServer().getAdvancement(nsk);
+        if (a != null) {
+            AdvancementProgress avp = player.getAdvancementProgress(a);
+            if (!avp.isDone()) {
+                TARDISPlugin.plugin.getServer().dispatchCommand(TARDISPlugin.plugin.getConsole(), "advancement grant " + player.getName() + " only tardis:" + adv.getConfigName());
+            }
+        } else {
+            player.sendMessage(ChatColor.YELLOW + "Advancement Made!");
+            player.sendMessage(ChatColor.WHITE + TARDISPlugin.plugin.getAdvancementConfig().getString(adv.getConfigName() + ".message"));
+        }
+    }
 
-	public void doAdvancement(Object obj) {
-		if (plugin.getConfig().getBoolean("allow.advancements")) {
-			// have they started the advancement?
-			HashMap<String, Object> whereA = new HashMap<>();
-			whereA.put("uuid", player.getUniqueId().toString());
-			whereA.put("name", advancement.getConfigName());
-			whereA.put("completed", 0);
-			ResultSetAdvancements rsa = new ResultSetAdvancements(plugin, whereA, false);
-			HashMap<String, Object> setA = new HashMap<>();
-			if (rsa.resultSet()) {
-				HashMap<String, Object> whereM = new HashMap<>();
-				whereM.put("a_id", rsa.getaId());
-				boolean achieved = false;
-				// check if the advancement has been reached
-				List<String> data = null;
-				String amount = (rsa.getAmount().isEmpty()) ? "0" : rsa.getAmount();
-				if (obj.getClass().equals(String.class)) {
-					// farm mobs & rooms - have they got this type before?
-					data = Arrays.asList(amount.split(":"));
-					if ((data.size() + 1) == size) {
-						achieved = true;
-					}
-				} else {
-					int req = plugin.getAdvancementConfig().getInt(advancement + ".required");
-					int have = TARDISNumberParsers.parseInt(amount);
-					int sum = have + (Integer) obj;
-					if (sum >= req) {
-						achieved = true;
-					}
-				}
-				if (achieved) {
-					// award advancement!
-					int reward_amount = plugin.getAdvancementConfig().getInt(
-							advancement.getConfigName() + ".reward_amount");
-					String reward_type = plugin.getAdvancementConfig().getString(
-							advancement.getConfigName() + ".reward_type");
-					// display a proper advancement if possible
-					grantAdvancement(advancement, player);
-					assert reward_type != null;
-					if (reward_type.equalsIgnoreCase("XP")) {
-						new TARDISXPRewarder(player).changeExp(reward_amount);
-					} else {
-						ItemStack is = new ItemStack(Material.valueOf(reward_type), reward_amount);
-						Inventory inv = player.getInventory();
-						HashMap<Integer, ItemStack> excess = inv.addItem(is);
-						excess.forEach((key, value) -> player.getWorld().dropItem(player.getLocation(), value));
-					}
-					// set advancement as done
-					setA.put("completed", 1);
-					plugin.getQueryFactory().doUpdate("advancements", setA, whereM);
-				} else {
-					if (obj.getClass().equals(String.class)) {
-						if (!data.contains(obj)) {
-							setA.put("amount", amount + ":" + obj);
-							plugin.getQueryFactory().doUpdate("advancements", setA, whereM);
-						}
-					} else {
-						setA.put("amount", TARDISNumberParsers.parseInt(amount) + (Integer) obj);
-						plugin.getQueryFactory().doUpdate("advancements", setA, whereM);
-					}
-				}
-			} else {
-				// is it an auto advancement?
-				if (plugin.getAdvancementConfig().getBoolean(advancement.getConfigName() + ".auto")) {
-					// insert a new record
-					setA.put("uuid", player.getUniqueId().toString());
-					setA.put("name", advancement.getConfigName());
-					setA.put("amount", obj);
-					setA.put("completed", 0);
-					plugin.getQueryFactory().doInsert("advancements", setA);
-				}
-			}
-		}
-	}
+    public void doAdvancement(Object obj) {
+        if (plugin.getConfig().getBoolean("allow.advancements")) {
+            // have they started the advancement?
+            HashMap<String, Object> whereA = new HashMap<>();
+            whereA.put("uuid", player.getUniqueId().toString());
+            whereA.put("name", advancement.getConfigName());
+            whereA.put("completed", 0);
+            ResultSetAdvancements rsa = new ResultSetAdvancements(plugin, whereA, false);
+            HashMap<String, Object> setA = new HashMap<>();
+            if (rsa.resultSet()) {
+                HashMap<String, Object> whereM = new HashMap<>();
+                whereM.put("a_id", rsa.getaId());
+                boolean achieved = false;
+                // check if the advancement has been reached
+                List<String> data = null;
+                String amount = (rsa.getAmount().isEmpty()) ? "0" : rsa.getAmount();
+                if (obj.getClass().equals(String.class)) {
+                    // farm mobs & rooms - have they got this type before?
+                    data = Arrays.asList(amount.split(":"));
+                    if ((data.size() + 1) == size) {
+                        achieved = true;
+                    }
+                } else {
+                    int req = plugin.getAdvancementConfig().getInt(advancement + ".required");
+                    int have = TARDISNumberParsers.parseInt(amount);
+                    int sum = have + (Integer) obj;
+                    if (sum >= req) {
+                        achieved = true;
+                    }
+                }
+                if (achieved) {
+                    // award advancement!
+                    int reward_amount = plugin.getAdvancementConfig().getInt(advancement.getConfigName() + ".reward_amount");
+                    String reward_type = plugin.getAdvancementConfig().getString(advancement.getConfigName() + ".reward_type");
+                    // display a proper advancement if possible
+                    grantAdvancement(advancement, player);
+                    assert reward_type != null;
+                    if (reward_type.equalsIgnoreCase("XP")) {
+                        new TARDISXPRewarder(player).changeExp(reward_amount);
+                    } else {
+                        ItemStack is = new ItemStack(Material.valueOf(reward_type), reward_amount);
+                        Inventory inv = player.getInventory();
+                        HashMap<Integer, ItemStack> excess = inv.addItem(is);
+                        excess.forEach((key, value) -> player.getWorld().dropItem(player.getLocation(), value));
+                    }
+                    // set advancement as done
+                    setA.put("completed", 1);
+                    plugin.getQueryFactory().doUpdate("advancements", setA, whereM);
+                } else {
+                    if (obj.getClass().equals(String.class)) {
+                        if (!data.contains(obj)) {
+                            setA.put("amount", amount + ":" + obj);
+                            plugin.getQueryFactory().doUpdate("advancements", setA, whereM);
+                        }
+                    } else {
+                        setA.put("amount", TARDISNumberParsers.parseInt(amount) + (Integer) obj);
+                        plugin.getQueryFactory().doUpdate("advancements", setA, whereM);
+                    }
+                }
+            } else {
+                // is it an auto advancement?
+                if (plugin.getAdvancementConfig().getBoolean(advancement.getConfigName() + ".auto")) {
+                    // insert a new record
+                    setA.put("uuid", player.getUniqueId().toString());
+                    setA.put("name", advancement.getConfigName());
+                    setA.put("amount", obj);
+                    setA.put("completed", 0);
+                    plugin.getQueryFactory().doInsert("advancements", setA);
+                }
+            }
+        }
+    }
 }

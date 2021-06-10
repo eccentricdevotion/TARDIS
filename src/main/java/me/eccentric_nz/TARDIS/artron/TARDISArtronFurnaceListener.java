@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.artron;
+package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.enumeration.RecipeItem;
+import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TARDISSounds;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Furnace;
@@ -46,11 +46,11 @@ import java.util.List;
  */
 public class TARDISArtronFurnaceListener implements Listener {
 
-    private final TARDIS plugin;
+    private final TARDISPlugin plugin;
     private final double burnFactor;
     private final short cookTime;
 
-    public TARDISArtronFurnaceListener(TARDIS plugin) {
+    public TARDISArtronFurnaceListener(TARDISPlugin plugin) {
         this.plugin = plugin;
         burnFactor = plugin.getArtronConfig().getInt("artron_furnace.burn_limit") * plugin.getArtronConfig().getDouble("artron_furnace.burn_time");
         cookTime = (short) (200 * this.plugin.getArtronConfig().getDouble("artron_furnace.cook_time"));

@@ -146,7 +146,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
 							hasPrefs = true;
 							key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
 							willFarm = rsp.isFarmOn();
-							if (rsp.isAutoPowerupOn() && plugin.getConfig().getBoolean("allow.power_down")) {
+							if (rsp.isAutoPowerUpOn() && plugin.getConfig().getBoolean("allow.power_down")) {
 								// check TARDIS is not abandoned
 								HashMap<String, Object> tid = new HashMap<>();
 								tid.put("tardis_id", id);

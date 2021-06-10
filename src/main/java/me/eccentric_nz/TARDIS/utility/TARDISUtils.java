@@ -191,7 +191,7 @@ public class TARDISUtils {
 					// check player difficulty preference
 					ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
 					if (rsp.resultSet()) {
-						inGracePeriod = rsp.isDifficulty();
+						inGracePeriod = rsp.isEasyDifficulty();
 					}
 				}
 			}
@@ -200,7 +200,7 @@ public class TARDISUtils {
 			// check player difficulty preference
 			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
 			if (rsp.resultSet()) {
-				inGracePeriod = rsp.isDifficulty();
+				inGracePeriod = rsp.isEasyDifficulty();
 			}
 		}
 		return inGracePeriod;
