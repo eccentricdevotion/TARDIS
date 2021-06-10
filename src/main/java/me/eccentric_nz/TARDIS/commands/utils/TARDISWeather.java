@@ -21,25 +21,25 @@ import org.bukkit.World;
 
 public class TARDISWeather {
 
-	public static void setRain(World world) {
-		world.setStorm(true);
-	}
+    public static void setRain(World world) {
+        world.setStorm(true);
+    }
 
-	public static void setThunder(World world) {
-		world.setStorm(true);
-		world.setThundering(true);
-	}
+    public static void setThunder(World world) {
+        world.setStorm(true);
+        world.setThundering(true);
+    }
 
-	public static void setClear(World world) {
-		world.setThundering(false);
-		world.setStorm(false);
-	}
+    public static void setClear(World world) {
+        world.setThundering(false);
+        world.setStorm(false);
+    }
 
-	static void setWeather(World world, Weather weather) {
-		switch (weather) {
-			case RAIN -> setRain(world);
-			case THUNDER -> setThunder(world);
-			default -> setClear(world);
-		}
-	}
+    static void setWeather(World world, Weather weather) {
+        switch (weather) {
+            case RAIN -> setRain(world);
+            case THUNDER -> setThunder(world);
+            default -> setClear(world);
+        }
+    }
 }

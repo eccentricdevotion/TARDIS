@@ -29,67 +29,67 @@ import java.util.List;
 
 public class ResultSetTransmatList {
 
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final TARDISPlugin plugin;
-	private final int id;
-	private final String prefix;
-	private final List<Transmat> data = new ArrayList<>();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final TARDISPlugin plugin;
+    private final int id;
+    private final String prefix;
+    private final List<Transmat> data = new ArrayList<>();
 
-	/**
-	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the transmats table.
-	 *
-	 * @param plugin an instance of the main class.
-	 * @param id     the tardis id to refine the search.
-	 */
-	public ResultSetTransmatList(TARDISPlugin plugin, int id) {
-		this.plugin = plugin;
-		this.id = id;
-		prefix = this.plugin.getPrefix();
-	}
+    /**
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the transmats table.
+     *
+     * @param plugin an instance of the main class.
+     * @param id     the tardis id to refine the search.
+     */
+    public ResultSetTransmatList(TARDISPlugin plugin, int id) {
+        this.plugin = plugin;
+        this.id = id;
+        prefix = this.plugin.getPrefix();
+    }
 
-	/**
-	 * Retrieves an SQL ResultSet from the transmats table. This method builds an SQL query string from the parameters
-	 * supplied and then executes the query. Use the getters to retrieve the results.
-	 *
-	 * @return true or false depending on whether any data matches the query
-	 */
-	public boolean resultSet() {
-		PreparedStatement statement = null;
-		ResultSet rs = null;
-		String query = "SELECT * FROM " + prefix + "transmats WHERE tardis_id = ?";
-		try {
-			service.testConnection(connection);
-			statement = connection.prepareStatement(query);
-			statement.setInt(1, id);
-			rs = statement.executeQuery();
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					Transmat transmat = new Transmat(rs.getString("name"), rs.getString("world"), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"), rs.getFloat("yaw"));
-					data.add(transmat);
-				}
-			} else {
-				return false;
-			}
-		} catch (SQLException e) {
-			plugin.debug("ResultSet error for list transmats! " + e.getMessage());
-			return false;
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing list transmats! " + e.getMessage());
-			}
-		}
-		return true;
-	}
+    /**
+     * Retrieves an SQL ResultSet from the transmats table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
+     *
+     * @return true or false depending on whether any data matches the query
+     */
+    public boolean resultSet() {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM " + prefix + "transmats WHERE tardis_id = ?";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    Transmat transmat = new Transmat(rs.getString("name"), rs.getString("world"), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"), rs.getFloat("yaw"));
+                    data.add(transmat);
+                }
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for list transmats! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing list transmats! " + e.getMessage());
+            }
+        }
+        return true;
+    }
 
-	public List<Transmat> getData() {
-		return data;
-	}
+    public List<Transmat> getData() {
+        return data;
+    }
 }

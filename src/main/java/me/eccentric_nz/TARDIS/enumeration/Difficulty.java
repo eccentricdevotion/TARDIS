@@ -21,7 +21,7 @@ package me.eccentric_nz.tardis.enumeration;
  */
 public enum Difficulty {
 
-	EASY,
-	MEDIUM,
-	HARD
+    EASY,
+    MEDIUM,
+    HARD
 }

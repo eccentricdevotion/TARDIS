@@ -21,7 +21,7 @@ import org.bukkit.OfflinePlayer;
 
 class TARDISHandlesPlaceholder {
 
-	static String getSubstituted(String s, OfflinePlayer player) {
-		return PlaceholderAPI.setPlaceholders(player, s);
-	}
+    static String getSubstituted(String s, OfflinePlayer player) {
+        return PlaceholderAPI.setPlaceholders(player, s);
+    }
 }

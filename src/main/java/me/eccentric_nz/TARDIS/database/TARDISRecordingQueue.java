@@ -20,29 +20,29 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class TARDISRecordingQueue {
 
-	private static final LinkedBlockingQueue<String> QUEUE = new LinkedBlockingQueue<>();
+    private static final LinkedBlockingQueue<String> QUEUE = new LinkedBlockingQueue<>();
 
-	/**
-	 * @return the size of the queue
-	 */
-	public static int getQueueSize() {
-		return QUEUE.size();
-	}
+    /**
+     * @return the size of the queue
+     */
+    public static int getQueueSize() {
+        return QUEUE.size();
+    }
 
-	/**
-	 * @param data The data string to add to the queue
-	 */
-	public static void addToQueue(String data) {
-		if (data == null) {
-			return;
-		}
-		QUEUE.add(data);
-	}
+    /**
+     * @param data The data string to add to the queue
+     */
+    public static void addToQueue(String data) {
+        if (data == null) {
+            return;
+        }
+        QUEUE.add(data);
+    }
 
-	/**
-	 * @return the queue
-	 */
-	public static LinkedBlockingQueue<String> getQUEUE() {
-		return QUEUE;
-	}
+    /**
+     * @return the queue
+     */
+    public static LinkedBlockingQueue<String> getQUEUE() {
+        return QUEUE;
+    }
 }

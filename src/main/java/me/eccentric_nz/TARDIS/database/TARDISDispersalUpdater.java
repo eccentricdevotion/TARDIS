@@ -29,87 +29,86 @@ import java.sql.*;
  */
 class TARDISDispersalUpdater {
 
-	private final TARDISPlugin plugin;
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final String prefix;
+    private final TARDISPlugin plugin;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final String prefix;
 
-	TARDISDispersalUpdater(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		prefix = this.plugin.getPrefix();
-	}
+    TARDISDispersalUpdater(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        prefix = this.plugin.getPrefix();
+    }
 
-	/**
-	 * Convert pre-tardis v2.3 controls to the new system.
-	 */
-	void updateTardisIds() {
-		int i = 0;
-		Statement statement = null;
-		ResultSet rs = null;
-		ResultSet rst = null;
-		PreparedStatement ps_select = null;
-		PreparedStatement ps_update = null;
-		try {
-			service.testConnection(connection);
-			statement = connection.createStatement();
-			rs = statement.executeQuery("SELECT d_id, uuid FROM " + prefix + "dispersed");
-			// insert values from tardis table
-			if (rs.isBeforeFirst()) {
-				ps_select = connection.prepareStatement("SELECT tardis_id FROM " + prefix + "tardis WHERE uuid = ?");
-				ps_update = connection.prepareStatement(
-						"UPDATE " + prefix + "dispersed SET tardis_id = ? WHERE d_id = ?");
-				while (rs.next()) {
-					ps_select.setString(1, rs.getString("uuid"));
-					rst = ps_select.executeQuery();
-					if (rst.next()) {
-						ps_update.setInt(1, rst.getInt("tardis_id"));
-						ps_update.setInt(2, rs.getInt("d_id"));
-						ps_update.executeUpdate();
-						i++;
-					}
-				}
-			}
-		} catch (SQLException e) {
-			plugin.debug("Dispersal update error: " + e.getMessage());
-		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException e) {
-					plugin.debug("Dispersal statement close error: " + e.getMessage());
-				}
-			}
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					plugin.debug("Dispersal statement close error: " + e.getMessage());
-				}
-			}
-			if (rst != null) {
-				try {
-					rst.close();
-				} catch (SQLException e) {
-					plugin.debug("Dispersal statement close error: " + e.getMessage());
-				}
-			}
-			if (ps_select != null) {
-				try {
-					ps_select.close();
-				} catch (SQLException e) {
-					plugin.debug("Dispersal select prepared statement close error: " + e.getMessage());
-				}
-			}
-			if (ps_update != null) {
-				try {
-					ps_update.close();
-				} catch (SQLException e) {
-					plugin.debug("Dispersal update prepared statement close error: " + e.getMessage());
-				}
-			}
-		}
-		if (i > 0) {
-			plugin.getConsole().sendMessage(plugin.getPluginName() + "Updated " + i + " dispersed records");
-		}
-	}
+    /**
+     * Convert pre-tardis v2.3 controls to the new system.
+     */
+    void updateTardisIds() {
+        int i = 0;
+        Statement statement = null;
+        ResultSet rs = null;
+        ResultSet rst = null;
+        PreparedStatement ps_select = null;
+        PreparedStatement ps_update = null;
+        try {
+            service.testConnection(connection);
+            statement = connection.createStatement();
+            rs = statement.executeQuery("SELECT d_id, uuid FROM " + prefix + "dispersed");
+            // insert values from tardis table
+            if (rs.isBeforeFirst()) {
+                ps_select = connection.prepareStatement("SELECT tardis_id FROM " + prefix + "tardis WHERE uuid = ?");
+                ps_update = connection.prepareStatement("UPDATE " + prefix + "dispersed SET tardis_id = ? WHERE d_id = ?");
+                while (rs.next()) {
+                    ps_select.setString(1, rs.getString("uuid"));
+                    rst = ps_select.executeQuery();
+                    if (rst.next()) {
+                        ps_update.setInt(1, rst.getInt("tardis_id"));
+                        ps_update.setInt(2, rs.getInt("d_id"));
+                        ps_update.executeUpdate();
+                        i++;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            plugin.debug("Dispersal update error: " + e.getMessage());
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    plugin.debug("Dispersal statement close error: " + e.getMessage());
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    plugin.debug("Dispersal statement close error: " + e.getMessage());
+                }
+            }
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    plugin.debug("Dispersal statement close error: " + e.getMessage());
+                }
+            }
+            if (ps_select != null) {
+                try {
+                    ps_select.close();
+                } catch (SQLException e) {
+                    plugin.debug("Dispersal select prepared statement close error: " + e.getMessage());
+                }
+            }
+            if (ps_update != null) {
+                try {
+                    ps_update.close();
+                } catch (SQLException e) {
+                    plugin.debug("Dispersal update prepared statement close error: " + e.getMessage());
+                }
+            }
+        }
+        if (i > 0) {
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Updated " + i + " dispersed records");
+        }
+    }
 }

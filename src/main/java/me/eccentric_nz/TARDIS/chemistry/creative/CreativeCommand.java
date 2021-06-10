@@ -29,48 +29,46 @@ import java.util.Locale;
 
 public class CreativeCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public CreativeCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public CreativeCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public boolean open(Player player, String[] args) {
-		if (!TARDISPermission.hasPermission(player, "tardis.chemistry.creative")) {
-			TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Creative");
-			return true;
-		}
-		Creative creative;
-		try {
-			creative = Creative.valueOf(args[2].toLowerCase(Locale.ENGLISH));
-		} catch (IllegalArgumentException e) {
-			return false;
-		}
-		// do stuff
-		switch (creative) {
-			case elements -> {
-				ItemStack[] emenu = new ElementInventory(plugin).getMenu();
-				Inventory elements = plugin.getServer().createInventory(player, 54,
-						ChatColor.DARK_RED + "Atomic elements");
-				elements.setContents(emenu);
-				player.openInventory(elements);
-				return true;
-			}
-			case compounds -> {
-				ItemStack[] cmenu = new CompoundsCreativeInventory(plugin).getMenu();
-				Inventory compounds = plugin.getServer().createInventory(player, 54,
-						ChatColor.DARK_RED + "Molecular compounds");
-				compounds.setContents(cmenu);
-				player.openInventory(compounds);
-				return true;
-			}
-			default -> { // lab & products
-				ItemStack[] lmenu = new ProductsCreativeInventory(plugin).getMenu();
-				Inventory lab = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Products");
-				lab.setContents(lmenu);
-				player.openInventory(lab);
-				return true;
-			}
-		}
-	}
+    public boolean open(Player player, String[] args) {
+        if (!TARDISPermission.hasPermission(player, "tardis.chemistry.creative")) {
+            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Creative");
+            return true;
+        }
+        Creative creative;
+        try {
+            creative = Creative.valueOf(args[2].toLowerCase(Locale.ENGLISH));
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+        // do stuff
+        switch (creative) {
+            case elements -> {
+                ItemStack[] emenu = new ElementInventory(plugin).getMenu();
+                Inventory elements = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Atomic elements");
+                elements.setContents(emenu);
+                player.openInventory(elements);
+                return true;
+            }
+            case compounds -> {
+                ItemStack[] cmenu = new CompoundsCreativeInventory(plugin).getMenu();
+                Inventory compounds = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Molecular compounds");
+                compounds.setContents(cmenu);
+                player.openInventory(compounds);
+                return true;
+            }
+            default -> { // lab & products
+                ItemStack[] lmenu = new ProductsCreativeInventory(plugin).getMenu();
+                Inventory lab = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Products");
+                lab.setContents(lmenu);
+                player.openInventory(lab);
+                return true;
+            }
+        }
+    }
 }

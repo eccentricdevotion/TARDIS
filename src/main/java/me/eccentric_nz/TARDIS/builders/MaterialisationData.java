@@ -29,85 +29,85 @@ import org.bukkit.OfflinePlayer;
  */
 public class MaterialisationData {
 
-	private TARDISBiome tardisBiome;
-	private COMPASS direction;
-	private Location location;
-	private OfflinePlayer player;
-	private boolean outside;
-	private boolean submarine;
-	private boolean siege;
-	private int tardisId;
-	private SpaceTimeThrottle throttle;
+    private TARDISBiome tardisBiome;
+    private COMPASS direction;
+    private Location location;
+    private OfflinePlayer player;
+    private boolean outside;
+    private boolean submarine;
+    private boolean siege;
+    private int tardisId;
+    private SpaceTimeThrottle throttle;
 
-	public TARDISBiome getTardisBiome() {
-		return tardisBiome;
-	}
+    public TARDISBiome getTardisBiome() {
+        return tardisBiome;
+    }
 
-	public void setTardisBiome(TARDISBiome tardisBiome) {
-		this.tardisBiome = tardisBiome;
-	}
+    public void setTardisBiome(TARDISBiome tardisBiome) {
+        this.tardisBiome = tardisBiome;
+    }
 
-	public COMPASS getDirection() {
-		return direction;
-	}
+    public COMPASS getDirection() {
+        return direction;
+    }
 
-	public void setDirection(COMPASS direction) {
-		this.direction = direction;
-	}
+    public void setDirection(COMPASS direction) {
+        this.direction = direction;
+    }
 
-	public Location getLocation() {
-		return location;
-	}
+    public Location getLocation() {
+        return location;
+    }
 
-	public void setLocation(Location location) {
-		this.location = location;
-	}
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
-	public OfflinePlayer getPlayer() {
-		return player;
-	}
+    public OfflinePlayer getPlayer() {
+        return player;
+    }
 
-	public void setPlayer(OfflinePlayer player) {
-		this.player = player;
-	}
+    public void setPlayer(OfflinePlayer player) {
+        this.player = player;
+    }
 
-	public boolean isOutside() {
-		return outside;
-	}
+    public boolean isOutside() {
+        return outside;
+    }
 
-	public void setOutside(boolean outside) {
-		this.outside = outside;
-	}
+    public void setOutside(boolean outside) {
+        this.outside = outside;
+    }
 
-	public boolean isSubmarine() {
-		return submarine;
-	}
+    public boolean isSubmarine() {
+        return submarine;
+    }
 
-	public void setSubmarine(boolean submarine) {
-		this.submarine = submarine;
-	}
+    public void setSubmarine(boolean submarine) {
+        this.submarine = submarine;
+    }
 
-	public boolean isSiege() {
-		return siege;
-	}
+    public boolean isSiege() {
+        return siege;
+    }
 
-	public void setSiege(boolean siege) {
-		this.siege = siege;
-	}
+    public void setSiege(boolean siege) {
+        this.siege = siege;
+    }
 
-	public int getTardisId() {
-		return tardisId;
-	}
+    public int getTardisId() {
+        return tardisId;
+    }
 
-	public void setTardisId(int tardisId) {
-		this.tardisId = tardisId;
-	}
+    public void setTardisId(int tardisId) {
+        this.tardisId = tardisId;
+    }
 
-	public SpaceTimeThrottle getThrottle() {
-		return throttle;
-	}
+    public SpaceTimeThrottle getThrottle() {
+        return throttle;
+    }
 
-	public void setThrottle(SpaceTimeThrottle throttle) {
-		this.throttle = throttle;
-	}
+    public void setThrottle(SpaceTimeThrottle throttle) {
+        this.throttle = throttle;
+    }
 }

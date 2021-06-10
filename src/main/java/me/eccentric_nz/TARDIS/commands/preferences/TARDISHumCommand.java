@@ -29,25 +29,25 @@ import java.util.Locale;
  */
 class TARDISHumCommand {
 
-	boolean setHumPref(Player player, String[] args) {
-		if (args.length < 2) {
-			TARDISMessage.send(player, "HUM_NEED");
-			return false;
-		}
-		Hum go;
-		try {
-			go = Hum.valueOf(args[1].toUpperCase(Locale.ENGLISH));
-		} catch (IllegalArgumentException e) {
-			TARDISMessage.send(player, "HUM_NOT_VALID");
-			return false;
-		}
-		String hum_set = (go.equals(Hum.RANDOM)) ? "" : go.toString().toLowerCase(Locale.ENGLISH);
-		HashMap<String, Object> set = new HashMap<>();
-		set.put("hum", hum_set);
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("uuid", player.getUniqueId().toString());
-		TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
-		TARDISMessage.send(player, "HUM_SAVED");
-		return true;
-	}
+    boolean setHumPref(Player player, String[] args) {
+        if (args.length < 2) {
+            TARDISMessage.send(player, "HUM_NEED");
+            return false;
+        }
+        Hum go;
+        try {
+            go = Hum.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+        } catch (IllegalArgumentException e) {
+            TARDISMessage.send(player, "HUM_NOT_VALID");
+            return false;
+        }
+        String hum_set = (go.equals(Hum.RANDOM)) ? "" : go.toString().toLowerCase(Locale.ENGLISH);
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("hum", hum_set);
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", player.getUniqueId().toString());
+        TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
+        TARDISMessage.send(player, "HUM_SAVED");
+        return true;
+    }
 }

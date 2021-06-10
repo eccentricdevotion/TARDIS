@@ -31,62 +31,62 @@ import java.sql.SQLException;
  */
 public class ResultSetTardisTimeLordName {
 
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final TARDISPlugin plugin;
-	private final String prefix;
-	private String owner;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final TARDISPlugin plugin;
+    private final String prefix;
+    private String owner;
 
-	/**
-	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
-	 *
-	 * @param plugin an instance of the main class.
-	 */
-	public ResultSetTardisTimeLordName(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		prefix = this.plugin.getPrefix();
-	}
+    /**
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
+     *
+     * @param plugin an instance of the main class.
+     */
+    public ResultSetTardisTimeLordName(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        prefix = this.plugin.getPrefix();
+    }
 
-	/**
-	 * Attempts to see whether the supplied tardis id is in the tardis table. This method builds an SQL query string
-	 * from the parameters supplied and then executes the query.
-	 *
-	 * @param id the tardis id to check
-	 * @return true or false depending on whether the Time Lord uuid exists in the table
-	 */
-	public boolean fromID(int id) {
-		PreparedStatement statement = null;
-		ResultSet rs = null;
-		String query = "SELECT owner FROM " + prefix + "tardis WHERE tardis_id = ? AND abandoned = 0";
-		try {
-			service.testConnection(connection);
-			statement = connection.prepareStatement(query);
-			statement.setInt(1, id);
-			rs = statement.executeQuery();
-			if (rs.isBeforeFirst()) {
-				rs.next();
-				owner = rs.getString("owner");
-				return true;
-			}
-			return false;
-		} catch (SQLException e) {
-			plugin.debug("ResultSet error for tardis [time lord name from tardis id] table! " + e.getMessage());
-			return false;
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing tardis [time lord name from tardis id] table! " + e.getMessage());
-			}
-		}
-	}
+    /**
+     * Attempts to see whether the supplied tardis id is in the tardis table. This method builds an SQL query string
+     * from the parameters supplied and then executes the query.
+     *
+     * @param id the tardis id to check
+     * @return true or false depending on whether the Time Lord uuid exists in the table
+     */
+    public boolean fromID(int id) {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT owner FROM " + prefix + "tardis WHERE tardis_id = ? AND abandoned = 0";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                owner = rs.getString("owner");
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for tardis [time lord name from tardis id] table! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing tardis [time lord name from tardis id] table! " + e.getMessage());
+            }
+        }
+    }
 
-	public String getOwner() {
-		return owner;
-	}
+    public String getOwner() {
+        return owner;
+    }
 }

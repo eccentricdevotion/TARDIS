@@ -29,35 +29,35 @@ import java.util.Locale;
  */
 class TARDISSetRespectCommand {
 
-	private final TARDISPlugin plugin;
-	private final ImmutableList<String> regions = ImmutableList.of("none", "wilderness", "town", "nation");
-	private final ImmutableList<String> flags = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
+    private final TARDISPlugin plugin;
+    private final ImmutableList<String> regions = ImmutableList.of("none", "wilderness", "town", "nation");
+    private final ImmutableList<String> flags = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
 
-	TARDISSetRespectCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISSetRespectCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean setRegion(CommandSender sender, String[] args) {
-		String region = args[1].toLowerCase(Locale.ENGLISH);
-		if (!regions.contains(region)) {
-			TARDISMessage.send(sender, "ARG_TOWNY");
-			return false;
-		}
-		plugin.getConfig().set("preferences.respect_towny", region);
-		plugin.saveConfig();
-		TARDISMessage.send(sender, "CONFIG_UPDATED");
-		return true;
-	}
+    boolean setRegion(CommandSender sender, String[] args) {
+        String region = args[1].toLowerCase(Locale.ENGLISH);
+        if (!regions.contains(region)) {
+            TARDISMessage.send(sender, "ARG_TOWNY");
+            return false;
+        }
+        plugin.getConfig().set("preferences.respect_towny", region);
+        plugin.saveConfig();
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        return true;
+    }
 
-	boolean setFlag(CommandSender sender, String[] args) {
-		String flag = args[1].toLowerCase(Locale.ENGLISH);
-		if (!flags.contains(flag)) {
-			TARDISMessage.send(sender, "ARG_FLAG");
-			return false;
-		}
-		plugin.getConfig().set("preferences.respect_worldguard", flag);
-		plugin.saveConfig();
-		TARDISMessage.send(sender, "CONFIG_UPDATED");
-		return true;
-	}
+    boolean setFlag(CommandSender sender, String[] args) {
+        String flag = args[1].toLowerCase(Locale.ENGLISH);
+        if (!flags.contains(flag)) {
+            TARDISMessage.send(sender, "ARG_FLAG");
+            return false;
+        }
+        plugin.getConfig().set("preferences.respect_worldguard", flag);
+        plugin.saveConfig();
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        return true;
+    }
 }

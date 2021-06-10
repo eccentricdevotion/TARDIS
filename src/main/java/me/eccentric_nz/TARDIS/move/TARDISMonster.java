@@ -27,85 +27,85 @@ import org.bukkit.inventory.EntityEquipment;
  */
 class TARDISMonster extends TARDISMob {
 
-	private boolean aggressive;
-	private int anger;
-	private boolean charged;
-	private Profession profession;
-	private EntityEquipment equipment;
-	private BlockData carried;
-	private EntityType passenger;
-	private String displayName;
-	private int size;
+    private boolean aggressive;
+    private int anger;
+    private boolean charged;
+    private Profession profession;
+    private EntityEquipment equipment;
+    private BlockData carried;
+    private EntityType passenger;
+    private String displayName;
+    private int size;
 
-	boolean isAggressive() {
-		return aggressive;
-	}
+    boolean isAggressive() {
+        return aggressive;
+    }
 
-	void setAggressive(boolean aggressive) {
-		this.aggressive = aggressive;
-	}
+    void setAggressive(boolean aggressive) {
+        this.aggressive = aggressive;
+    }
 
-	int getAnger() {
-		return anger;
-	}
+    int getAnger() {
+        return anger;
+    }
 
-	void setAnger(int anger) {
-		this.anger = anger;
-	}
+    void setAnger(int anger) {
+        this.anger = anger;
+    }
 
-	public boolean isCharged() {
-		return charged;
-	}
+    public boolean isCharged() {
+        return charged;
+    }
 
-	public void setCharged(boolean charged) {
-		this.charged = charged;
-	}
+    public void setCharged(boolean charged) {
+        this.charged = charged;
+    }
 
-	Profession getProfession() {
-		return profession;
-	}
+    Profession getProfession() {
+        return profession;
+    }
 
-	void setProfession(Profession profession) {
-		this.profession = profession;
-	}
+    void setProfession(Profession profession) {
+        this.profession = profession;
+    }
 
-	EntityEquipment getEquipment() {
-		return equipment;
-	}
+    EntityEquipment getEquipment() {
+        return equipment;
+    }
 
-	void setEquipment(EntityEquipment equipment) {
-		this.equipment = equipment;
-	}
+    void setEquipment(EntityEquipment equipment) {
+        this.equipment = equipment;
+    }
 
-	BlockData getCarried() {
-		return carried;
-	}
+    BlockData getCarried() {
+        return carried;
+    }
 
-	void setCarried(BlockData carried) {
-		this.carried = carried;
-	}
+    void setCarried(BlockData carried) {
+        this.carried = carried;
+    }
 
-	EntityType getPassenger() {
-		return passenger;
-	}
+    EntityType getPassenger() {
+        return passenger;
+    }
 
-	void setPassenger(EntityType passenger) {
-		this.passenger = passenger;
-	}
+    void setPassenger(EntityType passenger) {
+        this.passenger = passenger;
+    }
 
-	public String getDisplayName() {
-		return displayName;
-	}
+    public String getDisplayName() {
+        return displayName;
+    }
 
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
-	public int getSize() {
-		return size;
-	}
+    public int getSize() {
+        return size;
+    }
 
-	public void setSize(int size) {
-		this.size = size;
-	}
+    public void setSize(int size) {
+        this.size = size;
+    }
 }

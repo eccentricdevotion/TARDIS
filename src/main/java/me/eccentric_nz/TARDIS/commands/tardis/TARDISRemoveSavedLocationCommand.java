@@ -30,41 +30,41 @@ import java.util.HashMap;
  */
 class TARDISRemoveSavedLocationCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISRemoveSavedLocationCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISRemoveSavedLocationCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean doRemoveSave(Player player, String[] args) {
-		if (TARDISPermission.hasPermission(player, "tardis.save")) {
-			if (args.length < 2) {
-				TARDISMessage.send(player, "TOO_FEW_ARGS");
-				return false;
-			}
-			ResultSetTardisID rs = new ResultSetTardisID(plugin);
-			if (!rs.fromUUID(player.getUniqueId().toString())) {
-				TARDISMessage.send(player, "NO_TARDIS");
-				return false;
-			}
-			int id = rs.getTardisId();
-			HashMap<String, Object> whered = new HashMap<>();
-			whered.put("dest_name", args[1]);
-			whered.put("tardis_id", id);
-			ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
-			if (!rsd.resultSet()) {
-				TARDISMessage.send(player, "SAVE_NOT_FOUND");
-				return false;
-			}
-			int destId = rsd.getDestId();
-			HashMap<String, Object> did = new HashMap<>();
-			did.put("dest_id", destId);
-			plugin.getQueryFactory().doDelete("destinations", did);
-			TARDISMessage.send(player, "DEST_DELETED", args[1]);
-			return true;
-		} else {
-			TARDISMessage.send(player, "NO_PERMS");
-			return false;
-		}
-	}
+    boolean doRemoveSave(Player player, String[] args) {
+        if (TARDISPermission.hasPermission(player, "tardis.save")) {
+            if (args.length < 2) {
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                return false;
+            }
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            if (!rs.fromUUID(player.getUniqueId().toString())) {
+                TARDISMessage.send(player, "NO_TARDIS");
+                return false;
+            }
+            int id = rs.getTardisId();
+            HashMap<String, Object> whered = new HashMap<>();
+            whered.put("dest_name", args[1]);
+            whered.put("tardis_id", id);
+            ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
+            if (!rsd.resultSet()) {
+                TARDISMessage.send(player, "SAVE_NOT_FOUND");
+                return false;
+            }
+            int destId = rsd.getDestId();
+            HashMap<String, Object> did = new HashMap<>();
+            did.put("dest_id", destId);
+            plugin.getQueryFactory().doDelete("destinations", did);
+            TARDISMessage.send(player, "DEST_DELETED", args[1]);
+            return true;
+        } else {
+            TARDISMessage.send(player, "NO_PERMS");
+            return false;
+        }
+    }
 }

@@ -26,13 +26,13 @@ import org.bukkit.block.data.BlockData;
  */
 public class TARDISChameleonColumn {
 
-	private final BlockData[][] blockData;
+    private final BlockData[][] blockData;
 
-	TARDISChameleonColumn(BlockData[][] blockData) {
-		this.blockData = blockData;
-	}
+    TARDISChameleonColumn(BlockData[][] blockData) {
+        this.blockData = blockData;
+    }
 
-	public BlockData[][] getBlockData() {
-		return blockData;
-	}
+    public BlockData[][] getBlockData() {
+        return blockData;
+    }
 }

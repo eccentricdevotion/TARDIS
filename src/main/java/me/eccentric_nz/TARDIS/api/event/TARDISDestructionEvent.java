@@ -27,53 +27,53 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class TARDISDestructionEvent extends Event {
 
-	private static final HandlerList HANDLERS = new HandlerList();
-	private final Player player;
-	private final Location location;
-	private final String owner;
+    private static final HandlerList HANDLERS = new HandlerList();
+    private final Player player;
+    private final Location location;
+    private final String owner;
 
-	/**
-	 * A TARDIS extermination event.
-	 *
-	 * @param player   the player who is destroying the TARDIS - may be null if it is initiated by the console.
-	 * @param location the location of the TARDIS exterior preset
-	 * @param owner    the Time Lord of the TARDIS
-	 */
-	public TARDISDestructionEvent(Player player, Location location, String owner) {
-		this.player = player;
-		this.location = location;
-		this.owner = owner;
-	}
+    /**
+     * A TARDIS extermination event.
+     *
+     * @param player   the player who is destroying the TARDIS - may be null if it is initiated by the console.
+     * @param location the location of the TARDIS exterior preset
+     * @param owner    the Time Lord of the TARDIS
+     */
+    public TARDISDestructionEvent(Player player, Location location, String owner) {
+        this.player = player;
+        this.location = location;
+        this.owner = owner;
+    }
 
-	public static HandlerList getHandlerList() {
-		return HANDLERS;
-	}
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
 
-	public Player getPlayer() {
-		return player;
-	}
+    public Player getPlayer() {
+        return player;
+    }
 
-	/**
-	 * Returns the exterior location of the TARDIS being destroyed.
-	 *
-	 * @return the TARDIS location
-	 */
-	public Location getLocation() {
-		return location;
-	}
+    /**
+     * Returns the exterior location of the TARDIS being destroyed.
+     *
+     * @return the TARDIS location
+     */
+    public Location getLocation() {
+        return location;
+    }
 
-	/**
-	 * Returns the Time Lord of the TARDIS being destroyed. This may be different from the player who is doing the
-	 * destroying, i.e. a server admin.
-	 *
-	 * @return the TARDIS owner's name
-	 */
-	public String getOwner() {
-		return owner;
-	}
+    /**
+     * Returns the Time Lord of the TARDIS being destroyed. This may be different from the player who is doing the
+     * destroying, i.e. a server admin.
+     *
+     * @return the TARDIS owner's name
+     */
+    public String getOwner() {
+        return owner;
+    }
 
-	@Override
-	public @NotNull HandlerList getHandlers() {
-		return HANDLERS;
-	}
+    @Override
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
+    }
 }

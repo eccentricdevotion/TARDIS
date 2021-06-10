@@ -19,23 +19,23 @@ package me.eccentric_nz.tardis.noteblock;
 
 public class Note {
 
-	private final byte instrument;
-	private byte key;
+    private final byte instrument;
+    private byte key;
 
-	public Note(byte instrument, byte key) {
-		this.instrument = instrument;
-		this.key = key;
-	}
+    public Note(byte instrument, byte key) {
+        this.instrument = instrument;
+        this.key = key;
+    }
 
-	byte getInstrument() {
-		return instrument;
-	}
+    byte getInstrument() {
+        return instrument;
+    }
 
-	public byte getKey() {
-		return key;
-	}
+    public byte getKey() {
+        return key;
+    }
 
-	public void setKey(byte key) {
-		this.key = key;
-	}
+    public void setKey(byte key) {
+        this.key = key;
+    }
 }

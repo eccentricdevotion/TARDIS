@@ -37,29 +37,27 @@ import java.util.Objects;
  */
 public class TARDISTemporalListener implements Listener {
 
-	private final TARDISPlugin plugin;
-	private final List<String> notthese = Arrays.asList("Fob Watch", "Vortex Manipulator");
+    private final TARDISPlugin plugin;
+    private final List<String> notthese = Arrays.asList("Fob Watch", "Vortex Manipulator");
 
-	public TARDISTemporalListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISTemporalListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler
-	public void onPlayerInteract(PlayerInteractEvent event) {
-		if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
-			return;
-		}
-		Player p = event.getPlayer();
-		ItemStack inhand = p.getInventory().getItemInMainHand();
-		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.getType().equals(Material.CLOCK) &&
-			TARDISPermission.hasPermission(p, "tardis.temporal")) {
-			if (inhand.hasItemMeta() && Objects.requireNonNull(inhand.getItemMeta()).hasDisplayName() &&
-				notthese.contains(inhand.getItemMeta().getDisplayName())) {
-				return;
-			}
-			p.resetPlayerTime();
-			plugin.getTrackerKeeper().getSetTime().remove(p.getUniqueId());
-			TARDISMessage.send(p, "TEMPORAL_RESET");
-		}
-	}
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
+        Player p = event.getPlayer();
+        ItemStack inhand = p.getInventory().getItemInMainHand();
+        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.getType().equals(Material.CLOCK) && TARDISPermission.hasPermission(p, "tardis.temporal")) {
+            if (inhand.hasItemMeta() && Objects.requireNonNull(inhand.getItemMeta()).hasDisplayName() && notthese.contains(inhand.getItemMeta().getDisplayName())) {
+                return;
+            }
+            p.resetPlayerTime();
+            plugin.getTrackerKeeper().getSetTime().remove(p.getUniqueId());
+            TARDISMessage.send(p, "TEMPORAL_RESET");
+        }
+    }
 }

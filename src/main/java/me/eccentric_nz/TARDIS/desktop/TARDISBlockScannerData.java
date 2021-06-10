@@ -21,49 +21,49 @@ package me.eccentric_nz.tardis.desktop;
  */
 public class TARDISBlockScannerData {
 
-	private int changed;
-	private int count;
-	private float volume;
-	private boolean allow;
-	private String beacon;
+    private int changed;
+    private int count;
+    private float volume;
+    private boolean allow;
+    private String beacon;
 
-	public int getChanged() {
-		return changed;
-	}
+    public int getChanged() {
+        return changed;
+    }
 
-	public void setChanged(int changed) {
-		this.changed = changed;
-	}
+    public void setChanged(int changed) {
+        this.changed = changed;
+    }
 
-	public int getCount() {
-		return count;
-	}
+    public int getCount() {
+        return count;
+    }
 
-	public void setCount(int count) {
-		this.count = count;
-	}
+    public void setCount(int count) {
+        this.count = count;
+    }
 
-	int getVolume() {
-		return (int) volume;
-	}
+    int getVolume() {
+        return (int) volume;
+    }
 
-	void setVolume(float volume) {
-		this.volume = volume;
-	}
+    void setVolume(float volume) {
+        this.volume = volume;
+    }
 
-	public boolean allow() {
-		return allow;
-	}
+    public boolean allow() {
+        return allow;
+    }
 
-	public void setAllow(boolean allow) {
-		this.allow = allow;
-	}
+    public void setAllow(boolean allow) {
+        this.allow = allow;
+    }
 
-	public String getBeacon() {
-		return beacon;
-	}
+    public String getBeacon() {
+        return beacon;
+    }
 
-	public void setBeacon(String beacon) {
-		this.beacon = beacon;
-	}
+    public void setBeacon(String beacon) {
+        this.beacon = beacon;
+    }
 }

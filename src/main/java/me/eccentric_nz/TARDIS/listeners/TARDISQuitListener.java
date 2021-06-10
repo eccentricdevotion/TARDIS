@@ -42,97 +42,92 @@ import java.util.UUID;
  */
 public class TARDISQuitListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISQuitListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISQuitListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onPlayerQuit(PlayerQuitEvent event) {
-		Player player = event.getPlayer();
-		UUID uuid = player.getUniqueId();
-		// remove if Junk TARDIS traveller
-		if (plugin.getGeneralKeeper().getJunkTravellers().contains(uuid)) {
-			// check if they are in the vortex
-			if (plugin.getUtils().inTARDISWorld(player)) {
-				// set their location to the junk TARDISes destination
-				plugin.getTrackerKeeper().getJunkRelog().put(uuid, plugin.getGeneralKeeper().getJunkDestination());
-			}
-			plugin.getGeneralKeeper().getJunkTravellers().remove(uuid);
-		}
-		// if
-		// forget the players Police Box chunk
-		HashMap<String, Object> wherep = new HashMap<>();
-		wherep.put("uuid", uuid.toString());
-		ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
-		if (rs.resultSet()) {
-			TARDIS tardis = rs.getTardis();
-			HashMap<String, Object> wherecl = new HashMap<>();
-			wherecl.put("tardis_id", tardis.getTardisId());
-			ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-			if (rsc.resultSet()) {
-				World w = rsc.getWorld();
-				if (w != null) {
-					Chunk chunk = w.getChunkAt(new Location(w, rsc.getX(), rsc.getY(), rsc.getZ()));
-					chunk.setForceLoaded(false);
-				}
-			}
-			// power down TARDIS
-			if (plugin.getConfig().getBoolean("allow.power_down") &&
-				plugin.getConfig().getBoolean("allow.power_down_on_quit")) {
-				// check if powered on
-				if (tardis.isPowered()) {
-					// not if flying or uninitialised
-					int id = tardis.getTardisId();
-					if (!tardis.isTardisInit() || isTravelling(id) || !tardis.isHandbrakeOn()) {
-						return;
-					}
-					// power off
-					PRESET preset = tardis.getPreset();
-					boolean hidden = tardis.isHidden();
-					boolean lights = tardis.isLightsOn();
-					// police box lamp, delay it incase the TARDIS needs rebuilding
-					long delay = 1L;
-					// if hidden, rebuild
-					if (hidden) {
-						plugin.getServer().dispatchCommand(plugin.getConsole(),
-								"tardisremote " + player.getName() + " rebuild");
-						delay = 20L;
-					}
-					if (preset.equals(PRESET.ADAPTIVE)) {
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), delay);
-					}
-					// if lights are on, turn them off
-					if (lights) {
-						new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().hasLanterns());
-					}
-					// if beacon is on turn it off
-					new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);
-					// turn force field off
-					plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
-					// update database
-					HashMap<String, Object> wheret = new HashMap<>();
-					wheret.put("tardis_id", id);
-					HashMap<String, Object> sett = new HashMap<>();
-					sett.put("powered_on", 0);
-					plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
-				}
-			}
-			// save arched status
-			if (plugin.isDisguisesOnServer()) {
-				if (plugin.getConfig().getBoolean("arch.enabled") &&
-					plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-					new TARDISArchPersister(plugin).save(uuid);
-				}
-				plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
-			}
-		}
-	}
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+        // remove if Junk TARDIS traveller
+        if (plugin.getGeneralKeeper().getJunkTravellers().contains(uuid)) {
+            // check if they are in the vortex
+            if (plugin.getUtils().inTARDISWorld(player)) {
+                // set their location to the junk TARDISes destination
+                plugin.getTrackerKeeper().getJunkRelog().put(uuid, plugin.getGeneralKeeper().getJunkDestination());
+            }
+            plugin.getGeneralKeeper().getJunkTravellers().remove(uuid);
+        }
+        // if
+        // forget the players Police Box chunk
+        HashMap<String, Object> wherep = new HashMap<>();
+        wherep.put("uuid", uuid.toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
+        if (rs.resultSet()) {
+            TARDIS tardis = rs.getTardis();
+            HashMap<String, Object> wherecl = new HashMap<>();
+            wherecl.put("tardis_id", tardis.getTardisId());
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            if (rsc.resultSet()) {
+                World w = rsc.getWorld();
+                if (w != null) {
+                    Chunk chunk = w.getChunkAt(new Location(w, rsc.getX(), rsc.getY(), rsc.getZ()));
+                    chunk.setForceLoaded(false);
+                }
+            }
+            // power down TARDIS
+            if (plugin.getConfig().getBoolean("allow.power_down") && plugin.getConfig().getBoolean("allow.power_down_on_quit")) {
+                // check if powered on
+                if (tardis.isPowered()) {
+                    // not if flying or uninitialised
+                    int id = tardis.getTardisId();
+                    if (!tardis.isTardisInit() || isTravelling(id) || !tardis.isHandbrakeOn()) {
+                        return;
+                    }
+                    // power off
+                    PRESET preset = tardis.getPreset();
+                    boolean hidden = tardis.isHidden();
+                    boolean lights = tardis.isLightsOn();
+                    // police box lamp, delay it incase the TARDIS needs rebuilding
+                    long delay = 1L;
+                    // if hidden, rebuild
+                    if (hidden) {
+                        plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
+                        delay = 20L;
+                    }
+                    if (preset.equals(PRESET.ADAPTIVE)) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), delay);
+                    }
+                    // if lights are on, turn them off
+                    if (lights) {
+                        new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().hasLanterns());
+                    }
+                    // if beacon is on turn it off
+                    new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);
+                    // turn force field off
+                    plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
+                    // update database
+                    HashMap<String, Object> wheret = new HashMap<>();
+                    wheret.put("tardis_id", id);
+                    HashMap<String, Object> sett = new HashMap<>();
+                    sett.put("powered_on", 0);
+                    plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
+                }
+            }
+            // save arched status
+            if (plugin.isDisguisesOnServer()) {
+                if (plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+                    new TARDISArchPersister(plugin).save(uuid);
+                }
+                plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
+            }
+        }
+    }
 
-	private boolean isTravelling(int id) {
-		return (plugin.getTrackerKeeper().getDematerialising().contains(id) ||
-				plugin.getTrackerKeeper().getMaterialising().contains(id) ||
-				plugin.getTrackerKeeper().getInVortex().contains(id));
-	}
+    private boolean isTravelling(int id) {
+        return (plugin.getTrackerKeeper().getDematerialising().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id));
+    }
 }

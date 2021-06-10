@@ -46,82 +46,82 @@ import java.util.regex.Pattern;
  */
 public class TARDISChatListener implements Listener {
 
-	private final TARDISPlugin plugin;
-	private final Pattern handlesPattern = TARDISHandlesPattern.getPattern("prefix");
-	private Pattern howToPattern = null;
+    private final TARDISPlugin plugin;
+    private final Pattern handlesPattern = TARDISHandlesPattern.getPattern("prefix");
+    private Pattern howToPattern = null;
 
-	public TARDISChatListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISChatListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	/**
-	 * Listens for player typing "tardis rescue accept". If the player types it within 60 seconds of a Time Lord sending
-	 * a rescue request, a player rescue attempt is made.
-	 * <p>
-	 * Also processes questions pertaining to "How to make a tardis?" and variations thereof.
-	 *
-	 * @param event a player typing in chat
-	 */
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onChat(AsyncPlayerChatEvent event) {
-		UUID saved = event.getPlayer().getUniqueId();
-		String chat = event.getMessage().toLowerCase(Locale.ENGLISH);
-		if (chat.equals("tardis rescue accept") || chat.equals("tardis request accept")) {
-			event.setCancelled(true);
-			boolean request = (chat.equals("tardis request accept"));
-			if (plugin.getTrackerKeeper().getChat().containsKey(saved)) {
-				Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getChat().get(saved));
-				TARDISRescue res = new TARDISRescue(plugin);
-				plugin.getTrackerKeeper().getChat().remove(saved);
-				// delay it so the chat appears before the message
-				String player = event.getPlayer().getName();
-				String message = (request) ? "REQUEST_RELEASE" : "RESCUE_RELEASE";
-				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-					RescueData rd = res.tryRescue(rescuer, saved, request);
-					if (rd.success()) {
-						if (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
-							Player who = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(saved));
-							if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
-								TARDISMessage.send(who, message, player);
-							}
-							plugin.getTrackerKeeper().getTelepathicRescue().remove(saved);
-						} else if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
-							TARDISMessage.send(rescuer, message, player);
-						}
-						if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
-							new TARDISLand(plugin, rd.getTardisId(), rescuer).exitVortex();
-						}
-					}
-				}, 2L);
-			} else {
-				String message = (request) ? "REQUEST_TIMEOUT" : "RESCUE_TIMEOUT";
-				TARDISMessage.send(event.getPlayer(), message);
-			}
-		} else if (handlesPattern.matcher(chat).lookingAt()) {
-			event.setCancelled(true);
-			// process handles request
-			new TARDISHandlesRequest(plugin).process(saved, event.getMessage());
-		} else {
-			handleChat(event.getPlayer(), event.getMessage());
-		}
-	}
+    /**
+     * Listens for player typing "tardis rescue accept". If the player types it within 60 seconds of a Time Lord sending
+     * a rescue request, a player rescue attempt is made.
+     * <p>
+     * Also processes questions pertaining to "How to make a tardis?" and variations thereof.
+     *
+     * @param event a player typing in chat
+     */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onChat(AsyncPlayerChatEvent event) {
+        UUID saved = event.getPlayer().getUniqueId();
+        String chat = event.getMessage().toLowerCase(Locale.ENGLISH);
+        if (chat.equals("tardis rescue accept") || chat.equals("tardis request accept")) {
+            event.setCancelled(true);
+            boolean request = (chat.equals("tardis request accept"));
+            if (plugin.getTrackerKeeper().getChat().containsKey(saved)) {
+                Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getChat().get(saved));
+                TARDISRescue res = new TARDISRescue(plugin);
+                plugin.getTrackerKeeper().getChat().remove(saved);
+                // delay it so the chat appears before the message
+                String player = event.getPlayer().getName();
+                String message = (request) ? "REQUEST_RELEASE" : "RESCUE_RELEASE";
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    RescueData rd = res.tryRescue(rescuer, saved, request);
+                    if (rd.success()) {
+                        if (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
+                            Player who = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(saved));
+                            if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
+                                TARDISMessage.send(who, message, player);
+                            }
+                            plugin.getTrackerKeeper().getTelepathicRescue().remove(saved);
+                        } else if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
+                            TARDISMessage.send(rescuer, message, player);
+                        }
+                        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
+                            new TARDISLand(plugin, rd.getTardisId(), rescuer).exitVortex();
+                        }
+                    }
+                }, 2L);
+            } else {
+                String message = (request) ? "REQUEST_TIMEOUT" : "RESCUE_TIMEOUT";
+                TARDISMessage.send(event.getPlayer(), message);
+            }
+        } else if (handlesPattern.matcher(chat).lookingAt()) {
+            event.setCancelled(true);
+            // process handles request
+            new TARDISHandlesRequest(plugin).process(saved, event.getMessage());
+        } else {
+            handleChat(event.getPlayer(), event.getMessage());
+        }
+    }
 
-	private void handleChat(Player p, String message) {
-		if (plugin.getTrackerKeeper().getHowTo().contains(p.getUniqueId())) {
-			return;
-		}
-		if (howToPattern == null) {
-			howToPattern = Pattern.compile("(^|.*\\W)how\\W.*\\W(create|make|build|get)\\W.*tardis(\\W.*|$)", Pattern.CASE_INSENSITIVE);
-		}
-		if (howToPattern.matcher(message).matches()) {
-			plugin.getTrackerKeeper().getHowTo().add(p.getUniqueId());
-			// open how to GUI
-			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-				ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
-				Inventory wall = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "tardis Seeds Menu");
-				wall.setContents(seeds);
-				p.openInventory(wall);
-			}, 1L);
-		}
-	}
+    private void handleChat(Player p, String message) {
+        if (plugin.getTrackerKeeper().getHowTo().contains(p.getUniqueId())) {
+            return;
+        }
+        if (howToPattern == null) {
+            howToPattern = Pattern.compile("(^|.*\\W)how\\W.*\\W(create|make|build|get)\\W.*tardis(\\W.*|$)", Pattern.CASE_INSENSITIVE);
+        }
+        if (howToPattern.matcher(message).matches()) {
+            plugin.getTrackerKeeper().getHowTo().add(p.getUniqueId());
+            // open how to GUI
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
+                Inventory wall = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "tardis Seeds Menu");
+                wall.setContents(seeds);
+                p.openInventory(wall);
+            }, 1L);
+        }
+    }
 }

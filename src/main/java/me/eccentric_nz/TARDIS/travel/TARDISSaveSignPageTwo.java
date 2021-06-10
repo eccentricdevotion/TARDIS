@@ -38,150 +38,150 @@ import java.util.*;
  */
 public class TARDISSaveSignPageTwo {
 
-	private final TARDISPlugin plugin;
-	private final ItemStack[] pageTwo;
-	private final List<Integer> slots = new LinkedList<>(Arrays.asList(45, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90));
-	private final int id;
-	private final Player player;
+    private final TARDISPlugin plugin;
+    private final ItemStack[] pageTwo;
+    private final List<Integer> slots = new LinkedList<>(Arrays.asList(45, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90));
+    private final int id;
+    private final Player player;
 
-	public TARDISSaveSignPageTwo(TARDISPlugin plugin, int id, Player player) {
-		this.plugin = plugin;
-		this.id = id;
-		this.player = player;
-		pageTwo = getItemStack();
-	}
+    public TARDISSaveSignPageTwo(TARDISPlugin plugin, int id, Player player) {
+        this.plugin = plugin;
+        this.id = id;
+        this.player = player;
+        pageTwo = getItemStack();
+    }
 
-	/**
-	 * Constructs an inventory for the Save Sign GUI.
-	 *
-	 * @return an Array of itemStacks (an inventory)
-	 */
-	private ItemStack[] getItemStack() {
-		HashMap<Integer, ItemStack> dests = new HashMap<>();
-		// saved destinations
-		HashMap<String, Object> did = new HashMap<>();
-		did.put("tardis_id", id);
-		ResultSetDestinations rsd = new ResultSetDestinations(plugin, did, true);
-		int i = 1;
-		ItemStack[] stack = new ItemStack[54];
-		if (rsd.resultSet()) {
-			ArrayList<HashMap<String, String>> data = rsd.getData();
-			// cycle through saves
-			for (HashMap<String, String> map : data) {
-				if (map.get("type").equals("0")) {
-					int slot;
-					if (!map.get("slot").equals("-1")) {
-						slot = TARDISNumberParsers.parseInt(map.get("slot"));
-						if (i > 45 && slot < 45) {
-							slot = slots.get(0);
-						}
-					} else {
-						slot = slots.get(0);
-					}
-					slots.remove(Integer.valueOf(slot));
-					if (slot > 44) {
-						Material material;
-						if (map.get("icon").isEmpty()) {
-							material = TARDISConstants.GUI_IDS.get(i);
-						} else {
-							try {
-								material = Material.valueOf(map.get("icon"));
-							} catch (IllegalArgumentException e) {
-								material = TARDISConstants.GUI_IDS.get(i);
-							}
-						}
-						ItemStack is = new ItemStack(material, 1);
-						ItemMeta im = is.getItemMeta();
-						assert im != null;
-						im.setDisplayName(map.get("dest_name"));
-						List<String> lore = new ArrayList<>();
-						lore.add(map.get("world"));
-						lore.add(map.get("x"));
-						lore.add(map.get("y"));
-						lore.add(map.get("z"));
-						lore.add(map.get("direction"));
-						lore.add((map.get("submarine").equals("1")) ? "true" : "false");
-						if (!map.get("preset").isEmpty()) {
-							lore.add(map.get("preset"));
-						}
-						im.setLore(lore);
-						is.setItemMeta(im);
-						dests.put(slot, is);
-					}
-					i++;
-				}
-			}
+    /**
+     * Constructs an inventory for the Save Sign GUI.
+     *
+     * @return an Array of itemStacks (an inventory)
+     */
+    private ItemStack[] getItemStack() {
+        HashMap<Integer, ItemStack> dests = new HashMap<>();
+        // saved destinations
+        HashMap<String, Object> did = new HashMap<>();
+        did.put("tardis_id", id);
+        ResultSetDestinations rsd = new ResultSetDestinations(plugin, did, true);
+        int i = 1;
+        ItemStack[] stack = new ItemStack[54];
+        if (rsd.resultSet()) {
+            ArrayList<HashMap<String, String>> data = rsd.getData();
+            // cycle through saves
+            for (HashMap<String, String> map : data) {
+                if (map.get("type").equals("0")) {
+                    int slot;
+                    if (!map.get("slot").equals("-1")) {
+                        slot = TARDISNumberParsers.parseInt(map.get("slot"));
+                        if (i > 45 && slot < 45) {
+                            slot = slots.get(0);
+                        }
+                    } else {
+                        slot = slots.get(0);
+                    }
+                    slots.remove(Integer.valueOf(slot));
+                    if (slot > 44) {
+                        Material material;
+                        if (map.get("icon").isEmpty()) {
+                            material = TARDISConstants.GUI_IDS.get(i);
+                        } else {
+                            try {
+                                material = Material.valueOf(map.get("icon"));
+                            } catch (IllegalArgumentException e) {
+                                material = TARDISConstants.GUI_IDS.get(i);
+                            }
+                        }
+                        ItemStack is = new ItemStack(material, 1);
+                        ItemMeta im = is.getItemMeta();
+                        assert im != null;
+                        im.setDisplayName(map.get("dest_name"));
+                        List<String> lore = new ArrayList<>();
+                        lore.add(map.get("world"));
+                        lore.add(map.get("x"));
+                        lore.add(map.get("y"));
+                        lore.add(map.get("z"));
+                        lore.add(map.get("direction"));
+                        lore.add((map.get("submarine").equals("1")) ? "true" : "false");
+                        if (!map.get("preset").isEmpty()) {
+                            lore.add(map.get("preset"));
+                        }
+                        im.setLore(lore);
+                        is.setItemMeta(im);
+                        dests.put(slot, is);
+                    }
+                    i++;
+                }
+            }
 
-			for (int s = 45; s < 90; s++) {
-				stack[s - 45] = dests.getOrDefault(s, null);
-			}
-			// add button to allow rearranging saves
-			ItemStack tool = new ItemStack(Material.ARROW, 1);
-			ItemMeta rearrange = tool.getItemMeta();
-			assert rearrange != null;
-			rearrange.setDisplayName("Rearrange saves");
-			rearrange.setCustomModelData(GUISaves.REARRANGE_SAVES.getCustomModelData());
-			tool.setItemMeta(rearrange);
-			// add button to allow deleting saves
-			ItemStack bucket = new ItemStack(Material.BUCKET, 1);
-			ItemMeta delete = bucket.getItemMeta();
-			assert delete != null;
-			delete.setDisplayName("Delete save");
-			delete.setCustomModelData(GUISaves.DELETE_SAVE.getCustomModelData());
-			bucket.setItemMeta(delete);
-			ItemStack own;
-			// is it this player's tardis?
-			ResultSetTardisID rstid = new ResultSetTardisID(plugin);
-			if (rstid.fromUUID(player.getUniqueId().toString())) {
-				// add button to view own saves (if in another player's tardis)
-				if (rstid.getTardisId() != id) {
-					own = new ItemStack(GUISaves.LOAD_MY_SAVES.getMaterial(), 1);
-					ItemMeta saves = own.getItemMeta();
-					assert saves != null;
-					saves.setDisplayName(GUISaves.LOAD_MY_SAVES.getName());
-					saves.setCustomModelData(GUISaves.LOAD_MY_SAVES.getCustomModelData());
-					own.setItemMeta(saves);
-				} else {
-					// get tardis id of tardis player is in as they may have switched using the 'load my saves' button
-					int tid = TARDISInteriorPostioning.getTARDISIdFromLocation(player.getLocation());
-					if (tid != id) {
-						own = new ItemStack(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getMaterial(), 1);
-						ItemMeta saves = own.getItemMeta();
-						assert saves != null;
-						saves.setDisplayName(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getName());
-						saves.setCustomModelData(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getCustomModelData());
-						own.setItemMeta(saves);
-					}
-				}
-			}
-			// add button to go to back to previous page
-			ItemStack prev = new ItemStack(GUISaves.GO_TO_PAGE_1.getMaterial(), 1);
-			ItemMeta page = prev.getItemMeta();
-			assert page != null;
-			page.setDisplayName(GUISaves.GO_TO_PAGE_1.getName());
-			page.setCustomModelData(GUISaves.GO_TO_PAGE_1.getCustomModelData());
-			prev.setItemMeta(page);
-			// add button to load tardis areas
-			ItemStack map = new ItemStack(Material.MAP, 1);
-			ItemMeta switchTo = map.getItemMeta();
-			assert switchTo != null;
-			switchTo.setDisplayName("Load tardis areas");
-			switchTo.setCustomModelData(GUISaves.LOAD_TARDIS_AREAS.getCustomModelData());
-			map.setItemMeta(switchTo);
-			for (int m = 45; m < 54; m++) {
-				switch (m) {
-					case 45 -> stack[m] = tool;
-					case 47 -> stack[m] = bucket;
-					case 51 -> stack[m] = prev;
-					case 53 -> stack[m] = map;
-					default -> stack[m] = null;
-				}
-			}
-		}
-		return stack;
-	}
+            for (int s = 45; s < 90; s++) {
+                stack[s - 45] = dests.getOrDefault(s, null);
+            }
+            // add button to allow rearranging saves
+            ItemStack tool = new ItemStack(Material.ARROW, 1);
+            ItemMeta rearrange = tool.getItemMeta();
+            assert rearrange != null;
+            rearrange.setDisplayName("Rearrange saves");
+            rearrange.setCustomModelData(GUISaves.REARRANGE_SAVES.getCustomModelData());
+            tool.setItemMeta(rearrange);
+            // add button to allow deleting saves
+            ItemStack bucket = new ItemStack(Material.BUCKET, 1);
+            ItemMeta delete = bucket.getItemMeta();
+            assert delete != null;
+            delete.setDisplayName("Delete save");
+            delete.setCustomModelData(GUISaves.DELETE_SAVE.getCustomModelData());
+            bucket.setItemMeta(delete);
+            ItemStack own;
+            // is it this player's tardis?
+            ResultSetTardisID rstid = new ResultSetTardisID(plugin);
+            if (rstid.fromUUID(player.getUniqueId().toString())) {
+                // add button to view own saves (if in another player's tardis)
+                if (rstid.getTardisId() != id) {
+                    own = new ItemStack(GUISaves.LOAD_MY_SAVES.getMaterial(), 1);
+                    ItemMeta saves = own.getItemMeta();
+                    assert saves != null;
+                    saves.setDisplayName(GUISaves.LOAD_MY_SAVES.getName());
+                    saves.setCustomModelData(GUISaves.LOAD_MY_SAVES.getCustomModelData());
+                    own.setItemMeta(saves);
+                } else {
+                    // get tardis id of tardis player is in as they may have switched using the 'load my saves' button
+                    int tid = TARDISInteriorPostioning.getTARDISIdFromLocation(player.getLocation());
+                    if (tid != id) {
+                        own = new ItemStack(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getMaterial(), 1);
+                        ItemMeta saves = own.getItemMeta();
+                        assert saves != null;
+                        saves.setDisplayName(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getName());
+                        saves.setCustomModelData(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getCustomModelData());
+                        own.setItemMeta(saves);
+                    }
+                }
+            }
+            // add button to go to back to previous page
+            ItemStack prev = new ItemStack(GUISaves.GO_TO_PAGE_1.getMaterial(), 1);
+            ItemMeta page = prev.getItemMeta();
+            assert page != null;
+            page.setDisplayName(GUISaves.GO_TO_PAGE_1.getName());
+            page.setCustomModelData(GUISaves.GO_TO_PAGE_1.getCustomModelData());
+            prev.setItemMeta(page);
+            // add button to load tardis areas
+            ItemStack map = new ItemStack(Material.MAP, 1);
+            ItemMeta switchTo = map.getItemMeta();
+            assert switchTo != null;
+            switchTo.setDisplayName("Load tardis areas");
+            switchTo.setCustomModelData(GUISaves.LOAD_TARDIS_AREAS.getCustomModelData());
+            map.setItemMeta(switchTo);
+            for (int m = 45; m < 54; m++) {
+                switch (m) {
+                    case 45 -> stack[m] = tool;
+                    case 47 -> stack[m] = bucket;
+                    case 51 -> stack[m] = prev;
+                    case 53 -> stack[m] = map;
+                    default -> stack[m] = null;
+                }
+            }
+        }
+        return stack;
+    }
 
-	public ItemStack[] getPageTwo() {
-		return pageTwo;
-	}
+    public ItemStack[] getPageTwo() {
+        return pageTwo;
+    }
 }

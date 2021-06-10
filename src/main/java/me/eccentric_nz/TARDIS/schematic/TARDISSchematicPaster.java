@@ -44,139 +44,137 @@ import static me.eccentric_nz.tardis.schematic.TARDISBannerSetter.setBanners;
  */
 class TARDISSchematicPaster implements Runnable {
 
-	private final TARDISPlugin plugin;
-	private final Player player;
-	private final HashMap<Block, BlockData> postRedstoneTorches = new HashMap<>();
-	private final HashMap<Block, TARDISBannerData> postBanners = new HashMap<>();
-	private int task, l, r, h, w, d, x, y, z;
-	private int counter = 0;
-	private double div = 1.0d;
-	private World world;
-	private JsonObject obj;
-	private JsonArray arr;
-	private boolean running = false;
-	private BossBar bb;
+    private final TARDISPlugin plugin;
+    private final Player player;
+    private final HashMap<Block, BlockData> postRedstoneTorches = new HashMap<>();
+    private final HashMap<Block, TARDISBannerData> postBanners = new HashMap<>();
+    private int task, l, r, h, w, d, x, y, z;
+    private int counter = 0;
+    private double div = 1.0d;
+    private World world;
+    private JsonObject obj;
+    private JsonArray arr;
+    private boolean running = false;
+    private BossBar bb;
 
-	TARDISSchematicPaster(TARDISPlugin plugin, Player player) {
-		this.plugin = plugin;
-		this.player = player;
-		l = 0;
-		r = 0;
-	}
+    TARDISSchematicPaster(TARDISPlugin plugin, Player player) {
+        this.plugin = plugin;
+        this.player = player;
+        l = 0;
+        r = 0;
+    }
 
-	@Override
-	public void run() {
-		// initialise
-		if (!running) {
-			UUID uuid = player.getUniqueId();
-			if (!plugin.getTrackerKeeper().getPastes().containsKey(uuid)) {
-				player.sendMessage(
-						plugin.getPluginName() + "No schematic loaded! " + ChatColor.GREEN + "/ts load [name]");
-				plugin.getServer().getScheduler().cancelTask(task);
-				task = -1;
-				return;
-			}
-			obj = plugin.getTrackerKeeper().getPastes().get(uuid);
-			// get dimensions
-			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-			h = dimensions.get("height").getAsInt() - 1;
-			w = dimensions.get("width").getAsInt();
-			d = dimensions.get("length").getAsInt() - 1;
-			div = (h + 1.0d) * w * (d + 1.0d);
-			// get start location
-			JsonObject r = obj.get("relative").getAsJsonObject();
-			int rx = r.get("x").getAsInt();
-			int ry = r.get("y").getAsInt();
-			int rz = r.get("z").getAsInt();
-			x = player.getLocation().getBlockX() - rx;
-			y = player.getLocation().getBlockY() - ry;
-			z = player.getLocation().getBlockZ() - rz;
-			world = player.getWorld();
-			// get input array
-			arr = obj.get("input").getAsJsonArray();
-			bb = Bukkit.createBossBar("tardis Schematic Paste Progress", BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
-			bb.setProgress(0);
-			bb.addPlayer(player);
-			bb.setVisible(true);
-			running = true;
-		}
-		if (l == h && r == w - 1) {
-			for (Map.Entry<Block, BlockData> map : postRedstoneTorches.entrySet()) {
-				map.getKey().setBlockData(map.getValue());
-				if (TARDISPlugin.plugin.getBlockLogger().isLogging()) {
-					TARDISPlugin.plugin.getBlockLogger().logPlacement(map.getKey());
-				}
-			}
-			setBanners(postBanners);
-			// paintings
-			if (obj.has("paintings")) {
-				JsonArray paintings = (JsonArray) obj.get("paintings");
-				for (int i = 0; i < paintings.size(); i++) {
-					JsonObject painting = paintings.get(i).getAsJsonObject();
-					JsonObject rel = painting.get("rel_location").getAsJsonObject();
-					int px = rel.get("x").getAsInt();
-					int py = rel.get("y").getAsInt();
-					int pz = rel.get("z").getAsInt();
-					Art art = Art.valueOf(painting.get("art").getAsString());
-					BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-					Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world,
-							x + px, y + py, z + pz));
-					try {
-						Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
-						ent.teleport(pl);
-						ent.setFacingDirection(facing, true);
-						ent.setArt(art, true);
-					} catch (IllegalArgumentException e) {
-						plugin.debug("Invalid painting location!");
-					}
-				}
-			}
-			plugin.getServer().getScheduler().cancelTask(task);
-			task = -1;
-			bb.setProgress(1);
-			bb.setVisible(false);
-			bb.removeAll();
-		}
-		// paste a column
-		JsonArray level = (JsonArray) arr.get(l);
-		JsonArray row = (JsonArray) level.get(r);
-		for (int c = 0; c <= d; c++) {
-			counter++;
-			JsonObject col = row.get(c).getAsJsonObject();
-			BlockData data = plugin.getServer().createBlockData(col.get("data").getAsString());
-			Block block = world.getBlockAt(x + r, y + l, z + c);
-			if (!block.getType().isAir() && plugin.getBlockLogger().isLogging()) {
-				plugin.getBlockLogger().logRemoval(block);
-			}
-			switch (data.getMaterial()) {
-				case REDSTONE_TORCH -> postRedstoneTorches.put(block, data);
-				case BLACK_BANNER, BLACK_WALL_BANNER, BLUE_BANNER, BLUE_WALL_BANNER, BROWN_BANNER, BROWN_WALL_BANNER, CYAN_BANNER, CYAN_WALL_BANNER, GRAY_BANNER, GRAY_WALL_BANNER, GREEN_BANNER, GREEN_WALL_BANNER, LIGHT_BLUE_BANNER, LIGHT_BLUE_WALL_BANNER, LIGHT_GRAY_BANNER, LIGHT_GRAY_WALL_BANNER, LIME_BANNER, LIME_WALL_BANNER, MAGENTA_BANNER, MAGENTA_WALL_BANNER, ORANGE_BANNER, ORANGE_WALL_BANNER, PINK_BANNER, PINK_WALL_BANNER, PURPLE_BANNER, PURPLE_WALL_BANNER, RED_BANNER, RED_WALL_BANNER, WHITE_BANNER, WHITE_WALL_BANNER, YELLOW_BANNER, YELLOW_WALL_BANNER -> {
-					JsonObject state = col.has("banner") ? col.get("banner").getAsJsonObject() : null;
-					if (state != null) {
-						TARDISBannerData tbd = new TARDISBannerData(data, state);
-						postBanners.put(block, tbd);
-					}
-				}
-				default -> {
-					block.setBlockData(data, true);
-					if (plugin.getBlockLogger().isLogging()) {
-						plugin.getBlockLogger().logPlacement(block);
-					}
-				}
-			}
-			double progress = counter / div;
-			bb.setProgress(progress);
-			if (c == d && r < w) {
-				r++;
-			}
-			if (c == d && r == w && l < h) {
-				r = 0;
-				l++;
-			}
-		}
-	}
+    @Override
+    public void run() {
+        // initialise
+        if (!running) {
+            UUID uuid = player.getUniqueId();
+            if (!plugin.getTrackerKeeper().getPastes().containsKey(uuid)) {
+                player.sendMessage(plugin.getPluginName() + "No schematic loaded! " + ChatColor.GREEN + "/ts load [name]");
+                plugin.getServer().getScheduler().cancelTask(task);
+                task = -1;
+                return;
+            }
+            obj = plugin.getTrackerKeeper().getPastes().get(uuid);
+            // get dimensions
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            h = dimensions.get("height").getAsInt() - 1;
+            w = dimensions.get("width").getAsInt();
+            d = dimensions.get("length").getAsInt() - 1;
+            div = (h + 1.0d) * w * (d + 1.0d);
+            // get start location
+            JsonObject r = obj.get("relative").getAsJsonObject();
+            int rx = r.get("x").getAsInt();
+            int ry = r.get("y").getAsInt();
+            int rz = r.get("z").getAsInt();
+            x = player.getLocation().getBlockX() - rx;
+            y = player.getLocation().getBlockY() - ry;
+            z = player.getLocation().getBlockZ() - rz;
+            world = player.getWorld();
+            // get input array
+            arr = obj.get("input").getAsJsonArray();
+            bb = Bukkit.createBossBar("tardis Schematic Paste Progress", BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
+            bb.setProgress(0);
+            bb.addPlayer(player);
+            bb.setVisible(true);
+            running = true;
+        }
+        if (l == h && r == w - 1) {
+            for (Map.Entry<Block, BlockData> map : postRedstoneTorches.entrySet()) {
+                map.getKey().setBlockData(map.getValue());
+                if (TARDISPlugin.plugin.getBlockLogger().isLogging()) {
+                    TARDISPlugin.plugin.getBlockLogger().logPlacement(map.getKey());
+                }
+            }
+            setBanners(postBanners);
+            // paintings
+            if (obj.has("paintings")) {
+                JsonArray paintings = (JsonArray) obj.get("paintings");
+                for (int i = 0; i < paintings.size(); i++) {
+                    JsonObject painting = paintings.get(i).getAsJsonObject();
+                    JsonObject rel = painting.get("rel_location").getAsJsonObject();
+                    int px = rel.get("x").getAsInt();
+                    int py = rel.get("y").getAsInt();
+                    int pz = rel.get("z").getAsInt();
+                    Art art = Art.valueOf(painting.get("art").getAsString());
+                    BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
+                    Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));
+                    try {
+                        Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
+                        ent.teleport(pl);
+                        ent.setFacingDirection(facing, true);
+                        ent.setArt(art, true);
+                    } catch (IllegalArgumentException e) {
+                        plugin.debug("Invalid painting location!");
+                    }
+                }
+            }
+            plugin.getServer().getScheduler().cancelTask(task);
+            task = -1;
+            bb.setProgress(1);
+            bb.setVisible(false);
+            bb.removeAll();
+        }
+        // paste a column
+        JsonArray level = (JsonArray) arr.get(l);
+        JsonArray row = (JsonArray) level.get(r);
+        for (int c = 0; c <= d; c++) {
+            counter++;
+            JsonObject col = row.get(c).getAsJsonObject();
+            BlockData data = plugin.getServer().createBlockData(col.get("data").getAsString());
+            Block block = world.getBlockAt(x + r, y + l, z + c);
+            if (!block.getType().isAir() && plugin.getBlockLogger().isLogging()) {
+                plugin.getBlockLogger().logRemoval(block);
+            }
+            switch (data.getMaterial()) {
+                case REDSTONE_TORCH -> postRedstoneTorches.put(block, data);
+                case BLACK_BANNER, BLACK_WALL_BANNER, BLUE_BANNER, BLUE_WALL_BANNER, BROWN_BANNER, BROWN_WALL_BANNER, CYAN_BANNER, CYAN_WALL_BANNER, GRAY_BANNER, GRAY_WALL_BANNER, GREEN_BANNER, GREEN_WALL_BANNER, LIGHT_BLUE_BANNER, LIGHT_BLUE_WALL_BANNER, LIGHT_GRAY_BANNER, LIGHT_GRAY_WALL_BANNER, LIME_BANNER, LIME_WALL_BANNER, MAGENTA_BANNER, MAGENTA_WALL_BANNER, ORANGE_BANNER, ORANGE_WALL_BANNER, PINK_BANNER, PINK_WALL_BANNER, PURPLE_BANNER, PURPLE_WALL_BANNER, RED_BANNER, RED_WALL_BANNER, WHITE_BANNER, WHITE_WALL_BANNER, YELLOW_BANNER, YELLOW_WALL_BANNER -> {
+                    JsonObject state = col.has("banner") ? col.get("banner").getAsJsonObject() : null;
+                    if (state != null) {
+                        TARDISBannerData tbd = new TARDISBannerData(data, state);
+                        postBanners.put(block, tbd);
+                    }
+                }
+                default -> {
+                    block.setBlockData(data, true);
+                    if (plugin.getBlockLogger().isLogging()) {
+                        plugin.getBlockLogger().logPlacement(block);
+                    }
+                }
+            }
+            double progress = counter / div;
+            bb.setProgress(progress);
+            if (c == d && r < w) {
+                r++;
+            }
+            if (c == d && r == w && l < h) {
+                r = 0;
+                l++;
+            }
+        }
+    }
 
-	public void setTask(int task) {
-		this.task = task;
-	}
+    public void setTask(int task) {
+        this.task = task;
+    }
 }

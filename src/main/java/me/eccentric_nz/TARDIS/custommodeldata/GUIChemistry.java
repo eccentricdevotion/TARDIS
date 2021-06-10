@@ -21,47 +21,47 @@ import org.bukkit.Material;
 
 public enum GUIChemistry {
 
-	// tardis Areas
-	CLOSE(1, 1, Material.BOWL),
-	INFO(57, 1, Material.BOWL),
-	CHECK(89, 1, Material.BOWL),
-	CRAFT(90, 1, Material.BOWL),
-	ELECTRONS(91, 1, Material.BOWL),
-	NEUTRONS(92, 1, Material.BOWL),
-	PROTONS(93, 1, Material.BOWL),
-	REDUCE(94, 1, Material.BOWL),
-	SCROLL_DOWN(7, 1, Material.ARROW),
-	SCROLL_UP(8, 1, Material.ARROW),
-	PLUS(9, 1, Material.ARROW),
-	MINUS(10, 1, Material.ARROW),
-	ELEMENTS(10000999, 1, Material.FEATHER),
-	COMPOUNDS(1, 1, Material.GLASS_BOTTLE),
-	PRODUCTS(1, 1, Material.CRAFTING_TABLE);
+    // tardis Areas
+    CLOSE(1, 1, Material.BOWL),
+    INFO(57, 1, Material.BOWL),
+    CHECK(89, 1, Material.BOWL),
+    CRAFT(90, 1, Material.BOWL),
+    ELECTRONS(91, 1, Material.BOWL),
+    NEUTRONS(92, 1, Material.BOWL),
+    PROTONS(93, 1, Material.BOWL),
+    REDUCE(94, 1, Material.BOWL),
+    SCROLL_DOWN(7, 1, Material.ARROW),
+    SCROLL_UP(8, 1, Material.ARROW),
+    PLUS(9, 1, Material.ARROW),
+    MINUS(10, 1, Material.ARROW),
+    ELEMENTS(10000999, 1, Material.FEATHER),
+    COMPOUNDS(1, 1, Material.GLASS_BOTTLE),
+    PRODUCTS(1, 1, Material.CRAFTING_TABLE);
 
-	private final int customModelData;
-	private final int slot;
-	private final Material material;
+    private final int customModelData;
+    private final int slot;
+    private final Material material;
 
-	GUIChemistry(int customModelData, int slot, Material material) {
-		this.customModelData = customModelData;
-		this.slot = slot;
-		this.material = material;
-	}
+    GUIChemistry(int customModelData, int slot, Material material) {
+        this.customModelData = customModelData;
+        this.slot = slot;
+        this.material = material;
+    }
 
-	public int getCustomModelData() {
-		return customModelData;
-	}
+    public int getCustomModelData() {
+        return customModelData;
+    }
 
-	public int getSlot() {
-		return slot;
-	}
+    public int getSlot() {
+        return slot;
+    }
 
-	public Material getMaterial() {
-		return material;
-	}
+    public Material getMaterial() {
+        return material;
+    }
 
-	public String getName() {
-		String s = toString();
-		return TARDISStringUtils.sentenceCase(s);
-	}
+    public String getName() {
+        String s = toString();
+        return TARDISStringUtils.sentenceCase(s);
+    }
 }

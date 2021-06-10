@@ -28,28 +28,26 @@ import org.bukkit.event.block.BlockRedstoneEvent;
  */
 public class TARDISRedstoneListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISRedstoneListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISRedstoneListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler
-	public void onRedstoneChange(BlockRedstoneEvent event) {
-		String block = event.getBlock().getLocation().toString();
-		if (plugin.getGeneralKeeper().getSonicWires().contains(block) ||
-			plugin.getGeneralKeeper().getSonicLamps().contains(block) ||
-			plugin.getGeneralKeeper().getSonicRails().contains(block)) {
-			event.setNewCurrent(event.getOldCurrent());
-		}
-	}
+    @EventHandler
+    public void onRedstoneChange(BlockRedstoneEvent event) {
+        String block = event.getBlock().getLocation().toString();
+        if (plugin.getGeneralKeeper().getSonicWires().contains(block) || plugin.getGeneralKeeper().getSonicLamps().contains(block) || plugin.getGeneralKeeper().getSonicRails().contains(block)) {
+            event.setNewCurrent(event.getOldCurrent());
+        }
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onPistonRetract(BlockPistonRetractEvent event) {
-		String block = event.getBlock().getLocation().toString();
-		if (plugin.getGeneralKeeper().getSonicPistons().contains(block)) {
-			event.setCancelled(true);
-			TARDISSonicRedstone.setExtension(plugin, event.getBlock());
-		}
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onPistonRetract(BlockPistonRetractEvent event) {
+        String block = event.getBlock().getLocation().toString();
+        if (plugin.getGeneralKeeper().getSonicPistons().contains(block)) {
+            event.setCancelled(true);
+            TARDISSonicRedstone.setExtension(plugin, event.getBlock());
+        }
+    }
 }

@@ -23,31 +23,31 @@ import java.util.UUID;
  */
 public class Reminder {
 
-	private final int reminderId;
-	private final UUID uuid;
-	private final String reminder;
-	private final long time;
+    private final int reminderId;
+    private final UUID uuid;
+    private final String reminder;
+    private final long time;
 
-	public Reminder(int reminderId, UUID uuid, String reminder, long time) {
-		this.reminderId = reminderId;
-		this.uuid = uuid;
-		this.reminder = reminder;
-		this.time = time;
-	}
+    public Reminder(int reminderId, UUID uuid, String reminder, long time) {
+        this.reminderId = reminderId;
+        this.uuid = uuid;
+        this.reminder = reminder;
+        this.time = time;
+    }
 
-	public int getReminderId() {
-		return reminderId;
-	}
+    public int getReminderId() {
+        return reminderId;
+    }
 
-	public UUID getUuid() {
-		return uuid;
-	}
+    public UUID getUuid() {
+        return uuid;
+    }
 
-	public String getReminder() {
-		return reminder;
-	}
+    public String getReminder() {
+        return reminder;
+    }
 
-	public long getTime() {
-		return time;
-	}
+    public long getTime() {
+        return time;
+    }
 }

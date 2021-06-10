@@ -29,27 +29,27 @@ import org.bukkit.entity.Player;
  */
 class TARDISManualFlightStarter implements Runnable {
 
-	private final TARDISPlugin plugin;
-	private final Player player;
-	private final int id;
+    private final TARDISPlugin plugin;
+    private final Player player;
+    private final int id;
 
-	TARDISManualFlightStarter(TARDISPlugin plugin, Player player, int id) {
-		this.plugin = plugin;
-		this.player = player;
-		this.id = id;
-	}
+    TARDISManualFlightStarter(TARDISPlugin plugin, Player player, int id) {
+        this.plugin = plugin;
+        this.player = player;
+        this.id = id;
+    }
 
-	@Override
-	public void run() {
-		long delay = plugin.getConfig().getLong("travel.manual_flight_delay");
-		// start a manual flight session
-		TARDISMessage.send(player, "FLIGHT_ENGAGED");
-		TARDISManualFlightRunnable mfr = new TARDISManualFlightRunnable(plugin, player, id);
-		int taskid = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, mfr, 10L, delay);
-		mfr.setTaskId(taskid);
-		// play inflight sound
-		if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-			plugin.getServer().getScheduler().runTask(plugin, new TARDISLoopingFlightSound(plugin, player.getLocation(), id));
-		}
-	}
+    @Override
+    public void run() {
+        long delay = plugin.getConfig().getLong("travel.manual_flight_delay");
+        // start a manual flight session
+        TARDISMessage.send(player, "FLIGHT_ENGAGED");
+        TARDISManualFlightRunnable mfr = new TARDISManualFlightRunnable(plugin, player, id);
+        int taskid = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, mfr, 10L, delay);
+        mfr.setTaskId(taskid);
+        // play inflight sound
+        if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+            plugin.getServer().getScheduler().runTask(plugin, new TARDISLoopingFlightSound(plugin, player.getLocation(), id));
+        }
+    }
 }

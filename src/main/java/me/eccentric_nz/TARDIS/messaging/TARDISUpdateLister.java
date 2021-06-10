@@ -30,30 +30,29 @@ import org.bukkit.entity.Player;
  */
 public class TARDISUpdateLister {
 
-	private final Player player;
+    private final Player player;
 
-	public TARDISUpdateLister(Player player) {
-		this.player = player;
-	}
+    public TARDISUpdateLister(Player player) {
+        this.player = player;
+    }
 
-	public void list() {
-		TARDISMessage.send(player, "UPDATE_INFO");
-		TARDISMessage.message(player, ChatColor.GRAY + "Hover over command argument to see a description");
-		TARDISMessage.message(player, ChatColor.GRAY + "Click to run the /tardis update command");
-		TARDISMessage.message(player, "");
-		for (TARDISUpdateableCategory category : TARDISUpdateableCategory.values()) {
-			TARDISMessage.message(player, category.getName());
-			for (Updateable updateable : Updateable.values()) {
-				if (updateable.getCategory() == category) {
-					TextComponent tcu = new TextComponent(updateable.getName());
-					tcu.setColor(category.getColour());
-					tcu.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(updateable.getDescription())));
-					tcu.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-							"/tardis update " + updateable.getName()));
-					player.spigot().sendMessage(tcu);
-				}
-			}
-			TARDISMessage.message(player, "");
-		}
-	}
+    public void list() {
+        TARDISMessage.send(player, "UPDATE_INFO");
+        TARDISMessage.message(player, ChatColor.GRAY + "Hover over command argument to see a description");
+        TARDISMessage.message(player, ChatColor.GRAY + "Click to run the /tardis update command");
+        TARDISMessage.message(player, "");
+        for (TARDISUpdateableCategory category : TARDISUpdateableCategory.values()) {
+            TARDISMessage.message(player, category.getName());
+            for (Updateable updateable : Updateable.values()) {
+                if (updateable.getCategory() == category) {
+                    TextComponent tcu = new TextComponent(updateable.getName());
+                    tcu.setColor(category.getColour());
+                    tcu.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(updateable.getDescription())));
+                    tcu.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tardis update " + updateable.getName()));
+                    player.spigot().sendMessage(tcu);
+                }
+            }
+            TARDISMessage.message(player, "");
+        }
+    }
 }

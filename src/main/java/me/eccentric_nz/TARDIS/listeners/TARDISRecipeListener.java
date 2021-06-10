@@ -32,36 +32,36 @@ import java.util.UUID;
  */
 public class TARDISRecipeListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISRecipeListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISRecipeListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onRecipeClick(InventoryClickEvent event) {
-		Inventory top = event.getView().getTopInventory();
-		InventoryType type = top.getType();
-		if (type == InventoryType.CHEST) {
-			Player player = (Player) event.getWhoClicked();
-			if (plugin.getTrackerKeeper().getRecipeView().contains(player.getUniqueId())) {
-				event.setCancelled(true);
-			}
-		}
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onRecipeClick(InventoryClickEvent event) {
+        Inventory top = event.getView().getTopInventory();
+        InventoryType type = top.getType();
+        if (type == InventoryType.CHEST) {
+            Player player = (Player) event.getWhoClicked();
+            if (plugin.getTrackerKeeper().getRecipeView().contains(player.getUniqueId())) {
+                event.setCancelled(true);
+            }
+        }
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onRecipeClose(InventoryCloseEvent event) {
-		Inventory top = event.getView().getTopInventory();
-		InventoryType type = top.getType();
-		if (type == InventoryType.CHEST) {
-			Player p = (Player) event.getPlayer();
-			UUID uuid = p.getUniqueId();
-			if (plugin.getTrackerKeeper().getRecipeView().contains(uuid)) {
-				plugin.getTrackerKeeper().getRecipeView().remove(uuid);
-				event.getView().getTopInventory().clear();
-				p.updateInventory();
-			}
-		}
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onRecipeClose(InventoryCloseEvent event) {
+        Inventory top = event.getView().getTopInventory();
+        InventoryType type = top.getType();
+        if (type == InventoryType.CHEST) {
+            Player p = (Player) event.getPlayer();
+            UUID uuid = p.getUniqueId();
+            if (plugin.getTrackerKeeper().getRecipeView().contains(uuid)) {
+                plugin.getTrackerKeeper().getRecipeView().remove(uuid);
+                event.getView().getTopInventory().clear();
+                p.updateInventory();
+            }
+        }
+    }
 }

@@ -25,51 +25,51 @@ import java.util.Map;
  */
 public enum BiomeLookup {
 
-	CACTUS_B("DESERT", "DESERT_HILLS"),
-	DIRT_B("MOUNTAINS", "MODIFIED_GRAVELLY_MOUNTAINS"),
-	PODZOL_B("GIANT_TREE_TAIGA", "GIANT_TREE_TAIGA_HILLS"),
-	RED_SAND_B("BADLANDS", "BADLANDS_PLATEAU"),
-	ACACIA_LOG_B("SAVANNA", "SHATTERED_SAVANNA"),
-	DARK_OAK_LOG_B("DARK_FOREST", "DARK_FOREST_HILLS"),
-	OAK_LOG_B("FOREST", "WOODED_HILLS"),
-	SPRUCE_LOG_B("TAIGA", "TAIGA_HILLS"),
-	BIRCH_LOG_B("BIRCH_FOREST", "BIRCH_FOREST_HILLS"),
-	JUNGLE_LOG_B("JUNGLE", "JUNGLE_HILLS"),
-	SAND_B("BEACH", "SNOWY_BEACH"),
-	SNOW_BLOCK_B("SNOWY_TAIGA", "SNOWY_TAIGA_HILLS"),
-	WATER_BUCKET_B("OCEAN", "DEEP_OCEAN"),
-	RED_TULIP_B("FLOWER_FOREST", "TALL_BIRCH_HILLS"),
-	SUNFLOWER_B("PLAINS", "SUNFLOWER_PLAINS"),
-	ICE_B("SNOWY_TUNDRA", "ICE_SPIKES"),
-	MYCELIUM_B("MUSHROOM_FIELDS", "MUSHROOM_FIELD_SHORE"),
-	LILY_PAD_B("SWAMP", "SWAMP_HILLS"),
-	BAMBOO_B("BAMBOO_JUNGLE", "BAMBOO_JUNGLE_HILLS");
+    CACTUS_B("DESERT", "DESERT_HILLS"),
+    DIRT_B("MOUNTAINS", "MODIFIED_GRAVELLY_MOUNTAINS"),
+    PODZOL_B("GIANT_TREE_TAIGA", "GIANT_TREE_TAIGA_HILLS"),
+    RED_SAND_B("BADLANDS", "BADLANDS_PLATEAU"),
+    ACACIA_LOG_B("SAVANNA", "SHATTERED_SAVANNA"),
+    DARK_OAK_LOG_B("DARK_FOREST", "DARK_FOREST_HILLS"),
+    OAK_LOG_B("FOREST", "WOODED_HILLS"),
+    SPRUCE_LOG_B("TAIGA", "TAIGA_HILLS"),
+    BIRCH_LOG_B("BIRCH_FOREST", "BIRCH_FOREST_HILLS"),
+    JUNGLE_LOG_B("JUNGLE", "JUNGLE_HILLS"),
+    SAND_B("BEACH", "SNOWY_BEACH"),
+    SNOW_BLOCK_B("SNOWY_TAIGA", "SNOWY_TAIGA_HILLS"),
+    WATER_BUCKET_B("OCEAN", "DEEP_OCEAN"),
+    RED_TULIP_B("FLOWER_FOREST", "TALL_BIRCH_HILLS"),
+    SUNFLOWER_B("PLAINS", "SUNFLOWER_PLAINS"),
+    ICE_B("SNOWY_TUNDRA", "ICE_SPIKES"),
+    MYCELIUM_B("MUSHROOM_FIELDS", "MUSHROOM_FIELD_SHORE"),
+    LILY_PAD_B("SWAMP", "SWAMP_HILLS"),
+    BAMBOO_B("BAMBOO_JUNGLE", "BAMBOO_JUNGLE_HILLS");
 
-	public final static Map<String, BiomeLookup> BY_REG = Maps.newHashMap();
+    public final static Map<String, BiomeLookup> BY_REG = Maps.newHashMap();
 
-	static {
-		for (BiomeLookup bm : values()) {
-			BY_REG.put(bm.getRegular(), bm);
-		}
-	}
+    static {
+        for (BiomeLookup bm : values()) {
+            BY_REG.put(bm.getRegular(), bm);
+        }
+    }
 
-	String regular;
-	String upper;
+    String regular;
+    String upper;
 
-	BiomeLookup(String regular, String upper) {
-		this.regular = regular;
-		this.upper = upper;
-	}
+    BiomeLookup(String regular, String upper) {
+        this.regular = regular;
+        this.upper = upper;
+    }
 
-	public static BiomeLookup getBiome(String data) {
-		return BY_REG.get(data);
-	}
+    public static BiomeLookup getBiome(String data) {
+        return BY_REG.get(data);
+    }
 
-	public String getRegular() {
-		return regular;
-	}
+    public String getRegular() {
+        return regular;
+    }
 
-	public String getUpper() {
-		return upper;
-	}
+    public String getUpper() {
+        return upper;
+    }
 }

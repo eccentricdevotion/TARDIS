@@ -30,102 +30,101 @@ import java.util.*;
 
 public class TARDISForceField implements Runnable {
 
-	private final TARDISPlugin plugin;
-	private final int range;
-	private final int doubleRange;
-	private int dust = 0;
+    private final TARDISPlugin plugin;
+    private final int range;
+    private final int doubleRange;
+    private int dust = 0;
 
-	public TARDISForceField(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		range = this.plugin.getConfig().getInt("allow.force_field");
-		plugin.debug("Starting force fields with a range of " + range + " blocks.");
-		doubleRange = range * 2;
-	}
+    public TARDISForceField(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        range = this.plugin.getConfig().getInt("allow.force_field");
+        plugin.debug("Starting force fields with a range of " + range + " blocks.");
+        doubleRange = range * 2;
+    }
 
-	public static Vector getTrajectory2d(Location from, Entity to) {
-		return to.getLocation().toVector().subtract(from.toVector()).setY(0).normalize();
-	}
+    public static Vector getTrajectory2d(Location from, Entity to) {
+        return to.getLocation().toVector().subtract(from.toVector()).setY(0).normalize();
+    }
 
-	public static void velocity(Entity ent, Vector vec, double strength) {
-		if (Double.isNaN(vec.getX()) || Double.isNaN(vec.getY()) || Double.isNaN(vec.getZ()) || vec.length() == 0.0D) {
-			return;
-		}
-		vec.normalize();
-		vec.multiply(strength);
-		ent.setFallDistance(0.0F);
-		ent.setVelocity(vec);
-	}
+    public static void velocity(Entity ent, Vector vec, double strength) {
+        if (Double.isNaN(vec.getX()) || Double.isNaN(vec.getY()) || Double.isNaN(vec.getZ()) || vec.length() == 0.0D) {
+            return;
+        }
+        vec.normalize();
+        vec.multiply(strength);
+        ent.setFallDistance(0.0F);
+        ent.setVelocity(vec);
+    }
 
-	public static boolean addToTracker(Player player) {
-		ResultSetForcefield rsff = new ResultSetForcefield(TARDISPlugin.plugin, player.getUniqueId().toString());
-		if (rsff.resultSet()) {
-			TARDISPlugin.plugin.getTrackerKeeper().getActiveForceFields().put(rsff.getUuid(), rsff.getLocation());
-			return true;
-		}
-		return false;
-	}
+    public static boolean addToTracker(Player player) {
+        ResultSetForcefield rsff = new ResultSetForcefield(TARDISPlugin.plugin, player.getUniqueId().toString());
+        if (rsff.resultSet()) {
+            TARDISPlugin.plugin.getTrackerKeeper().getActiveForceFields().put(rsff.getUuid(), rsff.getLocation());
+            return true;
+        }
+        return false;
+    }
 
-	@Override
-	public void run() {
-		for (Map.Entry<UUID, Location> map : plugin.getTrackerKeeper().getActiveForceFields().entrySet()) {
-			Player player = plugin.getServer().getPlayer(map.getKey());
-			if (player == null || !player.isOnline()) {
-				continue;
-			}
-			Location location = map.getValue().clone().add(0.5, 0.5, 0.5);
-			new TARDISForceFieldVisualiser(plugin).showBorder(location.clone(), dust);
-			for (Entity other : Objects.requireNonNull(location.getWorld()).getNearbyEntities(location, doubleRange, doubleRange, doubleRange)) {
-				if (!(other instanceof LivingEntity)) {
-					continue;
-				}
-				if (other instanceof Player) {
-					if (player.equals(other)) {
-						continue;
-					}
-					if (((Player) other).getGameMode() == GameMode.SPECTATOR) {
-						continue;
-					}
-					if (other.hasPermission("tardis.admin")) {
-						continue;
-					}
-					if (isCompanion((Player) other, player)) {
-						continue;
-					}
-				}
-				if (offset(other, map.getValue()) > range) {
-					continue;
-				}
-				while (other.getVehicle() != null) {
-					other = other.getVehicle();
-				}
-				velocity(other, getTrajectory2d(map.getValue(), other), 0.5d);
-				other.getWorld().playSound(other.getLocation(), "tardis_force_field", 0.5f, 1.0f);
-			}
-			dust++;
-			if (dust > 11) {
-				dust = 0;
-			}
-		}
-	}
+    @Override
+    public void run() {
+        for (Map.Entry<UUID, Location> map : plugin.getTrackerKeeper().getActiveForceFields().entrySet()) {
+            Player player = plugin.getServer().getPlayer(map.getKey());
+            if (player == null || !player.isOnline()) {
+                continue;
+            }
+            Location location = map.getValue().clone().add(0.5, 0.5, 0.5);
+            new TARDISForceFieldVisualiser(plugin).showBorder(location.clone(), dust);
+            for (Entity other : Objects.requireNonNull(location.getWorld()).getNearbyEntities(location, doubleRange, doubleRange, doubleRange)) {
+                if (!(other instanceof LivingEntity)) {
+                    continue;
+                }
+                if (other instanceof Player) {
+                    if (player.equals(other)) {
+                        continue;
+                    }
+                    if (((Player) other).getGameMode() == GameMode.SPECTATOR) {
+                        continue;
+                    }
+                    if (other.hasPermission("tardis.admin")) {
+                        continue;
+                    }
+                    if (isCompanion((Player) other, player)) {
+                        continue;
+                    }
+                }
+                if (offset(other, map.getValue()) > range) {
+                    continue;
+                }
+                while (other.getVehicle() != null) {
+                    other = other.getVehicle();
+                }
+                velocity(other, getTrajectory2d(map.getValue(), other), 0.5d);
+                other.getWorld().playSound(other.getLocation(), "tardis_force_field", 0.5f, 1.0f);
+            }
+            dust++;
+            if (dust > 11) {
+                dust = 0;
+            }
+        }
+    }
 
-	private double offset(Entity entity, Location location) {
-		return (entity.getWorld() != location.getWorld()) ?
-				range + 999.0d : entity.getLocation().toVector().subtract(location.toVector()).length();
-	}
+    private double offset(Entity entity, Location location) {
+        return (entity.getWorld() != location.getWorld()) ? range + 999.0d : entity.getLocation().toVector().subtract(location.toVector()).length();
+    }
 
-	private boolean isCompanion(Player other, Player player) {
-		ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
-		if (rs.fromUUID(player.getUniqueId().toString())) {
-			List<String> comps;
-			if (rs.getCompanions() != null && !rs.getCompanions().isEmpty()) {
-				if (rs.getCompanions().equalsIgnoreCase("everyone")) {
-					return true;
-				} else {
-					comps = Arrays.asList(rs.getCompanions().split(":"));
-					return comps.contains(other.getUniqueId().toString());
-				}
-			}
-		}
-		return false;
-	}
+    private boolean isCompanion(Player other, Player player) {
+        ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
+        if (rs.fromUUID(player.getUniqueId().toString())) {
+            List<String> comps;
+            if (rs.getCompanions() != null && !rs.getCompanions().isEmpty()) {
+                if (rs.getCompanions().equalsIgnoreCase("everyone")) {
+                    return true;
+                } else {
+                    comps = Arrays.asList(rs.getCompanions().split(":"));
+                    return comps.contains(other.getUniqueId().toString());
+                }
+            }
+        }
+        return false;
+    }
 }

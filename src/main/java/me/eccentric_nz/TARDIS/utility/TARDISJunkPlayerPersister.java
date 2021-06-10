@@ -26,18 +26,18 @@ import java.util.HashMap;
  */
 public class TARDISJunkPlayerPersister {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISJunkPlayerPersister(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISJunkPlayerPersister(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public void load() {
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("chameleon_preset", "JUNK_MODE");
-		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", true, 2);
-		if (rs.resultSet()) {
-			rs.getData().forEach((t) -> plugin.getTrackerKeeper().getJunkPlayers().put(t.getUuid(), t.getTardisId()));
-		}
-	}
+    public void load() {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("chameleon_preset", "JUNK_MODE");
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", true, 2);
+        if (rs.resultSet()) {
+            rs.getData().forEach((t) -> plugin.getTrackerKeeper().getJunkPlayers().put(t.getUuid(), t.getTardisId()));
+        }
+    }
 }

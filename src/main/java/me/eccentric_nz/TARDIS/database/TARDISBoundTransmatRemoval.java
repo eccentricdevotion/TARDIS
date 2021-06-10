@@ -24,39 +24,39 @@ import java.sql.SQLException;
 
 public class TARDISBoundTransmatRemoval {
 
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final TARDISPlugin plugin;
-	private final int id;
-	private final String name;
-	private final String prefix;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final TARDISPlugin plugin;
+    private final int id;
+    private final String name;
+    private final String prefix;
 
-	public TARDISBoundTransmatRemoval(TARDISPlugin plugin, int id, String name) {
-		this.plugin = plugin;
-		this.id = id;
-		this.name = name;
-		prefix = this.plugin.getPrefix();
-	}
+    public TARDISBoundTransmatRemoval(TARDISPlugin plugin, int id, String name) {
+        this.plugin = plugin;
+        this.id = id;
+        this.name = name;
+        prefix = this.plugin.getPrefix();
+    }
 
-	public void unbind() {
-		PreparedStatement statement = null;
-		String query = "DELETE FROM " + prefix + "bind WHERE tardis_id = ? AND type = 6 AND name = ?";
-		try {
-			service.testConnection(connection);
-			statement = connection.prepareStatement(query);
-			statement.setInt(1, id);
-			statement.setString(2, name);
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			plugin.debug("Delete error for unbind transmats! " + e.getMessage());
-		} finally {
-			try {
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing unbind transmats! " + e.getMessage());
-			}
-		}
-	}
+    public void unbind() {
+        PreparedStatement statement = null;
+        String query = "DELETE FROM " + prefix + "bind WHERE tardis_id = ? AND type = 6 AND name = ?";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            statement.setString(2, name);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            plugin.debug("Delete error for unbind transmats! " + e.getMessage());
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing unbind transmats! " + e.getMessage());
+            }
+        }
+    }
 }

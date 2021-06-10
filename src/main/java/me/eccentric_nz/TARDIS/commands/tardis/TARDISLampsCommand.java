@@ -47,99 +47,97 @@ import java.util.HashMap;
  */
 class TARDISLampsCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISLampsCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISLampsCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	/**
-	 * Updates TARDISes from pre-malfunction plugin versions so that the lamps can flash.
-	 *
-	 * @param owner the Timelord of the tardis
-	 * @return true if the tardis has not been updated, otherwise false
-	 */
+    /**
+     * Updates TARDISes from pre-malfunction plugin versions so that the lamps can flash.
+     *
+     * @param owner the Timelord of the tardis
+     * @return true if the tardis has not been updated, otherwise false
+     */
 
-	boolean addLampBlocks(Player owner) {
-		// check they have permission
-		if (!TARDISPermission.hasPermission(owner, "tardis.update")) {
-			TARDISMessage.send(owner, "NO_PERMS");
-			return false;
-		}
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("uuid", owner.getUniqueId().toString());
-		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-		if (rs.resultSet()) {
-			TARDIS tardis = rs.getTardis();
-			int id = tardis.getTardisId();
-			// check if they have already got lamp records
-			HashMap<String, Object> wherel = new HashMap<>();
-			wherel.put("tardis_id", id);
-			ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, false);
-			if (rsl.resultSet()) {
-				TARDISMessage.send(owner, "LAMP_DELETE");
-				HashMap<String, Object> wheredel = new HashMap<>();
-				wheredel.put("tardis_id", id);
-				plugin.getQueryFactory().doDelete("lamps", wheredel);
-			}
-			// get the tardis console chunks
-			HashMap<String, Object> wherec = new HashMap<>();
-			wherec.put("tardis_id", id);
-			ResultSetChunks rsc = new ResultSetChunks(plugin, wherec, true);
-			if (rsc.resultSet()) {
-				int starty, endy;
-				Schematic schm = tardis.getSchematic();
-				Material lampon = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
-				// player preference
-				ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, owner.getUniqueId().toString());
-				if (rsp.resultSet() && rsp.isLanternsOn()) {
-					lampon = Material.SEA_LANTERN;
-				}
-				String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
-				String path =
-						plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() +
-						".tschm";
-				// get JSON
-				JsonObject obj = TARDISSchematicGZip.unzip(path);
-				// get dimensions
-				assert obj != null;
-				JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-				int h = dimensions.get("height").getAsInt();
-				starty = TARDISConstants.HIGHER.contains(schm.getPermission()) ? 65 : 64;
-				endy = starty + h;
-				ArrayList<HashMap<String, String>> data = rsc.getData();
-				// loop through the chunks
-				for (HashMap<String, String> map : data) {
-					String w = map.get("world");
-					World world = TARDISAliasResolver.getWorldFromAlias(w);
-					int x = TARDISNumberParsers.parseInt(map.get("x"));
-					int z = TARDISNumberParsers.parseInt(map.get("z"));
-					assert world != null;
-					Chunk chunk = world.getChunkAt(x, z);
-					// find the lamps in the chunks
-					int bx = chunk.getX() << 4;
-					int bz = chunk.getZ() << 4;
-					for (int xx = bx; xx < bx + 16; xx++) {
-						for (int zz = bz; zz < bz + 16; zz++) {
-							for (int yy = starty; yy < endy; yy++) {
-								Material mat = world.getBlockAt(xx, yy, zz).getType();
-								if (mat.equals(lampon)) {
-									String lamp = w + ":" + xx + ":" + yy + ":" + zz;
-									HashMap<String, Object> set = new HashMap<>();
-									set.put("tardis_id", id);
-									set.put("location", lamp);
-									plugin.getQueryFactory().doInsert("lamps", set);
-									TARDISMessage.send(owner, "LAMP_ADD", (xx + ":" + yy + ":" + zz));
-								}
-							}
-						}
-					}
-				}
-			}
-			return true;
-		} else {
-			TARDISMessage.send(owner, "NOT_A_TIMELORD");
-			return false;
-		}
-	}
+    boolean addLampBlocks(Player owner) {
+        // check they have permission
+        if (!TARDISPermission.hasPermission(owner, "tardis.update")) {
+            TARDISMessage.send(owner, "NO_PERMS");
+            return false;
+        }
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", owner.getUniqueId().toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+        if (rs.resultSet()) {
+            TARDIS tardis = rs.getTardis();
+            int id = tardis.getTardisId();
+            // check if they have already got lamp records
+            HashMap<String, Object> wherel = new HashMap<>();
+            wherel.put("tardis_id", id);
+            ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, false);
+            if (rsl.resultSet()) {
+                TARDISMessage.send(owner, "LAMP_DELETE");
+                HashMap<String, Object> wheredel = new HashMap<>();
+                wheredel.put("tardis_id", id);
+                plugin.getQueryFactory().doDelete("lamps", wheredel);
+            }
+            // get the tardis console chunks
+            HashMap<String, Object> wherec = new HashMap<>();
+            wherec.put("tardis_id", id);
+            ResultSetChunks rsc = new ResultSetChunks(plugin, wherec, true);
+            if (rsc.resultSet()) {
+                int starty, endy;
+                Schematic schm = tardis.getSchematic();
+                Material lampon = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
+                // player preference
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, owner.getUniqueId().toString());
+                if (rsp.resultSet() && rsp.isLanternsOn()) {
+                    lampon = Material.SEA_LANTERN;
+                }
+                String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
+                String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
+                // get JSON
+                JsonObject obj = TARDISSchematicGZip.unzip(path);
+                // get dimensions
+                assert obj != null;
+                JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+                int h = dimensions.get("height").getAsInt();
+                starty = TARDISConstants.HIGHER.contains(schm.getPermission()) ? 65 : 64;
+                endy = starty + h;
+                ArrayList<HashMap<String, String>> data = rsc.getData();
+                // loop through the chunks
+                for (HashMap<String, String> map : data) {
+                    String w = map.get("world");
+                    World world = TARDISAliasResolver.getWorldFromAlias(w);
+                    int x = TARDISNumberParsers.parseInt(map.get("x"));
+                    int z = TARDISNumberParsers.parseInt(map.get("z"));
+                    assert world != null;
+                    Chunk chunk = world.getChunkAt(x, z);
+                    // find the lamps in the chunks
+                    int bx = chunk.getX() << 4;
+                    int bz = chunk.getZ() << 4;
+                    for (int xx = bx; xx < bx + 16; xx++) {
+                        for (int zz = bz; zz < bz + 16; zz++) {
+                            for (int yy = starty; yy < endy; yy++) {
+                                Material mat = world.getBlockAt(xx, yy, zz).getType();
+                                if (mat.equals(lampon)) {
+                                    String lamp = w + ":" + xx + ":" + yy + ":" + zz;
+                                    HashMap<String, Object> set = new HashMap<>();
+                                    set.put("tardis_id", id);
+                                    set.put("location", lamp);
+                                    plugin.getQueryFactory().doInsert("lamps", set);
+                                    TARDISMessage.send(owner, "LAMP_ADD", (xx + ":" + yy + ":" + zz));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        } else {
+            TARDISMessage.send(owner, "NOT_A_TIMELORD");
+            return false;
+        }
+    }
 }

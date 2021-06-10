@@ -26,29 +26,28 @@ import java.util.Objects;
 
 public class TARDISPermissionLister {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISPermissionLister(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISPermissionLister(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	void listPerms(CommandSender sender) {
-		List<String> perms = new ArrayList<>(Objects.requireNonNull(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("permissions")).getKeys(true));
-		perms.sort(Comparator.naturalOrder());
-		String lastPerm = "";
-		for (int i = perms.size() - 1; i >= 0; i--) {
-			String perm = perms.get(i);
-			if (perm.contains(".") && notThese(perm)) {
-				if (!lastPerm.contains(perm)) {
-					sender.sendMessage(perm);
-					lastPerm = perm;
-				}
-			}
-		}
-	}
+    void listPerms(CommandSender sender) {
+        List<String> perms = new ArrayList<>(Objects.requireNonNull(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("permissions")).getKeys(true));
+        perms.sort(Comparator.naturalOrder());
+        String lastPerm = "";
+        for (int i = perms.size() - 1; i >= 0; i--) {
+            String perm = perms.get(i);
+            if (perm.contains(".") && notThese(perm)) {
+                if (!lastPerm.contains(perm)) {
+                    sender.sendMessage(perm);
+                    lastPerm = perm;
+                }
+            }
+        }
+    }
 
-	private boolean notThese(String perm) {
-		return !perm.contains("children") && !perm.contains("description") && !perm.contains("default") &&
-			   !perm.contains("*");
-	}
+    private boolean notThese(String perm) {
+        return !perm.contains("children") && !perm.contains("description") && !perm.contains("default") && !perm.contains("*");
+    }
 }

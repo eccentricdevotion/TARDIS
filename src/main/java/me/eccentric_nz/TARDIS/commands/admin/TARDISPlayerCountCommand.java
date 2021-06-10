@@ -31,34 +31,34 @@ import java.util.HashMap;
  */
 class TARDISPlayerCountCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISPlayerCountCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISPlayerCountCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean countPlayers(CommandSender sender, String[] args) {
-		int max_count = plugin.getConfig().getInt("creation.count");
-		OfflinePlayer player = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId());
-		String uuid = player.getUniqueId().toString();
-		ResultSetCount rsc = new ResultSetCount(plugin, uuid);
-		if (rsc.resultSet()) {
-			if (args.length == 3) {
-				// set count
-				int count = TARDISNumberParsers.parseInt(args[2]);
-				HashMap<String, Object> setc = new HashMap<>();
-				setc.put("count", count);
-				HashMap<String, Object> wherec = new HashMap<>();
-				wherec.put("uuid", uuid);
-				plugin.getQueryFactory().doUpdate("t_count", setc, wherec);
-				TARDISMessage.send(sender, "COUNT_SET", args[1], count, max_count);
-			} else {
-				// display count
-				TARDISMessage.send(sender, "COUNT_IS", args[1], rsc.getCount(), max_count);
-			}
-		} else {
-			TARDISMessage.send(sender, "COUNT_NOT_FOUND");
-		}
-		return true;
-	}
+    boolean countPlayers(CommandSender sender, String[] args) {
+        int max_count = plugin.getConfig().getInt("creation.count");
+        OfflinePlayer player = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId());
+        String uuid = player.getUniqueId().toString();
+        ResultSetCount rsc = new ResultSetCount(plugin, uuid);
+        if (rsc.resultSet()) {
+            if (args.length == 3) {
+                // set count
+                int count = TARDISNumberParsers.parseInt(args[2]);
+                HashMap<String, Object> setc = new HashMap<>();
+                setc.put("count", count);
+                HashMap<String, Object> wherec = new HashMap<>();
+                wherec.put("uuid", uuid);
+                plugin.getQueryFactory().doUpdate("t_count", setc, wherec);
+                TARDISMessage.send(sender, "COUNT_SET", args[1], count, max_count);
+            } else {
+                // display count
+                TARDISMessage.send(sender, "COUNT_IS", args[1], rsc.getCount(), max_count);
+            }
+        } else {
+            TARDISMessage.send(sender, "COUNT_NOT_FOUND");
+        }
+        return true;
+    }
 }

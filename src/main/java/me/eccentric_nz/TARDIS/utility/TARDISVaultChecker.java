@@ -34,56 +34,55 @@ import java.util.List;
  */
 public class TARDISVaultChecker implements Runnable {
 
-	private final TARDISPlugin plugin;
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final List<Material> chests = Arrays.asList(Material.CHEST, Material.TRAPPED_CHEST);
-	private final String prefix;
+    private final TARDISPlugin plugin;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final List<Material> chests = Arrays.asList(Material.CHEST, Material.TRAPPED_CHEST);
+    private final String prefix;
 
-	public TARDISVaultChecker(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		prefix = this.plugin.getPrefix();
-	}
+    public TARDISVaultChecker(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        prefix = this.plugin.getPrefix();
+    }
 
-	@Override
-	public void run() {
-		Statement statement = null;
-		ResultSet rs = null;
-		String query = "SELECT * FROM " + prefix + "vaults";
-		int i = 0;
-		try {
-			service.testConnection(connection);
-			statement = connection.createStatement();
-			rs = statement.executeQuery(query);
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
-					if (l != null && !chests.contains(l.getBlock().getType())) {
-						int vaultId = rs.getInt("v_id");
-						HashMap<String, Object> where = new HashMap<>();
-						where.put("v_id", vaultId);
-						plugin.getQueryFactory().doDelete("vaults", where);
-						i++;
-					}
-				}
-			}
-			if (i > 0) {
-				plugin.getConsole().sendMessage(
-						plugin.getPluginName() + "Removed " + i + " unused vault room drop chests!");
-			}
-		} catch (SQLException e) {
-			plugin.debug("ResultSet error for vaults table! " + e.getMessage());
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing vaults table! " + e.getMessage());
-			}
-		}
-	}
+    @Override
+    public void run() {
+        Statement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM " + prefix + "vaults";
+        int i = 0;
+        try {
+            service.testConnection(connection);
+            statement = connection.createStatement();
+            rs = statement.executeQuery(query);
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
+                    if (l != null && !chests.contains(l.getBlock().getType())) {
+                        int vaultId = rs.getInt("v_id");
+                        HashMap<String, Object> where = new HashMap<>();
+                        where.put("v_id", vaultId);
+                        plugin.getQueryFactory().doDelete("vaults", where);
+                        i++;
+                    }
+                }
+            }
+            if (i > 0) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed " + i + " unused vault room drop chests!");
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for vaults table! " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing vaults table! " + e.getMessage());
+            }
+        }
+    }
 }

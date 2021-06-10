@@ -26,28 +26,27 @@ import org.bukkit.ChatColor;
  */
 public class TARDISSiluria {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISSiluria(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISSiluria(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public void loadSilurianUnderworld() {
-		String s_world = plugin.getServer().getWorlds().get(0).getName();
-		// copy datapack files
-		if (!TARDISChecker.hasDimension("siluria")) {
-			plugin.getServer().reloadData();
-			// message console to restart server
-			TARDISMessage.message(plugin.getConsole(), ChatColor.RED +
-													   "Siluria data pack has been installed, please restart the server to enable the world.");
-			// get default server world
-			// add world to config
-			if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.time_travel")) {
-				plugin.getPlanetsConfig().set("planets." + s_world + "_tardis_siluria.time_travel", true);
-				plugin.savePlanetsConfig();
-			}
-		} else {
-			plugin.getServer().getWorld(s_world + "_tardis_siluriao");
-		}
-	}
+    public void loadSilurianUnderworld() {
+        String s_world = plugin.getServer().getWorlds().get(0).getName();
+        // copy datapack files
+        if (!TARDISChecker.hasDimension("siluria")) {
+            plugin.getServer().reloadData();
+            // message console to restart server
+            TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Siluria data pack has been installed, please restart the server to enable the world.");
+            // get default server world
+            // add world to config
+            if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.time_travel")) {
+                plugin.getPlanetsConfig().set("planets." + s_world + "_tardis_siluria.time_travel", true);
+                plugin.savePlanetsConfig();
+            }
+        } else {
+            plugin.getServer().getWorld(s_world + "_tardis_siluriao");
+        }
+    }
 }

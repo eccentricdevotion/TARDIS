@@ -26,21 +26,21 @@ import java.util.UUID;
 
 public class SudoHandbrake {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	SudoHandbrake(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    SudoHandbrake(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public boolean toggle(CommandSender sender, String[] args, UUID uuid) {
-		if (args.length < 3) {
-			TARDISMessage.send(sender, "TOO_FEW_ARGS");
-			return true;
-		}
-		ResultSetTardisID rs = new ResultSetTardisID(plugin);
-		if (rs.fromUUID(uuid.toString())) {
-			return new TARDISHandbrakeCommand(plugin).toggle(null, rs.getTardisId(), args, true);
-		}
-		return true;
-	}
+    public boolean toggle(CommandSender sender, String[] args, UUID uuid) {
+        if (args.length < 3) {
+            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            return true;
+        }
+        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        if (rs.fromUUID(uuid.toString())) {
+            return new TARDISHandbrakeCommand(plugin).toggle(null, rs.getTardisId(), args, true);
+        }
+        return true;
+    }
 }

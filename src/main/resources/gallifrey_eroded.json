@@ -1,147 +1,147 @@
 {
-	"surface_builder": "minecraft:eroded_badlands",
-	"depth": 0.1,
-	"scale": 0.2,
-	"temperature": 2,
-	"downfall": 0,
-	"precipitation": "none",
-	"category": "mesa",
-	"player_spawn_friendly": false,
-	"effects": {
-		"sky_color": 16763002,
-		"fog_color": 16771522,
-		"water_color": 4184548,
-		"water_fog_color": 340786,
-		"grass_color": 16714324,
-		"foliage_color": 16309733,
-		"mood_sound": {
-			"sound": "minecraft:ambient.cave",
-			"tick_delay": 6000,
-			"block_search_extent": 8,
-			"offset": 2
-		}
-	},
-	"starts": [
-		"minecraft:mineshaft_mesa",
-		"minecraft:stronghold",
-		"minecraft:ruined_portal_mountain"
-	],
-	"spawners": {
-		"monster": [
-			{
-				"type": "minecraft:spider",
-				"weight": 100,
-				"minCount": 4,
-				"maxCount": 4
-			},
-			{
-				"type": "minecraft:zombie",
-				"weight": 95,
-				"minCount": 4,
-				"maxCount": 4
-			},
-			{
-				"type": "minecraft:zombie_villager",
-				"weight": 5,
-				"minCount": 1,
-				"maxCount": 1
-			},
-			{
-				"type": "minecraft:skeleton",
-				"weight": 100,
-				"minCount": 4,
-				"maxCount": 4
-			},
-			{
-				"type": "minecraft:creeper",
-				"weight": 100,
-				"minCount": 4,
-				"maxCount": 4
-			},
-			{
-				"type": "minecraft:slime",
-				"weight": 100,
-				"minCount": 4,
-				"maxCount": 4
-			},
-			{
-				"type": "minecraft:enderman",
-				"weight": 10,
-				"minCount": 1,
-				"maxCount": 4
-			},
-			{
-				"type": "minecraft:witch",
-				"weight": 5,
-				"minCount": 1,
-				"maxCount": 1
-			}
-		],
-		"creature": [],
-		"ambient": [
-			{
-				"type": "minecraft:bat",
-				"weight": 10,
-				"minCount": 8,
-				"maxCount": 8
-			}
-		],
-		"water_creature": [],
-		"water_ambient": [],
-		"misc": []
-	},
-	"spawn_costs": {},
-	"carvers": {
-		"air": [
-			"minecraft:cave",
-			"minecraft:canyon"
-		]
-	},
-	"features": [
-		[],
-		[
-			"minecraft:lake_water",
-			"minecraft:lake_lava"
-		],
-		[],
-		[
-			"minecraft:monster_room"
-		],
-		[],
-		[],
-		[
-			"minecraft:ore_dirt",
-			"minecraft:ore_gravel",
-			"minecraft:ore_granite",
-			"minecraft:ore_diorite",
-			"minecraft:ore_andesite",
-			"minecraft:ore_coal",
-			"minecraft:ore_iron",
-			"minecraft:ore_gold",
-			"minecraft:ore_redstone",
-			"minecraft:ore_diamond",
-			"minecraft:ore_lapis",
-			"minecraft:ore_gold_extra",
-			"minecraft:disk_sand",
-			"minecraft:disk_clay",
-			"minecraft:disk_gravel"
-		],
-		[],
-		[
-			"tardis:gallifrey_grass",
-			"tardis:gallifrey_tree",
-			"minecraft:patch_grass_badlands",
-			"minecraft:patch_dead_bush_badlands",
-			"minecraft:brown_mushroom_normal",
-			"minecraft:red_mushroom_normal",
-			"minecraft:patch_sugar_cane_badlands",
-			"minecraft:patch_pumpkin",
-			"minecraft:patch_cactus_decorated",
-			"minecraft:spring_water",
-			"minecraft:spring_lava"
-		],
-		[
-			"minecraft:freeze_top_layer"
-		]
-	]
+    "surface_builder": "minecraft:eroded_badlands",
+    "depth": 0.1,
+    "scale": 0.2,
+    "temperature": 2,
+    "downfall": 0,
+    "precipitation": "none",
+    "category": "mesa",
+    "player_spawn_friendly": false,
+    "effects": {
+        "sky_color": 16763002,
+        "fog_color": 16771522,
+        "water_color": 4184548,
+        "water_fog_color": 340786,
+        "grass_color": 16714324,
+        "foliage_color": 16309733,
+        "mood_sound": {
+            "sound": "minecraft:ambient.cave",
+            "tick_delay": 6000,
+            "block_search_extent": 8,
+            "offset": 2
+        }
+    },
+    "starts": [
+        "minecraft:mineshaft_mesa",
+        "minecraft:stronghold",
+        "minecraft:ruined_portal_mountain"
+    ],
+    "spawners": {
+        "monster": [
+            {
+                "type": "minecraft:spider",
+                "weight": 100,
+                "minCount": 4,
+                "maxCount": 4
+            },
+            {
+                "type": "minecraft:zombie",
+                "weight": 95,
+                "minCount": 4,
+                "maxCount": 4
+            },
+            {
+                "type": "minecraft:zombie_villager",
+                "weight": 5,
+                "minCount": 1,
+                "maxCount": 1
+            },
+            {
+                "type": "minecraft:skeleton",
+                "weight": 100,
+                "minCount": 4,
+                "maxCount": 4
+            },
+            {
+                "type": "minecraft:creeper",
+                "weight": 100,
+                "minCount": 4,
+                "maxCount": 4
+            },
+            {
+                "type": "minecraft:slime",
+                "weight": 100,
+                "minCount": 4,
+                "maxCount": 4
+            },
+            {
+                "type": "minecraft:enderman",
+                "weight": 10,
+                "minCount": 1,
+                "maxCount": 4
+            },
+            {
+                "type": "minecraft:witch",
+                "weight": 5,
+                "minCount": 1,
+                "maxCount": 1
+            }
+        ],
+        "creature": [],
+        "ambient": [
+            {
+                "type": "minecraft:bat",
+                "weight": 10,
+                "minCount": 8,
+                "maxCount": 8
+            }
+        ],
+        "water_creature": [],
+        "water_ambient": [],
+        "misc": []
+    },
+    "spawn_costs": {},
+    "carvers": {
+        "air": [
+            "minecraft:cave",
+            "minecraft:canyon"
+        ]
+    },
+    "features": [
+        [],
+        [
+            "minecraft:lake_water",
+            "minecraft:lake_lava"
+        ],
+        [],
+        [
+            "minecraft:monster_room"
+        ],
+        [],
+        [],
+        [
+            "minecraft:ore_dirt",
+            "minecraft:ore_gravel",
+            "minecraft:ore_granite",
+            "minecraft:ore_diorite",
+            "minecraft:ore_andesite",
+            "minecraft:ore_coal",
+            "minecraft:ore_iron",
+            "minecraft:ore_gold",
+            "minecraft:ore_redstone",
+            "minecraft:ore_diamond",
+            "minecraft:ore_lapis",
+            "minecraft:ore_gold_extra",
+            "minecraft:disk_sand",
+            "minecraft:disk_clay",
+            "minecraft:disk_gravel"
+        ],
+        [],
+        [
+            "tardis:gallifrey_grass",
+            "tardis:gallifrey_tree",
+            "minecraft:patch_grass_badlands",
+            "minecraft:patch_dead_bush_badlands",
+            "minecraft:brown_mushroom_normal",
+            "minecraft:red_mushroom_normal",
+            "minecraft:patch_sugar_cane_badlands",
+            "minecraft:patch_pumpkin",
+            "minecraft:patch_cactus_decorated",
+            "minecraft:spring_water",
+            "minecraft:spring_lava"
+        ],
+        [
+            "minecraft:freeze_top_layer"
+        ]
+    ]
 }

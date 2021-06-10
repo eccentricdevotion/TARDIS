@@ -39,62 +39,59 @@ import java.util.UUID;
  */
 public class TARDISZeroRoomChatListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISZeroRoomChatListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISZeroRoomChatListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	/**
-	 * Prevents the occupants of zero rooms from sending or receiving chat.
-	 *
-	 * @param event a player typing in chat
-	 */
-	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-	public void onChat(AsyncPlayerChatEvent event) {
-		Player zero = event.getPlayer();
-		if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(zero.getUniqueId())) {
-			event.setCancelled(true);
-			TARDISMessage.send(zero, "NOT_IN_ZERO");
-		} else if (plugin.getServer().getWorld("TARDIS_Zero_Room") != null) {
-			List<Player> inZeroRoom = Objects.requireNonNull(plugin.getServer().getWorld("TARDIS_Zero_Room")).getPlayers();
-			inZeroRoom.forEach((p) -> event.getRecipients().remove(p));
-		}
-	}
+    /**
+     * Prevents the occupants of zero rooms from sending or receiving chat.
+     *
+     * @param event a player typing in chat
+     */
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onChat(AsyncPlayerChatEvent event) {
+        Player zero = event.getPlayer();
+        if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(zero.getUniqueId())) {
+            event.setCancelled(true);
+            TARDISMessage.send(zero, "NOT_IN_ZERO");
+        } else if (plugin.getServer().getWorld("TARDIS_Zero_Room") != null) {
+            List<Player> inZeroRoom = Objects.requireNonNull(plugin.getServer().getWorld("TARDIS_Zero_Room")).getPlayers();
+            inZeroRoom.forEach((p) -> event.getRecipients().remove(p));
+        }
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
-		Player player = event.getPlayer();
-		if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
-			event.setCancelled(true);
-			TARDISMessage.send(player, "NOT_IN_ZERO");
-			return;
-		}
-		UUID uuid = player.getUniqueId();
-		String command = event.getMessage().toLowerCase(Locale.ENGLISH);
-		if (plugin.getTrackerKeeper().getTelepaths().containsKey(uuid)) {
-			if (command.contains("tardis ") || command.contains("tardistravel ") || command.contains("ttravel ")) {
-				UUID owner = plugin.getTrackerKeeper().getTelepaths().get(uuid);
-				Player timelord = plugin.getServer().getPlayer(owner);
-				if (timelord != null && timelord.isOnline()) {
-					// message console so it is logged
-					TARDISMessage.message(plugin.getConsole(),
-							"[tardis] Companion [" + player.getName() + "] ran a telepathic command as Time Lord [" +
-							timelord.getName() + "]");
-					if (command.contains("rescue") &&
-						command.contains(timelord.getName().toLowerCase(Locale.ENGLISH))) {
-						// track the timelord
-						plugin.getTrackerKeeper().getTelepathicRescue().put(owner, uuid);
-					}
-					// if it is a tardis command run it as the time lord
-					event.setPlayer(timelord);
-					TARDISMessage.send(player, "TELEPATHIC_RUN", command);
-				} else {
-					TARDISMessage.send(player, "TELEPATHIC_ONLINE");
-				}
-			}
-			// always stop tracking the player
-			plugin.getTrackerKeeper().getTelepaths().remove(uuid);
-		}
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
+        Player player = event.getPlayer();
+        if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
+            event.setCancelled(true);
+            TARDISMessage.send(player, "NOT_IN_ZERO");
+            return;
+        }
+        UUID uuid = player.getUniqueId();
+        String command = event.getMessage().toLowerCase(Locale.ENGLISH);
+        if (plugin.getTrackerKeeper().getTelepaths().containsKey(uuid)) {
+            if (command.contains("tardis ") || command.contains("tardistravel ") || command.contains("ttravel ")) {
+                UUID owner = plugin.getTrackerKeeper().getTelepaths().get(uuid);
+                Player timelord = plugin.getServer().getPlayer(owner);
+                if (timelord != null && timelord.isOnline()) {
+                    // message console so it is logged
+                    TARDISMessage.message(plugin.getConsole(), "[tardis] Companion [" + player.getName() + "] ran a telepathic command as Time Lord [" + timelord.getName() + "]");
+                    if (command.contains("rescue") && command.contains(timelord.getName().toLowerCase(Locale.ENGLISH))) {
+                        // track the timelord
+                        plugin.getTrackerKeeper().getTelepathicRescue().put(owner, uuid);
+                    }
+                    // if it is a tardis command run it as the time lord
+                    event.setPlayer(timelord);
+                    TARDISMessage.send(player, "TELEPATHIC_RUN", command);
+                } else {
+                    TARDISMessage.send(player, "TELEPATHIC_ONLINE");
+                }
+            }
+            // always stop tracking the player
+            plugin.getTrackerKeeper().getTelepaths().remove(uuid);
+        }
+    }
 }

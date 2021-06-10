@@ -27,27 +27,27 @@ import java.util.Locale;
  */
 class TARDISHelpCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISHelpCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISHelpCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean showHelp(CommandSender sender, String[] args) {
-		TARDISCommandHelper tch = new TARDISCommandHelper(plugin);
-		if (args.length == 1) {
-			tch.getCommand("", sender);
-			return true;
-		}
-		if (args.length == 2) {
-			tch.getCommand(args[1].toLowerCase(Locale.ENGLISH), sender);
-			return true;
-		}
-		if (args.length > 2) {
-			String cmds = args[1].toLowerCase(Locale.ENGLISH) + " " + args[2].toLowerCase(Locale.ENGLISH);
-			tch.getCommand(cmds, sender);
-			return true;
-		}
-		return true;
-	}
+    boolean showHelp(CommandSender sender, String[] args) {
+        TARDISCommandHelper tch = new TARDISCommandHelper(plugin);
+        if (args.length == 1) {
+            tch.getCommand("", sender);
+            return true;
+        }
+        if (args.length == 2) {
+            tch.getCommand(args[1].toLowerCase(Locale.ENGLISH), sender);
+            return true;
+        }
+        if (args.length > 2) {
+            String cmds = args[1].toLowerCase(Locale.ENGLISH) + " " + args[2].toLowerCase(Locale.ENGLISH);
+            tch.getCommand(cmds, sender);
+            return true;
+        }
+        return true;
+    }
 }

@@ -48,197 +48,194 @@ import java.util.Objects;
  */
 public class TARDISCommands implements CommandExecutor {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISCommands(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISCommands(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@Override
-	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-		// If the player typed /tardis then do the following...
-		// check there is the right number of arguments
-		if (cmd.getName().equalsIgnoreCase("tardis")) {
-			Player player = null;
-			if (sender instanceof Player) {
-				player = (Player) sender;
-			}
-			if (args.length == 0) {
-				new TARDISCommandHelper(plugin).getCommand("", sender);
-				return true;
-			}
-			// the command list - first argument MUST appear here!
-			TardisCommand tc;
-			try {
-				tc = TardisCommand.valueOf(args[0].toLowerCase(Locale.ENGLISH));
-			} catch (IllegalArgumentException e) {
-				sender.sendMessage(plugin.getPluginName() + "That command wasn't recognised type " + ChatColor.GREEN +
-								   "/tardis help" + ChatColor.RESET + " to see the commands");
-				return false;
-			}
-			if (args[0].equalsIgnoreCase("version")) {
-				return new TARDISVersionCommand(plugin).displayVersion(sender);
-			}
-			if (args[0].equalsIgnoreCase("help")) {
-				return new TARDISHelpCommand(plugin).showHelp(sender, args);
-			}
-			if (player == null) {
-				TARDISMessage.send(sender, "CMD_PLAYER");
-				return false;
-			}
-			ResultSetTardisID rs = new ResultSetTardisID(plugin);
-			if (!rs.fromUUID(player.getUniqueId().toString())) {
-				TARDISMessage.send(player, "NOT_A_TIMELORD");
-				return true;
-			}
-			if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardisId()) && tc.noSiege()) {
-				TARDISMessage.send(player, "SIEGE_NO_CMD");
-				return true;
-			}
-			switch (tc) {
-				case abandon:
-					return new TARDISAbandonCommand(plugin).doAbandon(sender, args.length > 1);
-				case add:
-					if (args.length == 1) {
-						return new TARDISAddCompanionCommand(plugin).doAddGUI(player);
-					} else {
-						return new TARDISAddCompanionCommand(plugin).doAdd(player, args);
-					}
-				case arch_time:
-					return new TARDISArchCommand(plugin).getTime(player);
-				case archive:
-					return new TARDISArchiveCommand(plugin).zip(player, args);
-				case arsremove:
-					return new TARDISARSRemoveCommand(plugin).resetARS(player);
-				case bell:
-					return new TARDISBellCommand(plugin).toggle(rs.getTardisId(), player, args);
-				case check_loc:
-					return new TARDISCheckLocCommand(plugin).doACheckLocation(player);
-				case colourise:
-				case colorize:
-					new TARDISColouriseCommand(plugin).updateBeaconGlass(player);
-				case comehere:
-					return new TARDISComehereCommand(plugin).doComeHere(player);
-				case construct:
-					return new TARDISConstructCommand(plugin).setLine(player, args);
-				case cube:
-					return new TARDISCubeCommand(plugin).whoHasCube(player);
-				case desktop:
-				case upgrade:
-				case theme:
-					return new TARDISUpgradeCommand(plugin).openUpgradeGUI(player);
-				case direction:
-					return new TARDISDirectionCommand(plugin).changeDirection(player, args);
-				case door:
-					return new TARDISDoorCommand(plugin).toggleDoors(player, args);
-				case egg: // play tardis theme on noteblocks
-					return new TARDISPlayThemeCommand(plugin).playTheme(player);
-				case eject:
-					return new TARDISEjectCommand(plugin).eject(player);
-				case excite:
-					return new TARDISExciteCommand(plugin).excite(player);
-				case ep1:
-					return new TARDISEmergencyProgrammeCommand(plugin).showEP1(player);
-				case erase:
-					return new TARDISDiskWriterCommand(plugin).eraseDisk(player);
-				case find:
-					return new TARDISFindCommand(plugin).findTARDIS(player);
-				case handbrake:
-					return new TARDISHandbrakeCommand(plugin).toggle(player, rs.getTardisId(), args, false);
-				case hide:
-					return new TARDISHideCommand(plugin).hide(player);
-				case home:
-				case sethome:
-					return new TARDISHomeCommand(plugin).setHome(player, args);
-				case inside:
-					return new TARDISInsideCommand(plugin).whoIsInside(player);
-				case item:
-					return new TARDISItemCommand().update(player, args);
-				case jettison:
-					return new TARDISJettisonCommand(plugin).startJettison(player, args);
-				case lamps:
-					return new TARDISLampsCommand(plugin).addLampBlocks(player);
-				case list:
-					return new TARDISListCommand(plugin).doList(player, args);
-				case make_her_blue:
-					return new TARDISMakeHerBlueCommand(plugin).show(player);
-				case namekey:
-					return new TARDISNameKeyCommand(plugin).nameKey(player, args);
-				case occupy:
-					return new TARDISOccupyCommand(plugin).toggleOccupancy(player);
-				case rebuild:
-					return new TARDISRebuildCommand(plugin).rebuildPreset(player);
-				case remove:
-					return new TARDISRemoveCompanionCommand(plugin).doRemoveCompanion(player, args);
-				case removesave:
-					return new TARDISRemoveSavedLocationCommand(plugin).doRemoveSave(player, args);
-				case renamesave:
-					return new TARDISRenameSavedLocationCommand(plugin).doRenameSave(player, args);
-				case reordersave:
-					return new TARDISReorderSavedLocationCommand(plugin).doReorderSave(player, args);
-				case rescue:
-					return new TARDISRescueCommand(plugin).startRescue(player, args);
-				case room:
-					return new TARDISRoomCommand(plugin).startRoom(player, args);
-				case save_player:
-					ItemStack is = player.getInventory().getItemInMainHand();
-					if (heldDiskIsWrong(is, "Player Storage Disk")) {
-						TARDISMessage.send(player, "DISK_HAND_PLAYER");
-						return true;
-					}
-					return new TARDISDiskWriterCommand(plugin).writePlayer(player, args);
-				case secondary:
-					return new TARDISSecondaryCommand(plugin).startSecondary(player, args);
-				case section:
-					return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
-				case setdest:
-					return new TARDISSetDestinationCommand(plugin).doSetDestination(player, args);
-				case tagtheood:
-					return new TARDISTagCommand(plugin).getStats(player);
-				case transmat:
-					return new TARDISTransmatCommand(plugin).teleportOrProcess(player, args);
-				case update:
-					return new TARDISUpdateCommand(plugin).startUpdate(player, args);
-				case abort:
-					return new TARDISAbortCommand(plugin).doAbort(player, args);
-				case exterminate: // delete the TARDIS
-					return new TARDISExterminateCommand(plugin).doExterminate(player);
-				case save:
-					ItemStack itemStack = player.getInventory().getItemInMainHand();
-					if (itemStack.getType().equals(Material.MUSIC_DISC_FAR)) {
-						return new TARDISDiskWriterCommand(plugin).writeSaveToControlDisk(player, args);
-					} else {
-						if (!plugin.getDifficulty().equals(Difficulty.EASY) &&
-							!plugin.getUtils().inGracePeriod(player, true)) {
-							if (plugin.getDifficulty().equals(Difficulty.HARD) &&
-								heldDiskIsWrong(itemStack, "Save Storage Disk")) {
-								TARDISMessage.send(player, "DISK_HAND_SAVE");
-								return true;
-							}
-							return new TARDISDiskWriterCommand(plugin).writeSave(player, args);
-						} else {
-							return new TARDISSaveLocationCommand(plugin).doSave(player, args);
-						}
-					}
-				case saveicon:
-					return new TARDISSaveIconCommand(plugin).changeIcon(player, args);
-			}
-		}
-		// If the above has happened the function will break and return true. If this hasn't happened then value of false will be returned.
-		return false;
-	}
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        // If the player typed /tardis then do the following...
+        // check there is the right number of arguments
+        if (cmd.getName().equalsIgnoreCase("tardis")) {
+            Player player = null;
+            if (sender instanceof Player) {
+                player = (Player) sender;
+            }
+            if (args.length == 0) {
+                new TARDISCommandHelper(plugin).getCommand("", sender);
+                return true;
+            }
+            // the command list - first argument MUST appear here!
+            TardisCommand tc;
+            try {
+                tc = TardisCommand.valueOf(args[0].toLowerCase(Locale.ENGLISH));
+            } catch (IllegalArgumentException e) {
+                sender.sendMessage(plugin.getPluginName() + "That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
+                return false;
+            }
+            if (args[0].equalsIgnoreCase("version")) {
+                return new TARDISVersionCommand(plugin).displayVersion(sender);
+            }
+            if (args[0].equalsIgnoreCase("help")) {
+                return new TARDISHelpCommand(plugin).showHelp(sender, args);
+            }
+            if (player == null) {
+                TARDISMessage.send(sender, "CMD_PLAYER");
+                return false;
+            }
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            if (!rs.fromUUID(player.getUniqueId().toString())) {
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                return true;
+            }
+            if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardisId()) && tc.noSiege()) {
+                TARDISMessage.send(player, "SIEGE_NO_CMD");
+                return true;
+            }
+            switch (tc) {
+                case abandon:
+                    return new TARDISAbandonCommand(plugin).doAbandon(sender, args.length > 1);
+                case add:
+                    if (args.length == 1) {
+                        return new TARDISAddCompanionCommand(plugin).doAddGUI(player);
+                    } else {
+                        return new TARDISAddCompanionCommand(plugin).doAdd(player, args);
+                    }
+                case arch_time:
+                    return new TARDISArchCommand(plugin).getTime(player);
+                case archive:
+                    return new TARDISArchiveCommand(plugin).zip(player, args);
+                case arsremove:
+                    return new TARDISARSRemoveCommand(plugin).resetARS(player);
+                case bell:
+                    return new TARDISBellCommand(plugin).toggle(rs.getTardisId(), player, args);
+                case check_loc:
+                    return new TARDISCheckLocCommand(plugin).doACheckLocation(player);
+                case colourise:
+                case colorize:
+                    new TARDISColouriseCommand(plugin).updateBeaconGlass(player);
+                case comehere:
+                    return new TARDISComehereCommand(plugin).doComeHere(player);
+                case construct:
+                    return new TARDISConstructCommand(plugin).setLine(player, args);
+                case cube:
+                    return new TARDISCubeCommand(plugin).whoHasCube(player);
+                case desktop:
+                case upgrade:
+                case theme:
+                    return new TARDISUpgradeCommand(plugin).openUpgradeGUI(player);
+                case direction:
+                    return new TARDISDirectionCommand(plugin).changeDirection(player, args);
+                case door:
+                    return new TARDISDoorCommand(plugin).toggleDoors(player, args);
+                case egg: // play tardis theme on noteblocks
+                    return new TARDISPlayThemeCommand(plugin).playTheme(player);
+                case eject:
+                    return new TARDISEjectCommand(plugin).eject(player);
+                case excite:
+                    return new TARDISExciteCommand(plugin).excite(player);
+                case ep1:
+                    return new TARDISEmergencyProgrammeCommand(plugin).showEP1(player);
+                case erase:
+                    return new TARDISDiskWriterCommand(plugin).eraseDisk(player);
+                case find:
+                    return new TARDISFindCommand(plugin).findTARDIS(player);
+                case handbrake:
+                    return new TARDISHandbrakeCommand(plugin).toggle(player, rs.getTardisId(), args, false);
+                case hide:
+                    return new TARDISHideCommand(plugin).hide(player);
+                case home:
+                case sethome:
+                    return new TARDISHomeCommand(plugin).setHome(player, args);
+                case inside:
+                    return new TARDISInsideCommand(plugin).whoIsInside(player);
+                case item:
+                    return new TARDISItemCommand().update(player, args);
+                case jettison:
+                    return new TARDISJettisonCommand(plugin).startJettison(player, args);
+                case lamps:
+                    return new TARDISLampsCommand(plugin).addLampBlocks(player);
+                case list:
+                    return new TARDISListCommand(plugin).doList(player, args);
+                case make_her_blue:
+                    return new TARDISMakeHerBlueCommand(plugin).show(player);
+                case namekey:
+                    return new TARDISNameKeyCommand(plugin).nameKey(player, args);
+                case occupy:
+                    return new TARDISOccupyCommand(plugin).toggleOccupancy(player);
+                case rebuild:
+                    return new TARDISRebuildCommand(plugin).rebuildPreset(player);
+                case remove:
+                    return new TARDISRemoveCompanionCommand(plugin).doRemoveCompanion(player, args);
+                case removesave:
+                    return new TARDISRemoveSavedLocationCommand(plugin).doRemoveSave(player, args);
+                case renamesave:
+                    return new TARDISRenameSavedLocationCommand(plugin).doRenameSave(player, args);
+                case reordersave:
+                    return new TARDISReorderSavedLocationCommand(plugin).doReorderSave(player, args);
+                case rescue:
+                    return new TARDISRescueCommand(plugin).startRescue(player, args);
+                case room:
+                    return new TARDISRoomCommand(plugin).startRoom(player, args);
+                case save_player:
+                    ItemStack is = player.getInventory().getItemInMainHand();
+                    if (heldDiskIsWrong(is, "Player Storage Disk")) {
+                        TARDISMessage.send(player, "DISK_HAND_PLAYER");
+                        return true;
+                    }
+                    return new TARDISDiskWriterCommand(plugin).writePlayer(player, args);
+                case secondary:
+                    return new TARDISSecondaryCommand(plugin).startSecondary(player, args);
+                case section:
+                    return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
+                case setdest:
+                    return new TARDISSetDestinationCommand(plugin).doSetDestination(player, args);
+                case tagtheood:
+                    return new TARDISTagCommand(plugin).getStats(player);
+                case transmat:
+                    return new TARDISTransmatCommand(plugin).teleportOrProcess(player, args);
+                case update:
+                    return new TARDISUpdateCommand(plugin).startUpdate(player, args);
+                case abort:
+                    return new TARDISAbortCommand(plugin).doAbort(player, args);
+                case exterminate: // delete the TARDIS
+                    return new TARDISExterminateCommand(plugin).doExterminate(player);
+                case save:
+                    ItemStack itemStack = player.getInventory().getItemInMainHand();
+                    if (itemStack.getType().equals(Material.MUSIC_DISC_FAR)) {
+                        return new TARDISDiskWriterCommand(plugin).writeSaveToControlDisk(player, args);
+                    } else {
+                        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
+                            if (plugin.getDifficulty().equals(Difficulty.HARD) && heldDiskIsWrong(itemStack, "Save Storage Disk")) {
+                                TARDISMessage.send(player, "DISK_HAND_SAVE");
+                                return true;
+                            }
+                            return new TARDISDiskWriterCommand(plugin).writeSave(player, args);
+                        } else {
+                            return new TARDISSaveLocationCommand(plugin).doSave(player, args);
+                        }
+                    }
+                case saveicon:
+                    return new TARDISSaveIconCommand(plugin).changeIcon(player, args);
+            }
+        }
+        // If the above has happened the function will break and return true. If this hasn't happened then value of false will be returned.
+        return false;
+    }
 
-	private boolean heldDiskIsWrong(ItemStack is, String dn) {
-		boolean complexBool = false;
-		if (is == null) {
-			complexBool = true;
-		} else if (!is.hasItemMeta()) {
-			complexBool = true;
-		} else if (!Objects.requireNonNull(is.getItemMeta()).hasDisplayName()) {
-			complexBool = true;
-		} else if (!is.getItemMeta().getDisplayName().equals(dn)) {
-			complexBool = true;
-		}
-		return complexBool;
-	}
+    private boolean heldDiskIsWrong(ItemStack is, String dn) {
+        boolean complexBool = false;
+        if (is == null) {
+            complexBool = true;
+        } else if (!is.hasItemMeta()) {
+            complexBool = true;
+        } else if (!Objects.requireNonNull(is.getItemMeta()).hasDisplayName()) {
+            complexBool = true;
+        } else if (!is.getItemMeta().getDisplayName().equals(dn)) {
+            complexBool = true;
+        }
+        return complexBool;
+    }
 }

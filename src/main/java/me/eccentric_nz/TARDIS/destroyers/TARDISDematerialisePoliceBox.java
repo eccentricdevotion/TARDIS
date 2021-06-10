@@ -34,89 +34,89 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISDematerialisePoliceBox implements Runnable {
 
-	private final TARDISPlugin plugin;
-	private final DestroyData dd;
-	private final int loops;
-	private final PRESET preset;
-	private int task;
-	private int i;
-	private ItemFrame frame;
-	private ItemStack is;
+    private final TARDISPlugin plugin;
+    private final DestroyData dd;
+    private final int loops;
+    private final PRESET preset;
+    private int task;
+    private int i;
+    private ItemFrame frame;
+    private ItemStack is;
 
-	TARDISDematerialisePoliceBox(TARDISPlugin plugin, DestroyData dd, PRESET preset) {
-		this.plugin = plugin;
-		this.dd = dd;
-		loops = dd.getThrottle().getLoops();
-		this.preset = preset;
-	}
+    TARDISDematerialisePoliceBox(TARDISPlugin plugin, DestroyData dd, PRESET preset) {
+        this.plugin = plugin;
+        this.dd = dd;
+        loops = dd.getThrottle().getLoops();
+        this.preset = preset;
+    }
 
-	@Override
-	public void run() {
-		World world = dd.getLocation().getWorld();
-		if (i < loops) {
-			i++;
-			int cmd = switch (i % 3) {
-				case 2 -> // stained
-						1003;
-				case 1 -> // glass
-						1004;
-				default -> // preset
-						1001;
-			};
-			// first run - play sound
-			if (i == 1) {
-				boolean found = false;
-				assert world != null;
-				for (Entity e : world.getNearbyEntities(dd.getLocation(), 1.0d, 1.0d, 1.0d)) {
-					if (e instanceof ItemFrame) {
-						frame = (ItemFrame) e;
-						found = true;
-					}
-				}
-				if (!found) {
-					// spawn item frame
-					frame = (ItemFrame) world.spawnEntity(dd.getLocation(), EntityType.ITEM_FRAME);
-				}
-				frame.setFacingDirection(BlockFace.UP);
-				frame.setRotation(dd.getDirection().getRotation());
-				Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
-				is = new ItemStack(dye, 1);
-				// only play the sound if the player is outside the TARDIS
-				if (dd.isOutside()) {
-					ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, dd.getPlayer().getUniqueId().toString());
-					boolean minecart = false;
-					SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
-					if (rsp.resultSet()) {
-						minecart = rsp.isMinecartOn();
-						spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
-					}
-					if (!minecart) {
-						String sound = switch (spaceTimeThrottle) {
-							case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
-							default -> // NORMAL
-									"tardis_takeoff";
-						};
-						TARDISSounds.playTARDISSound(dd.getLocation(), sound);
-					} else {
-						world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
-					}
-				}
-			}
-			ItemMeta im = is.getItemMeta();
-			assert im != null;
-			im.setCustomModelData(cmd);
-			is.setItemMeta(im);
-			frame.setItem(is, false);
-			frame.setFixed(true);
-			frame.setVisible(false);
-		} else {
-			plugin.getServer().getScheduler().cancelTask(task);
-			task = 0;
-			new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, false, preset);
-		}
-	}
+    @Override
+    public void run() {
+        World world = dd.getLocation().getWorld();
+        if (i < loops) {
+            i++;
+            int cmd = switch (i % 3) {
+                case 2 -> // stained
+                        1003;
+                case 1 -> // glass
+                        1004;
+                default -> // preset
+                        1001;
+            };
+            // first run - play sound
+            if (i == 1) {
+                boolean found = false;
+                assert world != null;
+                for (Entity e : world.getNearbyEntities(dd.getLocation(), 1.0d, 1.0d, 1.0d)) {
+                    if (e instanceof ItemFrame) {
+                        frame = (ItemFrame) e;
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    // spawn item frame
+                    frame = (ItemFrame) world.spawnEntity(dd.getLocation(), EntityType.ITEM_FRAME);
+                }
+                frame.setFacingDirection(BlockFace.UP);
+                frame.setRotation(dd.getDirection().getRotation());
+                Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
+                is = new ItemStack(dye, 1);
+                // only play the sound if the player is outside the TARDIS
+                if (dd.isOutside()) {
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, dd.getPlayer().getUniqueId().toString());
+                    boolean minecart = false;
+                    SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
+                    if (rsp.resultSet()) {
+                        minecart = rsp.isMinecartOn();
+                        spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
+                    }
+                    if (!minecart) {
+                        String sound = switch (spaceTimeThrottle) {
+                            case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
+                            default -> // NORMAL
+                                    "tardis_takeoff";
+                        };
+                        TARDISSounds.playTARDISSound(dd.getLocation(), sound);
+                    } else {
+                        world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+                    }
+                }
+            }
+            ItemMeta im = is.getItemMeta();
+            assert im != null;
+            im.setCustomModelData(cmd);
+            is.setItemMeta(im);
+            frame.setItem(is, false);
+            frame.setFixed(true);
+            frame.setVisible(false);
+        } else {
+            plugin.getServer().getScheduler().cancelTask(task);
+            task = 0;
+            new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, false, preset);
+        }
+    }
 
-	public void setTask(int task) {
-		this.task = task;
-	}
+    public void setTask(int task) {
+        this.task = task;
+    }
 }

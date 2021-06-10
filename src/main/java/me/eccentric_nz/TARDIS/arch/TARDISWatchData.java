@@ -21,19 +21,19 @@ package me.eccentric_nz.tardis.arch;
  */
 public class TARDISWatchData {
 
-	private final String name;
-	private final long time;
+    private final String name;
+    private final long time;
 
-	TARDISWatchData(String name, long time) {
-		this.name = name;
-		this.time = time;
-	}
+    TARDISWatchData(String name, long time) {
+        this.name = name;
+        this.time = time;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public long getTime() {
-		return time;
-	}
+    public long getTime() {
+        return time;
+    }
 }

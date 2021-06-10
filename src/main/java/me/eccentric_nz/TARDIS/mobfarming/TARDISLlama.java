@@ -28,37 +28,37 @@ import org.bukkit.inventory.ItemStack;
  */
 public class TARDISLlama extends TARDISHorse {
 
-	private Llama.Color llamacolor;
-	private int strength;
-	private ItemStack decor;
+    private Llama.Color llamacolor;
+    private int strength;
+    private ItemStack decor;
 
-	/**
-	 * Data storage class for tardis Llama.
-	 */
-	public TARDISLlama() {
-	}
+    /**
+     * Data storage class for tardis Llama.
+     */
+    public TARDISLlama() {
+    }
 
-	public Llama.Color getLlamacolor() {
-		return llamacolor;
-	}
+    public Llama.Color getLlamacolor() {
+        return llamacolor;
+    }
 
-	public void setLlamacolor(Llama.Color llamacolor) {
-		this.llamacolor = llamacolor;
-	}
+    public void setLlamacolor(Llama.Color llamacolor) {
+        this.llamacolor = llamacolor;
+    }
 
-	public int getStrength() {
-		return strength;
-	}
+    public int getStrength() {
+        return strength;
+    }
 
-	public void setStrength(int strength) {
-		this.strength = strength;
-	}
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
 
-	public ItemStack getDecor() {
-		return decor;
-	}
+    public ItemStack getDecor() {
+        return decor;
+    }
 
-	public void setDecor(ItemStack decor) {
-		this.decor = decor;
-	}
+    public void setDecor(ItemStack decor) {
+        this.decor = decor;
+    }
 }

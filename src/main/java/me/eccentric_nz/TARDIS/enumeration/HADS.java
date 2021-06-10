@@ -21,6 +21,6 @@ package me.eccentric_nz.tardis.enumeration;
  */
 public enum HADS {
 
-	DISPLACEMENT,
-	DISPERSAL
+    DISPLACEMENT,
+    DISPERSAL
 }

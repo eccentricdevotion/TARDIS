@@ -30,15 +30,15 @@ import java.util.List;
  */
 public class TARDISHandlesTabComplete extends TARDISCompleter implements TabCompleter {
 
-	private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("disk", "remove", "takeoff", "land", "scan", "lock", "unlock", "remind", "say", "name", "time", "tell", "weird");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("disk", "remove", "takeoff", "land", "scan", "lock", "unlock", "remind", "say", "name", "time", "tell", "weird");
 
-	@Override
-	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-		if (args.length <= 1) {
-			return partial(args[0], ROOT_SUBS);
-		} else if (args.length == 2) {
-			return null;
-		}
-		return ImmutableList.of();
-	}
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        if (args.length <= 1) {
+            return partial(args[0], ROOT_SUBS);
+        } else if (args.length == 2) {
+            return null;
+        }
+        return ImmutableList.of();
+    }
 }

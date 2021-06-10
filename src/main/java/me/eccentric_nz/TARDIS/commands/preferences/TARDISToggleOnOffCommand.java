@@ -32,81 +32,81 @@ import java.util.UUID;
  */
 class TARDISToggleOnOffCommand {
 
-	private final TARDISPlugin plugin;
-	private final List<String> was;
+    private final TARDISPlugin plugin;
+    private final List<String> was;
 
 
-	TARDISToggleOnOffCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		was = Arrays.asList("auto", "auto_powerup", "auto_siege", "beacon", "build", "difficulty", "dnd", "eps", "farm", "hads", "lock_containers", "minecart", "renderer", "submarine", "travelbar", "telepathy");
-	}
+    TARDISToggleOnOffCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        was = Arrays.asList("auto", "auto_powerup", "auto_siege", "beacon", "build", "difficulty", "dnd", "eps", "farm", "hads", "lock_containers", "minecart", "renderer", "submarine", "travelbar", "telepathy");
+    }
 
-	public boolean toggle(Player player, String[] args) {
-		String pref = args[0];
-		if (pref.equals("auto") && !plugin.getConfig().getBoolean("allow.autonomous")) {
-			TARDISMessage.send(player, "AUTO_DISABLED");
-			return true;
-		}
-		if (pref.equals("auto_powerup") && !plugin.getConfig().getBoolean("allow.power_down")) {
-			TARDISMessage.send(player, "POWER_DOWN_DISABLED");
-			return true;
-		}
-		if (pref.equals("eps") && !plugin.getConfig().getBoolean("allow.emergency_npc")) {
-			TARDISMessage.send(player, "EP1_DISABLED");
-			return true;
-		}
-		if (pref.equals("hads") && !plugin.getConfig().getBoolean("allow.hads")) {
-			TARDISMessage.send(player, "HADS_DISBALED");
-			return true;
-		}
-		if (pref.equals("lock_containers") && !plugin.isWorldGuardOnServer()) {
-			TARDISMessage.send(player, "WG_DISABLED");
-			return true;
-		}
-		if (pref.equals("lock_containers") && !plugin.getUtils().inTARDISWorld(player)) {
-			TARDISMessage.send(player, "CMD_IN_WORLD");
-			return true;
-		}
-		HashMap<String, Object> setp = new HashMap<>();
-		HashMap<String, Object> wherep = new HashMap<>();
-		wherep.put("uuid", player.getUniqueId().toString());
-		if (args[1].equalsIgnoreCase("on")) {
-			if (args[0].equalsIgnoreCase("lock_containers")) {
-				plugin.getWorldGuardUtils().lockContainers(player.getWorld(), player.getName());
-			} else {
-				setp.put(pref + "_on", 1);
-				if (pref.equals("beacon")) {
-					UUID uuid = player.getUniqueId();
-					// get tardis id
-					ResultSetTardisID rsi = new ResultSetTardisID(plugin);
-					if (rsi.fromUUID(uuid.toString())) {
-						new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), true);
-					}
-				}
-			}
-			String grammar = (was.contains(pref)) ? "PREF_WAS_ON" : "PREF_WERE_ON";
-			TARDISMessage.send(player, grammar, pref);
-		}
-		if (args[1].equalsIgnoreCase("off")) {
-			if (args[0].equalsIgnoreCase("lock_containers")) {
-				plugin.getWorldGuardUtils().unlockContainers(player.getWorld(), player.getName());
-			} else {
-				setp.put(pref + "_on", 0);
-				if (pref.equals("beacon")) {
-					UUID uuid = player.getUniqueId();
-					// get tardis id
-					ResultSetTardisID rsi = new ResultSetTardisID(plugin);
-					if (rsi.fromUUID(uuid.toString())) {
-						new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), false);
-					}
-				}
-			}
-			String grammar = (was.contains(pref)) ? "PREF_WAS_OFF" : "PREF_WERE_OFF";
-			TARDISMessage.send(player, grammar, pref);
-		}
-		if (setp.size() > 0) {
-			plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);
-		}
-		return true;
-	}
+    public boolean toggle(Player player, String[] args) {
+        String pref = args[0];
+        if (pref.equals("auto") && !plugin.getConfig().getBoolean("allow.autonomous")) {
+            TARDISMessage.send(player, "AUTO_DISABLED");
+            return true;
+        }
+        if (pref.equals("auto_powerup") && !plugin.getConfig().getBoolean("allow.power_down")) {
+            TARDISMessage.send(player, "POWER_DOWN_DISABLED");
+            return true;
+        }
+        if (pref.equals("eps") && !plugin.getConfig().getBoolean("allow.emergency_npc")) {
+            TARDISMessage.send(player, "EP1_DISABLED");
+            return true;
+        }
+        if (pref.equals("hads") && !plugin.getConfig().getBoolean("allow.hads")) {
+            TARDISMessage.send(player, "HADS_DISBALED");
+            return true;
+        }
+        if (pref.equals("lock_containers") && !plugin.isWorldGuardOnServer()) {
+            TARDISMessage.send(player, "WG_DISABLED");
+            return true;
+        }
+        if (pref.equals("lock_containers") && !plugin.getUtils().inTARDISWorld(player)) {
+            TARDISMessage.send(player, "CMD_IN_WORLD");
+            return true;
+        }
+        HashMap<String, Object> setp = new HashMap<>();
+        HashMap<String, Object> wherep = new HashMap<>();
+        wherep.put("uuid", player.getUniqueId().toString());
+        if (args[1].equalsIgnoreCase("on")) {
+            if (args[0].equalsIgnoreCase("lock_containers")) {
+                plugin.getWorldGuardUtils().lockContainers(player.getWorld(), player.getName());
+            } else {
+                setp.put(pref + "_on", 1);
+                if (pref.equals("beacon")) {
+                    UUID uuid = player.getUniqueId();
+                    // get tardis id
+                    ResultSetTardisID rsi = new ResultSetTardisID(plugin);
+                    if (rsi.fromUUID(uuid.toString())) {
+                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), true);
+                    }
+                }
+            }
+            String grammar = (was.contains(pref)) ? "PREF_WAS_ON" : "PREF_WERE_ON";
+            TARDISMessage.send(player, grammar, pref);
+        }
+        if (args[1].equalsIgnoreCase("off")) {
+            if (args[0].equalsIgnoreCase("lock_containers")) {
+                plugin.getWorldGuardUtils().unlockContainers(player.getWorld(), player.getName());
+            } else {
+                setp.put(pref + "_on", 0);
+                if (pref.equals("beacon")) {
+                    UUID uuid = player.getUniqueId();
+                    // get tardis id
+                    ResultSetTardisID rsi = new ResultSetTardisID(plugin);
+                    if (rsi.fromUUID(uuid.toString())) {
+                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), false);
+                    }
+                }
+            }
+            String grammar = (was.contains(pref)) ? "PREF_WAS_OFF" : "PREF_WERE_OFF";
+            TARDISMessage.send(player, grammar, pref);
+        }
+        if (setp.size() > 0) {
+            plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);
+        }
+        return true;
+    }
 }

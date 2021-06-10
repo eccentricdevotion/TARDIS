@@ -26,26 +26,26 @@ import org.bukkit.command.CommandSender;
  */
 class TARDISDefaultWorldNameCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISDefaultWorldNameCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISDefaultWorldNameCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public boolean setName(CommandSender sender, String[] args) {
-		// get world name
-		int count = args.length;
-		StringBuilder buf = new StringBuilder();
-		for (int i = 1; i < count; i++) {
-			buf.append(args[i]).append(" ");
-		}
-		String tmp = buf.toString();
-		String t = tmp.substring(0, tmp.length() - 1);
-		// need to make there are no periods(.) in the text
-		String nodots = StringUtils.replace(t, ".", "_");
-		plugin.getConfig().set("creation.default_world_name", nodots);
-		plugin.saveConfig();
-		TARDISMessage.send(sender, "CONFIG_UPDATED");
-		return true;
-	}
+    public boolean setName(CommandSender sender, String[] args) {
+        // get world name
+        int count = args.length;
+        StringBuilder buf = new StringBuilder();
+        for (int i = 1; i < count; i++) {
+            buf.append(args[i]).append(" ");
+        }
+        String tmp = buf.toString();
+        String t = tmp.substring(0, tmp.length() - 1);
+        // need to make there are no periods(.) in the text
+        String nodots = StringUtils.replace(t, ".", "_");
+        plugin.getConfig().set("creation.default_world_name", nodots);
+        plugin.saveConfig();
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        return true;
+    }
 }

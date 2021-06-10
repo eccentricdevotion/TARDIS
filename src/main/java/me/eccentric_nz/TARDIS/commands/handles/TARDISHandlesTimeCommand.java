@@ -29,38 +29,38 @@ import java.util.Date;
  */
 class TARDISHandlesTimeCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISHandlesTimeCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISHandlesTimeCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean sayTime(Player player) {
-		long minecraftTime = player.getWorld().getTime();
-		String daynight = TARDISStaticUtils.getTime(minecraftTime);
-		// get current server time (in a nice format)
-		Date date = new Date();
-		String formatted = DateFormatUtils.format(date, "h:mm a");
-		// send message to player with current time
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-			TARDISMessage.handlesSend(player, "HANDLES_TIME", minecraftTime, daynight, parseTime(minecraftTime));
-			TARDISMessage.handlesSend(player, "HANDLES_SERVER_TIME", formatted);
-		}, 2L);
-		return true;
-	}
+    boolean sayTime(Player player) {
+        long minecraftTime = player.getWorld().getTime();
+        String daynight = TARDISStaticUtils.getTime(minecraftTime);
+        // get current server time (in a nice format)
+        Date date = new Date();
+        String formatted = DateFormatUtils.format(date, "h:mm a");
+        // send message to player with current time
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            TARDISMessage.handlesSend(player, "HANDLES_TIME", minecraftTime, daynight, parseTime(minecraftTime));
+            TARDISMessage.handlesSend(player, "HANDLES_SERVER_TIME", formatted);
+        }, 2L);
+        return true;
+    }
 
-	private String parseTime(long time) {
-		long hours = time / 1000 + 6;
-		long minutes = (time % 1000) * 60 / 1000;
-		String ampm = "AM";
-		if (hours >= 12) {
-			hours -= 12;
-			ampm = "PM";
-		}
-		if (hours == 0) {
-			hours = 12;
-		}
-		String mm = (minutes < 10) ? "0" + minutes : "" + minutes;
-		return hours + ":" + mm + " " + ampm;
-	}
+    private String parseTime(long time) {
+        long hours = time / 1000 + 6;
+        long minutes = (time % 1000) * 60 / 1000;
+        String ampm = "AM";
+        if (hours >= 12) {
+            hours -= 12;
+            ampm = "PM";
+        }
+        if (hours == 0) {
+            hours = 12;
+        }
+        String mm = (minutes < 10) ? "0" + minutes : "" + minutes;
+        return hours + ":" + mm + " " + ampm;
+    }
 }

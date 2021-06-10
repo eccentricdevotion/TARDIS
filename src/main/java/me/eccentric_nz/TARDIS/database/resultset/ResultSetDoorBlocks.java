@@ -36,87 +36,87 @@ import java.util.Objects;
  */
 public class ResultSetDoorBlocks {
 
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final TARDISPlugin plugin;
-	private final int id;
-	private final String prefix;
-	private Block innerBlock;
-	private Block outerBlock;
-	private COMPASS innerDirection;
-	private COMPASS outerDirection;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final TARDISPlugin plugin;
+    private final int id;
+    private final String prefix;
+    private Block innerBlock;
+    private Block outerBlock;
+    private COMPASS innerDirection;
+    private COMPASS outerDirection;
 
-	/**
-	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
-	 *
-	 * @param plugin an instance of the main class.
-	 * @param id     the tardis id to get the doors for.
-	 */
-	public ResultSetDoorBlocks(TARDISPlugin plugin, int id) {
-		this.plugin = plugin;
-		this.id = id;
-		prefix = this.plugin.getPrefix();
-	}
+    /**
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
+     *
+     * @param plugin an instance of the main class.
+     * @param id     the tardis id to get the doors for.
+     */
+    public ResultSetDoorBlocks(TARDISPlugin plugin, int id) {
+        this.plugin = plugin;
+        this.id = id;
+        prefix = this.plugin.getPrefix();
+    }
 
-	/**
-	 * Retrieves door from the doors table.
-	 *
-	 * @return the door block.
-	 */
-	public boolean resultSet() {
-		PreparedStatement statement = null;
-		ResultSet rs = null;
-		String query = "SELECT * FROM " + prefix + "doors WHERE door_type IN (0,1) AND tardis_id = ?";
-		try {
-			service.testConnection(connection);
-			statement = connection.prepareStatement(query);
-			statement.setInt(1, id);
-			rs = statement.executeQuery();
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					// get block
-					String door = rs.getString("door_location");
-					if (rs.getInt("door_type") == 0) {
-						outerBlock = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(door)).getBlock();
-						outerDirection = COMPASS.valueOf(rs.getString("door_direction"));
-					} else {
-						innerBlock = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(door)).getBlock();
-						innerDirection = COMPASS.valueOf(rs.getString("door_direction"));
-					}
-				}
-			} else {
-				return false;
-			}
-		} catch (SQLException e) {
-			plugin.debug("ResultSet error for door! " + e.getMessage());
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing door! " + e.getMessage());
-			}
-		}
-		return true;
-	}
+    /**
+     * Retrieves door from the doors table.
+     *
+     * @return the door block.
+     */
+    public boolean resultSet() {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM " + prefix + "doors WHERE door_type IN (0,1) AND tardis_id = ?";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    // get block
+                    String door = rs.getString("door_location");
+                    if (rs.getInt("door_type") == 0) {
+                        outerBlock = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(door)).getBlock();
+                        outerDirection = COMPASS.valueOf(rs.getString("door_direction"));
+                    } else {
+                        innerBlock = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(door)).getBlock();
+                        innerDirection = COMPASS.valueOf(rs.getString("door_direction"));
+                    }
+                }
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for door! " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing door! " + e.getMessage());
+            }
+        }
+        return true;
+    }
 
-	public Block getInnerBlock() {
-		return innerBlock;
-	}
+    public Block getInnerBlock() {
+        return innerBlock;
+    }
 
-	public Block getOuterBlock() {
-		return outerBlock;
-	}
+    public Block getOuterBlock() {
+        return outerBlock;
+    }
 
-	public COMPASS getInnerDirection() {
-		return innerDirection;
-	}
+    public COMPASS getInnerDirection() {
+        return innerDirection;
+    }
 
-	public COMPASS getOuterDirection() {
-		return outerDirection;
-	}
+    public COMPASS getOuterDirection() {
+        return outerDirection;
+    }
 }

@@ -20,7 +20,7 @@ import org.bukkit.Material;
 
 class SparklerMaterial {
 
-	static boolean isCorrectMaterial(Material material) {
-		return material == Material.END_ROD;
-	}
+    static boolean isCorrectMaterial(Material material) {
+        return material == Material.END_ROD;
+    }
 }

@@ -47,128 +47,127 @@ import java.util.UUID;
  */
 public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
 
-	private final TARDISPlugin plugin;
-	private final UUID uuid;
-	private final TARDISUpgradeData tud;
-	private boolean running;
-	private int level = 0;
-	private int row = 0;
-	private int h;
-	private int w;
-	private int c;
-	private int startx;
-	private int starty;
-	private int startz;
-	private World world;
-	private JsonArray arr;
-	private Material wall_type;
-	private Material floor_type;
-	private Player player;
+    private final TARDISPlugin plugin;
+    private final UUID uuid;
+    private final TARDISUpgradeData tud;
+    private boolean running;
+    private int level = 0;
+    private int row = 0;
+    private int h;
+    private int w;
+    private int c;
+    private int startx;
+    private int starty;
+    private int startz;
+    private World world;
+    private JsonArray arr;
+    private Material wall_type;
+    private Material floor_type;
+    private Player player;
 
-	public TARDISWallFloorRunnable(TARDISPlugin plugin, UUID uuid, TARDISUpgradeData tud) {
-		this.plugin = plugin;
-		this.uuid = uuid;
-		this.tud = tud;
-	}
+    public TARDISWallFloorRunnable(TARDISPlugin plugin, UUID uuid, TARDISUpgradeData tud) {
+        this.plugin = plugin;
+        this.uuid = uuid;
+        this.tud = tud;
+    }
 
-	@Override
+    @Override
 
-	public void run() {
-		// initialise
-		if (!running) {
-			String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
-			String path = plugin.getDataFolder() + File.separator + directory + File.separator +
-						  tud.getSchematic().getPermission() + ".tschm";
-			File file = new File(path);
-			if (!file.exists()) {
-				plugin.debug("Could not find a schematic with that name!");
-				return;
-			}
-			// get JSON
-			JsonObject obj = TARDISSchematicGZip.unzip(path);
-			// get dimensions
-			assert obj != null;
-			JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-			h = dimensions.get("height").getAsInt();
-			w = dimensions.get("width").getAsInt();
-			c = dimensions.get("length").getAsInt();
-			// calculate startx, starty, startz
-			HashMap<String, Object> wheret = new HashMap<>();
-			wheret.put("uuid", uuid.toString());
-			ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
-			if (!rs.resultSet()) {
-				// abort and return energy
-				HashMap<String, Object> wherea = new HashMap<>();
-				wherea.put("uuid", uuid.toString());
-				int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
-				plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
-			}
-			TARDIS tardis = rs.getTardis();
-			int slot = tardis.getTIPS();
-			if (slot != -1) { // default world - use TIPS
-				TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-				TARDISTIPSData pos = tintpos.getTIPSData(slot);
-				startx = pos.getCentreX();
-				startz = pos.getCentreZ();
-			} else {
-				int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
-				startx = gsl[0];
-				startz = gsl[2];
-			}
-			starty = TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
-			world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
-			// wall/floor block prefs
-			wall_type = Material.valueOf(tud.getWall());
-			floor_type = Material.valueOf(tud.getFloor());
-			// get input array
-			arr = obj.get("input").getAsJsonArray();
-			// set running
-			running = true;
-			player = plugin.getServer().getPlayer(uuid);
-			plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
-			// remove upgrade data
-			plugin.getTrackerKeeper().getUpgrades().remove(uuid);
-		}
-		if (level == (h - 1) && row == (w - 1)) {
-			// we're finished cancel the task
-			plugin.getServer().getScheduler().cancelTask(taskID);
-			taskID = 0;
-			TARDISMessage.send(player, "UPGRADE_FINISHED");
-		} else {
-			JsonArray floor = arr.get(level).getAsJsonArray();
-			JsonArray r = (JsonArray) floor.get(row);
-			// place a row of blocks
-			for (int col = 0; col < c; col++) {
-				JsonObject bb = r.get(col).getAsJsonObject();
-				int x = startx + row;
-				int y = starty + level;
-				int z = startz + col;
-				BlockData data = plugin.getServer().createBlockData(bb.get("data").getAsString());
-				Material type = data.getMaterial();
-				if (type.equals(Material.ORANGE_WOOL)) {
-					if (wall_type == Material.ORANGE_WOOL) {
-						data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
-					} else {
-						data = wall_type.createBlockData();
-					}
-					TARDISBlockSetters.setBlock(world, x, y, z, data);
-				}
-				if (type.equals(Material.LIGHT_GRAY_WOOL)) {
-					type = floor_type;
-					TARDISBlockSetters.setBlock(world, x, y, z, type);
-				}
-				if (type.equals(Material.BLUE_WOOL)) {
-					data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
-					TARDISBlockSetters.setBlock(world, x, y, z, data);
-				}
-			}
-			if (row < w) {
-				row++;
-			}
-			if (row == w && level < h) {
-				row = 0;
-				level++;
-			}
-		}
-	}
+    public void run() {
+        // initialise
+        if (!running) {
+            String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
+            String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
+            File file = new File(path);
+            if (!file.exists()) {
+                plugin.debug("Could not find a schematic with that name!");
+                return;
+            }
+            // get JSON
+            JsonObject obj = TARDISSchematicGZip.unzip(path);
+            // get dimensions
+            assert obj != null;
+            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+            h = dimensions.get("height").getAsInt();
+            w = dimensions.get("width").getAsInt();
+            c = dimensions.get("length").getAsInt();
+            // calculate startx, starty, startz
+            HashMap<String, Object> wheret = new HashMap<>();
+            wheret.put("uuid", uuid.toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
+            if (!rs.resultSet()) {
+                // abort and return energy
+                HashMap<String, Object> wherea = new HashMap<>();
+                wherea.put("uuid", uuid.toString());
+                int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
+                plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
+            }
+            TARDIS tardis = rs.getTardis();
+            int slot = tardis.getTIPS();
+            if (slot != -1) { // default world - use TIPS
+                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                TARDISTIPSData pos = tintpos.getTIPSData(slot);
+                startx = pos.getCentreX();
+                startz = pos.getCentreZ();
+            } else {
+                int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
+                startx = gsl[0];
+                startz = gsl[2];
+            }
+            starty = TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
+            world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+            // wall/floor block prefs
+            wall_type = Material.valueOf(tud.getWall());
+            floor_type = Material.valueOf(tud.getFloor());
+            // get input array
+            arr = obj.get("input").getAsJsonArray();
+            // set running
+            running = true;
+            player = plugin.getServer().getPlayer(uuid);
+            plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
+            // remove upgrade data
+            plugin.getTrackerKeeper().getUpgrades().remove(uuid);
+        }
+        if (level == (h - 1) && row == (w - 1)) {
+            // we're finished cancel the task
+            plugin.getServer().getScheduler().cancelTask(taskID);
+            taskID = 0;
+            TARDISMessage.send(player, "UPGRADE_FINISHED");
+        } else {
+            JsonArray floor = arr.get(level).getAsJsonArray();
+            JsonArray r = (JsonArray) floor.get(row);
+            // place a row of blocks
+            for (int col = 0; col < c; col++) {
+                JsonObject bb = r.get(col).getAsJsonObject();
+                int x = startx + row;
+                int y = starty + level;
+                int z = startz + col;
+                BlockData data = plugin.getServer().createBlockData(bb.get("data").getAsString());
+                Material type = data.getMaterial();
+                if (type.equals(Material.ORANGE_WOOL)) {
+                    if (wall_type == Material.ORANGE_WOOL) {
+                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                    } else {
+                        data = wall_type.createBlockData();
+                    }
+                    TARDISBlockSetters.setBlock(world, x, y, z, data);
+                }
+                if (type.equals(Material.LIGHT_GRAY_WOOL)) {
+                    type = floor_type;
+                    TARDISBlockSetters.setBlock(world, x, y, z, type);
+                }
+                if (type.equals(Material.BLUE_WOOL)) {
+                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
+                    TARDISBlockSetters.setBlock(world, x, y, z, data);
+                }
+            }
+            if (row < w) {
+                row++;
+            }
+            if (row == w && level < h) {
+                row = 0;
+                level++;
+            }
+        }
+    }
 }

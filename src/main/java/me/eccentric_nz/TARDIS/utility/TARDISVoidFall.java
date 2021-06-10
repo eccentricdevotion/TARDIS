@@ -30,61 +30,61 @@ import java.util.HashMap;
  */
 public class TARDISVoidFall {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISVoidFall(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISVoidFall(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public void teleport(Player p) {
-		// get tardis player was in
-		int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(p);
-		// get inner door location
-		HashMap<String, Object> wherei = new HashMap<>();
-		wherei.put("door_type", 1);
-		wherei.put("tardis_id", id);
-		ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
-		if (rsi.resultSet()) {
-			COMPASS innerD = rsi.getDoorDirection();
-			String doorLocStr = rsi.getDoorLocation();
-			World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
-			Location tardis_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
-			assert tardis_loc != null;
-			int getx = tardis_loc.getBlockX();
-			int getz = tardis_loc.getBlockZ();
-			switch (innerD) {
-				case NORTH -> {
-					// z -ve
-					tardis_loc.setX(getx + 0.5);
-					tardis_loc.setZ(getz - 0.5);
-				}
-				case EAST -> {
-					// x +ve
-					tardis_loc.setX(getx + 1.5);
-					tardis_loc.setZ(getz + 0.5);
-				}
-				case SOUTH -> {
-					// z +ve
-					tardis_loc.setX(getx + 0.5);
-					tardis_loc.setZ(getz + 1.5);
-				}
-				case WEST -> {
-					// x -ve
-					tardis_loc.setX(getx - 0.5);
-					tardis_loc.setZ(getz + 0.5);
-				}
-			}
-			// enter tardis!
-			cw.getChunkAt(tardis_loc).load();
-			float yaw = p.getLocation().getYaw();
-			float pitch = p.getLocation().getPitch();
-			tardis_loc.setPitch(pitch);
-			tardis_loc.setYaw(yaw);
-			World playerWorld = p.getLocation().getWorld();
-			p.setFallDistance(0.0f);
-			plugin.getGeneralKeeper().getDoorListener().movePlayer(p, tardis_loc, false, playerWorld, false, 3, true);
-		} else {
-			p.setHealth(0);
-		}
-	}
+    public void teleport(Player p) {
+        // get tardis player was in
+        int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(p);
+        // get inner door location
+        HashMap<String, Object> wherei = new HashMap<>();
+        wherei.put("door_type", 1);
+        wherei.put("tardis_id", id);
+        ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
+        if (rsi.resultSet()) {
+            COMPASS innerD = rsi.getDoorDirection();
+            String doorLocStr = rsi.getDoorLocation();
+            World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
+            Location tardis_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
+            assert tardis_loc != null;
+            int getx = tardis_loc.getBlockX();
+            int getz = tardis_loc.getBlockZ();
+            switch (innerD) {
+                case NORTH -> {
+                    // z -ve
+                    tardis_loc.setX(getx + 0.5);
+                    tardis_loc.setZ(getz - 0.5);
+                }
+                case EAST -> {
+                    // x +ve
+                    tardis_loc.setX(getx + 1.5);
+                    tardis_loc.setZ(getz + 0.5);
+                }
+                case SOUTH -> {
+                    // z +ve
+                    tardis_loc.setX(getx + 0.5);
+                    tardis_loc.setZ(getz + 1.5);
+                }
+                case WEST -> {
+                    // x -ve
+                    tardis_loc.setX(getx - 0.5);
+                    tardis_loc.setZ(getz + 0.5);
+                }
+            }
+            // enter tardis!
+            cw.getChunkAt(tardis_loc).load();
+            float yaw = p.getLocation().getYaw();
+            float pitch = p.getLocation().getPitch();
+            tardis_loc.setPitch(pitch);
+            tardis_loc.setYaw(yaw);
+            World playerWorld = p.getLocation().getWorld();
+            p.setFallDistance(0.0f);
+            plugin.getGeneralKeeper().getDoorListener().movePlayer(p, tardis_loc, false, playerWorld, false, 3, true);
+        } else {
+            p.setHealth(0);
+        }
+    }
 }

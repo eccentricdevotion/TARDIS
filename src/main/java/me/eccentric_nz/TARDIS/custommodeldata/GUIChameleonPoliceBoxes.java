@@ -21,35 +21,35 @@ import org.bukkit.Material;
 
 public enum GUIChameleonPoliceBoxes {
 
-	// Chameleon Police Boxes
-	GO_TO_PAGE_1(11, 24, Material.ARROW),
-	BACK(8, 25, Material.BOWL),
-	CLOSE(1, 26, Material.BOWL);
+    // Chameleon Police Boxes
+    GO_TO_PAGE_1(11, 24, Material.ARROW),
+    BACK(8, 25, Material.BOWL),
+    CLOSE(1, 26, Material.BOWL);
 
-	private final int customModelData;
-	private final int slot;
-	private final Material material;
+    private final int customModelData;
+    private final int slot;
+    private final Material material;
 
-	GUIChameleonPoliceBoxes(int customModelData, int slot, Material material) {
-		this.customModelData = customModelData;
-		this.slot = slot;
-		this.material = material;
-	}
+    GUIChameleonPoliceBoxes(int customModelData, int slot, Material material) {
+        this.customModelData = customModelData;
+        this.slot = slot;
+        this.material = material;
+    }
 
-	public int getCustomModelData() {
-		return customModelData;
-	}
+    public int getCustomModelData() {
+        return customModelData;
+    }
 
-	public int getSlot() {
-		return slot;
-	}
+    public int getSlot() {
+        return slot;
+    }
 
-	public Material getMaterial() {
-		return material;
-	}
+    public Material getMaterial() {
+        return material;
+    }
 
-	public String getName() {
-		String s = toString();
-		return TARDISStringUtils.sentenceCase(s);
-	}
+    public String getName() {
+        String s = toString();
+        return TARDISStringUtils.sentenceCase(s);
+    }
 }

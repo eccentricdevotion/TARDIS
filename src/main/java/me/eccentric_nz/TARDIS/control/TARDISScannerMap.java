@@ -28,32 +28,32 @@ import org.bukkit.map.MapView;
 
 public class TARDISScannerMap {
 
-	private final TARDISPlugin plugin;
-	private final Location location;
-	private final ItemFrame itemFrame;
+    private final TARDISPlugin plugin;
+    private final Location location;
+    private final ItemFrame itemFrame;
 
-	public TARDISScannerMap(TARDISPlugin plugin, Location location, ItemFrame itemFrame) {
-		this.plugin = plugin;
-		this.location = location;
-		this.itemFrame = itemFrame;
-	}
+    public TARDISScannerMap(TARDISPlugin plugin, Location location, ItemFrame itemFrame) {
+        this.plugin = plugin;
+        this.location = location;
+        this.itemFrame = itemFrame;
+    }
 
-	public void setMap() {
-		World world = location.getWorld();
-		assert world != null;
-		MapView view = plugin.getServer().createMap(world);
-		view.setCenterX(location.getBlockX());
-		view.setCenterZ(location.getBlockZ());
-		view.setScale(MapView.Scale.CLOSEST);
-		view.setTrackingPosition(true);
-		view.setLocked(true);
-		ItemStack map = new ItemStack(Material.FILLED_MAP, 1, (short) view.getId());
-		MapMeta meta = (MapMeta) map.getItemMeta();
-		assert meta != null;
-		meta.setMapView(view);
-		map.setItemMeta(meta);
-		itemFrame.setItem(map, false);
-		itemFrame.setRotation(Rotation.NONE);
-		plugin.getTardisHelper().updateMap(world, view);
-	}
+    public void setMap() {
+        World world = location.getWorld();
+        assert world != null;
+        MapView view = plugin.getServer().createMap(world);
+        view.setCenterX(location.getBlockX());
+        view.setCenterZ(location.getBlockZ());
+        view.setScale(MapView.Scale.CLOSEST);
+        view.setTrackingPosition(true);
+        view.setLocked(true);
+        ItemStack map = new ItemStack(Material.FILLED_MAP, 1, (short) view.getId());
+        MapMeta meta = (MapMeta) map.getItemMeta();
+        assert meta != null;
+        meta.setMapView(view);
+        map.setItemMeta(meta);
+        itemFrame.setItem(map, false);
+        itemFrame.setRotation(Rotation.NONE);
+        plugin.getTardisHelper().updateMap(world, view);
+    }
 }

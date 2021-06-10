@@ -45,72 +45,68 @@ import java.util.Objects;
  */
 public class TARDISExplosionListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISExplosionListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISExplosionListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	/**
-	 * Listens for explosions around the tardis Police Box. If the explosion affects any of the Police Box blocks, then
-	 * those blocks are removed from the effect of the explosion, there by protecting the Police box from damage.
-	 *
-	 * @param e an entity exploding
-	 */
-	@EventHandler(priority = EventPriority.LOW)
-	public void onEntityExplode(EntityExplodeEvent e) {
-		if (e.getEntityType().equals(EntityType.ENDER_DRAGON)) {
-			return;
-		}
-		Location explode = e.getLocation();
-		// check if the explosion is in a tardis world
-		if ((Objects.requireNonNull(explode.getWorld()).getName().contains("tardis") ||
-			 explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) &&
-			e.getEntity() instanceof Creeper) {
-			e.setCancelled(true);
-			// check it is not the Artron creeper
-			String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" +
-							 (explode.getBlockY() - 1) + ":" + (explode.getBlockZ() + 0.5f);
-			if (!new ResultSetCreeper(plugin, loc_chk).resultSet()) {
-				// create a new explosion that doesn't destroy blocks or set fire
-				explode.getWorld().createExplosion(explode.getX(), explode.getY(), explode.getZ(), 4.0f, false, false);
-			}
-		} else {
-			Environment env = explode.getWorld().getEnvironment();
-			if ((env.equals(Environment.THE_END) && !plugin.getConfig().getBoolean("travel.the_end")) ||
-				(env.equals(Environment.NETHER) && !plugin.getConfig().getBoolean("travel.nether"))) {
-				return;
-			}
-			for (String str : plugin.getGeneralKeeper().getProtectBlockMap().keySet()) {
-				Location loc = TARDISStaticLocationGetters.getLocationFromBukkitString(str);
-				if (loc != null) {
-					Block block = loc.getBlock();
-					// if the block is a tardis block then remove it
-					e.blockList().remove(block);
-				}
-			}
-		}
-	}
+    /**
+     * Listens for explosions around the tardis Police Box. If the explosion affects any of the Police Box blocks, then
+     * those blocks are removed from the effect of the explosion, there by protecting the Police box from damage.
+     *
+     * @param e an entity exploding
+     */
+    @EventHandler(priority = EventPriority.LOW)
+    public void onEntityExplode(EntityExplodeEvent e) {
+        if (e.getEntityType().equals(EntityType.ENDER_DRAGON)) {
+            return;
+        }
+        Location explode = e.getLocation();
+        // check if the explosion is in a tardis world
+        if ((Objects.requireNonNull(explode.getWorld()).getName().contains("tardis") || explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) && e.getEntity() instanceof Creeper) {
+            e.setCancelled(true);
+            // check it is not the Artron creeper
+            String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" + (explode.getBlockY() - 1) + ":" + (explode.getBlockZ() + 0.5f);
+            if (!new ResultSetCreeper(plugin, loc_chk).resultSet()) {
+                // create a new explosion that doesn't destroy blocks or set fire
+                explode.getWorld().createExplosion(explode.getX(), explode.getY(), explode.getZ(), 4.0f, false, false);
+            }
+        } else {
+            Environment env = explode.getWorld().getEnvironment();
+            if ((env.equals(Environment.THE_END) && !plugin.getConfig().getBoolean("travel.the_end")) || (env.equals(Environment.NETHER) && !plugin.getConfig().getBoolean("travel.nether"))) {
+                return;
+            }
+            for (String str : plugin.getGeneralKeeper().getProtectBlockMap().keySet()) {
+                Location loc = TARDISStaticLocationGetters.getLocationFromBukkitString(str);
+                if (loc != null) {
+                    Block block = loc.getBlock();
+                    // if the block is a tardis block then remove it
+                    e.blockList().remove(block);
+                }
+            }
+        }
+    }
 
-	@EventHandler(priority = EventPriority.LOW)
-	public void onEntityDamage(EntityDamageByEntityEvent e) {
-		if (e.getEntity() instanceof ItemFrame frame && e.getDamager() instanceof Player) {
-			// check if it is a tardis Chameleon item frame
-			String l = frame.getLocation().toString();
-			HashMap<String, Object> where = new HashMap<>();
-			where.put("location", l);
-			where.put("type", 27);
-			ResultSetControls rs = new ResultSetControls(plugin, where, false);
-			if (rs.resultSet()) {
-				e.setCancelled(true);
-			}
-		}
-		if (e.getCause() != DamageCause.ENTITY_EXPLOSION) {
-			return;
-		}
-		String l = Objects.requireNonNull(e.getDamager().getLocation().getWorld()).getName();
-		if (l.contains("tardis") || l.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-			e.setCancelled(true);
-		}
-	}
+    @EventHandler(priority = EventPriority.LOW)
+    public void onEntityDamage(EntityDamageByEntityEvent e) {
+        if (e.getEntity() instanceof ItemFrame frame && e.getDamager() instanceof Player) {
+            // check if it is a tardis Chameleon item frame
+            String l = frame.getLocation().toString();
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("location", l);
+            where.put("type", 27);
+            ResultSetControls rs = new ResultSetControls(plugin, where, false);
+            if (rs.resultSet()) {
+                e.setCancelled(true);
+            }
+        }
+        if (e.getCause() != DamageCause.ENTITY_EXPLOSION) {
+            return;
+        }
+        String l = Objects.requireNonNull(e.getDamager().getLocation().getWorld()).getName();
+        if (l.contains("tardis") || l.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+            e.setCancelled(true);
+        }
+    }
 }

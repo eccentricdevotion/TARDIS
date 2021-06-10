@@ -41,163 +41,161 @@ import java.util.Objects;
  */
 class TARDISAreaDisks {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISAreaDisks(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISAreaDisks(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	/**
-	 * Makes an array of item stacks containing the default Storage GUI top and any area storage disks the player has
-	 * permission for.
-	 *
-	 * @param p the player to create the array for
-	 * @return an array of item stacks
-	 */
-	ItemStack[] makeDisks(Player p) {
+    /**
+     * Makes an array of item stacks containing the default Storage GUI top and any area storage disks the player has
+     * permission for.
+     *
+     * @param p the player to create the array for
+     * @return an array of item stacks
+     */
+    ItemStack[] makeDisks(Player p) {
 
-		List<ItemStack> areas = new ArrayList<>();
-		// get the areas this player has access to
-		ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, false);
-		if (rsa.resultSet()) {
-			// cycle through areas
-			rsa.getData().forEach((a) -> {
-				String name = a.getAreaName();
-				if (TARDISPermission.hasPermission(p, "tardis.area." + name) ||
-					TARDISPermission.hasPermission(p, "tardis.area.*")) {
-					ItemStack is = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
-					ItemMeta im = is.getItemMeta();
-					assert im != null;
-					im.setDisplayName("Area Storage Disk");
-					List<String> lore = new ArrayList<>();
-					lore.add(name);
-					lore.add(a.getWorld());
-					im.setLore(lore);
-					im.setCustomModelData(10000001);
-					is.setItemMeta(im);
-					areas.add(is);
-				}
-			});
-		}
-		ItemStack[] stack = new ItemStack[54];
-		// set default top slots
-		try {
-			stack = TARDISSerializeInventory.itemStacksFromString(Storage.AREA.getEmpty());
-		} catch (IOException ex) {
-			plugin.debug("Could not get make Area Disk Inventory: " + ex);
-		}
-		// set saved slots
-		int i = 27;
-		for (ItemStack st : areas) {
-			stack[i] = st;
-			i++;
-		}
-		return stack;
-	}
+        List<ItemStack> areas = new ArrayList<>();
+        // get the areas this player has access to
+        ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, false);
+        if (rsa.resultSet()) {
+            // cycle through areas
+            rsa.getData().forEach((a) -> {
+                String name = a.getAreaName();
+                if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
+                    ItemStack is = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
+                    ItemMeta im = is.getItemMeta();
+                    assert im != null;
+                    im.setDisplayName("Area Storage Disk");
+                    List<String> lore = new ArrayList<>();
+                    lore.add(name);
+                    lore.add(a.getWorld());
+                    im.setLore(lore);
+                    im.setCustomModelData(10000001);
+                    is.setItemMeta(im);
+                    areas.add(is);
+                }
+            });
+        }
+        ItemStack[] stack = new ItemStack[54];
+        // set default top slots
+        try {
+            stack = TARDISSerializeInventory.itemStacksFromString(Storage.AREA.getEmpty());
+        } catch (IOException ex) {
+            plugin.debug("Could not get make Area Disk Inventory: " + ex);
+        }
+        // set saved slots
+        int i = 27;
+        for (ItemStack st : areas) {
+            stack[i] = st;
+            i++;
+        }
+        return stack;
+    }
 
-	/**
-	 * Checks the players current area disks and adds any new ones they have permission for.
-	 *
-	 * @param p the player to check for
-	 * @return a serialized String
-	 */
-	String checkDisksForNewAreas(Player p) {
-		String serialized = "";
-		// get the player's storage record
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("uuid", p.getUniqueId().toString());
-		ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
-		if (rs.resultSet()) {
-			List<String> player_has = new ArrayList<>();
-			String serilized_areas = rs.getAreas();
-			try {
-				// check storage inventory
-				ItemStack[] areas = TARDISSerializeInventory.itemStacksFromString(serilized_areas);
-				for (ItemStack a : areas) {
-					if (a != null && a.getType().equals(Material.MUSIC_DISC_BLOCKS) && a.hasItemMeta()) {
-						ItemMeta ima = a.getItemMeta();
-						assert ima != null;
-						if (ima.hasLore()) {
-							player_has.add(Objects.requireNonNull(ima.getLore()).get(0));
-						}
-					}
-				}
-				// check console inventory
-				ItemStack[] console = TARDISSerializeInventory.itemStacksFromString(rs.getConsole());
-				for (ItemStack c : console) {
-					if (c != null && c.getType().equals(Material.MUSIC_DISC_BLOCKS) && c.hasItemMeta()) {
-						ItemMeta imc = c.getItemMeta();
-						assert imc != null;
-						if (imc.hasLore()) {
-							player_has.add(Objects.requireNonNull(imc.getLore()).get(0));
-						}
-					}
-				}
-				// check player inventory
-				ItemStack[] player = p.getInventory().getContents();
-				for (ItemStack y : player) {
-					if (y != null && y.getType().equals(Material.MUSIC_DISC_BLOCKS) && y.hasItemMeta()) {
-						ItemMeta imy = y.getItemMeta();
-						assert imy != null;
-						if (imy.hasLore()) {
-							player_has.add(Objects.requireNonNull(imy.getLore()).get(0));
-						}
-					}
-				}
-				Inventory inv = plugin.getServer().createInventory(p, 54);
-				inv.setContents(areas);
-				ResultSetAreas rsa = new ResultSetAreas(plugin, null, true, false);
-				int count = 0;
-				if (rsa.resultSet()) {
-					// cycle through areas
-					for (Area map : rsa.getData()) {
-						String name = map.getAreaName();
-						if ((!player_has.contains(name) && TARDISPermission.hasPermission(p, "tardis.area." + name)) ||
-							(!player_has.contains(name) && TARDISPermission.hasPermission(p, "tardis.area.*"))) {
-							// add new area if there is room
-							int empty = getNextEmptySlot(inv);
-							if (empty != -1) {
-								ItemStack is = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
-								ItemMeta im = is.getItemMeta();
-								assert im != null;
-								im.setDisplayName("Area Storage Disk");
-								List<String> lore = new ArrayList<>();
-								lore.add(name);
-								lore.add(map.getWorld());
-								im.setLore(lore);
-								im.setCustomModelData(10000001);
-								is.setItemMeta(im);
-								inv.setItem(empty, is);
-								count++;
-							}
-						}
-					}
-				}
-				// return the serialized string
-				if (count > 0) {
-					return TARDISSerializeInventory.itemStacksToString(inv.getContents());
-				} else {
-					return serilized_areas;
-				}
-			} catch (IOException ex) {
-				plugin.debug("Could not get NEW Area Disk Inventory: " + ex);
-			}
-		}
-		return serialized;
-	}
+    /**
+     * Checks the players current area disks and adds any new ones they have permission for.
+     *
+     * @param p the player to check for
+     * @return a serialized String
+     */
+    String checkDisksForNewAreas(Player p) {
+        String serialized = "";
+        // get the player's storage record
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", p.getUniqueId().toString());
+        ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
+        if (rs.resultSet()) {
+            List<String> player_has = new ArrayList<>();
+            String serilized_areas = rs.getAreas();
+            try {
+                // check storage inventory
+                ItemStack[] areas = TARDISSerializeInventory.itemStacksFromString(serilized_areas);
+                for (ItemStack a : areas) {
+                    if (a != null && a.getType().equals(Material.MUSIC_DISC_BLOCKS) && a.hasItemMeta()) {
+                        ItemMeta ima = a.getItemMeta();
+                        assert ima != null;
+                        if (ima.hasLore()) {
+                            player_has.add(Objects.requireNonNull(ima.getLore()).get(0));
+                        }
+                    }
+                }
+                // check console inventory
+                ItemStack[] console = TARDISSerializeInventory.itemStacksFromString(rs.getConsole());
+                for (ItemStack c : console) {
+                    if (c != null && c.getType().equals(Material.MUSIC_DISC_BLOCKS) && c.hasItemMeta()) {
+                        ItemMeta imc = c.getItemMeta();
+                        assert imc != null;
+                        if (imc.hasLore()) {
+                            player_has.add(Objects.requireNonNull(imc.getLore()).get(0));
+                        }
+                    }
+                }
+                // check player inventory
+                ItemStack[] player = p.getInventory().getContents();
+                for (ItemStack y : player) {
+                    if (y != null && y.getType().equals(Material.MUSIC_DISC_BLOCKS) && y.hasItemMeta()) {
+                        ItemMeta imy = y.getItemMeta();
+                        assert imy != null;
+                        if (imy.hasLore()) {
+                            player_has.add(Objects.requireNonNull(imy.getLore()).get(0));
+                        }
+                    }
+                }
+                Inventory inv = plugin.getServer().createInventory(p, 54);
+                inv.setContents(areas);
+                ResultSetAreas rsa = new ResultSetAreas(plugin, null, true, false);
+                int count = 0;
+                if (rsa.resultSet()) {
+                    // cycle through areas
+                    for (Area map : rsa.getData()) {
+                        String name = map.getAreaName();
+                        if ((!player_has.contains(name) && TARDISPermission.hasPermission(p, "tardis.area." + name)) || (!player_has.contains(name) && TARDISPermission.hasPermission(p, "tardis.area.*"))) {
+                            // add new area if there is room
+                            int empty = getNextEmptySlot(inv);
+                            if (empty != -1) {
+                                ItemStack is = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
+                                ItemMeta im = is.getItemMeta();
+                                assert im != null;
+                                im.setDisplayName("Area Storage Disk");
+                                List<String> lore = new ArrayList<>();
+                                lore.add(name);
+                                lore.add(map.getWorld());
+                                im.setLore(lore);
+                                im.setCustomModelData(10000001);
+                                is.setItemMeta(im);
+                                inv.setItem(empty, is);
+                                count++;
+                            }
+                        }
+                    }
+                }
+                // return the serialized string
+                if (count > 0) {
+                    return TARDISSerializeInventory.itemStacksToString(inv.getContents());
+                } else {
+                    return serilized_areas;
+                }
+            } catch (IOException ex) {
+                plugin.debug("Could not get NEW Area Disk Inventory: " + ex);
+            }
+        }
+        return serialized;
+    }
 
-	/**
-	 * Finds the first empty slot greater than 27.
-	 *
-	 * @param inv the inventory to search
-	 * @return the empty slot number or -1 if not found
-	 */
-	int getNextEmptySlot(Inventory inv) {
-		for (int i = 27; i < 54; i++) {
-			if (inv.getItem(i) == null || Objects.requireNonNull(inv.getItem(i)).getType().isAir()) {
-				return i;
-			}
-		}
-		return -1;
-	}
+    /**
+     * Finds the first empty slot greater than 27.
+     *
+     * @param inv the inventory to search
+     * @return the empty slot number or -1 if not found
+     */
+    int getNextEmptySlot(Inventory inv) {
+        for (int i = 27; i < 54; i++) {
+            if (inv.getItem(i) == null || Objects.requireNonNull(inv.getItem(i)).getType().isAir()) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

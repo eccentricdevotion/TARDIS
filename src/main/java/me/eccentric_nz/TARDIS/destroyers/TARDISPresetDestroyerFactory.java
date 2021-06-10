@@ -50,339 +50,336 @@ import java.util.Objects;
  */
 public class TARDISPresetDestroyerFactory {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISPresetDestroyerFactory(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISPresetDestroyerFactory(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public void destroyPreset(DestroyData dd) {
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("tardis_id", dd.getTardisId());
-		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-		if (rs.resultSet()) {
-			TARDIS tardis = rs.getTardis();
-			PRESET demat = tardis.getDemat();
-			PRESET preset = tardis.getPreset();
-			// load the chunk if unloaded
-			if (!Objects.requireNonNull(dd.getLocation().getWorld()).isChunkLoaded(dd.getLocation().getChunk())) {
-				dd.getLocation().getWorld().loadChunk(dd.getLocation().getChunk());
-			}
-			if (!demat.equals(PRESET.INVISIBLE)) {
-				Material cham_id = Material.LIGHT_GRAY_TERRACOTTA;
-				if ((tardis.getAdaption().equals(Adaption.BIOME) && demat.equals(PRESET.FACTORY)) ||
-					demat.equals(PRESET.SUBMERGED) || tardis.getAdaption().equals(Adaption.BLOCK)) {
-					Block chameleonBlock;
-					// chameleon circuit is on - get block under TARDIS
-					if (dd.getLocation().getBlock().getType() == Material.SNOW) {
-						chameleonBlock = dd.getLocation().getBlock();
-					} else {
-						chameleonBlock = dd.getLocation().getBlock().getRelative(BlockFace.DOWN);
-					}
-					// determine cham_id
-					TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
-					cham_id = tcc.getChameleonBlock(chameleonBlock, dd.getPlayer());
-				}
-				int loops = dd.getThrottle().getLoops();
-				if (loops == 3) {
-					TARDISSounds.playTARDISSound(dd.getLocation(), "tardis_takeoff_fast");
-					if (dd.getPlayer() != null && dd.getPlayer().getPlayer() != null &&
-						plugin.getUtils().inTARDISWorld(dd.getPlayer().getPlayer())) {
-						TARDISSounds.playTARDISSound(dd.getPlayer().getPlayer().getLocation(), "tardis_takeoff_fast");
-					}
-				}
-				if (preset.equals(PRESET.JUNK_MODE)) {
-					dd.setThrottle(SpaceTimeThrottle.JUNK);
-				}
-				if (demat.equals(PRESET.JUNK)) {
-					TARDISJunkDestroyer runnable = new TARDISJunkDestroyer(plugin, dd);
-					int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-					runnable.setTask(taskID);
-				} else {
-					plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisId());
-					if (demat.equals(PRESET.SWAMP)) {
-						// remove door
-						destroyDoor(dd.getTardisId());
-					}
-					int taskID;
-					if (demat.usesItemFrame()) {
-						TARDISDematerialisePoliceBox frame = new TARDISDematerialisePoliceBox(plugin, dd, demat);
-						taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
-						frame.setTask(taskID);
-					} else {
-						TARDISDematerialisePreset runnable = new TARDISDematerialisePreset(plugin, dd, demat, cham_id.createBlockData());
-						taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-						runnable.setTask(taskID);
-					}
-				}
-			} else {
-				new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, dd.isHide(), demat);
-			}
-		}
-	}
+    public void destroyPreset(DestroyData dd) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", dd.getTardisId());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+        if (rs.resultSet()) {
+            TARDIS tardis = rs.getTardis();
+            PRESET demat = tardis.getDemat();
+            PRESET preset = tardis.getPreset();
+            // load the chunk if unloaded
+            if (!Objects.requireNonNull(dd.getLocation().getWorld()).isChunkLoaded(dd.getLocation().getChunk())) {
+                dd.getLocation().getWorld().loadChunk(dd.getLocation().getChunk());
+            }
+            if (!demat.equals(PRESET.INVISIBLE)) {
+                Material cham_id = Material.LIGHT_GRAY_TERRACOTTA;
+                if ((tardis.getAdaption().equals(Adaption.BIOME) && demat.equals(PRESET.FACTORY)) || demat.equals(PRESET.SUBMERGED) || tardis.getAdaption().equals(Adaption.BLOCK)) {
+                    Block chameleonBlock;
+                    // chameleon circuit is on - get block under TARDIS
+                    if (dd.getLocation().getBlock().getType() == Material.SNOW) {
+                        chameleonBlock = dd.getLocation().getBlock();
+                    } else {
+                        chameleonBlock = dd.getLocation().getBlock().getRelative(BlockFace.DOWN);
+                    }
+                    // determine cham_id
+                    TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
+                    cham_id = tcc.getChameleonBlock(chameleonBlock, dd.getPlayer());
+                }
+                int loops = dd.getThrottle().getLoops();
+                if (loops == 3) {
+                    TARDISSounds.playTARDISSound(dd.getLocation(), "tardis_takeoff_fast");
+                    if (dd.getPlayer() != null && dd.getPlayer().getPlayer() != null && plugin.getUtils().inTARDISWorld(dd.getPlayer().getPlayer())) {
+                        TARDISSounds.playTARDISSound(dd.getPlayer().getPlayer().getLocation(), "tardis_takeoff_fast");
+                    }
+                }
+                if (preset.equals(PRESET.JUNK_MODE)) {
+                    dd.setThrottle(SpaceTimeThrottle.JUNK);
+                }
+                if (demat.equals(PRESET.JUNK)) {
+                    TARDISJunkDestroyer runnable = new TARDISJunkDestroyer(plugin, dd);
+                    int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+                    runnable.setTask(taskID);
+                } else {
+                    plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisId());
+                    if (demat.equals(PRESET.SWAMP)) {
+                        // remove door
+                        destroyDoor(dd.getTardisId());
+                    }
+                    int taskID;
+                    if (demat.usesItemFrame()) {
+                        TARDISDematerialisePoliceBox frame = new TARDISDematerialisePoliceBox(plugin, dd, demat);
+                        taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
+                        frame.setTask(taskID);
+                    } else {
+                        TARDISDematerialisePreset runnable = new TARDISDematerialisePreset(plugin, dd, demat, cham_id.createBlockData());
+                        taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+                        runnable.setTask(taskID);
+                    }
+                }
+            } else {
+                new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, dd.isHide(), demat);
+            }
+        }
+    }
 
-	public void destroyDoor(int id) {
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("tardis_id", id);
-		where.put("door_type", 0);
-		ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
-		if (rsd.resultSet()) {
-			String dl = rsd.getDoorLocation();
-			if (dl != null) {
-				Location l = TARDISStaticLocationGetters.getLocationFromDB(dl);
-				if (l != null) {
-					Block b = l.getBlock();
-					b.setBlockData(TARDISConstants.AIR);
-					b.getRelative(BlockFace.UP).setBlockData(TARDISConstants.AIR);
-				}
-			}
-		}
-	}
+    public void destroyDoor(int id) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        where.put("door_type", 0);
+        ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
+        if (rsd.resultSet()) {
+            String dl = rsd.getDoorLocation();
+            if (dl != null) {
+                Location l = TARDISStaticLocationGetters.getLocationFromDB(dl);
+                if (l != null) {
+                    Block b = l.getBlock();
+                    b.setBlockData(TARDISConstants.AIR);
+                    b.getRelative(BlockFace.UP).setBlockData(TARDISConstants.AIR);
+                }
+            }
+        }
+    }
 
-	public void destroySign(Location l, COMPASS d, PRESET p) {
-		World w = l.getWorld();
-		int signx, signz, signy;
-		switch (p) {
-			case JUNK_MODE:
-				switch (d) {
-					case EAST -> {
-						signx = 0;
-						signz = 1;
-					}
-					case WEST -> {
-						signx = 0;
-						signz = -1;
-					}
-					default -> {
-						signx = 1;
-						signz = 0;
-					}
-				}
-				break;
-			case GRAVESTONE:
-				signx = 0;
-				signz = 0;
-				break;
-			case TORCH:
-				switch (d) {
-					case EAST -> {
-						signx = -1;
-						signz = 0;
-					}
-					case SOUTH -> {
-						signx = 0;
-						signz = -1;
-					}
-					case WEST -> {
-						signx = 1;
-						signz = 0;
-					}
-					default -> {
-						signx = 0;
-						signz = 1;
-					}
-				}
-				break;
-			case TOILET:
-				switch (d) {
-					case EAST -> {
-						signx = 1;
-						signz = -1;
-					}
-					case SOUTH -> {
-						signx = 1;
-						signz = 1;
-					}
-					case WEST -> {
-						signx = -1;
-						signz = 1;
-					}
-					default -> {
-						signx = -1;
-						signz = -1;
-					}
-				}
-				break;
-			case APPERTURE:
-				switch (d) {
-					case EAST -> {
-						signx = 1;
-						signz = 0;
-					}
-					case SOUTH -> {
-						signx = 0;
-						signz = 1;
-					}
-					case WEST -> {
-						signx = -1;
-						signz = 0;
-					}
-					default -> {
-						signx = 0;
-						signz = -1;
-					}
-				}
-				break;
-			default:
-				switch (d) {
-					case EAST -> {
-						signx = -2;
-						signz = 0;
-					}
-					case SOUTH -> {
-						signx = 0;
-						signz = -2;
-					}
-					case WEST -> {
-						signx = 2;
-						signz = 0;
-					}
-					default -> {
-						signx = 0;
-						signz = 2;
-					}
-				}
-				break;
-		}
-		signy = switch (p) {
-			case GAZEBO, JAIL, SHROOM, SWAMP -> 3;
-			case TOPSYTURVEY, TOILET, TORCH -> 1;
-			case ANGEL, APPERTURE, LAMP -> 0;
-			default -> 2;
-		};
-		assert w != null;
-		TARDISBlockSetters.setBlock(w,
-				l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, Material.AIR);
-		if (p.equals(PRESET.SWAMP)) {
-			TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, Material.AIR);
-		}
-	}
+    public void destroySign(Location l, COMPASS d, PRESET p) {
+        World w = l.getWorld();
+        int signx, signz, signy;
+        switch (p) {
+            case JUNK_MODE:
+                switch (d) {
+                    case EAST -> {
+                        signx = 0;
+                        signz = 1;
+                    }
+                    case WEST -> {
+                        signx = 0;
+                        signz = -1;
+                    }
+                    default -> {
+                        signx = 1;
+                        signz = 0;
+                    }
+                }
+                break;
+            case GRAVESTONE:
+                signx = 0;
+                signz = 0;
+                break;
+            case TORCH:
+                switch (d) {
+                    case EAST -> {
+                        signx = -1;
+                        signz = 0;
+                    }
+                    case SOUTH -> {
+                        signx = 0;
+                        signz = -1;
+                    }
+                    case WEST -> {
+                        signx = 1;
+                        signz = 0;
+                    }
+                    default -> {
+                        signx = 0;
+                        signz = 1;
+                    }
+                }
+                break;
+            case TOILET:
+                switch (d) {
+                    case EAST -> {
+                        signx = 1;
+                        signz = -1;
+                    }
+                    case SOUTH -> {
+                        signx = 1;
+                        signz = 1;
+                    }
+                    case WEST -> {
+                        signx = -1;
+                        signz = 1;
+                    }
+                    default -> {
+                        signx = -1;
+                        signz = -1;
+                    }
+                }
+                break;
+            case APPERTURE:
+                switch (d) {
+                    case EAST -> {
+                        signx = 1;
+                        signz = 0;
+                    }
+                    case SOUTH -> {
+                        signx = 0;
+                        signz = 1;
+                    }
+                    case WEST -> {
+                        signx = -1;
+                        signz = 0;
+                    }
+                    default -> {
+                        signx = 0;
+                        signz = -1;
+                    }
+                }
+                break;
+            default:
+                switch (d) {
+                    case EAST -> {
+                        signx = -2;
+                        signz = 0;
+                    }
+                    case SOUTH -> {
+                        signx = 0;
+                        signz = -2;
+                    }
+                    case WEST -> {
+                        signx = 2;
+                        signz = 0;
+                    }
+                    default -> {
+                        signx = 0;
+                        signz = 2;
+                    }
+                }
+                break;
+        }
+        signy = switch (p) {
+            case GAZEBO, JAIL, SHROOM, SWAMP -> 3;
+            case TOPSYTURVEY, TOILET, TORCH -> 1;
+            case ANGEL, APPERTURE, LAMP -> 0;
+            default -> 2;
+        };
+        assert w != null;
+        TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, Material.AIR);
+        if (p.equals(PRESET.SWAMP)) {
+            TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, Material.AIR);
+        }
+    }
 
-	public void destroyHandbrake(Location l, COMPASS d) {
-		int lx;
-		int lz;
-		switch (d) {
-			case EAST -> {
-				lx = -1;
-				lz = 1;
-			}
-			case SOUTH -> {
-				lx = -1;
-				lz = -1;
-			}
-			case WEST -> {
-				lx = 1;
-				lz = -1;
-			}
-			default -> {
-				lx = 1;
-				lz = 1;
-			}
-		}
-		World w = l.getWorld();
-		int tx = l.getBlockX() + lx;
-		int ty = l.getBlockY() + 2;
-		int tz = l.getBlockZ() + lz;
-		assert w != null;
-		TARDISBlockSetters.setBlock(w, tx, ty, tz, Material.AIR);
-	}
+    public void destroyHandbrake(Location l, COMPASS d) {
+        int lx;
+        int lz;
+        switch (d) {
+            case EAST -> {
+                lx = -1;
+                lz = 1;
+            }
+            case SOUTH -> {
+                lx = -1;
+                lz = -1;
+            }
+            case WEST -> {
+                lx = 1;
+                lz = -1;
+            }
+            default -> {
+                lx = 1;
+                lz = 1;
+            }
+        }
+        World w = l.getWorld();
+        int tx = l.getBlockX() + lx;
+        int ty = l.getBlockY() + 2;
+        int tz = l.getBlockZ() + lz;
+        assert w != null;
+        TARDISBlockSetters.setBlock(w, tx, ty, tz, Material.AIR);
+    }
 
-	public void destroyLamp(Location l, PRESET p) {
-		World w = l.getWorld();
-		int tx = l.getBlockX();
-		int ty = l.getBlockY() + 3;
-		int tz = l.getBlockZ();
-		if (p.equals(PRESET.CAKE)) {
-			for (int i = (tx - 1); i < (tx + 2); i++) {
-				for (int j = (tz - 1); j < (tz + 2); j++) {
-					assert w != null;
-					TARDISBlockSetters.setBlock(w, i, ty, j, Material.AIR);
-				}
-			}
-		} else {
-			assert w != null;
-			TARDISBlockSetters.setBlock(w, tx, ty, tz, Material.AIR);
-		}
-	}
+    public void destroyLamp(Location l, PRESET p) {
+        World w = l.getWorld();
+        int tx = l.getBlockX();
+        int ty = l.getBlockY() + 3;
+        int tz = l.getBlockZ();
+        if (p.equals(PRESET.CAKE)) {
+            for (int i = (tx - 1); i < (tx + 2); i++) {
+                for (int j = (tz - 1); j < (tz + 2); j++) {
+                    assert w != null;
+                    TARDISBlockSetters.setBlock(w, i, ty, j, Material.AIR);
+                }
+            }
+        } else {
+            assert w != null;
+            TARDISBlockSetters.setBlock(w, tx, ty, tz, Material.AIR);
+        }
+    }
 
-	public void destroyDuckEyes(Location l, COMPASS d) {
-		World w = l.getWorld();
-		int leftx, leftz, rightx, rightz;
-		int eyey = l.getBlockY() + 3;
-		switch (d) {
-			case NORTH -> {
-				leftx = l.getBlockX() - 1;
-				leftz = l.getBlockZ() + 1;
-				rightx = l.getBlockX() + 1;
-				rightz = l.getBlockZ() + 1;
-			}
-			case WEST -> {
-				leftx = l.getBlockX() + 1;
-				leftz = l.getBlockZ() + 1;
-				rightx = l.getBlockX() + 1;
-				rightz = l.getBlockZ() - 1;
-			}
-			case SOUTH -> {
-				leftx = l.getBlockX() + 1;
-				leftz = l.getBlockZ() - 1;
-				rightx = l.getBlockX() - 1;
-				rightz = l.getBlockZ() - 1;
-			}
-			default -> {
-				leftx = l.getBlockX() - 1;
-				leftz = l.getBlockZ() - 1;
-				rightx = l.getBlockX() - 1;
-				rightz = l.getBlockZ() + 1;
-			}
-		}
-		assert w != null;
-		TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, Material.AIR);
-		TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, Material.AIR);
-	}
+    public void destroyDuckEyes(Location l, COMPASS d) {
+        World w = l.getWorld();
+        int leftx, leftz, rightx, rightz;
+        int eyey = l.getBlockY() + 3;
+        switch (d) {
+            case NORTH -> {
+                leftx = l.getBlockX() - 1;
+                leftz = l.getBlockZ() + 1;
+                rightx = l.getBlockX() + 1;
+                rightz = l.getBlockZ() + 1;
+            }
+            case WEST -> {
+                leftx = l.getBlockX() + 1;
+                leftz = l.getBlockZ() + 1;
+                rightx = l.getBlockX() + 1;
+                rightz = l.getBlockZ() - 1;
+            }
+            case SOUTH -> {
+                leftx = l.getBlockX() + 1;
+                leftz = l.getBlockZ() - 1;
+                rightx = l.getBlockX() - 1;
+                rightz = l.getBlockZ() - 1;
+            }
+            default -> {
+                leftx = l.getBlockX() - 1;
+                leftz = l.getBlockZ() - 1;
+                rightx = l.getBlockX() - 1;
+                rightz = l.getBlockZ() + 1;
+            }
+        }
+        assert w != null;
+        TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, Material.AIR);
+        TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, Material.AIR);
+    }
 
-	public void destroyMineshaftTorches(Location l, COMPASS d) {
-		World w = l.getWorld();
-		int leftx, leftz, rightx, rightz;
-		int eyey = l.getBlockY() + 2;
-		switch (d) {
-			case NORTH, SOUTH -> {
-				leftx = l.getBlockX() - 1;
-				leftz = l.getBlockZ();
-				rightx = l.getBlockX() + 1;
-				rightz = l.getBlockZ();
-			}
-			default -> {
-				leftx = l.getBlockX();
-				leftz = l.getBlockZ() - 1;
-				rightx = l.getBlockX();
-				rightz = l.getBlockZ() + 1;
-			}
-		}
-		assert w != null;
-		TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, Material.AIR);
-		TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, Material.AIR);
-	}
+    public void destroyMineshaftTorches(Location l, COMPASS d) {
+        World w = l.getWorld();
+        int leftx, leftz, rightx, rightz;
+        int eyey = l.getBlockY() + 2;
+        switch (d) {
+            case NORTH, SOUTH -> {
+                leftx = l.getBlockX() - 1;
+                leftz = l.getBlockZ();
+                rightx = l.getBlockX() + 1;
+                rightz = l.getBlockZ();
+            }
+            default -> {
+                leftx = l.getBlockX();
+                leftz = l.getBlockZ() - 1;
+                rightx = l.getBlockX();
+                rightz = l.getBlockZ() + 1;
+            }
+        }
+        assert w != null;
+        TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, Material.AIR);
+        TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, Material.AIR);
+    }
 
-	public void destroyLampTrapdoors(Location l, COMPASS d) {
-		Block lamp = l.getBlock().getRelative(BlockFace.UP, 3).getRelative(getOppositeFace(d));
-		plugin.getGeneralKeeper().getFaces().forEach((f) -> lamp.getRelative(f).setBlockData(TARDISConstants.AIR));
-	}
+    public void destroyLampTrapdoors(Location l, COMPASS d) {
+        Block lamp = l.getBlock().getRelative(BlockFace.UP, 3).getRelative(getOppositeFace(d));
+        plugin.getGeneralKeeper().getFaces().forEach((f) -> lamp.getRelative(f).setBlockData(TARDISConstants.AIR));
+    }
 
-	private BlockFace getOppositeFace(COMPASS c) {
-		return switch (c) {
-			case NORTH -> BlockFace.SOUTH;
-			case WEST -> BlockFace.EAST;
-			case SOUTH -> BlockFace.NORTH;
-			default -> BlockFace.WEST;
-		};
-	}
+    private BlockFace getOppositeFace(COMPASS c) {
+        return switch (c) {
+            case NORTH -> BlockFace.SOUTH;
+            case WEST -> BlockFace.EAST;
+            case SOUTH -> BlockFace.NORTH;
+            default -> BlockFace.WEST;
+        };
+    }
 
-	public void removeBlockProtection(int id) {
-		HashMap<String, Object> whereb = new HashMap<>();
-		whereb.put("tardis_id", id);
-		whereb.put("police_box", 1);
-		plugin.getQueryFactory().doDelete("blocks", whereb);
-		// remove from protectBlockMap - remove(id) would only remove the first one
-		plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));
-	}
+    public void removeBlockProtection(int id) {
+        HashMap<String, Object> whereb = new HashMap<>();
+        whereb.put("tardis_id", id);
+        whereb.put("police_box", 1);
+        plugin.getQueryFactory().doDelete("blocks", whereb);
+        // remove from protectBlockMap - remove(id) would only remove the first one
+        plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));
+    }
 }

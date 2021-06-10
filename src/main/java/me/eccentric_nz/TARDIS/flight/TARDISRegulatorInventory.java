@@ -29,62 +29,62 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 class TARDISRegulatorInventory {
 
-	private final ItemStack[] regulator;
+    private final ItemStack[] regulator;
 
-	TARDISRegulatorInventory() {
-		regulator = getItemStack();
-	}
+    TARDISRegulatorInventory() {
+        regulator = getItemStack();
+    }
 
-	private ItemStack[] getItemStack() {
-		ItemStack[] is = new ItemStack[54];
-		for (int col = 0; col < 37; col += 9) {
-			for (int row = 0; row < 5; row++) {
-				int s = col + row;
-				if (s != 20) {
-					is[s] = new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1);
-				}
-			}
-		}
-		// direction pad up
-		ItemStack pad_up = new ItemStack(Material.LIME_WOOL, 1);
-		ItemMeta up = pad_up.getItemMeta();
-		assert up != null;
-		up.setDisplayName("Up");
-		pad_up.setItemMeta(up);
-		is[16] = pad_up;
-		// regulator
-		ItemStack wobb = new ItemStack(Material.BLUE_WOOL, 1);
-		ItemMeta ler = wobb.getItemMeta();
-		assert ler != null;
-		ler.setDisplayName("Regulator");
-		wobb.setItemMeta(ler);
-		is[20] = wobb;
-		// direction pad left
-		ItemStack pad_left = new ItemStack(Material.LIME_WOOL, 1);
-		ItemMeta left = pad_left.getItemMeta();
-		assert left != null;
-		left.setDisplayName("Left");
-		pad_left.setItemMeta(left);
-		is[24] = pad_left;
-		// direction pad right
-		ItemStack pad_right = new ItemStack(Material.LIME_WOOL, 1);
-		ItemMeta right = pad_right.getItemMeta();
-		assert right != null;
-		right.setDisplayName("Right");
-		pad_right.setItemMeta(right);
-		is[26] = pad_right;
-		// direction pad down
-		ItemStack pad_down = new ItemStack(Material.LIME_WOOL, 1);
-		ItemMeta down = pad_down.getItemMeta();
-		assert down != null;
-		down.setDisplayName("Down");
-		pad_down.setItemMeta(down);
-		is[34] = pad_down;
+    private ItemStack[] getItemStack() {
+        ItemStack[] is = new ItemStack[54];
+        for (int col = 0; col < 37; col += 9) {
+            for (int row = 0; row < 5; row++) {
+                int s = col + row;
+                if (s != 20) {
+                    is[s] = new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1);
+                }
+            }
+        }
+        // direction pad up
+        ItemStack pad_up = new ItemStack(Material.LIME_WOOL, 1);
+        ItemMeta up = pad_up.getItemMeta();
+        assert up != null;
+        up.setDisplayName("Up");
+        pad_up.setItemMeta(up);
+        is[16] = pad_up;
+        // regulator
+        ItemStack wobb = new ItemStack(Material.BLUE_WOOL, 1);
+        ItemMeta ler = wobb.getItemMeta();
+        assert ler != null;
+        ler.setDisplayName("Regulator");
+        wobb.setItemMeta(ler);
+        is[20] = wobb;
+        // direction pad left
+        ItemStack pad_left = new ItemStack(Material.LIME_WOOL, 1);
+        ItemMeta left = pad_left.getItemMeta();
+        assert left != null;
+        left.setDisplayName("Left");
+        pad_left.setItemMeta(left);
+        is[24] = pad_left;
+        // direction pad right
+        ItemStack pad_right = new ItemStack(Material.LIME_WOOL, 1);
+        ItemMeta right = pad_right.getItemMeta();
+        assert right != null;
+        right.setDisplayName("Right");
+        pad_right.setItemMeta(right);
+        is[26] = pad_right;
+        // direction pad down
+        ItemStack pad_down = new ItemStack(Material.LIME_WOOL, 1);
+        ItemMeta down = pad_down.getItemMeta();
+        assert down != null;
+        down.setDisplayName("Down");
+        pad_down.setItemMeta(down);
+        is[34] = pad_down;
 
-		return is;
-	}
+        return is;
+    }
 
-	public ItemStack[] getRegulator() {
-		return regulator;
-	}
+    public ItemStack[] getRegulator() {
+        return regulator;
+    }
 }

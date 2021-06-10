@@ -51,88 +51,83 @@ import java.util.List;
  */
 public class TARDISConsoleSwitchListener implements Listener {
 
-	private final TARDISPlugin plugin;
-	private final List<Integer> gui_circuits = Arrays.asList(10001966, 10001973, 10001974, 10001975, 10001976, 10001977, 20001966, 20001973, 20001974, 20001975, 20001976, 20001977);
+    private final TARDISPlugin plugin;
+    private final List<Integer> gui_circuits = Arrays.asList(10001966, 10001973, 10001974, 10001975, 10001976, 10001977, 20001966, 20001973, 20001974, 20001975, 20001976, 20001977);
 
-	public TARDISConsoleSwitchListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISConsoleSwitchListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onConsoleInventoryClick(InventoryClickEvent event) {
-		InventoryView view = event.getView();
-		if (view.getTitle().equals(ChatColor.DARK_RED + "tardis Console")) {
-			Player p = (Player) event.getWhoClicked();
-			// check they're in the tardis
-			HashMap<String, Object> wheret = new HashMap<>();
-			wheret.put("uuid", p.getUniqueId().toString());
-			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-			if (!rst.resultSet()) {
-				event.setCancelled(true);
-				TARDISMessage.send(p, "NOT_IN_TARDIS");
-			}
-			if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
-				event.setCancelled(true);
-				int slot = event.getRawSlot();
-				if (slot >= 0 && slot < 9) {
-					ItemStack item = view.getItem(slot);
-					if (item != null && item.getType().equals(Material.GLOWSTONE_DUST) && item.hasItemMeta()) {
-						ItemMeta im = item.getItemMeta();
-						assert im != null;
-						int cmd = (im.hasCustomModelData()) ? im.getCustomModelData() : 10001963;
-						if (gui_circuits.contains(cmd)) {
-							HashMap<String, Object> where = new HashMap<>();
-							where.put("uuid", p.getUniqueId().toString());
-							ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-							if (rs.resultSet()) {
-								TARDIS tardis = rs.getTardis();
-								plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-									ItemStack[] stack = null;
-									Inventory new_inv = null;
-									switch (cmd) { // Chameleon circuit
-										case 10001966, 20001966 -> {
-											new_inv = plugin.getServer().createInventory(p, 27,
-													ChatColor.DARK_RED + "Chameleon Circuit");
-											stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
-										} // ars circuit
-										case 10001973, 20001973 -> {
-											new_inv = plugin.getServer().createInventory(p, 54,
-													ChatColor.DARK_RED + "Architectural Reconfiguration");
-											stack = new TARDISARSInventory(plugin).getARS();
-										} // Temporal circuit
-										case 10001974, 20001974 -> {
-											new_inv = plugin.getServer().createInventory(p, 27,
-													ChatColor.DARK_RED + "Temporal Locator");
-											stack = new TARDISTemporalLocatorInventory(plugin).getTemporal();
-										} // Memory circuit (saves/areas)
-										case 10001975, 20001975 -> {
-											new_inv = plugin.getServer().createInventory(p, 54,
-													ChatColor.DARK_RED + "tardis saves");
-											stack = new TARDISSaveSignInventory(plugin, tardis.getTardisId(), p).getTerminal();
-										} // Input circuit (terminal)
-										case 10001976, 20001976 -> {
-											new_inv = plugin.getServer().createInventory(p, 54,
-													ChatColor.DARK_RED + "Destination Terminal");
-											stack = new TARDISTerminalInventory(plugin).getTerminal();
-										}
-										default -> // scanner circuit
-												TARDISScanner.scan(p, tardis.getTardisId(), plugin.getServer().getScheduler());
-									}
-									// close inventory
-									p.closeInventory();
-									if (new_inv != null && stack != null) {
-										// open new inventory
-										new_inv.setContents(stack);
-										p.openInventory(new_inv);
-									}
-								}, 1L);
-							} else {
-								TARDISMessage.send(p, "NO_TARDIS");
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onConsoleInventoryClick(InventoryClickEvent event) {
+        InventoryView view = event.getView();
+        if (view.getTitle().equals(ChatColor.DARK_RED + "tardis Console")) {
+            Player p = (Player) event.getWhoClicked();
+            // check they're in the tardis
+            HashMap<String, Object> wheret = new HashMap<>();
+            wheret.put("uuid", p.getUniqueId().toString());
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+            if (!rst.resultSet()) {
+                event.setCancelled(true);
+                TARDISMessage.send(p, "NOT_IN_TARDIS");
+            }
+            if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
+                event.setCancelled(true);
+                int slot = event.getRawSlot();
+                if (slot >= 0 && slot < 9) {
+                    ItemStack item = view.getItem(slot);
+                    if (item != null && item.getType().equals(Material.GLOWSTONE_DUST) && item.hasItemMeta()) {
+                        ItemMeta im = item.getItemMeta();
+                        assert im != null;
+                        int cmd = (im.hasCustomModelData()) ? im.getCustomModelData() : 10001963;
+                        if (gui_circuits.contains(cmd)) {
+                            HashMap<String, Object> where = new HashMap<>();
+                            where.put("uuid", p.getUniqueId().toString());
+                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+                            if (rs.resultSet()) {
+                                TARDIS tardis = rs.getTardis();
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                    ItemStack[] stack = null;
+                                    Inventory new_inv = null;
+                                    switch (cmd) { // Chameleon circuit
+                                        case 10001966, 20001966 -> {
+                                            new_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Chameleon Circuit");
+                                            stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
+                                        } // ars circuit
+                                        case 10001973, 20001973 -> {
+                                            new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
+                                            stack = new TARDISARSInventory(plugin).getARS();
+                                        } // Temporal circuit
+                                        case 10001974, 20001974 -> {
+                                            new_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Temporal Locator");
+                                            stack = new TARDISTemporalLocatorInventory(plugin).getTemporal();
+                                        } // Memory circuit (saves/areas)
+                                        case 10001975, 20001975 -> {
+                                            new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis saves");
+                                            stack = new TARDISSaveSignInventory(plugin, tardis.getTardisId(), p).getTerminal();
+                                        } // Input circuit (terminal)
+                                        case 10001976, 20001976 -> {
+                                            new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Destination Terminal");
+                                            stack = new TARDISTerminalInventory(plugin).getTerminal();
+                                        }
+                                        default -> // scanner circuit
+                                                TARDISScanner.scan(p, tardis.getTardisId(), plugin.getServer().getScheduler());
+                                    }
+                                    // close inventory
+                                    p.closeInventory();
+                                    if (new_inv != null && stack != null) {
+                                        // open new inventory
+                                        new_inv.setContents(stack);
+                                        p.openInventory(new_inv);
+                                    }
+                                }, 1L);
+                            } else {
+                                TARDISMessage.send(p, "NO_TARDIS");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

@@ -31,72 +31,69 @@ import java.net.URLConnection;
 
 public class TARDISUpdateChecker implements Runnable {
 
-	private final TARDISPlugin plugin;
-	private final CommandSender sender;
+    private final TARDISPlugin plugin;
+    private final CommandSender sender;
 
-	public TARDISUpdateChecker(TARDISPlugin plugin, CommandSender sender) {
-		this.plugin = plugin;
-		this.sender = sender;
-	}
+    public TARDISUpdateChecker(TARDISPlugin plugin, CommandSender sender) {
+        this.plugin = plugin;
+        this.sender = sender;
+    }
 
-	@Override
-	public void run() {
-		if (!plugin.getGeneralKeeper().getPluginYAML().contains("build-number")) {
-			// should never happen
-			return;
-		}
-		String build = plugin.getGeneralKeeper().getPluginYAML().getString("build-number");
-		assert build != null;
-		if (build.contains(":")) {
-			// local build, not a Jenkins build
-			return;
-		}
-		int buildNumber = Integer.parseInt(build);
-		JsonObject lastBuild = fetchLatestJenkinsBuild();
-		if (lastBuild == null || !lastBuild.has("id")) {
-			// couldn't get Jenkins info
-			return;
-		}
-		int newBuildNumber = lastBuild.get("id").getAsInt();
-		if (newBuildNumber <= buildNumber) {
-			// if new build number is same or older
-			return;
-		}
-		plugin.setUpdateFound(true);
-		plugin.setBuildNumber(buildNumber);
-		plugin.setUpdateNumber(newBuildNumber);
-		if (sender == null) {
-			plugin.getConsole().sendMessage(plugin.getPluginName() +
-											String.format(TARDISMessage.JENKINS_UPDATE_READY, buildNumber, newBuildNumber));
-			plugin.getConsole().sendMessage(plugin.getPluginName() + TARDISMessage.UPDATE_COMMAND);
-		} else {
-			if (buildNumber == newBuildNumber) {
-				sender.sendMessage(plugin.getPluginName() + "You are running the latest version!");
-			} else {
-				sender.sendMessage(
-						plugin.getPluginName() + "You are " + (newBuildNumber - buildNumber) + " builds behind! Type " +
-						ChatColor.AQUA + "/tadmin update_plugins" + ChatColor.RESET + " to update!");
-			}
-		}
-	}
+    @Override
+    public void run() {
+        if (!plugin.getGeneralKeeper().getPluginYAML().contains("build-number")) {
+            // should never happen
+            return;
+        }
+        String build = plugin.getGeneralKeeper().getPluginYAML().getString("build-number");
+        assert build != null;
+        if (build.contains(":")) {
+            // local build, not a Jenkins build
+            return;
+        }
+        int buildNumber = Integer.parseInt(build);
+        JsonObject lastBuild = fetchLatestJenkinsBuild();
+        if (lastBuild == null || !lastBuild.has("id")) {
+            // couldn't get Jenkins info
+            return;
+        }
+        int newBuildNumber = lastBuild.get("id").getAsInt();
+        if (newBuildNumber <= buildNumber) {
+            // if new build number is same or older
+            return;
+        }
+        plugin.setUpdateFound(true);
+        plugin.setBuildNumber(buildNumber);
+        plugin.setUpdateNumber(newBuildNumber);
+        if (sender == null) {
+            plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(TARDISMessage.JENKINS_UPDATE_READY, buildNumber, newBuildNumber));
+            plugin.getConsole().sendMessage(plugin.getPluginName() + TARDISMessage.UPDATE_COMMAND);
+        } else {
+            if (buildNumber == newBuildNumber) {
+                sender.sendMessage(plugin.getPluginName() + "You are running the latest version!");
+            } else {
+                sender.sendMessage(plugin.getPluginName() + "You are " + (newBuildNumber - buildNumber) + " builds behind! Type " + ChatColor.AQUA + "/tadmin update_plugins" + ChatColor.RESET + " to update!");
+            }
+        }
+    }
 
-	/**
-	 * Fetches from jenkins, using the REST api the last snapshot build information
-	 */
-	private JsonObject fetchLatestJenkinsBuild() {
-		try {
-			// We're connecting to tardis's Jenkins REST api
-			URL url = new URL("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/api/json");
-			// Create a connection
-			URLConnection request = url.openConnection();
-			request.setRequestProperty("User-Agent", "TARDISPlugin");
-			request.connect();
-			// Convert to a JSON object
-			JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
-			return root.getAsJsonObject();
-		} catch (Exception ex) {
-			plugin.debug("Failed to check for a snapshot update on tardis Jenkins.");
-		}
-		return null;
-	}
+    /**
+     * Fetches from jenkins, using the REST api the last snapshot build information
+     */
+    private JsonObject fetchLatestJenkinsBuild() {
+        try {
+            // We're connecting to tardis's Jenkins REST api
+            URL url = new URL("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/api/json");
+            // Create a connection
+            URLConnection request = url.openConnection();
+            request.setRequestProperty("User-Agent", "TARDISPlugin");
+            request.connect();
+            // Convert to a JSON object
+            JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
+            return root.getAsJsonObject();
+        } catch (Exception ex) {
+            plugin.debug("Failed to check for a snapshot update on tardis Jenkins.");
+        }
+        return null;
+    }
 }

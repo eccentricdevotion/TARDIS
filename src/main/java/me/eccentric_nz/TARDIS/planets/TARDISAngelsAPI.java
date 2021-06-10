@@ -28,20 +28,20 @@ import org.bukkit.plugin.Plugin;
  */
 public class TARDISAngelsAPI {
 
-	/**
-	 * Get TARDISWeepingAngelsAPI.
-	 *
-	 * @param plugin - a tardis plugin instance
-	 * @return the TARDISWeepingAngelsAPI
-	 */
-	public static TARDISWeepingAngelsAPI getAPI(TARDISPlugin plugin) {
-		Plugin p = plugin.getPM().getPlugin("TARDISWeepingAngels");
-		TARDISWeepingAngels twa = (TARDISWeepingAngels) p;
-		assert twa != null;
-		return twa.getWeepingAngelsAPI();
-	}
+    /**
+     * Get TARDISWeepingAngelsAPI.
+     *
+     * @param plugin - a tardis plugin instance
+     * @return the TARDISWeepingAngelsAPI
+     */
+    public static TARDISWeepingAngelsAPI getAPI(TARDISPlugin plugin) {
+        Plugin p = plugin.getPM().getPlugin("TARDISWeepingAngels");
+        TARDISWeepingAngels twa = (TARDISWeepingAngels) p;
+        assert twa != null;
+        return twa.getWeepingAngelsAPI();
+    }
 
-	public static boolean isDalek(Skeleton skeleton) {
-		return skeleton.getPersistentDataContainer().has(TARDISWeepingAngels.DALEK, PersistentDataType.INTEGER);
-	}
+    public static boolean isDalek(Skeleton skeleton) {
+        return skeleton.getPersistentDataContainer().has(TARDISWeepingAngels.DALEK, PersistentDataType.INTEGER);
+    }
 }

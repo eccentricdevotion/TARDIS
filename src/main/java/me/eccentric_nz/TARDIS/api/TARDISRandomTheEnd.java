@@ -31,64 +31,63 @@ import java.util.List;
  */
 public class TARDISRandomTheEnd extends TARDISRandomLocation {
 
-	private final TARDISPlugin plugin;
-	private final Parameters param;
-	private final List<World> worlds;
-	private Location dest;
+    private final TARDISPlugin plugin;
+    private final Parameters param;
+    private final List<World> worlds;
+    private Location dest;
 
-	TARDISRandomTheEnd(TARDISPlugin plugin, List<String> list, Parameters param) {
-		super(plugin);
-		worlds = getWorlds(list);
-		this.plugin = plugin;
-		this.param = param;
-	}
+    TARDISRandomTheEnd(TARDISPlugin plugin, List<String> list, Parameters param) {
+        super(plugin);
+        worlds = getWorlds(list);
+        this.plugin = plugin;
+        this.param = param;
+    }
 
-	@Override
-	public Location getLocation() {
-		WorldAndRange war = getWorldAndRange(worlds);
-		// loop till random attempts limit reached
-		int limit = plugin.getConfig().getInt("travel.random_attempts");
-		for (int n = 0; n < limit; n++) {
-			// get random values in range
-			int randX = TARDISConstants.RANDOM.nextInt(war.getRangeX());
-			int randZ = TARDISConstants.RANDOM.nextInt(war.getRangeZ());
-			// get the x coord
-			int x = war.getMinX() + randX;
-			// get the z coord
-			int z = war.getMinZ() + randZ;
-			// get the spawn point
-			Location endSpawn = war.getW().getSpawnLocation();
-			int highest = TARDISStaticLocationGetters.getHighestYIn3x3(war.getW(),
-					endSpawn.getBlockX() + x, endSpawn.getBlockZ() + z);
-			int startx, starty, startz, resetx, resetz, count = 0;
-			if (highest > 40) {
-				Block currentBlock = war.getW().getBlockAt(x, highest, z);
-				Location chunk_loc = currentBlock.getLocation();
-				if (plugin.getPluginRespect().getRespect(chunk_loc, param)) {
-					while (!war.getW().getChunkAt(chunk_loc).isLoaded()) {
-						war.getW().getChunkAt(chunk_loc).load();
-					}
-					if (param.spaceTardis()) {
-						// get start location for checking there is enough space
-						int[] gsl = TARDISTimeTravel.getStartLocation(chunk_loc, param.getCompass());
-						startx = gsl[0];
-						resetx = gsl[1];
-						starty = chunk_loc.getBlockY() + 1;
-						startz = gsl[2];
-						resetz = gsl[3];
-						count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, war.getW(), param.getCompass());
-					}
-				} else {
-					count = 1;
-				}
-			} else {
-				count = 1;
-			}
-			if (count == 0) {
-				dest = (highest > 0) ? new Location(war.getW(), x, highest, z) : null;
-			}
-			return dest;
-		}
-		return null;
-	}
+    @Override
+    public Location getLocation() {
+        WorldAndRange war = getWorldAndRange(worlds);
+        // loop till random attempts limit reached
+        int limit = plugin.getConfig().getInt("travel.random_attempts");
+        for (int n = 0; n < limit; n++) {
+            // get random values in range
+            int randX = TARDISConstants.RANDOM.nextInt(war.getRangeX());
+            int randZ = TARDISConstants.RANDOM.nextInt(war.getRangeZ());
+            // get the x coord
+            int x = war.getMinX() + randX;
+            // get the z coord
+            int z = war.getMinZ() + randZ;
+            // get the spawn point
+            Location endSpawn = war.getW().getSpawnLocation();
+            int highest = TARDISStaticLocationGetters.getHighestYIn3x3(war.getW(), endSpawn.getBlockX() + x, endSpawn.getBlockZ() + z);
+            int startx, starty, startz, resetx, resetz, count = 0;
+            if (highest > 40) {
+                Block currentBlock = war.getW().getBlockAt(x, highest, z);
+                Location chunk_loc = currentBlock.getLocation();
+                if (plugin.getPluginRespect().getRespect(chunk_loc, param)) {
+                    while (!war.getW().getChunkAt(chunk_loc).isLoaded()) {
+                        war.getW().getChunkAt(chunk_loc).load();
+                    }
+                    if (param.spaceTardis()) {
+                        // get start location for checking there is enough space
+                        int[] gsl = TARDISTimeTravel.getStartLocation(chunk_loc, param.getCompass());
+                        startx = gsl[0];
+                        resetx = gsl[1];
+                        starty = chunk_loc.getBlockY() + 1;
+                        startz = gsl[2];
+                        resetz = gsl[3];
+                        count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, war.getW(), param.getCompass());
+                    }
+                } else {
+                    count = 1;
+                }
+            } else {
+                count = 1;
+            }
+            if (count == 0) {
+                dest = (highest > 0) ? new Location(war.getW(), x, highest, z) : null;
+            }
+            return dest;
+        }
+        return null;
+    }
 }

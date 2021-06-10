@@ -26,51 +26,51 @@ import java.util.HashMap;
 
 public class TARDISBuilderUtility {
 
-	static void saveDoorLocation(BuildData bd) {
-		World world = bd.getLocation().getWorld();
-		int x = bd.getLocation().getBlockX();
-		int y = bd.getLocation().getBlockY();
-		int z = bd.getLocation().getBlockZ();
-		// remember the door location
-		assert world != null;
-		String doorLoc = world.getName() + ":" + x + ":" + y + ":" + z;
-		String doorStr = world.getBlockAt(x, y, z).getLocation().toString();
-		TARDISPlugin.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisId());
-		// should insert the door when tardis is first made, and then update location there after!
-		HashMap<String, Object> whered = new HashMap<>();
-		whered.put("door_type", 0);
-		whered.put("tardis_id", bd.getTardisId());
-		ResultSetDoors rsd = new ResultSetDoors(TARDISPlugin.plugin, whered, false);
-		HashMap<String, Object> setd = new HashMap<>();
-		setd.put("door_location", doorLoc);
-		setd.put("door_direction", bd.getDirection().toString());
-		if (rsd.resultSet()) {
-			HashMap<String, Object> whereid = new HashMap<>();
-			whereid.put("door_id", rsd.getDoorId());
-			TARDISPlugin.plugin.getQueryFactory().doUpdate("doors", setd, whereid);
-		} else {
-			setd.put("tardis_id", bd.getTardisId());
-			setd.put("door_type", 0);
-			TARDISPlugin.plugin.getQueryFactory().doInsert("doors", setd);
-		}
-	}
+    static void saveDoorLocation(BuildData bd) {
+        World world = bd.getLocation().getWorld();
+        int x = bd.getLocation().getBlockX();
+        int y = bd.getLocation().getBlockY();
+        int z = bd.getLocation().getBlockZ();
+        // remember the door location
+        assert world != null;
+        String doorLoc = world.getName() + ":" + x + ":" + y + ":" + z;
+        String doorStr = world.getBlockAt(x, y, z).getLocation().toString();
+        TARDISPlugin.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisId());
+        // should insert the door when tardis is first made, and then update location there after!
+        HashMap<String, Object> whered = new HashMap<>();
+        whered.put("door_type", 0);
+        whered.put("tardis_id", bd.getTardisId());
+        ResultSetDoors rsd = new ResultSetDoors(TARDISPlugin.plugin, whered, false);
+        HashMap<String, Object> setd = new HashMap<>();
+        setd.put("door_location", doorLoc);
+        setd.put("door_direction", bd.getDirection().toString());
+        if (rsd.resultSet()) {
+            HashMap<String, Object> whereid = new HashMap<>();
+            whereid.put("door_id", rsd.getDoorId());
+            TARDISPlugin.plugin.getQueryFactory().doUpdate("doors", setd, whereid);
+        } else {
+            setd.put("tardis_id", bd.getTardisId());
+            setd.put("door_type", 0);
+            TARDISPlugin.plugin.getQueryFactory().doInsert("doors", setd);
+        }
+    }
 
-	public static Material getMaterialForItemFrame(PRESET preset) {
-		if (preset.equals(PRESET.WEEPING_ANGEL)) {
-			return Material.GRAY_STAINED_GLASS_PANE;
-		} else {
-			String split = preset.toString().replace("POLICE_BOX_", "");
-			String dye = split + "_DYE";
-			return Material.valueOf(dye);
-		}
-	}
+    public static Material getMaterialForItemFrame(PRESET preset) {
+        if (preset.equals(PRESET.WEEPING_ANGEL)) {
+            return Material.GRAY_STAINED_GLASS_PANE;
+        } else {
+            String split = preset.toString().replace("POLICE_BOX_", "");
+            String dye = split + "_DYE";
+            return Material.valueOf(dye);
+        }
+    }
 
-	static void updateChameleonDemat(String preset, int id) {
-		// update demat field in database
-		HashMap<String, Object> set = new HashMap<>();
-		set.put("chameleon_demat", preset);
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("tardis_id", id);
-		TARDISPlugin.plugin.getQueryFactory().doUpdate("tardis", set, where);
-	}
+    static void updateChameleonDemat(String preset, int id) {
+        // update demat field in database
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("chameleon_demat", preset);
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        TARDISPlugin.plugin.getQueryFactory().doUpdate("tardis", set, where);
+    }
 }

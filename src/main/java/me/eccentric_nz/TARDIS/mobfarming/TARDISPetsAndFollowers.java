@@ -20,19 +20,19 @@ import java.util.List;
 
 public class TARDISPetsAndFollowers {
 
-	private final List<TARDISPet> pets;
-	private final List<TARDISFollower> followers;
+    private final List<TARDISPet> pets;
+    private final List<TARDISFollower> followers;
 
-	TARDISPetsAndFollowers(List<TARDISPet> pets, List<TARDISFollower> followers) {
-		this.pets = pets;
-		this.followers = followers;
-	}
+    TARDISPetsAndFollowers(List<TARDISPet> pets, List<TARDISFollower> followers) {
+        this.pets = pets;
+        this.followers = followers;
+    }
 
-	public List<TARDISPet> getPets() {
-		return pets;
-	}
+    public List<TARDISPet> getPets() {
+        return pets;
+    }
 
-	public List<TARDISFollower> getFollowers() {
-		return followers;
-	}
+    public List<TARDISFollower> getFollowers() {
+        return followers;
+    }
 }

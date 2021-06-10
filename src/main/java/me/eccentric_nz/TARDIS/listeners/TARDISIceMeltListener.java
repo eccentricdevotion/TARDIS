@@ -32,27 +32,27 @@ import org.bukkit.event.block.BlockFadeEvent;
  */
 public class TARDISIceMeltListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISIceMeltListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISIceMeltListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	/**
-	 * Listens for ice melting when the tardis Police Box is materialising. If the block is contained in the blocks
-	 * table then it cancels the event.
-	 *
-	 * @param event ice melting
-	 */
-	@EventHandler(ignoreCancelled = true)
-	public void onIceMelt(BlockFadeEvent event) {
-		Block b = event.getBlock();
-		Material m = b.getType();
-		if (m.equals(Material.ICE)) {
-			String l = b.getLocation().toString();
-			if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l)) {
-				event.setCancelled(true);
-			}
-		}
-	}
+    /**
+     * Listens for ice melting when the tardis Police Box is materialising. If the block is contained in the blocks
+     * table then it cancels the event.
+     *
+     * @param event ice melting
+     */
+    @EventHandler(ignoreCancelled = true)
+    public void onIceMelt(BlockFadeEvent event) {
+        Block b = event.getBlock();
+        Material m = b.getType();
+        if (m.equals(Material.ICE)) {
+            String l = b.getLocation().toString();
+            if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l)) {
+                event.setCancelled(true);
+            }
+        }
+    }
 }

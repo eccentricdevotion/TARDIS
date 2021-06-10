@@ -27,31 +27,31 @@ import java.util.HashMap;
  */
 public class TARDISLightSwitch {
 
-	private final TARDISPlugin plugin;
-	private final int id;
-	private final boolean lightsOn;
-	private final Player player;
-	private final boolean lanterns;
+    private final TARDISPlugin plugin;
+    private final int id;
+    private final boolean lightsOn;
+    private final Player player;
+    private final boolean lanterns;
 
-	public TARDISLightSwitch(TARDISPlugin plugin, int id, boolean lightsOn, Player player, boolean lanterns) {
-		this.plugin = plugin;
-		this.id = id;
-		this.lightsOn = lightsOn;
-		this.player = player;
-		this.lanterns = lanterns;
-	}
+    public TARDISLightSwitch(TARDISPlugin plugin, int id, boolean lightsOn, Player player, boolean lanterns) {
+        this.plugin = plugin;
+        this.id = id;
+        this.lightsOn = lightsOn;
+        this.player = player;
+        this.lanterns = lanterns;
+    }
 
-	public void flickSwitch() {
-		HashMap<String, Object> wherel = new HashMap<>();
-		wherel.put("tardis_id", id);
-		HashMap<String, Object> setl = new HashMap<>();
-		if (lightsOn) {
-			new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, lanterns);
-			setl.put("lights_on", 0);
-		} else {
-			new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false, lanterns);
-			setl.put("lights_on", 1);
-		}
-		plugin.getQueryFactory().doUpdate("tardis", setl, wherel);
-	}
+    public void flickSwitch() {
+        HashMap<String, Object> wherel = new HashMap<>();
+        wherel.put("tardis_id", id);
+        HashMap<String, Object> setl = new HashMap<>();
+        if (lightsOn) {
+            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, lanterns);
+            setl.put("lights_on", 0);
+        } else {
+            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false, lanterns);
+            setl.put("lights_on", 1);
+        }
+        plugin.getQueryFactory().doUpdate("tardis", setl, wherel);
+    }
 }

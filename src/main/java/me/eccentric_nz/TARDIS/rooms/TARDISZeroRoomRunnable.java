@@ -27,26 +27,26 @@ import java.util.List;
  */
 public class TARDISZeroRoomRunnable implements Runnable {
 
-	private final World zero_world;
+    private final World zero_world;
 
-	public TARDISZeroRoomRunnable(TARDISPlugin plugin) {
-		zero_world = plugin.getServer().getWorld("TARDIS_Zero_Room");
-	}
+    public TARDISZeroRoomRunnable(TARDISPlugin plugin) {
+        zero_world = plugin.getServer().getWorld("TARDIS_Zero_Room");
+    }
 
-	@Override
-	public void run() {
-		if (zero_world == null) {
-			return;
-		}
-		List<Player> inZeroRoom = zero_world.getPlayers();
-		if (inZeroRoom.size() < 1) {
-			return;
-		}
-		inZeroRoom.forEach((p) -> {
-			// setHealth() method max is 20.0
-			if (p.isOnline() && p.getHealth() < 19.5 && p.getLocation().getBlockY() > 16) {
-				p.setHealth(p.getHealth() + 0.5);
-			}
-		});
-	}
+    @Override
+    public void run() {
+        if (zero_world == null) {
+            return;
+        }
+        List<Player> inZeroRoom = zero_world.getPlayers();
+        if (inZeroRoom.size() < 1) {
+            return;
+        }
+        inZeroRoom.forEach((p) -> {
+            // setHealth() method max is 20.0
+            if (p.isOnline() && p.getHealth() < 19.5 && p.getLocation().getBlockY() > 16) {
+                p.setHealth(p.getHealth() + 0.5);
+            }
+        });
+    }
 }

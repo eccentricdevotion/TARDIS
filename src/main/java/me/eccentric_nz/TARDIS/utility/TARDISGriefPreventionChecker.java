@@ -30,28 +30,28 @@ import org.bukkit.entity.Player;
  */
 public class TARDISGriefPreventionChecker {
 
-	private final GriefPrevention griefprevention;
+    private final GriefPrevention griefprevention;
 
-	public TARDISGriefPreventionChecker(TARDISPlugin plugin) {
-		griefprevention = (GriefPrevention) plugin.getPM().getPlugin("GriefPrevention");
-	}
+    public TARDISGriefPreventionChecker(TARDISPlugin plugin) {
+        griefprevention = (GriefPrevention) plugin.getPM().getPlugin("GriefPrevention");
+    }
 
-	/**
-	 * Checks to see whether the specified location is within a GriefPrevention claim.
-	 *
-	 * @param p the player to check access for.
-	 * @param l the location to check.
-	 * @return true or false depending on whether the player has access to the claim
-	 */
-	public boolean isInClaim(Player p, Location l) {
-		boolean bool = true;
-		if (griefprevention != null) {
-			Claim claim = griefprevention.dataStore.getClaimAt(l, true, null);
-			// if no claim at this location or the player has access to the claim - allow
-			if (claim == null || claim.allowAccess(p) == null) {
-				bool = false;
-			}
-		}
-		return bool;
-	}
+    /**
+     * Checks to see whether the specified location is within a GriefPrevention claim.
+     *
+     * @param p the player to check access for.
+     * @param l the location to check.
+     * @return true or false depending on whether the player has access to the claim
+     */
+    public boolean isInClaim(Player p, Location l) {
+        boolean bool = true;
+        if (griefprevention != null) {
+            Claim claim = griefprevention.dataStore.getClaimAt(l, true, null);
+            // if no claim at this location or the player has access to the claim - allow
+            if (claim == null || claim.allowAccess(p) == null) {
+                bool = false;
+            }
+        }
+        return bool;
+    }
 }

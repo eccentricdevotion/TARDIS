@@ -23,31 +23,31 @@ import org.bukkit.util.Vector;
  */
 public class TARDISAntiBuild {
 
-	private Vector max;
-	private Vector min;
-	private String timelord;
+    private Vector max;
+    private Vector min;
+    private String timelord;
 
-	public Vector getMax() {
-		return max;
-	}
+    public Vector getMax() {
+        return max;
+    }
 
-	public void setMax(Vector max) {
-		this.max = max;
-	}
+    public void setMax(Vector max) {
+        this.max = max;
+    }
 
-	public Vector getMin() {
-		return min;
-	}
+    public Vector getMin() {
+        return min;
+    }
 
-	public void setMin(Vector min) {
-		this.min = min;
-	}
+    public void setMin(Vector min) {
+        this.min = min;
+    }
 
-	public String getTimelord() {
-		return timelord;
-	}
+    public String getTimelord() {
+        return timelord;
+    }
 
-	public void setTimelord(String timelord) {
-		this.timelord = timelord;
-	}
+    public void setTimelord(String timelord) {
+        this.timelord = timelord;
+    }
 }

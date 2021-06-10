@@ -25,30 +25,30 @@ import org.bukkit.entity.Player;
 
 public class TARDISDoorCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISDoorCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISDoorCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public boolean toggleDoors(Player player, String[] args) {
-		if (!TARDISPermission.hasPermission(player, "tardis.use")) {
-			TARDISMessage.send(player, "NO_PERMS");
-			return true;
-		}
-		// must have a tardis
-		ResultSetTardisID rs = new ResultSetTardisID(plugin);
-		if (!rs.fromUUID(player.getUniqueId().toString())) {
-			TARDISMessage.send(player, "NOT_A_TIMELORD");
-			return false;
-		}
-		if (args.length < 2) {
-			TARDISMessage.send(player, "TOO_FEW_ARGS");
-			return false;
-		}
-		boolean open = (args[1].equalsIgnoreCase("close"));
-		// toggle the door
-		new TARDISDoorToggler(plugin, player.getLocation().getBlock(), player, false, open, rs.getTardisId()).toggleDoors();
-		return true;
-	}
+    public boolean toggleDoors(Player player, String[] args) {
+        if (!TARDISPermission.hasPermission(player, "tardis.use")) {
+            TARDISMessage.send(player, "NO_PERMS");
+            return true;
+        }
+        // must have a tardis
+        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        if (!rs.fromUUID(player.getUniqueId().toString())) {
+            TARDISMessage.send(player, "NOT_A_TIMELORD");
+            return false;
+        }
+        if (args.length < 2) {
+            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            return false;
+        }
+        boolean open = (args[1].equalsIgnoreCase("close"));
+        // toggle the door
+        new TARDISDoorToggler(plugin, player.getLocation().getBlock(), player, false, open, rs.getTardisId()).toggleDoors();
+        return true;
+    }
 }

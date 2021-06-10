@@ -36,91 +36,91 @@ import java.util.UUID;
  */
 public class ResultSetSounds {
 
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final TARDISPlugin plugin;
-	private final List<UUID> data = new ArrayList<>();
-	private final String prefix;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final TARDISPlugin plugin;
+    private final List<UUID> data = new ArrayList<>();
+    private final String prefix;
 
-	/**
-	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the travellers table.
-	 *
-	 * @param plugin an instance of the main class.
-	 */
-	public ResultSetSounds(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		prefix = this.plugin.getPrefix();
-	}
+    /**
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the travellers table.
+     *
+     * @param plugin an instance of the main class.
+     */
+    public ResultSetSounds(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        prefix = this.plugin.getPrefix();
+    }
 
-	/**
-	 * Retrieves an SQL ResultSet from the travellers table. This method builds an SQL query string from the parameters
-	 * supplied and then executes the query. Use the getters to retrieve the results.
-	 *
-	 * @return true or false depending on whether any data matches the query
-	 */
-	public boolean resultSet() {
-		Statement statement = null;
-		PreparedStatement tardis = null;
-		PreparedStatement travellers = null;
-		ResultSet rs = null;
-		ResultSet rsTARDIS = null;
-		ResultSet rsTravellers = null;
-		String queryTARDIS = "SELECT tardis_id, powered_on FROM " + prefix + "tardis WHERE tardis_id = ?";
-		String queryTravellers = "SELECT uuid FROM " + prefix + "travellers WHERE tardis_id = ?";
-		try {
-			service.testConnection(connection);
-			statement = connection.createStatement();
-			tardis = connection.prepareStatement(queryTARDIS);
-			travellers = connection.prepareStatement(queryTravellers);
-			rs = statement.executeQuery("SELECT DISTINCT tardis_id FROM " + prefix + "travellers");
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					tardis.setInt(1, rs.getInt("tardis_id"));
-					rsTARDIS = tardis.executeQuery();
-					if (rsTARDIS.next()) {
-						if (rsTARDIS.getBoolean("powered_on")) {
-							travellers.setInt(1, rsTARDIS.getInt("tardis_id"));
-							rsTravellers = travellers.executeQuery();
-							while (rsTravellers.next()) {
-								data.add(UUID.fromString(rsTravellers.getString("uuid")));
-							}
-						}
-					}
-				}
-			} else {
-				return false;
-			}
-		} catch (SQLException e) {
-			plugin.debug("ResultSet error for travellers table [Sound]! " + e.getMessage());
-			return false;
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (rsTARDIS != null) {
-					rsTARDIS.close();
-				}
-				if (rsTravellers != null) {
-					rsTravellers.close();
-				}
-				if (tardis != null) {
-					tardis.close();
-				}
-				if (travellers != null) {
-					travellers.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing travellers table [Sound]! " + e.getMessage());
-			}
-		}
-		return true;
-	}
+    /**
+     * Retrieves an SQL ResultSet from the travellers table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
+     *
+     * @return true or false depending on whether any data matches the query
+     */
+    public boolean resultSet() {
+        Statement statement = null;
+        PreparedStatement tardis = null;
+        PreparedStatement travellers = null;
+        ResultSet rs = null;
+        ResultSet rsTARDIS = null;
+        ResultSet rsTravellers = null;
+        String queryTARDIS = "SELECT tardis_id, powered_on FROM " + prefix + "tardis WHERE tardis_id = ?";
+        String queryTravellers = "SELECT uuid FROM " + prefix + "travellers WHERE tardis_id = ?";
+        try {
+            service.testConnection(connection);
+            statement = connection.createStatement();
+            tardis = connection.prepareStatement(queryTARDIS);
+            travellers = connection.prepareStatement(queryTravellers);
+            rs = statement.executeQuery("SELECT DISTINCT tardis_id FROM " + prefix + "travellers");
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    tardis.setInt(1, rs.getInt("tardis_id"));
+                    rsTARDIS = tardis.executeQuery();
+                    if (rsTARDIS.next()) {
+                        if (rsTARDIS.getBoolean("powered_on")) {
+                            travellers.setInt(1, rsTARDIS.getInt("tardis_id"));
+                            rsTravellers = travellers.executeQuery();
+                            while (rsTravellers.next()) {
+                                data.add(UUID.fromString(rsTravellers.getString("uuid")));
+                            }
+                        }
+                    }
+                }
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for travellers table [Sound]! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (rsTARDIS != null) {
+                    rsTARDIS.close();
+                }
+                if (rsTravellers != null) {
+                    rsTravellers.close();
+                }
+                if (tardis != null) {
+                    tardis.close();
+                }
+                if (travellers != null) {
+                    travellers.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing travellers table [Sound]! " + e.getMessage());
+            }
+        }
+        return true;
+    }
 
-	public List<UUID> getData() {
-		return Collections.unmodifiableList(data);
-	}
+    public List<UUID> getData() {
+        return Collections.unmodifiableList(data);
+    }
 }

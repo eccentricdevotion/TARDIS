@@ -23,62 +23,62 @@ import java.util.HashMap;
  */
 public enum GlowstoneCircuit {
 
-	ADMIN("Server Admin Circuit", 10001968),
-	ARS("tardis ars Circuit", 10001973),
-	BIO("Bio-scanner Circuit", 10001969),
-	CHAMELEON("tardis Chameleon Circuit", 10001966),
-	CIRCUITS("Circuits", 10001985),
-	DIAMOND("Diamond Disruptor Circuit", 10001971),
-	EMERALD("Emerald Environment Circuit", 10001972),
-	IGNITE("Ignite Circuit", 10001982),
-	INPUT("tardis Input Circuit", 10001976),
-	INVISIBILITY("tardis Invisibility Circuit", 10001981),
-	KNOCKBACK("Knockback Circuit", 10001986),
-	LOCATOR("tardis Locator Circuit", 10001965),
-	MATERIALISATION("tardis Materialisation Circuit", 10001964),
-	MEMORY("tardis Memory Circuit", 10001975),
-	PAINTER("Painter Circuit", 10001979),
-	PERCEPTION("Perception Circuit", 10001978),
-	PICKUP("Pickup Arrows Circuit", 10001984),
-	RANDOM("tardis Randomiser Circuit", 10001980),
-	REDSTONE("Redstone Activator Circuit", 10001970),
-	RIFT("Rift Circuit", 10001983),
-	SCANNER("tardis Scanner Circuit", 10001977),
-	SONIC("Sonic Oscillator", 10001967),
-	STATTENHEIM("tardis Stattenheim Circuit", 10001963),
-	TEMPORAL("tardis Temporal Circuit", 10001974);
+    ADMIN("Server Admin Circuit", 10001968),
+    ARS("tardis ars Circuit", 10001973),
+    BIO("Bio-scanner Circuit", 10001969),
+    CHAMELEON("tardis Chameleon Circuit", 10001966),
+    CIRCUITS("Circuits", 10001985),
+    DIAMOND("Diamond Disruptor Circuit", 10001971),
+    EMERALD("Emerald Environment Circuit", 10001972),
+    IGNITE("Ignite Circuit", 10001982),
+    INPUT("tardis Input Circuit", 10001976),
+    INVISIBILITY("tardis Invisibility Circuit", 10001981),
+    KNOCKBACK("Knockback Circuit", 10001986),
+    LOCATOR("tardis Locator Circuit", 10001965),
+    MATERIALISATION("tardis Materialisation Circuit", 10001964),
+    MEMORY("tardis Memory Circuit", 10001975),
+    PAINTER("Painter Circuit", 10001979),
+    PERCEPTION("Perception Circuit", 10001978),
+    PICKUP("Pickup Arrows Circuit", 10001984),
+    RANDOM("tardis Randomiser Circuit", 10001980),
+    REDSTONE("Redstone Activator Circuit", 10001970),
+    RIFT("Rift Circuit", 10001983),
+    SCANNER("tardis Scanner Circuit", 10001977),
+    SONIC("Sonic Oscillator", 10001967),
+    STATTENHEIM("tardis Stattenheim Circuit", 10001963),
+    TEMPORAL("tardis Temporal Circuit", 10001974);
 
-	private static final HashMap<String, GlowstoneCircuit> BY_NAME = new HashMap<>();
+    private static final HashMap<String, GlowstoneCircuit> BY_NAME = new HashMap<>();
 
-	static {
-		for (GlowstoneCircuit glowstone : values()) {
-			BY_NAME.put(glowstone.displayName, glowstone);
-		}
-	}
+    static {
+        for (GlowstoneCircuit glowstone : values()) {
+            BY_NAME.put(glowstone.displayName, glowstone);
+        }
+    }
 
-	String displayName;
-	int customModelData;
-	int damaged;
+    String displayName;
+    int customModelData;
+    int damaged;
 
-	GlowstoneCircuit(String displayName, int customModelData) {
-		this.displayName = displayName;
-		this.customModelData = customModelData;
-		damaged = this.customModelData + 10000000;
-	}
+    GlowstoneCircuit(String displayName, int customModelData) {
+        this.displayName = displayName;
+        this.customModelData = customModelData;
+        damaged = this.customModelData + 10000000;
+    }
 
-	public static HashMap<String, GlowstoneCircuit> getByName() {
-		return BY_NAME;
-	}
+    public static HashMap<String, GlowstoneCircuit> getByName() {
+        return BY_NAME;
+    }
 
-	public String getDisplayName() {
-		return displayName;
-	}
+    public String getDisplayName() {
+        return displayName;
+    }
 
-	public int getCustomModelData() {
-		return customModelData;
-	}
+    public int getCustomModelData() {
+        return customModelData;
+    }
 
-	public int getDamaged() {
-		return damaged;
-	}
+    public int getDamaged() {
+        return damaged;
+    }
 }

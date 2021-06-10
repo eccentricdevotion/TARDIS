@@ -21,25 +21,25 @@ import java.util.HashMap;
 
 public class Song {
 
-	private final HashMap<Integer, Layer> layerHashMap;
-	private final short length;
-	private final float delay;
+    private final HashMap<Integer, Layer> layerHashMap;
+    private final short length;
+    private final float delay;
 
-	Song(float speed, HashMap<Integer, Layer> layerHashMap, short length) {
-		delay = 20 / speed;
-		this.layerHashMap = layerHashMap;
-		this.length = length;
-	}
+    Song(float speed, HashMap<Integer, Layer> layerHashMap, short length) {
+        delay = 20 / speed;
+        this.layerHashMap = layerHashMap;
+        this.length = length;
+    }
 
-	HashMap<Integer, Layer> getLayerHashMap() {
-		return layerHashMap;
-	}
+    HashMap<Integer, Layer> getLayerHashMap() {
+        return layerHashMap;
+    }
 
-	public short getLength() {
-		return length;
-	}
+    public short getLength() {
+        return length;
+    }
 
-	public float getDelay() {
-		return delay;
-	}
+    public float getDelay() {
+        return delay;
+    }
 }

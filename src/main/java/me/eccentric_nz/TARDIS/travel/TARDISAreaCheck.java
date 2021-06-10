@@ -20,19 +20,19 @@ import me.eccentric_nz.tardis.database.data.Area;
 
 public class TARDISAreaCheck {
 
-	private final Area area;
-	private final boolean inArea;
+    private final Area area;
+    private final boolean inArea;
 
-	TARDISAreaCheck(Area area, boolean inArea) {
-		this.area = area;
-		this.inArea = inArea;
-	}
+    TARDISAreaCheck(Area area, boolean inArea) {
+        this.area = area;
+        this.inArea = inArea;
+    }
 
-	public Area getArea() {
-		return area;
-	}
+    public Area getArea() {
+        return area;
+    }
 
-	public boolean isInArea() {
-		return inArea;
-	}
+    public boolean isInArea() {
+        return inArea;
+    }
 }

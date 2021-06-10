@@ -23,15 +23,15 @@ import org.bukkit.entity.Player;
 
 class BindRemove {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	BindRemove(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    BindRemove(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean setClick(Bind bind, Player player) {
-		plugin.getTrackerKeeper().getBindRemoval().put(player.getUniqueId(), bind);
-		TARDISMessage.send(player, "BIND_REMOVE_CLICK_BLOCK", bind.toString());
-		return true;
-	}
+    boolean setClick(Bind bind, Player player) {
+        plugin.getTrackerKeeper().getBindRemoval().put(player.getUniqueId(), bind);
+        TARDISMessage.send(player, "BIND_REMOVE_CLICK_BLOCK", bind.toString());
+        return true;
+    }
 }

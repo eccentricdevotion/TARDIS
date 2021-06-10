@@ -23,87 +23,87 @@ import me.eccentric_nz.tardis.enumeration.Schematic;
  */
 public class TARDISUpgradeData {
 
-	private Schematic schematic;
-	private Schematic previous;
-	private String wall;
-	private String floor;
-	private String siegeWall;
-	private String siegeFloor;
-	private int level;
+    private Schematic schematic;
+    private Schematic previous;
+    private String wall;
+    private String floor;
+    private String siegeWall;
+    private String siegeFloor;
+    private int level;
 
-	/**
-	 * Returns the desktop theme the upgrade will change to.
-	 *
-	 * @return the Schematic
-	 */
-	public Schematic getSchematic() {
-		return schematic;
-	}
+    /**
+     * Returns the desktop theme the upgrade will change to.
+     *
+     * @return the Schematic
+     */
+    public Schematic getSchematic() {
+        return schematic;
+    }
 
-	public void setSchematic(Schematic schematic) {
-		this.schematic = schematic;
-	}
+    public void setSchematic(Schematic schematic) {
+        this.schematic = schematic;
+    }
 
-	/**
-	 * Returns the desktop theme the tardis had previously.
-	 *
-	 * @return the Schematic
-	 */
-	public Schematic getPrevious() {
-		return previous;
-	}
+    /**
+     * Returns the desktop theme the tardis had previously.
+     *
+     * @return the Schematic
+     */
+    public Schematic getPrevious() {
+        return previous;
+    }
 
-	public void setPrevious(Schematic previous) {
-		this.previous = previous;
-	}
+    public void setPrevious(Schematic previous) {
+        this.previous = previous;
+    }
 
-	/**
-	 * Returns the wall block the theme use when changing.
-	 *
-	 * @return the Material name of the wall block
-	 */
-	public String getWall() {
-		return wall;
-	}
+    /**
+     * Returns the wall block the theme use when changing.
+     *
+     * @return the Material name of the wall block
+     */
+    public String getWall() {
+        return wall;
+    }
 
-	public void setWall(String wall) {
-		this.wall = wall;
-	}
+    public void setWall(String wall) {
+        this.wall = wall;
+    }
 
-	/**
-	 * Returns the floor block the theme use when changing.
-	 *
-	 * @return the Material name of the floor block
-	 */
-	public String getFloor() {
-		return floor;
-	}
+    /**
+     * Returns the floor block the theme use when changing.
+     *
+     * @return the Material name of the floor block
+     */
+    public String getFloor() {
+        return floor;
+    }
 
-	public void setFloor(String floor) {
-		this.floor = floor;
-	}
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
 
-	public String getSiegeWall() {
-		return siegeWall;
-	}
+    public String getSiegeWall() {
+        return siegeWall;
+    }
 
-	public void setSiegeWall(String siegeWall) {
-		this.siegeWall = siegeWall;
-	}
+    public void setSiegeWall(String siegeWall) {
+        this.siegeWall = siegeWall;
+    }
 
-	public String getSiegeFloor() {
-		return siegeFloor;
-	}
+    public String getSiegeFloor() {
+        return siegeFloor;
+    }
 
-	public void setSiegeFloor(String siegeFloor) {
-		this.siegeFloor = siegeFloor;
-	}
+    public void setSiegeFloor(String siegeFloor) {
+        this.siegeFloor = siegeFloor;
+    }
 
-	public int getLevel() {
-		return level;
-	}
+    public int getLevel() {
+        return level;
+    }
 
-	public void setLevel(int level) {
-		this.level = level;
-	}
+    public void setLevel(int level) {
+        this.level = level;
+    }
 }

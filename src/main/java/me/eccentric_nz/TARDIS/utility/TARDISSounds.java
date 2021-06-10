@@ -32,72 +32,72 @@ import java.util.Objects;
  */
 public class TARDISSounds {
 
-	private static float VOLUME = TARDISPlugin.plugin.getConfig().getInt("preferences.sfx_volume") / 10.0F;
+    private static float VOLUME = TARDISPlugin.plugin.getConfig().getInt("preferences.sfx_volume") / 10.0F;
 
-	/**
-	 * Plays the interior hum sound upon tardis entry.
-	 *
-	 * @param p the player to play the sound to
-	 */
-	public static void playTARDISHum(Player p) {
-		ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDISPlugin.plugin, p.getUniqueId().toString());
-		boolean userSFX;
-		String hum;
-		if (rsp.resultSet()) {
-			userSFX = rsp.isSfxOn();
-			hum = (rsp.getHum().isEmpty()) ? "tardis_hum" : "tardis_hum_" + rsp.getHum();
-		} else {
-			userSFX = true;
-			hum = "tardis_hum";
-		}
-		if (userSFX) {
-			playTARDISSound(p.getLocation(), hum);
-		}
-	}
+    /**
+     * Plays the interior hum sound upon tardis entry.
+     *
+     * @param p the player to play the sound to
+     */
+    public static void playTARDISHum(Player p) {
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDISPlugin.plugin, p.getUniqueId().toString());
+        boolean userSFX;
+        String hum;
+        if (rsp.resultSet()) {
+            userSFX = rsp.isSfxOn();
+            hum = (rsp.getHum().isEmpty()) ? "tardis_hum" : "tardis_hum_" + rsp.getHum();
+        } else {
+            userSFX = true;
+            hum = "tardis_hum";
+        }
+        if (userSFX) {
+            playTARDISSound(p.getLocation(), hum);
+        }
+    }
 
-	/**
-	 * Plays a tardis sound for the player and surrounding players at the current location.
-	 *
-	 * @param l      The location
-	 * @param s      The sound to play
-	 * @param volume The volume to play the sound at
-	 */
-	public static void playTARDISSound(Location l, String s, float volume) {
-		Objects.requireNonNull(l.getWorld()).playSound(l, s, VOLUME * volume, 1.0f);
-	}
+    /**
+     * Plays a tardis sound for the player and surrounding players at the current location.
+     *
+     * @param l      The location
+     * @param s      The sound to play
+     * @param volume The volume to play the sound at
+     */
+    public static void playTARDISSound(Location l, String s, float volume) {
+        Objects.requireNonNull(l.getWorld()).playSound(l, s, VOLUME * volume, 1.0f);
+    }
 
-	/**
-	 * Plays a tardis sound for the player and surrounding players at the current location.
-	 *
-	 * @param l The location
-	 * @param s The sound to play
-	 */
-	public static void playTARDISSound(Location l, String s) {
-		Objects.requireNonNull(l.getWorld()).playSound(l, s, VOLUME, 1.0f);
-	}
+    /**
+     * Plays a tardis sound for the player and surrounding players at the current location.
+     *
+     * @param l The location
+     * @param s The sound to play
+     */
+    public static void playTARDISSound(Location l, String s) {
+        Objects.requireNonNull(l.getWorld()).playSound(l, s, VOLUME, 1.0f);
+    }
 
-	/**
-	 * Plays a tardis sound for the specified player.
-	 *
-	 * @param p The player
-	 * @param s The sound to play
-	 */
-	public static void playTARDISSound(Player p, String s) {
-		p.playSound(p.getLocation(), s, VOLUME, 1.0f);
-	}
+    /**
+     * Plays a tardis sound for the specified player.
+     *
+     * @param p The player
+     * @param s The sound to play
+     */
+    public static void playTARDISSound(Player p, String s) {
+        p.playSound(p.getLocation(), s, VOLUME, 1.0f);
+    }
 
-	/**
-	 * Plays a tardis sound for the specified player after a delay.
-	 *
-	 * @param p The player
-	 * @param s The sound to play
-	 * @param d The delay time
-	 */
-	public static void playTARDISSound(Player p, String s, long d) {
-		TARDISPlugin.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDISPlugin.plugin, () -> p.playSound(p.getLocation(), s, VOLUME, 1.0f), d);
-	}
+    /**
+     * Plays a tardis sound for the specified player after a delay.
+     *
+     * @param p The player
+     * @param s The sound to play
+     * @param d The delay time
+     */
+    public static void playTARDISSound(Player p, String s, long d) {
+        TARDISPlugin.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDISPlugin.plugin, () -> p.playSound(p.getLocation(), s, VOLUME, 1.0f), d);
+    }
 
-	public static void setVolume(float v) {
-		TARDISSounds.VOLUME = v;
-	}
+    public static void setVolume(float v) {
+        TARDISSounds.VOLUME = v;
+    }
 }

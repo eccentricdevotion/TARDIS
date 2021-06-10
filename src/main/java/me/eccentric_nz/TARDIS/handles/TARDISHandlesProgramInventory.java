@@ -28,72 +28,72 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISHandlesProgramInventory {
 
-	private final TARDISPlugin plugin;
-	private final int programId;
-	private final ItemStack[] handles;
+    private final TARDISPlugin plugin;
+    private final int programId;
+    private final ItemStack[] handles;
 
-	public TARDISHandlesProgramInventory(TARDISPlugin plugin, int programId) {
-		this.plugin = plugin;
-		this.programId = programId;
-		handles = getItemStack();
-	}
+    public TARDISHandlesProgramInventory(TARDISPlugin plugin, int programId) {
+        this.plugin = plugin;
+        this.programId = programId;
+        handles = getItemStack();
+    }
 
-	/**
-	 * Constructs an inventory for the Handles Programming GUI.
-	 *
-	 * @return an Array of itemStacks (an inventory)
-	 */
-	private ItemStack[] getItemStack() {
+    /**
+     * Constructs an inventory for the Handles Programming GUI.
+     *
+     * @return an Array of itemStacks (an inventory)
+     */
+    private ItemStack[] getItemStack() {
 
-		ItemStack[] stack = new ItemStack[54];
-		int i = 0;
-		if (programId != 0) {
-			// retrieve the program from the database
-			ResultSetProgram rsp = new ResultSetProgram(plugin, programId);
-			if (rsp.resultSet()) {
-				Program p = rsp.getProgram();
-				for (ItemStack is : p.getInventory()) {
-					stack[i] = is;
-					i++;
-				}
-			}
-		}
-		i = 36;
-		for (TARDISHandlesBlock b : TARDISHandlesBlock.getButtons()) {
-			ItemStack is = new ItemStack(Material.BOWL, 1);
-			ItemMeta im = is.getItemMeta();
-			assert im != null;
-			im.setDisplayName(b.getDisplayName());
-			im.setCustomModelData(b.getCustomModelData());
-			is.setItemMeta(im);
-			stack[i] = is;
-			i++;
-			if (i == 45) {
-				i = 52;
-			}
-		}
+        ItemStack[] stack = new ItemStack[54];
+        int i = 0;
+        if (programId != 0) {
+            // retrieve the program from the database
+            ResultSetProgram rsp = new ResultSetProgram(plugin, programId);
+            if (rsp.resultSet()) {
+                Program p = rsp.getProgram();
+                for (ItemStack is : p.getInventory()) {
+                    stack[i] = is;
+                    i++;
+                }
+            }
+        }
+        i = 36;
+        for (TARDISHandlesBlock b : TARDISHandlesBlock.getButtons()) {
+            ItemStack is = new ItemStack(Material.BOWL, 1);
+            ItemMeta im = is.getItemMeta();
+            assert im != null;
+            im.setDisplayName(b.getDisplayName());
+            im.setCustomModelData(b.getCustomModelData());
+            is.setItemMeta(im);
+            stack[i] = is;
+            i++;
+            if (i == 45) {
+                i = 52;
+            }
+        }
 
-		i = 45;
-		for (TARDISHandlesBlock b : TARDISHandlesBlock.getControls()) {
-			ItemStack is = new ItemStack(Material.PAPER, 1);
-			ItemMeta im = is.getItemMeta();
-			assert im != null;
-			im.setDisplayName(b.getDisplayName());
-			if (b.getLore() != null) {
-				im.setLore(b.getLore());
-			}
-			im.setCustomModelData(b.getCustomModelData());
-			is.setItemMeta(im);
-			stack[i] = is;
-			i++;
-			if (i > 51) {
-				break;
-			}
-		}
-		return stack;
-	}
+        i = 45;
+        for (TARDISHandlesBlock b : TARDISHandlesBlock.getControls()) {
+            ItemStack is = new ItemStack(Material.PAPER, 1);
+            ItemMeta im = is.getItemMeta();
+            assert im != null;
+            im.setDisplayName(b.getDisplayName());
+            if (b.getLore() != null) {
+                im.setLore(b.getLore());
+            }
+            im.setCustomModelData(b.getCustomModelData());
+            is.setItemMeta(im);
+            stack[i] = is;
+            i++;
+            if (i > 51) {
+                break;
+            }
+        }
+        return stack;
+    }
 
-	public ItemStack[] getHandles() {
-		return handles;
-	}
+    public ItemStack[] getHandles() {
+        return handles;
+    }
 }

@@ -31,37 +31,37 @@ import java.util.Locale;
  */
 class TARDISFloorCommand {
 
-	boolean setFloorOrWallBlock(Player player, String[] args) {
-		String pref = args[0];
-		if (args.length < 2) {
-			TARDISMessage.send(player, "PREF_WALL", pref);
-			return false;
-		}
-		String wall_mat;
-		if (args.length > 2) {
-			int count = args.length;
-			StringBuilder buf = new StringBuilder();
-			for (int i = 1; i < count; i++) {
-				buf.append(args[i]).append("_");
-			}
-			String tmp = buf.toString();
-			String t = tmp.substring(0, tmp.length() - 1);
-			wall_mat = t.toUpperCase(Locale.ENGLISH);
-		} else {
-			wall_mat = args[1].toUpperCase(Locale.ENGLISH);
-		}
-		if (!TARDISWalls.BLOCKS.contains(Material.getMaterial(wall_mat))) {
-			String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
-			TARDISMessage.send(player, message, pref);
-			TARDISWalls.BLOCKS.forEach((w) -> player.sendMessage(w.toString()));
-			return true;
-		}
-		HashMap<String, Object> setw = new HashMap<>();
-		setw.put(pref, wall_mat);
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("uuid", player.getUniqueId().toString());
-		TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", setw, where);
-		TARDISMessage.send(player, "PREF_MAT_SET", TARDISStringUtils.uppercaseFirst(pref));
-		return true;
-	}
+    boolean setFloorOrWallBlock(Player player, String[] args) {
+        String pref = args[0];
+        if (args.length < 2) {
+            TARDISMessage.send(player, "PREF_WALL", pref);
+            return false;
+        }
+        String wall_mat;
+        if (args.length > 2) {
+            int count = args.length;
+            StringBuilder buf = new StringBuilder();
+            for (int i = 1; i < count; i++) {
+                buf.append(args[i]).append("_");
+            }
+            String tmp = buf.toString();
+            String t = tmp.substring(0, tmp.length() - 1);
+            wall_mat = t.toUpperCase(Locale.ENGLISH);
+        } else {
+            wall_mat = args[1].toUpperCase(Locale.ENGLISH);
+        }
+        if (!TARDISWalls.BLOCKS.contains(Material.getMaterial(wall_mat))) {
+            String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
+            TARDISMessage.send(player, message, pref);
+            TARDISWalls.BLOCKS.forEach((w) -> player.sendMessage(w.toString()));
+            return true;
+        }
+        HashMap<String, Object> setw = new HashMap<>();
+        setw.put(pref, wall_mat);
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", player.getUniqueId().toString());
+        TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", setw, where);
+        TARDISMessage.send(player, "PREF_MAT_SET", TARDISStringUtils.uppercaseFirst(pref));
+        return true;
+    }
 }

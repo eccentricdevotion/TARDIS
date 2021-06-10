@@ -25,25 +25,25 @@ import java.util.HashMap;
  */
 public class TARDISCondenserData {
 
-	private HashMap<String, Integer> blockIDCount = new HashMap<>();
-	private int tardisId;
+    private HashMap<String, Integer> blockIDCount = new HashMap<>();
+    private int tardisId;
 
-	public TARDISCondenserData() {
-	}
+    public TARDISCondenserData() {
+    }
 
-	public HashMap<String, Integer> getBlockIDCount() {
-		return blockIDCount;
-	}
+    public HashMap<String, Integer> getBlockIDCount() {
+        return blockIDCount;
+    }
 
-	public void setBlockIDCount(HashMap<String, Integer> blockIDCount) {
-		this.blockIDCount = blockIDCount;
-	}
+    public void setBlockIDCount(HashMap<String, Integer> blockIDCount) {
+        this.blockIDCount = blockIDCount;
+    }
 
-	public int getTardisId() {
-		return tardisId;
-	}
+    public int getTardisId() {
+        return tardisId;
+    }
 
-	public void setTardisId(int tardisId) {
-		this.tardisId = tardisId;
-	}
+    public void setTardisId(int tardisId) {
+        this.tardisId = tardisId;
+    }
 }

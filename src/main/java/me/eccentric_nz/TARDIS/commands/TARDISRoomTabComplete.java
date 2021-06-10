@@ -32,31 +32,31 @@ import java.util.Objects;
  */
 public class TARDISRoomTabComplete extends TARDISCompleter implements TabCompleter {
 
-	private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add", "blocks", "required");
-	private final ArrayList<String> ROOM_SUBS = new ArrayList<>();
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add", "blocks", "required");
+    private final ArrayList<String> ROOM_SUBS = new ArrayList<>();
 
-	public TARDISRoomTabComplete(TARDISPlugin plugin) {
-		// rooms - only add if enabled in the config
-		Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false).forEach((r) -> {
-			if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
-				ROOM_SUBS.add(r);
-			}
-		});
-	}
+    public TARDISRoomTabComplete(TARDISPlugin plugin) {
+        // rooms - only add if enabled in the config
+        Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false).forEach((r) -> {
+            if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
+                ROOM_SUBS.add(r);
+            }
+        });
+    }
 
-	@Override
-	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-		// Remember that we can return null to default to online player name matching
-		String lastArg = args[args.length - 1];
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        // Remember that we can return null to default to online player name matching
+        String lastArg = args[args.length - 1];
 
-		if (args.length <= 1) {
-			return partial(args[0], ROOT_SUBS);
-		} else if (args.length == 2) {
-			String sub = args[0];
-			if (sub.equals("required")) {
-				return partial(lastArg, ROOM_SUBS);
-			}
-		}
-		return ImmutableList.of();
-	}
+        if (args.length <= 1) {
+            return partial(args[0], ROOT_SUBS);
+        } else if (args.length == 2) {
+            String sub = args[0];
+            if (sub.equals("required")) {
+                return partial(lastArg, ROOM_SUBS);
+            }
+        }
+        return ImmutableList.of();
+    }
 }

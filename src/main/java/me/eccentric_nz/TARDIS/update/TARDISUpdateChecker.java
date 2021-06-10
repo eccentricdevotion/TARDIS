@@ -1,8 +1,8 @@
 package me.eccentric_nz.tardis.update;
 
 import com.google.common.collect.Sets;
-import me.eccentric_nz.tardis.ars.TARDISARSMethods;
 import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.ars.TARDISARSMethods;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
 import me.eccentric_nz.tardis.database.data.Farm;
 import me.eccentric_nz.tardis.database.data.TARDIS;
@@ -24,16 +24,7 @@ public class TARDISUpdateChecker {
     private final TARDIS tardis;
     private final String tardis_block;
 
-    private final Set<Updateable> mustGrowRoom = Sets.newHashSet(
-            Updateable.FARM,
-            Updateable.FUEL,
-            Updateable.IGLOO,
-            Updateable.SMELT,
-            Updateable.STABLE,
-            Updateable.STALL,
-            Updateable.VAULT,
-            Updateable.VILLAGE
-    );
+    private final Set<Updateable> mustGrowRoom = Sets.newHashSet(Updateable.FARM, Updateable.FUEL, Updateable.IGLOO, Updateable.SMELT, Updateable.STABLE, Updateable.STALL, Updateable.VAULT, Updateable.VILLAGE);
 
     public TARDISUpdateChecker(TARDISPlugin plugin, Updateable updateable, Player player, TARDIS tardis, String tardis_block) {
         this.plugin = plugin;

@@ -31,39 +31,39 @@ import java.util.List;
 
 public class TARDISChemistryTabComplete extends TARDISCompleter implements TabCompleter {
 
-	private final List<String> ROOT_SUBS = Arrays.asList("gui", "formula", "recipe");
-	private final List<String> GUI_SUBS = Arrays.asList("creative", "construct", "compound", "reduce", "product", "lab");
-	private final List<String> FORMULA_SUBS = new ArrayList<>();
-	private final List<String> CREATIVE_SUBS = Arrays.asList("elements", "compounds", "products", "lab");
+    private final List<String> ROOT_SUBS = Arrays.asList("gui", "formula", "recipe");
+    private final List<String> GUI_SUBS = Arrays.asList("creative", "construct", "compound", "reduce", "product", "lab");
+    private final List<String> FORMULA_SUBS = new ArrayList<>();
+    private final List<String> CREATIVE_SUBS = Arrays.asList("elements", "compounds", "products", "lab");
 
-	public TARDISChemistryTabComplete() {
-		for (Compound compound : Compound.values()) {
-			FORMULA_SUBS.add(compound.toString());
-		}
-		for (Product product : Product.values()) {
-			FORMULA_SUBS.add(product.toString());
-		}
-		for (Lab lab : Lab.values()) {
-			FORMULA_SUBS.add(lab.toString());
-		}
-	}
+    public TARDISChemistryTabComplete() {
+        for (Compound compound : Compound.values()) {
+            FORMULA_SUBS.add(compound.toString());
+        }
+        for (Product product : Product.values()) {
+            FORMULA_SUBS.add(product.toString());
+        }
+        for (Lab lab : Lab.values()) {
+            FORMULA_SUBS.add(lab.toString());
+        }
+    }
 
-	@Override
-	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-		String lastArg = args[args.length - 1];
-		if (args.length <= 1) {
-			return partial(args[0], ROOT_SUBS);
-		} else if (args.length == 2) {
-			String sub = args[0].toLowerCase();
-			if (sub.equals("gui") || sub.equals("recipe")) {
-				return partial(lastArg, GUI_SUBS);
-			}
-			if (sub.equals("formula")) {
-				return partial(lastArg, FORMULA_SUBS);
-			}
-		} else if (args.length == 3) {
-			return partial(lastArg, CREATIVE_SUBS);
-		}
-		return ImmutableList.of();
-	}
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        String lastArg = args[args.length - 1];
+        if (args.length <= 1) {
+            return partial(args[0], ROOT_SUBS);
+        } else if (args.length == 2) {
+            String sub = args[0].toLowerCase();
+            if (sub.equals("gui") || sub.equals("recipe")) {
+                return partial(lastArg, GUI_SUBS);
+            }
+            if (sub.equals("formula")) {
+                return partial(lastArg, FORMULA_SUBS);
+            }
+        } else if (args.length == 3) {
+            return partial(lastArg, CREATIVE_SUBS);
+        }
+        return ImmutableList.of();
+    }
 }

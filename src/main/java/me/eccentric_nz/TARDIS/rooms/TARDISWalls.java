@@ -30,17 +30,15 @@ import java.util.List;
  */
 public class TARDISWalls {
 
-	public static final List<Material> BLOCKS = new ArrayList<>();
+    public static final List<Material> BLOCKS = new ArrayList<>();
 
-	static {
-		for (String m : TARDISPlugin.plugin.getBlocksConfig().getStringList("tardis_blocks")) {
-			try {
-				BLOCKS.add(Material.valueOf(m));
-			} catch (IllegalArgumentException e) {
-				TARDISPlugin.plugin.getConsole().sendMessage(
-						TARDISPlugin.plugin.getPluginName() + "Invalid material '" + m + "' in tardis_blocks list! " +
-						e.getMessage());
-			}
-		}
-	}
+    static {
+        for (String m : TARDISPlugin.plugin.getBlocksConfig().getStringList("tardis_blocks")) {
+            try {
+                BLOCKS.add(Material.valueOf(m));
+            } catch (IllegalArgumentException e) {
+                TARDISPlugin.plugin.getConsole().sendMessage(TARDISPlugin.plugin.getPluginName() + "Invalid material '" + m + "' in tardis_blocks list! " + e.getMessage());
+            }
+        }
+    }
 }

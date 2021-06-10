@@ -34,45 +34,45 @@ import java.util.HashMap;
  */
 public class TARDISRemoteRebuildCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISRemoteRebuildCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISRemoteRebuildCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public boolean doRemoteRebuild(CommandSender sender, int id, OfflinePlayer player, boolean hidden) {
-		HashMap<String, Object> wherecl = new HashMap<>();
-		wherecl.put("tardis_id", id);
-		ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-		if (!rsc.resultSet()) {
-			TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
-			return true;
-		}
-		ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-		if (rs.fromID(id) && rs.getPreset().equals(PRESET.INVISIBLE)) {
-			TARDISMessage.send(player.getPlayer(), "INVISIBILITY_ENGAGED");
-			return true;
-		}
-		BuildData bd = new BuildData(player.getUniqueId().toString());
-		bd.setDirection(rsc.getDirection());
-		bd.setLocation(new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()));
-		bd.setMalfunction(false);
-		bd.setOutside(false);
-		bd.setPlayer(player);
-		bd.setRebuild(true);
-		bd.setSubmarine(rsc.isSubmarine());
-		bd.setTardisId(id);
-		bd.setThrottle(SpaceTimeThrottle.REBUILD);
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
-		TARDISMessage.send(sender, "TARDIS_REBUILT");
-		// set hidden to false
-		if (hidden) {
-			HashMap<String, Object> whereh = new HashMap<>();
-			whereh.put("tardis_id", id);
-			HashMap<String, Object> seth = new HashMap<>();
-			seth.put("hidden", 0);
-			plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
-		}
-		return true;
-	}
+    public boolean doRemoteRebuild(CommandSender sender, int id, OfflinePlayer player, boolean hidden) {
+        HashMap<String, Object> wherecl = new HashMap<>();
+        wherecl.put("tardis_id", id);
+        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+        if (!rsc.resultSet()) {
+            TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
+            return true;
+        }
+        ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
+        if (rs.fromID(id) && rs.getPreset().equals(PRESET.INVISIBLE)) {
+            TARDISMessage.send(player.getPlayer(), "INVISIBILITY_ENGAGED");
+            return true;
+        }
+        BuildData bd = new BuildData(player.getUniqueId().toString());
+        bd.setDirection(rsc.getDirection());
+        bd.setLocation(new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()));
+        bd.setMalfunction(false);
+        bd.setOutside(false);
+        bd.setPlayer(player);
+        bd.setRebuild(true);
+        bd.setSubmarine(rsc.isSubmarine());
+        bd.setTardisId(id);
+        bd.setThrottle(SpaceTimeThrottle.REBUILD);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
+        TARDISMessage.send(sender, "TARDIS_REBUILT");
+        // set hidden to false
+        if (hidden) {
+            HashMap<String, Object> whereh = new HashMap<>();
+            whereh.put("tardis_id", id);
+            HashMap<String, Object> seth = new HashMap<>();
+            seth.put("hidden", 0);
+            plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
+        }
+        return true;
+    }
 }

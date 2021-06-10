@@ -31,56 +31,55 @@ import org.bukkit.entity.Player;
 
 public class TARDISSonicRespect {
 
-	/**
-	 * Check whether a player can alter a block with their Sonic Screwdriver
-	 *
-	 * @param plugin an instance of the tardis plugin
-	 * @param player the player to check
-	 * @param block  the block to check
-	 * @return true if the player has permission to alter the block, otherwise false
-	 */
-	public static boolean checkBlockRespect(TARDISPlugin plugin, Player player, Block block) {
-		// WorldGuard is probably on server + possibly another protection plugin
-		if (plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canBuild(player, block.getLocation())) {
-			return false;
-		} else { // keep checking
+    /**
+     * Check whether a player can alter a block with their Sonic Screwdriver
+     *
+     * @param plugin an instance of the tardis plugin
+     * @param player the player to check
+     * @param block  the block to check
+     * @return true if the player has permission to alter the block, otherwise false
+     */
+    public static boolean checkBlockRespect(TARDISPlugin plugin, Player player, Block block) {
+        // WorldGuard is probably on server + possibly another protection plugin
+        if (plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canBuild(player, block.getLocation())) {
+            return false;
+        } else { // keep checking
 
-			// Factions
-			if (plugin.getPM().isPluginEnabled("Factions") &&
-				plugin.getConfig().getBoolean("preferences.respect_factions")) {
-				return TARDISFactionsChecker.isInFaction(player, block.getLocation());
-			}
-			// Towny
-			if (plugin.getPM().isPluginEnabled("Towny")) {
-				return new TARDISTownyChecker(plugin).playerHasPermission(player, block);
-			}
-			// GriefPrevention
-			if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
-				return !(new TARDISGriefPreventionChecker(plugin).isInClaim(player, block.getLocation()));
-			}
-			// RedProtect
-			if (plugin.getPM().isPluginEnabled("RedProtect")) {
-				return TARDISRedProtectChecker.canSonic(player, block);
-			}
-			// LockettePro
-			if (plugin.getPM().isPluginEnabled("LockettePro")) {
-				return !LocketteProAPI.isProtected(block);
-			}
-			// LWCX
-			if (plugin.getPM().isPluginEnabled("LWC")) {
-				ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
-				if (protectionCache != null) {
-					Protection protection = protectionCache.getProtection(block);
-					if (protection != null && !protection.isOwner(player)) {
-						return false;
-					}
-				}
-			}
-			// BlockLocker
-			if (plugin.getPM().isPluginEnabled("BlockLocker")) {
-				return !BlockLockerAPIv2.isProtected(block);
-			}
-		}
-		return true;
-	}
+            // Factions
+            if (plugin.getPM().isPluginEnabled("Factions") && plugin.getConfig().getBoolean("preferences.respect_factions")) {
+                return TARDISFactionsChecker.isInFaction(player, block.getLocation());
+            }
+            // Towny
+            if (plugin.getPM().isPluginEnabled("Towny")) {
+                return new TARDISTownyChecker(plugin).playerHasPermission(player, block);
+            }
+            // GriefPrevention
+            if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
+                return !(new TARDISGriefPreventionChecker(plugin).isInClaim(player, block.getLocation()));
+            }
+            // RedProtect
+            if (plugin.getPM().isPluginEnabled("RedProtect")) {
+                return TARDISRedProtectChecker.canSonic(player, block);
+            }
+            // LockettePro
+            if (plugin.getPM().isPluginEnabled("LockettePro")) {
+                return !LocketteProAPI.isProtected(block);
+            }
+            // LWCX
+            if (plugin.getPM().isPluginEnabled("LWC")) {
+                ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
+                if (protectionCache != null) {
+                    Protection protection = protectionCache.getProtection(block);
+                    if (protection != null && !protection.isOwner(player)) {
+                        return false;
+                    }
+                }
+            }
+            // BlockLocker
+            if (plugin.getPM().isPluginEnabled("BlockLocker")) {
+                return !BlockLockerAPIv2.isProtected(block);
+            }
+        }
+        return true;
+    }
 }

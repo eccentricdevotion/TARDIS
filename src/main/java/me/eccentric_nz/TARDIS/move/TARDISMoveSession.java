@@ -32,40 +32,39 @@ import org.bukkit.entity.Player;
  */
 public class TARDISMoveSession {
 
-	private boolean staleLocation;
-	private Location loc;
+    private boolean staleLocation;
+    private Location loc;
 
-	public TARDISMoveSession(Player p) {
-		setLocation(p.getLocation());
-	}
+    public TARDISMoveSession(Player p) {
+        setLocation(p.getLocation());
+    }
 
-	public boolean isStaleLocation() {
-		return staleLocation;
-	}
+    public boolean isStaleLocation() {
+        return staleLocation;
+    }
 
-	private void setStaleLocation(boolean active) {
-		staleLocation = active;
-	}
+    private void setStaleLocation(boolean active) {
+        staleLocation = active;
+    }
 
-	void setStaleLocation(Location loc) {
+    void setStaleLocation(Location loc) {
 
-		// If the player has not moved, they have a stale location
-		if (getLocation().getBlockX() == loc.getBlockX() && getLocation().getBlockY() == loc.getBlockY() &&
-			getLocation().getBlockZ() == loc.getBlockZ()) {
-			setStaleLocation(true);
-		} else {
-			// Update the Players Session to the new Location.
-			setLocation(loc);
-			// The location is no longer stale.
-			setStaleLocation(false);
-		}
-	}
+        // If the player has not moved, they have a stale location
+        if (getLocation().getBlockX() == loc.getBlockX() && getLocation().getBlockY() == loc.getBlockY() && getLocation().getBlockZ() == loc.getBlockZ()) {
+            setStaleLocation(true);
+        } else {
+            // Update the Players Session to the new Location.
+            setLocation(loc);
+            // The location is no longer stale.
+            setStaleLocation(false);
+        }
+    }
 
-	private Location getLocation() {
-		return loc;
-	}
+    private Location getLocation() {
+        return loc;
+    }
 
-	private void setLocation(Location loc) {
-		this.loc = loc;
-	}
+    private void setLocation(Location loc) {
+        this.loc = loc;
+    }
 }

@@ -26,24 +26,23 @@ import org.bukkit.command.CommandSender;
  */
 class TARDISDechargeCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISDechargeCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISDechargeCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean removeChargerStatus(CommandSender sender, String[] args) {
-		if (!plugin.getConfig().contains("rechargers." + args[1])) {
-			TARDISMessage.send(sender, "CHARGER_NOT_FOUND",
-					ChatColor.AQUA + " /tardis list rechargers" + ChatColor.RESET + " first.");
-			return true;
-		}
-		if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-			plugin.getWorldGuardUtils().removeRechargerRegion(args[1]);
-		}
-		plugin.getConfig().set("rechargers." + args[1], null);
-		plugin.saveConfig();
-		TARDISMessage.send(sender, "CONFIG_UPDATED");
-		return true;
-	}
+    boolean removeChargerStatus(CommandSender sender, String[] args) {
+        if (!plugin.getConfig().contains("rechargers." + args[1])) {
+            TARDISMessage.send(sender, "CHARGER_NOT_FOUND", ChatColor.AQUA + " /tardis list rechargers" + ChatColor.RESET + " first.");
+            return true;
+        }
+        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+            plugin.getWorldGuardUtils().removeRechargerRegion(args[1]);
+        }
+        plugin.getConfig().set("rechargers." + args[1], null);
+        plugin.saveConfig();
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        return true;
+    }
 }

@@ -48,7 +48,6 @@ import me.eccentric_nz.tardis.universaltranslator.TARDISSayCommand;
 import me.eccentric_nz.tardis.universaltranslator.TARDISSayTabComplete;
 
 import java.io.File;
-import java.util.Objects;
 
 /**
  * Loads all tardis command executors and tab completers.
@@ -57,13 +56,13 @@ import java.util.Objects;
  */
 class TARDISCommandSetter {
 
-	private final TARDISPlugin plugin;
-	private final TARDISInformationSystemListener info;
+    private final TARDISPlugin plugin;
+    private final TARDISInformationSystemListener info;
 
-	TARDISCommandSetter(TARDISPlugin plugin, TARDISInformationSystemListener info) {
-		this.plugin = plugin;
-		this.info = info;
-	}
+    TARDISCommandSetter(TARDISPlugin plugin, TARDISInformationSystemListener info) {
+        this.plugin = plugin;
+        this.info = info;
+    }
 
     /**
      * Loads all the commands that the TARDIS uses.

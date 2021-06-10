@@ -36,90 +36,88 @@ import java.util.UUID;
  */
 public class TARDISHadsPersister {
 
-	private final TARDISPlugin plugin;
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final String prefix;
-	private PreparedStatement ps = null;
-	private ResultSet rs = null;
-	private int count = 0;
+    private final TARDISPlugin plugin;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final String prefix;
+    private PreparedStatement ps = null;
+    private ResultSet rs = null;
+    private int count = 0;
 
-	public TARDISHadsPersister(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		prefix = this.plugin.getPrefix();
-	}
+    public TARDISHadsPersister(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        prefix = this.plugin.getPrefix();
+    }
 
-	public void save() {
-		try {
-			// save the dispersed police boxes
-			ps = connection.prepareStatement(
-					"INSERT INTO " + prefix + "dispersed (uuid, world, x, y, z, tardis_id) VALUES (?, ?, ?, ?, ?, ?)");
-			for (Map.Entry<UUID, Location> map : plugin.getTrackerKeeper().getDispersed().entrySet()) {
-				Location l = map.getValue();
-				String uuid = map.getKey().toString();
-				ps.setString(1, uuid);
-				ps.setString(2, Objects.requireNonNull(l.getWorld()).getName());
-				ps.setInt(3, l.getBlockX());
-				ps.setInt(4, l.getBlockY());
-				ps.setInt(5, l.getBlockZ());
-				// get tardis_id
-				ResultSetTardisID rst = new ResultSetTardisID(plugin);
-				rst.fromUUID(uuid);
-				ps.setInt(6, rst.getTardisId());
-				count += ps.executeUpdate();
-			}
-			if (count > 0) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " dispersed TARDISes.");
-			}
-		} catch (SQLException ex) {
-			plugin.debug("Insert error for dispersed table: " + ex.getMessage());
-		} finally {
-			try {
-				if (ps != null) {
-					ps.close();
-				}
-				if (rs != null) {
-					rs.close();
-				}
-			} catch (SQLException ex) {
-				plugin.debug("Error closing dispersed statement: " + ex.getMessage());
-			}
-		}
-	}
+    public void save() {
+        try {
+            // save the dispersed police boxes
+            ps = connection.prepareStatement("INSERT INTO " + prefix + "dispersed (uuid, world, x, y, z, tardis_id) VALUES (?, ?, ?, ?, ?, ?)");
+            for (Map.Entry<UUID, Location> map : plugin.getTrackerKeeper().getDispersed().entrySet()) {
+                Location l = map.getValue();
+                String uuid = map.getKey().toString();
+                ps.setString(1, uuid);
+                ps.setString(2, Objects.requireNonNull(l.getWorld()).getName());
+                ps.setInt(3, l.getBlockX());
+                ps.setInt(4, l.getBlockY());
+                ps.setInt(5, l.getBlockZ());
+                // get tardis_id
+                ResultSetTardisID rst = new ResultSetTardisID(plugin);
+                rst.fromUUID(uuid);
+                ps.setInt(6, rst.getTardisId());
+                count += ps.executeUpdate();
+            }
+            if (count > 0) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " dispersed TARDISes.");
+            }
+        } catch (SQLException ex) {
+            plugin.debug("Insert error for dispersed table: " + ex.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+                plugin.debug("Error closing dispersed statement: " + ex.getMessage());
+            }
+        }
+    }
 
-	public void load() {
-		try {
-			ps = connection.prepareStatement("SELECT * FROM " + prefix + "dispersed");
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				World world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
-				if (world != null) {
-					UUID uuid = UUID.fromString(rs.getString("uuid"));
-					Location l = new Location(world, rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));
-					plugin.getTrackerKeeper().getDispersed().put(uuid, l);
-					plugin.getTrackerKeeper().getDispersedTARDII().add(rs.getInt("tardis_id"));
-					count++;
-				}
-			}
-			if (count > 0) {
-				plugin.getConsole().sendMessage(
-						plugin.getPluginName() + "Loaded " + count + " dispersed Police Boxes.");
-			}
-			ps = connection.prepareStatement("DELETE FROM " + prefix + "dispersed");
-			ps.executeUpdate();
-		} catch (SQLException ex) {
-			plugin.debug("ResultSet error for dispersed table: " + ex.getMessage());
-		} finally {
-			try {
-				if (ps != null) {
-					ps.close();
-				}
-				if (rs != null) {
-					rs.close();
-				}
-			} catch (SQLException ex) {
-				plugin.debug("Error closing dispersed statement or resultset: " + ex.getMessage());
-			}
-		}
-	}
+    public void load() {
+        try {
+            ps = connection.prepareStatement("SELECT * FROM " + prefix + "dispersed");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                World world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
+                if (world != null) {
+                    UUID uuid = UUID.fromString(rs.getString("uuid"));
+                    Location l = new Location(world, rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));
+                    plugin.getTrackerKeeper().getDispersed().put(uuid, l);
+                    plugin.getTrackerKeeper().getDispersedTARDII().add(rs.getInt("tardis_id"));
+                    count++;
+                }
+            }
+            if (count > 0) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " dispersed Police Boxes.");
+            }
+            ps = connection.prepareStatement("DELETE FROM " + prefix + "dispersed");
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            plugin.debug("ResultSet error for dispersed table: " + ex.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+                plugin.debug("Error closing dispersed statement or resultset: " + ex.getMessage());
+            }
+        }
+    }
 }

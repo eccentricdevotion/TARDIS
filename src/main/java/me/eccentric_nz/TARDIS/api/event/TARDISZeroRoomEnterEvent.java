@@ -26,39 +26,39 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class TARDISZeroRoomEnterEvent extends Event {
 
-	private static final HandlerList HANDLERS = new HandlerList();
-	private final Player player;
-	private final int tardisId;
+    private static final HandlerList HANDLERS = new HandlerList();
+    private final Player player;
+    private final int tardisId;
 
-	public TARDISZeroRoomEnterEvent(Player player, int tardisId) {
-		this.player = player;
-		this.tardisId = tardisId;
-	}
+    public TARDISZeroRoomEnterEvent(Player player, int tardisId) {
+        this.player = player;
+        this.tardisId = tardisId;
+    }
 
-	public static HandlerList getHandlerList() {
-		return HANDLERS;
-	}
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
 
-	/**
-	 * Returns the player involved in this event.
-	 *
-	 * @return the player
-	 */
-	public Player getPlayer() {
-		return player;
-	}
+    /**
+     * Returns the player involved in this event.
+     *
+     * @return the player
+     */
+    public Player getPlayer() {
+        return player;
+    }
 
-	/**
-	 * Returns the tardis_id of the Zero room the player is entering or exiting.
-	 *
-	 * @return the tardis_id
-	 */
-	public int getTardisId() {
-		return tardisId;
-	}
+    /**
+     * Returns the tardis_id of the Zero room the player is entering or exiting.
+     *
+     * @return the tardis_id
+     */
+    public int getTardisId() {
+        return tardisId;
+    }
 
-	@Override
-	public @NotNull HandlerList getHandlers() {
-		return HANDLERS;
-	}
+    @Override
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
+    }
 }

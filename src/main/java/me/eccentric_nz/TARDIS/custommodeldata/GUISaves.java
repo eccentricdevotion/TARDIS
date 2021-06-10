@@ -21,39 +21,39 @@ import org.bukkit.Material;
 
 public enum GUISaves {
 
-	// tardis saves
-	REARRANGE_SAVES(5, 45, Material.ARROW),
-	LOAD_TARDIS_AREAS(1, 53, Material.MAP),
-	DELETE_SAVE(1, 47, Material.BUCKET),
-	LOAD_MY_SAVES(138, 49, Material.BOWL),
-	LOAD_SAVES_FROM_THIS_TARDIS(139, 49, Material.BOWL),
-	GO_TO_PAGE_1(11, 51, Material.ARROW),
-	GO_TO_PAGE_2(12, 51, Material.ARROW);
+    // tardis saves
+    REARRANGE_SAVES(5, 45, Material.ARROW),
+    LOAD_TARDIS_AREAS(1, 53, Material.MAP),
+    DELETE_SAVE(1, 47, Material.BUCKET),
+    LOAD_MY_SAVES(138, 49, Material.BOWL),
+    LOAD_SAVES_FROM_THIS_TARDIS(139, 49, Material.BOWL),
+    GO_TO_PAGE_1(11, 51, Material.ARROW),
+    GO_TO_PAGE_2(12, 51, Material.ARROW);
 
-	private final int customModelData;
-	private final int slot;
-	private final Material material;
+    private final int customModelData;
+    private final int slot;
+    private final Material material;
 
-	GUISaves(int customModelData, int slot, Material material) {
-		this.customModelData = customModelData;
-		this.slot = slot;
-		this.material = material;
-	}
+    GUISaves(int customModelData, int slot, Material material) {
+        this.customModelData = customModelData;
+        this.slot = slot;
+        this.material = material;
+    }
 
-	public int getCustomModelData() {
-		return customModelData;
-	}
+    public int getCustomModelData() {
+        return customModelData;
+    }
 
-	public int getSlot() {
-		return slot;
-	}
+    public int getSlot() {
+        return slot;
+    }
 
-	public Material getMaterial() {
-		return material;
-	}
+    public Material getMaterial() {
+        return material;
+    }
 
-	public String getName() {
-		String s = toString();
-		return TARDISStringUtils.sentenceCase(s);
-	}
+    public String getName() {
+        String s = toString();
+        return TARDISStringUtils.sentenceCase(s);
+    }
 }

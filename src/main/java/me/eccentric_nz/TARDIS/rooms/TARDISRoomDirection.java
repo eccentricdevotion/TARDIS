@@ -27,48 +27,48 @@ import org.bukkit.block.BlockFace;
  */
 class TARDISRoomDirection {
 
-	private final Block b;
-	private boolean found;
-	private boolean air;
-	private BlockFace face;
-	private COMPASS compass;
+    private final Block b;
+    private boolean found;
+    private boolean air;
+    private BlockFace face;
+    private COMPASS compass;
 
-	TARDISRoomDirection(Block b) {
-		this.b = b;
-		found = false;
-		air = false;
-	}
+    TARDISRoomDirection(Block b) {
+        this.b = b;
+        found = false;
+        air = false;
+    }
 
-	/**
-	 * Gets the compass the room should be grown by finding the pressure plate in front of the door.
-	 */
-	public void getDirection() {
-		for (COMPASS c : COMPASS.values()) {
-			BlockFace tmp = BlockFace.valueOf(c.toString());
-			Material plate = b.getRelative(tmp).getType();
-			if (Tag.WOODEN_PRESSURE_PLATES.isTagged(plate) || plate.equals(Material.STONE_PRESSURE_PLATE)) {
-				face = tmp;
-				found = true;
-				compass = c;
-				// do a quick check to see that there are actually AIR blocks at floor level on the other side of the pressure plate
-				air = b.getRelative(BlockFace.DOWN).getRelative(tmp, 9).getType().isAir();
-			}
-		}
-	}
+    /**
+     * Gets the compass the room should be grown by finding the pressure plate in front of the door.
+     */
+    public void getDirection() {
+        for (COMPASS c : COMPASS.values()) {
+            BlockFace tmp = BlockFace.valueOf(c.toString());
+            Material plate = b.getRelative(tmp).getType();
+            if (Tag.WOODEN_PRESSURE_PLATES.isTagged(plate) || plate.equals(Material.STONE_PRESSURE_PLATE)) {
+                face = tmp;
+                found = true;
+                compass = c;
+                // do a quick check to see that there are actually AIR blocks at floor level on the other side of the pressure plate
+                air = b.getRelative(BlockFace.DOWN).getRelative(tmp, 9).getType().isAir();
+            }
+        }
+    }
 
-	public boolean isFound() {
-		return found;
-	}
+    public boolean isFound() {
+        return found;
+    }
 
-	public boolean isAir() {
-		return air;
-	}
+    public boolean isAir() {
+        return air;
+    }
 
-	public BlockFace getFace() {
-		return face;
-	}
+    public BlockFace getFace() {
+        return face;
+    }
 
-	public COMPASS getCompass() {
-		return compass;
-	}
+    public COMPASS getCompass() {
+        return compass;
+    }
 }

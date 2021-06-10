@@ -39,103 +39,103 @@ import java.util.Arrays;
  */
 class TARDISArchiveInventory {
 
-	private final ItemStack[] menu;
-	private final TARDISPlugin plugin;
-	private final Player player;
+    private final ItemStack[] menu;
+    private final TARDISPlugin plugin;
+    private final Player player;
 
-	TARDISArchiveInventory(TARDISPlugin plugin, Player player) {
-		this.plugin = plugin;
-		this.player = player;
-		menu = getItemStack();
-	}
+    TARDISArchiveInventory(TARDISPlugin plugin, Player player) {
+        this.plugin = plugin;
+        this.player = player;
+        menu = getItemStack();
+    }
 
-	/**
-	 * Constructs an inventory for the Player Preferences Menu GUI.
-	 *
-	 * @return an Array of itemStacks (an inventory)
-	 */
-	private ItemStack[] getItemStack() {
-		ItemStack[] stack = new ItemStack[27];
-		int i = 0;
-		// get archived consoles
-		ResultSetArchiveButtons rs = new ResultSetArchiveButtons(plugin, player.getUniqueId().toString());
-		if (rs.resultSet()) {
-			for (ItemStack is : rs.getButtons()) {
-				stack[i] = is;
-				i++;
-			}
-		}
-		// back
-		ItemStack back = new ItemStack(Material.BOWL, 1);
-		ItemMeta back_im = back.getItemMeta();
-		assert back_im != null;
-		back_im.setDisplayName("Back");
-		back_im.setCustomModelData(GUIArchive.BACK.getCustomModelData());
-		back.setItemMeta(back_im);
-		stack[17] = back;
-		// size
-		ItemStack size = new ItemStack(Material.BOWL, 1);
-		ItemMeta size_im = size.getItemMeta();
-		assert size_im != null;
-		size_im.setDisplayName("Set size");
-		size_im.setCustomModelData(GUIArchive.SET_SIZE.getCustomModelData());
-		String s = "SMALL";
-		String b = "16 x 16 x 16 blocks";
+    /**
+     * Constructs an inventory for the Player Preferences Menu GUI.
+     *
+     * @return an Array of itemStacks (an inventory)
+     */
+    private ItemStack[] getItemStack() {
+        ItemStack[] stack = new ItemStack[27];
+        int i = 0;
+        // get archived consoles
+        ResultSetArchiveButtons rs = new ResultSetArchiveButtons(plugin, player.getUniqueId().toString());
+        if (rs.resultSet()) {
+            for (ItemStack is : rs.getButtons()) {
+                stack[i] = is;
+                i++;
+            }
+        }
+        // back
+        ItemStack back = new ItemStack(Material.BOWL, 1);
+        ItemMeta back_im = back.getItemMeta();
+        assert back_im != null;
+        back_im.setDisplayName("Back");
+        back_im.setCustomModelData(GUIArchive.BACK.getCustomModelData());
+        back.setItemMeta(back_im);
+        stack[17] = back;
+        // size
+        ItemStack size = new ItemStack(Material.BOWL, 1);
+        ItemMeta size_im = size.getItemMeta();
+        assert size_im != null;
+        size_im.setDisplayName("Set size");
+        size_im.setCustomModelData(GUIArchive.SET_SIZE.getCustomModelData());
+        String s = "SMALL";
+        String b = "16 x 16 x 16 blocks";
 
-		// get current console size
-		ResultSetTardisSize rss = new ResultSetTardisSize(plugin);
-		if (rss.fromUUID(player.getUniqueId().toString())) {
-			s = rss.getConsoleSize().toString();
-			b = rss.getConsoleSize().getBlocks();
-		}
-		size_im.setLore(Arrays.asList(s, b, ChatColor.AQUA + "Click to change"));
-		size.setItemMeta(size_im);
-		stack[18] = size;
-		// scan
-		ItemStack scan = new ItemStack(Material.BOWL, 1);
-		ItemMeta but_im = scan.getItemMeta();
-		assert but_im != null;
-		but_im.setDisplayName("Scan console");
-		but_im.setCustomModelData(GUIArchive.SCAN_CONSOLE.getCustomModelData());
-		scan.setItemMeta(but_im);
-		stack[19] = scan;
-		// archive
-		ItemStack arc = new ItemStack(Material.BOWL, 1);
-		ItemMeta hive_im = arc.getItemMeta();
-		assert hive_im != null;
-		hive_im.setDisplayName("Archive current console");
-		hive_im.setLore(Arrays.asList("A random name will", "be generated - use the", "/tardis archive command", "to set your own."));
-		hive_im.setCustomModelData(GUIArchive.ARCHIVE_CURRENT_CONSOLE.getCustomModelData());
-		arc.setItemMeta(hive_im);
-		stack[20] = arc;
-		// templates
-		int t = 22;
-		for (ConsoleSize c : ConsoleSize.values()) {
-			if (!c.equals(ConsoleSize.MASSIVE)) {
-				ItemStack temp = new ItemStack(Material.BOWL, 1);
-				ItemMeta late = temp.getItemMeta();
-				assert late != null;
-				late.setDisplayName(c.toString());
-				late.setCustomModelData(GUIArchive.valueOf(c.toString()).getCustomModelData());
-				late.setLore(Arrays.asList("Cobblestone template", c.getBlocks()));
-				temp.setItemMeta(late);
-				stack[t] = temp;
-				t++;
-			}
-		}
-		// close
-		ItemStack close = new ItemStack(Material.BOWL, 1);
-		ItemMeta close_im = close.getItemMeta();
-		assert close_im != null;
-		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-		close_im.setCustomModelData(GUIArchive.CLOSE.getCustomModelData());
-		close.setItemMeta(close_im);
-		stack[26] = close;
+        // get current console size
+        ResultSetTardisSize rss = new ResultSetTardisSize(plugin);
+        if (rss.fromUUID(player.getUniqueId().toString())) {
+            s = rss.getConsoleSize().toString();
+            b = rss.getConsoleSize().getBlocks();
+        }
+        size_im.setLore(Arrays.asList(s, b, ChatColor.AQUA + "Click to change"));
+        size.setItemMeta(size_im);
+        stack[18] = size;
+        // scan
+        ItemStack scan = new ItemStack(Material.BOWL, 1);
+        ItemMeta but_im = scan.getItemMeta();
+        assert but_im != null;
+        but_im.setDisplayName("Scan console");
+        but_im.setCustomModelData(GUIArchive.SCAN_CONSOLE.getCustomModelData());
+        scan.setItemMeta(but_im);
+        stack[19] = scan;
+        // archive
+        ItemStack arc = new ItemStack(Material.BOWL, 1);
+        ItemMeta hive_im = arc.getItemMeta();
+        assert hive_im != null;
+        hive_im.setDisplayName("Archive current console");
+        hive_im.setLore(Arrays.asList("A random name will", "be generated - use the", "/tardis archive command", "to set your own."));
+        hive_im.setCustomModelData(GUIArchive.ARCHIVE_CURRENT_CONSOLE.getCustomModelData());
+        arc.setItemMeta(hive_im);
+        stack[20] = arc;
+        // templates
+        int t = 22;
+        for (ConsoleSize c : ConsoleSize.values()) {
+            if (!c.equals(ConsoleSize.MASSIVE)) {
+                ItemStack temp = new ItemStack(Material.BOWL, 1);
+                ItemMeta late = temp.getItemMeta();
+                assert late != null;
+                late.setDisplayName(c.toString());
+                late.setCustomModelData(GUIArchive.valueOf(c.toString()).getCustomModelData());
+                late.setLore(Arrays.asList("Cobblestone template", c.getBlocks()));
+                temp.setItemMeta(late);
+                stack[t] = temp;
+                t++;
+            }
+        }
+        // close
+        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemMeta close_im = close.getItemMeta();
+        assert close_im != null;
+        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        close_im.setCustomModelData(GUIArchive.CLOSE.getCustomModelData());
+        close.setItemMeta(close_im);
+        stack[26] = close;
 
-		return stack;
-	}
+        return stack;
+    }
 
-	ItemStack[] getArchives() {
-		return menu;
-	}
+    ItemStack[] getArchives() {
+        return menu;
+    }
 }

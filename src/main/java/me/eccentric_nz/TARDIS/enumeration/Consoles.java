@@ -28,58 +28,58 @@ import java.util.TreeMap;
  */
 public class Consoles {
 
-	private final static TreeMap<String, Schematic> BY_NAMES = new TreeMap<>();
-	private final static HashMap<String, Schematic> BY_PERMS = new HashMap<>();
-	private final static HashMap<String, Schematic> BY_MATERIALS = new HashMap<>();
-	private final static List<Schematic> NO_BEACON = new ArrayList<>();
+    private final static TreeMap<String, Schematic> BY_NAMES = new TreeMap<>();
+    private final static HashMap<String, Schematic> BY_PERMS = new HashMap<>();
+    private final static HashMap<String, Schematic> BY_MATERIALS = new HashMap<>();
+    private final static List<Schematic> NO_BEACON = new ArrayList<>();
 
-	/**
-	 * Attempts to get the Schematic with the given name.
-	 *
-	 * @param perm permission node of the Schematic to get
-	 * @return Schematic if found, or null
-	 */
-	public static Schematic schematicFor(String perm) {
-		return BY_PERMS.get(perm);
-	}
+    /**
+     * Attempts to get the Schematic with the given name.
+     *
+     * @param perm permission node of the Schematic to get
+     * @return Schematic if found, or null
+     */
+    public static Schematic schematicFor(String perm) {
+        return BY_PERMS.get(perm);
+    }
 
-	/**
-	 * Attempts to get the Schematic with the given seed Material.
-	 *
-	 * @param mat Name of the Schematic to get
-	 * @return Schematic if found, or null
-	 */
-	public static Schematic schematicFor(Material mat) {
-		return BY_MATERIALS.get(mat.toString());
-	}
+    /**
+     * Attempts to get the Schematic with the given seed Material.
+     *
+     * @param mat Name of the Schematic to get
+     * @return Schematic if found, or null
+     */
+    public static Schematic schematicFor(Material mat) {
+        return BY_MATERIALS.get(mat.toString());
+    }
 
-	public static void loadLookups() {
-		for (Schematic ts : BY_NAMES.values()) {
-			if (!BY_PERMS.containsKey(ts.getPermission())) {
-				BY_PERMS.put(ts.getPermission(), ts);
-			}
-			if (!BY_MATERIALS.containsKey(ts.getSeed())) {
-				BY_MATERIALS.put(ts.getSeed(), ts);
-			}
-			if (!NO_BEACON.contains(ts) && !ts.hasBeacon()) {
-				NO_BEACON.add(ts);
-			}
-		}
-		BY_PERMS.put("junk", new Schematic("MILK_BUCKET", "junk", "Junk Console", ConsoleSize.SMALL, false, false, false));
-		Schematic archive = new Schematic("BONE_BLOCK", "archive", "Archived Console", ConsoleSize.MEDIUM, false, false, true);
-		BY_PERMS.put("archive", archive);
-		BY_MATERIALS.put("BONE_BLOCK", archive);
-	}
+    public static void loadLookups() {
+        for (Schematic ts : BY_NAMES.values()) {
+            if (!BY_PERMS.containsKey(ts.getPermission())) {
+                BY_PERMS.put(ts.getPermission(), ts);
+            }
+            if (!BY_MATERIALS.containsKey(ts.getSeed())) {
+                BY_MATERIALS.put(ts.getSeed(), ts);
+            }
+            if (!NO_BEACON.contains(ts) && !ts.hasBeacon()) {
+                NO_BEACON.add(ts);
+            }
+        }
+        BY_PERMS.put("junk", new Schematic("MILK_BUCKET", "junk", "Junk Console", ConsoleSize.SMALL, false, false, false));
+        Schematic archive = new Schematic("BONE_BLOCK", "archive", "Archived Console", ConsoleSize.MEDIUM, false, false, true);
+        BY_PERMS.put("archive", archive);
+        BY_MATERIALS.put("BONE_BLOCK", archive);
+    }
 
-	public static TreeMap<String, Schematic> getBY_NAMES() {
-		return BY_NAMES;
-	}
+    public static TreeMap<String, Schematic> getBY_NAMES() {
+        return BY_NAMES;
+    }
 
-	public static HashMap<String, Schematic> getBY_MATERIALS() {
-		return BY_MATERIALS;
-	}
+    public static HashMap<String, Schematic> getBY_MATERIALS() {
+        return BY_MATERIALS;
+    }
 
-	public static List<Schematic> getNO_BEACON() {
-		return NO_BEACON;
-	}
+    public static List<Schematic> getNO_BEACON() {
+        return NO_BEACON;
+    }
 }

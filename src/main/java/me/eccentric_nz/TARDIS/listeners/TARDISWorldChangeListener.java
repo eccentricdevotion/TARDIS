@@ -34,36 +34,36 @@ import java.util.HashMap;
  */
 public class TARDISWorldChangeListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISWorldChangeListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISWorldChangeListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	// lowest priority because we aren't affecting the world change
-	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-	public void onPlayerChangedWorldEvent(PlayerChangedWorldEvent event) {
-		handleWorld(event.getPlayer());
-	}
+    // lowest priority because we aren't affecting the world change
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onPlayerChangedWorldEvent(PlayerChangedWorldEvent event) {
+        handleWorld(event.getPlayer());
+    }
 
-	// handle player joins too
-	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-	public void onPlayerJoinEvent(PlayerJoinEvent event) {
-		handleWorld(event.getPlayer());
-	}
+    // handle player joins too
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onPlayerJoinEvent(PlayerJoinEvent event) {
+        handleWorld(event.getPlayer());
+    }
 
-	// add that the player has been to this world to the database
-	private void handleWorld(Player player) {
-		Environment environment = player.getWorld().getEnvironment();
-		// check if player has been to this dimension before
-		ResultSetTravelledTo rs = new ResultSetTravelledTo(plugin);
-		if (!rs.resultSet(player.getUniqueId().toString(), environment.toString())) {
-			// add this dimension to the database
-			QueryFactory queryFactory = plugin.getQueryFactory();
-			HashMap<String, Object> values = new HashMap<>();
-			values.put("uuid", player.getUniqueId().toString());
-			values.put("environment", environment.toString());
-			queryFactory.doInsert("traveled_to", values);
-		}
-	}
+    // add that the player has been to this world to the database
+    private void handleWorld(Player player) {
+        Environment environment = player.getWorld().getEnvironment();
+        // check if player has been to this dimension before
+        ResultSetTravelledTo rs = new ResultSetTravelledTo(plugin);
+        if (!rs.resultSet(player.getUniqueId().toString(), environment.toString())) {
+            // add this dimension to the database
+            QueryFactory queryFactory = plugin.getQueryFactory();
+            HashMap<String, Object> values = new HashMap<>();
+            values.put("uuid", player.getUniqueId().toString());
+            values.put("environment", environment.toString());
+            queryFactory.doInsert("traveled_to", values);
+        }
+    }
 }

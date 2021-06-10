@@ -41,67 +41,66 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISPerceptionFilterListener implements Listener {
 
-	private final TARDISPlugin plugin;
-	private final Material filter;
+    private final TARDISPlugin plugin;
+    private final Material filter;
 
-	public TARDISPerceptionFilterListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
-	}
+    public TARDISPerceptionFilterListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
+    }
 
-	@EventHandler
-	public void onPerceptionFilterClick(PlayerInteractEvent event) {
-		if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
-			return;
-		}
-		Player player = event.getPlayer();
-		ItemStack is = player.getInventory().getItemInMainHand();
-		if (is.getType().equals(filter) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-			if (is.hasItemMeta()) {
-				ItemMeta im = is.getItemMeta();
-				assert im != null;
-				if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
-					if (TARDISPermission.hasPermission(player, "tardis.filter")) {
-						ItemStack chestPlate = player.getInventory().getChestplate();
-						if (chestPlate == null) {
-							// equip the chest slot with the perception filter
-							player.getInventory().setChestplate(is);
-							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-								player.getInventory().setItemInMainHand(null);
-								player.updateInventory();
-								// make the player invisible
-								plugin.getFilter().addPerceptionFilter(player);
-							}, 1L);
-						} else {
-							TARDISMessage.send(player, "FILTER");
-						}
-					} else {
-						TARDISMessage.send(player, "NO_PERMS");
-					}
-				}
-			}
-		}
-	}
+    @EventHandler
+    public void onPerceptionFilterClick(PlayerInteractEvent event) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
+        Player player = event.getPlayer();
+        ItemStack is = player.getInventory().getItemInMainHand();
+        if (is.getType().equals(filter) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+            if (is.hasItemMeta()) {
+                ItemMeta im = is.getItemMeta();
+                assert im != null;
+                if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
+                    if (TARDISPermission.hasPermission(player, "tardis.filter")) {
+                        ItemStack chestPlate = player.getInventory().getChestplate();
+                        if (chestPlate == null) {
+                            // equip the chest slot with the perception filter
+                            player.getInventory().setChestplate(is);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                player.getInventory().setItemInMainHand(null);
+                                player.updateInventory();
+                                // make the player invisible
+                                plugin.getFilter().addPerceptionFilter(player);
+                            }, 1L);
+                        } else {
+                            TARDISMessage.send(player, "FILTER");
+                        }
+                    } else {
+                        TARDISMessage.send(player, "NO_PERMS");
+                    }
+                }
+            }
+        }
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onPerceptionFilterRemove(InventoryClickEvent event) {
-		if (event.getInventory().getType().equals(InventoryType.CRAFTING)) {
-			int slot = event.getRawSlot();
-			if (slot == 6) {
-				ItemStack is = event.getCurrentItem();
-				if (is != null) {
-					if (is.hasItemMeta()) {
-						ItemMeta im = is.getItemMeta();
-						assert im != null;
-						if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
-							if (event.getAction().equals(InventoryAction.PICKUP_ALL) ||
-								event.getAction().equals(InventoryAction.PLACE_ALL)) {
-								plugin.getFilter().removePerceptionFilter((Player) event.getWhoClicked());
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onPerceptionFilterRemove(InventoryClickEvent event) {
+        if (event.getInventory().getType().equals(InventoryType.CRAFTING)) {
+            int slot = event.getRawSlot();
+            if (slot == 6) {
+                ItemStack is = event.getCurrentItem();
+                if (is != null) {
+                    if (is.hasItemMeta()) {
+                        ItemMeta im = is.getItemMeta();
+                        assert im != null;
+                        if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
+                            if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.PLACE_ALL)) {
+                                plugin.getFilter().removePerceptionFilter((Player) event.getWhoClicked());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

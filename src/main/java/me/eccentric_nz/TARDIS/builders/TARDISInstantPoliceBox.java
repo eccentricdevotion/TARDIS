@@ -38,72 +38,72 @@ import java.util.UUID;
 
 public class TARDISInstantPoliceBox {
 
-	private final TARDISPlugin plugin;
-	private final BuildData bd;
-	private final PRESET preset;
+    private final TARDISPlugin plugin;
+    private final BuildData bd;
+    private final PRESET preset;
 
-	public TARDISInstantPoliceBox(TARDISPlugin plugin, BuildData bd, PRESET preset) {
-		this.plugin = plugin;
-		this.bd = bd;
-		this.preset = preset;
-	}
+    public TARDISInstantPoliceBox(TARDISPlugin plugin, BuildData bd, PRESET preset) {
+        this.plugin = plugin;
+        this.bd = bd;
+        this.preset = preset;
+    }
 
-	/**
-	 * Builds the TARDIS Preset.
-	 */
-	public void buildPreset() {
-		World world = bd.getLocation().getWorld();
-		// rescue player?
-		if (plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisId())) {
-			UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisId());
-			Player saved = plugin.getServer().getPlayer(playerUUID);
-			if (saved != null) {
-				TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisId());
-				Location l = idl.getL();
-				plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds());
-				// put player into travellers table
-				HashMap<String, Object> set = new HashMap<>();
-				set.put("tardis_id", bd.getTardisId());
-				set.put("uuid", playerUUID.toString());
-				plugin.getQueryFactory().doInsert("travellers", set);
-			}
-			plugin.getTrackerKeeper().getRescue().remove(bd.getTardisId());
-		}
-		TARDISBuilderUtility.saveDoorLocation(bd);
-		TARDISBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisId());
-		plugin.getGeneralKeeper().getProtectBlockMap().put(bd.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString(), bd.getTardisId());
-		ItemFrame frame = null;
-		boolean found = false;
-		assert world != null;
-		for (Entity e : world.getNearbyEntities(bd.getLocation(), 1.0d, 1.0d, 1.0d)) {
-			if (e instanceof ItemFrame) {
-				frame = (ItemFrame) e;
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
-			Block block = bd.getLocation().getBlock();
-			Block under = block.getRelative(BlockFace.DOWN);
-			block.setBlockData(TARDISConstants.AIR);
-			TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisId(), false);
-			// spawn item frame
-			frame = (ItemFrame) world.spawnEntity(bd.getLocation(), EntityType.ITEM_FRAME);
-		}
-		frame.setFacingDirection(BlockFace.UP);
-		frame.setRotation(bd.getDirection().getRotation());
-		Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
-		ItemStack is = new ItemStack(dye, 1);
-		ItemMeta im = is.getItemMeta();
-		assert im != null;
-		im.setCustomModelData(1001);
-		if (bd.shouldAddSign()) {
-			String pb = (preset.equals(PRESET.WEEPING_ANGEL)) ? "Weeping Angel" : "Police Box";
-			im.setDisplayName(bd.getPlayer().getName() + "'s " + pb);
-		}
-		is.setItemMeta(im);
-		frame.setItem(is, false);
-		frame.setFixed(true);
-		frame.setVisible(false);
-	}
+    /**
+     * Builds the TARDIS Preset.
+     */
+    public void buildPreset() {
+        World world = bd.getLocation().getWorld();
+        // rescue player?
+        if (plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisId())) {
+            UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisId());
+            Player saved = plugin.getServer().getPlayer(playerUUID);
+            if (saved != null) {
+                TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisId());
+                Location l = idl.getL();
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds());
+                // put player into travellers table
+                HashMap<String, Object> set = new HashMap<>();
+                set.put("tardis_id", bd.getTardisId());
+                set.put("uuid", playerUUID.toString());
+                plugin.getQueryFactory().doInsert("travellers", set);
+            }
+            plugin.getTrackerKeeper().getRescue().remove(bd.getTardisId());
+        }
+        TARDISBuilderUtility.saveDoorLocation(bd);
+        TARDISBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisId());
+        plugin.getGeneralKeeper().getProtectBlockMap().put(bd.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString(), bd.getTardisId());
+        ItemFrame frame = null;
+        boolean found = false;
+        assert world != null;
+        for (Entity e : world.getNearbyEntities(bd.getLocation(), 1.0d, 1.0d, 1.0d)) {
+            if (e instanceof ItemFrame) {
+                frame = (ItemFrame) e;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            Block block = bd.getLocation().getBlock();
+            Block under = block.getRelative(BlockFace.DOWN);
+            block.setBlockData(TARDISConstants.AIR);
+            TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisId(), false);
+            // spawn item frame
+            frame = (ItemFrame) world.spawnEntity(bd.getLocation(), EntityType.ITEM_FRAME);
+        }
+        frame.setFacingDirection(BlockFace.UP);
+        frame.setRotation(bd.getDirection().getRotation());
+        Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
+        ItemStack is = new ItemStack(dye, 1);
+        ItemMeta im = is.getItemMeta();
+        assert im != null;
+        im.setCustomModelData(1001);
+        if (bd.shouldAddSign()) {
+            String pb = (preset.equals(PRESET.WEEPING_ANGEL)) ? "Weeping Angel" : "Police Box";
+            im.setDisplayName(bd.getPlayer().getName() + "'s " + pb);
+        }
+        is.setItemMeta(im);
+        frame.setItem(is, false);
+        frame.setFixed(true);
+        frame.setVisible(false);
+    }
 }

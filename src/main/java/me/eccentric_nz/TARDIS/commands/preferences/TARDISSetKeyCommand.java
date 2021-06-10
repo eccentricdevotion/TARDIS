@@ -28,50 +28,49 @@ import java.util.*;
  */
 class TARDISSetKeyCommand {
 
-	private final TARDISPlugin plugin;
-	private final List<Material> keys = new ArrayList<>();
+    private final TARDISPlugin plugin;
+    private final List<Material> keys = new ArrayList<>();
 
-	TARDISSetKeyCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		plugin.getBlocksConfig().getStringList("keys").forEach((m) -> {
-			try {
-				keys.add(Material.valueOf(m));
-			} catch (IllegalArgumentException e) {
-				plugin.debug("Illegal Key value!");
-			}
-		});
-	}
+    TARDISSetKeyCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        plugin.getBlocksConfig().getStringList("keys").forEach((m) -> {
+            try {
+                keys.add(Material.valueOf(m));
+            } catch (IllegalArgumentException e) {
+                plugin.debug("Illegal Key value!");
+            }
+        });
+    }
 
-	boolean setKeyPref(Player player, String[] args) {
-		if (args.length < 2) {
-			TARDISMessage.send(player, "KEY_NEED");
-			return false;
-		}
-		String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
-		Material go;
-		try {
-			go = Material.valueOf(setMaterial);
-		} catch (IllegalArgumentException e) {
-			TARDISMessage.send(player, "MATERIAL_NOT_VALID");
-			return false;
-		}
-		//        if (go.isBlock() && !go.isAir()) {
-		if (go.isBlock()) {
-			TARDISMessage.send(player, "KEY_NO_BLOCK");
-			return true;
-		}
-		if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks") &&
-			!keys.contains(go)) {
-			TARDISMessage.send(player, "MATERIAL_NOT_VALID");
-			return true;
-		}
-		String field = (Objects.equals(plugin.getConfig().getString("storage.database"), "sqlite")) ? "key" : "key_item";
-		HashMap<String, Object> setk = new HashMap<>();
-		setk.put(field, setMaterial);
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("uuid", player.getUniqueId().toString());
-		plugin.getQueryFactory().doUpdate("player_prefs", setk, where);
-		TARDISMessage.send(player, "KEY_SAVED");
-		return true;
-	}
+    boolean setKeyPref(Player player, String[] args) {
+        if (args.length < 2) {
+            TARDISMessage.send(player, "KEY_NEED");
+            return false;
+        }
+        String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
+        Material go;
+        try {
+            go = Material.valueOf(setMaterial);
+        } catch (IllegalArgumentException e) {
+            TARDISMessage.send(player, "MATERIAL_NOT_VALID");
+            return false;
+        }
+        //        if (go.isBlock() && !go.isAir()) {
+        if (go.isBlock()) {
+            TARDISMessage.send(player, "KEY_NO_BLOCK");
+            return true;
+        }
+        if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks") && !keys.contains(go)) {
+            TARDISMessage.send(player, "MATERIAL_NOT_VALID");
+            return true;
+        }
+        String field = (Objects.equals(plugin.getConfig().getString("storage.database"), "sqlite")) ? "key" : "key_item";
+        HashMap<String, Object> setk = new HashMap<>();
+        setk.put(field, setMaterial);
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", player.getUniqueId().toString());
+        plugin.getQueryFactory().doUpdate("player_prefs", setk, where);
+        TARDISMessage.send(player, "KEY_SAVED");
+        return true;
+    }
 }

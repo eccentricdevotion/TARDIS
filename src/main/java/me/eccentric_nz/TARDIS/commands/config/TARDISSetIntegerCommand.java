@@ -33,87 +33,86 @@ import java.util.Locale;
  */
 class TARDISSetIntegerCommand {
 
-	private final TARDISPlugin plugin;
-	private final List<String> TIPS_SUBS = Arrays.asList("400", "800", "1200", "1600");
+    private final TARDISPlugin plugin;
+    private final List<String> TIPS_SUBS = Arrays.asList("400", "800", "1200", "1600");
 
-	TARDISSetIntegerCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISSetIntegerCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean setConfigInt(CommandSender sender, String[] args, String section) {
-		String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ENGLISH) :
-				section + "." + args[0].toLowerCase(Locale.ENGLISH);
-		String a = args[1];
-		if (args[0].toLowerCase(Locale.ENGLISH).equals("tips_limit") && !TIPS_SUBS.contains(a)) {
-			TARDISMessage.send(sender, "ARG_TIPS");
-			return false;
-		}
-		int val;
-		try {
-			val = Integer.parseInt(a);
-		} catch (NumberFormatException nfe) {
-			// not a number
-			TARDISMessage.send(sender, "ARG_LAST_NUMBER");
-			return false;
-		}
-		if (first.equals("circuits.uses.chameleon_uses")) {
-			first = "circuits.uses.chameleon";
-		}
-		if (first.equals("circuits.uses.invisibility_uses")) {
-			first = "circuits.uses.invisibility";
-		}
-		if (first.equals("preferences.chat_width")) {
-			TARDISChatPaginator.setGuaranteedNoWrapChatPageWidth(val);
-		}
-		if (first.equals("preferences.sfx_volume")) {
-			TARDISSounds.setVolume(val);
-		}
-		plugin.getConfig().set(first, val);
-		plugin.saveConfig();
-		TARDISMessage.send(sender, "CONFIG_UPDATED");
-		return true;
-	}
+    boolean setConfigInt(CommandSender sender, String[] args, String section) {
+        String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ENGLISH) : section + "." + args[0].toLowerCase(Locale.ENGLISH);
+        String a = args[1];
+        if (args[0].toLowerCase(Locale.ENGLISH).equals("tips_limit") && !TIPS_SUBS.contains(a)) {
+            TARDISMessage.send(sender, "ARG_TIPS");
+            return false;
+        }
+        int val;
+        try {
+            val = Integer.parseInt(a);
+        } catch (NumberFormatException nfe) {
+            // not a number
+            TARDISMessage.send(sender, "ARG_LAST_NUMBER");
+            return false;
+        }
+        if (first.equals("circuits.uses.chameleon_uses")) {
+            first = "circuits.uses.chameleon";
+        }
+        if (first.equals("circuits.uses.invisibility_uses")) {
+            first = "circuits.uses.invisibility";
+        }
+        if (first.equals("preferences.chat_width")) {
+            TARDISChatPaginator.setGuaranteedNoWrapChatPageWidth(val);
+        }
+        if (first.equals("preferences.sfx_volume")) {
+            TARDISSounds.setVolume(val);
+        }
+        plugin.getConfig().set(first, val);
+        plugin.saveConfig();
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        return true;
+    }
 
-	public boolean setConfigInt(CommandSender sender, String[] args) {
-		String first = args[0];
-		String a = args[1];
-		int val;
-		try {
-			val = Integer.parseInt(a);
-		} catch (NumberFormatException nfe) {
-			// not a number
-			TARDISMessage.send(sender, "ARG_LAST_NUMBER");
-			return false;
-		}
-		plugin.getArtronConfig().set(first, val);
-		try {
-			plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
-		} catch (IOException io) {
-			plugin.debug("Could not save artron.yml, " + io);
-		}
-		TARDISMessage.send(sender, "CONFIG_UPDATED");
-		return true;
-	}
+    public boolean setConfigInt(CommandSender sender, String[] args) {
+        String first = args[0];
+        String a = args[1];
+        int val;
+        try {
+            val = Integer.parseInt(a);
+        } catch (NumberFormatException nfe) {
+            // not a number
+            TARDISMessage.send(sender, "ARG_LAST_NUMBER");
+            return false;
+        }
+        plugin.getArtronConfig().set(first, val);
+        try {
+            plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
+        } catch (IOException io) {
+            plugin.debug("Could not save artron.yml, " + io);
+        }
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        return true;
+    }
 
-	public boolean setRandomInt(CommandSender sender, String[] args) {
-		String first = args[0];
-		String which = args[1];
-		if (!which.equalsIgnoreCase("x") || !which.equalsIgnoreCase("z")) {
-			TARDISMessage.send(sender, "ARG_DIRECTION");
-			return true;
-		}
-		String a = args[2];
-		int val;
-		try {
-			val = Integer.parseInt(a);
-		} catch (NumberFormatException nfe) {
-			// not a number
-			TARDISMessage.send(sender, "ARG_LAST_NUMBER");
-			return false;
-		}
-		plugin.getConfig().set("travel." + first + "." + which.toLowerCase(Locale.ENGLISH), val);
-		plugin.saveConfig();
-		TARDISMessage.send(sender, "CONFIG_UPDATED");
-		return true;
-	}
+    public boolean setRandomInt(CommandSender sender, String[] args) {
+        String first = args[0];
+        String which = args[1];
+        if (!which.equalsIgnoreCase("x") || !which.equalsIgnoreCase("z")) {
+            TARDISMessage.send(sender, "ARG_DIRECTION");
+            return true;
+        }
+        String a = args[2];
+        int val;
+        try {
+            val = Integer.parseInt(a);
+        } catch (NumberFormatException nfe) {
+            // not a number
+            TARDISMessage.send(sender, "ARG_LAST_NUMBER");
+            return false;
+        }
+        plugin.getConfig().set("travel." + first + "." + which.toLowerCase(Locale.ENGLISH), val);
+        plugin.saveConfig();
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        return true;
+    }
 }

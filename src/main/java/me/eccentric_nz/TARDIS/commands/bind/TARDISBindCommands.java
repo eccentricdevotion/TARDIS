@@ -40,11 +40,11 @@ import java.util.HashMap;
  */
 public class TARDISBindCommands implements CommandExecutor {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISBindCommands(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISBindCommands(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {

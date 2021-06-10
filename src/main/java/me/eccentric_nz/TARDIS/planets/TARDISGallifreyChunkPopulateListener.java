@@ -38,55 +38,54 @@ import java.util.List;
  */
 public class TARDISGallifreyChunkPopulateListener implements Listener {
 
-	private final TARDISPlugin plugin;
-	private final List<ChunkInfo> chunks = new ArrayList<>();
-	private long timeCheck;
+    private final TARDISPlugin plugin;
+    private final List<ChunkInfo> chunks = new ArrayList<>();
+    private long timeCheck;
 
-	public TARDISGallifreyChunkPopulateListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		timeCheck = System.currentTimeMillis() + 3000;
-	}
+    public TARDISGallifreyChunkPopulateListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        timeCheck = System.currentTimeMillis() + 3000;
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void gallifreyOnChunkPopulate(ChunkPopulateEvent event) {
-		Chunk chunk = event.getChunk();
-		// check world
-		if (!chunk.getWorld().getName().endsWith("gallifrey")) {
-			return;
-		}
-		ChunkInfo chunkInfo = new ChunkInfo(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
-		if (chunks.contains(chunkInfo)) {
-			return;
-		}
-		// scan chunk for GOLD_ORE between y = 50 , 70
-		for (int x = 0; x < 16; x++) {
-			for (int z = 0; z < 16; z++) {
-				for (int y = 45; y < 66; y++) {
-					Block block = chunk.getBlock(x, y, z);
-					if (block.getType().equals(Material.GOLD_ORE)) {
-						int hy = chunk.getWorld().getHighestBlockYAt(block.getLocation()) + 1;
-						if (System.currentTimeMillis() < timeCheck) {
-							return;
-						}
-						buildStructure(chunk, chunkInfo, x, hy, z);
-						return;
-					}
-				}
-			}
-		}
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void gallifreyOnChunkPopulate(ChunkPopulateEvent event) {
+        Chunk chunk = event.getChunk();
+        // check world
+        if (!chunk.getWorld().getName().endsWith("gallifrey")) {
+            return;
+        }
+        ChunkInfo chunkInfo = new ChunkInfo(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
+        if (chunks.contains(chunkInfo)) {
+            return;
+        }
+        // scan chunk for GOLD_ORE between y = 50 , 70
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                for (int y = 45; y < 66; y++) {
+                    Block block = chunk.getBlock(x, y, z);
+                    if (block.getType().equals(Material.GOLD_ORE)) {
+                        int hy = chunk.getWorld().getHighestBlockYAt(block.getLocation()) + 1;
+                        if (System.currentTimeMillis() < timeCheck) {
+                            return;
+                        }
+                        buildStructure(chunk, chunkInfo, x, hy, z);
+                        return;
+                    }
+                }
+            }
+        }
+    }
 
-	private void buildStructure(Chunk chunk, ChunkInfo chunkInfo, int x, int y, int z) {
-		timeCheck = System.currentTimeMillis() + 4500;
-		chunks.add(chunkInfo);
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-			// create structure
-			if (TARDISConstants.RANDOM.nextBoolean()) {
-				TARDISBuildGallifreyanStructure tbgs = new TARDISBuildGallifreyanStructure(plugin,
-						chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
-				int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tbgs, 1L, 1L);
-				tbgs.setTask(task);
-			}
-		}, 1L);
-	}
+    private void buildStructure(Chunk chunk, ChunkInfo chunkInfo, int x, int y, int z) {
+        timeCheck = System.currentTimeMillis() + 4500;
+        chunks.add(chunkInfo);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            // create structure
+            if (TARDISConstants.RANDOM.nextBoolean()) {
+                TARDISBuildGallifreyanStructure tbgs = new TARDISBuildGallifreyanStructure(plugin, chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
+                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tbgs, 1L, 1L);
+                tbgs.setTask(task);
+            }
+        }, 1L);
+    }
 }

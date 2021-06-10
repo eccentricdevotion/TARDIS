@@ -26,44 +26,44 @@ import org.bukkit.block.data.Directional;
  */
 public class TARDISTrapdoorRecalculator {
 
-	/**
-	 * Recalculate the data for directional block (TRAPDOOR) when the tardis preset changes direction.
-	 *
-	 * @param b the block data to convert
-	 * @param d the new direction of the tardis
-	 * @return the recalculated byte
-	 */
-	public BlockData recalculate(BlockData b, COMPASS d) {
-		Directional trap = (Directional) b;
-		switch (d) {
-			case SOUTH:
-				switch (trap.getFacing()) {
-					case SOUTH -> trap.setFacing(BlockFace.WEST); // 3
-					case NORTH -> trap.setFacing(BlockFace.EAST); // 2
-					case EAST -> trap.setFacing(BlockFace.SOUTH); // 0
-					default -> // WEST
-							trap.setFacing(BlockFace.NORTH); // 1
-				}
-				break;
-			case WEST:
-				switch (trap.getFacing()) {
-					case SOUTH -> trap.setFacing(BlockFace.NORTH);
-					case NORTH -> trap.setFacing(BlockFace.SOUTH);
-					case EAST -> trap.setFacing(BlockFace.WEST);
-					default -> // WEST
-							trap.setFacing(BlockFace.EAST);
-				}
-				break;
-			default:
-				switch (trap.getFacing()) {
-					case SOUTH -> trap.setFacing(BlockFace.EAST);
-					case NORTH -> trap.setFacing(BlockFace.WEST);
-					case EAST -> trap.setFacing(BlockFace.NORTH);
-					default -> // WEST
-							trap.setFacing(BlockFace.SOUTH);
-				}
-				break;
-		}
-		return trap;
-	}
+    /**
+     * Recalculate the data for directional block (TRAPDOOR) when the tardis preset changes direction.
+     *
+     * @param b the block data to convert
+     * @param d the new direction of the tardis
+     * @return the recalculated byte
+     */
+    public BlockData recalculate(BlockData b, COMPASS d) {
+        Directional trap = (Directional) b;
+        switch (d) {
+            case SOUTH:
+                switch (trap.getFacing()) {
+                    case SOUTH -> trap.setFacing(BlockFace.WEST); // 3
+                    case NORTH -> trap.setFacing(BlockFace.EAST); // 2
+                    case EAST -> trap.setFacing(BlockFace.SOUTH); // 0
+                    default -> // WEST
+                            trap.setFacing(BlockFace.NORTH); // 1
+                }
+                break;
+            case WEST:
+                switch (trap.getFacing()) {
+                    case SOUTH -> trap.setFacing(BlockFace.NORTH);
+                    case NORTH -> trap.setFacing(BlockFace.SOUTH);
+                    case EAST -> trap.setFacing(BlockFace.WEST);
+                    default -> // WEST
+                            trap.setFacing(BlockFace.EAST);
+                }
+                break;
+            default:
+                switch (trap.getFacing()) {
+                    case SOUTH -> trap.setFacing(BlockFace.EAST);
+                    case NORTH -> trap.setFacing(BlockFace.WEST);
+                    case EAST -> trap.setFacing(BlockFace.NORTH);
+                    default -> // WEST
+                            trap.setFacing(BlockFace.SOUTH);
+                }
+                break;
+        }
+        return trap;
+    }
 }

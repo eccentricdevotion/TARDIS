@@ -27,25 +27,25 @@ import java.util.Locale;
  */
 class TARDISDefaultCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISDefaultCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISDefaultCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean setDefaultItem(CommandSender sender, String[] args) {
-		String which = args[0].toLowerCase(Locale.ENGLISH);
-		int count = args.length;
-		StringBuilder buf = new StringBuilder();
-		for (int i = 1; i < count; i++) {
-			buf.append(args[i]).append("_");
-		}
-		String tmp = buf.toString();
-		String sonic = tmp.substring(0, tmp.length() - 1);
-		plugin.getConfig().set("preferences." + which, sonic);
-		plugin.saveConfig();
-		TARDISMessage.send(sender, "CONFIG_UPDATED");
-		TARDISMessage.send(sender, "RESTART");
-		return true;
-	}
+    boolean setDefaultItem(CommandSender sender, String[] args) {
+        String which = args[0].toLowerCase(Locale.ENGLISH);
+        int count = args.length;
+        StringBuilder buf = new StringBuilder();
+        for (int i = 1; i < count; i++) {
+            buf.append(args[i]).append("_");
+        }
+        String tmp = buf.toString();
+        String sonic = tmp.substring(0, tmp.length() - 1);
+        plugin.getConfig().set("preferences." + which, sonic);
+        plugin.saveConfig();
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "RESTART");
+        return true;
+    }
 }

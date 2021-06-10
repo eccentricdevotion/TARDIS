@@ -21,37 +21,37 @@ import org.bukkit.Material;
 
 public enum GUIWallFloor {
 
-	// tardis Wall & Floor Menu
-	BUTTON_SCROLL_U(3, 8, Material.ARROW),
-	BUTTON_SCROLL_D(2, 17, Material.ARROW),
-	WALL(136, 26, Material.BOWL),
-	FLOOR(137, 35, Material.BOWL),
-	BUTTON_ABORT(2, 53, Material.BOWL);
+    // tardis Wall & Floor Menu
+    BUTTON_SCROLL_U(3, 8, Material.ARROW),
+    BUTTON_SCROLL_D(2, 17, Material.ARROW),
+    WALL(136, 26, Material.BOWL),
+    FLOOR(137, 35, Material.BOWL),
+    BUTTON_ABORT(2, 53, Material.BOWL);
 
-	private final int customModelData;
-	private final int slot;
-	private final Material material;
+    private final int customModelData;
+    private final int slot;
+    private final Material material;
 
-	GUIWallFloor(int customModelData, int slot, Material material) {
-		this.customModelData = customModelData;
-		this.slot = slot;
-		this.material = material;
-	}
+    GUIWallFloor(int customModelData, int slot, Material material) {
+        this.customModelData = customModelData;
+        this.slot = slot;
+        this.material = material;
+    }
 
-	public int getCustomModelData() {
-		return customModelData;
-	}
+    public int getCustomModelData() {
+        return customModelData;
+    }
 
-	public int getSlot() {
-		return slot;
-	}
+    public int getSlot() {
+        return slot;
+    }
 
-	public Material getMaterial() {
-		return material;
-	}
+    public Material getMaterial() {
+        return material;
+    }
 
-	public String getName() {
-		String s = toString();
-		return TARDISPlugin.plugin.getLanguage().getString(s);
-	}
+    public String getName() {
+        String s = toString();
+        return TARDISPlugin.plugin.getLanguage().getString(s);
+    }
 }

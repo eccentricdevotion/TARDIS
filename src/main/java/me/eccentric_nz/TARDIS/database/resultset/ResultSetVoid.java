@@ -34,54 +34,54 @@ import java.sql.SQLException;
  */
 public class ResultSetVoid {
 
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final TARDISPlugin plugin;
-	private final int tardisId;
-	private final String prefix;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final TARDISPlugin plugin;
+    private final int tardisId;
+    private final String prefix;
 
-	/**
-	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the thevoid table.
-	 *
-	 * @param plugin   an instance of the main class.
-	 * @param tardisId the tardis id to check
-	 */
-	public ResultSetVoid(TARDISPlugin plugin, int tardisId) {
-		this.plugin = plugin;
-		this.tardisId = tardisId;
-		prefix = this.plugin.getPrefix();
-	}
+    /**
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the thevoid table.
+     *
+     * @param plugin   an instance of the main class.
+     * @param tardisId the tardis id to check
+     */
+    public ResultSetVoid(TARDISPlugin plugin, int tardisId) {
+        this.plugin = plugin;
+        this.tardisId = tardisId;
+        prefix = this.plugin.getPrefix();
+    }
 
-	/**
-	 * Attempts to see whether the supplied tardis id is in the thevoid table. This method builds an SQL query string
-	 * from the parameters supplied and then executes the query.
-	 *
-	 * @return true or false depending on whether the tardis id exists in the table
-	 */
-	public boolean hasUpdatedToVOID() {
-		PreparedStatement statement = null;
-		ResultSet rs = null;
-		String query = "SELECT tardis_id FROM " + prefix + "thevoid WHERE tardis_id = ?";
-		try {
-			service.testConnection(connection);
-			statement = connection.prepareStatement(query);
-			statement.setInt(1, tardisId);
-			rs = statement.executeQuery();
-			return rs.isBeforeFirst();
-		} catch (SQLException e) {
-			plugin.debug("ResultSet error for thevoid table! " + e.getMessage());
-			return false;
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing thevoid table! " + e.getMessage());
-			}
-		}
-	}
+    /**
+     * Attempts to see whether the supplied tardis id is in the thevoid table. This method builds an SQL query string
+     * from the parameters supplied and then executes the query.
+     *
+     * @return true or false depending on whether the tardis id exists in the table
+     */
+    public boolean hasUpdatedToVOID() {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT tardis_id FROM " + prefix + "thevoid WHERE tardis_id = ?";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, tardisId);
+            rs = statement.executeQuery();
+            return rs.isBeforeFirst();
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for thevoid table! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing thevoid table! " + e.getMessage());
+            }
+        }
+    }
 }

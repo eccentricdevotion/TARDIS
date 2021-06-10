@@ -25,27 +25,27 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ChemistryBlockRecipes {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public ChemistryBlockRecipes(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public ChemistryBlockRecipes(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public void addRecipes() {
-		for (RecipeData data : ChemistryBlock.RECIPES.values()) {
-			ItemStack is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
-			ItemMeta im = is.getItemMeta();
-			assert im != null;
-			im.setDisplayName(data.getDisplayName());
-			im.setLore(data.getLore());
-			im.setCustomModelData(data.getCustomModelData());
-			is.setItemMeta(im);
-			NamespacedKey key = new NamespacedKey(plugin, data.getNameSpacedKey());
-			ShapedRecipe recipe = new ShapedRecipe(key, is);
-			recipe.shape("AAA", "ACA", "AAA");
-			recipe.setIngredient('A', data.getCraftMaterial());
-			recipe.setIngredient('C', Material.CRAFTING_TABLE);
-			plugin.getServer().addRecipe(recipe);
-		}
-	}
+    public void addRecipes() {
+        for (RecipeData data : ChemistryBlock.RECIPES.values()) {
+            ItemStack is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
+            ItemMeta im = is.getItemMeta();
+            assert im != null;
+            im.setDisplayName(data.getDisplayName());
+            im.setLore(data.getLore());
+            im.setCustomModelData(data.getCustomModelData());
+            is.setItemMeta(im);
+            NamespacedKey key = new NamespacedKey(plugin, data.getNameSpacedKey());
+            ShapedRecipe recipe = new ShapedRecipe(key, is);
+            recipe.shape("AAA", "ACA", "AAA");
+            recipe.setIngredient('A', data.getCraftMaterial());
+            recipe.setIngredient('C', Material.CRAFTING_TABLE);
+            plugin.getServer().addRecipe(recipe);
+        }
+    }
 }

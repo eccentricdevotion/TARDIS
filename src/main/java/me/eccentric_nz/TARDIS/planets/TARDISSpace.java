@@ -40,105 +40,104 @@ import java.util.List;
  */
 public class TARDISSpace {
 
-	private final TARDISPlugin plugin;
-	private World tardisWorld = null;
+    private final TARDISPlugin plugin;
+    private World tardisWorld = null;
 
-	public TARDISSpace(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISSpace(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	/**
-	 * Gets custom world for the specified TARDIS. If the world does not exist, it is created.
-	 *
-	 * @param name the name of this world
-	 * @return a new TARDIS World
-	 */
-	public World getTardisWorld(String name) {
-		if (tardisWorld == null) {
-			tardisWorld = WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).generateStructures(false).createWorld();
-			// set the time to night
-			assert tardisWorld != null;
-			tardisWorld.setTime(14000L);
-			// add world to config, but time travel disabled by default
-			plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
-			plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
-			plugin.getPlanetsConfig().set("planets." + name + ".resource_pack", "default");
-			plugin.getPlanetsConfig().set("planets." + name + ".gamemode", "SURVIVAL");
-			plugin.getPlanetsConfig().set("planets." + name + ".world_type", "FLAT");
-			plugin.getPlanetsConfig().set("planets." + name + ".environment", "NORMAL");
-			plugin.getPlanetsConfig().set("planets." + name + ".void", true);
-			plugin.getPlanetsConfig().set("planets." + name + ".generator", "TARDISChunkGenerator");
-			plugin.getPlanetsConfig().set("planets." + name + ".gamerules.doWeatherCycle", false);
-			plugin.getPlanetsConfig().set("planets." + name + ".gamerules.doDaylightCycle", false);
-			plugin.savePlanetsConfig();
-			String inventory_group = plugin.getConfig().getString("creation.inventory_group");
-			assert inventory_group != null;
-			if (!inventory_group.equals("0")) {
-				if (plugin.getInvManager() == InventoryManager.MULTIVERSE) {
-					MultiverseInventories mi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
-					assert mi != null;
-					WorldGroup wgp = mi.getGroupManager().getGroup(inventory_group);
-					wgp.addWorld(name);
-				}
-			}
-			if (plugin.getPM().isPluginEnabled("WorldBorder")) {
-				// wb <world> set <radius> <x> <z>
-				plugin.getServer().dispatchCommand(plugin.getConsole(),
-						"wb " + name + " set " + plugin.getConfig().getInt("creation.border_radius") + " 0 0");
-			}
-			if (plugin.getConfig().getBoolean("creation.add_perms")) {
-				if (plugin.getPM().isPluginEnabled("GroupManager")) {
-					TARDISGroupManagerHandler tgmh = new TARDISGroupManagerHandler(plugin);
-					String player = name.substring(13);
-					tgmh.addPerms(player);
-				}
-				if (plugin.getPM().isPluginEnabled("bPermissions")) {
-					TARDISbPermissionsHandler tbph = new TARDISbPermissionsHandler(plugin);
-					String player = name.substring(13);
-					tbph.addPerms(player);
-				}
-				if (plugin.getPM().isPluginEnabled("PermissionsEx")) {
-					TARDISPermissionsExHandler tpesxh = new TARDISPermissionsExHandler(plugin);
-					String player = name.substring(13);
-					tpesxh.addPerms(player);
-				}
-			}
-		}
-		tardisWorld.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-		tardisWorld.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
-		return tardisWorld;
-	}
+    /**
+     * Gets custom world for the specified TARDIS. If the world does not exist, it is created.
+     *
+     * @param name the name of this world
+     * @return a new TARDIS World
+     */
+    public World getTardisWorld(String name) {
+        if (tardisWorld == null) {
+            tardisWorld = WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).generateStructures(false).createWorld();
+            // set the time to night
+            assert tardisWorld != null;
+            tardisWorld.setTime(14000L);
+            // add world to config, but time travel disabled by default
+            plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
+            plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
+            plugin.getPlanetsConfig().set("planets." + name + ".resource_pack", "default");
+            plugin.getPlanetsConfig().set("planets." + name + ".gamemode", "SURVIVAL");
+            plugin.getPlanetsConfig().set("planets." + name + ".world_type", "FLAT");
+            plugin.getPlanetsConfig().set("planets." + name + ".environment", "NORMAL");
+            plugin.getPlanetsConfig().set("planets." + name + ".void", true);
+            plugin.getPlanetsConfig().set("planets." + name + ".generator", "TARDISChunkGenerator");
+            plugin.getPlanetsConfig().set("planets." + name + ".gamerules.doWeatherCycle", false);
+            plugin.getPlanetsConfig().set("planets." + name + ".gamerules.doDaylightCycle", false);
+            plugin.savePlanetsConfig();
+            String inventory_group = plugin.getConfig().getString("creation.inventory_group");
+            assert inventory_group != null;
+            if (!inventory_group.equals("0")) {
+                if (plugin.getInvManager() == InventoryManager.MULTIVERSE) {
+                    MultiverseInventories mi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
+                    assert mi != null;
+                    WorldGroup wgp = mi.getGroupManager().getGroup(inventory_group);
+                    wgp.addWorld(name);
+                }
+            }
+            if (plugin.getPM().isPluginEnabled("WorldBorder")) {
+                // wb <world> set <radius> <x> <z>
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " set " + plugin.getConfig().getInt("creation.border_radius") + " 0 0");
+            }
+            if (plugin.getConfig().getBoolean("creation.add_perms")) {
+                if (plugin.getPM().isPluginEnabled("GroupManager")) {
+                    TARDISGroupManagerHandler tgmh = new TARDISGroupManagerHandler(plugin);
+                    String player = name.substring(13);
+                    tgmh.addPerms(player);
+                }
+                if (plugin.getPM().isPluginEnabled("bPermissions")) {
+                    TARDISbPermissionsHandler tbph = new TARDISbPermissionsHandler(plugin);
+                    String player = name.substring(13);
+                    tbph.addPerms(player);
+                }
+                if (plugin.getPM().isPluginEnabled("PermissionsEx")) {
+                    TARDISPermissionsExHandler tpesxh = new TARDISPermissionsExHandler(plugin);
+                    String player = name.substring(13);
+                    tpesxh.addPerms(player);
+                }
+            }
+        }
+        tardisWorld.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+        tardisWorld.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+        return tardisWorld;
+    }
 
-	public void keepNight() {
-		plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, this::timechk, 60L, 1200L);
-	}
+    public void keepNight() {
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, this::timechk, 60L, 1200L);
+    }
 
-	private void timechk() {
-		List<World> serverWorlds = plugin.getServer().getWorlds();
-		serverWorlds.forEach((w) -> {
-			if (w.getName().contains("TARDIS_") && w.getEnvironment().equals(Environment.NORMAL)) {
-				long now = w.getTime();
-				long dawn = 14000L;
-				long dusk = 21000L;
-				if (now < dawn || now > dusk) {
-					// set the time to dawn
-					w.setTime(dawn);
-				}
-			}
-		});
-	}
+    private void timechk() {
+        List<World> serverWorlds = plugin.getServer().getWorlds();
+        serverWorlds.forEach((w) -> {
+            if (w.getName().contains("TARDIS_") && w.getEnvironment().equals(Environment.NORMAL)) {
+                long now = w.getTime();
+                long dawn = 14000L;
+                long dusk = 21000L;
+                if (now < dawn || now > dusk) {
+                    // set the time to dawn
+                    w.setTime(dawn);
+                }
+            }
+        });
+    }
 
-	public void createDefaultWorld(String name) {
-		WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator("TARDISChunkGenerator").generateStructures(false).createWorld();
-		// add world to config, but disabled by default
-		plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
-		plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
-		plugin.getPlanetsConfig().set("planets." + name + ".resource_pack", "default");
-		plugin.getPlanetsConfig().set("planets." + name + ".gamemode", "SURVIVAL");
-		plugin.getPlanetsConfig().set("planets." + name + ".world_type", "FLAT");
-		plugin.getPlanetsConfig().set("planets." + name + ".environment", "NORMAL");
-		plugin.getPlanetsConfig().set("planets." + name + ".void", true);
-		plugin.getPlanetsConfig().set("planets." + name + ".generator", "TARDISChunkGenerator");
-		plugin.savePlanetsConfig();
-	}
+    public void createDefaultWorld(String name) {
+        WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator("TARDISChunkGenerator").generateStructures(false).createWorld();
+        // add world to config, but disabled by default
+        plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
+        plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
+        plugin.getPlanetsConfig().set("planets." + name + ".resource_pack", "default");
+        plugin.getPlanetsConfig().set("planets." + name + ".gamemode", "SURVIVAL");
+        plugin.getPlanetsConfig().set("planets." + name + ".world_type", "FLAT");
+        plugin.getPlanetsConfig().set("planets." + name + ".environment", "NORMAL");
+        plugin.getPlanetsConfig().set("planets." + name + ".void", true);
+        plugin.getPlanetsConfig().set("planets." + name + ".generator", "TARDISChunkGenerator");
+        plugin.savePlanetsConfig();
+    }
 }

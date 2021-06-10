@@ -24,38 +24,38 @@ import java.util.Collections;
 
 public class CompoundBuilder {
 
-	public static ItemStack getCompound(Compound compound) {
-		ItemStack is;
-		switch (compound) {
-			case Ink -> is = new ItemStack(Material.INK_SAC, 1);
-			case Charcoal -> is = new ItemStack(Material.CHARCOAL, 1);
-			case Rust -> {
-				is = new ItemStack(Material.LAVA_BUCKET, 1);
-				ItemMeta rm = is.getItemMeta();
-				assert rm != null;
-				rm.setDisplayName("Rust Bucket");
-				rm.setCustomModelData(1);
-				is.setItemMeta(rm);
-			}
-			case Sugar -> is = new ItemStack(Material.SUGAR, 1);
-			case Sulphuric_Acid -> {
-				is = new ItemStack(Material.WATER_BUCKET, 1);
-				ItemMeta am = is.getItemMeta();
-				assert am != null;
-				am.setDisplayName("Acid Bucket");
-				am.setCustomModelData(1);
-				is.setItemMeta(am);
-			}
-			default -> {
-				is = new ItemStack(Material.GLASS_BOTTLE, 1);
-				ItemMeta im = is.getItemMeta();
-				assert im != null;
-				im.setDisplayName(compound.toString().replace("_", " "));
-				im.setLore(Collections.singletonList(compound.getSymbol()));
-				im.setCustomModelData(10000001 + compound.ordinal());
-				is.setItemMeta(im);
-			}
-		}
-		return is;
-	}
+    public static ItemStack getCompound(Compound compound) {
+        ItemStack is;
+        switch (compound) {
+            case Ink -> is = new ItemStack(Material.INK_SAC, 1);
+            case Charcoal -> is = new ItemStack(Material.CHARCOAL, 1);
+            case Rust -> {
+                is = new ItemStack(Material.LAVA_BUCKET, 1);
+                ItemMeta rm = is.getItemMeta();
+                assert rm != null;
+                rm.setDisplayName("Rust Bucket");
+                rm.setCustomModelData(1);
+                is.setItemMeta(rm);
+            }
+            case Sugar -> is = new ItemStack(Material.SUGAR, 1);
+            case Sulphuric_Acid -> {
+                is = new ItemStack(Material.WATER_BUCKET, 1);
+                ItemMeta am = is.getItemMeta();
+                assert am != null;
+                am.setDisplayName("Acid Bucket");
+                am.setCustomModelData(1);
+                is.setItemMeta(am);
+            }
+            default -> {
+                is = new ItemStack(Material.GLASS_BOTTLE, 1);
+                ItemMeta im = is.getItemMeta();
+                assert im != null;
+                im.setDisplayName(compound.toString().replace("_", " "));
+                im.setLore(Collections.singletonList(compound.getSymbol()));
+                im.setCustomModelData(10000001 + compound.ordinal());
+                is.setItemMeta(im);
+            }
+        }
+        return is;
+    }
 }

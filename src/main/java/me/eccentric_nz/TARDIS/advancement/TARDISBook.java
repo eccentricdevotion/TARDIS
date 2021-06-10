@@ -38,52 +38,52 @@ import java.util.Scanner;
  */
 public class TARDISBook {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISBook(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISBook(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	/**
-	 * Read text from a file and write it to a book. The book is then placed in the player's inventory.
-	 *
-	 * @param title_reward The name of the book
-	 * @param author       Who wrote the book
-	 * @param name         The name of the text file
-	 * @param p            The player who will receive the book
-	 */
-	public void writeBook(String title_reward, String author, String name, Player p) {
-		// read the file
-		File file = new File(plugin.getDataFolder() + File.separator + "books" + File.separator + name + ".txt");
-		StringBuilder fileContents = new StringBuilder((int) file.length());
-		String book_str = "";
-		String ls = System.getProperty("line.separator");
-		try {
-			try (Scanner scanner = new Scanner(file)) {
-				while (scanner.hasNextLine()) {
-					fileContents.append(scanner.nextLine()).append(ls);
-				}
-				book_str = fileContents.toString();
-			}
-		} catch (FileNotFoundException f) {
-			plugin.debug("Could not find file");
-		}
-		book_str = book_str.replaceAll("@p", p.getName());
-		// two line breaks = new page
-		List<String> pages = Arrays.asList(book_str.split(ls + ls));
-		// make the book
-		ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
-		BookMeta meta = (BookMeta) book.getItemMeta();
-		String[] title = title_reward.split(" - ");
-		assert meta != null;
-		meta.setTitle(title[0]);
-		meta.setAuthor(author);
-		meta.setPages(pages);
-		book.setItemMeta(meta);
-		// put the book in the player's inventory
-		Inventory inv = p.getInventory();
-		inv.addItem(book);
-		p.updateInventory();
-		TARDISMessage.send(p, "BOOK_RECEIVE", name);
-	}
+    /**
+     * Read text from a file and write it to a book. The book is then placed in the player's inventory.
+     *
+     * @param title_reward The name of the book
+     * @param author       Who wrote the book
+     * @param name         The name of the text file
+     * @param p            The player who will receive the book
+     */
+    public void writeBook(String title_reward, String author, String name, Player p) {
+        // read the file
+        File file = new File(plugin.getDataFolder() + File.separator + "books" + File.separator + name + ".txt");
+        StringBuilder fileContents = new StringBuilder((int) file.length());
+        String book_str = "";
+        String ls = System.getProperty("line.separator");
+        try {
+            try (Scanner scanner = new Scanner(file)) {
+                while (scanner.hasNextLine()) {
+                    fileContents.append(scanner.nextLine()).append(ls);
+                }
+                book_str = fileContents.toString();
+            }
+        } catch (FileNotFoundException f) {
+            plugin.debug("Could not find file");
+        }
+        book_str = book_str.replaceAll("@p", p.getName());
+        // two line breaks = new page
+        List<String> pages = Arrays.asList(book_str.split(ls + ls));
+        // make the book
+        ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
+        BookMeta meta = (BookMeta) book.getItemMeta();
+        String[] title = title_reward.split(" - ");
+        assert meta != null;
+        meta.setTitle(title[0]);
+        meta.setAuthor(author);
+        meta.setPages(pages);
+        book.setItemMeta(meta);
+        // put the book in the player's inventory
+        Inventory inv = p.getInventory();
+        inv.addItem(book);
+        p.updateInventory();
+        TARDISMessage.send(p, "BOOK_RECEIVE", name);
+    }
 }

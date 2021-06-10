@@ -38,54 +38,54 @@ import java.util.Objects;
  */
 class TARDISJunkDelete {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISJunkDelete(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISJunkDelete(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public boolean delete(CommandSender sender) {
-		if (!sender.hasPermission("tardis.admin")) {
-			TARDISMessage.send(sender, "CMD_ADMIN");
-			return true;
-		}
-		ResultSetTardisID rs = new ResultSetTardisID(plugin);
-		if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
-			int id = rs.getTardisId();
-			// get the current location
-			Location bb_loc = null;
-			HashMap<String, Object> wherecl = new HashMap<>();
-			wherecl.put("tardis_id", id);
-			ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-			if (rsc.resultSet()) {
-				bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-			}
-			if (bb_loc == null) {
-				TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
-				return true;
-			}
-			// destroy junk tardis
-			DestroyData dd = new DestroyData();
-			dd.setDirection(COMPASS.SOUTH);
-			dd.setLocation(bb_loc);
-			dd.setHide(false);
-			dd.setOutside(false);
-			dd.setSubmarine(rsc.isSubmarine());
-			dd.setTardisId(id);
-			dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
-			dd.setThrottle(SpaceTimeThrottle.JUNK);
-			plugin.getPresetDestroyer().destroyPreset(dd);
-			// destroy the vortex tardis
-			World cw = plugin.getServer().getWorld(Objects.requireNonNull(plugin.getConfig().getString("creation.default_world_name")));
-			// give the tardis time to remove itself as it's not hidden
-			if (cw != null) {
-				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-					plugin.getInteriorDestroyer().destroyInner(Consoles.schematicFor("junk"), id, cw, -999);
-					TARDISDeleteCommand.cleanDatabase(id);
-					TARDISMessage.send(sender, "JUNK_DELETED");
-				}, 20L);
-			}
-		}
-		return true;
-	}
+    public boolean delete(CommandSender sender) {
+        if (!sender.hasPermission("tardis.admin")) {
+            TARDISMessage.send(sender, "CMD_ADMIN");
+            return true;
+        }
+        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
+            int id = rs.getTardisId();
+            // get the current location
+            Location bb_loc = null;
+            HashMap<String, Object> wherecl = new HashMap<>();
+            wherecl.put("tardis_id", id);
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            if (rsc.resultSet()) {
+                bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            }
+            if (bb_loc == null) {
+                TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
+                return true;
+            }
+            // destroy junk tardis
+            DestroyData dd = new DestroyData();
+            dd.setDirection(COMPASS.SOUTH);
+            dd.setLocation(bb_loc);
+            dd.setHide(false);
+            dd.setOutside(false);
+            dd.setSubmarine(rsc.isSubmarine());
+            dd.setTardisId(id);
+            dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
+            dd.setThrottle(SpaceTimeThrottle.JUNK);
+            plugin.getPresetDestroyer().destroyPreset(dd);
+            // destroy the vortex tardis
+            World cw = plugin.getServer().getWorld(Objects.requireNonNull(plugin.getConfig().getString("creation.default_world_name")));
+            // give the tardis time to remove itself as it's not hidden
+            if (cw != null) {
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    plugin.getInteriorDestroyer().destroyInner(Consoles.schematicFor("junk"), id, cw, -999);
+                    TARDISDeleteCommand.cleanDatabase(id);
+                    TARDISMessage.send(sender, "JUNK_DELETED");
+                }, 20L);
+            }
+        }
+        return true;
+    }
 }

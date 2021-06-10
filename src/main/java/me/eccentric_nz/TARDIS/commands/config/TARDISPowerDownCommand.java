@@ -27,31 +27,31 @@ import java.util.Locale;
  */
 class TARDISPowerDownCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISPowerDownCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISPowerDownCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean togglePowerDown(CommandSender sender, String[] args) {
-		// check they typed true of false
-		String tf = args[1].toLowerCase(Locale.ENGLISH);
-		if (!tf.equals("true") && !tf.equals("false")) {
-			TARDISMessage.send(sender, "TRUE_FALSE");
-			return false;
-		}
-		plugin.getConfig().set("allow.power_down", Boolean.valueOf(tf));
-		plugin.saveConfig();
-		TARDISMessage.send(sender, "CONFIG_UPDATED");
-		if (tf.equals("false")) {
-			// if false, stop the repeating task
-			plugin.getStandbyTask().cancel();
-			TARDISMessage.send(sender, "STANDBY_STOP");
-		} else {
-			// if true, start the repeating task
-			plugin.startStandBy();
-			TARDISMessage.send(sender, "STANDBY_START");
-		}
-		return true;
-	}
+    boolean togglePowerDown(CommandSender sender, String[] args) {
+        // check they typed true of false
+        String tf = args[1].toLowerCase(Locale.ENGLISH);
+        if (!tf.equals("true") && !tf.equals("false")) {
+            TARDISMessage.send(sender, "TRUE_FALSE");
+            return false;
+        }
+        plugin.getConfig().set("allow.power_down", Boolean.valueOf(tf));
+        plugin.saveConfig();
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        if (tf.equals("false")) {
+            // if false, stop the repeating task
+            plugin.getStandbyTask().cancel();
+            TARDISMessage.send(sender, "STANDBY_STOP");
+        } else {
+            // if true, start the repeating task
+            plugin.startStandBy();
+            TARDISMessage.send(sender, "STANDBY_START");
+        }
+        return true;
+    }
 }

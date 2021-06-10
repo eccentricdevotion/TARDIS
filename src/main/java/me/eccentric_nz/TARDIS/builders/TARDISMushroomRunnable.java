@@ -23,28 +23,28 @@ import java.util.List;
 
 public class TARDISMushroomRunnable implements Runnable {
 
-	private final TARDISPlugin plugin;
-	private final List<MushroomBlock> mushrooms;
-	private int task;
-	private int i = 0;
+    private final TARDISPlugin plugin;
+    private final List<MushroomBlock> mushrooms;
+    private int task;
+    private int i = 0;
 
-	public TARDISMushroomRunnable(TARDISPlugin plugin, List<MushroomBlock> mushrooms) {
-		this.plugin = plugin;
-		this.mushrooms = mushrooms;
-	}
+    public TARDISMushroomRunnable(TARDISPlugin plugin, List<MushroomBlock> mushrooms) {
+        this.plugin = plugin;
+        this.mushrooms = mushrooms;
+    }
 
-	@Override
-	public void run() {
-		Block block = mushrooms.get(i).getBlock();
-		block.setBlockData(mushrooms.get(i).getBlockData());
-		i++;
-		if (i == mushrooms.size()) {
-			plugin.getServer().getScheduler().cancelTask(task);
-			task = 0;
-		}
-	}
+    @Override
+    public void run() {
+        Block block = mushrooms.get(i).getBlock();
+        block.setBlockData(mushrooms.get(i).getBlockData());
+        i++;
+        if (i == mushrooms.size()) {
+            plugin.getServer().getScheduler().cancelTask(task);
+            task = 0;
+        }
+    }
 
-	public void setTask(int task) {
-		this.task = task;
-	}
+    public void setTask(int task) {
+        this.task = task;
+    }
 }

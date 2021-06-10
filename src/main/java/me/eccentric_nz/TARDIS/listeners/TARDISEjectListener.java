@@ -42,347 +42,345 @@ import java.util.UUID;
  */
 public class TARDISEjectListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISEjectListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISEjectListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onInteract(PlayerInteractEntityEvent event) {
-		Player player = event.getPlayer();
-		UUID uuid = player.getUniqueId();
-		if (!plugin.getTrackerKeeper().getEjecting().containsKey(uuid)) {
-			return;
-		}
-		// check they are still in the tardis world - they could have exited after running the command
-		if (!plugin.getUtils().inTARDISWorld(player)) {
-			TARDISMessage.send(player, "EJECT_WORLD");
-			return;
-		}
-		Entity ent = event.getRightClicked();
-		// only living entities
-		if (!(ent instanceof LivingEntity)) {
-			return;
-		}
-		// get the exit location
-		TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, plugin.getTrackerKeeper().getEjecting().get(uuid));
-		Location l = dl.getL();
-		// set the entity's direction as you would for a player when exiting
-		switch (dl.getD()) {
-			case NORTH -> {
-				l.setZ(l.getZ() + 2.5f);
-				l.setYaw(0.0f);
-			}
-			case WEST -> {
-				l.setX(l.getX() + 2.5f);
-				l.setYaw(270.0f);
-			}
-			case SOUTH -> {
-				l.setZ(l.getZ() - 2.5f);
-				l.setYaw(180.0f);
-			}
-			default -> {
-				l.setX(l.getX() - 2.5f);
-				l.setYaw(90.0f);
-			}
-		}
-		switch (ent.getType()) {
-			// can't eject OPs or tardis admins
-			case PLAYER -> {
-				Player p = (Player) ent;
-				if (p.isOp() || TARDISPermission.hasPermission(p, "tardis.admin")) {
-					TARDISMessage.send(player, "EJECT_PLAYER");
-					return;
-				}
-				// check the clicked player is in a tardis world
-				if (!plugin.getUtils().inTARDISWorld(p)) {
-					TARDISMessage.send(player, "EJECT_WORLD");
-					return;
-				}
-				// teleport player and remove from travellers table
-				plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true);
-				TARDISMessage.send(p, "EJECT_MESSAGE", player.getName());
-				HashMap<String, Object> where = new HashMap<>();
-				where.put("uuid", p.getUniqueId().toString());
-				plugin.getQueryFactory().doDelete("travellers", where);
-			}
-			case BEE -> {
-				Bee b = (Bee) ent;
-				Bee bee = (Bee) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.BEE);
-				bee.setTicksLived(b.getTicksLived());
-				if (!b.isAdult()) {
-					bee.setBaby();
-				}
-				String beename = ent.getCustomName();
-				if (beename != null && !beename.isEmpty()) {
-					bee.setCustomName(beename);
-				}
-				bee.setHasStung(b.hasStung());
-				bee.setHasNectar(b.hasNectar());
-				bee.setAnger(b.getAnger());
-				ent.remove();
-			}
-			case CHICKEN -> {
-				Chicken k = (Chicken) ent;
-				Chicken chicken = (Chicken) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.CHICKEN);
-				chicken.setTicksLived(k.getTicksLived());
-				if ((!k.isAdult())) {
-					chicken.setBaby();
-				}
-				String chickname = ent.getCustomName();
-				if (chickname != null && !chickname.isEmpty()) {
-					chicken.setCustomName(chickname);
-				}
-				ent.remove();
-			}
-			case COW -> {
-				Cow c = (Cow) ent;
-				Cow cow = (Cow) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.COW);
-				cow.setTicksLived(c.getTicksLived());
-				if ((!c.isAdult())) {
-					cow.setBaby();
-				}
-				String cowname = ent.getCustomName();
-				if (cowname != null && !cowname.isEmpty()) {
-					cow.setCustomName(cowname);
-				}
-				ent.remove();
-			}
-			case DONKEY, HORSE, MULE, SKELETON_HORSE, ZOMBIE_HORSE -> TARDISMessage.send(player, "EJECT_HORSE");
-			case LLAMA -> {
-				event.setCancelled(true);
-				Llama ll = (Llama) ent;
-				TARDISLlama tmlla = new TARDISLlama();
-				tmlla.setAge(ll.getAge());
-				tmlla.setBaby(!ll.isAdult());
-				double mh = Objects.requireNonNull(ll.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue();
-				tmlla.setHorseHealth(mh);
-				tmlla.setHealth(ll.getHealth());
-				// get horse colour, style and variant
-				tmlla.setLlamacolor(ll.getColor());
-				tmlla.setStrength(ll.getStrength());
-				tmlla.setHorseVariant(EntityType.HORSE);
-				tmlla.setTamed(ll.isTamed());
-				if (ll.isCarryingChest()) {
-					tmlla.setHasChest(true);
-				}
-				tmlla.setName(ll.getCustomName());
-				tmlla.setHorseInventory(ll.getInventory().getContents());
-				tmlla.setDomesticity(ll.getDomestication());
-				tmlla.setJumpStrength(ll.getJumpStrength());
-				tmlla.setSpeed(Objects.requireNonNull(ll.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).getBaseValue());
-				// check the leash
-				if (ll.isLeashed()) {
-					Entity leash = ll.getLeashHolder();
-					tmlla.setLeashed(true);
-					if (leash instanceof LeashHitch) {
-						leash.remove();
-					}
-				}
-				LlamaInventory llinv = ll.getInventory();
-				tmlla.setDecor(llinv.getDecor());
-				Llama llama = (Llama) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.LLAMA);
-				llama.setColor(tmlla.getLlamacolor());
-				llama.setStrength(tmlla.getStrength());
-				llama.setAge(tmlla.getAge());
-				if (tmlla.isBaby()) {
-					llama.setBaby();
-				}
-				AttributeInstance attribute = llama.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-				assert attribute != null;
-				attribute.setBaseValue(tmlla.getHorseHealth());
-				String name = tmlla.getName();
-				if (name != null && !name.isEmpty()) {
-					llama.setCustomName(name);
-				}
-				if (tmlla.isTamed()) {
-					llama.setTamed(true);
-					llama.setOwner(player);
-				}
-				llama.setDomestication(tmlla.getDomesticity());
-				llama.setJumpStrength(tmlla.getJumpStrength());
-				if (tmlla.hasChest()) {
-					llama.setCarryingChest(true);
-				}
-				LlamaInventory inv = llama.getInventory();
-				inv.setContents(tmlla.getHorseinventory());
-				inv.setDecor(tmlla.getDecor());
-				if (tmlla.isLeashed()) {
-					Inventory pinv = player.getInventory();
-					ItemStack leash = new ItemStack(Material.LEAD, 1);
-					pinv.addItem(leash);
-					player.updateInventory();
-				}
-				Objects.requireNonNull(llama.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).setBaseValue(tmlla.getSpeed());
-				ent.remove();
-			}
-			case MUSHROOM_COW -> {
-				MushroomCow m = (MushroomCow) ent;
-				MushroomCow mush = (MushroomCow) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.MUSHROOM_COW);
-				mush.setTicksLived(m.getTicksLived());
-				if ((!m.isAdult())) {
-					mush.setBaby();
-				}
-				mush.setVariant(m.getVariant());
-				String mushname = ent.getCustomName();
-				if (mushname != null && !mushname.isEmpty()) {
-					mush.setCustomName(mushname);
-				}
-				ent.remove();
-			}
-			case PANDA -> {
-				Panda inner_panda = (Panda) ent;
-				Panda outer_panda = (Panda) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.PANDA);
-				outer_panda.setTicksLived(inner_panda.getTicksLived());
-				if (!inner_panda.isAdult()) {
-					outer_panda.setBaby();
-				}
-				outer_panda.setMainGene(inner_panda.getMainGene());
-				outer_panda.setHiddenGene(inner_panda.getHiddenGene());
-				String panda_name = ent.getCustomName();
-				if (panda_name != null && !panda_name.isEmpty()) {
-					outer_panda.setCustomName(panda_name);
-				}
-				ent.remove();
-			}
-			case PARROT -> {
-				Parrot inner_parrot = (Parrot) ent;
-				Parrot outer_parrot = (Parrot) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.PARROT);
-				outer_parrot.setTicksLived(inner_parrot.getTicksLived());
-				String parrot_name = ent.getCustomName();
-				if (parrot_name != null && !parrot_name.isEmpty()) {
-					outer_parrot.setCustomName(parrot_name);
-				}
-				outer_parrot.setVariant(inner_parrot.getVariant());
-				ent.remove();
-			}
-			case PIG -> {
-				Pig g = (Pig) ent;
-				// eject any passengers
-				g.eject();
-				Pig pig = (Pig) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.PIG);
-				pig.setTicksLived(g.getTicksLived());
-				if ((!g.isAdult())) {
-					pig.setBaby();
-				}
-				String pigname = ent.getCustomName();
-				if (pigname != null && !pigname.isEmpty()) {
-					pig.setCustomName(pigname);
-				}
-				if (g.hasSaddle()) {
-					pig.setSaddle(true);
-				}
-				ent.remove();
-			}
-			case POLAR_BEAR -> {
-				PolarBear polar = (PolarBear) ent;
-				PolarBear bear = (PolarBear) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.POLAR_BEAR);
-				bear.setTicksLived(polar.getTicksLived());
-				if ((!polar.isAdult())) {
-					bear.setBaby();
-				}
-				String bearname = ent.getCustomName();
-				if (bearname != null && !bearname.isEmpty()) {
-					bear.setCustomName(bearname);
-				}
-				ent.remove();
-			}
-			case SHEEP -> {
-				Sheep s = (Sheep) ent;
-				Sheep sheep = (Sheep) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.SHEEP);
-				sheep.setTicksLived(s.getTicksLived());
-				if ((!s.isAdult())) {
-					sheep.setBaby();
-				}
-				String sheepname = ent.getCustomName();
-				if (sheepname != null && !sheepname.isEmpty()) {
-					sheep.setCustomName(sheepname);
-				}
-				sheep.setColor(s.getColor());
-				ent.remove();
-			}
-			case RABBIT -> {
-				Rabbit r = (Rabbit) ent;
-				Rabbit bunny = (Rabbit) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.RABBIT);
-				bunny.setTicksLived(r.getTicksLived());
-				if ((!r.isAdult())) {
-					bunny.setBaby();
-				}
-				String rabbitname = ent.getCustomName();
-				if (rabbitname != null && !rabbitname.isEmpty()) {
-					bunny.setCustomName(rabbitname);
-				}
-				bunny.setRabbitType(r.getRabbitType());
-				ent.remove();
-			}
-			case WOLF -> {
-				Tameable wtamed = (Tameable) ent;
-				if (wtamed.isTamed() &&
-					Objects.requireNonNull(wtamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
-					Wolf w = (Wolf) ent;
-					Wolf wolf = (Wolf) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.WOLF);
-					wolf.setTicksLived(w.getTicksLived());
-					if ((!w.isAdult())) {
-						wolf.setBaby();
-					}
-					String wolfname = ent.getCustomName();
-					if (wolfname != null && !wolfname.isEmpty()) {
-						wolf.setCustomName(wolfname);
-					}
-					wolf.setSitting(w.isSitting());
-					wolf.setCollarColor(w.getCollarColor());
-					double health = Math.min(w.getHealth(), 8D);
-					wolf.setHealth(health);
-					ent.remove();
-				}
-			}
-			case CAT -> {
-				Tameable otamed = (Tameable) ent;
-				if (otamed.isTamed() &&
-					Objects.requireNonNull(otamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
-					Cat o = (Cat) ent;
-					Cat cat = (Cat) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.CAT);
-					cat.setTicksLived(o.getTicksLived());
-					if ((!o.isAdult())) {
-						cat.setBaby();
-					}
-					String catname = ent.getCustomName();
-					if (catname != null && !catname.isEmpty()) {
-						cat.setCustomName(catname);
-					}
-					cat.setSitting(o.isSitting());
-					cat.setCatType(o.getCatType());
-					cat.setCollarColor(o.getCollarColor());
-					double health = Math.min(o.getHealth(), 8D);
-					cat.setHealth(health);
-					ent.remove();
-				}
-			}
-			case VILLAGER -> {
-				event.setCancelled(true);
-				Villager v = (Villager) ent;
-				Villager villager = (Villager) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.VILLAGER);
-				villager.setProfession(v.getProfession());
-				villager.setAge(v.getTicksLived());
-				if (!v.isAdult()) {
-					villager.setBaby();
-				}
-				villager.setHealth(v.getHealth());
-				villager.setRecipes(v.getRecipes());
-				villager.setVillagerType(v.getVillagerType());
-				villager.setVillagerExperience(v.getVillagerExperience());
-				villager.setVillagerLevel(v.getVillagerLevel());
-				String vilname = ent.getCustomName();
-				if (vilname != null && !vilname.isEmpty()) {
-					villager.setCustomName(vilname);
-				}
-				plugin.getTardisHelper().setVillagerWilling(villager, plugin.getTardisHelper().getVillagerWilling(v));
-				ent.remove();
-			}
-			default -> TARDISMessage.send(player, "EJECT_NOT_VALID");
-		}
-		// stop tracking player
-		plugin.getTrackerKeeper().getEjecting().remove(uuid);
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onInteract(PlayerInteractEntityEvent event) {
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+        if (!plugin.getTrackerKeeper().getEjecting().containsKey(uuid)) {
+            return;
+        }
+        // check they are still in the tardis world - they could have exited after running the command
+        if (!plugin.getUtils().inTARDISWorld(player)) {
+            TARDISMessage.send(player, "EJECT_WORLD");
+            return;
+        }
+        Entity ent = event.getRightClicked();
+        // only living entities
+        if (!(ent instanceof LivingEntity)) {
+            return;
+        }
+        // get the exit location
+        TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, plugin.getTrackerKeeper().getEjecting().get(uuid));
+        Location l = dl.getL();
+        // set the entity's direction as you would for a player when exiting
+        switch (dl.getD()) {
+            case NORTH -> {
+                l.setZ(l.getZ() + 2.5f);
+                l.setYaw(0.0f);
+            }
+            case WEST -> {
+                l.setX(l.getX() + 2.5f);
+                l.setYaw(270.0f);
+            }
+            case SOUTH -> {
+                l.setZ(l.getZ() - 2.5f);
+                l.setYaw(180.0f);
+            }
+            default -> {
+                l.setX(l.getX() - 2.5f);
+                l.setYaw(90.0f);
+            }
+        }
+        switch (ent.getType()) {
+            // can't eject OPs or tardis admins
+            case PLAYER -> {
+                Player p = (Player) ent;
+                if (p.isOp() || TARDISPermission.hasPermission(p, "tardis.admin")) {
+                    TARDISMessage.send(player, "EJECT_PLAYER");
+                    return;
+                }
+                // check the clicked player is in a tardis world
+                if (!plugin.getUtils().inTARDISWorld(p)) {
+                    TARDISMessage.send(player, "EJECT_WORLD");
+                    return;
+                }
+                // teleport player and remove from travellers table
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true);
+                TARDISMessage.send(p, "EJECT_MESSAGE", player.getName());
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("uuid", p.getUniqueId().toString());
+                plugin.getQueryFactory().doDelete("travellers", where);
+            }
+            case BEE -> {
+                Bee b = (Bee) ent;
+                Bee bee = (Bee) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.BEE);
+                bee.setTicksLived(b.getTicksLived());
+                if (!b.isAdult()) {
+                    bee.setBaby();
+                }
+                String beename = ent.getCustomName();
+                if (beename != null && !beename.isEmpty()) {
+                    bee.setCustomName(beename);
+                }
+                bee.setHasStung(b.hasStung());
+                bee.setHasNectar(b.hasNectar());
+                bee.setAnger(b.getAnger());
+                ent.remove();
+            }
+            case CHICKEN -> {
+                Chicken k = (Chicken) ent;
+                Chicken chicken = (Chicken) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.CHICKEN);
+                chicken.setTicksLived(k.getTicksLived());
+                if ((!k.isAdult())) {
+                    chicken.setBaby();
+                }
+                String chickname = ent.getCustomName();
+                if (chickname != null && !chickname.isEmpty()) {
+                    chicken.setCustomName(chickname);
+                }
+                ent.remove();
+            }
+            case COW -> {
+                Cow c = (Cow) ent;
+                Cow cow = (Cow) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.COW);
+                cow.setTicksLived(c.getTicksLived());
+                if ((!c.isAdult())) {
+                    cow.setBaby();
+                }
+                String cowname = ent.getCustomName();
+                if (cowname != null && !cowname.isEmpty()) {
+                    cow.setCustomName(cowname);
+                }
+                ent.remove();
+            }
+            case DONKEY, HORSE, MULE, SKELETON_HORSE, ZOMBIE_HORSE -> TARDISMessage.send(player, "EJECT_HORSE");
+            case LLAMA -> {
+                event.setCancelled(true);
+                Llama ll = (Llama) ent;
+                TARDISLlama tmlla = new TARDISLlama();
+                tmlla.setAge(ll.getAge());
+                tmlla.setBaby(!ll.isAdult());
+                double mh = Objects.requireNonNull(ll.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue();
+                tmlla.setHorseHealth(mh);
+                tmlla.setHealth(ll.getHealth());
+                // get horse colour, style and variant
+                tmlla.setLlamacolor(ll.getColor());
+                tmlla.setStrength(ll.getStrength());
+                tmlla.setHorseVariant(EntityType.HORSE);
+                tmlla.setTamed(ll.isTamed());
+                if (ll.isCarryingChest()) {
+                    tmlla.setHasChest(true);
+                }
+                tmlla.setName(ll.getCustomName());
+                tmlla.setHorseInventory(ll.getInventory().getContents());
+                tmlla.setDomesticity(ll.getDomestication());
+                tmlla.setJumpStrength(ll.getJumpStrength());
+                tmlla.setSpeed(Objects.requireNonNull(ll.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).getBaseValue());
+                // check the leash
+                if (ll.isLeashed()) {
+                    Entity leash = ll.getLeashHolder();
+                    tmlla.setLeashed(true);
+                    if (leash instanceof LeashHitch) {
+                        leash.remove();
+                    }
+                }
+                LlamaInventory llinv = ll.getInventory();
+                tmlla.setDecor(llinv.getDecor());
+                Llama llama = (Llama) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.LLAMA);
+                llama.setColor(tmlla.getLlamacolor());
+                llama.setStrength(tmlla.getStrength());
+                llama.setAge(tmlla.getAge());
+                if (tmlla.isBaby()) {
+                    llama.setBaby();
+                }
+                AttributeInstance attribute = llama.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                assert attribute != null;
+                attribute.setBaseValue(tmlla.getHorseHealth());
+                String name = tmlla.getName();
+                if (name != null && !name.isEmpty()) {
+                    llama.setCustomName(name);
+                }
+                if (tmlla.isTamed()) {
+                    llama.setTamed(true);
+                    llama.setOwner(player);
+                }
+                llama.setDomestication(tmlla.getDomesticity());
+                llama.setJumpStrength(tmlla.getJumpStrength());
+                if (tmlla.hasChest()) {
+                    llama.setCarryingChest(true);
+                }
+                LlamaInventory inv = llama.getInventory();
+                inv.setContents(tmlla.getHorseinventory());
+                inv.setDecor(tmlla.getDecor());
+                if (tmlla.isLeashed()) {
+                    Inventory pinv = player.getInventory();
+                    ItemStack leash = new ItemStack(Material.LEAD, 1);
+                    pinv.addItem(leash);
+                    player.updateInventory();
+                }
+                Objects.requireNonNull(llama.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).setBaseValue(tmlla.getSpeed());
+                ent.remove();
+            }
+            case MUSHROOM_COW -> {
+                MushroomCow m = (MushroomCow) ent;
+                MushroomCow mush = (MushroomCow) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.MUSHROOM_COW);
+                mush.setTicksLived(m.getTicksLived());
+                if ((!m.isAdult())) {
+                    mush.setBaby();
+                }
+                mush.setVariant(m.getVariant());
+                String mushname = ent.getCustomName();
+                if (mushname != null && !mushname.isEmpty()) {
+                    mush.setCustomName(mushname);
+                }
+                ent.remove();
+            }
+            case PANDA -> {
+                Panda inner_panda = (Panda) ent;
+                Panda outer_panda = (Panda) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.PANDA);
+                outer_panda.setTicksLived(inner_panda.getTicksLived());
+                if (!inner_panda.isAdult()) {
+                    outer_panda.setBaby();
+                }
+                outer_panda.setMainGene(inner_panda.getMainGene());
+                outer_panda.setHiddenGene(inner_panda.getHiddenGene());
+                String panda_name = ent.getCustomName();
+                if (panda_name != null && !panda_name.isEmpty()) {
+                    outer_panda.setCustomName(panda_name);
+                }
+                ent.remove();
+            }
+            case PARROT -> {
+                Parrot inner_parrot = (Parrot) ent;
+                Parrot outer_parrot = (Parrot) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.PARROT);
+                outer_parrot.setTicksLived(inner_parrot.getTicksLived());
+                String parrot_name = ent.getCustomName();
+                if (parrot_name != null && !parrot_name.isEmpty()) {
+                    outer_parrot.setCustomName(parrot_name);
+                }
+                outer_parrot.setVariant(inner_parrot.getVariant());
+                ent.remove();
+            }
+            case PIG -> {
+                Pig g = (Pig) ent;
+                // eject any passengers
+                g.eject();
+                Pig pig = (Pig) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.PIG);
+                pig.setTicksLived(g.getTicksLived());
+                if ((!g.isAdult())) {
+                    pig.setBaby();
+                }
+                String pigname = ent.getCustomName();
+                if (pigname != null && !pigname.isEmpty()) {
+                    pig.setCustomName(pigname);
+                }
+                if (g.hasSaddle()) {
+                    pig.setSaddle(true);
+                }
+                ent.remove();
+            }
+            case POLAR_BEAR -> {
+                PolarBear polar = (PolarBear) ent;
+                PolarBear bear = (PolarBear) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.POLAR_BEAR);
+                bear.setTicksLived(polar.getTicksLived());
+                if ((!polar.isAdult())) {
+                    bear.setBaby();
+                }
+                String bearname = ent.getCustomName();
+                if (bearname != null && !bearname.isEmpty()) {
+                    bear.setCustomName(bearname);
+                }
+                ent.remove();
+            }
+            case SHEEP -> {
+                Sheep s = (Sheep) ent;
+                Sheep sheep = (Sheep) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.SHEEP);
+                sheep.setTicksLived(s.getTicksLived());
+                if ((!s.isAdult())) {
+                    sheep.setBaby();
+                }
+                String sheepname = ent.getCustomName();
+                if (sheepname != null && !sheepname.isEmpty()) {
+                    sheep.setCustomName(sheepname);
+                }
+                sheep.setColor(s.getColor());
+                ent.remove();
+            }
+            case RABBIT -> {
+                Rabbit r = (Rabbit) ent;
+                Rabbit bunny = (Rabbit) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.RABBIT);
+                bunny.setTicksLived(r.getTicksLived());
+                if ((!r.isAdult())) {
+                    bunny.setBaby();
+                }
+                String rabbitname = ent.getCustomName();
+                if (rabbitname != null && !rabbitname.isEmpty()) {
+                    bunny.setCustomName(rabbitname);
+                }
+                bunny.setRabbitType(r.getRabbitType());
+                ent.remove();
+            }
+            case WOLF -> {
+                Tameable wtamed = (Tameable) ent;
+                if (wtamed.isTamed() && Objects.requireNonNull(wtamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
+                    Wolf w = (Wolf) ent;
+                    Wolf wolf = (Wolf) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.WOLF);
+                    wolf.setTicksLived(w.getTicksLived());
+                    if ((!w.isAdult())) {
+                        wolf.setBaby();
+                    }
+                    String wolfname = ent.getCustomName();
+                    if (wolfname != null && !wolfname.isEmpty()) {
+                        wolf.setCustomName(wolfname);
+                    }
+                    wolf.setSitting(w.isSitting());
+                    wolf.setCollarColor(w.getCollarColor());
+                    double health = Math.min(w.getHealth(), 8D);
+                    wolf.setHealth(health);
+                    ent.remove();
+                }
+            }
+            case CAT -> {
+                Tameable otamed = (Tameable) ent;
+                if (otamed.isTamed() && Objects.requireNonNull(otamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
+                    Cat o = (Cat) ent;
+                    Cat cat = (Cat) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.CAT);
+                    cat.setTicksLived(o.getTicksLived());
+                    if ((!o.isAdult())) {
+                        cat.setBaby();
+                    }
+                    String catname = ent.getCustomName();
+                    if (catname != null && !catname.isEmpty()) {
+                        cat.setCustomName(catname);
+                    }
+                    cat.setSitting(o.isSitting());
+                    cat.setCatType(o.getCatType());
+                    cat.setCollarColor(o.getCollarColor());
+                    double health = Math.min(o.getHealth(), 8D);
+                    cat.setHealth(health);
+                    ent.remove();
+                }
+            }
+            case VILLAGER -> {
+                event.setCancelled(true);
+                Villager v = (Villager) ent;
+                Villager villager = (Villager) Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.VILLAGER);
+                villager.setProfession(v.getProfession());
+                villager.setAge(v.getTicksLived());
+                if (!v.isAdult()) {
+                    villager.setBaby();
+                }
+                villager.setHealth(v.getHealth());
+                villager.setRecipes(v.getRecipes());
+                villager.setVillagerType(v.getVillagerType());
+                villager.setVillagerExperience(v.getVillagerExperience());
+                villager.setVillagerLevel(v.getVillagerLevel());
+                String vilname = ent.getCustomName();
+                if (vilname != null && !vilname.isEmpty()) {
+                    villager.setCustomName(vilname);
+                }
+                plugin.getTardisHelper().setVillagerWilling(villager, plugin.getTardisHelper().getVillagerWilling(v));
+                ent.remove();
+            }
+            default -> TARDISMessage.send(player, "EJECT_NOT_VALID");
+        }
+        // stop tracking player
+        plugin.getTrackerKeeper().getEjecting().remove(uuid);
+    }
 }

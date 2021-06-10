@@ -29,49 +29,49 @@ import org.bukkit.inventory.ItemStack;
  */
 class TARDISNameKeyCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISNameKeyCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISNameKeyCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean nameKey(Player player, String[] args) {
-		// determine key item
-		String key;
-		ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
-		if (rsp.resultSet()) {
-			key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
-		} else {
-			key = plugin.getConfig().getString("preferences.key");
-		}
-		assert key != null;
-		Material m = Material.getMaterial(key);
-		assert m != null;
-		if (m.isAir()) {
-			TARDISMessage.send(player, "KEY_NO_RENAME");
-			return true;
-		}
-		ItemStack is = player.getInventory().getItemInMainHand();
-		if (!is.getType().equals(m)) {
-			TARDISMessage.send(player, "KEY_ONLY");
-			return true;
-		}
-		int count = args.length;
-		if (count < 2) {
-			return false;
-		}
-		StringBuilder buf = new StringBuilder(args[1]);
-		for (int i = 2; i < count; i++) {
-			buf.append(" ").append(args[i]);
-		}
-		String tmp = buf.toString();
-		if (!tmp.isEmpty()) {
-			TARDISItemRenamer ir = new TARDISItemRenamer(plugin, player, is);
-			ir.setName(tmp, false);
-			TARDISMessage.send(player, "KEY_RENAMED", tmp);
-			return true;
-		} else {
-			return false;
-		}
-	}
+    boolean nameKey(Player player, String[] args) {
+        // determine key item
+        String key;
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
+        if (rsp.resultSet()) {
+            key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
+        } else {
+            key = plugin.getConfig().getString("preferences.key");
+        }
+        assert key != null;
+        Material m = Material.getMaterial(key);
+        assert m != null;
+        if (m.isAir()) {
+            TARDISMessage.send(player, "KEY_NO_RENAME");
+            return true;
+        }
+        ItemStack is = player.getInventory().getItemInMainHand();
+        if (!is.getType().equals(m)) {
+            TARDISMessage.send(player, "KEY_ONLY");
+            return true;
+        }
+        int count = args.length;
+        if (count < 2) {
+            return false;
+        }
+        StringBuilder buf = new StringBuilder(args[1]);
+        for (int i = 2; i < count; i++) {
+            buf.append(" ").append(args[i]);
+        }
+        String tmp = buf.toString();
+        if (!tmp.isEmpty()) {
+            TARDISItemRenamer ir = new TARDISItemRenamer(plugin, player, is);
+            ir.setName(tmp, false);
+            TARDISMessage.send(player, "KEY_RENAMED", tmp);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

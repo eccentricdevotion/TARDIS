@@ -38,47 +38,46 @@ import java.util.Objects;
  */
 public class TARDISAbandonLister {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISAbandonLister(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISAbandonLister(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public void list(CommandSender sender) {
-		ResultSetTardis rst = new ResultSetTardis(TARDISPlugin.plugin, new HashMap<>(), "", true, 1);
-		sender.sendMessage(ChatColor.GRAY + plugin.getLanguage().getString("ABANDONED_LIST"));
-		if (rst.resultSet()) {
-			boolean click = (sender instanceof Player);
-			if (click) {
-				sender.sendMessage(Objects.requireNonNull(plugin.getLanguage().getString("ABANDONED_CLICK")));
-			}
-			int i = 1;
-			for (TARDIS t : rst.getData()) {
-				String owner = (t.getOwner().equals("")) ? "TARDIS Admin" : t.getOwner();
-				// get current location
-				HashMap<String, Object> wherec = new HashMap<>();
-				wherec.put("tardis_id", t.getTardisId());
-				ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
-				if (rsc.resultSet()) {
-					String w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
-					String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
-					if (click) {
-						TextComponent tcg = new TextComponent(i + ". Abandoned by: " + owner + ", " + l);
-						TextComponent tce = new TextComponent(" < Enter > ");
-						tce.setColor(ChatColor.GREEN);
-						tce.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to enter this TARDIS")));
-						tce.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
-								"/tardisadmin enter " + t.getTardisId()));
-						tcg.addExtra(tce);
-						sender.spigot().sendMessage(tcg);
-					} else {
-						sender.sendMessage(i + ". Abandoned by: " + owner + ", location: " + l);
-					}
-					i++;
-				}
-			}
-		} else {
-			sender.sendMessage(Objects.requireNonNull(plugin.getLanguage().getString("ABANDONED_NONE")));
-		}
-	}
+    public void list(CommandSender sender) {
+        ResultSetTardis rst = new ResultSetTardis(TARDISPlugin.plugin, new HashMap<>(), "", true, 1);
+        sender.sendMessage(ChatColor.GRAY + plugin.getLanguage().getString("ABANDONED_LIST"));
+        if (rst.resultSet()) {
+            boolean click = (sender instanceof Player);
+            if (click) {
+                sender.sendMessage(Objects.requireNonNull(plugin.getLanguage().getString("ABANDONED_CLICK")));
+            }
+            int i = 1;
+            for (TARDIS t : rst.getData()) {
+                String owner = (t.getOwner().equals("")) ? "TARDIS Admin" : t.getOwner();
+                // get current location
+                HashMap<String, Object> wherec = new HashMap<>();
+                wherec.put("tardis_id", t.getTardisId());
+                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                if (rsc.resultSet()) {
+                    String w = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
+                    String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
+                    if (click) {
+                        TextComponent tcg = new TextComponent(i + ". Abandoned by: " + owner + ", " + l);
+                        TextComponent tce = new TextComponent(" < Enter > ");
+                        tce.setColor(ChatColor.GREEN);
+                        tce.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to enter this TARDIS")));
+                        tce.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisadmin enter " + t.getTardisId()));
+                        tcg.addExtra(tce);
+                        sender.spigot().sendMessage(tcg);
+                    } else {
+                        sender.sendMessage(i + ". Abandoned by: " + owner + ", location: " + l);
+                    }
+                    i++;
+                }
+            }
+        } else {
+            sender.sendMessage(Objects.requireNonNull(plugin.getLanguage().getString("ABANDONED_NONE")));
+        }
+    }
 }

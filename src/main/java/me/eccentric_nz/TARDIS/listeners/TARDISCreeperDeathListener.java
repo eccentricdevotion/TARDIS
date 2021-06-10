@@ -40,54 +40,54 @@ import java.util.HashMap;
  */
 public class TARDISCreeperDeathListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISCreeperDeathListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISCreeperDeathListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	/**
-	 * Listens for Creeper deaths. If the creeper is killed by a player and the creeper is a charged creeper, then the
-	 * player receives the configured amount of Artron Energy.
-	 *
-	 * @param e the death of an entity
-	 */
-	@EventHandler(priority = EventPriority.LOW)
-	public void onCreeperDeath(EntityDeathEvent e) {
-		LivingEntity ent = e.getEntity();
-		if (ent instanceof Creeper c) {
-			if (c.isPowered()) {
-				Player p = c.getKiller();
-				if (p != null) {
-					String killerUUID = p.getUniqueId().toString();
-					// is the killer a Time Lord?
-					HashMap<String, Object> where = new HashMap<>();
-					where.put("uuid", killerUUID);
-					ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-					if (rs.resultSet()) {
-						ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, killerUUID);
-						HashMap<String, Object> set = new HashMap<>();
-						int amount = plugin.getArtronConfig().getInt("creeper_recharge");
-						if (!rsp.resultSet()) {
-							set.put("uuid", killerUUID);
-							set.put("artron_level", amount);
-							plugin.getQueryFactory().doInsert("player_prefs", set);
-						} else {
-							int level = rsp.getArtronLevel() + amount;
-							HashMap<String, Object> wherea = new HashMap<>();
-							wherea.put("uuid", killerUUID);
-							set.put("artron_level", level);
-							plugin.getQueryFactory().doUpdate("player_prefs", set, wherea);
-						}
-						TARDISMessage.send(p, "ENERGY_CREEPER", String.format("%d", amount));
-						// are we doing an advancement?
-						if (plugin.getAdvancementConfig().getBoolean("kill.enabled")) {
-							TARDISAdvancementFactory taf = new TARDISAdvancementFactory(plugin, p, Advancement.KILL, 1);
-							taf.doAdvancement(1);
-						}
-					}
-				}
-			}
-		}
-	}
+    /**
+     * Listens for Creeper deaths. If the creeper is killed by a player and the creeper is a charged creeper, then the
+     * player receives the configured amount of Artron Energy.
+     *
+     * @param e the death of an entity
+     */
+    @EventHandler(priority = EventPriority.LOW)
+    public void onCreeperDeath(EntityDeathEvent e) {
+        LivingEntity ent = e.getEntity();
+        if (ent instanceof Creeper c) {
+            if (c.isPowered()) {
+                Player p = c.getKiller();
+                if (p != null) {
+                    String killerUUID = p.getUniqueId().toString();
+                    // is the killer a Time Lord?
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("uuid", killerUUID);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+                    if (rs.resultSet()) {
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, killerUUID);
+                        HashMap<String, Object> set = new HashMap<>();
+                        int amount = plugin.getArtronConfig().getInt("creeper_recharge");
+                        if (!rsp.resultSet()) {
+                            set.put("uuid", killerUUID);
+                            set.put("artron_level", amount);
+                            plugin.getQueryFactory().doInsert("player_prefs", set);
+                        } else {
+                            int level = rsp.getArtronLevel() + amount;
+                            HashMap<String, Object> wherea = new HashMap<>();
+                            wherea.put("uuid", killerUUID);
+                            set.put("artron_level", level);
+                            plugin.getQueryFactory().doUpdate("player_prefs", set, wherea);
+                        }
+                        TARDISMessage.send(p, "ENERGY_CREEPER", String.format("%d", amount));
+                        // are we doing an advancement?
+                        if (plugin.getAdvancementConfig().getBoolean("kill.enabled")) {
+                            TARDISAdvancementFactory taf = new TARDISAdvancementFactory(plugin, p, Advancement.KILL, 1);
+                            taf.doAdvancement(1);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

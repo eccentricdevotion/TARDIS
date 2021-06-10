@@ -20,30 +20,30 @@ import org.bukkit.Material;
 
 public enum Lab {
 
-	Bleach("Water,Water,Water,Sodium Hypochlorite,Sodium Hypochlorite,Sodium Hypochlorite", Material.WHITE_DYE, 1),
-	Heat_Block("Iron,Water,CHARCOAL,Salt", Material.MUSHROOM_STEM, 5),
-	Ice_Bomb("Sodium Acetate,Sodium Acetate,Sodium Acetate,Sodium Acetate", Material.SNOWBALL, 3),
-	Super_Fertiliser("Ammonia,Phosphorus", Material.BONE_MEAL, 4);
+    Bleach("Water,Water,Water,Sodium Hypochlorite,Sodium Hypochlorite,Sodium Hypochlorite", Material.WHITE_DYE, 1),
+    Heat_Block("Iron,Water,CHARCOAL,Salt", Material.MUSHROOM_STEM, 5),
+    Ice_Bomb("Sodium Acetate,Sodium Acetate,Sodium Acetate,Sodium Acetate", Material.SNOWBALL, 3),
+    Super_Fertiliser("Ammonia,Phosphorus", Material.BONE_MEAL, 4);
 
-	private final String recipe;
-	private final Material itemMaterial;
-	private final int customModelData;
+    private final String recipe;
+    private final Material itemMaterial;
+    private final int customModelData;
 
-	Lab(String recipe, Material itemMaterial, int customModelData) {
-		this.recipe = recipe;
-		this.itemMaterial = itemMaterial;
-		this.customModelData = customModelData;
-	}
+    Lab(String recipe, Material itemMaterial, int customModelData) {
+        this.recipe = recipe;
+        this.itemMaterial = itemMaterial;
+        this.customModelData = customModelData;
+    }
 
-	public String getRecipe() {
-		return recipe;
-	}
+    public String getRecipe() {
+        return recipe;
+    }
 
-	public Material getItemMaterial() {
-		return itemMaterial;
-	}
+    public Material getItemMaterial() {
+        return itemMaterial;
+    }
 
-	public int getCustomModelData() {
-		return customModelData;
-	}
+    public int getCustomModelData() {
+        return customModelData;
+    }
 }

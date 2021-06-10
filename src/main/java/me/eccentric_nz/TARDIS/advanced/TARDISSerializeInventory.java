@@ -30,38 +30,38 @@ import java.io.IOException;
  */
 public class TARDISSerializeInventory {
 
-	public static String itemStacksToString(ItemStack[] stack) {
-		try {
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			// Write the size of the stack
-			try (BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream)) {
-				// Write the size of the stack
-				dataOutput.writeInt(stack.length);
-				for (ItemStack is : stack) {
-					dataOutput.writeObject(is);
-				}
-				// Serialize that array
-			}
-			return Base64Coder.encodeLines(outputStream.toByteArray());
-		} catch (IOException e) {
-			throw new IllegalStateException("Unable to save item stacks.", e);
-		}
-	}
+    public static String itemStacksToString(ItemStack[] stack) {
+        try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            // Write the size of the stack
+            try (BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream)) {
+                // Write the size of the stack
+                dataOutput.writeInt(stack.length);
+                for (ItemStack is : stack) {
+                    dataOutput.writeObject(is);
+                }
+                // Serialize that array
+            }
+            return Base64Coder.encodeLines(outputStream.toByteArray());
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to save item stacks.", e);
+        }
+    }
 
-	public static ItemStack[] itemStacksFromString(String data) throws IOException {
-		try {
-			ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
-			ItemStack[] stack;
-			try (BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream)) {
-				stack = new ItemStack[dataInput.readInt()];
-				// Read the serialized ItemStacks
-				for (int i = 0; i < stack.length; i++) {
-					stack[i] = (ItemStack) dataInput.readObject();
-				}
-			}
-			return stack;
-		} catch (ClassNotFoundException e) {
-			throw new IOException("Unable to decode class type.", e);
-		}
-	}
+    public static ItemStack[] itemStacksFromString(String data) throws IOException {
+        try {
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
+            ItemStack[] stack;
+            try (BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream)) {
+                stack = new ItemStack[dataInput.readInt()];
+                // Read the serialized ItemStacks
+                for (int i = 0; i < stack.length; i++) {
+                    stack[i] = (ItemStack) dataInput.readObject();
+                }
+            }
+            return stack;
+        } catch (ClassNotFoundException e) {
+            throw new IOException("Unable to decode class type.", e);
+        }
+    }
 }

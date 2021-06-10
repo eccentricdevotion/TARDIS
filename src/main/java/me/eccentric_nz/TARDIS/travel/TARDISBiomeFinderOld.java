@@ -31,116 +31,116 @@ import java.util.Collections;
 @Deprecated
 public class TARDISBiomeFinderOld implements Runnable {
 
-	private final Integer[] directions = new Integer[]{0, 1, 2, 3};
-	private final Player p;
-	private final int startX;
-	private final int startZ;
-	private final Biome b;
-	private final World w;
-	private int taskId, limitE, limitS, limitW, limitN, i = 0, plus = 0;
-	private Location location = null;
+    private final Integer[] directions = new Integer[]{0, 1, 2, 3};
+    private final Player p;
+    private final int startX;
+    private final int startZ;
+    private final Biome b;
+    private final World w;
+    private int taskId, limitE, limitS, limitW, limitN, i = 0, plus = 0;
+    private Location location = null;
 
-	public TARDISBiomeFinderOld(TARDISPlugin plugin, Player p, int startX, int startZ, Biome b, World w) {
-		this.p = p;
-		this.startX = startX;
-		this.startZ = startZ;
-		this.b = b;
-		this.w = w;
-		Collections.shuffle(Arrays.asList(directions));
-		limitE = startX + 30000;
-		limitS = startZ + 30000;
-		limitW = startX - 30000;
-		limitN = startZ - 30000;
-		if (plugin.getPM().isPluginEnabled("WorldBorder")) {
-			// get the border limit for this world
-			TARDISWorldBorderChecker wb = new TARDISWorldBorderChecker(plugin);
-			int[] data = wb.getBorderDistance(w.getName());
-			int minEW = Math.min(data[0], 30000);
-			int minNS = Math.min(data[1], 30000);
-			limitE = minEW;
-			limitS = minNS;
-			limitW = -minEW;
-			limitN = -minNS;
-		}
-	}
+    public TARDISBiomeFinderOld(TARDISPlugin plugin, Player p, int startX, int startZ, Biome b, World w) {
+        this.p = p;
+        this.startX = startX;
+        this.startZ = startZ;
+        this.b = b;
+        this.w = w;
+        Collections.shuffle(Arrays.asList(directions));
+        limitE = startX + 30000;
+        limitS = startZ + 30000;
+        limitW = startX - 30000;
+        limitN = startZ - 30000;
+        if (plugin.getPM().isPluginEnabled("WorldBorder")) {
+            // get the border limit for this world
+            TARDISWorldBorderChecker wb = new TARDISWorldBorderChecker(plugin);
+            int[] data = wb.getBorderDistance(w.getName());
+            int minEW = Math.min(data[0], 30000);
+            int minNS = Math.min(data[1], 30000);
+            limitE = minEW;
+            limitS = minNS;
+            limitW = -minEW;
+            limitN = -minNS;
+        }
+    }
 
-	@Override
-	public void run() {
-		if (location == null) {
-			switch (directions[i]) {
-				case 0 -> {
-					// east
-					int east = startX + plus;
-					Biome chkbe = w.getBiome(east, w.getHighestBlockYAt(east, startZ), startZ);
-					if (chkbe.equals(b)) {
-						TARDISMessage.send(p, "BIOME_E", b.toString());
-						location = new Location(w, east, TARDISStaticLocationGetters.getHighestYIn3x3(w, east, startZ), startZ);
-					}
-					plus += 64;
-					if (east >= limitE) {
-						i++;
-						plus = 0;
-					}
-				}
-				case 1 -> {
-					// south
-					int south = startZ + plus;
-					Biome chkbs = w.getBiome(startX, w.getHighestBlockYAt(startX, south), south);
-					if (chkbs.equals(b)) {
-						TARDISMessage.send(p, "BIOME_S", b.toString());
-						location = new Location(w, startX, TARDISStaticLocationGetters.getHighestYIn3x3(w, startX, south), south);
-					}
-					plus += 64;
-					if (south >= limitS) {
-						i++;
-						plus = 0;
-					}
-				}
-				case 2 -> {
-					// west
-					int west = startX - plus;
-					Biome chkbw = w.getBiome(west, w.getHighestBlockYAt(west, startZ), startZ);
-					if (chkbw.equals(b)) {
-						TARDISMessage.send(p, "BIOME_W", b.toString());
-						location = new Location(w, west, TARDISStaticLocationGetters.getHighestYIn3x3(w, west, startZ), startZ);
-					}
-					plus -= 64;
-					if (west <= limitW) {
-						i++;
-						plus = 0;
-					}
-				}
-				case 3 -> {
-					// north
-					int north = startZ - plus;
-					Biome chkbn = w.getBiome(startX, w.getHighestBlockYAt(startX, north), north);
-					if (chkbn.equals(b)) {
-						TARDISMessage.send(p, "BIOME_N", b.toString());
-						location = new Location(w, startX, TARDISStaticLocationGetters.getHighestYIn3x3(w, startX, north), north);
-					}
-					plus -= 64;
-					if (north <= limitN) {
-						i++;
-						plus = 0;
-					}
-				}
-			}
-		}
-	}
+    @Override
+    public void run() {
+        if (location == null) {
+            switch (directions[i]) {
+                case 0 -> {
+                    // east
+                    int east = startX + plus;
+                    Biome chkbe = w.getBiome(east, w.getHighestBlockYAt(east, startZ), startZ);
+                    if (chkbe.equals(b)) {
+                        TARDISMessage.send(p, "BIOME_E", b.toString());
+                        location = new Location(w, east, TARDISStaticLocationGetters.getHighestYIn3x3(w, east, startZ), startZ);
+                    }
+                    plus += 64;
+                    if (east >= limitE) {
+                        i++;
+                        plus = 0;
+                    }
+                }
+                case 1 -> {
+                    // south
+                    int south = startZ + plus;
+                    Biome chkbs = w.getBiome(startX, w.getHighestBlockYAt(startX, south), south);
+                    if (chkbs.equals(b)) {
+                        TARDISMessage.send(p, "BIOME_S", b.toString());
+                        location = new Location(w, startX, TARDISStaticLocationGetters.getHighestYIn3x3(w, startX, south), south);
+                    }
+                    plus += 64;
+                    if (south >= limitS) {
+                        i++;
+                        plus = 0;
+                    }
+                }
+                case 2 -> {
+                    // west
+                    int west = startX - plus;
+                    Biome chkbw = w.getBiome(west, w.getHighestBlockYAt(west, startZ), startZ);
+                    if (chkbw.equals(b)) {
+                        TARDISMessage.send(p, "BIOME_W", b.toString());
+                        location = new Location(w, west, TARDISStaticLocationGetters.getHighestYIn3x3(w, west, startZ), startZ);
+                    }
+                    plus -= 64;
+                    if (west <= limitW) {
+                        i++;
+                        plus = 0;
+                    }
+                }
+                case 3 -> {
+                    // north
+                    int north = startZ - plus;
+                    Biome chkbn = w.getBiome(startX, w.getHighestBlockYAt(startX, north), north);
+                    if (chkbn.equals(b)) {
+                        TARDISMessage.send(p, "BIOME_N", b.toString());
+                        location = new Location(w, startX, TARDISStaticLocationGetters.getHighestYIn3x3(w, startX, north), north);
+                    }
+                    plus -= 64;
+                    if (north <= limitN) {
+                        i++;
+                        plus = 0;
+                    }
+                }
+            }
+        }
+    }
 
-	public int getTaskId() {
-		return taskId;
-	}
+    public int getTaskId() {
+        return taskId;
+    }
 
-	public void setTaskId(int taskId) {
-		this.taskId = taskId;
-	}
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
 
-	public boolean poll() {
-		return location != null;
-	}
+    public boolean poll() {
+        return location != null;
+    }
 
-	public Location getLocation() {
-		return location;
-	}
+    public Location getLocation() {
+        return location;
+    }
 }

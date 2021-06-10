@@ -1,15 +1,15 @@
 {
-	"display": {
-		"icon": {
-			"item": "minecraft:wheat"
-		},
-		"title": "Old MacDonald had a farm",
-		"description": "Farm all allowed animal types"
-	},
-	"parent": "tardis:tardis",
-	"criteria": {
-		"farm_mobs": {
-			"trigger": "minecraft:impossible"
-		}
-	}
+    "display": {
+        "icon": {
+            "item": "minecraft:wheat"
+        },
+        "title": "Old MacDonald had a farm",
+        "description": "Farm all allowed animal types"
+    },
+    "parent": "tardis:tardis",
+    "criteria": {
+        "farm_mobs": {
+            "trigger": "minecraft:impossible"
+        }
+    }
 }

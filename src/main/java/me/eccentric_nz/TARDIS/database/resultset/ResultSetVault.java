@@ -34,120 +34,120 @@ import java.sql.SQLException;
  */
 public class ResultSetVault {
 
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final TARDISPlugin plugin;
-	private final String where;
-	private final int id;
-	private final String prefix;
-	private int vaultId;
-	private int tardisId;
-	private String location;
-	private int x;
-	private int y;
-	private int z;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final TARDISPlugin plugin;
+    private final String where;
+    private final int id;
+    private final String prefix;
+    private int vaultId;
+    private int tardisId;
+    private String location;
+    private int x;
+    private int y;
+    private int z;
 
-	/**
-	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
-	 *
-	 * @param plugin an instance of the main class.
-	 * @param where  the location of the drop chest.
-	 */
-	public ResultSetVault(TARDISPlugin plugin, String where) {
-		this.plugin = plugin;
-		this.where = where;
-		id = -1;
-		prefix = this.plugin.getPrefix();
-	}
+    /**
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
+     *
+     * @param plugin an instance of the main class.
+     * @param where  the location of the drop chest.
+     */
+    public ResultSetVault(TARDISPlugin plugin, String where) {
+        this.plugin = plugin;
+        this.where = where;
+        id = -1;
+        prefix = this.plugin.getPrefix();
+    }
 
-	/**
-	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
-	 *
-	 * @param plugin an instance of the main class.
-	 * @param id     the tardis_id of the player updating the drop chest.
-	 */
-	public ResultSetVault(TARDISPlugin plugin, int id) {
-		this.plugin = plugin;
-		where = "";
-		this.id = id;
-		prefix = this.plugin.getPrefix();
-	}
+    /**
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
+     *
+     * @param plugin an instance of the main class.
+     * @param id     the tardis_id of the player updating the drop chest.
+     */
+    public ResultSetVault(TARDISPlugin plugin, int id) {
+        this.plugin = plugin;
+        where = "";
+        this.id = id;
+        prefix = this.plugin.getPrefix();
+    }
 
-	/**
-	 * Retrieves an SQL ResultSet from the vaults table. This method builds an SQL query string from the parameters
-	 * supplied and then executes the query. Use the getters to retrieve the results.
-	 *
-	 * @return true or false depending on whether any data matches the query
-	 */
-	public boolean resultSet() {
-		PreparedStatement statement = null;
-		ResultSet rs = null;
-		String query;
-		if (where.isEmpty()) {
-			query = "SELECT * FROM " + prefix + "vaults WHERE tardis_id = ?";
-		} else {
-			query = "SELECT * FROM " + prefix + "vaults WHERE location = ?";
-		}
-		try {
-			service.testConnection(connection);
-			statement = connection.prepareStatement(query);
-			if (where.isEmpty()) {
-				statement.setInt(1, id);
-			} else {
-				statement.setString(1, where);
-			}
-			rs = statement.executeQuery();
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					vaultId = rs.getInt("v_id");
-					tardisId = rs.getInt("tardis_id");
-					location = rs.getString("location");
-					x = rs.getInt("x");
-					y = rs.getInt("y");
-					z = rs.getInt("z");
-				}
-			} else {
-				return false;
-			}
-		} catch (SQLException e) {
-			plugin.debug("ResultSet error for vaults table! " + e.getMessage());
-			return false;
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing vaults table! " + e.getMessage());
-			}
-		}
-		return true;
-	}
+    /**
+     * Retrieves an SQL ResultSet from the vaults table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
+     *
+     * @return true or false depending on whether any data matches the query
+     */
+    public boolean resultSet() {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query;
+        if (where.isEmpty()) {
+            query = "SELECT * FROM " + prefix + "vaults WHERE tardis_id = ?";
+        } else {
+            query = "SELECT * FROM " + prefix + "vaults WHERE location = ?";
+        }
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            if (where.isEmpty()) {
+                statement.setInt(1, id);
+            } else {
+                statement.setString(1, where);
+            }
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    vaultId = rs.getInt("v_id");
+                    tardisId = rs.getInt("tardis_id");
+                    location = rs.getString("location");
+                    x = rs.getInt("x");
+                    y = rs.getInt("y");
+                    z = rs.getInt("z");
+                }
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for vaults table! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing vaults table! " + e.getMessage());
+            }
+        }
+        return true;
+    }
 
-	public int getVaultId() {
-		return vaultId;
-	}
+    public int getVaultId() {
+        return vaultId;
+    }
 
-	public int getTardisId() {
-		return tardisId;
-	}
+    public int getTardisId() {
+        return tardisId;
+    }
 
-	public String getLocation() {
-		return location;
-	}
+    public String getLocation() {
+        return location;
+    }
 
-	public int getX() {
-		return x;
-	}
+    public int getX() {
+        return x;
+    }
 
-	public int getY() {
-		return y;
-	}
+    public int getY() {
+        return y;
+    }
 
-	public int getZ() {
-		return z;
-	}
+    public int getZ() {
+        return z;
+    }
 }

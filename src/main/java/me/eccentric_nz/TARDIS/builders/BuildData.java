@@ -26,50 +26,50 @@ import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
  */
 public final class BuildData extends MaterialisationData {
 
-	private boolean addSign = true;
-	private boolean malfunction;
-	private boolean minecartSounds = false;
-	private boolean rebuild;
+    private boolean addSign = true;
+    private boolean malfunction;
+    private boolean minecartSounds = false;
+    private boolean rebuild;
 
-	public BuildData(String uuid) {
-		setPlayerDefaults(uuid);
-	}
+    public BuildData(String uuid) {
+        setPlayerDefaults(uuid);
+    }
 
-	boolean shouldAddSign() {
-		return addSign;
-	}
+    boolean shouldAddSign() {
+        return addSign;
+    }
 
-	public boolean isMalfunction() {
-		return malfunction;
-	}
+    public boolean isMalfunction() {
+        return malfunction;
+    }
 
-	public void setMalfunction(boolean malfunction) {
-		this.malfunction = malfunction;
-	}
+    public void setMalfunction(boolean malfunction) {
+        this.malfunction = malfunction;
+    }
 
-	boolean useMinecartSounds() {
-		return minecartSounds;
-	}
+    boolean useMinecartSounds() {
+        return minecartSounds;
+    }
 
-	public boolean isRebuild() {
-		return rebuild;
-	}
+    public boolean isRebuild() {
+        return rebuild;
+    }
 
-	public void setRebuild(boolean rebuild) {
-		this.rebuild = rebuild;
-	}
+    public void setRebuild(boolean rebuild) {
+        this.rebuild = rebuild;
+    }
 
-	private void setPlayerDefaults(String uuid) {
-		if (uuid == null) {
-			// sane defaults
-			addSign = true;
-			minecartSounds = false;
-		} else {
-			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDISPlugin.plugin, uuid);
-			if (rsp.resultSet()) {
-				addSign = rsp.isSignOn();
-				minecartSounds = rsp.isMinecartOn();
-			}
-		}
-	}
+    private void setPlayerDefaults(String uuid) {
+        if (uuid == null) {
+            // sane defaults
+            addSign = true;
+            minecartSounds = false;
+        } else {
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDISPlugin.plugin, uuid);
+            if (rsp.resultSet()) {
+                addSign = rsp.isSignOn();
+                minecartSounds = rsp.isMinecartOn();
+            }
+        }
+    }
 }

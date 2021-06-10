@@ -27,35 +27,34 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 class TARDISChameleonFrame {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISChameleonFrame(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISChameleonFrame(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	void updateChameleonFrame(int id, PRESET preset, String loc) {
-		// get location of Chameleon frame
-		Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(loc);
-		if (location != null) {
-			for (Entity e : location.getChunk().getEntities()) {
-				if (e instanceof ItemFrame) {
-					if (compareLocations(e.getLocation(), location)) {
-						ItemFrame frame = (ItemFrame) e;
-						ItemStack is = new ItemStack(preset.getGuiDisplay());
-						ItemMeta im = is.getItemMeta();
-						assert im != null;
-						im.setDisplayName(preset.toString());
-						is.setItemMeta(im);
-						frame.setItem(is, true);
-						break;
-					}
-				}
-			}
-		}
-	}
+    void updateChameleonFrame(int id, PRESET preset, String loc) {
+        // get location of Chameleon frame
+        Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(loc);
+        if (location != null) {
+            for (Entity e : location.getChunk().getEntities()) {
+                if (e instanceof ItemFrame) {
+                    if (compareLocations(e.getLocation(), location)) {
+                        ItemFrame frame = (ItemFrame) e;
+                        ItemStack is = new ItemStack(preset.getGuiDisplay());
+                        ItemMeta im = is.getItemMeta();
+                        assert im != null;
+                        im.setDisplayName(preset.toString());
+                        is.setItemMeta(im);
+                        frame.setItem(is, true);
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
-	private boolean compareLocations(Location one, Location two) {
-		return one.getBlockX() == two.getBlockX() && one.getBlockY() == two.getBlockY() &&
-			   one.getBlockZ() == two.getBlockZ();
-	}
+    private boolean compareLocations(Location one, Location two) {
+        return one.getBlockX() == two.getBlockX() && one.getBlockY() == two.getBlockY() && one.getBlockZ() == two.getBlockZ();
+    }
 }

@@ -30,55 +30,55 @@ import java.util.HashMap;
  */
 class TARDISJunkLocation {
 
-	private final TARDISPlugin plugin;
-	private Location current;
-	private Location home;
-	private int id;
-	private TARDISBiome tardisBiome;
+    private final TARDISPlugin plugin;
+    private Location current;
+    private Location home;
+    private int id;
+    private TARDISBiome tardisBiome;
 
-	TARDISJunkLocation(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISJunkLocation(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean isNotHome() {
-		// check the Junk tardis is not home already
-		ResultSetTardisID rs = new ResultSetTardisID(plugin);
-		if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
-			id = rs.getTardisId();
-			// get current location
-			HashMap<String, Object> wherec = new HashMap<>();
-			wherec.put("tardis_id", id);
-			ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
-			if (rsc.resultSet()) {
-				tardisBiome = TARDISBiome.get(rsc.getBiomeKey());
-				// get home location
-				HashMap<String, Object> whereh = new HashMap<>();
-				whereh.put("tardis_id", id);
-				ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, whereh);
-				if (rsh.resultSet()) {
-					current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-					home = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
-					// compare locations
-					return !current.equals(home);
-				}
-			}
-		}
-		return true;
-	}
+    boolean isNotHome() {
+        // check the Junk tardis is not home already
+        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
+            id = rs.getTardisId();
+            // get current location
+            HashMap<String, Object> wherec = new HashMap<>();
+            wherec.put("tardis_id", id);
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+            if (rsc.resultSet()) {
+                tardisBiome = TARDISBiome.get(rsc.getBiomeKey());
+                // get home location
+                HashMap<String, Object> whereh = new HashMap<>();
+                whereh.put("tardis_id", id);
+                ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, whereh);
+                if (rsh.resultSet()) {
+                    current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                    home = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
+                    // compare locations
+                    return !current.equals(home);
+                }
+            }
+        }
+        return true;
+    }
 
-	public Location getCurrent() {
-		return current;
-	}
+    public Location getCurrent() {
+        return current;
+    }
 
-	public Location getHome() {
-		return home;
-	}
+    public Location getHome() {
+        return home;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public TARDISBiome getTardisBiome() {
-		return tardisBiome;
-	}
+    public TARDISBiome getTardisBiome() {
+        return tardisBiome;
+    }
 }

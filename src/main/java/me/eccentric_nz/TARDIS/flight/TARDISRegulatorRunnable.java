@@ -31,71 +31,71 @@ import java.util.List;
  */
 public class TARDISRegulatorRunnable extends TARDISRegulatorSlot implements Runnable {
 
-	private final InventoryView view;
-	private final List<Integer> directions = Arrays.asList(0, 1, 2, 3);
-	private int slot;
-	private int taskId;
+    private final InventoryView view;
+    private final List<Integer> directions = Arrays.asList(0, 1, 2, 3);
+    private int slot;
+    private int taskId;
 
-	TARDISRegulatorRunnable(InventoryView view) {
-		this.view = view;
-		slot = 20;
-	}
+    TARDISRegulatorRunnable(InventoryView view) {
+        this.view = view;
+        slot = 20;
+    }
 
-	@Override
-	public void run() {
-		// clear slot
-		view.setItem(getSlot(), vortex);
-		Collections.shuffle(directions);
-		found:
-		for (int i = 0; i < 4; i++) {
-			for (int d = 0; d < 4; d++) {
-				if (directions.get(d) == 0) {
-					int s0 = upSlot(getSlot());
-					if (bounds.contains(s0)) {
-						setSlot(s0);
-						break found;
-					}
-				}
-				if (directions.get(d) == 1) {
-					int s1 = leftSlot(getSlot());
-					if (bounds.contains(s1)) {
-						setSlot(s1);
-						break found;
-					}
-				}
-				if (directions.get(d) == 2) {
-					int s2 = rightSlot(getSlot());
-					if (bounds.contains(s2)) {
-						setSlot(s2);
-						break found;
-					}
-				}
-				if (directions.get(d) == 3) {
-					int s3 = downSlot(getSlot());
-					if (bounds.contains(s3)) {
-						setSlot(s3);
-						break found;
-					}
-				}
-			}
-		}
-		// set the slot
-		view.setItem(getSlot(), box);
-	}
+    @Override
+    public void run() {
+        // clear slot
+        view.setItem(getSlot(), vortex);
+        Collections.shuffle(directions);
+        found:
+        for (int i = 0; i < 4; i++) {
+            for (int d = 0; d < 4; d++) {
+                if (directions.get(d) == 0) {
+                    int s0 = upSlot(getSlot());
+                    if (bounds.contains(s0)) {
+                        setSlot(s0);
+                        break found;
+                    }
+                }
+                if (directions.get(d) == 1) {
+                    int s1 = leftSlot(getSlot());
+                    if (bounds.contains(s1)) {
+                        setSlot(s1);
+                        break found;
+                    }
+                }
+                if (directions.get(d) == 2) {
+                    int s2 = rightSlot(getSlot());
+                    if (bounds.contains(s2)) {
+                        setSlot(s2);
+                        break found;
+                    }
+                }
+                if (directions.get(d) == 3) {
+                    int s3 = downSlot(getSlot());
+                    if (bounds.contains(s3)) {
+                        setSlot(s3);
+                        break found;
+                    }
+                }
+            }
+        }
+        // set the slot
+        view.setItem(getSlot(), box);
+    }
 
-	public int getSlot() {
-		return slot;
-	}
+    public int getSlot() {
+        return slot;
+    }
 
-	public void setSlot(int slot) {
-		this.slot = slot;
-	}
+    public void setSlot(int slot) {
+        this.slot = slot;
+    }
 
-	int getTaskId() {
-		return taskId;
-	}
+    int getTaskId() {
+        return taskId;
+    }
 
-	void setTaskId(int taskId) {
-		this.taskId = taskId;
-	}
+    void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
 }

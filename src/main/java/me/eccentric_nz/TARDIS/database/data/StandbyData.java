@@ -22,43 +22,43 @@ import java.util.UUID;
 
 public class StandbyData {
 
-	private final int level;
-	private final UUID uuid;
-	private final boolean hidden;
-	private final boolean lights;
-	private final PRESET preset;
-	private final boolean lanterns;
+    private final int level;
+    private final UUID uuid;
+    private final boolean hidden;
+    private final boolean lights;
+    private final PRESET preset;
+    private final boolean lanterns;
 
-	public StandbyData(int level, UUID uuid, boolean hidden, boolean lights, PRESET preset, boolean lanterns) {
-		this.level = level;
-		this.uuid = uuid;
-		this.hidden = hidden;
-		this.lights = lights;
-		this.preset = preset;
-		this.lanterns = lanterns;
-	}
+    public StandbyData(int level, UUID uuid, boolean hidden, boolean lights, PRESET preset, boolean lanterns) {
+        this.level = level;
+        this.uuid = uuid;
+        this.hidden = hidden;
+        this.lights = lights;
+        this.preset = preset;
+        this.lanterns = lanterns;
+    }
 
-	public int getLevel() {
-		return level;
-	}
+    public int getLevel() {
+        return level;
+    }
 
-	public UUID getUuid() {
-		return uuid;
-	}
+    public UUID getUuid() {
+        return uuid;
+    }
 
-	public boolean isHidden() {
-		return hidden;
-	}
+    public boolean isHidden() {
+        return hidden;
+    }
 
-	public boolean isLights() {
-		return lights;
-	}
+    public boolean isLights() {
+        return lights;
+    }
 
-	public PRESET getPreset() {
-		return preset;
-	}
+    public PRESET getPreset() {
+        return preset;
+    }
 
-	public boolean isLanterns() {
-		return lanterns;
-	}
+    public boolean isLanterns() {
+        return lanterns;
+    }
 }

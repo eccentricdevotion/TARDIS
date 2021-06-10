@@ -38,112 +38,112 @@ import java.util.UUID;
  */
 class TARDISEnterCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISEnterCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISEnterCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean enterTARDIS(CommandSender sender, String[] args) {
-		Player player = null;
-		if (sender instanceof Player) {
-			player = (Player) sender;
-		}
-		if (player == null) {
-			TARDISMessage.send(sender, "CMD_PLAYER");
-			return true;
-		}
-		if (!TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
-			TARDISMessage.send(player, "NO_PERMS");
-			return true;
-		}
-		int tmp = -1;
-		try {
-			tmp = Integer.parseInt(args[1]);
-		} catch (NumberFormatException nfe) {
-			// do nothing
-		}
-		HashMap<String, Object> where = new HashMap<>();
-		if (tmp == -1) {
-			// Look up this player's UUID
-			UUID uuid = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId()).getUniqueId();
-			where.put("uuid", uuid.toString());
-			where.put("abandoned", 0);
-		} else {
-			where.put("tardis_id", tmp);
-		}
-		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-		if (rs.resultSet()) {
-			TARDIS tardis = rs.getTardis();
-			int id = tardis.getTardisId();
-			String owner = tardis.getOwner();
-			HashMap<String, Object> wherei = new HashMap<>();
-			wherei.put("door_type", 1);
-			wherei.put("tardis_id", id);
-			ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
-			if (rsi.resultSet()) {
-				COMPASS innerD = rsi.getDoorDirection();
-				String doorLocStr = rsi.getDoorLocation();
-				World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
-				Location tardis_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
-				assert tardis_loc != null;
-				int getx = tardis_loc.getBlockX();
-				int getz = tardis_loc.getBlockZ();
-				switch (innerD) {
-					case NORTH -> {
-						// z -ve
-						tardis_loc.setX(getx + 0.5);
-						tardis_loc.setZ(getz - 0.5);
-					}
-					case EAST -> {
-						// x +ve
-						tardis_loc.setX(getx + 1.5);
-						tardis_loc.setZ(getz + 0.5);
-					}
-					case SOUTH -> {
-						// z +ve
-						tardis_loc.setX(getx + 0.5);
-						tardis_loc.setZ(getz + 1.5);
-					}
-					case WEST -> {
-						// x -ve
-						tardis_loc.setX(getx - 0.5);
-						tardis_loc.setZ(getz + 0.5);
-					}
-				}
-				// if WorldGuard is on the server check for tardis region protection and add admin as member
-				if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-					plugin.getWorldGuardUtils().addMemberToRegion(cw, owner, player.getName());
-				}
-				// enter tardis!
-				cw.getChunkAt(tardis_loc).load();
-				float yaw = player.getLocation().getYaw();
-				float pitch = player.getLocation().getPitch();
-				tardis_loc.setPitch(pitch);
-				// get players direction so we can adjust yaw if necessary
-				COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
-				if (!innerD.equals(d)) {
-					switch (d) {
-						case NORTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[0][innerD.ordinal()];
-						case WEST -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[1][innerD.ordinal()];
-						case SOUTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[2][innerD.ordinal()];
-						case EAST -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[3][innerD.ordinal()];
-					}
-				}
-				tardis_loc.setYaw(yaw);
-				World playerWorld = player.getLocation().getWorld();
-				plugin.getGeneralKeeper().getDoorListener().movePlayer(player, tardis_loc, false, playerWorld, false, 3, true);
-				// put player into travellers table
-				HashMap<String, Object> set = new HashMap<>();
-				set.put("tardis_id", id);
-				set.put("uuid", player.getUniqueId().toString());
-				plugin.getQueryFactory().doInsert("travellers", set);
-				return true;
-			}
-		} else {
-			String message = (tmp == -1) ? "PLAYER_NO_TARDIS" : "ABANDONED_NOT_FOUND";
-			TARDISMessage.send(player, message);
-		}
-		return true;
-	}
+    boolean enterTARDIS(CommandSender sender, String[] args) {
+        Player player = null;
+        if (sender instanceof Player) {
+            player = (Player) sender;
+        }
+        if (player == null) {
+            TARDISMessage.send(sender, "CMD_PLAYER");
+            return true;
+        }
+        if (!TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
+            TARDISMessage.send(player, "NO_PERMS");
+            return true;
+        }
+        int tmp = -1;
+        try {
+            tmp = Integer.parseInt(args[1]);
+        } catch (NumberFormatException nfe) {
+            // do nothing
+        }
+        HashMap<String, Object> where = new HashMap<>();
+        if (tmp == -1) {
+            // Look up this player's UUID
+            UUID uuid = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId()).getUniqueId();
+            where.put("uuid", uuid.toString());
+            where.put("abandoned", 0);
+        } else {
+            where.put("tardis_id", tmp);
+        }
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+        if (rs.resultSet()) {
+            TARDIS tardis = rs.getTardis();
+            int id = tardis.getTardisId();
+            String owner = tardis.getOwner();
+            HashMap<String, Object> wherei = new HashMap<>();
+            wherei.put("door_type", 1);
+            wherei.put("tardis_id", id);
+            ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
+            if (rsi.resultSet()) {
+                COMPASS innerD = rsi.getDoorDirection();
+                String doorLocStr = rsi.getDoorLocation();
+                World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
+                Location tardis_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
+                assert tardis_loc != null;
+                int getx = tardis_loc.getBlockX();
+                int getz = tardis_loc.getBlockZ();
+                switch (innerD) {
+                    case NORTH -> {
+                        // z -ve
+                        tardis_loc.setX(getx + 0.5);
+                        tardis_loc.setZ(getz - 0.5);
+                    }
+                    case EAST -> {
+                        // x +ve
+                        tardis_loc.setX(getx + 1.5);
+                        tardis_loc.setZ(getz + 0.5);
+                    }
+                    case SOUTH -> {
+                        // z +ve
+                        tardis_loc.setX(getx + 0.5);
+                        tardis_loc.setZ(getz + 1.5);
+                    }
+                    case WEST -> {
+                        // x -ve
+                        tardis_loc.setX(getx - 0.5);
+                        tardis_loc.setZ(getz + 0.5);
+                    }
+                }
+                // if WorldGuard is on the server check for tardis region protection and add admin as member
+                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                    plugin.getWorldGuardUtils().addMemberToRegion(cw, owner, player.getName());
+                }
+                // enter tardis!
+                cw.getChunkAt(tardis_loc).load();
+                float yaw = player.getLocation().getYaw();
+                float pitch = player.getLocation().getPitch();
+                tardis_loc.setPitch(pitch);
+                // get players direction so we can adjust yaw if necessary
+                COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
+                if (!innerD.equals(d)) {
+                    switch (d) {
+                        case NORTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[0][innerD.ordinal()];
+                        case WEST -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[1][innerD.ordinal()];
+                        case SOUTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[2][innerD.ordinal()];
+                        case EAST -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[3][innerD.ordinal()];
+                    }
+                }
+                tardis_loc.setYaw(yaw);
+                World playerWorld = player.getLocation().getWorld();
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(player, tardis_loc, false, playerWorld, false, 3, true);
+                // put player into travellers table
+                HashMap<String, Object> set = new HashMap<>();
+                set.put("tardis_id", id);
+                set.put("uuid", player.getUniqueId().toString());
+                plugin.getQueryFactory().doInsert("travellers", set);
+                return true;
+            }
+        } else {
+            String message = (tmp == -1) ? "PLAYER_NO_TARDIS" : "ABANDONED_NOT_FOUND";
+            TARDISMessage.send(player, message);
+        }
+        return true;
+    }
 }

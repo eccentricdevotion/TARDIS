@@ -32,59 +32,57 @@ import java.util.UUID;
  */
 public class TARDISInventoryPluginHelper implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISInventoryPluginHelper(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISInventoryPluginHelper(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	/*
-	 * Multiverse-Inventories listens on LOW priority, so if we listen on LOWEST
-	 * we should go first.
-	 */
-	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-	public void onPlayerWorldChangeLOWEST(PlayerChangedWorldEvent event) {
+    /*
+     * Multiverse-Inventories listens on LOW priority, so if we listen on LOWEST
+     * we should go first.
+     */
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onPlayerWorldChangeLOWEST(PlayerChangedWorldEvent event) {
 
-		Player player = event.getPlayer();
-		boolean shouldSwitch = switch (plugin.getInvManager()) {
-			case MULTIVERSE -> !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
-			case PER_WORLD -> !TARDISPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
-			default ->
-					// GAMEMODE
-					(plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) !=
-					 plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
-		};
-		if (shouldSwitch) {
-			// switch to non-fobbed inventory before inventory manager
-			UUID uuid = player.getUniqueId();
-			if (plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-				new TARDISArchInventory().switchInventories(player, 1);
-			}
-		}
-	}
+        Player player = event.getPlayer();
+        boolean shouldSwitch = switch (plugin.getInvManager()) {
+            case MULTIVERSE -> !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+            case PER_WORLD -> !TARDISPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+            default ->
+                    // GAMEMODE
+                    (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
+        };
+        if (shouldSwitch) {
+            // switch to non-fobbed inventory before inventory manager
+            UUID uuid = player.getUniqueId();
+            if (plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+                new TARDISArchInventory().switchInventories(player, 1);
+            }
+        }
+    }
 
-	/*
-	 * Multiverse-Inventories and GameModeInventories listen on LOW priority, MultiInv on HIGHEST, PerWorldInventory on MONITOR so if we listen on MONITOR
-	 * we should go after.
-	 */
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onPlayerWorldChangeNORMAL(PlayerChangedWorldEvent event) {
+    /*
+     * Multiverse-Inventories and GameModeInventories listen on LOW priority, MultiInv on HIGHEST, PerWorldInventory on MONITOR so if we listen on MONITOR
+     * we should go after.
+     */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onPlayerWorldChangeNORMAL(PlayerChangedWorldEvent event) {
 
-		Player player = event.getPlayer();
-		boolean shouldSwitch = switch (plugin.getInvManager()) {
-			case MULTIVERSE -> !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
-			case PER_WORLD -> !TARDISPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
-			default ->
-					// GAMEMODE
-					(plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) !=
-					 plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
-		};
-		if (shouldSwitch) {
-			// switch to back to fobbed inventory after MVI and MI
-			UUID uuid = player.getUniqueId();
-			if (plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-				new TARDISArchInventory().switchInventories(player, 0);
-			}
-		}
-	}
+        Player player = event.getPlayer();
+        boolean shouldSwitch = switch (plugin.getInvManager()) {
+            case MULTIVERSE -> !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+            case PER_WORLD -> !TARDISPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+            default ->
+                    // GAMEMODE
+                    (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
+        };
+        if (shouldSwitch) {
+            // switch to back to fobbed inventory after MVI and MI
+            UUID uuid = player.getUniqueId();
+            if (plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+                new TARDISArchInventory().switchInventories(player, 0);
+            }
+        }
+    }
 }

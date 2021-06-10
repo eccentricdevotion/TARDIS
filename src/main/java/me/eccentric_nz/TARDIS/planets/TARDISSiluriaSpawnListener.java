@@ -33,36 +33,35 @@ import java.util.Objects;
  */
 public final class TARDISSiluriaSpawnListener implements Listener {
 
-	private final TARDISPlugin plugin;
-	private final TARDISWeepingAngelsAPI twaAPI;
+    private final TARDISPlugin plugin;
+    private final TARDISWeepingAngelsAPI twaAPI;
 
-	public TARDISSiluriaSpawnListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		twaAPI = TARDISAngelsAPI.getAPI(plugin);
-	}
+    public TARDISSiluriaSpawnListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        twaAPI = TARDISAngelsAPI.getAPI(plugin);
+    }
 
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onSilurianSpawn(CreatureSpawnEvent event) {
-		if (!Objects.requireNonNull(event.getLocation().getWorld()).getName().endsWith("siluria")) {
-			return;
-		}
-		CreatureSpawnEvent.SpawnReason spawnReason = event.getSpawnReason();
-		// get default server world
-		String s_world = plugin.getServer().getWorlds().get(0).getName();
-		// if configured prevent spawns (unless from spawners and plugins)
-		if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.spawn_other_mobs") &&
-			spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
-			event.setCancelled(true);
-			return;
-		}
-		if (spawnReason == SpawnReason.SPAWNER) {
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onSilurianSpawn(CreatureSpawnEvent event) {
+        if (!Objects.requireNonNull(event.getLocation().getWorld()).getName().endsWith("siluria")) {
+            return;
+        }
+        CreatureSpawnEvent.SpawnReason spawnReason = event.getSpawnReason();
+        // get default server world
+        String s_world = plugin.getServer().getWorlds().get(0).getName();
+        // if configured prevent spawns (unless from spawners and plugins)
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.spawn_other_mobs") && spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
+            event.setCancelled(true);
+            return;
+        }
+        if (spawnReason == SpawnReason.SPAWNER) {
 
-			if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
-				return;
-			}
-			LivingEntity le = event.getEntity();
-			// it's a Silurian - disguise it!
-			twaAPI.setSilurianEquipment(le, false);
-		}
-	}
+            if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
+                return;
+            }
+            LivingEntity le = event.getEntity();
+            // it's a Silurian - disguise it!
+            twaAPI.setSilurianEquipment(le, false);
+        }
+    }
 }

@@ -30,52 +30,52 @@ import java.util.zip.GZIPOutputStream;
  */
 public class TARDISSchematicGZip {
 
-	static void zip(String instr, String outstr) {
-		try {
-			FileInputStream fis = new FileInputStream(instr);
-			FileOutputStream fos = new FileOutputStream(outstr);
-			GZIPOutputStream gzos = new GZIPOutputStream(fos);
-			byte[] buffer = new byte[1024 * 16];
-			int len;
-			while ((len = fis.read(buffer)) != -1) {
-				gzos.write(buffer, 0, len);
-			}
-			gzos.close();
-			fos.close();
-			fis.close();
-		} catch (IOException e) {
-			TARDISPlugin.plugin.debug("Could not GZip schematic file!" + e.getMessage());
-		}
-	}
+    static void zip(String instr, String outstr) {
+        try {
+            FileInputStream fis = new FileInputStream(instr);
+            FileOutputStream fos = new FileOutputStream(outstr);
+            GZIPOutputStream gzos = new GZIPOutputStream(fos);
+            byte[] buffer = new byte[1024 * 16];
+            int len;
+            while ((len = fis.read(buffer)) != -1) {
+                gzos.write(buffer, 0, len);
+            }
+            gzos.close();
+            fos.close();
+            fis.close();
+        } catch (IOException e) {
+            TARDISPlugin.plugin.debug("Could not GZip schematic file!" + e.getMessage());
+        }
+    }
 
-	public static JsonObject unzip(String instr) {
-		InputStreamReader isr = null;
-		StringWriter sw = null;
-		String s = "";
-		try {
-			GZIPInputStream gzis = new GZIPInputStream(new FileInputStream(instr));
-			isr = new InputStreamReader(gzis, StandardCharsets.UTF_8);
-			sw = new StringWriter();
-			char[] buffer = new char[1024 * 16];
-			int len;
-			while ((len = isr.read(buffer)) > 0) {
-				sw.write(buffer, 0, len);
-			}
-			s = sw.toString();
-		} catch (IOException ex) {
-			TARDISPlugin.plugin.debug("Could not read GZip schematic file! " + ex.getMessage());
-		} finally {
-			try {
-				if (sw != null) {
-					sw.close();
-				}
-				if (isr != null) {
-					isr.close();
-				}
-			} catch (IOException ex) {
-				TARDISPlugin.plugin.debug("Could not close GZip schematic file! " + ex.getMessage());
-			}
-		}
-		return (s.startsWith("{")) ? JsonParser.parseString(s).getAsJsonObject() : null;
-	}
+    public static JsonObject unzip(String instr) {
+        InputStreamReader isr = null;
+        StringWriter sw = null;
+        String s = "";
+        try {
+            GZIPInputStream gzis = new GZIPInputStream(new FileInputStream(instr));
+            isr = new InputStreamReader(gzis, StandardCharsets.UTF_8);
+            sw = new StringWriter();
+            char[] buffer = new char[1024 * 16];
+            int len;
+            while ((len = isr.read(buffer)) > 0) {
+                sw.write(buffer, 0, len);
+            }
+            s = sw.toString();
+        } catch (IOException ex) {
+            TARDISPlugin.plugin.debug("Could not read GZip schematic file! " + ex.getMessage());
+        } finally {
+            try {
+                if (sw != null) {
+                    sw.close();
+                }
+                if (isr != null) {
+                    isr.close();
+                }
+            } catch (IOException ex) {
+                TARDISPlugin.plugin.debug("Could not close GZip schematic file! " + ex.getMessage());
+            }
+        }
+        return (s.startsWith("{")) ? JsonParser.parseString(s).getAsJsonObject() : null;
+    }
 }

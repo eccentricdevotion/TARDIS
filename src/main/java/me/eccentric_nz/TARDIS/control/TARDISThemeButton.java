@@ -32,45 +32,45 @@ import org.bukkit.inventory.ItemStack;
  */
 public class TARDISThemeButton {
 
-	private final TARDISPlugin plugin;
-	private final Player player;
-	private final Schematic current_console;
-	private final int level;
-	private final int id;
+    private final TARDISPlugin plugin;
+    private final Player player;
+    private final Schematic current_console;
+    private final int level;
+    private final int id;
 
-	public TARDISThemeButton(TARDISPlugin plugin, Player player, Schematic current_console, int level, int id) {
-		this.plugin = plugin;
-		this.player = player;
-		this.current_console = current_console;
-		this.level = level;
-		this.id = id;
-	}
+    public TARDISThemeButton(TARDISPlugin plugin, Player player, Schematic current_console, int level, int id) {
+        this.plugin = plugin;
+        this.player = player;
+        this.current_console = current_console;
+        this.level = level;
+        this.id = id;
+    }
 
-	public void clickButton() {
-		// check player is in own tardis
-		int p_tid = getTardisId(player.getUniqueId().toString());
-		if (p_tid != id) {
-			TARDISMessage.send(player, "UPGRADE_OWN");
-			return;
-		}
-		// get player's current console
-		TARDISUpgradeData tud = new TARDISUpgradeData();
-		tud.setPrevious(current_console);
-		tud.setLevel(level);
-		plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
-		// open the upgrade menu
-		ItemStack[] consoles = new TARDISThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
-		Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis Upgrade Menu");
-		upg.setContents(consoles);
-		player.openInventory(upg);
-	}
+    public void clickButton() {
+        // check player is in own tardis
+        int p_tid = getTardisId(player.getUniqueId().toString());
+        if (p_tid != id) {
+            TARDISMessage.send(player, "UPGRADE_OWN");
+            return;
+        }
+        // get player's current console
+        TARDISUpgradeData tud = new TARDISUpgradeData();
+        tud.setPrevious(current_console);
+        tud.setLevel(level);
+        plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
+        // open the upgrade menu
+        ItemStack[] consoles = new TARDISThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
+        Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis Upgrade Menu");
+        upg.setContents(consoles);
+        player.openInventory(upg);
+    }
 
-	private int getTardisId(String uuid) {
-		int tid = 0;
-		ResultSetTardisID rs = new ResultSetTardisID(plugin);
-		if (rs.fromUUID(uuid)) {
-			tid = rs.getTardisId();
-		}
-		return tid;
-	}
+    private int getTardisId(String uuid) {
+        int tid = 0;
+        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        if (rs.fromUUID(uuid)) {
+            tid = rs.getTardisId();
+        }
+        return tid;
+    }
 }

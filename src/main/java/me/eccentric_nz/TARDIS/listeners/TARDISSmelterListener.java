@@ -34,35 +34,35 @@ import java.util.List;
 
 public class TARDISSmelterListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISSmelterListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISSmelterListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler(priority = EventPriority.NORMAL)
-	public void onSmelterDropChestClose(InventoryCloseEvent event) {
-		Inventory inv = event.getInventory();
-		InventoryHolder holder = inv.getHolder();
-		if (holder instanceof Chest chest) {
-			String loc = chest.getLocation().toString();
-			// check is drop chest
-			ResultSetSmelter rs = new ResultSetSmelter(plugin, loc);
-			if (!rs.resultSet()) {
-				return;
-			}
-			// sort contents
-			TARDISSonicSorterListener.sortInventory(inv);
-			// get fuel chests
-			List<Chest> fuelChests = rs.getFuelChests();
-			List<Chest> oreChests = rs.getOreChests();
-			// process chest contents
-			switch (rs.getType()) {
-				case FUEL -> new TARDISSmelterFuel().processItems(inv, fuelChests);
-				case SMELT -> new TARDISSmelterOre().processItems(inv, oreChests);
-				default -> // DROP
-						new TARDISSmelterDrop().processItems(inv, fuelChests, oreChests);
-			}
-		}
-	}
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onSmelterDropChestClose(InventoryCloseEvent event) {
+        Inventory inv = event.getInventory();
+        InventoryHolder holder = inv.getHolder();
+        if (holder instanceof Chest chest) {
+            String loc = chest.getLocation().toString();
+            // check is drop chest
+            ResultSetSmelter rs = new ResultSetSmelter(plugin, loc);
+            if (!rs.resultSet()) {
+                return;
+            }
+            // sort contents
+            TARDISSonicSorterListener.sortInventory(inv);
+            // get fuel chests
+            List<Chest> fuelChests = rs.getFuelChests();
+            List<Chest> oreChests = rs.getOreChests();
+            // process chest contents
+            switch (rs.getType()) {
+                case FUEL -> new TARDISSmelterFuel().processItems(inv, fuelChests);
+                case SMELT -> new TARDISSmelterOre().processItems(inv, oreChests);
+                default -> // DROP
+                        new TARDISSmelterDrop().processItems(inv, fuelChests, oreChests);
+            }
+        }
+    }
 }

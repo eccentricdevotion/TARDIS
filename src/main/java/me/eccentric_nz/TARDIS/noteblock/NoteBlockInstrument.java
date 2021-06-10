@@ -21,13 +21,13 @@ import org.bukkit.Sound;
 
 class NoteBlockInstrument {
 
-	static Sound getInstrument(byte instrument) {
-		return switch (instrument) {
-			case 1 -> Sound.BLOCK_NOTE_BLOCK_BASS;
-			case 2 -> Sound.BLOCK_NOTE_BLOCK_BASEDRUM;
-			case 3 -> Sound.BLOCK_NOTE_BLOCK_SNARE;
-			case 4 -> Sound.BLOCK_NOTE_BLOCK_HAT;
-			default -> Sound.BLOCK_NOTE_BLOCK_HARP;
-		};
-	}
+    static Sound getInstrument(byte instrument) {
+        return switch (instrument) {
+            case 1 -> Sound.BLOCK_NOTE_BLOCK_BASS;
+            case 2 -> Sound.BLOCK_NOTE_BLOCK_BASEDRUM;
+            case 3 -> Sound.BLOCK_NOTE_BLOCK_SNARE;
+            case 4 -> Sound.BLOCK_NOTE_BLOCK_HAT;
+            default -> Sound.BLOCK_NOTE_BLOCK_HARP;
+        };
+    }
 }

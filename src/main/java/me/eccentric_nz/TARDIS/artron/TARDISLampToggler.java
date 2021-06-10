@@ -35,65 +35,64 @@ import java.util.UUID;
  */
 public class TARDISLampToggler {
 
-	private final TARDISPlugin plugin;
-	private final BlockData lamp;
-	private final BlockData sea;
+    private final TARDISPlugin plugin;
+    private final BlockData lamp;
+    private final BlockData sea;
 
-	public TARDISLampToggler(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		lamp = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(52));
-		sea = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
-	}
+    public TARDISLampToggler(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        lamp = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(52));
+        sea = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
+    }
 
-	public void flickSwitch(int id, UUID uuid, boolean on, boolean lantern) {
-		// get lamp locations
-		HashMap<String, Object> wherel = new HashMap<>();
-		wherel.put("tardis_id", id);
-		ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, true);
-		if (rsl.resultSet()) {
-			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
-			boolean use_wool = false;
-			if (rsp.resultSet()) {
-				// only use player preference if the tardis id of the timelord/companion is the same as the tardis id they are in
-				ResultSetTardisID rs = new ResultSetTardisID(plugin);
-				if (rs.fromUUID(uuid.toString()) && rs.getTardisId() == id) {
-					lantern = rsp.isLanternsOn();
-					use_wool = rsp.isWoolLightsOn();
-				} else {
-					// also force the use of lanterns if that is the tardis owner's preference
-					ResultSetTardisTimeLord rstl = new ResultSetTardisTimeLord(plugin);
-					if (rstl.fromID(id) && rstl.getUuid() != uuid) {
-						// get tardis owner's preference
-						ResultSetPlayerPrefs rsptl = new ResultSetPlayerPrefs(plugin, rstl.getUuid().toString());
-						if (rsptl.resultSet()) {
-							lantern = rsptl.isLanternsOn();
-							use_wool = rsptl.isWoolLightsOn();
-						}
-					}
-				}
-			}
-			BlockData onlamp = (lantern) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
-			for (Block b : rsl.getData()) {
-				while (!b.getChunk().isLoaded()) {
-					b.getChunk().load();
-				}
-				if (on) {
-					if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP))) {
-						BlockData multipleFacing;
-						if (use_wool) {
-							multipleFacing = TARDISConstants.BLACK;
-						} else if (lantern) {
-							multipleFacing = sea;
-						} else {
-							multipleFacing = lamp;
-						}
-						b.setBlockData(multipleFacing);
-					}
-				} else if (b.getType().equals(Material.MUSHROOM_STEM) || b.getType().equals(Material.SPONGE) ||
-						   b.getType().equals(Material.INFESTED_STONE) || b.getType().equals(Material.BLACK_WOOL)) {
-					b.setBlockData(onlamp);
-				}
-			}
-		}
-	}
+    public void flickSwitch(int id, UUID uuid, boolean on, boolean lantern) {
+        // get lamp locations
+        HashMap<String, Object> wherel = new HashMap<>();
+        wherel.put("tardis_id", id);
+        ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, true);
+        if (rsl.resultSet()) {
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
+            boolean use_wool = false;
+            if (rsp.resultSet()) {
+                // only use player preference if the tardis id of the timelord/companion is the same as the tardis id they are in
+                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                if (rs.fromUUID(uuid.toString()) && rs.getTardisId() == id) {
+                    lantern = rsp.isLanternsOn();
+                    use_wool = rsp.isWoolLightsOn();
+                } else {
+                    // also force the use of lanterns if that is the tardis owner's preference
+                    ResultSetTardisTimeLord rstl = new ResultSetTardisTimeLord(plugin);
+                    if (rstl.fromID(id) && rstl.getUuid() != uuid) {
+                        // get tardis owner's preference
+                        ResultSetPlayerPrefs rsptl = new ResultSetPlayerPrefs(plugin, rstl.getUuid().toString());
+                        if (rsptl.resultSet()) {
+                            lantern = rsptl.isLanternsOn();
+                            use_wool = rsptl.isWoolLightsOn();
+                        }
+                    }
+                }
+            }
+            BlockData onlamp = (lantern) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
+            for (Block b : rsl.getData()) {
+                while (!b.getChunk().isLoaded()) {
+                    b.getChunk().load();
+                }
+                if (on) {
+                    if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP))) {
+                        BlockData multipleFacing;
+                        if (use_wool) {
+                            multipleFacing = TARDISConstants.BLACK;
+                        } else if (lantern) {
+                            multipleFacing = sea;
+                        } else {
+                            multipleFacing = lamp;
+                        }
+                        b.setBlockData(multipleFacing);
+                    }
+                } else if (b.getType().equals(Material.MUSHROOM_STEM) || b.getType().equals(Material.SPONGE) || b.getType().equals(Material.INFESTED_STONE) || b.getType().equals(Material.BLACK_WOOL)) {
+                    b.setBlockData(onlamp);
+                }
+            }
+        }
+    }
 }

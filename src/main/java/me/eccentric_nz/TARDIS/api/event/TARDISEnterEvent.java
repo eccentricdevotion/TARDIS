@@ -27,29 +27,29 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class TARDISEnterEvent extends Event {
 
-	private static final HandlerList HANDLERS = new HandlerList();
-	private final Player player;
-	private final World from;
+    private static final HandlerList HANDLERS = new HandlerList();
+    private final Player player;
+    private final World from;
 
-	public TARDISEnterEvent(Player player, World from) {
-		this.player = player;
-		this.from = from;
-	}
+    public TARDISEnterEvent(Player player, World from) {
+        this.player = player;
+        this.from = from;
+    }
 
-	public static HandlerList getHandlerList() {
-		return HANDLERS;
-	}
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
 
-	public Player getPlayer() {
-		return player;
-	}
+    public Player getPlayer() {
+        return player;
+    }
 
-	public World getFrom() {
-		return from;
-	}
+    public World getFrom() {
+        return from;
+    }
 
-	@Override
-	public @NotNull HandlerList getHandlers() {
-		return HANDLERS;
-	}
+    @Override
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
+    }
 }

@@ -29,42 +29,42 @@ import java.util.Locale;
  */
 class TARDISMakePresetCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISMakePresetCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISMakePresetCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean scanBlocks(CommandSender sender, String[] args) {
-		Player player = null;
-		if (sender instanceof Player) {
-			player = (Player) sender;
-		}
-		if (player == null) {
-			TARDISMessage.send(sender, "CMD_PLAYER");
-			return true;
-		}
-		// check they are facing east
-		String yaw = TARDISStaticUtils.getPlayersDirection(player, false);
-		if (!yaw.equals("EAST")) {
-			TARDISMessage.send(player, "PRESET_DIRECTION");
-			return true;
-		}
-		String bool;
-		if (args.length == 3) {
-			// check they typed true of false
-			String tf = args[2].toLowerCase(Locale.ENGLISH);
-			if (!tf.equals("true") && !tf.equals("false")) {
-				TARDISMessage.send(player, "TRUE_FALSE");
-				return false;
-			}
-			bool = tf;
-		} else {
-			// presume it is assymetric if not set
-			bool = "true";
-		}
-		TARDISMessage.send(player, "PRESET_INFO");
-		plugin.getTrackerKeeper().getPreset().put(player.getUniqueId(), args[1] + ":" + bool);
-		return true;
-	}
+    boolean scanBlocks(CommandSender sender, String[] args) {
+        Player player = null;
+        if (sender instanceof Player) {
+            player = (Player) sender;
+        }
+        if (player == null) {
+            TARDISMessage.send(sender, "CMD_PLAYER");
+            return true;
+        }
+        // check they are facing east
+        String yaw = TARDISStaticUtils.getPlayersDirection(player, false);
+        if (!yaw.equals("EAST")) {
+            TARDISMessage.send(player, "PRESET_DIRECTION");
+            return true;
+        }
+        String bool;
+        if (args.length == 3) {
+            // check they typed true of false
+            String tf = args[2].toLowerCase(Locale.ENGLISH);
+            if (!tf.equals("true") && !tf.equals("false")) {
+                TARDISMessage.send(player, "TRUE_FALSE");
+                return false;
+            }
+            bool = tf;
+        } else {
+            // presume it is assymetric if not set
+            bool = "true";
+        }
+        TARDISMessage.send(player, "PRESET_INFO");
+        plugin.getTrackerKeeper().getPreset().put(player.getUniqueId(), args[1] + ":" + bool);
+        return true;
+    }
 }

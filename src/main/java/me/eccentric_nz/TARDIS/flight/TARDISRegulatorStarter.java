@@ -29,26 +29,26 @@ import org.bukkit.inventory.ItemStack;
  */
 class TARDISRegulatorStarter implements Runnable {
 
-	private final TARDISPlugin plugin;
-	private final Player player;
-	private final int id;
+    private final TARDISPlugin plugin;
+    private final Player player;
+    private final int id;
 
-	TARDISRegulatorStarter(TARDISPlugin plugin, Player player, int id) {
-		this.plugin = plugin;
-		this.player = player;
-		this.id = id;
-	}
+    TARDISRegulatorStarter(TARDISPlugin plugin, Player player, int id) {
+        this.plugin = plugin;
+        this.player = player;
+        this.id = id;
+    }
 
-	@Override
-	public void run() {
-		TARDISRegulatorInventory reg = new TARDISRegulatorInventory();
-		ItemStack[] items = reg.getRegulator();
-		Inventory inv = plugin.getServer().createInventory(player, 54, "Helmic Regulator");
-		inv.setContents(items);
-		player.openInventory(inv);
-		// play inflight sound
-		if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-			plugin.getServer().getScheduler().runTask(plugin, new TARDISLoopingFlightSound(plugin, player.getLocation(), id));
-		}
-	}
+    @Override
+    public void run() {
+        TARDISRegulatorInventory reg = new TARDISRegulatorInventory();
+        ItemStack[] items = reg.getRegulator();
+        Inventory inv = plugin.getServer().createInventory(player, 54, "Helmic Regulator");
+        inv.setContents(items);
+        player.openInventory(inv);
+        // play inflight sound
+        if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+            plugin.getServer().getScheduler().runTask(plugin, new TARDISLoopingFlightSound(plugin, player.getLocation(), id));
+        }
+    }
 }

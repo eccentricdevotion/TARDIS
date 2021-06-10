@@ -59,141 +59,137 @@ import java.util.Objects;
  */
 public class TARDISSonicSorterListener implements Listener {
 
-	private final TARDISPlugin plugin;
-	private final List<Material> sortables = new ArrayList<>();
+    private final TARDISPlugin plugin;
+    private final List<Material> sortables = new ArrayList<>();
 
-	public TARDISSonicSorterListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		sortables.add(Material.BARREL);
-		sortables.add(Material.BLACK_SHULKER_BOX);
-		sortables.add(Material.BLUE_SHULKER_BOX);
-		sortables.add(Material.BROWN_SHULKER_BOX);
-		sortables.add(Material.CHEST);
-		sortables.add(Material.CYAN_SHULKER_BOX);
-		sortables.add(Material.GRAY_SHULKER_BOX);
-		sortables.add(Material.GREEN_SHULKER_BOX);
-		sortables.add(Material.LIGHT_BLUE_SHULKER_BOX);
-		sortables.add(Material.LIGHT_GRAY_SHULKER_BOX);
-		sortables.add(Material.LIME_SHULKER_BOX);
-		sortables.add(Material.MAGENTA_SHULKER_BOX);
-		sortables.add(Material.ORANGE_SHULKER_BOX);
-		sortables.add(Material.PINK_SHULKER_BOX);
-		sortables.add(Material.PURPLE_SHULKER_BOX);
-		sortables.add(Material.RED_SHULKER_BOX);
-		sortables.add(Material.SHULKER_BOX);
-		sortables.add(Material.TRAPPED_CHEST);
-		sortables.add(Material.WHITE_SHULKER_BOX);
-		sortables.add(Material.YELLOW_SHULKER_BOX);
-	}
+    public TARDISSonicSorterListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        sortables.add(Material.BARREL);
+        sortables.add(Material.BLACK_SHULKER_BOX);
+        sortables.add(Material.BLUE_SHULKER_BOX);
+        sortables.add(Material.BROWN_SHULKER_BOX);
+        sortables.add(Material.CHEST);
+        sortables.add(Material.CYAN_SHULKER_BOX);
+        sortables.add(Material.GRAY_SHULKER_BOX);
+        sortables.add(Material.GREEN_SHULKER_BOX);
+        sortables.add(Material.LIGHT_BLUE_SHULKER_BOX);
+        sortables.add(Material.LIGHT_GRAY_SHULKER_BOX);
+        sortables.add(Material.LIME_SHULKER_BOX);
+        sortables.add(Material.MAGENTA_SHULKER_BOX);
+        sortables.add(Material.ORANGE_SHULKER_BOX);
+        sortables.add(Material.PINK_SHULKER_BOX);
+        sortables.add(Material.PURPLE_SHULKER_BOX);
+        sortables.add(Material.RED_SHULKER_BOX);
+        sortables.add(Material.SHULKER_BOX);
+        sortables.add(Material.TRAPPED_CHEST);
+        sortables.add(Material.WHITE_SHULKER_BOX);
+        sortables.add(Material.YELLOW_SHULKER_BOX);
+    }
 
-	private static ItemStack[] sortInventory(ItemStack[] items) {
-		int endIndex = items.length;
-		for (int i = 0; i < endIndex; i++) {
-			ItemStack item1 = items[i];
-			if (item1 == null) {
-				continue;
-			}
-			int maxStackSize = item1.getMaxStackSize();
-			if (item1.getAmount() <= 0 || maxStackSize == 1) {
-				continue;
-			}
-			if (item1.getAmount() < maxStackSize) {
-				int needed = maxStackSize - item1.getAmount();
-				for (int j = i + 1; j < endIndex; j++) {
-					ItemStack item2 = items[j];
-					if (item2 == null || item2.getAmount() <= 0 || maxStackSize == 1) {
-						continue;
-					}
-					if (item2.getType() == item1.getType()) {
-						if (item1.getItemMeta() instanceof Damageable d1) {
-							Damageable d2 = (Damageable) item2.getItemMeta();
-							assert d2 != null;
-							if (d1.getDamage() == d2.getDamage() &&
-								item1.getEnchantments().equals(item2.getEnchantments()) &&
-								item1.getItemMeta().equals(item2.getItemMeta())) {
-								if (item2.getAmount() > needed) {
-									item1.setAmount(maxStackSize);
-									item2.setAmount(item2.getAmount() - needed);
-									break;
-								} else {
-									items[j] = null;
-									item1.setAmount(item1.getAmount() + item2.getAmount());
-									needed = maxStackSize - item1.getAmount();
-								}
-							}
-						} else {
-							if (item1.getEnchantments().equals(item2.getEnchantments()) &&
-								Objects.equals(item1.getItemMeta(), item2.getItemMeta())) {
-								if (item2.getAmount() > needed) {
-									item1.setAmount(maxStackSize);
-									item2.setAmount(item2.getAmount() - needed);
-									break;
-								} else {
-									items[j] = null;
-									item1.setAmount(item1.getAmount() + item2.getAmount());
-									needed = maxStackSize - item1.getAmount();
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		Arrays.sort(items, 0, endIndex, new TARDISItemComparator());
-		return items;
-	}
+    private static ItemStack[] sortInventory(ItemStack[] items) {
+        int endIndex = items.length;
+        for (int i = 0; i < endIndex; i++) {
+            ItemStack item1 = items[i];
+            if (item1 == null) {
+                continue;
+            }
+            int maxStackSize = item1.getMaxStackSize();
+            if (item1.getAmount() <= 0 || maxStackSize == 1) {
+                continue;
+            }
+            if (item1.getAmount() < maxStackSize) {
+                int needed = maxStackSize - item1.getAmount();
+                for (int j = i + 1; j < endIndex; j++) {
+                    ItemStack item2 = items[j];
+                    if (item2 == null || item2.getAmount() <= 0 || maxStackSize == 1) {
+                        continue;
+                    }
+                    if (item2.getType() == item1.getType()) {
+                        if (item1.getItemMeta() instanceof Damageable d1) {
+                            Damageable d2 = (Damageable) item2.getItemMeta();
+                            assert d2 != null;
+                            if (d1.getDamage() == d2.getDamage() && item1.getEnchantments().equals(item2.getEnchantments()) && item1.getItemMeta().equals(item2.getItemMeta())) {
+                                if (item2.getAmount() > needed) {
+                                    item1.setAmount(maxStackSize);
+                                    item2.setAmount(item2.getAmount() - needed);
+                                    break;
+                                } else {
+                                    items[j] = null;
+                                    item1.setAmount(item1.getAmount() + item2.getAmount());
+                                    needed = maxStackSize - item1.getAmount();
+                                }
+                            }
+                        } else {
+                            if (item1.getEnchantments().equals(item2.getEnchantments()) && Objects.equals(item1.getItemMeta(), item2.getItemMeta())) {
+                                if (item2.getAmount() > needed) {
+                                    item1.setAmount(maxStackSize);
+                                    item2.setAmount(item2.getAmount() - needed);
+                                    break;
+                                } else {
+                                    items[j] = null;
+                                    item1.setAmount(item1.getAmount() + item2.getAmount());
+                                    needed = maxStackSize - item1.getAmount();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Arrays.sort(items, 0, endIndex, new TARDISItemComparator());
+        return items;
+    }
 
-	public static void sortInventory(Inventory inventory) {
-		inventory.setContents(sortInventory(inventory.getContents()));
-	}
+    public static void sortInventory(Inventory inventory) {
+        inventory.setContents(sortInventory(inventory.getContents()));
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onPlayerInteract(PlayerInteractEvent event) {
-		if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
-			return;
-		}
-		Player player = event.getPlayer();
-		if (event.getAction() == Action.LEFT_CLICK_BLOCK &&
-			TARDISPermission.hasPermission(player, "tardis.sonic.sort")) {
-			ItemStack is = player.getInventory().getItemInMainHand();
-			if (is.hasItemMeta()) {
-				ItemMeta im = is.getItemMeta();
-				assert im != null;
-				if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
-					Block block = event.getClickedBlock();
-					if (block != null && sortables.contains(block.getType())) {
-						boolean allow = true;
-						if (plugin.getPM().isPluginEnabled("LockettePro")) {
-							if (LocketteProAPI.isProtected(block)) {
-								allow = false;
-							}
-						}
-						if (plugin.getPM().isPluginEnabled("BlockLocker")) {
-							if (BlockLockerAPIv2.isProtected(block)) {
-								allow = false;
-							}
-						}
-						if (plugin.getPM().isPluginEnabled("Towny")) {
-							allow = new TARDISTownyChecker(plugin).checkTowny(player, block.getLocation());
-						}
-						// LWCX
-						if (plugin.getPM().isPluginEnabled("LWC")) {
-							ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
-							if (protectionCache != null) {
-								Protection protection = protectionCache.getProtection(block);
-								if (protection != null && !protection.isOwner(player)) {
-									allow = false;
-								}
-							}
-						}
-						if (allow) {
-							Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
-							sortInventory(inventory);
-							TARDISMessage.send(player, "CHEST_SORTED");
-						}
-					}
-				}
-			}
-		}
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
+        Player player = event.getPlayer();
+        if (event.getAction() == Action.LEFT_CLICK_BLOCK && TARDISPermission.hasPermission(player, "tardis.sonic.sort")) {
+            ItemStack is = player.getInventory().getItemInMainHand();
+            if (is.hasItemMeta()) {
+                ItemMeta im = is.getItemMeta();
+                assert im != null;
+                if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
+                    Block block = event.getClickedBlock();
+                    if (block != null && sortables.contains(block.getType())) {
+                        boolean allow = true;
+                        if (plugin.getPM().isPluginEnabled("LockettePro")) {
+                            if (LocketteProAPI.isProtected(block)) {
+                                allow = false;
+                            }
+                        }
+                        if (plugin.getPM().isPluginEnabled("BlockLocker")) {
+                            if (BlockLockerAPIv2.isProtected(block)) {
+                                allow = false;
+                            }
+                        }
+                        if (plugin.getPM().isPluginEnabled("Towny")) {
+                            allow = new TARDISTownyChecker(plugin).checkTowny(player, block.getLocation());
+                        }
+                        // LWCX
+                        if (plugin.getPM().isPluginEnabled("LWC")) {
+                            ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
+                            if (protectionCache != null) {
+                                Protection protection = protectionCache.getProtection(block);
+                                if (protection != null && !protection.isOwner(player)) {
+                                    allow = false;
+                                }
+                            }
+                        }
+                        if (allow) {
+                            Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
+                            sortInventory(inventory);
+                            TARDISMessage.send(player, "CHEST_SORTED");
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

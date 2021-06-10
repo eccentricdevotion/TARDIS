@@ -26,19 +26,19 @@ import org.bukkit.entity.Player;
  */
 class TARDISExterminateCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISExterminateCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISExterminateCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean doExterminate(Player player) {
+    boolean doExterminate(Player player) {
 
-		if (!plugin.getTrackerKeeper().getExterminate().containsKey(player.getUniqueId())) {
-			TARDISMessage.send(player, "TARDIS_BREAK_SIGN");
-			return false;
-		}
-		TARDISExterminator del = new TARDISExterminator(plugin);
-		return del.exterminate(player, plugin.getTrackerKeeper().getExterminate().get(player.getUniqueId()));
-	}
+        if (!plugin.getTrackerKeeper().getExterminate().containsKey(player.getUniqueId())) {
+            TARDISMessage.send(player, "TARDIS_BREAK_SIGN");
+            return false;
+        }
+        TARDISExterminator del = new TARDISExterminator(plugin);
+        return del.exterminate(player, plugin.getTrackerKeeper().getExterminate().get(player.getUniqueId()));
+    }
 }

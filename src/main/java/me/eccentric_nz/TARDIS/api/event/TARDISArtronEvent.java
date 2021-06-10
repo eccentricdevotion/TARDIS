@@ -25,64 +25,64 @@ import org.jetbrains.annotations.NotNull;
 
 public class TARDISArtronEvent extends Event {
 
-	private static final HandlerList HANDLERS = new HandlerList();
-	private final Player player;
-	private final int amount;
-	private final int tardisId;
-	private int artronLevel = 0;
+    private static final HandlerList HANDLERS = new HandlerList();
+    private final Player player;
+    private final int amount;
+    private final int tardisId;
+    private int artronLevel = 0;
 
-	public TARDISArtronEvent(Player player, int amount, int tardisId) {
-		this.player = player;
-		this.amount = amount;
-		this.tardisId = tardisId;
-		ResultSetTardisArtron rs = new ResultSetTardisArtron(TARDISPlugin.plugin);
-		if (rs.fromID(this.tardisId)) {
-			artronLevel = rs.getArtronLevel();
-		}
-	}
+    public TARDISArtronEvent(Player player, int amount, int tardisId) {
+        this.player = player;
+        this.amount = amount;
+        this.tardisId = tardisId;
+        ResultSetTardisArtron rs = new ResultSetTardisArtron(TARDISPlugin.plugin);
+        if (rs.fromID(this.tardisId)) {
+            artronLevel = rs.getArtronLevel();
+        }
+    }
 
-	public static HandlerList getHandlerList() {
-		return HANDLERS;
-	}
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
 
-	/**
-	 * Returns the player involved in this event.
-	 *
-	 * @return the player
-	 */
-	public Player getPlayer() {
-		return player;
-	}
+    /**
+     * Returns the player involved in this event.
+     *
+     * @return the player
+     */
+    public Player getPlayer() {
+        return player;
+    }
 
-	/**
-	 * Returns the amount of energy involved in this event. This could be a positive or negative amount.
-	 *
-	 * @return the amount
-	 */
-	public int getAmount() {
-		return amount;
-	}
+    /**
+     * Returns the amount of energy involved in this event. This could be a positive or negative amount.
+     *
+     * @return the amount
+     */
+    public int getAmount() {
+        return amount;
+    }
 
-	/**
-	 * Returns the tardis id involved in this event.
-	 *
-	 * @return the tardis id
-	 */
-	public int getTardisId() {
-		return tardisId;
-	}
+    /**
+     * Returns the tardis id involved in this event.
+     *
+     * @return the tardis id
+     */
+    public int getTardisId() {
+        return tardisId;
+    }
 
-	/**
-	 * Returns the Artron Level after the amount has been added / subtracted.
-	 *
-	 * @return the player
-	 */
-	public int getLevel() {
-		return artronLevel;
-	}
+    /**
+     * Returns the Artron Level after the amount has been added / subtracted.
+     *
+     * @return the player
+     */
+    public int getLevel() {
+        return artronLevel;
+    }
 
-	@Override
-	public @NotNull HandlerList getHandlers() {
-		return HANDLERS;
-	}
+    @Override
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
+    }
 }

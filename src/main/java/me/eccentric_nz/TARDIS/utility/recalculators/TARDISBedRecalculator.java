@@ -24,36 +24,36 @@ import org.bukkit.block.data.Directional;
 
 public class TARDISBedRecalculator {
 
-	public BlockData recalculate(BlockData data, COMPASS d) {
-		Directional bed = (Directional) data;
-		switch (bed.getFacing()) {
-			case WEST -> bed.setFacing(BlockFace.valueOf(TARDISPlugin.plugin.getPresetBuilder().getOppositeFace(d).toString()));
-			case EAST -> bed.setFacing(BlockFace.valueOf(d.toString()));
-			case NORTH ->
-					// anticlockwise 90°
-					bed.setFacing(rotate90Anticlockwise(d));
-			default ->
-					// clockwise 90°
-					bed.setFacing(rotate90Clockwise(d));
-		}
-		return bed;
-	}
+    public BlockData recalculate(BlockData data, COMPASS d) {
+        Directional bed = (Directional) data;
+        switch (bed.getFacing()) {
+            case WEST -> bed.setFacing(BlockFace.valueOf(TARDISPlugin.plugin.getPresetBuilder().getOppositeFace(d).toString()));
+            case EAST -> bed.setFacing(BlockFace.valueOf(d.toString()));
+            case NORTH ->
+                    // anticlockwise 90°
+                    bed.setFacing(rotate90Anticlockwise(d));
+            default ->
+                    // clockwise 90°
+                    bed.setFacing(rotate90Clockwise(d));
+        }
+        return bed;
+    }
 
-	private BlockFace rotate90Clockwise(COMPASS d) {
-		return switch (d) {
-			case SOUTH -> BlockFace.WEST;
-			case WEST -> BlockFace.NORTH;
-			case NORTH -> BlockFace.EAST;
-			default -> BlockFace.SOUTH;
-		};
-	}
+    private BlockFace rotate90Clockwise(COMPASS d) {
+        return switch (d) {
+            case SOUTH -> BlockFace.WEST;
+            case WEST -> BlockFace.NORTH;
+            case NORTH -> BlockFace.EAST;
+            default -> BlockFace.SOUTH;
+        };
+    }
 
-	private BlockFace rotate90Anticlockwise(COMPASS d) {
-		return switch (d) {
-			case SOUTH -> BlockFace.EAST;
-			case WEST -> BlockFace.SOUTH;
-			case NORTH -> BlockFace.WEST;
-			default -> BlockFace.NORTH;
-		};
-	}
+    private BlockFace rotate90Anticlockwise(COMPASS d) {
+        return switch (d) {
+            case SOUTH -> BlockFace.EAST;
+            case WEST -> BlockFace.SOUTH;
+            case NORTH -> BlockFace.WEST;
+            default -> BlockFace.NORTH;
+        };
+    }
 }

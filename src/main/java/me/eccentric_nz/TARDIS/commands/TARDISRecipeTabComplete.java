@@ -32,29 +32,29 @@ import java.util.Set;
  */
 public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompleter {
 
-	public static final Set<String> ROOT_SUBS = new HashSet<>();
-	public static final List<String> TARDIS_TYPES = ImmutableList.of("ars", "bigger", "budget", "coral", "custom", "deluxe", "eleventh", "ender", "master", "pyramid", "redstone", "rotor", "steampunk", "thirteenth", "tom", "twelfth", "war", "wood", "legacy_budget", "legacy_bigger", "legacy_deluxe", "legacy_eleventh", "legacy_redstone");
+    public static final Set<String> ROOT_SUBS = new HashSet<>();
+    public static final List<String> TARDIS_TYPES = ImmutableList.of("ars", "bigger", "budget", "coral", "custom", "deluxe", "eleventh", "ender", "master", "pyramid", "redstone", "rotor", "steampunk", "thirteenth", "tom", "twelfth", "war", "wood", "legacy_budget", "legacy_bigger", "legacy_deluxe", "legacy_eleventh", "legacy_redstone");
 
-	public TARDISRecipeTabComplete() {
-		ROOT_SUBS.add("seed");
-		ROOT_SUBS.add("tardis");
-		for (RecipeItem recipeItem : RecipeItem.values()) {
-			ROOT_SUBS.add(recipeItem.toTabCompletionString());
-		}
-	}
+    public TARDISRecipeTabComplete() {
+        ROOT_SUBS.add("seed");
+        ROOT_SUBS.add("tardis");
+        for (RecipeItem recipeItem : RecipeItem.values()) {
+            ROOT_SUBS.add(recipeItem.toTabCompletionString());
+        }
+    }
 
-	@Override
-	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 
-		String lastArg = args[args.length - 1];
-		if (args.length <= 1) {
-			return partial(args[0], ROOT_SUBS);
-		} else if (args.length == 2) {
-			String sub = args[0];
-			if (sub.equals("tardis") || sub.equals("seed")) {
-				return partial(lastArg, TARDIS_TYPES);
-			}
-		}
-		return ImmutableList.of();
-	}
+        String lastArg = args[args.length - 1];
+        if (args.length <= 1) {
+            return partial(args[0], ROOT_SUBS);
+        } else if (args.length == 2) {
+            String sub = args[0];
+            if (sub.equals("tardis") || sub.equals("seed")) {
+                return partial(lastArg, TARDIS_TYPES);
+            }
+        }
+        return ImmutableList.of();
+    }
 }

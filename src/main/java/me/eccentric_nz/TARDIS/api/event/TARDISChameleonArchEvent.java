@@ -27,40 +27,40 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class TARDISChameleonArchEvent extends Event {
 
-	private static final HandlerList HANDLERS = new HandlerList();
-	private final Player player;
-	private final TARDISWatchData tardisWatchData;
+    private static final HandlerList HANDLERS = new HandlerList();
+    private final Player player;
+    private final TARDISWatchData tardisWatchData;
 
-	public TARDISChameleonArchEvent(Player player, TARDISWatchData tardisWatchData) {
-		this.player = player;
-		this.tardisWatchData = tardisWatchData;
-	}
+    public TARDISChameleonArchEvent(Player player, TARDISWatchData tardisWatchData) {
+        this.player = player;
+        this.tardisWatchData = tardisWatchData;
+    }
 
-	public static HandlerList getHandlerList() {
-		return HANDLERS;
-	}
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
 
-	/**
-	 * Returns the player involved in this event.
-	 *
-	 * @return the player
-	 */
-	public Player getPlayer() {
-		return player;
-	}
+    /**
+     * Returns the player involved in this event.
+     *
+     * @return the player
+     */
+    public Player getPlayer() {
+        return player;
+    }
 
-	/**
-	 * Returns the Chameleon Arch {@link me.eccentric_nz.tardis.arch.TARDISWatchData TARDISWatchData} object. This
-	 * contains the 'arched' player's new display name, and the time (in milliseconds) that they became 'arched'.
-	 *
-	 * @return the TARDISWatchData object
-	 */
-	public TARDISWatchData getTardisWatchData() {
-		return tardisWatchData;
-	}
+    /**
+     * Returns the Chameleon Arch {@link me.eccentric_nz.tardis.arch.TARDISWatchData TARDISWatchData} object. This
+     * contains the 'arched' player's new display name, and the time (in milliseconds) that they became 'arched'.
+     *
+     * @return the TARDISWatchData object
+     */
+    public TARDISWatchData getTardisWatchData() {
+        return tardisWatchData;
+    }
 
-	@Override
-	public @NotNull HandlerList getHandlers() {
-		return HANDLERS;
-	}
+    @Override
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
+    }
 }

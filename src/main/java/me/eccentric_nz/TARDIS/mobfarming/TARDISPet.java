@@ -23,31 +23,31 @@ import org.bukkit.entity.Parrot.Variant;
  */
 public class TARDISPet extends TARDISMob {
 
-	private Variant variant;
-	private boolean onLeftShoulder;
-	private boolean onRightShoulder;
+    private Variant variant;
+    private boolean onLeftShoulder;
+    private boolean onRightShoulder;
 
-	public Variant getVariant() {
-		return variant;
-	}
+    public Variant getVariant() {
+        return variant;
+    }
 
-	void setVariant(Variant variant) {
-		this.variant = variant;
-	}
+    void setVariant(Variant variant) {
+        this.variant = variant;
+    }
 
-	public boolean isOnLeftShoulder() {
-		return onLeftShoulder;
-	}
+    public boolean isOnLeftShoulder() {
+        return onLeftShoulder;
+    }
 
-	void setOnLeftShoulder(boolean onLeftShoulder) {
-		this.onLeftShoulder = onLeftShoulder;
-	}
+    void setOnLeftShoulder(boolean onLeftShoulder) {
+        this.onLeftShoulder = onLeftShoulder;
+    }
 
-	public boolean isOnRightShoulder() {
-		return onRightShoulder;
-	}
+    public boolean isOnRightShoulder() {
+        return onRightShoulder;
+    }
 
-	void setOnRightShoulder(boolean onRightShoulder) {
-		this.onRightShoulder = onRightShoulder;
-	}
+    void setOnRightShoulder(boolean onRightShoulder) {
+        this.onRightShoulder = onRightShoulder;
+    }
 }

@@ -32,51 +32,51 @@ import java.util.Locale;
  */
 class TARDISJettisonCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISJettisonCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISJettisonCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean startJettison(Player player, String[] args) {
-		if (TARDISPermission.hasPermission(player, "tardis.jettison")) {
-			if (args.length < 2) {
-				TARDISMessage.send(player, "TOO_FEW_ARGS");
-				return false;
-			}
-			String room = args[1].toUpperCase(Locale.ENGLISH);
-			if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
-				TARDISMessage.send(player, "GRAVITY_INFO", ChatColor.AQUA + "/tardisgravity remove" + ChatColor.RESET);
-			}
-			if (!plugin.getGeneralKeeper().getRoomArgs().contains(room)) {
-				StringBuilder buf = new StringBuilder(args[1]);
-				plugin.getGeneralKeeper().getRoomArgs().forEach((rl) -> buf.append(rl).append(", "));
-				String roomList = buf.substring(0, buf.length() - 2);
-				TARDISMessage.send(player, "ROOM_NOT_VALID", roomList);
-				return true;
-			}
-			ResultSetTardisID rs = new ResultSetTardisID(plugin);
-			if (!rs.fromUUID(player.getUniqueId().toString())) {
-				TARDISMessage.send(player, "NOT_A_TIMELORD");
-				return true;
-			}
-			int id = rs.getTardisId();
-			// check they are in the tardis
-			HashMap<String, Object> wheret = new HashMap<>();
-			wheret.put("uuid", player.getUniqueId().toString());
-			wheret.put("tardis_id", id);
-			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-			if (!rst.resultSet()) {
-				TARDISMessage.send(player, "NOT_IN_TARDIS");
-				return true;
-			}
-			plugin.getTrackerKeeper().getJettison().put(player.getUniqueId(), room);
-			String seed = plugin.getArtronConfig().getString("jettison_seed");
-			TARDISMessage.send(player, "ROOM_JETT_INFO", seed, room, seed);
-			return true;
-		} else {
-			TARDISMessage.send(player, "NO_PERMS");
-			return false;
-		}
-	}
+    boolean startJettison(Player player, String[] args) {
+        if (TARDISPermission.hasPermission(player, "tardis.jettison")) {
+            if (args.length < 2) {
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                return false;
+            }
+            String room = args[1].toUpperCase(Locale.ENGLISH);
+            if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
+                TARDISMessage.send(player, "GRAVITY_INFO", ChatColor.AQUA + "/tardisgravity remove" + ChatColor.RESET);
+            }
+            if (!plugin.getGeneralKeeper().getRoomArgs().contains(room)) {
+                StringBuilder buf = new StringBuilder(args[1]);
+                plugin.getGeneralKeeper().getRoomArgs().forEach((rl) -> buf.append(rl).append(", "));
+                String roomList = buf.substring(0, buf.length() - 2);
+                TARDISMessage.send(player, "ROOM_NOT_VALID", roomList);
+                return true;
+            }
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            if (!rs.fromUUID(player.getUniqueId().toString())) {
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                return true;
+            }
+            int id = rs.getTardisId();
+            // check they are in the tardis
+            HashMap<String, Object> wheret = new HashMap<>();
+            wheret.put("uuid", player.getUniqueId().toString());
+            wheret.put("tardis_id", id);
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+            if (!rst.resultSet()) {
+                TARDISMessage.send(player, "NOT_IN_TARDIS");
+                return true;
+            }
+            plugin.getTrackerKeeper().getJettison().put(player.getUniqueId(), room);
+            String seed = plugin.getArtronConfig().getString("jettison_seed");
+            TARDISMessage.send(player, "ROOM_JETT_INFO", seed, room, seed);
+            return true;
+        } else {
+            TARDISMessage.send(player, "NO_PERMS");
+            return false;
+        }
+    }
 }

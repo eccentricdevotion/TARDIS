@@ -38,47 +38,47 @@ import java.util.List;
  */
 public class TARDISSiluriaChunkPopulateListener implements Listener {
 
-	private final TARDISPlugin plugin;
-	private final List<ChunkInfo> chunks = new ArrayList<>();
-	private boolean isBuilding = false;
+    private final TARDISPlugin plugin;
+    private final List<ChunkInfo> chunks = new ArrayList<>();
+    private boolean isBuilding = false;
 
-	public TARDISSiluriaChunkPopulateListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISSiluriaChunkPopulateListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void siluriaOnChunkPopulate(ChunkPopulateEvent event) {
-		Chunk chunk = event.getChunk();
-		// check world
-		if (!chunk.getWorld().getName().endsWith("siluria")) {
-			return;
-		}
-		ChunkInfo chunkInfo = new ChunkInfo(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
-		if (chunks.contains(chunkInfo) || isBuilding) {
-			return;
-		}
-		// find water
-		int cx = chunk.getX() * 16;
-		int cz = chunk.getZ() * 16;
-		int hy = chunk.getWorld().getHighestBlockYAt(cx + 8, cz + 8) + 1;
-		Block water = chunk.getWorld().getBlockAt(cx + 8, hy, cz + 8);
-		if (water.getType() == Material.AIR) {
-			while (water.getType() == Material.AIR) {
-				water = water.getRelative(BlockFace.DOWN);
-			}
-			hy = water.getLocation().getBlockY() - 1;
-		}
-		if (water.getType().equals(Material.WATER)) {
-			buildStructure(chunkInfo, cx, hy, cz);
-		}
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void siluriaOnChunkPopulate(ChunkPopulateEvent event) {
+        Chunk chunk = event.getChunk();
+        // check world
+        if (!chunk.getWorld().getName().endsWith("siluria")) {
+            return;
+        }
+        ChunkInfo chunkInfo = new ChunkInfo(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
+        if (chunks.contains(chunkInfo) || isBuilding) {
+            return;
+        }
+        // find water
+        int cx = chunk.getX() * 16;
+        int cz = chunk.getZ() * 16;
+        int hy = chunk.getWorld().getHighestBlockYAt(cx + 8, cz + 8) + 1;
+        Block water = chunk.getWorld().getBlockAt(cx + 8, hy, cz + 8);
+        if (water.getType() == Material.AIR) {
+            while (water.getType() == Material.AIR) {
+                water = water.getRelative(BlockFace.DOWN);
+            }
+            hy = water.getLocation().getBlockY() - 1;
+        }
+        if (water.getType().equals(Material.WATER)) {
+            buildStructure(chunkInfo, cx, hy, cz);
+        }
+    }
 
-	private void buildStructure(ChunkInfo chunkInfo, int x, int y, int z) {
-		isBuilding = true;
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-			chunks.add(chunkInfo);
-			// create structure
-			isBuilding = new TARDISBuildSilurianStructure(plugin).buildCity(x, y, z);
-		}, 2L);
-	}
+    private void buildStructure(ChunkInfo chunkInfo, int x, int y, int z) {
+        isBuilding = true;
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            chunks.add(chunkInfo);
+            // create structure
+            isBuilding = new TARDISBuildSilurianStructure(plugin).buildCity(x, y, z);
+        }, 2L);
+    }
 }

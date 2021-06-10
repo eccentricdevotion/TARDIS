@@ -25,33 +25,33 @@ import java.util.List;
  */
 public enum Flag {
 
-	MESSAGE_PLAYER,
-	PERMS_AREA,
-	PERMS_NETHER,
-	PERMS_THEEND,
-	PERMS_WORLD,
-	RESPECT_FACTIONS,
-	RESPECT_GRIEFPREVENTION,
-	RESPECT_REDPROTECT,
-	RESPECT_TOWNY,
-	RESPECT_WORLDBORDER,
-	RESPECT_WORLDGUARD,
-	SPACE_TARDIS;
+    MESSAGE_PLAYER,
+    PERMS_AREA,
+    PERMS_NETHER,
+    PERMS_THEEND,
+    PERMS_WORLD,
+    RESPECT_FACTIONS,
+    RESPECT_GRIEFPREVENTION,
+    RESPECT_REDPROTECT,
+    RESPECT_TOWNY,
+    RESPECT_WORLDBORDER,
+    RESPECT_WORLDGUARD,
+    SPACE_TARDIS;
 
-	public static List<Flag> getNoMessageFlags() {
-		List<Flag> flags = new ArrayList<>(Arrays.asList(Flag.values()));
-		flags.remove(Flag.MESSAGE_PLAYER);
-		return flags;
-	}
+    public static List<Flag> getNoMessageFlags() {
+        List<Flag> flags = new ArrayList<>(Arrays.asList(Flag.values()));
+        flags.remove(Flag.MESSAGE_PLAYER);
+        return flags;
+    }
 
-	public static List<Flag> getAPIFlags() {
-		List<Flag> flags = new ArrayList<>(Arrays.asList(Flag.values()));
-		flags.remove(Flag.MESSAGE_PLAYER);
-		flags.remove(Flag.SPACE_TARDIS);
-		return flags;
-	}
+    public static List<Flag> getAPIFlags() {
+        List<Flag> flags = new ArrayList<>(Arrays.asList(Flag.values()));
+        flags.remove(Flag.MESSAGE_PLAYER);
+        flags.remove(Flag.SPACE_TARDIS);
+        return flags;
+    }
 
-	public static List<Flag> getDefaultFlags() {
-		return Arrays.asList(Flag.values());
-	}
+    public static List<Flag> getDefaultFlags() {
+        return Arrays.asList(Flag.values());
+    }
 }

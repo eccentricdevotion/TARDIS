@@ -29,62 +29,62 @@ import java.sql.SQLException;
  */
 public class ArchiveUpdate {
 
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final TARDISPlugin plugin;
-	private final String uuid;
-	private final String name;
-	private final String prefix;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final TARDISPlugin plugin;
+    private final String uuid;
+    private final String name;
+    private final String prefix;
 
-	public ArchiveUpdate(TARDISPlugin plugin, String uuid, String name) {
-		this.plugin = plugin;
-		this.uuid = uuid;
-		this.name = name;
-		prefix = this.plugin.getPrefix();
-	}
+    public ArchiveUpdate(TARDISPlugin plugin, String uuid, String name) {
+        this.plugin = plugin;
+        this.uuid = uuid;
+        this.name = name;
+        prefix = this.plugin.getPrefix();
+    }
 
-	public void setInUse() {
-		PreparedStatement statement = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		String query = "SELECT archive_id, name, use FROM " + prefix + "archive WHERE uuid = ?";
-		try {
-			service.testConnection(connection);
-			statement = connection.prepareStatement(query);
-			statement.setString(1, uuid);
-			rs = statement.executeQuery();
-			if (rs.isBeforeFirst()) {
-				String update = "UPDATE " + prefix + "archive SET use = ? WHERE archive_id = ?";
-				ps = connection.prepareStatement(update);
-				while (rs.next()) {
-					int i = 0;
-					if (rs.getString("name").equals(name)) {
-						i = 1;
-					}
-					if (rs.getInt("use") == 1) {
-						i = 2;
-					}
-					ps.setInt(1, i);
-					ps.setInt(2, rs.getInt("archive_id"));
-					ps.executeUpdate();
-				}
-			}
-		} catch (SQLException e) {
-			plugin.debug("ResultSet error for archive update! " + e.getMessage());
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (ps != null) {
-					ps.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing archive update! " + e.getMessage());
-			}
-		}
-	}
+    public void setInUse() {
+        PreparedStatement statement = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT archive_id, name, use FROM " + prefix + "archive WHERE uuid = ?";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            statement.setString(1, uuid);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                String update = "UPDATE " + prefix + "archive SET use = ? WHERE archive_id = ?";
+                ps = connection.prepareStatement(update);
+                while (rs.next()) {
+                    int i = 0;
+                    if (rs.getString("name").equals(name)) {
+                        i = 1;
+                    }
+                    if (rs.getInt("use") == 1) {
+                        i = 2;
+                    }
+                    ps.setInt(1, i);
+                    ps.setInt(2, rs.getInt("archive_id"));
+                    ps.executeUpdate();
+                }
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for archive update! " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing archive update! " + e.getMessage());
+            }
+        }
+    }
 }

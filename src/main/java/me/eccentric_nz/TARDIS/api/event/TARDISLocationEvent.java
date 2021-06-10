@@ -27,50 +27,50 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TARDISLocationEvent extends Event {
 
-	private static final HandlerList HANDLERS = new HandlerList();
-	private final Player player;
-	private final int tardis_id;
-	private final Location location;
+    private static final HandlerList HANDLERS = new HandlerList();
+    private final Player player;
+    private final int tardis_id;
+    private final Location location;
 
-	TARDISLocationEvent(Player player, int tardisid, Location location) {
-		this.player = player;
-		tardis_id = tardisid;
-		this.location = location;
-	}
+    TARDISLocationEvent(Player player, int tardisid, Location location) {
+        this.player = player;
+        tardis_id = tardisid;
+        this.location = location;
+    }
 
-	public static HandlerList getHandlerList() {
-		return HANDLERS;
-	}
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
 
-	/**
-	 * Returns the player involved in this event.
-	 *
-	 * @return the player
-	 */
-	public Player getPlayer() {
-		return player;
-	}
+    /**
+     * Returns the player involved in this event.
+     *
+     * @return the player
+     */
+    public Player getPlayer() {
+        return player;
+    }
 
-	/**
-	 * Returns the tardis_id of the TARDIS in the database.
-	 *
-	 * @return the TARDIS location
-	 */
-	public int getTardis_id() {
-		return tardis_id;
-	}
+    /**
+     * Returns the tardis_id of the TARDIS in the database.
+     *
+     * @return the TARDIS location
+     */
+    public int getTardis_id() {
+        return tardis_id;
+    }
 
-	/**
-	 * Returns the exterior location of the TARDIS.
-	 *
-	 * @return the TARDIS location
-	 */
-	public Location getLocation() {
-		return location;
-	}
+    /**
+     * Returns the exterior location of the TARDIS.
+     *
+     * @return the TARDIS location
+     */
+    public Location getLocation() {
+        return location;
+    }
 
-	@Override
-	public @NotNull HandlerList getHandlers() {
-		return HANDLERS;
-	}
+    @Override
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
+    }
 }

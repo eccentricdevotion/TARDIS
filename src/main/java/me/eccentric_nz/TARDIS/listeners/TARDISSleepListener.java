@@ -31,18 +31,17 @@ import java.util.Objects;
  */
 public class TARDISSleepListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISSleepListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISSleepListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-	public void onPlayerSleep(PlayerBedEnterEvent event) {
-		Location b = event.getBed().getLocation();
-		if (plugin.getUtils().inTARDISWorld(b) &&
-			Objects.requireNonNull(b.getWorld()).getEnvironment().equals(Environment.THE_END)) {
-			event.setCancelled(true);
-		}
-	}
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onPlayerSleep(PlayerBedEnterEvent event) {
+        Location b = event.getBed().getLocation();
+        if (plugin.getUtils().inTARDISWorld(b) && Objects.requireNonNull(b.getWorld()).getEnvironment().equals(Environment.THE_END)) {
+            event.setCancelled(true);
+        }
+    }
 }

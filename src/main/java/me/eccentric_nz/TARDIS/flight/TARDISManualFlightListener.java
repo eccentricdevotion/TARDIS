@@ -39,41 +39,39 @@ import java.util.UUID;
  */
 public class TARDISManualFlightListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISManualFlightListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISManualFlightListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler(priority = EventPriority.NORMAL)
-	public void onInteract(PlayerInteractEvent event) {
-		if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
-			return;
-		}
-		Player player = event.getPlayer();
-		UUID uuid = player.getUniqueId();
-		Block b = event.getClickedBlock();
-		// only repeaters
-		if (b != null && b.getType().equals(Material.REPEATER)) {
-			Location loc = b.getLocation();
-			if (plugin.getTrackerKeeper().getFlight().containsKey(uuid)) {
-				if (loc.toString().equals(plugin.getTrackerKeeper().getFlight().get(uuid))) {
-					if (plugin.getTrackerKeeper().getCount().containsKey(uuid)) {
-						plugin.getTrackerKeeper().getCount().put(uuid,
-								plugin.getTrackerKeeper().getCount().get(uuid) + 1);
-					} else {
-						plugin.getTrackerKeeper().getCount().put(uuid, 1);
-					}
-					event.setCancelled(true);
-				}
-				plugin.getTrackerKeeper().getFlight().remove(uuid);
-			} else // if it is a tardis repeater cancel the event
-			{
-				if (plugin.getTrackerKeeper().getRepeaters().containsKey(uuid) &&
-					plugin.getTrackerKeeper().getRepeaters().get(uuid).contains(loc)) {
-					event.setCancelled(true);
-				}
-			}
-		}
-	}
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onInteract(PlayerInteractEvent event) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+        Block b = event.getClickedBlock();
+        // only repeaters
+        if (b != null && b.getType().equals(Material.REPEATER)) {
+            Location loc = b.getLocation();
+            if (plugin.getTrackerKeeper().getFlight().containsKey(uuid)) {
+                if (loc.toString().equals(plugin.getTrackerKeeper().getFlight().get(uuid))) {
+                    if (plugin.getTrackerKeeper().getCount().containsKey(uuid)) {
+                        plugin.getTrackerKeeper().getCount().put(uuid, plugin.getTrackerKeeper().getCount().get(uuid) + 1);
+                    } else {
+                        plugin.getTrackerKeeper().getCount().put(uuid, 1);
+                    }
+                    event.setCancelled(true);
+                }
+                plugin.getTrackerKeeper().getFlight().remove(uuid);
+            } else // if it is a tardis repeater cancel the event
+            {
+                if (plugin.getTrackerKeeper().getRepeaters().containsKey(uuid) && plugin.getTrackerKeeper().getRepeaters().get(uuid).contains(loc)) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
 }

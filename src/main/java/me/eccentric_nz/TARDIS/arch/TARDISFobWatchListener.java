@@ -41,81 +41,81 @@ import java.util.UUID;
  */
 public class TARDISFobWatchListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISFobWatchListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISFobWatchListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onFobWatchClick(PlayerInteractEvent event) {
-		if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
-			return;
-		}
-		if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-			ItemStack is = event.getItem();
-			if (is == null || !is.getType().equals(Material.CLOCK) || !is.hasItemMeta()) {
-				return;
-			}
-			ItemMeta im = is.getItemMeta();
-			assert im != null;
-			if (!im.hasDisplayName() || !im.getDisplayName().equals("Fob Watch")) {
-				return;
-			}
-			Player player = event.getPlayer();
-			UUID uuid = player.getUniqueId();
-			boolean inv = plugin.getConfig().getBoolean("arch.switch_inventory");
-			if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-				// only check the permission when trying to 'fob'
-				if (!TARDISPermission.hasPermission(player, "tardis.chameleonarch")) {
-					TARDISMessage.send(player, "NO_PERM_CHAM_ARCH");
-					return;
-				}
-				String name = TARDISRandomName.name();
-				long time = System.currentTimeMillis() + plugin.getConfig().getLong("arch.min_time") * 60000L;
-				TARDISWatchData twd = new TARDISWatchData(name, time);
-				plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);
-				if (plugin.isDisguisesOnServer()) {
-					TARDISArchLibsDisguise.undisguise(player);
-				} else {
-					TARDISArchDisguise.undisguise(player);
-				}
-				player.getWorld().strikeLightningEffect(player.getLocation());
-				double mh = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue();
-				player.setHealth(mh / 10.0d);
-				if (inv) {
-					new TARDISArchInventory().switchInventories(player, 0);
-				}
-				if (plugin.isDisguisesOnServer()) {
-					TARDISArchLibsDisguise.disguise(player, name);
-				} else {
-					TARDISArchDisguise.disguise(player, name);
-				}
-				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-					player.setDisplayName(name);
-					player.setPlayerListName(name);
-				}, 5L);
-				plugin.getPM().callEvent(new TARDISChameleonArchEvent(player, twd));
-			} else if (plugin.getTrackerKeeper().getJohnSmith().get(uuid).getTime() <= System.currentTimeMillis()) {
-				// no permission check, always allow 'de-fobbing'
-				if (plugin.isDisguisesOnServer()) {
-					TARDISArchLibsDisguise.undisguise(player);
-				} else {
-					TARDISArchDisguise.undisguise(player);
-				}
-				if (inv) {
-					new TARDISArchInventory().switchInventories(player, 1);
-				}
-				player.getWorld().strikeLightningEffect(player.getLocation());
-				plugin.getTrackerKeeper().getJohnSmith().remove(uuid);
-				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-					player.setDisplayName(player.getName());
-					player.setPlayerListName(player.getName());
-				}, 5L);
-				// remove player from arched table
-				new TARDISArchPersister(plugin).removeArch(uuid);
-				plugin.getPM().callEvent(new TARDISChameleonArchOffEvent(player));
-			}
-		}
-	}
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onFobWatchClick(PlayerInteractEvent event) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
+        if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+            ItemStack is = event.getItem();
+            if (is == null || !is.getType().equals(Material.CLOCK) || !is.hasItemMeta()) {
+                return;
+            }
+            ItemMeta im = is.getItemMeta();
+            assert im != null;
+            if (!im.hasDisplayName() || !im.getDisplayName().equals("Fob Watch")) {
+                return;
+            }
+            Player player = event.getPlayer();
+            UUID uuid = player.getUniqueId();
+            boolean inv = plugin.getConfig().getBoolean("arch.switch_inventory");
+            if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+                // only check the permission when trying to 'fob'
+                if (!TARDISPermission.hasPermission(player, "tardis.chameleonarch")) {
+                    TARDISMessage.send(player, "NO_PERM_CHAM_ARCH");
+                    return;
+                }
+                String name = TARDISRandomName.name();
+                long time = System.currentTimeMillis() + plugin.getConfig().getLong("arch.min_time") * 60000L;
+                TARDISWatchData twd = new TARDISWatchData(name, time);
+                plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);
+                if (plugin.isDisguisesOnServer()) {
+                    TARDISArchLibsDisguise.undisguise(player);
+                } else {
+                    TARDISArchDisguise.undisguise(player);
+                }
+                player.getWorld().strikeLightningEffect(player.getLocation());
+                double mh = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue();
+                player.setHealth(mh / 10.0d);
+                if (inv) {
+                    new TARDISArchInventory().switchInventories(player, 0);
+                }
+                if (plugin.isDisguisesOnServer()) {
+                    TARDISArchLibsDisguise.disguise(player, name);
+                } else {
+                    TARDISArchDisguise.disguise(player, name);
+                }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    player.setDisplayName(name);
+                    player.setPlayerListName(name);
+                }, 5L);
+                plugin.getPM().callEvent(new TARDISChameleonArchEvent(player, twd));
+            } else if (plugin.getTrackerKeeper().getJohnSmith().get(uuid).getTime() <= System.currentTimeMillis()) {
+                // no permission check, always allow 'de-fobbing'
+                if (plugin.isDisguisesOnServer()) {
+                    TARDISArchLibsDisguise.undisguise(player);
+                } else {
+                    TARDISArchDisguise.undisguise(player);
+                }
+                if (inv) {
+                    new TARDISArchInventory().switchInventories(player, 1);
+                }
+                player.getWorld().strikeLightningEffect(player.getLocation());
+                plugin.getTrackerKeeper().getJohnSmith().remove(uuid);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    player.setDisplayName(player.getName());
+                    player.setPlayerListName(player.getName());
+                }, 5L);
+                // remove player from arched table
+                new TARDISArchPersister(plugin).removeArch(uuid);
+                plugin.getPM().callEvent(new TARDISChameleonArchOffEvent(player));
+            }
+        }
+    }
 }

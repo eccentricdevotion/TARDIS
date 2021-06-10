@@ -32,68 +32,66 @@ import java.util.*;
  */
 public class TARDISShapelessRecipe {
 
-	private final TARDISPlugin plugin;
-	private final HashMap<String, ShapelessRecipe> shapelessRecipes;
+    private final TARDISPlugin plugin;
+    private final HashMap<String, ShapelessRecipe> shapelessRecipes;
 
-	public TARDISShapelessRecipe(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		shapelessRecipes = new HashMap<>();
-	}
+    public TARDISShapelessRecipe(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        shapelessRecipes = new HashMap<>();
+    }
 
-	public void addShapelessRecipes() {
-		Set<String> shapeless = Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("shapeless")).getKeys(false);
-		shapeless.forEach((s) -> plugin.getServer().addRecipe(makeRecipe(s)));
-	}
+    public void addShapelessRecipes() {
+        Set<String> shapeless = Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("shapeless")).getKeys(false);
+        shapeless.forEach((s) -> plugin.getServer().addRecipe(makeRecipe(s)));
+    }
 
-	private ShapelessRecipe makeRecipe(String s) {
+    private ShapelessRecipe makeRecipe(String s) {
         /*
          recipe: VINE,VINE,VINE=Special Vine
          result: SLIME_BALL
          amount: 1
          lore: ""
          */
-		String[] ingredients = Objects.requireNonNull(plugin.getRecipesConfig().getString(
-				"shapeless." + s + ".recipe")).split(",");
-		String result = plugin.getRecipesConfig().getString("shapeless." + s + ".result");
-		Material mat = Material.valueOf(result);
-		int amount = plugin.getRecipesConfig().getInt("shapeless." + s + ".amount");
-		ItemStack is = new ItemStack(mat, amount);
-		ItemMeta im = is.getItemMeta();
-		assert im != null;
-		im.setDisplayName(s);
-		if (!Objects.equals(plugin.getRecipesConfig().getString("shapeless." + s + ".lore"), "")) {
-			im.setLore(Arrays.asList(Objects.requireNonNull(plugin.getRecipesConfig().getString(
-					"shapeless." + s + ".lore")).split("~")));
-		}
-		im.setCustomModelData(RecipeItem.getByName(s).getCustomModelData());
-		is.setItemMeta(im);
-		NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
-		ShapelessRecipe r = new ShapelessRecipe(key, is);
-		for (String i : ingredients) {
-			if (i.contains("=")) {
-				ItemStack exact;
-				String[] choice = i.split("=");
-				Material m = Material.valueOf(choice[0]);
-				exact = new ItemStack(m, 1);
-				ItemMeta em = exact.getItemMeta();
-				assert em != null;
-				em.setDisplayName(choice[1]);
-				em.setCustomModelData(RecipeItem.getByName(choice[1]).getCustomModelData());
-				exact.setItemMeta(em);
-				r.addIngredient(new RecipeChoice.ExactChoice(exact));
-			} else {
-				Material m = Material.valueOf(i);
-				r.addIngredient(m);
-			}
-		}
-		if (s.contains("Jelly Baby")) {
-			r.setGroup("Jelly Babies");
-		}
-		shapelessRecipes.put(s, r);
-		return r;
-	}
+        String[] ingredients = Objects.requireNonNull(plugin.getRecipesConfig().getString("shapeless." + s + ".recipe")).split(",");
+        String result = plugin.getRecipesConfig().getString("shapeless." + s + ".result");
+        Material mat = Material.valueOf(result);
+        int amount = plugin.getRecipesConfig().getInt("shapeless." + s + ".amount");
+        ItemStack is = new ItemStack(mat, amount);
+        ItemMeta im = is.getItemMeta();
+        assert im != null;
+        im.setDisplayName(s);
+        if (!Objects.equals(plugin.getRecipesConfig().getString("shapeless." + s + ".lore"), "")) {
+            im.setLore(Arrays.asList(Objects.requireNonNull(plugin.getRecipesConfig().getString("shapeless." + s + ".lore")).split("~")));
+        }
+        im.setCustomModelData(RecipeItem.getByName(s).getCustomModelData());
+        is.setItemMeta(im);
+        NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
+        ShapelessRecipe r = new ShapelessRecipe(key, is);
+        for (String i : ingredients) {
+            if (i.contains("=")) {
+                ItemStack exact;
+                String[] choice = i.split("=");
+                Material m = Material.valueOf(choice[0]);
+                exact = new ItemStack(m, 1);
+                ItemMeta em = exact.getItemMeta();
+                assert em != null;
+                em.setDisplayName(choice[1]);
+                em.setCustomModelData(RecipeItem.getByName(choice[1]).getCustomModelData());
+                exact.setItemMeta(em);
+                r.addIngredient(new RecipeChoice.ExactChoice(exact));
+            } else {
+                Material m = Material.valueOf(i);
+                r.addIngredient(m);
+            }
+        }
+        if (s.contains("Jelly Baby")) {
+            r.setGroup("Jelly Babies");
+        }
+        shapelessRecipes.put(s, r);
+        return r;
+    }
 
-	public HashMap<String, ShapelessRecipe> getShapelessRecipes() {
-		return shapelessRecipes;
-	}
+    public HashMap<String, ShapelessRecipe> getShapelessRecipes() {
+        return shapelessRecipes;
+    }
 }

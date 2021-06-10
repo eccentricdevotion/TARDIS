@@ -31,35 +31,35 @@ import java.util.UUID;
  */
 public class TARDISIsomorphicCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISIsomorphicCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISIsomorphicCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean toggleIsomorphicControls(Player player) {
-		return toggleIsomorphicControls(player.getUniqueId(), player);
-	}
+    boolean toggleIsomorphicControls(Player player) {
+        return toggleIsomorphicControls(player.getUniqueId(), player);
+    }
 
-	public boolean toggleIsomorphicControls(UUID uuid, CommandSender sender) {
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("uuid", uuid.toString());
-		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-		// does the player have a TARDIS
-		if (rs.resultSet()) {
-			TARDIS tardis = rs.getTardis();
-			int iso = (tardis.isIsoOn()) ? 0 : 1;
-			String onoff = (tardis.isIsoOn()) ? "ISO_OFF" : "ISO_ON";
-			int id = tardis.getTardisId();
-			HashMap<String, Object> seti = new HashMap<>();
-			seti.put("iso_on", iso);
-			HashMap<String, Object> wheret = new HashMap<>();
-			wheret.put("tardis_id", id);
-			plugin.getQueryFactory().doUpdate("tardis", seti, wheret);
-			TARDISMessage.send(sender, onoff);
-		} else {
-			TARDISMessage.send(sender, "NO_TARDIS");
-		}
-		return true;
-	}
+    public boolean toggleIsomorphicControls(UUID uuid, CommandSender sender) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid.toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+        // does the player have a TARDIS
+        if (rs.resultSet()) {
+            TARDIS tardis = rs.getTardis();
+            int iso = (tardis.isIsoOn()) ? 0 : 1;
+            String onoff = (tardis.isIsoOn()) ? "ISO_OFF" : "ISO_ON";
+            int id = tardis.getTardisId();
+            HashMap<String, Object> seti = new HashMap<>();
+            seti.put("iso_on", iso);
+            HashMap<String, Object> wheret = new HashMap<>();
+            wheret.put("tardis_id", id);
+            plugin.getQueryFactory().doUpdate("tardis", seti, wheret);
+            TARDISMessage.send(sender, onoff);
+        } else {
+            TARDISMessage.send(sender, "NO_TARDIS");
+        }
+        return true;
+    }
 }

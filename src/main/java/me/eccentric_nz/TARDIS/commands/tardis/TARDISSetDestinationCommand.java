@@ -38,101 +38,97 @@ import java.util.Objects;
  */
 class TARDISSetDestinationCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISSetDestinationCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISSetDestinationCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean doSetDestination(Player player, String[] args) {
-		if (TARDISPermission.hasPermission(player, "tardis.save")) {
-			ResultSetTardisID rs = new ResultSetTardisID(plugin);
-			if (!rs.fromUUID(player.getUniqueId().toString())) {
-				TARDISMessage.send(player, "NO_TARDIS");
-				return false;
-			}
-			if (args.length < 2) {
-				TARDISMessage.send(player, "TOO_FEW_ARGS");
-				return false;
-			}
-			if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-				TARDISMessage.send(player, "DEST_NAME_NOT_VALID");
-				return false;
-			} else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") ||
-					   args[1].equalsIgnoreCase("home")) {
-				TARDISMessage.send(player, "SAVE_RESERVED");
-				return false;
-			} else {
-				int id = rs.getTardisId();
-				TARDISCircuitChecker tcc = null;
-				if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-					tcc = new TARDISCircuitChecker(plugin, id);
-					tcc.getCircuits();
-				}
-				if (tcc != null && !tcc.hasMemory()) {
-					TARDISMessage.send(player, "NO_MEM_CIRCUIT");
-					return true;
-				}
-				// check they are not in the tardis
-				HashMap<String, Object> wherettrav = new HashMap<>();
-				wherettrav.put("uuid", player.getUniqueId().toString());
-				wherettrav.put("tardis_id", id);
-				ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
-				if (rst.resultSet()) {
-					TARDISMessage.send(player, "NO_PB_IN_TARDIS");
-					return true;
-				}
-				// get location player is looking at
-				Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50);
-				Location l = b.getLocation();
-				if (!plugin.getTardisArea().areaCheckInExisting(l)) {
-					TARDISMessage.send(player, "AREA_NO_SETDEST", ChatColor.AQUA + "/tardistravel area [area name]");
-					return true;
-				}
-				String world = Objects.requireNonNull(l.getWorld()).getName();
-				if (!plugin.getConfig().getBoolean("travel.include_default_world") &&
-					plugin.getConfig().getBoolean("creation.default_world") &&
-					world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-					TARDISMessage.send(player, "NO_WORLD_TRAVEL");
-					return true;
-				}
-				// check the world is not excluded
-				if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
-					TARDISMessage.send(player, "NO_PB_IN_WORLD");
-					return true;
-				}
-				if (!plugin.getPluginRespect().getRespect(l, new Parameters(player, Flag.getDefaultFlags()))) {
-					return true;
-				}
-				if (TARDISPermission.hasPermission(player, "tardis.exile") &&
-					plugin.getConfig().getBoolean("travel.exile")) {
-					String areaPerm = plugin.getTardisArea().getExileArea(player);
-					if (plugin.getTardisArea().areaCheckInExile(areaPerm, l)) {
-						TARDISMessage.send(player, "EXILE_NO_TRAVEL");
-						return false;
-					}
-				}
-				String dw = l.getWorld().getName();
-				int dx = l.getBlockX();
-				int dy = l.getBlockY() + 1;
-				int dz = l.getBlockZ();
-				HashMap<String, Object> set = new HashMap<>();
-				set.put("tardis_id", id);
-				set.put("dest_name", args[1]);
-				set.put("world", dw);
-				set.put("x", dx);
-				set.put("y", dy);
-				set.put("z", dz);
-				if (plugin.getQueryFactory().doSyncInsert("destinations", set) < 0) {
-					return false;
-				} else {
-					TARDISMessage.send(player, "DEST_SAVED", args[1]);
-					return true;
-				}
-			}
-		} else {
-			TARDISMessage.send(player, "NO_PERMS");
-			return false;
-		}
-	}
+    boolean doSetDestination(Player player, String[] args) {
+        if (TARDISPermission.hasPermission(player, "tardis.save")) {
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            if (!rs.fromUUID(player.getUniqueId().toString())) {
+                TARDISMessage.send(player, "NO_TARDIS");
+                return false;
+            }
+            if (args.length < 2) {
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                return false;
+            }
+            if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
+                TARDISMessage.send(player, "DEST_NAME_NOT_VALID");
+                return false;
+            } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
+                TARDISMessage.send(player, "SAVE_RESERVED");
+                return false;
+            } else {
+                int id = rs.getTardisId();
+                TARDISCircuitChecker tcc = null;
+                if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
+                    tcc = new TARDISCircuitChecker(plugin, id);
+                    tcc.getCircuits();
+                }
+                if (tcc != null && !tcc.hasMemory()) {
+                    TARDISMessage.send(player, "NO_MEM_CIRCUIT");
+                    return true;
+                }
+                // check they are not in the tardis
+                HashMap<String, Object> wherettrav = new HashMap<>();
+                wherettrav.put("uuid", player.getUniqueId().toString());
+                wherettrav.put("tardis_id", id);
+                ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
+                if (rst.resultSet()) {
+                    TARDISMessage.send(player, "NO_PB_IN_TARDIS");
+                    return true;
+                }
+                // get location player is looking at
+                Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50);
+                Location l = b.getLocation();
+                if (!plugin.getTardisArea().areaCheckInExisting(l)) {
+                    TARDISMessage.send(player, "AREA_NO_SETDEST", ChatColor.AQUA + "/tardistravel area [area name]");
+                    return true;
+                }
+                String world = Objects.requireNonNull(l.getWorld()).getName();
+                if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                    TARDISMessage.send(player, "NO_WORLD_TRAVEL");
+                    return true;
+                }
+                // check the world is not excluded
+                if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
+                    TARDISMessage.send(player, "NO_PB_IN_WORLD");
+                    return true;
+                }
+                if (!plugin.getPluginRespect().getRespect(l, new Parameters(player, Flag.getDefaultFlags()))) {
+                    return true;
+                }
+                if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
+                    String areaPerm = plugin.getTardisArea().getExileArea(player);
+                    if (plugin.getTardisArea().areaCheckInExile(areaPerm, l)) {
+                        TARDISMessage.send(player, "EXILE_NO_TRAVEL");
+                        return false;
+                    }
+                }
+                String dw = l.getWorld().getName();
+                int dx = l.getBlockX();
+                int dy = l.getBlockY() + 1;
+                int dz = l.getBlockZ();
+                HashMap<String, Object> set = new HashMap<>();
+                set.put("tardis_id", id);
+                set.put("dest_name", args[1]);
+                set.put("world", dw);
+                set.put("x", dx);
+                set.put("y", dy);
+                set.put("z", dz);
+                if (plugin.getQueryFactory().doSyncInsert("destinations", set) < 0) {
+                    return false;
+                } else {
+                    TARDISMessage.send(player, "DEST_SAVED", args[1]);
+                    return true;
+                }
+            }
+        } else {
+            TARDISMessage.send(player, "NO_PERMS");
+            return false;
+        }
+    }
 }

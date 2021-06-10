@@ -35,28 +35,28 @@ import java.util.List;
  */
 public class TARDISBannerSetter {
 
-	public static void setBanners(HashMap<Block, TARDISBannerData> banners) {
-		banners.forEach((key, tbd) -> {
-			JsonObject state = tbd.getState();
-			if (state != null) {
-				Block pbb = key.getLocation().getBlock();
-				pbb.setBlockData(tbd.getData(), true);
-				Banner banner = (Banner) pbb.getState();
-				List<Pattern> plist = new ArrayList<>();
-				JsonArray patterns = state.get("patterns").getAsJsonArray();
-				for (int j = 0; j < patterns.size(); j++) {
-					JsonObject jo = patterns.get(j).getAsJsonObject();
-					PatternType pt = PatternType.valueOf(jo.get("pattern").getAsString());
-					DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
-					Pattern p = new Pattern(dc, pt);
-					plist.add(p);
-				}
-				banner.setPatterns(plist);
-				banner.update();
-				if (TARDISPlugin.plugin.getBlockLogger().isLogging()) {
-					TARDISPlugin.plugin.getBlockLogger().logPlacement(pbb);
-				}
-			}
-		});
-	}
+    public static void setBanners(HashMap<Block, TARDISBannerData> banners) {
+        banners.forEach((key, tbd) -> {
+            JsonObject state = tbd.getState();
+            if (state != null) {
+                Block pbb = key.getLocation().getBlock();
+                pbb.setBlockData(tbd.getData(), true);
+                Banner banner = (Banner) pbb.getState();
+                List<Pattern> plist = new ArrayList<>();
+                JsonArray patterns = state.get("patterns").getAsJsonArray();
+                for (int j = 0; j < patterns.size(); j++) {
+                    JsonObject jo = patterns.get(j).getAsJsonObject();
+                    PatternType pt = PatternType.valueOf(jo.get("pattern").getAsString());
+                    DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
+                    Pattern p = new Pattern(dc, pt);
+                    plist.add(p);
+                }
+                banner.setPatterns(plist);
+                banner.update();
+                if (TARDISPlugin.plugin.getBlockLogger().isLogging()) {
+                    TARDISPlugin.plugin.getBlockLogger().logPlacement(pbb);
+                }
+            }
+        });
+    }
 }

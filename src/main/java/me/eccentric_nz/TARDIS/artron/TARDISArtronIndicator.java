@@ -33,73 +33,68 @@ import java.util.Objects;
  */
 public class TARDISArtronIndicator {
 
-	private final TARDISPlugin plugin;
-	private final ScoreboardManager manager;
-	private final int fc;
-	private final Material filter;
+    private final TARDISPlugin plugin;
+    private final ScoreboardManager manager;
+    private final int fc;
+    private final Material filter;
 
-	public TARDISArtronIndicator(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		manager = plugin.getServer().getScoreboardManager();
-		fc = plugin.getArtronConfig().getInt("full_charge");
-		filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
-	}
+    public TARDISArtronIndicator(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        manager = plugin.getServer().getScoreboardManager();
+        fc = plugin.getArtronConfig().getInt("full_charge");
+        filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
+    }
 
-	public void showArtronLevel(Player p, int id, int used) {
-		// check if they have the perception filter on
-		boolean isFiltered = false;
-		ItemStack[] armour = p.getInventory().getArmorContents();
-		for (ItemStack is : armour) {
-			if (is != null && is.getType().equals(filter)) {
-				isFiltered = true;
-			}
-		}
-		Scoreboard currentScoreboard = p.getScoreboard();
-		// get Artron level
-		ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
-		if (rs.fromID(id)) {
-			int current_level = rs.getArtronLevel();
-			int percent = Math.round((current_level * 100F) / fc);
-			if (!isFiltered) {
-				Scoreboard board = manager.getNewScoreboard();
-				Objective objective = board.registerNewObjective("tardis", "Artron", Objects.requireNonNull(plugin.getLanguage().getString("ARTRON_DISPLAY")));
-				objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-				if (used == 0) {
-					Score max = objective.getScore(ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":");
-					max.setScore(fc);
-					Score timelord = objective.getScore(
-							ChatColor.YELLOW + plugin.getLanguage().getString("ARTRON_TL") + ":");
-					ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
-					if (rsp.resultSet()) {
-						timelord.setScore(rsp.getArtronLevel());
-					}
-				}
-				Score current = objective.getScore(
-						ChatColor.GREEN + plugin.getLanguage().getString("ARTRON_REMAINING") + ":");
-				Score percentage = objective.getScore(
-						ChatColor.LIGHT_PURPLE + plugin.getLanguage().getString("ARTRON_PERCENT") + ":");
-				if (used > 0) {
-					Score amount_used = objective.getScore(
-							ChatColor.RED + plugin.getLanguage().getString("ARTRON_USED") + ":");
-					amount_used.setScore(used);
-				} else if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-					Score amount_used = objective.getScore(
-							ChatColor.RED + plugin.getLanguage().getString("ARTRON_COST") + ":");
-					amount_used.setScore(plugin.getTrackerKeeper().getHasDestination().get(id));
-				}
-				current.setScore(current_level);
-				percentage.setScore(percent);
-				p.setScoreboard(board);
-				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-					if (p.isOnline() && p.isValid()) {
-						p.setScoreboard(currentScoreboard);
-					}
-				}, 150L);
-			} else if (used > 0) {
-				TARDISMessage.send(p, "ENERGY_USED", String.format("%d", used));
-			} else {
-				TARDISMessage.send(p, "ENERGY_LEVEL", String.format("%d", percent));
-			}
-		}
-	}
+    public void showArtronLevel(Player p, int id, int used) {
+        // check if they have the perception filter on
+        boolean isFiltered = false;
+        ItemStack[] armour = p.getInventory().getArmorContents();
+        for (ItemStack is : armour) {
+            if (is != null && is.getType().equals(filter)) {
+                isFiltered = true;
+            }
+        }
+        Scoreboard currentScoreboard = p.getScoreboard();
+        // get Artron level
+        ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
+        if (rs.fromID(id)) {
+            int current_level = rs.getArtronLevel();
+            int percent = Math.round((current_level * 100F) / fc);
+            if (!isFiltered) {
+                Scoreboard board = manager.getNewScoreboard();
+                Objective objective = board.registerNewObjective("tardis", "Artron", Objects.requireNonNull(plugin.getLanguage().getString("ARTRON_DISPLAY")));
+                objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+                if (used == 0) {
+                    Score max = objective.getScore(ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":");
+                    max.setScore(fc);
+                    Score timelord = objective.getScore(ChatColor.YELLOW + plugin.getLanguage().getString("ARTRON_TL") + ":");
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
+                    if (rsp.resultSet()) {
+                        timelord.setScore(rsp.getArtronLevel());
+                    }
+                }
+                Score current = objective.getScore(ChatColor.GREEN + plugin.getLanguage().getString("ARTRON_REMAINING") + ":");
+                Score percentage = objective.getScore(ChatColor.LIGHT_PURPLE + plugin.getLanguage().getString("ARTRON_PERCENT") + ":");
+                if (used > 0) {
+                    Score amount_used = objective.getScore(ChatColor.RED + plugin.getLanguage().getString("ARTRON_USED") + ":");
+                    amount_used.setScore(used);
+                } else if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+                    Score amount_used = objective.getScore(ChatColor.RED + plugin.getLanguage().getString("ARTRON_COST") + ":");
+                    amount_used.setScore(plugin.getTrackerKeeper().getHasDestination().get(id));
+                }
+                current.setScore(current_level);
+                percentage.setScore(percent);
+                p.setScoreboard(board);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    if (p.isOnline() && p.isValid()) {
+                        p.setScoreboard(currentScoreboard);
+                    }
+                }, 150L);
+            } else if (used > 0) {
+                TARDISMessage.send(p, "ENERGY_USED", String.format("%d", used));
+            } else {
+                TARDISMessage.send(p, "ENERGY_LEVEL", String.format("%d", percent));
+            }
+        }
+    }
 }

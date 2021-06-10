@@ -28,32 +28,32 @@ import org.bukkit.event.block.BlockIgniteEvent;
 
 public class TARDISSonicIgnite {
 
-	public static void ignite(TARDISPlugin plugin, Block b, Player p) {
-		if (TARDISSonicRespect.checkBlockRespect(plugin, p, b)) {
-			if (b.getType().equals(Material.CAMPFIRE)) {
-				Lightable lightable = (Lightable) b.getBlockData();
-				if (!lightable.isLit()) {
-					lightable.setLit(true);
-					b.setBlockData(lightable);
-					plugin.getPM().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
-				}
-				return;
-			}
-			Block above = b.getRelative(BlockFace.UP);
-			if (b.getType().equals(Material.TNT)) {
-				b.setBlockData(TARDISConstants.AIR);
-				b.getWorld().spawnEntity(b.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.PRIMED_TNT);
-				plugin.getPM().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
-				return;
-			}
-			if (above.getType().isAir()) {
-				// delay 2 ticks as player may have clicked top of block automatically extinguishing the fire
-				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-					above.setBlockData(TARDISConstants.FIRE);
-					// call a block ignite event
-					plugin.getPM().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
-				}, 2L);
-			}
-		}
-	}
+    public static void ignite(TARDISPlugin plugin, Block b, Player p) {
+        if (TARDISSonicRespect.checkBlockRespect(plugin, p, b)) {
+            if (b.getType().equals(Material.CAMPFIRE)) {
+                Lightable lightable = (Lightable) b.getBlockData();
+                if (!lightable.isLit()) {
+                    lightable.setLit(true);
+                    b.setBlockData(lightable);
+                    plugin.getPM().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
+                }
+                return;
+            }
+            Block above = b.getRelative(BlockFace.UP);
+            if (b.getType().equals(Material.TNT)) {
+                b.setBlockData(TARDISConstants.AIR);
+                b.getWorld().spawnEntity(b.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.PRIMED_TNT);
+                plugin.getPM().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
+                return;
+            }
+            if (above.getType().isAir()) {
+                // delay 2 ticks as player may have clicked top of block automatically extinguishing the fire
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    above.setBlockData(TARDISConstants.FIRE);
+                    // call a block ignite event
+                    plugin.getPM().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
+                }, 2L);
+            }
+        }
+    }
 }

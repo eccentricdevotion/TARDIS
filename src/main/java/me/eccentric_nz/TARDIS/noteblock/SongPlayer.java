@@ -26,90 +26,89 @@ import java.util.UUID;
 
 class SongPlayer {
 
-	private final Song song;
-	private final ArrayList<UUID> playerList = new ArrayList<>();
-	private boolean playing = false;
-	private short tick = -1;
-	private boolean destroyed = false;
+    private final Song song;
+    private final ArrayList<UUID> playerList = new ArrayList<>();
+    private boolean playing = false;
+    private short tick = -1;
+    private boolean destroyed = false;
 
-	SongPlayer(Song song) {
-		this.song = song;
-		createThread();
-	}
+    SongPlayer(Song song) {
+        this.song = song;
+        createThread();
+    }
 
-	private void createThread() {
-		Thread playerThread = new Thread(() -> {
-			while (!destroyed) {
-				long startTime = System.currentTimeMillis();
-				synchronized (SongPlayer.this) {
-					if (playing) {
-						SongPlayer sp = SongPlayer.this;
-						sp.tick = ((short) (sp.tick + 1));
-						if (tick > song.getLength()) {
-							playing = false;
-							tick = -1;
-							destroy();
-							return;
-						}
-						playerList.forEach((uuid) -> {
-							Player p = Bukkit.getPlayer(uuid);
-							if (p != null) {
-								playTick(p, tick);
-							}
-						});
-					}
-				}
-				long duration = System.currentTimeMillis() - startTime;
-				float delayMillis = song.getDelay() * 50;
-				if (duration < delayMillis) {
-					try {
-						Thread.sleep((long) delayMillis - duration);
-					} catch (InterruptedException ignored) {
-					}
-				}
-			}
-		});
-		playerThread.setPriority(10);
-		playerThread.start();
-	}
+    private void createThread() {
+        Thread playerThread = new Thread(() -> {
+            while (!destroyed) {
+                long startTime = System.currentTimeMillis();
+                synchronized (SongPlayer.this) {
+                    if (playing) {
+                        SongPlayer sp = SongPlayer.this;
+                        sp.tick = ((short) (sp.tick + 1));
+                        if (tick > song.getLength()) {
+                            playing = false;
+                            tick = -1;
+                            destroy();
+                            return;
+                        }
+                        playerList.forEach((uuid) -> {
+                            Player p = Bukkit.getPlayer(uuid);
+                            if (p != null) {
+                                playTick(p, tick);
+                            }
+                        });
+                    }
+                }
+                long duration = System.currentTimeMillis() - startTime;
+                float delayMillis = song.getDelay() * 50;
+                if (duration < delayMillis) {
+                    try {
+                        Thread.sleep((long) delayMillis - duration);
+                    } catch (InterruptedException ignored) {
+                    }
+                }
+            }
+        });
+        playerThread.setPriority(10);
+        playerThread.start();
+    }
 
-	void addPlayer(Player p) {
-		synchronized (this) {
-			if (!playerList.contains(p.getUniqueId())) {
-				playerList.add(p.getUniqueId());
-				List<SongPlayer> songs = NoteBlockPlayer.PLAYING_SONGS.get(p.getUniqueId());
-				if (songs == null) {
-					songs = new ArrayList<>();
-				}
-				songs.add(this);
-				NoteBlockPlayer.PLAYING_SONGS.put(p.getUniqueId(), songs);
-			}
-		}
-	}
+    void addPlayer(Player p) {
+        synchronized (this) {
+            if (!playerList.contains(p.getUniqueId())) {
+                playerList.add(p.getUniqueId());
+                List<SongPlayer> songs = NoteBlockPlayer.PLAYING_SONGS.get(p.getUniqueId());
+                if (songs == null) {
+                    songs = new ArrayList<>();
+                }
+                songs.add(this);
+                NoteBlockPlayer.PLAYING_SONGS.put(p.getUniqueId(), songs);
+            }
+        }
+    }
 
-	private void playTick(Player p, int tick) {
-		song.getLayerHashMap().values().forEach((l) -> {
-			Note note = l.getNote(tick);
-			if (note != null) {
-				p.playSound(p.getEyeLocation(), NoteBlockInstrument.getInstrument(note.getInstrument()),
-						l.getVolume() * 100, NotePitch.getPitch(note.getKey() - 33));
-			}
-		});
-	}
+    private void playTick(Player p, int tick) {
+        song.getLayerHashMap().values().forEach((l) -> {
+            Note note = l.getNote(tick);
+            if (note != null) {
+                p.playSound(p.getEyeLocation(), NoteBlockInstrument.getInstrument(note.getInstrument()), l.getVolume() * 100, NotePitch.getPitch(note.getKey() - 33));
+            }
+        });
+    }
 
-	private void destroy() {
-		synchronized (this) {
-			destroyed = true;
-			playing = false;
-			setTick((short) -1);
-		}
-	}
+    private void destroy() {
+        synchronized (this) {
+            destroyed = true;
+            playing = false;
+            setTick((short) -1);
+        }
+    }
 
-	void setPlaying(boolean playing) {
-		this.playing = playing;
-	}
+    void setPlaying(boolean playing) {
+        this.playing = playing;
+    }
 
-	private void setTick(short tick) {
-		this.tick = tick;
-	}
+    private void setTick(short tick) {
+        this.tick = tick;
+    }
 }

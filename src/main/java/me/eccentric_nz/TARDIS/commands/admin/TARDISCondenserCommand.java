@@ -31,32 +31,32 @@ import java.io.IOException;
  */
 class TARDISCondenserCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISCondenserCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISCondenserCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public boolean set(CommandSender sender) {
-		if (!(sender instanceof Player player)) {
-			TARDISMessage.send(sender, "CMD_PLAYER");
-			return true;
-		}
-		Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
-		Material chest = b.getType();
-		if (!chest.equals(Material.CHEST)) {
-			TARDISMessage.send(sender, "UPDATE_CONDENSER");
-			return true;
-		}
-		String loc = b.getLocation().toString();
-		// update the artron config
-		plugin.getArtronConfig().set("condenser", loc);
-		try {
-			plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
-		} catch (IOException io) {
-			plugin.debug("Could not save artron.yml, " + io);
-		}
-		TARDISMessage.send(sender, "CONFIG_UPDATED");
-		return true;
-	}
+    public boolean set(CommandSender sender) {
+        if (!(sender instanceof Player player)) {
+            TARDISMessage.send(sender, "CMD_PLAYER");
+            return true;
+        }
+        Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
+        Material chest = b.getType();
+        if (!chest.equals(Material.CHEST)) {
+            TARDISMessage.send(sender, "UPDATE_CONDENSER");
+            return true;
+        }
+        String loc = b.getLocation().toString();
+        // update the artron config
+        plugin.getArtronConfig().set("condenser", loc);
+        try {
+            plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
+        } catch (IOException io) {
+            plugin.debug("Could not save artron.yml, " + io);
+        }
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        return true;
+    }
 }

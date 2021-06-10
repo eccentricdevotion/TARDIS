@@ -24,43 +24,43 @@ import org.bukkit.block.data.BlockData;
  */
 public class ReplacedBlock {
 
-	private final int id;
-	private final int tardisId;
-	private final Location location;
-	private final String strLocation;
-	private final BlockData blockData;
-	private final int policeBox;
+    private final int id;
+    private final int tardisId;
+    private final Location location;
+    private final String strLocation;
+    private final BlockData blockData;
+    private final int policeBox;
 
-	public ReplacedBlock(int id, int tardisId, Location location, String strLocation, BlockData blockData, int policeBox) {
-		this.id = id;
-		this.tardisId = tardisId;
-		this.location = location;
-		this.strLocation = strLocation;
-		this.blockData = blockData;
-		this.policeBox = policeBox;
-	}
+    public ReplacedBlock(int id, int tardisId, Location location, String strLocation, BlockData blockData, int policeBox) {
+        this.id = id;
+        this.tardisId = tardisId;
+        this.location = location;
+        this.strLocation = strLocation;
+        this.blockData = blockData;
+        this.policeBox = policeBox;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public int getTardisId() {
-		return tardisId;
-	}
+    public int getTardisId() {
+        return tardisId;
+    }
 
-	public Location getLocation() {
-		return location;
-	}
+    public Location getLocation() {
+        return location;
+    }
 
-	public String getStrLocation() {
-		return strLocation;
-	}
+    public String getStrLocation() {
+        return strLocation;
+    }
 
-	public BlockData getBlockData() {
-		return blockData;
-	}
+    public BlockData getBlockData() {
+        return blockData;
+    }
 
-	public int getPoliceBox() {
-		return policeBox;
-	}
+    public int getPoliceBox() {
+        return policeBox;
+    }
 }

@@ -31,54 +31,52 @@ import java.util.Objects;
 
 public class GlowStickRunnable implements Runnable {
 
-	private final TARDISPlugin plugin;
-	private final NamespacedKey namespacedKey;
+    private final TARDISPlugin plugin;
+    private final NamespacedKey namespacedKey;
 
-	public GlowStickRunnable(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		namespacedKey = new NamespacedKey(this.plugin, "glow_stick_time");
-	}
+    public GlowStickRunnable(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        namespacedKey = new NamespacedKey(this.plugin, "glow_stick_time");
+    }
 
-	@Override
-	public void run() {
-		for (Player player : plugin.getServer().getOnlinePlayers()) {
-			PlayerInventory inventory = player.getInventory();
-			// item in hands
-			ItemStack mainHand = inventory.getItemInMainHand();
-			if (isGlowStick(mainHand)) {
-				damage(mainHand, player, inventory, true);
-			}
-			ItemStack offHand = inventory.getItemInOffHand();
-			if (isGlowStick(offHand)) {
-				damage(offHand, player, inventory, false);
-			}
-		}
-	}
+    @Override
+    public void run() {
+        for (Player player : plugin.getServer().getOnlinePlayers()) {
+            PlayerInventory inventory = player.getInventory();
+            // item in hands
+            ItemStack mainHand = inventory.getItemInMainHand();
+            if (isGlowStick(mainHand)) {
+                damage(mainHand, player, inventory, true);
+            }
+            ItemStack offHand = inventory.getItemInOffHand();
+            if (isGlowStick(offHand)) {
+                damage(offHand, player, inventory, false);
+            }
+        }
+    }
 
-	private void damage(ItemStack glowStick, Player player, PlayerInventory inventory, boolean main) {
-		ItemMeta im = glowStick.getItemMeta();
-		assert im != null;
-		PersistentDataContainer pdk = im.getPersistentDataContainer();
-		if (pdk.has(namespacedKey, PersistentDataType.INTEGER)) {
-			int damage = pdk.get(namespacedKey, PersistentDataType.INTEGER) - 5;
-			if (damage <= 0) {
-				if (main) {
-					inventory.setItemInMainHand(null);
-				} else {
-					inventory.setItemInOffHand(null);
-				}
-				player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 1.0f);
-			} else {
-				pdk.set(namespacedKey, PersistentDataType.INTEGER, damage);
-				glowStick.setItemMeta(im);
-			}
-			player.updateInventory();
-		}
-	}
+    private void damage(ItemStack glowStick, Player player, PlayerInventory inventory, boolean main) {
+        ItemMeta im = glowStick.getItemMeta();
+        assert im != null;
+        PersistentDataContainer pdk = im.getPersistentDataContainer();
+        if (pdk.has(namespacedKey, PersistentDataType.INTEGER)) {
+            int damage = pdk.get(namespacedKey, PersistentDataType.INTEGER) - 5;
+            if (damage <= 0) {
+                if (main) {
+                    inventory.setItemInMainHand(null);
+                } else {
+                    inventory.setItemInOffHand(null);
+                }
+                player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 1.0f);
+            } else {
+                pdk.set(namespacedKey, PersistentDataType.INTEGER, damage);
+                glowStick.setItemMeta(im);
+            }
+            player.updateInventory();
+        }
+    }
 
-	private boolean isGlowStick(ItemStack glowStick) {
-		return glowStick != null && GlowStickMaterial.isCorrectMaterial(glowStick.getType()) &&
-			   glowStick.hasItemMeta() && Objects.requireNonNull(glowStick.getItemMeta()).hasCustomModelData() &&
-			   glowStick.containsEnchantment(Enchantment.LOYALTY);
-	}
+    private boolean isGlowStick(ItemStack glowStick) {
+        return glowStick != null && GlowStickMaterial.isCorrectMaterial(glowStick.getType()) && glowStick.hasItemMeta() && Objects.requireNonNull(glowStick.getItemMeta()).hasCustomModelData() && glowStick.containsEnchantment(Enchantment.LOYALTY);
+    }
 }

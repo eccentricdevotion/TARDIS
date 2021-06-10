@@ -33,53 +33,53 @@ import java.util.HashMap;
  */
 public class TARDISSpectaclesRunnable implements Runnable {
 
-	private final TARDISPlugin plugin;
-	private final HashMap<COMPASS, Door> lower = new HashMap<>();
-	private final Door upper;
+    private final TARDISPlugin plugin;
+    private final HashMap<COMPASS, Door> lower = new HashMap<>();
+    private final Door upper;
 
-	public TARDISSpectaclesRunnable(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		Door door = (Door) Material.IRON_DOOR.createBlockData();
-		door.setHalf(Bisected.Half.BOTTOM);
-		door.setHinge(Door.Hinge.RIGHT);
-		lower.put(COMPASS.EAST, calculateFacing(door, COMPASS.EAST));
-		lower.put(COMPASS.SOUTH, calculateFacing(door, COMPASS.SOUTH));
-		lower.put(COMPASS.WEST, calculateFacing(door, COMPASS.WEST));
-		lower.put(COMPASS.NORTH, calculateFacing(door, COMPASS.NORTH));
-		upper = (Door) Material.IRON_DOOR.createBlockData();
-		upper.setHalf(Bisected.Half.TOP);
-	}
+    public TARDISSpectaclesRunnable(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        Door door = (Door) Material.IRON_DOOR.createBlockData();
+        door.setHalf(Bisected.Half.BOTTOM);
+        door.setHinge(Door.Hinge.RIGHT);
+        lower.put(COMPASS.EAST, calculateFacing(door, COMPASS.EAST));
+        lower.put(COMPASS.SOUTH, calculateFacing(door, COMPASS.SOUTH));
+        lower.put(COMPASS.WEST, calculateFacing(door, COMPASS.WEST));
+        lower.put(COMPASS.NORTH, calculateFacing(door, COMPASS.NORTH));
+        upper = (Door) Material.IRON_DOOR.createBlockData();
+        upper.setHalf(Bisected.Half.TOP);
+    }
 
-	@Override
+    @Override
 
-	public void run() {
-		plugin.getTrackerKeeper().getInvisibleDoors().forEach((key, value) -> {
-			Player p = plugin.getServer().getPlayer(key);
-			if (p != null && p.isOnline() && plugin.getTrackerKeeper().getSpectacleWearers().contains(key)) {
-				String b = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getRelative(BlockFace.UP).toString();
-				if (b.equals(value.toString())) {
-					ResultSetTardisID rs = new ResultSetTardisID(plugin);
-					if (rs.fromUUID(key.toString())) {
-						HashMap<String, Object> wherec = new HashMap<>();
-						wherec.put("tardis_id", rs.getTardisId());
-						ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
-						if (rsc.resultSet()) {
-							p.sendBlockChange(value.getLocation(), lower.get(rsc.getDirection()));
-							p.sendBlockChange(value.getRelative(BlockFace.UP).getLocation(), upper);
-						}
-					}
-				}
-			}
-		});
-	}
+    public void run() {
+        plugin.getTrackerKeeper().getInvisibleDoors().forEach((key, value) -> {
+            Player p = plugin.getServer().getPlayer(key);
+            if (p != null && p.isOnline() && plugin.getTrackerKeeper().getSpectacleWearers().contains(key)) {
+                String b = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getRelative(BlockFace.UP).toString();
+                if (b.equals(value.toString())) {
+                    ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                    if (rs.fromUUID(key.toString())) {
+                        HashMap<String, Object> wherec = new HashMap<>();
+                        wherec.put("tardis_id", rs.getTardisId());
+                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                        if (rsc.resultSet()) {
+                            p.sendBlockChange(value.getLocation(), lower.get(rsc.getDirection()));
+                            p.sendBlockChange(value.getRelative(BlockFace.UP).getLocation(), upper);
+                        }
+                    }
+                }
+            }
+        });
+    }
 
-	private Door calculateFacing(Door door, COMPASS compass) {
-		switch (compass) {
-			case SOUTH -> door.setFacing(BlockFace.SOUTH);
-			case WEST -> door.setFacing(BlockFace.WEST);
-			case NORTH -> door.setFacing(BlockFace.NORTH);
-			default -> door.setFacing(BlockFace.EAST);
-		}
-		return door;
-	}
+    private Door calculateFacing(Door door, COMPASS compass) {
+        switch (compass) {
+            case SOUTH -> door.setFacing(BlockFace.SOUTH);
+            case WEST -> door.setFacing(BlockFace.WEST);
+            case NORTH -> door.setFacing(BlockFace.NORTH);
+            default -> door.setFacing(BlockFace.EAST);
+        }
+        return door;
+    }
 }

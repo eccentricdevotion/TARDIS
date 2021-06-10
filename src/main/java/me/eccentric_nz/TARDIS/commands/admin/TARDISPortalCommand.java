@@ -30,39 +30,39 @@ import java.sql.Statement;
  */
 class TARDISPortalCommand {
 
-	private final TARDISPlugin plugin;
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final String prefix;
-	private Statement statement = null;
+    private final TARDISPlugin plugin;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final String prefix;
+    private Statement statement = null;
 
-	TARDISPortalCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		prefix = this.plugin.getPrefix();
-	}
+    TARDISPortalCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        prefix = this.plugin.getPrefix();
+    }
 
-	boolean clearAll(CommandSender sender) {
-		// clear all portals on the server
-		plugin.getTrackerKeeper().getPortals().clear();
-		// stop tracking players
-		plugin.getTrackerKeeper().getMover().clear();
-		// clear the portals table
-		try {
-			statement = connection.createStatement();
-			String query = "DELETE FROM " + prefix + "portals";
-			statement.executeUpdate(query);
-		} catch (SQLException e) {
-			plugin.debug("Error deleting from portals table! " + e.getMessage());
-		} finally {
-			try {
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing portals table! " + e.getMessage());
-			}
-		}
-		TARDISMessage.send(sender, "PURGE_PORTAL");
-		return true;
-	}
+    boolean clearAll(CommandSender sender) {
+        // clear all portals on the server
+        plugin.getTrackerKeeper().getPortals().clear();
+        // stop tracking players
+        plugin.getTrackerKeeper().getMover().clear();
+        // clear the portals table
+        try {
+            statement = connection.createStatement();
+            String query = "DELETE FROM " + prefix + "portals";
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            plugin.debug("Error deleting from portals table! " + e.getMessage());
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing portals table! " + e.getMessage());
+            }
+        }
+        TARDISMessage.send(sender, "PURGE_PORTAL");
+        return true;
+    }
 }

@@ -28,66 +28,62 @@ import java.sql.Statement;
  */
 class TARDISSQLInsertControl implements Runnable {
 
-	private final TARDISPlugin plugin;
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final int id;
-	private final int type;
-	private final String location;
-	private final int secondary;
-	private final String prefix;
+    private final TARDISPlugin plugin;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final int id;
+    private final int type;
+    private final String location;
+    private final int secondary;
+    private final String prefix;
 
-	/**
-	 * Updates data in an SQLite database table. This method builds an SQL query string from the parameters supplied and
-	 * then executes the update.
-	 *
-	 * @param plugin    an instance of the main plugin class
-	 * @param id        the unique tardis identifier
-	 * @param type      the type of control to insert
-	 * @param location  the location of the control
-	 * @param secondary whether the control is a secondary control
-	 */
-	TARDISSQLInsertControl(TARDISPlugin plugin, int id, int type, String location, int secondary) {
-		this.plugin = plugin;
-		this.id = id;
-		this.type = type;
-		this.location = location;
-		this.secondary = secondary;
-		prefix = this.plugin.getPrefix();
-	}
+    /**
+     * Updates data in an SQLite database table. This method builds an SQL query string from the parameters supplied and
+     * then executes the update.
+     *
+     * @param plugin    an instance of the main plugin class
+     * @param id        the unique tardis identifier
+     * @param type      the type of control to insert
+     * @param location  the location of the control
+     * @param secondary whether the control is a secondary control
+     */
+    TARDISSQLInsertControl(TARDISPlugin plugin, int id, int type, String location, int secondary) {
+        this.plugin = plugin;
+        this.id = id;
+        this.type = type;
+        this.location = location;
+        this.secondary = secondary;
+        prefix = this.plugin.getPrefix();
+    }
 
-	@Override
-	public void run() {
-		Statement statement = null;
-		try {
-			service.testConnection(connection);
-			statement = connection.createStatement();
-			String select = "SELECT c_id FROM " + prefix + "controls WHERE tardis_id = " + id + " AND type = " + type +
-							" AND secondary = " + secondary;
-			ResultSet rs = statement.executeQuery(select);
-			if (rs.isBeforeFirst()) {
-				rs.next();
-				// update
-				String update = "UPDATE " + prefix + "controls SET location = '" + location + "' WHERE c_id = " +
-								rs.getInt("c_id");
-				statement.executeUpdate(update);
-			} else {
-				// insert
-				String insert =
-						"INSERT INTO " + prefix + "controls (tardis_id, type, location, secondary) VALUES (" + id +
-						", " + type + ", '" + location + "', " + secondary + ")";
-				statement.executeUpdate(insert);
-			}
-		} catch (SQLException e) {
-			plugin.debug("Insert control error! " + e.getMessage());
-		} finally {
-			try {
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing insert control statement! " + e.getMessage());
-			}
-		}
-	}
+    @Override
+    public void run() {
+        Statement statement = null;
+        try {
+            service.testConnection(connection);
+            statement = connection.createStatement();
+            String select = "SELECT c_id FROM " + prefix + "controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + secondary;
+            ResultSet rs = statement.executeQuery(select);
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                // update
+                String update = "UPDATE " + prefix + "controls SET location = '" + location + "' WHERE c_id = " + rs.getInt("c_id");
+                statement.executeUpdate(update);
+            } else {
+                // insert
+                String insert = "INSERT INTO " + prefix + "controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + location + "', " + secondary + ")";
+                statement.executeUpdate(insert);
+            }
+        } catch (SQLException e) {
+            plugin.debug("Insert control error! " + e.getMessage());
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing insert control statement! " + e.getMessage());
+            }
+        }
+    }
 }

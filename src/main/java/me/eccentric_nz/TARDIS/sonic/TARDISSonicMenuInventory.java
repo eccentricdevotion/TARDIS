@@ -34,59 +34,59 @@ import java.util.List;
  */
 public class TARDISSonicMenuInventory {
 
-	private final TARDISPlugin plugin;
-	private final ItemStack[] menu;
+    private final TARDISPlugin plugin;
+    private final ItemStack[] menu;
 
-	public TARDISSonicMenuInventory(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		menu = getItemStack();
-	}
+    public TARDISSonicMenuInventory(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        menu = getItemStack();
+    }
 
-	/**
-	 * Constructs an inventory for the Sonic Screwdriver Menu GUI.
-	 *
-	 * @return an Array of itemStacks (an inventory)
-	 */
+    /**
+     * Constructs an inventory for the Sonic Screwdriver Menu GUI.
+     *
+     * @return an Array of itemStacks (an inventory)
+     */
 
-	private ItemStack[] getItemStack() {
+    private ItemStack[] getItemStack() {
 
-		ItemStack[] stack = new ItemStack[27];
-		for (GUISonicPreferences sonic : GUISonicPreferences.values()) {
-			if (sonic.getMaterial() == Material.BLAZE_ROD) {
-				ItemStack is = new ItemStack(sonic.getMaterial(), 1);
-				ItemMeta im = is.getItemMeta();
-				assert im != null;
-				im.setDisplayName(sonic.getChatColor() + "Sonic Screwdriver");
-				im.setLore(Collections.singletonList(sonic.getName()));
-				im.setCustomModelData(sonic.getCustomModelData());
-				is.setItemMeta(im);
-				stack[sonic.getSlot()] = is;
-			}
-		}
-		// \u00a7 = § (ChatColor code)
-		// info
-		ItemStack info = new ItemStack(Material.BOOK, 1);
-		ItemMeta info_im = info.getItemMeta();
-		assert info_im != null;
-		info_im.setDisplayName("Instructions");
-		List<String> lore = Arrays.asList("Put your Sonic Screwdriver", "in the bottom left most slot", "and then click on the", "Sonic of your choice.");
-		info_im.setLore(lore);
-		info_im.setCustomModelData(GUISonicPreferences.INSTRUCTIONS.getCustomModelData());
-		info.setItemMeta(info_im);
-		stack[22] = info;
-		// close
-		ItemStack close = new ItemStack(Material.BOWL, 1);
-		ItemMeta close_im = close.getItemMeta();
-		assert close_im != null;
-		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-		close_im.setCustomModelData(GUISonicPreferences.CLOSE.getCustomModelData());
-		close.setItemMeta(close_im);
-		stack[26] = close;
+        ItemStack[] stack = new ItemStack[27];
+        for (GUISonicPreferences sonic : GUISonicPreferences.values()) {
+            if (sonic.getMaterial() == Material.BLAZE_ROD) {
+                ItemStack is = new ItemStack(sonic.getMaterial(), 1);
+                ItemMeta im = is.getItemMeta();
+                assert im != null;
+                im.setDisplayName(sonic.getChatColor() + "Sonic Screwdriver");
+                im.setLore(Collections.singletonList(sonic.getName()));
+                im.setCustomModelData(sonic.getCustomModelData());
+                is.setItemMeta(im);
+                stack[sonic.getSlot()] = is;
+            }
+        }
+        // \u00a7 = § (ChatColor code)
+        // info
+        ItemStack info = new ItemStack(Material.BOOK, 1);
+        ItemMeta info_im = info.getItemMeta();
+        assert info_im != null;
+        info_im.setDisplayName("Instructions");
+        List<String> lore = Arrays.asList("Put your Sonic Screwdriver", "in the bottom left most slot", "and then click on the", "Sonic of your choice.");
+        info_im.setLore(lore);
+        info_im.setCustomModelData(GUISonicPreferences.INSTRUCTIONS.getCustomModelData());
+        info.setItemMeta(info_im);
+        stack[22] = info;
+        // close
+        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemMeta close_im = close.getItemMeta();
+        assert close_im != null;
+        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        close_im.setCustomModelData(GUISonicPreferences.CLOSE.getCustomModelData());
+        close.setItemMeta(close_im);
+        stack[26] = close;
 
-		return stack;
-	}
+        return stack;
+    }
 
-	public ItemStack[] getMenu() {
-		return menu;
-	}
+    public ItemStack[] getMenu() {
+        return menu;
+    }
 }

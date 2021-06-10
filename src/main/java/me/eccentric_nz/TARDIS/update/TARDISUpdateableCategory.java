@@ -20,24 +20,24 @@ import net.md_5.bungee.api.ChatColor;
 
 public enum TARDISUpdateableCategory {
 
-	CONTROLS(ChatColor.GREEN, "TARDIS Controls"),
-	INTERFACES(ChatColor.RED, "TARDIS User Interfaces"),
-	LOCATIONS(ChatColor.AQUA, "TARDIS Internal Spawn Locations"),
-	OTHERS(ChatColor.LIGHT_PURPLE, "Others");
+    CONTROLS(ChatColor.GREEN, "TARDIS Controls"),
+    INTERFACES(ChatColor.RED, "TARDIS User Interfaces"),
+    LOCATIONS(ChatColor.AQUA, "TARDIS Internal Spawn Locations"),
+    OTHERS(ChatColor.LIGHT_PURPLE, "Others");
 
-	private final ChatColor colour;
-	private final String name;
+    private final ChatColor colour;
+    private final String name;
 
-	TARDISUpdateableCategory(ChatColor colour, String name) {
-		this.colour = colour;
-		this.name = name;
-	}
+    TARDISUpdateableCategory(ChatColor colour, String name) {
+        this.colour = colour;
+        this.name = name;
+    }
 
-	public ChatColor getColour() {
-		return colour;
-	}
+    public ChatColor getColour() {
+        return colour;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 }

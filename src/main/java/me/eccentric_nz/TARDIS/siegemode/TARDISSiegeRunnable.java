@@ -36,65 +36,65 @@ import java.util.Objects;
  */
 public class TARDISSiegeRunnable implements Runnable {
 
-	private final TARDISPlugin plugin;
-	private final int deplete;
+    private final TARDISPlugin plugin;
+    private final int deplete;
 
-	public TARDISSiegeRunnable(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		deplete = -this.plugin.getArtronConfig().getInt("siege_deplete");
-	}
+    public TARDISSiegeRunnable(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        deplete = -this.plugin.getArtronConfig().getInt("siege_deplete");
+    }
 
-	@Override
-	public void run() {
-		plugin.getTrackerKeeper().getInSiegeMode().forEach((id) -> {
-			// get current Artron level
-			HashMap<String, Object> where = new HashMap<>();
-			where.put("tardis_id", id);
-			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-			if (rs.resultSet()) {
-				TARDIS tardis = rs.getTardis();
-				int level = tardis.getArtronLevel();
-				if (level > deplete) {
-					// remove some energy
-					HashMap<String, Object> whered = new HashMap<>();
-					whered.put("tardis_id", id);
-					plugin.getQueryFactory().alterEnergyLevel("tardis", deplete, whered, null);
-				} else if (plugin.getConfig().getBoolean("siege.creeper")) {
-					Location l = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
-					// spawn an entity so we can check for the creeper
-					assert l != null;
-					Entity ent = Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.EGG);
-					List<Entity> creeps = ent.getNearbyEntities(1d, 1d, 1d);
-					ent.remove();
-					boolean boost = false;
-					for (Entity e : creeps) {
-						if (e instanceof Creeper) {
-							e.remove();
-							boost = true;
-						}
-					}
-					if (boost) {
-						// give some energy
-						HashMap<String, Object> wherec = new HashMap<>();
-						wherec.put("tardis_id", id);
-						plugin.getQueryFactory().alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("siege_creeper"), wherec, null);
-					}
-				}
-			}
-			// give players inside tardis a health boost
-			if (plugin.getConfig().getBoolean("siege.healing")) {
-				HashMap<String, Object> wheret = new HashMap<>();
-				wheret.put("tardis_id", id);
-				ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
-				if (rst.resultSet()) {
-					rst.getData().forEach((uuid) -> {
-						Player p = plugin.getServer().getPlayer(uuid);
-						if (p != null && p.isOnline() && p.getHealth() < 19.5) {
-							p.setHealth(p.getHealth() + 0.5);
-						}
-					});
-				}
-			}
-		});
-	}
+    @Override
+    public void run() {
+        plugin.getTrackerKeeper().getInSiegeMode().forEach((id) -> {
+            // get current Artron level
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+            if (rs.resultSet()) {
+                TARDIS tardis = rs.getTardis();
+                int level = tardis.getArtronLevel();
+                if (level > deplete) {
+                    // remove some energy
+                    HashMap<String, Object> whered = new HashMap<>();
+                    whered.put("tardis_id", id);
+                    plugin.getQueryFactory().alterEnergyLevel("tardis", deplete, whered, null);
+                } else if (plugin.getConfig().getBoolean("siege.creeper")) {
+                    Location l = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
+                    // spawn an entity so we can check for the creeper
+                    assert l != null;
+                    Entity ent = Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.EGG);
+                    List<Entity> creeps = ent.getNearbyEntities(1d, 1d, 1d);
+                    ent.remove();
+                    boolean boost = false;
+                    for (Entity e : creeps) {
+                        if (e instanceof Creeper) {
+                            e.remove();
+                            boost = true;
+                        }
+                    }
+                    if (boost) {
+                        // give some energy
+                        HashMap<String, Object> wherec = new HashMap<>();
+                        wherec.put("tardis_id", id);
+                        plugin.getQueryFactory().alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("siege_creeper"), wherec, null);
+                    }
+                }
+            }
+            // give players inside tardis a health boost
+            if (plugin.getConfig().getBoolean("siege.healing")) {
+                HashMap<String, Object> wheret = new HashMap<>();
+                wheret.put("tardis_id", id);
+                ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
+                if (rst.resultSet()) {
+                    rst.getData().forEach((uuid) -> {
+                        Player p = plugin.getServer().getPlayer(uuid);
+                        if (p != null && p.isOnline() && p.getHealth() < 19.5) {
+                            p.setHealth(p.getHealth() + 0.5);
+                        }
+                    });
+                }
+            }
+        });
+    }
 }

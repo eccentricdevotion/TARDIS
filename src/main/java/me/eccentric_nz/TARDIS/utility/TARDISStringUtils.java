@@ -22,79 +22,79 @@ import java.util.Locale;
 
 public class TARDISStringUtils {
 
-	private static final List<String> numbers = Arrays.asList("ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE");
+    private static final List<String> numbers = Arrays.asList("ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE");
 
-	public static String capitalise(String s) {
-		String[] split = s.split("_");
-		StringBuilder builder = new StringBuilder();
-		for (String str : split) {
-			builder.append(uppercaseFirst(str)).append(" ");
-		}
-		return builder.toString().trim();
-	}
+    public static String capitalise(String s) {
+        String[] split = s.split("_");
+        StringBuilder builder = new StringBuilder();
+        for (String str : split) {
+            builder.append(uppercaseFirst(str)).append(" ");
+        }
+        return builder.toString().trim();
+    }
 
-	public static String sentenceCase(String s) {
-		String replaced = s.replace("_", " ");
-		return uppercaseFirst(replaced);
-	}
+    public static String sentenceCase(String s) {
+        String replaced = s.replace("_", " ");
+        return uppercaseFirst(replaced);
+    }
 
-	public static String uppercaseFirst(String s) {
-		if (s.equalsIgnoreCase("ii") || s.equalsIgnoreCase("iii") || s.equalsIgnoreCase("iv")) {
-			return s.toUpperCase();
-		}
-		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
-	}
+    public static String uppercaseFirst(String s) {
+        if (s.equalsIgnoreCase("ii") || s.equalsIgnoreCase("iii") || s.equalsIgnoreCase("iv")) {
+            return s.toUpperCase();
+        }
+        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+    }
 
-	public static String titleCase(String s) {
-		String[] split = s.split(" ");
-		StringBuilder builder = new StringBuilder();
-		for (String str : split) {
-			builder.append(uppercaseFirst(str)).append(" ");
-		}
-		return builder.toString().trim();
-	}
+    public static String titleCase(String s) {
+        String[] split = s.split(" ");
+        StringBuilder builder = new StringBuilder();
+        for (String str : split) {
+            builder.append(uppercaseFirst(str)).append(" ");
+        }
+        return builder.toString().trim();
+    }
 
-	public static String fromInt(int i) {
-		if (i > 9) {
-			return "A big number";
-		}
-		return numbers.get(i);
-	}
+    public static String fromInt(int i) {
+        if (i > 9) {
+            return "A big number";
+        }
+        return numbers.get(i);
+    }
 
-	public static String toNumber(String s) {
-		return String.format("%s", numbers.indexOf(s));
-		// "-1" if not found
-	}
+    public static String toNumber(String s) {
+        return String.format("%s", numbers.indexOf(s));
+        // "-1" if not found
+    }
 
-	public static String toDashedLowercase(String s) {
-		return s.toLowerCase().replace("_", "-");
-	}
+    public static String toDashedLowercase(String s) {
+        return s.toLowerCase().replace("_", "-");
+    }
 
-	public static String toLowercaseDashed(String s) {
-		return s.toLowerCase().replace(" ", "-");
-	}
+    public static String toLowercaseDashed(String s) {
+        return s.toLowerCase().replace(" ", "-");
+    }
 
-	public static String toScoredUppercase(String s) {
-		return s.toUpperCase().replace("-", "_");
-	}
+    public static String toScoredUppercase(String s) {
+        return s.toUpperCase().replace("-", "_");
+    }
 
-	public static String toUnderscoredUppercase(String s) {
-		return s.toUpperCase().replace(" ", "_");
-	}
+    public static String toUnderscoredUppercase(String s) {
+        return s.toUpperCase().replace(" ", "_");
+    }
 
-	public static String toEnumUppercase(String s) {
-		return s.replace(" ", "_").replace("-", "_").replace("3", "THREE").toUpperCase(Locale.ENGLISH);
-	}
+    public static String toEnumUppercase(String s) {
+        return s.replace(" ", "_").replace("-", "_").replace("3", "THREE").toUpperCase(Locale.ENGLISH);
+    }
 
-	/**
-	 * Determines the Material type of the block. Values are calculated by converting the string values stored in a
-	 * tardis Seed block.
-	 *
-	 * @param str the lore stored in the tardis Seed block's Item Meta
-	 * @return an String representing the Material
-	 */
-	public static String getValuesFromWallString(String str) {
-		String[] split = str.split(": ");
-		return split[1];
-	}
+    /**
+     * Determines the Material type of the block. Values are calculated by converting the string values stored in a
+     * tardis Seed block.
+     *
+     * @param str the lore stored in the tardis Seed block's Item Meta
+     * @return an String representing the Material
+     */
+    public static String getValuesFromWallString(String str) {
+        String[] split = str.split(": ");
+        return split[1];
+    }
 }

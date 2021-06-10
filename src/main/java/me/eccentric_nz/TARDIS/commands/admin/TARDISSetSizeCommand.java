@@ -30,33 +30,33 @@ import java.util.Locale;
  */
 class TARDISSetSizeCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISSetSizeCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISSetSizeCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public boolean overwrite(CommandSender sender, String[] args) {
-		// /tadmin set_size [player] [size]
-		// get the player
-		Player p = plugin.getServer().getPlayer(args[1]);
-		if (p == null) { // player must be online
-			TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-			return true;
-		}
-		String type = args[2].toUpperCase(Locale.ENGLISH);
-		// check size
-		if (!Consoles.getBY_NAMES().containsKey(type)) {
-			TARDISMessage.message(sender, "Not a valid console size! Try using tab completion.");
-			return true;
-		}
-		String uuid = p.getUniqueId().toString();
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("uuid", uuid);
-		HashMap<String, Object> set = new HashMap<>();
-		set.put("size", type);
-		plugin.getQueryFactory().doUpdate("tardis", set, where);
-		TARDISMessage.message(sender, "Successfully set " + args[1] + "'s console size to " + type);
-		return true;
-	}
+    public boolean overwrite(CommandSender sender, String[] args) {
+        // /tadmin set_size [player] [size]
+        // get the player
+        Player p = plugin.getServer().getPlayer(args[1]);
+        if (p == null) { // player must be online
+            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            return true;
+        }
+        String type = args[2].toUpperCase(Locale.ENGLISH);
+        // check size
+        if (!Consoles.getBY_NAMES().containsKey(type)) {
+            TARDISMessage.message(sender, "Not a valid console size! Try using tab completion.");
+            return true;
+        }
+        String uuid = p.getUniqueId().toString();
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid);
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("size", type);
+        plugin.getQueryFactory().doUpdate("tardis", set, where);
+        TARDISMessage.message(sender, "Successfully set " + args[1] + "'s console size to " + type);
+        return true;
+    }
 }

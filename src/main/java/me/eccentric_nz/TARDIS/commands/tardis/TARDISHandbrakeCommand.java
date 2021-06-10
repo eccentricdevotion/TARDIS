@@ -30,50 +30,50 @@ import java.util.Locale;
 
 public class TARDISHandbrakeCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISHandbrakeCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISHandbrakeCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public boolean toggle(Player player, int id, String[] args, boolean admin) {
-		if (args.length < 2) {
-			TARDISMessage.send(player, "TOO_FEW_ARGS");
-			return true;
-		}
-		String tf = args[1];
-		if (!admin && !tf.equalsIgnoreCase("on") && !tf.equalsIgnoreCase("off")) {
-			TARDISMessage.send(player, "PREF_ON_OFF", "the handbrake");
-			return true;
-		}
-		// actually toggle the lever block
-		HashMap<String, Object> whereh = new HashMap<>();
-		whereh.put("type", 0);
-		whereh.put("tardis_id", id);
-		ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
-		if (rsc.resultSet()) {
-			boolean bool = tf.equalsIgnoreCase("on");
-			int onoff = (bool) ? 1 : 0;
-			HashMap<String, Object> where = new HashMap<>();
-			where.put("tardis_id", id);
-			HashMap<String, Object> set = new HashMap<>();
-			set.put("handbrake_on", onoff);
-			plugin.getQueryFactory().doUpdate("tardis", set, where);
-			Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
-			assert location != null;
-			TARDISSounds.playTARDISSound(location, "tardis_handbrake_engage");
-			// Changes the lever to on
-			TARDISHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);
-			if (bool) {
-				plugin.getTrackerKeeper().getDestinationVortex().remove(id);
-				plugin.getTrackerKeeper().getInVortex().remove(id);
-				plugin.getTrackerKeeper().getMaterialising().remove(id);
-				plugin.getTrackerKeeper().getDidDematToVortex().remove(id);
-			}
-			if (!admin) {
-				TARDISMessage.send(player, "HANDBRAKE_ON_OFF", args[1].toUpperCase(Locale.ENGLISH));
-			}
-		}
-		return true;
-	}
+    public boolean toggle(Player player, int id, String[] args, boolean admin) {
+        if (args.length < 2) {
+            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            return true;
+        }
+        String tf = args[1];
+        if (!admin && !tf.equalsIgnoreCase("on") && !tf.equalsIgnoreCase("off")) {
+            TARDISMessage.send(player, "PREF_ON_OFF", "the handbrake");
+            return true;
+        }
+        // actually toggle the lever block
+        HashMap<String, Object> whereh = new HashMap<>();
+        whereh.put("type", 0);
+        whereh.put("tardis_id", id);
+        ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
+        if (rsc.resultSet()) {
+            boolean bool = tf.equalsIgnoreCase("on");
+            int onoff = (bool) ? 1 : 0;
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("handbrake_on", onoff);
+            plugin.getQueryFactory().doUpdate("tardis", set, where);
+            Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+            assert location != null;
+            TARDISSounds.playTARDISSound(location, "tardis_handbrake_engage");
+            // Changes the lever to on
+            TARDISHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);
+            if (bool) {
+                plugin.getTrackerKeeper().getDestinationVortex().remove(id);
+                plugin.getTrackerKeeper().getInVortex().remove(id);
+                plugin.getTrackerKeeper().getMaterialising().remove(id);
+                plugin.getTrackerKeeper().getDidDematToVortex().remove(id);
+            }
+            if (!admin) {
+                TARDISMessage.send(player, "HANDBRAKE_ON_OFF", args[1].toUpperCase(Locale.ENGLISH));
+            }
+        }
+        return true;
+    }
 }

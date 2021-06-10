@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardis.chemistry.creative;
 
 public enum Creative {
-	elements,
-	compounds,
-	products,
-	lab
+    elements,
+    compounds,
+    products,
+    lab
 }

@@ -26,39 +26,39 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class TARDISGeneticManipulatorDisguiseEvent extends Event {
 
-	private static final HandlerList HANDLERS = new HandlerList();
-	private final Player player;
-	private final String disguise;
+    private static final HandlerList HANDLERS = new HandlerList();
+    private final Player player;
+    private final String disguise;
 
-	public TARDISGeneticManipulatorDisguiseEvent(Player player, String disguise) {
-		this.player = player;
-		this.disguise = disguise;
-	}
+    public TARDISGeneticManipulatorDisguiseEvent(Player player, String disguise) {
+        this.player = player;
+        this.disguise = disguise;
+    }
 
-	public static HandlerList getHandlerList() {
-		return HANDLERS;
-	}
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
 
-	/**
-	 * Returns the player involved in this event.
-	 *
-	 * @return the player
-	 */
-	public Player getPlayer() {
-		return player;
-	}
+    /**
+     * Returns the player involved in this event.
+     *
+     * @return the player
+     */
+    public Player getPlayer() {
+        return player;
+    }
 
-	/**
-	 * Returns the name of the disguise the player used.
-	 *
-	 * @return the disguise name
-	 */
-	public String getDisguise() {
-		return disguise;
-	}
+    /**
+     * Returns the name of the disguise the player used.
+     *
+     * @return the disguise name
+     */
+    public String getDisguise() {
+        return disguise;
+    }
 
-	@Override
-	public @NotNull HandlerList getHandlers() {
-		return HANDLERS;
-	}
+    @Override
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
+    }
 }

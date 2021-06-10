@@ -46,96 +46,95 @@ import java.util.List;
  */
 public class TARDISSonicActivatorListener extends TARDISMenuListener implements Listener {
 
-	private final TARDISPlugin plugin;
-	private final List<ItemStack> stacks;
+    private final TARDISPlugin plugin;
+    private final List<ItemStack> stacks;
 
-	public TARDISSonicActivatorListener(TARDISPlugin plugin) {
-		super(plugin);
-		this.plugin = plugin;
-		stacks = getStacks();
-	}
+    public TARDISSonicActivatorListener(TARDISPlugin plugin) {
+        super(plugin);
+        this.plugin = plugin;
+        stacks = getStacks();
+    }
 
-	private List<ItemStack> getStacks() {
-		// get the Sonic Generator recipe
-		ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get("Sonic Generator");
-		List<ItemStack> mats = new ArrayList<>(recipe.getIngredientMap().values());
-		mats.removeAll(Collections.singleton(null));
-		return mats;
-	}
+    private List<ItemStack> getStacks() {
+        // get the Sonic Generator recipe
+        ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get("Sonic Generator");
+        List<ItemStack> mats = new ArrayList<>(recipe.getIngredientMap().values());
+        mats.removeAll(Collections.singleton(null));
+        return mats;
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onActivatorMenuClick(InventoryClickEvent event) {
-		InventoryView view = event.getView();
-		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "Sonic Activator")) {
-			Player p = (Player) event.getWhoClicked();
-			int slot = event.getRawSlot();
-			if (slot >= 0 && slot < 9) {
-				switch (slot) {
-					case 7:
-						event.setCancelled(true);
-						break;
-					case 8:
-						event.setCancelled(true);
-						// close
-						save(p, view);
-						break;
-					default:
-						break;
-				}
-			} else {
-				ClickType click = event.getClick();
-				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) ||
-					click.equals(ClickType.DOUBLE_CLICK)) {
-					event.setCancelled(true);
-				}
-			}
-		}
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onActivatorMenuClick(InventoryClickEvent event) {
+        InventoryView view = event.getView();
+        String name = view.getTitle();
+        if (name.equals(ChatColor.DARK_RED + "Sonic Activator")) {
+            Player p = (Player) event.getWhoClicked();
+            int slot = event.getRawSlot();
+            if (slot >= 0 && slot < 9) {
+                switch (slot) {
+                    case 7:
+                        event.setCancelled(true);
+                        break;
+                    case 8:
+                        event.setCancelled(true);
+                        // close
+                        save(p, view);
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                ClickType click = event.getClick();
+                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
 
-	private void save(Player p, InventoryView view) {
-		Material m = Material.AIR;
-		int count = 0;
-		for (int i = 0; i < 7; i++) {
-			ItemStack is = view.getItem(i);
-			if (is != null) {
-				if (!is.getType().equals(m) && stacks.contains(is)) {
-					m = is.getType();
-					count++;
-				}
-			}
-		}
-		close(p);
-		if (count == stacks.size()) {
-			// actvate Sonic Generator
-			String uuid = p.getUniqueId().toString();
-			// do they have a sonic record?
-			HashMap<String, Object> wheres = new HashMap<>();
-			wheres.put("uuid", uuid);
-			ResultSetSonic rss = new ResultSetSonic(plugin, wheres);
-			HashMap<String, Object> set = new HashMap<>();
-			set.put("activated", 1);
-			if (rss.resultSet() && !rss.getSonic().isActivated()) {
-				HashMap<String, Object> wherea = new HashMap<>();
-				wherea.put("uuid", uuid);
-				plugin.getQueryFactory().doUpdate("sonic", set, wherea);
-			} else {
-				set.put("uuid", uuid);
-				plugin.getQueryFactory().doInsert("sonic", set);
-			}
-			TARDISMessage.send(p, "SONIC_ACTIVATED");
-		} else {
-			// return item stacks
-			Location l = p.getLocation();
-			World w = l.getWorld();
-			for (int i = 0; i < 7; i++) {
-				ItemStack is = view.getItem(i);
-				if (is != null) {
-					assert w != null;
-					w.dropItemNaturally(l, is);
-				}
-			}
-			TARDISMessage.send(p, "SONIC_NOT_ACTIVATED");
-		}
-	}
+    private void save(Player p, InventoryView view) {
+        Material m = Material.AIR;
+        int count = 0;
+        for (int i = 0; i < 7; i++) {
+            ItemStack is = view.getItem(i);
+            if (is != null) {
+                if (!is.getType().equals(m) && stacks.contains(is)) {
+                    m = is.getType();
+                    count++;
+                }
+            }
+        }
+        close(p);
+        if (count == stacks.size()) {
+            // actvate Sonic Generator
+            String uuid = p.getUniqueId().toString();
+            // do they have a sonic record?
+            HashMap<String, Object> wheres = new HashMap<>();
+            wheres.put("uuid", uuid);
+            ResultSetSonic rss = new ResultSetSonic(plugin, wheres);
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("activated", 1);
+            if (rss.resultSet() && !rss.getSonic().isActivated()) {
+                HashMap<String, Object> wherea = new HashMap<>();
+                wherea.put("uuid", uuid);
+                plugin.getQueryFactory().doUpdate("sonic", set, wherea);
+            } else {
+                set.put("uuid", uuid);
+                plugin.getQueryFactory().doInsert("sonic", set);
+            }
+            TARDISMessage.send(p, "SONIC_ACTIVATED");
+        } else {
+            // return item stacks
+            Location l = p.getLocation();
+            World w = l.getWorld();
+            for (int i = 0; i < 7; i++) {
+                ItemStack is = view.getItem(i);
+                if (is != null) {
+                    assert w != null;
+                    w.dropItemNaturally(l, is);
+                }
+            }
+            TARDISMessage.send(p, "SONIC_NOT_ACTIVATED");
+        }
+    }
 }

@@ -21,11 +21,11 @@ import org.bukkit.entity.Player;
 
 public class TARDISArchDisguise {
 
-	public static void disguise(Player player, String name) {
-		TARDISPlugin.plugin.getTardisHelper().disguise(player, name);
-	}
+    public static void disguise(Player player, String name) {
+        TARDISPlugin.plugin.getTardisHelper().disguise(player, name);
+    }
 
-	public static void undisguise(Player player) {
-		TARDISPlugin.plugin.getTardisHelper().reset(player);
-	}
+    public static void undisguise(Player player) {
+        TARDISPlugin.plugin.getTardisHelper().reset(player);
+    }
 }

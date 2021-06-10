@@ -48,44 +48,44 @@ import java.util.*;
  */
 public class TARDISARSMethods {
 
-	final TARDISPlugin plugin;
-	final HashMap<UUID, Integer> scroll_start = new HashMap<>();
-	final HashMap<UUID, Integer> selected_slot = new HashMap<>();
-	final HashMap<UUID, TARDISARSSaveData> save_map_data = new HashMap<>();
-	final HashMap<UUID, TARDISARSMapData> map_data = new HashMap<>();
-	final Set<String> consoleBlocks = Consoles.getBY_MATERIALS().keySet();
-	final HashMap<UUID, Integer> ids = new HashMap<>();
-	final List<UUID> hasLoadedMap = new ArrayList<>();
-	private final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
+    final TARDISPlugin plugin;
+    final HashMap<UUID, Integer> scroll_start = new HashMap<>();
+    final HashMap<UUID, Integer> selected_slot = new HashMap<>();
+    final HashMap<UUID, TARDISARSSaveData> save_map_data = new HashMap<>();
+    final HashMap<UUID, TARDISARSMapData> map_data = new HashMap<>();
+    final Set<String> consoleBlocks = Consoles.getBY_MATERIALS().keySet();
+    final HashMap<UUID, Integer> ids = new HashMap<>();
+    final List<UUID> hasLoadedMap = new ArrayList<>();
+    private final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
 
-	TARDISARSMethods(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISARSMethods(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	/**
-	 * Converts the JSON data stored in the database to a 3D array.
-	 *
-	 * @param js the JSON from the database
-	 * @return a 3D array of Strings
-	 */
-	public static String[][][] getGridFromJSON(String js) {
-		String[][][] grid = new String[3][9][9];
-		JsonArray json = JsonParser.parseString(js).getAsJsonArray();
-		for (int y = 0; y < 3; y++) {
-			JsonArray jsonX = json.get(y).getAsJsonArray();
-			for (int x = 0; x < 9; x++) {
-				JsonArray jsonZ = jsonX.get(x).getAsJsonArray();
-				for (int z = 0; z < 9; z++) {
-					if (jsonZ.get(z).getAsString().equals("TNT")) {
-						grid[y][x][z] = "STONE";
-					} else {
-						grid[y][x][z] = jsonZ.get(z).getAsString();
-					}
-				}
-			}
-		}
-		return grid;
-	}
+    /**
+     * Converts the JSON data stored in the database to a 3D array.
+     *
+     * @param js the JSON from the database
+     * @return a 3D array of Strings
+     */
+    public static String[][][] getGridFromJSON(String js) {
+        String[][][] grid = new String[3][9][9];
+        JsonArray json = JsonParser.parseString(js).getAsJsonArray();
+        for (int y = 0; y < 3; y++) {
+            JsonArray jsonX = json.get(y).getAsJsonArray();
+            for (int x = 0; x < 9; x++) {
+                JsonArray jsonZ = jsonX.get(x).getAsJsonArray();
+                for (int z = 0; z < 9; z++) {
+                    if (jsonZ.get(z).getAsString().equals("TNT")) {
+                        grid[y][x][z] = "STONE";
+                    } else {
+                        grid[y][x][z] = jsonZ.get(z).getAsString();
+                    }
+                }
+            }
+        }
+        return grid;
+    }
 
     /**
      * Saves the current ARS data to the database.
@@ -122,27 +122,27 @@ public class TARDISARSMethods {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getQueryFactory().doUpdate("ars", set, wherea), 6L);
     }
 
-	/**
-	 * Gets a 5x5 2D slice from a 3D array
-	 *
-	 * @param layer the level to to get
-	 * @param x     the x position of the slice
-	 * @param z     the z position of the slice
-	 * @return a slice of the larger array
-	 */
-	private String[][] sliceGrid(String[][] layer, int x, int z) {
-		String[][] slice = new String[5][5];
-		int indexX = 0, indexZ = 0;
-		for (int xx = x; xx < (x + 5); xx++) {
-			for (int zz = z; zz < (z + 5); zz++) {
-				slice[indexX][indexZ] = layer[xx][zz];
-				indexZ++;
-			}
-			indexZ = 0;
-			indexX++;
-		}
-		return slice;
-	}
+    /**
+     * Gets a 5x5 2D slice from a 3D array
+     *
+     * @param layer the level to to get
+     * @param x     the x position of the slice
+     * @param z     the z position of the slice
+     * @return a slice of the larger array
+     */
+    private String[][] sliceGrid(String[][] layer, int x, int z) {
+        String[][] slice = new String[5][5];
+        int indexX = 0, indexZ = 0;
+        for (int xx = x; xx < (x + 5); xx++) {
+            for (int zz = z; zz < (z + 5); zz++) {
+                slice[indexX][indexZ] = layer[xx][zz];
+                indexZ++;
+            }
+            indexZ = 0;
+            indexX++;
+        }
+        return slice;
+    }
 
     /**
      * Sets an ItemStack to the specified inventory slot updating the display name and removing any lore.
@@ -190,37 +190,37 @@ public class TARDISARSMethods {
         }
     }
 
-	/**
-	 * Get the coordinates of the clicked slot in relation to the ars map.
-	 *
-	 * @param slot the slot that was clicked
-	 * @param md   an instance of the TARDISARSMapData class from which to retrieve the map offset
-	 * @return an array of ints
-	 */
-	int[] getCoords(int slot, TARDISARSMapData md) {
-		int[] coords = new int[2];
-		if (slot <= 8) {
-			coords[0] = (slot - 4) + md.getE();
-			coords[1] = md.getS();
-		}
-		if (slot > 8 && slot <= 17) {
-			coords[0] = (slot - 13) + md.getE();
-			coords[1] = md.getS() + 1;
-		}
-		if (slot > 17 && slot <= 26) {
-			coords[0] = (slot - 22) + md.getE();
-			coords[1] = md.getS() + 2;
-		}
-		if (slot > 26 && slot <= 35) {
-			coords[0] = (slot - 31) + md.getE();
-			coords[1] = md.getS() + 3;
-		}
-		if (slot > 35 && slot <= 44) {
-			coords[0] = (slot - 40) + md.getE();
-			coords[1] = md.getS() + 4;
-		}
-		return coords;
-	}
+    /**
+     * Get the coordinates of the clicked slot in relation to the ars map.
+     *
+     * @param slot the slot that was clicked
+     * @param md   an instance of the TARDISARSMapData class from which to retrieve the map offset
+     * @return an array of ints
+     */
+    int[] getCoords(int slot, TARDISARSMapData md) {
+        int[] coords = new int[2];
+        if (slot <= 8) {
+            coords[0] = (slot - 4) + md.getE();
+            coords[1] = md.getS();
+        }
+        if (slot > 8 && slot <= 17) {
+            coords[0] = (slot - 13) + md.getE();
+            coords[1] = md.getS() + 1;
+        }
+        if (slot > 17 && slot <= 26) {
+            coords[0] = (slot - 22) + md.getE();
+            coords[1] = md.getS() + 2;
+        }
+        if (slot > 26 && slot <= 35) {
+            coords[0] = (slot - 31) + md.getE();
+            coords[1] = md.getS() + 3;
+        }
+        if (slot > 35 && slot <= 44) {
+            coords[0] = (slot - 40) + md.getE();
+            coords[1] = md.getS() + 4;
+        }
+        return coords;
+    }
 
     /**
      * Saves the current map to the TARDISARSMapData instance associated with the player using the GUI.
@@ -250,22 +250,22 @@ public class TARDISARSMethods {
         map_data.put(playerUUID, md);
     }
 
-	/**
-	 * Sets the lore of the ItemStack in the specified slot.
-	 *
-	 * @param view the inventory to update
-	 * @param slot the slot to update
-	 * @param str  the lore to set
-	 */
-	void setLore(InventoryView view, int slot, String str) {
-		List<String> lore = (str != null) ? Collections.singletonList(str) : null;
-		ItemStack is = view.getItem(slot);
-		assert is != null;
-		ItemMeta im = is.getItemMeta();
-		assert im != null;
-		im.setLore(lore);
-		is.setItemMeta(im);
-	}
+    /**
+     * Sets the lore of the ItemStack in the specified slot.
+     *
+     * @param view the inventory to update
+     * @param slot the slot to update
+     * @param str  the lore to set
+     */
+    void setLore(InventoryView view, int slot, String str) {
+        List<String> lore = (str != null) ? Collections.singletonList(str) : null;
+        ItemStack is = view.getItem(slot);
+        assert is != null;
+        ItemMeta im = is.getItemMeta();
+        assert im != null;
+        im.setLore(lore);
+        is.setItemMeta(im);
+    }
 
     /**
      * Switches the indicator block for the map level.
@@ -466,72 +466,71 @@ public class TARDISARSMethods {
         }
     }
 
-	/**
-	 * Checks whether a player has condensed the required BLOCKS to grow the room (s).
-	 *
-	 * @param uuid the UUID of the player to check for
-	 * @param map  a HashMap where the key is the changed room slot and the value is the ars room type
-	 * @param id   the tardis id
-	 * @return true or false
-	 */
-	private boolean hasCondensables(String uuid, HashMap<TARDISARSSlot, ARS> map, int id) {
-		boolean hasRequired = true;
-		String wall = "ORANGE_WOOL";
-		String floor = "LIGHT_GRAY_WOOL";
-		boolean hasPrefs = false;
-		ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
-		if (rsp.resultSet()) {
-			hasPrefs = true;
-			wall = rsp.getWall();
-			floor = rsp.getFloor();
-		}
-		HashMap<String, Integer> item_counts = new HashMap<>();
-		for (Map.Entry<TARDISARSSlot, ARS> rooms : map.entrySet()) {
-			HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(rooms.getValue().toString());
-			for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
-				String bid = entry.getKey();
-				String bkey;
-				if (hasPrefs && (bid.equals("ORANGE_WOOL") || bid.equals("LIGHT_GRAY_WOOL"))) {
-					bkey = (bid.equals("ORANGE_WOOL")) ? wall : floor;
-				} else {
-					bkey = bid;
-				}
-				int tmp = Math.round(
-						(entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
-				int required = (tmp > 0) ? tmp : 1;
-				if (item_counts.containsKey(bkey)) {
-					item_counts.put(bkey, (item_counts.get(bkey) + required));
-				} else {
-					item_counts.put(bkey, required);
-				}
-			}
-		}
-		for (Map.Entry<String, Integer> blocks : item_counts.entrySet()) {
-			HashMap<String, Object> whereC = new HashMap<>();
-			whereC.put("tardis_id", id);
-			whereC.put("block_data", blocks.getKey());
-			ResultSetCondenser rsc = new ResultSetCondenser(plugin, whereC);
-			if (rsc.resultSet()) {
-				if (rsc.getBlockCount() < blocks.getValue()) {
-					hasRequired = false;
-				}
-			} else {
-				hasRequired = false;
-			}
-		}
-		return hasRequired;
-	}
+    /**
+     * Checks whether a player has condensed the required BLOCKS to grow the room (s).
+     *
+     * @param uuid the UUID of the player to check for
+     * @param map  a HashMap where the key is the changed room slot and the value is the ars room type
+     * @param id   the tardis id
+     * @return true or false
+     */
+    private boolean hasCondensables(String uuid, HashMap<TARDISARSSlot, ARS> map, int id) {
+        boolean hasRequired = true;
+        String wall = "ORANGE_WOOL";
+        String floor = "LIGHT_GRAY_WOOL";
+        boolean hasPrefs = false;
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
+        if (rsp.resultSet()) {
+            hasPrefs = true;
+            wall = rsp.getWall();
+            floor = rsp.getFloor();
+        }
+        HashMap<String, Integer> item_counts = new HashMap<>();
+        for (Map.Entry<TARDISARSSlot, ARS> rooms : map.entrySet()) {
+            HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(rooms.getValue().toString());
+            for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
+                String bid = entry.getKey();
+                String bkey;
+                if (hasPrefs && (bid.equals("ORANGE_WOOL") || bid.equals("LIGHT_GRAY_WOOL"))) {
+                    bkey = (bid.equals("ORANGE_WOOL")) ? wall : floor;
+                } else {
+                    bkey = bid;
+                }
+                int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
+                int required = (tmp > 0) ? tmp : 1;
+                if (item_counts.containsKey(bkey)) {
+                    item_counts.put(bkey, (item_counts.get(bkey) + required));
+                } else {
+                    item_counts.put(bkey, required);
+                }
+            }
+        }
+        for (Map.Entry<String, Integer> blocks : item_counts.entrySet()) {
+            HashMap<String, Object> whereC = new HashMap<>();
+            whereC.put("tardis_id", id);
+            whereC.put("block_data", blocks.getKey());
+            ResultSetCondenser rsc = new ResultSetCondenser(plugin, whereC);
+            if (rsc.resultSet()) {
+                if (rsc.getBlockCount() < blocks.getValue()) {
+                    hasRequired = false;
+                }
+            } else {
+                hasRequired = false;
+            }
+        }
+        return hasRequired;
+    }
 
-	int getTardisId(String uuid) {
-		int id = 0;
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("uuid", uuid);
-		ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
-		if (rs.resultSet()) {
-			id = rs.getTardisId();
-		}
-		return id;
-	}
+    int getTardisId(String uuid) {
+        int id = 0;
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid);
+        ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+        if (rs.resultSet()) {
+            id = rs.getTardisId();
+        }
+        return id;
+    }
 
     boolean hasRenderer(UUID playerUUID) {
         HashMap<String, Object> where = new HashMap<>();
@@ -543,28 +542,28 @@ public class TARDISARSMethods {
         return false;
     }
 
-	boolean checkSlotForConsole(InventoryView view, int slot, String uuid) {
-		Material m = Objects.requireNonNull(view.getItem(slot)).getType();
-		if (m.equals(Material.NETHER_BRICKS)) {
-			// allow only if console is not MASTER
-			HashMap<String, Object> where = new HashMap<>();
-			where.put("uuid", uuid);
-			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-			if (rs.resultSet() && !rs.getTardis().getSchematic().getSeed().equals("NETHER_BRICKS")) {
-				return false;
-			}
-		}
-		if (m.equals(Material.NETHER_WART_BLOCK)) {
-			// allow only if console is not CORAL
-			HashMap<String, Object> where = new HashMap<>();
-			where.put("uuid", uuid);
-			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-			if (rs.resultSet() && !rs.getTardis().getSchematic().getSeed().equals("NETHER_WART_BLOCK")) {
-				return false;
-			}
-		}
-		return (consoleBlocks.contains(m.toString()));
-	}
+    boolean checkSlotForConsole(InventoryView view, int slot, String uuid) {
+        Material m = Objects.requireNonNull(view.getItem(slot)).getType();
+        if (m.equals(Material.NETHER_BRICKS)) {
+            // allow only if console is not MASTER
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", uuid);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+            if (rs.resultSet() && !rs.getTardis().getSchematic().getSeed().equals("NETHER_BRICKS")) {
+                return false;
+            }
+        }
+        if (m.equals(Material.NETHER_WART_BLOCK)) {
+            // allow only if console is not CORAL
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", uuid);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+            if (rs.resultSet() && !rs.getTardis().getSchematic().getSeed().equals("NETHER_WART_BLOCK")) {
+                return false;
+            }
+        }
+        return (consoleBlocks.contains(m.toString()));
+    }
 
     private boolean playerIsOwner(UUID uuid, int id) {
         HashMap<String, Object> where = new HashMap<>();

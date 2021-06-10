@@ -21,31 +21,31 @@ import java.util.HashMap;
 
 class Layer {
 
-	private final HashMap<Integer, Note> hashMap = new HashMap<>();
-	private byte volume = 100;
-	private String name = "";
+    private final HashMap<Integer, Note> hashMap = new HashMap<>();
+    private byte volume = 100;
+    private String name = "";
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	Note getNote(int tick) {
-		return hashMap.get(tick);
-	}
+    Note getNote(int tick) {
+        return hashMap.get(tick);
+    }
 
-	void setNote(int tick, Note note) {
-		hashMap.put(tick, note);
-	}
+    void setNote(int tick, Note note) {
+        hashMap.put(tick, note);
+    }
 
-	byte getVolume() {
-		return volume;
-	}
+    byte getVolume() {
+        return volume;
+    }
 
-	void setVolume(byte volume) {
-		this.volume = volume;
-	}
+    void setVolume(byte volume) {
+        this.volume = volume;
+    }
 }

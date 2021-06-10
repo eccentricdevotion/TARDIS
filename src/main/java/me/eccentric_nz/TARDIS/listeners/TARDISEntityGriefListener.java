@@ -37,36 +37,36 @@ import java.util.List;
  */
 public class TARDISEntityGriefListener implements Listener {
 
-	private final TARDISPlugin plugin;
-	private final List<EntityType> ents = new ArrayList<>();
+    private final TARDISPlugin plugin;
+    private final List<EntityType> ents = new ArrayList<>();
 
-	public TARDISEntityGriefListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		ents.add(EntityType.ENDER_DRAGON);
-		ents.add(EntityType.FIREBALL);
-		ents.add(EntityType.WITHER);
-	}
+    public TARDISEntityGriefListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        ents.add(EntityType.ENDER_DRAGON);
+        ents.add(EntityType.FIREBALL);
+        ents.add(EntityType.WITHER);
+    }
 
-	/**
-	 * Listens for Fireball, Wither and Dragon entity interaction with the tardis blocks. If the block is a tardis
-	 * block, then the block change event is cancelled.
-	 *
-	 * @param event an entity affecting a block
-	 */
-	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-	public void bossBlockBreak(EntityChangeBlockEvent event) {
-		Block b = event.getBlock();
-		String l = b.getLocation().toString();
-		EntityType eType;
-		try {
-			eType = event.getEntityType();
-		} catch (Exception e) {
-			eType = null;
-		}
-		if (eType != null && ents.contains(eType)) {
-			if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l)) {
-				event.setCancelled(true);
-			}
-		}
-	}
+    /**
+     * Listens for Fireball, Wither and Dragon entity interaction with the tardis blocks. If the block is a tardis
+     * block, then the block change event is cancelled.
+     *
+     * @param event an entity affecting a block
+     */
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void bossBlockBreak(EntityChangeBlockEvent event) {
+        Block b = event.getBlock();
+        String l = b.getLocation().toString();
+        EntityType eType;
+        try {
+            eType = event.getEntityType();
+        } catch (Exception e) {
+            eType = null;
+        }
+        if (eType != null && ents.contains(eType)) {
+            if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l)) {
+                event.setCancelled(true);
+            }
+        }
+    }
 }

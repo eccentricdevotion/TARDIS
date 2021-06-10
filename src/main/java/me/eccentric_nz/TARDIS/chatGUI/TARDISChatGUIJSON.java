@@ -31,67 +31,67 @@ import java.util.List;
  */
 public class TARDISChatGUIJSON {
 
-	private final List<TextComponent> sections = new ArrayList<>();
-	private final List<TextComponent> controls = new ArrayList<>();
-	private final List<TextComponent> interfaces = new ArrayList<>();
-	private final List<TextComponent> locations = new ArrayList<>();
-	private final List<TextComponent> others = new ArrayList<>();
+    private final List<TextComponent> sections = new ArrayList<>();
+    private final List<TextComponent> controls = new ArrayList<>();
+    private final List<TextComponent> interfaces = new ArrayList<>();
+    private final List<TextComponent> locations = new ArrayList<>();
+    private final List<TextComponent> others = new ArrayList<>();
 
-	public TARDISChatGUIJSON() {
-		int s = 1;
-		int c = 1;
-		int i = 1;
-		int l = 1;
-		int o = 1;
-		for (TARDISUpdateableCategory category : TARDISUpdateableCategory.values()) {
-			sections.add(buildTextComponent(s, category.getName(), category.toString().toLowerCase(), "section"));
-			s++;
-		}
-		for (Updateable updateable : Updateable.values()) {
-			// counter, updateable.getDescription(), updateable.getName()
-			if (updateable.getCategory() == TARDISUpdateableCategory.CONTROLS) {
-				controls.add(buildTextComponent(c, updateable.getDescription(), updateable.getName(), "update"));
-				c++;
-			}
-			if (updateable.getCategory() == TARDISUpdateableCategory.INTERFACES) {
-				interfaces.add(buildTextComponent(i, updateable.getDescription(), updateable.getName(), "update"));
-				i++;
-			}
-			if (updateable.getCategory() == TARDISUpdateableCategory.LOCATIONS) {
-				locations.add(buildTextComponent(l, updateable.getDescription(), updateable.getName(), "update"));
-				l++;
-			}
-			if (updateable.getCategory() == TARDISUpdateableCategory.OTHERS) {
-				others.add(buildTextComponent(o, updateable.getDescription(), updateable.getName(), "update"));
-				o++;
-			}
-		}
-	}
+    public TARDISChatGUIJSON() {
+        int s = 1;
+        int c = 1;
+        int i = 1;
+        int l = 1;
+        int o = 1;
+        for (TARDISUpdateableCategory category : TARDISUpdateableCategory.values()) {
+            sections.add(buildTextComponent(s, category.getName(), category.toString().toLowerCase(), "section"));
+            s++;
+        }
+        for (Updateable updateable : Updateable.values()) {
+            // counter, updateable.getDescription(), updateable.getName()
+            if (updateable.getCategory() == TARDISUpdateableCategory.CONTROLS) {
+                controls.add(buildTextComponent(c, updateable.getDescription(), updateable.getName(), "update"));
+                c++;
+            }
+            if (updateable.getCategory() == TARDISUpdateableCategory.INTERFACES) {
+                interfaces.add(buildTextComponent(i, updateable.getDescription(), updateable.getName(), "update"));
+                i++;
+            }
+            if (updateable.getCategory() == TARDISUpdateableCategory.LOCATIONS) {
+                locations.add(buildTextComponent(l, updateable.getDescription(), updateable.getName(), "update"));
+                l++;
+            }
+            if (updateable.getCategory() == TARDISUpdateableCategory.OTHERS) {
+                others.add(buildTextComponent(o, updateable.getDescription(), updateable.getName(), "update"));
+                o++;
+            }
+        }
+    }
 
-	private TextComponent buildTextComponent(int counter, String description, String name, String command) {
-		TextComponent tc = new TextComponent(counter + ". " + description);
-		tc.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
-		tc.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis " + command + " " + name));
-		return tc;
-	}
+    private TextComponent buildTextComponent(int counter, String description, String name, String command) {
+        TextComponent tc = new TextComponent(counter + ". " + description);
+        tc.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
+        tc.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis " + command + " " + name));
+        return tc;
+    }
 
-	public List<TextComponent> getSections() {
-		return sections;
-	}
+    public List<TextComponent> getSections() {
+        return sections;
+    }
 
-	public List<TextComponent> getControls() {
-		return controls;
-	}
+    public List<TextComponent> getControls() {
+        return controls;
+    }
 
-	List<TextComponent> getInterfaces() {
-		return interfaces;
-	}
+    List<TextComponent> getInterfaces() {
+        return interfaces;
+    }
 
-	public List<TextComponent> getLocations() {
-		return locations;
-	}
+    public List<TextComponent> getLocations() {
+        return locations;
+    }
 
-	public List<TextComponent> getOthers() {
-		return others;
-	}
+    public List<TextComponent> getOthers() {
+        return others;
+    }
 }

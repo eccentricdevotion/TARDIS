@@ -37,68 +37,66 @@ import java.util.UUID;
  */
 public class ResultSetStandby {
 
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final TARDISPlugin plugin;
-	private final String prefix;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final TARDISPlugin plugin;
+    private final String prefix;
 
-	public ResultSetStandby(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		prefix = this.plugin.getPrefix();
-	}
+    public ResultSetStandby(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        prefix = this.plugin.getPrefix();
+    }
 
-	public HashMap<Integer, StandbyData> onStandby() {
-		HashMap<Integer, StandbyData> ids = new HashMap<>();
-		PreparedStatement statement = null;
-		ResultSet rs = null;
-		String query =
-				"SELECT tardis_id, artron_level, chameleon_preset, size, hidden, lights_on, uuid FROM " + prefix +
-				"tardis WHERE powered_on = 1 AND abandoned = 0";
-		try {
-			service.testConnection(connection);
-			statement = connection.prepareStatement(query);
-			rs = statement.executeQuery();
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					StandbyData sd;
-					PRESET preset;
-					try {
-						preset = PRESET.valueOf(rs.getString("chameleon_preset"));
-					} catch (IllegalArgumentException e) {
-						preset = PRESET.FACTORY;
-					}
-					switch (rs.getString("size")) {
-						case "JUNK" -> sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, PRESET.JUNK, false);
-						case "ARCHIVE" -> {
-							HashMap<String, Object> wherea = new HashMap<>();
-							wherea.put("uuid", rs.getString("uuid"));
-							wherea.put("use", 1);
-							ResultSetArchive rsa = new ResultSetArchive(plugin, wherea);
-							boolean lanterns = false;
-							if (rsa.resultSet()) {
-								lanterns = rsa.getArchive().isLanterns();
-							}
-							sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, lanterns);
-						}
-						default -> sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, Consoles.getBY_NAMES().get(rs.getString("size")).hasLanterns());
-					}
-					ids.put(rs.getInt("tardis_id"), sd);
-				}
-			}
-		} catch (SQLException e) {
-			plugin.debug("ResultSet error for standby! " + e.getMessage());
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing standby! " + e.getMessage());
-			}
-		}
-		return ids;
-	}
+    public HashMap<Integer, StandbyData> onStandby() {
+        HashMap<Integer, StandbyData> ids = new HashMap<>();
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT tardis_id, artron_level, chameleon_preset, size, hidden, lights_on, uuid FROM " + prefix + "tardis WHERE powered_on = 1 AND abandoned = 0";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    StandbyData sd;
+                    PRESET preset;
+                    try {
+                        preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                    } catch (IllegalArgumentException e) {
+                        preset = PRESET.FACTORY;
+                    }
+                    switch (rs.getString("size")) {
+                        case "JUNK" -> sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, PRESET.JUNK, false);
+                        case "ARCHIVE" -> {
+                            HashMap<String, Object> wherea = new HashMap<>();
+                            wherea.put("uuid", rs.getString("uuid"));
+                            wherea.put("use", 1);
+                            ResultSetArchive rsa = new ResultSetArchive(plugin, wherea);
+                            boolean lanterns = false;
+                            if (rsa.resultSet()) {
+                                lanterns = rsa.getArchive().isLanterns();
+                            }
+                            sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, lanterns);
+                        }
+                        default -> sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, Consoles.getBY_NAMES().get(rs.getString("size")).hasLanterns());
+                    }
+                    ids.put(rs.getInt("tardis_id"), sd);
+                }
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for standby! " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing standby! " + e.getMessage());
+            }
+        }
+        return ids;
+    }
 }

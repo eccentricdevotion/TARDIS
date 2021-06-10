@@ -27,31 +27,31 @@ import java.util.HashMap;
 
 public class TARDISHandlesRunnable implements Runnable {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISHandlesRunnable(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISHandlesRunnable(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@Override
-	public void run() {
-		long currentTime = System.currentTimeMillis();
-		// check reminders table
-		ResultSetReminders rsr = new ResultSetReminders(plugin);
-		if (rsr.resultSet()) {
-			for (Reminder r : rsr.getReminders()) {
-				if (currentTime > r.getTime()) {
-					Player player = plugin.getServer().getPlayer(r.getUuid());
-					if (player != null && player.isOnline()) {
-						TARDISSounds.playTARDISSound(player, "handles_reminder");
-						TARDISMessage.handlesSend(player, "HANDLES_REMINDER", r.getReminder());
-						// remove the reminder...
-						HashMap<String, Object> where = new HashMap<>();
-						where.put("reminder_id", r.getReminderId());
-						plugin.getQueryFactory().doDelete("reminders", where);
-					}
-				}
-			}
-		}
-	}
+    @Override
+    public void run() {
+        long currentTime = System.currentTimeMillis();
+        // check reminders table
+        ResultSetReminders rsr = new ResultSetReminders(plugin);
+        if (rsr.resultSet()) {
+            for (Reminder r : rsr.getReminders()) {
+                if (currentTime > r.getTime()) {
+                    Player player = plugin.getServer().getPlayer(r.getUuid());
+                    if (player != null && player.isOnline()) {
+                        TARDISSounds.playTARDISSound(player, "handles_reminder");
+                        TARDISMessage.handlesSend(player, "HANDLES_REMINDER", r.getReminder());
+                        // remove the reminder...
+                        HashMap<String, Object> where = new HashMap<>();
+                        where.put("reminder_id", r.getReminderId());
+                        plugin.getQueryFactory().doDelete("reminders", where);
+                    }
+                }
+            }
+        }
+    }
 }

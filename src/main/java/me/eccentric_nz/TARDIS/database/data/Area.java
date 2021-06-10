@@ -21,67 +21,67 @@ package me.eccentric_nz.tardis.database.data;
  */
 public class Area {
 
-	private final String areaName;
-	private final String world;
-	private final int minX;
-	private final int minZ;
-	private final int maxX;
-	private final int maxZ;
-	private final int y;
-	private final int parkingDistance;
-	private final String invisibility;
-	private final String direction;
+    private final String areaName;
+    private final String world;
+    private final int minX;
+    private final int minZ;
+    private final int maxX;
+    private final int maxZ;
+    private final int y;
+    private final int parkingDistance;
+    private final String invisibility;
+    private final String direction;
 
-	public Area(String areaName, String world, int minX, int minZ, int maxX, int maxZ, int y, int parkingDistance, String invisibility, String direction) {
-		this.areaName = areaName;
-		this.world = world;
-		this.minX = minX;
-		this.minZ = minZ;
-		this.maxX = maxX;
-		this.maxZ = maxZ;
-		this.y = y;
-		this.parkingDistance = parkingDistance;
-		this.invisibility = invisibility;
-		this.direction = direction;
-	}
+    public Area(String areaName, String world, int minX, int minZ, int maxX, int maxZ, int y, int parkingDistance, String invisibility, String direction) {
+        this.areaName = areaName;
+        this.world = world;
+        this.minX = minX;
+        this.minZ = minZ;
+        this.maxX = maxX;
+        this.maxZ = maxZ;
+        this.y = y;
+        this.parkingDistance = parkingDistance;
+        this.invisibility = invisibility;
+        this.direction = direction;
+    }
 
-	public String getAreaName() {
-		return areaName;
-	}
+    public String getAreaName() {
+        return areaName;
+    }
 
-	public String getWorld() {
-		return world;
-	}
+    public String getWorld() {
+        return world;
+    }
 
-	public int getMinX() {
-		return minX;
-	}
+    public int getMinX() {
+        return minX;
+    }
 
-	public int getMinZ() {
-		return minZ;
-	}
+    public int getMinZ() {
+        return minZ;
+    }
 
-	public int getMaxX() {
-		return maxX;
-	}
+    public int getMaxX() {
+        return maxX;
+    }
 
-	public int getMaxZ() {
-		return maxZ;
-	}
+    public int getMaxZ() {
+        return maxZ;
+    }
 
-	public int getY() {
-		return y;
-	}
+    public int getY() {
+        return y;
+    }
 
-	public int getParkingDistance() {
-		return parkingDistance;
-	}
+    public int getParkingDistance() {
+        return parkingDistance;
+    }
 
-	public String getInvisibility() {
-		return invisibility;
-	}
+    public String getInvisibility() {
+        return invisibility;
+    }
 
-	public String getDirection() {
-		return direction;
-	}
+    public String getDirection() {
+        return direction;
+    }
 }

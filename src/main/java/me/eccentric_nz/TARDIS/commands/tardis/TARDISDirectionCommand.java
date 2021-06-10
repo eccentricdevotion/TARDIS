@@ -47,153 +47,150 @@ import java.util.UUID;
  */
 public class TARDISDirectionCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISDirectionCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISDirectionCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public boolean changeDirection(Player player, String[] args) {
-		if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
-			if (args.length < 2 || (!args[1].equalsIgnoreCase("north") && !args[1].equalsIgnoreCase("west") &&
-									!args[1].equalsIgnoreCase("south") && !args[1].equalsIgnoreCase("east"))) {
-				TARDISMessage.send(player, "DIRECTION_NEED");
-				return false;
-			}
-			UUID uuid = player.getUniqueId();
-			HashMap<String, Object> where = new HashMap<>();
-			where.put("uuid", uuid.toString());
-			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-			if (!rs.resultSet()) {
-				TARDISMessage.send(player, "NO_TARDIS");
-				return false;
-			}
-			TARDIS tardis = rs.getTardis();
-			if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
-				TARDISMessage.send(player, "POWER_DOWN");
-				return true;
-			}
-			int id = tardis.getTardisId();
-			TARDISCircuitChecker tcc = null;
-			if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-				tcc = new TARDISCircuitChecker(plugin, id);
-				tcc.getCircuits();
-			}
-			if (tcc != null && !tcc.hasMaterialisation()) {
-				TARDISMessage.send(player, "NO_MAT_CIRCUIT");
-				return true;
-			}
-			int level = tardis.getArtronLevel();
-			int amount = plugin.getArtronConfig().getInt("random");
-			if (level < amount) {
-				TARDISMessage.send(player, "ENERGY_NO_DIRECTION");
-				return true;
-			}
-			if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-				TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
-				return true;
-			}
-			if (plugin.getTrackerKeeper().getInVortex().contains(id) ||
-				plugin.getTrackerKeeper().getMaterialising().contains(id) ||
-				plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-				TARDISMessage.send(player, "NOT_WHILE_MAT");
-				return true;
-			}
-			if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
-				TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
-				return true;
-			}
-			boolean hid = tardis.isHidden();
-			PRESET demat = tardis.getDemat();
-			String dir = args[1].toUpperCase(Locale.ENGLISH);
-			HashMap<String, Object> wherecl = new HashMap<>();
-			wherecl.put("tardis_id", id);
-			ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-			if (!rsc.resultSet()) {
-				TARDISMessage.send(player, "CURRENT_NOT_FOUND");
-				return true;
-			}
-			COMPASS old_d = rsc.getDirection();
-			HashMap<String, Object> tid = new HashMap<>();
-			HashMap<String, Object> set = new HashMap<>();
-			tid.put("tardis_id", id);
-			set.put("direction", dir);
-			plugin.getQueryFactory().doUpdate("current", set, tid);
-			HashMap<String, Object> did = new HashMap<>();
-			HashMap<String, Object> setd = new HashMap<>();
-			did.put("door_type", 0);
-			did.put("tardis_id", id);
-			setd.put("door_direction", dir);
-			plugin.getQueryFactory().doUpdate("doors", setd, did);
-			// close doors & therefore remove open portals...
-			new TARDISDoorCloser(plugin, uuid, id).closeDoors();
-			Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-			COMPASS d = COMPASS.valueOf(dir);
-			// destroy sign
-			if (!hid) {
-				if (demat.equals(PRESET.DUCK)) {
-					plugin.getPresetDestroyer().destroyDuckEyes(l, old_d);
-				}
-				if (demat.equals(PRESET.MINESHAFT)) {
-					plugin.getPresetDestroyer().destroyMineshaftTorches(l, old_d);
-				}
-				if (demat.equals(PRESET.LAMP)) {
-					plugin.getPresetDestroyer().destroyLampTrapdoors(l, old_d);
-				}
-				if (demat.equals(PRESET.JUNK_MODE)) {
-					plugin.getPresetDestroyer().destroyHandbrake(l, old_d);
-				}
-				plugin.getPresetDestroyer().destroyDoor(id);
-				plugin.getPresetDestroyer().destroySign(l, old_d, demat);
-				BuildData bd = new BuildData(uuid.toString());
-				bd.setDirection(d);
-				bd.setLocation(l);
-				bd.setMalfunction(false);
-				bd.setOutside(false);
-				bd.setPlayer(player);
-				bd.setRebuild(true);
-				bd.setSubmarine(rsc.isSubmarine());
-				bd.setTardisId(id);
-				bd.setThrottle(SpaceTimeThrottle.REBUILD);
-				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
-			}
-			HashMap<String, Object> wherea = new HashMap<>();
-			wherea.put("tardis_id", id);
-			plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, player);
-			if (hid) {
-				TARDISMessage.send(player, "DIRECTION_CHANGED");
-			}
-			// if they have a Direction Frame, update the rotation
-			HashMap<String, Object> wheredf = new HashMap<>();
-			wheredf.put("tardis_id", id);
-			wheredf.put("type", 18);
-			ResultSetControls rsdf = new ResultSetControls(plugin, wheredf, false);
-			if (rsdf.resultSet()) {
-				String locToCheck = rsdf.getLocation();
-				Location dfl = TARDISStaticLocationGetters.getLocationFromBukkitString(locToCheck);
-				if (dfl != null) {
-					Chunk chunk = dfl.getChunk();
-					if (!chunk.isLoaded()) {
-						chunk.load();
-					}
-					for (Entity e : chunk.getEntities()) {
-						if (e instanceof ItemFrame frame && e.getLocation().toString().equals(locToCheck)) {
-							Rotation r = switch (d) {
-								case EAST -> Rotation.COUNTER_CLOCKWISE;
-								case SOUTH -> Rotation.NONE;
-								case WEST -> Rotation.CLOCKWISE;
-								default -> Rotation.FLIPPED;
-							};
-							frame.setRotation(r);
-							break;
-						}
-					}
-				}
-			}
-			return true;
-		} else {
-			TARDISMessage.send(player, "NO_PERMS");
-			return false;
-		}
-	}
+    public boolean changeDirection(Player player, String[] args) {
+        if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
+            if (args.length < 2 || (!args[1].equalsIgnoreCase("north") && !args[1].equalsIgnoreCase("west") && !args[1].equalsIgnoreCase("south") && !args[1].equalsIgnoreCase("east"))) {
+                TARDISMessage.send(player, "DIRECTION_NEED");
+                return false;
+            }
+            UUID uuid = player.getUniqueId();
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", uuid.toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+            if (!rs.resultSet()) {
+                TARDISMessage.send(player, "NO_TARDIS");
+                return false;
+            }
+            TARDIS tardis = rs.getTardis();
+            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
+                TARDISMessage.send(player, "POWER_DOWN");
+                return true;
+            }
+            int id = tardis.getTardisId();
+            TARDISCircuitChecker tcc = null;
+            if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
+                tcc = new TARDISCircuitChecker(plugin, id);
+                tcc.getCircuits();
+            }
+            if (tcc != null && !tcc.hasMaterialisation()) {
+                TARDISMessage.send(player, "NO_MAT_CIRCUIT");
+                return true;
+            }
+            int level = tardis.getArtronLevel();
+            int amount = plugin.getArtronConfig().getInt("random");
+            if (level < amount) {
+                TARDISMessage.send(player, "ENERGY_NO_DIRECTION");
+                return true;
+            }
+            if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
+                return true;
+            }
+            if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+                TARDISMessage.send(player, "NOT_WHILE_MAT");
+                return true;
+            }
+            if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
+                return true;
+            }
+            boolean hid = tardis.isHidden();
+            PRESET demat = tardis.getDemat();
+            String dir = args[1].toUpperCase(Locale.ENGLISH);
+            HashMap<String, Object> wherecl = new HashMap<>();
+            wherecl.put("tardis_id", id);
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            if (!rsc.resultSet()) {
+                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                return true;
+            }
+            COMPASS old_d = rsc.getDirection();
+            HashMap<String, Object> tid = new HashMap<>();
+            HashMap<String, Object> set = new HashMap<>();
+            tid.put("tardis_id", id);
+            set.put("direction", dir);
+            plugin.getQueryFactory().doUpdate("current", set, tid);
+            HashMap<String, Object> did = new HashMap<>();
+            HashMap<String, Object> setd = new HashMap<>();
+            did.put("door_type", 0);
+            did.put("tardis_id", id);
+            setd.put("door_direction", dir);
+            plugin.getQueryFactory().doUpdate("doors", setd, did);
+            // close doors & therefore remove open portals...
+            new TARDISDoorCloser(plugin, uuid, id).closeDoors();
+            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            COMPASS d = COMPASS.valueOf(dir);
+            // destroy sign
+            if (!hid) {
+                if (demat.equals(PRESET.DUCK)) {
+                    plugin.getPresetDestroyer().destroyDuckEyes(l, old_d);
+                }
+                if (demat.equals(PRESET.MINESHAFT)) {
+                    plugin.getPresetDestroyer().destroyMineshaftTorches(l, old_d);
+                }
+                if (demat.equals(PRESET.LAMP)) {
+                    plugin.getPresetDestroyer().destroyLampTrapdoors(l, old_d);
+                }
+                if (demat.equals(PRESET.JUNK_MODE)) {
+                    plugin.getPresetDestroyer().destroyHandbrake(l, old_d);
+                }
+                plugin.getPresetDestroyer().destroyDoor(id);
+                plugin.getPresetDestroyer().destroySign(l, old_d, demat);
+                BuildData bd = new BuildData(uuid.toString());
+                bd.setDirection(d);
+                bd.setLocation(l);
+                bd.setMalfunction(false);
+                bd.setOutside(false);
+                bd.setPlayer(player);
+                bd.setRebuild(true);
+                bd.setSubmarine(rsc.isSubmarine());
+                bd.setTardisId(id);
+                bd.setThrottle(SpaceTimeThrottle.REBUILD);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
+            }
+            HashMap<String, Object> wherea = new HashMap<>();
+            wherea.put("tardis_id", id);
+            plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, player);
+            if (hid) {
+                TARDISMessage.send(player, "DIRECTION_CHANGED");
+            }
+            // if they have a Direction Frame, update the rotation
+            HashMap<String, Object> wheredf = new HashMap<>();
+            wheredf.put("tardis_id", id);
+            wheredf.put("type", 18);
+            ResultSetControls rsdf = new ResultSetControls(plugin, wheredf, false);
+            if (rsdf.resultSet()) {
+                String locToCheck = rsdf.getLocation();
+                Location dfl = TARDISStaticLocationGetters.getLocationFromBukkitString(locToCheck);
+                if (dfl != null) {
+                    Chunk chunk = dfl.getChunk();
+                    if (!chunk.isLoaded()) {
+                        chunk.load();
+                    }
+                    for (Entity e : chunk.getEntities()) {
+                        if (e instanceof ItemFrame frame && e.getLocation().toString().equals(locToCheck)) {
+                            Rotation r = switch (d) {
+                                case EAST -> Rotation.COUNTER_CLOCKWISE;
+                                case SOUTH -> Rotation.NONE;
+                                case WEST -> Rotation.CLOCKWISE;
+                                default -> Rotation.FLIPPED;
+                            };
+                            frame.setRotation(r);
+                            break;
+                        }
+                    }
+                }
+            }
+            return true;
+        } else {
+            TARDISMessage.send(player, "NO_PERMS");
+            return false;
+        }
+    }
 }

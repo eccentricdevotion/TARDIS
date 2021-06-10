@@ -38,65 +38,65 @@ import java.util.UUID;
  */
 public class ResultSetReminders {
 
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final TARDISPlugin plugin;
-	private final String prefix;
-	private final List<Reminder> reminders;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final TARDISPlugin plugin;
+    private final String prefix;
+    private final List<Reminder> reminders;
 
-	/**
-	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the reminders table.
-	 *
-	 * @param plugin an instance of the main class.
-	 */
-	public ResultSetReminders(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		prefix = this.plugin.getPrefix();
-		reminders = new ArrayList<>();
-	}
+    /**
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the reminders table.
+     *
+     * @param plugin an instance of the main class.
+     */
+    public ResultSetReminders(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        prefix = this.plugin.getPrefix();
+        reminders = new ArrayList<>();
+    }
 
-	/**
-	 * Retrieves an SQL ResultSet from the reminders table. This method builds an SQL query string from the parameters
-	 * supplied and then executes the query. Use the getters to retrieve the results.
-	 *
-	 * @return true or false depending on whether any data matches the query
-	 */
-	public boolean resultSet() {
-		PreparedStatement statement = null;
-		ResultSet rs = null;
+    /**
+     * Retrieves an SQL ResultSet from the reminders table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
+     *
+     * @return true or false depending on whether any data matches the query
+     */
+    public boolean resultSet() {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
 
-		String query = "SELECT * FROM " + prefix + "reminders";
-		try {
-			service.testConnection(connection);
-			statement = connection.prepareStatement(query);
-			rs = statement.executeQuery();
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					Reminder reminder = new Reminder(rs.getInt("reminder_id"), UUID.fromString(rs.getString("uuid")), rs.getString("reminder"), rs.getLong("time"));
-					reminders.add(reminder);
-				}
-			} else {
-				return false;
-			}
-		} catch (SQLException e) {
-			plugin.debug("ResultSet error for reminders table! " + e.getMessage());
-			return false;
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing reminders table! " + e.getMessage());
-			}
-		}
-		return true;
-	}
+        String query = "SELECT * FROM " + prefix + "reminders";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    Reminder reminder = new Reminder(rs.getInt("reminder_id"), UUID.fromString(rs.getString("uuid")), rs.getString("reminder"), rs.getLong("time"));
+                    reminders.add(reminder);
+                }
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for reminders table! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing reminders table! " + e.getMessage());
+            }
+        }
+        return true;
+    }
 
-	public List<Reminder> getReminders() {
-		return reminders;
-	}
+    public List<Reminder> getReminders() {
+        return reminders;
+    }
 }

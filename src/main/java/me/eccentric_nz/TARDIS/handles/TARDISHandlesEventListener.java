@@ -33,99 +33,99 @@ import java.util.UUID;
 
 public class TARDISHandlesEventListener implements Listener {
 
-	/**
-	 * Process the program
-	 */
-	private final Callback<Program> programCallback = (Program program) -> {
-		Player player = Bukkit.getPlayer(UUID.fromString(program.getUuid()));
-		if (player != null && player.isOnline()) {
-			ItemStack[] stack = program.getInventory();
-			int i = 0;
-			for (ItemStack is : stack) {
-				// find the ARTRON / DO
-				if (is != null) {
-					TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(is.getItemMeta()).getDisplayName());
-					TARDISHandlesProcessor processor = new TARDISHandlesProcessor(TARDISPlugin.plugin, program, player, program.getProgramId());
-					switch (thb) {
-						case ARTRON -> {
-							processor.processArtronCommand(i + 1);
-							return;
-						}
-						case DO -> {
-							processor.processCommand(i + 1);
-							return;
-						}
-					}
-				}
-				i++;
-			}
-		}
-	};
+    /**
+     * Process the program
+     */
+    private final Callback<Program> programCallback = (Program program) -> {
+        Player player = Bukkit.getPlayer(UUID.fromString(program.getUuid()));
+        if (player != null && player.isOnline()) {
+            ItemStack[] stack = program.getInventory();
+            int i = 0;
+            for (ItemStack is : stack) {
+                // find the ARTRON / DO
+                if (is != null) {
+                    TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(is.getItemMeta()).getDisplayName());
+                    TARDISHandlesProcessor processor = new TARDISHandlesProcessor(TARDISPlugin.plugin, program, player, program.getProgramId());
+                    switch (thb) {
+                        case ARTRON -> {
+                            processor.processArtronCommand(i + 1);
+                            return;
+                        }
+                        case DO -> {
+                            processor.processCommand(i + 1);
+                            return;
+                        }
+                    }
+                }
+                i++;
+            }
+        }
+    };
 
-	public void onHandlesArtron(TARDISArtronEvent event) {
-		getProgram(event.getPlayer().getUniqueId().toString(), "ARTRON");
-	}
+    public void onHandlesArtron(TARDISArtronEvent event) {
+        getProgram(event.getPlayer().getUniqueId().toString(), "ARTRON");
+    }
 
-	public void onHandlesSiegeOff(TARDISSiegeOffEvent event) {
-		getProgram(event.getPlayer().getUniqueId().toString(), "SIEGE_OFF");
-	}
+    public void onHandlesSiegeOff(TARDISSiegeOffEvent event) {
+        getProgram(event.getPlayer().getUniqueId().toString(), "SIEGE_OFF");
+    }
 
-	public void onHandlesSiegeOn(TARDISSiegeEvent event) {
-		getProgram(event.getPlayer().getUniqueId().toString(), "SIEGE_ON");
-	}
+    public void onHandlesSiegeOn(TARDISSiegeEvent event) {
+        getProgram(event.getPlayer().getUniqueId().toString(), "SIEGE_ON");
+    }
 
-	public void onHandlesMaterialise(TARDISMaterialisationEvent event) {
-		getProgram(event.getPlayer().getUniqueId().toString(), "MATERIALISE");
-	}
+    public void onHandlesMaterialise(TARDISMaterialisationEvent event) {
+        getProgram(event.getPlayer().getUniqueId().toString(), "MATERIALISE");
+    }
 
-	public void onHandlesDematerialise(TARDISDematerialisationEvent event) {
-		getProgram(event.getPlayer().getUniqueId().toString(), "DEMATERIALISE");
-	}
+    public void onHandlesDematerialise(TARDISDematerialisationEvent event) {
+        getProgram(event.getPlayer().getUniqueId().toString(), "DEMATERIALISE");
+    }
 
-	public void onHandlesEnter(TARDISEnterEvent event) {
-		getProgram(event.getPlayer().getUniqueId().toString(), "ENTER");
-	}
+    public void onHandlesEnter(TARDISEnterEvent event) {
+        getProgram(event.getPlayer().getUniqueId().toString(), "ENTER");
+    }
 
-	public void onHandlesExit(TARDISExitEvent event) {
-		getProgram(event.getPlayer().getUniqueId().toString(), "EXIT");
-	}
+    public void onHandlesExit(TARDISExitEvent event) {
+        getProgram(event.getPlayer().getUniqueId().toString(), "EXIT");
+    }
 
-	public void onHandlesHADS(TARDISHADSEvent event) {
-		getProgram(event.getPlayer().getUniqueId().toString(), "HADS");
-	}
+    public void onHandlesHADS(TARDISHADSEvent event) {
+        getProgram(event.getPlayer().getUniqueId().toString(), "HADS");
+    }
 
-	public void onHandlesLogout(PlayerQuitEvent event) {
-		getProgram(event.getPlayer().getUniqueId().toString(), "LOG_OUT");
-	}
+    public void onHandlesLogout(PlayerQuitEvent event) {
+        getProgram(event.getPlayer().getUniqueId().toString(), "LOG_OUT");
+    }
 
-	public void onHandlesTimeLordDeath(PlayerDeathEvent event) {
-		getProgram(event.getEntity().getUniqueId().toString(), "DEATH");
-	}
+    public void onHandlesTimeLordDeath(PlayerDeathEvent event) {
+        getProgram(event.getEntity().getUniqueId().toString(), "DEATH");
+    }
 
-	/**
-	 * Retrieve a Program asynchronously from the database
-	 */
-	private void getProgram(String uuid, String event) {
-		if (TARDISPlugin.plugin.getHandlesConfig().getBoolean("enabled")) {
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					ResultSetProgramFromEvent rs = new ResultSetProgramFromEvent(TARDISPlugin.plugin, uuid, event);
-					if (rs.resultSet()) {
-						programCallback.execute(rs.getProgram());
-					}
-				}
-			}.runTaskAsynchronously(TARDISPlugin.plugin);
-		}
-	}
+    /**
+     * Retrieve a Program asynchronously from the database
+     */
+    private void getProgram(String uuid, String event) {
+        if (TARDISPlugin.plugin.getHandlesConfig().getBoolean("enabled")) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    ResultSetProgramFromEvent rs = new ResultSetProgramFromEvent(TARDISPlugin.plugin, uuid, event);
+                    if (rs.resultSet()) {
+                        programCallback.execute(rs.getProgram());
+                    }
+                }
+            }.runTaskAsynchronously(TARDISPlugin.plugin);
+        }
+    }
 
-	/**
-	 * Callback to get data asynchronously from the database.
-	 *
-	 * @param <T> The Object type we want to return
-	 */
-	interface Callback<T> {
+    /**
+     * Callback to get data asynchronously from the database.
+     *
+     * @param <T> The Object type we want to return
+     */
+    interface Callback<T> {
 
-		void execute(T response);
-	}
+        void execute(T response);
+    }
 }

@@ -32,50 +32,49 @@ import java.util.Set;
 
 public class TARDISSmithingRecipe {
 
-	private final TARDISPlugin plugin;
-	private final HashMap<String, SmithingRecipe> smithingRecipes;
+    private final TARDISPlugin plugin;
+    private final HashMap<String, SmithingRecipe> smithingRecipes;
 
-	public TARDISSmithingRecipe(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		smithingRecipes = new HashMap<>();
-	}
+    public TARDISSmithingRecipe(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        smithingRecipes = new HashMap<>();
+    }
 
-	public void addSmithingRecipes() {
-		Set<String> smithing = Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("smithing")).getKeys(false);
-		smithing.forEach((s) -> plugin.getServer().addRecipe(makeRecipe(s)));
-	}
+    public void addSmithingRecipes() {
+        Set<String> smithing = Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("smithing")).getKeys(false);
+        smithing.forEach((s) -> plugin.getServer().addRecipe(makeRecipe(s)));
+    }
 
-	private SmithingRecipe makeRecipe(String s) {
+    private SmithingRecipe makeRecipe(String s) {
         /*
          base: BLAZE_ROD
          addition: GLOWSTONE_DUST
          result: BLAZE_ROD
          */
-		// result
-		String result = plugin.getRecipesConfig().getString("smithing." + s + ".result");
-		Material mat = Material.valueOf(result);
-		ItemStack is = new ItemStack(mat, 1);
-		NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
-		// base material to upgrade
-		Material bm = Material.valueOf(plugin.getRecipesConfig().getString("smithing." + s + ".base"));
-		RecipeChoice base = new RecipeChoice.MaterialChoice(bm);
-		// addition material to use
-		String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString(
-				"smithing." + s + ".addition")).split("=");
-		Material am = Material.valueOf(split[0]);
-		ItemStack isa = new ItemStack(am, 1);
-		ItemMeta im = isa.getItemMeta();
-		assert im != null;
-		im.setDisplayName(split[1]);
-		im.setCustomModelData(RecipeItem.getByName(split[1]).getCustomModelData());
-		isa.setItemMeta(im);
-		RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
-		SmithingRecipe r = new SmithingRecipe(key, is, base, addition);
-		smithingRecipes.put(s, r);
-		return r;
-	}
+        // result
+        String result = plugin.getRecipesConfig().getString("smithing." + s + ".result");
+        Material mat = Material.valueOf(result);
+        ItemStack is = new ItemStack(mat, 1);
+        NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
+        // base material to upgrade
+        Material bm = Material.valueOf(plugin.getRecipesConfig().getString("smithing." + s + ".base"));
+        RecipeChoice base = new RecipeChoice.MaterialChoice(bm);
+        // addition material to use
+        String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString("smithing." + s + ".addition")).split("=");
+        Material am = Material.valueOf(split[0]);
+        ItemStack isa = new ItemStack(am, 1);
+        ItemMeta im = isa.getItemMeta();
+        assert im != null;
+        im.setDisplayName(split[1]);
+        im.setCustomModelData(RecipeItem.getByName(split[1]).getCustomModelData());
+        isa.setItemMeta(im);
+        RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
+        SmithingRecipe r = new SmithingRecipe(key, is, base, addition);
+        smithingRecipes.put(s, r);
+        return r;
+    }
 
-	public HashMap<String, SmithingRecipe> getSmithingRecipes() {
-		return smithingRecipes;
-	}
+    public HashMap<String, SmithingRecipe> getSmithingRecipes() {
+        return smithingRecipes;
+    }
 }

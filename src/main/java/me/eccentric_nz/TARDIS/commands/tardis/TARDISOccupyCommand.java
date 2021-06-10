@@ -32,58 +32,57 @@ import java.util.HashMap;
  */
 class TARDISOccupyCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISOccupyCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISOccupyCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean toggleOccupancy(Player player) {
-		if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
-			HashMap<String, Object> wheret = new HashMap<>();
-			wheret.put("uuid", player.getUniqueId().toString());
-			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-			String occupied;
-			if (rst.resultSet()) {
-				// only if they're not in the tardis world
-				if (!plugin.getUtils().inTARDISWorld(player)) {
-					HashMap<String, Object> whered = new HashMap<>();
-					whered.put("uuid", player.getUniqueId().toString());
-					plugin.getQueryFactory().doDelete("travellers", whered);
-					occupied = ChatColor.RED + plugin.getLanguage().getString("OCCUPY_OUT");
-				} else {
-					TARDISMessage.send(player, "OCCUPY_MUST_BE_OUT");
-					return true;
-				}
-			} else if (plugin.getUtils().inTARDISWorld(player)) {
-				ResultSetTardisID rsid = new ResultSetTardisID(plugin);
-				// if TIPS determine tardis_id from player location
-				if (plugin.getConfig().getBoolean("creation.default_world") &&
-					!player.hasPermission("tardis.create_world")) {
-					int slot = TARDISInteriorPostioning.getTIPSSlot(player.getLocation());
-					if (!rsid.fromTIPSSlot(slot)) {
-						TARDISMessage.send(player, "OCCUPY_MUST_BE_IN");
-						return false;
-					}
-				} else if (!rsid.fromUUID(player.getUniqueId().toString())) {
-					TARDISMessage.send(player, "NOT_A_TIMELORD");
-					return false;
-				}
-				int id = rsid.getTardisId();
-				HashMap<String, Object> wherei = new HashMap<>();
-				wherei.put("tardis_id", id);
-				wherei.put("uuid", player.getUniqueId().toString());
-				plugin.getQueryFactory().doInsert("travellers", wherei);
-				occupied = ChatColor.GREEN + plugin.getLanguage().getString("OCCUPY_IN");
-			} else {
-				TARDISMessage.send(player, "OCCUPY_MUST_BE_IN");
-				return true;
-			}
-			TARDISMessage.send(player, "OCCUPY_SET", occupied);
-			return true;
-		} else {
-			TARDISMessage.send(player, "NO_PERMS");
-			return false;
-		}
-	}
+    boolean toggleOccupancy(Player player) {
+        if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
+            HashMap<String, Object> wheret = new HashMap<>();
+            wheret.put("uuid", player.getUniqueId().toString());
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+            String occupied;
+            if (rst.resultSet()) {
+                // only if they're not in the tardis world
+                if (!plugin.getUtils().inTARDISWorld(player)) {
+                    HashMap<String, Object> whered = new HashMap<>();
+                    whered.put("uuid", player.getUniqueId().toString());
+                    plugin.getQueryFactory().doDelete("travellers", whered);
+                    occupied = ChatColor.RED + plugin.getLanguage().getString("OCCUPY_OUT");
+                } else {
+                    TARDISMessage.send(player, "OCCUPY_MUST_BE_OUT");
+                    return true;
+                }
+            } else if (plugin.getUtils().inTARDISWorld(player)) {
+                ResultSetTardisID rsid = new ResultSetTardisID(plugin);
+                // if TIPS determine tardis_id from player location
+                if (plugin.getConfig().getBoolean("creation.default_world") && !player.hasPermission("tardis.create_world")) {
+                    int slot = TARDISInteriorPostioning.getTIPSSlot(player.getLocation());
+                    if (!rsid.fromTIPSSlot(slot)) {
+                        TARDISMessage.send(player, "OCCUPY_MUST_BE_IN");
+                        return false;
+                    }
+                } else if (!rsid.fromUUID(player.getUniqueId().toString())) {
+                    TARDISMessage.send(player, "NOT_A_TIMELORD");
+                    return false;
+                }
+                int id = rsid.getTardisId();
+                HashMap<String, Object> wherei = new HashMap<>();
+                wherei.put("tardis_id", id);
+                wherei.put("uuid", player.getUniqueId().toString());
+                plugin.getQueryFactory().doInsert("travellers", wherei);
+                occupied = ChatColor.GREEN + plugin.getLanguage().getString("OCCUPY_IN");
+            } else {
+                TARDISMessage.send(player, "OCCUPY_MUST_BE_IN");
+                return true;
+            }
+            TARDISMessage.send(player, "OCCUPY_SET", occupied);
+            return true;
+        } else {
+            TARDISMessage.send(player, "NO_PERMS");
+            return false;
+        }
+    }
 }

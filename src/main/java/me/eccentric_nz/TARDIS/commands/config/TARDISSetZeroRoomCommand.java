@@ -28,27 +28,27 @@ import java.util.Locale;
  */
 class TARDISSetZeroRoomCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISSetZeroRoomCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISSetZeroRoomCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean setConfigZero(CommandSender sender, String[] args) {
-		// check they typed true of false
-		String tf = args[1].toLowerCase(Locale.ENGLISH);
-		if (!tf.equals("true") && !tf.equals("false")) {
-			TARDISMessage.send(sender, "TRUE_FALSE");
-			return false;
-		}
-		plugin.getConfig().set("allow.zero_room", Boolean.valueOf(tf));
-		plugin.saveConfig();
-		TARDISMessage.send(sender, "CONFIG_UPDATED");
-		if (tf.equals("true") && plugin.getServer().getWorld("TARDIS_Zero_Room") == null) {
-			TARDISMessage.send(sender, "ZERO_CREATE");
-			new TARDISSpace(plugin).createDefaultWorld("TARDIS_Zero_Room");
-			TARDISMessage.send(sender, "ZERO_RESTART");
-		}
-		return true;
-	}
+    boolean setConfigZero(CommandSender sender, String[] args) {
+        // check they typed true of false
+        String tf = args[1].toLowerCase(Locale.ENGLISH);
+        if (!tf.equals("true") && !tf.equals("false")) {
+            TARDISMessage.send(sender, "TRUE_FALSE");
+            return false;
+        }
+        plugin.getConfig().set("allow.zero_room", Boolean.valueOf(tf));
+        plugin.saveConfig();
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        if (tf.equals("true") && plugin.getServer().getWorld("TARDIS_Zero_Room") == null) {
+            TARDISMessage.send(sender, "ZERO_CREATE");
+            new TARDISSpace(plugin).createDefaultWorld("TARDIS_Zero_Room");
+            TARDISMessage.send(sender, "ZERO_RESTART");
+        }
+        return true;
+    }
 }

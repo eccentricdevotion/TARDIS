@@ -30,38 +30,38 @@ import org.bukkit.inventory.ItemStack;
 
 class TARDISChameleonControl {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISChameleonControl(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISChameleonControl(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	void openGUI(Player player, int id, Adaption adapt, PRESET preset) {
-		TARDISCircuitChecker tcc = null;
-		if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
-			tcc = new TARDISCircuitChecker(plugin, id);
-			tcc.getCircuits();
-		}
-		if (tcc != null && !tcc.hasChameleon()) {
-			TARDISMessage.send(player, "CHAM_MISSING");
-			return;
-		}
-		if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-			TARDISMessage.send(player, "SIEGE_NO_CONTROL");
-			return;
-		}
-		if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
-			TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
-			return;
-		}
-		if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-			TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
-			return;
-		}
-		// open Chameleon Circuit GUI
-		ItemStack[] cc = new TARDISChameleonInventory(plugin, adapt, preset).getMenu();
-		Inventory cc_gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
-		cc_gui.setContents(cc);
-		player.openInventory(cc_gui);
-	}
+    void openGUI(Player player, int id, Adaption adapt, PRESET preset) {
+        TARDISCircuitChecker tcc = null;
+        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
+            tcc = new TARDISCircuitChecker(plugin, id);
+            tcc.getCircuits();
+        }
+        if (tcc != null && !tcc.hasChameleon()) {
+            TARDISMessage.send(player, "CHAM_MISSING");
+            return;
+        }
+        if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+            return;
+        }
+        if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+            TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
+            return;
+        }
+        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+            TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
+            return;
+        }
+        // open Chameleon Circuit GUI
+        ItemStack[] cc = new TARDISChameleonInventory(plugin, adapt, preset).getMenu();
+        Inventory cc_gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
+        cc_gui.setContents(cc);
+        player.openInventory(cc_gui);
+    }
 }

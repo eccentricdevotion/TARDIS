@@ -29,35 +29,35 @@ import java.util.Locale;
  */
 public class TARDISSetFlightCommand {
 
-	boolean setMode(Player player, String[] args) {
-		if (args.length < 2) {
-			TARDISMessage.send(player, "FLIGHT_NEED");
-			return false;
-		}
-		FlightMode fm;
-		try {
-			fm = FlightMode.valueOf(args[1].toUpperCase(Locale.ENGLISH));
-		} catch (IllegalArgumentException e) {
-			TARDISMessage.send(player, "FLIGHT_INFO");
-			return true;
-		}
-		int mode = 1;
-		switch (fm) {
-			case REGULATOR:
-				mode = 2;
-				break;
-			case MANUAL:
-				mode = 3;
-				break;
-			default:
-				break;
-		}
-		HashMap<String, Object> setf = new HashMap<>();
-		setf.put("flying_mode", mode);
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("uuid", player.getUniqueId().toString());
-		TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
-		TARDISMessage.send(player, "FLIGHT_SAVED");
-		return true;
-	}
+    boolean setMode(Player player, String[] args) {
+        if (args.length < 2) {
+            TARDISMessage.send(player, "FLIGHT_NEED");
+            return false;
+        }
+        FlightMode fm;
+        try {
+            fm = FlightMode.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+        } catch (IllegalArgumentException e) {
+            TARDISMessage.send(player, "FLIGHT_INFO");
+            return true;
+        }
+        int mode = 1;
+        switch (fm) {
+            case REGULATOR:
+                mode = 2;
+                break;
+            case MANUAL:
+                mode = 3;
+                break;
+            default:
+                break;
+        }
+        HashMap<String, Object> setf = new HashMap<>();
+        setf.put("flying_mode", mode);
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", player.getUniqueId().toString());
+        TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
+        TARDISMessage.send(player, "FLIGHT_SAVED");
+        return true;
+    }
 }

@@ -30,51 +30,50 @@ import java.util.Locale;
  */
 class TARDISSetMaterialCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISSetMaterialCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISSetMaterialCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean setConfigMaterial(CommandSender sender, String[] args, String section) {
-		String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ENGLISH) :
-				section + "." + args[0].toLowerCase(Locale.ENGLISH);
-		String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
-		if (!checkMaterial(setMaterial)) {
-			TARDISMessage.send(sender, "MATERIAL_NOT_VALID");
-			return false;
-		} else {
-			plugin.getConfig().set(first, setMaterial);
-			plugin.saveConfig();
-			TARDISMessage.send(sender, "CONFIG_UPDATED");
-			return true;
-		}
-	}
+    boolean setConfigMaterial(CommandSender sender, String[] args, String section) {
+        String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ENGLISH) : section + "." + args[0].toLowerCase(Locale.ENGLISH);
+        String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
+        if (!checkMaterial(setMaterial)) {
+            TARDISMessage.send(sender, "MATERIAL_NOT_VALID");
+            return false;
+        } else {
+            plugin.getConfig().set(first, setMaterial);
+            plugin.saveConfig();
+            TARDISMessage.send(sender, "CONFIG_UPDATED");
+            return true;
+        }
+    }
 
-	public boolean setConfigMaterial(CommandSender sender, String[] args) {
-		String first = args[0].toLowerCase(Locale.ENGLISH);
-		String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
-		if (!checkMaterial(setMaterial)) {
-			TARDISMessage.send(sender, "MATERIAL_NOT_VALID");
-			return false;
-		} else {
-			plugin.getArtronConfig().set(first, setMaterial);
-			try {
-				plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
-			} catch (IOException io) {
-				plugin.debug("Could not save artron.yml, " + io);
-			}
-			TARDISMessage.send(sender, "CONFIG_UPDATED");
-			return true;
-		}
-	}
+    public boolean setConfigMaterial(CommandSender sender, String[] args) {
+        String first = args[0].toLowerCase(Locale.ENGLISH);
+        String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
+        if (!checkMaterial(setMaterial)) {
+            TARDISMessage.send(sender, "MATERIAL_NOT_VALID");
+            return false;
+        } else {
+            plugin.getArtronConfig().set(first, setMaterial);
+            try {
+                plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
+            } catch (IOException io) {
+                plugin.debug("Could not save artron.yml, " + io);
+            }
+            TARDISMessage.send(sender, "CONFIG_UPDATED");
+            return true;
+        }
+    }
 
-	private boolean checkMaterial(String setMaterial) {
-		try {
-			Material.valueOf(setMaterial);
-			return true;
-		} catch (IllegalArgumentException e) {
-			return false;
-		}
-	}
+    private boolean checkMaterial(String setMaterial) {
+        try {
+            Material.valueOf(setMaterial);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
 }

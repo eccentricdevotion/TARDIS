@@ -25,27 +25,27 @@ import org.bukkit.entity.Player;
  */
 class TARDISAbortCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISAbortCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISAbortCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean doAbort(Player player, String[] args) {
-		if (args.length < 2) {
-			TARDISMessage.send(player, "ROOM_ABORT");
-			return false;
-		}
-		try {
-			int task = Integer.parseInt(args[1]);
-			plugin.getServer().getScheduler().cancelTask(task);
-			plugin.getTrackerKeeper().getRoomTasks().remove(task);
-			plugin.getBuildKeeper().getRoomProgress().remove(player.getUniqueId());
-			TARDISMessage.send(player, "TASK_ABORT");
-			return true;
-		} catch (NumberFormatException nfe) {
-			TARDISMessage.send(player, "TASK_NUMBER");
-			return false;
-		}
-	}
+    boolean doAbort(Player player, String[] args) {
+        if (args.length < 2) {
+            TARDISMessage.send(player, "ROOM_ABORT");
+            return false;
+        }
+        try {
+            int task = Integer.parseInt(args[1]);
+            plugin.getServer().getScheduler().cancelTask(task);
+            plugin.getTrackerKeeper().getRoomTasks().remove(task);
+            plugin.getBuildKeeper().getRoomProgress().remove(player.getUniqueId());
+            TARDISMessage.send(player, "TASK_ABORT");
+            return true;
+        } catch (NumberFormatException nfe) {
+            TARDISMessage.send(player, "TASK_NUMBER");
+            return false;
+        }
+    }
 }

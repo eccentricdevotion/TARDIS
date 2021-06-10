@@ -38,44 +38,44 @@ import java.util.List;
  */
 public class TARDISMalfunctionExplosion implements Runnable {
 
-	private final TARDISPlugin plugin;
-	private final int id;
-	private final long end;
-	private boolean started = false;
-	private List<Location> locations;
-	private int task;
+    private final TARDISPlugin plugin;
+    private final int id;
+    private final long end;
+    private boolean started = false;
+    private List<Location> locations;
+    private int task;
 
-	public TARDISMalfunctionExplosion(TARDISPlugin plugin, int id, long end) {
-		this.plugin = plugin;
-		this.id = id;
-		this.end = end;
-	}
+    public TARDISMalfunctionExplosion(TARDISPlugin plugin, int id, long end) {
+        this.plugin = plugin;
+        this.id = id;
+        this.end = end;
+    }
 
-	@Override
-	public void run() {
-		if (!started) {
-			HashMap<String, Object> where = new HashMap<>();
-			where.put("tardis_id", id);
-			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-			if (rs.resultSet()) {
-				TARDIS tardis = rs.getTardis();
-				ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, tardis.getTardisId(), 0);
-				if (rsr.resultSet()) {
-					locations = rsr.getLocations();
-				}
-				started = true;
-			}
-		}
-		long time = System.currentTimeMillis();
-		if (time > end) {
-			plugin.getServer().getScheduler().cancelTask(task);
-		} else {
-			Location l = locations.get(TARDISConstants.RANDOM.nextInt(4));
-			TARDISFirework.randomize().displayEffects(plugin, l.add(0.5, 0.5, 0.5));
-		}
-	}
+    @Override
+    public void run() {
+        if (!started) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+            if (rs.resultSet()) {
+                TARDIS tardis = rs.getTardis();
+                ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, tardis.getTardisId(), 0);
+                if (rsr.resultSet()) {
+                    locations = rsr.getLocations();
+                }
+                started = true;
+            }
+        }
+        long time = System.currentTimeMillis();
+        if (time > end) {
+            plugin.getServer().getScheduler().cancelTask(task);
+        } else {
+            Location l = locations.get(TARDISConstants.RANDOM.nextInt(4));
+            TARDISFirework.randomize().displayEffects(plugin, l.add(0.5, 0.5, 0.5));
+        }
+    }
 
-	public void setTask(int task) {
-		this.task = task;
-	}
+    public void setTask(int task) {
+        this.task = task;
+    }
 }

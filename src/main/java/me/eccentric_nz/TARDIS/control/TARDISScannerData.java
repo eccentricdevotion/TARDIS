@@ -24,40 +24,40 @@ import org.bukkit.Location;
  */
 public class TARDISScannerData {
 
-	private Location scanLocation;
-	private COMPASS tardisDirection;
-	private long time;
-	private String scannedBiome;
+    private Location scanLocation;
+    private COMPASS tardisDirection;
+    private long time;
+    private String scannedBiome;
 
-	public Location getScanLocation() {
-		return scanLocation;
-	}
+    public Location getScanLocation() {
+        return scanLocation;
+    }
 
-	public void setScanLocation(Location scanLocation) {
-		this.scanLocation = scanLocation;
-	}
+    public void setScanLocation(Location scanLocation) {
+        this.scanLocation = scanLocation;
+    }
 
-	public COMPASS getTardisDirection() {
-		return tardisDirection;
-	}
+    public COMPASS getTardisDirection() {
+        return tardisDirection;
+    }
 
-	public void setTardisDirection(COMPASS tardisDirection) {
-		this.tardisDirection = tardisDirection;
-	}
+    public void setTardisDirection(COMPASS tardisDirection) {
+        this.tardisDirection = tardisDirection;
+    }
 
-	public long getTime() {
-		return time;
-	}
+    public long getTime() {
+        return time;
+    }
 
-	public void setTime(long time) {
-		this.time = time;
-	}
+    public void setTime(long time) {
+        this.time = time;
+    }
 
-	public String getScannedBiome() {
-		return scannedBiome;
-	}
+    public String getScannedBiome() {
+        return scannedBiome;
+    }
 
-	public void setScannedBiome(String scannedBiome) {
-		this.scannedBiome = scannedBiome;
-	}
+    public void setScannedBiome(String scannedBiome) {
+        this.scannedBiome = scannedBiome;
+    }
 }

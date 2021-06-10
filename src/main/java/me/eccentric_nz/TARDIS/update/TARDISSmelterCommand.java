@@ -33,54 +33,54 @@ import java.util.HashMap;
  */
 class TARDISSmelterCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISSmelterCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISSmelterCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean addDropChest(Player player, Updateable updateable, int id, Block b) {
-		// player is in their own TARDIS
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("uuid", player.getUniqueId().toString());
-		ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
-		if (rst.resultSet() && rst.getTardisId() != id) {
-			TARDISMessage.send(player, "CMD_ONLY_TL");
-			return true;
-		}
-		Location l = b.getLocation();
-		String pos = l.toString();
-		HashMap<String, Object> set = new HashMap<>();
-		set.put("tardis_id", id);
-		set.put("location", pos);
-		set.put("chest_type", updateable.toString());
-		set.put("x", 0);
-		set.put("y", 0);
-		set.put("z", 0);
-		// is there an existing DROP record?
-		HashMap<String, Object> wheres = new HashMap<>();
-		wheres.put("tardis_id", id);
-		wheres.put("chest_type", "DROP");
-		ResultSetSmelterCheck rssc = new ResultSetSmelterCheck(plugin, wheres);
-		if (rssc.resultSet()) {
-			HashMap<String, Object> whereSmeltCheck = new HashMap<>();
-			whereSmeltCheck.put("v_id", rssc.getSmelterId());
-			plugin.getQueryFactory().doUpdate("vaults", set, whereSmeltCheck);
-		} else {
-			// check if FUEL or SMELT exists
-			HashMap<String, Object> whereFuelSmelt = new HashMap<>();
-			whereFuelSmelt.put("tardis_id", id);
-			whereFuelSmelt.put("chest_type", updateable.toString());
-			ResultSetSmelterCheck rsfs = new ResultSetSmelterCheck(plugin, whereFuelSmelt);
-			if (rsfs.resultSet()) {
-				HashMap<String, Object> whereVault = new HashMap<>();
-				whereVault.put("v_id", rsfs.getSmelterId());
-				plugin.getQueryFactory().doUpdate("vaults", set, whereVault);
-			} else {
-				plugin.getQueryFactory().doInsert("vaults", set);
-			}
-		}
-		TARDISMessage.send(player, "SMELTER_SET", updateable.toString(), (updateable.equals(Updateable.FUEL)) ? "SMELT" : "FUEL");
-		return true;
-	}
+    boolean addDropChest(Player player, Updateable updateable, int id, Block b) {
+        // player is in their own TARDIS
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", player.getUniqueId().toString());
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+        if (rst.resultSet() && rst.getTardisId() != id) {
+            TARDISMessage.send(player, "CMD_ONLY_TL");
+            return true;
+        }
+        Location l = b.getLocation();
+        String pos = l.toString();
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("tardis_id", id);
+        set.put("location", pos);
+        set.put("chest_type", updateable.toString());
+        set.put("x", 0);
+        set.put("y", 0);
+        set.put("z", 0);
+        // is there an existing DROP record?
+        HashMap<String, Object> wheres = new HashMap<>();
+        wheres.put("tardis_id", id);
+        wheres.put("chest_type", "DROP");
+        ResultSetSmelterCheck rssc = new ResultSetSmelterCheck(plugin, wheres);
+        if (rssc.resultSet()) {
+            HashMap<String, Object> whereSmeltCheck = new HashMap<>();
+            whereSmeltCheck.put("v_id", rssc.getSmelterId());
+            plugin.getQueryFactory().doUpdate("vaults", set, whereSmeltCheck);
+        } else {
+            // check if FUEL or SMELT exists
+            HashMap<String, Object> whereFuelSmelt = new HashMap<>();
+            whereFuelSmelt.put("tardis_id", id);
+            whereFuelSmelt.put("chest_type", updateable.toString());
+            ResultSetSmelterCheck rsfs = new ResultSetSmelterCheck(plugin, whereFuelSmelt);
+            if (rsfs.resultSet()) {
+                HashMap<String, Object> whereVault = new HashMap<>();
+                whereVault.put("v_id", rsfs.getSmelterId());
+                plugin.getQueryFactory().doUpdate("vaults", set, whereVault);
+            } else {
+                plugin.getQueryFactory().doInsert("vaults", set);
+            }
+        }
+        TARDISMessage.send(player, "SMELTER_SET", updateable.toString(), (updateable.equals(Updateable.FUEL)) ? "SMELT" : "FUEL");
+        return true;
+    }
 }

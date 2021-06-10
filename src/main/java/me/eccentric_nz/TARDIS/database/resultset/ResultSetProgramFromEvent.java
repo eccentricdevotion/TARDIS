@@ -35,69 +35,69 @@ import java.sql.SQLException;
  */
 public class ResultSetProgramFromEvent {
 
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final TARDISPlugin plugin;
-	private final String uuid;
-	private final String event;
-	private final String prefix;
-	private Program program;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final TARDISPlugin plugin;
+    private final String uuid;
+    private final String event;
+    private final String prefix;
+    private Program program;
 
-	/**
-	 * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
-	 *
-	 * @param plugin an instance of the main class.
-	 * @param uuid   a player UUID to refine the search.
-	 * @param event  an event string to refine the search.
-	 */
-	public ResultSetProgramFromEvent(TARDISPlugin plugin, String uuid, String event) {
-		this.plugin = plugin;
-		this.uuid = uuid;
-		this.event = event;
-		prefix = this.plugin.getPrefix();
-	}
+    /**
+     * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
+     *
+     * @param plugin an instance of the main class.
+     * @param uuid   a player UUID to refine the search.
+     * @param event  an event string to refine the search.
+     */
+    public ResultSetProgramFromEvent(TARDISPlugin plugin, String uuid, String event) {
+        this.plugin = plugin;
+        this.uuid = uuid;
+        this.event = event;
+        prefix = this.plugin.getPrefix();
+    }
 
-	/**
-	 * Retrieves an SQL ResultSet from the programs table. This method builds an SQL query string from the parameters
-	 * supplied and then executes the query. Use the getters to retrieve the results.
-	 *
-	 * @return true or false depending on whether any data matches the query
-	 */
-	public boolean resultSet() {
-		PreparedStatement statement = null;
-		ResultSet rs = null;
-		String query = "SELECT * FROM " + prefix + "programs WHERE uuid = ? AND parsed = ?";
-		try {
-			service.testConnection(connection);
-			statement = connection.prepareStatement(query);
-			statement.setString(1, uuid);
-			statement.setString(2, event);
-			rs = statement.executeQuery();
-			if (rs.isBeforeFirst()) {
-				rs.next();
-				program = new Program(rs.getInt("program_id"), rs.getString("uuid"), rs.getString("name"), rs.getString("inventory"), rs.getString("parsed"), rs.getBoolean("checked"));
-			} else {
-				return false;
-			}
-		} catch (SQLException e) {
-			plugin.debug("ResultSet error for programs table! " + e.getMessage());
-			return false;
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing programs table! " + e.getMessage());
-			}
-		}
-		return true;
-	}
+    /**
+     * Retrieves an SQL ResultSet from the programs table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
+     *
+     * @return true or false depending on whether any data matches the query
+     */
+    public boolean resultSet() {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM " + prefix + "programs WHERE uuid = ? AND parsed = ?";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            statement.setString(1, uuid);
+            statement.setString(2, event);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                program = new Program(rs.getInt("program_id"), rs.getString("uuid"), rs.getString("name"), rs.getString("inventory"), rs.getString("parsed"), rs.getBoolean("checked"));
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for programs table! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing programs table! " + e.getMessage());
+            }
+        }
+        return true;
+    }
 
-	public Program getProgram() {
-		return program;
-	}
+    public Program getProgram() {
+        return program;
+    }
 }

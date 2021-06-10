@@ -29,22 +29,22 @@ import java.util.Locale;
  */
 class TARDISSignColourCommand {
 
-	private final TARDISPlugin plugin;
-	private final List<String> COLOURS = Arrays.asList("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
+    private final TARDISPlugin plugin;
+    private final List<String> COLOURS = Arrays.asList("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
 
-	TARDISSignColourCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISSignColourCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean setColour(CommandSender sender, String[] args) {
-		String colour = args[1].toUpperCase(Locale.ENGLISH);
-		if (!COLOURS.contains(colour)) {
-			TARDISMessage.send(sender, "ARG_COLOUR");
-			return true;
-		}
-		plugin.getConfig().set("police_box.sign_colour", colour);
-		plugin.saveConfig();
-		TARDISMessage.send(sender, "CONFIG_UPDATED");
-		return true;
-	}
+    boolean setColour(CommandSender sender, String[] args) {
+        String colour = args[1].toUpperCase(Locale.ENGLISH);
+        if (!COLOURS.contains(colour)) {
+            TARDISMessage.send(sender, "ARG_COLOUR");
+            return true;
+        }
+        plugin.getConfig().set("police_box.sign_colour", colour);
+        plugin.saveConfig();
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        return true;
+    }
 }

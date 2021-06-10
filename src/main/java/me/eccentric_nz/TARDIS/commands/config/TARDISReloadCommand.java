@@ -31,49 +31,49 @@ import java.io.IOException;
  */
 class TARDISReloadCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISReloadCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISReloadCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean reloadConfig(CommandSender sender) {
-		plugin.reloadConfig();
-		// check worlds
-		TARDISWorlds tc = new TARDISWorlds(plugin);
-		tc.doWorlds();
-		plugin.saveConfig();
-		TARDISMessage.send(sender, "RELOADED");
-		return true;
-	}
+    boolean reloadConfig(CommandSender sender) {
+        plugin.reloadConfig();
+        // check worlds
+        TARDISWorlds tc = new TARDISWorlds(plugin);
+        tc.doWorlds();
+        plugin.saveConfig();
+        TARDISMessage.send(sender, "RELOADED");
+        return true;
+    }
 
-	boolean reloadOtherConfig(CommandSender sender, String[] args) {
-		try {
-			Config config = Config.valueOf(args[1].toLowerCase());
-			File file = new File(plugin.getDataFolder(), config + ".yml");
-			switch (config) {
-				case advancements -> plugin.getAdvancementConfig().load(file);
-				case artron -> plugin.getArtronConfig().load(file);
-				case blocks -> plugin.getBlocksConfig().load(file);
-				case chameleon_guis -> plugin.getChameleonGuis().load(file);
-				case condensables -> plugin.getCondensablesConfig().load(file);
-				case handles -> plugin.getHandlesConfig().load(file);
-				case kits -> plugin.getKitsConfig().load(file);
-				case rooms -> plugin.getRoomsConfig().load(file);
-				case signs -> plugin.getSigns().load(file);
-				default -> {
-					TARDISMessage.send(sender, "RELOAD_NOT_THESE", args[1]);
-					return true;
-				}
-			}
-			TARDISMessage.send(sender, "RELOAD_SUCCESS", config.toString());
-		} catch (IllegalArgumentException e) {
-			TARDISMessage.send(sender, "RELOAD_FILE_BAD", args[1]);
-			return true;
-		} catch (InvalidConfigurationException | IOException e) {
-			TARDISMessage.send(sender, "RELOAD_FAIL", args[1]);
-			return true;
-		}
-		return true;
-	}
+    boolean reloadOtherConfig(CommandSender sender, String[] args) {
+        try {
+            Config config = Config.valueOf(args[1].toLowerCase());
+            File file = new File(plugin.getDataFolder(), config + ".yml");
+            switch (config) {
+                case advancements -> plugin.getAdvancementConfig().load(file);
+                case artron -> plugin.getArtronConfig().load(file);
+                case blocks -> plugin.getBlocksConfig().load(file);
+                case chameleon_guis -> plugin.getChameleonGuis().load(file);
+                case condensables -> plugin.getCondensablesConfig().load(file);
+                case handles -> plugin.getHandlesConfig().load(file);
+                case kits -> plugin.getKitsConfig().load(file);
+                case rooms -> plugin.getRoomsConfig().load(file);
+                case signs -> plugin.getSigns().load(file);
+                default -> {
+                    TARDISMessage.send(sender, "RELOAD_NOT_THESE", args[1]);
+                    return true;
+                }
+            }
+            TARDISMessage.send(sender, "RELOAD_SUCCESS", config.toString());
+        } catch (IllegalArgumentException e) {
+            TARDISMessage.send(sender, "RELOAD_FILE_BAD", args[1]);
+            return true;
+        } catch (InvalidConfigurationException | IOException e) {
+            TARDISMessage.send(sender, "RELOAD_FAIL", args[1]);
+            return true;
+        }
+        return true;
+    }
 }

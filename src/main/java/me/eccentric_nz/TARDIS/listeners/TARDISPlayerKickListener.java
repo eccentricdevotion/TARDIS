@@ -31,24 +31,24 @@ import java.util.Objects;
  */
 public class TARDISPlayerKickListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISPlayerKickListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISPlayerKickListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onFallOutOfTARDIS(PlayerKickEvent event) {
-		Player player = event.getPlayer();
-		Location location = player.getLocation();
-		if (location.getBlockY() < 1 && plugin.getUtils().inTARDISWorld(player)) {
-			event.setReason(player.getName() + " fell out of their tardis!");
-			event.setCancelled(true);
-			if (Objects.equals(plugin.getConfig().getString("preferences.vortex_fall"), "kill")) {
-				player.setHealth(0);
-			} else {
-				new TARDISVoidFall(plugin).teleport(player);
-			}
-		}
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onFallOutOfTARDIS(PlayerKickEvent event) {
+        Player player = event.getPlayer();
+        Location location = player.getLocation();
+        if (location.getBlockY() < 1 && plugin.getUtils().inTARDISWorld(player)) {
+            event.setReason(player.getName() + " fell out of their tardis!");
+            event.setCancelled(true);
+            if (Objects.equals(plugin.getConfig().getString("preferences.vortex_fall"), "kill")) {
+                player.setHealth(0);
+            } else {
+                new TARDISVoidFall(plugin).teleport(player);
+            }
+        }
+    }
 }

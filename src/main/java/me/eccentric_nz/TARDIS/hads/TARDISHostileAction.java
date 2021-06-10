@@ -32,46 +32,46 @@ import java.util.UUID;
  */
 public class TARDISHostileAction {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISHostileAction(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISHostileAction(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public void processAction(int id, Player hostile) {
-		if (plugin.getTrackerKeeper().getDamage().get(id) > 99) {
-			return;
-		}
-		plugin.getTrackerKeeper().getDamage().put(id, 100);
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("tardis_id", id);
-		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-		if (rs.resultSet()) {
-			TARDIS tardis = rs.getTardis();
-			UUID uuid = tardis.getUuid();
-			boolean powered = tardis.isPowered();
-			PRESET preset = tardis.getPreset();
-			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
-			if (rsp.resultSet()) {
-				if (rsp.isHadsOn() && powered) {
-					switch (rsp.getHadsType()) {
-						case DISPLACEMENT:
-							new TARDISHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);
-							break;
-						case DISPERSAL:
-							new TARDISHostileDispersal(plugin).disperseTARDIS(id, uuid, hostile, preset);
-							break;
-						default:
-							break;
-					}
-				} else {
-					plugin.getTrackerKeeper().getDamage().remove(id);
-					TARDISMessage.send(hostile, "TARDIS_BREAK");
-				}
-			} else {
-				plugin.getTrackerKeeper().getDamage().remove(id);
-				TARDISMessage.send(hostile, "TARDIS_BREAK");
-			}
-		}
-	}
+    public void processAction(int id, Player hostile) {
+        if (plugin.getTrackerKeeper().getDamage().get(id) > 99) {
+            return;
+        }
+        plugin.getTrackerKeeper().getDamage().put(id, 100);
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+        if (rs.resultSet()) {
+            TARDIS tardis = rs.getTardis();
+            UUID uuid = tardis.getUuid();
+            boolean powered = tardis.isPowered();
+            PRESET preset = tardis.getPreset();
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
+            if (rsp.resultSet()) {
+                if (rsp.isHadsOn() && powered) {
+                    switch (rsp.getHadsType()) {
+                        case DISPLACEMENT:
+                            new TARDISHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);
+                            break;
+                        case DISPERSAL:
+                            new TARDISHostileDispersal(plugin).disperseTARDIS(id, uuid, hostile, preset);
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    plugin.getTrackerKeeper().getDamage().remove(id);
+                    TARDISMessage.send(hostile, "TARDIS_BREAK");
+                }
+            } else {
+                plugin.getTrackerKeeper().getDamage().remove(id);
+                TARDISMessage.send(hostile, "TARDIS_BREAK");
+            }
+        }
+    }
 }

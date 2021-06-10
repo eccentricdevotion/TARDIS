@@ -22,16 +22,16 @@ import org.bukkit.entity.Player;
 
 public class TARDISArchLibsDisguise {
 
-	public static void disguise(Player player, String name) {
-		PlayerDisguise playerDisguise = new PlayerDisguise(name);
-		playerDisguise.setHideHeldItemFromSelf(false);
-		playerDisguise.setViewSelfDisguise(false);
-		DisguiseAPI.disguiseToAll(player, playerDisguise);
-	}
+    public static void disguise(Player player, String name) {
+        PlayerDisguise playerDisguise = new PlayerDisguise(name);
+        playerDisguise.setHideHeldItemFromSelf(false);
+        playerDisguise.setViewSelfDisguise(false);
+        DisguiseAPI.disguiseToAll(player, playerDisguise);
+    }
 
-	public static void undisguise(Player player) {
-		if (DisguiseAPI.isDisguised(player)) {
-			DisguiseAPI.undisguiseToAll(player);
-		}
-	}
+    public static void undisguise(Player player) {
+        if (DisguiseAPI.isDisguised(player)) {
+            DisguiseAPI.undisguiseToAll(player);
+        }
+    }
 }

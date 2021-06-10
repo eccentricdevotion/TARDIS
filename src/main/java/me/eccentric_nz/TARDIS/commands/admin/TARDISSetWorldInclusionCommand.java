@@ -27,36 +27,36 @@ import org.bukkit.command.CommandSender;
  */
 class TARDISSetWorldInclusionCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISSetWorldInclusionCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISSetWorldInclusionCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean setWorldStatus(CommandSender sender, String[] args) {
-		String first = args[0];
-		// get world name
-		int count = args.length;
-		StringBuilder buf = new StringBuilder();
-		for (int i = 1; i < count; i++) {
-			buf.append(args[i]).append(" ");
-		}
-		String tmp = buf.toString();
-		String t = tmp.substring(0, tmp.length() - 1);
-		// need to make there are no periods(.) in the text
-		String nodots = StringUtils.replace(t, ".", "_");
-		// check the world actually exists!
-		if (TARDISAliasResolver.getWorldFromAlias(nodots) == null) {
-			TARDISMessage.send(sender, "WORLD_NOT_FOUND");
-			return false;
-		}
-		if (first.equals("include")) {
-			plugin.getPlanetsConfig().set("planets." + nodots + ".time_travel", true);
-		} else {
-			plugin.getPlanetsConfig().set("planets." + nodots + ".time_travel", false);
-		}
-		plugin.savePlanetsConfig();
-		TARDISMessage.send(sender, "CONFIG_UPDATED");
-		return true;
-	}
+    boolean setWorldStatus(CommandSender sender, String[] args) {
+        String first = args[0];
+        // get world name
+        int count = args.length;
+        StringBuilder buf = new StringBuilder();
+        for (int i = 1; i < count; i++) {
+            buf.append(args[i]).append(" ");
+        }
+        String tmp = buf.toString();
+        String t = tmp.substring(0, tmp.length() - 1);
+        // need to make there are no periods(.) in the text
+        String nodots = StringUtils.replace(t, ".", "_");
+        // check the world actually exists!
+        if (TARDISAliasResolver.getWorldFromAlias(nodots) == null) {
+            TARDISMessage.send(sender, "WORLD_NOT_FOUND");
+            return false;
+        }
+        if (first.equals("include")) {
+            plugin.getPlanetsConfig().set("planets." + nodots + ".time_travel", true);
+        } else {
+            plugin.getPlanetsConfig().set("planets." + nodots + ".time_travel", false);
+        }
+        plugin.savePlanetsConfig();
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        return true;
+    }
 }

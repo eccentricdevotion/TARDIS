@@ -34,91 +34,91 @@ import java.util.UUID;
  */
 class TARDISRemoveCompanionCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISRemoveCompanionCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISRemoveCompanionCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean doRemoveCompanion(Player player, String[] args) {
-		if (TARDISPermission.hasPermission(player, "tardis.add")) {
-			HashMap<String, Object> where = new HashMap<>();
-			where.put("uuid", player.getUniqueId().toString());
-			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-			String comps;
-			int id;
-			String data;
-			String owner;
-			if (!rs.resultSet()) {
-				TARDISMessage.send(player, "NO_TARDIS");
-				return false;
-			} else {
-				TARDIS tardis = rs.getTardis();
-				comps = tardis.getCompanions();
-				if (comps == null || comps.isEmpty()) {
-					TARDISMessage.send(player, "COMPANIONS_NONE");
-					return true;
-				}
-				id = tardis.getTardisId();
-				data = tardis.getChunk();
-				owner = tardis.getOwner();
-			}
-			if (args.length < 2) {
-				TARDISMessage.send(player, "TOO_FEW_ARGS");
-				return false;
-			}
-			if (!args[1].matches("[A-Za-z0-9_*]{2,16}")) {
-				TARDISMessage.send(player, "PLAYER_NOT_VALID");
-			} else {
-				String newList = "";
-				String message = "COMPANIONS_REMOVE_ALL";
-				if (!args[1].equals("all")) {
-					UUID oluuid = plugin.getServer().getOfflinePlayer(player.getUniqueId()).getUniqueId();
-					String[] split = comps.split(":");
-					StringBuilder sb = new StringBuilder();
-					if (split.length > 1) {
-						// recompile string without the specified player
-						for (String c : split) {
-							if (!c.equals(oluuid.toString())) {
-								// add to new string
-								sb.append(c).append(":");
-							}
-						}
-						// remove trailing colon
-						if (sb.length() > 0) {
-							newList = sb.substring(0, sb.length() - 1);
-						}
-					}
-					message = "COMPANIONS_REMOVE_ONE";
-				}
-				// if using WorldGuard, remove them from the region membership
-				if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-					World w = TARDISStaticLocationGetters.getWorld(data);
-					if (w != null) {
-						if (args[1].equals("all")) {
-							plugin.getWorldGuardUtils().removeAllMembersFromRegion(w, owner);
-							// set entry and exit flags to deny
-							plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), false);
-						} else {
-							plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, args[1].toLowerCase(Locale.ENGLISH));
-						}
-					}
-				}
-				HashMap<String, Object> tid = new HashMap<>();
-				HashMap<String, Object> set = new HashMap<>();
-				tid.put("tardis_id", id);
-				set.put("companions", newList);
-				plugin.getQueryFactory().doUpdate("tardis", set, tid);
-				if (!args[1].equals("all")) {
-					TARDISMessage.send(player, message, args[1]);
-				} else {
-					TARDISMessage.send(player, message);
-				}
-			}
-			return true;
-		} else {
-			TARDISMessage.send(player, "NO_PERMS");
-			return false;
-		}
-	}
+    boolean doRemoveCompanion(Player player, String[] args) {
+        if (TARDISPermission.hasPermission(player, "tardis.add")) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+            String comps;
+            int id;
+            String data;
+            String owner;
+            if (!rs.resultSet()) {
+                TARDISMessage.send(player, "NO_TARDIS");
+                return false;
+            } else {
+                TARDIS tardis = rs.getTardis();
+                comps = tardis.getCompanions();
+                if (comps == null || comps.isEmpty()) {
+                    TARDISMessage.send(player, "COMPANIONS_NONE");
+                    return true;
+                }
+                id = tardis.getTardisId();
+                data = tardis.getChunk();
+                owner = tardis.getOwner();
+            }
+            if (args.length < 2) {
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                return false;
+            }
+            if (!args[1].matches("[A-Za-z0-9_*]{2,16}")) {
+                TARDISMessage.send(player, "PLAYER_NOT_VALID");
+            } else {
+                String newList = "";
+                String message = "COMPANIONS_REMOVE_ALL";
+                if (!args[1].equals("all")) {
+                    UUID oluuid = plugin.getServer().getOfflinePlayer(player.getUniqueId()).getUniqueId();
+                    String[] split = comps.split(":");
+                    StringBuilder sb = new StringBuilder();
+                    if (split.length > 1) {
+                        // recompile string without the specified player
+                        for (String c : split) {
+                            if (!c.equals(oluuid.toString())) {
+                                // add to new string
+                                sb.append(c).append(":");
+                            }
+                        }
+                        // remove trailing colon
+                        if (sb.length() > 0) {
+                            newList = sb.substring(0, sb.length() - 1);
+                        }
+                    }
+                    message = "COMPANIONS_REMOVE_ONE";
+                }
+                // if using WorldGuard, remove them from the region membership
+                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                    World w = TARDISStaticLocationGetters.getWorld(data);
+                    if (w != null) {
+                        if (args[1].equals("all")) {
+                            plugin.getWorldGuardUtils().removeAllMembersFromRegion(w, owner);
+                            // set entry and exit flags to deny
+                            plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), false);
+                        } else {
+                            plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, args[1].toLowerCase(Locale.ENGLISH));
+                        }
+                    }
+                }
+                HashMap<String, Object> tid = new HashMap<>();
+                HashMap<String, Object> set = new HashMap<>();
+                tid.put("tardis_id", id);
+                set.put("companions", newList);
+                plugin.getQueryFactory().doUpdate("tardis", set, tid);
+                if (!args[1].equals("all")) {
+                    TARDISMessage.send(player, message, args[1]);
+                } else {
+                    TARDISMessage.send(player, message);
+                }
+            }
+            return true;
+        } else {
+            TARDISMessage.send(player, "NO_PERMS");
+            return false;
+        }
+    }
 }

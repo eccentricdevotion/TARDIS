@@ -29,35 +29,35 @@ import org.bukkit.entity.Player;
  */
 class TARDISTravelBar {
 
-	private final TARDISPlugin plugin;
-	private int taskID;
+    private final TARDISPlugin plugin;
+    private int taskID;
 
-	TARDISTravelBar(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISTravelBar(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	void showTravelRemaining(Player player, long duration, boolean takeoff) {
+    void showTravelRemaining(Player player, long duration, boolean takeoff) {
 
-		String title = (takeoff) ? plugin.getLanguage().getString("TRAVEL_BAR_TAKEOFF") : plugin.getLanguage().getString("TRAVEL_BAR_LAND");
-		BossBar bb = Bukkit.createBossBar(title, BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
-		bb.setProgress(0);
-		bb.addPlayer(player);
-		bb.setVisible(true);
-		double millis = duration * 50.0d;
-		long start = System.currentTimeMillis();
-		double end = start + millis;
-		taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-			long now = System.currentTimeMillis();
-			if (now < end) {
-				double progress = 1 - (end - now) / millis;
-				bb.setProgress(progress);
-			} else {
-				bb.setProgress(1);
-				bb.setVisible(false);
-				bb.removeAll();
-				Bukkit.getScheduler().cancelTask(taskID);
-				taskID = 0;
-			}
-		}, 1L, 1L);
-	}
+        String title = (takeoff) ? plugin.getLanguage().getString("TRAVEL_BAR_TAKEOFF") : plugin.getLanguage().getString("TRAVEL_BAR_LAND");
+        BossBar bb = Bukkit.createBossBar(title, BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
+        bb.setProgress(0);
+        bb.addPlayer(player);
+        bb.setVisible(true);
+        double millis = duration * 50.0d;
+        long start = System.currentTimeMillis();
+        double end = start + millis;
+        taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+            long now = System.currentTimeMillis();
+            if (now < end) {
+                double progress = 1 - (end - now) / millis;
+                bb.setProgress(progress);
+            } else {
+                bb.setProgress(1);
+                bb.setVisible(false);
+                bb.removeAll();
+                Bukkit.getScheduler().cancelTask(taskID);
+                taskID = 0;
+            }
+        }, 1L, 1L);
+    }
 }

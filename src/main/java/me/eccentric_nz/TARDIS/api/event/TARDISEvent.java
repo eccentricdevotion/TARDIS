@@ -27,40 +27,40 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TARDISEvent extends Event {
 
-	private static final HandlerList HANDLERS = new HandlerList();
-	private final Player player;
-	private final TARDIS tardis;
+    private static final HandlerList HANDLERS = new HandlerList();
+    private final Player player;
+    private final TARDIS tardis;
 
-	TARDISEvent(Player player, TARDIS tardis) {
-		this.player = player;
-		this.tardis = tardis;
-	}
+    TARDISEvent(Player player, TARDIS tardis) {
+        this.player = player;
+        this.tardis = tardis;
+    }
 
-	public static HandlerList getHandlerList() {
-		return HANDLERS;
-	}
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
 
-	/**
-	 * Returns the player involved in this event.
-	 *
-	 * @return the player
-	 */
-	public Player getPlayer() {
-		return player;
-	}
+    /**
+     * Returns the player involved in this event.
+     *
+     * @return the player
+     */
+    public Player getPlayer() {
+        return player;
+    }
 
-	/**
-	 * Returns a Tardis data object. Use the object's getter methods to retrieve any data that is stored in the database
-	 * for this TARDIS.
-	 *
-	 * @return the Tardis data object
-	 */
-	public TARDIS getTardis() {
-		return tardis;
-	}
+    /**
+     * Returns a Tardis data object. Use the object's getter methods to retrieve any data that is stored in the database
+     * for this TARDIS.
+     *
+     * @return the Tardis data object
+     */
+    public TARDIS getTardis() {
+        return tardis;
+    }
 
-	@Override
-	public @NotNull HandlerList getHandlers() {
-		return HANDLERS;
-	}
+    @Override
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
+    }
 }

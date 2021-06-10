@@ -23,37 +23,37 @@ package me.eccentric_nz.tardis.mobfarming;
  */
 public class TARDISBee extends TARDISMob {
 
-	private boolean nectar;
-	private boolean stung;
-	private int anger;
+    private boolean nectar;
+    private boolean stung;
+    private int anger;
 
-	/**
-	 * Data storage class for tardis Bee.
-	 */
-	public TARDISBee() {
-	}
+    /**
+     * Data storage class for tardis Bee.
+     */
+    public TARDISBee() {
+    }
 
-	public boolean hasNectar() {
-		return nectar;
-	}
+    public boolean hasNectar() {
+        return nectar;
+    }
 
-	public void setHasNectar(boolean nectar) {
-		this.nectar = nectar;
-	}
+    public void setHasNectar(boolean nectar) {
+        this.nectar = nectar;
+    }
 
-	public boolean hasStung() {
-		return stung;
-	}
+    public boolean hasStung() {
+        return stung;
+    }
 
-	public void setHasStung(boolean stung) {
-		this.stung = stung;
-	}
+    public void setHasStung(boolean stung) {
+        this.stung = stung;
+    }
 
-	public int getAnger() {
-		return anger;
-	}
+    public int getAnger() {
+        return anger;
+    }
 
-	public void setAnger(int anger) {
-		this.anger = anger;
-	}
+    public void setAnger(int anger) {
+        this.anger = anger;
+    }
 }

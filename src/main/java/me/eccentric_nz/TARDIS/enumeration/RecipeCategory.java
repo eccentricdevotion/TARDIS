@@ -22,49 +22,49 @@ import org.bukkit.Material;
 
 public enum RecipeCategory {
 
-	ACCESSORIES(Material.LEATHER_HELMET, 10000037, 9, ChatColor.GREEN),
-	CONSOLE_CIRCUITS(Material.GLOWSTONE_DUST, 10001977, 11, ChatColor.LIGHT_PURPLE),
-	FOOD(Material.MELON_SLICE, 10000002, 13, ChatColor.GRAY),
-	ITEM_CIRCUITS(Material.GLOWSTONE_DUST, 10001967, 15, ChatColor.RED),
-	ITEMS(Material.GOLD_NUGGET, 12, 17, ChatColor.BLUE),
-	ROTORS(Material.LIGHT_GRAY_DYE, 10000002, 18, ChatColor.GOLD),
-	SONIC_CIRCUITS(Material.GLOWSTONE_DUST, 10001971, 20, ChatColor.GREEN),
-	SONIC_UPGRADES(Material.BLAZE_ROD, 10000009, 22, ChatColor.LIGHT_PURPLE),
-	STORAGE_DISKS(Material.MUSIC_DISC_STRAD, 10000001, 24, ChatColor.AQUA),
-	MISC(Material.WATER_BUCKET, 1, 26, ChatColor.GRAY),
-	UNCRAFTABLE(Material.CRAFTING_TABLE, 1, -1, ChatColor.DARK_RED),
-	UNUSED(Material.STONE, 1, -1, ChatColor.BLACK);
+    ACCESSORIES(Material.LEATHER_HELMET, 10000037, 9, ChatColor.GREEN),
+    CONSOLE_CIRCUITS(Material.GLOWSTONE_DUST, 10001977, 11, ChatColor.LIGHT_PURPLE),
+    FOOD(Material.MELON_SLICE, 10000002, 13, ChatColor.GRAY),
+    ITEM_CIRCUITS(Material.GLOWSTONE_DUST, 10001967, 15, ChatColor.RED),
+    ITEMS(Material.GOLD_NUGGET, 12, 17, ChatColor.BLUE),
+    ROTORS(Material.LIGHT_GRAY_DYE, 10000002, 18, ChatColor.GOLD),
+    SONIC_CIRCUITS(Material.GLOWSTONE_DUST, 10001971, 20, ChatColor.GREEN),
+    SONIC_UPGRADES(Material.BLAZE_ROD, 10000009, 22, ChatColor.LIGHT_PURPLE),
+    STORAGE_DISKS(Material.MUSIC_DISC_STRAD, 10000001, 24, ChatColor.AQUA),
+    MISC(Material.WATER_BUCKET, 1, 26, ChatColor.GRAY),
+    UNCRAFTABLE(Material.CRAFTING_TABLE, 1, -1, ChatColor.DARK_RED),
+    UNUSED(Material.STONE, 1, -1, ChatColor.BLACK);
 
-	private final Material material;
-	private final int customModelData;
-	private final int slot;
-	private final ChatColor colour;
+    private final Material material;
+    private final int customModelData;
+    private final int slot;
+    private final ChatColor colour;
 
-	RecipeCategory(Material material, int customModelData, int slot, ChatColor colour) {
-		this.material = material;
-		this.customModelData = customModelData;
-		this.slot = slot;
-		this.colour = colour;
-	}
+    RecipeCategory(Material material, int customModelData, int slot, ChatColor colour) {
+        this.material = material;
+        this.customModelData = customModelData;
+        this.slot = slot;
+        this.colour = colour;
+    }
 
-	public String getName() {
-		String s = toString();
-		return TARDISStringUtils.sentenceCase(s);
-	}
+    public String getName() {
+        String s = toString();
+        return TARDISStringUtils.sentenceCase(s);
+    }
 
-	public Material getMaterial() {
-		return material;
-	}
+    public Material getMaterial() {
+        return material;
+    }
 
-	public int getCustomModelData() {
-		return customModelData;
-	}
+    public int getCustomModelData() {
+        return customModelData;
+    }
 
-	public int getSlot() {
-		return slot;
-	}
+    public int getSlot() {
+        return slot;
+    }
 
-	public ChatColor getColour() {
-		return colour;
-	}
+    public ChatColor getColour() {
+        return colour;
+    }
 }

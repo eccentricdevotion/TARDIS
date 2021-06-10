@@ -26,57 +26,57 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class CompoundsCreativeInventory {
 
-	private final TARDISPlugin plugin;
-	private final ItemStack[] menu;
+    private final TARDISPlugin plugin;
+    private final ItemStack[] menu;
 
-	public CompoundsCreativeInventory(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		menu = getItemStack();
-	}
+    public CompoundsCreativeInventory(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        menu = getItemStack();
+    }
 
-	private ItemStack[] getItemStack() {
-		ItemStack[] stack = new ItemStack[54];
-		int i = 0;
-		for (Compound entry : Compound.values()) {
-			if (i > 52) {
-				break;
-			}
-			ItemStack is = CompoundBuilder.getCompound(entry);
-			stack[i] = is;
-			if (i % 9 == 7) {
-				i += 2;
-			} else {
-				i++;
-			}
-		}
-		// elements
-		ItemStack elements = new ItemStack(GUIChemistry.ELEMENTS.getMaterial(), 1);
-		ItemMeta eim = elements.getItemMeta();
-		assert eim != null;
-		eim.setDisplayName("Elements");
-		eim.setCustomModelData(GUIChemistry.ELEMENTS.getCustomModelData());
-		elements.setItemMeta(eim);
-		stack[35] = elements;
-		// products
-		ItemStack products = new ItemStack(GUIChemistry.PRODUCTS.getMaterial(), 1);
-		ItemMeta pim = products.getItemMeta();
-		assert pim != null;
-		pim.setDisplayName("Products");
-		pim.setCustomModelData(GUIChemistry.PRODUCTS.getCustomModelData());
-		products.setItemMeta(pim);
-		stack[44] = products;
-		// close
-		ItemStack close = new ItemStack(Material.BOWL, 1);
-		ItemMeta close_im = close.getItemMeta();
-		assert close_im != null;
-		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-		close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
-		close.setItemMeta(close_im);
-		stack[53] = close;
-		return stack;
-	}
+    private ItemStack[] getItemStack() {
+        ItemStack[] stack = new ItemStack[54];
+        int i = 0;
+        for (Compound entry : Compound.values()) {
+            if (i > 52) {
+                break;
+            }
+            ItemStack is = CompoundBuilder.getCompound(entry);
+            stack[i] = is;
+            if (i % 9 == 7) {
+                i += 2;
+            } else {
+                i++;
+            }
+        }
+        // elements
+        ItemStack elements = new ItemStack(GUIChemistry.ELEMENTS.getMaterial(), 1);
+        ItemMeta eim = elements.getItemMeta();
+        assert eim != null;
+        eim.setDisplayName("Elements");
+        eim.setCustomModelData(GUIChemistry.ELEMENTS.getCustomModelData());
+        elements.setItemMeta(eim);
+        stack[35] = elements;
+        // products
+        ItemStack products = new ItemStack(GUIChemistry.PRODUCTS.getMaterial(), 1);
+        ItemMeta pim = products.getItemMeta();
+        assert pim != null;
+        pim.setDisplayName("Products");
+        pim.setCustomModelData(GUIChemistry.PRODUCTS.getCustomModelData());
+        products.setItemMeta(pim);
+        stack[44] = products;
+        // close
+        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemMeta close_im = close.getItemMeta();
+        assert close_im != null;
+        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
+        close.setItemMeta(close_im);
+        stack[53] = close;
+        return stack;
+    }
 
-	public ItemStack[] getMenu() {
-		return menu;
-	}
+    public ItemStack[] getMenu() {
+        return menu;
+    }
 }

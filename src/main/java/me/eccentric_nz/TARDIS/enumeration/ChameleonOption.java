@@ -23,43 +23,43 @@ import org.bukkit.ChatColor;
  */
 public enum ChameleonOption {
 
-	FACTORY(20, "DISABLED", ChatColor.RED, "SET_ON", ChatColor.GREEN),
-	ADAPTIVE(21, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
-	INVISIBLE(22, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
-	PRESET(23, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
-	CONSTRUCT(24, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED);
+    FACTORY(20, "DISABLED", ChatColor.RED, "SET_ON", ChatColor.GREEN),
+    ADAPTIVE(21, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
+    INVISIBLE(22, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
+    PRESET(23, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
+    CONSTRUCT(24, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED);
 
-	private final int slot;
-	private final String on;
-	private final ChatColor onColour;
-	private final String off;
-	private final ChatColor offColour;
+    private final int slot;
+    private final String on;
+    private final ChatColor onColour;
+    private final String off;
+    private final ChatColor offColour;
 
-	ChameleonOption(int slot, String on, ChatColor onColour, String off, ChatColor offColour) {
-		this.slot = slot;
-		this.on = on;
-		this.off = off;
-		this.onColour = onColour;
-		this.offColour = offColour;
-	}
+    ChameleonOption(int slot, String on, ChatColor onColour, String off, ChatColor offColour) {
+        this.slot = slot;
+        this.on = on;
+        this.off = off;
+        this.onColour = onColour;
+        this.offColour = offColour;
+    }
 
-	public int getSlot() {
-		return slot;
-	}
+    public int getSlot() {
+        return slot;
+    }
 
-	public String getOn() {
-		return on;
-	}
+    public String getOn() {
+        return on;
+    }
 
-	public ChatColor getOnColour() {
-		return onColour;
-	}
+    public ChatColor getOnColour() {
+        return onColour;
+    }
 
-	public String getOff() {
-		return off;
-	}
+    public String getOff() {
+        return off;
+    }
 
-	public ChatColor getOffColour() {
-		return offColour;
-	}
+    public ChatColor getOffColour() {
+        return offColour;
+    }
 }

@@ -33,53 +33,53 @@ import java.util.UUID;
  */
 class TARDISSecondaryCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISSecondaryCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISSecondaryCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean startSecondary(Player player, String[] args) {
-		if (TARDISPermission.hasPermission(player, "tardis.update")) {
-			if (args.length < 2) {
-				TARDISMessage.send(player, "TOO_FEW_ARGS");
-				return false;
-			}
-			UUID uuid = player.getUniqueId();
-			ResultSetTardisID rs = new ResultSetTardisID(plugin);
-			if (!rs.fromUUID(uuid.toString())) {
-				TARDISMessage.send(player, "NOT_A_TIMELORD");
-				return false;
-			}
-			if (args[1].equalsIgnoreCase("remove")) {
-				plugin.getTrackerKeeper().getSecondaryRemovers().put(player.getUniqueId(), rs.getTardisId());
-				TARDISMessage.send(player, "SEC_REMOVE_CLICK_BLOCK");
-				return true;
-			}
-			Updateable updateable;
-			try {
-				updateable = Updateable.valueOf(TARDISStringUtils.toScoredUppercase(args[1]));
-			} catch (IllegalArgumentException e) {
-				TARDISMessage.send(player, "UPDATE_NOT_VALID");
-				return false;
-			}
-			if (!updateable.isSecondary()) {
-				TARDISMessage.send(player, "UPDATE_NOT_VALID");
-				return false;
-			}
-			HashMap<String, Object> wheret = new HashMap<>();
-			wheret.put("uuid", uuid.toString());
-			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-			if (!rst.resultSet()) {
-				TARDISMessage.send(player, "NOT_IN_TARDIS");
-				return false;
-			}
-			plugin.getTrackerKeeper().getSecondary().put(uuid, updateable);
-			TARDISMessage.send(player, "UPDATE_CLICK", updateable.getName());
-			return true;
-		} else {
-			TARDISMessage.send(player, "NO_PERMS");
-			return false;
-		}
-	}
+    boolean startSecondary(Player player, String[] args) {
+        if (TARDISPermission.hasPermission(player, "tardis.update")) {
+            if (args.length < 2) {
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                return false;
+            }
+            UUID uuid = player.getUniqueId();
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            if (!rs.fromUUID(uuid.toString())) {
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                return false;
+            }
+            if (args[1].equalsIgnoreCase("remove")) {
+                plugin.getTrackerKeeper().getSecondaryRemovers().put(player.getUniqueId(), rs.getTardisId());
+                TARDISMessage.send(player, "SEC_REMOVE_CLICK_BLOCK");
+                return true;
+            }
+            Updateable updateable;
+            try {
+                updateable = Updateable.valueOf(TARDISStringUtils.toScoredUppercase(args[1]));
+            } catch (IllegalArgumentException e) {
+                TARDISMessage.send(player, "UPDATE_NOT_VALID");
+                return false;
+            }
+            if (!updateable.isSecondary()) {
+                TARDISMessage.send(player, "UPDATE_NOT_VALID");
+                return false;
+            }
+            HashMap<String, Object> wheret = new HashMap<>();
+            wheret.put("uuid", uuid.toString());
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+            if (!rst.resultSet()) {
+                TARDISMessage.send(player, "NOT_IN_TARDIS");
+                return false;
+            }
+            plugin.getTrackerKeeper().getSecondary().put(uuid, updateable);
+            TARDISMessage.send(player, "UPDATE_CLICK", updateable.getName());
+            return true;
+        } else {
+            TARDISMessage.send(player, "NO_PERMS");
+            return false;
+        }
+    }
 }

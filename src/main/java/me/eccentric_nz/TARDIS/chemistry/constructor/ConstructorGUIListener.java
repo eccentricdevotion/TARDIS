@@ -35,162 +35,160 @@ import java.util.Objects;
 
 public class ConstructorGUIListener extends TARDISMenuListener implements Listener {
 
-	public ConstructorGUIListener(TARDISPlugin plugin) {
-		super(plugin);
-	}
+    public ConstructorGUIListener(TARDISPlugin plugin) {
+        super(plugin);
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onElementMenuClick(InventoryClickEvent event) {
-		InventoryView view = event.getView();
-		String name = view.getTitle();
-		if (name.equals(ChatColor.DARK_RED + "Element constructor")) {
-			Player p = (Player) event.getWhoClicked();
-			int slot = event.getRawSlot();
-			if (slot >= 0 && slot < 27) {
-				switch (slot) {
-					case 5 -> {
-						event.setCancelled(true);
-						int pminus = getCount(view, 0);
-						if (pminus > 0) {
-							setCount(view, pminus - 1, 0);
-							setElement(view);
-						}
-					}
-					case 6 -> {
-						event.setCancelled(true);
-						int pplus = getCount(view, 0);
-						if (pplus < 118) {
-							setCount(view, pplus + 1, 0);
-							setElement(view);
-						}
-					}
-					case 14 -> {
-						event.setCancelled(true);
-						int nminus = getCount(view, 9);
-						if (nminus > 0) {
-							setCount(view, nminus - 1, 9);
-							setElement(view);
-						}
-					}
-					case 15 -> {
-						event.setCancelled(true);
-						int nplus = getCount(view, 9);
-						if (nplus < 176) {
-							setCount(view, nplus + 1, 9);
-							setElement(view);
-						}
-					}
-					case 23 -> {
-						event.setCancelled(true);
-						int eminus = getCount(view, 18);
-						if (eminus > 0) {
-							setCount(view, eminus - 1, 18);
-							setElement(view);
-						}
-					}
-					case 24 -> {
-						event.setCancelled(true);
-						int eplus = getCount(view, 18);
-						if (eplus < 118) {
-							setCount(view, eplus + 1, 18);
-							setElement(view);
-						}
-					}
-					case 17 -> {
-						event.setCancelled(true);
-						// get clicked ItemStack
-						ItemStack choice = Objects.requireNonNull(view.getItem(17)).clone();
-						choice.setAmount(event.getClick().equals(ClickType.SHIFT_LEFT) ? 64 : 1);
-						// add ItemStack to inventory if there is room
-						p.getInventory().addItem(choice);
-					}
-					default -> event.setCancelled(true);
-				}
-			} else {
-				ClickType click = event.getClick();
-				if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) ||
-					click.equals(ClickType.DOUBLE_CLICK)) {
-					event.setCancelled(true);
-				}
-			}
-		}
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onElementMenuClick(InventoryClickEvent event) {
+        InventoryView view = event.getView();
+        String name = view.getTitle();
+        if (name.equals(ChatColor.DARK_RED + "Element constructor")) {
+            Player p = (Player) event.getWhoClicked();
+            int slot = event.getRawSlot();
+            if (slot >= 0 && slot < 27) {
+                switch (slot) {
+                    case 5 -> {
+                        event.setCancelled(true);
+                        int pminus = getCount(view, 0);
+                        if (pminus > 0) {
+                            setCount(view, pminus - 1, 0);
+                            setElement(view);
+                        }
+                    }
+                    case 6 -> {
+                        event.setCancelled(true);
+                        int pplus = getCount(view, 0);
+                        if (pplus < 118) {
+                            setCount(view, pplus + 1, 0);
+                            setElement(view);
+                        }
+                    }
+                    case 14 -> {
+                        event.setCancelled(true);
+                        int nminus = getCount(view, 9);
+                        if (nminus > 0) {
+                            setCount(view, nminus - 1, 9);
+                            setElement(view);
+                        }
+                    }
+                    case 15 -> {
+                        event.setCancelled(true);
+                        int nplus = getCount(view, 9);
+                        if (nplus < 176) {
+                            setCount(view, nplus + 1, 9);
+                            setElement(view);
+                        }
+                    }
+                    case 23 -> {
+                        event.setCancelled(true);
+                        int eminus = getCount(view, 18);
+                        if (eminus > 0) {
+                            setCount(view, eminus - 1, 18);
+                            setElement(view);
+                        }
+                    }
+                    case 24 -> {
+                        event.setCancelled(true);
+                        int eplus = getCount(view, 18);
+                        if (eplus < 118) {
+                            setCount(view, eplus + 1, 18);
+                            setElement(view);
+                        }
+                    }
+                    case 17 -> {
+                        event.setCancelled(true);
+                        // get clicked ItemStack
+                        ItemStack choice = Objects.requireNonNull(view.getItem(17)).clone();
+                        choice.setAmount(event.getClick().equals(ClickType.SHIFT_LEFT) ? 64 : 1);
+                        // add ItemStack to inventory if there is room
+                        p.getInventory().addItem(choice);
+                    }
+                    default -> event.setCancelled(true);
+                }
+            } else {
+                ClickType click = event.getClick();
+                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
 
-	private int getCount(InventoryView view, int offset) {
-		int oneInt, tenInt = 0, hundredInt = 0;
-		ItemStack ones = view.getItem(3 + offset);
-		assert ones != null;
-		ItemMeta oneMeta = ones.getItemMeta();
-		assert oneMeta != null;
-		oneInt = Integer.parseInt(oneMeta.getDisplayName());
-		ItemStack tens = view.getItem(2 + offset);
-		if (tens != null) {
-			ItemMeta tenMeta = tens.getItemMeta();
-			assert tenMeta != null;
-			tenInt = Integer.parseInt(tenMeta.getDisplayName()) * 10;
-		}
-		ItemStack hundreds = view.getItem(1 + offset);
-		if (hundreds != null) {
-			ItemMeta hundredMeta = hundreds.getItemMeta();
-			assert hundredMeta != null;
-			hundredInt = Integer.parseInt(hundredMeta.getDisplayName()) * 100;
-		}
-		return oneInt + tenInt + hundredInt;
-	}
+    private int getCount(InventoryView view, int offset) {
+        int oneInt, tenInt = 0, hundredInt = 0;
+        ItemStack ones = view.getItem(3 + offset);
+        assert ones != null;
+        ItemMeta oneMeta = ones.getItemMeta();
+        assert oneMeta != null;
+        oneInt = Integer.parseInt(oneMeta.getDisplayName());
+        ItemStack tens = view.getItem(2 + offset);
+        if (tens != null) {
+            ItemMeta tenMeta = tens.getItemMeta();
+            assert tenMeta != null;
+            tenInt = Integer.parseInt(tenMeta.getDisplayName()) * 10;
+        }
+        ItemStack hundreds = view.getItem(1 + offset);
+        if (hundreds != null) {
+            ItemMeta hundredMeta = hundreds.getItemMeta();
+            assert hundredMeta != null;
+            hundredInt = Integer.parseInt(hundredMeta.getDisplayName()) * 100;
+        }
+        return oneInt + tenInt + hundredInt;
+    }
 
-	private void setCount(InventoryView view, int amount, int offset) {
-		int oneInt = amount % 10;
-		int tenInt = (amount / 10) % 10;
-		int hundredInt = (amount / 100) % 10;
-		ItemStack ones = view.getItem(3 + offset);
-		assert ones != null;
-		ItemMeta oneMeta = ones.getItemMeta();
-		assert oneMeta != null;
-		oneMeta.setDisplayName("" + oneInt);
-		oneMeta.setCustomModelData(26 + oneInt);
-		ones.setItemMeta(oneMeta);
-		ItemStack tens = view.getItem(2 + offset);
-		if (tenInt > 0) {
-			if (tens == null) {
-				tens = new ItemStack(Material.PAPER, 1);
-			}
-			ItemMeta tenMeta = tens.getItemMeta();
-			assert tenMeta != null;
-			tenMeta.setDisplayName("" + tenInt);
-			tenMeta.setCustomModelData(26 + tenInt);
-			tens.setItemMeta(tenMeta);
-			view.setItem(2 + offset, tens);
-		} else {
-			view.setItem(2 + offset, null);
-		}
-		ItemStack hundreds = view.getItem(1 + offset);
-		if (hundredInt > 0) {
-			if (hundreds == null) {
-				hundreds = new ItemStack(Material.PAPER, 1);
-			}
-			ItemMeta hundredMeta = hundreds.getItemMeta();
-			assert hundredMeta != null;
-			hundredMeta.setDisplayName("" + hundredInt);
-			hundredMeta.setCustomModelData(26 + hundredInt);
-			hundreds.setItemMeta(hundredMeta);
-			view.setItem(1 + offset, hundreds);
-		} else {
-			view.setItem(1 + offset, null);
-		}
-	}
+    private void setCount(InventoryView view, int amount, int offset) {
+        int oneInt = amount % 10;
+        int tenInt = (amount / 10) % 10;
+        int hundredInt = (amount / 100) % 10;
+        ItemStack ones = view.getItem(3 + offset);
+        assert ones != null;
+        ItemMeta oneMeta = ones.getItemMeta();
+        assert oneMeta != null;
+        oneMeta.setDisplayName("" + oneInt);
+        oneMeta.setCustomModelData(26 + oneInt);
+        ones.setItemMeta(oneMeta);
+        ItemStack tens = view.getItem(2 + offset);
+        if (tenInt > 0) {
+            if (tens == null) {
+                tens = new ItemStack(Material.PAPER, 1);
+            }
+            ItemMeta tenMeta = tens.getItemMeta();
+            assert tenMeta != null;
+            tenMeta.setDisplayName("" + tenInt);
+            tenMeta.setCustomModelData(26 + tenInt);
+            tens.setItemMeta(tenMeta);
+            view.setItem(2 + offset, tens);
+        } else {
+            view.setItem(2 + offset, null);
+        }
+        ItemStack hundreds = view.getItem(1 + offset);
+        if (hundredInt > 0) {
+            if (hundreds == null) {
+                hundreds = new ItemStack(Material.PAPER, 1);
+            }
+            ItemMeta hundredMeta = hundreds.getItemMeta();
+            assert hundredMeta != null;
+            hundredMeta.setDisplayName("" + hundredInt);
+            hundredMeta.setCustomModelData(26 + hundredInt);
+            hundreds.setItemMeta(hundredMeta);
+            view.setItem(1 + offset, hundreds);
+        } else {
+            view.setItem(1 + offset, null);
+        }
+    }
 
-	private void setElement(InventoryView view) {
-		int protons = getCount(view, 0);
-		int neutrons = getCount(view, 9);
-		int electrons = getCount(view, 18);
-		for (Element element : Element.values()) {
-			if (protons == element.getAtomicNumber() && neutrons == element.getNeutrons() &&
-				electrons == element.getAtomicNumber()) {
-				ItemStack is = ElementBuilder.getElement(element);
-				view.setItem(17, is);
-				return;
-			}
-		}
-		view.setItem(17, null);
-	}
+    private void setElement(InventoryView view) {
+        int protons = getCount(view, 0);
+        int neutrons = getCount(view, 9);
+        int electrons = getCount(view, 18);
+        for (Element element : Element.values()) {
+            if (protons == element.getAtomicNumber() && neutrons == element.getNeutrons() && electrons == element.getAtomicNumber()) {
+                ItemStack is = ElementBuilder.getElement(element);
+                view.setItem(17, is);
+                return;
+            }
+        }
+        view.setItem(17, null);
+    }
 }

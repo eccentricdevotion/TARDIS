@@ -35,55 +35,54 @@ import java.util.Map;
  */
 public class TARDISGroupManagerHandler {
 
-	private final TARDISPlugin plugin;
-	private final File permissionsFile;
-	private final LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<>();
-	private String group;
+    private final TARDISPlugin plugin;
+    private final File permissionsFile;
+    private final LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<>();
+    private String group;
 
-	public TARDISGroupManagerHandler(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		permissionsFile = new File(plugin.getDataFolder(), "permissions.txt");
-	}
+    public TARDISGroupManagerHandler(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        permissionsFile = new File(plugin.getDataFolder(), "permissions.txt");
+    }
 
-	public void addPerms(String player) {
-		BufferedReader bufRdr = null;
-		try {
-			bufRdr = new BufferedReader(new FileReader(permissionsFile));
-			String line;
-			//read each line of text file
-			while ((line = bufRdr.readLine()) != null) {
-				if (line.charAt(0) == '#') {
-					group = line.substring(1).trim();
-					permgroups.put(group, new ArrayList<>());
-				} else {
-					List<String> perms = permgroups.get(group);
-					perms.add(line.trim());
-				}
-			}
-		} catch (IOException io) {
-			plugin.debug("Could not read perms file. " + io.getMessage());
-		} finally {
-			if (bufRdr != null) {
-				try {
-					bufRdr.close();
-				} catch (IOException e) {
-					plugin.debug("Error closing perms reader! " + e.getMessage());
-				}
-			}
-		}
-		plugin.getServer().dispatchCommand(plugin.getConsole(), "manselect TARDIS_WORLD_" + player);
-		int i = 0;
-		for (Map.Entry<String, List<String>> entry : permgroups.entrySet()) {
-			String grpstr = entry.getKey();
-			List<String> perms = entry.getValue();
-			plugin.getServer().dispatchCommand(plugin.getConsole(), "mangadd " + grpstr);
-			perms.forEach((p) -> plugin.getServer().dispatchCommand(plugin.getConsole(),
-					"mangaddp " + grpstr + " " + p));
-			if (i == 0) {
-				plugin.getServer().dispatchCommand(plugin.getConsole(), "manuadd " + player + " " + grpstr);
-			}
-			i++;
-		}
-		plugin.getServer().dispatchCommand(plugin.getConsole(), "mansave");
-	}
+    public void addPerms(String player) {
+        BufferedReader bufRdr = null;
+        try {
+            bufRdr = new BufferedReader(new FileReader(permissionsFile));
+            String line;
+            //read each line of text file
+            while ((line = bufRdr.readLine()) != null) {
+                if (line.charAt(0) == '#') {
+                    group = line.substring(1).trim();
+                    permgroups.put(group, new ArrayList<>());
+                } else {
+                    List<String> perms = permgroups.get(group);
+                    perms.add(line.trim());
+                }
+            }
+        } catch (IOException io) {
+            plugin.debug("Could not read perms file. " + io.getMessage());
+        } finally {
+            if (bufRdr != null) {
+                try {
+                    bufRdr.close();
+                } catch (IOException e) {
+                    plugin.debug("Error closing perms reader! " + e.getMessage());
+                }
+            }
+        }
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "manselect TARDIS_WORLD_" + player);
+        int i = 0;
+        for (Map.Entry<String, List<String>> entry : permgroups.entrySet()) {
+            String grpstr = entry.getKey();
+            List<String> perms = entry.getValue();
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mangadd " + grpstr);
+            perms.forEach((p) -> plugin.getServer().dispatchCommand(plugin.getConsole(), "mangaddp " + grpstr + " " + p));
+            if (i == 0) {
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "manuadd " + player + " " + grpstr);
+            }
+            i++;
+        }
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "mansave");
+    }
 }

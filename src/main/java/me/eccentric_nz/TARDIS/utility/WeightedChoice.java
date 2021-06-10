@@ -23,20 +23,20 @@ import java.util.TreeMap;
 
 public class WeightedChoice<E> {
 
-	private final NavigableMap<Double, E> map = new TreeMap<>();
-	private double total = 0;
+    private final NavigableMap<Double, E> map = new TreeMap<>();
+    private double total = 0;
 
-	public WeightedChoice<E> add(double weight, E result) {
-		if (weight <= 0) {
-			return this;
-		}
-		total += weight;
-		map.put(total, result);
-		return this;
-	}
+    public WeightedChoice<E> add(double weight, E result) {
+        if (weight <= 0) {
+            return this;
+        }
+        total += weight;
+        map.put(total, result);
+        return this;
+    }
 
-	public E next() {
-		double value = TARDISConstants.RANDOM.nextDouble() * total;
-		return map.higherEntry(value).getValue();
-	}
+    public E next() {
+        double value = TARDISConstants.RANDOM.nextDouble() * total;
+        return map.higherEntry(value).getValue();
+    }
 }

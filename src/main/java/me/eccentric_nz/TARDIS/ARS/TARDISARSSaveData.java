@@ -24,22 +24,22 @@ package me.eccentric_nz.tardis.ars;
  */
 class TARDISARSSaveData {
 
-	private String[][][] data;
-	private int id;
+    private String[][][] data;
+    private int id;
 
-	public String[][][] getData() {
-		return data;
-	}
+    public String[][][] getData() {
+        return data;
+    }
 
-	public void setData(String[][][] data) {
-		this.data = data;
-	}
+    public void setData(String[][][] data) {
+        this.data = data;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 }

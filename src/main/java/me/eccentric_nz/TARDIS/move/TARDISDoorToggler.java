@@ -30,54 +30,54 @@ import java.util.UUID;
  */
 public class TARDISDoorToggler {
 
-	private final TARDISPlugin plugin;
-	private final Block block;
-	private final Player player;
-	private final boolean minecart;
-	private final boolean open;
-	private final int id;
+    private final TARDISPlugin plugin;
+    private final Block block;
+    private final Player player;
+    private final boolean minecart;
+    private final boolean open;
+    private final int id;
 
-	public TARDISDoorToggler(TARDISPlugin plugin, Block block, Player player, boolean minecart, boolean open, int id) {
-		this.plugin = plugin;
-		this.block = block;
-		this.player = player;
-		this.minecart = minecart;
-		this.open = open;
-		this.id = id;
-	}
+    public TARDISDoorToggler(TARDISPlugin plugin, Block block, Player player, boolean minecart, boolean open, int id) {
+        this.plugin = plugin;
+        this.block = block;
+        this.player = player;
+        this.minecart = minecart;
+        this.open = open;
+        this.id = id;
+    }
 
-	/**
-	 * Toggle the door open and closed.
-	 */
-	public void toggleDoors() {
-		UUID uuid = player.getUniqueId();
-		if (open) {
-			new TARDISDoorCloser(plugin, uuid, id).closeDoors();
-		} else {
-			new TARDISDoorOpener(plugin, uuid, id).openDoors();
-		}
-		playDoorSound(player, open, block.getLocation(), minecart);
-	}
+    /**
+     * Toggle the door open and closed.
+     */
+    public void toggleDoors() {
+        UUID uuid = player.getUniqueId();
+        if (open) {
+            new TARDISDoorCloser(plugin, uuid, id).closeDoors();
+        } else {
+            new TARDISDoorOpener(plugin, uuid, id).openDoors();
+        }
+        playDoorSound(player, open, block.getLocation(), minecart);
+    }
 
-	/**
-	 * Plays a door sound when the iron door is clicked.
-	 *
-	 * @param p    a player to play the sound for
-	 * @param open which sound to play, open (true), close (false)
-	 * @param l    a location to play the sound at
-	 * @param m    whether to play the custom sound (false) or the Minecraft one (true)
-	 */
-	private void playDoorSound(Player p, boolean open, Location l, boolean m) {
-		if (open) {
-			if (!m) {
-				TARDISSounds.playTARDISSound(l, "tardis_door_close");
-			} else {
-				p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_CLOSE, 1.0F, 1.0F);
-			}
-		} else if (!m) {
-			TARDISSounds.playTARDISSound(l, "tardis_door_open");
-		} else {
-			p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
-		}
-	}
+    /**
+     * Plays a door sound when the iron door is clicked.
+     *
+     * @param p    a player to play the sound for
+     * @param open which sound to play, open (true), close (false)
+     * @param l    a location to play the sound at
+     * @param m    whether to play the custom sound (false) or the Minecraft one (true)
+     */
+    private void playDoorSound(Player p, boolean open, Location l, boolean m) {
+        if (open) {
+            if (!m) {
+                TARDISSounds.playTARDISSound(l, "tardis_door_close");
+            } else {
+                p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_CLOSE, 1.0F, 1.0F);
+            }
+        } else if (!m) {
+            TARDISSounds.playTARDISSound(l, "tardis_door_open");
+        } else {
+            p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
+        }
+    }
 }

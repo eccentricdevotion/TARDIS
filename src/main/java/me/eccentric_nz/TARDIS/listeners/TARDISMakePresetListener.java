@@ -47,133 +47,133 @@ import java.util.UUID;
  */
 public class TARDISMakePresetListener implements Listener {
 
-	private final TARDISPlugin plugin;
-	private final int[] orderx;
-	private final int[] orderz;
-	private final String GLASS = addQuotes(TARDISConstants.GLASS.getAsString());
+    private final TARDISPlugin plugin;
+    private final int[] orderx;
+    private final int[] orderz;
+    private final String GLASS = addQuotes(TARDISConstants.GLASS.getAsString());
 
-	public TARDISMakePresetListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
-		orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
-	}
+    public TARDISMakePresetListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
+        orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
+    }
 
-	/**
-	 * Listens for player clicking blocks. If the player's name is contained in various tracking HashMaps then we know
-	 * that they are trying to create a tardis area.
-	 *
-	 * @param event a player clicking a block
-	 */
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onAreaInteract(PlayerInteractEvent event) {
-		if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
-			return;
-		}
-		Player player = event.getPlayer();
-		UUID uuid = player.getUniqueId();
-		Block block = event.getClickedBlock();
-		if (block != null) {
-			if (plugin.getTrackerKeeper().getPreset().containsKey(uuid)) {
-				String[] split = plugin.getTrackerKeeper().getPreset().get(uuid).split(":");
-				String name = split[0];
-				String bool = split[1];
-				Location block_loc = block.getLocation();
-				World w = block_loc.getWorld();
-				int fx = block_loc.getBlockX();
-				int fy = block_loc.getBlockY();
-				int fz = block_loc.getBlockZ();
-				TARDISMessage.send(player, "PRESET_SCAN");
-				StringBuilder sb_blue_data = new StringBuilder("[");
-				StringBuilder sb_stain_data = new StringBuilder("[");
-				StringBuilder sb_glass_data = new StringBuilder("[");
-				for (int c = 0; c < 10; c++) {
-					sb_blue_data.append("[");
-					sb_stain_data.append("[");
-					sb_glass_data.append("[");
-					for (int y = fy; y < (fy + 4); y++) {
-						assert w != null;
-						Block b = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
-						Material material = b.getType();
-						BlockData data = b.getBlockData();
-						String dataStr = addQuotes(data.getAsString());
-						if (y == (fy + 3)) {
-							sb_blue_data.append(addQuotes(data.getAsString()));
-							if (TARDISMaterials.not_glass.contains(material)) {
-								sb_stain_data.append(dataStr);
-								sb_glass_data.append(dataStr);
-							} else {
-								Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material);
-								sb_stain_data.append(addQuotes(colour.createBlockData().getAsString()));
-								sb_glass_data.append(GLASS);
-							}
-						} else {
-							sb_blue_data.append(addQuotes(data.getAsString())).append(",");
-							if (TARDISMaterials.not_glass.contains(material)) {
-								sb_stain_data.append(dataStr).append(",");
-								sb_glass_data.append(dataStr).append(",");
-							} else {
-								Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material);
-								sb_stain_data.append(addQuotes(colour.createBlockData().getAsString())).append(",");
-								sb_glass_data.append(GLASS).append(",");
-							}
-						}
-					}
-					if (c == 9) {
-						sb_blue_data.append("]");
-						sb_stain_data.append("]");
-						sb_glass_data.append("]");
-					} else {
-						sb_blue_data.append("],");
-						sb_stain_data.append("],");
-						sb_glass_data.append("],");
-					}
-				}
-				sb_blue_data.append("]");
-				sb_stain_data.append("]");
-				sb_glass_data.append("]");
-				String jsonBlue = sb_blue_data.toString();
-				String jsonStain = sb_stain_data.toString();
-				String jsonGlass = sb_glass_data.toString();
-				String filename = "custom_preset_" + name + ".txt";
-				String file = plugin.getDataFolder() + File.separator + filename;
-				try {
-					BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
-					bw.write("##start custom blueprint");
-					bw.newLine();
-					bw.write(jsonBlue);
-					bw.newLine();
-					bw.write("##start custom stain");
-					bw.newLine();
-					bw.write(jsonStain);
-					bw.newLine();
-					bw.write("##start custom glass");
-					bw.newLine();
-					bw.write(jsonGlass);
-					bw.newLine();
-					bw.write("##sign text - first line is player's name");
-					bw.newLine();
-					bw.write("#second line");
-					bw.newLine();
-					bw.write(name);
-					bw.newLine();
-					bw.write("#third line");
-					bw.newLine();
-					bw.write("PRESET");
-					bw.newLine();
-					bw.write("#is the preset asymmetrical? for example are some of the corners different to others");
-					bw.newLine();
-					bw.write(bool);
-					bw.close();
-				} catch (IOException e) {
-					plugin.debug("Could not create and write to " + filename + "! " + e.getMessage());
-				}
-				plugin.getTrackerKeeper().getPreset().remove(uuid);
-				TARDISMessage.send(player, "PRESET_DONE", filename);
-			}
-		}
-	}
+    /**
+     * Listens for player clicking blocks. If the player's name is contained in various tracking HashMaps then we know
+     * that they are trying to create a tardis area.
+     *
+     * @param event a player clicking a block
+     */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onAreaInteract(PlayerInteractEvent event) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+        Block block = event.getClickedBlock();
+        if (block != null) {
+            if (plugin.getTrackerKeeper().getPreset().containsKey(uuid)) {
+                String[] split = plugin.getTrackerKeeper().getPreset().get(uuid).split(":");
+                String name = split[0];
+                String bool = split[1];
+                Location block_loc = block.getLocation();
+                World w = block_loc.getWorld();
+                int fx = block_loc.getBlockX();
+                int fy = block_loc.getBlockY();
+                int fz = block_loc.getBlockZ();
+                TARDISMessage.send(player, "PRESET_SCAN");
+                StringBuilder sb_blue_data = new StringBuilder("[");
+                StringBuilder sb_stain_data = new StringBuilder("[");
+                StringBuilder sb_glass_data = new StringBuilder("[");
+                for (int c = 0; c < 10; c++) {
+                    sb_blue_data.append("[");
+                    sb_stain_data.append("[");
+                    sb_glass_data.append("[");
+                    for (int y = fy; y < (fy + 4); y++) {
+                        assert w != null;
+                        Block b = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
+                        Material material = b.getType();
+                        BlockData data = b.getBlockData();
+                        String dataStr = addQuotes(data.getAsString());
+                        if (y == (fy + 3)) {
+                            sb_blue_data.append(addQuotes(data.getAsString()));
+                            if (TARDISMaterials.not_glass.contains(material)) {
+                                sb_stain_data.append(dataStr);
+                                sb_glass_data.append(dataStr);
+                            } else {
+                                Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material);
+                                sb_stain_data.append(addQuotes(colour.createBlockData().getAsString()));
+                                sb_glass_data.append(GLASS);
+                            }
+                        } else {
+                            sb_blue_data.append(addQuotes(data.getAsString())).append(",");
+                            if (TARDISMaterials.not_glass.contains(material)) {
+                                sb_stain_data.append(dataStr).append(",");
+                                sb_glass_data.append(dataStr).append(",");
+                            } else {
+                                Material colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(material);
+                                sb_stain_data.append(addQuotes(colour.createBlockData().getAsString())).append(",");
+                                sb_glass_data.append(GLASS).append(",");
+                            }
+                        }
+                    }
+                    if (c == 9) {
+                        sb_blue_data.append("]");
+                        sb_stain_data.append("]");
+                        sb_glass_data.append("]");
+                    } else {
+                        sb_blue_data.append("],");
+                        sb_stain_data.append("],");
+                        sb_glass_data.append("],");
+                    }
+                }
+                sb_blue_data.append("]");
+                sb_stain_data.append("]");
+                sb_glass_data.append("]");
+                String jsonBlue = sb_blue_data.toString();
+                String jsonStain = sb_stain_data.toString();
+                String jsonGlass = sb_glass_data.toString();
+                String filename = "custom_preset_" + name + ".txt";
+                String file = plugin.getDataFolder() + File.separator + filename;
+                try {
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+                    bw.write("##start custom blueprint");
+                    bw.newLine();
+                    bw.write(jsonBlue);
+                    bw.newLine();
+                    bw.write("##start custom stain");
+                    bw.newLine();
+                    bw.write(jsonStain);
+                    bw.newLine();
+                    bw.write("##start custom glass");
+                    bw.newLine();
+                    bw.write(jsonGlass);
+                    bw.newLine();
+                    bw.write("##sign text - first line is player's name");
+                    bw.newLine();
+                    bw.write("#second line");
+                    bw.newLine();
+                    bw.write(name);
+                    bw.newLine();
+                    bw.write("#third line");
+                    bw.newLine();
+                    bw.write("PRESET");
+                    bw.newLine();
+                    bw.write("#is the preset asymmetrical? for example are some of the corners different to others");
+                    bw.newLine();
+                    bw.write(bool);
+                    bw.close();
+                } catch (IOException e) {
+                    plugin.debug("Could not create and write to " + filename + "! " + e.getMessage());
+                }
+                plugin.getTrackerKeeper().getPreset().remove(uuid);
+                TARDISMessage.send(player, "PRESET_DONE", filename);
+            }
+        }
+    }
 
-	private String addQuotes(String s) {
-		return "\"" + s + "\"";
-	}
+    private String addQuotes(String s) {
+        return "\"" + s + "\"";
+    }
 }

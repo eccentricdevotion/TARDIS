@@ -42,55 +42,53 @@ import java.util.Objects;
  */
 public class TARDISLazarusListener implements Listener {
 
-	final BlockData WALL = Material.COBBLESTONE_WALL.createBlockData();
-	private final TARDISPlugin plugin;
+    final BlockData WALL = Material.COBBLESTONE_WALL.createBlockData();
+    private final TARDISPlugin plugin;
 
-	public TARDISLazarusListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISLazarusListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onInteract(PlayerInteractEvent event) {
-		Action a = event.getAction();
-		if (a.equals(Action.PHYSICAL) &&
-			Objects.requireNonNull(event.getClickedBlock()).getType().equals(Material.OAK_PRESSURE_PLATE)) {
-			Player player = event.getPlayer();
-			if (plugin.getTrackerKeeper().getLazarus().containsKey(player.getUniqueId())) {
-				return;
-			}
-			if (TARDISPermission.hasPermission(player, "tardis.lazarus")) {
-				Block b = event.getClickedBlock();
-				String l = b.getLocation().toString();
-				// is it a lazarus plate?
-				HashMap<String, Object> where = new HashMap<>();
-				where.put("location", l);
-				where.put("type", 19);
-				ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-				if (rsc.resultSet()) {
-					// check for power
-					if (plugin.getConfig().getBoolean("allow.power_down")) {
-						ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
-						if (rs.fromID(rsc.getTardisId()) && !rs.isPowered()) {
-							TARDISMessage.send(player, "POWER_DOWN");
-							return;
-						}
-					}
-					// track the block
-					plugin.getTrackerKeeper().getLazarus().put(player.getUniqueId(), b);
-					// close the door
-					b.getRelative(BlockFace.SOUTH).setBlockData(WALL);
-					b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setBlockData(WALL);
-					// open the GUI
-					Inventory inv = plugin.getServer().createInventory(player, 54,
-							ChatColor.DARK_RED + "Genetic Manipulator");
-					if (player.isSneaking()) {
-						inv.setContents(new TARDISLazarusExtraInventory(plugin).getTerminal());
-					} else {
-						inv.setContents(new TARDISLazarusInventory(plugin).getTerminal());
-					}
-					player.openInventory(inv);
-				}
-			}
-		}
-	}
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onInteract(PlayerInteractEvent event) {
+        Action a = event.getAction();
+        if (a.equals(Action.PHYSICAL) && Objects.requireNonNull(event.getClickedBlock()).getType().equals(Material.OAK_PRESSURE_PLATE)) {
+            Player player = event.getPlayer();
+            if (plugin.getTrackerKeeper().getLazarus().containsKey(player.getUniqueId())) {
+                return;
+            }
+            if (TARDISPermission.hasPermission(player, "tardis.lazarus")) {
+                Block b = event.getClickedBlock();
+                String l = b.getLocation().toString();
+                // is it a lazarus plate?
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("location", l);
+                where.put("type", 19);
+                ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+                if (rsc.resultSet()) {
+                    // check for power
+                    if (plugin.getConfig().getBoolean("allow.power_down")) {
+                        ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
+                        if (rs.fromID(rsc.getTardisId()) && !rs.isPowered()) {
+                            TARDISMessage.send(player, "POWER_DOWN");
+                            return;
+                        }
+                    }
+                    // track the block
+                    plugin.getTrackerKeeper().getLazarus().put(player.getUniqueId(), b);
+                    // close the door
+                    b.getRelative(BlockFace.SOUTH).setBlockData(WALL);
+                    b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setBlockData(WALL);
+                    // open the GUI
+                    Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
+                    if (player.isSneaking()) {
+                        inv.setContents(new TARDISLazarusExtraInventory(plugin).getTerminal());
+                    } else {
+                        inv.setContents(new TARDISLazarusInventory(plugin).getTerminal());
+                    }
+                    player.openInventory(inv);
+                }
+            }
+        }
+    }
 }

@@ -25,22 +25,22 @@ import org.bukkit.entity.Player;
  */
 class TARDISHandlesTellCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISHandlesTellCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISHandlesTellCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean message(String[] args) {
-		Player player = plugin.getServer().getPlayer(args[1]);
-		if (player != null) {
-			StringBuilder sb = new StringBuilder();
-			for (int i = 2; i < args.length; i++) {
-				sb.append(args[i]).append(" ");
-			}
-			String message = sb.toString();
-			TARDISMessage.handlesMessage(player, message);
-		}
-		return true;
-	}
+    boolean message(String[] args) {
+        Player player = plugin.getServer().getPlayer(args[1]);
+        if (player != null) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 2; i < args.length; i++) {
+                sb.append(args[i]).append(" ");
+            }
+            String message = sb.toString();
+            TARDISMessage.handlesMessage(player, message);
+        }
+        return true;
+    }
 }

@@ -38,66 +38,66 @@ import java.util.UUID;
  */
 public class TARDISTimeRotor {
 
-	private static final HashMap<String, Integer> BY_NAME = new HashMap<>() {
-		{
-			put("early", 10000002);
-			put("rotor", 10000003);
-			put("copper", 10000004);
-			put("round", 10000005);
-			put("delta", 10000006);
-		}
-	};
+    private static final HashMap<String, Integer> BY_NAME = new HashMap<>() {
+        {
+            put("early", 10000002);
+            put("rotor", 10000003);
+            put("copper", 10000004);
+            put("round", 10000005);
+            put("delta", 10000006);
+        }
+    };
 
-	public static void setItemFrame(String schm, Location location, int id) {
-		location.getBlock().setBlockData(TARDISConstants.VOID_AIR);
-		ItemFrame itemFrame = (ItemFrame) Objects.requireNonNull(location.getWorld()).spawnEntity(location, EntityType.ITEM_FRAME);
-		itemFrame.setFacingDirection(BlockFace.UP);
-		setRotor(BY_NAME.get(schm), itemFrame, false);
-		// save itemFrame UUID
-		UUID uuid = itemFrame.getUniqueId();
-		updateRotorRecord(id, uuid.toString());
-		TARDISPlugin.plugin.getGeneralKeeper().getTimeRotors().add(uuid);
-	}
+    public static void setItemFrame(String schm, Location location, int id) {
+        location.getBlock().setBlockData(TARDISConstants.VOID_AIR);
+        ItemFrame itemFrame = (ItemFrame) Objects.requireNonNull(location.getWorld()).spawnEntity(location, EntityType.ITEM_FRAME);
+        itemFrame.setFacingDirection(BlockFace.UP);
+        setRotor(BY_NAME.get(schm), itemFrame, false);
+        // save itemFrame UUID
+        UUID uuid = itemFrame.getUniqueId();
+        updateRotorRecord(id, uuid.toString());
+        TARDISPlugin.plugin.getGeneralKeeper().getTimeRotors().add(uuid);
+    }
 
-	public static void updateRotorRecord(int id, String uuid) {
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("tardis_id", id);
-		HashMap<String, Object> set = new HashMap<>();
-		set.put("rotor", uuid);
-		TARDISPlugin.plugin.getQueryFactory().doUpdate("tardis", set, where);
-	}
+    public static void updateRotorRecord(int id, String uuid) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("rotor", uuid);
+        TARDISPlugin.plugin.getQueryFactory().doUpdate("tardis", set, where);
+    }
 
-	public static void setRotor(int which, ItemFrame itemFrame, boolean animated) {
-		Material material = (animated) ? Material.LIGHT_BLUE_DYE : Material.LIGHT_GRAY_DYE;
-		ItemStack is = new ItemStack(material, 1);
-		ItemMeta im = is.getItemMeta();
-		assert im != null;
-		im.setDisplayName("Time Rotor");
-		im.setCustomModelData(which);
-		is.setItemMeta(im);
-		itemFrame.setItem(is, false);
-		itemFrame.setFixed(true);
-		itemFrame.setVisible(false);
-	}
+    public static void setRotor(int which, ItemFrame itemFrame, boolean animated) {
+        Material material = (animated) ? Material.LIGHT_BLUE_DYE : Material.LIGHT_GRAY_DYE;
+        ItemStack is = new ItemStack(material, 1);
+        ItemMeta im = is.getItemMeta();
+        assert im != null;
+        im.setDisplayName("Time Rotor");
+        im.setCustomModelData(which);
+        is.setItemMeta(im);
+        itemFrame.setItem(is, false);
+        itemFrame.setFixed(true);
+        itemFrame.setVisible(false);
+    }
 
-	public static void unlockRotor(ItemFrame itemFrame) {
-		itemFrame.setFixed(false);
-		itemFrame.setVisible(true);
-	}
+    public static void unlockRotor(ItemFrame itemFrame) {
+        itemFrame.setFixed(false);
+        itemFrame.setVisible(true);
+    }
 
-	public static ItemFrame getItemFrame(UUID uuid) {
-		return (ItemFrame) Bukkit.getEntity(uuid);
-	}
+    public static ItemFrame getItemFrame(UUID uuid) {
+        return (ItemFrame) Bukkit.getEntity(uuid);
+    }
 
-	public static int getRotorModelData(ItemFrame itemFrame) {
-		ItemStack is = itemFrame.getItem();
-		if (is.hasItemMeta()) {
-			ItemMeta im = is.getItemMeta();
-			assert im != null;
-			if (im.hasCustomModelData()) {
-				return im.getCustomModelData();
-			}
-		}
-		return 10000002;
-	}
+    public static int getRotorModelData(ItemFrame itemFrame) {
+        ItemStack is = itemFrame.getItem();
+        if (is.hasItemMeta()) {
+            ItemMeta im = is.getItemMeta();
+            assert im != null;
+            if (im.hasCustomModelData()) {
+                return im.getCustomModelData();
+            }
+        }
+        return 10000002;
+    }
 }

@@ -30,25 +30,25 @@ import java.util.Locale;
  */
 class TARDISSetLanguageCommand {
 
-	boolean setLanguagePref(Player player, String[] args) {
-		String pref = args[0];
-		if (args.length < 2) {
-			TARDISMessage.send(player, "PREF_NEED", pref);
-			return false;
-		}
-		String l = args[1].toUpperCase(Locale.ENGLISH);
-		try {
-			Language.valueOf(l);
-		} catch (IllegalArgumentException e) {
-			TARDISMessage.send(player, "LANG_NOT_VALID");
-			return true;
-		}
-		HashMap<String, Object> setl = new HashMap<>();
-		setl.put(pref, l);
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("uuid", player.getUniqueId().toString());
-		TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", setl, where);
-		TARDISMessage.send(player, "PREF_SET", TARDISStringUtils.uppercaseFirst(pref));
-		return true;
-	}
+    boolean setLanguagePref(Player player, String[] args) {
+        String pref = args[0];
+        if (args.length < 2) {
+            TARDISMessage.send(player, "PREF_NEED", pref);
+            return false;
+        }
+        String l = args[1].toUpperCase(Locale.ENGLISH);
+        try {
+            Language.valueOf(l);
+        } catch (IllegalArgumentException e) {
+            TARDISMessage.send(player, "LANG_NOT_VALID");
+            return true;
+        }
+        HashMap<String, Object> setl = new HashMap<>();
+        setl.put(pref, l);
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", player.getUniqueId().toString());
+        TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", setl, where);
+        TARDISMessage.send(player, "PREF_SET", TARDISStringUtils.uppercaseFirst(pref));
+        return true;
+    }
 }

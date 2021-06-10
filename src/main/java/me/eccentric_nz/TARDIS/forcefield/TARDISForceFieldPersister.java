@@ -30,77 +30,77 @@ import java.util.UUID;
 
 public class TARDISForceFieldPersister {
 
-	private final TARDISPlugin plugin;
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final String prefix;
-	private PreparedStatement ps = null;
-	private ResultSet rs = null;
-	private int count = 0;
+    private final TARDISPlugin plugin;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final String prefix;
+    private PreparedStatement ps = null;
+    private ResultSet rs = null;
+    private int count = 0;
 
-	public TARDISForceFieldPersister(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		prefix = this.plugin.getPrefix();
-	}
+    public TARDISForceFieldPersister(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        prefix = this.plugin.getPrefix();
+    }
 
-	public void save() {
-		if (plugin.getTrackerKeeper().getActiveForceFields().size() > 0) {
-			try {
-				connection.setAutoCommit(false);
-				ps = connection.prepareStatement("INSERT INTO " + prefix + "forcefield (uuid, location) VALUES (?, ?)");
-				for (Map.Entry<UUID, Location> map : plugin.getTrackerKeeper().getActiveForceFields().entrySet()) {
-					ps.setString(1, map.getKey().toString());
-					ps.setString(2, map.getValue().toString());
-					ps.addBatch();
-					count++;
-				}
-				ps.executeBatch();
-				connection.setAutoCommit(true);
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " tardis force fields.");
-			} catch (SQLException e) {
-				plugin.debug("Insert error for force field query: " + e.getMessage());
-			} finally {
-				try {
-					if (ps != null) {
-						ps.close();
-					}
-				} catch (SQLException e) {
-					plugin.debug("Error closing force field statement or resultset: " + e.getMessage());
-				}
-			}
-		}
-	}
+    public void save() {
+        if (plugin.getTrackerKeeper().getActiveForceFields().size() > 0) {
+            try {
+                connection.setAutoCommit(false);
+                ps = connection.prepareStatement("INSERT INTO " + prefix + "forcefield (uuid, location) VALUES (?, ?)");
+                for (Map.Entry<UUID, Location> map : plugin.getTrackerKeeper().getActiveForceFields().entrySet()) {
+                    ps.setString(1, map.getKey().toString());
+                    ps.setString(2, map.getValue().toString());
+                    ps.addBatch();
+                    count++;
+                }
+                ps.executeBatch();
+                connection.setAutoCommit(true);
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " tardis force fields.");
+            } catch (SQLException e) {
+                plugin.debug("Insert error for force field query: " + e.getMessage());
+            } finally {
+                try {
+                    if (ps != null) {
+                        ps.close();
+                    }
+                } catch (SQLException e) {
+                    plugin.debug("Error closing force field statement or resultset: " + e.getMessage());
+                }
+            }
+        }
+    }
 
-	public void load() {
-		try {
-			ps = connection.prepareStatement("SELECT uuid, location FROM " + prefix + "forcefield");
-			rs = ps.executeQuery();
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					UUID uuid = UUID.fromString(rs.getString("uuid"));
-					Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
-					// add to tracker
-					plugin.getTrackerKeeper().getActiveForceFields().put(uuid, location);
-					count++;
-				}
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " tardis force fields.");
-			}
-			// clear the table
-			ps = connection.prepareStatement("DELETE FROM " + prefix + "forcefield");
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			plugin.debug("ResultSet error for force field query: " + e.getMessage());
-		} finally {
-			try {
-				if (ps != null) {
-					ps.close();
-				}
-				if (rs != null) {
-					rs.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing force field statement or resultset: " + e.getMessage());
-			}
-		}
-	}
+    public void load() {
+        try {
+            ps = connection.prepareStatement("SELECT uuid, location FROM " + prefix + "forcefield");
+            rs = ps.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    UUID uuid = UUID.fromString(rs.getString("uuid"));
+                    Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
+                    // add to tracker
+                    plugin.getTrackerKeeper().getActiveForceFields().put(uuid, location);
+                    count++;
+                }
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " tardis force fields.");
+            }
+            // clear the table
+            ps = connection.prepareStatement("DELETE FROM " + prefix + "forcefield");
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for force field query: " + e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing force field statement or resultset: " + e.getMessage());
+            }
+        }
+    }
 }

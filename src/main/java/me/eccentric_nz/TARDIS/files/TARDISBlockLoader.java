@@ -41,122 +41,119 @@ import java.util.HashMap;
  */
 public class TARDISBlockLoader {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISBlockLoader(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISBlockLoader(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	/**
-	 * Loads Police Box and precious tardis blocks for protection from griefing and harvesting. This speeds the looking
-	 * up of block locations, as no database interaction is required.
-	 */
-	public void loadProtectedBlocks() {
-		ResultSetBlocks rsb = new ResultSetBlocks(plugin, null, true);
-		if (rsb.resultSet()) {
-			rsb.getData().forEach((rb) -> plugin.getGeneralKeeper().getProtectBlockMap().put(rb.getStrLocation(), rb.getTardisId()));
-		}
-	}
+    /**
+     * Loads Police Box and precious tardis blocks for protection from griefing and harvesting. This speeds the looking
+     * up of block locations, as no database interaction is required.
+     */
+    public void loadProtectedBlocks() {
+        ResultSetBlocks rsb = new ResultSetBlocks(plugin, null, true);
+        if (rsb.resultSet()) {
+            rsb.getData().forEach((rb) -> plugin.getGeneralKeeper().getProtectBlockMap().put(rb.getStrLocation(), rb.getTardisId()));
+        }
+    }
 
-	/**
-	 * Unloads Police Box and precious tardis blocks from protection. Called when a tardis is deleted.
-	 *
-	 * @param id the tardis id to unload protection from
-	 */
-	public void unloadProtectedBlocks(int id) {
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("tardis_id", id);
-		ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, true);
-		if (rsb.resultSet()) {
-			rsb.getData().forEach((rb) -> plugin.getGeneralKeeper().getProtectBlockMap().remove(rb.getStrLocation()));
-		}
-	}
+    /**
+     * Unloads Police Box and precious tardis blocks from protection. Called when a tardis is deleted.
+     *
+     * @param id the tardis id to unload protection from
+     */
+    public void unloadProtectedBlocks(int id) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, true);
+        if (rsb.resultSet()) {
+            rsb.getData().forEach((rb) -> plugin.getGeneralKeeper().getProtectBlockMap().remove(rb.getStrLocation()));
+        }
+    }
 
-	/**
-	 * Loads Gravity Well blocks to speed up block lookups (no database interaction is required).
-	 */
-	public void loadGravityWells() {
-		ResultSetGravity rsg = new ResultSetGravity(plugin, null, true);
-		if (rsg.resultSet()) {
-			ArrayList<HashMap<String, String>> data = rsg.getData();
-			for (HashMap<String, String> map : data) {
-				int i = TARDISNumberParsers.parseInt(map.get("direction"));
-				Double[] values = new Double[3];
-				values[0] = Double.valueOf(map.get("direction"));
-				values[1] = Double.valueOf(map.get("distance"));
-				values[2] = Double.valueOf(map.get("velocity"));
-				switch (i) {
-					case 1 ->
-							// going up
-							plugin.getGeneralKeeper().getGravityUpList().put(map.get("location"), values);
-					case 2 ->
-							// going north
-							plugin.getGeneralKeeper().getGravityNorthList().put(map.get("location"), values);
-					case 3 ->
-							// going west
-							plugin.getGeneralKeeper().getGravityWestList().put(map.get("location"), values);
-					case 4 ->
-							// going south
-							plugin.getGeneralKeeper().getGravitySouthList().put(map.get("location"), values);
-					case 5 ->
-							// going east
-							plugin.getGeneralKeeper().getGravityEastList().put(map.get("location"), values);
-					default ->
-							// going down
-							plugin.getGeneralKeeper().getGravityDownList().add(map.get("location"));
-				}
-			}
-		}
-	}
+    /**
+     * Loads Gravity Well blocks to speed up block lookups (no database interaction is required).
+     */
+    public void loadGravityWells() {
+        ResultSetGravity rsg = new ResultSetGravity(plugin, null, true);
+        if (rsg.resultSet()) {
+            ArrayList<HashMap<String, String>> data = rsg.getData();
+            for (HashMap<String, String> map : data) {
+                int i = TARDISNumberParsers.parseInt(map.get("direction"));
+                Double[] values = new Double[3];
+                values[0] = Double.valueOf(map.get("direction"));
+                values[1] = Double.valueOf(map.get("distance"));
+                values[2] = Double.valueOf(map.get("velocity"));
+                switch (i) {
+                    case 1 ->
+                            // going up
+                            plugin.getGeneralKeeper().getGravityUpList().put(map.get("location"), values);
+                    case 2 ->
+                            // going north
+                            plugin.getGeneralKeeper().getGravityNorthList().put(map.get("location"), values);
+                    case 3 ->
+                            // going west
+                            plugin.getGeneralKeeper().getGravityWestList().put(map.get("location"), values);
+                    case 4 ->
+                            // going south
+                            plugin.getGeneralKeeper().getGravitySouthList().put(map.get("location"), values);
+                    case 5 ->
+                            // going east
+                            plugin.getGeneralKeeper().getGravityEastList().put(map.get("location"), values);
+                    default ->
+                            // going down
+                            plugin.getGeneralKeeper().getGravityDownList().add(map.get("location"));
+                }
+            }
+        }
+    }
 
-	/**
-	 * Loads players antibuild preferences. Needed so that the preference is persisted between restarts.
-	 */
-	public void loadAntiBuild() {
-		TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-		Connection connection = service.getConnection();
-		Statement statement = null;
-		ResultSet rs = null;
-		String prefix = plugin.getPrefix();
-		String query =
-				"SELECT " + prefix + "tardis.tardis_id, " + prefix + "tardis.owner, " + prefix + "tardis.chunk FROM " +
-				prefix + "tardis, " + prefix + "player_prefs WHERE " + prefix + "player_prefs.build_on = 0 AND " +
-				prefix + "player_prefs.uuid = " + prefix + "tardis.uuid";
-		try {
-			service.testConnection(connection);
-			statement = connection.createStatement();
-			rs = statement.executeQuery(query);
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					Integer id = rs.getInt("tardis_id");
-					String tl = rs.getString("owner");
-					TARDISAntiBuild tab = new TARDISAntiBuild();
-					// get region vectors
-					String[] split = rs.getString("chunk").split(":");
-					ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(split[0], tl);
-					if (pr != null) {
-						Vector min = new Vector(pr.getMinimumPoint().getBlockX(), pr.getMinimumPoint().getBlockY(), pr.getMinimumPoint().getBlockZ());
-						Vector max = new Vector(pr.getMaximumPoint().getBlockX(), pr.getMaximumPoint().getBlockY(), pr.getMaximumPoint().getBlockZ());
-						tab.setMin(min);
-						tab.setMax(max);
-						tab.setTimelord(tl);
-						plugin.getTrackerKeeper().getAntiBuild().put(id, tab);
-					}
-				}
-			}
-		} catch (SQLException e) {
-			plugin.debug("ResultSet error for antibuild load! " + e.getMessage());
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.debug("Error closing antibuild load! " + e.getMessage());
-			}
-		}
-	}
+    /**
+     * Loads players antibuild preferences. Needed so that the preference is persisted between restarts.
+     */
+    public void loadAntiBuild() {
+        TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+        Connection connection = service.getConnection();
+        Statement statement = null;
+        ResultSet rs = null;
+        String prefix = plugin.getPrefix();
+        String query = "SELECT " + prefix + "tardis.tardis_id, " + prefix + "tardis.owner, " + prefix + "tardis.chunk FROM " + prefix + "tardis, " + prefix + "player_prefs WHERE " + prefix + "player_prefs.build_on = 0 AND " + prefix + "player_prefs.uuid = " + prefix + "tardis.uuid";
+        try {
+            service.testConnection(connection);
+            statement = connection.createStatement();
+            rs = statement.executeQuery(query);
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    Integer id = rs.getInt("tardis_id");
+                    String tl = rs.getString("owner");
+                    TARDISAntiBuild tab = new TARDISAntiBuild();
+                    // get region vectors
+                    String[] split = rs.getString("chunk").split(":");
+                    ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(split[0], tl);
+                    if (pr != null) {
+                        Vector min = new Vector(pr.getMinimumPoint().getBlockX(), pr.getMinimumPoint().getBlockY(), pr.getMinimumPoint().getBlockZ());
+                        Vector max = new Vector(pr.getMaximumPoint().getBlockX(), pr.getMaximumPoint().getBlockY(), pr.getMaximumPoint().getBlockZ());
+                        tab.setMin(min);
+                        tab.setMax(max);
+                        tab.setTimelord(tl);
+                        plugin.getTrackerKeeper().getAntiBuild().put(id, tab);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for antibuild load! " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing antibuild load! " + e.getMessage());
+            }
+        }
+    }
 }

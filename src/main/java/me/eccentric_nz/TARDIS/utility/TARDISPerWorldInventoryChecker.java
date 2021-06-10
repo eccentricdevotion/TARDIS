@@ -22,15 +22,15 @@ import org.bukkit.Bukkit;
 
 public class TARDISPerWorldInventoryChecker {
 
-	private static PerWorldInventoryAPI api;
+    private static PerWorldInventoryAPI api;
 
-	public static boolean checkWorldsCanShare(String from, String to) {
-		return api.canWorldsShare(from, to);
-	}
+    public static boolean checkWorldsCanShare(String from, String to) {
+        return api.canWorldsShare(from, to);
+    }
 
-	public static void setupPWI() {
-		PerWorldInventory pwi = (PerWorldInventory) Bukkit.getServer().getPluginManager().getPlugin("PerWorldInventory");
-		assert pwi != null;
-		api = pwi.getApi();
-	}
+    public static void setupPWI() {
+        PerWorldInventory pwi = (PerWorldInventory) Bukkit.getServer().getPluginManager().getPlugin("PerWorldInventory");
+        assert pwi != null;
+        api = pwi.getApi();
+    }
 }

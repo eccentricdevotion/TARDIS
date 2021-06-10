@@ -23,18 +23,18 @@ import org.bukkit.Rotation;
  */
 public enum COMPASS {
 
-	EAST(Rotation.FLIPPED),
-	SOUTH(Rotation.COUNTER_CLOCKWISE),
-	WEST(Rotation.NONE),
-	NORTH(Rotation.CLOCKWISE);
+    EAST(Rotation.FLIPPED),
+    SOUTH(Rotation.COUNTER_CLOCKWISE),
+    WEST(Rotation.NONE),
+    NORTH(Rotation.CLOCKWISE);
 
-	private final Rotation rotation;
+    private final Rotation rotation;
 
-	COMPASS(Rotation rotation) {
-		this.rotation = rotation;
-	}
+    COMPASS(Rotation rotation) {
+        this.rotation = rotation;
+    }
 
-	public Rotation getRotation() {
-		return rotation;
-	}
+    public Rotation getRotation() {
+        return rotation;
+    }
 }

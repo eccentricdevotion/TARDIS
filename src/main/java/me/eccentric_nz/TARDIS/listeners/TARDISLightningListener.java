@@ -38,56 +38,56 @@ import java.util.HashMap;
  */
 public class TARDISLightningListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISLightningListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISLightningListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	/**
-	 * Listens for lightning strikes around the TARDIS Police Box. If the strike is within (recharge_distance in
-	 * artron.yml) blocks, then the TARDIS Artron Levels will be increased by the configured amount (lightning_recharge
-	 * in artron.yml).
-	 *
-	 * @param e a lightning strike
-	 */
-	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-	public void onLightningStrike(LightningStrikeEvent e) {
-		LightningStrike strike = e.getLightning();
-		// only if a natural lightning strike
-		if (!strike.isEffect()) {
-			Location l = strike.getLocation();
-			World strikeworld = l.getWorld();
-			ResultSetTardis rs = new ResultSetTardis(plugin, new HashMap<>(), "", true, 0);
-			if (rs.resultSet()) {
-				for (TARDIS t : rs.getData()) {
-					boolean charging = !t.isRecharging();
-					int id = t.getTardisId();
-					if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-						return;
-					}
-					HashMap<String, Object> wherecl = new HashMap<>();
-					wherecl.put("tardis_id", id);
-					ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-					if (rsc.resultSet()) {
-						World w = rsc.getWorld();
-						// only if the tardis is in the same world as the lightning strike and is not at a beacon recharger!
-						assert strikeworld != null;
-						if (strikeworld.equals(w) && !charging) {
-							Location loc = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
-							// only recharge if the TARDIS is within range
-							if (plugin.getUtils().compareLocations(loc, loc)) {
-								int amount = plugin.getArtronConfig().getInt("lightning_recharge") + t.getArtronLevel();
-								HashMap<String, Object> set = new HashMap<>();
-								set.put("artron_level", amount);
-								HashMap<String, Object> where = new HashMap<>();
-								where.put("tardis_id", id);
-								plugin.getQueryFactory().doUpdate("tardis", set, where);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+    /**
+     * Listens for lightning strikes around the TARDIS Police Box. If the strike is within (recharge_distance in
+     * artron.yml) blocks, then the TARDIS Artron Levels will be increased by the configured amount (lightning_recharge
+     * in artron.yml).
+     *
+     * @param e a lightning strike
+     */
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void onLightningStrike(LightningStrikeEvent e) {
+        LightningStrike strike = e.getLightning();
+        // only if a natural lightning strike
+        if (!strike.isEffect()) {
+            Location l = strike.getLocation();
+            World strikeworld = l.getWorld();
+            ResultSetTardis rs = new ResultSetTardis(plugin, new HashMap<>(), "", true, 0);
+            if (rs.resultSet()) {
+                for (TARDIS t : rs.getData()) {
+                    boolean charging = !t.isRecharging();
+                    int id = t.getTardisId();
+                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                        return;
+                    }
+                    HashMap<String, Object> wherecl = new HashMap<>();
+                    wherecl.put("tardis_id", id);
+                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                    if (rsc.resultSet()) {
+                        World w = rsc.getWorld();
+                        // only if the tardis is in the same world as the lightning strike and is not at a beacon recharger!
+                        assert strikeworld != null;
+                        if (strikeworld.equals(w) && !charging) {
+                            Location loc = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
+                            // only recharge if the TARDIS is within range
+                            if (plugin.getUtils().compareLocations(loc, loc)) {
+                                int amount = plugin.getArtronConfig().getInt("lightning_recharge") + t.getArtronLevel();
+                                HashMap<String, Object> set = new HashMap<>();
+                                set.put("artron_level", amount);
+                                HashMap<String, Object> where = new HashMap<>();
+                                where.put("tardis_id", id);
+                                plugin.getQueryFactory().doUpdate("tardis", set, where);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

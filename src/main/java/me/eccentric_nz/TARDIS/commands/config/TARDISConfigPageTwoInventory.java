@@ -31,71 +31,68 @@ import java.util.*;
  */
 class TARDISConfigPageTwoInventory {
 
-	private final TARDISPlugin plugin;
-	private final ItemStack[] menu;
+    private final TARDISPlugin plugin;
+    private final ItemStack[] menu;
 
-	TARDISConfigPageTwoInventory(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		menu = getItemStack();
-	}
+    TARDISConfigPageTwoInventory(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        menu = getItemStack();
+    }
 
-	/**
-	 * Constructs an inventory for the Admin Menu GUI.
-	 *
-	 * @return an Array of itemStacks (an inventory)
-	 */
-	private ItemStack[] getItemStack() {
-		List<ItemStack> options = new ArrayList<>();
-		Set<String> config = new TreeSet<>(plugin.getConfig().getKeys(true));
-		config.forEach((c) -> {
-			String value = plugin.getConfig().getString(c);
-			assert value != null;
-			if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) &&
-				(c.startsWith("circuits") || c.startsWith("creation") || c.startsWith("debug") ||
-				 c.startsWith("desktop") || c.startsWith("junk") || c.startsWith("siege") || c.startsWith("travel") ||
-				 c.startsWith("abandon") || c.startsWith("blueprints"))) {
-				ItemStack is = new ItemStack(Material.REPEATER, 1);
-				ItemMeta im = is.getItemMeta();
-				assert im != null;
-				im.setDisplayName(c);
-				int cmd = GUIConfiguration.valueOf(c.split("\\.")[0].toUpperCase()).getCustomModelData();
-				if (value.equals("false")) {
-					cmd += 100; // xx -> 1xx
-				}
-				im.setCustomModelData(cmd);
-				im.setLore(Collections.singletonList(value));
-				is.setItemMeta(im);
-				options.add(is);
-			}
-		});
-		ItemStack[] stack = new ItemStack[54];
-		for (int s = 0; s < 52; s++) {
-			if (s < options.size()) {
-				stack[s] = options.get(s);
-			} else {
-				stack[s] = null;
-			}
-		}
-		// previous page
-		ItemStack next = new ItemStack(Material.BOWL, 1);
-		ItemMeta page = next.getItemMeta();
-		assert page != null;
-		page.setDisplayName("Previous page");
-		page.setCustomModelData(GUIConfiguration.PREV.getCustomModelData());
-		next.setItemMeta(page);
-		stack[52] = next;
-		// player prefs
-		ItemStack play = new ItemStack(Material.NETHER_STAR, 1);
-		ItemMeta prefs = play.getItemMeta();
-		assert prefs != null;
-		prefs.setDisplayName("Player Preferences");
-		prefs.setCustomModelData(GUIConfiguration.PREFS.getCustomModelData());
-		play.setItemMeta(prefs);
-		stack[53] = play;
-		return stack;
-	}
+    /**
+     * Constructs an inventory for the Admin Menu GUI.
+     *
+     * @return an Array of itemStacks (an inventory)
+     */
+    private ItemStack[] getItemStack() {
+        List<ItemStack> options = new ArrayList<>();
+        Set<String> config = new TreeSet<>(plugin.getConfig().getKeys(true));
+        config.forEach((c) -> {
+            String value = plugin.getConfig().getString(c);
+            assert value != null;
+            if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && (c.startsWith("circuits") || c.startsWith("creation") || c.startsWith("debug") || c.startsWith("desktop") || c.startsWith("junk") || c.startsWith("siege") || c.startsWith("travel") || c.startsWith("abandon") || c.startsWith("blueprints"))) {
+                ItemStack is = new ItemStack(Material.REPEATER, 1);
+                ItemMeta im = is.getItemMeta();
+                assert im != null;
+                im.setDisplayName(c);
+                int cmd = GUIConfiguration.valueOf(c.split("\\.")[0].toUpperCase()).getCustomModelData();
+                if (value.equals("false")) {
+                    cmd += 100; // xx -> 1xx
+                }
+                im.setCustomModelData(cmd);
+                im.setLore(Collections.singletonList(value));
+                is.setItemMeta(im);
+                options.add(is);
+            }
+        });
+        ItemStack[] stack = new ItemStack[54];
+        for (int s = 0; s < 52; s++) {
+            if (s < options.size()) {
+                stack[s] = options.get(s);
+            } else {
+                stack[s] = null;
+            }
+        }
+        // previous page
+        ItemStack next = new ItemStack(Material.BOWL, 1);
+        ItemMeta page = next.getItemMeta();
+        assert page != null;
+        page.setDisplayName("Previous page");
+        page.setCustomModelData(GUIConfiguration.PREV.getCustomModelData());
+        next.setItemMeta(page);
+        stack[52] = next;
+        // player prefs
+        ItemStack play = new ItemStack(Material.NETHER_STAR, 1);
+        ItemMeta prefs = play.getItemMeta();
+        assert prefs != null;
+        prefs.setDisplayName("Player Preferences");
+        prefs.setCustomModelData(GUIConfiguration.PREFS.getCustomModelData());
+        play.setItemMeta(prefs);
+        stack[53] = play;
+        return stack;
+    }
 
-	public ItemStack[] getMenu() {
-		return menu;
-	}
+    public ItemStack[] getMenu() {
+        return menu;
+    }
 }

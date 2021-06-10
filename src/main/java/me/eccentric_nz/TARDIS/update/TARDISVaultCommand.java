@@ -32,50 +32,50 @@ import java.util.HashMap;
  */
 class TARDISVaultCommand {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	TARDISVaultCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    TARDISVaultCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	boolean addDropChest(Player player, int id, Block b) {
-		// player is in their own TARDIS
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("uuid", player.getUniqueId().toString());
-		ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
-		if (rst.resultSet() && rst.getTardisId() != id) {
-			TARDISMessage.send(player, "CMD_ONLY_TL");
-			return true;
-		}
-		Location l = b.getLocation();
-		// determine the min x, y, z coords
-		int mx = l.getBlockX() % 16;
-		if (mx < 0) {
-			mx += 16;
-		}
-		int mz = l.getBlockZ() % 16;
-		if (mz < 0) {
-			mz += 16;
-		}
-		int x = l.getBlockX() - mx;
-		int y = l.getBlockY() - (l.getBlockY() % 16);
-		int z = l.getBlockZ() - mz;
-		String pos = l.toString();
-		HashMap<String, Object> set = new HashMap<>();
-		set.put("tardis_id", id);
-		set.put("location", pos);
-		set.put("x", x);
-		set.put("y", y);
-		set.put("z", z);
-		// is there an existing drop chest record?
-		ResultSetVault rsv = new ResultSetVault(plugin, id);
-		if (rsv.resultSet()) {
-			HashMap<String, Object> whereVault = new HashMap<>();
-			whereVault.put("v_id", rsv.getVaultId());
-			plugin.getQueryFactory().doUpdate("vaults", set, whereVault);
-		} else {
-			plugin.getQueryFactory().doInsert("vaults", set);
-		}
-		return true;
-	}
+    boolean addDropChest(Player player, int id, Block b) {
+        // player is in their own TARDIS
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", player.getUniqueId().toString());
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+        if (rst.resultSet() && rst.getTardisId() != id) {
+            TARDISMessage.send(player, "CMD_ONLY_TL");
+            return true;
+        }
+        Location l = b.getLocation();
+        // determine the min x, y, z coords
+        int mx = l.getBlockX() % 16;
+        if (mx < 0) {
+            mx += 16;
+        }
+        int mz = l.getBlockZ() % 16;
+        if (mz < 0) {
+            mz += 16;
+        }
+        int x = l.getBlockX() - mx;
+        int y = l.getBlockY() - (l.getBlockY() % 16);
+        int z = l.getBlockZ() - mz;
+        String pos = l.toString();
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("tardis_id", id);
+        set.put("location", pos);
+        set.put("x", x);
+        set.put("y", y);
+        set.put("z", z);
+        // is there an existing drop chest record?
+        ResultSetVault rsv = new ResultSetVault(plugin, id);
+        if (rsv.resultSet()) {
+            HashMap<String, Object> whereVault = new HashMap<>();
+            whereVault.put("v_id", rsv.getVaultId());
+            plugin.getQueryFactory().doUpdate("vaults", set, whereVault);
+        } else {
+            plugin.getQueryFactory().doInsert("vaults", set);
+        }
+        return true;
+    }
 }

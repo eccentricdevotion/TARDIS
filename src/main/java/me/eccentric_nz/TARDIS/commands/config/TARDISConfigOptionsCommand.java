@@ -28,76 +28,71 @@ import java.util.*;
  */
 class TARDISConfigOptionsCommand {
 
-	private final TARDISPlugin plugin;
-	private final List<String> sections = new ArrayList<>();
+    private final TARDISPlugin plugin;
+    private final List<String> sections = new ArrayList<>();
 
-	TARDISConfigOptionsCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		sections.add("storage");
-		sections.add("creation");
-		sections.add("police_box");
-		sections.add("travel");
-		sections.add("preferences");
-		sections.add("allow");
-		sections.add("growth");
-	}
+    TARDISConfigOptionsCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        sections.add("storage");
+        sections.add("creation");
+        sections.add("police_box");
+        sections.add("travel");
+        sections.add("preferences");
+        sections.add("allow");
+        sections.add("growth");
+    }
 
-	boolean showConfigOptions(CommandSender sender, String[] args) {
-		String section = args[1].toLowerCase(Locale.ENGLISH);
-		TARDISMessage.send(sender, "CONFIG");
-		if (sections.contains(section)) {
-			sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
-			Set<String> options = Objects.requireNonNull(plugin.getConfig().getConfigurationSection(section)).getKeys(false);
-			options.forEach((o) -> {
-				if (o.equals("mysql")) {
-					sender.sendMessage("    " + ChatColor.GREEN + o + "mysql:");
-					sender.sendMessage("        " + ChatColor.GREEN + o + "url: " +
-									   plugin.getConfig().getString(section + ".mysql.url"));
-					sender.sendMessage("        " + ChatColor.GREEN + o + "user: " +
-									   plugin.getConfig().getString(section + ".mysql.user"));
-					sender.sendMessage("        " + ChatColor.GREEN + o + "password: " +
-									   plugin.getConfig().getString(section + ".mysql.password"));
-				} else {
-					sender.sendMessage(
-							"    " + ChatColor.GREEN + o + ": " + plugin.getConfig().getString(section + "." + o));
-				}
-			});
-			return true;
-		}
-		if (section.equals("worlds")) {
-			sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
-			Set<String> worldNames = Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false);
-			worldNames.forEach((wname) -> {
-				String enabled = plugin.getPlanetsConfig().getString("planets." + wname + ".time_travel");
-				sender.sendMessage("    " + ChatColor.GREEN + wname + ": " + ChatColor.RESET + enabled);
-			});
-			return true;
-		}
-		if (section.equals("rechargers")) {
-			sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
-			Set<String> chargerNames = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("rechargers")).getKeys(false);
-			chargerNames.forEach((charname) -> {
-				sender.sendMessage("    " + ChatColor.GREEN + charname + ":");
-				sender.sendMessage(
-						"        world: " + plugin.getConfig().getString("rechargers." + charname + ".world"));
-				sender.sendMessage("        x: " + plugin.getConfig().getString("rechargers." + charname + ".x"));
-				sender.sendMessage("        y: " + plugin.getConfig().getString("rechargers." + charname + ".y"));
-				sender.sendMessage("        z: " + plugin.getConfig().getString("rechargers." + charname + ".z"));
-			});
-			return true;
-		}
-		if (section.equals("rooms")) {
-			sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
-			Set<String> roomNames = Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false);
-			roomNames.forEach((r) -> {
-				sender.sendMessage("    " + ChatColor.GREEN + r + ":");
-				sender.sendMessage("        enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
-				sender.sendMessage("        cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
-				sender.sendMessage("        offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
-				sender.sendMessage("        seed: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
-			});
-			return true;
-		}
-		return false;
-	}
+    boolean showConfigOptions(CommandSender sender, String[] args) {
+        String section = args[1].toLowerCase(Locale.ENGLISH);
+        TARDISMessage.send(sender, "CONFIG");
+        if (sections.contains(section)) {
+            sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
+            Set<String> options = Objects.requireNonNull(plugin.getConfig().getConfigurationSection(section)).getKeys(false);
+            options.forEach((o) -> {
+                if (o.equals("mysql")) {
+                    sender.sendMessage("    " + ChatColor.GREEN + o + "mysql:");
+                    sender.sendMessage("        " + ChatColor.GREEN + o + "url: " + plugin.getConfig().getString(section + ".mysql.url"));
+                    sender.sendMessage("        " + ChatColor.GREEN + o + "user: " + plugin.getConfig().getString(section + ".mysql.user"));
+                    sender.sendMessage("        " + ChatColor.GREEN + o + "password: " + plugin.getConfig().getString(section + ".mysql.password"));
+                } else {
+                    sender.sendMessage("    " + ChatColor.GREEN + o + ": " + plugin.getConfig().getString(section + "." + o));
+                }
+            });
+            return true;
+        }
+        if (section.equals("worlds")) {
+            sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
+            Set<String> worldNames = Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false);
+            worldNames.forEach((wname) -> {
+                String enabled = plugin.getPlanetsConfig().getString("planets." + wname + ".time_travel");
+                sender.sendMessage("    " + ChatColor.GREEN + wname + ": " + ChatColor.RESET + enabled);
+            });
+            return true;
+        }
+        if (section.equals("rechargers")) {
+            sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
+            Set<String> chargerNames = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("rechargers")).getKeys(false);
+            chargerNames.forEach((charname) -> {
+                sender.sendMessage("    " + ChatColor.GREEN + charname + ":");
+                sender.sendMessage("        world: " + plugin.getConfig().getString("rechargers." + charname + ".world"));
+                sender.sendMessage("        x: " + plugin.getConfig().getString("rechargers." + charname + ".x"));
+                sender.sendMessage("        y: " + plugin.getConfig().getString("rechargers." + charname + ".y"));
+                sender.sendMessage("        z: " + plugin.getConfig().getString("rechargers." + charname + ".z"));
+            });
+            return true;
+        }
+        if (section.equals("rooms")) {
+            sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
+            Set<String> roomNames = Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false);
+            roomNames.forEach((r) -> {
+                sender.sendMessage("    " + ChatColor.GREEN + r + ":");
+                sender.sendMessage("        enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
+                sender.sendMessage("        cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
+                sender.sendMessage("        offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
+                sender.sendMessage("        seed: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
+            });
+            return true;
+        }
+        return false;
+    }
 }

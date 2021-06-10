@@ -36,47 +36,46 @@ import java.util.List;
  */
 public class TARDISPermissionsExHandler {
 
-	private final TARDISPlugin plugin;
-	private final File permissionsFile;
-	private final LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<>();
-	private String group;
+    private final TARDISPlugin plugin;
+    private final File permissionsFile;
+    private final LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<>();
+    private String group;
 
-	public TARDISPermissionsExHandler(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		permissionsFile = new File(plugin.getDataFolder(), "permissions.txt");
-	}
+    public TARDISPermissionsExHandler(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        permissionsFile = new File(plugin.getDataFolder(), "permissions.txt");
+    }
 
-	public void addPerms(String player) {
-		BufferedReader bufRdr = null;
-		try {
-			bufRdr = new BufferedReader(new FileReader(permissionsFile));
-			String line;
-			//read each line of text file
-			while ((line = bufRdr.readLine()) != null) {
-				if (line.charAt(0) == '#') {
-					group = line.substring(1).trim();
-					permgroups.put(group, new ArrayList<>());
-				} else {
-					List<String> perms = permgroups.get(group);
-					perms.add(line.trim());
-				}
-			}
-		} catch (IOException io) {
-			plugin.debug("Could not read perms file. " + io.getMessage());
-		} finally {
-			if (bufRdr != null) {
-				try {
-					bufRdr.close();
-				} catch (IOException e) {
-					plugin.debug("Error closing perms reader! " + e.getMessage());
-				}
-			}
-		}
-		// get the default world
-		String w = plugin.getServer().getWorlds().get(0).getName();
-		// pex world <world> inherit <parentWorld> - make the tardis world inherit the main worlds permissions
-		plugin.getServer().dispatchCommand(plugin.getConsole(),
-				"pex world " + "TARDIS_WORLD_" + player + " inherit " + w);
-		plugin.getServer().dispatchCommand(plugin.getConsole(), "pex reload");
-	}
+    public void addPerms(String player) {
+        BufferedReader bufRdr = null;
+        try {
+            bufRdr = new BufferedReader(new FileReader(permissionsFile));
+            String line;
+            //read each line of text file
+            while ((line = bufRdr.readLine()) != null) {
+                if (line.charAt(0) == '#') {
+                    group = line.substring(1).trim();
+                    permgroups.put(group, new ArrayList<>());
+                } else {
+                    List<String> perms = permgroups.get(group);
+                    perms.add(line.trim());
+                }
+            }
+        } catch (IOException io) {
+            plugin.debug("Could not read perms file. " + io.getMessage());
+        } finally {
+            if (bufRdr != null) {
+                try {
+                    bufRdr.close();
+                } catch (IOException e) {
+                    plugin.debug("Error closing perms reader! " + e.getMessage());
+                }
+            }
+        }
+        // get the default world
+        String w = plugin.getServer().getWorlds().get(0).getName();
+        // pex world <world> inherit <parentWorld> - make the tardis world inherit the main worlds permissions
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "pex world " + "TARDIS_WORLD_" + player + " inherit " + w);
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "pex reload");
+    }
 }

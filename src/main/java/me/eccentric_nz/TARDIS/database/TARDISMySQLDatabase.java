@@ -33,42 +33,42 @@ import java.sql.Statement;
  */
 public class TARDISMySQLDatabase {
 
-	private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-	private final Connection connection = service.getConnection();
-	private final TARDISPlugin plugin;
-	private Statement statement = null;
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final Connection connection = service.getConnection();
+    private final TARDISPlugin plugin;
+    private Statement statement = null;
 
-	public TARDISMySQLDatabase(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISMySQLDatabase(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	/**
-	 * Creates the tardis default tables in the database.
-	 */
-	public void createTables() {
-		service.setIsMySQL(true);
-		try {
-			service.testConnection(connection);
-			statement = connection.createStatement();
+    /**
+     * Creates the tardis default tables in the database.
+     */
+    public void createTables() {
+        service.setIsMySQL(true);
+        try {
+            service.testConnection(connection);
+            statement = connection.createStatement();
 
-			for (String query : SQL.CREATES) {
-				String subbed = String.format(query, plugin.getConfig().getString("storage.mysql.prefix"));
-				statement.executeUpdate(subbed);
-			}
+            for (String query : SQL.CREATES) {
+                String subbed = String.format(query, plugin.getConfig().getString("storage.mysql.prefix"));
+                statement.executeUpdate(subbed);
+            }
 
-			// update tables
-			TARDISMySQLDatabaseUpdater dbu = new TARDISMySQLDatabaseUpdater(plugin, statement);
-			dbu.updateTables();
-		} catch (SQLException e) {
-			plugin.getConsole().sendMessage(plugin.getPluginName() + "MySQL create table error: " + e);
-		} finally {
-			try {
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				plugin.getConsole().sendMessage(plugin.getPluginName() + "MySQL close statement error: " + e);
-			}
-		}
-	}
+            // update tables
+            TARDISMySQLDatabaseUpdater dbu = new TARDISMySQLDatabaseUpdater(plugin, statement);
+            dbu.updateTables();
+        } catch (SQLException e) {
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "MySQL create table error: " + e);
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "MySQL close statement error: " + e);
+            }
+        }
+    }
 }

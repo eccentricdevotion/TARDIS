@@ -44,94 +44,94 @@ import java.util.UUID;
  */
 public class TARDISTelepathicListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISTelepathicListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISTelepathicListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onTelepathicCircuit(PlayerInteractEvent event) {
-		if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
-			return;
-		}
-		Block block = event.getClickedBlock();
-		assert block != null;
-		if (!block.getType().equals(Material.DAYLIGHT_DETECTOR)) {
-			return;
-		}
-		String location = block.getLocation().toString();
-		// get tardis from saved location
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("type", 23);
-		where.put("location", location);
-		ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-		if (rsc.resultSet()) {
-			int id = rsc.getTardisId();
-			// get the Time Lord of this tardis
-			HashMap<String, Object> wheret = new HashMap<>();
-			wheret.put("tardis_id", id);
-			ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
-			if (rs.resultSet()) {
-				UUID o_uuid = rs.getTardis().getUuid();
-				String owner = o_uuid.toString();
-				// get Time Lord player prefs
-				ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, owner);
-				if (rsp.resultSet()) {
-					Player player = event.getPlayer();
-					UUID uuid = player.getUniqueId();
-					if (rsp.isTelepathyOn()) {
-						// track player
-						plugin.getTrackerKeeper().getTelepaths().put(uuid, o_uuid);
-						TARDISMessage.send(player, "TELEPATHIC_COMMAND");
-					} else {
-						TARDISMessage.send(player, "TELEPATHIC_OFF");
-					}
-				}
-			}
-			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> block.setBlockData(TARDISConstants.DAYLIGHT), 3L);
-		}
-	}
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onTelepathicCircuit(PlayerInteractEvent event) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
+        Block block = event.getClickedBlock();
+        assert block != null;
+        if (!block.getType().equals(Material.DAYLIGHT_DETECTOR)) {
+            return;
+        }
+        String location = block.getLocation().toString();
+        // get tardis from saved location
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("type", 23);
+        where.put("location", location);
+        ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+        if (rsc.resultSet()) {
+            int id = rsc.getTardisId();
+            // get the Time Lord of this tardis
+            HashMap<String, Object> wheret = new HashMap<>();
+            wheret.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
+            if (rs.resultSet()) {
+                UUID o_uuid = rs.getTardis().getUuid();
+                String owner = o_uuid.toString();
+                // get Time Lord player prefs
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, owner);
+                if (rsp.resultSet()) {
+                    Player player = event.getPlayer();
+                    UUID uuid = player.getUniqueId();
+                    if (rsp.isTelepathyOn()) {
+                        // track player
+                        plugin.getTrackerKeeper().getTelepaths().put(uuid, o_uuid);
+                        TARDISMessage.send(player, "TELEPATHIC_COMMAND");
+                    } else {
+                        TARDISMessage.send(player, "TELEPATHIC_OFF");
+                    }
+                }
+            }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> block.setBlockData(TARDISConstants.DAYLIGHT), 3L);
+        }
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onTelepathicCircuitBreak(BlockBreakEvent event) {
-		Block b = event.getBlock();
-		if (!b.getType().equals(Material.DAYLIGHT_DETECTOR)) {
-			return;
-		}
-		// check location
-		HashMap<String, Object> where = new HashMap<>();
-		where.put("type", 23);
-		where.put("location", b.getLocation().toString());
-		ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-		if (!rsc.resultSet()) {
-			return;
-		}
-		event.setCancelled(true);
-		// set block to AIR
-		b.setBlockData(TARDISConstants.AIR);
-		// drop a custom DAYLIGHT_DETECTOR
-		ItemStack is = new ItemStack(Material.DAYLIGHT_DETECTOR, 1);
-		ItemMeta im = is.getItemMeta();
-		assert im != null;
-		im.setDisplayName("tardis Telepathic Circuit");
-		im.setLore(Arrays.asList("Allow companions to", "use tardis commands"));
-		is.setItemMeta(im);
-		b.getWorld().dropItemNaturally(b.getLocation(), is);
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onTelepathicCircuitBreak(BlockBreakEvent event) {
+        Block b = event.getBlock();
+        if (!b.getType().equals(Material.DAYLIGHT_DETECTOR)) {
+            return;
+        }
+        // check location
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("type", 23);
+        where.put("location", b.getLocation().toString());
+        ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+        if (!rsc.resultSet()) {
+            return;
+        }
+        event.setCancelled(true);
+        // set block to AIR
+        b.setBlockData(TARDISConstants.AIR);
+        // drop a custom DAYLIGHT_DETECTOR
+        ItemStack is = new ItemStack(Material.DAYLIGHT_DETECTOR, 1);
+        ItemMeta im = is.getItemMeta();
+        assert im != null;
+        im.setDisplayName("tardis Telepathic Circuit");
+        im.setLore(Arrays.asList("Allow companions to", "use tardis commands"));
+        is.setItemMeta(im);
+        b.getWorld().dropItemNaturally(b.getLocation(), is);
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onTelepathicCircuitPlace(BlockPlaceEvent event) {
-		ItemStack is = event.getItemInHand();
-		if (!is.getType().equals(Material.DAYLIGHT_DETECTOR) || !is.hasItemMeta()) {
-			return;
-		}
-		ItemMeta im = is.getItemMeta();
-		assert im != null;
-		if (im.hasDisplayName() && im.getDisplayName().equals("tardis Telepathic Circuit")) {
-			UUID uuid = event.getPlayer().getUniqueId();
-			String l = event.getBlock().getLocation().toString();
-			plugin.getTrackerKeeper().getTelepathicPlacements().put(uuid, l);
-		}
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onTelepathicCircuitPlace(BlockPlaceEvent event) {
+        ItemStack is = event.getItemInHand();
+        if (!is.getType().equals(Material.DAYLIGHT_DETECTOR) || !is.hasItemMeta()) {
+            return;
+        }
+        ItemMeta im = is.getItemMeta();
+        assert im != null;
+        if (im.hasDisplayName() && im.getDisplayName().equals("tardis Telepathic Circuit")) {
+            UUID uuid = event.getPlayer().getUniqueId();
+            String l = event.getBlock().getLocation().toString();
+            plugin.getTrackerKeeper().getTelepathicPlacements().put(uuid, l);
+        }
+    }
 }

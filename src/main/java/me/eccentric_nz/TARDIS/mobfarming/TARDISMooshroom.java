@@ -20,13 +20,13 @@ import org.bukkit.entity.MushroomCow.Variant;
 
 class TARDISMooshroom extends TARDISMob {
 
-	private Variant variant;
+    private Variant variant;
 
-	Variant getVariant() {
-		return variant;
-	}
+    Variant getVariant() {
+        return variant;
+    }
 
-	void setVariant(Variant variant) {
-		this.variant = variant;
-	}
+    void setVariant(Variant variant) {
+        this.variant = variant;
+    }
 }

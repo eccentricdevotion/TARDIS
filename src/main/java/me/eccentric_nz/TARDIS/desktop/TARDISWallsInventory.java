@@ -33,81 +33,81 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 class TARDISWallsInventory {
 
-	private final ItemStack[] menu;
-	private final TARDISPlugin plugin;
+    private final ItemStack[] menu;
+    private final TARDISPlugin plugin;
 
-	TARDISWallsInventory(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		menu = getItemStack();
-	}
+    TARDISWallsInventory(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        menu = getItemStack();
+    }
 
-	/**
-	 * Constructs an inventory for the Player Preferences Menu GUI.
-	 *
-	 * @return an Array of itemStacks (an inventory)
-	 */
-	private ItemStack[] getItemStack() {
-		ItemStack[] stack = new ItemStack[54];
-		int i = 0;
-		// get BLOCKS
-		for (Material entry : TARDISWalls.BLOCKS) {
-			if (i > 52) {
-				break;
-			}
-			ItemStack is = new ItemStack(entry, 1);
-			stack[i] = is;
-			if (i % 9 == 7) {
-				i += 2;
-			} else {
-				i++;
-			}
-		}
+    /**
+     * Constructs an inventory for the Player Preferences Menu GUI.
+     *
+     * @return an Array of itemStacks (an inventory)
+     */
+    private ItemStack[] getItemStack() {
+        ItemStack[] stack = new ItemStack[54];
+        int i = 0;
+        // get BLOCKS
+        for (Material entry : TARDISWalls.BLOCKS) {
+            if (i > 52) {
+                break;
+            }
+            ItemStack is = new ItemStack(entry, 1);
+            stack[i] = is;
+            if (i % 9 == 7) {
+                i += 2;
+            } else {
+                i++;
+            }
+        }
 
-		// scroll up
-		ItemStack scroll_up = new ItemStack(Material.ARROW, 1);
-		ItemMeta uim = scroll_up.getItemMeta();
-		assert uim != null;
-		uim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_U"));
-		uim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_U.getCustomModelData());
-		scroll_up.setItemMeta(uim);
-		stack[8] = scroll_up;
-		// scroll down
-		ItemStack scroll_down = new ItemStack(Material.ARROW, 1);
-		ItemMeta dim = scroll_down.getItemMeta();
-		assert dim != null;
-		dim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_D"));
-		dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.getCustomModelData());
-		scroll_down.setItemMeta(dim);
-		stack[17] = scroll_down;
-		// default wall
-		ItemStack wall = new ItemStack(Material.BOWL, 1);
-		ItemMeta wim = wall.getItemMeta();
-		assert wim != null;
-		wim.setDisplayName("Default Wall Block");
-		wim.setCustomModelData(GUIWallFloor.WALL.getCustomModelData());
-		wall.setItemMeta(wim);
-		stack[26] = wall;
-		// default floor
-		ItemStack floor = new ItemStack(Material.BOWL, 1);
-		ItemMeta fim = floor.getItemMeta();
-		assert fim != null;
-		fim.setDisplayName("Default Floor Block");
-		fim.setCustomModelData(GUIWallFloor.FLOOR.getCustomModelData());
-		floor.setItemMeta(fim);
-		stack[35] = floor;
-		// close
-		ItemStack close = new ItemStack(Material.BOWL, 1);
-		ItemMeta close_im = close.getItemMeta();
-		assert close_im != null;
-		close_im.setDisplayName("Abort upgrade");
-		close_im.setCustomModelData(GUIWallFloor.BUTTON_ABORT.getCustomModelData());
-		close.setItemMeta(close_im);
-		stack[53] = close;
+        // scroll up
+        ItemStack scroll_up = new ItemStack(Material.ARROW, 1);
+        ItemMeta uim = scroll_up.getItemMeta();
+        assert uim != null;
+        uim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_U"));
+        uim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_U.getCustomModelData());
+        scroll_up.setItemMeta(uim);
+        stack[8] = scroll_up;
+        // scroll down
+        ItemStack scroll_down = new ItemStack(Material.ARROW, 1);
+        ItemMeta dim = scroll_down.getItemMeta();
+        assert dim != null;
+        dim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_D"));
+        dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.getCustomModelData());
+        scroll_down.setItemMeta(dim);
+        stack[17] = scroll_down;
+        // default wall
+        ItemStack wall = new ItemStack(Material.BOWL, 1);
+        ItemMeta wim = wall.getItemMeta();
+        assert wim != null;
+        wim.setDisplayName("Default Wall Block");
+        wim.setCustomModelData(GUIWallFloor.WALL.getCustomModelData());
+        wall.setItemMeta(wim);
+        stack[26] = wall;
+        // default floor
+        ItemStack floor = new ItemStack(Material.BOWL, 1);
+        ItemMeta fim = floor.getItemMeta();
+        assert fim != null;
+        fim.setDisplayName("Default Floor Block");
+        fim.setCustomModelData(GUIWallFloor.FLOOR.getCustomModelData());
+        floor.setItemMeta(fim);
+        stack[35] = floor;
+        // close
+        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemMeta close_im = close.getItemMeta();
+        assert close_im != null;
+        close_im.setDisplayName("Abort upgrade");
+        close_im.setCustomModelData(GUIWallFloor.BUTTON_ABORT.getCustomModelData());
+        close.setItemMeta(close_im);
+        stack[53] = close;
 
-		return stack;
-	}
+        return stack;
+    }
 
-	public ItemStack[] getMenu() {
-		return menu;
-	}
+    public ItemStack[] getMenu() {
+        return menu;
+    }
 }

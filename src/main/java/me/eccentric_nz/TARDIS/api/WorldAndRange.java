@@ -23,37 +23,37 @@ import org.bukkit.World;
  */
 public class WorldAndRange {
 
-	private final World w;
-	private final int minX;
-	private final int minZ;
-	private final int rangeX;
-	private final int rangeZ;
+    private final World w;
+    private final int minX;
+    private final int minZ;
+    private final int rangeX;
+    private final int rangeZ;
 
-	WorldAndRange(World w, int minX, int minZ, int rangeX, int rangeZ) {
-		this.w = w;
-		this.minX = minX;
-		this.minZ = minZ;
-		this.rangeX = rangeX;
-		this.rangeZ = rangeZ;
-	}
+    WorldAndRange(World w, int minX, int minZ, int rangeX, int rangeZ) {
+        this.w = w;
+        this.minX = minX;
+        this.minZ = minZ;
+        this.rangeX = rangeX;
+        this.rangeZ = rangeZ;
+    }
 
-	public World getW() {
-		return w;
-	}
+    public World getW() {
+        return w;
+    }
 
-	public int getMinX() {
-		return minX;
-	}
+    public int getMinX() {
+        return minX;
+    }
 
-	public int getMinZ() {
-		return minZ;
-	}
+    public int getMinZ() {
+        return minZ;
+    }
 
-	int getRangeX() {
-		return rangeX;
-	}
+    int getRangeX() {
+        return rangeX;
+    }
 
-	int getRangeZ() {
-		return rangeZ;
-	}
+    int getRangeZ() {
+        return rangeZ;
+    }
 }

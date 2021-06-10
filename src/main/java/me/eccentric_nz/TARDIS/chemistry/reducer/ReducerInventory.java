@@ -26,45 +26,45 @@ import java.util.Arrays;
 
 public class ReducerInventory {
 
-	private final TARDISPlugin plugin;
-	private final ItemStack[] menu;
+    private final TARDISPlugin plugin;
+    private final ItemStack[] menu;
 
-	public ReducerInventory(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		menu = getItemStack();
-	}
+    public ReducerInventory(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        menu = getItemStack();
+    }
 
-	private ItemStack[] getItemStack() {
-		ItemStack[] stack = new ItemStack[27];
-		// info
-		ItemStack info = new ItemStack(Material.BOWL, 1);
-		ItemMeta info_im = info.getItemMeta();
-		assert info_im != null;
-		info_im.setDisplayName("Info");
-		info_im.setLore(Arrays.asList("Reduce a substance to its", "component elements.", "Place an item in the first slot,", "then click the reduce button."));
-		info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
-		info.setItemMeta(info_im);
-		stack[8] = info;
-		// check formula
-		ItemStack check = new ItemStack(Material.BOWL, 1);
-		ItemMeta check_im = check.getItemMeta();
-		assert check_im != null;
-		check_im.setDisplayName("Reduce");
-		check_im.setCustomModelData(GUIChemistry.REDUCE.getCustomModelData());
-		check.setItemMeta(check_im);
-		stack[17] = check;
-		// close
-		ItemStack close = new ItemStack(Material.BOWL, 1);
-		ItemMeta close_im = close.getItemMeta();
-		assert close_im != null;
-		close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-		close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
-		close.setItemMeta(close_im);
-		stack[26] = close;
-		return stack;
-	}
+    private ItemStack[] getItemStack() {
+        ItemStack[] stack = new ItemStack[27];
+        // info
+        ItemStack info = new ItemStack(Material.BOWL, 1);
+        ItemMeta info_im = info.getItemMeta();
+        assert info_im != null;
+        info_im.setDisplayName("Info");
+        info_im.setLore(Arrays.asList("Reduce a substance to its", "component elements.", "Place an item in the first slot,", "then click the reduce button."));
+        info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
+        info.setItemMeta(info_im);
+        stack[8] = info;
+        // check formula
+        ItemStack check = new ItemStack(Material.BOWL, 1);
+        ItemMeta check_im = check.getItemMeta();
+        assert check_im != null;
+        check_im.setDisplayName("Reduce");
+        check_im.setCustomModelData(GUIChemistry.REDUCE.getCustomModelData());
+        check.setItemMeta(check_im);
+        stack[17] = check;
+        // close
+        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemMeta close_im = close.getItemMeta();
+        assert close_im != null;
+        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
+        close.setItemMeta(close_im);
+        stack[26] = close;
+        return stack;
+    }
 
-	public ItemStack[] getMenu() {
-		return menu;
-	}
+    public ItemStack[] getMenu() {
+        return menu;
+    }
 }

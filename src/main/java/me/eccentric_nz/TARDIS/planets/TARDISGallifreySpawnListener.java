@@ -34,39 +34,38 @@ import java.util.Objects;
  */
 public final class TARDISGallifreySpawnListener implements Listener {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISGallifreySpawnListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISGallifreySpawnListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onGallifreyanSpawn(CreatureSpawnEvent event) {
-		if (!Objects.requireNonNull(event.getLocation().getWorld()).getName().endsWith("gallifrey")) {
-			return;
-		}
-		CreatureSpawnEvent.SpawnReason spawnReason = event.getSpawnReason();
-		// get default server world
-		String s_world = plugin.getServer().getWorlds().get(0).getName();
-		// if configured prevent spawns (unless from spawners and plugins)
-		if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_gallifrey.spawn_other_mobs") &&
-			spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
-			event.setCancelled(true);
-			return;
-		}
-		if (spawnReason == SpawnReason.SPAWNER) {
-			if (!event.getEntity().getType().equals(EntityType.VILLAGER)) {
-				return;
-			}
-			LivingEntity le = event.getEntity();
-			// it's a Gallifreyan - give it a random profession and outfit!
-			Villager villager = (Villager) le;
-			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-				villager.setProfession(Villager.Profession.values()[TARDISConstants.RANDOM.nextInt(Villager.Profession.values().length)]);
-				villager.setVillagerLevel(1); // minimum level is 1
-				villager.setVillagerExperience(1); // should be greater than 0 so villager doesn't lose its profession
-				villager.setVillagerType(Villager.Type.values()[TARDISConstants.RANDOM.nextInt(Villager.Type.values().length)]);
-			}, 2L);
-		}
-	}
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onGallifreyanSpawn(CreatureSpawnEvent event) {
+        if (!Objects.requireNonNull(event.getLocation().getWorld()).getName().endsWith("gallifrey")) {
+            return;
+        }
+        CreatureSpawnEvent.SpawnReason spawnReason = event.getSpawnReason();
+        // get default server world
+        String s_world = plugin.getServer().getWorlds().get(0).getName();
+        // if configured prevent spawns (unless from spawners and plugins)
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_gallifrey.spawn_other_mobs") && spawnReason != SpawnReason.SPAWNER && spawnReason != SpawnReason.CUSTOM) {
+            event.setCancelled(true);
+            return;
+        }
+        if (spawnReason == SpawnReason.SPAWNER) {
+            if (!event.getEntity().getType().equals(EntityType.VILLAGER)) {
+                return;
+            }
+            LivingEntity le = event.getEntity();
+            // it's a Gallifreyan - give it a random profession and outfit!
+            Villager villager = (Villager) le;
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                villager.setProfession(Villager.Profession.values()[TARDISConstants.RANDOM.nextInt(Villager.Profession.values().length)]);
+                villager.setVillagerLevel(1); // minimum level is 1
+                villager.setVillagerExperience(1); // should be greater than 0 so villager doesn't lose its profession
+                villager.setVillagerType(Villager.Type.values()[TARDISConstants.RANDOM.nextInt(Villager.Type.values().length)]);
+            }, 2L);
+        }
+    }
 }

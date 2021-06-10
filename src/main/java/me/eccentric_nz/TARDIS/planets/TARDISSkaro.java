@@ -30,34 +30,33 @@ import org.bukkit.plugin.Plugin;
  */
 public class TARDISSkaro {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISSkaro(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISSkaro(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	public void loadDalekWorld() {
-		String s_world = plugin.getServer().getWorlds().get(0).getName();
-		// copy datapack files
-		if (!TARDISChecker.hasDimension("skaro")) {
-			plugin.getServer().reloadData();
-			// message console to restart server
-			TARDISMessage.message(plugin.getConsole(), ChatColor.RED +
-													   "Skaro data pack has been installed, please restart the server to enable the world.");
-			// get default server world
-			// add world to config
-			if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.time_travel")) {
-				plugin.getPlanetsConfig().set("planets." + s_world + "_tardis_skaro.time_travel", true);
-				plugin.savePlanetsConfig();
-				// make sure TARDISWeepingAngels can re-disguise Daleks in the Skaro world
-				Plugin twa = plugin.getPM().getPlugin("TARDISWeepingAngels");
-				if (twa != null) {
-					twa.getConfig().set("daleks.worlds.Skaro", 500);
-					twa.saveConfig();
-				}
-			}
-		} else {
-			plugin.getServer().getWorld(s_world + "_tardis_skaro");
-		}
-	}
+    public void loadDalekWorld() {
+        String s_world = plugin.getServer().getWorlds().get(0).getName();
+        // copy datapack files
+        if (!TARDISChecker.hasDimension("skaro")) {
+            plugin.getServer().reloadData();
+            // message console to restart server
+            TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Skaro data pack has been installed, please restart the server to enable the world.");
+            // get default server world
+            // add world to config
+            if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.time_travel")) {
+                plugin.getPlanetsConfig().set("planets." + s_world + "_tardis_skaro.time_travel", true);
+                plugin.savePlanetsConfig();
+                // make sure TARDISWeepingAngels can re-disguise Daleks in the Skaro world
+                Plugin twa = plugin.getPM().getPlugin("TARDISWeepingAngels");
+                if (twa != null) {
+                    twa.getConfig().set("daleks.worlds.Skaro", 500);
+                    twa.saveConfig();
+                }
+            }
+        } else {
+            plugin.getServer().getWorld(s_world + "_tardis_skaro");
+        }
+    }
 }

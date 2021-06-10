@@ -36,38 +36,38 @@ import java.util.Comparator;
 
 class TARDISItemComparator implements Comparator<ItemStack> {
 
-	@Override
-	public int compare(ItemStack item1, ItemStack item2) {
-		if (item1 == null && item2 != null) {
-			return 1;
-		} else if (item1 != null && item2 == null) {
-			return -1;
-		} else if (item1 == null && item2 == null) {
-			return 0;
-		} else if (item1 != null && item2 != null) {
-			if (item1.getType().toString().compareTo(item2.getType().toString()) > 0) {
-				return 1;
-			} else if (item1.getType().toString().compareTo(item2.getType().toString()) < 0) {
-				return -1;
-			} else if (item1.getType().toString().compareTo(item2.getType().toString()) == 0) {
-				if (item1.getItemMeta() instanceof Damageable d1) {
-					Damageable d2 = (Damageable) item2.getItemMeta();
-					assert d2 != null;
-					if (d1.getDamage() > d2.getDamage()) {
-						return 1;
-					} else if (d1.getDamage() < d2.getDamage()) {
-						return -1;
-					} else if (d1.getDamage() == d2.getDamage()) {
-						return 0;
-					}
-				}
-				if (item1.getAmount() > item2.getAmount()) {
-					return 1;
-				} else if (item1.getAmount() < item2.getAmount()) {
-					return -1;
-				}
-			}
-		}
-		return 0;
-	}
+    @Override
+    public int compare(ItemStack item1, ItemStack item2) {
+        if (item1 == null && item2 != null) {
+            return 1;
+        } else if (item1 != null && item2 == null) {
+            return -1;
+        } else if (item1 == null && item2 == null) {
+            return 0;
+        } else if (item1 != null && item2 != null) {
+            if (item1.getType().toString().compareTo(item2.getType().toString()) > 0) {
+                return 1;
+            } else if (item1.getType().toString().compareTo(item2.getType().toString()) < 0) {
+                return -1;
+            } else if (item1.getType().toString().compareTo(item2.getType().toString()) == 0) {
+                if (item1.getItemMeta() instanceof Damageable d1) {
+                    Damageable d2 = (Damageable) item2.getItemMeta();
+                    assert d2 != null;
+                    if (d1.getDamage() > d2.getDamage()) {
+                        return 1;
+                    } else if (d1.getDamage() < d2.getDamage()) {
+                        return -1;
+                    } else if (d1.getDamage() == d2.getDamage()) {
+                        return 0;
+                    }
+                }
+                if (item1.getAmount() > item2.getAmount()) {
+                    return 1;
+                } else if (item1.getAmount() < item2.getAmount()) {
+                    return -1;
+                }
+            }
+        }
+        return 0;
+    }
 }
