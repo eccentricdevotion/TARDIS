@@ -36,70 +36,73 @@ import java.util.List;
 
 public class TARDISTimeCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-	private final TARDISPlugin plugin;
-	private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("day", "morning", "noon", "night", "midnight", "1AM", "2AM", "3AM", "4AM", "5AM", "6AM", "7AM", "8AM", "9AM", "10AM", "11AM", "12AM", "1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM", "9PM", "10PM", "11PM", "12PM");
+    private final TARDISPlugin plugin;
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("day", "morning", "noon", "night", "midnight", "1AM", "2AM", "3AM", "4AM", "5AM", "6AM", "7AM", "8AM", "9AM", "10AM", "11AM", "12AM", "1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM", "9PM", "10PM", "11PM", "12PM");
 
-	public TARDISTimeCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISTimeCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@Override
-	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("tardistime")) {
-			if (args.length < 1) {
-				TARDISMessage.send(sender, "TOO_FEW_ARGS");
-				return true;
-			}
-			Player player;
-			if (sender instanceof Player) {
-				player = (Player) sender;
-				if (!player.hasPermission("tardis.admin")) {
-					TARDISMessage.send(sender, "NO_PERMS");
-					return true;
-				}
-				Location location = player.getLocation();
-				World world = location.getWorld();
-				if (plugin.getUtils().inTARDISWorld(player)) {
-					// get tardis player is in
-					int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player);
-					// get current tardis location
-					HashMap<String, Object> where = new HashMap<>();
-					where.put("tardis_id", id);
-					ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
-					if (rsc.resultSet()) {
-						world = rsc.getWorld();
-					} else {
-						// can't change weather in tardis world
-						TARDISMessage.send(player, "TIME_TARDIS");
-						return true;
-					}
-				}
-				long ticks;
-				Time time = Time.getByName().get(args[0].toUpperCase());
-				if (time != null) {
-					ticks = time.getTicks();
-				} else {
-					try {
-						ticks = Long.parseLong(args[0]);
-					} catch (NumberFormatException nfe) {
-						TARDISMessage.send(player, "TIME_FORMAT");
-						return true;
-					}
-				}
-				assert world != null;
-				world.setTime(ticks);
-				TARDISMessage.send(player, "TIME_SET", String.format("%s", ticks), world.getName());
-				return true;
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        if (cmd.getName().equalsIgnoreCase("tardistime")) {
+            if (args.length < 1) {
+                TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                return true;
+            }
+            Player player;
+            if (sender instanceof Player) {
+                player = (Player) sender;
+                if (player == null) {
+                    TARDISMessage.send(sender, "CMD_PLAYER");
+                    return true;
+                }
+                if (!player.hasPermission("tardis.admin")) {
+                    TARDISMessage.send(sender, "NO_PERMS");
+                    return true;
+                }
+                Location location = player.getLocation();
+                World world = location.getWorld();
+                if (plugin.getUtils().inTARDISWorld(player)) {
+                    // get TARDIS player is in
+                    int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player);
+                    // get current TARDIS location
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("tardis_id", id);
+                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
+                    if (rsc.resultSet()) {
+                        world = rsc.getWorld();
+                    } else {
+                        // can't change weather in TARDIS world
+                        TARDISMessage.send(player, "TIME_TARDIS");
+                        return true;
+                    }
+                }
+                long ticks;
+                Time time = Time.getByName().get(args[0].toUpperCase());
+                if (time != null) {
+                    ticks = time.getTicks();
+                } else {
+                    try {
+                        ticks = Long.parseLong(args[0]);
+                    } catch (NumberFormatException nfe) {
+                        TARDISMessage.send(player, "TIME_FORMAT");
+                        return true;
+                    }
+                }
+                world.setTime(ticks);
+                TARDISMessage.send(player, "TIME_SET", String.format("%s", ticks), world.getName());
+                return true;
+            }
+        }
+        return false;
+    }
 
-	@Override
-	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-		if (args.length <= 1) {
-			return partial(args[0], ROOT_SUBS);
-		}
-		return ImmutableList.of();
-	}
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        if (args.length <= 1) {
+            return partial(args[0], ROOT_SUBS);
+        }
+        return ImmutableList.of();
+    }
 }

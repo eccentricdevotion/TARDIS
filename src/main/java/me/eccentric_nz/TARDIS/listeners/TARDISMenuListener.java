@@ -17,11 +17,13 @@
 package me.eccentric_nz.tardis.listeners;
 
 import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.tardis.enumeration.Storage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.InventoryView;
 
@@ -33,87 +35,97 @@ import java.util.Set;
  */
 public class TARDISMenuListener implements Listener {
 
-	private final TARDISPlugin plugin;
-	private final HashMap<String, Integer> titles;
+    private final TARDISPlugin plugin;
+    private final HashMap<String, Integer> titles;
 
-	protected TARDISMenuListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		titles = getTitleMap();
-	}
+    protected TARDISMenuListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        titles = getTitleMap();
+    }
 
-	/**
-	 * Closes the inventory.
-	 *
-	 * @param p the player using the GUI
-	 */
-	protected void close(Player p) {
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
-	}
+    /**
+     * Closes the inventory.
+     *
+     * @param p the player using the GUI
+     */
+    protected void close(Player p) {
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, p::closeInventory, 1L);
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onMenuDrag(InventoryDragEvent event) {
-		InventoryView view = event.getView();
-		String title = view.getTitle();
-		if (!titles.containsKey(title)) {
-			return;
-		}
-		Set<Integer> slots = event.getRawSlots();
-		slots.forEach((slot) -> {
-			if ((slot >= 0 && slot < titles.get(title))) {
-				event.setCancelled(true);
-			}
-		});
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onMenuDrag(InventoryDragEvent event) {
+        InventoryView view = event.getView();
+        String title = view.getTitle();
+        if (!titles.containsKey(title)) {
+            return;
+        }
+        Set<Integer> slots = event.getRawSlots();
+        slots.forEach((slot) -> {
+            if ((slot >= 0 && slot < titles.get(title))) {
+                event.setCancelled(true);
+            }
+        });
+    }
 
-	private HashMap<String, Integer> getTitleMap() {
-		HashMap<String, Integer> map = new HashMap<>();
-		map.put(ChatColor.DARK_RED + "Add Companion", 54);
-		map.put(ChatColor.DARK_RED + "Admin Menu", 54);
-		map.put(ChatColor.DARK_RED + "Architectural Reconfiguration", 54);
-		map.put(ChatColor.DARK_RED + "Chameleon Circuit", 27);
-		map.put(ChatColor.DARK_RED + "Chameleon Construction", 18);
-		map.put(ChatColor.DARK_RED + "Chameleon Help", 54);
-		map.put(ChatColor.DARK_RED + "Chameleon Presets", 54);
-		map.put(ChatColor.DARK_RED + "Chameleon Police Boxes", 27);
-		map.put(ChatColor.DARK_RED + "Chameleon Template", 54);
-		map.put(ChatColor.DARK_RED + "Companions", 54);
-		map.put(ChatColor.DARK_RED + "Destination Terminal", 54);
-		map.put(ChatColor.DARK_RED + "Chemical Compounds", 27);
-		map.put(ChatColor.DARK_RED + "Element Constructor", 27);
-		map.put(ChatColor.DARK_RED + "Material Reducer", 27);
-		map.put(ChatColor.DARK_RED + "Product Crafting", 27);
-		map.put(ChatColor.DARK_RED + "Lab Table", 27);
-		map.put(ChatColor.DARK_RED + "Genetic Manipulator", 54);
-		// TODO should Handles Program GUI be in here?
-		//        map.put(ChatColor.DARK_RED + "Handles Program", 54);
-		map.put(ChatColor.DARK_RED + "Player Prefs Menu", 36);
-		map.put(ChatColor.DARK_RED + "Recipe Categories", 27);
-		map.put(ChatColor.DARK_RED + "tardis Recipes", 27);
-		map.put(ChatColor.DARK_RED + "Saved Programs", 54);
-		map.put(ChatColor.DARK_RED + "Sonic Activator", 9);
-		map.put(ChatColor.DARK_RED + "Sonic Configurator", 27);
-		map.put(ChatColor.DARK_RED + "Sonic Generator", 54);
-		map.put(ChatColor.DARK_RED + "Sonic Prefs Menu", 27);
-		map.put(ChatColor.DARK_RED + "tardis Archive", 27);
-		map.put(ChatColor.DARK_RED + "tardis Console", 9);
-		map.put(ChatColor.DARK_RED + "tardis Control Menu", 54);
-		map.put(ChatColor.DARK_RED + "tardis Floor Menu", 54);
-		map.put(ChatColor.DARK_RED + "tardis Interior Sounds", 18);
-		map.put(ChatColor.DARK_RED + "tardis Key Prefs Menu", 27);
-		map.put(ChatColor.DARK_RED + "tardis Map", 54);
-		map.put(ChatColor.DARK_RED + "tardis Seeds Menu", 90);
-		map.put(ChatColor.DARK_RED + "tardis Seeds Recipe", 90);
-		map.put(ChatColor.DARK_RED + "tardis Upgrade Menu", 54);
-		map.put(ChatColor.DARK_RED + "tardis Wall & Floor Menu", 90);
-		map.put(ChatColor.DARK_RED + "tardis Wall Menu", 54);
-		map.put(ChatColor.DARK_RED + "tardis Weather Menu", 9);
-		map.put(ChatColor.DARK_RED + "tardis Areas", 90);
-		map.put(ChatColor.DARK_RED + "tardis Saves", 90);
-		map.put(ChatColor.DARK_RED + "tardis Transmats", 90);
-		map.put(ChatColor.DARK_RED + "Temporal Locator", 27);
-		for (Storage s : Storage.values()) {
-			map.put(s.getTitle(), 54);
-		}
-		return map;
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onMenuClose(InventoryCloseEvent event) {
+        InventoryView view = event.getView();
+        String title = view.getTitle();
+        if (!titles.containsKey(title)) {
+            return;
+        }
+        TARDISSudoTracker.SUDOERS.remove(event.getPlayer().getUniqueId());
+    }
+
+    private HashMap<String, Integer> getTitleMap() {
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put(ChatColor.DARK_RED + "Add Companion", 54);
+        map.put(ChatColor.DARK_RED + "Admin Config Menu", 54);
+        map.put(ChatColor.DARK_RED + "Architectural Reconfiguration", 54);
+        map.put(ChatColor.DARK_RED + "Chameleon Circuit", 27);
+        map.put(ChatColor.DARK_RED + "Chameleon Construction", 18);
+        map.put(ChatColor.DARK_RED + "Chameleon Help", 54);
+        map.put(ChatColor.DARK_RED + "Chameleon Presets", 54);
+        map.put(ChatColor.DARK_RED + "Chameleon Police Boxes", 27);
+        map.put(ChatColor.DARK_RED + "Chameleon Template", 54);
+        map.put(ChatColor.DARK_RED + "Companions", 54);
+        map.put(ChatColor.DARK_RED + "Destination Terminal", 54);
+        map.put(ChatColor.DARK_RED + "Chemical compounds", 27);
+        map.put(ChatColor.DARK_RED + "Element constructor", 27);
+        map.put(ChatColor.DARK_RED + "Material reducer", 27);
+        map.put(ChatColor.DARK_RED + "Product crafting", 27);
+        map.put(ChatColor.DARK_RED + "Lab table", 27);
+        map.put(ChatColor.DARK_RED + "Genetic Manipulator", 54);
+        // TODO should Handles Program GUI be in here?
+        //        map.put(ChatColor.DARK_RED + "Handles Program", 54);
+        map.put(ChatColor.DARK_RED + "Player Prefs Menu", 36);
+        map.put(ChatColor.DARK_RED + "Recipe Categories", 27);
+        map.put(ChatColor.DARK_RED + "TARDIS Recipes", 27);
+        map.put(ChatColor.DARK_RED + "Saved Programs", 54);
+        map.put(ChatColor.DARK_RED + "Sonic Activator", 9);
+        map.put(ChatColor.DARK_RED + "Sonic Configurator", 27);
+        map.put(ChatColor.DARK_RED + "Sonic Generator", 54);
+        map.put(ChatColor.DARK_RED + "Sonic Prefs Menu", 27);
+        map.put(ChatColor.DARK_RED + "TARDIS Archive", 27);
+        map.put(ChatColor.DARK_RED + "TARDIS Console", 9);
+        map.put(ChatColor.DARK_RED + "TARDIS Control Menu", 54);
+        map.put(ChatColor.DARK_RED + "TARDIS Floor Menu", 54);
+        map.put(ChatColor.DARK_RED + "TARDIS Interior Sounds", 18);
+        map.put(ChatColor.DARK_RED + "TARDIS Key Prefs Menu", 27);
+        map.put(ChatColor.DARK_RED + "TARDIS Map", 54);
+        map.put(ChatColor.DARK_RED + "TARDIS Seeds Menu", 90);
+        map.put(ChatColor.DARK_RED + "TARDIS Seeds Recipe", 90);
+        map.put(ChatColor.DARK_RED + "TARDIS Upgrade Menu", 54);
+        map.put(ChatColor.DARK_RED + "TARDIS Wall & Floor Menu", 90);
+        map.put(ChatColor.DARK_RED + "TARDIS Wall Menu", 54);
+        map.put(ChatColor.DARK_RED + "TARDIS Weather Menu", 9);
+        map.put(ChatColor.DARK_RED + "TARDIS Areas", 90);
+        map.put(ChatColor.DARK_RED + "TARDIS Saves", 90);
+        map.put(ChatColor.DARK_RED + "TARDIS Transmats", 90);
+        map.put(ChatColor.DARK_RED + "Temporal Locator", 27);
+        for (Storage s : Storage.values()) {
+            map.put(s.getTitle(), 54);
+        }
+        return map;
+    }
 }

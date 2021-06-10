@@ -19,7 +19,6 @@ creation:
   default_world_name: TARDIS_TimeVortex
   tips_limit: 400
   border_radius: 256
-  gamemode: survival
   keep_night: true
   inventory_group: 0
   add_perms: true
@@ -36,7 +35,6 @@ police_box:
   materialise: true
   confirm_timeout: 15
   sign_colour: WHITE
-  set_biome: true
   rebuild_cooldown: 10000
 # travel settings
 travel:
@@ -203,3 +201,4 @@ conversions:
   bind: true
   icons: true
   datapacks: true
+  restore_biomes: true

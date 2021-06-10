@@ -46,56 +46,56 @@ public class TARDISBindCommands implements CommandExecutor {
 		this.plugin = plugin;
 	}
 
-	@Override
-	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("tardisbind")) {
-			if (!TARDISPermission.hasPermission(sender, "tardis.update")) {
-				TARDISMessage.send(sender, "NO_PERMS");
-				return false;
-			}
-			Player player = null;
-			if (sender instanceof Player) {
-				player = (Player) sender;
-			}
-			if (player == null) {
-				TARDISMessage.send(sender, "CMD_PLAYER");
-				return false;
-			}
-			if (args.length < 2) {
-				TARDISMessage.send(player, "TOO_FEW_ARGS");
-				new TARDISCommandHelper(plugin).getCommand("tardisbind", sender);
-				return false;
-			}
-			Bind bind;
-			try {
-				bind = Bind.valueOf(args[1].toUpperCase());
-			} catch (IllegalArgumentException e) {
-				TARDISMessage.send(player, "BIND_NOT_VALID");
-				return false;
-			}
-			ResultSetTardisID rs = new ResultSetTardisID(plugin);
-			if (!rs.fromUUID(player.getUniqueId().toString())) {
-				TARDISMessage.send(player, "NOT_A_TIMELORD");
-				return false;
-			}
-			int id = rs.getTardisId();
-			HashMap<String, Object> wheret = new HashMap<>();
-			wheret.put("uuid", player.getUniqueId().toString());
-			ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-			if (!rst.resultSet()) {
-				TARDISMessage.send(player, "NOT_IN_TARDIS");
-				return false;
-			}
-			if (args[0].equalsIgnoreCase("add")) {
-				if (args.length < bind.getArgs()) {
-					TARDISMessage.send(player, "TOO_FEW_ARGS");
-					return false;
-				}
-				return new BindAdd(plugin).setClick(bind, player, id, args);
-			} else if (args[0].equalsIgnoreCase("remove")) {
-				return new BindRemove(plugin).setClick(bind, player);
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        if (cmd.getName().equalsIgnoreCase("tardisbind")) {
+            if (!TARDISPermission.hasPermission(sender, "tardis.update")) {
+                TARDISMessage.send(sender, "NO_PERMS");
+                return false;
+            }
+            Player player = null;
+            if (sender instanceof Player) {
+                player = (Player) sender;
+            }
+            if (player == null) {
+                TARDISMessage.send(sender, "CMD_PLAYER");
+                return false;
+            }
+            if (args.length < 2) {
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                new TARDISCommandHelper(plugin).getCommand("tardisbind", sender);
+                return false;
+            }
+            Bind bind;
+            try {
+                bind = Bind.valueOf(args[1].toUpperCase());
+            } catch (IllegalArgumentException e) {
+                TARDISMessage.send(player, "BIND_NOT_VALID");
+                return false;
+            }
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            if (!rs.fromUUID(player.getUniqueId().toString())) {
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                return false;
+            }
+            int id = rs.getTardisId();
+            HashMap<String, Object> wheret = new HashMap<>();
+            wheret.put("uuid", player.getUniqueId().toString());
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+            if (!rst.resultSet()) {
+                TARDISMessage.send(player, "NOT_IN_TARDIS");
+                return false;
+            }
+            if (args[0].equalsIgnoreCase("add")) {
+                if (args.length < bind.getArgs()) {
+                    TARDISMessage.send(player, "TOO_FEW_ARGS");
+                    return false;
+                }
+                return new BindAdd(plugin).setClick(bind, player, id, args);
+            } else if (args[0].equalsIgnoreCase("remove")) {
+                return new BindRemove(plugin).setClick(bind, player);
+            }
+        }
+        return false;
+    }
 }

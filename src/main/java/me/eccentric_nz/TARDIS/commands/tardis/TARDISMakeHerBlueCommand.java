@@ -118,11 +118,11 @@ class TARDISMakeHerBlueCommand {
 			return true;
 		}
 		plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
-		// set the preset to NEW
+		// set the preset to POLICE_BOX_BLUE
 		HashMap<String, Object> wherep = new HashMap<>();
 		wherep.put("tardis_id", id);
 		HashMap<String, Object> set = new HashMap<>();
-		set.put("chameleon_preset", "NEW");
+		set.put("chameleon_preset", "POLICE_BOX_BLUE");
 		plugin.getQueryFactory().doUpdate("tardis", set, wherep);
 		BuildData bd = new BuildData(uuid.toString());
 		bd.setDirection(rsc.getDirection());

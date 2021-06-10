@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis;
 
 import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
 import me.eccentric_nz.tardis.commands.TARDISTravelCommands;
-import me.eccentric_nz.tardis.commands.admin.TARDISAdminCommands;
+import me.eccentric_nz.tardis.commands.config.TARDISConfigCommand;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import me.eccentric_nz.tardis.listeners.TARDISRenderRoomListener;
 import me.eccentric_nz.tardis.move.TARDISDoorListener;
@@ -55,6 +55,7 @@ public class TARDISGeneralInstanceKeeper {
 	private final HashMap<String, String> sign_lookup;
 	private final HashMap<UUID, TARDISCondenserData> roomCondenserData = new HashMap<>();
 	private final Set<Material> transparent;
+	private final Set<Block> artronFurnaces = new HashSet<>();
 	private final Set<Block> doorPistons = new HashSet<>();
 	private final List<BlockFace> blockFaces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST, BlockFace.UP, BlockFace.DOWN);
 	private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
@@ -76,7 +77,7 @@ public class TARDISGeneralInstanceKeeper {
 	private List<String> quotes = new ArrayList<>();
 	private Location junkDestination = null;
 	private long junkTime;
-	private TARDISAdminCommands tardisAdminCommand;
+	private TARDISConfigCommand tardisConfigCommand;
 	private TARDISRenderRoomListener rendererListener;
 	private TARDISTravelCommands tardisTravelCommand;
 
@@ -104,6 +105,10 @@ public class TARDISGeneralInstanceKeeper {
 
 	public void setQuotes(ArrayList<String> quotes) {
 		this.quotes = quotes;
+	}
+
+	public Set<Block> getArtronFurnaces() {
+		return artronFurnaces;
 	}
 
 	public List<BlockFace> getFaces() {
@@ -166,12 +171,12 @@ public class TARDISGeneralInstanceKeeper {
 		return doorPistons;
 	}
 
-	public TARDISAdminCommands getTardisAdminCommand() {
-		return tardisAdminCommand;
+	public TARDISConfigCommand getTardisConfigCommand() {
+		return tardisConfigCommand;
 	}
 
-	void setTardisAdminCommand(TARDISAdminCommands tardisAdminCommand) {
-		this.tardisAdminCommand = tardisAdminCommand;
+	void setTardisConfigCommand(TARDISConfigCommand tardisConfigCommand) {
+		this.tardisConfigCommand = tardisConfigCommand;
 	}
 
 	public TARDISDoorListener getDoorListener() {

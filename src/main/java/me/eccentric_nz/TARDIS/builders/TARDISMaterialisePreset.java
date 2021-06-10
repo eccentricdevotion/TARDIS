@@ -35,9 +35,11 @@ import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
-import org.bukkit.block.data.*;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Lightable;
+import org.bukkit.block.data.Rotatable;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
@@ -174,12 +176,10 @@ class TARDISMaterialisePreset implements Runnable {
 					plugin.getTrackerKeeper().getRescue().remove(bd.getTardisId());
 				}
 				// first run - remember blocks
-				boolean isPoliceBox = preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD);
+				boolean isAdaptive = preset.equals(PRESET.ADAPTIVE);
 				boolean isAdaptiveFactory = preset.equals(PRESET.FACTORY) && adapt.equals(Adaption.BIOME);
 				boolean isJunk = preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.JUNK);
 				if (i == 1) {
-					// if configured and it's a Whovian preset set biome
-					setBiome(bd.useTexture(), true);
 					if (bd.isOutside()) {
 						if (!bd.useMinecartSounds()) {
 							String sound;
@@ -318,7 +318,7 @@ class TARDISMaterialisePreset implements Runnable {
 																					   yy), zz, party, bd.getTardisId());
 									break;
 								case BLUE_WOOL:
-									BlockData old = (isPoliceBox && adapt.equals(Adaption.BLOCK)) ? data : colData[yy];
+									BlockData old = (isAdaptive && adapt.equals(Adaption.BLOCK)) ? data : colData[yy];
 									TARDISBlockSetters.setBlockAndRemember(world, xx, (y +
 																					   yy), zz, old, bd.getTardisId());
 									break;
@@ -702,16 +702,8 @@ class TARDISMaterialisePreset implements Runnable {
 								TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, party);
 								break;
 							case BLUE_WOOL:
-								if (adapt.equals(Adaption.OFF) && isPoliceBox && bd.shouldUseCTM() &&
-									n == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 &&
-									plugin.getConfig().getBoolean("police_box.set_biome")) {
-									// set an observer block instead
-									Directional directional = (Directional) Material.OBSERVER.createBlockData();
-									directional.setFacing(BlockFace.valueOf(bd.getDirection().toString()));
-									TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, directional);
-								} else if (adapt.equals(Adaption.BLOCK) &&
-										   (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) ||
-											preset.equals(PRESET.SUBMERGED))) {
+								if (adapt.equals(Adaption.BLOCK) &&
+									(preset.equals(PRESET.ADAPTIVE) || preset.equals(PRESET.SUBMERGED))) {
 									TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, data);
 								} else {
 									TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, mat);
@@ -789,7 +781,7 @@ class TARDISMaterialisePreset implements Runnable {
 								TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chal);
 								break;
 							case BLUE_STAINED_GLASS:
-								Material chad = ((preset.equals(PRESET.OLD) && adapt.equals(Adaption.BLOCK)) ||
+								Material chad = ((preset.equals(PRESET.ADAPTIVE) && adapt.equals(Adaption.BLOCK)) ||
 												 preset.equals(PRESET.SUBMERGED)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(data.getMaterial()) : mat;
 								TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chad);
 								break;
@@ -834,8 +826,6 @@ class TARDISMaterialisePreset implements Runnable {
 					saveJunkControl(location, "handbrake");
 					// set handbrake to on ?
 				}
-				// just in case
-				setBiome(bd.useTexture(), false);
 				// remove trackers
 				plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisId()));
 				plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisId()));
@@ -891,13 +881,6 @@ class TARDISMaterialisePreset implements Runnable {
 					TARDISBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisId());
 				}
 			}
-		}
-	}
-
-	private void setBiome(boolean pp, boolean umbrella) {
-		if (plugin.getConfig().getBoolean("police_box.set_biome") &&
-			(preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && pp) {
-			BiomeSetter.setBiome(bd, umbrella, loops);
 		}
 	}
 

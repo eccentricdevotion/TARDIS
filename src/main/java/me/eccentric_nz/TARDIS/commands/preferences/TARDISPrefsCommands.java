@@ -60,7 +60,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
 		firstArgs.add("auto_siege");
 		firstArgs.add("beacon");
 		firstArgs.add("build");
-		firstArgs.add("ctm");
 		firstArgs.add("difficulty");
 		firstArgs.add("dnd");
 		firstArgs.add("eps");
@@ -68,7 +67,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
 		firstArgs.add("farm");
 		firstArgs.add("flight");
 		firstArgs.add("floor");
-		firstArgs.add("font");
 		firstArgs.add("forcefield");
 		firstArgs.add("hads");
 		firstArgs.add("hads_type");
@@ -81,7 +79,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
 		firstArgs.add("lanterns");
 		firstArgs.add("lock_containers");
 		firstArgs.add("minecart");
-		firstArgs.add("policebox_textures");
 		firstArgs.add("quotes");
 		firstArgs.add("renderer");
 		firstArgs.add("sfx");
@@ -129,7 +126,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
 						// open sonic prefs menu
 						ItemStack[] keys = new TARDISKeyMenuInventory().getMenu();
 						Inventory sim = plugin.getServer().createInventory(player, 27,
-								ChatColor.DARK_RED + "tardis Key Prefs Menu");
+								ChatColor.DARK_RED + "TARDIS Key Prefs Menu");
 						sim.setContents(keys);
 						player.openInventory(sim);
 						return true;
@@ -183,7 +180,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
 											return true;
 										}
 										if (TARDISForceField.addToTracker(player)) {
-											TARDISMessage.send(player, "PREF_WAS_ON", "The tardis force field");
+											TARDISMessage.send(player, "PREF_WAS_ON", "The TARDIS force field");
 										}
 									} else {
 										TARDISMessage.send(player, "POWER_LEVEL");
@@ -191,15 +188,18 @@ public class TARDISPrefsCommands implements CommandExecutor {
 									}
 								} else {
 									plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
-									TARDISMessage.send(player, "PREF_WAS_OFF", "The tardis force field");
+									TARDISMessage.send(player, "PREF_WAS_OFF", "The TARDIS force field");
 								}
 								return true;
 							}
-							return switch (pref) {
-								case "build" -> new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
-								case "junk" -> new TARDISJunkPreference(plugin).toggle(player, args[1]);
-								default -> new TARDISToggleOnOffCommand(plugin).toggle(player, args);
-							};
+							switch (pref) {
+								case "build":
+									return new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
+								case "junk":
+									return new TARDISJunkPreference(plugin).toggle(player, args[1]);
+								default:
+									return new TARDISToggleOnOffCommand(plugin).toggle(player, args);
+							}
 					}
 				} else {
 					TARDISMessage.send(player, "NO_PERMS");

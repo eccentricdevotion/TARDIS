@@ -18,9 +18,9 @@ package me.eccentric_nz.tardis.listeners;
 
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.arch.TARDISArchPersister;
+import me.eccentric_nz.tardis.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
 import me.eccentric_nz.tardis.artron.TARDISLampToggler;
-import me.eccentric_nz.tardis.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -28,6 +28,7 @@ import me.eccentric_nz.tardis.enumeration.PRESET;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -49,7 +50,18 @@ public class TARDISQuitListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		UUID uuid = event.getPlayer().getUniqueId();
+		Player player = event.getPlayer();
+		UUID uuid = player.getUniqueId();
+		// remove if Junk TARDIS traveller
+		if (plugin.getGeneralKeeper().getJunkTravellers().contains(uuid)) {
+			// check if they are in the vortex
+			if (plugin.getUtils().inTARDISWorld(player)) {
+				// set their location to the junk TARDISes destination
+				plugin.getTrackerKeeper().getJunkRelog().put(uuid, plugin.getGeneralKeeper().getJunkDestination());
+			}
+			plugin.getGeneralKeeper().getJunkTravellers().remove(uuid);
+		}
+		// if
 		// forget the players Police Box chunk
 		HashMap<String, Object> wherep = new HashMap<>();
 		wherep.put("uuid", uuid.toString());
@@ -85,11 +97,11 @@ public class TARDISQuitListener implements Listener {
 					// if hidden, rebuild
 					if (hidden) {
 						plugin.getServer().dispatchCommand(plugin.getConsole(),
-								"tardisremote " + event.getPlayer().getName() + " rebuild");
+								"tardisremote " + player.getName() + " rebuild");
 						delay = 20L;
 					}
-					if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
+					if (preset.equals(PRESET.ADAPTIVE)) {
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), delay);
 					}
 					// if lights are on, turn them off
 					if (lights) {

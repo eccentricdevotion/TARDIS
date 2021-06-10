@@ -17,7 +17,6 @@
 package me.eccentric_nz.tardis.commands.remote;
 
 import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
@@ -35,7 +34,6 @@ import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -80,7 +78,7 @@ class TARDISRemoteTravelCommand {
 			Location exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
 			COMPASS sd = rsn.getDirection();
 			// Removes Blue Box and loads chunk if it unloaded somehow
-			if (!Objects.requireNonNull(exit.getWorld()).isChunkLoaded(exit.getChunk())) {
+			if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
 				exit.getWorld().loadChunk(exit.getChunk());
 			}
 			HashMap<String, Object> set = new HashMap<>();
@@ -103,8 +101,6 @@ class TARDISRemoteTravelCommand {
 					// set hidden false!
 					set.put("hidden", 0);
 					plugin.getPresetDestroyer().removeBlockProtection(id);
-					// restore biome
-					BiomeSetter.restoreBiome(l, biome);
 				}
 			}
 			long delay = (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 1L : 500L;

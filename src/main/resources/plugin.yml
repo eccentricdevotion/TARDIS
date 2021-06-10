@@ -1,17 +1,17 @@
-authors: [eccentric_nz]
-main: me.eccentric_nz.tardis.TARDIS
-name: TARDIS
+authors: [ eccentric_nz ]
 description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations - it's bigger on the inside!
-version: maven-version-number
-build-number: maven-build-number
-api-version: 1.16
+main: me.eccentric_nz.TARDIS.TARDIS
+name: TARDIS
+load: POSTWORLD
+loadbefore: [ ItemSlotMachine ]
+depend: [ TARDISChunkGenerator ]
+softdepend: [ Blocklocker,CoreProtect,dynmap,Essentials,Factions,GriefPrevention,LibsDisguises,Lockette,LockettePro,LWC,MultiInv,Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My_Worlds,PerWorldInventory,PlaceholderAPI,RedProtect,TARDISWeepingAngels,Towny,WorldBorder,WorldGuard ]
 website: http://tardisjenkins.duckdns.org:8080/job/TARDIS/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://eccentricdevotion.github.io/TARDIS/
-load: POSTWORLD
-loadbefore: [ItemSlotMachine]
-depend: [TARDISHelper]
-softdepend: [Blocklocker,CoreProtect,dynmap,Essentials,Factions,GriefPrevention,LibsDisguises,Lockette,LockettePro,LWC,MultiInv,Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,My_Worlds,PerWorldInventory,PlaceholderAPI,RedProtect,TARDISShop,TARDISShopDoor,TARDISSonicBlaster,TARDISVortexManipulator,TARDISWeepingAngels,Towny,WorldBorder,WorldGuard]
+version: maven-version-number
+build-number: maven-build-number
+api-version: 1.16
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
@@ -415,6 +415,9 @@ permissions:
   tardis.upgrade:
     description: Allows a player to upgrade their TARDIS.
     default: op
+  tardis.furnace:
+    description: Allows a player to have a TARDIS Artron Furnace.
+    default: op
   tardis.acid.bypass:
     description: Allows a player to not dissolve in the Skaro planet's acid water.
     default: false
@@ -497,7 +500,7 @@ permissions:
 commands:
   tardis:
     aliases: tt
-    description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, etc).
+    description: Manipulate TARDISs (TARDISes?) with various arguments (list, save, find, help, etc).
     bell:
       description: Toggle the TARDIS Cloister Bell on and off.
       usage: /<command> bell [on|off]
@@ -656,7 +659,7 @@ commands:
       description: Allows a player to change the colour of their TARDIS beacon glass with a Sonic Screwdriver.
       usage: /<command> colourise
       permission: tardis.upgrade
-      aliases: [colorize]
+      aliases: [ colorize ]
     cube:
       description: Show a list of players who are carrying a Siege Cube.
       usage: /<command> cube
@@ -665,7 +668,7 @@ commands:
       description: Open the Desktop Theme GUI.
       usage: /<command> desktop
       permission: tardis.upgrade
-      aliases: [theme,upgrade]
+      aliases: [ theme,upgrade ]
     eject:
       description: Allows a player to eject entities from their TARDIS.
       usage: /<command> eject
@@ -765,16 +768,13 @@ commands:
       permission: tardis.timetravel
   tardisadmin:
     aliases: tadmin
-    description: Set TARDIS configuration options and perform TARDIS administration tasks.
-    usage: /<command> [option] [value]
+    description: Perform TARDIS administration tasks.
+    usage: /<command> [sub command] [...]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
     list:
-      description: List all TARDISs and their locations.
-      usage: /<command> list
-    reload:
-      description: Reload the TARDIS config from disk.
-      usage: /<command> reload
+      description: List TARDISs and their locations (or save them to file), plus list open portals / abandoned TARDISes.
+      usage: /<command> list [page no.|save|portals|abandoned]
     chunks:
       description: List chunks that are being kept loaded by TARDIS.
       usage: /<command> chunks
@@ -796,12 +796,6 @@ commands:
     desiege:
       description: Force a player's TARDIS out of Siege Mode.
       usage: /<command> desiege [player]
-    include:
-      description: Set whether the specified world is included in time travel destinations.
-      usage: /<command> include [world]
-    exclude:
-      description: Set whether the specified world is excluded from time travel destinations.
-      usage: /<command> exclude [world]
     arch:
       description: View an 'arched' player's real name, or with the 'force' argument, toggle arch status.
       usage: /<command> arch [player] (force)
@@ -815,16 +809,46 @@ commands:
       description: Check or set a player's TARDIS count.
       usage: /<command> playercount [player] [count]
     assemble:
-      description: Make a player's TARDIS reassemble itself after a HADS dispersal.
-      usage: /<command> assemble [player]
+      description: Clear HADS dispersal trackers or list dispered TARDISes.
+      usage: /<command> assemble [clear|list]
     convert_database:
       description: Convert an SQLite database to MySQL.
       usage: /<command> convert_database
+  tardisconfig:
+    aliases: tconfig
+    description: Set TARDIS configuration options and world inclusion.
+    usage: /<command> [option] [value]
+    permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
+    options:
+      description: List the TARDIS config options and values in chat.
+      usage: /<command> options
+    reload:
+      description: Reload the TARDIS config from disk.
+      usage: /<command> reload [config name]
+    include:
+      description: Set whether the specified world is included in time travel destinations.
+      usage: /<command> include [world]
+    exclude:
+      description: Set whether the specified world is excluded from time travel destinations.
+      usage: /<command> exclude [world]
+  tardisdev:
+    aliases: tdev
+    description: Commands used by eccentric_nz to help with coding and documenting the TARDIS plugin.
+    usage: /<command> [add_regions|advancements|tree|list] [preset_perms|perms|recipes|blueprints]
+    permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
   tardisgive:
     aliases: tgive
-    description: Give TARDIS items or Artron energy to a player.
-    usage: /<command> [player] [item|artron] [amount]
+    description: Give TARDIS items, Artron energy, Seed blocks, kits, knowledge books, recipe discoveries or mushroom blocks to a player.
+    usage: /<command> [player] [item|artron|kit|seed|knowledge|recipe|mushroom] [amount|recipe|...]
     permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
+  tardissudo:
+    aliases: [ tsudo ]
+    description: Used by TARDIS admins to run commands as another Time Lord or fix players' TARDISes.
+    permission: tardis.admin
+    usage: /<command> [player] [ars|assemble|back|chameleon|clean|comehere|deadlock|desiege|handbrake|hide|isomorphic|rebuild|repair|travel|update] [...]
     permission-message: You don't have the permission <permission> to use this command
   tardisroom:
     aliases: troom
@@ -906,9 +930,6 @@ commands:
     beacon:
       description: Toggle whether the TARDIS beacon is only on while travelling.
       usage: /<command> beacon [on|off]
-    ctm:
-      description: Toggle the Police Box telephone sign on and off.
-      usage: /<command> ctm [on|off]
     difficulty:
       description: Change your personal difficulty level.
       usage: /<command> difficulty [easy|medium|hard]
@@ -942,9 +963,6 @@ commands:
     minecart:
       description: Toggle default Minecraft SFX on and off.
       usage: /<command> minecart [on|off]
-    policebox_textures:
-      description: Toggle Police Box textures on and off.
-      usage: /<command> policebox_textures [on|off]
     renderer:
       description: Toggle entering the Renderer room after scanning on and off.
       usage: /<command> renderer [on|off]
@@ -975,9 +993,6 @@ commands:
     forcefield:
       description: Toggle the TARDIS forcefield on and off.
       usage: /<command> forcefield [on|off]
-    font:
-      description: Toggle whether to use the TARDIS-Resource-Pack unicode space font on and off.
-      usage: /<command> font [on|off]
   tardisarea:
     aliases: tarea
     description: Set up predefined TARDIS travel areas.
@@ -1110,11 +1125,11 @@ commands:
   tardisremote:
     aliases: tremote
     description: Remote control a TARDIS.
-    usage: /<command> [player] [travel|comehere|chameleon|hide|rebuild] [home|area|coords]
+    usage: /<command> [player] [travel|comehere|hide|rebuild|back] [home|area|coords]
     permission: tardis.remote
     permission-message: You don't have the permission <permission> to use this command
   tardisschematic:
-    aliases: [tschematic, ts]
+    aliases: [ tschematic, ts ]
     description: Save, load or paste a TARDIS schematic.
     usage: /<command> [save|load|paste|clear] [name]
     save:
@@ -1135,7 +1150,7 @@ commands:
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisnetherportal:
-    aliases: [tnetherportal, tnp]
+    aliases: [ tnetherportal, tnp ]
     description: Get coordinates for linking Nether Portals.
     usage: /<command> <[x] [y] [z] [overworld|nether]>
     permission: tardis.help
@@ -1166,11 +1181,11 @@ commands:
       permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   'tardis?':
-    aliases: ['t?', tardishelp]
+    aliases: [ 't?', tardishelp ]
     description: Get help with TARDIS commands.
     usage: /<command> [command] [argument]
   handles:
-    aliases: [tardishandles, thandles]
+    aliases: [ tardishandles, thandles ]
     description: These commands are used by the console to enable the Handles companion.
     usage: /<command> disk [disk name]
     takeoff:
@@ -1210,7 +1225,7 @@ commands:
       permission: tardis.handles.use
     permission-message: You don't have the permission <permission> to use this command
   tardisteleport:
-    aliases: [tardistp, ttp]
+    aliases: [ tardistp, ttp ]
     description: Teleport to a world's spawn point
     usage: /<command> [world]
     permission: tardis.admin
@@ -1222,7 +1237,7 @@ commands:
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisgamemode:
-    aliases: [tgm, tgms, tgmc, tgma, tgmsp]
+    aliases: [ tgm, tgms, tgmc, tgma, tgmsp ]
     description: Set a player's gamemode
     usage: /<command> [GameMode] <player>
     permission: tardis.admin
@@ -1272,12 +1287,6 @@ commands:
     description: Internal command used by the TARDIS Information System.
     usage: /<command> [letter]
     permission: tardis.help
-    permission-message: You don't have the permission <permission> to use this command
-  tardissudo:
-    aliases: [tsudo]
-    description: Used by TARDIS admins to run commands as another Time Lord. Currently only works for the /tardis theme [clean|repair] command.
-    permission: tardis.admin
-    usage: /<command> [player|off] [isomorphic|deadlock]
     permission-message: You don't have the permission <permission> to use this command
   tardisweather:
     aliases: tweather

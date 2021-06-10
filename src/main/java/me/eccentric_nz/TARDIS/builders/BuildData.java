@@ -26,19 +26,13 @@ import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
  */
 public final class BuildData extends MaterialisationData {
 
-	private boolean CTM = true;
 	private boolean addSign = true;
 	private boolean malfunction;
 	private boolean minecartSounds = false;
 	private boolean rebuild;
-	private boolean texture = true;
 
 	public BuildData(String uuid) {
 		setPlayerDefaults(uuid);
-	}
-
-	boolean shouldUseCTM() {
-		return CTM;
 	}
 
 	boolean shouldAddSign() {
@@ -65,27 +59,15 @@ public final class BuildData extends MaterialisationData {
 		this.rebuild = rebuild;
 	}
 
-	boolean useTexture() {
-		return texture;
-	}
-
-	public void setTexture(boolean texture) {
-		this.texture = texture;
-	}
-
-	public void setPlayerDefaults(String uuid) {
+	private void setPlayerDefaults(String uuid) {
 		if (uuid == null) {
 			// sane defaults
-			texture = TARDISPlugin.plugin.getConfig().getBoolean("police_box.set_biome");
 			addSign = true;
-			CTM = true;
 			minecartSounds = false;
 		} else {
 			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDISPlugin.plugin, uuid);
 			if (rsp.resultSet()) {
-				texture = rsp.isPoliceBoxTexturesOn();
 				addSign = rsp.isSignOn();
-				CTM = rsp.isCtmOn();
 				minecartSounds = rsp.isMinecartOn();
 			}
 		}

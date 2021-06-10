@@ -18,6 +18,7 @@ package me.eccentric_nz.tardis.blueprints;
 
 public enum BlueprintPreset {
 
+	ADAPTIVE("tardis.preset.adaptive"),
 	ANDESITE("tardis.preset.andesite"),
 	ANGEL("tardis.preset.angel"),
 	APPERTURE("tardis.preset.apperture"),
@@ -43,8 +44,6 @@ public enum BlueprintPreset {
 	LIGHTHOUSE("tardis.preset.lighthouse"),
 	MINESHAFT("tardis.preset.mineshaft"),
 	NETHER("tardis.preset.nether"),
-	NEW("tardis.preset.new"),
-	OLD("tardis.preset.old"),
 	PANDORICA("tardis.preset.pandorica"),
 	PARTY("tardis.preset.party"),
 	PEANUT("tardis.preset.peanut"),

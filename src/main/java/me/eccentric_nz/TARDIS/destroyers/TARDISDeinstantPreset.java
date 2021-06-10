@@ -18,7 +18,6 @@ package me.eccentric_nz.tardis.destroyers;
 
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.builders.MaterialisationData;
 import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
@@ -75,7 +74,6 @@ public class TARDISDeinstantPreset {
 		}
 		World w = l.getWorld();
 		// make sure chunk is loaded
-		assert w != null;
 		Chunk chunk = w.getChunkAt(l);
 		while (!chunk.isLoaded()) {
 			chunk.load();
@@ -83,7 +81,8 @@ public class TARDISDeinstantPreset {
 		if (preset.usesItemFrame()) {
 			// remove item frame
 			for (Entity e : w.getNearbyEntities(dd.getLocation(), 1.0d, 1.0d, 1.0d)) {
-				if (e instanceof ItemFrame frame) {
+				if (e instanceof ItemFrame) {
+					ItemFrame frame = (ItemFrame) e;
 					frame.setItem(null, false);
 					frame.remove();
 				}
@@ -100,11 +99,6 @@ public class TARDISDeinstantPreset {
 				sby = l.getBlockY();
 			}
 			int sbz = l.getBlockZ() - 1;
-			// reset biome and it's not The End
-			if (!BiomeSetter.restoreBiome(l, biome)) {
-				// remove TARDIS from tracker
-				plugin.getTrackerKeeper().getDematerialising().remove(id);
-			}
 			// remove problem blocks first
 			switch (preset) {
 				case GRAVESTONE:
@@ -113,22 +107,22 @@ public class TARDISDeinstantPreset {
 					int flowery = (l.getBlockY() + 1);
 					int flowerz;
 					switch (d) {
-						case NORTH -> {
+						case NORTH:
 							flowerx = l.getBlockX();
 							flowerz = l.getBlockZ() + 1;
-						}
-						case WEST -> {
+							break;
+						case WEST:
 							flowerx = l.getBlockX() + 1;
 							flowerz = l.getBlockZ();
-						}
-						case SOUTH -> {
+							break;
+						case SOUTH:
 							flowerx = l.getBlockX();
 							flowerz = l.getBlockZ() - 1;
-						}
-						default -> {
+							break;
+						default:
 							flowerx = l.getBlockX() - 1;
 							flowerz = l.getBlockZ();
-						}
+							break;
 					}
 					TARDISBlockSetters.setBlock(w, flowerx, flowery, flowerz, Material.AIR);
 					break;
@@ -205,8 +199,6 @@ public class TARDISDeinstantPreset {
 			BlockData blockData = plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
 			siege.setBlockData(blockData);
 		}
-		// refresh chunk
-		plugin.getTardisHelper().refreshChunk(chunk);
 		plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(id));
 		plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(id));
 	}

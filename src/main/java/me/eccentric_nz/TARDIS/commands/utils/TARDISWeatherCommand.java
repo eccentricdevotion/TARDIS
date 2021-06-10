@@ -37,61 +37,65 @@ import java.util.List;
 
 public class TARDISWeatherCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
-	private final TARDISPlugin plugin;
-	private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("clear", "c", "rain", "r", "thunder", "t", "sun", "s");
+    private final TARDISPlugin plugin;
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("clear", "c", "rain", "r", "thunder", "t", "sun", "s");
 
-	public TARDISWeatherCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISWeatherCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@Override
-	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("tardisweather")) {
-			if (args.length < 1) {
-				TARDISMessage.send(sender, "TOO_FEW_ARGS");
-				return true;
-			}
-			Player player;
-			if (sender instanceof Player) {
-				player = (Player) sender;
-				Location location = player.getLocation();
-				World world = location.getWorld();
-				if (plugin.getUtils().inTARDISWorld(player)) {
-					// get TARDIS player is in
-					int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player);
-					// get current TARDIS location
-					HashMap<String, Object> where = new HashMap<>();
-					where.put("tardis_id", id);
-					ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
-					if (rsc.resultSet()) {
-						world = rsc.getWorld();
-					} else {
-						// can't change weather in TARDIS world
-						TARDISMessage.send(player, "WEATHER_TARDIS");
-						return true;
-					}
-				}
-				Weather weather = Weather.fromString(args[0]);
-				String perm = weather.toString().toLowerCase();
-				if (!TARDISPermission.hasPermission(player, "tardis.weather." + perm)) {
-					TARDISMessage.send(sender, "NO_PERMS");
-					return true;
-				}
-				TARDISWeather.setWeather(world, weather);
-				TARDISMessage.send(player, "WEATHER_SET", perm);
-			} else {
-				TARDISMessage.send(sender, "CMD_PLAYER");
-			}
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        if (cmd.getName().equalsIgnoreCase("tardisweather")) {
+            if (args.length < 1) {
+                TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                return true;
+            }
+            Player player;
+            if (sender instanceof Player) {
+                player = (Player) sender;
+                if (player == null) {
+                    TARDISMessage.send(sender, "CMD_PLAYER");
+                    return true;
+                }
+                Location location = player.getLocation();
+                World world = location.getWorld();
+                if (plugin.getUtils().inTARDISWorld(player)) {
+                    // get TARDIS player is in
+                    int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player);
+                    // get current TARDIS location
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("tardis_id", id);
+                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
+                    if (rsc.resultSet()) {
+                        world = rsc.getWorld();
+                    } else {
+                        // can't change weather in TARDIS world
+                        TARDISMessage.send(player, "WEATHER_TARDIS");
+                        return true;
+                    }
+                }
+                Weather weather = Weather.fromString(args[0]);
+                String perm = weather.toString().toLowerCase();
+                if (!TARDISPermission.hasPermission(player, "tardis.weather." + perm)) {
+                    TARDISMessage.send(sender, "NO_PERMS");
+                    return true;
+                }
+                TARDISWeather.setWeather(world, weather);
+                TARDISMessage.send(player, "WEATHER_SET", perm);
+            } else {
+                TARDISMessage.send(sender, "CMD_PLAYER");
+            }
+            return true;
+        }
+        return false;
+    }
 
-	@Override
-	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-		if (args.length == 1) {
-			return partial(args[0], ROOT_SUBS);
-		}
-		return ImmutableList.of();
-	}
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        if (args.length == 1) {
+            return partial(args[0], ROOT_SUBS);
+        }
+        return ImmutableList.of();
+    }
 }

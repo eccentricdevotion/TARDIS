@@ -22,7 +22,6 @@ import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
-import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
@@ -45,25 +44,24 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.UUID;
 
 /**
  * @author eccentric_nz
  */
-class TARDISRemoteComehereCommand {
+public class TARDISRemoteComehereCommand {
 
 	private final TARDISPlugin plugin;
 
-	TARDISRemoteComehereCommand(TARDISPlugin plugin) {
+	public TARDISRemoteComehereCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
-	boolean doRemoteComeHere(Player player, UUID uuid) {
+	public boolean doRemoteComeHere(Player player, UUID uuid) {
 		Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
 		if (!plugin.getConfig().getBoolean("travel.include_default_world") &&
 			plugin.getConfig().getBoolean("creation.default_world") &&
-			Objects.requireNonNull(eyeLocation.getWorld()).getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
+			eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
 			TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 			return true;
 		}
@@ -81,7 +79,7 @@ class TARDISRemoteComehereCommand {
 			eyeLocation.setY(yplusone + 1);
 		}
 		// check the world is not excluded
-		String world = Objects.requireNonNull(eyeLocation.getWorld()).getName();
+		String world = eyeLocation.getWorld().getName();
 		if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
 			TARDISMessage.send(player, "NO_PB_IN_WORLD");
 			return true;
@@ -136,11 +134,6 @@ class TARDISRemoteComehereCommand {
 			count = TARDISTimeTravel.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), player_d);
 		}
 		Block under = eyeLocation.getBlock().getRelative(BlockFace.DOWN);
-		if (plugin.getPM().isPluginEnabled("Lockette")) {
-			if (LocketteProAPI.isProtected(eyeLocation.getBlock()) || LocketteProAPI.isProtected(under)) {
-				count = 1;
-			}
-		}
 		if (plugin.getPM().isPluginEnabled("LockettePro")) {
 			if (LocketteProAPI.isProtected(eyeLocation.getBlock()) || LocketteProAPI.isProtected(under) ||
 				plugin.getUtils().checkSurrounding(under)) {
@@ -206,8 +199,6 @@ class TARDISRemoteComehereCommand {
 			HashMap<String, Object> ttid = new HashMap<>();
 			ttid.put("tardis_id", id);
 			plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
-			// restore biome
-			BiomeSetter.restoreBiome(oldSave, biome);
 		}
 		plugin.getQueryFactory().doUpdate("current", set, tid);
 		TARDISMessage.send(player, "TARDIS_COMING");

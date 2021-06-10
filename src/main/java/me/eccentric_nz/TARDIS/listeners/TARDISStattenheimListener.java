@@ -23,11 +23,10 @@ import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.tardis.api.Parameters;
+import me.eccentric_nz.tardis.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
 import me.eccentric_nz.tardis.artron.TARDISLampToggler;
-import me.eccentric_nz.tardis.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.*;
@@ -184,7 +183,7 @@ public class TARDISStattenheimListener implements Listener {
 							TARDISMessage.send(player, "NOT_WHILE_MAT");
 							return;
 						}
-						// get tardis's current location
+						// get TARDIS's current location
 						HashMap<String, Object> wherecl = new HashMap<>();
 						wherecl.put("tardis_id", tardis.getTardisId());
 						ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -283,8 +282,6 @@ public class TARDISStattenheimListener implements Listener {
 							set.put("hidden", 0);
 							tid.put("tardis_id", id);
 							plugin.getQueryFactory().doUpdate("tardis", set, tid);
-							// restore biome
-							BiomeSetter.restoreBiome(oldSave, biome);
 						}
 						TARDISMessage.send(player, "TARDIS_COMING");
 						long delay = 10L;
@@ -322,7 +319,7 @@ public class TARDISStattenheimListener implements Listener {
 						bd.setThrottle(spaceTimeThrottle);
 						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd),
 								delay * 2);
-						// remove energy from tardis
+						// remove energy from TARDIS
 						HashMap<String, Object> wheret = new HashMap<>();
 						wheret.put("tardis_id", id);
 						plugin.getQueryFactory().alterEnergyLevel("tardis", -ch, wheret, player);
@@ -335,9 +332,9 @@ public class TARDISStattenheimListener implements Listener {
 					// is the power off?
 					if (!power) {
 						ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
-						boolean beaconOn = true;
+						boolean beacon_on = true;
 						if (rsp.resultSet()) {
-							beaconOn = rsp.isBeaconOn();
+							beacon_on = rsp.isBeaconOn();
 						}
 						// power up
 						PRESET preset = tardis.getPreset();
@@ -351,12 +348,12 @@ public class TARDISStattenheimListener implements Listener {
 							new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, tardis.getSchematic().hasLanterns());
 						}
 						// if beacon is off turn it on
-						if (beaconOn) {
+						if (beacon_on) {
 							new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
 						}
 						// police box lamp
-						if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
-							new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, true);
+						if (preset.equals(PRESET.ADAPTIVE)) {
+							new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true);
 						}
 						plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
 					}

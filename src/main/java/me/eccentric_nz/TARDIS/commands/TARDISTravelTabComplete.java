@@ -34,43 +34,43 @@ import java.util.List;
  */
 public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompleter {
 
-	private final List<String> ROOT_SUBS = new ArrayList<>();
-	private final List<String> BIOME_SUBS = new ArrayList<>();
-	private final List<String> AREA_SUBS = new ArrayList<>();
+    private final List<String> ROOT_SUBS = new ArrayList<>();
+    private final List<String> BIOME_SUBS = new ArrayList<>();
+    private final List<String> AREA_SUBS = new ArrayList<>();
 
-	public TARDISTravelTabComplete(TARDISPlugin plugin) {
-		for (Biome bi : org.bukkit.block.Biome.values()) {
-			if (!bi.equals(Biome.THE_VOID)) {
-				BIOME_SUBS.add(bi.toString());
-			}
-		}
-		ROOT_SUBS.addAll(Arrays.asList("home", "biome", "save", "dest", "area", "back", "player", "cave", "village", "random", "cancel", "costs", "stop"));
-		ROOT_SUBS.addAll(plugin.getTardisAPI().getWorlds());
-		ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
-		if (rsa.resultSet()) {
-			AREA_SUBS.addAll(rsa.getNames());
-		}
-	}
+    public TARDISTravelTabComplete(TARDISPlugin plugin) {
+        for (Biome bi : org.bukkit.block.Biome.values()) {
+            if (!bi.equals(Biome.THE_VOID)) {
+                BIOME_SUBS.add(bi.toString());
+            }
+        }
+        ROOT_SUBS.addAll(Arrays.asList("home", "biome", "save", "dest", "area", "back", "player", "cave", "village", "random", "cancel", "costs", "stop"));
+        ROOT_SUBS.addAll(plugin.getTardisAPI().getWorlds());
+        ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
+        if (rsa.resultSet()) {
+            AREA_SUBS.addAll(rsa.getNames());
+        }
+    }
 
-	@Override
-	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-		// Remember that we can return null to default to online player name matching
-		String lastArg = args[args.length - 1];
-		if (args.length <= 1) {
-			List<String> part = partial(args[0], ROOT_SUBS);
-			return (part.size() > 0) ? part : null;
-		} else if (args.length == 2) {
-			String sub = args[0];
-			if (sub.equals("area")) {
-				return partial(lastArg, AREA_SUBS);
-			}
-			if (sub.equals("biome")) {
-				return partial(lastArg, BIOME_SUBS);
-			}
-			if (sub.equals("player")) {
-				return null;
-			}
-		}
-		return ImmutableList.of();
-	}
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        // Remember that we can return null to default to online player name matching
+        String lastArg = args[args.length - 1];
+        if (args.length <= 1) {
+            List<String> part = partial(args[0], ROOT_SUBS);
+            return (part.size() > 0) ? part : null;
+        } else if (args.length == 2) {
+            String sub = args[0];
+            if (sub.equals("area")) {
+                return partial(lastArg, AREA_SUBS);
+            }
+            if (sub.equals("biome")) {
+                return partial(lastArg, BIOME_SUBS);
+            }
+            if (sub.equals("player")) {
+                return null;
+            }
+        }
+        return ImmutableList.of();
+    }
 }

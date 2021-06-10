@@ -73,7 +73,6 @@ public class TARDISChameleonPreset {
 	private final TARDISPartyPreset party;
 	private final TARDISPeanutButterPreset peanut;
 	private final TARDISPineTreePreset pine;
-	private final TARDISPoliceBoxPreset police;
 	private final TARDISPortalPreset portal;
 	private final TARDISPrismarinePreset prismarine;
 	private final TARDISPunkedPreset punked;
@@ -82,7 +81,6 @@ public class TARDISChameleonPreset {
 	private final TARDISSnowmanPreset snowman;
 	private final TARDISSubmergedPreset submerged;
 	private final TARDISSwampPreset swamp;
-	private final TARDISTallerPreset taller;
 	private final TARDISTelephoneBoxPreset telephone;
 	private final TARDISTheEndPreset theend;
 	private final TARDISToiletPreset toilet;
@@ -93,6 +91,7 @@ public class TARDISChameleonPreset {
 	private final TARDISWindmillPreset windmill;
 	private final TARDISYellowSubmarinePreset yellow;
 	// biome adaptive presets
+	private final TARDISAdaptivePreset adaptive;
 	private final TARDISRenderPreset render;
 	private final TARDISExtremeHillsPreset extreme;
 	private final TARDISForestPreset forest;
@@ -141,7 +140,6 @@ public class TARDISChameleonPreset {
 		party = new TARDISPartyPreset();
 		peanut = new TARDISPeanutButterPreset();
 		pine = new TARDISPineTreePreset();
-		police = new TARDISPoliceBoxPreset();
 		portal = new TARDISPortalPreset();
 		prismarine = new TARDISPrismarinePreset();
 		punked = new TARDISPunkedPreset();
@@ -150,7 +148,6 @@ public class TARDISChameleonPreset {
 		snowman = new TARDISSnowmanPreset();
 		submerged = new TARDISSubmergedPreset();
 		swamp = new TARDISSwampPreset();
-		taller = new TARDISTallerPreset();
 		telephone = new TARDISTelephoneBoxPreset();
 		theend = new TARDISTheEndPreset();
 		toilet = new TARDISToiletPreset();
@@ -161,6 +158,7 @@ public class TARDISChameleonPreset {
 		windmill = new TARDISWindmillPreset();
 		yellow = new TARDISYellowSubmarinePreset();
 		custom = new TARDISCustomPreset();
+		adaptive = new TARDISAdaptivePreset();
 		render = new TARDISRenderPreset();
 		extreme = new TARDISExtremeHillsPreset();
 		forest = new TARDISForestPreset();
@@ -175,7 +173,7 @@ public class TARDISChameleonPreset {
 		boat = new TARDISBoatPreset();
 	}
 
-	public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String[][] strings, boolean asymmetric, boolean duck) {
+	static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String[][] strings, boolean asymmetric, boolean duck) {
 		TARDISChameleonColumn tcc;
 		BlockData[][] blockDataArr = getBlockDataFromArray(strings);
 		if (d.equals(COMPASS.EAST)) {
@@ -186,7 +184,7 @@ public class TARDISChameleonPreset {
 		return tcc;
 	}
 
-	public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String json, boolean asymmetric, boolean duck) {
+	static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String json, boolean asymmetric, boolean duck) {
 		TARDISChameleonColumn tcc;
 		BlockData[][] blockDataArr = getStringArrayFromJSON(json);
 		if (d.equals(COMPASS.EAST)) {
@@ -435,7 +433,6 @@ public class TARDISChameleonPreset {
 		party.makePresets(false, false);
 		peanut.makePresets(false, false);
 		pine.makePresets(false, false);
-		police.makePresets(false, false);
 		portal.makePresets(false, false);
 		prismarine.makePresets(false, false);
 		punked.makePresets(false, false);
@@ -444,7 +441,6 @@ public class TARDISChameleonPreset {
 		snowman.makePresets(true, false);
 		submerged.makePresets(true, false);
 		swamp.makePresets(false, false);
-		taller.makePresets(false, false);
 		telephone.makePresets(false, false);
 		theend.makePresets(false, false);
 		toilet.makePresets(true, false);
@@ -455,6 +451,7 @@ public class TARDISChameleonPreset {
 		windmill.makePresets(true, false);
 		yellow.makePresets(false, false);
 		custom.makePresets();
+		adaptive.makePresets(false, false);
 		render.makePresets(false, false);
 		extreme.makePresets(false, false);
 		forest.makePresets(true, false);
@@ -529,8 +526,6 @@ public class TARDISChameleonPreset {
 				return mine.getBlueprint().get(d);
 			case NETHER:
 				return nether.getBlueprint().get(d);
-			case OLD:
-				return police.getBlueprint().get(d);
 			case PANDORICA:
 				return pandorica.getBlueprint().get(d);
 			case PARTY:
@@ -602,7 +597,7 @@ public class TARDISChameleonPreset {
 			case BOAT:
 				return boat.getBlueprint().get(d);
 			default:
-				return taller.getBlueprint().get(d);
+				return adaptive.getBlueprint().get(d);
 		}
 	}
 
@@ -666,8 +661,6 @@ public class TARDISChameleonPreset {
 				return mine.getGlass().get(d);
 			case NETHER:
 				return nether.getGlass().get(d);
-			case OLD:
-				return police.getGlass().get(d);
 			case PANDORICA:
 				return pandorica.getGlass().get(d);
 			case PARTY:
@@ -739,7 +732,7 @@ public class TARDISChameleonPreset {
 			case BOAT:
 				return boat.getGlass().get(d);
 			default:
-				return taller.getGlass().get(d);
+				return adaptive.getGlass().get(d);
 		}
 	}
 
@@ -803,8 +796,6 @@ public class TARDISChameleonPreset {
 				return mine.getStained().get(d);
 			case NETHER:
 				return nether.getStained().get(d);
-			case OLD:
-				return police.getStained().get(d);
 			case PANDORICA:
 				return pandorica.getStained().get(d);
 			case PARTY:
@@ -876,7 +867,7 @@ public class TARDISChameleonPreset {
 			case BOAT:
 				return boat.getStained().get(d);
 			default:
-				return taller.getStained().get(d);
+				return adaptive.getStained().get(d);
 		}
 	}
 

@@ -52,7 +52,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 		// If the player typed /tardisartron then do the following...
 		// check there is the right number of arguments
 		if (cmd.getName().equalsIgnoreCase("tardisartron")) {
@@ -132,7 +132,6 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
 				return true;
 			}
 			List<String> lore = im.getLore();
-			assert lore != null;
 			int level = TARDISNumberParsers.parseInt(lore.get(1));
 			int new_amount = amount + level;
 			int max = plugin.getArtronConfig().getInt("full_charge");

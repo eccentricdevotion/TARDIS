@@ -21,10 +21,14 @@ import me.eccentric_nz.tardis.artron.TARDISArtronTabComplete;
 import me.eccentric_nz.tardis.commands.*;
 import me.eccentric_nz.tardis.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.tardis.commands.admin.TARDISAdminTabComplete;
-import me.eccentric_nz.tardis.commands.admin.TARDISGiveCommand;
-import me.eccentric_nz.tardis.commands.admin.TARDISGiveTabComplete;
 import me.eccentric_nz.tardis.commands.bind.TARDISBindCommands;
 import me.eccentric_nz.tardis.commands.bind.TARDISBindTabComplete;
+import me.eccentric_nz.tardis.commands.config.TARDISConfigCommand;
+import me.eccentric_nz.tardis.commands.config.TARDISConfigTabComplete;
+import me.eccentric_nz.tardis.commands.dev.TARDISDevCommand;
+import me.eccentric_nz.tardis.commands.dev.TARDISDevTabComplete;
+import me.eccentric_nz.tardis.commands.give.TARDISGiveCommand;
+import me.eccentric_nz.tardis.commands.give.TARDISGiveTabComplete;
 import me.eccentric_nz.tardis.commands.handles.TARDISHandlesCommand;
 import me.eccentric_nz.tardis.commands.handles.TARDISHandlesTabComplete;
 import me.eccentric_nz.tardis.commands.preferences.TARDISPrefsCommands;
@@ -61,84 +65,87 @@ class TARDISCommandSetter {
 		this.info = info;
 	}
 
-	/**
-	 * Loads all the commands that the TARDIS uses.
-	 */
-	void loadCommands() {
-		Objects.requireNonNull(plugin.getCommand("tardis")).setExecutor(new TARDISCommands(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardis")).setTabCompleter(new TARDISTabComplete(plugin));
-		TARDISAdminCommands tardisAdminCommand = new TARDISAdminCommands(plugin);
-		Objects.requireNonNull(plugin.getCommand("tardisadmin")).setExecutor(tardisAdminCommand);
-		plugin.getGeneralKeeper().setTardisAdminCommand(tardisAdminCommand);
-		Objects.requireNonNull(plugin.getCommand("tardisadmin")).setTabCompleter(new TARDISAdminTabComplete(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisarea")).setExecutor(new TARDISAreaCommands(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisarea")).setTabCompleter(new TARDISAreaTabComplete());
-		Objects.requireNonNull(plugin.getCommand("tardisartron")).setExecutor(new TARDISArtronStorageCommand(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisartron")).setTabCompleter(new TARDISArtronTabComplete());
-		Objects.requireNonNull(plugin.getCommand("tardisbind")).setExecutor(new TARDISBindCommands(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisbind")).setTabCompleter(new TARDISBindTabComplete());
-		Objects.requireNonNull(plugin.getCommand("tardisbiome")).setExecutor(new TARDISBiomeCommand(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisbook")).setExecutor(new TARDISBookCommands(plugin));
-		TARDISDisplayCommand tardisDisplayCommand = new TARDISDisplayCommand(plugin);
-		Objects.requireNonNull(plugin.getCommand("tardisdisplay")).setExecutor(tardisDisplayCommand);
-		Objects.requireNonNull(plugin.getCommand("tardisdisplay")).setTabCompleter(tardisDisplayCommand);
-		TARDISGameModeCommand tardisGM = new TARDISGameModeCommand(plugin);
-		Objects.requireNonNull(plugin.getCommand("tardisgamemode")).setExecutor(tardisGM);
-		Objects.requireNonNull(plugin.getCommand("tardisgamemode")).setTabCompleter(tardisGM);
-		Objects.requireNonNull(plugin.getCommand("tardisgive")).setExecutor(new TARDISGiveCommand(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisgive")).setTabCompleter(new TARDISGiveTabComplete(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisgravity")).setExecutor(new TARDISGravityCommands(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisgravity")).setTabCompleter(new TARDISGravityTabComplete());
-		Objects.requireNonNull(plugin.getCommand("tardisjunk")).setExecutor(new TARDISJunkCommands(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisjunk")).setTabCompleter(new TARDISJunkTabComplete());
-		Objects.requireNonNull(plugin.getCommand("tardisprefs")).setExecutor(new TARDISPrefsCommands(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisprefs")).setTabCompleter(new TARDISPrefsTabComplete(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisrecipe")).setExecutor(new TARDISRecipeCommands(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisrecipe")).setTabCompleter(new TARDISRecipeTabComplete());
-		Objects.requireNonNull(plugin.getCommand("tardisroom")).setExecutor(new TARDISRoomCommands(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisroom")).setTabCompleter(new TARDISRoomTabComplete(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisschematic")).setExecutor(new TARDISSchematicCommand(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisschematic")).setTabCompleter(new TARDISSchematicTabComplete(new File(
-				plugin.getDataFolder() + File.separator + "user_schematics")));
-		TARDISTeleportCommand tardisTP = new TARDISTeleportCommand(plugin);
-		Objects.requireNonNull(plugin.getCommand("tardisteleport")).setExecutor(tardisTP);
-		Objects.requireNonNull(plugin.getCommand("tardisteleport")).setTabCompleter(tardisTP);
-		TARDISWorldCommand tardisWorldCommand = new TARDISWorldCommand(plugin);
-		Objects.requireNonNull(plugin.getCommand("tardisworld")).setExecutor(tardisWorldCommand);
-		Objects.requireNonNull(plugin.getCommand("tardisworld")).setTabCompleter(tardisWorldCommand);
-		Objects.requireNonNull(plugin.getCommand("tardistexture")).setExecutor(new TARDISTextureCommands(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardistexture")).setTabCompleter(new TARDISTextureTabComplete());
-		TARDISTravelCommands tardisTravelCommand = new TARDISTravelCommands(plugin);
-		Objects.requireNonNull(plugin.getCommand("tardistravel")).setExecutor(tardisTravelCommand);
-		plugin.getGeneralKeeper().setTardisTravelCommand(tardisTravelCommand);
-		Objects.requireNonNull(plugin.getCommand("tardistravel")).setTabCompleter(new TARDISTravelTabComplete(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardissay")).setExecutor(new TARDISSayCommand(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardissay")).setTabCompleter(new TARDISSayTabComplete());
-		TARDISSudoCommand tardisSudoCommand = new TARDISSudoCommand(plugin);
-		Objects.requireNonNull(plugin.getCommand("tardissudo")).setExecutor(tardisSudoCommand);
-		Objects.requireNonNull(plugin.getCommand("tardissudo")).setTabCompleter(tardisSudoCommand);
-		TARDISRemoteCommands tardisRemoteCommands = new TARDISRemoteCommands(plugin);
-		Objects.requireNonNull(plugin.getCommand("tardisremote")).setExecutor(tardisRemoteCommands);
-		Objects.requireNonNull(plugin.getCommand("tardisremote")).setTabCompleter(tardisRemoteCommands);
-		TARDISNetherPortalCommand tardisNetherPortalCommand = new TARDISNetherPortalCommand(plugin);
-		Objects.requireNonNull(plugin.getCommand("tardisnetherportal")).setExecutor(tardisNetherPortalCommand);
-		Objects.requireNonNull(plugin.getCommand("tardisnetherportal")).setTabCompleter(tardisNetherPortalCommand);
-		Objects.requireNonNull(plugin.getCommand("tardis?")).setExecutor(new TARDISQuestionMarkCommand(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardis?")).setTabCompleter(new TARDISQuestionTabComplete(plugin));
-		Objects.requireNonNull(plugin.getCommand("tardisinfo")).setExecutor(info);
-		Objects.requireNonNull(plugin.getCommand("handles")).setExecutor(new TARDISHandlesCommand(plugin));
-		Objects.requireNonNull(plugin.getCommand("handles")).setTabCompleter(new TARDISHandlesTabComplete());
-		if (plugin.getConfig().getBoolean("allow.chemistry")) {
-			Objects.requireNonNull(plugin.getCommand("tardischemistry")).setExecutor(new TARDISChemistryCommand(plugin));
-			Objects.requireNonNull(plugin.getCommand("tardischemistry")).setTabCompleter(new TARDISChemistryTabComplete());
-		}
-		if (plugin.getConfig().getBoolean("allow.weather_set")) {
-			TARDISWeatherCommand tardisWeatherCommand = new TARDISWeatherCommand(plugin);
-			Objects.requireNonNull(plugin.getCommand("tardisweather")).setExecutor(tardisWeatherCommand);
-			Objects.requireNonNull(plugin.getCommand("tardisweather")).setTabCompleter(tardisWeatherCommand);
-		}
-		TARDISTimeCommand tardisTimeCommand = new TARDISTimeCommand(plugin);
-		Objects.requireNonNull(plugin.getCommand("tardistime")).setExecutor(tardisTimeCommand);
-		Objects.requireNonNull(plugin.getCommand("tardistime")).setTabCompleter(tardisTimeCommand);
-	}
+    /**
+     * Loads all the commands that the TARDIS uses.
+     */
+    void loadCommands() {
+        plugin.getCommand("tardis").setExecutor(new TARDISCommands(plugin));
+        plugin.getCommand("tardis").setTabCompleter(new TARDISTabComplete(plugin));
+        plugin.getCommand("tardisadmin").setExecutor(new TARDISAdminCommands(plugin));
+        plugin.getCommand("tardisadmin").setTabCompleter(new TARDISAdminTabComplete(plugin));
+        TARDISConfigCommand tardisConfigCommand = new TARDISConfigCommand(plugin);
+        plugin.getGeneralKeeper().setTardisConfigCommand(tardisConfigCommand);
+        plugin.getCommand("tardisconfig").setExecutor(tardisConfigCommand);
+        plugin.getCommand("tardisconfig").setTabCompleter(new TARDISConfigTabComplete(plugin));
+        plugin.getCommand("tardisdev").setExecutor(new TARDISDevCommand(plugin));
+        plugin.getCommand("tardisdev").setTabCompleter(new TARDISDevTabComplete());
+        plugin.getCommand("tardisarea").setExecutor(new TARDISAreaCommands(plugin));
+        plugin.getCommand("tardisarea").setTabCompleter(new TARDISAreaTabComplete());
+        plugin.getCommand("tardisartron").setExecutor(new TARDISArtronStorageCommand(plugin));
+        plugin.getCommand("tardisartron").setTabCompleter(new TARDISArtronTabComplete());
+        plugin.getCommand("tardisbind").setExecutor(new TARDISBindCommands(plugin));
+        plugin.getCommand("tardisbind").setTabCompleter(new TARDISBindTabComplete());
+        plugin.getCommand("tardisbiome").setExecutor(new TARDISBiomeCommand(plugin));
+        plugin.getCommand("tardisbook").setExecutor(new TARDISBookCommands(plugin));
+        TARDISDisplayCommand tardisDisplayCommand = new TARDISDisplayCommand(plugin);
+        plugin.getCommand("tardisdisplay").setExecutor(tardisDisplayCommand);
+        plugin.getCommand("tardisdisplay").setTabCompleter(tardisDisplayCommand);
+        TARDISGameModeCommand tardisGM = new TARDISGameModeCommand(plugin);
+        plugin.getCommand("tardisgamemode").setExecutor(tardisGM);
+        plugin.getCommand("tardisgamemode").setTabCompleter(tardisGM);
+        plugin.getCommand("tardisgive").setExecutor(new TARDISGiveCommand(plugin));
+        plugin.getCommand("tardisgive").setTabCompleter(new TARDISGiveTabComplete(plugin));
+        plugin.getCommand("tardisgravity").setExecutor(new TARDISGravityCommands(plugin));
+        plugin.getCommand("tardisgravity").setTabCompleter(new TARDISGravityTabComplete());
+        plugin.getCommand("tardisjunk").setExecutor(new TARDISJunkCommands(plugin));
+        plugin.getCommand("tardisjunk").setTabCompleter(new TARDISJunkTabComplete());
+        plugin.getCommand("tardisprefs").setExecutor(new TARDISPrefsCommands(plugin));
+        plugin.getCommand("tardisprefs").setTabCompleter(new TARDISPrefsTabComplete(plugin));
+        plugin.getCommand("tardisrecipe").setExecutor(new TARDISRecipeCommands(plugin));
+        plugin.getCommand("tardisrecipe").setTabCompleter(new TARDISRecipeTabComplete());
+        plugin.getCommand("tardisroom").setExecutor(new TARDISRoomCommands(plugin));
+        plugin.getCommand("tardisroom").setTabCompleter(new TARDISRoomTabComplete(plugin));
+        plugin.getCommand("tardisschematic").setExecutor(new TARDISSchematicCommand(plugin));
+        plugin.getCommand("tardisschematic").setTabCompleter(new TARDISSchematicTabComplete(new File(plugin.getDataFolder() + File.separator + "user_schematics")));
+        TARDISTeleportCommand tardisTP = new TARDISTeleportCommand(plugin);
+        plugin.getCommand("tardisteleport").setExecutor(tardisTP);
+        plugin.getCommand("tardisteleport").setTabCompleter(tardisTP);
+        TARDISWorldCommand tardisWorldCommand = new TARDISWorldCommand(plugin);
+        plugin.getCommand("tardisworld").setExecutor(tardisWorldCommand);
+        plugin.getCommand("tardisworld").setTabCompleter(tardisWorldCommand);
+        plugin.getCommand("tardistexture").setExecutor(new TARDISTextureCommands(plugin));
+        plugin.getCommand("tardistexture").setTabCompleter(new TARDISTextureTabComplete());
+        TARDISTravelCommands tardisTravelCommand = new TARDISTravelCommands(plugin);
+        plugin.getCommand("tardistravel").setExecutor(tardisTravelCommand);
+        plugin.getGeneralKeeper().setTardisTravelCommand(tardisTravelCommand);
+        plugin.getCommand("tardistravel").setTabCompleter(new TARDISTravelTabComplete(plugin));
+        plugin.getCommand("tardissay").setExecutor(new TARDISSayCommand(plugin));
+        plugin.getCommand("tardissay").setTabCompleter(new TARDISSayTabComplete());
+        TARDISSudoCommand tardisSudoCommand = new TARDISSudoCommand(plugin);
+        plugin.getCommand("tardissudo").setExecutor(tardisSudoCommand);
+        plugin.getCommand("tardissudo").setTabCompleter(tardisSudoCommand);
+        TARDISRemoteCommands tardisRemoteCommands = new TARDISRemoteCommands(plugin);
+        plugin.getCommand("tardisremote").setExecutor(tardisRemoteCommands);
+        plugin.getCommand("tardisremote").setTabCompleter(tardisRemoteCommands);
+        TARDISNetherPortalCommand tardisNetherPortalCommand = new TARDISNetherPortalCommand(plugin);
+        plugin.getCommand("tardisnetherportal").setExecutor(tardisNetherPortalCommand);
+        plugin.getCommand("tardisnetherportal").setTabCompleter(tardisNetherPortalCommand);
+        plugin.getCommand("tardis?").setExecutor(new TARDISQuestionMarkCommand(plugin));
+        plugin.getCommand("tardis?").setTabCompleter(new TARDISQuestionTabComplete(plugin));
+        plugin.getCommand("tardisinfo").setExecutor(info);
+        plugin.getCommand("handles").setExecutor(new TARDISHandlesCommand(plugin));
+        plugin.getCommand("handles").setTabCompleter(new TARDISHandlesTabComplete());
+        if (plugin.getConfig().getBoolean("allow.chemistry")) {
+            plugin.getCommand("tardischemistry").setExecutor(new TARDISChemistryCommand(plugin));
+            plugin.getCommand("tardischemistry").setTabCompleter(new TARDISChemistryTabComplete());
+        }
+        if (plugin.getConfig().getBoolean("allow.weather_set")) {
+            TARDISWeatherCommand tardisWeatherCommand = new TARDISWeatherCommand(plugin);
+            plugin.getCommand("tardisweather").setExecutor(tardisWeatherCommand);
+            plugin.getCommand("tardisweather").setTabCompleter(tardisWeatherCommand);
+        }
+        TARDISTimeCommand tardisTimeCommand = new TARDISTimeCommand(plugin);
+        plugin.getCommand("tardistime").setExecutor(tardisTimeCommand);
+        plugin.getCommand("tardistime").setTabCompleter(tardisTimeCommand);
+    }
 }

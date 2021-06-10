@@ -17,9 +17,9 @@
 package me.eccentric_nz.tardis.control;
 
 import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
 import me.eccentric_nz.tardis.artron.TARDISLampToggler;
-import me.eccentric_nz.tardis.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
@@ -35,103 +35,100 @@ import java.util.UUID;
  */
 public class TARDISPowerButton {
 
-	private final TARDISPlugin plugin;
-	private final int id;
-	private final Player player;
-	private final PRESET preset;
-	private final boolean powered;
-	private final boolean hidden;
-	private final boolean lightsOn;
-	private final Location loc;
-	private final int level;
-	private final boolean lanterns;
+    private final TARDISPlugin plugin;
+    private final int id;
+    private final Player player;
+    private final PRESET preset;
+    private final boolean powered;
+    private final boolean hidden;
+    private final boolean lightsOn;
+    private final Location loc;
+    private final int level;
+    private final boolean lanterns;
 
-	public TARDISPowerButton(TARDISPlugin plugin, int id, Player player, PRESET preset, boolean powered, boolean hidden, boolean lightsOn, Location loc, int level, boolean lanterns) {
-		this.plugin = plugin;
-		this.id = id;
-		this.player = player;
-		this.preset = preset;
-		this.powered = powered;
-		this.hidden = hidden;
-		this.lightsOn = lightsOn;
-		this.loc = loc;
-		this.level = level;
-		this.lanterns = lanterns;
-	}
+    public TARDISPowerButton(TARDISPlugin plugin, int id, Player player, PRESET preset, boolean powered, boolean hidden, boolean lightsOn, Location loc, int level, boolean lanterns) {
+        this.plugin = plugin;
+        this.id = id;
+        this.player = player;
+        this.preset = preset;
+        this.powered = powered;
+        this.hidden = hidden;
+        this.lightsOn = lightsOn;
+        this.loc = loc;
+        this.level = level;
+        this.lanterns = lanterns;
+    }
 
-	public void clickButton() {
-		HashMap<String, Object> wherep = new HashMap<>();
-		wherep.put("tardis_id", id);
-		HashMap<String, Object> setp = new HashMap<>();
-		boolean isNewOrOld = preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD);
-		UUID uuid = player.getUniqueId();
-		if (powered) {
-			if (isTravelling(id)) {
-				TARDISMessage.send(player, "POWER_NO");
-				return;
-			}
-			TARDISSounds.playTARDISSound(loc, "power_down");
-			// power down
-			setp.put("powered_on", 0);
-			TARDISMessage.send(player, "POWER_OFF");
-			long delay = 0;
-			// if hidden, rebuild
-			if (hidden) {
-				plugin.getServer().dispatchCommand(plugin.getConsole(),
-						"tardisremote " + player.getName() + " rebuild");
-				TARDISMessage.send(player, "POWER_FAIL");
-				delay = 20L;
-			}
-			// police box lamp, delay it incase the tardis needs rebuilding
-			if (isNewOrOld) {
-				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false), delay);
-			}
-			// if lights are on, turn them off
-			if (lightsOn) {
-				new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, lanterns);
-			}
-			// if beacon is on turn it off
-			new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);
-			// turn force field off
-			if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
-				plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
-				TARDISMessage.send(player, "FORCE_FIELD", "OFF");
-			}
-		} else {
-			// don't power up if there is no power
-			if (level <= plugin.getArtronConfig().getInt("standby")) {
-				TARDISMessage.send(player, "POWER_LOW");
-				return;
-			}
-			TARDISSounds.playTARDISSound(loc, "power_up");
-			// power up
-			setp.put("powered_on", 1);
-			TARDISMessage.send(player, "POWER_ON");
-			// if lights are off, turn them on
-			if (lightsOn) {
-				new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, lanterns);
-			}
-			// determine beacon prefs
-			ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
-			boolean beaconOn = true;
-			if (rsp.resultSet()) {
-				beaconOn = rsp.isBeaconOn();
-			}
-			// if beacon is off turn it on
-			if (beaconOn) {
-				new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
-			}
-			// police box lamp
-			if (isNewOrOld) {
-				new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, true);
-			}
-		}
-		plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
-	}
+    public void clickButton() {
+        HashMap<String, Object> wherep = new HashMap<>();
+        wherep.put("tardis_id", id);
+        HashMap<String, Object> setp = new HashMap<>();
+        boolean isAdaptive = preset.equals(PRESET.ADAPTIVE);
+        UUID uuid = player.getUniqueId();
+        if (powered) {
+            if (isTravelling(id)) {
+                TARDISMessage.send(player, "POWER_NO");
+                return;
+            }
+            TARDISSounds.playTARDISSound(loc, "power_down");
+            // power down
+            setp.put("powered_on", 0);
+            TARDISMessage.send(player, "POWER_OFF");
+            long delay = 0;
+            // if hidden, rebuild
+            if (hidden) {
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
+                TARDISMessage.send(player, "POWER_FAIL");
+                delay = 20L;
+            }
+            // police box lamp, delay it incase the TARDIS needs rebuilding
+            if (isAdaptive) {
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), delay);
+            }
+            // if lights are on, turn them off
+            if (lightsOn) {
+                new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, lanterns);
+            }
+            // if beacon is on turn it off
+            new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);
+            // turn force field off
+            if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
+                plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
+                TARDISMessage.send(player, "FORCE_FIELD", "OFF");
+            }
+        } else {
+            // don't power up if there is no power
+            if (level <= plugin.getArtronConfig().getInt("standby")) {
+                TARDISMessage.send(player, "POWER_LOW");
+                return;
+            }
+            TARDISSounds.playTARDISSound(loc, "power_up");
+            // power up
+            setp.put("powered_on", 1);
+            TARDISMessage.send(player, "POWER_ON");
+            // if lights are off, turn them on
+            if (lightsOn) {
+                new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, lanterns);
+            }
+            // determine beacon prefs
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
+            boolean beacon_on = true;
+            if (rsp.resultSet()) {
+                beacon_on = rsp.isBeaconOn();
+            }
+            // if beacon is off turn it on
+            if (beacon_on) {
+                new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
+            }
+            // police box lamp
+            if (isAdaptive) {
+                new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true);
+            }
+        }
+        plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
+    }
 
-	private boolean isTravelling(int id) {
-		return (plugin.getTrackerKeeper().getDematerialising().contains(id) ||
-				plugin.getTrackerKeeper().getMaterialising().contains(id) ||
-				plugin.getTrackerKeeper().getInVortex().contains(id));
-	}
+    private boolean isTravelling(int id) {
+        return (plugin.getTrackerKeeper().getDematerialising().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id));
+    }
 }

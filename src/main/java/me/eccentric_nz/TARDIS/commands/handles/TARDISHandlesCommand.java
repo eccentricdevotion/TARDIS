@@ -84,7 +84,6 @@ public class TARDISHandlesCommand implements CommandExecutor {
 			case "unlock":
 				return new TARDISHandlesLockUnlockCommand(plugin).toggleLock(player, TARDISNumberParsers.parseInt(args[2]), Boolean.parseBoolean(args[3]));
 			case "name":
-				assert player != null;
 				TARDISMessage.handlesSend(player, "HANDLES_NAME", player.getName());
 				return true;
 			case "remind":
@@ -96,7 +95,6 @@ public class TARDISHandlesCommand implements CommandExecutor {
 			case "takeoff":
 				return new TARDISHandlesTakeoffCommand(plugin).enterVortex(player, args);
 			case "time":
-				assert player != null;
 				return new TARDISHandlesTimeCommand(plugin).sayTime(player);
 		}
 		return false;

@@ -18,7 +18,6 @@ package me.eccentric_nz.tardis.commands.admin;
 
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.event.TARDISDestructionEvent;
-import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
@@ -95,8 +94,7 @@ public class TARDISDeleteCommand {
 			if (junk) {
 				uuid = UUID.fromString("00000000-aaaa-bbbb-cccc-000000000000");
 			} else {
-				assert sender instanceof Player;
-				uuid = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId()).getUniqueId();
+				uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
 			}
 			where.put("uuid", uuid.toString());
 		} else {
@@ -142,7 +140,7 @@ public class TARDISDeleteCommand {
 				biome = TARDISBiome.PLAINS;
 			}
 			plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, tardis.getOwner()));
-			// destroy outer tardis
+			// destroy outer TARDIS
 			if (!hidden) {
 				UUID u = rs.getTardis().getUuid();
 				DestroyData dd = new DestroyData();
@@ -156,17 +154,13 @@ public class TARDISDeleteCommand {
 				dd.setTardisBiome(biome);
 				dd.setThrottle(SpaceTimeThrottle.REBUILD);
 				plugin.getPresetDestroyer().destroyPreset(dd);
-			} else {
-				// restore biome
-				BiomeSetter.restoreBiome(bb_loc, biome);
 			}
-			// destroy the inner tardis
-			// give the tardis time to remove itself as it's not hidden
+			// destroy the inner TARDIS
+			// give the TARDIS time to remove itself as it's not hidden
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 				if ((plugin.getConfig().getBoolean("creation.create_worlds") &&
-					 !plugin.getConfig().getBoolean("creation.default_world")) ||
-					Objects.requireNonNull(wname).contains("TARDIS_WORLD_")) {
-					// delete tardis world
+					 !plugin.getConfig().getBoolean("creation.default_world")) || wname.contains("TARDIS_WORLD_")) {
+					// delete TARDIS world
 					List<Player> players = cw.getPlayers();
 					players.forEach((p) -> p.kickPlayer("World scheduled for deletion!"));
 					if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {

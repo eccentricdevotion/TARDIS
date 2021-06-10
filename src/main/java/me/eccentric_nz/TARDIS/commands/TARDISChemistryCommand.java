@@ -52,7 +52,7 @@ public class TARDISChemistryCommand implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("tardischemistry")) {
 			Player player = null;
 			if (sender instanceof Player) {

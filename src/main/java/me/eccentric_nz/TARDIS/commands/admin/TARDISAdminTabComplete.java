@@ -21,7 +21,6 @@ import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.utility.TARDISWorldGuardFlag;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -38,49 +37,25 @@ import java.util.List;
  */
 public class TARDISAdminTabComplete extends TARDISCompleter implements TabCompleter {
 
-	private final TARDISPlugin plugin;
-	private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
-	private final ImmutableList<String> COLOURS = ImmutableList.of("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
-	private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("worlds", "rechargers", "storage", "creation", "police_box", "travel", "preferences", "allow", "growth", "rooms");
-	private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
-	private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "medium", "hard");
-	private final ImmutableList<String> FLAG_SUBS;
-	private final ImmutableList<String> KEYS = ImmutableList.of("first", "second", "third", "fifth", "seventh", "ninth", "tenth", "eleventh", "susan", "rose", "sally", "perception", "gold");
-	private final ImmutableList<String> LANG_SUBS = ImmutableList.of("ar", "bg", "ca", "zh", "cs", "da", "nl", "en", "et", "fi", "fr", "de", "el", "ht", "he", "hi", "mww", "hu", "id", "it", "ja", "ko", "lv", "lt", "ms", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sl", "es", "sv", "th", "tr", "uk", "ur", "vi");
-	private final ImmutableList<String> PRESETS;
-	private final ImmutableList<String> REGION_SUBS = ImmutableList.of("entry", "exit");
-	private final ImmutableList<String> ROOT_SUBS;
-	private final ImmutableList<String> USE_CLAY_SUBS = ImmutableList.of("WOOL", "TERRACOTTA", "CONCRETE");
-	private final ImmutableList<String> SIEGE_SUBS = ImmutableList.of("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture", "true", "false");
-	private final ImmutableList<String> SONICS = ImmutableList.of("mark_1", "mark_2", "mark_3", "mark_4", "eighth", "ninth", "ninth_open", "tenth", "tenth_open", "eleventh", "eleventh_open", "master", "sarah_jane", "river_song", "war", "twelfth");
-	private final ImmutableList<String> TIPS_SUBS = ImmutableList.of("400", "800", "1200", "1600");
-	private final ImmutableList<String> TOWNY_SUBS = ImmutableList.of("none", "wilderness", "town", "nation");
-	private final ImmutableList<String> VORTEX_SUBS = ImmutableList.of("kill", "teleport");
-	private final ImmutableList<String> LIST_SUBS = ImmutableList.of("abandoned", "portals", "save", "preset_perms", "perms", "recipes", "blueprints");
-	private final ImmutableList<String> FILE_SUBS = ImmutableList.of("achievements", "artron", "blocks", "chameleon_guis", "condensables", "handles", "kits", "rooms", "signs", "tag");
+	private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("arch", "condenser", "config", "convert_database", "decharge", "delete", "disguise", "dispersed", "enter", "list", "make_preset", "maze", "playercount", "prune", "prunelist", "purge", "purge_portals", "recharger", "region_flag", "reload", "repair", "revoke", "set_size", "spawn_abandoned", "undisguise", "update_plugins");
+	private final ImmutableList<String> ASS_SUBS = ImmutableList.of("clear", "list");
 	private final ImmutableList<String> COMPASS_SUBS = ImmutableList.of("NORTH", "EAST", "SOUTH", "WEST");
-	private final ImmutableList<String> WORLD_SUBS;
-	private final ImmutableList<String> SEED_SUBS;
 	private final ImmutableList<String> ENTITY_SUBS;
+	private final ImmutableList<String> LIST_SUBS = ImmutableList.of("abandoned", "portals", "save", "preset_perms", "perms", "recipes", "blueprints");
+	private final ImmutableList<String> PRESETS;
+	private final ImmutableList<String> SEED_SUBS = ImmutableList.copyOf(Consoles.getBY_NAMES().keySet());
+	private final ImmutableList<String> WORLD_SUBS;
 	private final List<String> BLUEPRINT_SUBS = new ArrayList<>();
 
 	public TARDISAdminTabComplete(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		if (plugin.isWorldGuardOnServer()) {
-			FLAG_SUBS = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
-		} else {
-			FLAG_SUBS = ImmutableList.of("none", "build", "entry");
-		}
 		List<String> tmpPresets = new ArrayList<>();
 		for (PRESET p : PRESET.values()) {
 			tmpPresets.add(p.toString());
 		}
 		PRESETS = ImmutableList.copyOf(tmpPresets);
-		ROOT_SUBS = ImmutableList.copyOf(combineLists());
 		List<String> worlds = new ArrayList<>();
 		plugin.getServer().getWorlds().forEach((w) -> worlds.add(w.getName()));
 		WORLD_SUBS = ImmutableList.copyOf(worlds);
-		SEED_SUBS = ImmutableList.copyOf(Consoles.getBY_NAMES().keySet());
 		List<String> tmpEntities = new ArrayList<>();
 		for (EntityType e : EntityType.values()) {
 			if (e.getEntityClass() != null && Creature.class.isAssignableFrom(e.getEntityClass())) {
@@ -99,86 +74,33 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
 		if (args.length <= 1) {
 			return partial(args[0], ROOT_SUBS);
 		} else if (args.length == 2) {
-			String sub = args[0];
-			if (sub.equals("include") || sub.equals("exclude")) {
-				return partial(lastArg, WORLD_SUBS);
-			}
-			if (sub.equals("config")) {
-				return partial(lastArg, CONFIG_SUBS);
+			String sub = args[0].toLowerCase();
+			if (sub.equals("dispersed")) {
+				return partial(lastArg, ASS_SUBS);
 			}
 			if (sub.equals("disguise")) {
 				return partial(lastArg, ENTITY_SUBS);
 			}
-			if (sub.equals("difficulty")) {
-				return partial(lastArg, DIFFICULTY_SUBS);
-			}
 			if (sub.equals("list")) {
 				return partial(lastArg, LIST_SUBS);
 			}
-			if (sub.equals("respect_towny")) {
-				return partial(lastArg, TOWNY_SUBS);
-			}
-			if (sub.equals("respect_worldguard")) {
-				return partial(lastArg, FLAG_SUBS);
-			}
-			if (sub.equals("region_flag")) {
-				return partial(lastArg, REGION_SUBS);
-			}
-			if (sub.equals("reload")) {
-				return partial(lastArg, FILE_SUBS);
-			}
-			if (sub.equals("vortex_fall")) {
-				return partial(lastArg, VORTEX_SUBS);
-			}
-			if (sub.equals("sign_colour")) {
-				return partial(lastArg, COLOURS);
-			}
-			if (sub.equals("siege")) {
-				return partial(lastArg, SIEGE_SUBS);
-			}
-			if (sub.equals("default_key")) {
-				return partial(lastArg, KEYS);
-			}
-			if (sub.equals("default_preset")) {
-				return partial(lastArg, PRESETS);
-			}
-			if (sub.equals("default_sonic")) {
-				return partial(lastArg, SONICS);
-			}
-			if (sub.equals("database")) {
-				return partial(lastArg, DB_SUBS);
-			}
-			if (sub.equals("language")) {
-				return partial(lastArg, LANG_SUBS);
-			}
-			if (sub.equals("tips_limit")) {
-				return partial(lastArg, TIPS_SUBS);
-			}
-			if (sub.equals("spawn_abandoned")) {
-				return partial(lastArg, SEED_SUBS);
-			}
-			if (sub.equals("use_clay")) {
-				return partial(lastArg, USE_CLAY_SUBS);
-			}
 			if (sub.equals("arch") || sub.equals("delete") || sub.equals("enter") || sub.equals("purge") ||
-				sub.equals("desiege") || sub.equals("repair") || sub.equals("revoke") || sub.equals("set_size") ||
-				sub.equals("undisguise")) {
+				sub.equals("repair") || sub.equals("revoke") || sub.equals("set_size") || sub.equals("undisguise")) {
 				// return null to default to online player name matching
 				return null;
-			} else {
-				return partial(lastArg, BOOL_SUBS);
 			}
 		} else if (args.length == 3) {
 			if (args[0].equalsIgnoreCase("spawn_abandoned")) {
 				return partial(lastArg, PRESETS);
-			} else if (args[0].equalsIgnoreCase("set_size")) {
+			}
+			if (args[0].equalsIgnoreCase("set_size")) {
 				return partial(lastArg, SEED_SUBS);
-			} else if (args[0].equalsIgnoreCase("disguise") || args[0].equalsIgnoreCase("handbrake")) {
+			}
+			if (args[0].equalsIgnoreCase("disguise")) {
 				return null;
-			} else if (args[0].equalsIgnoreCase("revoke")) {
+			}
+			if (args[0].equalsIgnoreCase("revoke")) {
 				return partial(lastArg, BLUEPRINT_SUBS);
-			} else {
-				return partial(lastArg, BOOL_SUBS);
 			}
 		} else if (args.length == 4) {
 			return partial(lastArg, COMPASS_SUBS);
@@ -186,19 +108,5 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
 			return partial(lastArg, WORLD_SUBS);
 		}
 		return ImmutableList.of();
-	}
-
-	private List<String> combineLists() {
-		List<String> newList = new ArrayList<>(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStr.size() +
-											   plugin.getGeneralKeeper().getTardisAdminCommand().firstsBool.size() +
-											   plugin.getGeneralKeeper().getTardisAdminCommand().firstsInt.size() +
-											   plugin.getGeneralKeeper().getTardisAdminCommand().firstsStrArtron.size() +
-											   plugin.getGeneralKeeper().getTardisAdminCommand().firstsIntArtron.size());
-		newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStr.keySet());
-		newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsBool.keySet());
-		newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsInt.keySet());
-		newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStrArtron);
-		newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsIntArtron);
-		return newList;
 	}
 }

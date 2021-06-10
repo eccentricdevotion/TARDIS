@@ -32,25 +32,25 @@ import java.util.List;
  */
 public class TARDISJunkTabComplete extends TARDISCompleter implements TabCompleter {
 
-	private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("create", "find", "floor", "return", "delete", "time", "wall");
-	private final ImmutableList<String> MAT_SUBS;
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("create", "find", "floor", "return", "delete", "time", "wall");
+    private final ImmutableList<String> MAT_SUBS;
 
-	public TARDISJunkTabComplete() {
-		List<String> mats = new ArrayList<>();
-		TARDISWalls.BLOCKS.forEach((m) -> mats.add(m.toString()));
-		MAT_SUBS = ImmutableList.copyOf(mats);
-	}
+    public TARDISJunkTabComplete() {
+        List<String> mats = new ArrayList<>();
+        TARDISWalls.BLOCKS.forEach((m) -> mats.add(m.toString()));
+        MAT_SUBS = ImmutableList.copyOf(mats);
+    }
 
-	@Override
-	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-		String lastArg = args[args.length - 1];
-		if (args.length <= 1) {
-			return partial(args[0], ROOT_SUBS);
-		} else if (args.length == 2) {
-			if (args[0].equals("floor") || args[0].equals("wall")) {
-				return partial(lastArg, MAT_SUBS);
-			}
-		}
-		return ImmutableList.of();
-	}
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        String lastArg = args[args.length - 1];
+        if (args.length <= 1) {
+            return partial(args[0], ROOT_SUBS);
+        } else if (args.length == 2) {
+            if (args[0].equals("floor") || args[0].equals("wall")) {
+                return partial(lastArg, MAT_SUBS);
+            }
+        }
+        return ImmutableList.of();
+    }
 }

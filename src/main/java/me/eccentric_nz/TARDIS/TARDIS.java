@@ -378,9 +378,6 @@ public class TARDIS extends JavaPlugin {
                 getConfig().set("conversions.archive_wall_data", true);
                 conversions++;
             }
-            if (conversions > 0) {
-                saveConfig();
-            }
             loadMultiverse();
             loadInventoryManager();
             checkTCG();
@@ -455,10 +452,10 @@ public class TARDIS extends JavaPlugin {
             presets.makePresets();
             if (getConfig().getBoolean("preferences.walk_in_tardis")) {
                 new TARDISPortalPersister(this).load();
-                getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400L, 2400L);
+                getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400, 2400);
             }
             if (getConfig().getBoolean("allow.3d_doors")) {
-                getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISSpectaclesRunnable(this), 120L, 100L);
+                getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISSpectaclesRunnable(this), 120, 100);
             }
             if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
                 new TARDISArchPersister(this).checkAll();
@@ -477,11 +474,11 @@ public class TARDIS extends JavaPlugin {
             if (getConfig().getBoolean("allow.chemistry")) {
                 new ChemistryBlockRecipes(this).addRecipes();
                 new BleachRecipe(this).setRecipes();
-                getServer().getScheduler().scheduleSyncRepeatingTask(this, new GlowStickRunnable(this), 200L, 200L);
-                getServer().getScheduler().scheduleSyncRepeatingTask(this, new HeatBlockRunnable(this), 200L, 80L);
+                getServer().getScheduler().scheduleSyncRepeatingTask(this, new GlowStickRunnable(this), 200, 200);
+                getServer().getScheduler().scheduleSyncRepeatingTask(this, new HeatBlockRunnable(this), 200, 80);
             }
             if (getConfig().getInt("allow.force_field") > 0) {
-                getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISForceField(this), 20L, 5L);
+                getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISForceField(this), 20, 5);
             }
             new TARDISVortexPersister(this).load();
             new TARDISJunkPlayerPersister(this).load();
@@ -501,17 +498,17 @@ public class TARDIS extends JavaPlugin {
             }
             if (getConfig().getBoolean("junk.enabled") && getConfig().getLong("junk.return") > 0) {
                 generalKeeper.setJunkTime(System.currentTimeMillis());
-                long delay = getConfig().getLong("junk.return") * 20L;
+                long delay = getConfig().getLong("junk.return") * 20;
                 getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISJunkReturnRunnable(this), delay, delay);
             }
             startRecorderTask();
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISControlRunnable(this), 200L, 200L);
+            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISControlRunnable(this), 200, 200);
             getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
                 if (!TARDISAchievementFactory.checkAdvancement("tardis")) {
                     getConsole().sendMessage(getPluginName() + getLanguage().getString("ADVANCEMENT_RELOAD"));
                     getServer().reloadData();
                 }
-            }, 199L);
+            }, 199);
             // check TARDIS build
             if (getConfig().getBoolean("preferences.notify_update")) {
                 getServer().getScheduler().runTaskAsynchronously(this, new TARDISUpdateChecker(this, null));
@@ -533,6 +530,16 @@ public class TARDIS extends JavaPlugin {
             if (pm.getPlugin("CoreProtect") != null) {
                 debug("Logging block changes with CoreProtect.");
                 blockLogger.enableLogger();
+            }
+            if (!getConfig().getBoolean("conversions.restore_biomes")) {
+                getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+                    new TARDISBiomeConverter(this).convertBiomes();
+                }, 1200);
+                getConfig().set("conversions.restore_biomes", true);
+                conversions++;
+            }
+            if (conversions > 0) {
+                saveConfig();
             }
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion.get() + " or higher, disabling...");
@@ -701,7 +708,7 @@ public class TARDIS extends JavaPlugin {
      * Starts a repeating task that plays TARDIS sound effects to players while they are inside the TARDIS.
      */
     private void startSound() {
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> new TARDISHumSounds().playTARDISHum(), 60L, 1500L);
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> new TARDISHumSounds().playTARDISHum(), 60, 1500);
     }
 
     /**
@@ -709,7 +716,7 @@ public class TARDIS extends JavaPlugin {
      */
     private void startReminders() {
         if (getHandlesConfig().getBoolean("reminders.enabled")) {
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISHandlesRunnable(this), 120L, getHandlesConfig().getLong("reminders.schedule"));
+            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISHandlesRunnable(this), 120, getHandlesConfig().getLong("reminders.schedule"));
         }
     }
 
@@ -724,7 +731,7 @@ public class TARDIS extends JavaPlugin {
             if (repeat <= 0) {
                 return;
             }
-            standbyTask = getServer().getScheduler().runTaskTimerAsynchronously(this, new TARDISStandbyMode(this), 6000L, repeat);
+            standbyTask = getServer().getScheduler().runTaskTimerAsynchronously(this, new TARDISStandbyMode(this), 6000, repeat);
         }
     }
 
@@ -738,7 +745,7 @@ public class TARDIS extends JavaPlugin {
             if (ticks <= 0) {
                 return;
             }
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISSiegeRunnable(this), 1500L, ticks);
+            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISSiegeRunnable(this), 1500, ticks);
         }
     }
 
@@ -747,7 +754,7 @@ public class TARDIS extends JavaPlugin {
      */
     private void startZeroHealing() {
         if (getConfig().getBoolean("allow.zero_room")) {
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISZeroRoomRunnable(this), 20L, getConfig().getLong("preferences.heal_speed"));
+            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISZeroRoomRunnable(this), 20, getConfig().getLong("preferences.heal_speed"));
         }
     }
 
@@ -756,7 +763,7 @@ public class TARDIS extends JavaPlugin {
      */
     private void startBeeTicks() {
         if (getConfig().getBoolean("preferences.wake_bees")) {
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISBeeWaker(this), 40L, 500L);
+            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISBeeWaker(this), 40, 500);
         }
     }
 
@@ -1031,7 +1038,7 @@ public class TARDIS extends JavaPlugin {
      * Removes unused drop chest database records from the vaults table.
      */
     private void checkDropChests() {
-        getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISVaultChecker(this), 2400L);
+        getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISVaultChecker(this), 2400);
     }
 
     /**

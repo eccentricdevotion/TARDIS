@@ -61,7 +61,7 @@ public class TARDISGravityCommands implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 		// If the player typed /tardisgravity then do the following...
 		if (cmd.getName().equalsIgnoreCase("tardisgravity")) {
 			Player player = null;
@@ -77,9 +77,9 @@ public class TARDISGravityCommands implements CommandExecutor {
 				return true;
 			}
 			if (!plugin.getConfig().getBoolean("allow.external_gravity")) {
-				// check they are still in the tardis world
+				// check they are still in the TARDIS world
 				if (!plugin.getUtils().inTARDISWorld(player)) {
-					String mess_stub = (Objects.requireNonNull(player.getLocation().getWorld()).getName().toUpperCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) ? "GRAVITY_OWN_WORLD" : "GRAVITY_A_WORLD";
+					String mess_stub = (player.getLocation().getWorld().getName().toLowerCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) ? "GRAVITY_OWN_WORLD" : "GRAVITY_A_WORLD";
 					TARDISMessage.send(player, mess_stub);
 					return true;
 				}
@@ -123,7 +123,9 @@ public class TARDISGravityCommands implements CommandExecutor {
 				plugin.getTrackerKeeper().getGravity().put(uuid, values);
 				String message = (dir.equals("remove")) ? "GRAVITY_CLICK_REMOVE" : "GRAVITY_CLICK_SAVE";
 				TARDISMessage.send(player, message);
-				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getGravity().remove(uuid), 1200L);
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+					plugin.getTrackerKeeper().getGravity().remove(uuid);
+				}, 1200L);
 				return true;
 			}
 		}

@@ -29,29 +29,29 @@ import org.jetbrains.annotations.NotNull;
 
 public class TARDISBiomeCommand implements CommandExecutor {
 
-	private final TARDISPlugin plugin;
+    private final TARDISPlugin plugin;
 
-	public TARDISBiomeCommand(TARDISPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public TARDISBiomeCommand(TARDISPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@Override
-	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("tardisbiome")) {
-			Player player;
-			if (sender instanceof Player) {
-				player = (Player) sender;
-			} else {
-				TARDISMessage.send(sender, "CMD_PLAYER");
-				return true;
-			}
-			// get location
-			Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 20).getLocation();
-			// get biome
-			TARDISBiome biome = TARDISStaticUtils.getBiomeAt(eyeLocation);
-			TARDISMessage.message(player, "The TARDISBiome is: " + biome.getKey());
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        if (cmd.getName().equalsIgnoreCase("tardisbiome")) {
+            Player player;
+            if (sender instanceof Player) {
+                player = (Player) sender;
+            } else {
+                TARDISMessage.send(sender, "CMD_PLAYER");
+                return true;
+            }
+            // get location
+            Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 20).getLocation();
+            // get biome
+            TARDISBiome biome = TARDISStaticUtils.getBiomeAt(eyeLocation);
+            TARDISMessage.message(player, "The TARDISBiome is: " + biome.getKey());
+            return true;
+        }
+        return false;
+    }
 }

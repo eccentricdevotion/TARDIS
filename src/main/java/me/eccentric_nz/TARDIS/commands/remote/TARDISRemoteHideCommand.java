@@ -36,15 +36,15 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISRemoteHideCommand {
+public class TARDISRemoteHideCommand {
 
 	private final TARDISPlugin plugin;
 
-	TARDISRemoteHideCommand(TARDISPlugin plugin) {
+	public TARDISRemoteHideCommand(TARDISPlugin plugin) {
 		this.plugin = plugin;
 	}
 
-	boolean doRemoteHide(CommandSender sender, int id) {
+	public boolean doRemoteHide(CommandSender sender, int id) {
 		if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
 			TARDISMessage.send(sender, "NOT_IN_VORTEX");
 			return true;
@@ -74,7 +74,6 @@ class TARDISRemoteHideCommand {
 			TARDISMessage.send(olp.getPlayer(), "INVISIBILITY_ENGAGED");
 			return true;
 		}
-		assert olp != null;
 		UUID uuid = olp.getUniqueId();
 		DestroyData dd = new DestroyData();
 		dd.setDirection(rsc.getDirection());

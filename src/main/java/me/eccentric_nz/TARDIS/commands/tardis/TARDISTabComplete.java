@@ -105,7 +105,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
 					return partial(lastArg, LIST_SUBS);
 				case "room":
 				case "jettison":
-					return partial(lastArg, Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false));
+					return partial(lastArg, plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false));
 				case "transmat":
 					return partial(lastArg, TRANSMAT_SUBS);
 				case "secondary":

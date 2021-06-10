@@ -34,191 +34,130 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author eccentric_nz
  */
 public class TARDISSpawnListener implements Listener {
 
-	private final TARDISPlugin plugin;
-	private final List<SpawnReason> good_spawns = new ArrayList<>();
-	private final List<TARDISBiome> biomes = new ArrayList<>();
+    private final TARDISPlugin plugin;
+    private final List<SpawnReason> good_spawns = new ArrayList<>();
 
-	public TARDISSpawnListener(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		good_spawns.add(SpawnReason.BEEHIVE);
-		good_spawns.add(SpawnReason.BREEDING);
-		good_spawns.add(SpawnReason.BUILD_IRONGOLEM);
-		good_spawns.add(SpawnReason.BUILD_SNOWMAN);
-		good_spawns.add(SpawnReason.BUILD_WITHER);
-		good_spawns.add(SpawnReason.CURED);
-		good_spawns.add(SpawnReason.CUSTOM);
-		good_spawns.add(SpawnReason.DISPENSE_EGG);
-		good_spawns.add(SpawnReason.EGG);
-		good_spawns.add(SpawnReason.ENDER_PEARL);
-		good_spawns.add(SpawnReason.INFECTION);
-		good_spawns.add(SpawnReason.JOCKEY);
-		good_spawns.add(SpawnReason.LIGHTNING);
-		good_spawns.add(SpawnReason.MOUNT);
-		good_spawns.add(SpawnReason.NETHER_PORTAL);
-		good_spawns.add(SpawnReason.OCELOT_BABY);
-		good_spawns.add(SpawnReason.RAID);
-		good_spawns.add(SpawnReason.REINFORCEMENTS);
-		good_spawns.add(SpawnReason.SHEARED);
-		good_spawns.add(SpawnReason.SHOULDER_ENTITY);
-		good_spawns.add(SpawnReason.SILVERFISH_BLOCK);
-		good_spawns.add(SpawnReason.SLIME_SPLIT);
-		good_spawns.add(SpawnReason.SPAWNER_EGG);
-		good_spawns.add(SpawnReason.VILLAGE_DEFENSE);
-		good_spawns.add(SpawnReason.VILLAGE_INVASION);
-		biomes.add(TARDISBiome.DEEP_OCEAN);
-		biomes.add(TARDISBiome.END_BARRENS);
-		biomes.add(TARDISBiome.END_HIGHLANDS);
-		biomes.add(TARDISBiome.END_MIDLANDS);
-		biomes.add(TARDISBiome.MUSHROOM_FIELD_SHORE);
-		biomes.add(TARDISBiome.MUSHROOM_FIELDS);
-		biomes.add(TARDISBiome.NETHER_WASTES);
-		biomes.add(TARDISBiome.SOUL_SAND_VALLEY);
-		biomes.add(TARDISBiome.CRIMSON_FOREST);
-		biomes.add(TARDISBiome.WARPED_FOREST);
-		biomes.add(TARDISBiome.BASALT_DELTAS);
-		biomes.add(TARDISBiome.SMALL_END_ISLANDS);
-		biomes.add(TARDISBiome.THE_END);
-	}
+    public TARDISSpawnListener(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        good_spawns.add(SpawnReason.BEEHIVE);
+        good_spawns.add(SpawnReason.BREEDING);
+        good_spawns.add(SpawnReason.BUILD_IRONGOLEM);
+        good_spawns.add(SpawnReason.BUILD_SNOWMAN);
+        good_spawns.add(SpawnReason.BUILD_WITHER);
+        good_spawns.add(SpawnReason.CURED);
+        good_spawns.add(SpawnReason.CUSTOM);
+        good_spawns.add(SpawnReason.DISPENSE_EGG);
+        good_spawns.add(SpawnReason.DROWNED);
+        good_spawns.add(SpawnReason.EGG);
+        good_spawns.add(SpawnReason.ENDER_PEARL);
+        good_spawns.add(SpawnReason.INFECTION);
+        good_spawns.add(SpawnReason.JOCKEY);
+        good_spawns.add(SpawnReason.LIGHTNING);
+        good_spawns.add(SpawnReason.MOUNT);
+        good_spawns.add(SpawnReason.NETHER_PORTAL);
+        good_spawns.add(SpawnReason.OCELOT_BABY);
+        good_spawns.add(SpawnReason.PATROL);
+        good_spawns.add(SpawnReason.PIGLIN_ZOMBIFIED);
+        good_spawns.add(SpawnReason.RAID);
+        good_spawns.add(SpawnReason.REINFORCEMENTS);
+        good_spawns.add(SpawnReason.SHEARED);
+        good_spawns.add(SpawnReason.SHOULDER_ENTITY);
+        good_spawns.add(SpawnReason.SILVERFISH_BLOCK);
+        good_spawns.add(SpawnReason.SLIME_SPLIT);
+        good_spawns.add(SpawnReason.SPAWNER_EGG);
+        good_spawns.add(SpawnReason.VILLAGE_DEFENSE);
+        good_spawns.add(SpawnReason.VILLAGE_INVASION);
+    }
 
-	/**
-	 * Listens for entity spawn events. If WorldGuard is enabled it blocks mob-spawning inside the tardis, so this
-	 * checks to see if we are doing the spawning and un-cancels WorldGuard's setCancelled(true).
-	 * <p>
-	 * It also prevents natural mob spawning in the tardis DEEP_OCEAN biome.
-	 *
-	 * @param event A creature spawn event
-	 */
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void onEntitySpawn(CreatureSpawnEvent event) {
-		SpawnReason spawnReason = event.getSpawnReason();
-		Location l = event.getLocation();
-		if (Objects.requireNonNull(l.getWorld()).getName().contains("tardis")) {
-			if (event.getEntityType().equals(EntityType.ARMOR_STAND)) {
-				return;
-			}
-			if (plugin.isTardisSpawn()) {
-				plugin.setTardisSpawn(false);
-				return;
-			}
-			if (spawnReason.equals(SpawnReason.BEEHIVE) ||
-				(spawnReason.equals(SpawnReason.DEFAULT) && event.getEntity() instanceof Bee)) {
-				int random = TARDISConstants.RANDOM.nextInt(1200) + 1200;
-				((Bee) event.getEntity()).setCannotEnterHiveTicks(random);
-				return;
-			}
-			// if not an allowable tardis spawn reason, cancel
-			if (!good_spawns.contains(spawnReason)) {
-				event.setCancelled(true);
-			}
-			if (spawnReason.equals(SpawnReason.BUILD_SNOWMAN) &&
-				plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-				if (TARDISConstants.RANDOM.nextInt(100) < 3) {
-					// spawn a Dalek instead
-					LivingEntity le = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
-					TARDISAngelsAPI.getAPI(plugin).setDalekEquipment(le, false);
-					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> event.getEntity().remove(), 2L);
-				}
-			}
-		} else {
-			// only if configured
-			if (!plugin.getConfig().getBoolean("police_box.set_biome")) {
-				return;
-			}
-			if (!event.getEntityType().isAlive()) {
-				return;
-			}
-			// only natural spawning
-			if (!spawnReason.equals(SpawnReason.NATURAL)) {
-				return;
-			}
-			// only in DEEP_OCEAN, MUSHROOM_ISLAND, NETHER & THE END
-			if (!biomes.contains(TARDISStaticUtils.getBiomeAt(l))) {
-				return;
-			}
-			// only monsters
-			if (!TARDISConstants.MONSTER_TYPES.contains(event.getEntity().getType())) {
-				return;
-			}
-			// always deny MUSHROOM, HELL and SKY biomes
-			switch (TARDISStaticUtils.getBiomeAt(l).name()) {
-				case "MUSHROOM_FIELDS":
-				case "NETHER_WASTES":
-				case "SOUL_SAND_VALLEY":
-				case "CRIMSON_FOREST":
-				case "WARPED_FOREST":
-				case "BASALT_DELTAS":
-					if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
-						event.setCancelled(true);
-						return;
-					}
-					return;
-				case "THE_END":
-					if (!event.getEntity().getType().equals(EntityType.ENDERMAN)) {
-						event.setCancelled(true);
-						return;
-					}
-					break;
-				case "MUSHROOM_FIELD_SHORE":
-					if (!event.getEntity().getType().equals(EntityType.SQUID)) {
-						event.setCancelled(true);
-						return;
-					}
-					break;
-				default:
-					break;
-			}
-			// only tardis locations
-			if (isTARDISBiome(l)) {
-				event.setCancelled(true);
-			}
-		}
-	}
+    /**
+     * Listens for entity spawn events. If WorldGuard is enabled it blocks mob-spawning inside the TARDIS, so this
+     * checks to see if we are doing the spawning and un-cancels WorldGuard's setCancelled(true).
+     * <p>
+     * It also prevents natural mob spawning in the TARDIS DEEP_OCEAN biome.
+     *
+     * @param event A creature spawn event
+     */
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onEntitySpawn(CreatureSpawnEvent event) {
+        SpawnReason spawnReason = event.getSpawnReason();
+        Location l = event.getLocation();
+        if (l.getWorld().getName().contains("TARDIS")) {
+            if (event.getEntityType().equals(EntityType.ARMOR_STAND)) {
+                return;
+            }
+            if (plugin.isTardisSpawn()) {
+                plugin.setTardisSpawn(false);
+                return;
+            }
+            if (spawnReason.equals(SpawnReason.BEEHIVE) || (spawnReason.equals(SpawnReason.DEFAULT) && event.getEntity() instanceof Bee)) {
+                int random = TARDISConstants.RANDOM.nextInt(1200) + 1200;
+                ((Bee) event.getEntity()).setCannotEnterHiveTicks(random);
+                return;
+            }
+            // if not an allowable TARDIS spawn reason, cancel
+            if (!good_spawns.contains(spawnReason)) {
+                event.setCancelled(true);
+            }
+            if (spawnReason.equals(SpawnReason.BUILD_SNOWMAN) && plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
+                    // spawn a Dalek instead
+                    LivingEntity le = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
+                    TARDISAngelsAPI.getAPI(plugin).setDalekEquipment(le, false);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> event.getEntity().remove(), 2L);
+                }
+            }
+        } else {
+            // only TARDIS locations
+            if (isTARDISBiome(l)) {
+                event.setCancelled(true);
+            }
+        }
+    }
 
-	private boolean isTARDISBiome(Location l) {
-		/*
-		 * Looping through all the TARDISes on the server and checking
-		 * a 3x3 area around their location is too expensive, instead
-		 * we'll check the specific area around the location and if a 3x3
-		 * DEEP_OCEAN biome is found then we'll deny the spawn.
-		 */
-		int found = 0, three_by_three = 0;
-		int x = l.getBlockX();
-		int z = l.getBlockZ();
-		World w = l.getWorld();
-		/*
-		 * A 7x7 block area is sure to encapsulate a 3x3 one if the mob
-		 * spawns anywhere in the 3x3 square. Caveat: This relies on the
-		 * premise that there is at least 1 block between TARDISes.
-		 */
-		for (int col = -3; col < 4; col++) {
-			for (int row = -3; row < 4; row++) {
-				assert w != null;
-				TARDISBiome b = TARDISStaticUtils.getBiomeAt(w.getBlockAt(x + col, 64, z + row).getLocation());
-				if (b.equals(TARDISBiome.DEEP_OCEAN)) {
-					found++;
-				}
-				if (found < 3 && !b.equals(TARDISBiome.DEEP_OCEAN)) {
-					// reset count - not three in a row
-					found = 0;
-				}
-				if (found == 3 && !b.equals(TARDISBiome.DEEP_OCEAN)) {
-					// found 3 consecutive blocks in a row, increment 3x3 row count
-					three_by_three++;
-					// reset count
-					found = 0;
-					// skip the rest of the row
-					break;
-				}
-			}
-		}
-		// check if location is in region
-		return three_by_three == 3;
-	}
+    private boolean isTARDISBiome(Location l) {
+        /*
+         * Looping through all the TARDISes on the server and checking
+         * a 3x3 area around their location is too expensive, instead
+         * we'll check the specific area around the location and if a 3x3
+         * DEEP_OCEAN biome is found then we'll deny the spawn.
+         */
+        int found = 0, three_by_three = 0;
+        int x = l.getBlockX();
+        int z = l.getBlockZ();
+        World w = l.getWorld();
+        /*
+         * A 7x7 block area is sure to encapsulate a 3x3 one if the mob
+         * spawns anywhere in the 3x3 square. Caveat: This relies on the
+         * premise that there is at least 1 block between TARDISes.
+         */
+        for (int col = -3; col < 4; col++) {
+            for (int row = -3; row < 4; row++) {
+                assert w != null;
+                TARDISBiome b = TARDISStaticUtils.getBiomeAt(w.getBlockAt(x + col, 64, z + row).getLocation());
+                if (b.equals(TARDISBiome.DEEP_OCEAN)) {
+                    found++;
+                }
+                if (found < 3 && !b.equals(TARDISBiome.DEEP_OCEAN)) {
+                    // reset count - not three in a row
+                    found = 0;
+                }
+                if (found == 3 && !b.equals(TARDISBiome.DEEP_OCEAN)) {
+                    // found 3 consecutive blocks in a row, increment 3x3 row count
+                    three_by_three++;
+                    // reset count
+                    found = 0;
+                    // skip the rest of the row
+                    break;
+                }
+            }
+        }
+        // check if location is in region
+        return three_by_three == 3;
+    }
 }

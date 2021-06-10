@@ -55,7 +55,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
 	}
 
 	@Override
-	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 		// If the player typed /tardisbook then do the following...
 		if (cmd.getName().equalsIgnoreCase("tardisbook")) {
 			if (args.length < 1) {
@@ -106,7 +106,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
 						TARDISMessage.send(player, "ACHIEVE_AUTO");
 						return true;
 					}
-					// check they have not already started the advancement
+					// check they have not already started the achievement
 					HashMap<String, Object> where = new HashMap<>();
 					where.put("uuid", player.getUniqueId().toString());
 					where.put("name", first);

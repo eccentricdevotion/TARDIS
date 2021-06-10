@@ -36,10 +36,12 @@ import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
-import org.bukkit.block.data.*;
+import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Bisected.Half;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Lightable;
+import org.bukkit.block.data.Rotatable;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -105,11 +107,6 @@ public class TARDISInstantPreset {
 		minusz = (bd.getLocation().getBlockZ() - 1);
 		World world = bd.getLocation().getWorld();
 		int signx = 0, signz = 0;
-		// if configured and it's a Whovian preset set biome
-		boolean isPoliceBox = preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD);
-		if (plugin.getConfig().getBoolean("police_box.set_biome") && isPoliceBox && bd.useTexture()) {
-			BiomeSetter.setBiome(bd, true, 1);
-		}
 		// rescue player?
 		if (plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisId())) {
 			UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisId());
@@ -127,72 +124,72 @@ public class TARDISInstantPreset {
 			plugin.getTrackerKeeper().getRescue().remove(bd.getTardisId());
 		}
 		switch (bd.getDirection()) {
-			case SOUTH -> {
+			case SOUTH:
 				//if (yaw >= 315 || yaw < 45)
 				signx = x;
 				signz = (minusz - 1);
-			}
-			case EAST -> {
+				break;
+			case EAST:
 				//if (yaw >= 225 && yaw < 315)
 				signx = (minusx - 1);
 				signz = z;
-			}
-			case NORTH -> {
+				break;
+			case NORTH:
 				//if (yaw >= 135 && yaw < 225)
 				signx = x;
 				signz = (plusz + 1);
-			}
-			case WEST -> {
+				break;
+			case WEST:
 				//if (yaw >= 45 && yaw < 135)
 				signx = (plusx + 1);
 				signz = z;
-			}
+				break;
 		}
 		int xx, zz;
 		BlockData[][] data = column.getBlockData();
 		for (int i = 0; i < 10; i++) {
 			BlockData[] colData = data[i];
 			switch (i) {
-				case 0 -> {
+				case 0:
 					xx = minusx;
 					zz = minusz;
-				}
-				case 1 -> {
+					break;
+				case 1:
 					xx = x;
 					zz = minusz;
-				}
-				case 2 -> {
+					break;
+				case 2:
 					xx = plusx;
 					zz = minusz;
-				}
-				case 3 -> {
+					break;
+				case 3:
 					xx = plusx;
 					zz = z;
-				}
-				case 4 -> {
+					break;
+				case 4:
 					xx = plusx;
 					zz = plusz;
-				}
-				case 5 -> {
+					break;
+				case 5:
 					xx = x;
 					zz = plusz;
-				}
-				case 6 -> {
+					break;
+				case 6:
 					xx = minusx;
 					zz = plusz;
-				}
-				case 7 -> {
+					break;
+				case 7:
 					xx = minusx;
 					zz = z;
-				}
-				case 8 -> {
+					break;
+				case 8:
 					xx = x;
 					zz = z;
-				}
-				default -> {
+					break;
+				default:
 					xx = signx;
 					zz = signz;
-				}
+					break;
 			}
 			for (int yy = 0; yy < 4; yy++) {
 				boolean change = true;
@@ -257,14 +254,6 @@ public class TARDISInstantPreset {
 							TARDISBlockSetters.setBlockAndRemember(world, xx, (y +
 																			   yy), zz, random_colour, bd.getTardisId());
 						}
-						if (bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 &&
-							isPoliceBox && plugin.getConfig().getBoolean("police_box.set_biome")) {
-							// set an observer block instead
-							Directional directional = (Directional) Material.OBSERVER.createBlockData();
-							directional.setFacing(BlockFace.valueOf(bd.getDirection().toString()));
-							TARDISBlockSetters.setBlockAndRemember(world, xx, (y +
-																			   yy), zz, directional, bd.getTardisId());
-						}
 						if ((preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.JUNK)) &&
 							mat.equals(Material.ORANGE_WOOL)) {
 							TARDISBlockSetters.setBlockAndRemember(world, xx, (y +
@@ -283,7 +272,8 @@ public class TARDISInstantPreset {
 						if (mat.equals(Material.TORCH)) {
 							do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), light));
 						} else {
-							if (light instanceof Lightable lit) {
+							if (light instanceof Lightable) {
+								Lightable lit = (Lightable) light;
 								lit.setLit(true);
 								TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, lit, bd.getTardisId());
 							} else {
@@ -395,9 +385,16 @@ public class TARDISInstantPreset {
 													player_name.substring(0, 12) + "'s" : player_name + "'s";
 										}
 										switch (preset) {
-											case GRAVESTONE -> s.setLine(3, owner);
-											case ANGEL, JAIL -> s.setLine(2, owner);
-											default -> s.setLine(0, owner);
+											case GRAVESTONE:
+												s.setLine(3, owner);
+												break;
+											case ANGEL:
+											case JAIL:
+												s.setLine(2, owner);
+												break;
+											default:
+												s.setLine(0, owner);
+												break;
 										}
 									}
 								}
@@ -411,27 +408,27 @@ public class TARDISInstantPreset {
 									line2 = preset.getSecondLine();
 								}
 								switch (preset) {
-									case ANGEL -> {
+									case ANGEL:
 										s.setLine(0, sign_colour + line1);
 										s.setLine(1, sign_colour + line2);
 										s.setLine(3, sign_colour + "TARDIS");
-									}
-									case APPERTURE -> {
+										break;
+									case APPERTURE:
 										s.setLine(1, sign_colour + line1);
 										s.setLine(2, sign_colour + line2);
 										s.setLine(3, sign_colour + "LAB");
-									}
-									case JAIL -> {
+										break;
+									case JAIL:
 										s.setLine(0, sign_colour + line1);
 										s.setLine(1, sign_colour + line2);
 										s.setLine(3, sign_colour + "CAPTURE");
-									}
-									case THEEND -> {
+										break;
+									case THEEND:
 										s.setLine(1, sign_colour + line1);
 										s.setLine(2, sign_colour + line2);
 										s.setLine(3, sign_colour + "HOT ROD");
-									}
-									case CONSTRUCT -> {
+										break;
+									case CONSTRUCT:
 										// get sign text from database
 										ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, bd.getTardisId());
 										if (rscs.resultSet()) {
@@ -446,11 +443,11 @@ public class TARDISInstantPreset {
 												s.setLine(3, rscs.getLine4());
 											}
 										}
-									}
-									default -> {
+										break;
+									default:
 										s.setLine(1, sign_colour + line1);
 										s.setLine(2, sign_colour + line2);
-									}
+										break;
 								}
 								s.update();
 							}

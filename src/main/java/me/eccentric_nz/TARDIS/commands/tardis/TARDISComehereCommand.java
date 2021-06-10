@@ -23,7 +23,6 @@ import me.crafter.mc.lockettepro.LocketteProAPI;
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.builders.BiomeSetter;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.database.data.TARDIS;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
@@ -49,7 +48,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -87,7 +85,7 @@ class TARDISComehereCommand {
 				Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
 				if (!plugin.getConfig().getBoolean("travel.include_default_world") &&
 					plugin.getConfig().getBoolean("creation.default_world") &&
-					Objects.requireNonNull(eyeLocation.getWorld()).getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
+					eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
 					TARDISMessage.send(player, "NO_WORLD_TRAVEL");
 					return true;
 				}
@@ -116,7 +114,7 @@ class TARDISComehereCommand {
 					eyeLocation.setY(yplusone + 1);
 				}
 				// check the world is not excluded
-				String world = Objects.requireNonNull(eyeLocation.getWorld()).getName();
+				String world = eyeLocation.getWorld().getName();
 				if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
 					TARDISMessage.send(player, "NO_PB_IN_WORLD");
 					return true;
@@ -234,8 +232,6 @@ class TARDISComehereCommand {
 					HashMap<String, Object> ttid = new HashMap<>();
 					ttid.put("tardis_id", id);
 					plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
-					// restore biome
-					BiomeSetter.restoreBiome(oldSave, biome);
 				}
 				plugin.getQueryFactory().doUpdate("current", set, tid);
 				TARDISMessage.send(player, "TARDIS_COMING");
@@ -274,7 +270,7 @@ class TARDISComehereCommand {
 				bd.setThrottle(spaceTimeThrottle);
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd),
 						delay * 2);
-				// remove energy from tardis
+				// remove energy from TARDIS
 				HashMap<String, Object> wheret = new HashMap<>();
 				wheret.put("tardis_id", id);
 				plugin.getQueryFactory().alterEnergyLevel("tardis", -ch, wheret, player);

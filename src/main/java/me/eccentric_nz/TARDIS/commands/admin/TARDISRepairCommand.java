@@ -22,7 +22,6 @@ import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
@@ -43,7 +42,11 @@ class TARDISRepairCommand {
 			return true;
 		}
 		// Look up this player's UUID
-		OfflinePlayer op = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId());
+		OfflinePlayer op = plugin.getServer().getOfflinePlayer(args[1]);
+		if (op == null) {
+			TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+			return true;
+		}
 		String uuid = op.getUniqueId().toString();
 		ResultSetCount rs = new ResultSetCount(plugin, uuid);
 		if (!rs.resultSet()) {
@@ -60,7 +63,7 @@ class TARDISRepairCommand {
 		HashMap<String, Object> set = new HashMap<>();
 		set.put("repair", r);
 		plugin.getQueryFactory().doUpdate("t_count", set, where);
-		TARDISMessage.send(sender, "REPAIR_SET", args[1], args[2]);
+		TARDISMessage.send(sender, "REPAIR_SET", args[1], "" + r);
 		return true;
 	}
 }

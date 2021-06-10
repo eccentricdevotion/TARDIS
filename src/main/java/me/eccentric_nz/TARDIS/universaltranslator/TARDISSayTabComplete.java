@@ -30,14 +30,14 @@ import java.util.List;
  */
 public class TARDISSayTabComplete extends TARDISCompleter implements TabCompleter {
 
-	private final ImmutableList<String> LANGUAGE_SUBS = ImmutableList.of("AFRIKAANS", "ALBANIAN", "ARABIC", "ARMENIAN", "AZERBAIJANI", "BASHKIR", "BASQUE", "BELARUSIAN", "BOSNIAN", "BULGARIAN", "CATALAN", "CHINESE", "CROATIAN", "CZECH", "DANISH", "DUTCH", "ENGLISH", "ESTONIAN", "FINNISH", "FRENCH", "GALICIAN", "GEORGIAN", "GERMAN", "GREEK", "HAITIAN", "HEBREW", "HUNGARIAN", "ICELANDIC", "INDONESIAN", "IRISH", "ITALIAN", "JAPANESE", "KAZAKH", "KIRGHIZ", "KOREAN", "LATIN", "LATVIAN", "LITHUANIAN", "MACEDONIAN", "MALAGASY", "MALAY", "MALTESE", "MONGOLIAN", "NORWEGIAN", "PERSIAN", "POLISH", "PORTUGUESE", "ROMANIAN", "RUSSIAN", "SERBIAN", "SLOVAK", "SLOVENIAN", "SPANISH", "SWAHILI", "SWEDISH", "TAGALOG", "TAJIK", "TATAR", "THAI", "TURKISH", "UKRAINIAN", "UZBEK", "VIETNAMESE", "WELSH");
+    private final ImmutableList<String> LANGUAGE_SUBS = ImmutableList.of("AFRIKAANS", "ALBANIAN", "ARABIC", "ARMENIAN", "AZERBAIJANI", "BASHKIR", "BASQUE", "BELARUSIAN", "BOSNIAN", "BULGARIAN", "CATALAN", "CHINESE", "CROATIAN", "CZECH", "DANISH", "DUTCH", "ENGLISH", "ESTONIAN", "FINNISH", "FRENCH", "GALICIAN", "GEORGIAN", "GERMAN", "GREEK", "HAITIAN", "HEBREW", "HUNGARIAN", "ICELANDIC", "INDONESIAN", "IRISH", "ITALIAN", "JAPANESE", "KAZAKH", "KIRGHIZ", "KOREAN", "LATIN", "LATVIAN", "LITHUANIAN", "MACEDONIAN", "MALAGASY", "MALAY", "MALTESE", "MONGOLIAN", "NORWEGIAN", "PERSIAN", "POLISH", "PORTUGUESE", "ROMANIAN", "RUSSIAN", "SERBIAN", "SLOVAK", "SLOVENIAN", "SPANISH", "SWAHILI", "SWEDISH", "TAGALOG", "TAJIK", "TATAR", "THAI", "TURKISH", "UKRAINIAN", "UZBEK", "VIETNAMESE", "WELSH");
 
-	@Override
-	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 
-		if (args.length <= 1) {
-			return partial(args[0], LANGUAGE_SUBS);
-		}
-		return ImmutableList.of();
-	}
+        if (args.length <= 1) {
+            return partial(args[0], LANGUAGE_SUBS);
+        }
+        return ImmutableList.of();
+    }
 }

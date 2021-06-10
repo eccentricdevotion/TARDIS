@@ -21,8 +21,6 @@ import me.eccentric_nz.tardis.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.tardis.arch.TARDISArchCommand;
 import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
-import me.eccentric_nz.tardis.commands.sudo.SudoRepair;
-import me.eccentric_nz.tardis.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.TardisCommand;
@@ -39,7 +37,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * Command /tardis [arguments].
@@ -58,7 +55,7 @@ public class TARDISCommands implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 		// If the player typed /tardis then do the following...
 		// check there is the right number of arguments
 		if (cmd.getName().equalsIgnoreCase("tardis")) {
@@ -129,13 +126,7 @@ public class TARDISCommands implements CommandExecutor {
 				case desktop:
 				case upgrade:
 				case theme:
-					if (args.length > 1 && (args[1].equalsIgnoreCase("clean") || args[1].equalsIgnoreCase("repair")) &&
-						TARDISSudoTracker.isSudo(sender)) {
-						UUID uuid = TARDISSudoTracker.getSudoPlayer(sender);
-						return new SudoRepair(plugin, uuid, args[1].equalsIgnoreCase("clean")).repair();
-					} else {
-						return new TARDISUpgradeCommand(plugin).openUpgradeGUI(player);
-					}
+					return new TARDISUpgradeCommand(plugin).openUpgradeGUI(player);
 				case direction:
 					return new TARDISDirectionCommand(plugin).changeDirection(player, args);
 				case door:
@@ -210,7 +201,7 @@ public class TARDISCommands implements CommandExecutor {
 					return new TARDISUpdateCommand(plugin).startUpdate(player, args);
 				case abort:
 					return new TARDISAbortCommand(plugin).doAbort(player, args);
-				case exterminate: // delete the tardis
+				case exterminate: // delete the TARDIS
 					return new TARDISExterminateCommand(plugin).doExterminate(player);
 				case save:
 					ItemStack itemStack = player.getInventory().getItemInMainHand();

@@ -33,59 +33,59 @@ import java.util.Locale;
  */
 public class TARDISJunkCommands implements CommandExecutor {
 
-	private final TARDISPlugin plugin;
-	private final List<String> firstArgs = new ArrayList<>();
+    private final TARDISPlugin plugin;
+    private final List<String> firstArgs = new ArrayList<>();
 
-	public TARDISJunkCommands(TARDISPlugin plugin) {
-		this.plugin = plugin;
-		firstArgs.add("create");
-		firstArgs.add("delete");
-		firstArgs.add("find");
-		firstArgs.add("floor");
-		firstArgs.add("return");
-		firstArgs.add("time");
-		firstArgs.add("wall");
-	}
+    public TARDISJunkCommands(TARDISPlugin plugin) {
+        this.plugin = plugin;
+        firstArgs.add("create");
+        firstArgs.add("delete");
+        firstArgs.add("find");
+        firstArgs.add("floor");
+        firstArgs.add("return");
+        firstArgs.add("time");
+        firstArgs.add("wall");
+    }
 
-	@Override
-	public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
-		// If the player typed /tardisjunk then do the following...
-		if (cmd.getName().equalsIgnoreCase("tardisjunk")) {
-			if (args.length == 0) {
-				// find Junk tardis
-				return new TARDISJunkFind(plugin).find(sender);
-			}
-			String first = args[0].toLowerCase(Locale.ENGLISH);
-			if (args.length == 1 && firstArgs.contains(first)) {
-				if (first.equals("create")) {
-					Player p = null;
-					if (sender instanceof Player) {
-						p = (Player) sender;
-					}
-					if (p == null) {
-						TARDISMessage.send(sender, "CMD_PLAYER");
-						return false;
-					}
-					return new TARDISJunkCreator(plugin, p).createJunkTARDIS();
-				}
-				if (first.equals("find")) {
-					return new TARDISJunkFind(plugin).find(sender);
-				}
-				if (first.equals("time")) {
-					return new TARDISJunkTime(plugin).elapsed(sender);
-				}
-				if (first.equals("return")) {
-					return new TARDISJunkReturn(plugin).recall(sender);
-				}
-				if (first.equals("delete")) {
-					return new TARDISJunkDelete(plugin).delete(sender);
-				}
-				return true;
-			}
-			if (args.length == 2 && first.equals("floor") || first.equals("wall")) {
-				return new TARDISJunkFloorWall(plugin).setJunkWallOrFloor(sender, args);
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        // If the player typed /tardisjunk then do the following...
+        if (cmd.getName().equalsIgnoreCase("tardisjunk")) {
+            if (args.length == 0) {
+                // find Junk TARDIS
+                return new TARDISJunkFind(plugin).find(sender);
+            }
+            String first = args[0].toLowerCase(Locale.ENGLISH);
+            if (args.length == 1 && firstArgs.contains(first)) {
+                if (first.equals("create")) {
+                    Player p = null;
+                    if (sender instanceof Player) {
+                        p = (Player) sender;
+                    }
+                    if (p == null) {
+                        TARDISMessage.send(sender, "CMD_PLAYER");
+                        return false;
+                    }
+                    return new TARDISJunkCreator(plugin, p).createJunkTARDIS();
+                }
+                if (first.equals("find")) {
+                    return new TARDISJunkFind(plugin).find(sender);
+                }
+                if (first.equals("time")) {
+                    return new TARDISJunkTime(plugin).elapsed(sender);
+                }
+                if (first.equals("return")) {
+                    return new TARDISJunkReturn(plugin).recall(sender);
+                }
+                if (first.equals("delete")) {
+                    return new TARDISJunkDelete(plugin).delete(sender);
+                }
+                return true;
+            }
+            if (args.length == 2 && first.equals("floor") || first.equals("wall")) {
+                return new TARDISJunkFloorWall(plugin).setJunkWallOrFloor(sender, args);
+            }
+        }
+        return false;
+    }
 }
