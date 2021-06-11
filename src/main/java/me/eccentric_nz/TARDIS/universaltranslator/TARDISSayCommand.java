@@ -57,8 +57,8 @@ public class TARDISSayCommand implements CommandExecutor {
                 return false;
             }
             String preferedLang = "ENGLISH";
-            if (sender instanceof Player) {
-                ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, ((Player) sender).getUniqueId().toString());
+            if (sender instanceof Player player) {
+                ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
                 if (rs.resultSet() && !rs.getLanguage().isEmpty()) {
                     if (!rs.getLanguage().equalsIgnoreCase("AUTO_DETECT")) {
                         preferedLang = rs.getLanguage();
@@ -77,8 +77,8 @@ public class TARDISSayCommand implements CommandExecutor {
                 Translate.setKey("trnsl.1.1.20170312T202552Z.b0bd3c7ce48fe120.8d084aec9ae76b8d17b7882cd3026202c61ee7e0");
                 try {
                     String translatedText = Translate.execute(whatToTranslate, from, to);
-                    if (sender instanceof Player) {
-                        ((Player) sender).chat(UT + translatedText);
+                    if (sender instanceof Player player) {
+                        player.chat(UT + translatedText);
                     } else {
                         plugin.getServer().dispatchCommand(sender, "say " + UT + translatedText);
                     }

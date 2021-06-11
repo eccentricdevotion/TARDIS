@@ -95,8 +95,8 @@ public class CureBrewingListener implements Listener {
                             items.add(item.getItemStack().getType().toString());
                             // get entities around current item
                             for (Entity e : item.getNearbyEntities(1.25d, 1.25d, 1.25d)) {
-                                if (e instanceof Item) {
-                                    ItemStack is = ((Item) e).getItemStack();
+                                if (e instanceof Item i) {
+                                    ItemStack is = i.getItemStack();
                                     Material type = is.getType();
                                     if (type.equals(Material.FEATHER) && is.hasItemMeta()) {
                                         ItemMeta im = is.getItemMeta();

@@ -38,9 +38,8 @@ class TARDISChameleonFrame {
         Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(loc);
         if (location != null) {
             for (Entity e : location.getChunk().getEntities()) {
-                if (e instanceof ItemFrame) {
+                if (e instanceof ItemFrame frame) {
                     if (compareLocations(e.getLocation(), location)) {
-                        ItemFrame frame = (ItemFrame) e;
                         ItemStack is = new ItemStack(preset.getGuiDisplay());
                         ItemMeta im = is.getItemMeta();
                         assert im != null;

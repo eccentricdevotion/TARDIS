@@ -118,7 +118,6 @@ public class TARDISVortexPersister {
                                 dd.setDirection(rsb.getDirection());
                                 dd.setSubmarine(rsb.isSubmarine());
                                 dd.setTardisId(id);
-                                dd.setTardisBiome(null);
                                 dd.setSiege(false);
                                 dd.setThrottle(SpaceTimeThrottle.REBUILD);
                                 dd.setPlayer(Bukkit.getOfflinePlayer(uuid));

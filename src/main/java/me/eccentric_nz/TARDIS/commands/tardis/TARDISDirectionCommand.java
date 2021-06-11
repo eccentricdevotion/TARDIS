@@ -175,12 +175,21 @@ public class TARDISDirectionCommand {
                     }
                     for (Entity e : chunk.getEntities()) {
                         if (e instanceof ItemFrame frame && e.getLocation().toString().equals(locToCheck)) {
-                            Rotation r = switch (d) {
-                                case EAST -> Rotation.COUNTER_CLOCKWISE;
-                                case SOUTH -> Rotation.NONE;
-                                case WEST -> Rotation.CLOCKWISE;
-                                default -> Rotation.FLIPPED;
-                            };
+                            Rotation r;
+                            switch (d) {
+                                case EAST:
+                                    r = Rotation.COUNTER_CLOCKWISE;
+                                    break;
+                                case SOUTH:
+                                    r = Rotation.NONE;
+                                    break;
+                                case WEST:
+                                    r = Rotation.CLOCKWISE;
+                                    break;
+                                default:
+                                    r = Rotation.FLIPPED;
+                                    break;
+                            }
                             frame.setRotation(r);
                             break;
                         }

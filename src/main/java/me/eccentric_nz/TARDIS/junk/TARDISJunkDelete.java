@@ -25,7 +25,6 @@ import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -72,7 +71,6 @@ class TARDISJunkDelete {
             dd.setOutside(false);
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisId(id);
-            dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
             dd.setThrottle(SpaceTimeThrottle.JUNK);
             plugin.getPresetDestroyer().destroyPreset(dd);
             // destroy the vortex tardis

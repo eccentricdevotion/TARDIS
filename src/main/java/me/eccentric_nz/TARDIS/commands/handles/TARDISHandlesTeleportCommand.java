@@ -26,7 +26,6 @@ import me.eccentric_nz.tardis.destroyers.DestroyData;
 import me.eccentric_nz.tardis.enumeration.Flag;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
 import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -117,7 +116,6 @@ public class TARDISHandlesTeleportCommand {
             dd.setOutside(true);
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisId(id);
-            dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
             dd.setThrottle(SpaceTimeThrottle.NORMAL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 plugin.getTrackerKeeper().getDematerialising().add(id);

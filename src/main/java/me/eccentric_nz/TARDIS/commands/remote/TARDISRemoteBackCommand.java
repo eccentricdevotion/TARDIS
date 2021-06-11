@@ -23,7 +23,6 @@ import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -91,7 +90,6 @@ public class TARDISRemoteBackCommand {
             dd.setOutside(true);
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisId(id);
-            dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
             dd.setThrottle(SpaceTimeThrottle.NORMAL);
             plugin.getTrackerKeeper().getDematerialising().add(id);
             plugin.getPresetDestroyer().destroyPreset(dd);

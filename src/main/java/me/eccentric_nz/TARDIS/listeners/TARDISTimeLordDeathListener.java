@@ -37,7 +37,6 @@ import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.tardis.hads.TARDISCloisterBell;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.move.TARDISDoorCloser;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
 import me.eccentric_nz.tardis.siegemode.TARDISSiegeArea;
 import me.eccentric_nz.tardis.travel.TARDISEPSRunnable;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
@@ -185,8 +184,6 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             dd.setOutside(false);
                                             dd.setSubmarine(rsc.isSubmarine());
                                             dd.setTardisId(id);
-                                            TARDISBiome biome = TARDISBiome.get(rsc.getBiomeKey());
-                                            dd.setTardisBiome(biome);
                                             dd.setThrottle(spaceTimeThrottle);
                                             // set handbrake off
                                             HashMap<String, Object> set = new HashMap<>();
@@ -306,7 +303,6 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     dd.setOutside(false);
                                     dd.setSubmarine(rsc.isSubmarine());
                                     dd.setTardisId(id);
-                                    dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
                                     dd.setThrottle(spaceTimeThrottle);
                                     plugin.getPresetDestroyer().destroyPreset(dd);
                                     // sound the cloister bell at current location for siege mode

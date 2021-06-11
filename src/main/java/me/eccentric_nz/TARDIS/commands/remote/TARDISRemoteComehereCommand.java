@@ -32,7 +32,6 @@ import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.enumeration.Flag;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
 import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
 import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
@@ -154,7 +153,6 @@ public class TARDISRemoteComehereCommand {
             return true;
         }
         Location oldSave = null;
-        TARDISBiome biome = TARDISBiome.get(rsc.getBiomeKey());
         HashMap<String, Object> bid = new HashMap<>();
         bid.put("tardis_id", id);
         HashMap<String, Object> bset = new HashMap<>();
@@ -207,7 +205,6 @@ public class TARDISRemoteComehereCommand {
             dd.setOutside(true);
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisId(id);
-            dd.setTardisBiome(biome);
             dd.setThrottle(SpaceTimeThrottle.NORMAL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 if (!hid) {

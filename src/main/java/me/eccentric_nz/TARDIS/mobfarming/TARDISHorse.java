@@ -42,7 +42,7 @@ public class TARDISHorse extends TARDISMob {
     private double horseHealth;
 
     /**
-     * Data storage class for tardis mobs.
+     * Data storage class for TARDIS horse.
      */
     public TARDISHorse() {
     }

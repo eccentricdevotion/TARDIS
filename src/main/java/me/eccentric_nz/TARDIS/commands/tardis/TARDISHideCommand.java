@@ -28,7 +28,6 @@ import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -129,7 +128,6 @@ public class TARDISHideCommand {
             dd.setOutside(false);
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisId(id);
-            dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
             dd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getPresetDestroyer().destroyPreset(dd);
             plugin.getTrackerKeeper().getInVortex().add(id);

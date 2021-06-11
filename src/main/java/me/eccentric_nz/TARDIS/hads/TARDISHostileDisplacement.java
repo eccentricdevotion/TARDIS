@@ -137,7 +137,6 @@ class TARDISHostileDisplacement {
                         dd.setSubmarine(rsc.isSubmarine());
                         dd.setTardisId(id);
                         TARDISBiome biome = TARDISStaticUtils.getBiomeAt(current);
-                        dd.setTardisBiome(biome);
                         dd.setThrottle(SpaceTimeThrottle.NORMAL);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             plugin.getTrackerKeeper().getDematerialising().add(id);

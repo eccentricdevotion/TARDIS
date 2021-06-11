@@ -56,7 +56,7 @@ public class TARDISHorseListener implements Listener {
             Entity passenger = (h.getPassengers().size() > 0) ? h.getPassengers().get(0) : null;
             if (passenger != null && m.equals(Material.OAK_PRESSURE_PLATE)) {
                 if (passenger instanceof Player p) {
-                    String pworld = Objects.requireNonNull(p.getLocation().getWorld()).getName();
+                    String pworld = p.getLocation().getWorld().getName();
                     HashMap<String, Object> wherep = new HashMap<>();
                     wherep.put("uuid", p.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);

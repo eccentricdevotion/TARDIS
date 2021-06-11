@@ -21,21 +21,17 @@ import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
 import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
 import me.eccentric_nz.tardis.utility.TARDISParticles;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -51,7 +47,6 @@ public class TARDISJunkDestroyer implements Runnable {
     private final Location junkLoc;
     private final Location effectsLoc;
     private final World world;
-    private final TARDISBiome biome;
     private int task;
     private int i = 0;
     private Location vortexJunkLoc;
@@ -69,7 +64,6 @@ public class TARDISJunkDestroyer implements Runnable {
         startZ = junkLoc.getBlockZ() - 2;
         endZ = junkLoc.getBlockZ() + 3;
         world = junkLoc.getWorld();
-        biome = this.pdd.getTardisBiome();
     }
 
     @Override
@@ -79,8 +73,7 @@ public class TARDISJunkDestroyer implements Runnable {
             i++;
             if (i == 1) {
                 getJunkTravellers().forEach((e) -> {
-                    if (e instanceof Player) {
-                        Player p = (Player) e;
+                    if (e instanceof Player p) {
                         plugin.getGeneralKeeper().getJunkTravellers().add(p.getUniqueId());
                     }
                 });
@@ -96,8 +89,7 @@ public class TARDISJunkDestroyer implements Runnable {
                     // teleport players to vortex
                     vortexJunkLoc = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getTardis().getCreeper()).add(3.0d, 0.0d, 2.0d);
                     getJunkTravellers().forEach((e) -> {
-                        if (e instanceof Player) {
-                            Player p = (Player) e;
+                        if (e instanceof Player p) {
                             Location relativeLoc = getRelativeLocation(p);
                             p.teleport(relativeLoc);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(relativeLoc), 2L);
@@ -107,16 +99,6 @@ public class TARDISJunkDestroyer implements Runnable {
                     int jvrtask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 1L, 20L);
                     runnable.setTask(jvrtask);
                 }
-                // what biome?
-                Biome b = null;
-                if (biome.getKey().getNamespace().equalsIgnoreCase("minecraft")) {
-                    try {
-                        b = Biome.valueOf(biome.name());
-                    } catch (IllegalArgumentException e) {
-                        // ignore
-                    }
-                }
-                List<Chunk> chunks = new ArrayList<>();
                 // remove blocks
                 for (int row = startX; row <= endX; row++) {
                     for (int column = startY; column <= endY; column++) {
@@ -148,8 +130,7 @@ public class TARDISJunkDestroyer implements Runnable {
             } else if (plugin.getConfig().getBoolean("junk.particles")) {
                 // just animate particles
                 plugin.getUtils().getJunkTravellers(junkLoc).forEach((e) -> {
-                    if (e instanceof Player) {
-                        Player p = (Player) e;
+                    if (e instanceof Player p) {
                         TARDISParticles.sendVortexParticles(effectsLoc, p);
                     }
                 });

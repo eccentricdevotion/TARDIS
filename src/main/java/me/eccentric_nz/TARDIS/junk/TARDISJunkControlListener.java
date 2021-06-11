@@ -27,7 +27,6 @@ import me.eccentric_nz.tardis.destroyers.DestroyData;
 import me.eccentric_nz.tardis.enumeration.*;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.*;
@@ -123,7 +122,6 @@ public class TARDISJunkControlListener implements Listener {
                             dd.setOutside(false);
                             dd.setSubmarine(rsc.isSubmarine());
                             dd.setTardisId(id);
-                            dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
                             dd.setThrottle(SpaceTimeThrottle.JUNK);
                             plugin.getPresetDestroyer().destroyPreset(dd);
                             // fly my pretties

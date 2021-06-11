@@ -71,10 +71,9 @@ public class TARDISCondenserListener implements Listener {
         InventoryView view = event.getView();
         InventoryHolder holder = event.getInventory().getHolder();
         String title = view.getTitle();
-        if (holder instanceof Chest) {
+        if (holder instanceof Chest chest) {
             if (title.equals(ChatColor.DARK_RED + "Artron Condenser") || title.equals(ChatColor.DARK_RED + "Server Condenser")) {
                 Player player = (Player) event.getPlayer();
-                Chest chest = (Chest) holder;
                 Location loc = chest.getLocation();
                 String chest_loc = loc.toString();
                 ResultSetTardis rs;

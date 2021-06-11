@@ -51,9 +51,7 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
                 TARDISMessage.send(sender, "TOO_FEW_ARGS");
                 return true;
             }
-            Player player;
-            if (sender instanceof Player) {
-                player = (Player) sender;
+            if (sender instanceof Player player) {
                 if (player == null) {
                     TARDISMessage.send(sender, "CMD_PLAYER");
                     return true;

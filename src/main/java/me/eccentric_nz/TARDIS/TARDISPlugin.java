@@ -479,6 +479,11 @@ public class TARDISPlugin extends JavaPlugin {
             if (getConfig().getInt("allow.force_field") > 0) {
                 getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISForceField(this), 20, 5);
             }
+            // hook CoreProtectAPI
+            if (pm.getPlugin("CoreProtect") != null) {
+                debug("Logging block changes with CoreProtect.");
+                blockLogger.enableLogger();
+            }
             new TARDISVortexPersister(this).load();
             new TARDISJunkPlayerPersister(this).load();
             new TARDISSeedBlockPersister(this).load();
@@ -525,11 +530,6 @@ public class TARDISPlugin extends JavaPlugin {
                 new TARDISPlaceholderExpansion(this).register();
             }
             blockLogger = new TARDISBlockLogger(this);
-            // hook CoreProtectAPI
-            if (pm.getPlugin("CoreProtect") != null) {
-                debug("Logging block changes with CoreProtect.");
-                blockLogger.enableLogger();
-            }
             if (!getConfig().getBoolean("conversions.restore_biomes")) {
                 getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
                     new TARDISBiomeConverter(this).convertBiomes();

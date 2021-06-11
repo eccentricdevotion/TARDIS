@@ -546,8 +546,7 @@ class TARDISMaterialisePreset implements Runnable {
                 if (preset.equals(PRESET.JUNK_MODE) && plugin.getConfig().getBoolean("junk.particles")) {
                     // animate particles
                     plugin.getUtils().getJunkTravellers(bd.getLocation()).forEach((e) -> {
-                        if (e instanceof Player) {
-                            Player p = (Player) e;
+                        if (e instanceof Player p) {
                             Location effectsLoc = bd.getLocation().clone().add(0.5d, 0, 0.5d);
                             TARDISParticles.sendVortexParticles(effectsLoc, p);
                         }
@@ -692,8 +691,7 @@ class TARDISMaterialisePreset implements Runnable {
                                     light = mat;
                                 }
                                 BlockData lamp = light.createBlockData();
-                                if (lamp instanceof Lightable) {
-                                    Lightable lightable = (Lightable) lamp;
+                                if (lamp instanceof Lightable lightable) {
                                     lightable.setLit(true);
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, lightable);
                                 } else {

@@ -211,7 +211,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                             // check for paintings
                             Location bLocation = b.getLocation();
                             for (Entity entity : bLocation.getWorld().getNearbyEntities(bLocation, 1.25, 1.25, 1.25)) {
-                                if (entity instanceof Painting) {
+                                if (entity instanceof Painting art) {
                                     Location ploc = entity.getLocation();
                                     if (!entities.contains(entity)) {
                                         JsonObject painting = new JsonObject();
@@ -220,7 +220,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                                         loc.addProperty("y", ploc.getBlockY() - miny);
                                         loc.addProperty("z", ploc.getBlockZ() - minz);
                                         painting.add("rel_location", loc);
-                                        painting.addProperty("art", ((Painting) entity).getArt().toString());
+                                        painting.addProperty("art", art.getArt().toString());
                                         painting.addProperty("facing", entity.getFacing().toString());
                                         paintings.add(painting);
                                         entities.add(entity);

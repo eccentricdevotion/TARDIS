@@ -26,7 +26,6 @@ import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -131,7 +130,6 @@ class TARDISMakeHerBlueCommand {
         bd.setRebuild(true);
         bd.setSubmarine(rsc.isSubmarine());
         bd.setTardisId(id);
-        bd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
         bd.setThrottle(SpaceTimeThrottle.REBUILD);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 20L);
         String message = (tardis.getPreset().equals(PRESET.JUNK_MODE)) ? "JUNK_PRESET_OFF" : "INVISIBILITY_REMOVED";

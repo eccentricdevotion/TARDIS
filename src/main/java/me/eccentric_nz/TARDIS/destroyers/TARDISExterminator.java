@@ -28,7 +28,6 @@ import me.eccentric_nz.tardis.enumeration.Schematic;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
 import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -99,7 +98,6 @@ public class TARDISExterminator {
                 dd.setOutside(false);
                 dd.setSubmarine(rsc.isSubmarine());
                 dd.setTardisId(id);
-                dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
                 dd.setThrottle(SpaceTimeThrottle.REBUILD);
                 if (!hid) {
                     plugin.getPresetDestroyer().destroyPreset(dd);
@@ -236,8 +234,6 @@ public class TARDISExterminator {
                 dd.setOutside(false);
                 dd.setSubmarine(rsc.isSubmarine());
                 dd.setTardisId(id);
-                TARDISBiome tardisBiome = TARDISBiome.get(rsc.getBiomeKey());
-                dd.setTardisBiome(tardisBiome);
                 dd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, owner));
                 if (!tardis.isHidden()) {

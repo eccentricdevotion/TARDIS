@@ -101,7 +101,7 @@ public class TARDISMonsterRunnable implements Runnable {
             // check if a Time Lord or companion is near
             boolean take_action = true;
             for (Entity e : entities) {
-                if (e instanceof Player && isTimelord(map.getValue(), (Player) e)) {
+                if (e instanceof Player player && isTimelord(map.getValue(), player)) {
                     take_action = false;
                     break;
                 }

@@ -24,7 +24,6 @@ import me.eccentric_nz.tardis.destroyers.DestroyData;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -83,7 +82,6 @@ public class TARDISRemoteHideCommand {
         dd.setOutside(false);
         dd.setSubmarine(rsc.isSubmarine());
         dd.setTardisId(id);
-        dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
         dd.setThrottle(SpaceTimeThrottle.REBUILD);
         plugin.getPresetDestroyer().destroyPreset(dd);
         TARDISMessage.send(sender, "TARDIS_HIDDEN", "/tardisremote [player] rebuild");

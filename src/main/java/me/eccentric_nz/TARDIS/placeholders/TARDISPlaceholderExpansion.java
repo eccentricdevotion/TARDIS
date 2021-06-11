@@ -19,7 +19,9 @@ package me.eccentric_nz.tardis.placeholders;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.database.resultset.*;
+import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -265,7 +267,10 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             where.put("tardis_id", rsti.getTardisId());
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
-                                result = rscl.getBiomeKey().toString();
+                                // get from current location
+                                Location location = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
+                                result = TARDISStaticUtils.getBiomeAt(location).name();
+                                ;
                             } else {
                                 result = "";
                             }

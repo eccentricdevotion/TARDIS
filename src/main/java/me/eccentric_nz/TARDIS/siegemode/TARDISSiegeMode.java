@@ -31,7 +31,6 @@ import me.eccentric_nz.tardis.enumeration.Schematic;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.tardis.enumeration.UseClay;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
 import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -155,7 +154,6 @@ public class TARDISSiegeMode {
             dd.setSiege(true);
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisId(id);
-            dd.setTardisBiome(TARDISBiome.get(rsc.getBiomeKey()));
             dd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getPresetDestroyer().destroyPreset(dd);
             // track this siege block

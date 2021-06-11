@@ -392,8 +392,7 @@ public class TARDISSiegeListener implements Listener {
     private boolean isSiegeCube(Block b) {
         boolean faced = b.getType().equals(Material.BROWN_MUSHROOM_BLOCK);
         BlockData blockData = b.getBlockData();
-        if (blockData instanceof MultipleFacing) {
-            MultipleFacing mf = (MultipleFacing) b.getBlockData();
+        if (blockData instanceof MultipleFacing mf) {
             return mf.getAsString().equals(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
         }
         return faced;

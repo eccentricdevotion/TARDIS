@@ -157,7 +157,7 @@ public class TARDISGravityWellListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onEntityDamage(EntityDamageEvent e) {
         Entity ent = e.getEntity();
-        if ((ent instanceof Player)) {
+        if ((ent instanceof Player p)) {
             Location l = ent.getLocation();
             switch (e.getCause()) {
                 case FALL:
@@ -172,7 +172,6 @@ public class TARDISGravityWellListener implements Listener {
                     }
                     break;
                 case VOID:
-                    Player p = (Player) ent;
                     if (l.getBlockY() < 1 && plugin.getUtils().inTARDISWorld(p)) {
                         if (Objects.equals(plugin.getConfig().getString("preferences.vortex_fall"), "kill")) {
                             p.setHealth(0);

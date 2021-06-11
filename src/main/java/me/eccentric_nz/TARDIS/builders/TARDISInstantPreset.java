@@ -263,8 +263,7 @@ public class TARDISInstantPreset {
                         if (mat.equals(Material.TORCH)) {
                             do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), light));
                         } else {
-                            if (light instanceof Lightable) {
-                                Lightable lit = (Lightable) light;
+                            if (light instanceof Lightable lit) {
                                 lit.setLit(true);
                                 TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, lit, bd.getTardisId());
                             } else {

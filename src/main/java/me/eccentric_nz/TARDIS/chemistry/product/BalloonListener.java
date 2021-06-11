@@ -73,9 +73,8 @@ public class BalloonListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerPickupBalloon(EntityPickupItemEvent event) {
-        if (event.getEntity() instanceof Player) {
+        if (event.getEntity() instanceof Player player) {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                Player player = (Player) event.getEntity();
                 int factor = -1;
                 if (isBalloon(event.getItem().getItemStack())) {
                     if (isBalloon(player.getInventory().getItemInMainHand())) {

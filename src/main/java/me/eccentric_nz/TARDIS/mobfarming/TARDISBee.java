@@ -28,24 +28,24 @@ public class TARDISBee extends TARDISMob {
     private int anger;
 
     /**
-     * Data storage class for tardis Bee.
+     * Data storage class for TARDIS bee.
      */
-    public TARDISBee() {
+    TARDISBee() {
     }
 
-    public boolean hasNectar() {
+    boolean hasNectar() {
         return nectar;
     }
 
-    public void setHasNectar(boolean nectar) {
+    void setHasNectar(boolean nectar) {
         this.nectar = nectar;
     }
 
-    public boolean hasStung() {
+    boolean hasStung() {
         return stung;
     }
 
-    public void setHasStung(boolean stung) {
+    void setHasStung(boolean stung) {
         this.stung = stung;
     }
 

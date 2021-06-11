@@ -26,7 +26,6 @@ import me.eccentric_nz.tardis.destroyers.DestroyData;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -65,7 +64,6 @@ class TARDISRemoteTravelCommand {
                 l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
             }
             COMPASS cd = rscl.getDirection();
-            TARDISBiome biome = (l == null) ? TARDISBiome.PLAINS : TARDISBiome.get(rscl.getBiomeKey());
             boolean sub = rscl.isSubmarine();
             HashMap<String, Object> wherenl = new HashMap<>();
             wherenl.put("tardis_id", id);
@@ -92,7 +90,6 @@ class TARDISRemoteTravelCommand {
                 dd.setOutside(false);
                 dd.setSubmarine(sub);
                 dd.setTardisId(id);
-                dd.setTardisBiome(biome);
                 dd.setThrottle(SpaceTimeThrottle.NORMAL);
                 if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
                     plugin.getTrackerKeeper().getDematerialising().add(id);

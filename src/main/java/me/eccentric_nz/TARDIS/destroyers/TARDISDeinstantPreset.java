@@ -24,7 +24,6 @@ import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.enumeration.PRESET;
 import me.eccentric_nz.tardis.move.TARDISDoorCloser;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
 import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -65,7 +64,6 @@ public class TARDISDeinstantPreset {
         COMPASS d = dd.getDirection();
         int id = dd.getTardisId();
         boolean sub = dd.isSubmarine();
-        TARDISBiome biome = dd.getTardisBiome();
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             // always remove the portal
             plugin.getTrackerKeeper().getPortals().remove(l);
@@ -81,8 +79,7 @@ public class TARDISDeinstantPreset {
         if (preset.usesItemFrame()) {
             // remove item frame
             for (Entity e : w.getNearbyEntities(dd.getLocation(), 1.0d, 1.0d, 1.0d)) {
-                if (e instanceof ItemFrame) {
-                    ItemFrame frame = (ItemFrame) e;
+                if (e instanceof ItemFrame frame) {
                     frame.setItem(null, false);
                     frame.remove();
                 }

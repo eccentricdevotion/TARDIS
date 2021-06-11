@@ -23,7 +23,7 @@ import org.bukkit.entity.Rabbit;
  * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
  * creatures, as well as robots.
  * <p>
- * Data storage class for tardis pig.
+ * Data storage class for TARDIS rabbit.
  *
  * @author eccentric_nz
  */
