@@ -355,7 +355,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                     if (plugin.isDisguisesOnServer()) {
                                         new TARDISLazarusLibs(player, disguise, getProfession(view), false, getBaby(view)).createDisguise();
                                     } else {
-                                        options = new Object[]{PROFESSION.getFromVillagerProfression(getProfession(view)), AGE.getFromBoolean(getBaby(view))};
+                                        options = new Object[]{PROFESSION.getFromVillagerProfession(getProfession(view)), AGE.getFromBoolean(getBaby(view))};
                                     }
                                     break;
                                 case SLIME:
