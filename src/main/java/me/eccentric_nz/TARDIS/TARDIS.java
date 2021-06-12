@@ -173,7 +173,6 @@ public class TARDIS extends JavaPlugin {
     public TARDIS() {
         worldGuardOnServer = false;
         invManager = InventoryManager.NONE;
-//        versions.put("dynmap", "3.0.1");
         versions.put("GriefPrevention", "16.13");
         versions.put("LibsDisguises", "10.0.14");
         versions.put("MultiWorld", "5.2");
@@ -183,7 +182,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("MultiInv", "3.3.6");
         versions.put("My_Worlds", "1.16.1");
         versions.put("PerWorldInventory", "2.3.0");
-        versions.put("TARDISChunkGenerator", "4.6.3");
+        versions.put("TARDISChunkGenerator", "4.7.0");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.0");
@@ -302,7 +301,7 @@ public class TARDIS extends JavaPlugin {
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         Version serverVersion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.16.2");
+        Version minversion = new Version("1.17");
         // check server version
         if (serverVersion.compareTo(minversion) >= 0) {
             if (!PaperLib.isPaper() && !PaperLib.isSpigot()) {

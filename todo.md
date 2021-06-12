@@ -4,6 +4,7 @@
 
 ## Next version `4.7`
 
+0. Use Java 16 `record` data type?
 1. Update to Spigot-API 1.17.0
     * Add Cave & Weathered consoles
     * Add Geode room
