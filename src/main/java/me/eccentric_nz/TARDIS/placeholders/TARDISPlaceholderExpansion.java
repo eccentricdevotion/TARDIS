@@ -270,7 +270,6 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                                 // get from current location
                                 Location location = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                                 result = TARDISStaticUtils.getBiomeAt(location).name();
-                                ;
                             } else {
                                 result = "";
                             }

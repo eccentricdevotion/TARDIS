@@ -182,7 +182,7 @@ public class TARDISPlugin extends JavaPlugin {
         versions.put("MultiInv", "3.3.6");
         versions.put("My_Worlds", "1.16.1");
         versions.put("PerWorldInventory", "2.3.0");
-        versions.put("TARDISChunkGenerator", "4.6.3");
+        versions.put("TARDISChunkGenerator", "4.7.0");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.0");
@@ -210,6 +210,7 @@ public class TARDISPlugin extends JavaPlugin {
         if (pm.isPluginEnabled(plg)) {
             Plugin check = pm.getPlugin(plg);
             Version minver = new Version(min);
+            assert check != null;
             String preSplit = check.getDescription().getVersion();
             String[] split = preSplit.split("-");
             try {
@@ -392,7 +393,7 @@ public class TARDISPlugin extends JavaPlugin {
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
             generalKeeper.setQuotes(quotes());
             try {
-                difficulty = Difficulty.valueOf(getConfig().getString("preferences.difficulty").toUpperCase(Locale.ENGLISH));
+                difficulty = Difficulty.valueOf(Objects.requireNonNull(getConfig().getString("preferences.difficulty")).toUpperCase(Locale.ENGLISH));
             } catch (IllegalArgumentException e) {
                 debug("Could not determine difficulty setting, using EASY");
                 difficulty = Difficulty.EASY;
@@ -531,9 +532,7 @@ public class TARDISPlugin extends JavaPlugin {
                 new TARDISPlaceholderExpansion(this).register();
             }
             if (!getConfig().getBoolean("conversions.restore_biomes")) {
-                getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
-                    new TARDISBiomeConverter(this).convertBiomes();
-                }, 1200);
+                getServer().getScheduler().scheduleSyncDelayedTask(this, () -> new TARDISBiomeConverter(this).convertBiomes(), 1200);
                 getConfig().set("conversions.restore_biomes", true);
                 conversions++;
             }
@@ -556,6 +555,7 @@ public class TARDISPlugin extends JavaPlugin {
     private void loadDatabase() {
         String dbtype = getConfig().getString("storage.database");
         try {
+            assert dbtype != null;
             if (dbtype.equals("sqlite")) {
                 String path = getDataFolder() + File.separator + "TARDIS.db";
                 service.setConnection(path);
@@ -891,7 +891,7 @@ public class TARDISPlugin extends JavaPlugin {
      */
     private HashMap<Material, String> getSeeds() {
         HashMap<Material, String> map = new HashMap<>();
-        Set<String> rooms = getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
+        Set<String> rooms = Objects.requireNonNull(getRoomsConfig().getConfigurationSection("rooms")).getKeys(false);
         int r = 0;
         for (String s : rooms) {
             if (!getRoomsConfig().contains("rooms." + s + ".user")) {
@@ -1013,6 +1013,7 @@ public class TARDISPlugin extends JavaPlugin {
 
     private void updateTagStats() {
         String it = getTagConfig().getString("it");
+        assert it != null;
         if (!it.equals("")) {
             HashMap<String, Object> set = new HashMap<>();
             set.put("player", getTagConfig().getString("it"));
@@ -1027,6 +1028,7 @@ public class TARDISPlugin extends JavaPlugin {
             return;
         }
         String defWorld = getConfig().getString("creation.default_world_name");
+        assert defWorld != null;
         if (getServer().getWorld(defWorld) == null) {
             console.sendMessage(pluginName + "Default world specified, but it doesn't exist! Trying to create it now...");
             new TARDISSpace(this).createDefaultWorld(defWorld);
@@ -1048,6 +1050,7 @@ public class TARDISPlugin extends JavaPlugin {
     public boolean checkTWA() {
         if (getPM().isPluginEnabled("TARDISWeepingAngels")) {
             Plugin twa = getPM().getPlugin("TARDISWeepingAngels");
+            assert twa != null;
             Version version = new Version(twa.getDescription().getVersion());
             return (version.compareTo(new Version("3.3.1")) >= 0);
         } else {

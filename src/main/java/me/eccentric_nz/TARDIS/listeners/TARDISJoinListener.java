@@ -36,6 +36,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Tylos was a member of Varsh's group of Outlers on Alzarius. When Adric asked to join them, Tylos challenged him to
@@ -179,15 +180,13 @@ public class TARDISJoinListener implements Listener {
         }
         // add to zero room occupants
         if (plugin.getConfig().getBoolean("allow.zero_room")) {
-            if (player.getLocation().getWorld().getName().equals("TARDIS_Zero_Room")) {
+            if (Objects.requireNonNull(player.getLocation().getWorld()).getName().equals("TARDIS_Zero_Room")) {
                 plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
             }
         }
         // teleport players that rejoined after logging out while in Junk TARDIS
         if (plugin.getTrackerKeeper().getJunkRelog().containsKey(player.getUniqueId())) {
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                player.teleport(plugin.getTrackerKeeper().getJunkRelog().get(player.getUniqueId()));
-            }, 2L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.teleport(plugin.getTrackerKeeper().getJunkRelog().get(player.getUniqueId())), 2L);
         }
         // notify updates
         if (plugin.getConfig().getBoolean("preferences.notify_update") && plugin.isUpdateFound() && player.isOp()) {

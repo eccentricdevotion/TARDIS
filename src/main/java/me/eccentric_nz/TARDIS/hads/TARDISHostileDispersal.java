@@ -87,6 +87,7 @@ class TARDISHostileDispersal {
         }
         World w = l.getWorld();
         // make sure chunk is loaded
+        assert w != null;
         Chunk chunk = w.getChunkAt(l);
         while (!chunk.isLoaded()) {
             chunk.load();
@@ -107,22 +108,22 @@ class TARDISHostileDispersal {
                 int flowery = (l.getBlockY() + 1);
                 int flowerz;
                 switch (d) {
-                    case NORTH:
+                    case NORTH -> {
                         flowerx = l.getBlockX();
                         flowerz = l.getBlockZ() + 1;
-                        break;
-                    case WEST:
+                    }
+                    case WEST -> {
                         flowerx = l.getBlockX() + 1;
                         flowerz = l.getBlockZ();
-                        break;
-                    case SOUTH:
+                    }
+                    case SOUTH -> {
                         flowerx = l.getBlockX();
                         flowerz = l.getBlockZ() - 1;
-                        break;
-                    default:
+                    }
+                    default -> {
                         flowerx = l.getBlockX() - 1;
                         flowerz = l.getBlockZ();
-                        break;
+                    }
                 }
                 TARDISBlockSetters.setBlock(w, flowerx, flowery, flowerz, Material.AIR);
                 break;

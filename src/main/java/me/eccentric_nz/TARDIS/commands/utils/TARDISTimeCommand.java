@@ -88,6 +88,7 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
                         return true;
                     }
                 }
+                assert world != null;
                 world.setTime(ticks);
                 TARDISMessage.send(player, "TIME_SET", String.format("%s", ticks), world.getName());
                 return true;

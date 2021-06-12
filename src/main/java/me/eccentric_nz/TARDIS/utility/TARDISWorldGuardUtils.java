@@ -190,6 +190,7 @@ public class TARDISWorldGuardUtils {
         flags.put(Flags.LIGHTER, State.DENY);
         flags.put(Flags.USE, State.ALLOW);
         region.setFlags(flags);
+        assert rm != null;
         rm.addRegion(region);
         if (!p.equals("junk")) {
             // deny exit to all

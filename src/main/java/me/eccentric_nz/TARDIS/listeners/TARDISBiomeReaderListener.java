@@ -34,10 +34,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -75,13 +72,14 @@ public class TARDISBiomeReaderListener implements Listener {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        if (event.getClickedBlock().getType().isInteractable()) {
+        if (Objects.requireNonNull(event.getClickedBlock()).getType().isInteractable()) {
             return;
         }
         Player player = event.getPlayer();
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(Material.BRICK) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Biome Reader")) {
                 TARDISBiome biome = TARDISStaticUtils.getBiomeAt(event.getClickedBlock().getLocation());
                 if (biome.equals(TARDISBiome.THE_VOID)) {
@@ -111,6 +109,7 @@ public class TARDISBiomeReaderListener implements Listener {
                             if (!hasBiomeDisk(disks2, biome.name())) {
                                 ItemStack bd = new ItemStack(Material.MUSIC_DISC_CAT, 1);
                                 ItemMeta dim = bd.getItemMeta();
+                                assert dim != null;
                                 dim.setDisplayName("Biome Storage Disk");
                                 List<String> disk_lore = new ArrayList<>();
                                 disk_lore.add(biome.name());

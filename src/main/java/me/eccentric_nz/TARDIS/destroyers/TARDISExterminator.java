@@ -161,7 +161,7 @@ public class TARDISExterminator {
                 Block blockDown = blockbehind.getRelative(BlockFace.DOWN, 2);
                 Location bd_loc = blockDown.getLocation();
                 HashMap<String, Object> wherecl = new HashMap<>();
-                wherecl.put("world", bd_loc.getWorld().getName());
+                wherecl.put("world", Objects.requireNonNull(bd_loc.getWorld()).getName());
                 wherecl.put("x", bd_loc.getBlockX());
                 wherecl.put("y", bd_loc.getBlockY());
                 wherecl.put("z", bd_loc.getBlockZ());
@@ -210,18 +210,10 @@ public class TARDISExterminator {
             // get TARDIS direction
             COMPASS d = rsc.getDirection();
             switch (d) {
-                case EAST:
-                    signx = -2;
-                    break;
-                case SOUTH:
-                    signz = -2;
-                    break;
-                case WEST:
-                    signx = 2;
-                    break;
-                case NORTH:
-                    signz = 2;
-                    break;
+                case EAST -> signx = -2;
+                case SOUTH -> signz = -2;
+                case WEST -> signx = 2;
+                case NORTH -> signz = 2;
             }
             int signy = -2;
             if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
@@ -245,7 +237,7 @@ public class TARDISExterminator {
                     TARDISMessage.send(player, "WORLD_DELETED");
                     return true;
                 }
-                if (!cw.getName().toLowerCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) {
+                if (!cw.getName().toUpperCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) {
                     plugin.getInteriorDestroyer().destroyInner(schm, id, cw, tips);
                 }
                 cleanWorlds(cw, owner);

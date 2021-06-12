@@ -1,8 +1,8 @@
 # TODO
 
-## Current version `4.6.3`
+## Current version `4.7.0`
 
-## Next version `4.7`
+## Next version `4.7.1`
 
 1. Update to Spigot-API 1.17.0
     * Add Cave & Weathered consoles

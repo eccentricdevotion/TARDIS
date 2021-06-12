@@ -161,23 +161,19 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     String name = args[1].toLowerCase(Locale.ROOT);
                     if (name.equals("gallifrey") || name.equals("siluria") || name.equals("skaro")) {
                         switch (name) {
-                            case "gallifrey":
-                                new TARDISGallifrey(plugin).loadTimeLordWorld();
-                                break;
-                            case "siluria":
-                                new TARDISSiluria(plugin).loadSilurianUnderworld();
-                                break;
-                            default:
-                                new TARDISSkaro(plugin).loadDalekWorld();
-                                break;
+                            case "gallifrey" -> new TARDISGallifrey(plugin).loadTimeLordWorld();
+                            case "siluria" -> new TARDISSiluria(plugin).loadSilurianUnderworld();
+                            default -> new TARDISSkaro(plugin).loadDalekWorld();
                         }
                         FileConfiguration pConfig = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "planets_template.yml"));
                         ConfigurationSection section = pConfig.getConfigurationSection("planets." + TARDISStringUtils.uppercaseFirst(name));
                         ConfigurationSection rules = pConfig.getConfigurationSection("planets." + TARDISStringUtils.uppercaseFirst(name) + ".gamerules");
                         String s_world = plugin.getServer().getWorlds().get(0).getName();
                         name = s_world + "_tardis_" + name;
+                        assert section != null;
                         plugin.getPlanetsConfig().createSection("planets." + name, section.getValues(true));
                         plugin.getPlanetsConfig().set("planets." + name + "gamerules", null);
+                        assert rules != null;
                         plugin.getPlanetsConfig().createSection("planets." + name + ".gamerules", rules.getValues(true));
                         plugin.getPlanetsConfig().set("planets." + name + ".time_travel", true);
                         if (name.equals(s_world + "_tardis_skaro")) {

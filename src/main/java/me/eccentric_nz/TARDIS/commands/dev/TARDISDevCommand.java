@@ -84,8 +84,7 @@ public class TARDISDevCommand implements CommandExecutor {
                     return false;
                 }
                 if (first.equals("tree")) {
-                    if (sender instanceof Player) {
-                        Player p = (Player) sender;
+                    if (sender instanceof Player p) {
                         Block l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation().getBlock();
                         int which = TARDISNumberParsers.parseInt(args[1]);
                         FractalFence.grow(l, which);

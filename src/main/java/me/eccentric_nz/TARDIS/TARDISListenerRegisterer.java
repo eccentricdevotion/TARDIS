@@ -87,6 +87,8 @@ import me.eccentric_nz.tardis.travel.TARDISAreaSignListener;
 import me.eccentric_nz.tardis.travel.TARDISTerminalListener;
 import me.eccentric_nz.tardis.update.TARDISUpdateListener;
 
+import java.util.Objects;
+
 /**
  * Registers all the listeners for the various events required to use the tardis.
  *
@@ -285,14 +287,14 @@ class TARDISListenerRegisterer {
             if (plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.acid")) {
                 plugin.getPM().registerEvents(new TARDISAcidWater(plugin), plugin);
             }
-            if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
+            if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && Objects.requireNonNull(plugin.getPM().getPlugin("TARDISWeepingAngels")).isEnabled()) {
                 plugin.getPM().registerEvents(new TARDISSkaroSpawnListener(plugin), plugin);
             }
         }
         if (plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.enabled")) {
             plugin.debug("Siluria enabled, registering planet event listeners");
             plugin.getPM().registerEvents(new TARDISSiluriaChunkPopulateListener(plugin), plugin);
-            if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
+            if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && Objects.requireNonNull(plugin.getPM().getPlugin("TARDISWeepingAngels")).isEnabled()) {
                 plugin.getPM().registerEvents(new TARDISSiluriaSpawnListener(plugin), plugin);
             }
         }

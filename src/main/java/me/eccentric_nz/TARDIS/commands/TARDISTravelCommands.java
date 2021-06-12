@@ -244,7 +244,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         TARDISMessage.send(player, "NO_MORE_SPOTS");
                         return true;
                     }
-                    set.put("world", l.getWorld().getName());
+                    set.put("world", Objects.requireNonNull(l.getWorld()).getName());
                     set.put("x", l.getBlockX());
                     set.put("y", l.getBlockY());
                     set.put("z", l.getBlockZ());
@@ -340,7 +340,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         return true;
                                     }
                                 }
-                                set.put("world", cave.getWorld().getName());
+                                set.put("world", Objects.requireNonNull(cave.getWorld()).getName());
                                 set.put("x", cave.getBlockX());
                                 set.put("y", cave.getBlockY());
                                 set.put("z", cave.getBlockZ());
@@ -369,22 +369,16 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         return true;
                                     }
                                 }
-                                set.put("world", village.getWorld().getName());
+                                set.put("world", Objects.requireNonNull(village.getWorld()).getName());
                                 set.put("x", village.getBlockX());
                                 set.put("y", village.getBlockY());
                                 set.put("z", village.getBlockZ());
                                 set.put("submarine", 0);
-                                switch (village.getWorld().getEnvironment()) {
-                                    case THE_END:
-                                        which = "End City";
-                                        break;
-                                    case NETHER:
-                                        which = "Nether Fortress";
-                                        break;
-                                    default:
-                                        which = "Village";
-                                        break;
-                                }
+                                which = switch (village.getWorld().getEnvironment()) {
+                                    case THE_END -> "End City";
+                                    case NETHER -> "Nether Fortress";
+                                    default -> "Village";
+                                };
                             }
                             plugin.getQueryFactory().doSyncUpdate("next", set, tid);
                             TARDISMessage.send(player, "TRAVEL_LOADED", which, !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
@@ -668,7 +662,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             TARDISMessage.send(player, "NO_MORE_SPOTS");
                             return true;
                         }
-                        set.put("world", l.getWorld().getName());
+                        set.put("world", Objects.requireNonNull(l.getWorld()).getName());
                         set.put("x", l.getBlockX());
                         set.put("y", l.getBlockY());
                         set.put("z", l.getBlockZ());
@@ -722,7 +716,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         parameters.setCompass(rsc.getDirection());
                                         Location l = plugin.getTardisAPI().getRandomLocation(worlds, world.getEnvironment(), parameters);
                                         if (l != null) {
-                                            set.put("world", l.getWorld().getName());
+                                            set.put("world", Objects.requireNonNull(l.getWorld()).getName());
                                             set.put("x", l.getBlockX());
                                             set.put("y", l.getBlockY());
                                             set.put("z", l.getBlockZ());
@@ -784,7 +778,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     if (count > 0) {
                                         TARDISMessage.send(player, "NOT_SAFE");
                                     } else {
-                                        set.put("world", location.getWorld().getName());
+                                        set.put("world", Objects.requireNonNull(location.getWorld()).getName());
                                         set.put("x", location.getBlockX());
                                         set.put("y", location.getBlockY());
                                         set.put("z", location.getBlockZ());
@@ -806,7 +800,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         if (count > 0) {
                                             TARDISMessage.send(player, "NOT_SAFE");
                                         } else {
-                                            set.put("world", determiney.getWorld().getName());
+                                            set.put("world", Objects.requireNonNull(determiney.getWorld()).getName());
                                             set.put("x", determiney.getBlockX());
                                             set.put("y", determiney.getBlockY());
                                             set.put("z", determiney.getBlockZ());
@@ -832,7 +826,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     if (count > 0) {
                                         TARDISMessage.send(player, "NOT_SAFE");
                                     } else {
-                                        set.put("world", giveny.getWorld().getName());
+                                        set.put("world", Objects.requireNonNull(giveny.getWorld()).getName());
                                         set.put("x", giveny.getBlockX());
                                         set.put("y", giveny.getBlockY());
                                         set.put("z", giveny.getBlockZ());

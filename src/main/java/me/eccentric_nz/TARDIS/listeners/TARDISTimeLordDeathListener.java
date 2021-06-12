@@ -51,10 +51,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Several events can trigger an Automatic Emergency Landing. Under these circumstances a tardis will use the coordinate
@@ -116,7 +113,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             }
                                         }
                                     }
-                                    String death_world = death_loc.getWorld().getName();
+                                    String death_world = Objects.requireNonNull(death_loc.getWorld()).getName();
                                     // where is the TARDIS Police Box?
                                     HashMap<String, Object> wherecl = new HashMap<>();
                                     wherecl.put("tardis_id", id);
@@ -169,7 +166,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     // if the TARDIS is already at the home location, do nothing
                                     if (!compareCurrentToHome(rsc, rsh)) {
                                         // check for creation area
-                                        if (!plugin.getConfig().getString("creation.area").equals("none") && plugin.getTardisArea().areaCheckLocPlayer(player, goto_loc)) {
+                                        if (!Objects.requireNonNull(plugin.getConfig().getString("creation.area")).equals("none") && plugin.getTardisArea().areaCheckLocPlayer(player, goto_loc)) {
                                             plugin.getTrackerKeeper().getPerm().remove(player.getUniqueId());
                                             return;
                                         }
@@ -237,7 +234,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         }, 500L);
                                         // set current
                                         HashMap<String, Object> setc = new HashMap<>();
-                                        setc.put("world", goto_loc.getWorld().getName());
+                                        setc.put("world", Objects.requireNonNull(goto_loc.getWorld()).getName());
                                         setc.put("x", goto_loc.getBlockX());
                                         setc.put("y", goto_loc.getBlockY());
                                         setc.put("z", goto_loc.getBlockZ());

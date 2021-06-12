@@ -155,6 +155,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     int max = a.getMaxX();
                     int maz = a.getMaxZ();
                     World w = TARDISAliasResolver.getWorldFromAlias(a.getWorld());
+                    assert w != null;
                     Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
                     b1.setBlockData(SNOW);
                     Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
@@ -203,6 +204,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     World yardWorld = TARDISAliasResolver.getWorldFromAlias(yardArea.getWorld());
                     for (int x = yardMinX; x <= yardMaxX; x++) {
                         for (int z = yardMinZ; z <= yardMaxZ; z++) {
+                            assert yardWorld != null;
                             int y = yardWorld.getHighestBlockYAt(x, z);
                             if ((x - 2) % 5 == 0 && (z - 2) % 5 == 0) {
                                 yardWorld.getBlockAt(x, y, z).setBlockData(dock);

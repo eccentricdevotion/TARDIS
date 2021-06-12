@@ -34,6 +34,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -126,20 +127,13 @@ public class TARDISDematerialiseToVortex implements Runnable {
                         if (plugin.getTrackerKeeper().getMalfunction().get(id) && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                             sound = "tardis_malfunction_takeoff";
                         } else {
-                            switch (spaceTimeThrottle) {
-                                case WARP:
-                                    sound = "tardis_takeoff_warp";
-                                    break;
-                                case RAPID:
-                                    sound = "tardis_takeoff_rapid";
-                                    break;
-                                case FASTER:
-                                    sound = "tardis_takeoff_faster";
-                                    break;
-                                default: // NORMAL
-                                    sound = "tardis_takeoff";
-                                    break;
-                            }
+                            sound = switch (spaceTimeThrottle) {
+                                case WARP -> "tardis_takeoff_warp";
+                                case RAPID -> "tardis_takeoff_rapid";
+                                case FASTER -> "tardis_takeoff_faster";
+                                default -> // NORMAL
+                                        "tardis_takeoff";
+                            };
                         }
                         TARDISSounds.playTARDISSound(handbrake, sound);
                         TARDISSounds.playTARDISSound(l, sound);
@@ -147,7 +141,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
                         TARDISSounds.playTARDISSound(handbrake, "junk_takeoff");
                     }
                 } else {
-                    handbrake.getWorld().playSound(handbrake, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+                    Objects.requireNonNull(handbrake.getWorld()).playSound(handbrake, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                 }
                 plugin.getTrackerKeeper().getDematerialising().add(id);
                 plugin.getPresetDestroyer().destroyPreset(dd);

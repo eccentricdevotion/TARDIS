@@ -189,7 +189,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                 // home, area or coords?
                                 HashMap<String, Object> set = new HashMap<>();
                                 switch (args[2].toLowerCase(Locale.ENGLISH)) {
-                                    case "home":
+                                    case "home" -> {
                                         // get home location
                                         HashMap<String, Object> wherehl = new HashMap<>();
                                         wherehl.put("tardis_id", id);
@@ -214,8 +214,8 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                             setp.put("adapti_on", 0);
                                             plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
                                         }
-                                        break;
-                                    case "area":
+                                    }
+                                    case "area" -> {
                                         if (args.length < 4) {
                                             TARDISMessage.send(sender, "TOO_FEW_ARGS");
                                             return true;
@@ -265,13 +265,13 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                             TARDISMessage.send(sender, "NO_MORE_SPOTS");
                                             return true;
                                         }
-                                        set.put("world", l.getWorld().getName());
+                                        set.put("world", Objects.requireNonNull(l.getWorld()).getName());
                                         set.put("x", l.getBlockX());
                                         set.put("y", l.getBlockY());
                                         set.put("z", l.getBlockZ());
                                         set.put("submarine", 0);
-                                        break;
-                                    default:
+                                    }
+                                    default -> {
                                         // coords
                                         if (args.length < 6) {
                                             TARDISMessage.send(sender, "ARG_COORDS");
@@ -330,13 +330,13 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                             TARDISMessage.send(sender, "NOT_SAFE");
                                             return true;
                                         } else {
-                                            set.put("world", location.getWorld().getName());
+                                            set.put("world", Objects.requireNonNull(location.getWorld()).getName());
                                             set.put("x", location.getBlockX());
                                             set.put("y", location.getBlockY());
                                             set.put("z", location.getBlockZ());
                                             set.put("submarine", 0);
                                         }
-                                        break;
+                                    }
                                 }
                                 HashMap<String, Object> wheret = new HashMap<>();
                                 wheret.put("tardis_id", id);

@@ -124,72 +124,72 @@ public class TARDISInstantPreset {
             plugin.getTrackerKeeper().getRescue().remove(bd.getTardisId());
         }
         switch (bd.getDirection()) {
-            case SOUTH:
+            case SOUTH -> {
                 //if (yaw >= 315 || yaw < 45)
                 signx = x;
                 signz = (minusz - 1);
-                break;
-            case EAST:
+            }
+            case EAST -> {
                 //if (yaw >= 225 && yaw < 315)
                 signx = (minusx - 1);
                 signz = z;
-                break;
-            case NORTH:
+            }
+            case NORTH -> {
                 //if (yaw >= 135 && yaw < 225)
                 signx = x;
                 signz = (plusz + 1);
-                break;
-            case WEST:
+            }
+            case WEST -> {
                 //if (yaw >= 45 && yaw < 135)
                 signx = (plusx + 1);
                 signz = z;
-                break;
+            }
         }
         int xx, zz;
         BlockData[][] data = column.getBlockData();
         for (int i = 0; i < 10; i++) {
             BlockData[] colData = data[i];
             switch (i) {
-                case 0:
+                case 0 -> {
                     xx = minusx;
                     zz = minusz;
-                    break;
-                case 1:
+                }
+                case 1 -> {
                     xx = x;
                     zz = minusz;
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     xx = plusx;
                     zz = minusz;
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     xx = plusx;
                     zz = z;
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     xx = plusx;
                     zz = plusz;
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     xx = x;
                     zz = plusz;
-                    break;
-                case 6:
+                }
+                case 6 -> {
                     xx = minusx;
                     zz = plusz;
-                    break;
-                case 7:
+                }
+                case 7 -> {
                     xx = minusx;
                     zz = z;
-                    break;
-                case 8:
+                }
+                case 8 -> {
                     xx = x;
                     zz = z;
-                    break;
-                default:
+                }
+                default -> {
                     xx = signx;
                     zz = signz;
-                    break;
+                }
             }
             for (int yy = 0; yy < 4; yy++) {
                 boolean change = true;
@@ -369,16 +369,9 @@ public class TARDISInstantPreset {
                                             owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
                                         }
                                         switch (preset) {
-                                            case GRAVESTONE:
-                                                s.setLine(3, owner);
-                                                break;
-                                            case ANGEL:
-                                            case JAIL:
-                                                s.setLine(2, owner);
-                                                break;
-                                            default:
-                                                s.setLine(0, owner);
-                                                break;
+                                            case GRAVESTONE -> s.setLine(3, owner);
+                                            case ANGEL, JAIL -> s.setLine(2, owner);
+                                            default -> s.setLine(0, owner);
                                         }
                                     }
                                 }
@@ -392,27 +385,27 @@ public class TARDISInstantPreset {
                                     line2 = preset.getSecondLine();
                                 }
                                 switch (preset) {
-                                    case ANGEL:
+                                    case ANGEL -> {
                                         s.setLine(0, sign_colour + line1);
                                         s.setLine(1, sign_colour + line2);
                                         s.setLine(3, sign_colour + "TARDIS");
-                                        break;
-                                    case APPERTURE:
+                                    }
+                                    case APPERTURE -> {
                                         s.setLine(1, sign_colour + line1);
                                         s.setLine(2, sign_colour + line2);
                                         s.setLine(3, sign_colour + "LAB");
-                                        break;
-                                    case JAIL:
+                                    }
+                                    case JAIL -> {
                                         s.setLine(0, sign_colour + line1);
                                         s.setLine(1, sign_colour + line2);
                                         s.setLine(3, sign_colour + "CAPTURE");
-                                        break;
-                                    case THEEND:
+                                    }
+                                    case THEEND -> {
                                         s.setLine(1, sign_colour + line1);
                                         s.setLine(2, sign_colour + line2);
                                         s.setLine(3, sign_colour + "HOT ROD");
-                                        break;
-                                    case CONSTRUCT:
+                                    }
+                                    case CONSTRUCT -> {
                                         // get sign text from database
                                         ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, bd.getTardisId());
                                         if (rscs.resultSet()) {
@@ -426,11 +419,11 @@ public class TARDISInstantPreset {
                                                 s.setLine(3, rscs.getLine4());
                                             }
                                         }
-                                        break;
-                                    default:
+                                    }
+                                    default -> {
                                         s.setLine(1, sign_colour + line1);
                                         s.setLine(2, sign_colour + line2);
-                                        break;
+                                    }
                                 }
                                 s.update();
                             }

@@ -188,14 +188,11 @@ public class TARDISPrefsCommands implements CommandExecutor {
                                 }
                                 return true;
                             }
-                            switch (pref) {
-                                case "build":
-                                    return new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
-                                case "junk":
-                                    return new TARDISJunkPreference(plugin).toggle(player, args[1]);
-                                default:
-                                    return new TARDISToggleOnOffCommand(plugin).toggle(player, args);
-                            }
+                            return switch (pref) {
+                                case "build" -> new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
+                                case "junk" -> new TARDISJunkPreference(plugin).toggle(player, args[1]);
+                                default -> new TARDISToggleOnOffCommand(plugin).toggle(player, args);
+                            };
                     }
                 } else {
                     TARDISMessage.send(player, "NO_PERMS");

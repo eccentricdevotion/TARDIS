@@ -33,6 +33,7 @@ import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -76,7 +77,7 @@ class TARDISRemoteTravelCommand {
             Location exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
             COMPASS sd = rsn.getDirection();
             // Removes Blue Box and loads chunk if it unloaded somehow
-            if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
+            if (!Objects.requireNonNull(exit.getWorld()).isChunkLoaded(exit.getChunk())) {
                 exit.getWorld().loadChunk(exit.getChunk());
             }
             HashMap<String, Object> set = new HashMap<>();

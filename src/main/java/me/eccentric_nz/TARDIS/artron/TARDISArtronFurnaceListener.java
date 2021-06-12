@@ -40,6 +40,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -64,8 +65,10 @@ public class TARDISArtronFurnaceListener implements Listener {
             ItemStack is = event.getFuel().clone();
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
+                assert im != null;
                 if (im.hasDisplayName() && im.getDisplayName().equals("Artron Storage Cell")) {
                     List<String> lore = im.getLore();
+                    assert lore != null;
                     if (!lore.get(1).equals("0")) {
                         // track furnace
                         plugin.getTrackerKeeper().getArtronFurnaces().add(l);
@@ -109,8 +112,9 @@ public class TARDISArtronFurnaceListener implements Listener {
         }
         Furnace furnace = (Furnace) event.getInventory().getHolder();
         // Setting cookTime when the furnace is empty but already burning
+        assert furnace != null;
         if (plugin.getTardisHelper().isArtronFurnace(furnace.getBlock()) && plugin.getTrackerKeeper().getArtronFurnaces().contains(furnace.getLocation().toString()) && (event.getSlot() == 0 || event.getSlot() == 1) // Click in one of the two slots
-                && event.getCursor().getType() != Material.AIR // With an item
+                && Objects.requireNonNull(event.getCursor()).getType() != Material.AIR // With an item
                 && furnace.getCookTime() > cookTime) {         // The furnace is not already burning something
             furnace.setCookTimeTotal(cookTime);
         }
@@ -124,7 +128,7 @@ public class TARDISArtronFurnaceListener implements Listener {
         if (!event.getItemInHand().hasItemMeta()) {
             return;
         }
-        if (!event.getItemInHand().getItemMeta().hasDisplayName()) {
+        if (!Objects.requireNonNull(event.getItemInHand().getItemMeta()).hasDisplayName()) {
             return;
         }
         if (!event.getItemInHand().getItemMeta().getDisplayName().equals("TARDIS Artron Furnace")) {
@@ -161,6 +165,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             }
             ItemStack is = new ItemStack(Material.FURNACE, 1);
             ItemMeta im = is.getItemMeta();
+            assert im != null;
             im.setDisplayName("TARDIS Artron Furnace");
             im.setCustomModelData(RecipeItem.TARDIS_ARTRON_FURNACE.getCustomModelData());
             is.setItemMeta(im);
