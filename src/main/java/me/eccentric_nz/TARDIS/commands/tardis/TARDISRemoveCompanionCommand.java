@@ -67,7 +67,7 @@ class TARDISRemoveCompanionCommand {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
-            if (!args[1].matches("[A-Za-z0-9_*]{2,16}")) {
+            if (!args[1].matches("[A-Za-z0-9_*.]{2,16}")) {
                 TARDISMessage.send(player, "PLAYER_NOT_VALID");
             } else {
                 String newList = "";
