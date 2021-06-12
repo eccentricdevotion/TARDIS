@@ -141,6 +141,7 @@ class TARDISSQLiteDatabaseUpdater {
         chameleonupdates.add("asymmetric INTEGER DEFAULT 0");
         farmingupdates.add("apiary TEXT DEFAULT ''");
         farmingupdates.add("bamboo TEXT DEFAULT ''");
+        farmingupdates.add("geode TEXT DEFAULT ''");
         sonicupdates.add("arrow INTEGER DEFAULT 0");
         sonicupdates.add("knockback INTEGER DEFAULT 0");
         sonicupdates.add("model INTEGER DEFAULT 10000011");

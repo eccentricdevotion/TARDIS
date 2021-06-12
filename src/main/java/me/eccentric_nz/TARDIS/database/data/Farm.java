@@ -27,19 +27,21 @@ public class Farm {
     private final String bamboo;
     private final String birdcage;
     private final String farm;
+    private final String geode;
     private final String hutch;
     private final String igloo;
     private final String stable;
     private final String stall;
     private final String village;
 
-    public Farm(int tardis_id, String apiary, String aquarium, String bamboo, String birdcage, String farm, String hutch, String igloo, String stable, String stall, String village) {
+    public Farm(int tardis_id, String apiary, String aquarium, String bamboo, String birdcage, String farm, String geode, String hutch, String igloo, String stable, String stall, String village) {
         this.tardis_id = tardis_id;
         this.apiary = apiary;
         this.aquarium = aquarium;
         this.bamboo = bamboo;
         this.birdcage = birdcage;
         this.farm = farm;
+        this.geode = geode;
         this.hutch = hutch;
         this.igloo = igloo;
         this.stable = stable;
@@ -104,6 +106,16 @@ public class Farm {
      */
     public String getFarm() {
         return farm;
+    }
+
+    /**
+     * Returns a String representation of the Geode room mob spawn location in this TARDIS. It is in the form of {@code
+     * World name:x:y:z}
+     *
+     * @return the Geode room mob spawn location string, or an empty string if the room does not exist
+     */
+    public String getGeode() {
+        return geode;
     }
 
     /**

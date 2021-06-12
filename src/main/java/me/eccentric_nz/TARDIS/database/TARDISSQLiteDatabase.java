@@ -121,7 +121,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryDoors);
 
             // Table structure for table 'farming'
-            String queryFarming = "CREATE TABLE IF NOT EXISTS " + prefix + "farming (farm_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, apiary TEXT DEFAULT '', aquarium TEXT DEFAULT '', bamboo TEXT DEFAULT '', birdcage TEXT DEFAULT '', farm TEXT DEFAULT '', hutch TEXT DEFAULT '', igloo TEXT DEFAULT '', stable TEXT DEFAULT '', stall TEXT DEFAULT '', village TEXT DEFAULT '')";
+            String queryFarming = "CREATE TABLE IF NOT EXISTS " + prefix + "farming (farm_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, apiary TEXT DEFAULT '', aquarium TEXT DEFAULT '', bamboo TEXT DEFAULT '', birdcage TEXT DEFAULT '', farm TEXT DEFAULT '', geode TEXT DEFAULT '', hutch TEXT DEFAULT '', igloo TEXT DEFAULT '', stable TEXT DEFAULT '', stall TEXT DEFAULT '', village TEXT DEFAULT '')";
             statement.executeUpdate(queryFarming);
 
             // Table structure for table 'forcefield'
