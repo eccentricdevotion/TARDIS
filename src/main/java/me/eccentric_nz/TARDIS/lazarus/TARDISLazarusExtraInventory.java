@@ -61,6 +61,10 @@ class TARDISLazarusExtraInventory {
         disguises.add(Material.STRIDER_SPAWN_EGG);
         disguises.add(Material.HOGLIN_SPAWN_EGG);
         disguises.add(Material.ZOGLIN_SPAWN_EGG);
+        // 1.17
+        disguises.add(Material.AXOLOTL_SPAWN_EGG); // add colours to TCG
+        disguises.add(Material.GOAT_SPAWN_EGG);
+        disguises.add(Material.GLOW_SQUID_SPAWN_EGG);
         terminal = getItemStack();
     }
 
