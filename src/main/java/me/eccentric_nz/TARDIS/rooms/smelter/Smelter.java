@@ -65,13 +65,14 @@ public class Smelter {
         ORE_VECTORS.add(new Vector(5.0, 4.0, -4.0));
     }
 
-    public static boolean isSmeltable(Material material) {
+    static boolean isSmeltable(Material material) {
         switch (material) {
-            case ACACIA_WOOD:
             case ACACIA_LOG:
+            case ACACIA_WOOD:
+            case BASALT:
             case BEEF:
-            case BIRCH_WOOD:
             case BIRCH_LOG:
+            case BIRCH_WOOD:
             case BLACK_TERRACOTTA:
             case BLUE_TERRACOTTA:
             case BROWN_TERRACOTTA:
@@ -80,17 +81,22 @@ public class Smelter {
             case CHORUS_FRUIT:
             case CLAY:
             case CLAY_BALL:
+            case COBBLED_DEEPSLATE:
             case COBBLESTONE:
             case COD:
+            case COPPER_ORE:
             case CYAN_TERRACOTTA:
-            case DARK_OAK_WOOD:
             case DARK_OAK_LOG:
+            case DARK_OAK_WOOD:
+            case DEEPSLATE_COPPER_ORE:
+            case DEEPSLATE_GOLD_ORE:
+            case DEEPSLATE_IRON_ORE:
             case GOLD_ORE:
             case GRAY_TERRACOTTA:
             case GREEN_TERRACOTTA:
             case IRON_ORE:
-            case JUNGLE_WOOD:
             case JUNGLE_LOG:
+            case JUNGLE_WOOD:
             case KELP:
             case LIGHT_BLUE_TERRACOTTA:
             case LIGHT_GRAY_TERRACOTTA:
@@ -98,8 +104,8 @@ public class Smelter {
             case MAGENTA_TERRACOTTA:
             case MUTTON:
             case NETHERRACK:
-            case OAK_WOOD:
             case OAK_LOG:
+            case OAK_WOOD:
             case ORANGE_TERRACOTTA:
             case PINK_TERRACOTTA:
             case PORKCHOP:
@@ -107,6 +113,7 @@ public class Smelter {
             case PURPLE_TERRACOTTA:
             case QUARTZ_BLOCK:
             case RABBIT:
+            case RAW_COPPER:
             case RED_SANDSTONE:
             case RED_TERRACOTTA:
             case SALMON:
@@ -114,8 +121,8 @@ public class Smelter {
             case SANDSTONE:
             case SEA_PICKLE:
             case SPONGE:
-            case SPRUCE_WOOD:
             case SPRUCE_LOG:
+            case SPRUCE_WOOD:
             case STONE:
             case STONE_BRICKS:
             case STRIPPED_ACACIA_LOG:
