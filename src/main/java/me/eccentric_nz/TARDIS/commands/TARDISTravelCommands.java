@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -504,7 +505,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         return true;
                                     }
                                     String planet = args[2].toLowerCase(Locale.ROOT);
-                                    if (planet.endsWith("gallifrey") || planet.endsWith("siluria") || planet.endsWith("skaro")) {
+                                    if (TARDISConstants.isDatapackWorld(planet)) {
                                         TARDISMessage.send(player, "BIOME_NOT_PLANET", args[2]);
                                         return true;
                                     }
@@ -516,7 +517,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     }
                                 } else {
                                     String planet = rsc.getWorld().getName().toLowerCase(Locale.ROOT);
-                                    if (planet.endsWith("gallifrey") || planet.endsWith("siluria") || planet.endsWith("skaro")) {
+                                    if (TARDISConstants.isDatapackWorld(planet)) {
                                         TARDISMessage.send(player, "BIOME_NOT_PLANET", rsc.getWorld().getName());
                                         return true;
                                     }

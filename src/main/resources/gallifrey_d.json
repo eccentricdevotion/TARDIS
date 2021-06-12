@@ -1,72 +1,72 @@
 {
-    "type": "tardis:gallifrey",
-    "generator": {
-        "type": "minecraft:noise",
-        "seed": -523564070,
-        "biome_source": {
-            "type": "minecraft:multi_noise",
-            "seed": -523564070,
-            "altitude_noise": {
-                "firstOctave": -7,
-                "amplitudes": [
-                    1,
-                    1
-                ]
-            },
-            "temperature_noise": {
-                "firstOctave": -7,
-                "amplitudes": [
-                    1,
-                    1
-                ]
-            },
-            "humidity_noise": {
-                "firstOctave": -7,
-                "amplitudes": [
-                    1,
-                    1
-                ]
-            },
-            "weirdness_noise": {
-                "firstOctave": -7,
-                "amplitudes": [
-                    1,
-                    1
-                ]
-            },
-            "biomes": [
-                {
-                    "biome": "tardis:gallifrey_badlands",
-                    "parameters": {
-                        "altitude": 0,
-                        "temperature": 0.2,
-                        "humidity": 0.2,
-                        "weirdness": 0.2,
-                        "offset": 0.2
-                    }
-                },
-                {
-                    "biome": "tardis:gallifrey_plateau",
-                    "parameters": {
-                        "altitude": 0.4,
-                        "temperature": 0.2,
-                        "humidity": 0.1,
-                        "weirdness": 0.5,
-                        "offset": 0.1
-                    }
-                },
-                {
-                    "biome": "tardis:gallifrey_eroded",
-                    "parameters": {
-                        "altitude": 0.1,
-                        "temperature": 0.2,
-                        "humidity": 0.2,
-                        "weirdness": 0.6,
-                        "offset": 0.4
-                    }
-                }
-            ]
+  "type": "tardis:gallifrey",
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": -523564070,
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "seed": -523564070,
+      "altitude_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1,
+          1
+        ]
+      },
+      "temperature_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1,
+          1
+        ]
+      },
+      "humidity_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1,
+          1
+        ]
+      },
+      "weirdness_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1,
+          1
+        ]
+      },
+      "biomes": [
+        {
+          "biome": "tardis:gallifrey_badlands",
+          "parameters": {
+            "altitude": 0,
+            "temperature": 0.2,
+            "humidity": 0.2,
+            "weirdness": 0.2,
+            "offset": 0.2
+          }
         },
-        "settings": "minecraft:overworld"
-    }
+        {
+          "biome": "tardis:gallifrey_plateau",
+          "parameters": {
+            "altitude": 0.4,
+            "temperature": 0.2,
+            "humidity": 0.1,
+            "weirdness": 0.5,
+            "offset": 0.1
+          }
+        },
+        {
+          "biome": "tardis:gallifrey_eroded",
+          "parameters": {
+            "altitude": 0.1,
+            "temperature": 0.2,
+            "humidity": 0.2,
+            "weirdness": 0.6,
+            "offset": 0.4
+          }
+        }
+      ]
+    },
+    "settings": "minecraft:overworld"
+  }
 }

@@ -41,7 +41,12 @@ import java.util.Random;
 public class TARDISConstants {
 
     // TARDIS world names
-    public static final List<String> PLANETS = Arrays.asList("Gallifrey", "Siluria", "Skaro");
+    public static final List<String> PLANETS = Arrays.asList("gallifrey", "siluria", "skaro");
+
+    public static boolean isDatapackWorld(String world) {
+        return world.endsWith("gallifrey") || world.endsWith("siluria") || world.endsWith("skaro");
+    }
+
     public static final ImmutableMap<String, String> REVERT_LEVELS = ImmutableMap.of("gallifrey", "Gallifrey", "siluria", "Siluria", "skaro", "Skaro", "tardis_time_vortex", "TARDIS_TimeVortex", "tardis_zero_room", "TARDIS_Zero_Room");
 
     // consoles which need to be higher

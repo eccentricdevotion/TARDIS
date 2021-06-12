@@ -35,7 +35,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.*;
 
 /**
@@ -170,7 +172,8 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                                 new TARDISSkaro(plugin).loadDalekWorld();
                                 break;
                         }
-                        FileConfiguration pConfig = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "planets_template.yml"));
+                        Reader reader = new InputStreamReader(plugin.getResource("planets_template.yml"));
+                        FileConfiguration pConfig = YamlConfiguration.loadConfiguration(reader);
                         ConfigurationSection section = pConfig.getConfigurationSection("planets." + TARDISStringUtils.uppercaseFirst(name));
                         ConfigurationSection rules = pConfig.getConfigurationSection("planets." + TARDISStringUtils.uppercaseFirst(name) + ".gamerules");
                         String s_world = plugin.getServer().getWorlds().get(0).getName();
@@ -181,6 +184,11 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         plugin.getPlanetsConfig().set("planets." + name + ".time_travel", true);
                         if (name.equals(s_world + "_tardis_skaro")) {
                             plugin.getPlanetsConfig().set("planets." + name + ".acid_potions", Arrays.asList("WEAKNESS", "POISON"));
+                        }
+                        try {
+                            reader.close();
+                        } catch (IOException e) {
+                            plugin.debug("Could not close input stream reader!");
                         }
                     } else {
                         // try to load the world

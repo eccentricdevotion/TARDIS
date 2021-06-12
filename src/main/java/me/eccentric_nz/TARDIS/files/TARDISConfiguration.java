@@ -237,6 +237,9 @@ public class TARDISConfiguration {
         if (config.contains("creation.use_block_stack")) {
             plugin.getConfig().set("creation.use_block_stack", null);
         }
+        if (config.contains("conversions.datapacks")) {
+            plugin.getConfig().set("conversions.datapacks", false);
+        }
         // boolean values
         for (Map.Entry<String, Boolean> entry : booleanOptions.entrySet()) {
             if (!config.contains(entry.getKey())) {
