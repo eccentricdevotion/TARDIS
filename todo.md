@@ -7,10 +7,7 @@
 0. Use Java 16 `record` data type?
 1. Update to Spigot-API 1.17.0
     * Add Cave & Weathered consoles
-    * Add Geode room
-    * Add Axolotls to farming -> Geode room
-    * Add new blocks & items to condensables, wall/floor/under door blocks, stained glass lookup, smeltables
-    * Add new mobs to Lazarus device
+    * Fix JavaDoc warnings
 2. Update documentation...
 3. Use the Vortex Manipulator to teleport past force fields
 4. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)

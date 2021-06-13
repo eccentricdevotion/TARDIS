@@ -32,7 +32,7 @@ public enum Room {
     CHEMISTRY,
     EMPTY,
     FARM,
-    //    GEODE,
+    GEODE,
     GRAVITY,
     GREENHOUSE,
     HARMONY,

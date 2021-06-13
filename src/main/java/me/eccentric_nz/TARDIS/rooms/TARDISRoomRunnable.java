@@ -610,7 +610,7 @@ public class TARDISRoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertControl(tardis_id, 19, plate, 0);
                 }
                 // set stable
-                if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE"))) {
+                if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE"))) {
                     HashMap<String, Object> sets = new HashMap<>();
                     sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                     HashMap<String, Object> wheres = new HashMap<>();
@@ -644,6 +644,9 @@ public class TARDISRoomRunnable implements Runnable {
                         case BAMBOO:
                         case BIRDCAGE:
                             data = Material.PODZOL.createBlockData();
+                            break;
+                        case GEODE:
+                            data = Material.CLAY.createBlockData();
                             break;
                         case IGLOO:
                             data = Material.PACKED_ICE.createBlockData();
