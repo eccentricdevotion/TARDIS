@@ -116,38 +116,82 @@ public class TARDISBuilderInstanceKeeper {
     private final HashMap<UUID, Integer> roomProgress = new HashMap<>();
     private HashMap<Material, String> seeds;
 
+    /**
+     * Gets a list of precious blocks to protect
+     *
+     * @return a list of precious blocks
+     */
     public static Set<Material> getPrecious() {
         return PRECIOUS;
     }
 
+    /**
+     * Gets a map of locations and TARDIS seed data
+     *
+     * @return a map of locations and TARDIS seed data
+     */
     public HashMap<Location, TARDISBuildData> getTrackTARDISSeed() {
         return trackTARDISSeed;
     }
 
+    /**
+     * Gets a map of room names and block counts
+     *
+     * @return a map of room names and block counts
+     */
     public HashMap<String, HashMap<String, Integer>> getRoomBlockCounts() {
         return roomBlockCounts;
     }
 
+    /**
+     * Gets a lookup utility to convert blocks to their stained glass equivalent
+     *
+     * @return the TARDIS Stained Glass Lookup class
+     */
     public TARDISStainedGlassLookup getStainedGlassLookup() {
         return stainedGlassLookup;
     }
 
+    /**
+     * Gets a map of Material and TARDIS seed names
+     *
+     * @return a map of Material and TARDIS seed names
+     */
     public HashMap<Material, String> getSeeds() {
         return seeds;
     }
 
+    /**
+     * Sets a map of Material and TARDIS seed names
+     */
     public void setSeeds(HashMap<Material, String> t_seeds) {
         seeds = t_seeds;
     }
 
+    /**
+     * Gets a map of Material names where the key is a block that needs to be changed to the item in the map value.
+     * This is needed when condensing blocks for rooms.
+     *
+     * @return a map of Material names for conversion
+     */
     public HashMap<String, String> getBlockConversion() {
         return BLOCK_CONVERSION;
     }
 
+    /**
+     * Get a list of blocks that will be ignored by the rooms_require_blocks option
+     *
+     * @return a list of block names
+     */
     public Set<String> getIgnoreBlocks() {
         return IGNORE_BLOCKS;
     }
 
+    /**
+     * Gets a map of player UUIDs and the amount of room growing progress.
+     *
+     * @return a map
+     */
     public HashMap<UUID, Integer> getRoomProgress() {
         return roomProgress;
     }

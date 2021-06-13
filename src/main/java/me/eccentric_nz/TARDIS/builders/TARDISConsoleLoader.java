@@ -40,7 +40,6 @@ public class TARDISConsoleLoader {
         this.plugin = plugin;
     }
 
-    //    new Schematic(String seed, String permission, String description, ConsoleSize size, boolean beacon, boolean lanterns, boolean custom)
     public void addSchematics() {
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
         Consoles.getBY_NAMES().put("ARS", new Schematic("QUARTZ_BLOCK", "ars", "ARS Console", ConsoleSize.SMALL, true, false, false));

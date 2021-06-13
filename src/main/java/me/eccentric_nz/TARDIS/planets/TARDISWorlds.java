@@ -21,12 +21,10 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.*;
-import org.bukkit.configuration.ConfigurationSection;
 
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 public class TARDISWorlds {
@@ -88,22 +86,6 @@ public class TARDISWorlds {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Added '" + worldName + "' to planets.yml. To exclude this world from time travel run: /tardisadmin exclude " + worldName);
             }
         });
-        // revert lowercase TARDIS world names
-        if (plugin.getConfig().getBoolean("conversions.level_names")) {
-            for (Map.Entry<String, String> level : TARDISConstants.REVERT_LEVELS.entrySet()) {
-                // set the LevelName in level.dat
-                plugin.getTardisHelper().setLevelName(level.getKey(), level.getValue());
-                // rename the planet in planets.yml
-                ConfigurationSection section = plugin.getPlanetsConfig().getConfigurationSection("planets." + level.getKey());
-                if (section != null) {
-                    Map<String, Object> map = section.getValues(true);
-                    plugin.getPlanetsConfig().set("planets." + level.getValue(), map);
-                    plugin.getPlanetsConfig().set("planets." + level.getKey(), null);
-                }
-            }
-            plugin.getConfig().set("conversions.level_names", null);
-            plugin.saveConfig();
-        }
         // now load TARDIS worlds / remove worlds that may have been deleted
         Set<String> cWorlds = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         cWorlds.forEach((cw) -> {
