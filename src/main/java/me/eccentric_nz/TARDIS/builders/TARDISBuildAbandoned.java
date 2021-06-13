@@ -58,7 +58,8 @@ import java.util.*;
 class TARDISBuildAbandoned implements Runnable {
 
     private final TARDIS plugin;
-    private final List<Block> lampblocks = new ArrayList<>();
+    private final List<Block> lampBlocks = new ArrayList<>();
+    private final List<Block> iceBlocks = new ArrayList<>();
     private final Schematic schm;
     private final World world;
     private final int dbID;
@@ -196,6 +197,11 @@ class TARDISBuildAbandoned implements Runnable {
             postLeverBlocks.forEach(Block::setBlockData);
             postDripstoneBlocks.forEach(Block::setBlockData);
             postLichenBlocks.forEach(Block::setBlockData);
+            if (schm.getPermission().equals("cave")) {
+                iceBlocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
+                iceBlocks.clear();
+            }
+
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 if (s == 0) {
@@ -218,11 +224,11 @@ class TARDISBuildAbandoned implements Runnable {
             if (postBedrock != null) {
                 postBedrock.setBlockData(TARDISConstants.POWER);
             }
-            lampblocks.forEach((lamp) -> {
+            lampBlocks.forEach((lamp) -> {
                 BlockData lantern = (schm.hasLanterns()) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
                 lamp.setBlockData(lantern);
             });
-            lampblocks.clear();
+            lampBlocks.clear();
             TARDISBannerSetter.setBanners(postBannerBlocks);
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 plugin.getWorldGuardUtils().addWGProtection(UUID.randomUUID().toString(), pos, world);
@@ -442,10 +448,13 @@ class TARDISBuildAbandoned implements Runnable {
                 seta.put("json", json.toString());
                 plugin.getQueryFactory().doInsert("ars", seta);
             }
+            if (type.equals(Material.ICE) && schm.getPermission().equals("cave")) {
+                iceBlocks.add(world.getBlockAt(x, y, z));
+            }
             if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
                 // remember lamp blocks
                 Block lamp = world.getBlockAt(x, y, z);
-                lampblocks.add(lamp);
+                lampBlocks.add(lamp);
                 // remember lamp block locations for malfunction and light switch
                 HashMap<String, Object> setlb = new HashMap<>();
                 String lloc = world.getName() + ":" + x + ":" + y + ":" + z;

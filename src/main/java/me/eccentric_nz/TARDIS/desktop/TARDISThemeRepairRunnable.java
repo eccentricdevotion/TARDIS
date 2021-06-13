@@ -65,8 +65,9 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private final TARDIS plugin;
     private final UUID uuid;
     private final TARDISUpgradeData tud;
-    private final List<Block> lampblocks = new ArrayList<>();
+    private final List<Block> lampBlocks = new ArrayList<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
+    private final List<Block> iceBlocks = new ArrayList<>();
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
@@ -284,13 +285,17 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     s++;
                 }
             }
-            lampblocks.forEach((lamp) -> {
+            lampBlocks.forEach((lamp) -> {
                 BlockData l = (tud.getSchematic().hasLanterns() || (archive != null && archive.isLanterns())) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
                 lamp.setBlockData(l);
             });
-            lampblocks.clear();
+            lampBlocks.clear();
             for (int f = 0; f < fractalBlocks.size(); f++) {
                 FractalFence.grow(fractalBlocks.get(f), f);
+            }
+            if (tud.getSchematic().getPermission().equals("cave")) {
+                iceBlocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
+                iceBlocks.clear();
             }
             if (postBedrock != null) {
                 postBedrock.setBlockData(TARDISConstants.GLASS);
@@ -454,7 +459,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
                     // remember lamp blocks
                     Block lamp = world.getBlockAt(x, y, z);
-                    lampblocks.add(lamp);
+                    lampBlocks.add(lamp);
                     // remember lamp block locations for malfunction and light switch
                     HashMap<String, Object> setlb = new HashMap<>();
                     String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
@@ -541,6 +546,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 } else if (TARDISMaterials.infested.contains(type)) {
                     // legacy monster egg stone for controls
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                } else if (type.equals(Material.ICE) && tud.getSchematic().getPermission().equals("cave")) {
+                    iceBlocks.add(world.getBlockAt(x, y, z));
                 } else if (type.equals(Material.MUSHROOM_STEM)) { // mushroom stem for repeaters
                     // save repeater location
                     if (j < 6) {

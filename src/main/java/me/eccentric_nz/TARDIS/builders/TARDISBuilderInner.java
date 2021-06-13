@@ -64,6 +64,7 @@ public class TARDISBuilderInner implements Runnable {
     private final TARDIS plugin;
     private final List<Block> lampBlocks = new ArrayList<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
+    private final List<Block> iceBlocks = new ArrayList<>();
     private final Schematic schm;
     private final World world;
     private final int dbID;
@@ -282,6 +283,10 @@ public class TARDISBuilderInner implements Runnable {
                 lamp.setBlockData(lantern);
             });
             lampBlocks.clear();
+            if (schm.getPermission().equals("cave")) {
+                iceBlocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
+                iceBlocks.clear();
+            }
             for (int f = 0; f < fractalBlocks.size(); f++) {
                 FractalFence.grow(fractalBlocks.get(f), f);
             }
@@ -642,6 +647,8 @@ public class TARDISBuilderInner implements Runnable {
                  */
                 TARDISBlockSetters.setBlock(world, x, y, z, (schm.getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
                 TARDISTimeRotor.setItemFrame(schm.getPermission(), new Location(world, x, y + 1, z), dbID);
+            } else if (type.equals(Material.ICE) && schm.getPermission().equals("cave")) {
+                iceBlocks.add(world.getBlockAt(x, y, z));
             } else if (type.equals(Material.IRON_DOOR)) { // doors
                 postDoorBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.REDSTONE_TORCH) || type.equals(Material.REDSTONE_WALL_TORCH)) {

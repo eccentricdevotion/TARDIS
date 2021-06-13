@@ -111,12 +111,14 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                     }
                 }
             }
-            ItemMeta im = is.getItemMeta();
-            im.setCustomModelData(cmd);
-            is.setItemMeta(im);
-            frame.setItem(is, false);
-            frame.setFixed(true);
-            frame.setVisible(false);
+            if (is != null) {
+                ItemMeta im = is.getItemMeta();
+                im.setCustomModelData(cmd);
+                is.setItemMeta(im);
+                frame.setItem(is, false);
+                frame.setFixed(true);
+                frame.setVisible(false);
+            }
         } else {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;

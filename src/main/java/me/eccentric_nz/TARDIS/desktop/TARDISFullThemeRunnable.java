@@ -69,6 +69,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private final TARDISUpgradeData tud;
     private final List<Block> lampBlocks = new ArrayList<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
+    private final List<Block> iceBlocks = new ArrayList<>();
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
@@ -368,6 +369,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 lamp.setBlockData(l);
             });
             lampBlocks.clear();
+            if (tud.getSchematic().getPermission().equals("cave")) {
+                iceBlocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
+                iceBlocks.clear();
+            }
             for (int f = 0; f < fractalBlocks.size(); f++) {
                 FractalFence.grow(fractalBlocks.get(f), f);
             }
@@ -659,14 +664,16 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
                 if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
                     // remember lamp blocks
-                    Block lamp = world.getBlockAt(x, y, z);
-                    lampBlocks.add(lamp);
+                    lampBlocks.add(world.getBlockAt(x, y, z));
                     // remember lamp block locations for malfunction and light switch
                     HashMap<String, Object> setlb = new HashMap<>();
                     String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
                     setlb.put("tardis_id", id);
                     setlb.put("location", lloc);
                     plugin.getQueryFactory().doInsert("lamps", setlb);
+                }
+                if (type.equals(Material.ICE) && tud.getSchematic().getPermission().equals("cave")) {
+                    iceBlocks.add(world.getBlockAt(x, y, z));
                 }
                 if (type.equals(Material.COMMAND_BLOCK) || ((tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("coral") || tud.getSchematic().getPermission().equals("deluxe") || tud.getSchematic().getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                     /*
