@@ -58,7 +58,7 @@ class TARDISRecipesLister {
             for (Map.Entry<String, ShapelessRecipe> shapeless : plugin.getIncomposita().getShapelessRecipes().entrySet()) {
                 sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shapeless.getKey()) + "(\"" + shapeless.getKey() + "\", Material." + shapeless.getValue().getResult().getType() + ", " + RecipeItem.getByName(shapeless.getKey()).getCustomModelData() + "),");
             }
-            for (Map.Entry<Schematic, ShapedRecipe> seed : plugin.getOobstructionum().getSeedRecipes().entrySet()) {
+            for (Map.Entry<Schematic, ShapedRecipe> seed : plugin.getObstructionum().getSeedRecipes().entrySet()) {
                 int model;
                 String material;
                 if (TARDISSeedModel.materialMap.containsKey(seed.getKey().getSeedMaterial())) {

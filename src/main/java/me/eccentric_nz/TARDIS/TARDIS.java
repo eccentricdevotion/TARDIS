@@ -100,6 +100,9 @@ import java.util.regex.Pattern;
  */
 public class TARDIS extends JavaPlugin {
 
+    /**
+     * static getter for TARDIS plugin
+     */
     public static TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final TARDISArea tardisArea = new TARDISArea(this);
@@ -170,6 +173,9 @@ public class TARDIS extends JavaPlugin {
     private TARDISBlockLogger blockLogger;
     private TARDISDynmap tardisDynmap;
 
+    /**
+     * Constructor
+     */
     public TARDIS() {
         worldGuardOnServer = false;
         invManager = InventoryManager.NONE;
@@ -1066,202 +1072,448 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    /**
+     * Gets the acheivements configuration
+     *
+     * @return the acheivements configuration
+     */
     public FileConfiguration getAchievementConfig() {
         return achievementConfig;
     }
 
+    /**
+     * Gets the artron configuration
+     *
+     * @return the artron configuration
+     */
     public FileConfiguration getArtronConfig() {
         return artronConfig;
     }
 
+    /**
+     * Gets the blocks configuration
+     *
+     * @return the blocks configuration
+     */
     public FileConfiguration getBlocksConfig() {
         return blocksConfig;
     }
 
+    /**
+     * Gets the rooms configuration
+     *
+     * @return the rooms configuration
+     */
     public FileConfiguration getRoomsConfig() {
         return roomsConfig;
     }
 
+    /**
+     * Gets the planets configuration
+     *
+     * @return the planets configuration
+     */
     public FileConfiguration getPlanetsConfig() {
         return planetsConfig;
     }
 
+    /**
+     * Gets the tag configuration
+     *
+     * @return the tag configuration
+     */
     public FileConfiguration getTagConfig() {
         return tagConfig;
     }
 
+    /**
+     * Gets the recipes configuration
+     *
+     * @return the recipes configuration
+     */
     public FileConfiguration getRecipesConfig() {
         return recipesConfig;
     }
 
+    /**
+     * Gets the kits configuration
+     *
+     * @return the kits configuration
+     */
     public FileConfiguration getKitsConfig() {
         return kitsConfig;
     }
 
+    /**
+     * Gets the condensables configuration
+     *
+     * @return the condensables configuration
+     */
     public FileConfiguration getCondensablesConfig() {
         return condensablesConfig;
     }
 
+    /**
+     * Gets the custom consoles configuration
+     *
+     * @return the custom consoles configuration
+     */
     public FileConfiguration getCustomConsolesConfig() {
         return customConsolesConfig;
     }
 
+    /**
+     * Gets the language configuration
+     *
+     * @return the language configuration
+     */
     public FileConfiguration getLanguage() {
         return language;
     }
 
+    /**
+     * Set the language configuration
+     *
+     * @param language the language configuration to use
+     */
     public void setLanguage(FileConfiguration language) {
         this.language = language;
     }
 
+    /**
+     * Gets the signs configuration
+     *
+     * @return the signs configuration
+     */
     public FileConfiguration getSigns() {
         return signs;
     }
 
+    /**
+     * Gets the chameleon guis configuration
+     *
+     * @return the chameleon guis configuration
+     */
     public FileConfiguration getChameleonGuis() {
         return chameleonGuis;
     }
 
+    /**
+     * Gets the handles configuration
+     *
+     * @return the handles configuration
+     */
     public FileConfiguration getHandlesConfig() {
         return handlesConfig;
     }
 
+    /**
+     * Gets the TARDIS Utilities class
+     *
+     * @return the TARDIS Utilities class
+     */
     public TARDISUtils getUtils() {
         return utils;
     }
 
+    /**
+     * Gets the TARDIS Location Utilities class
+     *
+     * @return the TARDIS Location Utilities class
+     */
     public TARDISLocationGetters getLocationUtils() {
         return locationUtils;
     }
 
+    /**
+     * Gets the TARDIS Plugin Respect Utilities class
+     *
+     * @return the TARDIS Plugin Respect Utilities class
+     */
     public TARDISPluginRespect getPluginRespect() {
         return pluginRespect;
     }
 
+    /**
+     * Gets the TARDIS Preset Builder
+     *
+     * @return the TARDIS Preset Builder
+     */
     public TARDISPresetBuilderFactory getPresetBuilder() {
         return presetBuilder;
     }
 
+    /**
+     * Gets the TARDIS Interior Destroyer
+     *
+     * @return the TARDIS Interior Destroyer
+     */
     public TARDISDestroyerInner getInteriorDestroyer() {
         return interiorDestroyer;
     }
 
+    /**
+     * Gets the TARDIS Preset Destroyer Factory
+     *
+     * @return the TARDIS Preset Destroyer Factory
+     */
     public TARDISPresetDestroyerFactory getPresetDestroyer() {
         return presetDestroyer;
     }
 
+    /**
+     * Gets the TARDIS Area Utilities class
+     *
+     * @return the TARDIS Area Utilities class
+     */
     public TARDISArea getTardisArea() {
         return tardisArea;
     }
 
+    /**
+     * Gets the WorldGuard Utilities class
+     *
+     * @return the WorldGuard Utilities class
+     */
     public TARDISWorldGuardUtils getWorldGuardUtils() {
         return worldGuardUtils;
     }
 
+    /**
+     * Gets the Chameleon presets
+     *
+     * @return the Chameleon presets
+     */
     public TARDISChameleonPreset getPresets() {
         return presets;
     }
 
+    /**
+     * Gets the TARDIS Shaped Recipes
+     *
+     * @return the TARDIS Shaped Recipes
+     */
     public TARDISShapedRecipe getFigura() {
         return figura;
     }
 
-    public TARDISSeedRecipe getOobstructionum() {
+    /**
+     * Gets the TARDIS Seed Recipes
+     *
+     * @return the TARDIS Seed Recipes
+     */
+    public TARDISSeedRecipe getObstructionum() {
         return obstructionum;
     }
 
+    /**
+     * Gets the TARDIS Shapeless Recipes
+     *
+     * @return the ARDIS Shapeless Recipes
+     */
     public TARDISShapelessRecipe getIncomposita() {
         return incomposita;
     }
 
+    /**
+     * Gets the TARDIS Perception Filter
+     *
+     * @return the TARDIS Perception Filter
+     */
     public TARDISPerceptionFilter getFilter() {
         return filter;
     }
 
+    /**
+     * Gets a calendar date for the Tag the Ood game
+     *
+     * @return a calendar
+     */
     public Calendar getBeforeCal() {
         return beforeCal;
     }
 
+    /**
+     * Gets a calendar date for the Tag the Ood game
+     *
+     * @return a calendar
+     */
     public Calendar getAfterCal() {
         return afterCal;
     }
 
+    /**
+     * Gets a map of the TARDIS Condensable values
+     *
+     * @return a map of the TARDIS Condensable values
+     */
     public HashMap<String, Integer> getCondensables() {
         return condensables;
     }
 
+    /**
+     * Gets the TARDIS General Keeper of useful things
+     *
+     * @return the TARDIS General Keeper
+     */
     public TARDISGeneralInstanceKeeper getGeneralKeeper() {
         return generalKeeper;
     }
 
+    /**
+     * Gets the TARDIS Builder utility class
+     *
+     * @return the TARDIS Builder utility class
+     */
     public TARDISBuilderInstanceKeeper getBuildKeeper() {
         return buildKeeper;
     }
 
+    /**
+     * Gets the TARDIS Tracker class
+     *
+     * @return the TARDIS Tracker class
+     */
     public TARDISTrackerInstanceKeeper getTrackerKeeper() {
         return trackerKeeper;
     }
 
+    /**
+     * Gets the TARDIS Chat GUI JSON class
+     *
+     * @return the TARDIS Chat GUI JSON class
+     */
     public TARDISChatGUIJSON getJsonKeeper() {
         return jsonKeeper;
     }
 
+    /**
+     * Gets the server's Console Command Sender
+     *
+     * @return the server's Console Command Sender
+     */
     public ConsoleCommandSender getConsole() {
         return console;
     }
 
+    /**
+     * Gets the formatted TARDIS plugin name for messaging
+     *
+     * @return the formatted TARDIS plugin name
+     */
     public String getPluginName() {
         return pluginName;
     }
 
+    /**
+     * Gets the server's default resource pack URL
+     *
+     * @return the server's default resource pack URL
+     */
     public String getResourcePack() {
         return resourcePack;
     }
 
+    /**
+     * Gets whether theres is a TARDIS plugin spawn
+     *
+     * @return true if it is a TARDIS plugin spawn
+     */
     public boolean isTardisSpawn() {
         return tardisSpawn;
     }
 
+    /**
+     * Sets whether a spawn event is a TARDIS plugin spawn and allows it to happen
+     */
     public void setTardisSpawn(boolean tardisSpawn) {
         this.tardisSpawn = tardisSpawn;
     }
 
+    /**
+     * Gets whether the WorldGuard plugin is enabled on the server
+     *
+     * @return true if WorldGuard is enabled
+     */
     public boolean isWorldGuardOnServer() {
         return worldGuardOnServer;
     }
 
+    /**
+     * Gets whether the LibsDisguises plugin is enabled on the server
+     *
+     * @return true if LibsDisguises is enabled
+     */
     public boolean isDisguisesOnServer() {
         return disguisesOnServer;
     }
 
+    /**
+     * Gets the server's Plugin Manager
+     *
+     * @return the server's Plugin Manager
+     */
     public PluginManager getPM() {
         return pm;
     }
 
+    /**
+     * Gets the TARDIS File Copier
+     *
+     * @return the TARDIS File Copier
+     */
     public TARDISFileCopier getTardisCopier() {
         return tardisCopier;
     }
 
+    /**
+     * Gets the TARDIS API
+     *
+     * @return the TARDIS API
+     */
     public TARDII getTardisAPI() {
         return new TARDII();
     }
 
+    /**
+     * Gets the TARDIS Artron Energy Standby Task
+     *
+     * @return the TARDIS Artron Energy Standby Task
+     */
     public BukkitTask getStandbyTask() {
         return standbyTask;
     }
 
+    /**
+     * Gets a list of worlds to clean up from the planets configuartion
+     *
+     * @return a list of world names
+     */
     public List<String> getCleanUpWorlds() {
         return cleanUpWorlds;
     }
 
+    /**
+     * Gets the TARDIS Difficulty level
+     *
+     * @return the TARDIS Difficulty level
+     */
     public Difficulty getDifficulty() {
         return difficulty;
     }
 
+    /**
+     * Sets the TARDIS Difficulty level
+     */
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
 
+    /**
+     * Gets the TARDIS World Manager
+     *
+     * @return the TARDIS World Manager
+     */
     public WorldManager getWorldManager() {
         return worldManager;
     }
@@ -1272,66 +1524,136 @@ public class TARDIS extends JavaPlugin {
         recordingTask = getServer().getScheduler().runTaskLaterAsynchronously(this, new TARDISRecordingTask(this), recorder_tick_delay);
     }
 
+    /**
+     * Sets the TARDIS Block RecordingTask
+     */
     public void setRecordingTask(BukkitTask recordingTask) {
         this.recordingTask = recordingTask;
     }
 
+    /**
+     * Gets the deprecated TARDIS Custom Block NamespacedKey
+     *
+     * @return the deprecated TARDIS Custom Block NamespacedKey
+     */
     public NamespacedKey getOldBlockKey() {
         return oldBlockKey;
     }
 
+    /**
+     * Gets the TARDIS Custom Block NamespacedKey
+     *
+     * @return the TARDIS Custom Block NamespacedKey
+     */
     public NamespacedKey getCustomBlockKey() {
         return customBlockKey;
     }
 
+    /**
+     * Gets the Time Lord UUID NamespacedKey
+     *
+     * @return the Time Lord UUID NamespacedKey
+     */
     public NamespacedKey getTimeLordUuidKey() {
         return timeLordUuidKey;
     }
 
+    /**
+     * Gets the TARDIS Blueprint NamespacedKey
+     *
+     * @return the TARDIS Blueprint NamespacedKey
+     */
     public NamespacedKey getBlueprintKey() {
         return blueprintKey;
     }
 
+    /**
+     * Gets the Sonic Screwdriver UUID NamespacedKey
+     *
+     * @return the Sonic Screwdriver UUID NamespacedKey
+     */
     public NamespacedKey getSonicUuidKey() {
         return sonicUuidKey;
     }
 
+    /**
+     * Gets the TARDIS UUID Persistent Data Type
+     *
+     * @return the TARDIS UUID Persistent Data Type
+     */
     public PersistentDataType<byte[], UUID> getPersistentDataTypeUUID() {
         return persistentDataTypeUUID;
     }
 
+    /**
+     * Gets the TARDIS database Query Factory
+     *
+     * @return the Query Factory
+     */
     public QueryFactory getQueryFactory() {
         return queryFactory;
     }
 
+    /**
+     * Gets whether an update was found
+     *
+     * @return true if an update was found
+     */
     public boolean isUpdateFound() {
         return updateFound;
     }
 
+    /**
+     * Sets whether an update was found
+     */
     public void setUpdateFound(boolean updateFound) {
         this.updateFound = updateFound;
     }
 
+    /**
+     * Gets the Build Number
+     *
+     * @return the Build Number
+     */
     public int getBuildNumber() {
         return buildNumber;
     }
 
+    /**
+     * Sets the Build Number
+     */
     public void setBuildNumber(int buildNumber) {
         this.buildNumber = buildNumber;
     }
 
+    /**
+     * Gets the Update Number
+     *
+     * @return the Update Number
+     */
     public int getUpdateNumber() {
         return updateNumber;
     }
 
+    /**
+     * Sets the Update Number
+     */
     public void setUpdateNumber(int updateNumber) {
         this.updateNumber = updateNumber;
     }
 
+    /**
+     * Gets the TARDIS Block Logger
+     *
+     * @return the TARDIS Block Logger
+     */
     public TARDISBlockLogger getBlockLogger() {
         return blockLogger;
     }
 
+    /**
+     * Saves the Planets Configuration
+     */
     public void savePlanetsConfig() {
         try {
             String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
