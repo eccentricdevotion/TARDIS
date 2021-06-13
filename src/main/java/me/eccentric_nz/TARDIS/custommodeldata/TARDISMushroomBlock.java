@@ -64,7 +64,7 @@ public class TARDISMushroomBlock {
             "minecraft:mushroom_stem[down=false,east=true,north=true,south=true,up=false,west=true]",
             "minecraft:mushroom_stem[down=true,east=true,north=true,south=true,up=true,west=true]"
     );
-    private static final HashMap<String, String> chemistryStemOn = new HashMap<String, String>() {
+    private static final HashMap<String, String> chemistryStemOn = new HashMap<>() {
         {
             // blue_lamp_on
             put("minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=false]", "minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=false]");
@@ -76,7 +76,7 @@ public class TARDISMushroomBlock {
             put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=false,west=true]", "minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=false,west=true]");
         }
     };
-    private static final HashMap<String, String> chemistryStemOff = new HashMap<String, String>() {
+    private static final HashMap<String, String> chemistryStemOff = new HashMap<>() {
         {
             // blue_lamp
             put("minecraft:mushroom_stem[down=true,east=false,north=true,south=false,up=true,west=false]", "minecraft:mushroom_stem[down=true,east=false,north=false,south=true,up=true,west=false]");

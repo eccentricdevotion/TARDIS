@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class TARDISSeedModel {
 
-    public static final HashMap<Material, Integer> materialMap = new HashMap<Material, Integer>() {
+    public static final HashMap<Material, Integer> materialMap = new HashMap<>() {
         {
             // ars
             put(Material.QUARTZ_BLOCK, 14);
@@ -74,6 +74,10 @@ public class TARDISSeedModel {
             put(Material.CRYING_OBSIDIAN, 43);
             // copper
             put(Material.WARPED_PLANKS, 42);
+            // cave
+            put(Material.DRIPSTONE_BLOCK, 56);
+            // weathered
+            put(Material.WEATHERED_COPPER, 57);
 //            // custom
 //            put(Material.MUSHROOM_STEM, 45);
 //            // templates
@@ -83,7 +87,7 @@ public class TARDISSeedModel {
         }
     };
 
-    public static final HashMap<String, Integer> consoleMap = new HashMap<String, Integer>() {
+    public static final HashMap<String, Integer> consoleMap = new HashMap<>() {
         {
             put("ARS", 14);
             put("BIGGER", 15);

@@ -42,7 +42,7 @@ import java.util.Set;
 public class SuperFertisliserListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<Material, TreeType> TREE_LOOKUP = new HashMap<Material, TreeType>() {
+    private final HashMap<Material, TreeType> TREE_LOOKUP = new HashMap<>() {
         {
             put(Material.OAK_SAPLING, TreeType.TREE);
             put(Material.DARK_OAK_SAPLING, TreeType.DARK_OAK);
