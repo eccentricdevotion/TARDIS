@@ -252,8 +252,8 @@ public class TARDISBuilderInner implements Runnable {
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 Block psb = entry.getKey();
                 psb.setBlockData(entry.getValue());
-                // always make the control centre the first oak wall sign
-                if (s == 0 && entry.getValue().getMaterial().equals(Material.OAK_WALL_SIGN)) {
+                // always make the control centre the first oak sign
+                if (s == 0 && (entry.getValue().getMaterial().equals(Material.OAK_WALL_SIGN) || (schm.getPermission().equals("cave") && entry.getValue().getMaterial().equals(Material.OAK_SIGN)))) {
                     Sign cs = (Sign) psb.getState();
                     cs.setLine(0, "");
                     cs.setLine(1, plugin.getSigns().getStringList("control").get(0));

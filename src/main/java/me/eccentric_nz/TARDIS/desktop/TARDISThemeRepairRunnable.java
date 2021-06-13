@@ -272,8 +272,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 Block psb = entry.getKey();
                 psb.setBlockData(entry.getValue());
-                // always make the control centre the first oak wall sign
-                if (s == 0 && psb.getType().equals(Material.OAK_WALL_SIGN)) {
+                // always make the control centre the first oak sign
+                if (s == 0 && (psb.getType().equals(Material.OAK_WALL_SIGN) || (tud.getSchematic().getPermission().equals("cave") && psb.getType().equals(Material.OAK_SIGN)))) {
                     Sign cs = (Sign) psb.getState();
                     cs.setLine(0, "");
                     cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
@@ -537,7 +537,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     postPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.PISTON_HEAD)) {
                     postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
-                } else if (Tag.WALL_SIGNS.isTagged(type)) {
+                } else if (Tag.WALL_SIGNS.isTagged(type) || (tud.getSchematic().getPermission().equals("cave") && type.equals(Material.OAK_SIGN))) {
                     postSignBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.POINTED_DRIPSTONE)) {
                     postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);

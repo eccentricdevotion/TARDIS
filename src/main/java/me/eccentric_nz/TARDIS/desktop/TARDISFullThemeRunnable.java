@@ -349,18 +349,16 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 Block psb = entry.getKey();
                 psb.setBlockData(entry.getValue());
-                // always make the control centre the first oak wall sign
-                if (s == 0 && psb.getType().equals(Material.OAK_WALL_SIGN)) {
-                    if (Tag.WALL_SIGNS.isTagged(psb.getType())) {
-                        Sign cs = (Sign) psb.getState();
-                        cs.setLine(0, "");
-                        cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
-                        cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
-                        cs.setLine(3, "");
-                        cs.update();
-                        String controlloc = psb.getLocation().toString();
-                        plugin.getQueryFactory().insertSyncControl(id, 22, controlloc, 0);
-                    }
+                // always make the control centre the first oak sign
+                if (s == 0 && (psb.getType().equals(Material.OAK_WALL_SIGN) || (tud.getSchematic().getPermission().equals("cave") && psb.getType().equals(Material.OAK_SIGN)))) {
+                    Sign cs = (Sign) psb.getState();
+                    cs.setLine(0, "");
+                    cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
+                    cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
+                    cs.setLine(3, "");
+                    cs.update();
+                    String controlloc = psb.getLocation().toString();
+                    plugin.getQueryFactory().insertSyncControl(id, 22, controlloc, 0);
                     s++;
                 }
             }
@@ -747,7 +745,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     postPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.PISTON_HEAD)) {
                     postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
-                } else if (Tag.WALL_SIGNS.isTagged(type)) {
+                } else if (Tag.SIGNS.isTagged(type)) {
                     postSignBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.POINTED_DRIPSTONE)) {
                     postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
@@ -822,6 +820,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 level++;
             }
         }
+
     }
 
     private List<TARDISARSJettison> getJettisons(ConsoleSize next, ConsoleSize prev, Chunk chunk) {

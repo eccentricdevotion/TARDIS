@@ -204,11 +204,11 @@ class TARDISBuildAbandoned implements Runnable {
 
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
+                Block psb = entry.getKey();
+                psb.setBlockData(entry.getValue());
                 if (s == 0) {
-                    // always make the control centre the first sign
-                    Block psb = entry.getKey();
-                    psb.setBlockData(entry.getValue());
-                    if (Tag.WALL_SIGNS.isTagged(entry.getValue().getMaterial())) {
+                    // always make the control centre the first oak sign
+                    if (entry.getValue().getMaterial().equals(Material.OAK_WALL_SIGN) || (schm.getPermission().equals("cave") && entry.getValue().getMaterial().equals(Material.OAK_SIGN))) {
                         Sign cs = (Sign) psb.getState();
                         cs.setLine(0, "");
                         cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
@@ -217,9 +217,9 @@ class TARDISBuildAbandoned implements Runnable {
                         cs.update();
                         String controlloc = psb.getLocation().toString();
                         plugin.getQueryFactory().insertSyncControl(dbID, 22, controlloc, 0);
+                        s++;
                     }
                 }
-                s++;
             }
             if (postBedrock != null) {
                 postBedrock.setBlockData(TARDISConstants.POWER);
@@ -533,7 +533,7 @@ class TARDISBuildAbandoned implements Runnable {
                 postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.LEVER)) {
                 postLeverBlocks.put(world.getBlockAt(x, y, z), data);
-            } else if (type.equals(Material.OAK_WALL_SIGN)) {
+            } else if (Tag.SIGNS.isTagged(type)) {
                 postSignBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.POINTED_DRIPSTONE)) {
                 postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
