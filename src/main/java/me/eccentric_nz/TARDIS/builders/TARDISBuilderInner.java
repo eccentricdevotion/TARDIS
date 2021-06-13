@@ -81,6 +81,8 @@ public class TARDISBuilderInner implements Runnable {
     private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postCarpetBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
     private final List<MushroomBlock> postMushroomBlocks = new ArrayList<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
     private final HashMap<String, Object> set = new HashMap<>();
@@ -243,6 +245,8 @@ public class TARDISBuilderInner implements Runnable {
             });
             postPistonExtensionBlocks.forEach(Block::setBlockData);
             postLeverBlocks.forEach(Block::setBlockData);
+            postDripstoneBlocks.forEach(Block::setBlockData);
+            postLichenBlocks.forEach(Block::setBlockData);
             int s = 0;
             for (Map.Entry<Block, BlockData> entry : postSignBlocks.entrySet()) {
                 Block psb = entry.getKey();
@@ -654,6 +658,10 @@ public class TARDISBuilderInner implements Runnable {
                 postLeverBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (Tag.SIGNS.isTagged(type)) {
                 postSignBlocks.put(world.getBlockAt(x, y, z), data);
+            } else if (type.equals(Material.POINTED_DRIPSTONE)) {
+                postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
+            } else if (type.equals(Material.GLOW_LICHEN)) {
+                postLichenBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (TARDISStaticUtils.isBanner(type)) {
                 JsonObject state = c.has("banner") ? c.get("banner").getAsJsonObject() : null;
                 if (state != null) {

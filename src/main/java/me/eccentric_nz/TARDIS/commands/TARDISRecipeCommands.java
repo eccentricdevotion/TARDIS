@@ -62,6 +62,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("ARS", Material.QUARTZ_BLOCK); // ARS
         t.put("BIGGER", Material.GOLD_BLOCK); // bigger
         t.put("BUDGET", Material.IRON_BLOCK); // budget
+        t.put("CAVE", Material.DRIPSTONE_BLOCK); // dripstone cave
         t.put("COPPER", Material.WARPED_PLANKS); // copper schematic designed by vistaero
         t.put("CORAL", Material.NETHER_WART_BLOCK); // coral schematic designed by vistaero
         t.put("DELTA", Material.CRYING_OBSIDIAN); // delta
@@ -77,6 +78,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("THIRTEENTH", Material.ORANGE_CONCRETE); // thirteenth designed by Razihel
         t.put("TWELFTH", Material.PRISMARINE); // twelfth
         t.put("WAR", Material.WHITE_TERRACOTTA); // war doctor
+        t.put("WEATHERED", Material.WEATHERED_COPPER); // weathered
         t.put("PYRAMID", Material.SANDSTONE_STAIRS); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
         t.put("MASTER", Material.NETHER_BRICKS); // master schematic designed by ShadowAssociate
         t.put("LEGACY_BIGGER", Material.ORANGE_GLAZED_TERRACOTTA);
@@ -317,6 +319,12 @@ public class TARDISRecipeCommands implements CommandExecutor {
             tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         } else if (type.equalsIgnoreCase("COPPER")) {
             model = 46;
+            tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
+        } else if (type.equalsIgnoreCase("CAVE")) {
+            model = 56;
+            tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
+        } else if (type.equalsIgnoreCase("WEATHERED")) {
+            model = 57;
             tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         } else {
             model = TARDISSeedModel.modelByString(type.toUpperCase());

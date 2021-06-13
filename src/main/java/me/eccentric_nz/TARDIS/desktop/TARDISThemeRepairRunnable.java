@@ -73,6 +73,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private final HashMap<Block, BlockData> postLeverBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postSignBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRepeaterBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postDripstoneBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> postLichenBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postPistonExtensionBlocks = new HashMap<>();
@@ -254,6 +256,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             postLeverBlocks.forEach(Block::setBlockData);
             postTorchBlocks.forEach(Block::setBlockData);
             postRepeaterBlocks.forEach(Block::setBlockData);
+            postDripstoneBlocks.forEach(Block::setBlockData);
+            postLichenBlocks.forEach(Block::setBlockData);
             postStickyPistonBaseBlocks.forEach((pspb, value) -> {
                 plugin.getGeneralKeeper().getDoorPistons().add(pspb);
                 pspb.setBlockData(value);
@@ -530,6 +534,10 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (Tag.WALL_SIGNS.isTagged(type)) {
                     postSignBlocks.put(world.getBlockAt(x, y, z), data);
+                } else if (type.equals(Material.POINTED_DRIPSTONE)) {
+                    postDripstoneBlocks.put(world.getBlockAt(x, y, z), data);
+                } else if (type.equals(Material.GLOW_LICHEN)) {
+                    postLichenBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (TARDISMaterials.infested.contains(type)) {
                     // legacy monster egg stone for controls
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);

@@ -77,7 +77,7 @@ public class TARDISSeedBlockListener implements Listener {
             if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
                 int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
                 MultipleFacing multipleFacing;
-                if (which >= 42 && which <= 45) {
+                if (which >= 42 && which <= 57) {
                     multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
                 } else {
                     multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));

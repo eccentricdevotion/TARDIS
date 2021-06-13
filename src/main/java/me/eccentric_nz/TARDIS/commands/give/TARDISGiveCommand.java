@@ -408,9 +408,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             ItemStack is;
             if (Consoles.getBY_NAMES().containsKey(type)) {
                 int model = TARDISSeedModel.modelByString(type);
-                if (Consoles.getBY_NAMES().get(type).isCustom()) {
-                    is = new ItemStack(Material.MUSHROOM_STEM, 1);
-                } else if (type.equalsIgnoreCase("DELTA") || type.equalsIgnoreCase("ROTOR") || type.equalsIgnoreCase("COPPER")) {
+                if (Consoles.getBY_NAMES().get(type).isCustom() || type.equalsIgnoreCase("DELTA") || type.equalsIgnoreCase("ROTOR") || type.equalsIgnoreCase("COPPER") || type.equalsIgnoreCase("CAVE") || type.equalsIgnoreCase("WEATHERED")) {
                     is = new ItemStack(Material.MUSHROOM_STEM, 1);
                 } else {
                     is = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);

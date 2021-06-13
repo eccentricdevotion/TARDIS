@@ -1131,7 +1131,7 @@ commands:
   tardisschematic:
     aliases: [ tschematic, ts ]
     description: Save, load or paste a TARDIS schematic.
-    usage: /<command> [save|load|paste|clear] [name]
+    usage: /<command> [save|load|paste|clear|replace] [name]
     save:
       description: Save a TARDIS schematic.
       usage: /<command> save [name]
