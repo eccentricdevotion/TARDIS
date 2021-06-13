@@ -167,7 +167,6 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
      */
     private void floor(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
             ItemStack[] wall_blocks = new TARDISWallsInventory(plugin).getMenu();
             Inventory wall = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Floor Menu");
             wall.setContents(wall_blocks);
