@@ -24,7 +24,7 @@ public class TARDISMushroomBlockData {
     public static final String RED_MUSHROOM_DATA_ALL = "minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=true,west=true]";
     public static final String MUSHROOM_STEM_DATA_ALL = "minecraft:mushroom_stem[down=true,east=true,north=true,south=true,up=true,west=true]";
 
-    public static final HashMap<Integer, String> BROWN_MUSHROOM_DATA = new HashMap<Integer, String>() {
+    public static final HashMap<Integer, String> BROWN_MUSHROOM_DATA = new HashMap<>() {
         {
             // the_moment
             put(1, "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=false,up=false,west=true]");
@@ -33,7 +33,7 @@ public class TARDISMushroomBlockData {
         }
     };
 
-    public static final HashMap<Integer, String> RED_MUSHROOM_DATA = new HashMap<Integer, String>() {
+    public static final HashMap<Integer, String> RED_MUSHROOM_DATA = new HashMap<>() {
         {
             // ars
             put(14, "minecraft:red_mushroom_block[down=false,east=true,north=true,south=true,up=true,west=false]");
@@ -83,7 +83,6 @@ public class TARDISMushroomBlockData {
             put(36, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=false,west=false]");
             // legacy_redstone
             put(37, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=false,west=true]");
-            // TODO change pandorica to item frame model
             // pandorica
             put(38, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=false]");
             // master
@@ -103,7 +102,7 @@ public class TARDISMushroomBlockData {
         }
     };
 
-    public static final HashMap<Integer, String> MUSHROOM_STEM_DATA = new HashMap<Integer, String>() {
+    public static final HashMap<Integer, String> MUSHROOM_STEM_DATA = new HashMap<>() {
         {
             // heat_block
             put(5, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=true]");
@@ -151,6 +150,10 @@ public class TARDISMushroomBlockData {
             put(54, "minecraft:mushroom_stem[down=true,east=true,north=false,south=true,up=true,west=true]");
             // animated seed grow
             put(55, "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=true,west=false]");
+            // cave seed block
+            put(56, "minecraft:red_mushroom_block[down=false,east=false,north=false,south=true,up=false,west=true]");
+            // weathered seed block
+            put(57, "minecraft:red_mushroom_block[down=false,east=false,north=false,south=true,up=true,west=false]");
         }
     };
 }

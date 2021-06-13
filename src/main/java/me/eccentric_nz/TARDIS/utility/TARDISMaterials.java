@@ -57,7 +57,8 @@ public class TARDISMaterials {
 
     public static final List<Material> submarine_blocks = Arrays.asList(Material.BLUE_ICE, Material.FROSTED_ICE, Material.ICE, Material.KELP_PLANT, Material.PACKED_ICE, Material.SEA_PICKLE, Material.SEAGRASS, Material.TALL_SEAGRASS, Material.WATER);
 
-    public static final HashMap<Material, EntityType> fishMap = new HashMap<Material, EntityType>() {
+    public static final HashMap<Material, EntityType> fishMap = new HashMap<>() {
+        
         private static final long serialVersionUID = 3109256773218160485L;
 
         {

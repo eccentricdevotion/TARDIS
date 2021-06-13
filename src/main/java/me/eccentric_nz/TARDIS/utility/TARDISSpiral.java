@@ -28,7 +28,8 @@ class TARDISSpiral {
     static final List<Point> SPIRAL;
 
     static {
-        SPIRAL = new ArrayList<Point>() {
+        
+        SPIRAL = new ArrayList<>() {
 
             private static final long serialVersionUID = 3109256773218160485L;
 

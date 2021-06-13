@@ -37,7 +37,7 @@ import java.util.UUID;
  */
 public class TARDISTimeRotor {
 
-    private static final HashMap<String, Integer> BY_NAME = new HashMap<String, Integer>() {
+    private static final HashMap<String, Integer> BY_NAME = new HashMap<>() {
         {
             put("early", 10000002);
             put("rotor", 10000003);
