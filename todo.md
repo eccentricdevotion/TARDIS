@@ -4,6 +4,7 @@
 
 ## Next version `4.7`
 
+0. Rewrite TARDIS extermination (now that the old Police Box preset has been removed)
 1. Use Java 16 `record` data type?
 2. Update documentation...
 3. Use the Vortex Manipulator to teleport past force fields

@@ -155,7 +155,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: nl.rutgerkok:blocklocker:1.9.3">
+      <library name="Maven: nl.rutgerkok:blocklocker:1.10">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/BlockLocker.jar!/" />
         </CLASSES>

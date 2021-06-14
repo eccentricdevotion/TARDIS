@@ -110,6 +110,7 @@
                             <!--<additionalparam>-Xdoclint:none</additionalparam>-->
                             <quiet/>
                             <excludePackageNames>com.*:org.*</excludePackageNames>
+                            <release>16</release>
                         </configuration>
                         <executions>
                             <execution>
@@ -373,7 +374,7 @@
         <dependency>
             <groupId>nl.rutgerkok</groupId>
             <artifactId>blocklocker</artifactId>
-            <version>1.9.3</version>
+            <version>1.10</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/BlockLocker.jar</systemPath>
@@ -436,7 +437,7 @@
         <dependency>
             <groupId>org.dynmap</groupId>
             <artifactId>dynmap-api</artifactId>
-            <version>3.1</version>
+            <version>3.2-beta-1</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/dynmap-api.jar</systemPath>
         </dependency>
