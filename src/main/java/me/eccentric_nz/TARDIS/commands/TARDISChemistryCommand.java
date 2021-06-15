@@ -113,7 +113,7 @@ public class TARDISChemistryCommand implements CommandExecutor {
 
     private void showBlockRecipe(Player player, String which) {
         player.closeInventory();
-        plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
+        plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
         Material surround;
         switch (which) {
             case "creative":

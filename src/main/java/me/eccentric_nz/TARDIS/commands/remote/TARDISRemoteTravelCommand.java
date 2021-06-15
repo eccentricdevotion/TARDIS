@@ -91,7 +91,7 @@ class TARDISRemoteTravelCommand {
                 dd.setSubmarine(sub);
                 dd.setTardisID(id);
                 dd.setThrottle(SpaceTimeThrottle.NORMAL);
-                if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
+                if (!hidden && !plugin.getTrackerKeeper().getResetWorlds().contains(resetw)) {
                     plugin.getTrackerKeeper().getDematerialising().add(id);
                     plugin.getPresetDestroyer().destroyPreset(dd);
                 } else {
@@ -115,7 +115,7 @@ class TARDISRemoteTravelCommand {
                 plugin.getPresetBuilder().buildPreset(bd);
                 TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land");
             }, delay);
-            plugin.getTrackerKeeper().getDamage().remove(id);
+            plugin.getTrackerKeeper().getHadsDamage().remove(id);
             // current
             HashMap<String, Object> setcurrent = new HashMap<>();
             setcurrent.put("world", exit.getWorld().getName());

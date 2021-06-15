@@ -175,7 +175,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(str);
         player.discoverRecipe(recipe.getKey());
         player.closeInventory();
-        plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
+        plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
         Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "" + str + " recipe");
         String[] recipeShape = recipe.getShape();
         Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
@@ -240,7 +240,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(str);
         player.discoverRecipe(recipe.getKey());
         List<ItemStack> ingredients = recipe.getIngredientList();
-        plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
+        plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
         Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "" + str + " recipe");
         int glowstoneCount = 0;
         for (int i = 0; i < ingredients.size(); i++) {
@@ -284,7 +284,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     }
 
     private void showTARDISRecipe(Player player, String type) {
-        plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
+        plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
         Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS " + type.toUpperCase(Locale.ENGLISH) + " seed recipe");
         // redstone torch
         ItemStack red = new ItemStack(Material.REDSTONE_TORCH, 1);

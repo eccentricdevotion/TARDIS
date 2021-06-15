@@ -187,7 +187,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                         plugin.getQueryFactory().doDelete("blocks", whered);
                     }
                     // tardis has moved so remove HADS damage count
-                    plugin.getTrackerKeeper().getDamage().remove(bd.getTardisID());
+                    plugin.getTrackerKeeper().getHadsDamage().remove(bd.getTardisID());
                     // update demat field in database
                     TARDISBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisID());
                 }

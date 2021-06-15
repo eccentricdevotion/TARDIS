@@ -552,6 +552,11 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    /**
+     * Gets the MySQL database prefix for TARDIS tables
+     *
+     * @return the prefix from the config
+     */
     public String getPrefix() {
         return prefix;
     }
@@ -799,6 +804,11 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    /**
+     * Gets the inventory manager that the server is using
+     *
+     * @return the {@link InventoryManager}
+     */
     public InventoryManager getInvManager() {
         return invManager;
     }
@@ -814,12 +824,19 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    /**
+     * Gets the Multiverse plugin utility class
+     *
+     * @return the utitily class
+     */
     public TARDISMultiverseHelper getMVHelper() {
         return mvHelper;
     }
 
     /**
      * Checks if the TARDISChunkGenerator plugin is available, and loads support if it is.
+     *
+     * @return true if the plugin is enabled, if false the TARDIS plugin will disable itself
      */
     private boolean loadHelper() {
         Plugin tcg = pm.getPlugin("TARDISChunkGenerator");
@@ -831,6 +848,11 @@ public class TARDIS extends JavaPlugin {
         return false;
     }
 
+    /**
+     * Gets the TARDISChunkGenerator helper utility for accessing CraftBukkit and NMS methods
+     *
+     * @return the helper utility
+     */
     public TARDISHelper getTardisHelper() {
         return tardisHelper;
     }
@@ -1425,6 +1447,8 @@ public class TARDIS extends JavaPlugin {
 
     /**
      * Sets whether a spawn event is a TARDIS plugin spawn and allows it to happen
+     *
+     * @param tardisSpawn true if this is a TARDIS plugin spawn
      */
     public void setTardisSpawn(boolean tardisSpawn) {
         this.tardisSpawn = tardisSpawn;
@@ -1504,6 +1528,8 @@ public class TARDIS extends JavaPlugin {
 
     /**
      * Sets the TARDIS Difficulty level
+     *
+     * @param difficulty the {@link Difficulty} level to set
      */
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
@@ -1526,6 +1552,8 @@ public class TARDIS extends JavaPlugin {
 
     /**
      * Sets the TARDIS Block RecordingTask
+     *
+     * @param recordingTask the BukkitTask to set
      */
     public void setRecordingTask(BukkitTask recordingTask) {
         this.recordingTask = recordingTask;
@@ -1605,6 +1633,8 @@ public class TARDIS extends JavaPlugin {
 
     /**
      * Sets whether an update was found
+     *
+     * @param updateFound true if an update was found
      */
     public void setUpdateFound(boolean updateFound) {
         this.updateFound = updateFound;
@@ -1621,6 +1651,8 @@ public class TARDIS extends JavaPlugin {
 
     /**
      * Sets the Build Number
+     *
+     * @param buildNumber the build number to set
      */
     public void setBuildNumber(int buildNumber) {
         this.buildNumber = buildNumber;
@@ -1637,6 +1669,8 @@ public class TARDIS extends JavaPlugin {
 
     /**
      * Sets the Update Number
+     *
+     * @param updateNumber the update number to set
      */
     public void setUpdateNumber(int updateNumber) {
         this.updateNumber = updateNumber;

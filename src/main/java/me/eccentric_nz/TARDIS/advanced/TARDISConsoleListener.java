@@ -71,7 +71,7 @@ public class TARDISConsoleListener implements Listener {
         if (!TARDISPermission.hasPermission(p, "tardis.advanced")) {
             return;
         }
-        if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {
+        if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(uuid)) {
             return;
         }
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {

@@ -166,6 +166,8 @@ public class TARDISBuilderInstanceKeeper {
 
     /**
      * Sets a map of Material and TARDIS seed names
+     *
+     * @param t_seeds a Map of Material keys and console name values
      */
     public void setSeeds(HashMap<Material, String> t_seeds) {
         seeds = t_seeds;

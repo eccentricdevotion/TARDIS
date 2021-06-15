@@ -177,7 +177,7 @@ class TARDISHostileDisplacement {
                     new TARDISHostileDispersal(plugin).disperseTARDIS(id, uuid, hostile, preset);
                 }
             } else {
-                plugin.getTrackerKeeper().getDamage().remove(id);
+                plugin.getTrackerKeeper().getHadsDamage().remove(id);
                 TARDISMessage.send(player, "HADS_NO_WATER");
             }
         }

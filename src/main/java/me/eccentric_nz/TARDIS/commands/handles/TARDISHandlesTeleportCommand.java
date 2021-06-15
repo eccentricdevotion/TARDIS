@@ -100,7 +100,7 @@ public class TARDISHandlesTeleportCommand {
             set.put("z", location.getBlockZ());
             set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
             plugin.getQueryFactory().doUpdate("current", set, tid);
-            plugin.getTrackerKeeper().getDamage().remove(id);
+            plugin.getTrackerKeeper().getHadsDamage().remove(id);
             long delay = 1L;
             plugin.getTrackerKeeper().getInVortex().add(id);
             UUID uuid = player.getUniqueId();

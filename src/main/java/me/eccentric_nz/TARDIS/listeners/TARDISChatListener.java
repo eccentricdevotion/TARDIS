@@ -70,10 +70,10 @@ public class TARDISChatListener implements Listener {
             if (chat.equals("tardis rescue accept") || chat.equals("tardis request accept")) {
                 event.setCancelled(true);
                 boolean request = (chat.equals("tardis request accept"));
-                if (plugin.getTrackerKeeper().getChat().containsKey(saved)) {
-                    Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getChat().get(saved));
+                if (plugin.getTrackerKeeper().getChatRescue().containsKey(saved)) {
+                    Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getChatRescue().get(saved));
                     TARDISRescue res = new TARDISRescue(plugin);
-                    plugin.getTrackerKeeper().getChat().remove(saved);
+                    plugin.getTrackerKeeper().getChatRescue().remove(saved);
                     // delay it so the chat appears before the message
                     String player = event.getPlayer().getName();
                     String message = (request) ? "REQUEST_RELEASE" : "RESCUE_RELEASE";

@@ -83,7 +83,7 @@ public class TARDISBlockDamageListener implements Listener {
                 }
                 boolean m = false;
                 boolean isDoor = false;
-                int damage = plugin.getTrackerKeeper().getDamage().getOrDefault(id, 0);
+                int damage = plugin.getTrackerKeeper().getHadsDamage().getOrDefault(id, 0);
                 if (damage <= plugin.getConfig().getInt("preferences.hads_damage") && plugin.getConfig().getBoolean("allow.hads") && !plugin.getTrackerKeeper().getInVortex().contains(id) && isOwnerOnline(id) && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
                     if (TARDISMaterials.doors.contains(b.getType())) {
                         if (isOwner(id, p.getUniqueId().toString())) {
@@ -91,7 +91,7 @@ public class TARDISBlockDamageListener implements Listener {
                         }
                     }
                     if (!isDoor && rb.getPolice_box() == 1) {
-                        plugin.getTrackerKeeper().getDamage().put(id, damage + 1);
+                        plugin.getTrackerKeeper().getHadsDamage().put(id, damage + 1);
                         if (damage == plugin.getConfig().getInt("preferences.hads_damage")) {
                             new TARDISHostileAction(plugin).processAction(id, p);
                             m = true;

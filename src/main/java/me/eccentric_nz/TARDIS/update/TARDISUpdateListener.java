@@ -81,8 +81,8 @@ public class TARDISUpdateListener implements Listener {
         UUID playerUUID = player.getUniqueId();
         Updateable updateable;
         boolean secondary = false;
-        if (plugin.getTrackerKeeper().getPlayers().containsKey(playerUUID)) {
-            updateable = Updateable.valueOf(TARDISStringUtils.toScoredUppercase(plugin.getTrackerKeeper().getPlayers().get(playerUUID)));
+        if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(playerUUID)) {
+            updateable = Updateable.valueOf(TARDISStringUtils.toScoredUppercase(plugin.getTrackerKeeper().getUpdatePlayers().get(playerUUID)));
         } else if (plugin.getTrackerKeeper().getSecondary().containsKey(playerUUID)) {
             updateable = plugin.getTrackerKeeper().getSecondary().get(playerUUID);
             secondary = true;
@@ -146,7 +146,7 @@ public class TARDISUpdateListener implements Listener {
             if (secondary) {
                 plugin.getTrackerKeeper().getSecondary().remove(playerUUID);
             } else {
-                plugin.getTrackerKeeper().getPlayers().remove(playerUUID);
+                plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
             }
             if (!updateable.isAnyBlock() && !updateable.getMaterialChoice().getChoices().contains(blockType)) {
                 TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());

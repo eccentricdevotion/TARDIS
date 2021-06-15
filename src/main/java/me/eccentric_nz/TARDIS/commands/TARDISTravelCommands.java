@@ -156,7 +156,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     // remove trackers
                     plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(id));
                     plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(id));
-                    plugin.getTrackerKeeper().getDamage().remove(id);
+                    plugin.getTrackerKeeper().getHadsDamage().remove(id);
                     plugin.getTrackerKeeper().getMalfunction().remove(id);
                     if (plugin.getTrackerKeeper().getDidDematToVortex().contains(id)) {
                         plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(id));
@@ -426,12 +426,12 @@ public class TARDISTravelCommands implements CommandExecutor {
                         // ask if we can travel to this player
                         UUID requestedUUID = requested.getUniqueId();
                         TARDISMessage.send(requested, "REQUEST_TRAVEL", player.getName(), ChatColor.AQUA + "tardis request accept" + ChatColor.RESET);
-                        plugin.getTrackerKeeper().getChat().put(requestedUUID, player.getUniqueId());
+                        plugin.getTrackerKeeper().getChatRescue().put(requestedUUID, player.getUniqueId());
                         Player p = player;
                         String to = args[0];
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            if (plugin.getTrackerKeeper().getChat().containsKey(requestedUUID)) {
-                                plugin.getTrackerKeeper().getChat().remove(requestedUUID);
+                            if (plugin.getTrackerKeeper().getChatRescue().containsKey(requestedUUID)) {
+                                plugin.getTrackerKeeper().getChatRescue().remove(requestedUUID);
                                 TARDISMessage.send(p, "REQUEST_NO_RESPONSE", to);
                             }
                         }, 1200L);

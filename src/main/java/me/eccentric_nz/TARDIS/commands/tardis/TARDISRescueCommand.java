@@ -68,7 +68,7 @@ class TARDISRescueCommand {
                 if (rsp.resultSet() && rsp.isAutoRescueOn()) {
                     // go straight to rescue
                     TARDISRescue res = new TARDISRescue(plugin);
-                    plugin.getTrackerKeeper().getChat().remove(savedUUID);
+                    plugin.getTrackerKeeper().getChatRescue().remove(savedUUID);
                     // delay it so the chat appears before the message
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISRescue.RescueData rd = res.tryRescue(player, destPlayer.getUniqueId(), false);
@@ -82,10 +82,10 @@ class TARDISRescueCommand {
                     }, 2L);
                 } else {
                     TARDISMessage.send(destPlayer, "RESCUE_REQUEST", who, ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET);
-                    plugin.getTrackerKeeper().getChat().put(savedUUID, player.getUniqueId());
+                    plugin.getTrackerKeeper().getChatRescue().put(savedUUID, player.getUniqueId());
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        if (plugin.getTrackerKeeper().getChat().containsKey(savedUUID)) {
-                            plugin.getTrackerKeeper().getChat().remove(savedUUID);
+                        if (plugin.getTrackerKeeper().getChatRescue().containsKey(savedUUID)) {
+                            plugin.getTrackerKeeper().getChatRescue().remove(savedUUID);
                             TARDISMessage.send(player, "RESCUE_NO_RESPONSE", saved);
                         }
                     }, 1200L);

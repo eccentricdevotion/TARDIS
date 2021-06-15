@@ -277,7 +277,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             plugin.getQueryFactory().doUpdate("back", setback, whereback);
                             plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
                         }
-                        if (plugin.getAchievementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getReset().contains(rscl.getWorld().getName())) {
+                        if (plugin.getAchievementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getResetWorlds().contains(rscl.getWorld().getName())) {
                             if (l.getWorld().equals(final_location.getWorld())) {
                                 int distance = (int) l.distance(final_location);
                                 if (distance > 0 && plugin.getAchievementConfig().getBoolean("travel.enabled")) {
@@ -291,7 +291,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             plugin.getTrackerKeeper().getFlightData().remove(uuid);
                         }
                     }, materialisation_delay);
-                    plugin.getTrackerKeeper().getDamage().remove(id);
+                    plugin.getTrackerKeeper().getHadsDamage().remove(id);
                     // set last use
                     long now;
                     if (TARDISPermission.hasPermission(player, "tardis.prune.bypass")) {

@@ -62,25 +62,25 @@ public class TARDISAreaListener implements Listener {
         UUID uuid = player.getUniqueId();
         Block block = event.getClickedBlock();
         if (block != null) {
-            if (plugin.getTrackerKeeper().getArea().containsKey(uuid) && !plugin.getTrackerKeeper().getBlock().containsKey(uuid)) {
+            if (plugin.getTrackerKeeper().getArea().containsKey(uuid) && !plugin.getTrackerKeeper().getAreaStartBlock().containsKey(uuid)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
                     String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
-                    plugin.getTrackerKeeper().getBlock().put(uuid, locStr);
+                    plugin.getTrackerKeeper().getAreaStartBlock().put(uuid, locStr);
                     TARDISMessage.send(player, "AREA_END_INFO", ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         plugin.getTrackerKeeper().getArea().remove(uuid);
-                        plugin.getTrackerKeeper().getBlock().remove(uuid);
+                        plugin.getTrackerKeeper().getAreaStartBlock().remove(uuid);
                     }, 1200L);
                 } else {
                     TARDISMessage.send(player, "AREA_INSIDE");
                 }
-            } else if (plugin.getTrackerKeeper().getBlock().containsKey(uuid) && plugin.getTrackerKeeper().getEnd().containsKey(uuid)) {
+            } else if (plugin.getTrackerKeeper().getAreaStartBlock().containsKey(uuid) && plugin.getTrackerKeeper().getAreaEndBlock().containsKey(uuid)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
-                    String[] firstblock = plugin.getTrackerKeeper().getBlock().get(uuid).split(":");
+                    String[] firstblock = plugin.getTrackerKeeper().getAreaStartBlock().get(uuid).split(":");
                     if (!block_loc.getWorld().getName().equals(firstblock[0])) {
                         TARDISMessage.send(player, "AREA_WORLD");
                         return;
@@ -117,8 +117,8 @@ public class TARDISAreaListener implements Listener {
                     plugin.getQueryFactory().doInsert("areas", set);
                     TARDISMessage.send(player, "AREA_SAVED", plugin.getTrackerKeeper().getArea().get(uuid));
                     plugin.getTrackerKeeper().getArea().remove(uuid);
-                    plugin.getTrackerKeeper().getBlock().remove(uuid);
-                    plugin.getTrackerKeeper().getEnd().remove(uuid);
+                    plugin.getTrackerKeeper().getAreaStartBlock().remove(uuid);
+                    plugin.getTrackerKeeper().getAreaEndBlock().remove(uuid);
                 } else {
                     TARDISMessage.send(player, "AREA_INSIDE");
                 }

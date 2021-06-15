@@ -62,8 +62,8 @@ public class TARDISItemFrameListener implements Listener {
         if (event.getRightClicked() instanceof ItemFrame frame) {
             UUID uuid = player.getUniqueId();
             // did they run the `/tardis update direction|frame|rotor|map` command?
-            if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {
-                Control control = Control.valueOf(plugin.getTrackerKeeper().getPlayers().get(uuid).toUpperCase());
+            if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(uuid)) {
+                Control control = Control.valueOf(plugin.getTrackerKeeper().getUpdatePlayers().get(uuid).toUpperCase());
                 if (control.equals(Control.DIRECTION) || control.equals(Control.FRAME) || control.equals(Control.ROTOR) || control.equals(Control.MAP)) {
                     // check they have a TARDIS
                     ResultSetTardisID rst = new ResultSetTardisID(plugin);
@@ -77,7 +77,7 @@ public class TARDISItemFrameListener implements Listener {
                         case FRAME:
                         case MAP:
                             if (control.equals(Control.MAP) && !TARDISPermission.hasPermission(player, "tardis.scanner.map")) {
-                                plugin.getTrackerKeeper().getPlayers().remove(uuid);
+                                plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                                 TARDISMessage.send(player, "NO_PERM_MAP");
                                 return;
                             }
@@ -85,7 +85,7 @@ public class TARDISItemFrameListener implements Listener {
                                 // frame must have a MAP or FILLED_MAP in it
                                 ItemStack map = frame.getItem();
                                 if (map.getType() != Material.MAP && map.getType() != Material.FILLED_MAP) {
-                                    plugin.getTrackerKeeper().getPlayers().remove(uuid);
+                                    plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                                     TARDISMessage.send(player, "SCANNER_NO_MAP");
                                     return;
                                 }
@@ -108,7 +108,7 @@ public class TARDISItemFrameListener implements Listener {
                                 // add control
                                 plugin.getQueryFactory().insertControl(id, control.getId(), l, 0);
                             }
-                            plugin.getTrackerKeeper().getPlayers().remove(uuid);
+                            plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                             String which;
                             if (control.equals(Control.DIRECTION)) {
                                 which = "Direction";
@@ -135,7 +135,7 @@ public class TARDISItemFrameListener implements Listener {
                             // set fixed and invisible
                             frame.setFixed(true);
                             frame.setVisible(false);
-                            plugin.getTrackerKeeper().getPlayers().remove(uuid);
+                            plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                             TARDISMessage.send(player, "ROTOR_UPDATE");
                     }
                     return;

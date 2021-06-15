@@ -37,7 +37,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -112,7 +111,6 @@ public class TARDISKeyboardListener implements Listener {
                 // set location player
                 p.performCommand("tardistravel " + event.getLine(0));
                 plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel " + event.getLine(0));
-                removeTracker(id);
                 return;
             }
             // location?
@@ -121,7 +119,6 @@ public class TARDISKeyboardListener implements Listener {
                 String command = event.getLine(0) + " " + event.getLine(1) + " " + event.getLine(2) + " " + event.getLine(3);
                 p.performCommand("tardistravel " + command);
                 plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel " + command);
-                removeTracker(id);
                 return;
             }
             // home?
@@ -147,19 +144,16 @@ public class TARDISKeyboardListener implements Listener {
                 } else {
                     TARDISMessage.send(p, "HOME_NOT_FOUND");
                 }
-                removeTracker(id);
                 return;
             }
             if (event.getLine(0).equalsIgnoreCase("cave") && TARDISPermission.hasPermission(p, "tardis.timetravel.cave")) {
                 p.performCommand("tardistravel cave");
                 plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel cave");
-                removeTracker(id);
                 return;
             }
             if (event.getLine(0).equalsIgnoreCase("village") && plugin.getConfig().getBoolean("allow.village_travel") && TARDISPermission.hasPermission(p, "tardis.timetravel.village")) {
                 p.performCommand("tardistravel village");
                 plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel village");
-                removeTracker(id);
                 return;
             }
             // biome ?
@@ -169,7 +163,6 @@ public class TARDISKeyboardListener implements Listener {
                 if (!upper.equals("HELL") && !upper.equals("SKY") && !upper.equals("VOID")) {
                     p.performCommand("tardistravel biome " + upper);
                     plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel biome " + upper);
-                    removeTracker(id);
                     return;
                 }
             } catch (IllegalArgumentException iae) {
@@ -182,7 +175,6 @@ public class TARDISKeyboardListener implements Listener {
             if (rsd.resultSet()) {
                 p.performCommand("tardistravel dest " + event.getLine(0));
                 plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel dest " + event.getLine(0));
-                removeTracker(id);
                 return;
             }
             // area?
@@ -192,7 +184,6 @@ public class TARDISKeyboardListener implements Listener {
             if (rsa.resultSet()) {
                 p.performCommand("tardistravel area " + event.getLine(0));
                 plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel area " + event.getLine(0));
-                removeTracker(id);
                 return;
             }
             plugin.getTardisHelper().finishSignEditing(p);
@@ -214,11 +205,5 @@ public class TARDISKeyboardListener implements Listener {
             return true;
         }
         return rsh.getZ() != rsc.getZ();
-    }
-
-    private void removeTracker(int id) {
-        if (plugin.getTrackerKeeper().getKeyboard().contains(id)) {
-            plugin.getTrackerKeeper().getKeyboard().removeAll(Collections.singleton(id));
-        }
     }
 }
