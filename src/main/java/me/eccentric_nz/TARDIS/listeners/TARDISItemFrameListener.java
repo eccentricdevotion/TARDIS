@@ -365,7 +365,6 @@ public class TARDISItemFrameListener implements Listener {
                 if (player != null) {
                     if (player.isSneaking()) {
                         talkingHandles.add(handlesId);    // add this handles to the list of currently talking handleses (by tardis id)
-                        plugin.debug(String.format("Adding handles ID %d to talking handles list", handlesId));
                         
                         event.setCancelled(true);
                         TARDISSounds.playTARDISSound(player, "handles", 5L);
@@ -375,7 +374,6 @@ public class TARDISItemFrameListener implements Listener {
                         frame.setItem(is, false);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             talkingHandles.remove(handlesId);   // remove this handles from the list of talking handles
-                            plugin.debug(String.format("Removing handles ID %d from talking handles list", handlesId));
                             
                             im.setCustomModelData(10000001);
                             is.setItemMeta(im);
