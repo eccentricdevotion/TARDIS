@@ -75,19 +75,6 @@ public class TARDISDeleteCommand {
         HashMap<String, Object> where = new HashMap<>();
         Player player = null;
         if (tmp == -1) {
-            // this should be run from the console if the player running it is the player to be deleted
-            if (sender instanceof Player) {
-                player = (Player) sender;
-                if (player.getName().equals(args[1])) {
-                    HashMap<String, Object> wherep = new HashMap<>();
-                    wherep.put("uuid", player.getUniqueId().toString());
-                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
-                    if (rst.resultSet()) {
-                        TARDISMessage.send(sender, "TARDIS_DELETE_NO");
-                        return true;
-                    }
-                }
-            }
             // Look up this player's UUID
             UUID uuid;
             if (junk) {
