@@ -903,7 +903,6 @@ SUDO_ON: "Sudo on! You will now be running TARDIS commands as '%s'. Use '/tardis
 TARDIS_BREAK: "You cannot break the TARDIS blocks!"
 TARDIS_BREAK_SIGN: "You must break the TARDIS Police Box sign first!"
 TARDIS_COMING: "The TARDIS is coming..."
-TARDIS_DELETE_NO: "You cannot be in your TARDIS when you delete it!"
 TARDIS_EXISTS: "A TARDIS already exists at this location, please try another chunk!"
 TARDIS_EXTERMINATED: "The TARDIS was removed from the world and database successfully."
 TARDIS_FIND: "TARDIS was left at %s"
