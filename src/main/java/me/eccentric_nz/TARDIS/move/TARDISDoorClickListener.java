@@ -343,7 +343,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                     }
                                                 }
                                                 // exit TARDIS!
-                                                movePlayer(player, exitLoc, true, playerWorld, userQuotes, 2, minecart);
+                                                movePlayer(player, exitLoc, true, playerWorld, userQuotes, 2, minecart, false);
                                                 if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm")) {
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
                                                     TARDISPetsAndFollowers petsAndFollowers = tf.exitPets(player);
@@ -413,7 +413,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                     yaw += adjustYaw(pd, innerD);
                                                 }
                                                 tardis_loc.setYaw(yaw);
-                                                movePlayer(player, tardis_loc, false, playerWorld, userQuotes, 1, minecart);
+                                                movePlayer(player, tardis_loc, false, playerWorld, userQuotes, 1, minecart, false);
                                                 if (petsAndFollowers != null) {
                                                     if (petsAndFollowers.getPets().size() > 0) {
                                                         movePets(petsAndFollowers.getPets(), tardis_loc, player, d, true);
@@ -470,7 +470,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             }
                                             inner_loc.setYaw(yaw);
                                             inner_loc.setPitch(pitch);
-                                            movePlayer(player, inner_loc, false, playerWorld, userQuotes, 1, minecart);
+                                            movePlayer(player, inner_loc, false, playerWorld, userQuotes, 1, minecart, false);
                                             if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
                                                 if (!rsp.getTextureIn().isEmpty()) {
                                                     new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn());
@@ -546,7 +546,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             }
                                             outer_loc.setYaw(yaw);
                                             outer_loc.setPitch(pitch);
-                                            movePlayer(player, outer_loc, true, playerWorld, userQuotes, 2, minecart);
+                                            movePlayer(player, outer_loc, true, playerWorld, userQuotes, 2, minecart, false);
                                             if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
                                                 new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureOut());
                                             }

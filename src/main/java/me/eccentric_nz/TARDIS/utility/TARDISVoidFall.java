@@ -81,7 +81,7 @@ public class TARDISVoidFall {
             tardis_loc.setYaw(yaw);
             World playerWorld = p.getLocation().getWorld();
             p.setFallDistance(0.0f);
-            plugin.getGeneralKeeper().getDoorListener().movePlayer(p, tardis_loc, false, playerWorld, false, 3, true);
+            plugin.getGeneralKeeper().getDoorListener().movePlayer(p, tardis_loc, false, playerWorld, false, 3, true, false);
         } else {
             p.setHealth(0);
         }
