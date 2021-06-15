@@ -257,13 +257,19 @@ public class TARDISItemFrameListener implements Listener {
                 }
                 ItemStack is = frame.getItem();
                 if (isHandles(is)) {
+                    Integer handlesId = rsh.getTardis_id();
+                    
                     // play sound
+                    talkingHandles.add(handlesId);    // add this handles to the list of currently talking handleses (by tardis id)
                     TARDISSounds.playTARDISSound(player, "handles", 5L);
+                    
                     ItemMeta im = is.getItemMeta();
                     im.setCustomModelData(10000002);
                     is.setItemMeta(im);
                     frame.setItem(is, false);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        talkingHandles.remove(handlesId);   // remove this handles from the list of talking handles
+                        
                         im.setCustomModelData(10000001);
                         is.setItemMeta(im);
                         frame.setItem(is, false);
