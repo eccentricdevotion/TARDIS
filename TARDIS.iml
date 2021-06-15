@@ -220,7 +220,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.dynmap:dynmap-api:3.1">
+      <library name="Maven: org.dynmap:dynmap-api:3.2-beta-1">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/dynmap-api.jar!/" />
         </CLASSES>
