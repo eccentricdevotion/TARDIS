@@ -69,9 +69,10 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
      */
     @EventHandler(ignoreCancelled = true)
     public void onSaveTerminalClick(InventoryClickEvent event) {
-        // player clicked outside inventory
-        if (event.getClickedInventory() == null) return;
-        
+        if (event.getClickedInventory() == null) {
+            // player clicked outside inventory
+            return;
+        }
         InventoryView view = event.getView();
         String name = view.getTitle();
         if (name.startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
