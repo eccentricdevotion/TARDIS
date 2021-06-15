@@ -100,7 +100,7 @@ public class TARDISEjectListener implements Listener {
                     return;
                 }
                 // teleport player and remove from travellers table
-                plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true);
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true, false);
                 TARDISMessage.send(p, "EJECT_MESSAGE", player.getName());
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", p.getUniqueId().toString());
