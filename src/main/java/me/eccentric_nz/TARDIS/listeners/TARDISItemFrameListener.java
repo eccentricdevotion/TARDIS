@@ -42,8 +42,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,11 +53,11 @@ import java.util.UUID;
 public class TARDISItemFrameListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Integer> talkingHandles = new ArrayList<Integer>();
-    
+    private final List<Integer> talkingHandles = new ArrayList<>();
+
     public TARDISItemFrameListener(TARDIS plugin) {
         this.plugin = plugin;
-        
+
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -258,18 +258,15 @@ public class TARDISItemFrameListener implements Listener {
                 ItemStack is = frame.getItem();
                 if (isHandles(is)) {
                     Integer handlesId = rsh.getTardis_id();
-                    
                     // play sound
                     talkingHandles.add(handlesId);    // add this handles to the list of currently talking handleses (by tardis id)
                     TARDISSounds.playTARDISSound(player, "handles", 5L);
-                    
                     ItemMeta im = is.getItemMeta();
                     im.setCustomModelData(10000002);
                     is.setItemMeta(im);
                     frame.setItem(is, false);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         talkingHandles.remove(handlesId);   // remove this handles from the list of talking handles
-                        
                         im.setCustomModelData(10000001);
                         is.setItemMeta(im);
                         frame.setItem(is, false);
@@ -364,14 +361,11 @@ public class TARDISItemFrameListener implements Listener {
                 if (!rsc.resultSet()) {
                     return;
                 }
-                
                 // set this handles id to its tardis id
                 Integer handlesId = rsc.getTardis_id();
-                
                 if (player != null) {
                     if (player.isSneaking()) {
                         talkingHandles.add(handlesId);    // add this handles to the list of currently talking handleses (by tardis id)
-                        
                         event.setCancelled(true);
                         TARDISSounds.playTARDISSound(player, "handles", 5L);
                         ItemMeta im = is.getItemMeta();
@@ -380,7 +374,6 @@ public class TARDISItemFrameListener implements Listener {
                         frame.setItem(is, false);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             talkingHandles.remove(handlesId);   // remove this handles from the list of talking handles
-                            
                             im.setCustomModelData(10000001);
                             is.setItemMeta(im);
                             frame.setItem(is, false);
@@ -393,7 +386,6 @@ public class TARDISItemFrameListener implements Listener {
                             plugin.debug(String.format("Cancelling breaking handles ID %d because he is still talking", handlesId));
                             return;
                         }
-                        
                         // is it the players handles?
                         ResultSetTardisID rst = new ResultSetTardisID(plugin);
                         if (rst.fromUUID(player.getUniqueId().toString()) && rsc.getTardis_id() == rst.getTardis_id()) {
