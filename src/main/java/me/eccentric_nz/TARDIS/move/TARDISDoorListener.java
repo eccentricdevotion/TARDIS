@@ -320,13 +320,13 @@ public class TARDISDoorListener {
      * @param id       the unique TARDIS identifier i the database
      * @return an instance of the TARDISDoorLocation data class
      */
-    public TARDISDoorLocation getDoor(int doortype, int id) {
+    public static TARDISDoorLocation getDoor(int doortype, int id) {
         TARDISDoorLocation tdl = new TARDISDoorLocation();
         // get door location
         HashMap<String, Object> wherei = new HashMap<>();
         wherei.put("door_type", doortype);
         wherei.put("tardis_id", id);
-        ResultSetDoors rsd = new ResultSetDoors(plugin, wherei, false);
+        ResultSetDoors rsd = new ResultSetDoors(TARDIS.plugin, wherei, false);
         if (rsd.resultSet()) {
             COMPASS d = rsd.getDoor_direction();
             tdl.setD(d);
