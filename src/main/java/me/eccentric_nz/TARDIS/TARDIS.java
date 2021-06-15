@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceParticle;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
+import me.eccentric_nz.TARDIS.bStats.Metrics;
 import me.eccentric_nz.TARDIS.builders.TARDISConsoleLoader;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockPersister;
@@ -546,6 +547,11 @@ public class TARDIS extends JavaPlugin {
             if (conversions > 0) {
                 saveConfig();
             }
+            // start bStats metrics
+            int pluginId = 11698; // You can find the plugin id on https://bstats.org/what-is-my-plugin-id
+            Metrics metrics = new Metrics(this, pluginId);
+            // Add custom charts
+            metrics.addCustomChart(new Metrics.SimplePie("junk_tardis", () -> getConfig().getString("junk.enabled", "true")));
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion.get() + " or higher, disabling...");
             pm.disablePlugin(this);
