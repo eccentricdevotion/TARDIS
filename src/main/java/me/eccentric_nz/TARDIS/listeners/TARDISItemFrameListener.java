@@ -387,7 +387,8 @@ public class TARDISItemFrameListener implements Listener {
                         }, 40L);
                     } else {
                         // is the handles currently talking?
-                        if (talkingHandles.stream().anyMatch(id -> id.equals(handlesId))) { // match by predicate since handlesId was fetched from database again
+                        // match by predicate in case multiple entries are in list. can happen when handles is clicked many times repeatedly
+                        if (talkingHandles.stream().anyMatch(id -> id.equals(handlesId))) {
                             event.setCancelled(true);
                             plugin.debug(String.format("Cancelling breaking handles ID %d because he is still talking", handlesId));
                             return;
