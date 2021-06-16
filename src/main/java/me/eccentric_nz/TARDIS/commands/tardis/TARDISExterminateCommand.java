@@ -17,8 +17,14 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.entity.Player;
 
 /**
@@ -32,13 +38,22 @@ class TARDISExterminateCommand {
         this.plugin = plugin;
     }
 
-    boolean doExterminate(Player player) {
-
-        if (!plugin.getTrackerKeeper().getExterminate().containsKey(player.getUniqueId())) {
-            TARDISMessage.send(player, "TARDIS_BREAK_SIGN");
-            return false;
+    boolean doExterminate(Player player, boolean messagePlayer) {
+        if (TARDISPermission.hasPermission(player, "tardis.exterminate")) {
+            if (messagePlayer) {
+                TextComponent textComponent = new TextComponent(plugin.getLanguage().getString("EXTERMINATE_CONFIRM"));
+                textComponent.setColor(ChatColor.AQUA);
+                textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
+                textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis exterminate 6z@3=V!Q7*/O_OB^"));
+                TARDISMessage.send(player, "EXTERMINATE_CHECK");
+                player.spigot().sendMessage(textComponent);
+                return true;
+            } else {
+                return new TARDISExterminator(plugin).exterminate(player);
+            }
+        } else {
+            TARDISMessage.send(player, "NO_PERM_DELETE");
+            return true;
         }
-        TARDISExterminator del = new TARDISExterminator(plugin);
-        return del.exterminate(player, plugin.getTrackerKeeper().getExterminate().get(player.getUniqueId()));
     }
 }

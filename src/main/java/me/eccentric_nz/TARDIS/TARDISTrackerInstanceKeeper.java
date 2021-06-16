@@ -61,7 +61,6 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<String, List<TARDISSiegeArea>> siegeGrowthAreas = new HashMap<>();
     private final HashMap<String, Sign> sign = new HashMap<>();
     private final HashMap<UUID, Bind> bindRemoval = new HashMap<>();
-    private final HashMap<UUID, Block> exterminate = new HashMap<>();
     private final HashMap<UUID, Block> invisibleDoors = new HashMap<>();
     private final HashMap<UUID, Block> lazarus = new HashMap<>();
     private final HashMap<UUID, BuildData> flightData = new HashMap<>();
@@ -214,10 +213,11 @@ public class TARDISTrackerInstanceKeeper {
         return bindRemoval;
     }
 
-    public HashMap<UUID, Block> getExterminate() {
-        return exterminate;
-    }
-
+    /**
+     * Tracks players whose TARDIS is invisible and the config option <code>allow.3d_doors</code> is true
+     *
+     * @return a Map of player UUIDs and the door block of their TARDIS
+     */
     public HashMap<UUID, Block> getInvisibleDoors() {
         return invisibleDoors;
     }
