@@ -114,6 +114,8 @@ public class TARDISSeedModel {
             put("COPPER", 42);
             put("DELTA", 43);
             put("ROTOR", 44);
+            put("CAVE", 56);
+            put("WEATHERED", 57);
             put("CUSTOM", 45);
         }
     };
