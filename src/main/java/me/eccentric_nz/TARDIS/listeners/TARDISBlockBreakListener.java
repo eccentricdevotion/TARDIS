@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -36,7 +35,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * The Silurians, also known as Earth Reptiles, Eocenes, Homo reptilia and Psionosauropodomorpha, are a species of Earth
@@ -106,16 +104,6 @@ public class TARDISBlockBreakListener implements Listener {
             if (isPresetSign(line0, line1, line2)) {
                 event.setCancelled(true);
                 sign.update();
-                if (TARDISPermission.hasPermission(player, "tardis.exterminate")) {
-                    UUID uuid = player.getUniqueId();
-                    // check it is their TARDIS
-                    plugin.getTrackerKeeper().getExterminate().put(uuid, block);
-                    long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");
-                    TARDISMessage.send(player, "Q_DELETE", ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET, String.format("%d", timeout));
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getExterminate().remove(uuid), timeout * 20);
-                } else {
-                    TARDISMessage.send(player, "NO_PERM_DELETE");
-                }
             }
         }
         if (blockType == Material.BEACON) {

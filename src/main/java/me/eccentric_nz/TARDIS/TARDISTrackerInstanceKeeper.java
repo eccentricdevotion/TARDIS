@@ -61,7 +61,6 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<String, List<TARDISSiegeArea>> siegeGrowthAreas = new HashMap<>();
     private final HashMap<String, Sign> sign = new HashMap<>();
     private final HashMap<UUID, Bind> bindRemoval = new HashMap<>();
-    private final HashMap<UUID, Block> exterminate = new HashMap<>();
     private final HashMap<UUID, Block> invisibleDoors = new HashMap<>();
     private final HashMap<UUID, Block> lazarus = new HashMap<>();
     private final HashMap<UUID, BuildData> flightData = new HashMap<>();
@@ -297,15 +296,6 @@ public class TARDISTrackerInstanceKeeper {
      */
     public HashMap<UUID, Bind> getBindRemoval() {
         return bindRemoval;
-    }
-
-    /**
-     * Tracks players rtying to exterminate (remove) their TARDIS
-     *
-     * @return a Map of player UUIDs and the sign block they broke
-     */
-    public HashMap<UUID, Block> getExterminate() {
-        return exterminate;
     }
 
     /**

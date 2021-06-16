@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -32,9 +31,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -134,70 +130,28 @@ public class TARDISExterminator {
      * Deletes a TARDIS.
      *
      * @param player running the command.
-     * @param block  the block that represents the Police Box sign
      * @return true or false depending on whether the TARIS could be deleted
      */
-    public boolean exterminate(Player player, Block block) {
-        int signx = 0, signz = 0;
-        Location sign_loc = block.getLocation();
+    public boolean exterminate(Player player) {
         HashMap<String, Object> where = new HashMap<>();
-        ResultSetTardis rs;
-        if (TARDISPermission.hasPermission(player, "tardis.delete")) {
-            Block blockbehind = null;
-            Directional sign = (Directional) block.getBlockData();
-            if (sign.getFacing().equals(BlockFace.WEST)) {
-                blockbehind = block.getRelative(BlockFace.EAST, 2);
-            }
-            if (sign.getFacing().equals(BlockFace.EAST)) {
-                blockbehind = block.getRelative(BlockFace.WEST, 2);
-            }
-            if (sign.getFacing().equals(BlockFace.SOUTH)) {
-                blockbehind = block.getRelative(BlockFace.NORTH, 2);
-            }
-            if (sign.getFacing().equals(BlockFace.NORTH)) {
-                blockbehind = block.getRelative(BlockFace.SOUTH, 2);
-            }
-            if (blockbehind != null) {
-                Block blockDown = blockbehind.getRelative(BlockFace.DOWN, 2);
-                Location bd_loc = blockDown.getLocation();
-                HashMap<String, Object> wherecl = new HashMap<>();
-                wherecl.put("world", bd_loc.getWorld().getName());
-                wherecl.put("x", bd_loc.getBlockX());
-                wherecl.put("y", bd_loc.getBlockY());
-                wherecl.put("z", bd_loc.getBlockZ());
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                if (!rsc.resultSet()) {
-                    TARDISMessage.send(player, "CURRENT_NOT_FOUND");
-                    return false;
-                }
-                where.put("tardis_id", rsc.getTardis_id());
-                rs = new ResultSetTardis(plugin, where, "", false, 2);
-            } else {
-                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
-                return false;
-            }
-        } else {
-            where.put("uuid", player.getUniqueId().toString());
-            rs = new ResultSetTardis(plugin, where, "", false, 0);
-        }
+        where.put("uuid", player.getUniqueId().toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             int id = tardis.getTardis_id();
+            // check that the player is not currently in their TARDIS
+            HashMap<String, Object> travid = new HashMap<>();
+            travid.put("tardis_id", id);
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, travid, false);
+            if (rst.resultSet()) {
+                TARDISMessage.send(player, "TARDIS_NO_DELETE");
+                return false;
+            }
             String owner = tardis.getOwner();
             String chunkLoc = tardis.getChunk();
             int tips = tardis.getTIPS();
             boolean hasZero = (!tardis.getZero().isEmpty());
             Schematic schm = tardis.getSchematic();
-            // need to check that a player is not currently in the TARDIS
-            if (TARDISPermission.hasPermission(player, "tardis.delete")) {
-                HashMap<String, Object> travid = new HashMap<>();
-                travid.put("tardis_id", id);
-                ResultSetTravellers rst = new ResultSetTravellers(plugin, travid, false);
-                if (rst.resultSet()) {
-                    TARDISMessage.send(player, "TARDIS_NO_DELETE");
-                    return false;
-                }
-            }
             // check the sign location
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
@@ -209,60 +163,39 @@ public class TARDISExterminator {
             Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             // get TARDIS direction
             COMPASS d = rsc.getDirection();
-            switch (d) {
-                case EAST:
-                    signx = -2;
-                    break;
-                case SOUTH:
-                    signz = -2;
-                    break;
-                case WEST:
-                    signx = 2;
-                    break;
-                case NORTH:
-                    signz = 2;
-                    break;
+            // Destroy the TARDIS!
+            DestroyData dd = new DestroyData();
+            dd.setDirection(d);
+            dd.setLocation(bb_loc);
+            dd.setPlayer(player);
+            dd.setHide(true);
+            dd.setOutside(false);
+            dd.setSubmarine(rsc.isSubmarine());
+            dd.setTardisID(id);
+            dd.setThrottle(SpaceTimeThrottle.REBUILD);
+            plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, owner));
+            if (!tardis.isHidden()) {
+                // remove Police Box
+                plugin.getPresetDestroyer().destroyPreset(dd);
             }
-            int signy = -2;
-            if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
-                // if the sign was on the TARDIS destroy the TARDIS!
-                DestroyData dd = new DestroyData();
-                dd.setDirection(d);
-                dd.setLocation(bb_loc);
-                dd.setPlayer(player);
-                dd.setHide(true);
-                dd.setOutside(false);
-                dd.setSubmarine(rsc.isSubmarine());
-                dd.setTardisID(id);
-                dd.setThrottle(SpaceTimeThrottle.REBUILD);
-                plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, owner));
-                if (!tardis.isHidden()) {
-                    // remove Police Box
-                    plugin.getPresetDestroyer().destroyPreset(dd);
-                }
-                World cw = TARDISStaticLocationGetters.getWorld(chunkLoc);
-                if (cw == null) {
-                    TARDISMessage.send(player, "WORLD_DELETED");
-                    return true;
-                }
-                if (!cw.getName().toLowerCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) {
-                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, tips);
-                }
-                cleanWorlds(cw, owner);
-                removeZeroRoom(tips, hasZero);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    cleanDatabase(id);
-                    TARDISMessage.send(player, "TARDIS_EXTERMINATED");
-                }, 40L);
-            } else {
-                // cancel the event because it's not the player's TARDIS
-                TARDISMessage.send(player, "NOT_OWNER");
+            World cw = TARDISStaticLocationGetters.getWorld(chunkLoc);
+            if (cw == null) {
+                TARDISMessage.send(player, "WORLD_DELETED");
+                return true;
             }
-            return false;
+            if (!cw.getName().toLowerCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) {
+                plugin.getInteriorDestroyer().destroyInner(schm, id, cw, tips);
+            }
+            cleanWorlds(cw, owner);
+            removeZeroRoom(tips, hasZero);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                cleanDatabase(id);
+                TARDISMessage.send(player, "TARDIS_EXTERMINATED");
+            }, 40L);
         } else {
-            TARDISMessage.send(player, "NO_GRIEF");
-            return false;
+            TARDISMessage.send(player, "EXTERMINATE_NONE");
         }
+        return true;
     }
 
     public void cleanHashMaps(int id) {
