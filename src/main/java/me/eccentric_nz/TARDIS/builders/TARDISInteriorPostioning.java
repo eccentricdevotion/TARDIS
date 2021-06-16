@@ -232,7 +232,7 @@ public class TARDISInteriorPostioning {
                             }
                             // remove dropped items
                             for (Entity e : tipsChunk.getEntities()) {
-                                //e.remove();
+                                e.remove();
                             }
                         }
                     }
