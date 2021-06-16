@@ -422,7 +422,7 @@ public class TARDIS extends JavaPlugin {
                     alwaysNight.keepNight();
                 }
             }
-            if (pm.isPluginEnabled("dynmap")) {
+            if (pm.isPluginEnabled("dynmap") && getConfig().getBoolean("preferences.enable_dynmap")) {
                 tardisDynmap = new TARDISDynmap(this);
                 tardisDynmap.enable();
                 debug("Creating markers for Dynmap.");

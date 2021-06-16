@@ -103,6 +103,7 @@ public class TARDISConfiguration {
         booleanOptions.put("junk.enabled", true);
         booleanOptions.put("junk.particles", true);
         booleanOptions.put("police_box.name_tardis", false);
+        booleanOptions.put("preferences.enable_dynmap", true);
         booleanOptions.put("preferences.nerf_pistons.enabled", false);
         booleanOptions.put("preferences.nerf_pistons.only_tardis_worlds", true);
         booleanOptions.put("preferences.no_coords", false);
