@@ -60,7 +60,7 @@ import java.util.logging.Level;
  */
 public class TARDISes implements TARDISAPI {
 
-    private static final WeightedChoice<Environment> weightedChoice = new WeightedChoice<Environment>().add(70, Environment.NORMAL).add(15, Environment.NETHER).add(15, Environment.THE_END);
+    private static final WeightedChoice<Environment> WEIGHTED_CHOICE = new WeightedChoice<Environment>().add(70, Environment.NORMAL).add(15, Environment.NETHER).add(15, Environment.THE_END);
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
 
@@ -167,7 +167,7 @@ public class TARDISes implements TARDISAPI {
     public Location getRandomLocation(List<String> worlds, Environment environment, Parameters param) {
         if (environment == null) {
             // choose random environment - weighted towards normal!
-            environment = weightedChoice.next();
+            environment = WEIGHTED_CHOICE.next();
             // check if environment is enabled
             if ((environment.equals(Environment.NETHER) && !TARDISPlugin.plugin.getConfig().getBoolean("travel.nether")) || (environment.equals(Environment.THE_END) && !TARDISPlugin.plugin.getConfig().getBoolean("travel.the_end"))) {
                 environment = Environment.NORMAL;

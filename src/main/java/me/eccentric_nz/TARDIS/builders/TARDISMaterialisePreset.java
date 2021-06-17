@@ -32,7 +32,7 @@ import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
 import me.eccentric_nz.tardis.utility.TARDISParticles;
 import me.eccentric_nz.tardis.utility.TARDISSounds;
 import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
+import me.eccentric_nz.tardischunkgenerator.TardisChunkGenerator;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -276,7 +276,7 @@ class TARDISMaterialisePreset implements Runnable {
                                 } else if (preset.equals(PRESET.SUBMERGED)) {
                                     change = false;
                                 }
-                                if (world.getEnvironment().equals(World.Environment.NETHER) || world.getEnvironment().equals(World.Environment.THE_END) || world.getGenerator() instanceof TARDISChunkGenerator) {
+                                if (world.getEnvironment().equals(World.Environment.NETHER) || world.getEnvironment().equals(World.Environment.THE_END) || world.getGenerator() instanceof TardisChunkGenerator) {
                                     TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), false);
                                 }
                             }

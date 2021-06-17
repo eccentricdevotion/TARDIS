@@ -39,21 +39,21 @@ class TARDISForceFieldVisualiser {
             // topLeft
             double space = 1.0d;
             assert world != null;
-            world.spawnParticle(Particle.REDSTONE, tffl.getTopFrontLeft().add(0, 0, space), 1, TARDISConstants.DUSTOPTIONS.get(d));
+            world.spawnParticle(Particle.REDSTONE, tffl.getTopFrontLeft().add(0, 0, space), 1, TARDISConstants.DUST_OPTIONS.get(d));
             // topBack
-            world.spawnParticle(Particle.REDSTONE, tffl.getTopBackLeft().add(space, 0, 0), 1, TARDISConstants.DUSTOPTIONS.get(d));
+            world.spawnParticle(Particle.REDSTONE, tffl.getTopBackLeft().add(space, 0, 0), 1, TARDISConstants.DUST_OPTIONS.get(d));
             // topRight
-            world.spawnParticle(Particle.REDSTONE, tffl.getTopBackRight().add(0, 0, -space), 1, TARDISConstants.DUSTOPTIONS.get(d));
+            world.spawnParticle(Particle.REDSTONE, tffl.getTopBackRight().add(0, 0, -space), 1, TARDISConstants.DUST_OPTIONS.get(d));
             // topFront
-            world.spawnParticle(Particle.REDSTONE, tffl.getTopFrontRight().add(-space, 0, 0), 1, TARDISConstants.DUSTOPTIONS.get(d));
+            world.spawnParticle(Particle.REDSTONE, tffl.getTopFrontRight().add(-space, 0, 0), 1, TARDISConstants.DUST_OPTIONS.get(d));
             // bottomLeft
-            world.spawnParticle(Particle.REDSTONE, tffl.getBottomFrontLeft().add(0, 0, space), 1, TARDISConstants.DUSTOPTIONS.get(d));
+            world.spawnParticle(Particle.REDSTONE, tffl.getBottomFrontLeft().add(0, 0, space), 1, TARDISConstants.DUST_OPTIONS.get(d));
             // bottomBack
-            world.spawnParticle(Particle.REDSTONE, tffl.getBottomBackLeft().add(space, 0, 0), 1, TARDISConstants.DUSTOPTIONS.get(d));
+            world.spawnParticle(Particle.REDSTONE, tffl.getBottomBackLeft().add(space, 0, 0), 1, TARDISConstants.DUST_OPTIONS.get(d));
             // bottomRight
-            world.spawnParticle(Particle.REDSTONE, tffl.getBottomBackRight().add(0, 0, -space), 1, TARDISConstants.DUSTOPTIONS.get(d));
+            world.spawnParticle(Particle.REDSTONE, tffl.getBottomBackRight().add(0, 0, -space), 1, TARDISConstants.DUST_OPTIONS.get(d));
             // bottomFront
-            world.spawnParticle(Particle.REDSTONE, tffl.getBottomFrontRight().add(-space, 0, 0), 1, TARDISConstants.DUSTOPTIONS.get(d));
+            world.spawnParticle(Particle.REDSTONE, tffl.getBottomFrontRight().add(-space, 0, 0), 1, TARDISConstants.DUST_OPTIONS.get(d));
         }
     }
 }

@@ -107,7 +107,7 @@ public class TARDISSeedBlockProcessor {
                 String cw;
                 World chunkworld;
                 boolean tips = false;
-                // TODO name worlds without player name
+                // TODO Name worlds without player name
                 if (plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
                     // create a new world to store this tardis
                     cw = "TARDIS_WORLD_" + playerNameStr;

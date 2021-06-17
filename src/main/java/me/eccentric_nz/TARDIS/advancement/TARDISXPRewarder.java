@@ -39,7 +39,7 @@ import java.util.Arrays;
  */
 class TARDISXPRewarder {
 
-    private static final int hardMaxLevel = 100000;
+    private static final int HARD_MAX_LEVEL = 100000;
     private static int[] xpTotalToReachLevel;
 
     static {
@@ -176,7 +176,7 @@ class TARDISXPRewarder {
         if (exp > xpTotalToReachLevel[xpTotalToReachLevel.length - 1]) {
             // need to extend the lookup tables
             int newMax = calculateLevelForExp(exp) * 2;
-            Validate.isTrue(newMax <= hardMaxLevel, "Level for exp " + exp + " > hard max level " + hardMaxLevel);
+            Validate.isTrue(newMax <= HARD_MAX_LEVEL, "Level for exp " + exp + " > hard max level " + HARD_MAX_LEVEL);
             initLookupTables(newMax);
         }
         int pos = Arrays.binarySearch(xpTotalToReachLevel, exp);
@@ -203,7 +203,7 @@ class TARDISXPRewarder {
      * @throws IllegalArgumentException if the level is less than 0 or greater than the current hard maximum
      */
     private int getXpForLevel(int level) {
-        Validate.isTrue(level >= 0 && level <= hardMaxLevel, "Invalid level " + level + "(must be in range 0.." + hardMaxLevel + ")");
+        Validate.isTrue(level >= 0 && level <= HARD_MAX_LEVEL, "Invalid level " + level + "(must be in range 0.." + HARD_MAX_LEVEL + ")");
         if (level >= xpTotalToReachLevel.length) {
             initLookupTables(level * 2);
         }

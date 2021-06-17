@@ -108,7 +108,7 @@ public class TARDISHandlesProcessor {
             plugin.getQueryFactory().doUpdate("programs", set, where);
             TARDISMessage.handlesSend(player, "HANDLES_RUNNING");
         } else {
-            // TODO check conditions
+            // TODO Check conditions
             processCommand(0);
             TARDISMessage.handlesSend(player, "HANDLES_EXECUTE");
         }

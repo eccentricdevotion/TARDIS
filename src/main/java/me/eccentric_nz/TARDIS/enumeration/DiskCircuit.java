@@ -48,16 +48,16 @@ public enum DiskCircuit {
     SONIC("Sonic Screwdriver", Material.valueOf(TARDISPlugin.plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result"))),
     TEMPORAL("tardis Temporal Circuit", Material.GLOWSTONE_DUST);
 
-    static final List<String> circuitNames = new ArrayList<>();
-    static final List<DiskCircuit> tardisCircuits = new ArrayList<>();
+    static final List<String> CIRCUIT_NAMES = new ArrayList<>();
+    static final List<DiskCircuit> TARDIS_CIRCUITS = new ArrayList<>();
 
     static {
         for (DiskCircuit circuit : values()) {
             if (circuit.getName().endsWith("Circuit")) {
-                circuitNames.add(circuit.getName());
+                CIRCUIT_NAMES.add(circuit.getName());
             }
             if (circuit.getMaterial() == Material.GLOWSTONE_DUST) {
-                tardisCircuits.add(circuit);
+                TARDIS_CIRCUITS.add(circuit);
             }
         }
     }
@@ -71,11 +71,11 @@ public enum DiskCircuit {
     }
 
     public static List<String> getCircuitNames() {
-        return circuitNames;
+        return CIRCUIT_NAMES;
     }
 
     public static List<DiskCircuit> getTardisCircuits() {
-        return tardisCircuits;
+        return TARDIS_CIRCUITS;
     }
 
     public String getName() {

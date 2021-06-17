@@ -83,7 +83,7 @@ public class TARDISMushroomBlockData {
             put(36, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=false,west=false]");
             // legacy_redstone
             put(37, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=false,west=true]");
-            // TODO change pandorica to item frame model
+            // TODO Change pandorica to item frame model
             // pandorica
             put(38, "minecraft:red_mushroom_block[down=true,east=true,north=false,south=true,up=true,west=false]");
             // master

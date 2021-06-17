@@ -139,13 +139,13 @@ public enum Element {
     Oganesson(118, "Og", 176),
     Unknown(999, "Un", 999);
 
-    private static final HashMap<String, Element> bySymbol = new HashMap<>();
-    private static final HashMap<Integer, Element> byAtomicNumber = new HashMap<>();
+    private static final HashMap<String, Element> BY_SYMBOL = new HashMap<>();
+    private static final HashMap<Integer, Element> BY_ATOMIC_NUMBER = new HashMap<>();
 
     static {
         for (Element e : values()) {
-            bySymbol.put(e.symbol, e);
-            byAtomicNumber.put(e.atomicNumber, e);
+            BY_SYMBOL.put(e.symbol, e);
+            BY_ATOMIC_NUMBER.put(e.atomicNumber, e);
         }
     }
 
@@ -160,11 +160,11 @@ public enum Element {
     }
 
     public static HashMap<String, Element> getBySymbol() {
-        return bySymbol;
+        return BY_SYMBOL;
     }
 
     public static HashMap<Integer, Element> getByAtomicNumber() {
-        return byAtomicNumber;
+        return BY_ATOMIC_NUMBER;
     }
 
     public int getAtomicNumber() {

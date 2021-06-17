@@ -23,7 +23,7 @@ import me.eccentric_nz.tardis.enumeration.InventoryManager;
 import me.eccentric_nz.tardis.perms.TARDISGroupManagerHandler;
 import me.eccentric_nz.tardis.perms.TARDISPermissionsExHandler;
 import me.eccentric_nz.tardis.perms.TARDISbPermissionsHandler;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
+import me.eccentric_nz.tardischunkgenerator.TardisChunkGenerator;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
@@ -55,7 +55,7 @@ public class TARDISSpace {
      */
     public World getTardisWorld(String name) {
         if (tardisWorld == null) {
-            tardisWorld = WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).generateStructures(false).createWorld();
+            tardisWorld = WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator(new TardisChunkGenerator()).generateStructures(false).createWorld();
             // set the time to night
             assert tardisWorld != null;
             tardisWorld.setTime(14000L);

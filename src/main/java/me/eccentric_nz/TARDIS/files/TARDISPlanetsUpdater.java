@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.files;
 
 import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
+import me.eccentric_nz.tardischunkgenerator.helpers.TardisPlanetData;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -48,7 +48,7 @@ public class TARDISPlanetsUpdater {
             for (String w : worlds) {
                 if (!planets_config.contains("planets." + w)) {
                     // get level data
-                    TARDISPlanetData data = plugin.getTardisHelper().getLevelData(w);
+                    TardisPlanetData data = plugin.getTardisHelper().getLevelData(w);
                     planets_config.set("planets." + w + ".enabled", true);
                     planets_config.set("planets." + w + ".time_travel", plugin.getConfig().getBoolean("worlds." + w));
                     planets_config.set("planets." + w + ".resource_pack", "default");

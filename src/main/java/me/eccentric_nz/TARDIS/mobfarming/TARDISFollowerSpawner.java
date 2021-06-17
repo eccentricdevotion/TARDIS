@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.mobfarming;
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.COMPASS;
 import me.eccentric_nz.tardis.planets.TARDISAngelsAPI;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
+import me.eccentric_nz.tardisweepingangels.TardisWeepingAngelsApi;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -51,7 +51,7 @@ public class TARDISFollowerSpawner {
                 default -> pl.add(-1, 0, 1);
             }
         }
-        TARDISWeepingAngelsAPI twa = TARDISAngelsAPI.getAPI(TARDISPlugin.plugin);
+        TardisWeepingAngelsApi twa = TARDISAngelsAPI.getAPI(TARDISPlugin.plugin);
         for (TARDISFollower follower : followers) {
             plugin.setTardisSpawn(true);
             assert w != null;

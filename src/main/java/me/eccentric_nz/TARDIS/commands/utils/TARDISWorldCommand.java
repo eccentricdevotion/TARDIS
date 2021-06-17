@@ -22,7 +22,7 @@ import me.eccentric_nz.tardis.commands.TARDISCompleter;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
 import me.eccentric_nz.tardis.planets.*;
 import me.eccentric_nz.tardis.utility.TARDISStringUtils;
-import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
+import me.eccentric_nz.tardischunkgenerator.helpers.TardisPlanetData;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -126,7 +126,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                             return true;
                         }
                     } else {
-                        TARDISPlanetData data = plugin.getTardisHelper().getLevelData(args[1]);
+                        TardisPlanetData data = plugin.getTardisHelper().getLevelData(args[1]);
                         TARDISMessage.send(sender, "WORLD_GM", data.getGameMode().toString());
                         return true;
                     }

@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.planets;
 import me.eccentric_nz.tardis.TARDISConstants;
 import me.eccentric_nz.tardis.TARDISPlugin;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
-import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
+import me.eccentric_nz.tardischunkgenerator.helpers.TardisPlanetData;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -74,7 +74,7 @@ public class TARDISWorlds {
         worlds.forEach((w) -> {
             String worldName = w.getName();
             if (!plugin.getPlanetsConfig().contains("planets." + worldName) && !worldName.equals(defWorld)) {
-                TARDISPlanetData data = plugin.getTardisHelper().getLevelData(w.getName());
+                TardisPlanetData data = plugin.getTardisHelper().getLevelData(w.getName());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".enabled", false);
                 plugin.getPlanetsConfig().set("planets." + worldName + ".time_travel", !isTARDISDataPackWorld(worldName));
                 plugin.getPlanetsConfig().set("planets." + worldName + ".resource_pack", "default");

@@ -68,7 +68,7 @@ import me.eccentric_nz.tardis.travel.TARDISArea;
 import me.eccentric_nz.tardis.travel.TARDISPluginRespect;
 import me.eccentric_nz.tardis.utility.*;
 import me.eccentric_nz.tardis.utility.logging.TARDISBlockLogger;
-import me.eccentric_nz.tardischunkgenerator.TARDISHelperPlugin;
+import me.eccentric_nz.tardischunkgenerator.TardisHelperPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -115,7 +115,7 @@ public class TARDISPlugin extends JavaPlugin {
     private Calendar afterCal;
     private Calendar beforeCal;
     private ConsoleCommandSender console;
-    private File quotesfile = null;
+    private File quotesFile = null;
     private FileConfiguration advancementConfig;
     private FileConfiguration artronConfig;
     private FileConfiguration blocksConfig;
@@ -150,12 +150,11 @@ public class TARDISPlugin extends JavaPlugin {
     private InventoryManager invManager;
     private PluginManager pm;
     private TARDISGeneralInstanceKeeper generalKeeper;
-    private TARDISHelperPlugin tardisHelper = null;
+    private TardisHelperPlugin tardisHelper = null;
     private TARDISMultiverseHelper mvHelper = null;
     private String prefix;
     private Difficulty difficulty;
     private WorldManager worldManager;
-    private BukkitTask recordingTask;
     private NamespacedKey oldBlockKey;
     private NamespacedKey customBlockKey;
     private NamespacedKey timeLordUuidKey;
@@ -682,7 +681,7 @@ public class TARDISPlugin extends JavaPlugin {
     private void loadFiles() {
         tardisCopier.copyFiles();
         new TARDISRoomMap(this).load();
-        quotesfile = tardisCopier.copy("quotes.txt");
+        quotesFile = tardisCopier.copy("quotes.txt");
     }
 
     /**
@@ -819,13 +818,13 @@ public class TARDISPlugin extends JavaPlugin {
         Plugin tcg = pm.getPlugin("TARDISChunkGenerator");
         if (tcg != null && tcg.isEnabled()) {
             debug("Hooking into TARDISChunkGenerator!");
-            tardisHelper = (TARDISHelperPlugin) getPM().getPlugin("TARDISChunkGenerator");
+            tardisHelper = (TardisHelperPlugin) getPM().getPlugin("TARDISChunkGenerator");
             return true;
         }
         return false;
     }
 
-    public TARDISHelperPlugin getTardisHelper() {
+    public TardisHelperPlugin getTardisHelper() {
         return tardisHelper;
     }
 
@@ -859,10 +858,10 @@ public class TARDISPlugin extends JavaPlugin {
      */
     private ArrayList<String> quotes() {
         ArrayList<String> quotes = new ArrayList<>();
-        if (quotesfile != null) {
+        if (quotesFile != null) {
             BufferedReader bufRdr = null;
             try {
-                bufRdr = new BufferedReader(new FileReader(quotesfile));
+                bufRdr = new BufferedReader(new FileReader(quotesFile));
                 String line;
                 //read each line of text file
                 while ((line = bufRdr.readLine()) != null) {
@@ -1272,11 +1271,10 @@ public class TARDISPlugin extends JavaPlugin {
     private void startRecorderTask() {
         int recorder_tick_delay = 5;
         // we schedule it once, it will reschedule itself
-        recordingTask = getServer().getScheduler().runTaskLaterAsynchronously(this, new TARDISRecordingTask(this), recorder_tick_delay);
+        getServer().getScheduler().runTaskLaterAsynchronously(this, new TARDISRecordingTask(this), recorder_tick_delay);
     }
 
     public void setRecordingTask(BukkitTask recordingTask) {
-        this.recordingTask = recordingTask;
     }
 
     public NamespacedKey getOldBlockKey() {

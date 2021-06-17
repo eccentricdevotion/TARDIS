@@ -24,7 +24,7 @@ import me.eccentric_nz.tardis.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.display.TARDISDisplayType;
 import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
+import me.eccentric_nz.tardischunkgenerator.TardisChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -74,7 +74,7 @@ public class TARDISUtils {
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
-        boolean special = (data[0].equalsIgnoreCase(dn) && gen instanceof TARDISChunkGenerator);
+        boolean special = (data[0].equalsIgnoreCase(dn) && gen instanceof TardisChunkGenerator);
         return (data[0].contains("TARDIS_WORLD_") || special);
     }
 
@@ -93,7 +93,7 @@ public class TARDISUtils {
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
-        boolean special = ((name.equals(dn) || name.equals("TARDIS_Zero_Room")) && gen instanceof TARDISChunkGenerator);
+        boolean special = ((name.equals(dn) || name.equals("TARDIS_Zero_Room")) && gen instanceof TardisChunkGenerator);
         assert player != null;
         return name.equals("TARDIS_WORLD_" + player.getName()) || special;
     }
@@ -109,7 +109,7 @@ public class TARDISUtils {
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name");
         }
-        boolean special = (name.equals(dn) && gen instanceof TARDISChunkGenerator);
+        boolean special = (name.equals(dn) && gen instanceof TardisChunkGenerator);
         return name.startsWith("TARDIS_WORLD_") || special;
     }
 
