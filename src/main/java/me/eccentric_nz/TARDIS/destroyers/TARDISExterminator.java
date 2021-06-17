@@ -306,7 +306,7 @@ public class TARDISExterminator {
     }
 
     public void cleanDatabase(int id) {
-        List<String> tables = Arrays.asList("ars", "back", "bind", "blocks", "chameleon", "chunks", "condenser", "controls", "current", "destinations", "dispersed", "doors", "farming", "gravity_well", "homes", "junk", "lamps", "next", "room_progress", "tardis", "thevoid", "travellers", "vaults");
+        List<String> tables = Arrays.asList("ars", "back", "bind", "chameleon", "chunks", "condenser", "controls", "current", "destinations", "dispersed", "doors", "farming", "gravity_well", "homes", "junk", "lamps", "next", "room_progress", "tardis", "thevoid", "travellers", "vaults");
         // remove record from database tables
         tables.forEach((table) -> {
             HashMap<String, Object> where = new HashMap<>();
