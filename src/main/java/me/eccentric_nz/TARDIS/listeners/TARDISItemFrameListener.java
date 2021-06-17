@@ -77,9 +77,7 @@ public class TARDISItemFrameListener implements Listener {
                     }
                     int id = rst.getTardis_id();
                     switch (control) {
-                        case DIRECTION:
-                        case FRAME:
-                        case MAP:
+                        case DIRECTION, FRAME, MAP -> {
                             if (control.equals(Control.MAP) && !TARDISPermission.hasPermission(player, "tardis.scanner.map")) {
                                 plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                                 TARDISMessage.send(player, "NO_PERM_MAP");
@@ -130,8 +128,8 @@ public class TARDISItemFrameListener implements Listener {
                                 }
                             }
                             TARDISMessage.send(player, "FRAME_UPDATE", which);
-                            break;
-                        default:
+                        }
+                        default -> {
                             // ROTOR
                             UUID rotorId = frame.getUniqueId();
                             TARDISTimeRotor.updateRotorRecord(id, rotorId.toString());
@@ -141,6 +139,7 @@ public class TARDISItemFrameListener implements Listener {
                             frame.setVisible(false);
                             plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                             TARDISMessage.send(player, "ROTOR_UPDATE");
+                        }
                     }
                     return;
                 }
@@ -173,42 +172,34 @@ public class TARDISItemFrameListener implements Listener {
                         // cancel the rotation!
                         event.setCancelled(true);
                         // perform the rotation
-                        switch (frame.getRotation()) {
-                            case FLIPPED:
-                                direction = "NORTH";
-                                break;
-                            case COUNTER_CLOCKWISE:
-                                direction = "EAST";
-                                break;
-                            case NONE:
-                                direction = "SOUTH";
-                                break;
-                            default:
-                                direction = "WEST";
-                                break;
-                        }
+                        direction = switch (frame.getRotation()) {
+                            case FLIPPED -> "NORTH";
+                            case COUNTER_CLOCKWISE -> "EAST";
+                            case NONE -> "SOUTH";
+                            default -> "WEST";
+                        };
                         player.performCommand("tardis direction " + direction);
                         plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardis direction " + direction);
                     } else {
                         Rotation r;
                         // set the rotation
                         switch (frame.getRotation()) {
-                            case FLIPPED:
+                            case FLIPPED -> {
                                 r = Rotation.FLIPPED_45;
                                 direction = "EAST";
-                                break;
-                            case COUNTER_CLOCKWISE:
+                            }
+                            case COUNTER_CLOCKWISE -> {
                                 r = Rotation.COUNTER_CLOCKWISE_45;
                                 direction = "SOUTH";
-                                break;
-                            case NONE:
+                            }
+                            case NONE -> {
                                 r = Rotation.CLOCKWISE_45;
                                 direction = "WEST";
-                                break;
-                            default:
+                            }
+                            default -> {
                                 r = Rotation.CLOCKWISE_135;
                                 direction = "NORTH";
-                                break;
+                            }
                         }
                         frame.setRotation(r);
                         TARDISMessage.send(player, "DIRECTON_SET", direction);
@@ -223,21 +214,12 @@ public class TARDISItemFrameListener implements Listener {
                         if (rscl.resultSet()) {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 // update the TRIPWIRE_HOOK rotation
-                                Rotation r;
-                                switch (rscl.getDirection()) {
-                                    case EAST:
-                                        r = Rotation.COUNTER_CLOCKWISE;
-                                        break;
-                                    case SOUTH:
-                                        r = Rotation.NONE;
-                                        break;
-                                    case WEST:
-                                        r = Rotation.CLOCKWISE;
-                                        break;
-                                    default:
-                                        r = Rotation.FLIPPED;
-                                        break;
-                                }
+                                Rotation r = switch (rscl.getDirection()) {
+                                    case EAST -> Rotation.COUNTER_CLOCKWISE;
+                                    case SOUTH -> Rotation.NONE;
+                                    case WEST -> Rotation.CLOCKWISE;
+                                    default -> Rotation.FLIPPED;
+                                };
                                 frame.setRotation(r);
                                 TARDISMessage.send(player, "DIRECTION_CURRENT", rscl.getDirection().toString());
                             }, 4L);

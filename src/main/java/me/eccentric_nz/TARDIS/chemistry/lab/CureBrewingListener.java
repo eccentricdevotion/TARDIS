@@ -175,22 +175,22 @@ public class CureBrewingListener implements Listener {
                                         if (milk) {
                                             ItemMeta im = is.getItemMeta();
                                             switch (potionType) {
-                                                case AWKWARD:
+                                                case AWKWARD -> {
                                                     im.setDisplayName("Antidote");
                                                     im.setCustomModelData(1);
-                                                    break;
-                                                case MUNDANE:
+                                                }
+                                                case MUNDANE -> {
                                                     im.setDisplayName("Elixir");
                                                     im.setCustomModelData(2);
-                                                    break;
-                                                case THICK:
+                                                }
+                                                case THICK -> {
                                                     im.setDisplayName("Eye drops");
                                                     im.setCustomModelData(3);
-                                                    break;
-                                                default: // UNCRAFTABLE
+                                                }
+                                                default -> { // UNCRAFTABLE
                                                     im.setDisplayName("Tonic");
                                                     im.setCustomModelData(4);
-                                                    break;
+                                                }
                                             }
                                             is.setItemMeta(im);
                                         } else {

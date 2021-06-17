@@ -195,13 +195,9 @@ public class ChemistryBlockListener implements Listener {
     }
 
     private boolean isMushroomBlock(Material material) {
-        switch (material) {
-            case MUSHROOM_STEM:
-            case RED_MUSHROOM_BLOCK:
-            case BROWN_MUSHROOM_BLOCK:
-                return true;
-            default:
-                return false;
-        }
+        return switch (material) {
+            case MUSHROOM_STEM, RED_MUSHROOM_BLOCK, BROWN_MUSHROOM_BLOCK -> true;
+            default -> false;
+        };
     }
 }

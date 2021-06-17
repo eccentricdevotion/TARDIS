@@ -341,16 +341,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                         owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
                     }
                     switch (preset) {
-                        case GRAVESTONE:
-                            sign.setLine(3, owner);
-                            break;
-                        case ANGEL:
-                        case JAIL:
-                            sign.setLine(2, owner);
-                            break;
-                        default:
-                            sign.setLine(0, owner);
-                            break;
+                        case GRAVESTONE -> sign.setLine(3, owner);
+                        case ANGEL, JAIL -> sign.setLine(2, owner);
+                        default -> sign.setLine(0, owner);
                     }
                     sign.update();
                 }

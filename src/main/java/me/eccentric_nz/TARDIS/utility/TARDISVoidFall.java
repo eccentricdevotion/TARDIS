@@ -52,26 +52,26 @@ public class TARDISVoidFall {
             int getx = tardis_loc.getBlockX();
             int getz = tardis_loc.getBlockZ();
             switch (innerD) {
-                case NORTH:
+                case NORTH -> {
                     // z -ve
                     tardis_loc.setX(getx + 0.5);
                     tardis_loc.setZ(getz - 0.5);
-                    break;
-                case EAST:
+                }
+                case EAST -> {
                     // x +ve
                     tardis_loc.setX(getx + 1.5);
                     tardis_loc.setZ(getz + 0.5);
-                    break;
-                case SOUTH:
+                }
+                case SOUTH -> {
                     // z +ve
                     tardis_loc.setX(getx + 0.5);
                     tardis_loc.setZ(getz + 1.5);
-                    break;
-                case WEST:
+                }
+                case WEST -> {
                     // x -ve
                     tardis_loc.setX(getx - 0.5);
                     tardis_loc.setZ(getz + 0.5);
-                    break;
+                }
             }
             // enter TARDIS!
             cw.getChunkAt(tardis_loc).load();

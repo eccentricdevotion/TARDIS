@@ -74,22 +74,22 @@ public class TARDISHorseListener implements Listener {
                         Location l = dl.getL();
                         // set the horse's direction as you would for a player when exiting
                         switch (dl.getD()) {
-                            case NORTH:
+                            case NORTH -> {
                                 l.setZ(l.getZ() + 5);
                                 l.setYaw(0.0f);
-                                break;
-                            case WEST:
+                            }
+                            case WEST -> {
                                 l.setX(l.getX() + 5);
                                 l.setYaw(270.0f);
-                                break;
-                            case SOUTH:
+                            }
+                            case SOUTH -> {
                                 l.setZ(l.getZ() - 5);
                                 l.setYaw(180.0f);
-                                break;
-                            default:
+                            }
+                            default -> {
                                 l.setX(l.getX() - 5);
                                 l.setYaw(90.0f);
-                                break;
+                            }
                         }
                         // save horse
                         TARDISHorse tmhor = new TARDISHorse();

@@ -131,14 +131,9 @@ public class TARDISHandlesProcessor {
                         switch (thb) {
                             case DOOR:
                                 switch (next) {
-                                    case CLOSE:
-                                        new TARDISDoorCloser(plugin, uuid, id).closeDoors();
-                                        break;
-                                    case OPEN:
-                                        new TARDISDoorOpener(plugin, uuid, id).openDoors();
-                                        break;
-                                    case LOCK:
-                                    case UNLOCK:
+                                    case CLOSE -> new TARDISDoorCloser(plugin, uuid, id).closeDoors();
+                                    case OPEN -> new TARDISDoorOpener(plugin, uuid, id).openDoors();
+                                    case LOCK, UNLOCK -> {
                                         HashMap<String, Object> whered = new HashMap<>();
                                         whered.put("tardis_id", id);
                                         whered.put("door_type", 0);
@@ -156,7 +151,7 @@ public class TARDISHandlesProcessor {
                                                 TARDISMessage.handlesSend(player, "DOOR_LOCK", message);
                                             }
                                         }
-                                        break;
+                                    }
                                 }
                                 break;
                             case LIGHTS:
@@ -610,23 +605,14 @@ public class TARDISHandlesProcessor {
                             // get the current Artron level
                             ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
                             if (rs.fromUUID(player.getUniqueId().toString())) {
-                                switch (comparison) {
-                                    case LESS_THAN:
-                                        process = (level < rs.getArtronLevel());
-                                        break;
-                                    case LESS_THAN_EQUAL:
-                                        process = (level <= rs.getArtronLevel());
-                                        break;
-                                    case GREATER_THAN:
-                                        process = (level > rs.getArtronLevel());
-                                        break;
-                                    case GREATER_THAN_EQUAL:
-                                        process = (level >= rs.getArtronLevel());
-                                        break;
-                                    default: // EQUALS
-                                        process = (level == rs.getArtronLevel());
-                                        break;
-                                }
+                                process = switch (comparison) {
+                                    case LESS_THAN -> (level < rs.getArtronLevel());
+                                    case LESS_THAN_EQUAL -> (level <= rs.getArtronLevel());
+                                    case GREATER_THAN -> (level > rs.getArtronLevel());
+                                    case GREATER_THAN_EQUAL -> (level >= rs.getArtronLevel());
+                                    default -> // EQUALS
+                                            (level == rs.getArtronLevel());
+                                };
                                 if (!process) {
                                     return;
                                 }

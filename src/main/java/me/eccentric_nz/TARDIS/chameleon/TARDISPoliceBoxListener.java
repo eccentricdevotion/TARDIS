@@ -93,23 +93,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                             // set the Chameleon Circuit sign(s)
                             HashMap<String, Object> set = new HashMap<>();
                             switch (slot) {
-                                case 0:
-                                case 1:
-                                case 2:
-                                case 3:
-                                case 4:
-                                case 5:
-                                case 6:
-                                case 7:
-                                case 8:
-                                case 9:
-                                case 10:
-                                case 11:
-                                case 12:
-                                case 13:
-                                case 14:
-                                case 15:
-                                case 16:
+                                case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 -> {
                                     // item frame preset
                                     PRESET selected = PRESET.getItemFramePresetBySlot(slot);
                                     set.put("chameleon_preset", selected.toString());
@@ -120,29 +104,25 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                         new TARDISChameleonFrame(plugin).updateChameleonFrame(id, selected, rsf.getLocation());
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + selected.getDisplayName());
-                                    break;
-                                case 24:
-                                    // go to page one (regular presets)
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
-                                        ItemStack[] items = tpi.getPresets();
-                                        Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Presets");
-                                        presetinv.setContents(items);
-                                        player.openInventory(presetinv);
-                                    }, 2L);
-                                    break;
-                                case 25:
-                                    // return to Chameleon Circuit GUI
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
-                                        Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
-                                        gui.setContents(stacks);
-                                        player.openInventory(gui);
-                                    }, 2L);
-                                    break;
-                                default:
-                                    close(player);
-                                    break;
+                                }
+                                case 24 ->
+                                        // go to page one (regular presets)
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                            TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
+                                            ItemStack[] items = tpi.getPresets();
+                                            Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Presets");
+                                            presetinv.setContents(items);
+                                            player.openInventory(presetinv);
+                                        }, 2L);
+                                case 25 ->
+                                        // return to Chameleon Circuit GUI
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                            ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
+                                            Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
+                                            gui.setContents(stacks);
+                                            player.openInventory(gui);
+                                        }, 2L);
+                                default -> close(player);
                             }
                             if (set.size() > 0) {
                                 set.put("adapti_on", 0);

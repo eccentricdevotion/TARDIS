@@ -58,15 +58,10 @@ public class TARDISSmelterListener implements Listener {
             List<Chest> oreChests = rs.getOreChests();
             // process chest contents
             switch (rs.getType()) {
-                case FUEL:
-                    new TARDISSmelterFuel().processItems(inv, fuelChests);
-                    break;
-                case SMELT:
-                    new TARDISSmelterOre().processItems(inv, oreChests);
-                    break;
-                default: // DROP
-                    new TARDISSmelterDrop().processItems(inv, fuelChests, oreChests);
-                    break;
+                case FUEL -> new TARDISSmelterFuel().processItems(inv, fuelChests);
+                case SMELT -> new TARDISSmelterOre().processItems(inv, oreChests);
+                default -> // DROP
+                        new TARDISSmelterDrop().processItems(inv, fuelChests, oreChests);
             }
         }
     }

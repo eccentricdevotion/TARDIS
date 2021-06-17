@@ -45,25 +45,23 @@ public class TARDISBlockSetters {
         BlockData blockData;
         if (b != null) {
             switch (bd.getMaterial()) {
-                case CAKE:
+                case CAKE -> {
                     // cake -> handbrake
                     blockData = Material.LEVER.createBlockData();
                     Switch lever = (Switch) blockData;
                     lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
-                    break;
-                case SPAWNER:
+                }
+                case SPAWNER -> {
                     // mob spawner -> scanner button
                     blockData = Material.OAK_BUTTON.createBlockData();
                     Switch button = (Switch) blockData;
                     button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
-                    break;
-                default:
-                    b.setBlockData(bd);
-                    break;
+                }
+                default -> b.setBlockData(bd);
             }
             if (TARDIS.plugin.getBlockLogger().isLogging()) {
                 TARDIS.plugin.getBlockLogger().logPlacement(b);
@@ -84,25 +82,23 @@ public class TARDISBlockSetters {
         Block b = w.getBlockAt(x, y, z);
         if (b != null) {
             switch (data.getMaterial()) {
-                case CAKE:
+                case CAKE -> {
                     // cake -> handbrake
                     BlockData blockData = Material.LEVER.createBlockData();
                     Switch lever = (Switch) blockData;
                     lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
-                    break;
-                case SPAWNER:
+                }
+                case SPAWNER -> {
                     // mob spawner -> scanner button
                     BlockData oak = Material.OAK_BUTTON.createBlockData();
                     Switch button = (Switch) oak;
                     button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
-                    break;
-                default:
-                    b.setBlockData(data);
-                    break;
+                }
+                default -> b.setBlockData(data);
             }
             if (TARDIS.plugin.getBlockLogger().isLogging()) {
                 TARDIS.plugin.getBlockLogger().logPlacement(b);
@@ -124,25 +120,23 @@ public class TARDISBlockSetters {
         BlockData blockData = material.createBlockData();
         if (b != null) {
             switch (material) {
-                case CAKE:
+                case CAKE -> {
                     // cake -> handbrake
                     blockData = Material.LEVER.createBlockData();
                     Switch lever = (Switch) blockData;
                     lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
                     lever.setFacing(BlockFace.SOUTH);
                     b.setBlockData(lever);
-                    break;
-                case SPAWNER:
+                }
+                case SPAWNER -> {
                     // mob spawner -> scanner button
                     blockData = Material.OAK_BUTTON.createBlockData();
                     Switch button = (Switch) blockData;
                     button.setAttachedFace(FaceAttachable.AttachedFace.WALL);
                     button.setFacing(BlockFace.SOUTH);
                     b.setBlockData(button);
-                    break;
-                default:
-                    b.setBlockData(blockData);
-                    break;
+                }
+                default -> b.setBlockData(blockData);
             }
             if (TARDIS.plugin.getBlockLogger().isLogging()) {
                 TARDIS.plugin.getBlockLogger().logPlacement(b);

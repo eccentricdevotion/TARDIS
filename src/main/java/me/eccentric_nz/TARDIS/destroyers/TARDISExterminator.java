@@ -215,24 +215,12 @@ public class TARDISExterminator {
             for (HashMap<String, String> gmap : gdata) {
                 int direction = TARDISNumberParsers.parseInt(gmap.get("direction"));
                 switch (direction) {
-                    case 1:
-                        plugin.getGeneralKeeper().getGravityUpList().remove(gmap.get("location"));
-                        break;
-                    case 2:
-                        plugin.getGeneralKeeper().getGravityNorthList().remove(gmap.get("location"));
-                        break;
-                    case 3:
-                        plugin.getGeneralKeeper().getGravityWestList().remove(gmap.get("location"));
-                        break;
-                    case 4:
-                        plugin.getGeneralKeeper().getGravitySouthList().remove(gmap.get("location"));
-                        break;
-                    case 5:
-                        plugin.getGeneralKeeper().getGravityEastList().remove(gmap.get("location"));
-                        break;
-                    default:
-                        plugin.getGeneralKeeper().getGravityDownList().remove(gmap.get("location"));
-                        break;
+                    case 1 -> plugin.getGeneralKeeper().getGravityUpList().remove(gmap.get("location"));
+                    case 2 -> plugin.getGeneralKeeper().getGravityNorthList().remove(gmap.get("location"));
+                    case 3 -> plugin.getGeneralKeeper().getGravityWestList().remove(gmap.get("location"));
+                    case 4 -> plugin.getGeneralKeeper().getGravitySouthList().remove(gmap.get("location"));
+                    case 5 -> plugin.getGeneralKeeper().getGravityEastList().remove(gmap.get("location"));
+                    default -> plugin.getGeneralKeeper().getGravityDownList().remove(gmap.get("location"));
                 }
             }
         }

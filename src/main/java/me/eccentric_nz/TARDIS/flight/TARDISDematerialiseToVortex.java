@@ -126,20 +126,13 @@ public class TARDISDematerialiseToVortex implements Runnable {
                         if (plugin.getTrackerKeeper().getMalfunction().get(id) && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                             sound = "tardis_malfunction_takeoff";
                         } else {
-                            switch (spaceTimeThrottle) {
-                                case WARP:
-                                    sound = "tardis_takeoff_warp";
-                                    break;
-                                case RAPID:
-                                    sound = "tardis_takeoff_rapid";
-                                    break;
-                                case FASTER:
-                                    sound = "tardis_takeoff_faster";
-                                    break;
-                                default: // NORMAL
-                                    sound = "tardis_takeoff";
-                                    break;
-                            }
+                            sound = switch (spaceTimeThrottle) {
+                                case WARP -> "tardis_takeoff_warp";
+                                case RAPID -> "tardis_takeoff_rapid";
+                                case FASTER -> "tardis_takeoff_faster";
+                                default -> // NORMAL
+                                        "tardis_takeoff";
+                            };
                         }
                         TARDISSounds.playTARDISSound(handbrake, sound);
                         TARDISSounds.playTARDISSound(l, sound);

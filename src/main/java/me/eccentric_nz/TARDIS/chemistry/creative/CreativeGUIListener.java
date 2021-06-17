@@ -45,7 +45,7 @@ public class CreativeGUIListener implements Listener {
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 54) {
                 switch (slot) {
-                    case 35:
+                    case 35 -> {
                         event.setCancelled(true);
                         // switch to elements
                         close(p);
@@ -55,8 +55,8 @@ public class CreativeGUIListener implements Listener {
                             elements.setContents(emenu);
                             p.openInventory(elements);
                         }, 2L);
-                        break;
-                    case 44:
+                    }
+                    case 44 -> {
                         event.setCancelled(true);
                         boolean molecular = (name.equals(ChatColor.DARK_RED + "Molecular compounds"));
                         close(p);
@@ -67,13 +67,13 @@ public class CreativeGUIListener implements Listener {
                             inventory.setContents(stacks);
                             p.openInventory(inventory);
                         }, 2L);
-                        break;
-                    case 53:
+                    }
+                    case 53 -> {
                         // close
                         event.setCancelled(true);
                         close(p);
-                        break;
-                    default:
+                    }
+                    default -> {
                         event.setCancelled(true);
                         // get clicked ItemStack
                         if (view.getItem(slot) != null) {
@@ -82,7 +82,7 @@ public class CreativeGUIListener implements Listener {
                             // add ItemStack to inventory if there is room
                             p.getInventory().addItem(choice);
                         }
-                        break;
+                    }
                 }
             } else {
                 ClickType click = event.getClick();

@@ -38,47 +38,29 @@ public class TARDISTrapdoorRecalculator {
         switch (d) {
             case SOUTH:
                 switch (trap.getFacing()) {
-                    case SOUTH:
-                        trap.setFacing(BlockFace.WEST); // 3
-                        break;
-                    case NORTH:
-                        trap.setFacing(BlockFace.EAST); // 2
-                        break;
-                    case EAST:
-                        trap.setFacing(BlockFace.SOUTH); // 0
-                        break;
-                    default: // WEST
-                        trap.setFacing(BlockFace.NORTH); // 1
+                    case SOUTH -> trap.setFacing(BlockFace.WEST); // 3
+                    case NORTH -> trap.setFacing(BlockFace.EAST); // 2
+                    case EAST -> trap.setFacing(BlockFace.SOUTH); // 0
+                    default -> // WEST
+                            trap.setFacing(BlockFace.NORTH); // 1
                 }
                 break;
             case WEST:
                 switch (trap.getFacing()) {
-                    case SOUTH:
-                        trap.setFacing(BlockFace.NORTH);
-                        break;
-                    case NORTH:
-                        trap.setFacing(BlockFace.SOUTH);
-                        break;
-                    case EAST:
-                        trap.setFacing(BlockFace.WEST);
-                        break;
-                    default: // WEST
-                        trap.setFacing(BlockFace.EAST);
+                    case SOUTH -> trap.setFacing(BlockFace.NORTH);
+                    case NORTH -> trap.setFacing(BlockFace.SOUTH);
+                    case EAST -> trap.setFacing(BlockFace.WEST);
+                    default -> // WEST
+                            trap.setFacing(BlockFace.EAST);
                 }
                 break;
             default:
                 switch (trap.getFacing()) {
-                    case SOUTH:
-                        trap.setFacing(BlockFace.EAST);
-                        break;
-                    case NORTH:
-                        trap.setFacing(BlockFace.WEST);
-                        break;
-                    case EAST:
-                        trap.setFacing(BlockFace.NORTH);
-                        break;
-                    default: // WEST
-                        trap.setFacing(BlockFace.SOUTH);
+                    case SOUTH -> trap.setFacing(BlockFace.EAST);
+                    case NORTH -> trap.setFacing(BlockFace.WEST);
+                    case EAST -> trap.setFacing(BlockFace.NORTH);
+                    default -> // WEST
+                            trap.setFacing(BlockFace.SOUTH);
                 }
                 break;
         }

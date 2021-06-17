@@ -48,24 +48,27 @@ public class CreativeCommand {
         }
         // do stuff
         switch (creative) {
-            case elements:
+            case elements -> {
                 ItemStack[] emenu = new ElementInventory(plugin).getMenu();
                 Inventory elements = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Atomic elements");
                 elements.setContents(emenu);
                 player.openInventory(elements);
                 return true;
-            case compounds:
+            }
+            case compounds -> {
                 ItemStack[] cmenu = new CompoundsCreativeInventory(plugin).getMenu();
                 Inventory compounds = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Molecular compounds");
                 compounds.setContents(cmenu);
                 player.openInventory(compounds);
                 return true;
-            default: // lab & products
+            }
+            default -> { // lab & products
                 ItemStack[] lmenu = new ProductsCreativeInventory(plugin).getMenu();
                 Inventory lab = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Products");
                 lab.setContents(lmenu);
                 player.openInventory(lab);
                 return true;
+            }
         }
     }
 }

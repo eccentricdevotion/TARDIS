@@ -79,20 +79,16 @@ class TARDISRoomRemover {
         upy = h - (downy + 1);
         int xzoffset = (wid / 2);
         switch (d) {
-            case NORTH:
+            case NORTH -> {
                 l.setX(l.getX() - xzoffset);
                 l.setZ(l.getZ() - wid);
-                break;
-            case WEST:
+            }
+            case WEST -> {
                 l.setX(l.getX() - wid);
                 l.setZ(l.getZ() - xzoffset);
-                break;
-            case SOUTH:
-                l.setX(l.getX() - xzoffset);
-                break;
-            default:
-                l.setZ(l.getZ() - xzoffset);
-                break;
+            }
+            case SOUTH -> l.setX(l.getX() - xzoffset);
+            default -> l.setZ(l.getZ() - xzoffset);
         }
         sx = l.getBlockX();
         ex = l.getBlockX() + (wid - 1);

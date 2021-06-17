@@ -149,38 +149,11 @@ public class TARDISSonicScanner {
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome), 40L);
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_TIME", daynight + " / " + time), 60L);
         // get weather
-        String weather;
-        switch (biome) {
-            case "BADLANDS":
-            case "BADLANDS_PLATEAU":
-            case "DESERT":
-            case "DESERT_HILLS":
-            case "DESERT_LAKES":
-            case "ERODED_BADLANDS":
-            case "MODIFIED_BADLANDS_PLATEAU":
-            case "MODIFIED_WOODED_BADLANDS_PLATEAU":
-            case "SAVANNA":
-            case "SAVANNA_PLATEAU":
-            case "SHATTERED_SAVANNA":
-            case "SHATTERED_SAVANNA_PLATEAU":
-            case "WOODED_BADLANDS_PLATEAU":
-                weather = plugin.getLanguage().getString("WEATHER_DRY");
-                break;
-            case "FROZEN_OCEAN":
-            case "FROZEN_RIVER":
-            case "ICE_SPIKES":
-            case "SNOWY_BEACH":
-            case "SNOWY_MOUNTAINS":
-            case "SNOWY_TAIGA":
-            case "SNOWY_TAIGA_HILLS":
-            case "SNOWY_TAIGA_MOUNTAINS":
-            case "SNOWY_TUNDRA":
-                weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
-                break;
-            default:
-                weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");
-                break;
-        }
+        String weather = switch (biome) {
+            case "BADLANDS", "BADLANDS_PLATEAU", "DESERT", "DESERT_HILLS", "DESERT_LAKES", "ERODED_BADLANDS", "MODIFIED_BADLANDS_PLATEAU", "MODIFIED_WOODED_BADLANDS_PLATEAU", "SAVANNA", "SAVANNA_PLATEAU", "SHATTERED_SAVANNA", "SHATTERED_SAVANNA_PLATEAU", "WOODED_BADLANDS_PLATEAU" -> plugin.getLanguage().getString("WEATHER_DRY");
+            case "FROZEN_OCEAN", "FROZEN_RIVER", "ICE_SPIKES", "SNOWY_BEACH", "SNOWY_MOUNTAINS", "SNOWY_TAIGA", "SNOWY_TAIGA_HILLS", "SNOWY_TAIGA_MOUNTAINS", "SNOWY_TUNDRA" -> (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
+            default -> (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");
+        };
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_WEATHER", weather), 80L);
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity())), 100L);
         bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature())), 120L);

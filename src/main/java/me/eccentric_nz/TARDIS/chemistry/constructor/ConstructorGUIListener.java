@@ -46,65 +46,63 @@ public class ConstructorGUIListener extends TARDISMenuListener implements Listen
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
                 switch (slot) {
-                    case 5:
+                    case 5 -> {
                         event.setCancelled(true);
                         int pminus = getCount(view, 0);
                         if (pminus > 0) {
                             setCount(view, pminus - 1, 0);
                             setElement(view);
                         }
-                        break;
-                    case 6:
+                    }
+                    case 6 -> {
                         event.setCancelled(true);
                         int pplus = getCount(view, 0);
                         if (pplus < 118) {
                             setCount(view, pplus + 1, 0);
                             setElement(view);
                         }
-                        break;
-                    case 14:
+                    }
+                    case 14 -> {
                         event.setCancelled(true);
                         int nminus = getCount(view, 9);
                         if (nminus > 0) {
                             setCount(view, nminus - 1, 9);
                             setElement(view);
                         }
-                        break;
-                    case 15:
+                    }
+                    case 15 -> {
                         event.setCancelled(true);
                         int nplus = getCount(view, 9);
                         if (nplus < 176) {
                             setCount(view, nplus + 1, 9);
                             setElement(view);
                         }
-                        break;
-                    case 23:
+                    }
+                    case 23 -> {
                         event.setCancelled(true);
                         int eminus = getCount(view, 18);
                         if (eminus > 0) {
                             setCount(view, eminus - 1, 18);
                             setElement(view);
                         }
-                        break;
-                    case 24:
+                    }
+                    case 24 -> {
                         event.setCancelled(true);
                         int eplus = getCount(view, 18);
                         if (eplus < 118) {
                             setCount(view, eplus + 1, 18);
                             setElement(view);
                         }
-                        break;
-                    case 17:
+                    }
+                    case 17 -> {
                         event.setCancelled(true);
                         // get clicked ItemStack
                         ItemStack choice = view.getItem(17).clone();
                         choice.setAmount(event.getClick().equals(ClickType.SHIFT_LEFT) ? 64 : 1);
                         // add ItemStack to inventory if there is room
                         p.getInventory().addItem(choice);
-                        break;
-                    default:
-                        event.setCancelled(true);
-                        break;
+                    }
+                    default -> event.setCancelled(true);
                 }
             } else {
                 ClickType click = event.getClick();
