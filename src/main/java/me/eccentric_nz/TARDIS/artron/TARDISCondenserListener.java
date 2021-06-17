@@ -33,6 +33,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -211,9 +212,12 @@ public class TARDISCondenserListener implements Listener {
                             continue;
                         }
 
-                        // don't condense enchanted items so players don't accidentally enchant their
-                        // gear
-                        if (is.getEnchantments().size() > 0) {
+                        // don't condense enchanted items so players don't accidentally condense their gear
+                        // ignores curse enchantments
+
+                        // note: i would really love to use Enchantment#isCursed() here for forwards
+                        // compatibility but it's deprecated with no good alternative
+                        if (!is.getEnchantments().keySet().stream().allMatch(ench -> ench.equals(Enchantment.BINDING_CURSE) || ench.equals(Enchantment.VANISHING_CURSE))) {
                             savedEnchantedItems++;
                             returnedItems.add(is);
 
