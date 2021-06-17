@@ -86,7 +86,15 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Maven: me.crafter.mc:lockettepro:2.10.10" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: me.crafter.mc:lockettepro:2.10.10">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/LockettePro-2.10.10.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Maven: com.github.TechFortress:GriefPrevention:16.17.1" level="project" />
     <orderEntry type="library" name="Maven: nl.rutgerkok:blocklocker:1.9.3-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.griefcraft.lwc:LWCX:2.2.7" level="project" />
@@ -109,8 +117,8 @@
     <orderEntry type="library" name="Maven: br.net.fabiozumbi12.RedProtect:RedProtect-Spigot:7.7.3" level="project" />
     <orderEntry type="library" name="Maven: br.net.fabiozumbi12.RedProtect:RedProtect-Spigot:javadoc:7.7.3" level="project" />
     <orderEntry type="library" name="Maven: net.coreprotect:coreprotect:19.5" level="project" />
-    <orderEntry type="library" name="Maven: com.github.webbukkit.dynmap:dynmap-api:v3.1-beta-7" level="project" />
-    <orderEntry type="library" name="Maven: com.github.webbukkit.dynmap:DynmapCoreAPI:all:v3.1-beta-7" level="project" />
+    <orderEntry type="library" name="Maven: us.dynmap:dynmap-api:3.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: us.dynmap:DynmapCoreAPI:all:3.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.rauschig:jarchivelib:1.2.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.20" level="project" />
     <orderEntry type="library" name="Maven: org.swinglabs:swing-layout:1.0.3" level="project" />

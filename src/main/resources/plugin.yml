@@ -1,6 +1,6 @@
 authors: [eccentric_nz]
-description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations - it's bigger on the inside!
-main: me.eccentric_nz.TARDIS.TARDIS
+description: A plugin for all Doctor Who fans--create and use a TARDIS! Teleport to random destinations! It's bigger on the inside!
+main: me.eccentric_nz.tardis.TARDISPlugin
 name: TARDIS
 load: POSTWORLD
 loadbefore: [ItemSlotMachine]

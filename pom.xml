@@ -96,9 +96,14 @@
             <url>https://repo.md-5.net/content/groups/public/</url>
         </repository>
         <repository>
-            <!-- EssentialsX -->
+            <!-- EssentialsX releases -->
             <id>essentialsx-repo</id>
             <url>https://repo.essentialsx.net/releases/</url>
+        </repository>
+        <repository>
+            <!-- EssentialsX snapshots -->
+            <id>essentialsx-snapshot-repo</id>
+            <url>https://repo.essentialsx.net/snapshots/</url>
         </repository>
         <repository>
             <!-- RedProtect -->
@@ -415,7 +420,8 @@
             <artifactId>lockettepro</artifactId>
             <version>2.10.10</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/LockettePro-2.10.10.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.github.TechFortress</groupId>
@@ -497,9 +503,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.webbukkit.dynmap</groupId>
+            <groupId>us.dynmap</groupId>
             <artifactId>dynmap-api</artifactId>
-            <version>v3.1-beta-7</version>
+            <version>3.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
