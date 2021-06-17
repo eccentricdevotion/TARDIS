@@ -212,17 +212,19 @@ public class TARDISCondenserListener implements Listener {
                             continue;
                         }
 
-                        // don't condense enchanted items so players don't accidentally condense their gear
-                        // ignores curse enchantments
+                        // don't condense enchanted items so players don't accidentally condense their
+                        // gear ignores curse enchantments
 
                         // note: i would really love to use Enchantment#isCursed() here for forwards
                         // compatibility but it's deprecated with no good alternative
-                        if (!is.getEnchantments().keySet().stream().allMatch(ench -> ench.equals(Enchantment.BINDING_CURSE) || ench.equals(Enchantment.VANISHING_CURSE))) {
-                            savedEnchantedItems++;
-                            returnedItems.add(is);
+                        if (plugin.getConfig().getBoolean("preferences.no_enchanted_condense")) {
+                            if (!is.getEnchantments().keySet().stream().allMatch(ench -> ench.equals(Enchantment.BINDING_CURSE) || ench.equals(Enchantment.VANISHING_CURSE))) {
+                                savedEnchantedItems++;
+                                returnedItems.add(is);
 
-                            inv.remove(is);
-                            continue;
+                                inv.remove(is);
+                                continue;
+                            }
                         }
 
                         // condense other blocks and items
@@ -256,7 +258,8 @@ public class TARDISCondenserListener implements Listener {
                     }
 
                     // return non-condensed items to the player
-                    HashMap<Integer, ItemStack> didntFit = player.getInventory().addItem(returnedItems.toArray(new ItemStack[0]));
+                    HashMap<Integer, ItemStack> didntFit = player.getInventory()
+                            .addItem(returnedItems.toArray(new ItemStack[0]));
                     player.updateInventory();
 
                     // drop items that didn't fit in the player's inventory on the ground
