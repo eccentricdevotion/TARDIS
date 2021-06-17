@@ -342,8 +342,8 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                 wheret.put("tardis_id", id);
                                 plugin.getQueryFactory().doUpdate("next", set, wheret);
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                    OfflinePlayer player = plugin.getServer().getOfflinePlayer(uuid);
-                                    String success = (new TARDISRemoteTravelCommand(plugin).doTravel(id, player, sender)) ? plugin.getLanguage().getString("SUCCESS_Y") : plugin.getLanguage().getString("SUCCESS_N");
+                                    OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(uuid);
+                                    String success = (new TARDISRemoteTravelCommand(plugin).doTravel(id, offlinePlayer, sender)) ? plugin.getLanguage().getString("SUCCESS_Y") : plugin.getLanguage().getString("SUCCESS_N");
                                     TARDISMessage.send(sender, "REMOTE_SUCCESS", success);
                                 }, 5L);
                                 return true;
