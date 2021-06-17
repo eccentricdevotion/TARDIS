@@ -255,7 +255,7 @@ public class TARDISInteriorPostioning {
     }
 
     private void teleportPlayerToExit(Player player, Location exit) {
-        plugin.getGeneralKeeper().getDoorListener().movePlayer(player, exit, true, player.getWorld(), false, 0, true);
+        plugin.getGeneralKeeper().getDoorListener().movePlayer(player, exit, true, player.getWorld(), false, 0, true, true);
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", player.getUniqueId().toString());
         plugin.getQueryFactory().doDelete("travellers", wheret);
