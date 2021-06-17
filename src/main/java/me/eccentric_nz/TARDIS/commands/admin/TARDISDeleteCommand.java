@@ -54,7 +54,7 @@ public class TARDISDeleteCommand {
     public static void cleanDatabase(int id) {
         TARDISBlockLoader bl = new TARDISBlockLoader(TARDIS.plugin);
         bl.unloadProtectedBlocks(id);
-        List<String> tables = Arrays.asList("ars", "back", "blocks", "chunks", "controls", "current", "destinations", "doors", "gravity_well", "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults");
+        List<String> tables = Arrays.asList("ars", "back", "chunks", "controls", "current", "destinations", "doors", "gravity_well", "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults");
         // remove record from database tables
         tables.forEach((table) -> {
             HashMap<String, Object> where = new HashMap<>();

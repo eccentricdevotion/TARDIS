@@ -69,6 +69,7 @@ public class TARDISDestroyerInner {
         // remove blocks saved to blocks table (iron/gold/diamond/emerald)
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
+        where.put("police_box", 0);
         plugin.getQueryFactory().doDelete("blocks", where);
         // remove from protectBlockMap - remove(id) would only remove the first one
         plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));
