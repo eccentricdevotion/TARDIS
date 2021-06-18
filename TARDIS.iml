@@ -173,7 +173,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: com.comphenix.protocol:ProtocolLib:4.7.0-SNAPSHOT">
+      <library name="Maven: com.comphenix.protocol:ProtocolLib:4.6.1">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/ProtocolLib.jar!/" />
         </CLASSES>
