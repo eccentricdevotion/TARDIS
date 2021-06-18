@@ -77,8 +77,7 @@ public class TARDISCondenserListener implements Listener {
         InventoryHolder holder = event.getInventory().getHolder();
         String title = view.getTitle();
         if (holder instanceof Chest chest) {
-            if (title.equals(ChatColor.DARK_RED + "Artron Condenser")
-                    || title.equals(ChatColor.DARK_RED + "Server Condenser")) {
+            if (title.equals(ChatColor.DARK_RED + "Artron Condenser") || title.equals(ChatColor.DARK_RED + "Server Condenser")) {
                 Player player = (Player) event.getPlayer();
                 Location loc = chest.getLocation();
                 String chest_loc = loc.toString();
@@ -95,17 +94,14 @@ public class TARDISCondenserListener implements Listener {
                                 }
                                 break;
                             case MULTIWORLD:
-                                MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld"))
-                                        .getApi();
+                                MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
                                 if (multiworld.isCreativeWorld(loc.getWorld().getName())) {
                                     TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
                                     return;
                                 }
                                 break;
                             case NONE:
-                                if (plugin.getPlanetsConfig()
-                                        .getString("planets." + loc.getWorld().getName() + ".gamemode")
-                                        .equalsIgnoreCase("CREATIVE")) {
+                                if (plugin.getPlanetsConfig().getString("planets." + loc.getWorld().getName() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
                                     TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
                                     return;
                                 }
@@ -126,8 +122,7 @@ public class TARDISCondenserListener implements Listener {
                 } else {
                     where.put("uuid", player.getUniqueId().toString());
                     rs = new ResultSetTardis(plugin, where, "", false, 0);
-                    isCondenser = (plugin.getArtronConfig().contains("condenser")
-                            && plugin.getArtronConfig().getString("condenser").equals(chest_loc) && rs.resultSet());
+                    isCondenser = (plugin.getArtronConfig().contains("condenser") && plugin.getArtronConfig().getString("condenser").equals(chest_loc) && rs.resultSet());
                 }
 
                 if (isCondenser) {
@@ -164,13 +159,11 @@ public class TARDISCondenserListener implements Listener {
                                 }
 
                                 if (lore.contains("Diamond Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.diamond")
-                                            * full);
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.diamond") * full);
                                 }
 
                                 if (lore.contains("Emerald Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.emerald")
-                                            * full);
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.emerald") * full);
                                 }
 
                                 if (lore.contains("Redstone Upgrade")) {
@@ -178,23 +171,19 @@ public class TARDISCondenserListener implements Listener {
                                 }
 
                                 if (lore.contains("Painter Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.painter")
-                                            * full);
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.painter") * full);
                                 }
 
                                 if (lore.contains("Ignite Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite")
-                                            * full);
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full);
                                 }
 
                                 if (lore.contains("Pickup Arrows Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow")
-                                            * full);
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full);
                                 }
 
                                 if (lore.contains("Knockback Upgrade")) {
-                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback")
-                                            * full);
+                                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full);
                                 }
                             }
 
@@ -280,8 +269,7 @@ public class TARDISCondenserListener implements Listener {
                                 HashMap<String, Object> setc = new HashMap<>();
                                 if (rsc.resultSet()) {
                                     int new_stack_size = value + rsc.getBlock_count();
-                                    plugin.getQueryFactory().updateCondensedBlockCount(new_stack_size,
-                                            tardis.getTardis_id(), key);
+                                    plugin.getQueryFactory().updateCondensedBlockCount(new_stack_size, tardis.getTardis_id(), key);
                                 } else {
                                     setc.put("tardis_id", tardis.getTardis_id());
                                     setc.put("block_data", key);
@@ -308,8 +296,7 @@ public class TARDISCondenserListener implements Listener {
                                 int current_level = tardis.getArtron_level() + amount;
                                 int fc = plugin.getArtronConfig().getInt("full_charge");
                                 int percent = Math.round((current_level * 100F) / fc);
-                                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player,
-                                        Advancement.ENERGY, 1);
+                                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.ENERGY, 1);
                                 if (percent >= plugin.getAchievementConfig().getInt("energy.required")) {
                                     taf.doAchievement(percent);
                                 } else {
