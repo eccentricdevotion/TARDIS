@@ -1,8 +1,8 @@
 # TODO
 
-## Current version `4.6.3`
+## Current version `4.7.0`
 
-## Next version `4.7`
+## Next version `4.7.1`
 
 1. Use Java 16 `record` data type?
 2. Update documentation...
@@ -12,7 +12,7 @@
 6. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
 7. TCG API - use Police Box location instead of player location? _can't remember what this is about..._
 8. Add some metrics tracking
-    * what custom stats do we want to track?
+    * how often each type of travel is enabled/used (saves, biome, cave, village, etc.)
 9. All the things...
 
 ## Resource Pack / TARDISWeepingAngels
