@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPaperBag;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,11 +35,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class TARDISPaperBagListener implements Listener {
+public class TardisPaperBagListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISPaperBagListener(TARDISPlugin plugin) {
+    public TardisPaperBagListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -48,7 +48,7 @@ public class TARDISPaperBagListener implements Listener {
         Inventory inv = event.getView().getBottomInventory();
         if (inv.getType().equals(InventoryType.PLAYER)) {
             Player player = (Player) event.getWhoClicked();
-            if (!TARDISPermission.hasPermission(player, "tardis.paper_bag")) {
+            if (!TardisPermission.hasPermission(player, "tardis.paper_bag")) {
                 return;
             }
             if (event.getRawSlot() >= 0) {
@@ -75,7 +75,7 @@ public class TARDISPaperBagListener implements Listener {
                                     player.updateInventory();
                                 } else {
                                     // message player
-                                    TARDISMessage.send(player, "PAPER_BAG_SLOT");
+                                    TardisMessage.send(player, "PAPER_BAG_SLOT");
                                 }
                             } else {
                                 // create a new record if one doesn't exist
@@ -85,7 +85,7 @@ public class TARDISPaperBagListener implements Listener {
                                     plugin.getQueryFactory().doSyncInsert("paper_bag", bag);
                                 }
                                 // message player
-                                TARDISMessage.send(player, "PAPER_BAG_EMPTY");
+                                TardisMessage.send(player, "PAPER_BAG_EMPTY");
                             }
                         }
                         if (event.isShiftClick()) {

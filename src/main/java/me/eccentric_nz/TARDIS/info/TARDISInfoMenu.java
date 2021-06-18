@@ -24,7 +24,7 @@ import java.util.TreeMap;
  *
  * @author bootthanoo, eccentric_nz
  */
-public enum TARDISInfoMenu {
+public enum TardisInfoMenu {
 
     TIS("tardis Information System", "TIS|Commands|tardis Commands|add", "tardis"),
     ITEMS("TIS|Items", "TIS", "I"),
@@ -370,7 +370,7 @@ public enum TARDISInfoMenu {
     private final String parent;
     private final String key;
 
-    TARDISInfoMenu(String name, String parent, String key) {
+    TardisInfoMenu(String name, String parent, String key) {
         this.name = name;
         this.parent = parent;
         this.key = key;
@@ -384,7 +384,7 @@ public enum TARDISInfoMenu {
      */
     public static TreeMap<String, String> getChildren(String parent) {
         TreeMap<String, String> children = new TreeMap<>();
-        for (TARDISInfoMenu tim : values()) {
+        for (TardisInfoMenu tim : values()) {
             if (tim.getParent().equals(parent)) {
                 String[] crumbs = tim.getName().split("[|]");
                 children.put(crumbs[crumbs.length - 1], tim.getKey());

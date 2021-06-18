@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 
 /**
  * @author eccentric_nz
  */
-class TARDISSetWorldInclusionCommand {
+class TardisSetWorldInclusionCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISSetWorldInclusionCommand(TARDISPlugin plugin) {
+    TardisSetWorldInclusionCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -46,8 +46,8 @@ class TARDISSetWorldInclusionCommand {
         // need to make there are no periods(.) in the text
         String nodots = StringUtils.replace(t, ".", "_");
         // check the world actually exists!
-        if (TARDISAliasResolver.getWorldFromAlias(nodots) == null) {
-            TARDISMessage.send(sender, "WORLD_NOT_FOUND");
+        if (TardisAliasResolver.getWorldFromAlias(nodots) == null) {
+            TardisMessage.send(sender, "WORLD_NOT_FOUND");
             return false;
         }
         if (first.equals("include")) {
@@ -56,7 +56,7 @@ class TARDISSetWorldInclusionCommand {
             plugin.getPlanetsConfig().set("planets." + nodots + ".time_travel", false);
         }
         plugin.savePlanetsConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TardisMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
 }

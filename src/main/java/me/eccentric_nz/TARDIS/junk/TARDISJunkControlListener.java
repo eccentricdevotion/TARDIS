@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
 import me.eccentric_nz.tardis.enumeration.*;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -50,14 +50,14 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkControlListener implements Listener {
+public class TardisJunkControlListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<Integer, Integer> repeaterMap = new HashMap<>();
     private final List<String> worlds;
     private final HashMap<UUID, Integer> worldMap = new HashMap<>();
 
-    public TARDISJunkControlListener(TARDISPlugin plugin) {
+    public TardisJunkControlListener(TardisPlugin plugin) {
         this.plugin = plugin;
         repeaterMap.put(1, 1);
         repeaterMap.put(2, 10);
@@ -89,10 +89,10 @@ public class TARDISJunkControlListener implements Listener {
                     int id = rsh.getTardisId();
                     // is it the Junk tardis?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-                    if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
+                    if (rs.fromID(id) && rs.getPreset().equals(Preset.JUNK)) {
                         Player player = event.getPlayer();
-                        if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
-                            TARDISMessage.send(player, "JUNK_NO_PERM");
+                        if (!TardisPermission.hasPermission(player, "tardis.junk")) {
+                            TardisMessage.send(player, "JUNK_NO_PERM");
                             return;
                         }
                         // get the destination
@@ -107,7 +107,7 @@ public class TARDISJunkControlListener implements Listener {
                                 junkloc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                             }
                             if (junkloc == null) {
-                                TARDISMessage.send(player, "JUNK_NOT_FOUND");
+                                TardisMessage.send(player, "JUNK_NOT_FOUND");
                                 return;
                             }
                             Switch lever = (Switch) block.getBlockData();
@@ -116,7 +116,7 @@ public class TARDISJunkControlListener implements Listener {
                             // destroy junk tardis
                             DestroyData dd = new DestroyData();
                             dd.setPlayer(player);
-                            dd.setDirection(COMPASS.SOUTH);
+                            dd.setDirection(CardinalDirection.SOUTH);
                             dd.setLocation(junkloc);
                             dd.setHide(false);
                             dd.setOutside(false);
@@ -127,7 +127,7 @@ public class TARDISJunkControlListener implements Listener {
                             // fly my pretties
                             plugin.getGeneralKeeper().setJunkTravelling(true);
                         } else {
-                            TARDISMessage.send(event.getPlayer(), "JUNK_NO_DEST");
+                            TardisMessage.send(event.getPlayer(), "JUNK_NO_DEST");
                             return;
                         }
                     }
@@ -141,10 +141,10 @@ public class TARDISJunkControlListener implements Listener {
                     int id = rst.getTardisId();
                     // is it the Junk tardis?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-                    if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
+                    if (rs.fromID(id) && rs.getPreset().equals(Preset.JUNK)) {
                         Player player = event.getPlayer();
-                        if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
-                            TARDISMessage.send(player, "JUNK_NO_PERM");
+                        if (!TardisPermission.hasPermission(player, "tardis.junk")) {
+                            TardisMessage.send(player, "JUNK_NO_PERM");
                             return;
                         }
                         setSignWorld(id, player.getUniqueId());
@@ -159,10 +159,10 @@ public class TARDISJunkControlListener implements Listener {
                     int id = rsh.getTardisId();
                     // is it the Junk tardis?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-                    if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
+                    if (rs.fromID(id) && rs.getPreset().equals(Preset.JUNK)) {
                         Player player = event.getPlayer();
-                        if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
-                            TARDISMessage.send(player, "JUNK_NO_PERM");
+                        if (!TardisPermission.hasPermission(player, "tardis.junk")) {
+                            TardisMessage.send(player, "JUNK_NO_PERM");
                             return;
                         }
                         setSignCoords(id, 2);
@@ -177,10 +177,10 @@ public class TARDISJunkControlListener implements Listener {
                     int id = rsh.getTardisId();
                     // is it the Junk tardis?
                     ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-                    if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
+                    if (rs.fromID(id) && rs.getPreset().equals(Preset.JUNK)) {
                         Player player = event.getPlayer();
-                        if (!TARDISPermission.hasPermission(player, "tardis.junk")) {
-                            TARDISMessage.send(player, "JUNK_NO_PERM");
+                        if (!TardisPermission.hasPermission(player, "tardis.junk")) {
+                            TardisMessage.send(player, "JUNK_NO_PERM");
                             return;
                         }
                         setSignCoords(id, 3);
@@ -200,31 +200,31 @@ public class TARDISJunkControlListener implements Listener {
             if (line1.isEmpty() || line2.isEmpty() || line3.isEmpty()) {
                 if (line1.isEmpty() && line2.isEmpty() && line3.isEmpty()) {
                     // check location
-                    TARDISJunkLocation tjl = new TARDISJunkLocation(plugin);
+                    TardisJunkLocation tjl = new TardisJunkLocation(plugin);
                     if (tjl.isNotHome()) {
                         plugin.getGeneralKeeper().setJunkDestination(tjl.getHome());
-                        TARDISMessage.send(p, "JUNK_RETURN");
+                        TardisMessage.send(p, "JUNK_RETURN");
                         return;
                     }
                 }
-                TARDISMessage.send(p, "JUNK_LINES");
+                TardisMessage.send(p, "JUNK_LINES");
                 return;
             }
             World w;
             if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                 w = plugin.getMVHelper().getWorld(line1);
             } else {
-                w = TARDISAliasResolver.getWorldFromAlias(line1);
+                w = TardisAliasResolver.getWorldFromAlias(line1);
             }
-            int x = TARDISNumberParsers.parseInt(line2);
-            int z = TARDISNumberParsers.parseInt(line3);
+            int x = TardisNumberParsers.parseInt(line2);
+            int z = TardisNumberParsers.parseInt(line3);
             // load the chunk
             assert w != null;
             Chunk chunk = w.getChunkAt(x, z);
             while (!chunk.isLoaded()) {
                 w.loadChunk(chunk);
             }
-            int y = TARDISStaticLocationGetters.getHighestYIn3x3(w, x, z);
+            int y = TardisStaticLocationGetters.getHighestYIn3x3(w, x, z);
             Location d = new Location(w, x, y, z);
             // check destination
             if (plugin.getPluginRespect().getRespect(d, new Parameters(p, Flag.getNoMessageFlags()))) {
@@ -266,7 +266,7 @@ public class TARDISJunkControlListener implements Listener {
             int multiplier = repeaterMap.get(r.getDelay());
             int positiveNegative = (c.getMode().equals(Comparator.Mode.COMPARE)) ? 1 : -1;
             // get current coord
-            int current = TARDISNumberParsers.parseInt(txt);
+            int current = TardisNumberParsers.parseInt(txt);
             // increment / decrement sign coord value
             int amount = current + (multiplier * positiveNegative);
             s.setLine(line, "" + amount);
@@ -290,7 +290,7 @@ public class TARDISJunkControlListener implements Listener {
         where.put("type", type);
         ResultSetControls rs = new ResultSetControls(plugin, where, false);
         if (rs.resultSet()) {
-            Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
+            Location l = TardisStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
             assert l != null;
             b = l.getBlock();
         }
@@ -304,7 +304,7 @@ public class TARDISJunkControlListener implements Listener {
             for (row = 0; row < 6; row++) {
                 for (col = 0; col < 6; col++) {
                     Material mat = Objects.requireNonNull(l.getWorld()).getBlockAt(startx, starty, startz).getType();
-                    if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
+                    if (!TardisConstants.GOOD_MATERIALS.contains(mat)) {
                         found = true;
                     }
                     startx += 1;

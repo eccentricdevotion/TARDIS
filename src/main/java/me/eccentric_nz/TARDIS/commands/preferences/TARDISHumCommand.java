@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.Hum;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -27,18 +27,18 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISHumCommand {
+class TardisHumCommand {
 
     boolean setHumPref(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "HUM_NEED");
+            TardisMessage.send(player, "HUM_NEED");
             return false;
         }
         Hum go;
         try {
             go = Hum.valueOf(args[1].toUpperCase(Locale.ENGLISH));
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, "HUM_NOT_VALID");
+            TardisMessage.send(player, "HUM_NOT_VALID");
             return false;
         }
         String hum_set = (go.equals(Hum.RANDOM)) ? "" : go.toString().toLowerCase(Locale.ENGLISH);
@@ -46,8 +46,8 @@ class TARDISHumCommand {
         set.put("hum", hum_set);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
-        TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
-        TARDISMessage.send(player, "HUM_SAVED");
+        TardisPlugin.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
+        TardisMessage.send(player, "HUM_SAVED");
         return true;
     }
 }

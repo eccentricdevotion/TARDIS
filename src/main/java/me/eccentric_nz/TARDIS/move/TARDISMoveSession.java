@@ -30,12 +30,12 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-public class TARDISMoveSession {
+public class TardisMoveSession {
 
     private boolean staleLocation;
     private Location loc;
 
-    public TARDISMoveSession(Player p) {
+    public TardisMoveSession(Player p) {
         setLocation(p.getLocation());
     }
 

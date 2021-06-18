@@ -24,7 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.List;
 
-public class TARDISSmelterOre {
+public class TardisSmelterOre {
 
     public void processItems(Inventory inv, List<Chest> oreChests) {
         // process ore chest contents

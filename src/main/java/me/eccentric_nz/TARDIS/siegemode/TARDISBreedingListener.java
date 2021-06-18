@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Location;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
@@ -32,12 +32,12 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISBreedingListener implements Listener {
+public class TardisBreedingListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int chance;
 
-    public TARDISBreedingListener(TARDISPlugin plugin) {
+    public TardisBreedingListener(TardisPlugin plugin) {
         this.plugin = plugin;
         chance = this.plugin.getConfig().getInt("siege.breeding");
     }
@@ -57,7 +57,7 @@ public class TARDISBreedingListener implements Listener {
             return;
         }
         plugin.getTrackerKeeper().getSiegeBreedingAreas().get(w).forEach((area) -> {
-            if (area.isInSiegeArea(l) && TARDISConstants.RANDOM.nextInt(100) < chance) {
+            if (area.isInSiegeArea(l) && TardisConstants.RANDOM.nextInt(100) < chance) {
                 // make them twins
                 plugin.setTardisSpawn(true);
                 Ageable twin = (Ageable) l.getWorld().spawnEntity(l, ent.getType());

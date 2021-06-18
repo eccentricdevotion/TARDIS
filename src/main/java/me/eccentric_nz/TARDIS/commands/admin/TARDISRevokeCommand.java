@@ -16,31 +16,31 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlueprint;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-class TARDISRevokeCommand {
+class TardisRevokeCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISRevokeCommand(TARDISPlugin plugin) {
+    TardisRevokeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean removePermission(CommandSender sender, String[] args) {
         // tardisadmin revoke [player] [permission]
         if (args.length < 3) {
-            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            TardisMessage.send(sender, "TOO_FEW_ARGS");
             return true;
         }
         Player player = plugin.getServer().getPlayer(args[1]);
         if (player == null) {
-            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            TardisMessage.send(sender, "COULD_NOT_FIND_NAME");
             return true;
         }
         int id = new ResultSetBlueprint(plugin).getRecordId(player.getUniqueId().toString(), args[2].toLowerCase());
@@ -49,9 +49,9 @@ class TARDISRevokeCommand {
             HashMap<String, Object> where = new HashMap<>();
             where.put("bp_id", id);
             plugin.getQueryFactory().doDelete("blueprint", where);
-            TARDISMessage.send(sender, "BLUEPRINT_REVOKED");
+            TardisMessage.send(sender, "BLUEPRINT_REVOKED");
         } else {
-            TARDISMessage.send(sender, "BLUEPRINT_NOT_FOUND");
+            TardisMessage.send(sender, "BLUEPRINT_NOT_FOUND");
         }
         return true;
     }

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Material;
 
-public enum GUIGeneticManipulator {
+public enum GuiGeneticManipulator {
 
     // Genetic Manipulator
     BUTTON_MASTER(3, 45, Material.COMPARATOR),
@@ -49,7 +49,7 @@ public enum GUIGeneticManipulator {
     private final int slot;
     private final Material material;
 
-    GUIGeneticManipulator(int customModelData, int slot, Material material) {
+    GuiGeneticManipulator(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -69,6 +69,6 @@ public enum GUIGeneticManipulator {
 
     public String getName() {
         String s = toString();
-        return TARDISPlugin.plugin.getLanguage().getString(s);
+        return TardisPlugin.plugin.getLanguage().getString(s);
     }
 }

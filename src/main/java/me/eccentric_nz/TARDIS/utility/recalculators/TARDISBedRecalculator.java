@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.tardis.utility.recalculators;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 
-public class TARDISBedRecalculator {
+public class TardisBedRecalculator {
 
-    public BlockData recalculate(BlockData data, COMPASS d) {
+    public BlockData recalculate(BlockData data, CardinalDirection d) {
         Directional bed = (Directional) data;
         switch (bed.getFacing()) {
-            case WEST -> bed.setFacing(BlockFace.valueOf(TARDISPlugin.plugin.getPresetBuilder().getOppositeFace(d).toString()));
+            case WEST -> bed.setFacing(BlockFace.valueOf(TardisPlugin.plugin.getPresetBuilder().getOppositeFace(d).toString()));
             case EAST -> bed.setFacing(BlockFace.valueOf(d.toString()));
             case NORTH ->
                     // anticlockwise 90°
@@ -39,7 +39,7 @@ public class TARDISBedRecalculator {
         return bed;
     }
 
-    private BlockFace rotate90Clockwise(COMPASS d) {
+    private BlockFace rotate90Clockwise(CardinalDirection d) {
         return switch (d) {
             case SOUTH -> BlockFace.WEST;
             case WEST -> BlockFace.NORTH;
@@ -48,7 +48,7 @@ public class TARDISBedRecalculator {
         };
     }
 
-    private BlockFace rotate90Anticlockwise(COMPASS d) {
+    private BlockFace rotate90Anticlockwise(CardinalDirection d) {
         return switch (d) {
             case SOUTH -> BlockFace.EAST;
             case WEST -> BlockFace.SOUTH;

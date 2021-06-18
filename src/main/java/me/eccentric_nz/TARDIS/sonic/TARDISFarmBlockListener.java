@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.sonic.actions.TARDISSonicReplant;
-import me.eccentric_nz.tardis.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.sonic.actions.TardisSonicReplant;
+import me.eccentric_nz.tardis.utility.TardisMaterials;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -34,9 +34,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Objects;
 
-public class TARDISFarmBlockListener implements Listener {
+public class TardisFarmBlockListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     // seeds
     private final Material air = Material.AIR;
     private final Material bs = Material.BEETROOT_SEEDS;
@@ -52,7 +52,7 @@ public class TARDISFarmBlockListener implements Listener {
     private final Material ca = Material.CACTUS;
     private final Material sonic;
 
-    public TARDISFarmBlockListener(TARDISPlugin plugin) {
+    public TardisFarmBlockListener(TardisPlugin plugin) {
         this.plugin = plugin;
         String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result")).split(":");
         sonic = Material.valueOf(split[0]);
@@ -61,12 +61,12 @@ public class TARDISFarmBlockListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlantHarvest(BlockBreakEvent event) {
         Player player = event.getPlayer();
-        if (!TARDISPermission.hasPermission(player, "tardis.sonic.plant")) {
+        if (!TardisPermission.hasPermission(player, "tardis.sonic.plant")) {
             return;
         }
         Block block = event.getBlock();
         Material material = block.getType();
-        if (!TARDISMaterials.crops.contains(material)) {
+        if (!TardisMaterials.crops.contains(material)) {
             return;
         }
         ItemStack stack = player.getInventory().getItemInMainHand();
@@ -148,7 +148,7 @@ public class TARDISFarmBlockListener implements Listener {
             } else {
                 p.getInventory().setItem(slot, new ItemStack(air));
             }
-            Runnable tsr = new TARDISSonicReplant(plugin, b, m);
+            Runnable tsr = new TardisSonicReplant(plugin, b, m);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, tsr, 20);
         }
     }

@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.chemistry.creative;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.chemistry.compound.Compound;
 import me.eccentric_nz.tardis.chemistry.compound.CompoundBuilder;
-import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
+import me.eccentric_nz.tardis.custommodeldata.GuiChemistry;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class CompoundsCreativeInventory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ItemStack[] menu;
 
-    public CompoundsCreativeInventory(TARDISPlugin plugin) {
+    public CompoundsCreativeInventory(TardisPlugin plugin) {
         this.plugin = plugin;
         menu = getItemStack();
     }
@@ -50,19 +50,19 @@ public class CompoundsCreativeInventory {
             }
         }
         // elements
-        ItemStack elements = new ItemStack(GUIChemistry.ELEMENTS.getMaterial(), 1);
+        ItemStack elements = new ItemStack(GuiChemistry.ELEMENTS.getMaterial(), 1);
         ItemMeta eim = elements.getItemMeta();
         assert eim != null;
         eim.setDisplayName("Elements");
-        eim.setCustomModelData(GUIChemistry.ELEMENTS.getCustomModelData());
+        eim.setCustomModelData(GuiChemistry.ELEMENTS.getCustomModelData());
         elements.setItemMeta(eim);
         stack[35] = elements;
         // products
-        ItemStack products = new ItemStack(GUIChemistry.PRODUCTS.getMaterial(), 1);
+        ItemStack products = new ItemStack(GuiChemistry.PRODUCTS.getMaterial(), 1);
         ItemMeta pim = products.getItemMeta();
         assert pim != null;
         pim.setDisplayName("Products");
-        pim.setCustomModelData(GUIChemistry.PRODUCTS.getCustomModelData());
+        pim.setCustomModelData(GuiChemistry.PRODUCTS.getCustomModelData());
         products.setItemMeta(pim);
         stack[44] = products;
         // close
@@ -70,7 +70,7 @@ public class CompoundsCreativeInventory {
         ItemMeta close_im = close.getItemMeta();
         assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GuiChemistry.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[53] = close;
         return stack;

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -27,11 +27,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISHandlesRemindCommand {
+class TardisHandlesRemindCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISHandlesRemindCommand(TARDISPlugin plugin) {
+    TardisHandlesRemindCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -42,13 +42,13 @@ class TARDISHandlesRemindCommand {
         }
         String message = sb.toString();
         // the last argument should be a number
-        long when = TARDISNumberParsers.parseLong(args[args.length - 1]);
+        long when = TardisNumberParsers.parseLong(args[args.length - 1]);
         if (when == 0) {
-            TARDISMessage.handlesMessage(player, "HANDLES_NUMBER");
+            TardisMessage.handlesMessage(player, "HANDLES_NUMBER");
             return true;
         }
-        TARDISMessage.handlesSend(player, "HANDLES_OK", "" + when);
-        TARDISSounds.playTARDISSound(player, "handles_confirmed", 5L);
+        TardisMessage.handlesSend(player, "HANDLES_OK", "" + when);
+        TardisSounds.playTARDISSound(player, "handles_confirmed", 5L);
         // convert minutes to milliseconds
         when *= 60000;
         // add the current time in milliseconds

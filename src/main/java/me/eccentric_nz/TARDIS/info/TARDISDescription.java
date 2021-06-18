@@ -23,7 +23,7 @@ package me.eccentric_nz.tardis.info;
  *
  * @author bootthanoo, eccentric_nz
  */
-public enum TARDISDescription {
+public enum TardisDescription {
 
     KEY_INFO("The tardis key allows you to enter and exit the tardis."),
     SONIC_INFO("The Sonic Screwdriver comes with 5 different upgrades, and each has its own special uses. Check out the Sonic Screwdriver upgrades for further information."),
@@ -291,7 +291,7 @@ public enum TARDISDescription {
     ;
     private final String desc;
 
-    TARDISDescription(String desc) {
+    TardisDescription(String desc) {
         this.desc = desc;
     }
 

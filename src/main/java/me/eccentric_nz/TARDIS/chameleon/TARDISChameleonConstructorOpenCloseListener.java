@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,11 +30,11 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author eccentric_nz
  */
-public final class TARDISChameleonConstructorOpenCloseListener implements Listener {
+public final class TardisChameleonConstructorOpenCloseListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISChameleonConstructorOpenCloseListener(TARDISPlugin plugin) {
+    public TardisChameleonConstructorOpenCloseListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

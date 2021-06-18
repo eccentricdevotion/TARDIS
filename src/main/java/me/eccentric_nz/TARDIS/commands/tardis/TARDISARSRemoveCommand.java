@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -32,11 +32,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISARSRemoveCommand {
+class TardisArsRemoveCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISARSRemoveCommand(TARDISPlugin plugin) {
+    TardisArsRemoveCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -44,7 +44,7 @@ class TARDISARSRemoveCommand {
         // check they are a timelord
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "NOT_A_TIMELORD");
+            TardisMessage.send(player, "NOT_A_TIMELORD");
             return true;
         }
         int id = rs.getTardisId();
@@ -54,7 +54,7 @@ class TARDISARSRemoveCommand {
         wheres.put("type", 10);
         ResultSetControls rsc = new ResultSetControls(plugin, wheres, false);
         if (rsc.resultSet()) {
-            Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+            Location l = TardisStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
             if (l != null) {
                 Block b = l.getBlock();
                 if (Tag.SIGNS.isTagged(b.getType())) {
@@ -68,10 +68,10 @@ class TARDISARSRemoveCommand {
                 del.put("tardis_id", id);
                 del.put("type", 10);
                 plugin.getQueryFactory().doDelete("controls", del);
-                TARDISMessage.send(player, "ARS_REMOVED");
+                TardisMessage.send(player, "ARS_REMOVED");
             }
         } else {
-            TARDISMessage.send(player, "NO_ARS");
+            TardisMessage.send(player, "NO_ARS");
         }
         return true;
     }

@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardis;
 
 import com.google.common.collect.Sets;
-import me.eccentric_nz.tardis.builders.TARDISBuildData;
-import me.eccentric_nz.tardis.chameleon.TARDISStainedGlassLookup;
+import me.eccentric_nz.tardis.builders.TardisBuildData;
+import me.eccentric_nz.tardis.chameleon.TardisStainedGlassLookup;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
@@ -33,7 +33,7 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISBuilderInstanceKeeper {
+public class TardisBuilderInstanceKeeper {
 
     private static final HashMap<String, String> BLOCK_CONVERSION = new HashMap<>();
     private static final Set<String> IGNORE_BLOCKS = Sets.newHashSet("AIR", "CAVE_AIR", "VOID_AIR", "BEDROCK", "CAKE", "COMMAND_BLOCK", "REPEATING_COMMAND_BLOCK", "CHAIN_COMMAND_BLOCK", "GOLD_ORE", "MUSHROOM_STEM", "ICE", "LAVA", "SPAWNER", "INFESTED_CHISELED_STONE_BRICKS", "INFESTED_COBBLESTONE", "INFESTED_CRACKED_STONE_BRICKS", "INFESTED_MOSSY_STONE_BRICKS", "INFESTED_STONE", "INFESTED_STONE_BRICKS", "PISTON_HEAD", "SPONGE", "WATER");
@@ -110,9 +110,9 @@ public class TARDISBuilderInstanceKeeper {
         PRECIOUS.add(Material.REDSTONE_BLOCK);
     }
 
-    private final HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<>();
+    private final HashMap<Location, TardisBuildData> trackTARDISSeed = new HashMap<>();
     private final HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<>();
-    private final TARDISStainedGlassLookup stainedGlassLookup = new TARDISStainedGlassLookup();
+    private final TardisStainedGlassLookup stainedGlassLookup = new TardisStainedGlassLookup();
     private final HashMap<UUID, Integer> roomProgress = new HashMap<>();
     private HashMap<Material, String> seeds;
 
@@ -120,7 +120,7 @@ public class TARDISBuilderInstanceKeeper {
         return PRECIOUS;
     }
 
-    public HashMap<Location, TARDISBuildData> getTrackTARDISSeed() {
+    public HashMap<Location, TardisBuildData> getTrackTARDISSeed() {
         return trackTARDISSeed;
     }
 
@@ -128,7 +128,7 @@ public class TARDISBuilderInstanceKeeper {
         return roomBlockCounts;
     }
 
-    public TARDISStainedGlassLookup getStainedGlassLookup() {
+    public TardisStainedGlassLookup getStainedGlassLookup() {
         return stainedGlassLookup;
     }
 

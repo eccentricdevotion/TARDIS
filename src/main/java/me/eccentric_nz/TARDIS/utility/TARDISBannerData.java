@@ -22,12 +22,12 @@ import org.bukkit.block.data.BlockData;
 /**
  * @author eccentric_nz
  */
-public class TARDISBannerData {
+public class TardisBannerData {
 
     private final BlockData data;
     private final JsonObject state;
 
-    public TARDISBannerData(BlockData data, JsonObject state) {
+    public TardisBannerData(BlockData data, JsonObject state) {
         this.data = data;
         this.state = state;
     }

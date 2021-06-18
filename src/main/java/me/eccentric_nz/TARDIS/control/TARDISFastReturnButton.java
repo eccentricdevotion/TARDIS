@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.tardis.flight.TARDISLand;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.flight.TardisLand;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -28,14 +28,14 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISFastReturnButton {
+public class TardisFastReturnButton {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
     private final int id;
     private final int level;
 
-    public TARDISFastReturnButton(TARDISPlugin plugin, Player player, int id, int level) {
+    public TardisFastReturnButton(TardisPlugin plugin, Player player, int id, int level) {
         this.plugin = plugin;
         this.player = player;
         this.id = id;
@@ -45,7 +45,7 @@ public class TARDISFastReturnButton {
     public void clickButton() {
         int cost = plugin.getArtronConfig().getInt("travel");
         if (level < cost) {
-            TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
+            TardisMessage.send(player, "NOT_ENOUGH_ENERGY");
             return;
         }
         HashMap<String, Object> wherebl = new HashMap<>();
@@ -70,15 +70,15 @@ public class TARDISFastReturnButton {
                     plugin.getTrackerKeeper().getHasDestination().put(id, cost);
                     plugin.getTrackerKeeper().getRescue().remove(id);
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                        new TARDISLand(plugin, id, player).exitVortex();
+                        new TardisLand(plugin, id, player).exitVortex();
                     }
-                    TARDISMessage.send(player, "PREV_SET", rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                    TardisMessage.send(player, "PREV_SET", rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                 } else {
-                    TARDISMessage.send(player, "TRAVEL_NO_BACK");
+                    TardisMessage.send(player, "TRAVEL_NO_BACK");
                 }
             }
         } else {
-            TARDISMessage.send(player, "PREV_NOT_FOUND");
+            TardisMessage.send(player, "PREV_NOT_FOUND");
         }
     }
 

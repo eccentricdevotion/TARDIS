@@ -27,7 +27,7 @@ import org.bukkit.entity.Rabbit;
  *
  * @author eccentric_nz
  */
-class TARDISRabbit extends TARDISMob {
+class TardisRabbit extends TardisMob {
 
     private Rabbit.Type bunnyType;
 

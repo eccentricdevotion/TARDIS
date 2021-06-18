@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISBoatPreset extends TARDISPreset {
+class TardisBoatPreset extends TardisPreset {
 
-    TARDISBoatPreset() {
+    TardisBoatPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:oak_stairs[half=top,facing=south]";

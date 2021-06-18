@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.data.StandbyData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetStandby;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
@@ -32,12 +32,12 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISStandbyMode implements Runnable {
+public class TardisStandbyMode implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int amount;
 
-    public TARDISStandbyMode(TARDISPlugin plugin) {
+    public TardisStandbyMode(TardisPlugin plugin) {
         this.plugin = plugin;
         amount = this.plugin.getArtronConfig().getInt("standby");
     }
@@ -69,28 +69,28 @@ public class TARDISStandbyMode implements Runnable {
                     setp.put("powered_on", 0);
                     OfflinePlayer player = plugin.getServer().getOfflinePlayer(standbyData.getUuid());
                     if (player.isOnline()) {
-                        TARDISSounds.playTARDISSound(Objects.requireNonNull(player.getPlayer()).getLocation(), "power_down");
-                        TARDISMessage.send(player.getPlayer(), "POWER_OFF_AUTO");
+                        TardisSounds.playTARDISSound(Objects.requireNonNull(player.getPlayer()).getLocation(), "power_down");
+                        TardisMessage.send(player.getPlayer(), "POWER_OFF_AUTO");
                     }
                     long delay = 0;
                     // if hidden, rebuild
                     if (standbyData.isHidden()) {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
                         if (player.isOnline()) {
-                            TARDISMessage.send(player.getPlayer(), "POWER_FAIL");
+                            TardisMessage.send(player.getPlayer(), "POWER_FAIL");
                         }
                         delay = 20L;
                     }
                     // police box lamp, delay it incase the TARDIS needs rebuilding
-                    if (standbyData.getPreset().equals(PRESET.ADAPTIVE)) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), delay);
+                    if (standbyData.getPreset().equals(Preset.ADAPTIVE)) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), delay);
                     }
                     // if lights are on, turn them off
                     if (standbyData.isLights()) {
-                        new TARDISLampToggler(plugin).flickSwitch(id, standbyData.getUuid(), true, standbyData.isLanterns());
+                        new TardisLampToggler(plugin).flickSwitch(id, standbyData.getUuid(), true, standbyData.isLanterns());
                     }
                     // if beacon is on turn it off
-                    new TARDISBeaconToggler(plugin).flickSwitch(standbyData.getUuid(), id, false);
+                    new TardisBeaconToggler(plugin).flickSwitch(standbyData.getUuid(), id, false);
                     // update database
                     plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
                     // if force field is on, disable it

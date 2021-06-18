@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.siegemode.TARDISSiegeMode;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.siegemode.TardisSiegeMode;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -28,14 +28,14 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISSiegeButton {
+public class TardisSiegeButton {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
     private final boolean powered;
     private final int id;
 
-    TARDISSiegeButton(TARDISPlugin plugin, Player player, boolean powered, int id) {
+    TardisSiegeButton(TardisPlugin plugin, Player player, boolean powered, int id) {
         this.plugin = plugin;
         this.player = player;
         this.powered = powered;
@@ -44,7 +44,7 @@ public class TARDISSiegeButton {
 
     public void clickButton() {
         if (!plugin.getConfig().getBoolean("siege.enabled")) {
-            TARDISMessage.send(player, "SIEGE_DISABLED");
+            TardisMessage.send(player, "SIEGE_DISABLED");
             return;
         }
         UUID uuid = player.getUniqueId();
@@ -53,36 +53,36 @@ public class TARDISSiegeButton {
             long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
             long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
             if (now < then) {
-                TARDISMessage.send(player, "COOLDOWN", String.format("%d", cooldown / 1000));
+                TardisMessage.send(player, "COOLDOWN", String.format("%d", cooldown / 1000));
                 return;
             }
         }
         if (plugin.getConfig().getBoolean("allow.power_down") && !powered) {
-            TARDISMessage.send(player, "POWER_DOWN");
+            TardisMessage.send(player, "POWER_DOWN");
             return;
         }
         HashMap<String, Object> wherein = new HashMap<>();
         wherein.put("uuid", uuid.toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
         if (rst.resultSet() && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-            TARDISMessage.send(player, "TARDIS_NO_REBUILD");
+            TardisMessage.send(player, "TARDIS_NO_REBUILD");
             return;
         }
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
+            TardisMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
             return;
         }
         if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-            TARDISMessage.send(player, "NOT_WHILE_MAT");
+            TardisMessage.send(player, "NOT_WHILE_MAT");
             return;
         }
         // not while a siege cube item
         if (plugin.getTrackerKeeper().getIsSiegeCube().contains(id)) {
-            TARDISMessage.send(player, "SIEGE_CUBED");
+            TardisMessage.send(player, "SIEGE_CUBED");
             return;
         }
         plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
         // toggle siege mode
-        new TARDISSiegeMode(plugin).toggleViaSwitch(id, player);
+        new TardisSiegeMode(plugin).toggleViaSwitch(id, player);
     }
 }

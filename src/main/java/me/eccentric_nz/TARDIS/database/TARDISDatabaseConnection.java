@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,13 +30,13 @@ import java.sql.SQLException;
  *
  * @author eccentric_nz
  */
-public class TARDISDatabaseConnection {
+public class TardisDatabaseConnection {
 
-    private static final TARDISDatabaseConnection INSTANCE = new TARDISDatabaseConnection();
+    private static final TardisDatabaseConnection INSTANCE = new TardisDatabaseConnection();
     public Connection connection = null;
     private boolean isMySQL;
 
-    public static synchronized TARDISDatabaseConnection getINSTANCE() {
+    public static synchronized TardisDatabaseConnection getINSTANCE() {
         return INSTANCE;
     }
 
@@ -50,12 +50,12 @@ public class TARDISDatabaseConnection {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Cannot find the driver in the classpath!", e);
         }
-        String jdbc = "jdbc:mysql://" + TARDISPlugin.plugin.getConfig().getString("storage.mysql.host") + ":" + TARDISPlugin.plugin.getConfig().getString("storage.mysql.port") + "/" + TARDISPlugin.plugin.getConfig().getString("storage.mysql.database") + "?autoReconnect=true";
-        if (!TARDISPlugin.plugin.getConfig().getBoolean("storage.mysql.useSSL")) {
+        String jdbc = "jdbc:mysql://" + TardisPlugin.plugin.getConfig().getString("storage.mysql.host") + ":" + TardisPlugin.plugin.getConfig().getString("storage.mysql.port") + "/" + TardisPlugin.plugin.getConfig().getString("storage.mysql.database") + "?autoReconnect=true";
+        if (!TardisPlugin.plugin.getConfig().getBoolean("storage.mysql.useSSL")) {
             jdbc += "&useSSL=false";
         }
-        String user = TARDISPlugin.plugin.getConfig().getString("storage.mysql.user");
-        String pass = TARDISPlugin.plugin.getConfig().getString("storage.mysql.password");
+        String user = TardisPlugin.plugin.getConfig().getString("storage.mysql.user");
+        String pass = TardisPlugin.plugin.getConfig().getString("storage.mysql.password");
         try {
             connection = DriverManager.getConnection(jdbc, user, pass);
             connection.setAutoCommit(true);
@@ -94,7 +94,7 @@ public class TARDISDatabaseConnection {
                 setConnection();
             }
         } catch (SQLException ex) {
-            TARDISPlugin.plugin.debug("Could not re-connect to database! " + ex.getMessage());
+            TardisPlugin.plugin.debug("Could not re-connect to database! " + ex.getMessage());
         }
     }
 }

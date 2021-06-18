@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -31,15 +31,15 @@ import java.sql.Statement;
  *
  * @author eccentric_nz
  */
-public class TARDISSQLiteDatabase {
+public class TardisSqliteDatabase {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
     private Statement statement = null;
 
-    public TARDISSQLiteDatabase(TARDISPlugin plugin) {
+    public TardisSqliteDatabase(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -252,7 +252,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(dropLevers);
 
             // update tables
-            TARDISSQLiteDatabaseUpdater dbu = new TARDISSQLiteDatabaseUpdater(plugin, statement);
+            TardisSqliteDatabaseUpdater dbu = new TardisSqliteDatabaseUpdater(plugin, statement);
             dbu.updateTables();
 
             // change RAISED preset to SWAMP

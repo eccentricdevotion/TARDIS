@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -38,12 +38,12 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISTeleportListener implements Listener {
+public class TardisTeleportListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<TeleportCause> causes = new ArrayList<>();
 
-    public TARDISTeleportListener(TARDISPlugin plugin) {
+    public TardisTeleportListener(TardisPlugin plugin) {
         this.plugin = plugin;
         causes.add(TeleportCause.PLUGIN);
         causes.add(TeleportCause.COMMAND);
@@ -63,7 +63,7 @@ public class TARDISTeleportListener implements Listener {
                 where.put("uuid", uuid);
                 plugin.getQueryFactory().doDelete("travellers", where);
                 if (!cause.equals(TeleportCause.PLUGIN)) {
-                    TARDISMessage.send(p, "OCCUPY_AUTO");
+                    TardisMessage.send(p, "OCCUPY_AUTO");
                 }
                 // stop tracking telepaths
                 plugin.getTrackerKeeper().getTelepaths().remove(p.getUniqueId());
@@ -76,7 +76,7 @@ public class TARDISTeleportListener implements Listener {
                             return;
                         }
                     } else {
-                        int slot = TARDISInteriorPostioning.getTIPSSlot(p.getLocation());
+                        int slot = TardisInteriorPositioning.getTIPSSlot(p.getLocation());
                         if (!rsid.fromTIPSSlot(slot)) {
                             return;
                         }

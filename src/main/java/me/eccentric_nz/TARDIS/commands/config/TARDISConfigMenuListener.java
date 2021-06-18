@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.config;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.preferences.TARDISPrefsMenuInventory;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.preferences.TardisPrefsMenuInventory;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,11 +40,11 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISConfigMenuListener implements Listener {
+public class TardisConfigMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISConfigMenuListener(TARDISPlugin plugin) {
+    public TardisConfigMenuListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -63,13 +63,13 @@ public class TARDISConfigMenuListener implements Listener {
                     if (option.equals("Previous page")) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Config Menu");
-                            ppm.setContents(new TARDISConfigMenuInventory(plugin).getMenu());
+                            ppm.setContents(new TardisConfigMenuInventory(plugin).getMenu());
                             p.openInventory(ppm);
                         }, 1L);
                     } else {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Config Menu");
-                            ppm.setContents(new TARDISConfigPageTwoInventory(plugin).getMenu());
+                            ppm.setContents(new TardisConfigPageTwoInventory(plugin).getMenu());
                             p.openInventory(ppm);
                         }, 1L);
                     }
@@ -80,7 +80,7 @@ public class TARDISConfigMenuListener implements Listener {
                     // close this gui and load the Player Prefs Menu
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         Inventory ppm = plugin.getServer().createInventory(p, 36, ChatColor.DARK_RED + "Player Prefs Menu");
-                        ppm.setContents(new TARDISPrefsMenuInventory(plugin, p.getUniqueId()).getMenu());
+                        ppm.setContents(new TardisPrefsMenuInventory(plugin, p.getUniqueId()).getMenu());
                         p.openInventory(ppm);
                     }, 1L);
                     return;
@@ -89,7 +89,7 @@ public class TARDISConfigMenuListener implements Listener {
                     boolean bool = plugin.getConfig().getBoolean(option);
                     if (option.equals("abandon.enabled") && !bool && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
                         Player p = (Player) event.getWhoClicked();
-                        TARDISMessage.message(p, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
+                        TardisMessage.message(p, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
                         return;
                     }
                     plugin.getConfig().set(option, !bool);

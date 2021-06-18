@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * TabCompleter for /tardistravel
  */
-public class TARDISGravityTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisGravityTabComplete extends TardisCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("down", "up", "north", "west", "south", "east", "remove");
 

@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.chemistry.reducer;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -26,15 +26,15 @@ import org.bukkit.inventory.ItemStack;
 
 public class ReduceCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public ReduceCommand(TARDISPlugin plugin) {
+    public ReduceCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public boolean use(Player player) {
-        if (!TARDISPermission.hasPermission(player, "tardis.reducer.use")) {
-            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Reduction");
+        if (!TardisPermission.hasPermission(player, "tardis.reducer.use")) {
+            TardisMessage.send(player, "CHEMISTRY_SUB_PERM", "Reduction");
             return true;
         }
         // do stuff

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -28,16 +28,16 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISDoorToggler {
+public class TardisDoorToggler {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Block block;
     private final Player player;
     private final boolean minecart;
     private final boolean open;
     private final int id;
 
-    public TARDISDoorToggler(TARDISPlugin plugin, Block block, Player player, boolean minecart, boolean open, int id) {
+    public TardisDoorToggler(TardisPlugin plugin, Block block, Player player, boolean minecart, boolean open, int id) {
         this.plugin = plugin;
         this.block = block;
         this.player = player;
@@ -52,9 +52,9 @@ public class TARDISDoorToggler {
     public void toggleDoors() {
         UUID uuid = player.getUniqueId();
         if (open) {
-            new TARDISDoorCloser(plugin, uuid, id).closeDoors();
+            new TardisDoorCloser(plugin, uuid, id).closeDoors();
         } else {
-            new TARDISDoorOpener(plugin, uuid, id).openDoors();
+            new TardisDoorOpener(plugin, uuid, id).openDoors();
         }
         playDoorSound(player, open, block.getLocation(), minecart);
     }
@@ -70,12 +70,12 @@ public class TARDISDoorToggler {
     private void playDoorSound(Player p, boolean open, Location l, boolean m) {
         if (open) {
             if (!m) {
-                TARDISSounds.playTARDISSound(l, "tardis_door_close");
+                TardisSounds.playTARDISSound(l, "tardis_door_close");
             } else {
                 p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_CLOSE, 1.0F, 1.0F);
             }
         } else if (!m) {
-            TARDISSounds.playTARDISSound(l, "tardis_door_open");
+            TardisSounds.playTARDISSound(l, "tardis_door_open");
         } else {
             p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
         }

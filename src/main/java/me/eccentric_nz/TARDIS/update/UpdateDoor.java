@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.update;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.Updateable;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
@@ -31,9 +31,9 @@ import java.util.HashMap;
 
 public class UpdateDoor {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    UpdateDoor(TARDISPlugin plugin) {
+    UpdateDoor(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -59,7 +59,7 @@ public class UpdateDoor {
         }
         if ((updateable.equals(Updateable.BACKDOOR) || (updateable.equals(Updateable.DOOR) && secondary))) {
             // get player direction
-            String d = TARDISStaticUtils.getPlayersDirection(player, true);
+            String d = TardisStaticUtils.getPlayersDirection(player, true);
             set.put("door_location", location);
             set.put("door_direction", d);
             HashMap<String, Object> wheret = new HashMap<>();
@@ -71,13 +71,13 @@ public class UpdateDoor {
                 type = (secondary) ? 4 : 3;
                 // check the world
                 if (!plugin.getUtils().inTARDISWorld(player)) {
-                    TARDISMessage.send(player, "NOT_IN_TARDIS");
+                    TardisMessage.send(player, "NOT_IN_TARDIS");
                     return;
                 }
             } else {
                 type = 2;
                 if (plugin.getUtils().inTARDISWorld(player)) {
-                    TARDISMessage.send(player, "TARDIS_OUTSIDE");
+                    TardisMessage.send(player, "TARDIS_OUTSIDE");
                     return;
                 }
             }

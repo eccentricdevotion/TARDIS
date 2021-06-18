@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,9 +30,9 @@ import java.util.UUID;
 
 public class ResultSetPaperBag {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final UUID uuid;
     private final List<Integer> flavours = Arrays.asList(1, 2, 3, 4);
     private final String prefix;
@@ -52,7 +52,7 @@ public class ResultSetPaperBag {
      * @param plugin an instance of the main class.
      * @param uuid   a player's UUID to refine the search.
      */
-    public ResultSetPaperBag(TARDISPlugin plugin, UUID uuid) {
+    public ResultSetPaperBag(TardisPlugin plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
         prefix = this.plugin.getPrefix();

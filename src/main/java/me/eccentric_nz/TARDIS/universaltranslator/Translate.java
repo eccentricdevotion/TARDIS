@@ -21,7 +21,7 @@ import java.net.URLEncoder;
 /**
  * Makes calls to the Yandex machine translation web service API
  */
-public final class Translate extends YandexTranslatorAPI {
+public final class Translate extends YandexTranslatorApi {
 
     private static final String SERVICE_URL = "https://translate.yandex.net/api/v1.5/tr.json/translate?";
     private static final String TRANSLATION_LABEL = "text";

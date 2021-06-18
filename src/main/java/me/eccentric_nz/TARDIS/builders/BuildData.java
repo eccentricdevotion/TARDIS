@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 
 /**
@@ -65,7 +65,7 @@ public final class BuildData extends MaterialisationData {
             addSign = true;
             minecartSounds = false;
         } else {
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDISPlugin.plugin, uuid);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TardisPlugin.plugin, uuid);
             if (rsp.resultSet()) {
                 addSign = rsp.isSignOn();
                 minecartSounds = rsp.isMinecartOn();

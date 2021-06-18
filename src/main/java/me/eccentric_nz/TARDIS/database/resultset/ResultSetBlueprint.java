@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,9 +31,9 @@ import java.sql.SQLException;
  */
 public class ResultSetBlueprint {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
 
     /**
@@ -41,7 +41,7 @@ public class ResultSetBlueprint {
      *
      * @param plugin an instance of the main class.
      */
-    public ResultSetBlueprint(TARDISPlugin plugin) {
+    public ResultSetBlueprint(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }

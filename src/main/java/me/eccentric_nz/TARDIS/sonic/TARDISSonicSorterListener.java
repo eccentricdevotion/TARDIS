@@ -25,10 +25,10 @@ import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISTownyChecker;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -57,12 +57,12 @@ import java.util.Objects;
  * @author Pyr0Byt3
  * @author pendo324
  */
-public class TARDISSonicSorterListener implements Listener {
+public class TardisSonicSorterListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Material> sortables = new ArrayList<>();
 
-    public TARDISSonicSorterListener(TARDISPlugin plugin) {
+    public TardisSonicSorterListener(TardisPlugin plugin) {
         this.plugin = plugin;
         sortables.add(Material.BARREL);
         sortables.add(Material.BLACK_SHULKER_BOX);
@@ -136,7 +136,7 @@ public class TARDISSonicSorterListener implements Listener {
                 }
             }
         }
-        Arrays.sort(items, 0, endIndex, new TARDISItemComparator());
+        Arrays.sort(items, 0, endIndex, new TardisItemComparator());
         return items;
     }
 
@@ -150,7 +150,7 @@ public class TARDISSonicSorterListener implements Listener {
             return;
         }
         Player player = event.getPlayer();
-        if (event.getAction() == Action.LEFT_CLICK_BLOCK && TARDISPermission.hasPermission(player, "tardis.sonic.sort")) {
+        if (event.getAction() == Action.LEFT_CLICK_BLOCK && TardisPermission.hasPermission(player, "tardis.sonic.sort")) {
             ItemStack is = player.getInventory().getItemInMainHand();
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
@@ -170,7 +170,7 @@ public class TARDISSonicSorterListener implements Listener {
                             }
                         }
                         if (plugin.getPM().isPluginEnabled("Towny")) {
-                            allow = new TARDISTownyChecker(plugin).checkTowny(player, block.getLocation());
+                            allow = new TardisTownyChecker(plugin).checkTowny(player, block.getLocation());
                         }
                         // LWCX
                         if (plugin.getPM().isPluginEnabled("LWC")) {
@@ -185,7 +185,7 @@ public class TARDISSonicSorterListener implements Listener {
                         if (allow) {
                             Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
                             sortInventory(inventory);
-                            TARDISMessage.send(player, "CHEST_SORTED");
+                            TardisMessage.send(player, "CHEST_SORTED");
                         }
                     }
                 }

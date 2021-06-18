@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.chemistry.reducer;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiChemistry;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -26,10 +26,10 @@ import java.util.Arrays;
 
 public class ReducerInventory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ItemStack[] menu;
 
-    public ReducerInventory(TARDISPlugin plugin) {
+    public ReducerInventory(TardisPlugin plugin) {
         this.plugin = plugin;
         menu = getItemStack();
     }
@@ -42,7 +42,7 @@ public class ReducerInventory {
         assert info_im != null;
         info_im.setDisplayName("Info");
         info_im.setLore(Arrays.asList("Reduce a substance to its", "component elements.", "Place an item in the first slot,", "then click the reduce button."));
-        info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
+        info_im.setCustomModelData(GuiChemistry.INFO.getCustomModelData());
         info.setItemMeta(info_im);
         stack[8] = info;
         // check formula
@@ -50,7 +50,7 @@ public class ReducerInventory {
         ItemMeta check_im = check.getItemMeta();
         assert check_im != null;
         check_im.setDisplayName("Reduce");
-        check_im.setCustomModelData(GUIChemistry.REDUCE.getCustomModelData());
+        check_im.setCustomModelData(GuiChemistry.REDUCE.getCustomModelData());
         check.setItemMeta(check_im);
         stack[17] = check;
         // close
@@ -58,7 +58,7 @@ public class ReducerInventory {
         ItemMeta close_im = close.getItemMeta();
         assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GuiChemistry.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[26] = close;
         return stack;

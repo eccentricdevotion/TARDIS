@@ -17,11 +17,11 @@
 package me.eccentric_nz.tardis.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.enumeration.Time;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -34,12 +34,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.List;
 
-public class TARDISTimeCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
+public class TardisTimeCommand extends TardisCompleter implements CommandExecutor, TabCompleter {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("day", "morning", "noon", "night", "midnight", "1AM", "2AM", "3AM", "4AM", "5AM", "6AM", "7AM", "8AM", "9AM", "10AM", "11AM", "12AM", "1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM", "9PM", "10PM", "11PM", "12PM");
 
-    public TARDISTimeCommand(TARDISPlugin plugin) {
+    public TardisTimeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -47,16 +47,16 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardistime")) {
             if (args.length < 1) {
-                TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                TardisMessage.send(sender, "TOO_FEW_ARGS");
                 return true;
             }
             if (sender instanceof Player player) {
                 if (player == null) {
-                    TARDISMessage.send(sender, "CMD_PLAYER");
+                    TardisMessage.send(sender, "CMD_PLAYER");
                     return true;
                 }
                 if (!player.hasPermission("tardis.admin")) {
-                    TARDISMessage.send(sender, "NO_PERMS");
+                    TardisMessage.send(sender, "NO_PERMS");
                     return true;
                 }
                 Location location = player.getLocation();
@@ -72,7 +72,7 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
                         world = rsc.getWorld();
                     } else {
                         // can't change weather in TARDIS world
-                        TARDISMessage.send(player, "TIME_TARDIS");
+                        TardisMessage.send(player, "TIME_TARDIS");
                         return true;
                     }
                 }
@@ -84,13 +84,13 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
                     try {
                         ticks = Long.parseLong(args[0]);
                     } catch (NumberFormatException nfe) {
-                        TARDISMessage.send(player, "TIME_FORMAT");
+                        TardisMessage.send(player, "TIME_FORMAT");
                         return true;
                     }
                 }
                 assert world != null;
                 world.setTime(ticks);
-                TARDISMessage.send(player, "TIME_SET", String.format("%s", ticks), world.getName());
+                TardisMessage.send(player, "TIME_SET", String.format("%s", ticks), world.getName());
                 return true;
             }
         }

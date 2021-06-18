@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISChecker;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisChecker;
 import org.bukkit.ChatColor;
 
 /**
@@ -28,21 +28,21 @@ import org.bukkit.ChatColor;
  * was later discovered to be frozen in a pocket universe by the first thirteen incarnations of the Doctor, surviving
  * the Time War. The literal translation of Gallifrey is "They that walk in the shadows"
  */
-public class TARDISGallifrey {
+public class TardisGallifrey {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISGallifrey(TARDISPlugin plugin) {
+    public TardisGallifrey(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public void loadTimeLordWorld() {
         String s_world = plugin.getServer().getWorlds().get(0).getName();
         // copy datapack files
-        if (!TARDISChecker.hasDimension("gallifrey")) {
+        if (!TardisChecker.hasDimension("gallifrey")) {
             plugin.getServer().reloadData();
             // message console to restart server
-            TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Gallifrey data pack has been installed, please restart the server to enable the world.");
+            TardisMessage.message(plugin.getConsole(), ChatColor.RED + "Gallifrey data pack has been installed, please restart the server to enable the world.");
             // get default server world
             // add world to config
             if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_gallifrey.time_travel")) {

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
-public enum GUISavedPrograms {
+public enum GuiSavedPrograms {
 
     // Saved Programs
     BACK_TO_EDITOR(1, 45, Material.ARROW),
@@ -33,7 +33,7 @@ public enum GUISavedPrograms {
     private final int slot;
     private final Material material;
 
-    GUISavedPrograms(int customModelData, int slot, Material material) {
+    GuiSavedPrograms(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -53,6 +53,6 @@ public enum GUISavedPrograms {
 
     public String getName() {
         String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
+        return TardisStringUtils.sentenceCase(s);
     }
 }

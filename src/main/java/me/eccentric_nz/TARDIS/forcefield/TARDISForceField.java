@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.forcefield;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetForcefield;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisCompanions;
 import org.bukkit.GameMode;
@@ -28,14 +28,14 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class TARDISForceField implements Runnable {
+public class TardisForceField implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int range;
     private final int doubleRange;
     private int dust = 0;
 
-    public TARDISForceField(TARDISPlugin plugin) {
+    public TardisForceField(TardisPlugin plugin) {
         this.plugin = plugin;
         range = this.plugin.getConfig().getInt("allow.force_field");
         plugin.debug("Starting force fields with a range of " + range + " blocks.");
@@ -57,9 +57,9 @@ public class TARDISForceField implements Runnable {
     }
 
     public static boolean addToTracker(Player player) {
-        ResultSetForcefield rsff = new ResultSetForcefield(TARDISPlugin.plugin, player.getUniqueId().toString());
+        ResultSetForcefield rsff = new ResultSetForcefield(TardisPlugin.plugin, player.getUniqueId().toString());
         if (rsff.resultSet()) {
-            TARDISPlugin.plugin.getTrackerKeeper().getActiveForceFields().put(rsff.getUuid(), rsff.getLocation());
+            TardisPlugin.plugin.getTrackerKeeper().getActiveForceFields().put(rsff.getUuid(), rsff.getLocation());
             return true;
         }
         return false;
@@ -73,7 +73,7 @@ public class TARDISForceField implements Runnable {
                 continue;
             }
             Location location = map.getValue().clone().add(0.5, 0.5, 0.5);
-            new TARDISForceFieldVisualiser(plugin).showBorder(location.clone(), dust);
+            new TardisForceFieldVisualiser(plugin).showBorder(location.clone(), dust);
             for (Entity other : Objects.requireNonNull(location.getWorld()).getNearbyEntities(location, doubleRange, doubleRange, doubleRange)) {
                 if (!(other instanceof LivingEntity)) {
                     continue;

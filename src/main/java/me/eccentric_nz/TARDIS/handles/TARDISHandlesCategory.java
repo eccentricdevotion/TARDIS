@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.handles;
 /**
  * @author eccentric_nz
  */
-public enum TARDISHandlesCategory {
+public enum TardisHandlesCategory {
 
     BUTTON("Buttons", 11),
     COMMAND("tardis commands and actions", 7),
@@ -34,7 +34,7 @@ public enum TARDISHandlesCategory {
     private final String lore;
     private final int size;
 
-    TARDISHandlesCategory(String lore, int size) {
+    TardisHandlesCategory(String lore, int size) {
         this.lore = lore;
         this.size = size;
     }

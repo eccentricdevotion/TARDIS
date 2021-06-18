@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.enumeration.Flag;
 import org.bukkit.Material;
@@ -38,9 +38,9 @@ import java.util.Objects;
 
 public class IceBombListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public IceBombListener(TARDISPlugin plugin) {
+    public IceBombListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -74,11 +74,11 @@ public class IceBombListener implements Listener {
                     // check plugin respect
                     if (plugin.getPluginRespect().getRespect(block.getLocation(), new Parameters((Player) event.getEntity().getShooter(), Flag.getNoMessageFlags()))) {
                         // freeze water
-                        up.setBlockData(TARDISConstants.ICE);
+                        up.setBlockData(TardisConstants.ICE);
                         for (BlockFace face : plugin.getGeneralKeeper().getSurrounding()) {
                             Block water = up.getRelative(face);
                             if (water.getType().equals(Material.WATER)) {
-                                water.setBlockData(TARDISConstants.ICE);
+                                water.setBlockData(TardisConstants.ICE);
                             }
                         }
                     }

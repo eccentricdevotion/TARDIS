@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advanced.TARDISSerializeInventory;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advanced.TardisSerializeInventory;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -40,15 +40,15 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISHandlesProgramListener implements Listener {
+public class TardisHandlesProgramListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<UUID, Integer> scroll_start = new HashMap<>();
-    private final HashMap<UUID, List<TARDISHandlesBlock>> scroll_list = new HashMap<>();
-    private final HashMap<UUID, TARDISHandlesCategory> scroll_category = new HashMap<>();
+    private final HashMap<UUID, List<TardisHandlesBlock>> scroll_list = new HashMap<>();
+    private final HashMap<UUID, TardisHandlesCategory> scroll_category = new HashMap<>();
     private final List<Material> allowed = Arrays.asList(Material.MUSIC_DISC_CHIRP, Material.MUSIC_DISC_WAIT, Material.MUSIC_DISC_CAT, Material.MUSIC_DISC_BLOCKS);
 
-    public TARDISHandlesProgramListener(TARDISPlugin plugin) {
+    public TardisHandlesProgramListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -66,8 +66,8 @@ public class TARDISHandlesProgramListener implements Listener {
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             if (!scroll_list.containsKey(uuid)) {
-                scroll_list.put(uuid, TARDISHandlesBlock.getControls());
-                scroll_category.put(uuid, TARDISHandlesCategory.CONTROL);
+                scroll_list.put(uuid, TardisHandlesBlock.getControls());
+                scroll_category.put(uuid, TardisHandlesCategory.CONTROL);
             }
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 36) {
@@ -83,50 +83,50 @@ public class TARDISHandlesProgramListener implements Listener {
             switch (slot) {
                 case 36:
                     // set control blocks
-                    scroll_list.put(uuid, TARDISHandlesBlock.getControls());
-                    setList(uuid, TARDISHandlesCategory.CONTROL, view);
+                    scroll_list.put(uuid, TardisHandlesBlock.getControls());
+                    setList(uuid, TardisHandlesCategory.CONTROL, view);
                     scroll_start.put(uuid, 0);
                     break;
                 case 37:
                     // set operator blocks
-                    scroll_list.put(uuid, TARDISHandlesBlock.getOperators());
-                    setList(uuid, TARDISHandlesCategory.OPERATOR, view);
+                    scroll_list.put(uuid, TardisHandlesBlock.getOperators());
+                    setList(uuid, TardisHandlesCategory.OPERATOR, view);
                     scroll_start.put(uuid, 0);
                     break;
                 case 38:
                     // set variable blocks
-                    scroll_list.put(uuid, TARDISHandlesBlock.getVariables());
-                    setList(uuid, TARDISHandlesCategory.VARIABLE, view);
+                    scroll_list.put(uuid, TardisHandlesBlock.getVariables());
+                    setList(uuid, TardisHandlesCategory.VARIABLE, view);
                     scroll_start.put(uuid, 0);
                     break;
                 case 39:
                     // set number blocks
-                    scroll_list.put(uuid, TARDISHandlesBlock.getNumbers());
-                    setList(uuid, TARDISHandlesCategory.NUMBER, view);
+                    scroll_list.put(uuid, TardisHandlesBlock.getNumbers());
+                    setList(uuid, TardisHandlesCategory.NUMBER, view);
                     scroll_start.put(uuid, 0);
                     break;
                 case 40:
                     // set event blocks
-                    scroll_list.put(uuid, TARDISHandlesBlock.getEvents());
-                    setList(uuid, TARDISHandlesCategory.EVENT, view);
+                    scroll_list.put(uuid, TardisHandlesBlock.getEvents());
+                    setList(uuid, TardisHandlesCategory.EVENT, view);
                     scroll_start.put(uuid, 0);
                     break;
                 case 41:
                     // set command blocks
-                    scroll_list.put(uuid, TARDISHandlesBlock.getCommands());
-                    setList(uuid, TARDISHandlesCategory.COMMAND, view);
+                    scroll_list.put(uuid, TardisHandlesBlock.getCommands());
+                    setList(uuid, TardisHandlesCategory.COMMAND, view);
                     scroll_start.put(uuid, 0);
                     break;
                 case 42:
                     // set selector blocks
-                    scroll_list.put(uuid, TARDISHandlesBlock.getSelectors());
-                    setList(uuid, TARDISHandlesCategory.SELECTOR, view);
+                    scroll_list.put(uuid, TardisHandlesBlock.getSelectors());
+                    setList(uuid, TardisHandlesCategory.SELECTOR, view);
                     scroll_start.put(uuid, 0);
                     break;
                 case 43:
                     // go to saved disks
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        TARDISHandlesSavedInventory thsi = new TARDISHandlesSavedInventory(plugin, uuid.toString());
+                        TardisHandlesSavedInventory thsi = new TardisHandlesSavedInventory(plugin, uuid.toString());
                         ItemStack[] items = thsi.getPrograms();
                         Inventory programsinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Saved Programs");
                         programsinv.setContents(items);
@@ -147,9 +147,9 @@ public class TARDISHandlesProgramListener implements Listener {
                         im.setCustomModelData(10000001);
                         is.setItemMeta(im);
                         player.getWorld().dropItemNaturally(player.getLocation(), is);
-                        TARDISMessage.send(player, "HANDLES_SAVED");
+                        TardisMessage.send(player, "HANDLES_SAVED");
                     } else {
-                        TARDISMessage.send(player, "HANDLES_NOTHING");
+                        TardisMessage.send(player, "HANDLES_NOTHING");
                     }
                     break;
                 case 45:
@@ -242,7 +242,7 @@ public class TARDISHandlesProgramListener implements Listener {
      * @param slot  the slot number to update
      * @param block the program block
      */
-    private void setSlot(InventoryView view, int slot, TARDISHandlesBlock block) {
+    private void setSlot(InventoryView view, int slot, TardisHandlesBlock block) {
         ItemStack is = new ItemStack(Material.PAPER, 1);
         ItemMeta im = is.getItemMeta();
         assert im != null;
@@ -255,7 +255,7 @@ public class TARDISHandlesProgramListener implements Listener {
         view.setItem(slot, is);
     }
 
-    private void setList(UUID uuid, TARDISHandlesCategory category, InventoryView view) {
+    private void setList(UUID uuid, TardisHandlesCategory category, InventoryView view) {
         scroll_category.put(uuid, category);
         for (int i = 0; i < 7; i++) {
             if (i < category.getSize()) {
@@ -278,9 +278,9 @@ public class TARDISHandlesProgramListener implements Listener {
         // there should be a minimum size for a valid program e.g. selector + command
         if (pid > 1) {
             // validate the program
-            TARDISHandlesValidator validator = new TARDISHandlesValidator(stack, player);
+            TardisHandlesValidator validator = new TardisHandlesValidator(stack, player);
             if (validator.validateDisk()) {
-                String serialized = TARDISSerializeInventory.itemStacksToString(stack);
+                String serialized = TardisSerializeInventory.itemStacksToString(stack);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("uuid", uuid);
                 set.put("name", "Untitled Disk");

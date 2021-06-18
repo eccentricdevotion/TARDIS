@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -30,16 +30,16 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISOccupyCommand {
+class TardisOccupyCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISOccupyCommand(TARDISPlugin plugin) {
+    TardisOccupyCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean toggleOccupancy(Player player) {
-        if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
+        if (TardisPermission.hasPermission(player, "tardis.timetravel")) {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -52,20 +52,20 @@ class TARDISOccupyCommand {
                     plugin.getQueryFactory().doDelete("travellers", whered);
                     occupied = ChatColor.RED + plugin.getLanguage().getString("OCCUPY_OUT");
                 } else {
-                    TARDISMessage.send(player, "OCCUPY_MUST_BE_OUT");
+                    TardisMessage.send(player, "OCCUPY_MUST_BE_OUT");
                     return true;
                 }
             } else if (plugin.getUtils().inTARDISWorld(player)) {
                 ResultSetTardisID rsid = new ResultSetTardisID(plugin);
                 // if TIPS determine tardis_id from player location
                 if (plugin.getConfig().getBoolean("creation.default_world") && !player.hasPermission("tardis.create_world")) {
-                    int slot = TARDISInteriorPostioning.getTIPSSlot(player.getLocation());
+                    int slot = TardisInteriorPositioning.getTIPSSlot(player.getLocation());
                     if (!rsid.fromTIPSSlot(slot)) {
-                        TARDISMessage.send(player, "OCCUPY_MUST_BE_IN");
+                        TardisMessage.send(player, "OCCUPY_MUST_BE_IN");
                         return false;
                     }
                 } else if (!rsid.fromUUID(player.getUniqueId().toString())) {
-                    TARDISMessage.send(player, "NOT_A_TIMELORD");
+                    TardisMessage.send(player, "NOT_A_TIMELORD");
                     return false;
                 }
                 int id = rsid.getTardisId();
@@ -75,13 +75,13 @@ class TARDISOccupyCommand {
                 plugin.getQueryFactory().doInsert("travellers", wherei);
                 occupied = ChatColor.GREEN + plugin.getLanguage().getString("OCCUPY_IN");
             } else {
-                TARDISMessage.send(player, "OCCUPY_MUST_BE_IN");
+                TardisMessage.send(player, "OCCUPY_MUST_BE_IN");
                 return true;
             }
-            TARDISMessage.send(player, "OCCUPY_SET", occupied);
+            TardisMessage.send(player, "OCCUPY_SET", occupied);
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            TardisMessage.send(player, "NO_PERMS");
             return false;
         }
     }

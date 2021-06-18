@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisChunk;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISLocationGetters {
+public class TardisLocationGetters {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISLocationGetters(TARDISPlugin plugin) {
+    public TardisLocationGetters(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -44,9 +44,9 @@ public class TARDISLocationGetters {
         if (rs.fromID(id)) {
             String c = rs.getChunk();
             String[] data = c.split(":");
-            World w = TARDISAliasResolver.getWorldFromAlias(data[0]);
-            int cx = TARDISNumberParsers.parseInt(data[1]);
-            int cz = TARDISNumberParsers.parseInt(data[2]);
+            World w = TardisAliasResolver.getWorldFromAlias(data[0]);
+            int cx = TardisNumberParsers.parseInt(data[1]);
+            int cz = TardisNumberParsers.parseInt(data[2]);
             assert w != null;
             return w.getChunkAt(cx, cz);
         }
@@ -66,9 +66,9 @@ public class TARDISLocationGetters {
         if (rs.fromID(id)) {
             String chunkstr = rs.getChunk();
             String[] split = chunkstr.split(":");
-            World w = TARDISAliasResolver.getWorldFromAlias(split[0]);
-            cx = TARDISNumberParsers.parseInt(split[1]);
-            cz = TARDISNumberParsers.parseInt(split[2]);
+            World w = TardisAliasResolver.getWorldFromAlias(split[0]);
+            cx = TardisNumberParsers.parseInt(split[1]);
+            cz = TardisNumberParsers.parseInt(split[2]);
             assert w != null;
             Chunk chunk = w.getChunkAt(cx, cz);
             startLoc[0] = (chunk.getBlock(0, 64, 0).getX());

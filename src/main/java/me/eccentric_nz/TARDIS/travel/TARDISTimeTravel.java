@@ -16,21 +16,21 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.Flag;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
-import me.eccentric_nz.tardis.utility.TARDISMaterials;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
+import me.eccentric_nz.tardis.utility.TardisMaterials;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -51,13 +51,13 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISTimeTravel {
+public class TardisTimeTravel {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int attempts;
     private Location dest;
 
-    public TARDISTimeTravel(TARDISPlugin plugin) {
+    public TardisTimeTravel(TardisPlugin plugin) {
         this.plugin = plugin;
         // add good materials
         attempts = plugin.getConfig().getInt("travel.random_attempts");
@@ -76,7 +76,7 @@ public class TARDISTimeTravel {
      * @param d      the direction the Police Box is facing.
      * @return the number of unsafe blocks
      */
-    public static int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
+    public static int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, CardinalDirection d) {
         int level, row, col, rowcount, colcount, count = 0;
         switch (d) {
             case EAST, WEST -> {
@@ -102,11 +102,11 @@ public class TARDISTimeTravel {
                         }
                     }
                     Material mat = block.getType();
-                    if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
+                    if (!TardisConstants.GOOD_MATERIALS.contains(mat)) {
                         // check for siege cube
-                        if (TARDISPlugin.plugin.getConfig().getBoolean("siege.enabled") && mat.equals(Material.BROWN_MUSHROOM_BLOCK)) {
+                        if (TardisPlugin.plugin.getConfig().getBoolean("siege.enabled") && mat.equals(Material.BROWN_MUSHROOM_BLOCK)) {
                             MultipleFacing mf = (MultipleFacing) block.getBlockData();
-                            if (!mf.getAsString().equals(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2))) {
+                            if (!mf.getAsString().equals(TardisMushroomBlockData.BROWN_MUSHROOM_DATA.get(2))) {
                                 count++;
                                 break;
                             }
@@ -132,7 +132,7 @@ public class TARDISTimeTravel {
      * @param d   the direction the Police Box is facing.
      * @return an array containing x and z coordinates
      */
-    public static int[] getStartLocation(Location loc, COMPASS d) {
+    public static int[] getStartLocation(Location loc, CardinalDirection d) {
         int[] startLocation = new int[4];
         switch (d) {
             case EAST -> {
@@ -172,7 +172,7 @@ public class TARDISTimeTravel {
      * @param current     the current location of the tardis
      * @return a random Location
      */
-    public Location randomDestination(Player p, int rx, int rz, int ry, COMPASS d, String e, World this_world, boolean malfunction, Location current) {
+    public Location randomDestination(Player p, int rx, int rz, int ry, CardinalDirection d, String e, World this_world, boolean malfunction, Location current) {
         int startx, starty, startz, resetx, resetz, listlen;
         World randworld;
         int count;
@@ -189,7 +189,7 @@ public class TARDISTimeTravel {
             allowedWorlds.add(this_world);
         } else {
             worldlist.forEach((o) -> {
-                World ww = TARDISAliasResolver.getWorldFromAlias(o);
+                World ww = TardisAliasResolver.getWorldFromAlias(o);
                 if (ww != null) {
                     String env = ww.getEnvironment().toString();
                     // Catch all non-nether and non-end ENVIRONMENT types and assume they're normal
@@ -215,7 +215,7 @@ public class TARDISTimeTravel {
                         allowedWorlds.remove(this_world);
                     }
                     // remove the world if the player doesn't have permission
-                    if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !TARDISPermission.hasPermission(p, "tardis.travel." + o)) {
+                    if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !TardisPermission.hasPermission(p, "tardis.travel." + o)) {
                         allowedWorlds.remove(ww);
                     }
                 }
@@ -223,7 +223,7 @@ public class TARDISTimeTravel {
         }
         listlen = allowedWorlds.size();
         // random world
-        randworld = allowedWorlds.get(TARDISConstants.RANDOM.nextInt(listlen));
+        randworld = allowedWorlds.get(TardisConstants.RANDOM.nextInt(listlen));
 
         switch (randworld.getEnvironment()) {
             case NETHER:
@@ -239,18 +239,18 @@ public class TARDISTimeTravel {
                 if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".void")) {
                     // any location will do!
                     int voidx = randomX(range, quarter, rx, ry, e, current);
-                    int voidy = TARDISConstants.RANDOM.nextInt(240) + 5;
+                    int voidy = TardisConstants.RANDOM.nextInt(240) + 5;
                     int voidz = randomZ(range, quarter, rz, ry, e, current);
                     return new Location(randworld, voidx, voidy, voidz);
                 }
                 for (int n = 0; n < attempts; n++) {
-                    wherex = TARDISConstants.RANDOM.nextInt(240);
-                    wherez = TARDISConstants.RANDOM.nextInt(240);
+                    wherex = TardisConstants.RANDOM.nextInt(240);
+                    wherez = TardisConstants.RANDOM.nextInt(240);
                     wherex -= 120;
                     wherez -= 120;
                     // get the spawn point
                     Location endSpawn = randworld.getSpawnLocation();
-                    highest = TARDISStaticLocationGetters.getHighestYIn3x3(randworld, endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
+                    highest = TardisStaticLocationGetters.getHighestYIn3x3(randworld, endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
                     if (highest > 40) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                         Location chunk_loc = currentBlock.getLocation();
@@ -292,7 +292,7 @@ public class TARDISTimeTravel {
                     if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".void")) {
                         // any location will do!
                         int voidx = randomX(range, quarter, rx, ry, e, current);
-                        int voidy = TARDISConstants.RANDOM.nextInt(240) + 5;
+                        int voidy = TardisConstants.RANDOM.nextInt(240) + 5;
                         int voidz = randomZ(range, quarter, rz, ry, e, current);
                         return new Location(randworld, voidx, voidy, voidz);
                     }
@@ -304,16 +304,16 @@ public class TARDISTimeTravel {
                             // randomX(Random TARDISConstants.RANDOM, int range, int quarter, int rx, int ry, int max)
                             wherex = randomX(range, quarter, rx, ry, e, current);
                             wherez = randomZ(range, quarter, rz, ry, e, current);
-                            highest = TARDISStaticLocationGetters.getHighestYIn3x3(randworld, wherex, wherez);
+                            highest = TardisStaticLocationGetters.getHighestYIn3x3(randworld, wherex, wherez);
                             if (highest > 3) {
                                 Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                                 if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && !plugin.getConfig().getBoolean("travel.land_on_water")) {
                                     // check if submarine is on
                                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
                                     if (rsp.resultSet()) {
-                                        if (rsp.isSubmarineOn() && TARDISStaticUtils.isOceanBiome(TARDISStaticUtils.getBiomeAt(currentBlock.getLocation()))) {
+                                        if (rsp.isSubmarineOn() && TardisStaticUtils.isOceanBiome(TardisStaticUtils.getBiomeAt(currentBlock.getLocation()))) {
                                             // get submarine location
-                                            TARDISMessage.send(p, "SUB_SEARCH");
+                                            TardisMessage.send(p, "SUB_SEARCH");
                                             Location underwater = submarine(currentBlock, d);
                                             if (underwater != null) {
                                                 // get TARDIS id
@@ -334,7 +334,7 @@ public class TARDISTimeTravel {
                                         count = 1;
                                     }
                                 } else {
-                                    if (TARDISConstants.GOOD_MATERIALS.contains(currentBlock.getType())) {
+                                    if (TardisConstants.GOOD_MATERIALS.contains(currentBlock.getType())) {
                                         currentBlock = currentBlock.getRelative(BlockFace.DOWN);
                                     }
                                     Location chunk_loc = currentBlock.getLocation();
@@ -383,7 +383,7 @@ public class TARDISTimeTravel {
      * @param loc the location to test
      * @param d   the direction the Police Box is facing.
      */
-    public void testSafeLocation(Location loc, COMPASS d) {
+    public void testSafeLocation(Location loc, CardinalDirection d) {
         World w = loc.getWorld();
         int starty = loc.getBlockY();
         int sx, sz;
@@ -417,23 +417,23 @@ public class TARDISTimeTravel {
         int startX = sx;
         int startZ = sz;
         assert w != null;
-        TARDISBlockSetters.setBlock(w, startX, starty, startZ, Material.SNOW_BLOCK);
-        TARDISBlockSetters.setBlock(w, startX, starty, startZ + row, Material.SNOW_BLOCK);
-        TARDISBlockSetters.setBlock(w, startX + col, starty, startZ, Material.SNOW_BLOCK);
-        TARDISBlockSetters.setBlock(w, startX + col, starty, startZ + row, Material.SNOW_BLOCK);
-        TARDISBlockSetters.setBlock(w, startX, starty + 3, startZ, Material.SNOW_BLOCK);
-        TARDISBlockSetters.setBlock(w, startX + col, starty + 3, startZ, Material.SNOW_BLOCK);
-        TARDISBlockSetters.setBlock(w, startX, starty + 3, startZ + row, Material.SNOW_BLOCK);
-        TARDISBlockSetters.setBlock(w, startX + col, starty + 3, startZ + row, Material.SNOW_BLOCK);
+        TardisBlockSetters.setBlock(w, startX, starty, startZ, Material.SNOW_BLOCK);
+        TardisBlockSetters.setBlock(w, startX, starty, startZ + row, Material.SNOW_BLOCK);
+        TardisBlockSetters.setBlock(w, startX + col, starty, startZ, Material.SNOW_BLOCK);
+        TardisBlockSetters.setBlock(w, startX + col, starty, startZ + row, Material.SNOW_BLOCK);
+        TardisBlockSetters.setBlock(w, startX, starty + 3, startZ, Material.SNOW_BLOCK);
+        TardisBlockSetters.setBlock(w, startX + col, starty + 3, startZ, Material.SNOW_BLOCK);
+        TardisBlockSetters.setBlock(w, startX, starty + 3, startZ + row, Material.SNOW_BLOCK);
+        TardisBlockSetters.setBlock(w, startX + col, starty + 3, startZ + row, Material.SNOW_BLOCK);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            TARDISBlockSetters.setBlock(w, startX, starty, startZ, Material.AIR);
-            TARDISBlockSetters.setBlock(w, startX, starty, startZ + r, Material.AIR);
-            TARDISBlockSetters.setBlock(w, startX + c, starty, startZ, Material.AIR);
-            TARDISBlockSetters.setBlock(w, startX + c, starty, startZ + r, Material.AIR);
-            TARDISBlockSetters.setBlock(w, startX, starty + 3, startZ, Material.AIR);
-            TARDISBlockSetters.setBlock(w, startX + c, starty + 3, startZ, Material.AIR);
-            TARDISBlockSetters.setBlock(w, startX, starty + 3, startZ + r, Material.AIR);
-            TARDISBlockSetters.setBlock(w, startX + c, starty + 3, startZ + r, Material.AIR);
+            TardisBlockSetters.setBlock(w, startX, starty, startZ, Material.AIR);
+            TardisBlockSetters.setBlock(w, startX, starty, startZ + r, Material.AIR);
+            TardisBlockSetters.setBlock(w, startX + c, starty, startZ, Material.AIR);
+            TardisBlockSetters.setBlock(w, startX + c, starty, startZ + r, Material.AIR);
+            TardisBlockSetters.setBlock(w, startX, starty + 3, startZ, Material.AIR);
+            TardisBlockSetters.setBlock(w, startX + c, starty + 3, startZ, Material.AIR);
+            TardisBlockSetters.setBlock(w, startX, starty + 3, startZ + r, Material.AIR);
+            TardisBlockSetters.setBlock(w, startX + c, starty + 3, startZ + r, Material.AIR);
         }, 300L);
     }
 
@@ -447,7 +447,7 @@ public class TARDISTimeTravel {
      * @param p      the player to check permissions for
      * @return true or false
      */
-    boolean safeNether(World nether, int wherex, int wherez, COMPASS d, Player p) {
+    boolean safeNether(World nether, int wherex, int wherez, CardinalDirection d, Player p) {
         boolean safe = false;
         int startx, starty, startz, resetx, resetz, count;
         int wherey = 100;
@@ -497,11 +497,11 @@ public class TARDISTimeTravel {
     private int randomX(int range, int quarter, int rx, int ry, String e, Location l) {
         int currentx = (e.equals("THIS")) ? l.getBlockX() : 0;
         int wherex;
-        wherex = TARDISConstants.RANDOM.nextInt(range);
+        wherex = TardisConstants.RANDOM.nextInt(range);
         // add the distance from the x and z repeaters
         wherex += (quarter * rx);
         // add chance of negative values
-        if (TARDISConstants.RANDOM.nextInt(2) == 1) {
+        if (TardisConstants.RANDOM.nextInt(2) == 1) {
             wherex = -wherex;
         }
         // use multiplier based on position of third (y) repeater
@@ -522,11 +522,11 @@ public class TARDISTimeTravel {
     private int randomZ(int range, int quarter, int rz, int ry, String e, Location l) {
         int currentz = (e.equals("THIS")) ? l.getBlockZ() : 0;
         int wherez;
-        wherez = TARDISConstants.RANDOM.nextInt(range);
+        wherez = TardisConstants.RANDOM.nextInt(range);
         // add the distance from the x and z repeaters
         wherez += (quarter * rz);
         // add chance of negative values
-        if (TARDISConstants.RANDOM.nextInt(2) == 1) {
+        if (TardisConstants.RANDOM.nextInt(2) == 1) {
             wherez = -wherez;
         }
         // use multiplier based on position of third (y) repeater
@@ -534,13 +534,13 @@ public class TARDISTimeTravel {
         return wherez + currentz;
     }
 
-    public Location submarine(Block b, COMPASS d) {
+    public Location submarine(Block b, CardinalDirection d) {
         Block block = b;
         Material type;
         do {
             block = block.getRelative(BlockFace.DOWN);
             type = block.getType();
-        } while (TARDISMaterials.submarine_blocks.contains(type));
+        } while (TardisMaterials.submarine_blocks.contains(type));
         Location loc = block.getRelative(BlockFace.UP).getLocation();
         for (int n = 0; n < attempts; n++) {
             if (isSafeSubmarine(loc, d)) {
@@ -552,7 +552,7 @@ public class TARDISTimeTravel {
         return (isSafeSubmarine(loc, d)) ? loc : null;
     }
 
-    public boolean isSafeSubmarine(Location l, COMPASS d) {
+    public boolean isSafeSubmarine(Location l, CardinalDirection d) {
         int[] s = getStartLocation(l, d);
         int level, row, col, rowcount, colcount, count = 0;
         int starty = l.getBlockY();
@@ -570,7 +570,7 @@ public class TARDISTimeTravel {
             for (row = 0; row < rowcount; row++) {
                 for (col = 0; col < colcount; col++) {
                     Material mat = Objects.requireNonNull(l.getWorld()).getBlockAt(s[0], starty, s[2]).getType();
-                    if (!TARDISConstants.GOOD_WATER.contains(mat)) {
+                    if (!TardisConstants.GOOD_WATER.contains(mat)) {
                         count++;
                     }
                     s[0] += 1;

@@ -33,9 +33,9 @@ import com.sk89q.worldguard.protection.managers.storage.StorageException;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.util.SpongeUtil;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -50,9 +50,9 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISWorldGuardUtils {
+public class TardisWorldGuardUtils {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private WorldGuardPlugin wgp;
     private WorldGuardPlatform wg;
 
@@ -61,7 +61,7 @@ public class TARDISWorldGuardUtils {
      *
      * @param plugin an instance of the tardis plugin
      */
-    public TARDISWorldGuardUtils(TARDISPlugin plugin) {
+    public TardisWorldGuardUtils(TardisPlugin plugin) {
         this.plugin = plugin;
         if (plugin.isWorldGuardOnServer()) {
             wgp = (WorldGuardPlugin) plugin.getPM().getPlugin("WorldGuard");
@@ -107,7 +107,7 @@ public class TARDISWorldGuardUtils {
             return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
         }
         // get the flag to check
-        StateFlag flag = TARDISWorldGuardFlag.getFLAG_LOOKUP().get(f.toLowerCase(Locale.ENGLISH));
+        StateFlag flag = TardisWorldGuardFlag.getFLAG_LOOKUP().get(f.toLowerCase(Locale.ENGLISH));
         if (flag == null) {
             return true;
         }
@@ -171,7 +171,7 @@ public class TARDISWorldGuardUtils {
      * @param data a TIPS Data container
      * @param w    the world we are creating the region in
      */
-    public void addWGProtection(String p, TARDISTIPSData data, World w) {
+    public void addWGProtection(String p, TardisTipsData data, World w) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
         BlockVector3 b1 = BlockVector3.at(data.getMinX(), 0, data.getMinZ());
         BlockVector3 b2 = BlockVector3.at(data.getMaxX(), 256, data.getMaxZ());
@@ -328,7 +328,7 @@ public class TARDISWorldGuardUtils {
      * @param name the name of the recharger to remove
      */
     public void removeRechargerRegion(String name) {
-        World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + name + ".world"));
+        World w = TardisAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + name + ".world"));
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
         assert rm != null;
         rm.removeRegion("tardis_recharger_" + name);
@@ -573,7 +573,7 @@ public class TARDISWorldGuardUtils {
      * @return the protected region
      */
     public ProtectedRegion getRegion(String world, String p) {
-        World w = TARDISAliasResolver.getWorldFromAlias(world);
+        World w = TardisAliasResolver.getWorldFromAlias(world);
         if (w == null) {
             return null;
         }
@@ -622,7 +622,7 @@ public class TARDISWorldGuardUtils {
      * @param allow whether the flag state should be set to allow or deny
      */
     public void setEntryExitFlags(String world, String owner, boolean allow) {
-        World w = TARDISAliasResolver.getWorldFromAlias(world);
+        World w = TardisAliasResolver.getWorldFromAlias(world);
         if (w != null) {
             RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
             assert rm != null;

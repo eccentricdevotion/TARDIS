@@ -17,11 +17,11 @@
 package me.eccentric_nz.tardis.commands.dev;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -35,15 +35,15 @@ import java.sql.Statement;
 /**
  * @author eccentric_nz
  */
-class TARDISAddRegionsCommand {
+class TardisAddRegionsCommand {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
     private WorldGuardPlugin wg;
 
-    TARDISAddRegionsCommand(TARDISPlugin plugin) {
+    TardisAddRegionsCommand(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
         if (plugin.isWorldGuardOnServer()) {
@@ -85,9 +85,9 @@ class TARDISAddRegionsCommand {
                         // check if region name exists
                         String rn = "TARDIS_" + tl;
                         if (!config.contains("regions." + rn)) {
-                            TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                            TARDISTIPSData td = tintpos.getTIPSData(t);
-                            plugin.getWorldGuardUtils().addWGProtection(tl, td, TARDISAliasResolver.getWorldFromAlias(dw));
+                            TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
+                            TardisTipsData td = tintpos.getTIPSData(t);
+                            plugin.getWorldGuardUtils().addWGProtection(tl, td, TardisAliasResolver.getWorldFromAlias(dw));
                         }
                     }
                 }

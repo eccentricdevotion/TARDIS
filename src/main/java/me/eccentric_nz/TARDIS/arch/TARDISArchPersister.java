@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -30,17 +30,17 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISArchPersister {
+public class TardisArchPersister {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
 
-    public TARDISArchPersister(TARDISPlugin plugin) {
+    public TardisArchPersister(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -49,11 +49,11 @@ public class TARDISArchPersister {
         try {
             // save the arched players
             ps = connection.prepareStatement("INSERT INTO " + prefix + "arched (uuid, arch_name, arch_time) VALUES (?, ?, ?)");
-            for (Map.Entry<UUID, TARDISWatchData> map : plugin.getTrackerKeeper().getJohnSmith().entrySet()) {
+            for (Map.Entry<UUID, TardisWatchData> map : plugin.getTrackerKeeper().getJohnSmith().entrySet()) {
                 ps = connection.prepareStatement("SELECT uuid FROM " + prefix + "arched WHERE uuid = ?");
                 ps.setString(1, map.getKey().toString());
                 rs = ps.executeQuery();
-                TARDISWatchData twd = map.getValue();
+                TardisWatchData twd = map.getValue();
                 long time = 0;
                 long now = System.currentTimeMillis();
                 if (now < twd.getTime()) {
@@ -97,7 +97,7 @@ public class TARDISArchPersister {
             ps = connection.prepareStatement("SELECT uuid FROM " + prefix + "arched WHERE uuid = ?");
             ps.setString(1, uuid.toString());
             rs = ps.executeQuery();
-            TARDISWatchData twd = plugin.getTrackerKeeper().getJohnSmith().get(uuid);
+            TardisWatchData twd = plugin.getTrackerKeeper().getJohnSmith().get(uuid);
             long time = 0;
             long now = System.currentTimeMillis();
             if (now < twd.getTime()) {
@@ -146,17 +146,17 @@ public class TARDISArchPersister {
                     // disguise the player
                     String name = rs.getString("arch_name");
                     long time = System.currentTimeMillis() + rs.getLong("arch_time");
-                    TARDISWatchData twd = new TARDISWatchData(name, time);
+                    TardisWatchData twd = new TardisWatchData(name, time);
                     plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);
                     if (plugin.isDisguisesOnServer()) {
-                        TARDISArchLibsDisguise.undisguise(player);
+                        TardisArchLibsDisguise.undisguise(player);
                     } else {
-                        TARDISArchDisguise.undisguise(player);
+                        TardisArchDisguise.undisguise(player);
                     }
                     if (plugin.isDisguisesOnServer()) {
-                        TARDISArchLibsDisguise.disguise(player, name);
+                        TardisArchLibsDisguise.disguise(player, name);
                     } else {
-                        TARDISArchDisguise.disguise(player, name);
+                        TardisArchDisguise.disguise(player, name);
                     }
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         player.setDisplayName(name);
@@ -192,17 +192,17 @@ public class TARDISArchPersister {
                             // disguise the player
                             String name = rs.getString("arch_name");
                             long time = System.currentTimeMillis() + rs.getLong("arch_time");
-                            TARDISWatchData twd = new TARDISWatchData(name, time);
+                            TardisWatchData twd = new TardisWatchData(name, time);
                             plugin.getTrackerKeeper().getJohnSmith().put(player.getUniqueId(), twd);
                             if (plugin.isDisguisesOnServer()) {
-                                TARDISArchLibsDisguise.undisguise(player);
+                                TardisArchLibsDisguise.undisguise(player);
                             } else {
-                                TARDISArchDisguise.undisguise(player);
+                                TardisArchDisguise.undisguise(player);
                             }
                             if (plugin.isDisguisesOnServer()) {
-                                TARDISArchLibsDisguise.disguise(player, name);
+                                TardisArchLibsDisguise.disguise(player, name);
                             } else {
-                                TARDISArchDisguise.disguise(player, name);
+                                TardisArchDisguise.disguise(player, name);
                             }
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 player.setDisplayName(name);

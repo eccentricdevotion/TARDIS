@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.hads;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.api.event.TARDISHADSEvent;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisHadsEvent;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.enumeration.HADS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.move.TARDISDoorCloser;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.Hads;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.move.TardisDoorCloser;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -49,17 +49,17 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-class TARDISHostileDispersal {
+class TardisHostileDispersal {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Material> replace_with_barrier;
 
-    TARDISHostileDispersal(TARDISPlugin plugin) {
+    TardisHostileDispersal(TardisPlugin plugin) {
         this.plugin = plugin;
         replace_with_barrier = buildList();
     }
 
-    void disperseTARDIS(int id, UUID uuid, Player hostile, PRESET preset) {
+    void disperseTARDIS(int id, UUID uuid, Player hostile, Preset preset) {
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -68,22 +68,22 @@ class TARDISHostileDispersal {
         }
         if (rsc.isSubmarine()) {
             // underwater use displacement
-            new TARDISHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);
+            new TardisHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);
             return;
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         // sound the cloister bell
-        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 3, id, l, plugin.getServer().getPlayer(uuid), "HADS dispersal");
+        TardisCloisterBell bell = new TardisCloisterBell(plugin, 3, id, l, plugin.getServer().getPlayer(uuid), "HADS dispersal");
         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
         bell.setTask(taskID);
         plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
         // disperse
-        COMPASS d = rsc.getDirection();
+        CardinalDirection d = rsc.getDirection();
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             // always remove the portal
             plugin.getTrackerKeeper().getPortals().remove(l);
             // toggle the doors if neccessary
-            new TARDISDoorCloser(plugin, uuid, id).closeDoors();
+            new TardisDoorCloser(plugin, uuid, id).closeDoors();
         }
         World w = l.getWorld();
         // make sure chunk is loaded
@@ -94,7 +94,7 @@ class TARDISHostileDispersal {
         }
         int sbx = l.getBlockX() - 1;
         int sby;
-        if (preset.equals(PRESET.SUBMERGED)) {
+        if (preset.equals(Preset.SUBMERGED)) {
             sby = l.getBlockY() - 1;
         } else {
             sby = l.getBlockY();
@@ -125,7 +125,7 @@ class TARDISHostileDispersal {
                         flowerz = l.getBlockZ();
                     }
                 }
-                TARDISBlockSetters.setBlock(w, flowerx, flowery, flowerz, Material.AIR);
+                TardisBlockSetters.setBlock(w, flowerx, flowery, flowerz, Material.AIR);
                 break;
             case DUCK:
                 plugin.getPresetDestroyer().destroyDuckEyes(l, d);
@@ -147,7 +147,7 @@ class TARDISHostileDispersal {
         plugin.getPresetDestroyer().destroyLamp(l, preset);
         // remove sign
         plugin.getPresetDestroyer().destroySign(l, d, preset);
-        if (preset.equals(PRESET.JUNK_MODE)) {
+        if (preset.equals(Preset.JUNK_MODE)) {
             plugin.getPresetDestroyer().destroyHandbrake(l, d);
         }
         // remove blue wool
@@ -160,11 +160,11 @@ class TARDISHostileDispersal {
                     if (yy == 0) {
                         Block under = b.getRelative(BlockFace.DOWN);
                         if (replace_with_barrier.contains(under.getType())) {
-                            TARDISBlockSetters.setUnderDoorBlock(w, (sbx + xx), (sby + yy) - 1, (sbz + zz), id, false);
+                            TardisBlockSetters.setUnderDoorBlock(w, (sbx + xx), (sby + yy) - 1, (sbz + zz), id, false);
                         }
                     }
                     if (!b.getType().isAir()) {
-                        float v = (float) -0.5 + (float) (TARDISConstants.RANDOM.nextFloat() * ((0.5 - -0.5) + 1));
+                        float v = (float) -0.5 + (float) (TardisConstants.RANDOM.nextFloat() * ((0.5 - -0.5) + 1));
                         // get the appropriate carpet colour
                         String stainedGlass = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(b.getType()).toString();
                         String colour = stainedGlass.replace("STAINED_GLASS", "CARPET");
@@ -176,7 +176,7 @@ class TARDISHostileDispersal {
                         falls.add(fb);
                         fb.setDropItem(false);
                         fb.setVelocity(new Vector(v, v, v));
-                        b.setBlockData(TARDISConstants.AIR);
+                        b.setBlockData(TardisConstants.AIR);
                     }
                 }
             }
@@ -184,7 +184,7 @@ class TARDISHostileDispersal {
         BlockData carpetBlockData = tmp.createBlockData();
         // schedule task to remove fallen blocks
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> falls.forEach((f) -> {
-            f.getLocation().getBlock().setBlockData(TARDISConstants.AIR);
+            f.getLocation().getBlock().setBlockData(TardisConstants.AIR);
             f.remove();
         }), 10L);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -198,7 +198,7 @@ class TARDISHostileDispersal {
         }, 15L);
         plugin.getTrackerKeeper().getDispersed().put(uuid, l);
         plugin.getTrackerKeeper().getDispersedTARDII().add(id);
-        plugin.getPM().callEvent(new TARDISHADSEvent(hostile, id, l, HADS.DISPERSAL));
+        plugin.getPM().callEvent(new TardisHadsEvent(hostile, id, l, Hads.DISPERSAL));
     }
 
     private List<Material> buildList() {

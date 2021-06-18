@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advancement.TardisAdvancementFactory;
 import me.eccentric_nz.tardis.enumeration.Advancement;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.rooms.TARDISCondenserData;
-import me.eccentric_nz.tardis.rooms.TARDISRoomBuilder;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.rooms.TardisCondenserData;
+import me.eccentric_nz.tardis.rooms.TardisRoomBuilder;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -33,20 +33,20 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISZeroRoomBuilder {
+public class TardisZeroRoomBuilder {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISZeroRoomBuilder(TARDISPlugin plugin) {
+    public TardisZeroRoomBuilder(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public boolean build(Player p, int tips, int id) {
         if (!plugin.getConfig().getBoolean("allow.zero_room")) {
-            TARDISMessage.send(p, "ZERO_DISABLED");
+            TardisMessage.send(p, "ZERO_DISABLED");
             return true;
         }
-        TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+        TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
         int slot = tips;
         if (tips == -1) {
             slot = tintpos.getFreeSlot();
@@ -57,17 +57,17 @@ public class TARDISZeroRoomBuilder {
             where.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", set, where);
         }
-        TARDISTIPSData pos = tintpos.getTIPSData(slot);
+        TardisTipsData pos = tintpos.getTIPSData(slot);
         int x = pos.getCentreX();
         int y = 64;
         int z = pos.getCentreZ();
         World w = plugin.getServer().getWorld("TARDIS_Zero_room");
         if (w == null) {
-            TARDISMessage.send(p, "ZERO_NOT_FOUND");
+            TardisMessage.send(p, "ZERO_NOT_FOUND");
             return true;
         }
         Location l = new Location(w, x, y, z);
-        TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, "ZERO", l, COMPASS.SOUTH, p);
+        TardisRoomBuilder builder = new TardisRoomBuilder(plugin, "ZERO", l, CardinalDirection.SOUTH, p);
         if (builder.build()) {
             UUID uuid = p.getUniqueId();
             // ok, room growing was successful, so take their energy!
@@ -77,7 +77,7 @@ public class TARDISZeroRoomBuilder {
             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, set, p);
             // remove blocks from condenser table if rooms_require_blocks is true
             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
+                TardisCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
                 c_data.getBlockIDCount().forEach((key, value) -> {
                     HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", c_data.getTardisId());
@@ -88,7 +88,7 @@ public class TARDISZeroRoomBuilder {
             }
             // are we doing an advancement?
             if (plugin.getAdvancementConfig().getBoolean("rooms.enabled")) {
-                TARDISAdvancementFactory taf = new TARDISAdvancementFactory(plugin, p, Advancement.ROOMS, plugin.getBuildKeeper().getSeeds().size());
+                TardisAdvancementFactory taf = new TardisAdvancementFactory(plugin, p, Advancement.ROOMS, plugin.getBuildKeeper().getSeeds().size());
                 taf.doAdvancement("ZERO");
             }
         }

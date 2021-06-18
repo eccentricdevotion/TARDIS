@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Material;
 
-public enum GUIChameleon {
+public enum GuiChameleon {
 
     // Chameleon Circuit
     BUTTON_APPLY(1, 0, Material.COMPARATOR),
@@ -34,7 +34,7 @@ public enum GUIChameleon {
     private final int slot;
     private final Material material;
 
-    GUIChameleon(int customModelData, int slot, Material material) {
+    GuiChameleon(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -54,6 +54,6 @@ public enum GUIChameleon {
 
     public String getName() {
         String s = toString();
-        return TARDISPlugin.plugin.getLanguage().getString(s);
+        return TardisPlugin.plugin.getLanguage().getString(s);
     }
 }

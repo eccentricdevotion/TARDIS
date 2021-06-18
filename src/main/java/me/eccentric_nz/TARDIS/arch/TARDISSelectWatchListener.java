@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,11 +29,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * @author eccentric_nz
  */
-public class TARDISSelectWatchListener implements Listener {
+public class TardisSelectWatchListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISSelectWatchListener(TARDISPlugin plugin) {
+    public TardisSelectWatchListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.tardis.mobfarming;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advancement.TardisAdvancementFactory;
 import me.eccentric_nz.tardis.database.data.Farm;
 import me.eccentric_nz.tardis.database.resultset.ResultSetFarming;
 import me.eccentric_nz.tardis.enumeration.Advancement;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISMaterials;
-import me.eccentric_nz.tardis.utility.TARDISMultiverseInventoriesChecker;
-import me.eccentric_nz.tardis.utility.TARDISPerWorldInventoryChecker;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisMaterials;
+import me.eccentric_nz.tardis.utility.TardisMultiverseInventoriesChecker;
+import me.eccentric_nz.tardis.utility.TardisPerWorldInventoryChecker;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -48,11 +48,11 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISFarmer {
+public class TardisFarmer {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISFarmer(TARDISPlugin plugin) {
+    public TardisFarmer(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -71,7 +71,7 @@ public class TARDISFarmer {
      * @param from the world from
      * @return a List of the player's pets (if any are nearby)
      */
-    public TARDISPetsAndFollowers farmAnimals(Location l, COMPASS d, int id, Player p, String to, String from) {
+    public TardisPetsAndFollowers farmAnimals(Location l, CardinalDirection d, int id, Player p, String to, String from) {
         switch (d) {
             case NORTH -> l.setZ(l.getZ() - 1);
             case WEST -> l.setX(l.getX() - 1);
@@ -84,27 +84,27 @@ public class TARDISFarmer {
         Entity egg = w.spawnEntity(l, EntityType.EGG);
         List<Entity> mobs = egg.getNearbyEntities(3.75D, 3.75D, 3.75D);
 
-        List<TARDISPet> pets = new ArrayList<>();
-        List<TARDISFollower> followers = new ArrayList<>();
+        List<TardisPet> pets = new ArrayList<>();
+        List<TardisFollower> followers = new ArrayList<>();
         if (mobs.size() > 0) {
-            List<TARDISHorse> horses = new ArrayList<>();
-            List<TARDISLlama> llamas = new ArrayList<>();
-            List<TARDISMob> chickens = new ArrayList<>();
-            List<TARDISMob> cows = new ArrayList<>();
-            TARDISFish fish = null;
-            List<TARDISMooshroom> mooshrooms = new ArrayList<>();
-            List<TARDISMob> sheep = new ArrayList<>();
-            List<TARDISPet> parrots = new ArrayList<>();
-            List<TARDISPig> pigs = new ArrayList<>();
-            List<TARDISMob> polarbears = new ArrayList<>();
-            List<TARDISRabbit> rabbits = new ArrayList<>();
-            List<TARDISBee> bees = new ArrayList<>();
-            List<TARDISVillager> villagers = new ArrayList<>();
-            List<TARDISPanda> pandas = new ArrayList<>();
+            List<TardisHorse> horses = new ArrayList<>();
+            List<TardisLlama> llamas = new ArrayList<>();
+            List<TardisMob> chickens = new ArrayList<>();
+            List<TardisMob> cows = new ArrayList<>();
+            TardisFish fish = null;
+            List<TardisMooshroom> mooshrooms = new ArrayList<>();
+            List<TardisMob> sheep = new ArrayList<>();
+            List<TardisPet> parrots = new ArrayList<>();
+            List<TardisPig> pigs = new ArrayList<>();
+            List<TardisMob> polarbears = new ArrayList<>();
+            List<TardisRabbit> rabbits = new ArrayList<>();
+            List<TardisBee> bees = new ArrayList<>();
+            List<TardisVillager> villagers = new ArrayList<>();
+            List<TardisPanda> pandas = new ArrayList<>();
             // are we doing an advancement?
-            TARDISAdvancementFactory taf = null;
+            TardisAdvancementFactory taf = null;
             if (plugin.getAdvancementConfig().getBoolean("farm.enabled")) {
-                taf = new TARDISAdvancementFactory(plugin, p, Advancement.FARM, 14);
+                taf = new TardisAdvancementFactory(plugin, p, Advancement.FARM, 14);
             }
             // count total farm mobs
             int farmtotal = 0;
@@ -127,7 +127,7 @@ public class TARDISFarmer {
                     switch (entity.getType()) {
                         case ARMOR_STAND:
                             if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-                                TARDISFollower follower = new TARDISFollower(entity, p.getUniqueId());
+                                TardisFollower follower = new TardisFollower(entity, p.getUniqueId());
                                 if (follower.isValid()) {
                                     followers.add(follower);
                                     entity.remove();
@@ -135,7 +135,7 @@ public class TARDISFarmer {
                             }
                             break;
                         case BEE:
-                            TARDISBee tmbee = new TARDISBee();
+                            TardisBee tmbee = new TardisBee();
                             tmbee.setHasNectar(((Bee) entity).hasNectar());
                             tmbee.setHasStung(((Bee) entity).hasStung());
                             tmbee.setAnger(((Bee) entity).getAnger());
@@ -151,7 +151,7 @@ public class TARDISFarmer {
                             }
                             break;
                         case CHICKEN:
-                            TARDISMob tmchk = new TARDISMob();
+                            TardisMob tmchk = new TardisMob();
                             tmchk.setAge(((Chicken) entity).getAge());
                             tmchk.setBaby(!((Chicken) entity).isAdult());
                             tmchk.setName(entity.getCustomName());
@@ -165,7 +165,7 @@ public class TARDISFarmer {
                             farmtotal++;
                             break;
                         case COW:
-                            TARDISMob tmcow = new TARDISMob();
+                            TardisMob tmcow = new TardisMob();
                             tmcow.setAge(((Cow) entity).getAge());
                             tmcow.setBaby(!((Cow) entity).isAdult());
                             tmcow.setName(entity.getCustomName());
@@ -192,7 +192,7 @@ public class TARDISFarmer {
                                     break;
                                 }
                             }
-                            TARDISHorse tmhor = new TARDISHorse();
+                            TardisHorse tmhor = new TardisHorse();
                             tmhor.setAge(horse.getAge());
                             tmhor.setBaby(!horse.isAdult());
                             double mh = horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
@@ -245,7 +245,7 @@ public class TARDISFarmer {
                                     break;
                                 }
                             }
-                            TARDISLlama tmlla = new TARDISLlama();
+                            TardisLlama tmlla = new TardisLlama();
                             tmlla.setAge(llama.getAge());
                             tmlla.setBaby(!llama.isAdult());
                             double llmh = llama.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
@@ -286,7 +286,7 @@ public class TARDISFarmer {
                             Tameable polly = (Tameable) entity;
                             AnimalTamer tamer = polly.getOwner();
                             boolean timeLordIsOwner = (tamer != null && tamer.getUniqueId().equals(p.getUniqueId()));
-                            TARDISPet tmpet = new TARDISPet();
+                            TardisPet tmpet = new TardisPet();
                             if (polly.isTamed()) {
                                 if (timeLordIsOwner) {
                                     // only move tamed parrots that the time lord owns!
@@ -318,7 +318,7 @@ public class TARDISFarmer {
                             }
                             break;
                         case PANDA:
-                            TARDISPanda tmpanda = new TARDISPanda();
+                            TardisPanda tmpanda = new TardisPanda();
                             tmpanda.setAge(((Panda) entity).getAge());
                             tmpanda.setBaby(!((Panda) entity).isAdult());
                             tmpanda.setName(entity.getCustomName());
@@ -333,7 +333,7 @@ public class TARDISFarmer {
                             }
                             break;
                         case PIG:
-                            TARDISPig tmpig = new TARDISPig();
+                            TardisPig tmpig = new TardisPig();
                             tmpig.setAge(((Pig) entity).getAge());
                             tmpig.setBaby(!((Pig) entity).isAdult());
                             tmpig.setName(entity.getCustomName());
@@ -350,7 +350,7 @@ public class TARDISFarmer {
                             farmtotal++;
                             break;
                         case POLAR_BEAR:
-                            TARDISMob tmbear = new TARDISMob();
+                            TardisMob tmbear = new TardisMob();
                             tmbear.setAge(((PolarBear) entity).getAge());
                             tmbear.setBaby(!((PolarBear) entity).isAdult());
                             tmbear.setName(entity.getCustomName());
@@ -364,7 +364,7 @@ public class TARDISFarmer {
                             break;
                         case RABBIT:
                             Rabbit rabbit = (Rabbit) entity;
-                            TARDISRabbit tmrabbit = new TARDISRabbit();
+                            TardisRabbit tmrabbit = new TardisRabbit();
                             tmrabbit.setAge(rabbit.getAge());
                             tmrabbit.setBaby(!rabbit.isAdult());
                             tmrabbit.setName(rabbit.getCustomName());
@@ -378,7 +378,7 @@ public class TARDISFarmer {
                             }
                             break;
                         case SHEEP:
-                            TARDISMob tmshp = new TARDISMob();
+                            TardisMob tmshp = new TardisMob();
                             tmshp.setAge(((Sheep) entity).getAge());
                             tmshp.setBaby(!((Sheep) entity).isAdult());
                             tmshp.setColour(((Sheep) entity).getColor());
@@ -393,7 +393,7 @@ public class TARDISFarmer {
                             farmtotal++;
                             break;
                         case MUSHROOM_COW:
-                            TARDISMooshroom tmshr = new TARDISMooshroom();
+                            TardisMooshroom tmshr = new TardisMooshroom();
                             tmshr.setAge(((MushroomCow) entity).getAge());
                             tmshr.setBaby(!((MushroomCow) entity).isAdult());
                             tmshr.setVariant(((MushroomCow) entity).getVariant());
@@ -408,7 +408,7 @@ public class TARDISFarmer {
                             farmtotal++;
                             break;
                         case VILLAGER:
-                            TARDISVillager tv = new TARDISVillager();
+                            TardisVillager tv = new TardisVillager();
                             Villager v = (Villager) entity;
                             tv.setProfession(v.getProfession());
                             tv.setAge(v.getAge());
@@ -429,7 +429,7 @@ public class TARDISFarmer {
                         case CAT:
                             Tameable tamed = (Tameable) entity;
                             if (tamed.isTamed() && tamed.getOwner().getUniqueId().equals(p.getUniqueId())) {
-                                TARDISPet pet = new TARDISPet();
+                                TardisPet pet = new TardisPet();
                                 pet.setType(entity.getType());
                                 pet.setName(entity.getCustomName());
                                 double health;
@@ -458,9 +458,9 @@ public class TARDISFarmer {
                     }
                 }
                 ItemStack fishBucket = p.getInventory().getItemInOffHand();
-                if (fishBucket != null && TARDISMaterials.fish_buckets.contains(fishBucket.getType())) {
-                    fish = new TARDISFish();
-                    fish.setType(TARDISMaterials.fishMap.get(fishBucket.getType()));
+                if (fishBucket != null && TardisMaterials.fish_buckets.contains(fishBucket.getType())) {
+                    fish = new TardisFish();
+                    fish.setType(TardisMaterials.fishMap.get(fishBucket.getType()));
                     if (fishBucket.getType().equals(Material.TROPICAL_FISH_BUCKET)) {
                         TropicalFishBucketMeta fbim = (TropicalFishBucketMeta) fishBucket.getItemMeta();
                         fish.setColour(fbim.getBodyColor());
@@ -470,21 +470,21 @@ public class TARDISFarmer {
                 }
                 if (bees.size() > 0 || farmtotal > 0 || horses.size() > 0 || villagers.size() > 0 || pets.size() > 0 || polarbears.size() > 0 || llamas.size() > 0 || parrots.size() > 0 || pandas.size() > 0 || rabbits.size() > 0 || fish != null || followers.size() > 0) {
                     boolean canfarm = switch (plugin.getInvManager()) {
-                        case MULTIVERSE -> TARDISMultiverseInventoriesChecker.checkWorldsCanShare(from, to);
-                        case PER_WORLD -> TARDISPerWorldInventoryChecker.checkWorldsCanShare(from, to);
+                        case MULTIVERSE -> TardisMultiverseInventoriesChecker.checkWorldsCanShare(from, to);
+                        case PER_WORLD -> TardisPerWorldInventoryChecker.checkWorldsCanShare(from, to);
                         default -> true;
                     };
                     if (!canfarm) {
-                        TARDISMessage.send(p, "WORLD_NO_FARM");
+                        TardisMessage.send(p, "WORLD_NO_FARM");
                         plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());
                         return null;
                     }
                 }
                 if (!apiary.isEmpty()) {
                     // get location of farm room
-                    World world = TARDISStaticLocationGetters.getWorld(apiary);
+                    World world = TardisStaticLocationGetters.getWorld(apiary);
                     if (bees.size() > 0) {
-                        Location beehive = TARDISStaticLocationGetters.getSpawnLocationFromDB(apiary);
+                        Location beehive = TardisStaticLocationGetters.getSpawnLocationFromDB(apiary);
                         while (!world.getChunkAt(beehive).isLoaded()) {
                             world.getChunkAt(beehive).load();
                         }
@@ -512,12 +512,12 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (bees.size() > 0) {
-                    TARDISMessage.send(p, "FARM_APIARY");
+                    TardisMessage.send(p, "FARM_APIARY");
                 }
                 if (!aquarium.isEmpty() && fish != null) {
                     // get location of farm room
-                    World world = TARDISStaticLocationGetters.getWorld(aquarium);
-                    Location fish_tank = TARDISStaticLocationGetters.getSpawnLocationFromDB(aquarium);
+                    World world = TardisStaticLocationGetters.getWorld(aquarium);
+                    Location fish_tank = TardisStaticLocationGetters.getSpawnLocationFromDB(aquarium);
                     switch (fish.getType()) {
                         case COD -> fish_tank.add(3.0d, 1.5d, 3.0d);
                         case PUFFERFISH -> fish_tank.add(-3.0d, 1.5d, 3.0d);
@@ -542,9 +542,9 @@ public class TARDISFarmer {
                 }
                 if (!bamboo.isEmpty()) {
                     // get location of bamboo room
-                    World world = TARDISStaticLocationGetters.getWorld(bamboo);
+                    World world = TardisStaticLocationGetters.getWorld(bamboo);
                     if (pandas.size() > 0) {
-                        Location forest = TARDISStaticLocationGetters.getSpawnLocationFromDB(bamboo);
+                        Location forest = TardisStaticLocationGetters.getSpawnLocationFromDB(bamboo);
                         while (!world.getChunkAt(forest).isLoaded()) {
                             world.getChunkAt(forest).load();
                         }
@@ -571,13 +571,13 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (pandas.size() > 0) {
-                    TARDISMessage.send(p, "FARM_BAMBOO");
+                    TardisMessage.send(p, "FARM_BAMBOO");
                 }
                 if (!farm.isEmpty()) {
                     // get location of farm room
-                    World world = TARDISStaticLocationGetters.getWorld(farm);
+                    World world = TardisStaticLocationGetters.getWorld(farm);
                     if (chickens.size() > 0) {
-                        Location chicken_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(3, 0, -3);
+                        Location chicken_pen = TardisStaticLocationGetters.getSpawnLocationFromDB(farm).add(3, 0, -3);
                         while (!world.getChunkAt(chicken_pen).isLoaded()) {
                             world.getChunkAt(chicken_pen).load();
                         }
@@ -596,7 +596,7 @@ public class TARDISFarmer {
                         });
                     }
                     if (cows.size() > 0) {
-                        Location cow_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(3, 0, 3);
+                        Location cow_pen = TardisStaticLocationGetters.getSpawnLocationFromDB(farm).add(3, 0, 3);
                         while (!world.getChunkAt(cow_pen).isLoaded()) {
                             world.getChunkAt(cow_pen).load();
                         }
@@ -615,7 +615,7 @@ public class TARDISFarmer {
                         });
                     }
                     if (pigs.size() > 0) {
-                        Location pig_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(-3, 0, -3);
+                        Location pig_pen = TardisStaticLocationGetters.getSpawnLocationFromDB(farm).add(-3, 0, -3);
                         while (!world.getChunkAt(pig_pen).isLoaded()) {
                             world.getChunkAt(pig_pen).load();
                         }
@@ -635,7 +635,7 @@ public class TARDISFarmer {
                         });
                     }
                     if (sheep.size() > 0) {
-                        Location sheep_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(-3, 0, 3);
+                        Location sheep_pen = TardisStaticLocationGetters.getSpawnLocationFromDB(farm).add(-3, 0, 3);
                         while (!world.getChunkAt(sheep_pen).isLoaded()) {
                             world.getChunkAt(sheep_pen).load();
                         }
@@ -655,7 +655,7 @@ public class TARDISFarmer {
                         });
                     }
                     if (mooshrooms.size() > 0) {
-                        Location cow_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(farm).add(3, 0, 3);
+                        Location cow_pen = TardisStaticLocationGetters.getSpawnLocationFromDB(farm).add(3, 0, 3);
                         while (!world.getChunkAt(cow_pen).isLoaded()) {
                             world.getChunkAt(cow_pen).load();
                         }
@@ -699,12 +699,12 @@ public class TARDISFarmer {
                     }
                     p.updateInventory();
                 } else if (farmtotal > 0) {
-                    TARDISMessage.send(p, "FARM");
+                    TardisMessage.send(p, "FARM");
                 }
                 if (!stable.isEmpty() && horses.size() > 0) {
                     // get location of stable room
-                    World world = TARDISStaticLocationGetters.getWorld(stable);
-                    Location horse_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(stable);
+                    World world = TardisStaticLocationGetters.getWorld(stable);
+                    Location horse_pen = TardisStaticLocationGetters.getSpawnLocationFromDB(stable);
                     while (!world.getChunkAt(horse_pen).isLoaded()) {
                         world.getChunkAt(horse_pen).load();
                     }
@@ -755,12 +755,12 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (horses.size() > 0) {
-                    TARDISMessage.send(p, "FARM_STABLE");
+                    TardisMessage.send(p, "FARM_STABLE");
                 }
                 if (!stall.isEmpty() && llamas.size() > 0) {
                     // get location of stable room
-                    World world = TARDISStaticLocationGetters.getWorld(stall);
-                    Location llama_pen = TARDISStaticLocationGetters.getSpawnLocationFromDB(stall);
+                    World world = TardisStaticLocationGetters.getWorld(stall);
+                    Location llama_pen = TardisStaticLocationGetters.getSpawnLocationFromDB(stall);
                     while (!world.getChunkAt(llama_pen).isLoaded()) {
                         world.getChunkAt(llama_pen).load();
                     }
@@ -809,12 +809,12 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (llamas.size() > 0) {
-                    TARDISMessage.send(p, "FARM_STALL");
+                    TardisMessage.send(p, "FARM_STALL");
                 }
                 if (!hutch.isEmpty() && rabbits.size() > 0) {
                     // get location of hutch room
-                    World world = TARDISStaticLocationGetters.getWorld(hutch);
-                    Location rabbit_hutch = TARDISStaticLocationGetters.getSpawnLocationFromDB(hutch);
+                    World world = TardisStaticLocationGetters.getWorld(hutch);
+                    Location rabbit_hutch = TardisStaticLocationGetters.getSpawnLocationFromDB(hutch);
                     while (!world.getChunkAt(rabbit_hutch).isLoaded()) {
                         world.getChunkAt(rabbit_hutch).load();
                     }
@@ -839,12 +839,12 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (rabbits.size() > 0) {
-                    TARDISMessage.send(p, "FARM_HUTCH");
+                    TardisMessage.send(p, "FARM_HUTCH");
                 }
                 if (!village.isEmpty() && villagers.size() > 0) {
                     // get location of village room
-                    World world = TARDISStaticLocationGetters.getWorld(village);
-                    Location v_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(village);
+                    World world = TardisStaticLocationGetters.getWorld(village);
+                    Location v_room = TardisStaticLocationGetters.getSpawnLocationFromDB(village);
                     while (!world.getChunkAt(v_room).isLoaded()) {
                         world.getChunkAt(v_room).load();
                     }
@@ -875,12 +875,12 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (villagers.size() > 0) {
-                    TARDISMessage.send(p, "FARM_VILLAGE");
+                    TardisMessage.send(p, "FARM_VILLAGE");
                 }
                 if (!igloo.isEmpty() && polarbears.size() > 0) {
                     // get location of igloo room
-                    World world = TARDISStaticLocationGetters.getWorld(igloo);
-                    Location i_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(igloo);
+                    World world = TardisStaticLocationGetters.getWorld(igloo);
+                    Location i_room = TardisStaticLocationGetters.getSpawnLocationFromDB(igloo);
                     while (!world.getChunkAt(i_room).isLoaded()) {
                         world.getChunkAt(i_room).load();
                     }
@@ -904,12 +904,12 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (polarbears.size() > 0) {
-                    TARDISMessage.send(p, "FARM_IGLOO");
+                    TardisMessage.send(p, "FARM_IGLOO");
                 }
                 if (!birdcage.isEmpty() && parrots.size() > 0) {
                     // get location of birdcage room
-                    World world = TARDISStaticLocationGetters.getWorld(birdcage);
-                    Location b_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(birdcage);
+                    World world = TardisStaticLocationGetters.getWorld(birdcage);
+                    Location b_room = TardisStaticLocationGetters.getSpawnLocationFromDB(birdcage);
                     while (!world.getChunkAt(b_room).isLoaded()) {
                         world.getChunkAt(b_room).load();
                     }
@@ -936,24 +936,24 @@ public class TARDISFarmer {
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (parrots.size() > 0) {
-                    TARDISMessage.send(p, "FARM_BIRDCAGE");
+                    TardisMessage.send(p, "FARM_BIRDCAGE");
                 }
             }
         }
         egg.remove();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId()), 20L);
-        return new TARDISPetsAndFollowers(pets, followers);
+        return new TardisPetsAndFollowers(pets, followers);
     }
 
-    public TARDISPetsAndFollowers exitPets(Player player) {
-        List<TARDISPet> pets = new ArrayList<>();
-        List<TARDISFollower> followers = new ArrayList<>();
+    public TardisPetsAndFollowers exitPets(Player player) {
+        List<TardisPet> pets = new ArrayList<>();
+        List<TardisFollower> followers = new ArrayList<>();
         List<Entity> mobs = player.getNearbyEntities(3.5D, 3.5D, 3.5D);
         for (Entity entity : mobs) {
             if (entity.getType().equals(EntityType.CAT) || entity.getType().equals(EntityType.WOLF) || entity.getType().equals(EntityType.PARROT)) {
                 Tameable tamed = (Tameable) entity;
                 if (tamed.isTamed() && Objects.requireNonNull(tamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
-                    TARDISPet pet = new TARDISPet();
+                    TardisPet pet = new TardisPet();
                     pet.setType(entity.getType());
                     String pet_name = entity.getCustomName();
                     if (pet_name != null) {
@@ -995,13 +995,13 @@ public class TARDISFarmer {
                     entity.remove();
                 }
             } else if (entity.getType().equals(EntityType.ARMOR_STAND) && plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-                TARDISFollower follower = new TARDISFollower(entity, player.getUniqueId());
+                TardisFollower follower = new TardisFollower(entity, player.getUniqueId());
                 if (follower.isValid()) {
                     followers.add(follower);
                     entity.remove();
                 }
             }
         }
-        return new TARDISPetsAndFollowers(pets, followers);
+        return new TardisPetsAndFollowers(pets, followers);
     }
 }

@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.move.TARDISMoveSession;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.move.TardisMoveSession;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -48,12 +48,12 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISAcidWater implements Listener {
+public class TardisAcidWater implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Player> burningPlayers = new ArrayList<>();
 
-    public TARDISAcidWater(TARDISPlugin plugin) {
+    public TardisAcidWater(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -72,7 +72,7 @@ public class TARDISAcidWater implements Listener {
         Player player = e.getPlayer();
         Location loc = player.getLocation();
 
-        TARDISMoveSession tms = plugin.getTrackerKeeper().getTARDISMoveSession(player);
+        TardisMoveSession tms = plugin.getTrackerKeeper().getTARDISMoveSession(player);
 
         // If the location is stale, ie: the player isn't actually moving xyz coords, they're looking around
         if (tms.isStaleLocation()) {
@@ -88,7 +88,7 @@ public class TARDISAcidWater implements Listener {
             return;
         }
         // Return if players are immune
-        if (TARDISPermission.hasPermission(player, "tardis.acid.bypass")) {
+        if (TardisPermission.hasPermission(player, "tardis.acid.bypass")) {
             return;
         }
         if (player.getGameMode().equals(GameMode.CREATIVE)) {

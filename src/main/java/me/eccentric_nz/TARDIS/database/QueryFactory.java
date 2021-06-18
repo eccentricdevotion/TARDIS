@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import org.bukkit.entity.Player;
 
@@ -34,12 +34,12 @@ import java.util.UUID;
  */
 public class QueryFactory {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
 
-    public QueryFactory(TARDISPlugin plugin) {
+    public QueryFactory(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -51,7 +51,7 @@ public class QueryFactory {
      * @param data  a HashMap&lt;String, Object&gt; of table fields and values to insert.
      */
     public void doInsert(String table, HashMap<String, Object> data) {
-        TARDISSQLInsert insert = new TARDISSQLInsert(plugin, table, data);
+        TardisSqlInsert insert = new TardisSqlInsert(plugin, table, data);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, insert);
     }
 
@@ -125,7 +125,7 @@ public class QueryFactory {
      * @param where a HashMap&lt;String, Object&gt; of table fields and values to select the records to update.
      */
     public void doUpdate(String table, HashMap<String, Object> data, HashMap<String, Object> where) {
-        TARDISSQLUpdate update = new TARDISSQLUpdate(plugin, table, data, where);
+        TardisSqlUpdate update = new TardisSqlUpdate(plugin, table, data, where);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, update);
     }
 
@@ -137,7 +137,7 @@ public class QueryFactory {
      * @param where a HashMap&lt;String, Object&gt; of table fields and values to select the records to update.
      */
     public void doSyncUpdate(String table, HashMap<String, Object> data, HashMap<String, Object> where) {
-        TARDISSQLUpdate update = new TARDISSQLUpdate(plugin, table, data, where);
+        TardisSqlUpdate update = new TardisSqlUpdate(plugin, table, data, where);
         plugin.getServer().getScheduler().runTask(plugin, update);
     }
 
@@ -148,7 +148,7 @@ public class QueryFactory {
      * @param where a HashMap&lt;String, Object&gt; of table fields and values to select the records to delete.
      */
     public void doDelete(String table, HashMap<String, Object> where) {
-        TARDISSQLDelete delete = new TARDISSQLDelete(plugin, table, where);
+        TardisSqlDelete delete = new TardisSqlDelete(plugin, table, where);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, delete);
     }
 
@@ -201,7 +201,7 @@ public class QueryFactory {
      * @param p      the player who receives the success message.
      */
     public void alterEnergyLevel(String table, int amount, HashMap<String, Object> where, Player p) {
-        TARDISSQLAlterEnergy alter = new TARDISSQLAlterEnergy(plugin, table, amount, where, p);
+        TardisSqlAlterEnergy alter = new TardisSqlAlterEnergy(plugin, table, amount, where, p);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, alter);
     }
 
@@ -212,7 +212,7 @@ public class QueryFactory {
      * @param where  a HashMap&lt;String, Object&gt; of table fields and values to select the records to alter.
      */
     public void alterCondenserBlockCount(int amount, HashMap<String, Object> where) {
-        TARDISSQLCondenserUpdate condense = new TARDISSQLCondenserUpdate(plugin, amount, where);
+        TardisSqlCondenserUpdate condense = new TardisSqlCondenserUpdate(plugin, amount, where);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, condense);
     }
 
@@ -225,7 +225,7 @@ public class QueryFactory {
      * @param s    what level the control is (0 primary, 1 secondary (BAKER), 2 tertiary (WOOD))
      */
     public void insertControl(int id, int type, String l, int s) {
-        TARDISSQLInsertControl control = new TARDISSQLInsertControl(plugin, id, type, l, s);
+        TardisSqlInsertControl control = new TardisSqlInsertControl(plugin, id, type, l, s);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, control);
     }
 
@@ -275,7 +275,7 @@ public class QueryFactory {
      * @param id    the tardis_id
      */
     public void insertLocations(HashMap<String, Object> data, String biome, int id) {
-        TARDISSQLInsertLocations locate = new TARDISSQLInsertLocations(plugin, data, biome, id);
+        TardisSqlInsertLocations locate = new TardisSqlInsertLocations(plugin, data, biome, id);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, locate);
     }
 
@@ -287,7 +287,7 @@ public class QueryFactory {
      * @param id    the tardis_id
      */
     public void updateLocations(HashMap<String, Object> data, String biome, int id) {
-        TARDISSQLUpdateLocations locate = new TARDISSQLUpdateLocations(plugin, data, biome, id);
+        TardisSqlUpdateLocations locate = new TardisSqlUpdateLocations(plugin, data, biome, id);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, locate);
     }
 
@@ -363,8 +363,8 @@ public class QueryFactory {
             try {
                 service.testConnection(connection);
                 long now;
-                if (TARDISPermission.hasPermission(player, "tardis.prune.bypass")) {
-                    now = Long.MAX_VALUE - TARDISConstants.RANDOM.nextInt(1000);
+                if (TardisPermission.hasPermission(player, "tardis.prune.bypass")) {
+                    now = Long.MAX_VALUE - TardisConstants.RANDOM.nextInt(1000);
                 } else {
                     now = System.currentTimeMillis();
                 }

@@ -24,9 +24,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISPandoricaPreset extends TARDISPreset {
+class TardisPandoricaPreset extends TardisPreset {
 
-    TARDISPandoricaPreset() {
+    TardisPandoricaPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         for (int c = 0; c < 10; c++) {

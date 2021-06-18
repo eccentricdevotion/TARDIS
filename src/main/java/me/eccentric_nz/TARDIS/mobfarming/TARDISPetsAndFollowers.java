@@ -18,21 +18,21 @@ package me.eccentric_nz.tardis.mobfarming;
 
 import java.util.List;
 
-public class TARDISPetsAndFollowers {
+public class TardisPetsAndFollowers {
 
-    private final List<TARDISPet> pets;
-    private final List<TARDISFollower> followers;
+    private final List<TardisPet> pets;
+    private final List<TardisFollower> followers;
 
-    TARDISPetsAndFollowers(List<TARDISPet> pets, List<TARDISFollower> followers) {
+    TardisPetsAndFollowers(List<TardisPet> pets, List<TardisFollower> followers) {
         this.pets = pets;
         this.followers = followers;
     }
 
-    public List<TARDISPet> getPets() {
+    public List<TardisPet> getPets() {
         return pets;
     }
 
-    public List<TARDISFollower> getFollowers() {
+    public List<TardisFollower> getFollowers() {
         return followers;
     }
 }

@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -27,11 +27,11 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISMakePresetCommand {
+class TardisMakePresetCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISMakePresetCommand(TARDISPlugin plugin) {
+    TardisMakePresetCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -41,13 +41,13 @@ class TARDISMakePresetCommand {
             player = (Player) sender;
         }
         if (player == null) {
-            TARDISMessage.send(sender, "CMD_PLAYER");
+            TardisMessage.send(sender, "CMD_PLAYER");
             return true;
         }
         // check they are facing east
-        String yaw = TARDISStaticUtils.getPlayersDirection(player, false);
+        String yaw = TardisStaticUtils.getPlayersDirection(player, false);
         if (!yaw.equals("EAST")) {
-            TARDISMessage.send(player, "PRESET_DIRECTION");
+            TardisMessage.send(player, "PRESET_DIRECTION");
             return true;
         }
         String bool;
@@ -55,7 +55,7 @@ class TARDISMakePresetCommand {
             // check they typed true of false
             String tf = args[2].toLowerCase(Locale.ENGLISH);
             if (!tf.equals("true") && !tf.equals("false")) {
-                TARDISMessage.send(player, "TRUE_FALSE");
+                TardisMessage.send(player, "TRUE_FALSE");
                 return false;
             }
             bool = tf;
@@ -63,7 +63,7 @@ class TARDISMakePresetCommand {
             // presume it is assymetric if not set
             bool = "true";
         }
-        TARDISMessage.send(player, "PRESET_INFO");
+        TardisMessage.send(player, "PRESET_INFO");
         plugin.getTrackerKeeper().getPreset().put(player.getUniqueId(), args[1] + ":" + bool);
         return true;
     }

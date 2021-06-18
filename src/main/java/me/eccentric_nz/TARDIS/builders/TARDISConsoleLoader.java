@@ -17,11 +17,11 @@
 package me.eccentric_nz.tardis.builders;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.ConsoleSize;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
 import org.bukkit.Material;
 
 import java.io.File;
@@ -32,12 +32,12 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISConsoleLoader {
+public class TardisConsoleLoader {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private boolean save = false;
 
-    public TARDISConsoleLoader(TARDISPlugin plugin) {
+    public TardisConsoleLoader(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -108,7 +108,7 @@ public class TARDISConsoleLoader {
                 }
                 plugin.debug("Adding custom console schematic: " + console);
                 // get JSON
-                JsonObject obj = TARDISSchematicGZip.unzip(path);
+                JsonObject obj = TardisSchematicGZip.unzip(path);
                 // get dimensions
                 assert obj != null;
                 JsonObject dimensions = obj.get("dimensions").getAsJsonObject();

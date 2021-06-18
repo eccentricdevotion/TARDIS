@@ -22,7 +22,7 @@ import org.bukkit.Material;
 /**
  * @author eccentric_nz
  */
-public class TARDISBuildData {
+public class TardisBuildData {
 
     private Schematic schematic;
     private Material wallType;

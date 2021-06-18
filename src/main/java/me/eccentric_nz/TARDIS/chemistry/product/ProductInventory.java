@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.chemistry.product;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiChemistry;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -28,9 +28,9 @@ import java.util.Arrays;
 public class ProductInventory {
 
     private final ItemStack[] menu;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public ProductInventory(TARDISPlugin plugin) {
+    public ProductInventory(TardisPlugin plugin) {
         this.plugin = plugin;
         menu = getItemStack();
     }
@@ -43,7 +43,7 @@ public class ProductInventory {
         assert info_im != null;
         info_im.setDisplayName("Info");
         info_im.setLore(Arrays.asList("Combine elements and compounds", "to create sparklers, balloons,", "lamps, and glow sticks.", "To see a product formula", "use the " + ChatColor.GREEN + ChatColor.ITALIC + "/tardischemistry formula" + ChatColor.DARK_PURPLE + ChatColor.ITALIC + " command.", "Place items like you would", "in a crafting table", "in the 9 left slots."));
-        info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
+        info_im.setCustomModelData(GuiChemistry.INFO.getCustomModelData());
         info.setItemMeta(info_im);
         stack[8] = info;
         // craft recipe
@@ -51,7 +51,7 @@ public class ProductInventory {
         ItemMeta craft_im = craft.getItemMeta();
         assert craft_im != null;
         craft_im.setDisplayName("Craft");
-        craft_im.setCustomModelData(GUIChemistry.CRAFT.getCustomModelData());
+        craft_im.setCustomModelData(GuiChemistry.CRAFT.getCustomModelData());
         craft.setItemMeta(craft_im);
         stack[17] = craft;
         // close
@@ -59,7 +59,7 @@ public class ProductInventory {
         ItemMeta close_im = close.getItemMeta();
         assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GuiChemistry.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[26] = close;
         return stack;

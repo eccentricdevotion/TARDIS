@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis;
 
-import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
-import me.eccentric_nz.tardis.commands.TARDISTravelCommands;
-import me.eccentric_nz.tardis.commands.config.TARDISConfigCommand;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.listeners.TARDISRenderRoomListener;
-import me.eccentric_nz.tardis.move.TARDISDoorListener;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
-import me.eccentric_nz.tardis.rooms.TARDISCondenserData;
+import me.eccentric_nz.tardis.commands.TardisCommandHelper;
+import me.eccentric_nz.tardis.commands.TardisTravelCommands;
+import me.eccentric_nz.tardis.commands.config.TardisConfigCommand;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.listeners.TardisRenderRoomListener;
+import me.eccentric_nz.tardis.move.TardisDoorListener;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
+import me.eccentric_nz.tardis.rooms.TardisCondenserData;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -44,7 +44,7 @@ import java.util.logging.Logger;
  *
  * @author eccentric_nz
  */
-public class TARDISGeneralInstanceKeeper {
+public class TardisGeneralInstanceKeeper {
 
     private final HashMap<String, Double[]> gravityEastList = new HashMap<>();
     private final HashMap<String, Double[]> gravityNorthList = new HashMap<>();
@@ -53,7 +53,7 @@ public class TARDISGeneralInstanceKeeper {
     private final HashMap<String, Double[]> gravityWestList = new HashMap<>();
     private final HashMap<String, Integer> protectBlockMap = new HashMap<>();
     private final HashMap<String, String> sign_lookup;
-    private final HashMap<UUID, TARDISCondenserData> roomCondenserData = new HashMap<>();
+    private final HashMap<UUID, TardisCondenserData> roomCondenserData = new HashMap<>();
     private final Set<Material> transparent;
     private final Set<Block> artronFurnaces = new HashSet<>();
     private final Set<Block> doorPistons = new HashSet<>();
@@ -70,22 +70,22 @@ public class TARDISGeneralInstanceKeeper {
     private final Set<String> sonicWires = new HashSet<>();
     private final Set<UUID> junkTravellers = new HashSet<>();
     private final Set<UUID> timeRotors = new HashSet<>();
-    private final TARDISPlugin plugin;
-    private final TARDISDoorListener doorListener;
+    private final TardisPlugin plugin;
+    private final TardisDoorListener doorListener;
     private final YamlConfiguration pluginYAML;
     private boolean junkTravelling = false;
     private List<String> quotes = new ArrayList<>();
     private Location junkDestination = null;
     private long junkTime;
-    private TARDISConfigCommand tardisConfigCommand;
-    private TARDISRenderRoomListener rendererListener;
-    private TARDISTravelCommands tardisTravelCommand;
+    private TardisConfigCommand tardisConfigCommand;
+    private TardisRenderRoomListener rendererListener;
+    private TardisTravelCommands tardisTravelCommand;
 
-    TARDISGeneralInstanceKeeper(TARDISPlugin plugin) {
+    TardisGeneralInstanceKeeper(TardisPlugin plugin) {
         this.plugin = plugin;
         roomArgs = buildRoomArgs();
         transparent = buildTransparent();
-        doorListener = new TARDISDoorListener(plugin);
+        doorListener = new TardisDoorListener(plugin);
         sign_lookup = buildSignLookup();
         setRechargers();
         InputStream is = plugin.getResource("plugin.yml");
@@ -95,7 +95,7 @@ public class TARDISGeneralInstanceKeeper {
         try {
             pluginYAML.load(reader);
         } catch (IOException | InvalidConfigurationException ex) {
-            Logger.getLogger(TARDISCommandHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TardisCommandHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -159,7 +159,7 @@ public class TARDISGeneralInstanceKeeper {
         return sign_lookup;
     }
 
-    public HashMap<UUID, TARDISCondenserData> getRoomCondenserData() {
+    public HashMap<UUID, TardisCondenserData> getRoomCondenserData() {
         return roomCondenserData;
     }
 
@@ -171,31 +171,31 @@ public class TARDISGeneralInstanceKeeper {
         return doorPistons;
     }
 
-    public TARDISConfigCommand getTardisConfigCommand() {
+    public TardisConfigCommand getTardisConfigCommand() {
         return tardisConfigCommand;
     }
 
-    void setTardisConfigCommand(TARDISConfigCommand tardisConfigCommand) {
+    void setTardisConfigCommand(TardisConfigCommand tardisConfigCommand) {
         this.tardisConfigCommand = tardisConfigCommand;
     }
 
-    public TARDISDoorListener getDoorListener() {
+    public TardisDoorListener getDoorListener() {
         return doorListener;
     }
 
-    public TARDISRenderRoomListener getRendererListener() {
+    public TardisRenderRoomListener getRendererListener() {
         return rendererListener;
     }
 
-    void setRendererListener(TARDISRenderRoomListener rendererListener) {
+    void setRendererListener(TardisRenderRoomListener rendererListener) {
         this.rendererListener = rendererListener;
     }
 
-    public TARDISTravelCommands getTardisTravelCommand() {
+    public TardisTravelCommands getTardisTravelCommand() {
         return tardisTravelCommand;
     }
 
-    void setTardisTravelCommand(TARDISTravelCommands tardisTravelCommand) {
+    void setTardisTravelCommand(TardisTravelCommands tardisTravelCommand) {
         this.tardisTravelCommand = tardisTravelCommand;
     }
 
@@ -263,7 +263,7 @@ public class TARDISGeneralInstanceKeeper {
         if (plugin.getConfig().isConfigurationSection("rechargers")) {
             Set<String> therechargers = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("rechargers")).getKeys(false);
             therechargers.forEach((s) -> {
-                World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + s + ".world"));
+                World w = TardisAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + s + ".world"));
                 if (w != null) {
                     int x = plugin.getConfig().getInt("rechargers." + s + ".x");
                     int y = plugin.getConfig().getInt("rechargers." + s + ".y");
@@ -327,7 +327,7 @@ public class TARDISGeneralInstanceKeeper {
 
     private HashMap<String, String> buildSignLookup() {
         HashMap<String, String> lookup = new HashMap<>();
-        for (PRESET p : PRESET.values()) {
+        for (Preset p : Preset.values()) {
             if (!p.getFirstLine().isEmpty() && !lookup.containsKey(p.getFirstLine())) {
                 lookup.put(p.getFirstLine(), p.getSecondLine());
             }

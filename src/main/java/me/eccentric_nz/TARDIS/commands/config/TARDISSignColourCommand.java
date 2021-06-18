@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.config;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
@@ -27,24 +27,24 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISSignColourCommand {
+class TardisSignColourCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> COLOURS = Arrays.asList("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
 
-    TARDISSignColourCommand(TARDISPlugin plugin) {
+    TardisSignColourCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean setColour(CommandSender sender, String[] args) {
         String colour = args[1].toUpperCase(Locale.ENGLISH);
         if (!COLOURS.contains(colour)) {
-            TARDISMessage.send(sender, "ARG_COLOUR");
+            TardisMessage.send(sender, "ARG_COLOUR");
             return true;
         }
         plugin.getConfig().set("police_box.sign_colour", colour);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TardisMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
 }

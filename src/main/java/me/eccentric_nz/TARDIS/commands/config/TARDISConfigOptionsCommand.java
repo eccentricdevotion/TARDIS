@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.config;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -26,12 +26,12 @@ import java.util.*;
 /**
  * @author eccentric_nz
  */
-class TARDISConfigOptionsCommand {
+class TardisConfigOptionsCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> sections = new ArrayList<>();
 
-    TARDISConfigOptionsCommand(TARDISPlugin plugin) {
+    TardisConfigOptionsCommand(TardisPlugin plugin) {
         this.plugin = plugin;
         sections.add("storage");
         sections.add("creation");
@@ -44,7 +44,7 @@ class TARDISConfigOptionsCommand {
 
     boolean showConfigOptions(CommandSender sender, String[] args) {
         String section = args[1].toLowerCase(Locale.ENGLISH);
-        TARDISMessage.send(sender, "CONFIG");
+        TardisMessage.send(sender, "CONFIG");
         if (sections.contains(section)) {
             sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
             Set<String> options = Objects.requireNonNull(plugin.getConfig().getConfigurationSection(section)).getKeys(false);

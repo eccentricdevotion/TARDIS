@@ -22,9 +22,9 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-public final class TARDISCreationEvent extends TARDISLocationEvent {
+public final class TardisCreationEvent extends TardisLocationEvent {
 
-    public TARDISCreationEvent(Player player, int tardisId, Location location) {
+    public TardisCreationEvent(Player player, int tardisId, Location location) {
         super(player, tardisId, location);
     }
 }

@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
-import me.eccentric_nz.tardis.utility.TARDISParticles;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
+import me.eccentric_nz.tardis.utility.TardisParticles;
+import me.eccentric_nz.tardis.utility.TardisSounds;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -39,9 +39,9 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkDestroyer implements Runnable {
+public class TardisJunkDestroyer implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final DestroyData pdd;
     private final int startX, endX, startY, endY, startZ, endZ;
     private final Location junkLoc;
@@ -52,7 +52,7 @@ public class TARDISJunkDestroyer implements Runnable {
     private Location vortexJunkLoc;
     private int fryTask;
 
-    public TARDISJunkDestroyer(TARDISPlugin plugin, DestroyData pdd) {
+    public TardisJunkDestroyer(TardisPlugin plugin, DestroyData pdd) {
         this.plugin = plugin;
         this.pdd = pdd;
         junkLoc = this.pdd.getLocation();
@@ -77,8 +77,8 @@ public class TARDISJunkDestroyer implements Runnable {
                         plugin.getGeneralKeeper().getJunkTravellers().add(p.getUniqueId());
                     }
                 });
-                TARDISSounds.playTARDISSound(junkLoc, "junk_takeoff");
-                fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, junkLoc), 0, 1L);
+                TardisSounds.playTARDISSound(junkLoc, "junk_takeoff");
+                fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TardisJunkItsDangerousRunnable(plugin, junkLoc), 0, 1L);
             }
             if (i == 25) {
                 // get junk vortex location
@@ -87,7 +87,7 @@ public class TARDISJunkDestroyer implements Runnable {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                 if (rs.resultSet()) {
                     // teleport players to vortex
-                    vortexJunkLoc = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getTardis().getCreeper())).add(3.0d, 0.0d, 2.0d);
+                    vortexJunkLoc = Objects.requireNonNull(TardisStaticLocationGetters.getLocationFromBukkitString(rs.getTardis().getCreeper())).add(3.0d, 0.0d, 2.0d);
                     getJunkTravellers().forEach((e) -> {
                         if (e instanceof Player p) {
                             Location relativeLoc = getRelativeLocation(p);
@@ -95,7 +95,7 @@ public class TARDISJunkDestroyer implements Runnable {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(relativeLoc), 2L);
                         }
                     });
-                    TARDISJunkVortexRunnable runnable = new TARDISJunkVortexRunnable(plugin, vortexJunkLoc, pdd.getPlayer(), pdd.getTardisId());
+                    TardisJunkVortexRunnable runnable = new TardisJunkVortexRunnable(plugin, vortexJunkLoc, pdd.getPlayer(), pdd.getTardisId());
                     int jvrtask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 1L, 20L);
                     runnable.setTask(jvrtask);
                 }
@@ -104,7 +104,7 @@ public class TARDISJunkDestroyer implements Runnable {
                     for (int column = startY; column <= endY; column++) {
                         for (int aisle = startZ; aisle <= endZ; aisle++) {
                             Block block = world.getBlockAt(row, column, aisle);
-                            block.setBlockData(TARDISConstants.AIR);
+                            block.setBlockData(TardisConstants.AIR);
                         }
                     }
                 }
@@ -119,7 +119,7 @@ public class TARDISJunkDestroyer implements Runnable {
                         int rx = rp.getLocation().getBlockX();
                         int ry = rp.getLocation().getBlockY();
                         int rz = rp.getLocation().getBlockZ();
-                        TARDISBlockSetters.setBlock(world, rx, ry, rz, rp.getBlockData());
+                        TardisBlockSetters.setBlock(world, rx, ry, rz, rp.getBlockData());
                     });
                 }
                 // remove block protection
@@ -131,7 +131,7 @@ public class TARDISJunkDestroyer implements Runnable {
                 // just animate particles
                 plugin.getUtils().getJunkTravellers(junkLoc).forEach((e) -> {
                     if (e instanceof Player p) {
-                        TARDISParticles.sendVortexParticles(effectsLoc, p);
+                        TardisParticles.sendVortexParticles(effectsLoc, p);
                     }
                 });
             }

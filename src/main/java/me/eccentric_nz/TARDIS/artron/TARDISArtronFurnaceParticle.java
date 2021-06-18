@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -24,11 +24,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Furnace;
 import org.bukkit.inventory.Inventory;
 
-public class TARDISArtronFurnaceParticle {
+public class TardisArtronFurnaceParticle {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISArtronFurnaceParticle(TARDISPlugin plugin) {
+    public TardisArtronFurnaceParticle(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

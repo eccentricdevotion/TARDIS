@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -30,11 +30,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class TARDISSonicSound {
+public class TardisSonicSound {
 
     private static final HashMap<UUID, Long> timeout = new HashMap<>();
 
-    public static void playSonicSound(TARDISPlugin plugin, Player player, long now, long cooldown, String sound) {
+    public static void playSonicSound(TardisPlugin plugin, Player player, long now, long cooldown, String sound) {
         if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             assert im != null;
@@ -42,7 +42,7 @@ public class TARDISSonicSound {
             im.addItemFlags(ItemFlag.values());
             player.getInventory().getItemInMainHand().setItemMeta(im);
             timeout.put(player.getUniqueId(), now + cooldown);
-            TARDISSounds.playTARDISSound(player.getLocation(), sound);
+            TardisSounds.playTARDISSound(player.getLocation(), sound);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 ItemStack is = player.getInventory().getItemInMainHand();
                 if (is.hasItemMeta()) {
@@ -61,7 +61,7 @@ public class TARDISSonicSound {
         }
     }
 
-    private static void removeSonicEnchant(TARDISPlugin plugin, PlayerInventory inv) {
+    private static void removeSonicEnchant(TardisPlugin plugin, PlayerInventory inv) {
         String result = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result");
         Material sonic = Material.valueOf(result);
         int first = inv.first(sonic);

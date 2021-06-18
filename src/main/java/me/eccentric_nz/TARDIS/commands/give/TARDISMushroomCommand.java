@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.give;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -25,9 +25,9 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.Arrays;
 import java.util.List;
 
-public class TARDISMushroomCommand {
+public class TardisMushroomCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> brownBlockNames = Arrays.asList("", "The Moment", "Siege Cube");
     private final List<String> brownSubs = Arrays.asList("", "the_moment", "siege_cube");
     private final List<String> redBlockNames = Arrays.asList("", "Ars", "Bigger", "Budget", "Coral", "Deluxe", "Eleventh", "Ender", "Plank", "Pyramid", "Redstone", "Steampunk", "Thirteenth", "Factory", "Tom", "Twelfth", "War", "Small", "Medium", "Tall", "Legacy Bigger", "Legacy Budget", "Legacy Deluxe", "Legacy Eleventh", "Legacy Redstone", "Pandorica", "Master", "Atomic elements", "Chemical compounds", "Material reducer", "Element constructor", "Lab table", "Product crafting");
@@ -35,7 +35,7 @@ public class TARDISMushroomCommand {
     private final List<String> stemBlockNames = Arrays.asList("", "Blue Lamp", "Red Lamp", "Purple Lamp", "Green Lamp", "Blue Lamp On", "Red Lamp On", "Purple Lamp On", "Green Lamp On", "Heat Block", "Custom", "Hexagon", "Roundel", "Roundel Offset", "Cog", "Advanced Console", "Disk Storage", "Lamp Off", "Lantern Off", "Blue Police Box", "Seed Block Grow");
     private final List<String> stemSubs = Arrays.asList("", "blue_lamp", "red_lamp", "purple_lamp", "green_lamp", "blue_lamp_on", "red_lamp_on", "purple_lamp_on", "green_lamp_on", "heat_block", "rotor", "custom", "hexagon", "roundel", "roundel_offset", "cog", "advanced_console", "disk_storage", "lamp_off", "lantern_off", "blue_box", "grow");
 
-    TARDISMushroomCommand(TARDISPlugin plugin) {
+    TardisMushroomCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

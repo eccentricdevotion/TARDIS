@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.mobfarming.TARDISMob;
+import me.eccentric_nz.tardis.mobfarming.TardisMob;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager.Profession;
@@ -25,7 +25,7 @@ import org.bukkit.inventory.EntityEquipment;
 /**
  * @author eccentric_nz
  */
-class TARDISMonster extends TARDISMob {
+class TardisMonster extends TardisMob {
 
     private boolean aggressive;
     private int anger;

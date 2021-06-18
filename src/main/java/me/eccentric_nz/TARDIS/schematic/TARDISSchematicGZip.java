@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -28,7 +28,7 @@ import java.util.zip.GZIPOutputStream;
 /**
  * @author eccentric_nz
  */
-public class TARDISSchematicGZip {
+public class TardisSchematicGZip {
 
     static void zip(String instr, String outstr) {
         try {
@@ -44,7 +44,7 @@ public class TARDISSchematicGZip {
             fos.close();
             fis.close();
         } catch (IOException e) {
-            TARDISPlugin.plugin.debug("Could not GZip schematic file!" + e.getMessage());
+            TardisPlugin.plugin.debug("Could not GZip schematic file!" + e.getMessage());
         }
     }
 
@@ -63,7 +63,7 @@ public class TARDISSchematicGZip {
             }
             s = sw.toString();
         } catch (IOException ex) {
-            TARDISPlugin.plugin.debug("Could not read GZip schematic file! " + ex.getMessage());
+            TardisPlugin.plugin.debug("Could not read GZip schematic file! " + ex.getMessage());
         } finally {
             try {
                 if (sw != null) {
@@ -73,7 +73,7 @@ public class TARDISSchematicGZip {
                     isr.close();
                 }
             } catch (IOException ex) {
-                TARDISPlugin.plugin.debug("Could not close GZip schematic file! " + ex.getMessage());
+                TardisPlugin.plugin.debug("Could not close GZip schematic file! " + ex.getMessage());
             }
         }
         return (s.startsWith("{")) ? JsonParser.parseString(s).getAsJsonObject() : null;

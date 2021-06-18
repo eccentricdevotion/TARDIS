@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.planets.TARDISWorlds;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.planets.TardisWorlds;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -33,15 +33,15 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISConfiguration {
+public class TardisConfiguration {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final FileConfiguration config;
     private final HashMap<String, String> stringOptions = new HashMap<>();
     private final HashMap<String, Integer> integerOptions = new HashMap<>();
     private final HashMap<String, Boolean> booleanOptions = new HashMap<>();
 
-    public TARDISConfiguration(TARDISPlugin plugin) {
+    public TardisConfiguration(TardisPlugin plugin) {
         this.plugin = plugin;
         File configFile = new File(plugin.getDataFolder(), "config.yml");
         config = YamlConfiguration.loadConfiguration(configFile);
@@ -286,7 +286,7 @@ public class TARDISConfiguration {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
         }
         // worlds
-        new TARDISWorlds(plugin).doWorlds();
+        new TardisWorlds(plugin).doWorlds();
         plugin.saveConfig();
     }
 }

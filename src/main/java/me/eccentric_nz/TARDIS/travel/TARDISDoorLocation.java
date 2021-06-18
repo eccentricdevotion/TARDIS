@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -25,13 +25,13 @@ import org.bukkit.World;
  *
  * @author eccentric_nz
  */
-public class TARDISDoorLocation {
+public class TardisDoorLocation {
 
     private Location l;
     private World w;
-    private COMPASS d;
+    private CardinalDirection d;
 
-    public TARDISDoorLocation() {
+    public TardisDoorLocation() {
     }
 
     /**
@@ -69,7 +69,7 @@ public class TARDISDoorLocation {
     /**
      * @return the direction of the door
      */
-    public COMPASS getD() {
+    public CardinalDirection getD() {
         return d;
     }
 
@@ -78,7 +78,7 @@ public class TARDISDoorLocation {
      *
      * @param d the direction (one of NORTH, SOUTH, EAST, WEST)
      */
-    public void setD(COMPASS d) {
+    public void setD(CardinalDirection d) {
         this.d = d;
     }
 }

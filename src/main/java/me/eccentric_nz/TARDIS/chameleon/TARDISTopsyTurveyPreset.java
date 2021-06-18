@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISTopsyTurveyPreset extends TARDISPreset {
+class TardisTopsyTurveyPreset extends TardisPreset {
 
-    TARDISTopsyTurveyPreset() {
+    TardisTopsyTurveyPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:stone_slab[type=top]";

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCount;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -29,11 +29,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISPlayerCountCommand {
+class TardisPlayerCountCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISPlayerCountCommand(TARDISPlugin plugin) {
+    TardisPlayerCountCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -45,19 +45,19 @@ class TARDISPlayerCountCommand {
         if (rsc.resultSet()) {
             if (args.length == 3) {
                 // set count
-                int count = TARDISNumberParsers.parseInt(args[2]);
+                int count = TardisNumberParsers.parseInt(args[2]);
                 HashMap<String, Object> setc = new HashMap<>();
                 setc.put("count", count);
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("uuid", uuid);
                 plugin.getQueryFactory().doUpdate("t_count", setc, wherec);
-                TARDISMessage.send(sender, "COUNT_SET", args[1], count, max_count);
+                TardisMessage.send(sender, "COUNT_SET", args[1], count, max_count);
             } else {
                 // display count
-                TARDISMessage.send(sender, "COUNT_IS", args[1], rsc.getCount(), max_count);
+                TardisMessage.send(sender, "COUNT_IS", args[1], rsc.getCount(), max_count);
             }
         } else {
-            TARDISMessage.send(sender, "COUNT_NOT_FOUND");
+            TardisMessage.send(sender, "COUNT_NOT_FOUND");
         }
         return true;
     }

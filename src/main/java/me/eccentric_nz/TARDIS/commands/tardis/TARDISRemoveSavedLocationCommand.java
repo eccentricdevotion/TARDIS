@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -28,23 +28,23 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISRemoveSavedLocationCommand {
+class TardisRemoveSavedLocationCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISRemoveSavedLocationCommand(TARDISPlugin plugin) {
+    TardisRemoveSavedLocationCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean doRemoveSave(Player player, String[] args) {
-        if (TARDISPermission.hasPermission(player, "tardis.save")) {
+        if (TardisPermission.hasPermission(player, "tardis.save")) {
             if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                TardisMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                TardisMessage.send(player, "NO_TARDIS");
                 return false;
             }
             int id = rs.getTardisId();
@@ -53,17 +53,17 @@ class TARDISRemoveSavedLocationCommand {
             whered.put("tardis_id", id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
-                TARDISMessage.send(player, "SAVE_NOT_FOUND");
+                TardisMessage.send(player, "SAVE_NOT_FOUND");
                 return false;
             }
             int destId = rsd.getDestId();
             HashMap<String, Object> did = new HashMap<>();
             did.put("dest_id", destId);
             plugin.getQueryFactory().doDelete("destinations", did);
-            TARDISMessage.send(player, "DEST_DELETED", args[1]);
+            TardisMessage.send(player, "DEST_DELETED", args[1]);
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            TardisMessage.send(player, "NO_PERMS");
             return false;
         }
     }

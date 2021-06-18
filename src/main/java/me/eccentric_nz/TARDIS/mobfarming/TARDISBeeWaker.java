@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.mobfarming;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetApiaries;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -27,11 +27,11 @@ import org.bukkit.block.Beehive;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Bee;
 
-public class TARDISBeeWaker implements Runnable {
+public class TardisBeeWaker implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISBeeWaker(TARDISPlugin plugin) {
+    public TardisBeeWaker(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -64,7 +64,7 @@ public class TARDISBeeWaker implements Runnable {
                                 if (material.equals(Material.BEE_NEST) || material.equals(Material.BEEHIVE)) {
                                     Beehive beehive = (Beehive) block.getState();
                                     for (Bee bee : beehive.releaseEntities()) {
-                                        int random = TARDISConstants.RANDOM.nextInt(1200) + 1200;
+                                        int random = TardisConstants.RANDOM.nextInt(1200) + 1200;
                                         bee.setCannotEnterHiveTicks(random);
                                     }
                                 }

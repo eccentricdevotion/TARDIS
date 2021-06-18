@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetConsole;
 import me.eccentric_nz.tardis.database.resultset.ResultSetOccupied;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.ChatColor;
 import org.bukkit.Tag;
 import org.bukkit.block.Sign;
@@ -28,12 +28,12 @@ import org.bukkit.block.Sign;
 /**
  * @author eccentric_nz
  */
-public class TARDISControlRunnable implements Runnable {
+public class TardisControlRunnable implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private int modulo = 0;
 
-    public TARDISControlRunnable(TARDISPlugin plugin) {
+    public TardisControlRunnable(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -56,7 +56,7 @@ public class TARDISControlRunnable implements Runnable {
                                 sign.setLine(1, ChatColor.DARK_PURPLE + "time vortex...");
                                 sign.setLine(2, "");
                             } else {
-                                String worldname = (rsc.getWorld() != null) ? TARDISAliasResolver.getWorldAlias(rsc.getWorld()) : "";
+                                String worldname = (rsc.getWorld() != null) ? TardisAliasResolver.getWorldAlias(rsc.getWorld()) : "";
                                 if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldname.equals("")) {
                                     worldname = plugin.getMVHelper().getAlias(worldname);
                                 }

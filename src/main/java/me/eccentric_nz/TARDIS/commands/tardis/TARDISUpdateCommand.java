@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.builders.TARDISTimeRotor;
-import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.tardis.commands.sudo.TARDISSudoTracker;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.builders.TardisTimeRotor;
+import me.eccentric_nz.tardis.chatgui.TardisChatGuiUpdater;
+import me.eccentric_nz.tardis.commands.sudo.TardisSudoTracker;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Updateable;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.messaging.TARDISUpdateLister;
-import me.eccentric_nz.tardis.update.TARDISUpdateBlocks;
-import me.eccentric_nz.tardis.update.TARDISUpdateChecker;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.messaging.TardisUpdateLister;
+import me.eccentric_nz.tardis.update.TardisUpdateBlocks;
+import me.eccentric_nz.tardis.update.TardisUpdateChecker;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -46,21 +46,21 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISUpdateCommand {
+class TardisUpdateCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISUpdateCommand(TARDISPlugin plugin) {
+    TardisUpdateCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
 
     boolean startUpdate(Player player, String[] args) {
-        if (TARDISPermission.hasPermission(player, "tardis.update")) {
+        if (TardisPermission.hasPermission(player, "tardis.update")) {
             if (args.length == 1) {
-                return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
+                return new TardisChatGuiUpdater(plugin).showInterface(player, args);
             } else if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                TardisMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             if (args[1].equalsIgnoreCase("list")) {
@@ -79,24 +79,24 @@ class TARDISUpdateCommand {
             }
             HashMap<String, Object> where = new HashMap<>();
             UUID playerUUID = player.getUniqueId();
-            String uuid = (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) ? TARDISSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();
+            String uuid = (TardisSudoTracker.SUDOERS.containsKey(playerUUID)) ? TardisSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();
             where.put("uuid", uuid);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                TardisMessage.send(player, "NOT_A_TIMELORD");
                 return false;
             }
-            TARDIS tardis = rs.getTardis();
-            String tardis_block = TARDISStringUtils.toScoredUppercase(args[1]);
+            Tardis tardis = rs.getTardis();
+            String tardis_block = TardisStringUtils.toScoredUppercase(args[1]);
             Updateable updateable;
             try {
                 updateable = Updateable.valueOf(tardis_block);
             } catch (IllegalArgumentException e) {
-                new TARDISUpdateLister(player).list();
+                new TardisUpdateLister(player).list();
                 return true;
             }
             if (args.length == 3 && args[2].equalsIgnoreCase("blocks")) {
-                TARDISUpdateBlocks.showOptions(player, updateable);
+                TardisUpdateBlocks.showOptions(player, updateable);
                 return true;
             }
             if (updateable.equals(Updateable.HINGE)) {
@@ -122,16 +122,16 @@ class TARDISUpdateCommand {
                 // update note block if it's not MUSHROOM_STEM
                 Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
                 if (block.getType().equals(Material.NOTE_BLOCK)) {
-                    BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
+                    BlockData mushroom = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
                     block.setBlockData(mushroom, true);
                 }
             }
-            if (new TARDISUpdateChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {
+            if (new TardisUpdateChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {
                 if (updateable.equals(Updateable.ROTOR) && args.length == 3 && args[2].equalsIgnoreCase("unlock")) {
                     // get Time Rotor frame location
-                    ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                    ItemFrame itemFrame = TardisTimeRotor.getItemFrame(tardis.getRotor());
                     if (itemFrame != null) {
-                        TARDISTimeRotor.unlockRotor(itemFrame);
+                        TardisTimeRotor.unlockRotor(itemFrame);
                         // also need to remove the item frame protection
                         plugin.getGeneralKeeper().getTimeRotors().remove(itemFrame.getUniqueId());
                         // and block protection
@@ -140,19 +140,19 @@ class TARDISUpdateCommand {
                         plugin.getGeneralKeeper().getProtectBlockMap().remove(location);
                         String under = block.getRelative(BlockFace.DOWN).getLocation().toString();
                         plugin.getGeneralKeeper().getProtectBlockMap().remove(under);
-                        TARDISMessage.send(player, "ROTOR_UNFIXED");
+                        TardisMessage.send(player, "ROTOR_UNFIXED");
                     }
                     return true;
                 }
                 plugin.getTrackerKeeper().getPlayers().put(playerUUID, tardis_block);
-                TARDISMessage.send(player, "UPDATE_CLICK", tardis_block);
+                TardisMessage.send(player, "UPDATE_CLICK", tardis_block);
                 if (updateable.equals(Updateable.DIRECTION)) {
-                    TARDISMessage.send(player, "HOOK_REMIND");
+                    TardisMessage.send(player, "HOOK_REMIND");
                 }
             }
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            TardisMessage.send(player, "NO_PERMS");
             return false;
         }
     }

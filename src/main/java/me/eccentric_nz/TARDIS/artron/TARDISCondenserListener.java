@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advancement.TardisAdvancementFactory;
 import me.eccentric_nz.tardis.blueprints.BlueprintProcessor;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Advancement;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -50,12 +50,12 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISCondenserListener implements Listener {
+public class TardisCondenserListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> zero;
 
-    public TARDISCondenserListener(TARDISPlugin plugin) {
+    public TardisCondenserListener(TardisPlugin plugin) {
         this.plugin = plugin;
         zero = this.plugin.getBlocksConfig().getStringList("no_artron_value");
     }
@@ -84,13 +84,13 @@ public class TARDISCondenserListener implements Listener {
                         switch (plugin.getWorldManager()) {
                             case MULTIVERSE:
                                 if (!plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
-                                    TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
+                                    TardisMessage.send(player, "CONDENSE_NO_CREATIVE");
                                     return;
                                 }
                                 break;
                             case NONE:
                                 if (Objects.requireNonNull(plugin.getPlanetsConfig().getString("planets." + Objects.requireNonNull(loc.getWorld()).getName() + ".gamemode")).equalsIgnoreCase("CREATIVE")) {
-                                    TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
+                                    TardisMessage.send(player, "CONDENSE_NO_CREATIVE");
                                     return;
                                 }
                                 break;
@@ -176,7 +176,7 @@ public class TARDISCondenserListener implements Listener {
                             }
                         }
                     }
-                    TARDIS tardis = rs.getTardis();
+                    Tardis tardis = rs.getTardis();
                     if (tardis != null) {
                         // process item_counts
                         if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
@@ -210,16 +210,16 @@ public class TARDISCondenserListener implements Listener {
                                 int current_level = tardis.getArtronLevel() + amount;
                                 int fc = plugin.getArtronConfig().getInt("full_charge");
                                 int percent = Math.round((current_level * 100F) / fc);
-                                TARDISAdvancementFactory taf = new TARDISAdvancementFactory(plugin, player, Advancement.ENERGY, 1);
+                                TardisAdvancementFactory taf = new TardisAdvancementFactory(plugin, player, Advancement.ENERGY, 1);
                                 if (percent >= plugin.getAdvancementConfig().getInt("energy.required")) {
                                     taf.doAdvancement(percent);
                                 } else {
                                     taf.doAdvancement(Math.round((amount * 100F) / fc));
                                 }
                             }
-                            TARDISMessage.send(player, "ENERGY_CONDENSED", String.format("%d", amount));
+                            TardisMessage.send(player, "ENERGY_CONDENSED", String.format("%d", amount));
                         } else {
-                            TARDISMessage.send(player, "CONDENSE_NO_VALID");
+                            TardisMessage.send(player, "CONDENSE_NO_VALID");
                         }
                     } else {
                         plugin.debug("tardis data was null!");

@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.FlightMode;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -27,18 +27,18 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISSetFlightCommand {
+public class TardisSetFlightCommand {
 
     boolean setMode(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "FLIGHT_NEED");
+            TardisMessage.send(player, "FLIGHT_NEED");
             return false;
         }
         FlightMode fm;
         try {
             fm = FlightMode.valueOf(args[1].toUpperCase(Locale.ENGLISH));
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, "FLIGHT_INFO");
+            TardisMessage.send(player, "FLIGHT_INFO");
             return true;
         }
         int mode = 1;
@@ -56,8 +56,8 @@ public class TARDISSetFlightCommand {
         setf.put("flying_mode", mode);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
-        TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
-        TARDISMessage.send(player, "FLIGHT_SAVED");
+        TardisPlugin.plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
+        TardisMessage.send(player, "FLIGHT_SAVED");
         return true;
     }
 }

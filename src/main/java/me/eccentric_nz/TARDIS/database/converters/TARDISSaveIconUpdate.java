@@ -16,23 +16,23 @@
  */
 package me.eccentric_nz.tardis.database.converters;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 
 import java.sql.*;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISSaveIconUpdate {
+public class TardisSaveIconUpdate {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
 
-    public TARDISSaveIconUpdate(TARDISPlugin plugin) {
+    public TardisSaveIconUpdate(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -56,7 +56,7 @@ public class TARDISSaveIconUpdate {
             while (rs.next()) {
                 int slot = rs.getInt("slot");
                 if (slot != -1) {
-                    ps.setString(1, TARDISConstants.GUI_IDS.get(slot).toString());
+                    ps.setString(1, TardisConstants.GUI_IDS.get(slot).toString());
                     ps.setInt(2, rs.getInt("dest_id"));
                     ps.addBatch();
                     i++;

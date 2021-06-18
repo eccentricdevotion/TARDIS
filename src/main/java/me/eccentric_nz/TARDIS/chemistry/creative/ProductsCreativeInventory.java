@@ -16,22 +16,22 @@
  */
 package me.eccentric_nz.tardis.chemistry.creative;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.chemistry.lab.Lab;
 import me.eccentric_nz.tardis.chemistry.lab.LabBuilder;
 import me.eccentric_nz.tardis.chemistry.product.Product;
 import me.eccentric_nz.tardis.chemistry.product.ProductBuilder;
-import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
+import me.eccentric_nz.tardis.custommodeldata.GuiChemistry;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class ProductsCreativeInventory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ItemStack[] menu;
 
-    public ProductsCreativeInventory(TARDISPlugin plugin) {
+    public ProductsCreativeInventory(TardisPlugin plugin) {
         this.plugin = plugin;
         menu = getItemStack();
     }
@@ -64,19 +64,19 @@ public class ProductsCreativeInventory {
             }
         }
         // elements
-        ItemStack elements = new ItemStack(GUIChemistry.ELEMENTS.getMaterial(), 1);
+        ItemStack elements = new ItemStack(GuiChemistry.ELEMENTS.getMaterial(), 1);
         ItemMeta eim = elements.getItemMeta();
         assert eim != null;
         eim.setDisplayName("Elements");
-        eim.setCustomModelData(GUIChemistry.ELEMENTS.getCustomModelData());
+        eim.setCustomModelData(GuiChemistry.ELEMENTS.getCustomModelData());
         elements.setItemMeta(eim);
         stack[35] = elements;
         // compounds
-        ItemStack compounds = new ItemStack(GUIChemistry.COMPOUNDS.getMaterial(), 1);
+        ItemStack compounds = new ItemStack(GuiChemistry.COMPOUNDS.getMaterial(), 1);
         ItemMeta cim = compounds.getItemMeta();
         assert cim != null;
         cim.setDisplayName("Compounds");
-        cim.setCustomModelData(GUIChemistry.COMPOUNDS.getCustomModelData());
+        cim.setCustomModelData(GuiChemistry.COMPOUNDS.getCustomModelData());
         compounds.setItemMeta(cim);
         stack[44] = compounds;
         // close
@@ -84,7 +84,7 @@ public class ProductsCreativeInventory {
         ItemMeta close_im = close.getItemMeta();
         assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GuiChemistry.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[53] = close;
         return stack;

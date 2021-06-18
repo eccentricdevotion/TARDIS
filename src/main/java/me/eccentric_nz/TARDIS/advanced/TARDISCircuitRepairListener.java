@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -35,12 +35,12 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISCircuitRepairListener implements Listener {
+public class TardisCircuitRepairListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<Integer, String> circuits = new HashMap<>();
 
-    public TARDISCircuitRepairListener(TARDISPlugin plugin) {
+    public TardisCircuitRepairListener(TardisPlugin plugin) {
         this.plugin = plugin;
         circuits.put(10001973, "ars");
         circuits.put(10001966, "chameleon");
@@ -81,7 +81,7 @@ public class TARDISCircuitRepairListener implements Listener {
                             String stripped = ChatColor.stripColor(flore.get(1));
                             if (!stripped.equals("unlimited")) {
                                 // get the uses left
-                                int left = TARDISNumberParsers.parseInt(stripped);
+                                int left = TardisNumberParsers.parseInt(stripped);
                                 // get max uses for this circuit
                                 int ctm = (fim.hasCustomModelData()) ? fim.getCustomModelData() : 10001963;
                                 int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(ctm));

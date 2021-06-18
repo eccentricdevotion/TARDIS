@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUIWallFloor;
-import me.eccentric_nz.tardis.rooms.TARDISWalls;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiWallFloor;
+import me.eccentric_nz.tardis.rooms.TardisWalls;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -31,12 +31,12 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-class TARDISWallsInventory {
+class TardisWallsInventory {
 
     private final ItemStack[] menu;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISWallsInventory(TARDISPlugin plugin) {
+    TardisWallsInventory(TardisPlugin plugin) {
         this.plugin = plugin;
         menu = getItemStack();
     }
@@ -50,7 +50,7 @@ class TARDISWallsInventory {
         ItemStack[] stack = new ItemStack[54];
         int i = 0;
         // get BLOCKS
-        for (Material entry : TARDISWalls.BLOCKS) {
+        for (Material entry : TardisWalls.BLOCKS) {
             if (i > 52) {
                 break;
             }
@@ -68,7 +68,7 @@ class TARDISWallsInventory {
         ItemMeta uim = scroll_up.getItemMeta();
         assert uim != null;
         uim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_U"));
-        uim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_U.getCustomModelData());
+        uim.setCustomModelData(GuiWallFloor.BUTTON_SCROLL_U.getCustomModelData());
         scroll_up.setItemMeta(uim);
         stack[8] = scroll_up;
         // scroll down
@@ -76,7 +76,7 @@ class TARDISWallsInventory {
         ItemMeta dim = scroll_down.getItemMeta();
         assert dim != null;
         dim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_D"));
-        dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.getCustomModelData());
+        dim.setCustomModelData(GuiWallFloor.BUTTON_SCROLL_D.getCustomModelData());
         scroll_down.setItemMeta(dim);
         stack[17] = scroll_down;
         // default wall
@@ -84,7 +84,7 @@ class TARDISWallsInventory {
         ItemMeta wim = wall.getItemMeta();
         assert wim != null;
         wim.setDisplayName("Default Wall Block");
-        wim.setCustomModelData(GUIWallFloor.WALL.getCustomModelData());
+        wim.setCustomModelData(GuiWallFloor.WALL.getCustomModelData());
         wall.setItemMeta(wim);
         stack[26] = wall;
         // default floor
@@ -92,7 +92,7 @@ class TARDISWallsInventory {
         ItemMeta fim = floor.getItemMeta();
         assert fim != null;
         fim.setDisplayName("Default Floor Block");
-        fim.setCustomModelData(GUIWallFloor.FLOOR.getCustomModelData());
+        fim.setCustomModelData(GuiWallFloor.FLOOR.getCustomModelData());
         floor.setItemMeta(fim);
         stack[35] = floor;
         // close
@@ -100,7 +100,7 @@ class TARDISWallsInventory {
         ItemMeta close_im = close.getItemMeta();
         assert close_im != null;
         close_im.setDisplayName("Abort upgrade");
-        close_im.setCustomModelData(GUIWallFloor.BUTTON_ABORT.getCustomModelData());
+        close_im.setCustomModelData(GuiWallFloor.BUTTON_ABORT.getCustomModelData());
         close.setItemMeta(close_im);
         stack[53] = close;
 

@@ -18,30 +18,30 @@ package me.eccentric_nz.tardis.chameleon;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetChameleon;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 
 import java.util.HashMap;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISConstructColumn {
+public class TardisConstructColumn {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
     private final String field;
-    private final COMPASS d;
+    private final CardinalDirection d;
 
-    public TARDISConstructColumn(TARDISPlugin plugin, int id, String field, COMPASS d) {
+    public TardisConstructColumn(TardisPlugin plugin, int id, String field, CardinalDirection d) {
         this.plugin = plugin;
         this.id = id;
         this.field = field;
         this.d = d;
     }
 
-    public TARDISChameleonColumn getColumn() {
+    public TardisChameleonColumn getColumn() {
         // get the json data
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
@@ -62,7 +62,7 @@ public class TARDISConstructColumn {
                         strings[i][j] = block;
                     }
                 }
-                return TARDISChameleonPreset.buildTARDISChameleonColumn(d, strings, rs.getData().get("asymmetric").equals("1"), false);
+                return TardisChameleonPreset.buildTARDISChameleonColumn(d, strings, rs.getData().get("asymmetric").equals("1"), false);
             }
         }
         return null;

@@ -17,11 +17,11 @@
 
 package me.eccentric_nz.tardis.update;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetSmelterCheck;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.Updateable;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -31,11 +31,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISSmelterCommand {
+class TardisSmelterCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISSmelterCommand(TARDISPlugin plugin) {
+    TardisSmelterCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -45,7 +45,7 @@ class TARDISSmelterCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet() && rst.getTardisId() != id) {
-            TARDISMessage.send(player, "CMD_ONLY_TL");
+            TardisMessage.send(player, "CMD_ONLY_TL");
             return true;
         }
         Location l = b.getLocation();
@@ -80,7 +80,7 @@ class TARDISSmelterCommand {
                 plugin.getQueryFactory().doInsert("vaults", set);
             }
         }
-        TARDISMessage.send(player, "SMELTER_SET", updateable.toString(), (updateable.equals(Updateable.FUEL)) ? "SMELT" : "FUEL");
+        TardisMessage.send(player, "SMELTER_SET", updateable.toString(), (updateable.equals(Updateable.FUEL)) ? "SMELT" : "FUEL");
         return true;
     }
 }

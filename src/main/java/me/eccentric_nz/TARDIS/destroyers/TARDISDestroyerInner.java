@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.tardis.builders.TARDISTIPSData;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -34,11 +34,11 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TARDISDestroyerInner {
+public class TardisDestroyerInner {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISDestroyerInner(TARDISPlugin plugin) {
+    public TardisDestroyerInner(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -53,12 +53,12 @@ public class TARDISDestroyerInner {
     public void destroyInner(Schematic schematic, int id, World w, int slot) {
         // destroy tardis
         if (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
-            plugin.debug(TARDISPlugin.plugin.getLanguage().getString("CONFIG_CREATION_WORLD"));
+            plugin.debug(TardisPlugin.plugin.getLanguage().getString("CONFIG_CREATION_WORLD"));
             return;
         }
         Location wgl;
-        TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
-        TARDISTIPSData coords;
+        TardisInteriorPositioning tips = new TardisInteriorPositioning(plugin);
+        TardisTipsData coords;
         if (schematic.getPermission().equals("junk")) {
             coords = tips.getTIPSJunkData();
         } else {

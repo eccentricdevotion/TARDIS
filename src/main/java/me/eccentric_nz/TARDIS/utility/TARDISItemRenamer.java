@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -31,13 +31,13 @@ import java.util.ArrayList;
  *
  * @author eccentric_nz
  */
-public class TARDISItemRenamer {
+public class TardisItemRenamer {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
     private final ItemStack itemStack;
 
-    public TARDISItemRenamer(TARDISPlugin plugin, Player player, ItemStack itemStack) {
+    public TardisItemRenamer(TardisPlugin plugin, Player player, ItemStack itemStack) {
         this.plugin = plugin;
         this.player = player;
         this.itemStack = itemStack;
@@ -52,7 +52,7 @@ public class TARDISItemRenamer {
     public void setName(String name, boolean setLore) {
         ItemMeta im = itemStack.getItemMeta();
         if (im == null) {
-            TARDISPlugin.plugin.debug("ItemMeta was null for ItemStack: " + itemStack);
+            TardisPlugin.plugin.debug("ItemMeta was null for ItemStack: " + itemStack);
         } else {
             im.setDisplayName(name);
             if (setLore) {
@@ -65,7 +65,7 @@ public class TARDISItemRenamer {
                 im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
             }
             try {
-                RecipeItem recipeItem = RecipeItem.valueOf(TARDISStringUtils.toScoredUppercase(name));
+                RecipeItem recipeItem = RecipeItem.valueOf(TardisStringUtils.toScoredUppercase(name));
                 im.setCustomModelData(recipeItem.getCustomModelData());
             } catch (IllegalArgumentException e) {
                 // do nothing

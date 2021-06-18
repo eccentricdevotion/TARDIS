@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Material;
 
-public enum GUIMap {
+public enum GuiMap {
 
     // tardis Map
     BUTTON_UP(1, 1, Material.CYAN_WOOL),
@@ -41,7 +41,7 @@ public enum GUIMap {
     private final int slot;
     private final Material material;
 
-    GUIMap(int customModelData, int slot, Material material) {
+    GuiMap(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -61,6 +61,6 @@ public enum GUIMap {
 
     public String getName() {
         String s = toString();
-        return (this == EMPTY_SLOT) ? "Empty Slot" : TARDISPlugin.plugin.getLanguage().getString(s);
+        return (this == EMPTY_SLOT) ? "Empty Slot" : TardisPlugin.plugin.getLanguage().getString(s);
     }
 }

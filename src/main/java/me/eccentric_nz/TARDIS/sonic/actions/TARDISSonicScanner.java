@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
+import me.eccentric_nz.tardis.planets.TardisBiome;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
@@ -36,17 +36,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import static me.eccentric_nz.tardis.control.TARDISScanner.getNearbyEntities;
+import static me.eccentric_nz.tardis.control.TardisScanner.getNearbyEntities;
 
-public class TARDISSonicScanner {
+public class TardisSonicScanner {
 
-    public static void scan(TARDISPlugin plugin, Location scan_loc, Player player) {
+    public static void scan(TardisPlugin plugin, Location scan_loc, Player player) {
         // record nearby entities
         HashMap<EntityType, Integer> scannedentities = new HashMap<>();
         List<String> playernames = new ArrayList<>();
         getNearbyEntities(scan_loc, 16).forEach((k) -> {
             EntityType et = k.getType();
-            if (TARDISConstants.ENTITY_TYPES.contains(et)) {
+            if (TardisConstants.ENTITY_TYPES.contains(et)) {
                 boolean visible = true;
                 if (et.equals(EntityType.PLAYER)) {
                     Player entPlayer = (Player) k;
@@ -56,7 +56,7 @@ public class TARDISSonicScanner {
                         visible = false;
                     }
                 }
-                if (TARDISPlugin.plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                if (TardisPlugin.plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
                     if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
                         EntityEquipment ee = ((LivingEntity) k).getEquipment();
                         assert ee != null;
@@ -131,37 +131,37 @@ public class TARDISSonicScanner {
             }
         });
         long time = Objects.requireNonNull(scan_loc.getWorld()).getTime();
-        String daynight = TARDISStaticUtils.getTime(time);
+        String daynight = TardisStaticUtils.getTime(time);
         String worldname;
         if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
             worldname = plugin.getMVHelper().getAlias(scan_loc.getWorld());
         } else {
-            worldname = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());
+            worldname = TardisAliasResolver.getWorldAlias(scan_loc.getWorld());
         }
         String wn = worldname;
         // message the player
-        TARDISMessage.send(player, "SONIC_SCAN");
+        TardisMessage.send(player, "SONIC_SCAN");
         BukkitScheduler bsched = plugin.getServer().getScheduler();
         bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.send(player, "SCAN_WORLD", wn);
-            TARDISMessage.send(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
+            TardisMessage.send(player, "SCAN_WORLD", wn);
+            TardisMessage.send(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         }, 20L);
         // get biome
-        TARDISBiome tardisBiome = TARDISStaticUtils.getBiomeAt(scan_loc);
+        TardisBiome tardisBiome = TardisStaticUtils.getBiomeAt(scan_loc);
         String biome = tardisBiome.name();
-        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "BIOME_TYPE", biome), 40L);
-        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_TIME", daynight + " / " + time), 60L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TardisMessage.send(player, "BIOME_TYPE", biome), 40L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TardisMessage.send(player, "SCAN_TIME", daynight + " / " + time), 60L);
         // get weather
         String weather = switch (biome) {
             case "BADLANDS", "BADLANDS_PLATEAU", "DESERT", "DESERT_HILLS", "DESERT_LAKES", "ERODED_BADLANDS", "MODIFIED_BADLANDS_PLATEAU", "MODIFIED_WOODED_BADLANDS_PLATEAU", "SAVANNA", "SAVANNA_PLATEAU", "SHATTERED_SAVANNA", "SHATTERED_SAVANNA_PLATEAU", "WOODED_BADLANDS_PLATEAU" -> plugin.getLanguage().getString("WEATHER_DRY");
             case "FROZEN_OCEAN", "FROZEN_RIVER", "ICE_SPIKES", "SNOWY_BEACH", "SNOWY_MOUNTAINS", "SNOWY_TAIGA", "SNOWY_TAIGA_HILLS", "SNOWY_TAIGA_MOUNTAINS", "SNOWY_TUNDRA" -> (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
             default -> (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");
         };
-        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_WEATHER", weather), 80L);
-        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity())), 100L);
-        bsched.scheduleSyncDelayedTask(plugin, () -> TARDISMessage.send(player, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature())), 120L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TardisMessage.send(player, "SCAN_WEATHER", weather), 80L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TardisMessage.send(player, "SCAN_HUMIDITY", String.format("%.2f", scan_loc.getBlock().getHumidity())), 100L);
+        bsched.scheduleSyncDelayedTask(plugin, () -> TardisMessage.send(player, "SCAN_TEMP", String.format("%.2f", scan_loc.getBlock().getTemperature())), 120L);
         bsched.scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.send(player, "SCAN_ENTS");
+            TardisMessage.send(player, "SCAN_ENTS");
             if (scannedentities.size() > 0) {
                 scannedentities.forEach((ent, value) -> {
                     String message = "";
@@ -225,7 +225,7 @@ public class TARDISSonicScanner {
                 });
                 scannedentities.clear();
             } else {
-                TARDISMessage.send(player, "SCAN_NONE");
+                TardisMessage.send(player, "SCAN_NONE");
             }
         }, 140L);
     }

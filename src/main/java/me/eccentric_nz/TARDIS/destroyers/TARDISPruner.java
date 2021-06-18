@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 
 import java.io.BufferedWriter;
@@ -35,14 +35,14 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TARDISPruner {
+public class TardisPruner {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
 
-    public TARDISPruner(TARDISPlugin plugin) {
+    public TardisPruner(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -62,7 +62,7 @@ public class TARDISPruner {
                     if (rs.isBeforeFirst()) {
                         sender.sendMessage(plugin.getPluginName() + "Prune List:");
                     } else {
-                        TARDISMessage.send(sender, "PRUNE_NONE");
+                        TardisMessage.send(sender, "PRUNE_NONE");
                     }
                     while (rs.next()) {
                         HashMap<String, Object> wherecl = new HashMap<>();
@@ -112,7 +112,7 @@ public class TARDISPruner {
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
-            TARDISExterminator te = new TARDISExterminator(plugin);
+            TardisExterminator te = new TardisExterminator(plugin);
             while (rs.next()) {
                 // double check that this is an unused tardis
                 Timestamp lastUse = new Timestamp(rs.getLong("last_use"));

@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.handles;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * TabCompleter for /handles
  */
-public class TARDISHandlesTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisHandlesTabComplete extends TardisCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("disk", "remove", "takeoff", "land", "scan", "lock", "unlock", "remind", "say", "name", "time", "tell", "weird");
 

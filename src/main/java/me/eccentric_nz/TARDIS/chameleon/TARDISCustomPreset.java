@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.files.TARDISFileCopier;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.files.TardisFileCopier;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,11 +33,11 @@ import java.util.EnumMap;
  *
  * @author eccentric_nz
  */
-public class TARDISCustomPreset {
+public class TardisCustomPreset {
 
-    private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
-    private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<>(COMPASS.class);
-    private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<>(COMPASS.class);
+    private final EnumMap<CardinalDirection, TardisChameleonColumn> blueprint = new EnumMap<>(CardinalDirection.class);
+    private final EnumMap<CardinalDirection, TardisChameleonColumn> stained = new EnumMap<>(CardinalDirection.class);
+    private final EnumMap<CardinalDirection, TardisChameleonColumn> glass = new EnumMap<>(CardinalDirection.class);
     private String firstLine;
     private String secondLine;
 
@@ -46,12 +46,12 @@ public class TARDISCustomPreset {
         // ignore lines that start with a #
         String[] custom_data = new String[6];
         File custom_file;
-        if (!TARDISPlugin.plugin.getConfig().getBoolean("conversions.custom_preset")) {
-            custom_file = TARDISFileCopier.copy(TARDISPlugin.plugin.getDataFolder() + File.separator + "custom_preset.txt", TARDISPlugin.plugin.getResource("custom_preset.txt"), true);
-            TARDISPlugin.plugin.getConfig().set("conversions.custom_preset", true);
-            TARDISPlugin.plugin.saveConfig();
+        if (!TardisPlugin.plugin.getConfig().getBoolean("conversions.custom_preset")) {
+            custom_file = TardisFileCopier.copy(TardisPlugin.plugin.getDataFolder() + File.separator + "custom_preset.txt", TardisPlugin.plugin.getResource("custom_preset.txt"), true);
+            TardisPlugin.plugin.getConfig().set("conversions.custom_preset", true);
+            TardisPlugin.plugin.saveConfig();
         } else {
-            custom_file = TARDISPlugin.plugin.getTardisCopier().copy("custom_preset.txt");
+            custom_file = TardisPlugin.plugin.getTardisCopier().copy("custom_preset.txt");
         }
         BufferedReader bufRdr = null;
         int i = 0;
@@ -66,13 +66,13 @@ public class TARDISCustomPreset {
                 }
             }
         } catch (IOException io) {
-            TARDISPlugin.plugin.getConsole().sendMessage(TARDISPlugin.plugin.getPluginName() + "Could not read custom preset file! " + io.getMessage());
+            TardisPlugin.plugin.getConsole().sendMessage(TardisPlugin.plugin.getPluginName() + "Could not read custom preset file! " + io.getMessage());
         } finally {
             if (bufRdr != null) {
                 try {
                     bufRdr.close();
                 } catch (IOException e) {
-                    TARDISPlugin.plugin.debug("Error closing custom preset reader! " + e.getMessage());
+                    TardisPlugin.plugin.debug("Error closing custom preset reader! " + e.getMessage());
                 }
             }
         }
@@ -83,10 +83,10 @@ public class TARDISCustomPreset {
             // assume true if not set
             asymmetric = true;
         }
-        for (COMPASS d : COMPASS.values()) {
-            blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[0], asymmetric, false));
-            stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[1], asymmetric, false));
-            glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[2], asymmetric, false));
+        for (CardinalDirection d : CardinalDirection.values()) {
+            blueprint.put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, custom_data[0], asymmetric, false));
+            stained.put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, custom_data[1], asymmetric, false));
+            glass.put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, custom_data[2], asymmetric, false));
         }
         if (custom_data[3] != null && !custom_data[3].isEmpty()) {
             firstLine = custom_data[3];
@@ -97,15 +97,15 @@ public class TARDISCustomPreset {
         }
     }
 
-    public EnumMap<COMPASS, TARDISChameleonColumn> getBlueprint() {
+    public EnumMap<CardinalDirection, TardisChameleonColumn> getBlueprint() {
         return blueprint;
     }
 
-    public EnumMap<COMPASS, TARDISChameleonColumn> getStained() {
+    public EnumMap<CardinalDirection, TardisChameleonColumn> getStained() {
         return stained;
     }
 
-    public EnumMap<COMPASS, TARDISChameleonColumn> getGlass() {
+    public EnumMap<CardinalDirection, TardisChameleonColumn> getGlass() {
         return glass;
     }
 

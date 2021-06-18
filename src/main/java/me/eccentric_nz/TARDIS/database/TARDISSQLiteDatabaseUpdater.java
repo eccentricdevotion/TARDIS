@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.ChatColor;
 
 import java.sql.ResultSet;
@@ -32,7 +32,7 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-class TARDISSQLiteDatabaseUpdater {
+class TardisSqliteDatabaseUpdater {
 
     private final List<String> areaUpdates = new ArrayList<>();
     private final List<String> blockUpdates = new ArrayList<>();
@@ -49,10 +49,10 @@ class TARDISSQLiteDatabaseUpdater {
     private final List<String> sonicUpdates = new ArrayList<>();
     private final List<String> uuidUpdates = Arrays.asList("achievements", "ars", "player_prefs", "storage", "t_count", "tardis", "travellers");
     private final Statement statement;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
 
-    TARDISSQLiteDatabaseUpdater(TARDISPlugin plugin, Statement statement) {
+    TardisSqliteDatabaseUpdater(TardisPlugin plugin, Statement statement) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
         this.statement = statement;
@@ -327,7 +327,7 @@ class TARDISSQLiteDatabaseUpdater {
                 String dispersedAlter = "ALTER TABLE " + prefix + "dispersed ADD tardis_id INTEGER";
                 statement.executeUpdate(dispersedAlter);
                 // update tardis_id column for existing records
-                new TARDISDispersalUpdater(plugin).updateTardisIds();
+                new TardisDispersalUpdater(plugin).updateTardisIds();
             }
             // transfer `void` data to `thevoid`, then remove `void` table
             String voidQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='" + prefix + "void'";
@@ -396,7 +396,7 @@ class TARDISSQLiteDatabaseUpdater {
             plugin.debug("SQLite database add fields error: " + e.getMessage() + e.getErrorCode());
         }
         if (i > 0) {
-            plugin.getConsole().sendMessage(TARDISPlugin.plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the SQLite database!");
+            plugin.getConsole().sendMessage(TardisPlugin.plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the SQLite database!");
         }
     }
 }

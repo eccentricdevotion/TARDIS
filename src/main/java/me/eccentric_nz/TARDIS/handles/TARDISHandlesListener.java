@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -36,11 +36,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISHandlesListener implements Listener {
+public class TardisHandlesListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISHandlesListener(TARDISPlugin plugin) {
+    public TardisHandlesListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -60,7 +60,7 @@ public class TARDISHandlesListener implements Listener {
         }
         event.setCancelled(true);
         // set block to AIR
-        b.setBlockData(TARDISConstants.AIR);
+        b.setBlockData(TardisConstants.AIR);
         // drop a custom BIRCH_BUTTON
         ItemStack is = new ItemStack(Material.BIRCH_BUTTON, 1);
         ItemMeta im = is.getItemMeta();
@@ -88,7 +88,7 @@ public class TARDISHandlesListener implements Listener {
         if (im.hasDisplayName() && im.getDisplayName().equals("Handles")) {
             // can only be placed in an item frame
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), "HANDLES_FRAME");
+            TardisMessage.send(event.getPlayer(), "HANDLES_FRAME");
         }
     }
 }

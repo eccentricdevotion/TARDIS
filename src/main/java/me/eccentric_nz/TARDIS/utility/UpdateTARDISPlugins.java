@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -15,14 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class UpdateTARDISPlugins {
+public class UpdateTardisPlugins {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> FILES = new ArrayList<>();
     private final List<String> URLS = new ArrayList<>();
     private final AtomicBoolean updateInProgress = new AtomicBoolean(false);
 
-    public UpdateTARDISPlugins(TARDISPlugin plugin) {
+    public UpdateTardisPlugins(TardisPlugin plugin) {
         this.plugin = plugin;
         FILES.add("tardis.jar");
         FILES.add("TARDISChunkGenerator.jar");

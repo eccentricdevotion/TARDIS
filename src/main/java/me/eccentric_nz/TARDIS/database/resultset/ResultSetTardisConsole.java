@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import org.bukkit.Material;
@@ -37,9 +37,9 @@ import java.sql.SQLException;
  */
 public class ResultSetTardisConsole {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
     private Schematic schematic = Consoles.schematicFor(Material.IRON_BLOCK);
 
@@ -48,7 +48,7 @@ public class ResultSetTardisConsole {
      *
      * @param plugin an instance of the main class.
      */
-    public ResultSetTardisConsole(TARDISPlugin plugin) {
+    public ResultSetTardisConsole(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }

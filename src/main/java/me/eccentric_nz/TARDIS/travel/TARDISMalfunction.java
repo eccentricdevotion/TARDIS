@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advanced.TardisCircuitChecker;
+import me.eccentric_nz.tardis.advanced.TardisCircuitDamager;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetLamps;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.DiskCircuit;
 import org.bukkit.Location;
@@ -43,11 +43,11 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISMalfunction {
+public class TardisMalfunction {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISMalfunction(TARDISPlugin plugin) {
+    public TardisMalfunction(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -55,14 +55,14 @@ public class TARDISMalfunction {
         boolean mal = false;
         if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
             int chance = 100 - plugin.getConfig().getInt("preferences.malfunction");
-            if (TARDISConstants.RANDOM.nextInt(100) > chance) {
+            if (TardisConstants.RANDOM.nextInt(100) > chance) {
                 mal = true;
             }
         }
         return mal;
     }
 
-    public Location getMalfunction(int id, Player p, COMPASS dir, Location handbrake_loc, String eps, String creeper) {
+    public Location getMalfunction(int id, Player p, CardinalDirection dir, Location handbrake_loc, String eps, String creeper) {
         Location l;
         // get current tardis preset location
         HashMap<String, Object> wherecl = new HashMap<>();
@@ -72,11 +72,11 @@ public class TARDISMalfunction {
             Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
             int end = 100 - plugin.getConfig().getInt("preferences.malfunction_end");
             int nether = end - plugin.getConfig().getInt("preferences.malfunction_nether");
-            int r = TARDISConstants.RANDOM.nextInt(100);
-            TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-            int x = TARDISConstants.RANDOM.nextInt(4) + 1;
-            int z = TARDISConstants.RANDOM.nextInt(4) + 1;
-            int y = TARDISConstants.RANDOM.nextInt(4) + 1;
+            int r = TardisConstants.RANDOM.nextInt(100);
+            TardisTimeTravel tt = new TardisTimeTravel(plugin);
+            int x = TardisConstants.RANDOM.nextInt(4) + 1;
+            int z = TardisConstants.RANDOM.nextInt(4) + 1;
+            int y = TardisConstants.RANDOM.nextInt(4) + 1;
             if (r > end) {
                 // get random the_end location
                 l = tt.randomDestination(p, x, z, y, dir, "THE_END", null, true, cl);
@@ -105,9 +105,9 @@ public class TARDISMalfunction {
             int malfunctionDamage = plugin.getConfig().getInt("circuits.malfunction_damage");
             if (plugin.getConfig().getBoolean("circuits.damage") && malfunctionDamage > 0 && !plugin.getDifficulty().equals(Difficulty.EASY)) {
                 // choose a random circuit
-                DiskCircuit circuit = DiskCircuit.getTardisCircuits().get(TARDISConstants.RANDOM.nextInt(DiskCircuit.getTardisCircuits().size()));
+                DiskCircuit circuit = DiskCircuit.getTardisCircuits().get(TardisConstants.RANDOM.nextInt(DiskCircuit.getTardisCircuits().size()));
                 // is the circuit in the advanced console?
-                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                TardisCircuitChecker tcc = new TardisCircuitChecker(plugin, id);
                 tcc.getCircuits();
                 int damage;
                 int usesLeft;
@@ -194,18 +194,18 @@ public class TARDISMalfunction {
                         playerUUIDs = new ArrayList<>();
                         playerUUIDs.add(p.getUniqueId());
                     }
-                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
+                    TardisEpsRunnable EPS_runnable = new TardisEpsRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
                 }
                 Material light = (rsp.isLanternsOn()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP;
                 // flicker lights
                 long end = System.currentTimeMillis() + 10000;
-                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), end, light, rsp.isWoolLightsOn());
+                TardisLampsRunnable runnable = new TardisLampsRunnable(plugin, rsl.getData(), end, light, rsp.isWoolLightsOn());
                 runnable.setHandbrake(handbrake);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
                 runnable.setTask(taskID);
                 // add fireworks
-                TARDISMalfunctionExplosion explodeable = new TARDISMalfunctionExplosion(plugin, id, end);
+                TardisMalfunctionExplosion explodeable = new TardisMalfunctionExplosion(plugin, id, end);
                 int taskEx = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, explodeable, 10L, 30L);
                 explodeable.setTask(taskEx);
             }
@@ -213,7 +213,7 @@ public class TARDISMalfunction {
     }
 
     private void damage(DiskCircuit circuit, int uses_left, int id, Player p) {
-        TARDISCircuitDamager tcd = new TARDISCircuitDamager(plugin, circuit, uses_left, id, p);
+        TardisCircuitDamager tcd = new TardisCircuitDamager(plugin, circuit, uses_left, id, p);
         tcd.damage();
     }
 }

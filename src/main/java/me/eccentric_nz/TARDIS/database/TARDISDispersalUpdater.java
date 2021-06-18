@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 
 import java.sql.*;
 
@@ -27,14 +27,14 @@ import java.sql.*;
  *
  * @author eccentric_nz
  */
-class TARDISDispersalUpdater {
+class TardisDispersalUpdater {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
 
-    TARDISDispersalUpdater(TARDISPlugin plugin) {
+    TardisDispersalUpdater(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }

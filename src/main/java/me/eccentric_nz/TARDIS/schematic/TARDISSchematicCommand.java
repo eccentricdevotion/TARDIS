@@ -18,10 +18,10 @@ package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -46,11 +46,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-public class TARDISSchematicCommand implements CommandExecutor {
+public class TardisSchematicCommand implements CommandExecutor {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISSchematicCommand(TARDISPlugin plugin) {
+    public TardisSchematicCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -58,7 +58,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisschematic")) {
             if (args.length < 1) {
-                TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                TardisMessage.send(sender, "TOO_FEW_ARGS");
                 return true;
             }
             Player player = null;
@@ -66,16 +66,16 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                TARDISMessage.send(sender, "CMD_PLAYER");
+                TardisMessage.send(sender, "CMD_PLAYER");
                 return true;
             }
             if (!player.hasPermission("tardis.admin")) {
-                TARDISMessage.send(sender, "CMD_ADMIN");
+                TardisMessage.send(sender, "CMD_ADMIN");
                 return true;
             }
             UUID uuid = player.getUniqueId();
             if (args.length == 1 && args[0].equalsIgnoreCase("paste")) {
-                TARDISSchematicPaster paster = new TARDISSchematicPaster(plugin, player);
+                TardisSchematicPaster paster = new TardisSchematicPaster(plugin, player);
                 int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, paster, 1L, 3L);
                 paster.setTask(task);
                 return true;
@@ -85,21 +85,21 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 String path = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + "legacy_budget.csv";
                 File csv = new File(path);
                 if (csv.exists()) {
-                    TARDISCSVPaster paster = new TARDISCSVPaster(plugin);
+                    TardisCsvPaster paster = new TardisCsvPaster(plugin);
                     paster.buildLegacy(paster.arrayFromCSV(csv), eyeLocation);
                 } else {
-                    TARDISMessage.message(player, "Nice try, but it looks like you don't know what this command is for...");
+                    TardisMessage.message(player, "Nice try, but it looks like you don't know what this command is for...");
                 }
                 return true;
             }
             if (args[0].equalsIgnoreCase("clear")) {
                 // check they have selected start and end blocks
                 if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
-                    TARDISMessage.send(player, "SCHM_NO_START");
+                    TardisMessage.send(player, "SCHM_NO_START");
                     return true;
                 }
                 if (!plugin.getTrackerKeeper().getEndLocation().containsKey(uuid)) {
-                    TARDISMessage.send(player, "SCHM_NO_END");
+                    TardisMessage.send(player, "SCHM_NO_END");
                     return true;
                 }
                 // get the world
@@ -107,7 +107,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 String chk_w = Objects.requireNonNull(plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld()).getName();
                 assert w != null;
                 if (!w.getName().equals(chk_w)) {
-                    TARDISMessage.send(player, "SCHM_WORLD");
+                    TardisMessage.send(player, "SCHM_WORLD");
                     return true;
                 }
                 // get the raw coords
@@ -129,15 +129,15 @@ public class TARDISSchematicCommand implements CommandExecutor {
                     for (int r = minx; r <= maxx; r++) {
                         for (int c = minz; c <= maxz; c++) {
                             Block b = w.getBlockAt(r, l, c);
-                            b.setBlockData(TARDISConstants.AIR);
+                            b.setBlockData(TardisConstants.AIR);
                         }
                     }
                 }
                 return true;
             }
             if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
-                TARDISMessage.send(player, "SCHM_NAME");
+                TardisMessage.send(player, "TOO_FEW_ARGS");
+                TardisMessage.send(player, "SCHM_NAME");
                 return true;
             }
             if (!args[0].equalsIgnoreCase("load") && !args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("replace")) {
@@ -146,11 +146,11 @@ public class TARDISSchematicCommand implements CommandExecutor {
             if (args[0].equalsIgnoreCase("save")) {
                 // check they have selected start and end blocks
                 if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
-                    TARDISMessage.send(player, "SCHM_NO_START");
+                    TardisMessage.send(player, "SCHM_NO_START");
                     return true;
                 }
                 if (!plugin.getTrackerKeeper().getEndLocation().containsKey(uuid)) {
-                    TARDISMessage.send(player, "SCHM_NO_END");
+                    TardisMessage.send(player, "SCHM_NO_END");
                     return true;
                 }
                 // get the world
@@ -158,7 +158,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 String chk_w = Objects.requireNonNull(plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld()).getName();
                 assert w != null;
                 if (!w.getName().equals(chk_w)) {
-                    TARDISMessage.send(player, "SCHM_WORLD");
+                    TardisMessage.send(player, "SCHM_WORLD");
                     return true;
                 }
                 // get the raw coords
@@ -192,11 +192,11 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 dimensions.addProperty("height", height);
                 dimensions.addProperty("length", length);
                 if (width != length) {
-                    TARDISMessage.send(player, "SCHM_SQUARE");
+                    TardisMessage.send(player, "SCHM_SQUARE");
                     return true;
                 }
                 if ((width % 16 != 0 || length % 16 != 0) && !args[1].equals("zero") && !args[1].equals("junk")) {
-                    TARDISMessage.send(player, "SCHM_MULTIPLE");
+                    TardisMessage.send(player, "SCHM_MULTIPLE");
                     return true;
                 }
                 JsonArray paintings = new JsonArray();
@@ -233,7 +233,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                             String blockData = b.getBlockData().getAsString();
                             obj.addProperty("data", blockData);
                             // banners
-                            if (TARDISStaticUtils.isBanner(b.getType())) {
+                            if (TardisStaticUtils.isBanner(b.getType())) {
                                 JsonObject state = new JsonObject();
                                 Banner banner = (Banner) b.getState();
                                 JsonArray patterns = new JsonArray();
@@ -267,11 +267,11 @@ public class TARDISSchematicCommand implements CommandExecutor {
                     try (BufferedWriter bw = new BufferedWriter(new FileWriter(file), 16 * 1024)) {
                         bw.write(schematic.toString());
                     }
-                    TARDISSchematicGZip.zip(output, plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".tschm");
+                    TardisSchematicGZip.zip(output, plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".tschm");
                     file.delete();
-                    TARDISMessage.send(player, "SCHM_SAVED", args[1]);
+                    TardisMessage.send(player, "SCHM_SAVED", args[1]);
                 } catch (IOException e) {
-                    TARDISMessage.send(player, "SCHM_ERROR");
+                    TardisMessage.send(player, "SCHM_ERROR");
                 }
                 return true;
             }
@@ -279,26 +279,26 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 String instr = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".tschm";
                 File file = new File(instr);
                 if (!file.exists()) {
-                    TARDISMessage.send(player, "SCHM_NOT_VALID");
+                    TardisMessage.send(player, "SCHM_NOT_VALID");
                     return true;
                 }
-                JsonObject sch = TARDISSchematicGZip.unzip(instr);
+                JsonObject sch = TardisSchematicGZip.unzip(instr);
                 plugin.getTrackerKeeper().getPastes().put(uuid, sch);
-                TARDISMessage.send(player, "SCHM_LOADED", ChatColor.GREEN + "/ts paste" + ChatColor.RESET);
+                TardisMessage.send(player, "SCHM_LOADED", ChatColor.GREEN + "/ts paste" + ChatColor.RESET);
                 return true;
             }
             if (args[0].equalsIgnoreCase("replace")) {
                 if (args.length < 3) {
-                    TARDISMessage.send(player, "TOO_FEW_ARGS");
+                    TardisMessage.send(player, "TOO_FEW_ARGS");
                     return true;
                 }
                 // check they have selected start and end blocks
                 if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
-                    TARDISMessage.send(player, "SCHM_NO_START");
+                    TardisMessage.send(player, "SCHM_NO_START");
                     return true;
                 }
                 if (!plugin.getTrackerKeeper().getEndLocation().containsKey(uuid)) {
-                    TARDISMessage.send(player, "SCHM_NO_END");
+                    TardisMessage.send(player, "SCHM_NO_END");
                     return true;
                 }
                 // get the world
@@ -306,7 +306,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 String chk_w = Objects.requireNonNull(plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld()).getName();
                 assert w != null;
                 if (!w.getName().equals(chk_w)) {
-                    TARDISMessage.send(player, "SCHM_WORLD");
+                    TardisMessage.send(player, "SCHM_WORLD");
                     return true;
                 }
                 try {
@@ -342,7 +342,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                         }
                     }
                 } catch (IllegalArgumentException e) {
-                    TARDISMessage.send(player, "ARG_MATERIAL");
+                    TardisMessage.send(player, "ARG_MATERIAL");
                     return true;
                 }
                 return true;

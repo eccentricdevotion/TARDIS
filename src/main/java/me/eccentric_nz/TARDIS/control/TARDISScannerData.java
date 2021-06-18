@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import org.bukkit.Location;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISScannerData {
+public class TardisScannerData {
 
     private Location scanLocation;
-    private COMPASS tardisDirection;
+    private CardinalDirection tardisDirection;
     private long time;
     private String scannedBiome;
 
@@ -37,11 +37,11 @@ public class TARDISScannerData {
         this.scanLocation = scanLocation;
     }
 
-    public COMPASS getTardisDirection() {
+    public CardinalDirection getTardisDirection() {
         return tardisDirection;
     }
 
-    public void setTardisDirection(COMPASS tardisDirection) {
+    public void setTardisDirection(CardinalDirection tardisDirection) {
         this.tardisDirection = tardisDirection;
     }
 

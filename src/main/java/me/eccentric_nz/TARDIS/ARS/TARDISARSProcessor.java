@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.ars;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
 import org.bukkit.Chunk;
 
@@ -28,16 +28,16 @@ import java.util.Map;
  *
  * @author eccentric_nz
  */
-class TARDISARSProcessor {
+class TardisArsProcessor {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
     private final int limit;
     private String error = "ENERGY_NOT_ENOUGH";
-    private HashMap<TARDISARSSlot, ARS> changed;
-    private HashMap<TARDISARSJettison, ARS> jettison;
+    private HashMap<TardisArsSlot, Ars> changed;
+    private HashMap<TardisArsJettison, Ars> jettison;
 
-    public TARDISARSProcessor(TARDISPlugin plugin, int id) {
+    public TardisArsProcessor(TardisPlugin plugin, int id) {
         this.plugin = plugin;
         this.id = id;
         limit = this.plugin.getConfig().getInt("growth.ars_limit");
@@ -53,60 +53,60 @@ class TARDISARSProcessor {
                     if (!start[l][x][z].equals(end[l][x][z])) {
                         if (end[l][x][z].equals("TNT")) {
                             // found TNT in this slot
-                            TARDISARSJettison slot = new TARDISARSJettison();
+                            TardisArsJettison slot = new TardisArsJettison();
                             slot.setChunk(c);
                             slot.setY(l);
                             slot.setX(x);
                             slot.setZ(z);
-                            jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
+                            jettison.put(slot, TardisArs.ARSFor(start[l][x][z]));
                             // if it is a gravity well on the top or bottom levels jettison the other half too
                             if (start[l][x][z].equals("SANDSTONE") && l == 2) {
-                                TARDISARSJettison uslot = new TARDISARSJettison();
+                                TardisArsJettison uslot = new TardisArsJettison();
                                 uslot.setChunk(c);
                                 uslot.setY(3);
                                 uslot.setX(x);
                                 uslot.setZ(z);
-                                jettison.put(uslot, TARDISARS.ANTIGRAVITY);
+                                jettison.put(uslot, TardisArs.ANTIGRAVITY);
                             }
                             if (start[l][x][z].equals("MOSSY_COBBLESTONE") && l == 0) {
-                                TARDISARSJettison lslot = new TARDISARSJettison();
+                                TardisArsJettison lslot = new TardisArsJettison();
                                 lslot.setChunk(c);
                                 lslot.setY(-1);
                                 lslot.setX(x);
                                 lslot.setZ(z);
-                                jettison.put(lslot, TARDISARS.GRAVITY);
+                                jettison.put(lslot, TardisArs.GRAVITY);
                             }
                         } else {
                             switch (end[l][x][z]) {
                                 case "SANDSTONE":
                                     if (l == 0 || (l == 1 && !end[l - 1][x][z].equals("SANDSTONE")) || (l == 2 && !end[l - 1][x][z].equals("SANDSTONE")) || (l == 2 && end[l - 1][x][z].equals("SANDSTONE") && end[l - 2][x][z].equals("SANDSTONE"))) {
                                         // only remember the bottom slot of an anti-gravity well
-                                        TARDISARSSlot slot = new TARDISARSSlot();
+                                        TardisArsSlot slot = new TardisArsSlot();
                                         slot.setChunk(c);
                                         slot.setY(l);
                                         slot.setX(x);
                                         slot.setZ(z);
-                                        changed.put(slot, TARDISARS.ARSFor(end[l][x][z]));
+                                        changed.put(slot, TardisArs.ARSFor(end[l][x][z]));
                                     }
                                     break;
                                 case "MOSSY_COBBLESTONE":
                                     if (l == 2 || (l == 1 && !end[l + 1][x][z].equals("MOSSY_COBBLESTONE")) || (l == 0 && !end[l + 1][x][z].equals("MOSSY_COBBLESTONE")) || (l == 0 && end[l + 1][x][z].equals("MOSSY_COBBLESTONE") && end[l + 2][x][z].equals("MOSSY_COBBLESTONE"))) {
                                         // only remember the top slot of a gravity well
-                                        TARDISARSSlot slot = new TARDISARSSlot();
+                                        TardisArsSlot slot = new TardisArsSlot();
                                         slot.setChunk(c);
                                         slot.setY(l - 1);
                                         slot.setX(x);
                                         slot.setZ(z);
-                                        changed.put(slot, TARDISARS.ARSFor(end[l][x][z]));
+                                        changed.put(slot, TardisArs.ARSFor(end[l][x][z]));
                                     }
                                     break;
                                 default:
-                                    TARDISARSSlot slot = new TARDISARSSlot();
+                                    TardisArsSlot slot = new TardisArsSlot();
                                     slot.setChunk(c);
                                     slot.setY(l);
                                     slot.setX(x);
                                     slot.setZ(z);
-                                    changed.put(slot, TARDISARS.ARSFor(end[l][x][z]));
+                                    changed.put(slot, TardisArs.ARSFor(end[l][x][z]));
                                     break;
                             }
                         }
@@ -121,17 +121,17 @@ class TARDISARSProcessor {
         return jettison.size() > 0 || (changed.size() > 0 && !overlimit);
     }
 
-    boolean checkCosts(HashMap<TARDISARSSlot, ARS> changed, HashMap<TARDISARSJettison, ARS> jettison) {
+    boolean checkCosts(HashMap<TardisArsSlot, Ars> changed, HashMap<TardisArsJettison, Ars> jettison) {
         if (changed.size() > 0) {
             int totalcost = 0;
             int recoveredcost = 0;
             // calculate energy gained by jettisons
-            for (Map.Entry<TARDISARSJettison, ARS> c : jettison.entrySet()) {
+            for (Map.Entry<TardisArsJettison, Ars> c : jettison.entrySet()) {
                 if (c.getValue() != null) {
                     recoveredcost += Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost"));
                 }
             }
-            for (Map.Entry<TARDISARSSlot, ARS> c : changed.entrySet()) {
+            for (Map.Entry<TardisArsSlot, Ars> c : changed.entrySet()) {
                 int cost = plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost");
                 totalcost += cost;
             }
@@ -148,11 +148,11 @@ class TARDISARSProcessor {
         return true;
     }
 
-    public HashMap<TARDISARSSlot, ARS> getChanged() {
+    public HashMap<TardisArsSlot, Ars> getChanged() {
         return changed;
     }
 
-    public HashMap<TARDISARSJettison, ARS> getJettison() {
+    public HashMap<TardisArsJettison, Ars> getJettison() {
         return jettison;
     }
 

@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISChecker;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
@@ -28,21 +28,21 @@ import org.bukkit.plugin.Plugin;
  *
  * @author eccentric_nz
  */
-public class TARDISSkaro {
+public class TardisSkaro {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISSkaro(TARDISPlugin plugin) {
+    public TardisSkaro(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public void loadDalekWorld() {
         String s_world = plugin.getServer().getWorlds().get(0).getName();
         // copy datapack files
-        if (!TARDISChecker.hasDimension("skaro")) {
+        if (!TardisChecker.hasDimension("skaro")) {
             plugin.getServer().reloadData();
             // message console to restart server
-            TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Skaro data pack has been installed, please restart the server to enable the world.");
+            TardisMessage.message(plugin.getConsole(), ChatColor.RED + "Skaro data pack has been installed, please restart the server to enable the world.");
             // get default server world
             // add world to config
             if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.time_travel")) {

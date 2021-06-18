@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.enumeration;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 
@@ -49,7 +49,7 @@ public enum RecipeCategory {
 
     public String getName() {
         String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
+        return TardisStringUtils.sentenceCase(s);
     }
 
     public Material getMaterial() {

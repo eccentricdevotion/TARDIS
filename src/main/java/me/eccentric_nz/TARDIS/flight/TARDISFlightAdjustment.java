@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.enumeration.Flag;
-import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
+import me.eccentric_nz.tardis.travel.TardisTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
@@ -37,19 +37,19 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-class TARDISFlightAdjustment {
+class TardisFlightAdjustment {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Integer> angles;
 
-    TARDISFlightAdjustment(TARDISPlugin plugin) {
+    TardisFlightAdjustment(TardisPlugin plugin) {
         this.plugin = plugin;
         angles = Arrays.asList(0, 45, 90, 135, 180, 225, 270, 315);
     }
 
     public Location getLocation(BuildData bd, int r) {
         Location final_location;
-        TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
+        TardisTimeTravel tt = new TardisTimeTravel(plugin);
         Location adjusted_location = bd.getLocation().clone();
         // randomise the direction
         Collections.shuffle(angles);
@@ -76,8 +76,8 @@ class TARDISFlightAdjustment {
                     sub = tt.submarine(adjusted_location.getBlock(), bd.getDirection());
                     safe = (sub != null);
                 } else {
-                    int[] start = TARDISTimeTravel.getStartLocation(adjusted_location, bd.getDirection());
-                    safe = (TARDISTimeTravel.safeLocation(start[0], y, start[2], start[1], start[3], adjusted_location.getWorld(), bd.getDirection()) < 1);
+                    int[] start = TardisTimeTravel.getStartLocation(adjusted_location, bd.getDirection());
+                    safe = (TardisTimeTravel.safeLocation(start[0], y, start[2], start[1], start[3], adjusted_location.getWorld(), bd.getDirection()) < 1);
                 }
                 if (safe) {
                     final_location = (bd.isSubmarine()) ? sub : adjusted_location;

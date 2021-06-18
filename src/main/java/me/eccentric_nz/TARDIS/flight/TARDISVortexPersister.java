@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.builders.TARDISInstantPoliceBox;
-import me.eccentric_nz.tardis.builders.TARDISInstantPreset;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.builders.TardisInstantPoliceBox;
+import me.eccentric_nz.tardis.builders.TardisInstantPreset;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
-import me.eccentric_nz.tardis.destroyers.TARDISDeinstantPreset;
+import me.eccentric_nz.tardis.destroyers.TardisDeinstantPreset;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,17 +45,17 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISVortexPersister {
+public class TardisVortexPersister {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
 
-    public TARDISVortexPersister(TARDISPlugin plugin) {
+    public TardisVortexPersister(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -124,7 +124,7 @@ public class TARDISVortexPersister {
                                 while (!location.getChunk().isLoaded()) {
                                     location.getChunk().load();
                                 }
-                                new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, false, rs.getTardis().getDemat());
+                                new TardisDeinstantPreset(plugin).instaDestroyPreset(dd, false, rs.getTardis().getDemat());
                             }
                         }
                         // interrupted materialisation
@@ -150,9 +150,9 @@ public class TARDISVortexPersister {
                             }
                             plugin.getTrackerKeeper().getMaterialising().add(id);
                             if (rs.getTardis().getPreset().usesItemFrame()) {
-                                new TARDISInstantPoliceBox(plugin, bd, rs.getTardis().getPreset()).buildPreset();
+                                new TardisInstantPoliceBox(plugin, bd, rs.getTardis().getPreset()).buildPreset();
                             } else {
-                                new TARDISInstantPreset(plugin, bd, rs.getTardis().getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();
+                                new TardisInstantPreset(plugin, bd, rs.getTardis().getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();
                             }
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 plugin.getTrackerKeeper().getInVortex().remove(id);
@@ -171,8 +171,8 @@ public class TARDISVortexPersister {
                     whereh.put("secondary", 0);
                     ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
                     if (rsh.resultSet()) {
-                        Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
-                        new TARDISLoopingFlightSound(plugin, handbrake, id).run();
+                        Location handbrake = TardisStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
+                        new TardisLoopingFlightSound(plugin, handbrake, id).run();
                         count++;
                     }
                 }

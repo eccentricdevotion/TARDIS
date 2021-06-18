@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import org.bukkit.entity.Player;
 
 /**
  * @author eccentric_nz
  */
-public final class TARDISSiegeEvent extends TARDISEvent {
+public final class TardisSiegeEvent extends TardisEvent {
 
-    public TARDISSiegeEvent(Player player, TARDIS tardis) {
+    public TardisSiegeEvent(Player player, Tardis tardis) {
         super(player, tardis);
     }
 }

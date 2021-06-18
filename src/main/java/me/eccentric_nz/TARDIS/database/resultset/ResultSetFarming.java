@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.data.Farm;
 
 import java.sql.Connection;
@@ -33,9 +33,9 @@ import java.sql.SQLException;
  */
 public class ResultSetFarming {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int tardisId;
     private final String prefix;
     private Farm data;
@@ -46,7 +46,7 @@ public class ResultSetFarming {
      * @param plugin   an instance of the main class.
      * @param tardisId the id of the tardis to get the farm locations for.
      */
-    public ResultSetFarming(TARDISPlugin plugin, int tardisId) {
+    public ResultSetFarming(TardisPlugin plugin, int tardisId) {
         this.plugin = plugin;
         this.tardisId = tardisId;
         prefix = this.plugin.getPrefix();

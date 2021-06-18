@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
@@ -31,11 +31,11 @@ import org.bukkit.block.BlockFace;
  *
  * @author eccentric_nz
  */
-public class TARDISChameleonCircuit {
+public class TardisChameleonCircuit {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISChameleonCircuit(TARDISPlugin plugin) {
+    public TardisChameleonCircuit(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -46,29 +46,29 @@ public class TARDISChameleonCircuit {
         if (plugin.getBlocksConfig().getStringList("chameleon_blocks").contains(chameleonType.toString())) {
             wall_block = chameleonType;
         }
-        if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains(chameleonType)) {
-            TARDISMessage.send(p.getPlayer(), "CHAM_NOT_ENGAGE");
+        if (TardisConstants.CHAMELEON_BLOCKS_BAD.contains(chameleonType)) {
+            TardisMessage.send(p.getPlayer(), "CHAM_NOT_ENGAGE");
         }
-        if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains(chameleonType)) {
+        if (TardisConstants.CHAMELEON_BLOCKS_CHANGE.contains(chameleonType)) {
             wall_block = swapMaterial(chameleonType);
         }
-        if (TARDISConstants.CHAMELEON_BLOCKS_NEXT.contains(chameleonType)) {
+        if (TardisConstants.CHAMELEON_BLOCKS_NEXT.contains(chameleonType)) {
             // try the surrounding blocks
             for (BlockFace bf : plugin.getGeneralKeeper().getSurrounding()) {
                 Block surroundblock = b.getRelative(bf);
                 Material emat = surroundblock.getType();
-                if (TARDISConstants.CHAMELEON_BLOCKS_VALID.contains(emat)) {
+                if (TardisConstants.CHAMELEON_BLOCKS_VALID.contains(emat)) {
                     wall_block = emat;
                     break;
                 }
-                if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains(emat)) {
+                if (TardisConstants.CHAMELEON_BLOCKS_CHANGE.contains(emat)) {
                     wall_block = swapMaterial(emat);
                     break;
                 }
             }
         }
         // if it's a precious block or TNT and all_blocks is false, then switch it to wool of similar colour
-        if (TARDISConstants.CHAMELEON_BLOCKS_PRECIOUS.contains(chameleonType) && !plugin.getConfig().getBoolean("allow.all_blocks")) {
+        if (TardisConstants.CHAMELEON_BLOCKS_PRECIOUS.contains(chameleonType) && !plugin.getConfig().getBoolean("allow.all_blocks")) {
             wall_block = switch (chameleonType) {
                 case IRON_BLOCK -> Material.YELLOW_WOOL;
                 case DIAMOND_BLOCK -> Material.LIGHT_BLUE_WOOL;
@@ -83,6 +83,6 @@ public class TARDISChameleonCircuit {
     }
 
     private Material swapMaterial(Material material) {
-        return TARDISConstants.CHAMELEON_BLOCKS_CHANGE_HASH.get(material);
+        return TardisConstants.CHAMELEON_BLOCKS_CHANGE_HASH.get(material);
     }
 }

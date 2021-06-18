@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.hads;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -30,11 +30,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISHostileAction {
+public class TardisHostileAction {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISHostileAction(TARDISPlugin plugin) {
+    public TardisHostileAction(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -47,30 +47,30 @@ public class TARDISHostileAction {
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             UUID uuid = tardis.getUuid();
             boolean powered = tardis.isPowered();
-            PRESET preset = tardis.getPreset();
+            Preset preset = tardis.getPreset();
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             if (rsp.resultSet()) {
                 if (rsp.isHadsOn() && powered) {
                     switch (rsp.getHadsType()) {
                         case DISPLACEMENT:
-                            new TARDISHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);
+                            new TardisHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);
                             break;
                         case DISPERSAL:
-                            new TARDISHostileDispersal(plugin).disperseTARDIS(id, uuid, hostile, preset);
+                            new TardisHostileDispersal(plugin).disperseTARDIS(id, uuid, hostile, preset);
                             break;
                         default:
                             break;
                     }
                 } else {
                     plugin.getTrackerKeeper().getDamage().remove(id);
-                    TARDISMessage.send(hostile, "TARDIS_BREAK");
+                    TardisMessage.send(hostile, "TARDIS_BREAK");
                 }
             } else {
                 plugin.getTrackerKeeper().getDamage().remove(id);
-                TARDISMessage.send(hostile, "TARDIS_BREAK");
+                TardisMessage.send(hostile, "TARDIS_BREAK");
             }
         }
     }

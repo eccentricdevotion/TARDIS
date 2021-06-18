@@ -17,10 +17,10 @@
 package me.eccentric_nz.tardis.commands.admin;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
 import me.eccentric_nz.tardis.enumeration.Consoles;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * TabCompleter for /tardisadmin
  */
-public class TARDISAdminTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisAdminTabComplete extends TardisCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("arch", "condenser", "config", "convert_database", "decharge", "delete", "disguise", "dispersed", "enter", "list", "make_preset", "maze", "playercount", "prune", "prunelist", "purge", "purge_portals", "recharger", "region_flag", "reload", "repair", "revoke", "set_size", "spawn_abandoned", "undisguise", "update_plugins");
     private final ImmutableList<String> ASS_SUBS = ImmutableList.of("clear", "list");
@@ -47,9 +47,9 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> WORLD_SUBS;
     private final List<String> BLUEPRINT_SUBS = new ArrayList<>();
 
-    public TARDISAdminTabComplete(TARDISPlugin plugin) {
+    public TardisAdminTabComplete(TardisPlugin plugin) {
         List<String> tmpPresets = new ArrayList<>();
-        for (PRESET p : PRESET.values()) {
+        for (Preset p : Preset.values()) {
             tmpPresets.add(p.toString());
         }
         PRESETS = ImmutableList.copyOf(tmpPresets);

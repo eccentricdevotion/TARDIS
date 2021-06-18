@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISItemRenamer;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisItemRenamer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -27,11 +27,11 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author eccentric_nz
  */
-class TARDISNameKeyCommand {
+class TardisNameKeyCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISNameKeyCommand(TARDISPlugin plugin) {
+    TardisNameKeyCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -48,12 +48,12 @@ class TARDISNameKeyCommand {
         Material m = Material.getMaterial(key);
         assert m != null;
         if (m.isAir()) {
-            TARDISMessage.send(player, "KEY_NO_RENAME");
+            TardisMessage.send(player, "KEY_NO_RENAME");
             return true;
         }
         ItemStack is = player.getInventory().getItemInMainHand();
         if (!is.getType().equals(m)) {
-            TARDISMessage.send(player, "KEY_ONLY");
+            TardisMessage.send(player, "KEY_ONLY");
             return true;
         }
         int count = args.length;
@@ -66,9 +66,9 @@ class TARDISNameKeyCommand {
         }
         String tmp = buf.toString();
         if (!tmp.isEmpty()) {
-            TARDISItemRenamer ir = new TARDISItemRenamer(plugin, player, is);
+            TardisItemRenamer ir = new TardisItemRenamer(plugin, player, is);
             ir.setName(tmp, false);
-            TARDISMessage.send(player, "KEY_RENAMED", tmp);
+            TardisMessage.send(player, "KEY_RENAMED", tmp);
             return true;
         } else {
             return false;

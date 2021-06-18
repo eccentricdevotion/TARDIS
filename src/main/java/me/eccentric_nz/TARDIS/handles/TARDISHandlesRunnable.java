@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.data.Reminder;
 import me.eccentric_nz.tardis.database.resultset.ResultSetReminders;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-public class TARDISHandlesRunnable implements Runnable {
+public class TardisHandlesRunnable implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISHandlesRunnable(TARDISPlugin plugin) {
+    public TardisHandlesRunnable(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -43,8 +43,8 @@ public class TARDISHandlesRunnable implements Runnable {
                 if (currentTime > r.getTime()) {
                     Player player = plugin.getServer().getPlayer(r.getUuid());
                     if (player != null && player.isOnline()) {
-                        TARDISSounds.playTARDISSound(player, "handles_reminder");
-                        TARDISMessage.handlesSend(player, "HANDLES_REMINDER", r.getReminder());
+                        TardisSounds.playTARDISSound(player, "handles_reminder");
+                        TardisMessage.handlesSend(player, "HANDLES_REMINDER", r.getReminder());
                         // remove the reminder...
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("reminder_id", r.getReminderId());

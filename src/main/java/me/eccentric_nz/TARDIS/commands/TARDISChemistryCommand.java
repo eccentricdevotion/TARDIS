@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.chemistry.block.ChemistryBlock;
 import me.eccentric_nz.tardis.chemistry.block.RecipeData;
 import me.eccentric_nz.tardis.chemistry.compound.CompoundCommand;
@@ -27,7 +27,7 @@ import me.eccentric_nz.tardis.chemistry.formula.FormulaCommand;
 import me.eccentric_nz.tardis.chemistry.lab.LabCommand;
 import me.eccentric_nz.tardis.chemistry.product.ProductCommand;
 import me.eccentric_nz.tardis.chemistry.reducer.ReduceCommand;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -42,12 +42,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
-public class TARDISChemistryCommand implements CommandExecutor {
+public class TardisChemistryCommand implements CommandExecutor {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> GUIS = Arrays.asList("creative", "construct", "compound", "reduce", "product", "lab");
 
-    public TARDISChemistryCommand(TARDISPlugin plugin) {
+    public TardisChemistryCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -63,20 +63,20 @@ public class TARDISChemistryCommand implements CommandExecutor {
                 return true;
             }
             if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                TardisMessage.send(player, "TOO_FEW_ARGS");
                 return true;
             }
-            if (args[0].equalsIgnoreCase("formula") && TARDISPermission.hasPermission(player, "tardis.formula.show")) {
+            if (args[0].equalsIgnoreCase("formula") && TardisPermission.hasPermission(player, "tardis.formula.show")) {
                 return new FormulaCommand(plugin).show(player, args);
             } else if (args[0].equalsIgnoreCase("gui")) {
-                if (!TARDISPermission.hasPermission(player, "tardis.chemistry.command")) {
-                    TARDISMessage.send(player, "CHEMISTRY_CMD_PERM");
+                if (!TardisPermission.hasPermission(player, "tardis.chemistry.command")) {
+                    TardisMessage.send(player, "CHEMISTRY_CMD_PERM");
                     return true;
                 }
                 switch (args[1].toLowerCase()) {
                     case "creative":
                         if (args.length < 3) {
-                            TARDISMessage.send(player, "TOO_FEW_ARGS");
+                            TardisMessage.send(player, "TOO_FEW_ARGS");
                             return true;
                         }
                         return new CreativeCommand(plugin).open(player, args);
@@ -94,13 +94,13 @@ public class TARDISChemistryCommand implements CommandExecutor {
                         return true;
                 }
             } else if (args[0].equalsIgnoreCase("recipe")) {
-                if (!TARDISPermission.hasPermission(sender, "tardis.help")) {
-                    TARDISMessage.send(sender, "NO_PERMS");
+                if (!TardisPermission.hasPermission(sender, "tardis.help")) {
+                    TardisMessage.send(sender, "NO_PERMS");
                     return true;
                 }
                 String which = args[1].toLowerCase();
                 if (!GUIS.contains(which)) {
-                    TARDISMessage.message(player, "");
+                    TardisMessage.message(player, "");
                     return false;
                 }
                 showBlockRecipe(player, which);

@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.messaging;
 
 import me.eccentric_nz.tardis.enumeration.Updateable;
-import me.eccentric_nz.tardis.update.TARDISUpdateableCategory;
+import me.eccentric_nz.tardis.update.TardisUpdateableCategory;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -28,21 +28,21 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-public class TARDISUpdateLister {
+public class TardisUpdateLister {
 
     private final Player player;
 
-    public TARDISUpdateLister(Player player) {
+    public TardisUpdateLister(Player player) {
         this.player = player;
     }
 
     public void list() {
-        TARDISMessage.send(player, "UPDATE_INFO");
-        TARDISMessage.message(player, ChatColor.GRAY + "Hover over command argument to see a description");
-        TARDISMessage.message(player, ChatColor.GRAY + "Click to run the /tardis update command");
-        TARDISMessage.message(player, "");
-        for (TARDISUpdateableCategory category : TARDISUpdateableCategory.values()) {
-            TARDISMessage.message(player, category.getName());
+        TardisMessage.send(player, "UPDATE_INFO");
+        TardisMessage.message(player, ChatColor.GRAY + "Hover over command argument to see a description");
+        TardisMessage.message(player, ChatColor.GRAY + "Click to run the /tardis update command");
+        TardisMessage.message(player, "");
+        for (TardisUpdateableCategory category : TardisUpdateableCategory.values()) {
+            TardisMessage.message(player, category.getName());
             for (Updateable updateable : Updateable.values()) {
                 if (updateable.getCategory() == category) {
                     TextComponent tcu = new TextComponent(updateable.getName());
@@ -52,7 +52,7 @@ public class TARDISUpdateLister {
                     player.spigot().sendMessage(tcu);
                 }
             }
-            TARDISMessage.message(player, "");
+            TardisMessage.message(player, "");
         }
     }
 }

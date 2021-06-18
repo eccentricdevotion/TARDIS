@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISMesaPreset extends TARDISPreset {
+class TardisMesaPreset extends TardisPreset {
 
-    TARDISMesaPreset() {
+    TardisMesaPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:terracotta";

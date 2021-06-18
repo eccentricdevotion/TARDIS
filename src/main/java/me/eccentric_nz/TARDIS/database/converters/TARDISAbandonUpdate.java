@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.converters;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 
 import java.sql.Connection;
@@ -28,16 +28,16 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISAbandonUpdate {
+public class TardisAbandonUpdate {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
     private final String uuid;
     private final String prefix;
 
-    public TARDISAbandonUpdate(TARDISPlugin plugin, int id, String uuid) {
+    public TardisAbandonUpdate(TardisPlugin plugin, int id, String uuid) {
         this.plugin = plugin;
         this.id = id;
         this.uuid = uuid;

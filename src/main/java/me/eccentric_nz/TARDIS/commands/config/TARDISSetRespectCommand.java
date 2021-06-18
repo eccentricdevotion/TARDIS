@@ -17,9 +17,9 @@
 package me.eccentric_nz.tardis.commands.config;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISWorldGuardFlag;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisWorldGuardFlag;
 import org.bukkit.command.CommandSender;
 
 import java.util.Locale;
@@ -27,37 +27,37 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISSetRespectCommand {
+class TardisSetRespectCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ImmutableList<String> regions = ImmutableList.of("none", "wilderness", "town", "nation");
-    private final ImmutableList<String> flags = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
+    private final ImmutableList<String> flags = ImmutableList.copyOf(TardisWorldGuardFlag.getFLAG_LOOKUP().keySet());
 
-    TARDISSetRespectCommand(TARDISPlugin plugin) {
+    TardisSetRespectCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean setRegion(CommandSender sender, String[] args) {
         String region = args[1].toLowerCase(Locale.ENGLISH);
         if (!regions.contains(region)) {
-            TARDISMessage.send(sender, "ARG_TOWNY");
+            TardisMessage.send(sender, "ARG_TOWNY");
             return false;
         }
         plugin.getConfig().set("preferences.respect_towny", region);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TardisMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
 
     boolean setFlag(CommandSender sender, String[] args) {
         String flag = args[1].toLowerCase(Locale.ENGLISH);
         if (!flags.contains(flag)) {
-            TARDISMessage.send(sender, "ARG_FLAG");
+            TardisMessage.send(sender, "ARG_FLAG");
             return false;
         }
         plugin.getConfig().set("preferences.respect_worldguard", flag);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TardisMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
 }

@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.ars;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -34,15 +34,15 @@ import java.util.Locale;
  *
  * @author eccentric_nz
  */
-class TARDISARSJettisonRunnable implements Runnable {
+class TardisArsJettisonRunnable implements Runnable {
 
-    private final TARDISPlugin plugin;
-    private final TARDISARSJettison slot;
-    private final ARS room;
+    private final TardisPlugin plugin;
+    private final TardisArsJettison slot;
+    private final Ars room;
     private final int id;
     private final Player p;
 
-    TARDISARSJettisonRunnable(TARDISPlugin plugin, TARDISARSJettison slot, ARS room, int id, Player p) {
+    TardisArsJettisonRunnable(TardisPlugin plugin, TardisArsJettison slot, Ars room, int id, Player p) {
         this.plugin = plugin;
         this.slot = slot;
         this.room = room;
@@ -80,12 +80,12 @@ class TARDISARSJettisonRunnable implements Runnable {
                     }
                     BlockState state = b.getState();
                     plugin.getTardisHelper().removeTileEntity(state);
-                    b.setBlockData(TARDISConstants.AIR);
+                    b.setBlockData(TardisConstants.AIR);
                 }
             }
         }
         // give them their energy!
-        if (room != TARDISARS.SLOT) {
+        if (room != TardisArs.SLOT) {
             int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
             if (r.equals("GRAVITY") || r.equals("ANTIGRAVITY")) {
                 // halve it because they have to jettison top and bottom
@@ -95,7 +95,7 @@ class TARDISARSJettisonRunnable implements Runnable {
             set.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("tardis", amount, set, null);
             if (p.isOnline()) {
-                TARDISMessage.send(p, "ENERGY_RECOVERED", String.format("%d", amount));
+                TardisMessage.send(p, "ENERGY_RECOVERED", String.format("%d", amount));
             }
             // if it is a secondary console room remove the controls
             if (r.equals("BAKER") || r.equals("WOOD")) {

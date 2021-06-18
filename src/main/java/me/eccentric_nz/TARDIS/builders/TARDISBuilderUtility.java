@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import org.bukkit.Material;
 import org.bukkit.World;
 
 import java.util.HashMap;
 
-public class TARDISBuilderUtility {
+public class TardisBuilderUtility {
 
     static void saveDoorLocation(BuildData bd) {
         World world = bd.getLocation().getWorld();
@@ -35,28 +35,28 @@ public class TARDISBuilderUtility {
         assert world != null;
         String doorLoc = world.getName() + ":" + x + ":" + y + ":" + z;
         String doorStr = world.getBlockAt(x, y, z).getLocation().toString();
-        TARDISPlugin.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisId());
+        TardisPlugin.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisId());
         // should insert the door when tardis is first made, and then update location there after!
         HashMap<String, Object> whered = new HashMap<>();
         whered.put("door_type", 0);
         whered.put("tardis_id", bd.getTardisId());
-        ResultSetDoors rsd = new ResultSetDoors(TARDISPlugin.plugin, whered, false);
+        ResultSetDoors rsd = new ResultSetDoors(TardisPlugin.plugin, whered, false);
         HashMap<String, Object> setd = new HashMap<>();
         setd.put("door_location", doorLoc);
         setd.put("door_direction", bd.getDirection().toString());
         if (rsd.resultSet()) {
             HashMap<String, Object> whereid = new HashMap<>();
             whereid.put("door_id", rsd.getDoorId());
-            TARDISPlugin.plugin.getQueryFactory().doUpdate("doors", setd, whereid);
+            TardisPlugin.plugin.getQueryFactory().doUpdate("doors", setd, whereid);
         } else {
             setd.put("tardis_id", bd.getTardisId());
             setd.put("door_type", 0);
-            TARDISPlugin.plugin.getQueryFactory().doInsert("doors", setd);
+            TardisPlugin.plugin.getQueryFactory().doInsert("doors", setd);
         }
     }
 
-    public static Material getMaterialForItemFrame(PRESET preset) {
-        if (preset.equals(PRESET.WEEPING_ANGEL)) {
+    public static Material getMaterialForItemFrame(Preset preset) {
+        if (preset.equals(Preset.WEEPING_ANGEL)) {
             return Material.GRAY_STAINED_GLASS_PANE;
         } else {
             String split = preset.toString().replace("POLICE_BOX_", "");
@@ -71,6 +71,6 @@ public class TARDISBuilderUtility {
         set.put("chameleon_demat", preset);
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        TARDISPlugin.plugin.getQueryFactory().doUpdate("tardis", set, where);
+        TardisPlugin.plugin.getQueryFactory().doUpdate("tardis", set, where);
     }
 }

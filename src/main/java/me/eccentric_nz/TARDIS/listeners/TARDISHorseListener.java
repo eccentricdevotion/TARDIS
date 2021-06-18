@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.mobfarming.TARDISHorse;
-import me.eccentric_nz.tardis.travel.TARDISDoorLocation;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.mobfarming.TardisHorse;
+import me.eccentric_nz.tardis.travel.TardisDoorLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -40,11 +40,11 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISHorseListener implements Listener {
+public class TardisHorseListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISHorseListener(TARDISPlugin plugin) {
+    public TardisHorseListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -67,11 +67,11 @@ public class TARDISHorseListener implements Listener {
                         whered.put("door_type", 1);
                         ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
                         if (rsd.resultSet() && rsd.isLocked()) {
-                            TARDISMessage.send(p, "DOOR_UNLOCK");
+                            TardisMessage.send(p, "DOOR_UNLOCK");
                             return;
                         }
                         // get spawn location
-                        TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
+                        TardisDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
                         Location l = dl.getL();
                         // set the horse's direction as you would for a player when exiting
                         switch (dl.getD()) {
@@ -93,7 +93,7 @@ public class TARDISHorseListener implements Listener {
                             }
                         }
                         // save horse
-                        TARDISHorse tmhor = new TARDISHorse();
+                        TardisHorse tmhor = new TardisHorse();
                         tmhor.setAge(h.getTicksLived());
                         tmhor.setBaby(!h.isAdult());
                         if (e.getType().equals(EntityType.HORSE)) {

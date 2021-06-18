@@ -16,24 +16,24 @@
  */
 package me.eccentric_nz.tardis.update;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.Updateable;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public class TARDISUpdateBlocks {
+public class TardisUpdateBlocks {
 
     public static void showOptions(Player player, Updateable updateable) {
-        TARDISMessage.message(player, TARDISPlugin.plugin.getPluginName() + ChatColor.AQUA + "'" + updateable.getName() + "'" + ChatColor.RESET + " valid blocks:");
+        TardisMessage.message(player, TardisPlugin.plugin.getPluginName() + ChatColor.AQUA + "'" + updateable.getName() + "'" + ChatColor.RESET + " valid blocks:");
         for (Material m : updateable.getMaterialChoice().getChoices()) {
             String s = m.toString();
             if (s.equals("SPAWNER")) {
-                TARDISMessage.message(player, "   ANY BLOCK");
+                TardisMessage.message(player, "   ANY BLOCK");
             } else {
-                TARDISMessage.message(player, "  - " + TARDISStringUtils.capitalise(s));
+                TardisMessage.message(player, "  - " + TardisStringUtils.capitalise(s));
             }
         }
     }

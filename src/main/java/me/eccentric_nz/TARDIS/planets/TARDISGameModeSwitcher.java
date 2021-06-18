@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -30,11 +30,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 /**
  * @author eccentric_nz
  */
-public class TARDISGameModeSwitcher implements Listener {
+public class TardisGameModeSwitcher implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISGameModeSwitcher(TARDISPlugin plugin) {
+    public TardisGameModeSwitcher(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -42,7 +42,7 @@ public class TARDISGameModeSwitcher implements Listener {
     public void onGameModeWorldChange(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
         String world = player.getWorld().getName();
-        if (plugin.getWorldManager().equals(WorldManager.NONE) && !TARDISPermission.hasPermission(player, "tardis.gamemode.bypass")) {
+        if (plugin.getWorldManager().equals(WorldManager.NONE) && !TardisPermission.hasPermission(player, "tardis.gamemode.bypass")) {
             // tardis is managing worlds so switch player GameMode if necessary
             try {
                 GameMode gm = GameMode.valueOf(plugin.getPlanetsConfig().getString("planets." + world + ".gamemode"));
@@ -57,7 +57,7 @@ public class TARDISGameModeSwitcher implements Listener {
     public void onGameModeJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         String world = player.getWorld().getName();
-        if (plugin.getWorldManager().equals(WorldManager.NONE) && !TARDISPermission.hasPermission(player, "tardis.gamemode.bypass")) {
+        if (plugin.getWorldManager().equals(WorldManager.NONE) && !TardisPermission.hasPermission(player, "tardis.gamemode.bypass")) {
             try {
                 GameMode gm = GameMode.valueOf(plugin.getPlanetsConfig().getString("planets." + world + ".gamemode"));
                 player.setGameMode(gm);

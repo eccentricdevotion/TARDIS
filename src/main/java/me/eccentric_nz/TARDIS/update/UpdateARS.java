@@ -20,8 +20,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.resultset.ResultSetARS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.resultset.ResultSetArs;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -29,11 +29,11 @@ import org.bukkit.block.Sign;
 
 import java.util.HashMap;
 
-public class UpdateARS {
+public class UpdateArs {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    UpdateARS(TARDISPlugin plugin) {
+    UpdateArs(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -43,7 +43,7 @@ public class UpdateARS {
         // check if they already have an ars record (they may have used `/tardis arsremove`)
         HashMap<String, Object> wherer = new HashMap<>();
         wherer.put("tardis_id", id);
-        ResultSetARS rsa = new ResultSetARS(plugin, wherer);
+        ResultSetArs rsa = new ResultSetArs(plugin, wherer);
         if (!rsa.resultSet()) {
             // create default json
             String[][][] empty = new String[3][9][9];

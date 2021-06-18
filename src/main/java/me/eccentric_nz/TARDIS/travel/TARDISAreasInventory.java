@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.custommodeldata.GUIArea;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.custommodeldata.GuiArea;
 import me.eccentric_nz.tardis.database.data.Area;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
 import org.bukkit.Material;
@@ -36,13 +36,13 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISAreasInventory {
+public class TardisAreasInventory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ItemStack[] terminal;
     private final Player p;
 
-    public TARDISAreasInventory(TARDISPlugin plugin, Player p) {
+    public TardisAreasInventory(TardisPlugin plugin, Player p) {
         this.plugin = plugin;
         this.p = p;
         terminal = getItemStack();
@@ -62,8 +62,8 @@ public class TARDISAreasInventory {
             // cycle through areas
             for (Area a : rsa.getData()) {
                 String name = a.getAreaName();
-                if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
-                    ItemStack is = new ItemStack(TARDISConstants.GUI_IDS.get(i), 1);
+                if (TardisPermission.hasPermission(p, "tardis.area." + name) || TardisPermission.hasPermission(p, "tardis.area.*")) {
+                    ItemStack is = new ItemStack(TardisConstants.GUI_IDS.get(i), 1);
                     ItemMeta im = is.getItemMeta();
                     assert im != null;
                     im.setDisplayName(name);
@@ -90,7 +90,7 @@ public class TARDISAreasInventory {
         ItemMeta switchto = map.getItemMeta();
         assert switchto != null;
         switchto.setDisplayName("Load tardis saves");
-        switchto.setCustomModelData(GUIArea.LOAD_TARDIS_SAVES.getCustomModelData());
+        switchto.setCustomModelData(GuiArea.LOAD_TARDIS_SAVES.getCustomModelData());
         map.setItemMeta(switchto);
         for (int m = 45; m < 54; m++) {
             if (m == 49) {

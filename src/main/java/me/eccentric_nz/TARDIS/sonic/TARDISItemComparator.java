@@ -34,7 +34,7 @@ import org.bukkit.inventory.meta.Damageable;
 
 import java.util.Comparator;
 
-class TARDISItemComparator implements Comparator<ItemStack> {
+class TardisItemComparator implements Comparator<ItemStack> {
 
     @Override
     public int compare(ItemStack item1, ItemStack item2) {

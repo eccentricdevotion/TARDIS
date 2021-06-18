@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISMineshaftPreset extends TARDISPreset {
+class TardisMineshaftPreset extends TardisPreset {
 
-    TARDISMineshaftPreset() {
+    TardisMineshaftPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:oak_fence";

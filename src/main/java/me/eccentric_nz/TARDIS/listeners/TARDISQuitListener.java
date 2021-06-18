@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.arch.TARDISArchPersister;
-import me.eccentric_nz.tardis.artron.TARDISAdaptiveBoxLampToggler;
-import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
-import me.eccentric_nz.tardis.artron.TARDISLampToggler;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.arch.TardisArchPersister;
+import me.eccentric_nz.tardis.artron.TardisAdaptiveBoxLampToggler;
+import me.eccentric_nz.tardis.artron.TardisBeaconToggler;
+import me.eccentric_nz.tardis.artron.TardisLampToggler;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -40,11 +40,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISQuitListener implements Listener {
+public class TardisQuitListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISQuitListener(TARDISPlugin plugin) {
+    public TardisQuitListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -67,7 +67,7 @@ public class TARDISQuitListener implements Listener {
         wherep.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", tardis.getTardisId());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -88,7 +88,7 @@ public class TARDISQuitListener implements Listener {
                         return;
                     }
                     // power off
-                    PRESET preset = tardis.getPreset();
+                    Preset preset = tardis.getPreset();
                     boolean hidden = tardis.isHidden();
                     boolean lights = tardis.isLightsOn();
                     // police box lamp, delay it incase the TARDIS needs rebuilding
@@ -98,15 +98,15 @@ public class TARDISQuitListener implements Listener {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
                         delay = 20L;
                     }
-                    if (preset.equals(PRESET.ADAPTIVE)) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), delay);
+                    if (preset.equals(Preset.ADAPTIVE)) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), delay);
                     }
                     // if lights are on, turn them off
                     if (lights) {
-                        new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().hasLanterns());
+                        new TardisLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().hasLanterns());
                     }
                     // if beacon is on turn it off
-                    new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);
+                    new TardisBeaconToggler(plugin).flickSwitch(uuid, id, false);
                     // turn force field off
                     plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
                     // update database
@@ -120,7 +120,7 @@ public class TARDISQuitListener implements Listener {
             // save arched status
             if (plugin.isDisguisesOnServer()) {
                 if (plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-                    new TARDISArchPersister(plugin).save(uuid);
+                    new TardisArchPersister(plugin).save(uuid);
                 }
                 plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
             }

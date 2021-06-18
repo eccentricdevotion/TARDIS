@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
@@ -34,12 +34,12 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISSiegeRunnable implements Runnable {
+public class TardisSiegeRunnable implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int deplete;
 
-    public TARDISSiegeRunnable(TARDISPlugin plugin) {
+    public TardisSiegeRunnable(TardisPlugin plugin) {
         this.plugin = plugin;
         deplete = -this.plugin.getArtronConfig().getInt("siege_deplete");
     }
@@ -52,7 +52,7 @@ public class TARDISSiegeRunnable implements Runnable {
             where.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
-                TARDIS tardis = rs.getTardis();
+                Tardis tardis = rs.getTardis();
                 int level = tardis.getArtronLevel();
                 if (level > deplete) {
                     // remove some energy
@@ -60,7 +60,7 @@ public class TARDISSiegeRunnable implements Runnable {
                     whered.put("tardis_id", id);
                     plugin.getQueryFactory().alterEnergyLevel("tardis", deplete, whered, null);
                 } else if (plugin.getConfig().getBoolean("siege.creeper")) {
-                    Location l = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
+                    Location l = TardisStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                     // spawn an entity so we can check for the creeper
                     assert l != null;
                     Entity ent = Objects.requireNonNull(l.getWorld()).spawnEntity(l, EntityType.EGG);

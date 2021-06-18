@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -29,32 +29,32 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISSaveLocationCommand {
+class TardisSaveLocationCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISSaveLocationCommand(TARDISPlugin plugin) {
+    TardisSaveLocationCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean doSave(Player player, String[] args) {
-        if (TARDISPermission.hasPermission(player, "tardis.save")) {
+        if (TardisPermission.hasPermission(player, "tardis.save")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                TardisMessage.send(player, "NO_TARDIS");
                 return false;
             }
             if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                TardisMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
+                TardisMessage.send(player, "SAVE_NAME_NOT_VALID");
                 return false;
             } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
-                TARDISMessage.send(player, "SAVE_RESERVED");
+                TardisMessage.send(player, "SAVE_RESERVED");
                 return false;
             } else {
                 int id = rs.getTardis().getTardisId();
@@ -65,7 +65,7 @@ class TARDISSaveLocationCommand {
                 wherename.put("type", 0);
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
                 if (rsd.resultSet()) {
-                    TARDISMessage.send(player, "SAVE_EXISTS");
+                    TardisMessage.send(player, "SAVE_EXISTS");
                     return true;
                 }
                 // get current destination
@@ -73,12 +73,12 @@ class TARDISSaveLocationCommand {
                 wherecl.put("tardis_id", id);
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (!rsc.resultSet()) {
-                    TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                    TardisMessage.send(player, "CURRENT_NOT_FOUND");
                     return true;
                 }
                 String w = rsc.getWorld().getName();
                 if (w.startsWith("TARDIS_")) {
-                    TARDISMessage.send(player, "SAVE_NO_TARDIS");
+                    TardisMessage.send(player, "SAVE_NO_TARDIS");
                     return true;
                 }
                 HashMap<String, Object> set = new HashMap<>();
@@ -96,12 +96,12 @@ class TARDISSaveLocationCommand {
                 if (plugin.getQueryFactory().doSyncInsert("destinations", set) < 0) {
                     return false;
                 } else {
-                    TARDISMessage.send(player, "SAVE_SET", args[1]);
+                    TardisMessage.send(player, "SAVE_SET", args[1]);
                     return true;
                 }
             }
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            TardisMessage.send(player, "NO_PERMS");
             return false;
         }
     }

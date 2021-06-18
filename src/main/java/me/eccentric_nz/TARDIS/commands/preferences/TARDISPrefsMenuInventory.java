@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUIPlayerPreferences;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiPlayerPreferences;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.FlightMode;
-import me.eccentric_nz.tardis.enumeration.HADS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Hads;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
@@ -36,13 +36,13 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISPrefsMenuInventory {
+public class TardisPrefsMenuInventory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final UUID uuid;
     private final ItemStack[] menu;
 
-    public TARDISPrefsMenuInventory(TARDISPlugin plugin, UUID uuid) {
+    public TardisPrefsMenuInventory(TardisPlugin plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
         menu = getItemStack();
@@ -74,7 +74,7 @@ public class TARDISPrefsMenuInventory {
         values.add(rsp.isDndOn());
         values.add(rsp.isEpsOn());
         values.add(rsp.isHadsOn());
-        values.add(rsp.getHadsType().equals(HADS.DISPERSAL));
+        values.add(rsp.getHadsType().equals(Hads.DISPERSAL));
         values.add(rsp.isQuotesOn());
         values.add(rsp.isRendererOn());
         values.add(rsp.isSfxOn());
@@ -91,7 +91,7 @@ public class TARDISPrefsMenuInventory {
         wherep.put("uuid", uuid.toString());
         ResultSetTardis rst = new ResultSetTardis(plugin, wherep, "", false, 0);
         if (rst.resultSet()) {
-            values.add(rst.getTardis().getPreset().equals(PRESET.JUNK_MODE)); // junk mode
+            values.add(rst.getTardis().getPreset().equals(Preset.JUNK_MODE)); // junk mode
         } else {
             values.add(false);
         }
@@ -110,7 +110,7 @@ public class TARDISPrefsMenuInventory {
         }
 
         // get TARDIS preset
-        TARDIS tardis = null;
+        Tardis tardis = null;
         HashMap<String, Object> wherej = new HashMap<>();
         wherej.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wherej, "", false, 0);
@@ -119,7 +119,7 @@ public class TARDISPrefsMenuInventory {
         }
         // make a stack
         ItemStack[] stack = new ItemStack[36];
-        for (GUIPlayerPreferences pref : GUIPlayerPreferences.values()) {
+        for (GuiPlayerPreferences pref : GuiPlayerPreferences.values()) {
             if (pref.getMaterial() == Material.REPEATER) {
                 ItemStack is = new ItemStack(pref.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
@@ -127,13 +127,13 @@ public class TARDISPrefsMenuInventory {
                 im.setDisplayName(pref.getName());
                 int cmd = pref.getCustomModelData();
                 boolean v;
-                if (pref == GUIPlayerPreferences.JUNK_TARDIS) {
-                    v = (tardis != null && tardis.getPreset().equals(PRESET.JUNK_MODE));
+                if (pref == GuiPlayerPreferences.JUNK_TARDIS) {
+                    v = (tardis != null && tardis.getPreset().equals(Preset.JUNK_MODE));
                 } else {
                     v = values.get(pref.getSlot());
                 }
                 im.setCustomModelData(v ? cmd : cmd + 100);
-                if (pref == GUIPlayerPreferences.HADS_TYPE) {
+                if (pref == GuiPlayerPreferences.HADS_TYPE) {
                     im.setLore(Collections.singletonList(v ? "DISPERSAL" : "DISPLACEMENT"));
                 } else {
                     im.setLore(Collections.singletonList(v ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF")));
@@ -143,7 +143,7 @@ public class TARDISPrefsMenuInventory {
             }
         }
         if (!plugin.isWorldGuardOnServer()) {
-            stack[GUIPlayerPreferences.LOCK_CONTAINERS.getSlot()] = null;
+            stack[GuiPlayerPreferences.LOCK_CONTAINERS.getSlot()] = null;
         }
         // flight mode
         ItemStack fli = new ItemStack(Material.ELYTRA, 1);
@@ -152,9 +152,9 @@ public class TARDISPrefsMenuInventory {
         ght_im.setDisplayName("Flight Mode");
         String mode_value = FlightMode.getByMode().get(rsp.getFlightMode()).toString();
         ght_im.setLore(Collections.singletonList(mode_value));
-        ght_im.setCustomModelData(GUIPlayerPreferences.FLIGHT_MODE.getCustomModelData());
+        ght_im.setCustomModelData(GuiPlayerPreferences.FLIGHT_MODE.getCustomModelData());
         fli.setItemMeta(ght_im);
-        stack[GUIPlayerPreferences.FLIGHT_MODE.getSlot()] = fli;
+        stack[GuiPlayerPreferences.FLIGHT_MODE.getSlot()] = fli;
         // interior hum sound
         ItemStack hum = new ItemStack(Material.BOWL, 1);
         ItemMeta hum_im = hum.getItemMeta();
@@ -162,43 +162,43 @@ public class TARDISPrefsMenuInventory {
         hum_im.setDisplayName("Interior Hum Sound");
         String hum_value = (rsp.getHum().isEmpty()) ? "random" : rsp.getHum();
         hum_im.setLore(Collections.singletonList(hum_value));
-        hum_im.setCustomModelData(GUIPlayerPreferences.INTERIOR_HUM_SOUND.getCustomModelData());
+        hum_im.setCustomModelData(GuiPlayerPreferences.INTERIOR_HUM_SOUND.getCustomModelData());
         hum.setItemMeta(hum_im);
-        stack[GUIPlayerPreferences.INTERIOR_HUM_SOUND.getSlot()] = hum;
+        stack[GuiPlayerPreferences.INTERIOR_HUM_SOUND.getSlot()] = hum;
         // handbrake
         ItemStack hand = new ItemStack(Material.LEVER, 1);
         ItemMeta brake = hand.getItemMeta();
         assert brake != null;
         brake.setDisplayName("Handbrake");
         brake.setLore(Collections.singletonList((tardis != null && tardis.isHandbrakeOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF")));
-        brake.setCustomModelData(GUIPlayerPreferences.HANDBRAKE.getCustomModelData());
+        brake.setCustomModelData(GuiPlayerPreferences.HANDBRAKE.getCustomModelData());
         hand.setItemMeta(brake);
-        stack[GUIPlayerPreferences.HANDBRAKE.getSlot()] = hand;
+        stack[GuiPlayerPreferences.HANDBRAKE.getSlot()] = hand;
         // map
         ItemStack tt = new ItemStack(Material.MAP, 1);
         ItemMeta map = tt.getItemMeta();
         assert map != null;
         map.setDisplayName("TARDIS Map");
-        map.setCustomModelData(GUIPlayerPreferences.TARDIS_MAP.getCustomModelData());
+        map.setCustomModelData(GuiPlayerPreferences.TARDIS_MAP.getCustomModelData());
         tt.setItemMeta(map);
-        stack[GUIPlayerPreferences.TARDIS_MAP.getSlot()] = tt;
+        stack[GuiPlayerPreferences.TARDIS_MAP.getSlot()] = tt;
         // map
         ItemStack sonic = new ItemStack(Material.BOWL, 1);
         ItemMeta config = sonic.getItemMeta();
         assert config != null;
         config.setDisplayName("Sonic Configurator");
-        config.setCustomModelData(GUIPlayerPreferences.SONIC_CONFIGURATOR.getCustomModelData());
+        config.setCustomModelData(GuiPlayerPreferences.SONIC_CONFIGURATOR.getCustomModelData());
         sonic.setItemMeta(config);
-        stack[GUIPlayerPreferences.SONIC_CONFIGURATOR.getSlot()] = sonic;
+        stack[GuiPlayerPreferences.SONIC_CONFIGURATOR.getSlot()] = sonic;
         if (Objects.requireNonNull(plugin.getServer().getPlayer(uuid)).hasPermission("tardis.admin")) {
             // admin
             ItemStack ad = new ItemStack(Material.NETHER_STAR, 1);
             ItemMeta min = ad.getItemMeta();
             assert min != null;
             min.setDisplayName("Admin Config Menu");
-            min.setCustomModelData(GUIPlayerPreferences.ADMIN_MENU.getCustomModelData());
+            min.setCustomModelData(GuiPlayerPreferences.ADMIN_MENU.getCustomModelData());
             ad.setItemMeta(min);
-            stack[GUIPlayerPreferences.ADMIN_MENU.getSlot()] = ad;
+            stack[GuiPlayerPreferences.ADMIN_MENU.getSlot()] = ad;
         }
         return stack;
     }

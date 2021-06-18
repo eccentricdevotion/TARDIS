@@ -29,13 +29,13 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-class TARDISRegulatorSlot {
+class TardisRegulatorSlot {
 
     final List<Integer> bounds = Arrays.asList(0, 1, 2, 3, 4, 9, 10, 11, 12, 13, 18, 19, 20, 21, 22, 27, 28, 29, 30, 31, 36, 37, 38, 39, 40);
     final ItemStack box;
     final ItemStack vortex;
 
-    TARDISRegulatorSlot() {
+    TardisRegulatorSlot() {
         box = new ItemStack(Material.BLUE_WOOL, 1);
         ItemMeta ler = box.getItemMeta();
         assert ler != null;

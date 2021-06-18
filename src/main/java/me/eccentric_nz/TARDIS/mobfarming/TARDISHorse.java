@@ -28,7 +28,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author eccentric_nz
  */
-public class TARDISHorse extends TARDISMob {
+public class TardisHorse extends TardisMob {
 
     private Color horsecolor;
     private Style horsestyle;
@@ -44,7 +44,7 @@ public class TARDISHorse extends TARDISMob {
     /**
      * Data storage class for TARDIS horse.
      */
-    public TARDISHorse() {
+    public TardisHorse() {
     }
 
     public Color getHorseColour() {

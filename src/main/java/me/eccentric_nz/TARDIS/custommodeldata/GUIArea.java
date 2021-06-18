@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
-public enum GUIArea {
+public enum GuiArea {
 
     // tardis Areas
     LOAD_TARDIS_SAVES(1, 1, Material.MAP);
@@ -28,7 +28,7 @@ public enum GUIArea {
     private final int slot;
     private final Material material;
 
-    GUIArea(int customModelData, int slot, Material material) {
+    GuiArea(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -48,6 +48,6 @@ public enum GUIArea {
 
     public String getName() {
         String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
+        return TardisStringUtils.sentenceCase(s);
     }
 }

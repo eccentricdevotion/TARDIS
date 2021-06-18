@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import org.bukkit.Location;
@@ -37,11 +37,11 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISHotbarListener implements Listener {
+public class TardisHotbarListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISHotbarListener(TARDISPlugin plugin) {
+    public TardisHotbarListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

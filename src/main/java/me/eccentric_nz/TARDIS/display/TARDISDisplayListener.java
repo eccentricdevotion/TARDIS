@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.display;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
@@ -10,11 +10,11 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.Objects;
 
-public class TARDISDisplayListener implements Listener {
+public class TardisDisplayListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISDisplayListener(TARDISPlugin plugin) {
+    public TardisDisplayListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

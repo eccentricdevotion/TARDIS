@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,11 +45,11 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISJettisonSeeder implements Listener {
+public class TardisJettisonSeeder implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISJettisonSeeder(TARDISPlugin plugin) {
+    public TardisJettisonSeeder(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -89,13 +89,13 @@ public class TARDISJettisonSeeder implements Listener {
                 if (inhand.equals(Material.getMaterial(key))) {
                     String r = plugin.getTrackerKeeper().getJettison().get(uuid);
                     // get jettison direction
-                    TARDISRoomDirection trd = new TARDISRoomDirection(block);
+                    TardisRoomDirection trd = new TardisRoomDirection(block);
                     trd.getDirection();
                     if (!trd.isFound()) {
-                        TARDISMessage.send(player, "PLATE_NOT_FOUND");
+                        TardisMessage.send(player, "PLATE_NOT_FOUND");
                         return;
                     }
-                    COMPASS d = trd.getCompass();
+                    CardinalDirection d = trd.getCompass();
                     BlockFace facing = trd.getFace();
                     // get clicked block location
                     Location l = block.getRelative(facing, 3).getLocation();
@@ -103,10 +103,10 @@ public class TARDISJettisonSeeder implements Listener {
                     ResultSetTardisID rs = new ResultSetTardisID(plugin);
                     if (rs.fromUUID(player.getUniqueId().toString())) {
                         int id = rs.getTardisId();
-                        TARDISRoomRemover remover = new TARDISRoomRemover(plugin, r, l, d, id);
+                        TardisRoomRemover remover = new TardisRoomRemover(plugin, r, l, d, id);
                         if (remover.remove()) {
                             plugin.getTrackerKeeper().getJettison().remove(uuid);
-                            block.setBlockData(TARDISConstants.AIR);
+                            block.setBlockData(TardisConstants.AIR);
                             Objects.requireNonNull(l.getWorld()).playEffect(l, Effect.POTION_BREAK, 9);
                             // ok they clicked it, so give them their energy!
                             int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
@@ -134,12 +134,12 @@ public class TARDISJettisonSeeder implements Listener {
                                 inv.addItem(is);
                                 player.updateInventory();
                             }
-                            TARDISMessage.send(player, "ENERGY_AMOUNT", String.format("%d", amount));
+                            TardisMessage.send(player, "ENERGY_AMOUNT", String.format("%d", amount));
                         } else {
-                            TARDISMessage.send(player, "ROOM_HAS_JETT");
+                            TardisMessage.send(player, "ROOM_HAS_JETT");
                         }
                     } else {
-                        TARDISMessage.send(player, "ID_NOT_FOUND");
+                        TardisMessage.send(player, "ID_NOT_FOUND");
                     }
                 }
             }

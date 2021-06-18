@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.Flag;
-import me.eccentric_nz.tardis.flight.TARDISLand;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.flight.TardisLand;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -31,19 +31,19 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-public class TARDISBiomeFinder {
+public class TardisBiomeFinder {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISBiomeFinder(TARDISPlugin plugin) {
+    public TardisBiomeFinder(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
-    public void run(World w, Biome biome, Player player, int id, COMPASS direction) {
+    public void run(World w, Biome biome, Player player, int id, CardinalDirection direction) {
         Location tb = plugin.getTardisHelper().searchBiome(w, biome, player);
         // cancel biome finder
         if (tb == null) {
-            TARDISMessage.send(player, "BIOME_NOT_FOUND");
+            TardisMessage.send(player, "BIOME_NOT_FOUND");
             return;
         }
         if (!plugin.getPluginRespect().getRespect(tb, new Parameters(player, Flag.getDefaultFlags()))) {
@@ -51,7 +51,7 @@ public class TARDISBiomeFinder {
                 plugin.getTrackerKeeper().getMalfunction().put(id, true);
             } else {
                 // cancel
-                TARDISMessage.send(player, "PROTECTED");
+                TardisMessage.send(player, "PROTECTED");
                 return;
             }
         }
@@ -69,10 +69,10 @@ public class TARDISBiomeFinder {
             highest = getNetherHighest(tb);
         }
         tb.setY(highest + 1);
-        int[] start_loc = TARDISTimeTravel.getStartLocation(tb, direction);
+        int[] start_loc = TardisTimeTravel.getStartLocation(tb, direction);
         int tmp_y = tb.getBlockY();
         for (int up = 0; up < 10; up++) {
-            int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], tb.getWorld(), direction);
+            int count = TardisTimeTravel.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], tb.getWorld(), direction);
             if (count == 0) {
                 tb.setY(tmp_y + up);
                 break;
@@ -88,11 +88,11 @@ public class TARDISBiomeFinder {
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-        TARDISMessage.send(player, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+        TardisMessage.send(player, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
         plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
         plugin.getTrackerKeeper().getRescue().remove(id);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            new TARDISLand(plugin, id, player).exitVortex();
+            new TardisLand(plugin, id, player).exitVortex();
         }
     }
 

@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.control.TARDISThemeButton;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.control.TardisThemeButton;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.ConsoleSize;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.schematic.ArchiveUpdate;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,11 +45,11 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISArchiveMenuListener extends TARDISMenuListener implements Listener {
+public class TardisArchiveMenuListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISArchiveMenuListener(TARDISPlugin plugin) {
+    public TardisArchiveMenuListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
     }
@@ -70,10 +70,10 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                         where.put("uuid", p.getUniqueId().toString());
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                         rs.resultSet();
-                        TARDIS tardis = rs.getTardis();
+                        Tardis tardis = rs.getTardis();
                         // return to Desktop Theme GUI
                         close(p);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtronLevel(), tardis.getTardisId()).clickButton(), 2L);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtronLevel(), tardis.getTardisId()).clickButton(), 2L);
                     }
                     case 18 -> {
                         // size
@@ -105,7 +105,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                         ItemStack template = view.getItem(slot);
                         if (template != null) {
                             UUID uuid = p.getUniqueId();
-                            TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+                            TardisUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                             ItemMeta im = template.getItemMeta();
                             assert im != null;
                             String size = im.getDisplayName().toLowerCase(Locale.ENGLISH);
@@ -118,7 +118,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                     plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
                                     // process upgrade
-                                    new TARDISThemeProcessor(plugin, uuid).changeDesktop();
+                                    new TardisThemeProcessor(plugin, uuid).changeDesktop();
                                 }, 10L);
                                 close(p);
                             }
@@ -134,19 +134,19 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                             // remember the upgrade choice
                             Schematic schm = Consoles.schematicFor("archive");
                             UUID uuid = p.getUniqueId();
-                            TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+                            TardisUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                             ItemMeta im = choice.getItemMeta();
                             assert im != null;
                             List<String> lore = im.getLore();
                             assert lore != null;
                             if (lore.contains(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"))) {
-                                TARDISMessage.send(p, "ARCHIVE_NOT_CURRENT");
+                                TardisMessage.send(p, "ARCHIVE_NOT_CURRENT");
                                 return;
                             }
                             int upgrade = plugin.getArtronConfig().getInt("upgrades.archive.tall");
                             for (String l : lore) {
                                 if (l.startsWith("Cost")) {
-                                    upgrade = TARDISNumberParsers.parseInt(l.replace("Cost: ", ""));
+                                    upgrade = TardisNumberParsers.parseInt(l.replace("Cost: ", ""));
                                 }
                             }
                             if (tud.getLevel() >= upgrade) {
@@ -157,7 +157,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                     plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
                                     // process upgrade
-                                    new TARDISThemeProcessor(plugin, uuid).changeDesktop();
+                                    new TardisThemeProcessor(plugin, uuid).changeDesktop();
                                 }, 10L);
                                 close(p);
                             }
@@ -209,7 +209,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
             String size = lore.get(0);
             p.closeInventory();
             // generate random name
-            String name = TARDISRandomArchiveName.getRandomName();
+            String name = TardisRandomArchiveName.getRandomName();
             p.performCommand("tardis archive add " + name + " " + size);
         }, 1L);
     }

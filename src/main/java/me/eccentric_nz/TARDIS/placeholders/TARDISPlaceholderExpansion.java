@@ -17,21 +17,21 @@
 package me.eccentric_nz.tardis.placeholders;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.*;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
-public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
+public class TardisPlaceholderExpansion extends PlaceholderExpansion {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISPlaceholderExpansion(TARDISPlugin plugin) {
+    public TardisPlaceholderExpansion(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -163,7 +163,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         where.put("uuid", uuid);
                         rst = new ResultSetTardis(plugin, where, "", false, 2);
                         if (rst.resultSet()) {
-                            result = TARDISStringUtils.uppercaseFirst(rst.getTardis().getSchematic().getPermission());
+                            result = TardisStringUtils.uppercaseFirst(rst.getTardis().getSchematic().getPermission());
                         } else {
                             result = "";
                         }
@@ -269,7 +269,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             if (rscl.resultSet()) {
                                 // get from current location
                                 Location location = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-                                result = TARDISStaticUtils.getBiomeAt(location).name();
+                                result = TardisStaticUtils.getBiomeAt(location).name();
                             } else {
                                 result = "";
                             }

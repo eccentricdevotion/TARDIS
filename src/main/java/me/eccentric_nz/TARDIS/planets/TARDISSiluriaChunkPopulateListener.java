@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -36,13 +36,13 @@ import java.util.List;
  * There are also green forests, golden fields and red deserts, but overall it is a much drier world than Earth. The
  * Sixth Doctor once declared the climate to be "like the Serengeti all year round".
  */
-public class TARDISSiluriaChunkPopulateListener implements Listener {
+public class TardisSiluriaChunkPopulateListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<ChunkInfo> chunks = new ArrayList<>();
     private boolean isBuilding = false;
 
-    public TARDISSiluriaChunkPopulateListener(TARDISPlugin plugin) {
+    public TardisSiluriaChunkPopulateListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -78,7 +78,7 @@ public class TARDISSiluriaChunkPopulateListener implements Listener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             chunks.add(chunkInfo);
             // create structure
-            isBuilding = new TARDISBuildSilurianStructure(plugin).buildCity(x, y, z);
+            isBuilding = new TardisBuildSilurianStructure(plugin).buildCity(x, y, z);
         }, 2L);
     }
 }

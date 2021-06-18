@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,11 +35,11 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISAnvilListener implements Listener {
+public class TardisAnvilListener implements Listener {
 
     private final HashMap<String, Material> disallow = new HashMap<>();
 
-    public TARDISAnvilListener(TARDISPlugin plugin) {
+    public TardisAnvilListener(TardisPlugin plugin) {
         Objects.requireNonNull(plugin.getRecipesConfig().getConfigurationSection("shaped")).getKeys(false).forEach((r) -> {
             String[] result = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped." + r + ".result")).split(":");
             disallow.put(r, Material.valueOf(result[0]));
@@ -66,7 +66,7 @@ public class TARDISAnvilListener implements Listener {
                     if (checkRepair(one, two)) {
                         assert im != null;
                         if (im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getType() == disallow.get(im.getDisplayName())) {
-                            TARDISMessage.send(player, "NO_RENAME");
+                            TardisMessage.send(player, "NO_RENAME");
                             event.setCancelled(true);
                         }
                     }

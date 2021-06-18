@@ -1,8 +1,8 @@
 package me.eccentric_nz.tardis.dynmap;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.api.TARDISData;
-import me.eccentric_nz.tardis.files.TARDISFileCopier;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.TardisData;
+import me.eccentric_nz.tardis.files.TardisFileCopier;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -18,10 +18,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 
-public class TARDISDynmap {
+public class TardisDynmap {
 
     private static final String INFO = "<div class=\"regioninfo\"><div class=\"infowindow\"><span style=\"font-weight:bold;\">Time Lord:</span> %owner%<br/><span style=\"font-weight:bold;\">Console type:</span> %console%<br/><span style=\"font-weight:bold;\">Chameleon circuit:</span> %chameleon%<br/><span style=\"font-weight:bold;\">Location:</span> %location%<br/><span style=\"font-weight:bold;\">Door:</span> %door%<br/><span style=\"font-weight:bold;\">Powered on:</span> %powered%<br/><span style=\"font-weight:bold;\">Siege mode:</span> %siege%<br/><span style=\"font-weight:bold;\">Occupants:</span> %occupants%</div></div>";
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private Plugin dynmap;
     private DynmapAPI api;
     private MarkerAPI markerapi;
@@ -29,7 +29,7 @@ public class TARDISDynmap {
     private boolean stop;
     private Layer tardisLayer;
 
-    public TARDISDynmap(TARDISPlugin plugin) {
+    public TardisDynmap(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -98,7 +98,7 @@ public class TARDISDynmap {
         String path = "plugins/dynmap/web/tiles/_markers_/tardis.png";
         File icon = new File(path);
         if (!icon.exists()) {
-            TARDISFileCopier.copy(path, plugin.getResource("tardis.png"), true);
+            TardisFileCopier.copy(path, plugin.getResource("tardis.png"), true);
             plugin.getServer().dispatchCommand(plugin.getConsole(), "dmarker addicon id:tardis newlabel:tardis file:plugins/dynmap/web/tiles/_markers_/tardis.png");
         }
     }
@@ -108,7 +108,7 @@ public class TARDISDynmap {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new MarkerUpdate(), 100L);
     }
 
-    private String formatInfoWindow(String who, TARDISData data) {
+    private String formatInfoWindow(String who, TardisData data) {
         String window = INFO;
         window = window.replace("%owner%", who);
         window = window.replace("%console%", data.getConsole());
@@ -167,7 +167,7 @@ public class TARDISDynmap {
             /*
              * Build new map
              */
-            Map<String, TARDISData> marks = getMarkers();
+            Map<String, TardisData> marks = getMarkers();
             marks.keySet().forEach((name) -> {
                 Location loc = marks.get(name).getLocation();
                 String wname = Objects.requireNonNull(loc.getWorld()).getName();
@@ -220,7 +220,7 @@ public class TARDISDynmap {
         /*
          * Get current markers, by ID with location
          */
-        public abstract Map<String, TARDISData> getMarkers();
+        public abstract Map<String, TardisData> getMarkers();
     }
 
     private class TARDISServerListener implements Listener {
@@ -247,11 +247,11 @@ public class TARDISDynmap {
          * Get current markers, by timelord with location
          */
         @Override
-        public Map<String, TARDISData> getMarkers() {
-            HashMap<String, TARDISData> map = new HashMap<>();
+        public Map<String, TardisData> getMarkers() {
+            HashMap<String, TardisData> map = new HashMap<>();
             HashMap<String, Integer> tl = plugin.getTardisAPI().getTimelordMap();
             tl.forEach((key, value) -> {
-                TARDISData data;
+                TardisData data;
                 try {
                     data = plugin.getTardisAPI().getTARDISMapData(value);
                     if (data.getLocation() != null) {

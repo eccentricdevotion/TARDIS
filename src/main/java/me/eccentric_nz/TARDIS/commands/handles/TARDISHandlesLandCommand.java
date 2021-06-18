@@ -16,26 +16,26 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.tardis.artron.TARDISArtronIndicator;
-import me.eccentric_nz.tardis.artron.TARDISArtronLevels;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advanced.TardisCircuitChecker;
+import me.eccentric_nz.tardis.advanced.TardisCircuitDamager;
+import me.eccentric_nz.tardis.artron.TardisArtronIndicator;
+import me.eccentric_nz.tardis.artron.TardisArtronLevels;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.DiskCircuit;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.flight.TARDISHandbrake;
-import me.eccentric_nz.tardis.flight.TARDISHandbrakeListener;
-import me.eccentric_nz.tardis.flight.TARDISLand;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.travel.TARDISRandomiserCircuit;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.flight.TardisHandbrake;
+import me.eccentric_nz.tardis.flight.TardisHandbrakeListener;
+import me.eccentric_nz.tardis.flight.TardisLand;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.travel.TardisRandomiserCircuit;
+import me.eccentric_nz.tardis.utility.TardisSounds;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -46,11 +46,11 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-class TARDISHandlesLandCommand {
+class TardisHandlesLandCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISHandlesLandCommand(TARDISPlugin plugin) {
+    TardisHandlesLandCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -59,17 +59,17 @@ class TARDISHandlesLandCommand {
         wherei.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
-            if (tardis.getPreset().equals(PRESET.JUNK)) {
-                TARDISMessage.handlesSend(player, "HANDLES_JUNK");
+            Tardis tardis = rs.getTardis();
+            if (tardis.getPreset().equals(Preset.JUNK)) {
+                TardisMessage.handlesSend(player, "HANDLES_JUNK");
                 return true;
             }
             if (tardis.isHandbrakeOn()) {
-                TARDISMessage.handlesSend(player, "HANDBRAKE_ON_ERR");
+                TardisMessage.handlesSend(player, "HANDBRAKE_ON_ERR");
                 return true;
             }
             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                TARDISMessage.handlesSend(player, "HANDLES_VORTEX");
+                TardisMessage.handlesSend(player, "HANDLES_VORTEX");
                 return true;
             }
             // must have a destination, but setting one will make the TARDIS automatically exit the time vortex
@@ -78,7 +78,7 @@ class TARDISHandlesLandCommand {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
             if (rscl.resultSet()) {
-                Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(player, rscl.getDirection());
+                Location l = new TardisRandomiserCircuit(plugin).getRandomlocation(player, rscl.getDirection());
                 if (l != null) {
                     HashMap<String, Object> set_next = new HashMap<>();
                     HashMap<String, Object> where_next = new HashMap<>();
@@ -94,7 +94,7 @@ class TARDISHandlesLandCommand {
                     plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);
                     plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("random_circuit"));
                     plugin.getTrackerKeeper().getHasRandomised().add(id);
-                    new TARDISLand(plugin, id, player).exitVortex();
+                    new TardisLand(plugin, id, player).exitVortex();
                     // delay setting handbrake
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         HashMap<String, Object> whereh = new HashMap<>();
@@ -103,13 +103,13 @@ class TARDISHandlesLandCommand {
                         whereh.put("secondary", 0);
                         ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
                         if (rsc.resultSet()) {
-                            Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+                            Location location = TardisStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                             assert location != null;
-                            TARDISSounds.playTARDISSound(location, "tardis_handbrake_engage");
+                            TardisSounds.playTARDISSound(location, "tardis_handbrake_engage");
                             // Changes the lever to on
-                            TARDISHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);
+                            TardisHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);
                             // Check if it's at a recharge point
-                            TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
+                            TardisArtronLevels tal = new TardisArtronLevels(plugin);
                             tal.recharge(id);
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                             boolean beac_on = true;
@@ -118,29 +118,29 @@ class TARDISHandlesLandCommand {
                                 beac_on = rsp.isBeaconOn();
                             }
                             if (!beac_on && !beacon.isEmpty()) {
-                                TARDISHandbrakeListener.toggleBeacon(beacon, false);
+                                TardisHandbrakeListener.toggleBeacon(beacon, false);
                             }
                             // Remove energy from TARDIS and sets database
-                            TARDISMessage.send(player, "HANDBRAKE_ON");
+                            TardisMessage.send(player, "HANDBRAKE_ON");
                             int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
-                            new TARDISArtronIndicator(plugin).showArtronLevel(player, id, Math.abs(amount));
+                            new TardisArtronIndicator(plugin).showArtronLevel(player, id, Math.abs(amount));
                             plugin.getTrackerKeeper().getHasDestination().remove(id);
                             if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
                                 plugin.getTrackerKeeper().getHasRandomised().removeAll(Collections.singleton(id));
                             }
                             // damage the circuit if configured
-                            TARDISCircuitChecker tcc = null;
+                            TardisCircuitChecker tcc = null;
                             if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-                                tcc = new TARDISCircuitChecker(plugin, id);
+                                tcc = new TardisCircuitChecker(plugin, id);
                                 tcc.getCircuits();
                             }
                             if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
                                 // decrement uses
                                 int uses_left = tcc.getMaterialisationUses();
-                                new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
+                                new TardisCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
                             }
                             HashMap<String, Object> set = new HashMap<>();
                             set.put("handbrake_on", 1);
@@ -150,10 +150,10 @@ class TARDISHandlesLandCommand {
                         }
                     }, 400L);
                 } else {
-                    TARDISMessage.handlesSend(player, "HANDLES_NO_LOCATION");
+                    TardisMessage.handlesSend(player, "HANDLES_NO_LOCATION");
                 }
             } else {
-                TARDISMessage.handlesSend(player, "CURRENT_NOT_FOUND");
+                TardisMessage.handlesSend(player, "CURRENT_NOT_FOUND");
             }
         }
         return true;

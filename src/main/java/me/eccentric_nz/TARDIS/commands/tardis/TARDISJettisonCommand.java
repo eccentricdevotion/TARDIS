@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -30,34 +30,34 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISJettisonCommand {
+class TardisJettisonCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISJettisonCommand(TARDISPlugin plugin) {
+    TardisJettisonCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean startJettison(Player player, String[] args) {
-        if (TARDISPermission.hasPermission(player, "tardis.jettison")) {
+        if (TardisPermission.hasPermission(player, "tardis.jettison")) {
             if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                TardisMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             String room = args[1].toUpperCase(Locale.ENGLISH);
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
-                TARDISMessage.send(player, "GRAVITY_INFO", ChatColor.AQUA + "/tardisgravity remove" + ChatColor.RESET);
+                TardisMessage.send(player, "GRAVITY_INFO", ChatColor.AQUA + "/tardisgravity remove" + ChatColor.RESET);
             }
             if (!plugin.getGeneralKeeper().getRoomArgs().contains(room)) {
                 StringBuilder buf = new StringBuilder(args[1]);
                 plugin.getGeneralKeeper().getRoomArgs().forEach((rl) -> buf.append(rl).append(", "));
                 String roomList = buf.substring(0, buf.length() - 2);
-                TARDISMessage.send(player, "ROOM_NOT_VALID", roomList);
+                TardisMessage.send(player, "ROOM_NOT_VALID", roomList);
                 return true;
             }
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                TardisMessage.send(player, "NOT_A_TIMELORD");
                 return true;
             }
             int id = rs.getTardisId();
@@ -67,15 +67,15 @@ class TARDISJettisonCommand {
             wheret.put("tardis_id", id);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                TARDISMessage.send(player, "NOT_IN_TARDIS");
+                TardisMessage.send(player, "NOT_IN_TARDIS");
                 return true;
             }
             plugin.getTrackerKeeper().getJettison().put(player.getUniqueId(), room);
             String seed = plugin.getArtronConfig().getString("jettison_seed");
-            TARDISMessage.send(player, "ROOM_JETT_INFO", seed, room, seed);
+            TardisMessage.send(player, "ROOM_JETT_INFO", seed, room, seed);
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            TardisMessage.send(player, "NO_PERMS");
             return false;
         }
     }

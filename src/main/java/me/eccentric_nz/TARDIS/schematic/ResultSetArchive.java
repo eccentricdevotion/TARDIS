@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.data.Archive;
 
 import java.sql.Connection;
@@ -34,14 +34,14 @@ import java.util.UUID;
  */
 public class ResultSetArchive {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<String, Object> where;
     private final String prefix;
     private Archive archive;
 
-    public ResultSetArchive(TARDISPlugin plugin, HashMap<String, Object> where) {
+    public ResultSetArchive(TardisPlugin plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
         prefix = this.plugin.getPrefix();

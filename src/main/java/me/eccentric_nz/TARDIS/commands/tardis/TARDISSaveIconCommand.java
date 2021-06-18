@@ -16,34 +16,34 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Locale;
 
-class TARDISSaveIconCommand {
+class TardisSaveIconCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISSaveIconCommand(TARDISPlugin plugin) {
+    TardisSaveIconCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean changeIcon(Player player, String[] args) {
-        if (TARDISPermission.hasPermission(player, "tardis.save")) {
+        if (TardisPermission.hasPermission(player, "tardis.save")) {
             if (args.length < 3) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                TardisMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                TardisMessage.send(player, "NO_TARDIS");
                 return false;
             }
             int id = rs.getTardisId();
@@ -52,14 +52,14 @@ class TARDISSaveIconCommand {
             whered.put("tardis_id", id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
-                TARDISMessage.send(player, "SAVE_NOT_FOUND");
+                TardisMessage.send(player, "SAVE_NOT_FOUND");
                 return false;
             }
             Material material;
             try {
                 material = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
-                TARDISMessage.send(player, "MATERIAL_NOT_VALID");
+                TardisMessage.send(player, "MATERIAL_NOT_VALID");
                 return false;
             }
             int destID = rsd.getDestId();
@@ -68,7 +68,7 @@ class TARDISSaveIconCommand {
             HashMap<String, Object> set = new HashMap<>();
             set.put("icon", material.toString());
             plugin.getQueryFactory().doUpdate("destinations", set, did);
-            TARDISMessage.send(player, "DEST_ICON", material.toString());
+            TardisMessage.send(player, "DEST_ICON", material.toString());
             return true;
         }
         return true;

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoorBlocks;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -29,11 +29,11 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-public class TARDISBlackWoolToggler {
+public class TardisBlackWoolToggler {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISBlackWoolToggler(TARDISPlugin plugin) {
+    public TardisBlackWoolToggler(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -43,16 +43,16 @@ public class TARDISBlackWoolToggler {
             Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
             BlockData mat;
             if (b.getType().isAir()) {
-                mat = TARDISConstants.BLACK;
+                mat = TardisConstants.BLACK;
             } else {
-                mat = TARDISConstants.AIR;
+                mat = TardisConstants.AIR;
             }
             b.setBlockData(mat);
             b.getRelative(BlockFace.UP).setBlockData(mat);
             Block door = b.getRelative(BlockFace.SOUTH);
-            if (Tag.DOORS.isTagged(door.getType()) && TARDISStaticUtils.isDoorOpen(door)) {
+            if (Tag.DOORS.isTagged(door.getType()) && TardisStaticUtils.isDoorOpen(door)) {
                 // toggle doors shut
-                new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), player, false, true, id).toggleDoors();
+                new TardisDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), player, false, true, id).toggleDoors();
             }
         }
     }

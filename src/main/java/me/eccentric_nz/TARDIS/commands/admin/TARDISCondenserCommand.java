@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -29,23 +29,23 @@ import java.io.IOException;
 /**
  * @author eccentric_nz
  */
-class TARDISCondenserCommand {
+class TardisCondenserCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISCondenserCommand(TARDISPlugin plugin) {
+    TardisCondenserCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public boolean set(CommandSender sender) {
         if (!(sender instanceof Player player)) {
-            TARDISMessage.send(sender, "CMD_PLAYER");
+            TardisMessage.send(sender, "CMD_PLAYER");
             return true;
         }
         Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
         Material chest = b.getType();
         if (!chest.equals(Material.CHEST)) {
-            TARDISMessage.send(sender, "UPDATE_CONDENSER");
+            TardisMessage.send(sender, "UPDATE_CONDENSER");
             return true;
         }
         String loc = b.getLocation().toString();
@@ -56,7 +56,7 @@ class TARDISCondenserCommand {
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);
         }
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TardisMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
 }

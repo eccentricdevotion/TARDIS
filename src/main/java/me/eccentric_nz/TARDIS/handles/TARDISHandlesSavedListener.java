@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -39,12 +39,12 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISHandlesSavedListener extends TARDISMenuListener implements Listener {
+public class TardisHandlesSavedListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<UUID, Integer> selectedSlot = new HashMap<>();
 
-    public TARDISHandlesSavedListener(TARDISPlugin plugin) {
+    public TardisHandlesSavedListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
     }
@@ -77,7 +77,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                             List<String> lore = im.getLore();
                             // ckeck in
                             assert lore != null;
-                            int pid = TARDISNumberParsers.parseInt(lore.get(1));
+                            int pid = TardisNumberParsers.parseInt(lore.get(1));
                             HashMap<String, Object> set = new HashMap<>();
                             set.put("checked", 0);
                             HashMap<String, Object> where = new HashMap<>();
@@ -98,7 +98,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
             if (slot == 45) {
                 // back to editor
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    TARDISHandlesProgramInventory thi = new TARDISHandlesProgramInventory(plugin, 0);
+                    TardisHandlesProgramInventory thi = new TardisHandlesProgramInventory(plugin, 0);
                     ItemStack[] items = thi.getHandles();
                     Inventory chaminv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Handles Program");
                     chaminv.setContents(items);
@@ -110,17 +110,17 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                 if (selectedSlot.containsKey(uuid)) {
                     ItemStack is = view.getItem(selectedSlot.get(uuid));
                     assert is != null;
-                    int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(Objects.requireNonNull(is.getItemMeta()).getLore()).get(1));
+                    int pid = TardisNumberParsers.parseInt(Objects.requireNonNull(Objects.requireNonNull(is.getItemMeta()).getLore()).get(1));
                     selectedSlot.put(uuid, null);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        TARDISHandlesProgramInventory thi = new TARDISHandlesProgramInventory(plugin, pid);
+                        TardisHandlesProgramInventory thi = new TardisHandlesProgramInventory(plugin, pid);
                         ItemStack[] items = thi.getHandles();
                         Inventory handlesinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Handles Program");
                         handlesinv.setContents(items);
                         player.openInventory(handlesinv);
                     }, 2L);
                 } else {
-                    TARDISMessage.send(player, "HANDLES_SELECT");
+                    TardisMessage.send(player, "HANDLES_SELECT");
                 }
             }
             if (slot == 48) {
@@ -128,7 +128,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                 if (selectedSlot.containsKey(uuid)) {
                     ItemStack is = view.getItem(selectedSlot.get(uuid));
                     assert is != null;
-                    int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(Objects.requireNonNull(is.getItemMeta()).getLore()).get(1));
+                    int pid = TardisNumberParsers.parseInt(Objects.requireNonNull(Objects.requireNonNull(is.getItemMeta()).getLore()).get(1));
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("program_id", pid);
                     HashMap<String, Object> set = new HashMap<>();
@@ -143,7 +143,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                     is.setItemMeta(im);
                     selectedSlot.put(uuid, null);
                 } else {
-                    TARDISMessage.send(player, "HANDLES_SELECT");
+                    TardisMessage.send(player, "HANDLES_SELECT");
                 }
             }
             if (slot == 49) {
@@ -151,7 +151,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                 if (selectedSlot.containsKey(uuid)) {
                     ItemStack is = view.getItem(selectedSlot.get(uuid));
                     assert is != null;
-                    int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(Objects.requireNonNull(is.getItemMeta()).getLore()).get(1));
+                    int pid = TardisNumberParsers.parseInt(Objects.requireNonNull(Objects.requireNonNull(is.getItemMeta()).getLore()).get(1));
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("program_id", pid);
                     plugin.getQueryFactory().doDelete("programs", where);
@@ -160,7 +160,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                     setSlots(view, -1);
                     selectedSlot.put(uuid, null);
                 } else {
-                    TARDISMessage.send(player, "HANDLES_SELECT");
+                    TardisMessage.send(player, "HANDLES_SELECT");
                 }
             }
             if (slot == 51) {
@@ -173,7 +173,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                         List<String> lore = im.getLore();
                         assert lore != null;
                         if (lore.get(2).equals("Checked OUT")) {
-                            TARDISMessage.send(player, "HANDLES_CHECKED");
+                            TardisMessage.send(player, "HANDLES_CHECKED");
                             return;
                         }
                         lore.set(2, "Checked OUT");
@@ -184,7 +184,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                         ItemStack clone = is.clone();
                         player.getWorld().dropItemNaturally(player.getLocation(), clone);
                         // check out
-                        int pid = TARDISNumberParsers.parseInt(lore.get(1));
+                        int pid = TardisNumberParsers.parseInt(lore.get(1));
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("checked", 1);
                         HashMap<String, Object> where = new HashMap<>();
@@ -192,7 +192,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener implements Li
                         plugin.getQueryFactory().doUpdate("programs", set, where);
                     }
                 } else {
-                    TARDISMessage.send(player, "HANDLES_SELECT");
+                    TardisMessage.send(player, "HANDLES_SELECT");
                 }
             }
             if (slot == 53) {

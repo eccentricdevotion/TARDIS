@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetSonic;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -44,12 +44,12 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISSonicActivatorListener extends TARDISMenuListener implements Listener {
+public class TardisSonicActivatorListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<ItemStack> stacks;
 
-    public TARDISSonicActivatorListener(TARDISPlugin plugin) {
+    public TardisSonicActivatorListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
         stacks = getStacks();
@@ -122,7 +122,7 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
                 set.put("uuid", uuid);
                 plugin.getQueryFactory().doInsert("sonic", set);
             }
-            TARDISMessage.send(p, "SONIC_ACTIVATED");
+            TardisMessage.send(p, "SONIC_ACTIVATED");
         } else {
             // return item stacks
             Location l = p.getLocation();
@@ -134,7 +134,7 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
                     w.dropItemNaturally(l, is);
                 }
             }
-            TARDISMessage.send(p, "SONIC_NOT_ACTIVATED");
+            TardisMessage.send(p, "SONIC_NOT_ACTIVATED");
         }
     }
 }

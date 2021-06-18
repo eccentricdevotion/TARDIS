@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.universaltranslator.Language;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -28,27 +28,27 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISSetLanguageCommand {
+class TardisSetLanguageCommand {
 
     boolean setLanguagePref(Player player, String[] args) {
         String pref = args[0];
         if (args.length < 2) {
-            TARDISMessage.send(player, "PREF_NEED", pref);
+            TardisMessage.send(player, "PREF_NEED", pref);
             return false;
         }
         String l = args[1].toUpperCase(Locale.ENGLISH);
         try {
             Language.valueOf(l);
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, "LANG_NOT_VALID");
+            TardisMessage.send(player, "LANG_NOT_VALID");
             return true;
         }
         HashMap<String, Object> setl = new HashMap<>();
         setl.put(pref, l);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
-        TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", setl, where);
-        TARDISMessage.send(player, "PREF_SET", TARDISStringUtils.uppercaseFirst(pref));
+        TardisPlugin.plugin.getQueryFactory().doUpdate("player_prefs", setl, where);
+        TardisMessage.send(player, "PREF_SET", TardisStringUtils.uppercaseFirst(pref));
         return true;
     }
 }

@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISData {
+public class TardisData {
 
     private final Location location;
     private final String console;
@@ -34,7 +34,7 @@ public class TARDISData {
     private final String abandoned;
     private final List<String> occupants;
 
-    TARDISData(Location location, String console, String chameleon, String door, String powered, String siege, String abandoned, List<String> occupants) {
+    TardisData(Location location, String console, String chameleon, String door, String powered, String siege, String abandoned, List<String> occupants) {
         this.location = location;
         this.console = console;
         this.chameleon = chameleon;

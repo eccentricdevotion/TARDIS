@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,9 +36,9 @@ import java.util.Map;
  */
 public class ResultSetSmelterCheck {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<String, Object> where;
     private final String prefix;
     private int smelterId;
@@ -49,7 +49,7 @@ public class ResultSetSmelterCheck {
      * @param plugin an instance of the main class.
      * @param where  the location of the smelter chest.
      */
-    public ResultSetSmelterCheck(TARDISPlugin plugin, HashMap<String, Object> where) {
+    public ResultSetSmelterCheck(TardisPlugin plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
         prefix = this.plugin.getPrefix();

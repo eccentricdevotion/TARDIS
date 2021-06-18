@@ -17,9 +17,9 @@
 package me.eccentric_nz.tardis.sonic.actions;
 
 import com.google.common.collect.Sets;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlock;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlock;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -36,14 +36,14 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
-public class TARDISSonicRedstone {
+public class TardisSonicRedstone {
 
     private static final Set<Material> PISTON_NO_MOVE = Sets.newHashSet(Material.PISTON_HEAD, Material.ACACIA_SIGN, Material.ACACIA_WALL_SIGN, Material.ANVIL, Material.BARREL, Material.BARRIER, Material.BEACON, Material.BEDROCK, Material.BEDROCK, Material.BEE_NEST, Material.BEEHIVE, Material.BIRCH_SIGN, Material.BIRCH_WALL_SIGN, Material.BLACK_BANNER, Material.BLACK_WALL_BANNER, Material.BLAST_FURNACE, Material.BLUE_BANNER, Material.BLUE_WALL_BANNER, Material.BREWING_STAND, Material.BROWN_BANNER, Material.BROWN_WALL_BANNER, Material.CAMPFIRE, Material.CHEST, Material.CHIPPED_ANVIL, Material.COMMAND_BLOCK, Material.CRYING_OBSIDIAN, Material.CYAN_BANNER, Material.CYAN_WALL_BANNER, Material.DAMAGED_ANVIL, Material.DARK_OAK_SIGN, Material.DARK_OAK_WALL_SIGN, Material.DAYLIGHT_DETECTOR, Material.DISPENSER, Material.DROPPER, Material.ENCHANTING_TABLE, Material.END_GATEWAY, Material.END_PORTAL, Material.END_PORTAL_FRAME, Material.ENDER_CHEST, Material.FURNACE, Material.GRAY_BANNER, Material.GRAY_WALL_BANNER, Material.GREEN_BANNER, Material.GREEN_WALL_BANNER, Material.HOPPER, Material.JIGSAW, Material.JUKEBOX, Material.JUNGLE_SIGN, Material.JUNGLE_WALL_SIGN, Material.LECTERN, Material.LIGHT_BLUE_BANNER, Material.LIGHT_BLUE_WALL_BANNER, Material.LIGHT_GRAY_BANNER, Material.LIGHT_GRAY_WALL_BANNER, Material.LIME_BANNER, Material.LIME_WALL_BANNER, Material.LODESTONE, Material.MAGENTA_BANNER, Material.MAGENTA_WALL_BANNER, Material.NETHER_PORTAL, Material.OAK_SIGN, Material.OAK_WALL_SIGN, Material.OBSIDIAN, Material.ORANGE_BANNER, Material.ORANGE_WALL_BANNER, Material.PINK_BANNER, Material.PINK_WALL_BANNER, Material.PURPLE_BANNER, Material.PURPLE_WALL_BANNER, Material.RED_BANNER, Material.RED_WALL_BANNER, Material.SMOKER, Material.SOUL_CAMPFIRE, Material.SPAWNER, Material.SPRUCE_SIGN, Material.SPRUCE_WALL_SIGN, Material.TRAPPED_CHEST, Material.WHITE_BANNER, Material.WHITE_WALL_BANNER, Material.YELLOW_BANNER, Material.YELLOW_WALL_BANNER);
 
-    public static void togglePoweredState(TARDISPlugin plugin, Player player, Block block) {
+    public static void togglePoweredState(TardisPlugin plugin, Player player, Block block) {
         // not protected blocks - WorldGuard / GriefPrevention / Lockette / Towny
-        if (TARDISSonicRespect.checkBlockRespect(plugin, player, block)) {
-            TARDISSonicSound.playSonicSound(plugin, player, System.currentTimeMillis(), 600L, "sonic_short");
+        if (TardisSonicRespect.checkBlockRespect(plugin, player, block)) {
+            TardisSonicSound.playSonicSound(plugin, player, System.currentTimeMillis(), 600L, "sonic_short");
             Material blockType = block.getType();
             // do redstone activation
             switch (blockType) {
@@ -102,8 +102,8 @@ public class TARDISSonicRedstone {
                         for (BlockFace f : plugin.getGeneralKeeper().getBlockFaces()) {
                             if (block.getRelative(f).getType().isAir()) {
                                 // force a block update
-                                block.getRelative(f).setBlockData(TARDISConstants.VOID_AIR, true);
-                                block.getRelative(f).setBlockData(TARDISConstants.AIR, true);
+                                block.getRelative(f).setBlockData(TardisConstants.VOID_AIR, true);
+                                block.getRelative(f).setBlockData(TardisConstants.AIR, true);
                                 break;
                             }
                         }
@@ -120,10 +120,10 @@ public class TARDISSonicRedstone {
                         for (BlockFace f : plugin.getGeneralKeeper().getBlockFaces()) {
                             if (block.getRelative(f).getType().isAir()) {
                                 // force a block update
-                                block.getRelative(f).setBlockData(TARDISConstants.POWER, true);
+                                block.getRelative(f).setBlockData(TardisConstants.POWER, true);
                                 lightable.setLit(true);
                                 block.setBlockData(lightable, true);
-                                block.getRelative(f).setBlockData(TARDISConstants.AIR, true);
+                                block.getRelative(f).setBlockData(TardisConstants.AIR, true);
                                 break;
                             }
                         }
@@ -157,12 +157,12 @@ public class TARDISSonicRedstone {
                 case MUSHROOM_STEM:
                     // check the block is a chemistry lamp block
                     MultipleFacing multipleFacing = (MultipleFacing) block.getBlockData();
-                    if (TARDISMushroomBlock.isChemistryStemOn(multipleFacing)) {
-                        multipleFacing = TARDISMushroomBlock.getChemistryStemOff(multipleFacing);
+                    if (TardisMushroomBlock.isChemistryStemOn(multipleFacing)) {
+                        multipleFacing = TardisMushroomBlock.getChemistryStemOff(multipleFacing);
                         // delete light source
                         plugin.getTardisHelper().deleteLight(block.getLocation());
-                    } else if (TARDISMushroomBlock.isChemistryStemOff(multipleFacing)) {
-                        multipleFacing = TARDISMushroomBlock.getChemistryStemOn(multipleFacing);
+                    } else if (TardisMushroomBlock.isChemistryStemOff(multipleFacing)) {
+                        multipleFacing = TardisMushroomBlock.getChemistryStemOn(multipleFacing);
                         // create light source
                         plugin.getTardisHelper().createLight(block.getLocation());
                     }
@@ -174,7 +174,7 @@ public class TARDISSonicRedstone {
         }
     }
 
-    public static boolean setExtension(TARDISPlugin plugin, Block b) {
+    public static boolean setExtension(TardisPlugin plugin, Block b) {
         BlockFace face = ((Piston) b.getBlockData()).getFacing();
         Block l = b.getRelative(face);
         Material mat = l.getType();
@@ -196,7 +196,7 @@ public class TARDISSonicRedstone {
         return false;
     }
 
-    private static void extend(TARDISPlugin plugin, Block b, Block l) {
+    private static void extend(TardisPlugin plugin, Block b, Block l) {
         plugin.getGeneralKeeper().getSonicPistons().add(b.getLocation().toString());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             PistonHead pistonHead = (PistonHead) Material.PISTON_HEAD.createBlockData();

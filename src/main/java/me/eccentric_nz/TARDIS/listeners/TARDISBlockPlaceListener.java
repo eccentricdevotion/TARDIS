@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -47,11 +47,11 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISBlockPlaceListener implements Listener {
+public class TardisBlockPlaceListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISBlockPlaceListener(TARDISPlugin plugin) {
+    public TardisBlockPlaceListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -67,13 +67,13 @@ public class TARDISBlockPlaceListener implements Listener {
         Player player = event.getPlayer();
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
-            TARDISMessage.send(player, "NOT_IN_ZERO");
+            TardisMessage.send(player, "NOT_IN_ZERO");
             return;
         }
         String blockStr = event.getBlockPlaced().getLocation().toString();
         if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(blockStr)) {
             event.setCancelled(true);
-            TARDISMessage.send(player, "NO_PLACE");
+            TardisMessage.send(player, "NO_PLACE");
         }
         ItemStack is = event.getItemInHand();
         if ((is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM))) {
@@ -85,11 +85,11 @@ public class TARDISBlockPlaceListener implements Listener {
                     int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
                     MultipleFacing multipleFacing;
                     if (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
-                        multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(which));
+                        multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TardisMushroomBlockData.BROWN_MUSHROOM_DATA.get(which));
                     } else if (is.getType().equals(Material.RED_MUSHROOM_BLOCK)) {
-                        multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));
+                        multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TardisMushroomBlockData.RED_MUSHROOM_DATA.get(which));
                     } else {
-                        multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
+                        multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
                         light = (which > 10000000 && which < 10000005);
                         if (plugin.getConfig().getBoolean("allow.chemistry") && which == 5) {
                             // remember heat block location
@@ -105,18 +105,18 @@ public class TARDISBlockPlaceListener implements Listener {
             } else {
                 BlockData data;
                 if (is.getType().equals(Material.BROWN_MUSHROOM_BLOCK)) {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA_ALL);
+                    data = plugin.getServer().createBlockData(TardisMushroomBlockData.BROWN_MUSHROOM_DATA_ALL);
                 } else if (is.getType().equals(Material.RED_MUSHROOM_BLOCK)) {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA_ALL);
+                    data = plugin.getServer().createBlockData(TardisMushroomBlockData.RED_MUSHROOM_DATA_ALL);
                 } else {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA_ALL);
+                    data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA_ALL);
                 }
                 event.getBlockPlaced().setBlockData(data, false);
                 setNextToMushroomBlock(player, event.getBlockPlaced());
                 return;
             }
         }
-        if (!TARDISPermission.hasPermission(player, "tardis.rift")) {
+        if (!TardisPermission.hasPermission(player, "tardis.rift")) {
             return;
         }
         if (!is.getType().equals(Material.BEACON) || !is.hasItemMeta()) {
@@ -131,14 +131,14 @@ public class TARDISBlockPlaceListener implements Listener {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
             if (rst.resultSet()) {
                 event.setCancelled(true);
-                TARDISMessage.send(player, "RIFT_OUTSIDE");
+                TardisMessage.send(player, "RIFT_OUTSIDE");
                 return;
             }
             // add recharger to to config
             Location l = event.getBlockPlaced().getLocation();
-            String name = "rift_" + player.getName() + "_" + TARDISConstants.RANDOM.nextInt(Integer.MAX_VALUE);
+            String name = "rift_" + player.getName() + "_" + TardisConstants.RANDOM.nextInt(Integer.MAX_VALUE);
             while (plugin.getConfig().contains("rechargers." + name)) {
-                name = "rift_" + player.getName() + "_" + TARDISConstants.RANDOM.nextInt(Integer.MAX_VALUE);
+                name = "rift_" + player.getName() + "_" + TardisConstants.RANDOM.nextInt(Integer.MAX_VALUE);
             }
             plugin.getConfig().set("rechargers." + name + ".world", Objects.requireNonNull(l.getWorld()).getName());
             plugin.getConfig().set("rechargers." + name + ".x", l.getBlockX());
@@ -146,7 +146,7 @@ public class TARDISBlockPlaceListener implements Listener {
             plugin.getConfig().set("rechargers." + name + ".z", l.getBlockZ());
             plugin.getConfig().set("rechargers." + name + ".uuid", player.getUniqueId().toString());
             plugin.saveConfig();
-            TARDISMessage.send(player, "RIFT_SUCCESS");
+            TardisMessage.send(player, "RIFT_SUCCESS");
         }
     }
 

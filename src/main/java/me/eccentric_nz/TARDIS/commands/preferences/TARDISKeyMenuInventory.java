@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.custommodeldata.GUIKeyPreferences;
+import me.eccentric_nz.tardis.custommodeldata.GuiKeyPreferences;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -29,11 +29,11 @@ import java.util.Collections;
  *
  * @author eccentric_nz
  */
-class TARDISKeyMenuInventory {
+class TardisKeyMenuInventory {
 
     private final ItemStack[] menu;
 
-    TARDISKeyMenuInventory() {
+    TardisKeyMenuInventory() {
         menu = getItemStack();
     }
 
@@ -46,11 +46,11 @@ class TARDISKeyMenuInventory {
 
         ItemStack[] itemStacks = new ItemStack[27];
 
-        for (GUIKeyPreferences key : GUIKeyPreferences.values()) {
+        for (GuiKeyPreferences key : GuiKeyPreferences.values()) {
             ItemStack is = new ItemStack(key.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             assert im != null;
-            if (key == GUIKeyPreferences.CLOSE || key == GUIKeyPreferences.INSTRUCTIONS) {
+            if (key == GuiKeyPreferences.CLOSE || key == GuiKeyPreferences.INSTRUCTIONS) {
                 im.setDisplayName(key.getName());
             } else {
                 im.setDisplayName(key.getChatColor() + "tardis Key");

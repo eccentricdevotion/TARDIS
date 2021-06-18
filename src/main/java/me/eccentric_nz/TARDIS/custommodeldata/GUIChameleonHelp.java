@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Material;
 
-public enum GUIChameleonHelp {
+public enum GuiChameleonHelp {
 
     // Chameleon Help
     BACK_CHAM_OPTS(1, 0, Material.ARROW),
@@ -47,14 +47,14 @@ public enum GUIChameleonHelp {
     private final Material material;
     private final String number;
 
-    GUIChameleonHelp(int customModelData, int slot, Material material, String number) {
+    GuiChameleonHelp(int customModelData, int slot, Material material, String number) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
         this.number = number;
     }
 
-    GUIChameleonHelp(int customModelData, int slot, Material material) {
+    GuiChameleonHelp(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -76,11 +76,11 @@ public enum GUIChameleonHelp {
     public String getName() {
         String s = toString();
         if (s.startsWith("INFO")) {
-            return TARDISPlugin.plugin.getChameleonGuis().getString("INFO");
+            return TardisPlugin.plugin.getChameleonGuis().getString("INFO");
         } else if (s.startsWith("COL") || s.startsWith("ROW")) {
             return number;
         } else {
-            return TARDISPlugin.plugin.getChameleonGuis().getString(s);
+            return TardisPlugin.plugin.getChameleonGuis().getString(s);
         }
     }
 }

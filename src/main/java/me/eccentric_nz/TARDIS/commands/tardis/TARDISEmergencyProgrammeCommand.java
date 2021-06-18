@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.travel.TARDISEPSRunnable;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.travel.TardisEpsRunnable;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -33,28 +33,28 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISEmergencyProgrammeCommand {
+class TardisEmergencyProgrammeCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISEmergencyProgrammeCommand(TARDISPlugin plugin) {
+    TardisEmergencyProgrammeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean showEP1(Player p) {
         if (plugin.getConfig().getBoolean("allow.emergency_npc")) {
             if (!plugin.getUtils().inTARDISWorld(p)) {
-                TARDISMessage.send(p, "CMD_IN_WORLD");
+                TardisMessage.send(p, "CMD_IN_WORLD");
                 return true;
             }
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", p.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
-                TARDISMessage.send(p, "NOT_A_TIMELORD");
+                TardisMessage.send(p, "NOT_A_TIMELORD");
                 return true;
             }
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             String eps = tardis.getEps();
             String creeper = tardis.getCreeper();
@@ -62,11 +62,11 @@ class TARDISEmergencyProgrammeCommand {
             wherem.put("uuid", p.getUniqueId().toString());
             ResultSetTravellers rsm = new ResultSetTravellers(plugin, wherem, true);
             if (!rsm.resultSet()) {
-                TARDISMessage.send(p, "NOT_IN_TARDIS");
+                TardisMessage.send(p, "NOT_IN_TARDIS");
                 return true;
             }
             if (rsm.getTardisId() != id) {
-                TARDISMessage.send(p, "NOT_IN_TARDIS");
+                TardisMessage.send(p, "NOT_IN_TARDIS");
                 return true;
             }
             // get player prefs
@@ -86,10 +86,10 @@ class TARDISEmergencyProgrammeCommand {
                 playerUUIDs = new ArrayList<>();
                 playerUUIDs.add(p.getUniqueId());
             }
-            TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
+            TardisEpsRunnable EPS_runnable = new TardisEpsRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
         } else {
-            TARDISMessage.send(p, "EP1_DISABLED");
+            TardisMessage.send(p, "EP1_DISABLED");
         }
         return true;
     }

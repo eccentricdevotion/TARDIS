@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.flight.TARDISLand;
-import me.eccentric_nz.tardis.handles.TARDISHandlesPattern;
-import me.eccentric_nz.tardis.handles.TARDISHandlesRequest;
-import me.eccentric_nz.tardis.howto.TARDISSeedsInventory;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.travel.TARDISRescue;
-import me.eccentric_nz.tardis.travel.TARDISRescue.RescueData;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.flight.TardisLand;
+import me.eccentric_nz.tardis.handles.TardisHandlesPattern;
+import me.eccentric_nz.tardis.handles.TardisHandlesRequest;
+import me.eccentric_nz.tardis.howto.TardisSeedsInventory;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.travel.TardisRescue;
+import me.eccentric_nz.tardis.travel.TardisRescue.RescueData;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,13 +44,13 @@ import java.util.regex.Pattern;
  *
  * @author eccentric_nz
  */
-public class TARDISChatListener implements Listener {
+public class TardisChatListener implements Listener {
 
-    private final TARDISPlugin plugin;
-    private final Pattern handlesPattern = TARDISHandlesPattern.getPattern("prefix");
+    private final TardisPlugin plugin;
+    private final Pattern handlesPattern = TardisHandlesPattern.getPattern("prefix");
     private Pattern howToPattern = null;
 
-    public TARDISChatListener(TARDISPlugin plugin) {
+    public TardisChatListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -71,7 +71,7 @@ public class TARDISChatListener implements Listener {
             boolean request = (chat.equals("tardis request accept"));
             if (plugin.getTrackerKeeper().getChat().containsKey(saved)) {
                 Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getChat().get(saved));
-                TARDISRescue res = new TARDISRescue(plugin);
+                TardisRescue res = new TardisRescue(plugin);
                 plugin.getTrackerKeeper().getChat().remove(saved);
                 // delay it so the chat appears before the message
                 String player = event.getPlayer().getName();
@@ -82,25 +82,25 @@ public class TARDISChatListener implements Listener {
                         if (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
                             Player who = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(saved));
                             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
-                                TARDISMessage.send(who, message, player);
+                                TardisMessage.send(who, message, player);
                             }
                             plugin.getTrackerKeeper().getTelepathicRescue().remove(saved);
                         } else if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
-                            TARDISMessage.send(rescuer, message, player);
+                            TardisMessage.send(rescuer, message, player);
                         }
                         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
-                            new TARDISLand(plugin, rd.getTardisId(), rescuer).exitVortex();
+                            new TardisLand(plugin, rd.getTardisId(), rescuer).exitVortex();
                         }
                     }
                 }, 2L);
             } else {
                 String message = (request) ? "REQUEST_TIMEOUT" : "RESCUE_TIMEOUT";
-                TARDISMessage.send(event.getPlayer(), message);
+                TardisMessage.send(event.getPlayer(), message);
             }
         } else if (handlesPattern.matcher(chat).lookingAt()) {
             event.setCancelled(true);
             // process handles request
-            new TARDISHandlesRequest(plugin).process(saved, event.getMessage());
+            new TardisHandlesRequest(plugin).process(saved, event.getMessage());
         } else {
             handleChat(event.getPlayer(), event.getMessage());
         }
@@ -117,7 +117,7 @@ public class TARDISChatListener implements Listener {
             plugin.getTrackerKeeper().getHowTo().add(p.getUniqueId());
             // open how to GUI
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
+                ItemStack[] seeds = new TardisSeedsInventory(plugin, p).getMenu();
                 Inventory wall = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "tardis Seeds Menu");
                 wall.setContents(seeds);
                 p.openInventory(wall);

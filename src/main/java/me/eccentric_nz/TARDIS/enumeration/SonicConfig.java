@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.enumeration;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
 public enum SonicConfig {
@@ -42,6 +42,6 @@ public enum SonicConfig {
     }
 
     public String getName() {
-        return TARDISStringUtils.sentenceCase(toString());
+        return TardisStringUtils.sentenceCase(toString());
     }
 }

@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.chemistry.block;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.chemistry.compound.CompoundInventory;
 import me.eccentric_nz.tardis.chemistry.constructor.ConstructorInventory;
 import me.eccentric_nz.tardis.chemistry.element.ElementInventory;
 import me.eccentric_nz.tardis.chemistry.lab.LabInventory;
 import me.eccentric_nz.tardis.chemistry.product.ProductInventory;
 import me.eccentric_nz.tardis.chemistry.reducer.ReducerInventory;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -49,11 +49,11 @@ import java.util.Objects;
 
 public class ChemistryBlockListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<String, String> blocks = new HashMap<>();
     private final HashMap<String, Integer> models = new HashMap<>();
 
-    public ChemistryBlockListener(TARDISPlugin plugin) {
+    public ChemistryBlockListener(TardisPlugin plugin) {
         this.plugin = plugin;
         blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=false,west=false]", "Atomic elements");
         blocks.put("minecraft:red_mushroom_block[down=true,east=true,north=true,south=false,up=false,west=true]", "Chemical compounds");
@@ -100,55 +100,55 @@ public class ChemistryBlockListener implements Listener {
                 switch (name) {
                     case "Atomic elements":
                         // elements
-                        if (TARDISPermission.hasPermission(player, "tardis.chemistry.creative")) {
+                        if (TardisPermission.hasPermission(player, "tardis.chemistry.creative")) {
                             menu = new ElementInventory(plugin).getMenu();
                         } else {
-                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
+                            TardisMessage.send(player, "CHEMISTRY_SUB_PERM", name);
                             return;
                         }
                         break;
                     case "Chemical compounds":
                         // compound
-                        if (TARDISPermission.hasPermission(player, "tardis.compound.create")) {
+                        if (TardisPermission.hasPermission(player, "tardis.compound.create")) {
                             menu = new CompoundInventory(plugin).getMenu();
                         } else {
-                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
+                            TardisMessage.send(player, "CHEMISTRY_SUB_PERM", name);
                             return;
                         }
                         break;
                     case "Material reducer":
                         // reducer
-                        if (TARDISPermission.hasPermission(player, "tardis.reducer.use")) {
+                        if (TardisPermission.hasPermission(player, "tardis.reducer.use")) {
                             menu = new ReducerInventory(plugin).getMenu();
                         } else {
-                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
+                            TardisMessage.send(player, "CHEMISTRY_SUB_PERM", name);
                             return;
                         }
                         break;
                     case "Element constructor":
                         // constructor
-                        if (TARDISPermission.hasPermission(player, "tardis.construct.build")) {
+                        if (TardisPermission.hasPermission(player, "tardis.construct.build")) {
                             menu = new ConstructorInventory().getMenu();
                         } else {
-                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
+                            TardisMessage.send(player, "CHEMISTRY_SUB_PERM", name);
                             return;
                         }
                         break;
                     case "Lab table":
                         // lab
-                        if (TARDISPermission.hasPermission(player, "tardis.lab.combine")) {
+                        if (TardisPermission.hasPermission(player, "tardis.lab.combine")) {
                             menu = new LabInventory(plugin).getMenu();
                         } else {
-                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
+                            TardisMessage.send(player, "CHEMISTRY_SUB_PERM", name);
                             return;
                         }
                         break;
                     default:
                         // product
-                        if (TARDISPermission.hasPermission(player, "tardis.products.craft")) {
+                        if (TardisPermission.hasPermission(player, "tardis.products.craft")) {
                             menu = new ProductInventory(plugin).getMenu();
                         } else {
-                            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", name);
+                            TardisMessage.send(player, "CHEMISTRY_SUB_PERM", name);
                             return;
                         }
                         break;
@@ -179,7 +179,7 @@ public class ChemistryBlockListener implements Listener {
                 im.setCustomModelData(10000000 + cmd);
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
                 is.setItemMeta(im);
-                block.setBlockData(TARDISConstants.AIR);
+                block.setBlockData(TardisConstants.AIR);
                 block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);
                 if (cmd == 5) {
                     plugin.getTrackerKeeper().getHeatBlocks().remove(block.getLocation().toString());

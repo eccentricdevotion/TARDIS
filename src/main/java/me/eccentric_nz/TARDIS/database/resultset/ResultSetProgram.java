@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.data.Program;
 
 import java.sql.Connection;
@@ -35,9 +35,9 @@ import java.sql.SQLException;
  */
 public class ResultSetProgram {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int programId;
     private final String prefix;
     private Program program;
@@ -48,7 +48,7 @@ public class ResultSetProgram {
      * @param plugin    an instance of the main class.
      * @param programId a program_id to refine the search.
      */
-    public ResultSetProgram(TARDISPlugin plugin, int programId) {
+    public ResultSetProgram(TardisPlugin plugin, int programId) {
         this.plugin = plugin;
         this.programId = programId;
         prefix = this.plugin.getPrefix();

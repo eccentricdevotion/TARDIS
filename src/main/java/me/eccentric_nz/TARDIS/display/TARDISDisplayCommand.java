@@ -1,9 +1,9 @@
 package me.eccentric_nz.tardis.display;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,14 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TARDISDisplayCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
+public class TardisDisplayCommand extends TardisCompleter implements CommandExecutor, TabCompleter {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> SUBS = new ArrayList<>();
 
-    public TARDISDisplayCommand(TARDISPlugin plugin) {
+    public TardisDisplayCommand(TardisPlugin plugin) {
         this.plugin = plugin;
-        for (TARDISDisplayType dt : TARDISDisplayType.values()) {
+        for (TardisDisplayType dt : TardisDisplayType.values()) {
             SUBS.add(dt.toString());
         }
     }
@@ -35,22 +35,22 @@ public class TARDISDisplayCommand extends TARDISCompleter implements CommandExec
                 if (p.hasPermission("tardis.display")) {
                     if (plugin.getTrackerKeeper().getDisplay().containsKey(uuid)) {
                         plugin.getTrackerKeeper().getDisplay().remove(uuid);
-                        TARDISMessage.send(p, "DISPLAY_DISABLED");
+                        TardisMessage.send(p, "DISPLAY_DISABLED");
                     } else {
-                        plugin.getTrackerKeeper().getDisplay().put(uuid, TARDISDisplayType.ALL);
-                        TARDISMessage.send(p, "DISPLAY_ENABLED");
+                        plugin.getTrackerKeeper().getDisplay().put(uuid, TardisDisplayType.ALL);
+                        TardisMessage.send(p, "DISPLAY_ENABLED");
                     }
                 } else {
-                    TARDISMessage.send(p, "DISPLAY_PERMISSION");
+                    TardisMessage.send(p, "DISPLAY_PERMISSION");
                 }
             }
             if (args.length == 1) {
                 try {
-                    TARDISDisplayType displayType = TARDISDisplayType.valueOf(args[0].toUpperCase());
+                    TardisDisplayType displayType = TardisDisplayType.valueOf(args[0].toUpperCase());
                     plugin.getTrackerKeeper().getDisplay().put(uuid, displayType);
-                    TARDISMessage.send(p, "DISPLAY_ENABLED");
+                    TardisMessage.send(p, "DISPLAY_ENABLED");
                 } catch (IllegalArgumentException e) {
-                    TARDISMessage.send(p, "DISPLAY_INVALID");
+                    TardisMessage.send(p, "DISPLAY_INVALID");
                 }
             }
         }

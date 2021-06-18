@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -25,15 +25,15 @@ import java.sql.Statement;
 /**
  * @author eccentric_nz
  */
-public class TARDISWorldRemover {
+public class TardisWorldRemover {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
     private Statement statement;
 
-    public TARDISWorldRemover(TARDISPlugin plugin) {
+    public TardisWorldRemover(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }

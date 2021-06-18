@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUISonicGenerator;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiSonicGenerator;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,14 +47,14 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener implements Listener {
+public class TardisSonicGeneratorMenuListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<String, Integer> costs;
     private final HashMap<String, String> fields;
     private Location location;
 
-    public TARDISSonicGeneratorMenuListener(TARDISPlugin plugin) {
+    public TardisSonicGeneratorMenuListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
         costs = getCosts();
@@ -159,7 +159,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                             // remove lore
                             sonic_im.setLore(null);
                         }
-                        sonic_im.setCustomModelData(GUISonicGenerator.ELEVENTH_DOCTOR.getCustomModelData());
+                        sonic_im.setCustomModelData(GuiSonicGenerator.ELEVENTH_DOCTOR.getCustomModelData());
                         sonic.setItemMeta(sonic_im);
                         setCost(view, costs.get("Standard Sonic"));
                         break;
@@ -283,7 +283,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
                 where.put("uuid", p.getUniqueId().toString());
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -cost, where, p);
             } else {
-                TARDISMessage.send(p, "UPGRADE_ABORT_ENERGY");
+                TardisMessage.send(p, "UPGRADE_ABORT_ENERGY");
             }
         }
         close(p);
@@ -295,7 +295,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener impleme
         ItemMeta im = is.getItemMeta();
         assert im != null;
         String c = Objects.requireNonNull(im.getLore()).get(0);
-        return TARDISNumberParsers.parseInt(c);
+        return TardisNumberParsers.parseInt(c);
     }
 
     private void setCost(InventoryView view, int cost) {

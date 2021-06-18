@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands.dev;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
@@ -24,11 +24,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-public class TARDISPermissionLister {
+public class TardisPermissionLister {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISPermissionLister(TARDISPlugin plugin) {
+    public TardisPermissionLister(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

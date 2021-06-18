@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.tardis.enumeration.DiskCircuit;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -34,15 +34,15 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISCircuitDamager {
+public class TardisCircuitDamager {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final DiskCircuit circuit;
     private final int id;
     private final Player p;
     private int uses_left;
 
-    public TARDISCircuitDamager(TARDISPlugin plugin, DiskCircuit circuit, int uses_left, int id, Player p) {
+    public TardisCircuitDamager(TardisPlugin plugin, DiskCircuit circuit, int uses_left, int id, Player p) {
         this.plugin = plugin;
         this.circuit = circuit;
         this.uses_left = uses_left;
@@ -57,13 +57,13 @@ public class TARDISCircuitDamager {
         if ((uses_left - 1) <= 0) {
             // destroy
             setCircuitDamage(circuit.getName(), 0, true);
-            TARDISMessage.send(p, "CIRCUIT_VAPOUR", circuit.getName());
+            TardisMessage.send(p, "CIRCUIT_VAPOUR", circuit.getName());
         } else {
             // decrement
             int decremented = uses_left - 1;
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 setCircuitDamage(circuit.getName(), decremented, false);
-                TARDISMessage.send(p, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));
+                TardisMessage.send(p, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));
             }, 5L);
         }
     }
@@ -77,7 +77,7 @@ public class TARDISCircuitDamager {
             ItemStack[] clone = new ItemStack[9];
             int i = 0;
             try {
-                items = TARDISSerializeInventory.itemStacksFromString(rs.getConsole());
+                items = TardisSerializeInventory.itemStacksFromString(rs.getConsole());
                 for (ItemStack is : items) {
                     if (is != null && is.hasItemMeta()) {
                         ItemMeta im = is.getItemMeta();
@@ -106,7 +106,7 @@ public class TARDISCircuitDamager {
                     }
                     i++;
                 }
-                String serialized = TARDISSerializeInventory.itemStacksToString(clone);
+                String serialized = TardisSerializeInventory.itemStacksToString(clone);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("console", serialized);
                 HashMap<String, Object> wheret = new HashMap<>();

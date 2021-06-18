@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.block.Block;
 
 import java.sql.Connection;
@@ -36,15 +36,15 @@ import java.util.Objects;
  */
 public class ResultSetDoorBlocks {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
     private final String prefix;
     private Block innerBlock;
     private Block outerBlock;
-    private COMPASS innerDirection;
-    private COMPASS outerDirection;
+    private CardinalDirection innerDirection;
+    private CardinalDirection outerDirection;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
@@ -52,7 +52,7 @@ public class ResultSetDoorBlocks {
      * @param plugin an instance of the main class.
      * @param id     the tardis id to get the doors for.
      */
-    public ResultSetDoorBlocks(TARDISPlugin plugin, int id) {
+    public ResultSetDoorBlocks(TardisPlugin plugin, int id) {
         this.plugin = plugin;
         this.id = id;
         prefix = this.plugin.getPrefix();
@@ -77,11 +77,11 @@ public class ResultSetDoorBlocks {
                     // get block
                     String door = rs.getString("door_location");
                     if (rs.getInt("door_type") == 0) {
-                        outerBlock = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(door)).getBlock();
-                        outerDirection = COMPASS.valueOf(rs.getString("door_direction"));
+                        outerBlock = Objects.requireNonNull(TardisStaticLocationGetters.getLocationFromDB(door)).getBlock();
+                        outerDirection = CardinalDirection.valueOf(rs.getString("door_direction"));
                     } else {
-                        innerBlock = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(door)).getBlock();
-                        innerDirection = COMPASS.valueOf(rs.getString("door_direction"));
+                        innerBlock = Objects.requireNonNull(TardisStaticLocationGetters.getLocationFromDB(door)).getBlock();
+                        innerDirection = CardinalDirection.valueOf(rs.getString("door_direction"));
                     }
                 }
             } else {
@@ -112,11 +112,11 @@ public class ResultSetDoorBlocks {
         return outerBlock;
     }
 
-    public COMPASS getInnerDirection() {
+    public CardinalDirection getInnerDirection() {
         return innerDirection;
     }
 
-    public COMPASS getOuterDirection() {
+    public CardinalDirection getOuterDirection() {
         return outerDirection;
     }
 }

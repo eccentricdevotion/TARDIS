@@ -17,19 +17,19 @@
 package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.ars.TARDISARSMethods;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.ars.TardisArsMethods;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.data.Archive;
-import me.eccentric_nz.tardis.database.data.TARDIS;
-import me.eccentric_nz.tardis.database.resultset.ResultSetARS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetArs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.ConsoleSize;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.schematic.ArchiveReset;
 import me.eccentric_nz.tardis.schematic.ResultSetArchive;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -40,36 +40,36 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISThemeProcessor {
+class TardisThemeProcessor {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final UUID uuid;
     private Archive archive_next;
 
-    TARDISThemeProcessor(TARDISPlugin plugin, UUID uuid) {
+    TardisThemeProcessor(TardisPlugin plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
     }
 
     void changeDesktop() {
         // get upgrade data
-        TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+        TardisUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
         Player player = plugin.getServer().getPlayer(uuid);
         if (plugin.getHandlesConfig().getBoolean("enabled")) {
             assert player != null;
-            if (TARDISPermission.hasPermission(player, "tardis.handles")) {
+            if (TardisPermission.hasPermission(player, "tardis.handles")) {
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
                 rs.resultSet();
-                TARDIS tardis = rs.getTardis();
+                Tardis tardis = rs.getTardis();
                 // check if the player has a Handles placed
                 HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("type", 26);
                 whereh.put("tardis_id", tardis.getTardisId());
                 ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
                 if (rsc.resultSet()) {
-                    TARDISMessage.send(player, "UPGRADE_REMOVE_HANDLES");
+                    TardisMessage.send(player, "UPGRADE_REMOVE_HANDLES");
                     return;
                 }
             }
@@ -92,7 +92,7 @@ class TARDISThemeProcessor {
             } else {
                 // abort
                 Player cp = plugin.getServer().getPlayer(uuid);
-                TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                TardisMessage.send(cp, "ARCHIVE_NOT_FOUND");
                 return;
             }
         } else {
@@ -104,7 +104,7 @@ class TARDISThemeProcessor {
                 return;
             }
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.unzip(path);
+            JsonObject obj = TardisSchematicGZip.unzip(path);
             // get dimensions
             assert obj != null;
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
@@ -128,7 +128,7 @@ class TARDISThemeProcessor {
             } else {
                 // abort
                 Player cp = plugin.getServer().getPlayer(uuid);
-                TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                TardisMessage.send(cp, "ARCHIVE_NOT_FOUND");
                 return;
             }
         } else {
@@ -140,7 +140,7 @@ class TARDISThemeProcessor {
                 return;
             }
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.unzip(path);
+            JsonObject obj = TardisSchematicGZip.unzip(path);
             // get dimensions
             assert obj != null;
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
@@ -150,15 +150,15 @@ class TARDISThemeProcessor {
         }
         // if configured check whether there are still any blocks left
         if (plugin.getConfig().getBoolean("desktop.check_blocks_before_upgrade")) {
-            TARDISUpgradeBlockScanner scanner = new TARDISUpgradeBlockScanner(plugin, tud, uuid);
-            TARDISBlockScannerData check = scanner.check();
+            TardisUpgradeBlockScanner scanner = new TardisUpgradeBlockScanner(plugin, tud, uuid);
+            TardisBlockScannerData check = scanner.check();
             if (check == null) {
                 return;
             } else if (!check.allow()) {
                 Player cp = plugin.getServer().getPlayer(uuid);
-                TARDISMessage.send(cp, "UPGRADE_PERCENT_BLOCKS", plugin.getConfig().getInt("desktop.block_change_percent") + "");
-                TARDISMessage.send(cp, "UPGRADE_PERCENT_EXPLAIN", check.getCount() + "", check.getVolume() + "", check.getChanged() + "");
-                TARDISMessage.send(cp, "UPGRADE_PERCENT_REASON");
+                TardisMessage.send(cp, "UPGRADE_PERCENT_BLOCKS", plugin.getConfig().getInt("desktop.block_change_percent") + "");
+                TardisMessage.send(cp, "UPGRADE_PERCENT_EXPLAIN", check.getCount() + "", check.getVolume() + "", check.getChanged() + "");
+                TardisMessage.send(cp, "UPGRADE_PERCENT_REASON");
                 if (tud.getPrevious().getPermission().equals("archive")) {
                     // reset archive use back to 1
                     new ArchiveReset(plugin, uuid.toString(), 1).resetUse();
@@ -170,7 +170,7 @@ class TARDISThemeProcessor {
         if (w < pw || h < ph) {
             // we need more space!
             if (checkARSGrid(size_prev, size_next, uuid)) {
-                TARDISMessage.send(plugin.getServer().getPlayer(uuid), "UPGRADE_ABORT_SPACE");
+                TardisMessage.send(plugin.getServer().getPlayer(uuid), "UPGRADE_ABORT_SPACE");
                 plugin.getTrackerKeeper().getUpgrades().remove(uuid);
                 if (tud.getPrevious().getPermission().equals("archive")) {
                     // reset archive use back to 1
@@ -198,19 +198,19 @@ class TARDISThemeProcessor {
         wherea.put("uuid", uuid.toString());
         String config_path = (archive_next != null) ? "upgrades.archive." + archive_next.getConsoleSize().getConfigPath() : "upgrades." + tud.getSchematic().getPermission().toLowerCase(Locale.ENGLISH);
         int amount = plugin.getArtronConfig().getInt(config_path);
-        TARDISThemeRunnable ttr;
+        TardisThemeRunnable ttr;
         boolean hasLava = tud.getPrevious().getPermission().equals("master") || tud.getPrevious().getPermission().equals("delta");
         if (tud.getPrevious().equals(tud.getSchematic()) && archive_next == null) {
             // reduce the cost of the theme change
             amount = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * amount);
-            ttr = new TARDISWallFloorRunnable(plugin, uuid, tud);
+            ttr = new TardisWallFloorRunnable(plugin, uuid, tud);
         } else {
             // check for master
             if (hasLava) {
                 // remove lava and water
-                new TARDISDelavafier(plugin, uuid).swap();
+                new TardisDelavafier(plugin, uuid).swap();
             }
-            ttr = new TARDISFullThemeRunnable(plugin, uuid, tud);
+            ttr = new TardisFullThemeRunnable(plugin, uuid, tud);
         }
         plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, plugin.getServer().getPlayer(uuid));
         // start the rebuild
@@ -224,10 +224,10 @@ class TARDISThemeProcessor {
         // get ars
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
-        ResultSetARS rs = new ResultSetARS(plugin, where);
+        ResultSetArs rs = new ResultSetArs(plugin, where);
         if (rs.resultSet()) {
             String json = rs.getJson();
-            String[][][] grid = TARDISARSMethods.getGridFromJSON(json);
+            String[][][] grid = TardisArsMethods.getGridFromJSON(json);
             switch (prev) {
                 case SMALL:
                     switch (next) {

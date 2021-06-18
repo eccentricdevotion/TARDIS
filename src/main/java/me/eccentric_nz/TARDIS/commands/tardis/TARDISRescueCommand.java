@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisPowered;
-import me.eccentric_nz.tardis.flight.TARDISLand;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.travel.TARDISRescue;
+import me.eccentric_nz.tardis.flight.TardisLand;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.travel.TardisRescue;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -32,34 +32,34 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISRescueCommand {
+class TardisRescueCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISRescueCommand(TARDISPlugin plugin) {
+    TardisRescueCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean startRescue(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            TardisMessage.send(player, "TOO_FEW_ARGS");
             return true;
         }
-        if (TARDISPermission.hasPermission(player, "tardis.timetravel.rescue")) {
+        if (TardisPermission.hasPermission(player, "tardis.timetravel.rescue")) {
             ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                TardisMessage.send(player, "NOT_A_TIMELORD");
                 return true;
             }
             if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered()) {
-                TARDISMessage.send(player, "POWER_DOWN");
+                TardisMessage.send(player, "POWER_DOWN");
                 return true;
             }
             String saved = args[1];
             if (!saved.equalsIgnoreCase("accept")) {
                 Player destPlayer = plugin.getServer().getPlayer(saved);
                 if (destPlayer == null) {
-                    TARDISMessage.send(player, "NOT_ONLINE");
+                    TardisMessage.send(player, "NOT_ONLINE");
                     return true;
                 }
                 UUID savedUUID = destPlayer.getUniqueId();
@@ -68,32 +68,32 @@ class TARDISRescueCommand {
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, destPlayer.getUniqueId().toString());
                 if (rsp.resultSet() && rsp.isAutoRescueOn()) {
                     // go straight to rescue
-                    TARDISRescue res = new TARDISRescue(plugin);
+                    TardisRescue res = new TardisRescue(plugin);
                     plugin.getTrackerKeeper().getChat().remove(savedUUID);
                     // delay it so the chat appears before the message
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        TARDISRescue.RescueData rd = res.tryRescue(player, destPlayer.getUniqueId(), false);
+                        TardisRescue.RescueData rd = res.tryRescue(player, destPlayer.getUniqueId(), false);
                         if (rd.success()) {
                             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardisId())) {
-                                new TARDISLand(plugin, rd.getTardisId(), player).exitVortex();
+                                new TardisLand(plugin, rd.getTardisId(), player).exitVortex();
                             } else {
-                                TARDISMessage.send(player, "REQUEST_RELEASE", destPlayer.getName());
+                                TardisMessage.send(player, "REQUEST_RELEASE", destPlayer.getName());
                             }
                         }
                     }, 2L);
                 } else {
-                    TARDISMessage.send(destPlayer, "RESCUE_REQUEST", who, ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET);
+                    TardisMessage.send(destPlayer, "RESCUE_REQUEST", who, ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET);
                     plugin.getTrackerKeeper().getChat().put(savedUUID, player.getUniqueId());
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         if (plugin.getTrackerKeeper().getChat().containsKey(savedUUID)) {
                             plugin.getTrackerKeeper().getChat().remove(savedUUID);
-                            TARDISMessage.send(player, "RESCUE_NO_RESPONSE", saved);
+                            TardisMessage.send(player, "RESCUE_NO_RESPONSE", saved);
                         }
                     }, 1200L);
                 }
             }
         } else {
-            TARDISMessage.send(player, "NO_PERM_PLAYER");
+            TardisMessage.send(player, "NO_PERM_PLAYER");
             return true;
         }
         return false;

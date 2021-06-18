@@ -18,18 +18,18 @@ package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.api.event.TARDISDesktopThemeEvent;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisDesktopThemeEvent;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
@@ -45,11 +45,11 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
+public class TardisWallFloorRunnable extends TardisThemeRunnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final UUID uuid;
-    private final TARDISUpgradeData tud;
+    private final TardisUpgradeData tud;
     private boolean running;
     private int level = 0;
     private int row = 0;
@@ -65,7 +65,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
     private Material floor_type;
     private Player player;
 
-    public TARDISWallFloorRunnable(TARDISPlugin plugin, UUID uuid, TARDISUpgradeData tud) {
+    public TardisWallFloorRunnable(TardisPlugin plugin, UUID uuid, TardisUpgradeData tud) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.tud = tud;
@@ -84,7 +84,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                 return;
             }
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.unzip(path);
+            JsonObject obj = TardisSchematicGZip.unzip(path);
             // get dimensions
             assert obj != null;
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
@@ -102,11 +102,11 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
             }
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             int slot = tardis.getTIPS();
             if (slot != -1) { // default world - use TIPS
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                TARDISTIPSData pos = tintpos.getTIPSData(slot);
+                TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
+                TardisTipsData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();
             } else {
@@ -114,8 +114,8 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                 startx = gsl[0];
                 startz = gsl[2];
             }
-            starty = TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
-            world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+            starty = TardisConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
+            world = TardisStaticLocationGetters.getWorld(tardis.getChunk());
             // wall/floor block prefs
             wall_type = Material.valueOf(tud.getWall());
             floor_type = Material.valueOf(tud.getFloor());
@@ -124,7 +124,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
             // set running
             running = true;
             player = plugin.getServer().getPlayer(uuid);
-            plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
+            plugin.getPM().callEvent(new TardisDesktopThemeEvent(player, tardis, tud));
             // remove upgrade data
             plugin.getTrackerKeeper().getUpgrades().remove(uuid);
         }
@@ -132,7 +132,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
             // we're finished cancel the task
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;
-            TARDISMessage.send(player, "UPGRADE_FINISHED");
+            TardisMessage.send(player, "UPGRADE_FINISHED");
         } else {
             JsonArray floor = arr.get(level).getAsJsonArray();
             JsonArray r = (JsonArray) floor.get(row);
@@ -146,19 +146,19 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                 Material type = data.getMaterial();
                 if (type.equals(Material.ORANGE_WOOL)) {
                     if (wall_type == Material.ORANGE_WOOL) {
-                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                        data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
                     } else {
                         data = wall_type.createBlockData();
                     }
-                    TARDISBlockSetters.setBlock(world, x, y, z, data);
+                    TardisBlockSetters.setBlock(world, x, y, z, data);
                 }
                 if (type.equals(Material.LIGHT_GRAY_WOOL)) {
                     type = floor_type;
-                    TARDISBlockSetters.setBlock(world, x, y, z, type);
+                    TardisBlockSetters.setBlock(world, x, y, z, type);
                 }
                 if (type.equals(Material.BLUE_WOOL)) {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
-                    TARDISBlockSetters.setBlock(world, x, y, z, data);
+                    data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
+                    TardisBlockSetters.setBlock(world, x, y, z, data);
                 }
             }
             if (row < w) {

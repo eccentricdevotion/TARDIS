@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.advancement;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAdvancements;
 import me.eccentric_nz.tardis.enumeration.Advancement;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -40,14 +40,14 @@ import java.util.Locale;
  *
  * @author eccentric_nz
  */
-public class TARDISAdvancementFactory {
+public class TardisAdvancementFactory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
     private final Advancement advancement;
     private final int size;
 
-    public TARDISAdvancementFactory(TARDISPlugin plugin, Player player, Advancement advancement, int size) {
+    public TardisAdvancementFactory(TardisPlugin plugin, Player player, Advancement advancement, int size) {
         this.plugin = plugin;
         this.player = player;
         this.advancement = advancement;
@@ -55,28 +55,28 @@ public class TARDISAdvancementFactory {
     }
 
     public static boolean checkAdvancement(String adv) {
-        NamespacedKey nsk = new NamespacedKey(TARDISPlugin.plugin, adv.toLowerCase(Locale.ENGLISH));
-        org.bukkit.advancement.Advancement a = TARDISPlugin.plugin.getServer().getAdvancement(nsk);
+        NamespacedKey nsk = new NamespacedKey(TardisPlugin.plugin, adv.toLowerCase(Locale.ENGLISH));
+        org.bukkit.advancement.Advancement a = TardisPlugin.plugin.getServer().getAdvancement(nsk);
         if (a != null) {
-            TARDISPlugin.plugin.debug("Advancement 'tardis:" + adv + "' exists :)");
+            TardisPlugin.plugin.debug("Advancement 'tardis:" + adv + "' exists :)");
             return true;
         } else {
-            TARDISPlugin.plugin.debug("There is no advancement with that key; try running /minecraft:reload");
+            TardisPlugin.plugin.debug("There is no advancement with that key; try running /minecraft:reload");
             return false;
         }
     }
 
     public static void grantAdvancement(Advancement adv, Player player) {
-        NamespacedKey nsk = new NamespacedKey(TARDISPlugin.plugin, adv.getConfigName());
-        org.bukkit.advancement.Advancement a = TARDISPlugin.plugin.getServer().getAdvancement(nsk);
+        NamespacedKey nsk = new NamespacedKey(TardisPlugin.plugin, adv.getConfigName());
+        org.bukkit.advancement.Advancement a = TardisPlugin.plugin.getServer().getAdvancement(nsk);
         if (a != null) {
             AdvancementProgress avp = player.getAdvancementProgress(a);
             if (!avp.isDone()) {
-                TARDISPlugin.plugin.getServer().dispatchCommand(TARDISPlugin.plugin.getConsole(), "advancement grant " + player.getName() + " only tardis:" + adv.getConfigName());
+                TardisPlugin.plugin.getServer().dispatchCommand(TardisPlugin.plugin.getConsole(), "advancement grant " + player.getName() + " only tardis:" + adv.getConfigName());
             }
         } else {
             player.sendMessage(ChatColor.YELLOW + "Advancement Made!");
-            player.sendMessage(ChatColor.WHITE + TARDISPlugin.plugin.getAdvancementConfig().getString(adv.getConfigName() + ".message"));
+            player.sendMessage(ChatColor.WHITE + TardisPlugin.plugin.getAdvancementConfig().getString(adv.getConfigName() + ".message"));
         }
     }
 
@@ -104,7 +104,7 @@ public class TARDISAdvancementFactory {
                     }
                 } else {
                     int req = plugin.getAdvancementConfig().getInt(advancement + ".required");
-                    int have = TARDISNumberParsers.parseInt(amount);
+                    int have = TardisNumberParsers.parseInt(amount);
                     int sum = have + (Integer) obj;
                     if (sum >= req) {
                         achieved = true;
@@ -118,7 +118,7 @@ public class TARDISAdvancementFactory {
                     grantAdvancement(advancement, player);
                     assert reward_type != null;
                     if (reward_type.equalsIgnoreCase("XP")) {
-                        new TARDISXPRewarder(player).changeExp(reward_amount);
+                        new TardisXpRewarder(player).changeExp(reward_amount);
                     } else {
                         ItemStack is = new ItemStack(Material.valueOf(reward_type), reward_amount);
                         Inventory inv = player.getInventory();
@@ -135,7 +135,7 @@ public class TARDISAdvancementFactory {
                             plugin.getQueryFactory().doUpdate("advancements", setA, whereM);
                         }
                     } else {
-                        setA.put("amount", TARDISNumberParsers.parseInt(amount) + (Integer) obj);
+                        setA.put("amount", TardisNumberParsers.parseInt(amount) + (Integer) obj);
                         plugin.getQueryFactory().doUpdate("advancements", setA, whereM);
                     }
                 }

@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advancement.TardisAdvancementFactory;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Advancement;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -38,11 +38,11 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TARDISCreeperDeathListener implements Listener {
+public class TardisCreeperDeathListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISCreeperDeathListener(TARDISPlugin plugin) {
+    public TardisCreeperDeathListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -79,10 +79,10 @@ public class TARDISCreeperDeathListener implements Listener {
                             set.put("artron_level", level);
                             plugin.getQueryFactory().doUpdate("player_prefs", set, wherea);
                         }
-                        TARDISMessage.send(p, "ENERGY_CREEPER", String.format("%d", amount));
+                        TardisMessage.send(p, "ENERGY_CREEPER", String.format("%d", amount));
                         // are we doing an advancement?
                         if (plugin.getAdvancementConfig().getBoolean("kill.enabled")) {
-                            TARDISAdvancementFactory taf = new TARDISAdvancementFactory(plugin, p, Advancement.KILL, 1);
+                            TardisAdvancementFactory taf = new TardisAdvancementFactory(plugin, p, Advancement.KILL, 1);
                             taf.doAdvancement(1);
                         }
                     }

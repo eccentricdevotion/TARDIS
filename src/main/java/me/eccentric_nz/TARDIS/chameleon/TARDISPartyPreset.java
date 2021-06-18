@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISPartyPreset extends TARDISPreset {
+class TardisPartyPreset extends TardisPreset {
 
-    TARDISPartyPreset() {
+    TardisPartyPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:lime_wool";

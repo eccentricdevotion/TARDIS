@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.config;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -30,12 +30,12 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISSetBooleanCommand {
+class TardisSetBooleanCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> require_restart = Arrays.asList("use_worldguard", "wg_flag_set", "walk_in_tardis", "zero_room", "open_door_policy", "particles", "switch_resource_packs", "handles");
 
-    TARDISSetBooleanCommand(TARDISPlugin plugin) {
+    TardisSetBooleanCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -45,7 +45,7 @@ class TARDISSetBooleanCommand {
         // check they typed true of false
         String tf = args[1].toLowerCase(Locale.ENGLISH);
         if (!tf.equals("true") && !tf.equals("false")) {
-            TARDISMessage.send(sender, "TRUE_FALSE");
+            TardisMessage.send(sender, "TRUE_FALSE");
             return false;
         }
         boolean bool = Boolean.parseBoolean(tf);
@@ -59,7 +59,7 @@ class TARDISSetBooleanCommand {
         }
         if (first.equals("abandon")) {
             if (tf.equals("true") && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
-                TARDISMessage.message(sender, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
+                TardisMessage.message(sender, ChatColor.RED + "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!");
                 return true;
             }
             plugin.getConfig().set("abandon.enabled", bool);
@@ -69,9 +69,9 @@ class TARDISSetBooleanCommand {
             plugin.getConfig().set(first, bool);
         }
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TardisMessage.send(sender, "CONFIG_UPDATED");
         if (require_restart.contains(tolower)) {
-            TARDISMessage.send(sender, "RESTART");
+            TardisMessage.send(sender, "RESTART");
         }
         return true;
     }

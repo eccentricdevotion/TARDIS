@@ -23,7 +23,7 @@ import org.bukkit.Chunk;
  *
  * @author eccentric_nz
  */
-public class TARDISARSSlot {
+public class TardisArsSlot {
 
     private Chunk chunk;
     private int y;

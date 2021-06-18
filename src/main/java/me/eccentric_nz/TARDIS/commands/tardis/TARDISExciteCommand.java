@@ -16,32 +16,32 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.control.TARDISAtmosphericExcitation;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.control.TardisAtmosphericExcitation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 /**
  * @author eccentric_nz
  */
-class TARDISExciteCommand {
+class TardisExciteCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISExciteCommand(TARDISPlugin plugin) {
+    TardisExciteCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean excite(Player player) {
         if (plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
-            TARDISMessage.send(player, "CMD_EXCITE");
+            TardisMessage.send(player, "CMD_EXCITE");
             return true;
         }
         // get tardis id
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {
-            new TARDISAtmosphericExcitation(plugin).excite(rs.getTardisId(), player);
+            new TardisAtmosphericExcitation(plugin).excite(rs.getTardisId(), player);
             plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
             return true;
         }

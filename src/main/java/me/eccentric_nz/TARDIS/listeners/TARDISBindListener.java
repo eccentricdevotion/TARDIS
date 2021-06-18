@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBind;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.Bind;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -49,12 +49,12 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISBindListener implements Listener {
+public class TardisBindListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Material> validBlocks = new ArrayList<>();
 
-    public TARDISBindListener(TARDISPlugin plugin) {
+    public TardisBindListener(TardisPlugin plugin) {
         this.plugin = plugin;
         validBlocks.addAll(Tag.SIGNS.getValues());
         validBlocks.addAll(Tag.BUTTONS.getValues());
@@ -90,7 +90,7 @@ public class TARDISBindListener implements Listener {
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("location", l);
                     plugin.getQueryFactory().doUpdate("bind", set, where);
-                    TARDISMessage.send(player, "BIND_SAVE", m.toString());
+                    TardisMessage.send(player, "BIND_SAVE", m.toString());
                 } else if (plugin.getTrackerKeeper().getBindRemoval().containsKey(uuid)) {
                     Bind bind = plugin.getTrackerKeeper().getBindRemoval().get(uuid);
                     // get the bind record from the location and type
@@ -101,9 +101,9 @@ public class TARDISBindListener implements Listener {
                     if (rsb.resultSet()) {
                         where.put("bind_id", rsb.getBindId());
                         plugin.getQueryFactory().doDelete("bind", where);
-                        TARDISMessage.send(player, "BIND_REMOVED", bind.toString());
+                        TardisMessage.send(player, "BIND_REMOVED", bind.toString());
                     } else {
-                        TARDISMessage.send(player, "BIND_REMOVE_NO_MATCH");
+                        TardisMessage.send(player, "BIND_REMOVE_NO_MATCH");
                     }
                     plugin.getTrackerKeeper().getBindRemoval().remove(uuid);
                 } else {
@@ -116,7 +116,7 @@ public class TARDISBindListener implements Listener {
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
                         if (rs.resultSet()) {
-                            TARDIS tardis = rs.getTardis();
+                            Tardis tardis = rs.getTardis();
                             UUID ownerUUID = tardis.getUuid();
                             HashMap<String, Object> whereb = new HashMap<>();
                             whereb.put("tardis_id", id);
@@ -124,21 +124,21 @@ public class TARDISBindListener implements Listener {
                             ResultSetBind rsb = new ResultSetBind(plugin, whereb);
                             if (rsb.resultSet()) {
                                 if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
-                                    TARDISMessage.send(player, "POWER_DOWN");
+                                    TardisMessage.send(player, "POWER_DOWN");
                                     return;
                                 }
                                 if ((tardis.isIsoOn() && !player.getUniqueId().equals(ownerUUID) && !event.useInteractedBlock().equals(Event.Result.DENY)) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
-                                    TARDISMessage.send(player, "ISO_HANDS_OFF");
+                                    TardisMessage.send(player, "ISO_HANDS_OFF");
                                     return;
                                 }
                                 int type = rsb.getType();
                                 if (type != 6 && !tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                                    TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
+                                    TardisMessage.send(player, "NOT_WHILE_TRAVELLING");
                                     return;
                                 }
                                 // make sure TARDIS is not dispersed
                                 if (type != 6 && plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
-                                    TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
+                                    TardisMessage.send(player, "NOT_WHILE_DISPERSED");
                                     return;
                                 }
                                 // what bind type is it?
@@ -213,7 +213,7 @@ public class TARDISBindListener implements Listener {
                                             // look up the transmat location
                                             ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, rsb.getName());
                                             if (rsm.resultSet()) {
-                                                TARDISMessage.send(player, "TRANSMAT");
+                                                TardisMessage.send(player, "TRANSMAT");
                                                 Location tp_loc = rsm.getLocation();
                                                 tp_loc.setYaw(rsm.getYaw());
                                                 tp_loc.setPitch(player.getLocation().getPitch());

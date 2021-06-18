@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDiskStorage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -33,9 +33,9 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISCircuitChecker {
+public class TardisCircuitChecker {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
     private boolean ars;
     private boolean chameleon;
@@ -56,7 +56,7 @@ public class TARDISCircuitChecker {
     private int scannerUses;
     private int temporalUses;
 
-    public TARDISCircuitChecker(TARDISPlugin plugin, int id) {
+    public TardisCircuitChecker(TardisPlugin plugin, int id) {
         this.plugin = plugin;
         this.id = id;
         ars = false;
@@ -89,7 +89,7 @@ public class TARDISCircuitChecker {
         if (rs.resultSet()) {
             ItemStack[] items;
             try {
-                items = TARDISSerializeInventory.itemStacksFromString(rs.getConsole());
+                items = TardisSerializeInventory.itemStacksFromString(rs.getConsole());
                 for (ItemStack is : items) {
                     if (is != null && is.hasItemMeta()) {
                         ItemMeta im = is.getItemMeta();
@@ -226,7 +226,7 @@ public class TARDISCircuitChecker {
             assert lore != null;
             String stripped = ChatColor.stripColor(lore.get(1));
             if (!stripped.equals("unlimited")) {
-                uses = TARDISNumberParsers.parseInt(stripped);
+                uses = TardisNumberParsers.parseInt(stripped);
             }
         }
         return uses;

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.Consoles;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 
 import java.sql.Connection;
@@ -35,14 +35,14 @@ import java.util.Locale;
  */
 public class ResultSetTardisAbandoned {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
     private int tardisId;
     private int artronLevel;
     private Schematic schematic;
-    private PRESET preset;
+    private Preset preset;
     private boolean handbrakeOn;
     private boolean hidden;
     private boolean tardisInit;
@@ -54,7 +54,7 @@ public class ResultSetTardisAbandoned {
      *
      * @param plugin an instance of the main class.
      */
-    public ResultSetTardisAbandoned(TARDISPlugin plugin) {
+    public ResultSetTardisAbandoned(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -81,9 +81,9 @@ public class ResultSetTardisAbandoned {
                 artronLevel = rs.getInt("artron_level");
                 schematic = Consoles.schematicFor(rs.getString("size").toLowerCase(Locale.ENGLISH));
                 try {
-                    preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                    preset = Preset.valueOf(rs.getString("chameleon_preset"));
                 } catch (IllegalArgumentException e) {
-                    preset = PRESET.FACTORY;
+                    preset = Preset.FACTORY;
                 }
                 handbrakeOn = rs.getBoolean("handbrake_on");
                 hidden = rs.getBoolean("hidden");
@@ -122,7 +122,7 @@ public class ResultSetTardisAbandoned {
         return schematic;
     }
 
-    public PRESET getPreset() {
+    public Preset getPreset() {
         return preset;
     }
 

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -25,15 +25,15 @@ import org.bukkit.block.BlockFace;
 /**
  * @author eccentric_nz
  */
-class TARDISRoomDirection {
+class TardisRoomDirection {
 
     private final Block b;
     private boolean found;
     private boolean air;
     private BlockFace face;
-    private COMPASS compass;
+    private CardinalDirection cardinalDirection;
 
-    TARDISRoomDirection(Block b) {
+    TardisRoomDirection(Block b) {
         this.b = b;
         found = false;
         air = false;
@@ -43,13 +43,13 @@ class TARDISRoomDirection {
      * Gets the compass the room should be grown by finding the pressure plate in front of the door.
      */
     public void getDirection() {
-        for (COMPASS c : COMPASS.values()) {
+        for (CardinalDirection c : CardinalDirection.values()) {
             BlockFace tmp = BlockFace.valueOf(c.toString());
             Material plate = b.getRelative(tmp).getType();
             if (Tag.WOODEN_PRESSURE_PLATES.isTagged(plate) || plate.equals(Material.STONE_PRESSURE_PLATE)) {
                 face = tmp;
                 found = true;
-                compass = c;
+                cardinalDirection = c;
                 // do a quick check to see that there are actually AIR blocks at floor level on the other side of the pressure plate
                 air = b.getRelative(BlockFace.DOWN).getRelative(tmp, 9).getType().isAir();
             }
@@ -68,7 +68,7 @@ class TARDISRoomDirection {
         return face;
     }
 
-    public COMPASS getCompass() {
-        return compass;
+    public CardinalDirection getCompass() {
+        return cardinalDirection;
     }
 }

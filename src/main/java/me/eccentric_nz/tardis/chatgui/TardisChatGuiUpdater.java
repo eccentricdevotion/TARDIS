@@ -14,21 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardis.chatGUI;
+package me.eccentric_nz.tardis.chatgui;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.entity.Player;
 
-public class TARDISUpdateChatGUI {
+public class TardisChatGuiUpdater {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISUpdateChatGUI(TARDISPlugin plugin) {
+    public TardisChatGuiUpdater(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -48,35 +48,35 @@ public class TARDISUpdateChatGUI {
 
     public boolean showInterface(Player player, String[] args) {
         if (args.length == 1) {
-            TARDISMessage.send(player, "UPDATE_SECTION");
+            TardisMessage.send(player, "UPDATE_SECTION");
             player.sendMessage("------");
             plugin.getJsonKeeper().getSections().forEach((s) -> player.spigot().sendMessage(s));
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("controls")) {
-            TARDISMessage.send(player, "UPDATE_SECTION");
+            TardisMessage.send(player, "UPDATE_SECTION");
             player.sendMessage("------");
             plugin.getJsonKeeper().getControls().forEach((c) -> player.spigot().sendMessage(c));
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("interfaces")) {
-            TARDISMessage.send(player, "UPDATE_INTERFACE");
+            TardisMessage.send(player, "UPDATE_INTERFACE");
             player.sendMessage("------");
             plugin.getJsonKeeper().getInterfaces().forEach((i) -> player.spigot().sendMessage(i));
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("locations")) {
-            TARDISMessage.send(player, "UPDATE_LOCATION");
+            TardisMessage.send(player, "UPDATE_LOCATION");
             player.sendMessage("------");
             plugin.getJsonKeeper().getLocations().forEach((l) -> player.spigot().sendMessage(l));
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("others")) {
-            TARDISMessage.send(player, "UPDATE_OTHER");
+            TardisMessage.send(player, "UPDATE_OTHER");
             player.sendMessage("------");
             plugin.getJsonKeeper().getOthers().forEach((o) -> player.spigot().sendMessage(o));
             player.sendMessage("------");

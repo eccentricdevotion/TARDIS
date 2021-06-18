@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCompanions;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.mobfarming.TARDISFarmer;
-import me.eccentric_nz.tardis.mobfarming.TARDISFollowerSpawner;
-import me.eccentric_nz.tardis.mobfarming.TARDISPetsAndFollowers;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.mobfarming.TardisFarmer;
+import me.eccentric_nz.tardis.mobfarming.TardisFollowerSpawner;
+import me.eccentric_nz.tardis.mobfarming.TardisPetsAndFollowers;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,11 +41,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISAnyoneMoveListener implements Listener {
+public class TardisAnyoneMoveListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISAnyoneMoveListener(TARDISPlugin plugin) {
+    public TardisAnyoneMoveListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -61,7 +61,7 @@ public class TARDISAnyoneMoveListener implements Listener {
          * calculations... This is to prevent huge performance drops on high
          * player count servers.
          */
-        TARDISMoveSession tms = plugin.getTrackerKeeper().getTARDISMoveSession(p);
+        TardisMoveSession tms = plugin.getTrackerKeeper().getTARDISMoveSession(p);
         tms.setStaleLocation(loc);
 
         // If the location is stale, ie: the player isn't actually moving xyz coords, they're looking around
@@ -70,12 +70,12 @@ public class TARDISAnyoneMoveListener implements Listener {
         }
         // check the block they're on
         if (plugin.getTrackerKeeper().getPortals().containsKey(l)) {
-            TARDISTeleportLocation tpl = plugin.getTrackerKeeper().getPortals().get(l);
+            TardisTeleportLocation tpl = plugin.getTrackerKeeper().getPortals().get(l);
             UUID uuid = p.getUniqueId();
             int id = tpl.getTardisId();
             Location to = tpl.getLocation();
             boolean exit;
-            if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(Objects.requireNonNull(plugin.getServer().getPlayer(uuid)), "tardis.create_world")) {
+            if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TardisPermission.hasPermission(Objects.requireNonNull(plugin.getServer().getPlayer(uuid)), "tardis.create_world")) {
                 exit = !(Objects.requireNonNull(to.getWorld()).getName().contains("TARDIS"));
             } else if (plugin.getConfig().getBoolean("creation.default_world")) {
                 // check default world name
@@ -85,7 +85,7 @@ public class TARDISAnyoneMoveListener implements Listener {
             }
             // adjust player yaw for to
             float yaw = (exit) ? p.getLocation().getYaw() + 180.0f : p.getLocation().getYaw();
-            COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(p, false));
+            CardinalDirection d = CardinalDirection.valueOf(TardisStaticUtils.getPlayersDirection(p, false));
             if (!tpl.getDirection().equals(d)) {
                 yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(d, tpl.getDirection());
             }
@@ -96,10 +96,10 @@ public class TARDISAnyoneMoveListener implements Listener {
             boolean userQuotes = (hasPrefs) && rsp.isQuotesOn();
             boolean willFarm = (hasPrefs) && rsp.isFarmOn();
             // check for entities near the police box
-            TARDISPetsAndFollowers petsAndFollowers = null;
-            if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(p, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
+            TardisPetsAndFollowers petsAndFollowers = null;
+            if (plugin.getConfig().getBoolean("allow.mob_farming") && TardisPermission.hasPermission(p, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                 plugin.getTrackerKeeper().getFarming().add(uuid);
-                TARDISFarmer tf = new TARDISFarmer(plugin);
+                TardisFarmer tf = new TardisFarmer(plugin);
                 petsAndFollowers = tf.farmAnimals(l, d, id, p, Objects.requireNonNull(tpl.getLocation().getWorld()).getName(), Objects.requireNonNull(l.getWorld()).getName());
             }
             // set travelling status
@@ -128,11 +128,11 @@ public class TARDISAnyoneMoveListener implements Listener {
                     plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), tpl.getLocation(), p, d, true);
                 }
                 if (petsAndFollowers.getFollowers().size() > 0) {
-                    new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tpl.getLocation(), p, d, true);
+                    new TardisFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tpl.getLocation(), p, d, true);
                 }
             }
             if (userQuotes) {
-                TARDISMessage.send(p, "DOOR_REMIND");
+                TardisMessage.send(p, "DOOR_REMIND");
             }
             // if WorldGuard is on the server check for TARDIS region protection and remove player as member
             if (exit && plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && isCompanion(uuid, id)) {

@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.tardis.hads;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
-import me.eccentric_nz.tardis.api.event.TARDISHADSEvent;
+import me.eccentric_nz.tardis.api.event.TardisHadsEvent;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
 import me.eccentric_nz.tardis.enumeration.*;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
-import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisBiome;
+import me.eccentric_nz.tardis.travel.TardisTimeTravel;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
@@ -44,20 +44,20 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-class TARDISHostileDisplacement {
+class TardisHostileDisplacement {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Integer> angles;
     private int count = 0;
 
-    TARDISHostileDisplacement(TARDISPlugin plugin) {
+    TardisHostileDisplacement(TardisPlugin plugin) {
         angles = Arrays.asList(0, 45, 90, 135, 180, 225, 270, 315);
         this.plugin = plugin;
     }
 
-    void moveTARDIS(int id, UUID uuid, Player hostile, PRESET preset) {
+    void moveTARDIS(int id, UUID uuid, Player hostile, Preset preset) {
 
-        TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
+        TardisTimeTravel tt = new TardisTimeTravel(plugin);
         int r = plugin.getConfig().getInt("preferences.hads_distance");
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
@@ -68,7 +68,7 @@ class TARDISHostileDisplacement {
         boolean underwater = rsc.isSubmarine();
         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         // displace
-        COMPASS d = rsc.getDirection();
+        CardinalDirection d = rsc.getDirection();
         Location l = current.clone();
         // randomise the direction
         Collections.shuffle(angles);
@@ -83,7 +83,7 @@ class TARDISHostileDisplacement {
             if (Objects.requireNonNull(l.getWorld()).getEnvironment().equals(Environment.NETHER)) {
                 y = plugin.getUtils().getHighestNetherBlock(l.getWorld(), wx, wz);
             } else {
-                y = TARDISStaticLocationGetters.getHighestYIn3x3(l.getWorld(), wx, wz);
+                y = TardisStaticLocationGetters.getHighestYIn3x3(l.getWorld(), wx, wz);
             }
             l.setY(y);
             if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !rsc.isSubmarine()) {
@@ -97,20 +97,20 @@ class TARDISHostileDisplacement {
                     sub = tt.submarine(l.getBlock(), d);
                     safe = (sub != null);
                 } else {
-                    int[] start = TARDISTimeTravel.getStartLocation(l, d);
-                    safe = (TARDISTimeTravel.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1);
+                    int[] start = TardisTimeTravel.getStartLocation(l, d);
+                    safe = (TardisTimeTravel.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1);
                 }
                 if (safe) {
                     Location fl = (rsc.isSubmarine()) ? sub : l;
                     if (plugin.getPluginRespect().getRespect(fl, new Parameters(player, Flag.getNoMessageFlags()))) {
                         // sound the cloister bell at current location for dematerialisation
-                        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 5, id, current, plugin.getServer().getPlayer(uuid), true, "HADS displacement", false);
+                        TardisCloisterBell bell = new TardisCloisterBell(plugin, 5, id, current, plugin.getServer().getPlayer(uuid), true, "HADS displacement", false);
                         int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
                         bell.setTask(taskId);
                         plugin.getTrackerKeeper().getCloisterBells().put(id, taskId);
                         // sound the cloister bell at HADS location for materialisation
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            TARDISCloisterBell end = new TARDISCloisterBell(plugin, 6, id, fl, plugin.getServer().getPlayer(uuid), false, "", true);
+                            TardisCloisterBell end = new TardisCloisterBell(plugin, 6, id, fl, plugin.getServer().getPlayer(uuid), false, "", true);
                             int endTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, end, 2L, 70L);
                             bell.setTask(endTask);
                             plugin.getTrackerKeeper().getCloisterBells().put(id, endTask);
@@ -136,7 +136,7 @@ class TARDISHostileDisplacement {
                         dd.setOutside(true);
                         dd.setSubmarine(rsc.isSubmarine());
                         dd.setTardisId(id);
-                        TARDISBiome biome = TARDISStaticUtils.getBiomeAt(current);
+                        TardisBiome biome = TardisStaticUtils.getBiomeAt(current);
                         dd.setThrottle(SpaceTimeThrottle.NORMAL);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             plugin.getTrackerKeeper().getDematerialising().add(id);
@@ -158,28 +158,28 @@ class TARDISHostileDisplacement {
                         assert player != null;
                         player.sendMessage(message);
                         String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
-                        TARDISMessage.send(player, "HADS_LOC", hads);
+                        TardisMessage.send(player, "HADS_LOC", hads);
                         if (player != hostile) {
                             hostile.sendMessage(message);
                         }
-                        plugin.getPM().callEvent(new TARDISHADSEvent(hostile, id, fl, HADS.DISPLACEMENT));
+                        plugin.getPM().callEvent(new TardisHadsEvent(hostile, id, fl, Hads.DISPLACEMENT));
                         break;
                     } else {
-                        TARDISMessage.send(player, "HADS_PROTECTED");
+                        TardisMessage.send(player, "HADS_PROTECTED");
                         if (player != hostile) {
-                            TARDISMessage.send(hostile, "HADS_PROTECTED");
+                            TardisMessage.send(hostile, "HADS_PROTECTED");
                         }
                     }
                 } else if (underwater) {
-                    TARDISMessage.send(player, "HADS_NOT_SAFE");
+                    TardisMessage.send(player, "HADS_NOT_SAFE");
                 } else if (count > 7) {
                     // only if count is 8 or more
                     // use dispersal instead...
-                    new TARDISHostileDispersal(plugin).disperseTARDIS(id, uuid, hostile, preset);
+                    new TardisHostileDispersal(plugin).disperseTARDIS(id, uuid, hostile, preset);
                 }
             } else {
                 plugin.getTrackerKeeper().getDamage().remove(id);
-                TARDISMessage.send(player, "HADS_NO_WATER");
+                TardisMessage.send(player, "HADS_NO_WATER");
             }
         }
     }

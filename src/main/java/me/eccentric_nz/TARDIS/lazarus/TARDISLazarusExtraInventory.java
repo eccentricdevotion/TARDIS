@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.lazarus;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUIGeneticManipulator;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiGeneticManipulator;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -34,13 +34,13 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-class TARDISLazarusExtraInventory {
+class TardisLazarusExtraInventory {
 
     private final ItemStack[] terminal;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Material> disguises = new ArrayList<>();
 
-    TARDISLazarusExtraInventory(TARDISPlugin plugin) {
+    TardisLazarusExtraInventory(TardisPlugin plugin) {
         this.plugin = plugin;
         disguises.add(Material.COD_SPAWN_EGG);
         disguises.add(Material.PUFFERFISH_SPAWN_EGG);
@@ -129,7 +129,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta ing = weep.getItemMeta();
             assert ing != null;
             ing.setDisplayName("WEEPING ANGEL");
-            ing.setCustomModelData(GUIGeneticManipulator.ANGEL.getCustomModelData());
+            ing.setCustomModelData(GuiGeneticManipulator.ANGEL.getCustomModelData());
             weep.setItemMeta(ing);
             eggs[i] = weep;
             i++;
@@ -137,7 +137,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta men = cyber.getItemMeta();
             assert men != null;
             men.setDisplayName("CYBERMAN");
-            men.setCustomModelData(GUIGeneticManipulator.CYBERMAN.getCustomModelData());
+            men.setCustomModelData(GuiGeneticManipulator.CYBERMAN.getCustomModelData());
             cyber.setItemMeta(men);
             eggs[i] = cyber;
             i++;
@@ -145,7 +145,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta lek = dalek.getItemMeta();
             assert lek != null;
             lek.setDisplayName("DALEK");
-            lek.setCustomModelData(GUIGeneticManipulator.DALEK.getCustomModelData());
+            lek.setCustomModelData(GuiGeneticManipulator.DALEK.getCustomModelData());
             dalek.setItemMeta(lek);
             eggs[i] = dalek;
             i++;
@@ -153,7 +153,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta war = ice.getItemMeta();
             assert war != null;
             war.setDisplayName("ICE WARRIOR");
-            war.setCustomModelData(GUIGeneticManipulator.ICE_WARRIOR.getCustomModelData());
+            war.setCustomModelData(GuiGeneticManipulator.ICE_WARRIOR.getCustomModelData());
             ice.setItemMeta(war);
             eggs[i] = ice;
             i++;
@@ -161,7 +161,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta tyc = emp.getItemMeta();
             assert tyc != null;
             tyc.setDisplayName("EMPTY CHILD");
-            tyc.setCustomModelData(GUIGeneticManipulator.EMPTY_CHILD.getCustomModelData());
+            tyc.setCustomModelData(GuiGeneticManipulator.EMPTY_CHILD.getCustomModelData());
             emp.setItemMeta(tyc);
             eggs[i] = emp;
             i++;
@@ -169,7 +169,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta oon = jud.getItemMeta();
             assert oon != null;
             oon.setDisplayName("JUDOON");
-            oon.setCustomModelData(GUIGeneticManipulator.JUDOON.getCustomModelData());
+            oon.setCustomModelData(GuiGeneticManipulator.JUDOON.getCustomModelData());
             jud.setItemMeta(oon);
             eggs[i] = jud;
             i++;
@@ -177,7 +177,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta comp = k9.getItemMeta();
             assert comp != null;
             comp.setDisplayName("K9");
-            comp.setCustomModelData(GUIGeneticManipulator.K9.getCustomModelData());
+            comp.setCustomModelData(GuiGeneticManipulator.K9.getCustomModelData());
             k9.setItemMeta(comp);
             eggs[i] = k9;
             i++;
@@ -185,7 +185,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta eye = ood.getItemMeta();
             assert eye != null;
             eye.setDisplayName("OOD");
-            eye.setCustomModelData(GUIGeneticManipulator.OOD.getCustomModelData());
+            eye.setCustomModelData(GuiGeneticManipulator.OOD.getCustomModelData());
             ood.setItemMeta(eye);
             eggs[i] = ood;
             i++;
@@ -193,7 +193,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta lent = the.getItemMeta();
             assert lent != null;
             lent.setDisplayName("SILENT");
-            lent.setCustomModelData(GUIGeneticManipulator.SILENT.getCustomModelData());
+            lent.setCustomModelData(GuiGeneticManipulator.SILENT.getCustomModelData());
             the.setItemMeta(lent);
             eggs[i] = the;
             i++;
@@ -201,7 +201,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta uri = sil.getItemMeta();
             assert uri != null;
             uri.setDisplayName("SILURIAN");
-            uri.setCustomModelData(GUIGeneticManipulator.SILURIAN.getCustomModelData());
+            uri.setCustomModelData(GuiGeneticManipulator.SILURIAN.getCustomModelData());
             sil.setItemMeta(uri);
             eggs[i] = sil;
             i++;
@@ -209,7 +209,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta tar = son.getItemMeta();
             assert tar != null;
             tar.setDisplayName("SONTARAN");
-            tar.setCustomModelData(GUIGeneticManipulator.SONTARAN.getCustomModelData());
+            tar.setCustomModelData(GuiGeneticManipulator.SONTARAN.getCustomModelData());
             son.setItemMeta(tar);
             eggs[i] = son;
             i++;
@@ -217,7 +217,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta axs = str.getItemMeta();
             assert axs != null;
             axs.setDisplayName("STRAX");
-            axs.setCustomModelData(GUIGeneticManipulator.STRAX.getCustomModelData());
+            axs.setCustomModelData(GuiGeneticManipulator.STRAX.getCustomModelData());
             str.setItemMeta(axs);
             eggs[i] = str;
             i++;
@@ -225,7 +225,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta fane = tocla.getItemMeta();
             assert fane != null;
             fane.setDisplayName("TOCLAFANE");
-            fane.setCustomModelData(GUIGeneticManipulator.TOCLAFANE.getCustomModelData());
+            fane.setCustomModelData(GuiGeneticManipulator.TOCLAFANE.getCustomModelData());
             tocla.setItemMeta(fane);
             eggs[i] = tocla;
             i++;
@@ -233,7 +233,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta hta = vas.getItemMeta();
             assert hta != null;
             hta.setDisplayName("VASHTA NERADA");
-            hta.setCustomModelData(GUIGeneticManipulator.VASHTA_NERADA.getCustomModelData());
+            hta.setCustomModelData(GuiGeneticManipulator.VASHTA_NERADA.getCustomModelData());
             vas.setItemMeta(hta);
             eggs[i] = vas;
             i++;
@@ -241,7 +241,7 @@ class TARDISLazarusExtraInventory {
             ItemMeta onz = zyg.getItemMeta();
             assert onz != null;
             onz.setDisplayName("ZYGON");
-            onz.setCustomModelData(GUIGeneticManipulator.ZYGON.getCustomModelData());
+            onz.setCustomModelData(GuiGeneticManipulator.ZYGON.getCustomModelData());
             zyg.setItemMeta(onz);
             eggs[i] = zyg;
         }
@@ -251,7 +251,7 @@ class TARDISLazarusExtraInventory {
         assert master != null;
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
         master.setLore(Collections.singletonList(plugin.getLanguage().getString("SET_OFF")));
-        master.setCustomModelData(GUIGeneticManipulator.BUTTON_MASTER.getCustomModelData());
+        master.setCustomModelData(GuiGeneticManipulator.BUTTON_MASTER.getCustomModelData());
         the.setItemMeta(master);
         eggs[45] = the;
         ItemStack adult = new ItemStack(Material.HOPPER, 1);
@@ -259,7 +259,7 @@ class TARDISLazarusExtraInventory {
         assert baby != null;
         baby.setDisplayName(plugin.getLanguage().getString("BUTTON_AGE"));
         baby.setLore(Collections.singletonList("ADULT"));
-        baby.setCustomModelData(GUIGeneticManipulator.BUTTON_AGE.getCustomModelData());
+        baby.setCustomModelData(GuiGeneticManipulator.BUTTON_AGE.getCustomModelData());
         adult.setItemMeta(baby);
         eggs[47] = adult;
         ItemStack typ = new ItemStack(Material.CYAN_DYE, 1);
@@ -267,7 +267,7 @@ class TARDISLazarusExtraInventory {
         assert col != null;
         col.setDisplayName(plugin.getLanguage().getString("BUTTON_TYPE"));
         col.setLore(Collections.singletonList("WHITE"));
-        col.setCustomModelData(GUIGeneticManipulator.BUTTON_TYPE.getCustomModelData());
+        col.setCustomModelData(GuiGeneticManipulator.BUTTON_TYPE.getCustomModelData());
         typ.setItemMeta(col);
         eggs[48] = typ;
         ItemStack tamed = new ItemStack(Material.LEAD, 1);
@@ -275,7 +275,7 @@ class TARDISLazarusExtraInventory {
         assert tf != null;
         tf.setDisplayName(plugin.getLanguage().getString("BUTTON_OPTS"));
         tf.setLore(Collections.singletonList("FALSE"));
-        tf.setCustomModelData(GUIGeneticManipulator.BUTTON_OPTS.getCustomModelData());
+        tf.setCustomModelData(GuiGeneticManipulator.BUTTON_OPTS.getCustomModelData());
         tamed.setItemMeta(tf);
         eggs[49] = tamed;
         // add buttons
@@ -283,7 +283,7 @@ class TARDISLazarusExtraInventory {
         ItemMeta ove = rem.getItemMeta();
         assert ove != null;
         ove.setDisplayName(plugin.getLanguage().getString("BUTTON_RESTORE"));
-        ove.setCustomModelData(GUIGeneticManipulator.BUTTON_RESTORE.getCustomModelData());
+        ove.setCustomModelData(GuiGeneticManipulator.BUTTON_RESTORE.getCustomModelData());
         rem.setItemMeta(ove);
         eggs[51] = rem;
         // set
@@ -291,14 +291,14 @@ class TARDISLazarusExtraInventory {
         ItemMeta sim = s.getItemMeta();
         assert sim != null;
         sim.setDisplayName(plugin.getLanguage().getString("BUTTON_DNA"));
-        sim.setCustomModelData(GUIGeneticManipulator.BUTTON_DNA.getCustomModelData());
+        sim.setCustomModelData(GuiGeneticManipulator.BUTTON_DNA.getCustomModelData());
         s.setItemMeta(sim);
         eggs[52] = s;
         ItemStack can = new ItemStack(Material.BOWL, 1);
         ItemMeta cel = can.getItemMeta();
         assert cel != null;
         cel.setDisplayName(plugin.getLanguage().getString("BUTTON_CANCEL"));
-        cel.setCustomModelData(GUIGeneticManipulator.BUTTON_CANCEL.getCustomModelData());
+        cel.setCustomModelData(GuiGeneticManipulator.BUTTON_CANCEL.getCustomModelData());
         can.setItemMeta(cel);
         eggs[53] = can;
 

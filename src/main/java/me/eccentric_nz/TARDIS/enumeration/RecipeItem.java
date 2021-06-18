@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.enumeration;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 
 public enum RecipeItem {
     // shaped recipes start here
@@ -141,7 +141,7 @@ public enum RecipeItem {
     }
 
     public static RecipeItem getByName(String name) {
-        String processed = TARDISStringUtils.toEnumUppercase(name);
+        String processed = TardisStringUtils.toEnumUppercase(name);
         try {
             return RecipeItem.valueOf(processed);
         } catch (IllegalArgumentException e) {
@@ -164,7 +164,7 @@ public enum RecipeItem {
             case BIO_SCANNER_UPGRADE -> "Bio-scanner Upgrade";
             case BOWL_OF_CUSTARD -> "Bowl of Custard";
             case TARDIS_ARS_CIRCUIT -> "TARDIS ARS Circuit";
-            default -> TARDISStringUtils.capitalise(toString()).replace("Tardis", "TARDIS");
+            default -> TardisStringUtils.capitalise(toString()).replace("Tardis", "TARDIS");
         };
     }
 
@@ -173,13 +173,13 @@ public enum RecipeItem {
         if (this == THREE_D_GLASSES) {
             return "3-d-glasses";
         } else if (recipe.startsWith("TARDIS")) {
-            return TARDISStringUtils.toLowercaseDashed(recipe).replace("tardis-", "");
+            return TardisStringUtils.toLowercaseDashed(recipe).replace("tardis-", "");
         } else if (recipe.endsWith("Baby")) {
             return "jelly-baby";
         } else if (recipe.endsWith("Tie")) {
             return "bow-tie";
         } else {
-            return TARDISStringUtils.toLowercaseDashed(recipe);
+            return TardisStringUtils.toLowercaseDashed(recipe);
         }
     }
 }

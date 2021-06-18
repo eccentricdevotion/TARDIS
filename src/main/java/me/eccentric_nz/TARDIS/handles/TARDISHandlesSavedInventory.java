@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUISavedPrograms;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiSavedPrograms;
 import me.eccentric_nz.tardis.database.data.Program;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPrograms;
 import org.bukkit.ChatColor;
@@ -31,13 +31,13 @@ import java.util.Arrays;
 /**
  * @author eccentric_nz
  */
-class TARDISHandlesSavedInventory {
+class TardisHandlesSavedInventory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String uuid;
     private final ItemStack[] programs;
 
-    TARDISHandlesSavedInventory(TARDISPlugin plugin, String uuid) {
+    TardisHandlesSavedInventory(TardisPlugin plugin, String uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
         programs = getItemStack();
@@ -82,7 +82,7 @@ class TARDISHandlesSavedInventory {
         ItemMeta bk = back.getItemMeta();
         assert bk != null;
         bk.setDisplayName("Back to editor");
-        bk.setCustomModelData(GUISavedPrograms.BACK_TO_EDITOR.getCustomModelData());
+        bk.setCustomModelData(GuiSavedPrograms.BACK_TO_EDITOR.getCustomModelData());
         back.setItemMeta(bk);
         stack[45] = back;
         // load button
@@ -90,7 +90,7 @@ class TARDISHandlesSavedInventory {
         ItemMeta ld = load.getItemMeta();
         assert ld != null;
         ld.setDisplayName("Load selected program in editor");
-        ld.setCustomModelData(GUISavedPrograms.LOAD_SELECTED_PROGRAM_IN_EDITOR.getCustomModelData());
+        ld.setCustomModelData(GuiSavedPrograms.LOAD_SELECTED_PROGRAM_IN_EDITOR.getCustomModelData());
         load.setItemMeta(ld);
         stack[47] = load;
         // deactivate
@@ -98,7 +98,7 @@ class TARDISHandlesSavedInventory {
         ItemMeta dem = deactivate.getItemMeta();
         assert dem != null;
         dem.setDisplayName("Deactivate selected program");
-        dem.setCustomModelData(GUISavedPrograms.DEACTIVATE_SELECTED_PROGRAM.getCustomModelData());
+        dem.setCustomModelData(GuiSavedPrograms.DEACTIVATE_SELECTED_PROGRAM.getCustomModelData());
         deactivate.setItemMeta(dem);
         stack[48] = deactivate;
         // delete
@@ -106,7 +106,7 @@ class TARDISHandlesSavedInventory {
         ItemMeta dm = delete.getItemMeta();
         assert dm != null;
         dm.setDisplayName("Delete selected program");
-        dm.setCustomModelData(GUISavedPrograms.DELETE_SELECTED_PROGRAM.getCustomModelData());
+        dm.setCustomModelData(GuiSavedPrograms.DELETE_SELECTED_PROGRAM.getCustomModelData());
         delete.setItemMeta(dm);
         stack[49] = delete;
         // check out
@@ -114,7 +114,7 @@ class TARDISHandlesSavedInventory {
         ItemMeta km = checked.getItemMeta();
         assert km != null;
         km.setDisplayName("Check out selected program");
-        km.setCustomModelData(GUISavedPrograms.CHECK_OUT_SELECTED_PROGRAM.getCustomModelData());
+        km.setCustomModelData(GuiSavedPrograms.CHECK_OUT_SELECTED_PROGRAM.getCustomModelData());
         checked.setItemMeta(km);
         stack[51] = checked;
         // close
@@ -122,7 +122,7 @@ class TARDISHandlesSavedInventory {
         ItemMeta cm = close.getItemMeta();
         assert cm != null;
         cm.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        cm.setCustomModelData(GUISavedPrograms.CLOSE.getCustomModelData());
+        cm.setCustomModelData(GuiSavedPrograms.CLOSE.getCustomModelData());
         close.setItemMeta(cm);
         stack[53] = close;
         return stack;

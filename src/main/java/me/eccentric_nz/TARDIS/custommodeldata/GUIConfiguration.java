@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
-public enum GUIConfiguration {
+public enum GuiConfiguration {
 
     // Admin Menu
     ALLOW(1, 0, Material.REPEATER),
@@ -46,7 +46,7 @@ public enum GUIConfiguration {
     private final int slot;
     private final Material material;
 
-    GUIConfiguration(int customModelData, int slot, Material material) {
+    GuiConfiguration(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -66,6 +66,6 @@ public enum GUIConfiguration {
 
     public String getName() {
         String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
+        return TardisStringUtils.sentenceCase(s);
     }
 }

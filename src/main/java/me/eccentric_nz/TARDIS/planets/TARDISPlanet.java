@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.planets;
 
 import org.bukkit.World;
 
-public class TARDISPlanet {
+public class TardisPlanet {
 
     private String alias;
     private String name;

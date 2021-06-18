@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisMaterials;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -40,11 +40,11 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISBeaconColouringListener implements Listener {
+public class TardisBeaconColouringListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISBeaconColouringListener(TARDISPlugin plugin) {
+    public TardisBeaconColouringListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -59,12 +59,12 @@ public class TARDISBeaconColouringListener implements Listener {
             return;
         }
         ItemStack dye = player.getInventory().getItemInMainHand();
-        if (!TARDISMaterials.dyes.contains(player.getInventory().getItemInMainHand().getType())) {
-            TARDISMessage.send(player, "COLOUR_DYE");
+        if (!TardisMaterials.dyes.contains(player.getInventory().getItemInMainHand().getType())) {
+            TardisMessage.send(player, "COLOUR_DYE");
             return;
         }
-        if (!TARDISMaterials.glass.contains(Objects.requireNonNull(event.getClickedBlock()).getType())) {
-            TARDISMessage.send(player, "COLOUR_GLASS");
+        if (!TardisMaterials.glass.contains(Objects.requireNonNull(event.getClickedBlock()).getType())) {
+            TardisMessage.send(player, "COLOUR_GLASS");
             return;
         }
         Block b = event.getClickedBlock();
@@ -79,7 +79,7 @@ public class TARDISBeaconColouringListener implements Listener {
             }
         }
         if (!found) {
-            TARDISMessage.send(player, "COLOUR_BEACON");
+            TardisMessage.send(player, "COLOUR_BEACON");
             plugin.getTrackerKeeper().getBeaconColouring().remove(uuid);
             return;
         }
@@ -194,7 +194,7 @@ public class TARDISBeaconColouringListener implements Listener {
         }
         int needed = candidates.size();
         if (amount < needed) {
-            TARDISMessage.send(player, "COLOUR_NOT_ENOUGH", String.format("%d", needed));
+            TardisMessage.send(player, "COLOUR_NOT_ENOUGH", String.format("%d", needed));
             plugin.getTrackerKeeper().getBeaconColouring().remove(uuid);
             return;
         }

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -28,7 +28,7 @@ import org.bukkit.OfflinePlayer;
  */
 public class MaterialisationData {
 
-    private COMPASS direction;
+    private CardinalDirection direction;
     private Location location;
     private OfflinePlayer player;
     private boolean outside;
@@ -37,11 +37,11 @@ public class MaterialisationData {
     private int tardisId;
     private SpaceTimeThrottle throttle;
 
-    public COMPASS getDirection() {
+    public CardinalDirection getDirection() {
         return direction;
     }
 
-    public void setDirection(COMPASS direction) {
+    public void setDirection(CardinalDirection direction) {
         this.direction = direction;
     }
 

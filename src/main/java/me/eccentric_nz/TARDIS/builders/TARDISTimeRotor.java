@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -36,7 +36,7 @@ import java.util.UUID;
  * the tardis is in flight, the rotor rises and falls, stopping when the tardis handbrake is engaged. It is associated
  * with the 'whooshing' noise heard when the tardis is in flight.
  */
-public class TARDISTimeRotor {
+public class TardisTimeRotor {
 
     private static final HashMap<String, Integer> BY_NAME = new HashMap<>() {
         {
@@ -49,14 +49,14 @@ public class TARDISTimeRotor {
     };
 
     public static void setItemFrame(String schm, Location location, int id) {
-        location.getBlock().setBlockData(TARDISConstants.VOID_AIR);
+        location.getBlock().setBlockData(TardisConstants.VOID_AIR);
         ItemFrame itemFrame = (ItemFrame) Objects.requireNonNull(location.getWorld()).spawnEntity(location, EntityType.ITEM_FRAME);
         itemFrame.setFacingDirection(BlockFace.UP);
         setRotor(BY_NAME.get(schm), itemFrame, false);
         // save itemFrame UUID
         UUID uuid = itemFrame.getUniqueId();
         updateRotorRecord(id, uuid.toString());
-        TARDISPlugin.plugin.getGeneralKeeper().getTimeRotors().add(uuid);
+        TardisPlugin.plugin.getGeneralKeeper().getTimeRotors().add(uuid);
     }
 
     public static void updateRotorRecord(int id, String uuid) {
@@ -64,7 +64,7 @@ public class TARDISTimeRotor {
         where.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
         set.put("rotor", uuid);
-        TARDISPlugin.plugin.getQueryFactory().doUpdate("tardis", set, where);
+        TardisPlugin.plugin.getQueryFactory().doUpdate("tardis", set, where);
     }
 
     public static void setRotor(int which, ItemFrame itemFrame, boolean animated) {

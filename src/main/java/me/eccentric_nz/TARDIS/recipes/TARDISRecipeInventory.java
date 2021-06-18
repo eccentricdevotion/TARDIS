@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUIChameleonPresets;
-import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiChameleonPresets;
+import me.eccentric_nz.tardis.custommodeldata.GuiChemistry;
 import me.eccentric_nz.tardis.enumeration.RecipeCategory;
 import me.eccentric_nz.tardis.enumeration.RecipeItem;
 import org.bukkit.Material;
@@ -32,14 +32,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class TARDISRecipeInventory {
+public class TardisRecipeInventory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ItemStack[] menu;
     private final RecipeCategory category;
     private final HashMap<String, String> recipeItems = new HashMap<>();
 
-    TARDISRecipeInventory(TARDISPlugin plugin, RecipeCategory category) {
+    TardisRecipeInventory(TardisPlugin plugin, RecipeCategory category) {
 
         for (RecipeItem recipeItem : RecipeItem.values()) {
             if (recipeItem.getCategory() != RecipeCategory.UNUSED && recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE) {
@@ -58,7 +58,7 @@ public class TARDISRecipeInventory {
         ItemMeta but = back.getItemMeta();
         assert but != null;
         but.setDisplayName("Back");
-        but.setCustomModelData(GUIChameleonPresets.BACK.getCustomModelData());
+        but.setCustomModelData(GuiChameleonPresets.BACK.getCustomModelData());
         back.setItemMeta(but);
         stack[0] = back;
         // info
@@ -67,7 +67,7 @@ public class TARDISRecipeInventory {
         assert info_im != null;
         info_im.setDisplayName("Info");
         info_im.setLore(Arrays.asList("Click a button below", "to see the recipe", "for that item"));
-        info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
+        info_im.setCustomModelData(GuiChemistry.INFO.getCustomModelData());
         info.setItemMeta(info_im);
         stack[4] = info;
         // close
@@ -75,7 +75,7 @@ public class TARDISRecipeInventory {
         ItemMeta close_im = close.getItemMeta();
         assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GuiChemistry.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[8] = close;
         int i = 9;

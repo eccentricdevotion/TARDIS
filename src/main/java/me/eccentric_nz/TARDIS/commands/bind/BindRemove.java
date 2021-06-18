@@ -16,22 +16,22 @@
  */
 package me.eccentric_nz.tardis.commands.bind;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.Bind;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 class BindRemove {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    BindRemove(TARDISPlugin plugin) {
+    BindRemove(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean setClick(Bind bind, Player player) {
         plugin.getTrackerKeeper().getBindRemoval().put(player.getUniqueId(), bind);
-        TARDISMessage.send(player, "BIND_REMOVE_CLICK_BLOCK", bind.toString());
+        TardisMessage.send(player, "BIND_REMOVE_CLICK_BLOCK", bind.toString());
         return true;
     }
 }

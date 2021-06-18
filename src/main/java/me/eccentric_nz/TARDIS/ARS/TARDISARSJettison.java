@@ -23,17 +23,17 @@ import org.bukkit.Chunk;
  *
  * @author eccentric_nz
  */
-public class TARDISARSJettison {
+public class TardisArsJettison {
 
     private Chunk chunk;
     private int y;
     private int x;
     private int z;
 
-    TARDISARSJettison() {
+    TardisArsJettison() {
     }
 
-    public TARDISARSJettison(Chunk chunk, int y, int x, int z) {
+    public TardisArsJettison(Chunk chunk, int y, int x, int z) {
         this.chunk = chunk;
         setY(y);
         setX(x);

@@ -18,29 +18,29 @@ package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.api.event.TARDISDesktopThemeEvent;
+import me.eccentric_nz.tardis.TardisBuilderInstanceKeeper;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisDesktopThemeEvent;
 import me.eccentric_nz.tardis.builders.FractalFence;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.builders.TARDISTimeRotor;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
+import me.eccentric_nz.tardis.builders.TardisTimeRotor;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
 import me.eccentric_nz.tardis.database.data.Archive;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.ConsoleSize;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.rooms.TARDISCondenserData;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.rooms.TardisCondenserData;
 import me.eccentric_nz.tardis.schematic.ArchiveReset;
 import me.eccentric_nz.tardis.schematic.ResultSetArchive;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
-import me.eccentric_nz.tardis.utility.TARDISMaterials;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
+import me.eccentric_nz.tardis.utility.TardisMaterials;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -60,11 +60,11 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
+public class TardisThemeRepairRunnable extends TardisThemeRunnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final UUID uuid;
-    private final TARDISUpgradeData tud;
+    private final TardisUpgradeData tud;
     private final List<Block> lampBlocks = new ArrayList<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
@@ -104,7 +104,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private Location ender = null;
     private Archive archive;
 
-    TARDISThemeRepairRunnable(TARDISPlugin plugin, UUID uuid, TARDISUpgradeData tud, boolean clean) {
+    TardisThemeRepairRunnable(TardisPlugin plugin, UUID uuid, TardisUpgradeData tud, boolean clean) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.tud = tud;
@@ -127,7 +127,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 } else {
                     // abort
                     Player cp = plugin.getServer().getPlayer(uuid);
-                    TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                    TardisMessage.send(cp, "ARCHIVE_NOT_FOUND");
                     // cancel task
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     return;
@@ -147,7 +147,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     return;
                 }
                 // get JSON
-                obj = TARDISSchematicGZip.unzip(path);
+                obj = TardisSchematicGZip.unzip(path);
             } else {
                 obj = archive.getJson();
             }
@@ -165,10 +165,10 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 // ?
                 return;
             }
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             slot = tardis.getTIPS();
             id = tardis.getTardisId();
-            Chunk chunk = TARDISStaticLocationGetters.getChunk(tardis.getChunk());
+            Chunk chunk = TardisStaticLocationGetters.getChunk(tardis.getChunk());
             if (tud.getPrevious().getPermission().equals("ender")) {
                 // remove ender crystal
                 for (Entity end : chunk.getEntities()) {
@@ -179,15 +179,15 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             }
             if (tardis.getRotor() != null) {
                 // remove item frame and delete UUID in db
-                ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                ItemFrame itemFrame = TardisTimeRotor.getItemFrame(tardis.getRotor());
                 itemFrame.setItem(null, false);
                 itemFrame.remove();
-                TARDISTimeRotor.updateRotorRecord(id, "");
+                TardisTimeRotor.updateRotorRecord(id, "");
             }
             chunks = getChunks(chunk, tud.getSchematic());
             if (!tardis.getCreeper().isEmpty()) {
                 // remove the charged creeper
-                Location creeper = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
+                Location creeper = TardisStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                 assert creeper != null;
                 Entity ent = Objects.requireNonNull(creeper.getWorld()).spawnEntity(creeper, EntityType.EGG);
                 ent.getNearbyEntities(1.5d, 1.5d, 1.5d).forEach((e) -> {
@@ -198,8 +198,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 ent.remove();
             }
             if (slot != -1) { // default world - use TIPS
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                TARDISTIPSData pos = tintpos.getTIPSData(slot);
+                TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
+                TardisTipsData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();
             } else {
@@ -207,8 +207,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 startx = gsl[0];
                 startz = gsl[2];
             }
-            starty = TARDISConstants.HIGHER.contains(tardis.getSchematic().getPermission()) ? 65 : 64;
-            world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+            starty = TardisConstants.HIGHER.contains(tardis.getSchematic().getPermission()) ? 65 : 64;
+            world = TardisStaticLocationGetters.getWorld(tardis.getChunk());
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
             wg1 = new Location(world, startx, starty, startz);
             wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (c - 1));
@@ -237,7 +237,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             plugin.getQueryFactory().doDelete("lamps", wherel);
-            plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
+            plugin.getPM().callEvent(new TardisDesktopThemeEvent(player, tardis, tud));
         }
         if (level == (h - 1) && row == (w - 1)) {
             // we're finished
@@ -283,7 +283,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 }
             }
             lampBlocks.forEach((lamp) -> {
-                BlockData l = (tud.getSchematic().hasLanterns() || (archive != null && archive.isLanterns())) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
+                BlockData l = (tud.getSchematic().hasLanterns() || (archive != null && archive.isLanterns())) ? TardisConstants.LANTERN : TardisConstants.LAMP;
                 lamp.setBlockData(l);
             });
             lampBlocks.clear();
@@ -291,7 +291,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 FractalFence.grow(fractalBlocks.get(f), f);
             }
             if (postBedrock != null) {
-                postBedrock.setBlockData(TARDISConstants.GLASS);
+                postBedrock.setBlockData(TardisConstants.GLASS);
             }
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 if (slot == -1) {
@@ -321,7 +321,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", id);
             plugin.getQueryFactory().doDelete("chunks", wherec);
-            List<Chunk> chunkList = TARDISStaticUtils.getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, c);
+            List<Chunk> chunkList = TardisStaticUtils.getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, c);
             // update chunks list in DB
             chunkList.forEach((hunk) -> {
                 HashMap<String, Object> setc = new HashMap<>();
@@ -333,7 +333,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             });
             // remove blocks from condenser table if necessary
             if (!clean && plugin.getGeneralKeeper().getRoomCondenserData().containsKey(uuid)) {
-                TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
+                TardisCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
                 int amount = 0;
                 for (Map.Entry<String, Integer> entry : c_data.getBlockIDCount().entrySet()) {
                     HashMap<String, Object> whered = new HashMap<>();
@@ -353,7 +353,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;
             String message = (clean) ? "REPAIR_CLEAN" : "REPAIR_DONE";
-            TARDISMessage.send(player, message);
+            TardisMessage.send(player, message);
         } else {
             JsonArray floor = arr.get(level).getAsJsonArray();
             JsonArray r = (JsonArray) floor.get(row);
@@ -373,29 +373,29 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 }
                 if (type.equals(Material.NOTE_BLOCK)) {
                     // remember the location of this Disk Storage
-                    String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String storage = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 14, storage, 0);
                     // set block data to correct MUSHROOM_STEM
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
+                    data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
                 }
                 if (type.equals(Material.ORANGE_WOOL)) {
                     if (wall_type == Material.ORANGE_WOOL) {
-                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                        data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
                     } else {
                         data = wall_type.createBlockData();
                     }
                 }
                 if (type.equals(Material.BLUE_WOOL)) {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
+                    data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
                 }
                 if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && tud.getSchematic().getPermission().equals("delta")) {
                     fractalBlocks.add(world.getBlockAt(x, y, z));
                 }
                 if (type.equals(Material.WHITE_STAINED_GLASS) && tud.getSchematic().getPermission().equals("war")) {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
+                    data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
                 }
                 if (type.equals(Material.WHITE_TERRACOTTA) && tud.getSchematic().getPermission().equals("war")) {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(48));
+                    data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(48));
                 }
                 if (type.equals(Material.LIGHT_GRAY_WOOL)) {
                     data = floor_type.createBlockData();
@@ -405,12 +405,12 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                      * mob spawner will be converted to the correct id by
                      * setBlock(), but remember it for the scanner.
                      */
-                    String scanner = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String scanner = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 33, scanner, 0);
                 }
                 if (type.equals(Material.CHEST)) {
                     // remember the location of the condenser chest
-                    String condenser = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String condenser = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 34, condenser, 0);
                 }
                 if (type.equals(Material.IRON_DOOR)) {
@@ -431,22 +431,22 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 }
                 if (type.equals(Material.STONE_BUTTON)) { // random button
                     // remember the location of this button
-                    String button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String button = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 1, button, 0);
                 }
                 if (type.equals(Material.JUKEBOX)) {
                     // remember the location of this Advanced Console
-                    String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String advanced = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 15, advanced, 0);
                     // set block data to correct MUSHROOM_STEM
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
+                    data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
                 }
                 if (type.equals(Material.CAKE)) {
                     /*
                      * This block will be converted to a lever by setBlock(),
                      * but remember it so we can use it as the handbrake!
                      */
-                    String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String handbrakeloc = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 0, handbrakeloc, 0);
                 }
                 if (type.equals(Material.REDSTONE_LAMP) || type.equals(Material.SEA_LANTERN)) {
@@ -482,14 +482,14 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     /*
                      * Remember it for the Artron Energy Capacitor.
                      */
-                    String woodbuttonloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String woodbuttonloc = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 6, woodbuttonloc, 0);
                 }
                 if (type.equals(Material.DAYLIGHT_DETECTOR)) {
                     /*
                      * remember the telepathic circuit.
                      */
-                    String telepathicloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String telepathicloc = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 23, telepathicloc, 0);
                 }
                 if (type.equals(Material.BEACON) && tud.getSchematic().getPermission().equals("ender")) {
@@ -499,9 +499,9 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
                 }
                 // if it's an iron/gold/diamond/emerald/beacon/redstone/bedrock/conduit/netherite block put it in the blocks table
-                if (TARDISBuilderInstanceKeeper.getPrecious().contains(type)) {
+                if (TardisBuilderInstanceKeeper.getPrecious().contains(type)) {
                     HashMap<String, Object> setpb = new HashMap<>();
-                    String loc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String loc = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     setpb.put("tardis_id", id);
                     setpb.put("location", loc);
                     setpb.put("data", "minecraft:air");
@@ -514,8 +514,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     /*
                      * spawn an item frame and place the time rotor in it
                      */
-                    TARDISBlockSetters.setBlock(world, x, y, z, (tud.getSchematic().getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
-                    TARDISTimeRotor.setItemFrame(tud.getSchematic().getPermission(), new Location(world, x, y + 1, z), id);
+                    TardisBlockSetters.setBlock(world, x, y, z, (tud.getSchematic().getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
+                    TardisTimeRotor.setItemFrame(tud.getSchematic().getPermission(), new Location(world, x, y + 1, z), id);
                 } else if (type.equals(Material.IRON_DOOR)) { // doors
                     postDoorBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.LEVER)) {
@@ -532,9 +532,9 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (Tag.WALL_SIGNS.isTagged(type)) {
                     postSignBlocks.put(world.getBlockAt(x, y, z), data);
-                } else if (TARDISMaterials.infested.contains(type)) {
+                } else if (TardisMaterials.infested.contains(type)) {
                     // legacy monster egg stone for controls
-                    TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                    TardisBlockSetters.setBlock(world, x, y, z, Material.AIR);
                 } else if (type.equals(Material.MUSHROOM_STEM)) { // mushroom stem for repeaters
                     // save repeater location
                     if (j < 6) {
@@ -570,11 +570,11 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                         j++;
                     }
                 } else if (type.equals(Material.SPONGE)) {
-                    TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                    TardisBlockSetters.setBlock(world, x, y, z, Material.AIR);
                 } else {
                     BlockState state = world.getBlockAt(x, y, z).getState();
                     plugin.getTardisHelper().removeTileEntity(state);
-                    TARDISBlockSetters.setBlock(world, x, y, z, data);
+                    TardisBlockSetters.setBlock(world, x, y, z, data);
                 }
             }
             // remove items
@@ -601,7 +601,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             for (int xx = jx; xx < (jx + 16); xx++) {
                 for (int zz = jz; zz < (jz + 16); zz++) {
                     Block b = jw.getBlockAt(xx, yy, zz);
-                    b.setBlockData(TARDISConstants.AIR);
+                    b.setBlockData(TardisConstants.AIR);
                 }
             }
         }

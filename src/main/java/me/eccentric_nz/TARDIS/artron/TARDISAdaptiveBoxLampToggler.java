@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,11 +29,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISAdaptiveBoxLampToggler {
+public class TardisAdaptiveBoxLampToggler {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISAdaptiveBoxLampToggler(TARDISPlugin plugin) {
+    public TardisAdaptiveBoxLampToggler(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -50,7 +50,7 @@ public class TARDISAdaptiveBoxLampToggler {
             if (lamp.getType().equals(Material.REDSTONE_LAMP)) {
                 if (on) {
                     // turn on
-                    redstone.setBlockData(TARDISConstants.POWER);
+                    redstone.setBlockData(TardisConstants.POWER);
                 } else {
                     // turn off
                     redstone.setBlockData(Material.BLUE_WOOL.createBlockData());

@@ -18,12 +18,12 @@ package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -38,16 +38,16 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISSchematicBuilder {
+public class TardisSchematicBuilder {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final World w;
     private final int id, sx, ex, sy, ey, sz, ez;
     private final int[] controls = {0, 2, 3, 4, 5};
     private final HashMap<String, Material> mushroom_stem = new HashMap<>();
     private Location h;
 
-    public TARDISSchematicBuilder(TARDISPlugin plugin, int id, World w, int sx, int ex, int sy, int ey, int sz, int ez) {
+    public TardisSchematicBuilder(TardisPlugin plugin, int id, World w, int sx, int ex, int sy, int ey, int sz, int ez) {
         this.plugin = plugin;
         this.id = id;
         this.w = w;
@@ -77,7 +77,7 @@ public class TARDISSchematicBuilder {
             whereh.put("type", c);
             ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
             if (rsc.resultSet()) {
-                Location location = TARDISStaticLocationGetters.getLocationFromDB(rsc.getLocation());
+                Location location = TardisStaticLocationGetters.getLocationFromDB(rsc.getLocation());
                 switch (c) {
                     // world repeater
                     // x repeater
@@ -87,7 +87,7 @@ public class TARDISSchematicBuilder {
                             map.put(c, location);
                     default ->
                             // handbrake
-                            h = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+                            h = TardisStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                 }
             }
         }
@@ -100,17 +100,17 @@ public class TARDISSchematicBuilder {
             String beacon = rs.getTardis().getBeacon();
             if (!beacon.isEmpty()) {
                 String[] split = beacon.split(":");
-                bx = TARDISNumberParsers.parseInt(split[1]);
-                by = TARDISNumberParsers.parseInt(split[2]);
-                bz = TARDISNumberParsers.parseInt(split[3]);
+                bx = TardisNumberParsers.parseInt(split[1]);
+                by = TardisNumberParsers.parseInt(split[2]);
+                bz = TardisNumberParsers.parseInt(split[3]);
             }
             // and the creeper location...
             String creeper = rs.getTardis().getCreeper();
             if (!creeper.isEmpty()) {
                 String[] csplit = creeper.split(":");
-                cx = TARDISNumberParsers.parseInt(csplit[1].substring(0, csplit[1].length() - 2));
-                cy = TARDISNumberParsers.parseInt(csplit[2]);
-                cz = TARDISNumberParsers.parseInt(csplit[3].substring(0, csplit[3].length() - 2));
+                cx = TardisNumberParsers.parseInt(csplit[1].substring(0, csplit[1].length() - 2));
+                cy = TardisNumberParsers.parseInt(csplit[2]);
+                cz = TardisNumberParsers.parseInt(csplit[3].substring(0, csplit[3].length() - 2));
             }
         }
 
@@ -190,7 +190,7 @@ public class TARDISSchematicBuilder {
                     }
                     obj.addProperty("data", data.getAsString());
                     // banners
-                    if (TARDISStaticUtils.isBanner(m)) {
+                    if (TardisStaticUtils.isBanner(m)) {
                         JsonObject state = new JsonObject();
                         Banner banner = (Banner) b.getState();
                         state.addProperty("colour", banner.getBaseColor().toString());

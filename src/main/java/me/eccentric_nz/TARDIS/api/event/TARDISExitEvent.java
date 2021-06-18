@@ -25,13 +25,13 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author eccentric_nz
  */
-public final class TARDISExitEvent extends Event {
+public final class TardisExitEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
     private final World to;
 
-    public TARDISExitEvent(Player player, World from) {
+    public TardisExitEvent(Player player, World from) {
         this.player = player;
         to = from;
     }

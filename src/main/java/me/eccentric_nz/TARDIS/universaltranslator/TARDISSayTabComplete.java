@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.universaltranslator;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * TabCompleter for /tardissay command
  */
-public class TARDISSayTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisSayTabComplete extends TardisCompleter implements TabCompleter {
 
     private final ImmutableList<String> LANGUAGE_SUBS = ImmutableList.of("AFRIKAANS", "ALBANIAN", "ARABIC", "ARMENIAN", "AZERBAIJANI", "BASHKIR", "BASQUE", "BELARUSIAN", "BOSNIAN", "BULGARIAN", "CATALAN", "CHINESE", "CROATIAN", "CZECH", "DANISH", "DUTCH", "ENGLISH", "ESTONIAN", "FINNISH", "FRENCH", "GALICIAN", "GEORGIAN", "GERMAN", "GREEK", "HAITIAN", "HEBREW", "HUNGARIAN", "ICELANDIC", "INDONESIAN", "IRISH", "ITALIAN", "JAPANESE", "KAZAKH", "KIRGHIZ", "KOREAN", "LATIN", "LATVIAN", "LITHUANIAN", "MACEDONIAN", "MALAGASY", "MALAY", "MALTESE", "MONGOLIAN", "NORWEGIAN", "PERSIAN", "POLISH", "PORTUGUESE", "ROMANIAN", "RUSSIAN", "SERBIAN", "SLOVAK", "SLOVENIAN", "SPANISH", "SWAHILI", "SWEDISH", "TAGALOG", "TAJIK", "TATAR", "THAI", "TURKISH", "UKRAINIAN", "UZBEK", "VIETNAMESE", "WELSH");
 

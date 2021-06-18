@@ -18,17 +18,17 @@ package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.UseClay;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.tardis.utility.TARDISMaterials;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
+import me.eccentric_nz.tardis.utility.TardisMaterials;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.World;
@@ -42,20 +42,20 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISUpgradeBlockScanner {
+public class TardisUpgradeBlockScanner {
 
-    private final TARDISPlugin plugin;
-    private final TARDISUpgradeData tud;
+    private final TardisPlugin plugin;
+    private final TardisUpgradeData tud;
     private final UUID uuid;
     private int count = 0;
 
-    public TARDISUpgradeBlockScanner(TARDISPlugin plugin, TARDISUpgradeData tud, UUID uuid) {
+    public TardisUpgradeBlockScanner(TardisPlugin plugin, TardisUpgradeData tud, UUID uuid) {
         this.plugin = plugin;
         this.tud = tud;
         this.uuid = uuid;
     }
 
-    public TARDISBlockScannerData check() {
+    public TardisBlockScannerData check() {
         String directory = (tud.getPrevious().isCustom()) ? "user_schematics" : "schematics";
         String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getPrevious().getPermission() + ".tschm";
         File file = new File(path);
@@ -64,7 +64,7 @@ public class TARDISUpgradeBlockScanner {
             return null;
         }
         // get JSON
-        JsonObject obj = TARDISSchematicGZip.unzip(path);
+        JsonObject obj = TardisSchematicGZip.unzip(path);
         // get dimensions
         assert obj != null;
         JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
@@ -77,13 +77,13 @@ public class TARDISUpgradeBlockScanner {
         wheret.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             int slot = tardis.getTIPS();
             int startz;
             int startx;
             if (slot != -1) { // default world - use TIPS
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                TARDISTIPSData pos = tintpos.getTIPSData(slot);
+                TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
+                TardisTipsData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();
             } else {
@@ -91,8 +91,8 @@ public class TARDISUpgradeBlockScanner {
                 startx = gsl[0];
                 startz = gsl[2];
             }
-            int starty = TARDISConstants.HIGHER.contains(tud.getPrevious().getPermission()) ? 65 : 64;
-            World world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+            int starty = TardisConstants.HIGHER.contains(tud.getPrevious().getPermission()) ? 65 : 64;
+            World world = TardisStaticLocationGetters.getWorld(tardis.getChunk());
             Material wall_type;
             Material floor_type;
             // get wall/floor block prefs from database...
@@ -139,7 +139,7 @@ public class TARDISUpgradeBlockScanner {
                         if (type.equals(Material.MUSHROOM_STEM)) {
                             type = Material.REPEATER;
                         }
-                        if (TARDISMaterials.infested.contains(type)) {
+                        if (TardisMaterials.infested.contains(type)) {
                             type = Material.AIR;
                         }
                         if (type.equals(Material.BEDROCK)) {
@@ -217,7 +217,7 @@ public class TARDISUpgradeBlockScanner {
                     }
                 }
             }
-            TARDISBlockScannerData tbsd = new TARDISBlockScannerData();
+            TardisBlockScannerData tbsd = new TardisBlockScannerData();
             tbsd.setCount(count);
             tbsd.setVolume(v);
             int changed = (int) ((count / v) * 100);

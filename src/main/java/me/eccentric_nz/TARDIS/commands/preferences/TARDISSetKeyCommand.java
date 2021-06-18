@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -26,12 +26,12 @@ import java.util.*;
 /**
  * @author eccentric_nz
  */
-class TARDISSetKeyCommand {
+class TardisSetKeyCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Material> keys = new ArrayList<>();
 
-    TARDISSetKeyCommand(TARDISPlugin plugin) {
+    TardisSetKeyCommand(TardisPlugin plugin) {
         this.plugin = plugin;
         plugin.getBlocksConfig().getStringList("keys").forEach((m) -> {
             try {
@@ -44,7 +44,7 @@ class TARDISSetKeyCommand {
 
     boolean setKeyPref(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "KEY_NEED");
+            TardisMessage.send(player, "KEY_NEED");
             return false;
         }
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
@@ -52,16 +52,16 @@ class TARDISSetKeyCommand {
         try {
             go = Material.valueOf(setMaterial);
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, "MATERIAL_NOT_VALID");
+            TardisMessage.send(player, "MATERIAL_NOT_VALID");
             return false;
         }
         //        if (go.isBlock() && !go.isAir()) {
         if (go.isBlock()) {
-            TARDISMessage.send(player, "KEY_NO_BLOCK");
+            TardisMessage.send(player, "KEY_NO_BLOCK");
             return true;
         }
         if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks") && !keys.contains(go)) {
-            TARDISMessage.send(player, "MATERIAL_NOT_VALID");
+            TardisMessage.send(player, "MATERIAL_NOT_VALID");
             return true;
         }
         String field = (Objects.equals(plugin.getConfig().getString("storage.database"), "sqlite")) ? "key" : "key_item";
@@ -70,7 +70,7 @@ class TARDISSetKeyCommand {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         plugin.getQueryFactory().doUpdate("player_prefs", setk, where);
-        TARDISMessage.send(player, "KEY_SAVED");
+        TardisMessage.send(player, "KEY_SAVED");
         return true;
     }
 }

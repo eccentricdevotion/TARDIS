@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -36,11 +36,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISEnterCommand {
+class TardisEnterCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISEnterCommand(TARDISPlugin plugin) {
+    TardisEnterCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -50,11 +50,11 @@ class TARDISEnterCommand {
             player = (Player) sender;
         }
         if (player == null) {
-            TARDISMessage.send(sender, "CMD_PLAYER");
+            TardisMessage.send(sender, "CMD_PLAYER");
             return true;
         }
-        if (!TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
-            TARDISMessage.send(player, "NO_PERMS");
+        if (!TardisPermission.hasPermission(player, "tardis.skeletonkey")) {
+            TardisMessage.send(player, "NO_PERMS");
             return true;
         }
         int tmp = -1;
@@ -74,7 +74,7 @@ class TARDISEnterCommand {
         }
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             String owner = tardis.getOwner();
             HashMap<String, Object> wherei = new HashMap<>();
@@ -82,10 +82,10 @@ class TARDISEnterCommand {
             wherei.put("tardis_id", id);
             ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
             if (rsi.resultSet()) {
-                COMPASS innerD = rsi.getDoorDirection();
+                CardinalDirection innerD = rsi.getDoorDirection();
                 String doorLocStr = rsi.getDoorLocation();
-                World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
-                Location tardis_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
+                World cw = TardisStaticLocationGetters.getWorld(doorLocStr);
+                Location tardis_loc = TardisStaticLocationGetters.getLocationFromDB(doorLocStr);
                 assert tardis_loc != null;
                 int getx = tardis_loc.getBlockX();
                 int getz = tardis_loc.getBlockZ();
@@ -121,7 +121,7 @@ class TARDISEnterCommand {
                 float pitch = player.getLocation().getPitch();
                 tardis_loc.setPitch(pitch);
                 // get players direction so we can adjust yaw if necessary
-                COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
+                CardinalDirection d = CardinalDirection.valueOf(TardisStaticUtils.getPlayersDirection(player, false));
                 if (!innerD.equals(d)) {
                     switch (d) {
                         case NORTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[0][innerD.ordinal()];
@@ -142,7 +142,7 @@ class TARDISEnterCommand {
             }
         } else {
             String message = (tmp == -1) ? "PLAYER_NO_TARDIS" : "ABANDONED_NOT_FOUND";
-            TARDISMessage.send(player, message);
+            TardisMessage.send(player, message);
         }
         return true;
     }

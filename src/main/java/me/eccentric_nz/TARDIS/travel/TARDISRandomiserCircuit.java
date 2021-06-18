@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.Flag;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -37,20 +37,20 @@ import java.util.Set;
  *
  * @author eccentric_nz
  */
-public class TARDISRandomiserCircuit {
+public class TardisRandomiserCircuit {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISRandomiserCircuit(TARDISPlugin plugin) {
+    public TardisRandomiserCircuit(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
-    public Location getRandomlocation(Player p, COMPASS d) {
+    public Location getRandomlocation(Player p, CardinalDirection d) {
         // get a random world
         Set<String> worldlist = Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false);
         List<String> allowedWorlds = new ArrayList<>();
         worldlist.forEach((o) -> {
-            World ww = TARDISAliasResolver.getWorldFromAlias(o);
+            World ww = TardisAliasResolver.getWorldFromAlias(o);
             if (ww != null) {
                 if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
                     if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
@@ -64,7 +64,7 @@ public class TARDISRandomiserCircuit {
                     }
                 }
                 // remove the world if the player doesn't have permission
-                if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !TARDISPermission.hasPermission(p, "tardis.travel." + o)) {
+                if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !TardisPermission.hasPermission(p, "tardis.travel." + o)) {
                     allowedWorlds.remove(o);
                 }
             }

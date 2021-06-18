@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
-public enum GUIChameleonPresets {
+public enum GuiChameleonPresets {
 
     // Chameleon Presets
     GO_TO_PAGE_2(12, 51, Material.ARROW),
@@ -30,7 +30,7 @@ public enum GUIChameleonPresets {
     private final int slot;
     private final Material material;
 
-    GUIChameleonPresets(int customModelData, int slot, Material material) {
+    GuiChameleonPresets(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -50,6 +50,6 @@ public enum GUIChameleonPresets {
 
     public String getName() {
         String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
+        return TardisStringUtils.sentenceCase(s);
     }
 }

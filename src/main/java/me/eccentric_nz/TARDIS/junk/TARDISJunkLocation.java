@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -27,14 +27,14 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISJunkLocation {
+class TardisJunkLocation {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private Location current;
     private Location home;
     private int id;
 
-    TARDISJunkLocation(TARDISPlugin plugin) {
+    TardisJunkLocation(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

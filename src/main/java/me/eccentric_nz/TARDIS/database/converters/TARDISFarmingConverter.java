@@ -16,22 +16,22 @@
  */
 package me.eccentric_nz.tardis.database.converters;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class TARDISFarmingConverter {
+public class TardisFarmingConverter {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
 
-    public TARDISFarmingConverter(TARDISPlugin plugin) {
+    public TardisFarmingConverter(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }

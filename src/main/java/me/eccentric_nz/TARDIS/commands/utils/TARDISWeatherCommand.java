@@ -17,12 +17,12 @@
 package me.eccentric_nz.tardis.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.enumeration.Weather;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -35,12 +35,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.List;
 
-public class TARDISWeatherCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
+public class TardisWeatherCommand extends TardisCompleter implements CommandExecutor, TabCompleter {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("clear", "c", "rain", "r", "thunder", "t", "sun", "s");
 
-    public TARDISWeatherCommand(TARDISPlugin plugin) {
+    public TardisWeatherCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -48,12 +48,12 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisweather")) {
             if (args.length < 1) {
-                TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                TardisMessage.send(sender, "TOO_FEW_ARGS");
                 return true;
             }
             if (sender instanceof Player player) {
                 if (player == null) {
-                    TARDISMessage.send(sender, "CMD_PLAYER");
+                    TardisMessage.send(sender, "CMD_PLAYER");
                     return true;
                 }
                 Location location = player.getLocation();
@@ -69,20 +69,20 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
                         world = rsc.getWorld();
                     } else {
                         // can't change weather in TARDIS world
-                        TARDISMessage.send(player, "WEATHER_TARDIS");
+                        TardisMessage.send(player, "WEATHER_TARDIS");
                         return true;
                     }
                 }
                 Weather weather = Weather.fromString(args[0]);
                 String perm = weather.toString().toLowerCase();
-                if (!TARDISPermission.hasPermission(player, "tardis.weather." + perm)) {
-                    TARDISMessage.send(sender, "NO_PERMS");
+                if (!TardisPermission.hasPermission(player, "tardis.weather." + perm)) {
+                    TardisMessage.send(sender, "NO_PERMS");
                     return true;
                 }
-                TARDISWeather.setWeather(world, weather);
-                TARDISMessage.send(player, "WEATHER_SET", perm);
+                TardisWeather.setWeather(world, weather);
+                TardisMessage.send(player, "WEATHER_SET", perm);
             } else {
-                TARDISMessage.send(sender, "CMD_PLAYER");
+                TardisMessage.send(sender, "CMD_PLAYER");
             }
             return true;
         }

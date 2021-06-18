@@ -23,7 +23,7 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISStaticLocationGetters {
+public class TardisStaticLocationGetters {
 
     //    private static final int[] fourByFour = new int[]{-2, -1, 0, 1, 2};
     private static final int[] threeByThree = new int[]{-1, 0, 1};
@@ -53,9 +53,9 @@ public class TARDISStaticLocationGetters {
         if (savedw == null) {
             return null;
         }
-        savedx = TARDISNumberParsers.parseDouble(data[1]);
-        savedy = TARDISNumberParsers.parseDouble(data[2]);
-        savedz = TARDISNumberParsers.parseDouble(data[3]);
+        savedx = TardisNumberParsers.parseDouble(data[1]);
+        savedy = TardisNumberParsers.parseDouble(data[2]);
+        savedz = TardisNumberParsers.parseDouble(data[3]);
         return new Location(savedw, savedx, savedy, savedz);
     }
 
@@ -73,9 +73,9 @@ public class TARDISStaticLocationGetters {
         if (savedw == null) {
             return null;
         }
-        savedx = TARDISNumberParsers.parseDouble(data[1]) + 0.5d;
-        savedy = TARDISNumberParsers.parseDouble(data[2]) + 1.0d;
-        savedz = TARDISNumberParsers.parseDouble(data[3]) + 0.5d;
+        savedx = TardisNumberParsers.parseDouble(data[1]) + 0.5d;
+        savedy = TardisNumberParsers.parseDouble(data[2]) + 1.0d;
+        savedz = TardisNumberParsers.parseDouble(data[3]) + 0.5d;
         return new Location(savedw, savedx, savedy, savedz);
     }
 
@@ -99,9 +99,9 @@ public class TARDISStaticLocationGetters {
             return null;
         }
         // Location{world=CraftWorld{name=world},x=1.0000021E7,y=67.0,z=1824.0,pitch=0.0,yaw=0.0}
-        double x = (xStr[1].contains("E")) ? Double.parseDouble(xStr[1]) : TARDISNumberParsers.parseDouble(xStr[1]);
-        double y = TARDISNumberParsers.parseDouble(yStr[1]);
-        double z = (zStr[1].contains("E")) ? Double.parseDouble(zStr[1]) : TARDISNumberParsers.parseDouble(zStr[1]);
+        double x = (xStr[1].contains("E")) ? Double.parseDouble(xStr[1]) : TardisNumberParsers.parseDouble(xStr[1]);
+        double y = TardisNumberParsers.parseDouble(yStr[1]);
+        double z = (zStr[1].contains("E")) ? Double.parseDouble(zStr[1]) : TardisNumberParsers.parseDouble(zStr[1]);
         return new Location(w, x, y, z);
     }
 
@@ -150,8 +150,8 @@ public class TARDISStaticLocationGetters {
     public static Chunk getChunk(String str) {
         String[] split = str.split(":");
         World cw = Bukkit.getServer().getWorld(split[0]);
-        int cx = TARDISNumberParsers.parseInt(split[1]);
-        int cz = TARDISNumberParsers.parseInt(split[2]);
+        int cx = TardisNumberParsers.parseInt(split[1]);
+        int cz = TardisNumberParsers.parseInt(split[2]);
         assert cw != null;
         return cw.getChunkAt(cx, cz);
     }

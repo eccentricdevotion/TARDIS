@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.data.Area;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDiskStorage;
@@ -39,11 +39,11 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-class TARDISAreaDisks {
+class TardisAreaDisks {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISAreaDisks(TARDISPlugin plugin) {
+    TardisAreaDisks(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -63,7 +63,7 @@ class TARDISAreaDisks {
             // cycle through areas
             rsa.getData().forEach((a) -> {
                 String name = a.getAreaName();
-                if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
+                if (TardisPermission.hasPermission(p, "tardis.area." + name) || TardisPermission.hasPermission(p, "tardis.area.*")) {
                     ItemStack is = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
                     ItemMeta im = is.getItemMeta();
                     assert im != null;
@@ -81,7 +81,7 @@ class TARDISAreaDisks {
         ItemStack[] stack = new ItemStack[54];
         // set default top slots
         try {
-            stack = TARDISSerializeInventory.itemStacksFromString(Storage.AREA.getEmpty());
+            stack = TardisSerializeInventory.itemStacksFromString(Storage.AREA.getEmpty());
         } catch (IOException ex) {
             plugin.debug("Could not get make Area Disk Inventory: " + ex);
         }
@@ -111,7 +111,7 @@ class TARDISAreaDisks {
             String serilized_areas = rs.getAreas();
             try {
                 // check storage inventory
-                ItemStack[] areas = TARDISSerializeInventory.itemStacksFromString(serilized_areas);
+                ItemStack[] areas = TardisSerializeInventory.itemStacksFromString(serilized_areas);
                 for (ItemStack a : areas) {
                     if (a != null && a.getType().equals(Material.MUSIC_DISC_BLOCKS) && a.hasItemMeta()) {
                         ItemMeta ima = a.getItemMeta();
@@ -122,7 +122,7 @@ class TARDISAreaDisks {
                     }
                 }
                 // check console inventory
-                ItemStack[] console = TARDISSerializeInventory.itemStacksFromString(rs.getConsole());
+                ItemStack[] console = TardisSerializeInventory.itemStacksFromString(rs.getConsole());
                 for (ItemStack c : console) {
                     if (c != null && c.getType().equals(Material.MUSIC_DISC_BLOCKS) && c.hasItemMeta()) {
                         ItemMeta imc = c.getItemMeta();
@@ -151,7 +151,7 @@ class TARDISAreaDisks {
                     // cycle through areas
                     for (Area map : rsa.getData()) {
                         String name = map.getAreaName();
-                        if ((!player_has.contains(name) && TARDISPermission.hasPermission(p, "tardis.area." + name)) || (!player_has.contains(name) && TARDISPermission.hasPermission(p, "tardis.area.*"))) {
+                        if ((!player_has.contains(name) && TardisPermission.hasPermission(p, "tardis.area." + name)) || (!player_has.contains(name) && TardisPermission.hasPermission(p, "tardis.area.*"))) {
                             // add new area if there is room
                             int empty = getNextEmptySlot(inv);
                             if (empty != -1) {
@@ -173,7 +173,7 @@ class TARDISAreaDisks {
                 }
                 // return the serialized string
                 if (count > 0) {
-                    return TARDISSerializeInventory.itemStacksToString(inv.getContents());
+                    return TardisSerializeInventory.itemStacksToString(inv.getContents());
                 } else {
                     return serilized_areas;
                 }

@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.desktop;
 /**
  * @author eccentric_nz
  */
-public class TARDISBlockScannerData {
+public class TardisBlockScannerData {
 
     private int changed;
     private int count;

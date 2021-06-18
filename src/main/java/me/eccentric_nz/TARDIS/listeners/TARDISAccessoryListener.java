@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,11 +30,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Objects;
 
-public class TARDISAccessoryListener implements Listener {
+public class TardisAccessoryListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISAccessoryListener(TARDISPlugin plugin) {
+    public TardisAccessoryListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

@@ -19,8 +19,8 @@ package me.eccentric_nz.tardis.utility;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -29,12 +29,12 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class TARDISUpdateChecker implements Runnable {
+public class TardisUpdateChecker implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final CommandSender sender;
 
-    public TARDISUpdateChecker(TARDISPlugin plugin, CommandSender sender) {
+    public TardisUpdateChecker(TardisPlugin plugin, CommandSender sender) {
         this.plugin = plugin;
         this.sender = sender;
     }
@@ -66,8 +66,8 @@ public class TARDISUpdateChecker implements Runnable {
         plugin.setBuildNumber(buildNumber);
         plugin.setUpdateNumber(newBuildNumber);
         if (sender == null) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(TARDISMessage.JENKINS_UPDATE_READY, buildNumber, newBuildNumber));
-            plugin.getConsole().sendMessage(plugin.getPluginName() + TARDISMessage.UPDATE_COMMAND);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(TardisMessage.JENKINS_UPDATE_READY, buildNumber, newBuildNumber));
+            plugin.getConsole().sendMessage(plugin.getPluginName() + TardisMessage.UPDATE_COMMAND);
         } else {
             if (buildNumber == newBuildNumber) {
                 sender.sendMessage(plugin.getPluginName() + "You are running the latest version!");

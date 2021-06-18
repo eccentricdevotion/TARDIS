@@ -29,7 +29,7 @@ import org.bukkit.entity.EntityType;
  *
  * @author eccentric_nz
  */
-public class TARDISMob {
+public class TardisMob {
 
     private EntityType type;
     private Type catType;

@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.builders.TARDISBuilderUtility;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.builders.TardisBuilderUtility;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -32,18 +32,18 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class TARDISDematerialisePoliceBox implements Runnable {
+public class TardisDematerialisePoliceBox implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final DestroyData dd;
     private final int loops;
-    private final PRESET preset;
+    private final Preset preset;
     private int task;
     private int i;
     private ItemFrame frame;
     private ItemStack is;
 
-    TARDISDematerialisePoliceBox(TARDISPlugin plugin, DestroyData dd, PRESET preset) {
+    TardisDematerialisePoliceBox(TardisPlugin plugin, DestroyData dd, Preset preset) {
         this.plugin = plugin;
         this.dd = dd;
         loops = dd.getThrottle().getLoops();
@@ -79,7 +79,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                 }
                 frame.setFacingDirection(BlockFace.UP);
                 frame.setRotation(dd.getDirection().getRotation());
-                Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
+                Material dye = TardisBuilderUtility.getMaterialForItemFrame(preset);
                 is = new ItemStack(dye, 1);
                 // only play the sound if the player is outside the TARDIS
                 if (dd.isOutside()) {
@@ -96,7 +96,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                             default -> // NORMAL
                                     "tardis_takeoff";
                         };
-                        TARDISSounds.playTARDISSound(dd.getLocation(), sound);
+                        TardisSounds.playTARDISSound(dd.getLocation(), sound);
                     } else {
                         world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                     }
@@ -112,7 +112,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
         } else {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
-            new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, false, preset);
+            new TardisDeinstantPreset(plugin).instaDestroyPreset(dd, false, preset);
         }
     }
 

@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.commands.dev;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.TARDISSeedModel;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.TardisSeedModel;
 import me.eccentric_nz.tardis.enumeration.RecipeCategory;
 import me.eccentric_nz.tardis.enumeration.RecipeItem;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ShapedRecipe;
@@ -30,11 +30,11 @@ import org.bukkit.inventory.ShapelessRecipe;
 
 import java.util.Map;
 
-class TARDISRecipesLister {
+class TardisRecipesLister {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISRecipesLister(TARDISPlugin plugin) {
+    TardisRecipesLister(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -45,24 +45,24 @@ class TARDISRecipesLister {
                     sender.sendMessage("#### " + category.getName());
                     for (RecipeItem item : RecipeItem.values()) {
                         if (item.getCategory() == category) {
-                            sender.sendMessage("| " + TARDISStringUtils.capitalise(item.name()) + " | `/tardisrecipe " + item.toTabCompletionString() + "` |");
+                            sender.sendMessage("| " + TardisStringUtils.capitalise(item.name()) + " | `/tardisrecipe " + item.toTabCompletionString() + "` |");
                         }
                     }
-                    TARDISMessage.message(sender, "");
+                    TardisMessage.message(sender, "");
                 }
             }
         } else {
             for (Map.Entry<String, ShapedRecipe> shaped : plugin.getFigura().getShapedRecipes().entrySet()) {
-                sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shaped.getKey()) + "(\"" + shaped.getKey() + "\", Material." + shaped.getValue().getResult().getType() + ", " + RecipeItem.getByName(shaped.getKey()).getCustomModelData() + "),");
+                sender.sendMessage(TardisStringUtils.toUnderscoredUppercase(shaped.getKey()) + "(\"" + shaped.getKey() + "\", Material." + shaped.getValue().getResult().getType() + ", " + RecipeItem.getByName(shaped.getKey()).getCustomModelData() + "),");
             }
             for (Map.Entry<String, ShapelessRecipe> shapeless : plugin.getIncomposita().getShapelessRecipes().entrySet()) {
-                sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shapeless.getKey()) + "(\"" + shapeless.getKey() + "\", Material." + shapeless.getValue().getResult().getType() + ", " + RecipeItem.getByName(shapeless.getKey()).getCustomModelData() + "),");
+                sender.sendMessage(TardisStringUtils.toUnderscoredUppercase(shapeless.getKey()) + "(\"" + shapeless.getKey() + "\", Material." + shapeless.getValue().getResult().getType() + ", " + RecipeItem.getByName(shapeless.getKey()).getCustomModelData() + "),");
             }
             for (Map.Entry<Schematic, ShapedRecipe> seed : plugin.getOobstructionum().getSeedRecipes().entrySet()) {
                 int model;
                 String material;
-                if (TARDISSeedModel.materialMap.containsKey(seed.getKey().getSeedMaterial())) {
-                    model = TARDISSeedModel.modelByMaterial(seed.getKey().getSeedMaterial());
+                if (TardisSeedModel.materialMap.containsKey(seed.getKey().getSeedMaterial())) {
+                    model = TardisSeedModel.modelByMaterial(seed.getKey().getSeedMaterial());
                     if (seed.getKey().getPermission().equals("rotor")) {
                         material = "MUSHROOM_STEM";
                     } else {

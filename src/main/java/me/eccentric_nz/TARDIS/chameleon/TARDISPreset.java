@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 
 import java.util.EnumMap;
 
@@ -27,35 +27,35 @@ import java.util.EnumMap;
  *
  * @author eccentric_nz
  */
-class TARDISPreset {
+class TardisPreset {
 
-    private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
-    private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<>(COMPASS.class);
-    private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<>(COMPASS.class);
+    private final EnumMap<CardinalDirection, TardisChameleonColumn> blueprint = new EnumMap<>(CardinalDirection.class);
+    private final EnumMap<CardinalDirection, TardisChameleonColumn> stained = new EnumMap<>(CardinalDirection.class);
+    private final EnumMap<CardinalDirection, TardisChameleonColumn> glass = new EnumMap<>(CardinalDirection.class);
     private String[][] blueprintData;
     private String[][] stainedData;
     private String[][] glassData;
 
-    TARDISPreset() {
+    TardisPreset() {
     }
 
     public void makePresets(boolean assymetric, boolean duck) {
-        for (COMPASS d : COMPASS.values()) {
-            blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, blueprintData, assymetric, duck));
-            stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, stainedData, assymetric, duck));
-            glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, glassData, assymetric, duck));
+        for (CardinalDirection d : CardinalDirection.values()) {
+            blueprint.put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, blueprintData, assymetric, duck));
+            stained.put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, stainedData, assymetric, duck));
+            glass.put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, glassData, assymetric, duck));
         }
     }
 
-    public EnumMap<COMPASS, TARDISChameleonColumn> getBlueprint() {
+    public EnumMap<CardinalDirection, TardisChameleonColumn> getBlueprint() {
         return blueprint;
     }
 
-    public EnumMap<COMPASS, TARDISChameleonColumn> getStained() {
+    public EnumMap<CardinalDirection, TardisChameleonColumn> getStained() {
         return stained;
     }
 
-    public EnumMap<COMPASS, TARDISChameleonColumn> getGlass() {
+    public EnumMap<CardinalDirection, TardisChameleonColumn> getGlass() {
         return glass;
     }
 

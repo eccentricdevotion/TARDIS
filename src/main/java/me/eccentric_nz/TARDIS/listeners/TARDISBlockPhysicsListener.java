@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISRecordingQueue;
-import me.eccentric_nz.tardis.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisRecordingQueue;
+import me.eccentric_nz.tardis.utility.TardisMaterials;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -34,11 +34,11 @@ import org.bukkit.event.block.BlockPhysicsEvent;
 /**
  * @author eccentric_nz
  */
-public class TARDISBlockPhysicsListener implements Listener {
+public class TardisBlockPhysicsListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISBlockPhysicsListener(TARDISPlugin plugin) {
+    public TardisBlockPhysicsListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -48,21 +48,21 @@ public class TARDISBlockPhysicsListener implements Listener {
         Block block = event.getBlock();
         if (block.getType().equals(Material.GRASS_PATH)) {
             String loc = block.getRelative(BlockFace.UP).getLocation().toString();
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> TARDISRecordingQueue.addToQueue(loc), 7L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> TardisRecordingQueue.addToQueue(loc), 7L);
         }
         if (plugin.getTrackerKeeper().getMaterialising().size() > 0) {
             BlockData state = block.getBlockData();
             if (state instanceof TrapDoor) {
                 Block blockBehind = getBlockBehindAttachable(block, ((TrapDoor) state).getFacing());
                 if (blockBehind != null) {
-                    if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || TARDISMaterials.stained_glass.contains(blockBehind.getType())) {
+                    if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || TardisMaterials.stained_glass.contains(blockBehind.getType())) {
                         event.setCancelled(true);
                     }
                 }
             }
             if (state instanceof Door) {
                 Block blockBelow = getBlockBelow(block);
-                if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || Tag.DOORS.isTagged(blockBelow.getType()) || TARDISMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().isAir() || blockBelow.getType().equals(Material.SEA_LANTERN)) {
+                if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || Tag.DOORS.isTagged(blockBelow.getType()) || TardisMaterials.stained_glass.contains(blockBelow.getType()) || blockBelow.getType().isAir() || blockBelow.getType().equals(Material.SEA_LANTERN)) {
                     event.setCancelled(true);
                 }
             }

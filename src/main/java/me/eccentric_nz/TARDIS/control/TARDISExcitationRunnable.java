@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.utility.TARDISParticles;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.utility.TardisParticles;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -37,16 +37,16 @@ import java.util.Objects;
  * The Tenth Doctor used a device above the inside of the door of the tardis to excite the atmosphere, causing snow, in
  * an attempt to cheer up Donna Noble.
  */
-class TARDISExcitationRunnable implements Runnable {
+class TardisExcitationRunnable implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Location location;
     private final Player player;
     private final List<Block> snow = new ArrayList<>();
     public int task;
     private int i = 0;
 
-    TARDISExcitationRunnable(TARDISPlugin plugin, Location l, Player player) {
+    TardisExcitationRunnable(TardisPlugin plugin, Location l, Player player) {
         this.plugin = plugin;
         location = l;
         this.player = player;
@@ -55,10 +55,10 @@ class TARDISExcitationRunnable implements Runnable {
     @Override
     public void run() {
         if (i < 100) {
-            TARDISParticles.sendSnowParticles(location, player);
+            TardisParticles.sendSnowParticles(location, player);
             player.getNearbyEntities(16.0, 16.0, 16.0).forEach((e) -> {
                 if (e instanceof Player p) {
-                    TARDISParticles.sendSnowParticles(location, p);
+                    TardisParticles.sendSnowParticles(location, p);
                 }
             });
             if (i % 5 == 0) {
@@ -66,7 +66,7 @@ class TARDISExcitationRunnable implements Runnable {
                 s.setY(Objects.requireNonNull(location.getWorld()).getHighestBlockYAt(s) + 1);
                 Block b = s.getBlock();
                 if (b.isEmpty() && b.getRelative(BlockFace.DOWN).getType().isOccluding()) {
-                    b.setBlockData(TARDISConstants.SNOW);
+                    b.setBlockData(TardisConstants.SNOW);
                     snow.add(b);
                 }
             }
@@ -75,13 +75,13 @@ class TARDISExcitationRunnable implements Runnable {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             plugin.getTrackerKeeper().getExcitation().remove(player.getUniqueId());
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> snow.forEach((block) -> block.setBlockData(TARDISConstants.AIR)), 40L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> snow.forEach((block) -> block.setBlockData(TardisConstants.AIR)), 40L);
         }
     }
 
     private Location calculateLocationInCircle(Location location) {
-        double angle = TARDISConstants.RANDOM.nextDouble() * Math.PI * 2;
-        double radius = TARDISConstants.RANDOM.nextDouble() * 6;
+        double angle = TardisConstants.RANDOM.nextDouble() * Math.PI * 2;
+        double radius = TardisConstants.RANDOM.nextDouble() * 6;
         double x = radius * Math.cos(angle);
         double z = radius * Math.sin(angle);
         return location.clone().add(x, 0, z);

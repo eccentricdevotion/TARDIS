@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.hads;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -34,17 +34,17 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISHadsPersister {
+public class TardisHadsPersister {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
 
-    public TARDISHadsPersister(TARDISPlugin plugin) {
+    public TardisHadsPersister(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -91,7 +91,7 @@ public class TARDISHadsPersister {
             ps = connection.prepareStatement("SELECT * FROM " + prefix + "dispersed");
             rs = ps.executeQuery();
             while (rs.next()) {
-                World world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
+                World world = TardisAliasResolver.getWorldFromAlias(rs.getString("world"));
                 if (world != null) {
                     UUID uuid = UUID.fromString(rs.getString("uuid"));
                     Location l = new Location(world, rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));

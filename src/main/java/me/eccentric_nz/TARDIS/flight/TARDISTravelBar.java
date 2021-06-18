@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -27,19 +27,19 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-class TARDISTravelBar {
+class TardisTravelBar {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private int taskID;
 
-    TARDISTravelBar(TARDISPlugin plugin) {
+    TardisTravelBar(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     void showTravelRemaining(Player player, long duration, boolean takeoff) {
 
         String title = (takeoff) ? plugin.getLanguage().getString("TRAVEL_BAR_TAKEOFF") : plugin.getLanguage().getString("TRAVEL_BAR_LAND");
-        BossBar bb = Bukkit.createBossBar(title, BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
+        BossBar bb = Bukkit.createBossBar(title, BarColor.WHITE, BarStyle.SOLID, TardisConstants.EMPTY_ARRAY);
         bb.setProgress(0);
         bb.addPlayer(player);
         bb.setVisible(true);

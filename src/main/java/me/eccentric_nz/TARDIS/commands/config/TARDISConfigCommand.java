@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.commands.config;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.TardisCommandHelper;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.enumeration.UseClay;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -42,16 +42,16 @@ import java.util.Locale;
  *
  * @author eccentric_nz
  */
-public class TARDISConfigCommand implements CommandExecutor {
+public class TardisConfigCommand implements CommandExecutor {
 
     final HashMap<String, String> firstsStr = new HashMap<>();
     final List<String> firstsStrArtron = new ArrayList<>();
     final HashMap<String, String> firstsBool = new HashMap<>();
     final HashMap<String, String> firstsInt = new HashMap<>();
     final List<String> firstsIntArtron = new ArrayList<>();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISConfigCommand(TARDISPlugin plugin) {
+    public TardisConfigCommand(TardisPlugin plugin) {
         this.plugin = plugin;
         // add first arguments
         firstsStr.put("area", "creation");
@@ -202,71 +202,71 @@ public class TARDISConfigCommand implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("tardisconfig")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
                 if (args.length == 0) {
-                    new TARDISCommandHelper(plugin).getCommand("tardisadmin", sender);
+                    new TardisCommandHelper(plugin).getCommand("tardisadmin", sender);
                     return true;
                 }
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (!firstsStr.containsKey(first) && !firstsBool.containsKey(first) && !firstsInt.containsKey(first) && !firstsIntArtron.contains(first) && !firstsStrArtron.contains(first)) {
-                    TARDISMessage.send(sender, "ARG_NOT_VALID");
+                    TardisMessage.send(sender, "ARG_NOT_VALID");
                     return false;
                 }
                 if (args.length == 1 && first.equals("reload")) {
-                    return new TARDISReloadCommand(plugin).reloadConfig(sender);
+                    return new TardisReloadCommand(plugin).reloadConfig(sender);
                 }
                 if (args.length < 2) {
-                    TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                    TardisMessage.send(sender, "TOO_FEW_ARGS");
                     return false;
                 }
                 if (first.equals("reload")) {
-                    return new TARDISReloadCommand(plugin).reloadOtherConfig(sender, args);
+                    return new TardisReloadCommand(plugin).reloadOtherConfig(sender, args);
                 }
                 if (first.equals("area")) {
                     plugin.getConfig().set("creation.area", args[1]);
                 }
                 if (first.equals("options")) {
-                    return new TARDISConfigOptionsCommand(plugin).showConfigOptions(sender, args);
+                    return new TardisConfigOptionsCommand(plugin).showConfigOptions(sender, args);
                 }
                 if (first.equals("language")) {
-                    return new TARDISLanguageCommand(plugin).setLanguage(sender, args);
+                    return new TardisLanguageCommand(plugin).setLanguage(sender, args);
                 }
                 if (first.equals("power_down")) {
-                    return new TARDISPowerDownCommand(plugin).togglePowerDown(sender, args);
+                    return new TardisPowerDownCommand(plugin).togglePowerDown(sender, args);
                 }
                 if (first.equals("database")) {
                     String dbtype = args[1].toLowerCase(Locale.ENGLISH);
                     if (!dbtype.equals("mysql") && !dbtype.equals("sqlite")) {
-                        TARDISMessage.send(sender, "ARG_DB");
+                        TardisMessage.send(sender, "ARG_DB");
                         return true;
                     }
                     plugin.getConfig().set("database", dbtype);
                 }
                 if (first.equals("siege")) {
-                    return new TARDISSiegeCommand(plugin).setOption(sender, args);
+                    return new TardisSiegeCommand(plugin).setOption(sender, args);
                 }
                 if (first.equals("sign_colour")) {
-                    return new TARDISSignColourCommand(plugin).setColour(sender, args);
+                    return new TardisSignColourCommand(plugin).setColour(sender, args);
                 }
                 if (first.equals("key") || first.equals("custom_schematic_seed")) {
-                    return new TARDISSetMaterialCommand(plugin).setConfigMaterial(sender, args, firstsStr.get(first));
+                    return new TardisSetMaterialCommand(plugin).setConfigMaterial(sender, args, firstsStr.get(first));
                 }
                 if (first.equals("full_charge_item") || first.equals("jettison_seed")) {
-                    return new TARDISSetMaterialCommand(plugin).setConfigMaterial(sender, args);
+                    return new TardisSetMaterialCommand(plugin).setConfigMaterial(sender, args);
                 }
                 if (first.equals("default_key") || first.equals("default_sonic")) {
-                    return new TARDISDefaultCommand(plugin).setDefaultItem(sender, args);
+                    return new TardisDefaultCommand(plugin).setDefaultItem(sender, args);
                 }
                 if (first.equals("default_world_name")) {
-                    return new TARDISDefaultWorldNameCommand(plugin).setName(sender, args);
+                    return new TardisDefaultWorldNameCommand(plugin).setName(sender, args);
                 }
                 if (first.equals("respect_towny")) {
-                    return new TARDISSetRespectCommand(plugin).setRegion(sender, args);
+                    return new TardisSetRespectCommand(plugin).setRegion(sender, args);
                 }
                 if (first.equals("respect_worldguard")) {
-                    return new TARDISSetRespectCommand(plugin).setFlag(sender, args);
+                    return new TardisSetRespectCommand(plugin).setFlag(sender, args);
                 }
                 if (first.equals("difficulty")) {
                     if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("medium") && !args[1].equalsIgnoreCase("hard")) {
-                        TARDISMessage.send(sender, "ARG_DIFF");
+                        TardisMessage.send(sender, "ARG_DIFF");
                         return true;
                     }
                     plugin.getConfig().set("preferences.difficulty", args[1].toLowerCase(Locale.ENGLISH));
@@ -274,9 +274,9 @@ public class TARDISConfigCommand implements CommandExecutor {
                 }
                 if (first.equals("default_preset")) {
                     try {
-                        PRESET.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+                        Preset.valueOf(args[1].toUpperCase(Locale.ENGLISH));
                     } catch (IllegalArgumentException e) {
-                        TARDISMessage.send(sender, "ARG_PRESET");
+                        TardisMessage.send(sender, "ARG_PRESET");
                         return true;
                     }
                     plugin.getConfig().set("police_box.default_preset", args[1].toUpperCase(Locale.ENGLISH));
@@ -285,7 +285,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                     try {
                         UseClay.valueOf(args[1].toUpperCase(Locale.ENGLISH));
                     } catch (IllegalArgumentException e) {
-                        TARDISMessage.send(sender, "ARG_USE_CLAY");
+                        TardisMessage.send(sender, "ARG_USE_CLAY");
                         return true;
                     }
                     plugin.getConfig().set("creation.use_clay", args[1].toUpperCase(Locale.ENGLISH));
@@ -295,7 +295,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                 }
                 if (first.equals("vortex_fall")) {
                     if (!args[1].equalsIgnoreCase("kill") && !args[1].equalsIgnoreCase("teleport")) {
-                        TARDISMessage.send(sender, "ARG_VORTEX");
+                        TardisMessage.send(sender, "ARG_VORTEX");
                         return true;
                     }
                     plugin.getConfig().set("preferences.vortex_fall", args[1].toLowerCase(Locale.ENGLISH));
@@ -303,27 +303,27 @@ public class TARDISConfigCommand implements CommandExecutor {
                 // checks if it's a boolean config option
                 if (firstsBool.containsKey(first)) {
                     if (first.equals("zero_room")) {
-                        return new TARDISSetZeroRoomCommand(plugin).setConfigZero(sender, args);
+                        return new TardisSetZeroRoomCommand(plugin).setConfigZero(sender, args);
                     } else {
-                        return new TARDISSetBooleanCommand(plugin).setConfigBool(sender, args, firstsBool.get(first));
+                        return new TardisSetBooleanCommand(plugin).setConfigBool(sender, args, firstsBool.get(first));
                     }
                 }
                 // checks if it's a number config option
                 if (firstsInt.containsKey(first)) {
                     if (first.equalsIgnoreCase("random_circuit")) {
-                        return new TARDISSetIntegerCommand(plugin).setRandomInt(sender, args);
+                        return new TardisSetIntegerCommand(plugin).setRandomInt(sender, args);
                     } else {
-                        return new TARDISSetIntegerCommand(plugin).setConfigInt(sender, args, firstsInt.get(first));
+                        return new TardisSetIntegerCommand(plugin).setConfigInt(sender, args, firstsInt.get(first));
                     }
                 }
                 if (firstsIntArtron.contains(first)) {
-                    return new TARDISSetIntegerCommand(plugin).setConfigInt(sender, args);
+                    return new TardisSetIntegerCommand(plugin).setConfigInt(sender, args);
                 }
                 plugin.saveConfig();
-                TARDISMessage.send(sender, "CONFIG_UPDATED");
+                TardisMessage.send(sender, "CONFIG_UPDATED");
                 return true;
             } else {
-                TARDISMessage.send(sender, "CMD_ADMIN");
+                TardisMessage.send(sender, "CMD_ADMIN");
                 return false;
             }
         }

@@ -17,10 +17,10 @@
 package me.eccentric_nz.tardis.rooms;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -37,15 +37,15 @@ import java.util.Locale;
  *
  * @author eccentric_nz
  */
-class TARDISRoomRemover {
+class TardisRoomRemover {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String r;
     private final Location l;
-    private final COMPASS d;
+    private final CardinalDirection d;
     private final int id;
 
-    TARDISRoomRemover(TARDISPlugin plugin, String r, Location l, COMPASS d, int id) {
+    TardisRoomRemover(TardisPlugin plugin, String r, Location l, CardinalDirection d, int id) {
         this.plugin = plugin;
         this.r = r;
         this.l = l;
@@ -70,7 +70,7 @@ class TARDISRoomRemover {
         String directory = (plugin.getRoomsConfig().getBoolean("rooms." + r + ".user")) ? "user_schematics" : "schematics";
         String path = plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase(Locale.ENGLISH) + ".tschm";
         // get JSON
-        JsonObject obj = TARDISSchematicGZip.unzip(path);
+        JsonObject obj = TardisSchematicGZip.unzip(path);
         // get dimensions
         assert obj != null;
         JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
@@ -104,7 +104,7 @@ class TARDISRoomRemover {
                 for (int z = sz; z <= ez; z++) {
                     assert w != null;
                     Block block = w.getBlockAt(x, y, z);
-                    block.setBlockData(TARDISConstants.AIR);
+                    block.setBlockData(TardisConstants.AIR);
                     // if it is a GRAVITY or ANTIGRAVITY well remove it from the database
                     if (r.equals("GRAVITY") || r.equals("ANTIGRAVITY")) {
                         if (block.getType().equals(Material.LIME_WOOL) || block.getType().equals(Material.PINK_WOOL)) {

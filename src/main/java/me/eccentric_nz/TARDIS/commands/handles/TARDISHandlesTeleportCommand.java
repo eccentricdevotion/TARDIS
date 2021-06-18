@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
 import me.eccentric_nz.tardis.enumeration.Flag;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.travel.TardisTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -37,11 +37,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISHandlesTeleportCommand {
+public class TardisHandlesTeleportCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISHandlesTeleportCommand(TARDISPlugin plugin) {
+    public TardisHandlesTeleportCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -50,7 +50,7 @@ public class TARDISHandlesTeleportCommand {
         Location location = player.getLocation();
         // must be outside the tardis
         if (plugin.getUtils().inTARDISWorld(location)) {
-            TARDISMessage.handlesSend(player, "TARDIS_OUTSIDE");
+            TardisMessage.handlesSend(player, "TARDIS_OUTSIDE");
             return;
         }
         // get tardis data
@@ -58,19 +58,19 @@ public class TARDISHandlesTeleportCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
-            TARDISMessage.handlesSend(player, "NO_TARDIS");
+            TardisMessage.handlesSend(player, "NO_TARDIS");
             return;
         }
-        TARDIS tardis = rs.getTardis();
+        Tardis tardis = rs.getTardis();
         int id = tardis.getTardisId();
         if (!tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            TARDISMessage.handlesSend(player, "NOT_WHILE_TRAVELLING");
+            TardisMessage.handlesSend(player, "NOT_WHILE_TRAVELLING");
             return;
         }
         int level = tardis.getArtronLevel();
         int travel = plugin.getArtronConfig().getInt("travel");
         if (level < travel) {
-            TARDISMessage.handlesSend(player, "NOT_ENOUGH_ENERGY");
+            TardisMessage.handlesSend(player, "NOT_ENOUGH_ENERGY");
             return;
         }
         // plugin respect
@@ -80,13 +80,13 @@ public class TARDISHandlesTeleportCommand {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                TARDISMessage.handlesSend(player, "CURRENT_NOT_FOUND");
+                TardisMessage.handlesSend(player, "CURRENT_NOT_FOUND");
             }
-            int[] start_loc = TARDISTimeTravel.getStartLocation(location, rsc.getDirection());
+            int[] start_loc = TardisTimeTravel.getStartLocation(location, rsc.getDirection());
             // check destination has room for tardis
-            int count = TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
+            int count = TardisTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
             if (count > 0) {
-                TARDISMessage.handlesSend(player, "RESCUE_NOT_SAFE");
+                TardisMessage.handlesSend(player, "RESCUE_NOT_SAFE");
                 return;
             }
             // build current location

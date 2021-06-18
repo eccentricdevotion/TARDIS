@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.database.converters;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 
 import java.sql.*;
 
-public class TARDISControlsConverter {
+public class TardisControlsConverter {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
 
-    public TARDISControlsConverter(TARDISPlugin plugin) {
+    public TardisControlsConverter(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -117,7 +117,7 @@ public class TARDISControlsConverter {
 
     private String getLocationFromString(String s) {
         String[] split = s.split(":");
-        return TARDISStaticLocationGetters.makeLocationStr(split[0], split[1], split[2], split[3]);
+        return TardisStaticLocationGetters.makeLocationStr(split[0], split[1], split[2], split[3]);
     }
 }
 

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,12 +38,12 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISRegulatorListener extends TARDISRegulatorSlot implements Listener {
+public class TardisRegulatorListener extends TardisRegulatorSlot implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Integer> directions = Arrays.asList(16, 24, 26, 34);
 
-    public TARDISRegulatorListener(TARDISPlugin plugin) {
+    public TardisRegulatorListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -56,9 +56,9 @@ public class TARDISRegulatorListener extends TARDISRegulatorSlot implements List
             if (plugin.getTrackerKeeper().getRegulating().containsKey(uuid)) {
                 plugin.getServer().getScheduler().cancelTask(plugin.getTrackerKeeper().getRegulating().get(uuid).getTaskId());
                 plugin.getTrackerKeeper().getRegulating().remove(uuid);
-                TARDISMessage.send(player, "HELMIC_ABORT");
+                TardisMessage.send(player, "HELMIC_ABORT");
                 // get and set maximum adjustment from original location
-                Location adjusted = new TARDISFlightAdjustment(plugin).getLocation(plugin.getTrackerKeeper().getFlightData().get(uuid), 10);
+                Location adjusted = new TardisFlightAdjustment(plugin).getLocation(plugin.getTrackerKeeper().getFlightData().get(uuid), 10);
                 plugin.getTrackerKeeper().getFlightData().get(uuid).setLocation(adjusted);
             }
         }
@@ -71,7 +71,7 @@ public class TARDISRegulatorListener extends TARDISRegulatorSlot implements List
             Player player = (Player) event.getPlayer();
             UUID uuid = player.getUniqueId();
             // start the runnable
-            TARDISRegulatorRunnable wr = new TARDISRegulatorRunnable(view);
+            TardisRegulatorRunnable wr = new TardisRegulatorRunnable(view);
             int id = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, wr, 5L, 20L);
             wr.setTaskId(id);
             plugin.getTrackerKeeper().getRegulating().put(uuid, wr);
@@ -121,7 +121,7 @@ public class TARDISRegulatorListener extends TARDISRegulatorSlot implements List
                 }
                 // adjust location
                 if (blocks != 0) {
-                    Location adjusted = new TARDISFlightAdjustment(plugin).getLocation(plugin.getTrackerKeeper().getFlightData().get(uuid), blocks);
+                    Location adjusted = new TardisFlightAdjustment(plugin).getLocation(plugin.getTrackerKeeper().getFlightData().get(uuid), blocks);
                     plugin.getTrackerKeeper().getFlightData().get(uuid).setLocation(adjusted);
                 }
             }, 600L);

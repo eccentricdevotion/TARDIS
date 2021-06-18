@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.chameleon.TARDISChameleonColumn;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
-import me.eccentric_nz.tardis.utility.TARDISEntityTracker;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.chameleon.TardisChameleonColumn;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
+import me.eccentric_nz.tardis.utility.TardisEntityTracker;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -38,15 +38,15 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISExteriorRenderer {
+public class TardisExteriorRenderer {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISExteriorRenderer(TARDISPlugin plugin) {
+    public TardisExteriorRenderer(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
-    public void render(String interior, Location exterior, int id, Player p, COMPASS d, long time, String biome) {
+    public void render(String interior, Location exterior, int id, Player p, CardinalDirection d, long time, String biome) {
         // construct a string for comparison
         World ew = exterior.getWorld();
         int epbx = exterior.getBlockX();
@@ -55,15 +55,15 @@ public class TARDISExteriorRenderer {
         assert ew != null;
         String isRendered = ew.getName() + ":" + epbx + ":" + epby + ":" + epbz;
         String[] idata = interior.split(":");
-        World iw = TARDISAliasResolver.getWorldFromAlias(idata[0]);
-        int ipbx = TARDISNumberParsers.parseInt(idata[1]);
-        int ipby = TARDISNumberParsers.parseInt(idata[2]) + 2;
-        int ipbz = TARDISNumberParsers.parseInt(idata[3]);
+        World iw = TardisAliasResolver.getWorldFromAlias(idata[0]);
+        int ipbx = TardisNumberParsers.parseInt(idata[1]);
+        int ipby = TardisNumberParsers.parseInt(idata[2]) + 2;
+        int ipbz = TardisNumberParsers.parseInt(idata[3]);
         Location location = new Location(iw, ipbx, ipby, ipbz);
         if (plugin.getTrackerKeeper().getRenderer().containsKey(id) && plugin.getTrackerKeeper().getRenderer().get(id).equals(isRendered)) {
-            TARDISMessage.send(p, "DEST_NO_CHANGE");
+            TardisMessage.send(p, "DEST_NO_CHANGE");
         } else {
-            TARDISMessage.send(p, "RENDER_START");
+            TardisMessage.send(p, "RENDER_START");
             int isx, isy, isz, esx, esy, esz, xx = 0, yy = 0, zz = 0;
             // get interior coords
             isx = ipbx - 6;
@@ -112,7 +112,7 @@ public class TARDISExteriorRenderer {
             int z = (location.getBlockZ());
             int plusz = (location.getBlockZ() + 1);
             int minusz = (location.getBlockZ() - 1);
-            TARDISChameleonColumn column = plugin.getPresets().getGlass(PRESET.RENDER, d);
+            TardisChameleonColumn column = plugin.getPresets().getGlass(Preset.RENDER, d);
             int px, pz;
             BlockData[][] data = column.getBlockData();
             for (int i = 0; i < 9; i++) {
@@ -157,7 +157,7 @@ public class TARDISExteriorRenderer {
                 }
                 for (int py = 0; py < 4; py++) {
                     assert iw != null;
-                    TARDISBlockSetters.setBlock(iw, px, (y + py), pz, coldatas[py]);
+                    TardisBlockSetters.setBlock(iw, px, (y + py), pz, coldatas[py]);
                 }
             }
             // change the black/blue/green wool to blue/black/ to reflect time of day and environment
@@ -166,17 +166,17 @@ public class TARDISExteriorRenderer {
             BlockData stone;
             switch (biome) {
                 case "THE_END" -> {
-                    sky = TARDISConstants.BLACK;
+                    sky = TardisConstants.BLACK;
                     base = Material.END_STONE.createBlockData();
                     stone = Material.OBSIDIAN.createBlockData();
                 }
                 case "NETHER_WASTES", "SOUL_SAND_VALLEY", "CRIMSON_FOREST", "WARPED_FOREST", "BASALT_DELTAS" -> {
-                    sky = TARDISConstants.BLACK;
+                    sky = TardisConstants.BLACK;
                     base = Material.NETHERRACK.createBlockData();
                     stone = Material.NETHER_QUARTZ_ORE.createBlockData();
                 }
                 default -> {
-                    sky = (time > 12500) ? TARDISConstants.BLACK : Material.LIGHT_BLUE_WOOL.createBlockData();
+                    sky = (time > 12500) ? TardisConstants.BLACK : Material.LIGHT_BLUE_WOOL.createBlockData();
                     base = Material.DIRT.createBlockData();
                     stone = Material.STONE.createBlockData();
                 }
@@ -228,7 +228,7 @@ public class TARDISExteriorRenderer {
                 }
             }
             plugin.getTrackerKeeper().getRenderer().put(id, isRendered);
-            TARDISMessage.send(p, "RENDER_DONE");
+            TardisMessage.send(p, "RENDER_DONE");
             // remove dropped items
             for (Entity e : location.getChunk().getEntities()) {
                 if (e instanceof Item) {
@@ -238,7 +238,7 @@ public class TARDISExteriorRenderer {
         }
         // if enabled add static entities
         if (plugin.getConfig().getBoolean("preferences.render_entities")) {
-            new TARDISEntityTracker(plugin).addNPCs(exterior, location, p.getUniqueId());
+            new TardisEntityTracker(plugin).addNPCs(exterior, location, p.getUniqueId());
         }
         // charge artron energy for the render
         HashMap<String, Object> where = new HashMap<>();
@@ -249,11 +249,11 @@ public class TARDISExteriorRenderer {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             transmat(p, d, location);
             p.playSound(location, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
-            TARDISMessage.send(p, "RENDER_EXIT");
+            TardisMessage.send(p, "RENDER_EXIT");
         }, 10L);
     }
 
-    public void transmat(Player player, COMPASS d, Location loc) {
+    public void transmat(Player player, CardinalDirection d, Location loc) {
         float yaw = player.getLocation().getYaw();
         float pitch = player.getLocation().getPitch();
         loc.setPitch(pitch);

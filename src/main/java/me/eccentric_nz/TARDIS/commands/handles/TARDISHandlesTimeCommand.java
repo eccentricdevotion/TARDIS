@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.bukkit.entity.Player;
 
@@ -27,24 +27,24 @@ import java.util.Date;
 /**
  * @author eccentric_nz
  */
-class TARDISHandlesTimeCommand {
+class TardisHandlesTimeCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISHandlesTimeCommand(TARDISPlugin plugin) {
+    TardisHandlesTimeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean sayTime(Player player) {
         long minecraftTime = player.getWorld().getTime();
-        String daynight = TARDISStaticUtils.getTime(minecraftTime);
+        String daynight = TardisStaticUtils.getTime(minecraftTime);
         // get current server time (in a nice format)
         Date date = new Date();
         String formatted = DateFormatUtils.format(date, "h:mm a");
         // send message to player with current time
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            TARDISMessage.handlesSend(player, "HANDLES_TIME", minecraftTime, daynight, parseTime(minecraftTime));
-            TARDISMessage.handlesSend(player, "HANDLES_SERVER_TIME", formatted);
+            TardisMessage.handlesSend(player, "HANDLES_TIME", minecraftTime, daynight, parseTime(minecraftTime));
+            TardisMessage.handlesSend(player, "HANDLES_SERVER_TIME", formatted);
         }, 2L);
         return true;
     }

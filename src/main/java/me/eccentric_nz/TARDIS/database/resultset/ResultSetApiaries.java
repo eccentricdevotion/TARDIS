@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 
 import java.sql.Connection;
@@ -36,9 +36,9 @@ import java.util.List;
  */
 public class ResultSetApiaries {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Location> data = new ArrayList<>();
     private final String prefix;
 
@@ -47,7 +47,7 @@ public class ResultSetApiaries {
      *
      * @param plugin an instance of the main class.
      */
-    public ResultSetApiaries(TARDISPlugin plugin) {
+    public ResultSetApiaries(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -68,7 +68,7 @@ public class ResultSetApiaries {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    Location replacedBlock = TARDISStaticLocationGetters.getLocationFromDB(rs.getString("apiary"));
+                    Location replacedBlock = TardisStaticLocationGetters.getLocationFromDB(rs.getString("apiary"));
                     if (replacedBlock != null) {
                         data.add(replacedBlock);
                     }

@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 
 /**
  * @author eccentric_nz
  */
-class TARDISDispersedCommand {
+class TardisDispersedCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISDispersedCommand(TARDISPlugin plugin) {
+    TardisDispersedCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -35,7 +35,7 @@ class TARDISDispersedCommand {
         if (which.equalsIgnoreCase("clear")) {
             plugin.getTrackerKeeper().getDispersed().clear();
             plugin.getTrackerKeeper().getDispersedTARDII().clear();
-            TARDISMessage.send(sender, "ASSEMBLE_ALL");
+            TardisMessage.send(sender, "ASSEMBLE_ALL");
         } else if (which.equalsIgnoreCase("list")) {
             plugin.getTrackerKeeper().getDispersedTARDII().forEach((d) -> plugin.debug("TARDIS id: " + d));
         }

@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISNumberParsers {
+public class TardisNumberParsers {
 
     /**
      * Parses a string for an integer.
@@ -34,7 +34,7 @@ public class TARDISNumberParsers {
         try {
             num = Integer.parseInt(i);
         } catch (NumberFormatException n) {
-            TARDISPlugin.plugin.debug("Could not convert to int, the string was: " + i);
+            TardisPlugin.plugin.debug("Could not convert to int, the string was: " + i);
             //            n.printStackTrace();
         }
         return num;
@@ -51,7 +51,7 @@ public class TARDISNumberParsers {
         try {
             num = Float.parseFloat(i);
         } catch (NumberFormatException n) {
-            TARDISPlugin.plugin.debug("Could not convert to float, the string was: " + i);
+            TardisPlugin.plugin.debug("Could not convert to float, the string was: " + i);
         }
         return num;
     }
@@ -67,7 +67,7 @@ public class TARDISNumberParsers {
         try {
             num = Double.parseDouble(i);
         } catch (NumberFormatException n) {
-            TARDISPlugin.plugin.debug("Could not convert to double, the string was: " + i);
+            TardisPlugin.plugin.debug("Could not convert to double, the string was: " + i);
         }
         return num;
     }
@@ -83,7 +83,7 @@ public class TARDISNumberParsers {
         try {
             num = Long.parseLong(i);
         } catch (NumberFormatException n) {
-            TARDISPlugin.plugin.debug("Could not convert to double, the string was: " + i);
+            TardisPlugin.plugin.debug("Could not convert to double, the string was: " + i);
         }
         return num;
     }

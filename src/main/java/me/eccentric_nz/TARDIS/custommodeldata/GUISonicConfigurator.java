@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
-public enum GUISonicConfigurator {
+public enum GuiSonicConfigurator {
 
     // Sonic Configurator
     BIO_SCANNER_UPGRADE(9, 0, Material.BOWL, ""),
@@ -45,7 +45,7 @@ public enum GUISonicConfigurator {
     private final Material material;
     private final String lore;
 
-    GUISonicConfigurator(int customModelData, int slot, Material material, String lore) {
+    GuiSonicConfigurator(int customModelData, int slot, Material material, String lore) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -66,7 +66,7 @@ public enum GUISonicConfigurator {
 
     public String getName() {
         String s = toString();
-        return TARDISStringUtils.capitalise(s);
+        return TardisStringUtils.capitalise(s);
     }
 
     public String getLore() {

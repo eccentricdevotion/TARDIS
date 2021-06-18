@@ -16,23 +16,23 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.Flag;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.flight.TARDISDematerialiseToVortex;
-import me.eccentric_nz.tardis.flight.TARDISHandbrake;
-import me.eccentric_nz.tardis.flight.TARDISMaterialseFromVortex;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
-import me.eccentric_nz.tardis.travel.TARDISEPSRunnable;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.flight.TardisDematerialiseToVortex;
+import me.eccentric_nz.tardis.flight.TardisHandbrake;
+import me.eccentric_nz.tardis.flight.TardisMaterialiseFromVortex;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
+import me.eccentric_nz.tardis.travel.TardisEpsRunnable;
+import me.eccentric_nz.tardis.utility.TardisSounds;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -48,9 +48,9 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISAuthorisedControlDisk {
+public class TardisAuthorisedControlDisk {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final UUID uuid;
     private final List<String> lore;
     private final int id;
@@ -58,7 +58,7 @@ public class TARDISAuthorisedControlDisk {
     private final String eps;
     private final String creeper;
 
-    TARDISAuthorisedControlDisk(TARDISPlugin plugin, UUID uuid, List<String> lore, int id, Player player, String eps, String creeper) {
+    TardisAuthorisedControlDisk(TardisPlugin plugin, UUID uuid, List<String> lore, int id, Player player, String eps, String creeper) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.lore = lore;
@@ -75,7 +75,7 @@ public class TARDISAuthorisedControlDisk {
             return "The Time Lord of this TARDIS is not online.";
         }
         Location location = null;
-        COMPASS direction = COMPASS.EAST;
+        CardinalDirection direction = CardinalDirection.EAST;
         boolean isPlayerLocation = false;
         if (lore.size() > 3) {
             // has a stored save
@@ -95,10 +95,10 @@ public class TARDISAuthorisedControlDisk {
                 // get save location
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, where, false);
                 if (rsd.resultSet()) {
-                    World w = TARDISAliasResolver.getWorldFromAlias(rsd.getWorld());
+                    World w = TardisAliasResolver.getWorldFromAlias(rsd.getWorld());
                     if (w != null) {
                         location = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
-                        direction = COMPASS.valueOf(rsd.getDirection());
+                        direction = CardinalDirection.valueOf(rsd.getDirection());
                     } else {
                         return "Could not find the specified TARDIS save.";
                     }
@@ -136,19 +136,19 @@ public class TARDISAuthorisedControlDisk {
             where.put("secondary", 0);
             ResultSetControls rsc = new ResultSetControls(plugin, where, false);
             if (rsc.resultSet()) {
-                Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+                Location handbrake = TardisStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                 assert handbrake != null;
-                TARDISHandbrake.setLevers(handbrake.getBlock(), false, true, handbrake.toString(), id, plugin);
+                TardisHandbrake.setLevers(handbrake.getBlock(), false, true, handbrake.toString(), id, plugin);
                 if (plugin.getConfig().getBoolean("circuits.damage")) {
                     plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
                 }
-                TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
+                TardisSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("handbrake_on", 0);
                 HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-                TARDISMessage.send(player, "HANDBRAKE_OFF");
+                TardisMessage.send(player, "HANDBRAKE_OFF");
                 plugin.getTrackerKeeper().getInVortex().add(id);
                 // show emergency program one
                 HashMap<String, Object> wherev = new HashMap<>();
@@ -162,13 +162,13 @@ public class TARDISAuthorisedControlDisk {
                     playerUUIDs.add(player.getUniqueId());
                 }
                 String message = "The TARDIS has detected an authorised control disc, valid for one journey only. Travelling to the programmed location.";
-                TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, player, playerUUIDs, id, eps, creeper);
+                TardisEpsRunnable EPS_runnable = new TardisEpsRunnable(plugin, message, player, playerUUIDs, id, eps, creeper);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     // dematerialise
-                    new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
+                    new TardisDematerialiseToVortex(plugin, id, player, handbrake).run();
                     // materialise
-                    new TARDISMaterialseFromVortex(plugin, id, player, handbrake, SpaceTimeThrottle.NORMAL).run();
+                    new TardisMaterialiseFromVortex(plugin, id, player, handbrake, SpaceTimeThrottle.NORMAL).run();
                 }, 60L);
             } else {
                 return "Could not disengage handbrake.";

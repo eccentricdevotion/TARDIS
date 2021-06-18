@@ -38,7 +38,7 @@ import java.util.Random;
  *
  * @author eccentric_nz
  */
-public class TARDISConstants {
+public class TardisConstants {
 
     // TARDIS world names
     public static final List<String> PLANETS = Arrays.asList("Gallifrey", "Siluria", "Skaro");

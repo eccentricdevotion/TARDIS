@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,9 +33,9 @@ import java.util.UUID;
  */
 public class ResultSetAntiBuild {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String uuid;
     private final String prefix;
     private Integer tardisId;
@@ -46,7 +46,7 @@ public class ResultSetAntiBuild {
      * @param plugin an instance of the main class.
      * @param uuid   the uuid who is trying to build.
      */
-    public ResultSetAntiBuild(TARDISPlugin plugin, UUID uuid) {
+    public ResultSetAntiBuild(TardisPlugin plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid.toString();
         prefix = this.plugin.getPrefix();

@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.commands.preferences.TARDISPrefsMenuInventory;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.commands.preferences.TardisPrefsMenuInventory;
 import me.eccentric_nz.tardis.sonic.actions.*;
-import me.eccentric_nz.tardis.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.utility.TardisMaterials;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -47,16 +47,16 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISSonicListener implements Listener {
+public class TardisSonicListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Material sonic;
     private final List<Material> diamond = new ArrayList<>();
     private final List<Material> doors = new ArrayList<>();
     private final List<Material> redstone = new ArrayList<>();
     private final List<Material> ignite = new ArrayList<>();
 
-    public TARDISSonicListener(TARDISPlugin plugin) {
+    public TardisSonicListener(TardisPlugin plugin) {
         this.plugin = plugin;
         String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result")).split(":");
         sonic = Material.valueOf(split[0]);
@@ -64,7 +64,7 @@ public class TARDISSonicListener implements Listener {
         diamond.add(Material.IRON_BARS);
         diamond.add(Material.SNOW);
         diamond.add(Material.SNOW_BLOCK);
-        diamond.addAll(TARDISMaterials.glass);
+        diamond.addAll(TardisMaterials.glass);
         doors.add(Material.ACACIA_DOOR);
         doors.add(Material.ACACIA_TRAPDOOR);
         doors.add(Material.BIRCH_DOOR);
@@ -118,35 +118,35 @@ public class TARDISSonicListener implements Listener {
                 if (action.equals(Action.RIGHT_CLICK_AIR) && !player.isSneaking()) {
                     // rebuild Police Box if dispersed by HADS
                     if (plugin.getTrackerKeeper().getDispersed().containsKey(player.getUniqueId())) {
-                        TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
-                        TARDISSonicDispersed.assemble(plugin, player);
+                        TardisSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
+                        TardisSonicDispersed.assemble(plugin, player);
                     } else if (lore != null && (lore.contains("Bio-scanner Upgrade") || lore.contains("Knockback Upgrade"))) {
-                        TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
-                        if (TARDISPermission.hasPermission(player, "tardis.sonic.freeze")) {
+                        TardisSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
+                        if (TardisPermission.hasPermission(player, "tardis.sonic.freeze")) {
                             // freeze target player
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                Player target = TARDISSonicFreeze.getTargetPlayer(player);
+                                Player target = TardisSonicFreeze.getTargetPlayer(player);
                                 if (target != null) {
-                                    TARDISSonicFreeze.immobilise(plugin, player, target);
+                                    TardisSonicFreeze.immobilise(plugin, player, target);
                                 }
                             }, 20L);
                         }
-                        if (TARDISPermission.hasPermission(player, "tardis.sonic.knockback")) {
+                        if (TardisPermission.hasPermission(player, "tardis.sonic.knockback")) {
                             // knockback any monsters in line of sight
-                            Entity target = TARDISSonicKnockback.getTargetEntity(player);
+                            Entity target = TardisSonicKnockback.getTargetEntity(player);
                             if (target != null) {
-                                TARDISSonicKnockback.knockback(player, target);
+                                TardisSonicKnockback.knockback(player, target);
                             }
                         }
                     }
-                    if (TARDISPermission.hasPermission(player, "tardis.sonic.standard")) {
-                        TARDISSonic.standardSonic(plugin, player, now);
+                    if (TardisPermission.hasPermission(player, "tardis.sonic.standard")) {
+                        TardisSonic.standardSonic(plugin, player, now);
                         return;
                     }
                 }
-                if (action.equals(Action.RIGHT_CLICK_AIR) && player.isSneaking() && TARDISPermission.hasPermission(player, "tardis.sonic.standard")) {
+                if (action.equals(Action.RIGHT_CLICK_AIR) && player.isSneaking() && TardisPermission.hasPermission(player, "tardis.sonic.standard")) {
                     Inventory ppm = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "Player Prefs Menu");
-                    ppm.setContents(new TARDISPrefsMenuInventory(plugin, player.getUniqueId()).getMenu());
+                    ppm.setContents(new TardisPrefsMenuInventory(plugin, player.getUniqueId()).getMenu());
                     player.openInventory(ppm);
                     return;
                 }
@@ -155,16 +155,16 @@ public class TARDISSonicListener implements Listener {
                     assert block != null;
                     if (doors.contains(block.getType()) && player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
                         // display tardis info
-                        TARDISSonicAdmin.displayInfo(plugin, player, block);
+                        TardisSonicAdmin.displayInfo(plugin, player, block);
                     }
-                    if (Tag.WALL_SIGNS.isTagged(block.getType()) && TARDISPermission.hasPermission(player, "tardis.atmospheric")) {
+                    if (Tag.WALL_SIGNS.isTagged(block.getType()) && TardisPermission.hasPermission(player, "tardis.atmospheric")) {
                         // make it snow
-                        TARDISSonicAtmospheric.makeItSnow(plugin, player, block);
+                        TardisSonicAtmospheric.makeItSnow(plugin, player, block);
                         return;
                     }
-                    if (TARDISPermission.hasPermission(player, "tardis.sonic.arrow") && lore != null && lore.contains("Pickup Arrows Upgrade")) {
+                    if (TardisPermission.hasPermission(player, "tardis.sonic.arrow") && lore != null && lore.contains("Pickup Arrows Upgrade")) {
                         if (!block.getType().isInteractable()) {
-                            TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+                            TardisSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
                         }
                         // scan area around block for an arrow
                         List<Entity> nearbyEntites = block.getWorld().getNearbyEntities(block.getLocation(), 2, 2, 2).stream().toList();
@@ -176,35 +176,35 @@ public class TARDISSonicListener implements Listener {
                             }
                         }
                     }
-                    if (redstone.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.redstone") && lore != null && lore.contains("Redstone Upgrade")) {
+                    if (redstone.contains(block.getType()) && TardisPermission.hasPermission(player, "tardis.sonic.redstone") && lore != null && lore.contains("Redstone Upgrade")) {
                         // toggle powered state
-                        TARDISSonicRedstone.togglePoweredState(plugin, player, block);
+                        TardisSonicRedstone.togglePoweredState(plugin, player, block);
                         return;
                     }
-                    if (!redstone.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade") && !block.getType().isInteractable()) {
-                        TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
+                    if (!redstone.contains(block.getType()) && TardisPermission.hasPermission(player, "tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade") && !block.getType().isInteractable()) {
+                        TardisSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                         // scan environment
-                        TARDISSonicScanner.scan(plugin, block.getLocation(), player);
+                        TardisSonicScanner.scan(plugin, block.getLocation(), player);
                     }
                 }
                 if (action.equals(Action.LEFT_CLICK_BLOCK)) {
                     Block block = event.getClickedBlock();
                     if (!player.isSneaking()) {
                         assert block != null;
-                        if ((block.getType().isBurnable() || ignite.contains(block.getType())) && TARDISPermission.hasPermission(player, "tardis.sonic.ignite") && lore != null && lore.contains("Ignite Upgrade")) {
-                            TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_short");
+                        if ((block.getType().isBurnable() || ignite.contains(block.getType())) && TardisPermission.hasPermission(player, "tardis.sonic.ignite") && lore != null && lore.contains("Ignite Upgrade")) {
+                            TardisSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_short");
                             // ignite block
-                            TARDISSonicIgnite.ignite(plugin, block, player);
+                            TardisSonicIgnite.ignite(plugin, block, player);
                         }
-                        if (diamond.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.diamond") && lore != null && lore.contains("Diamond Upgrade")) {
+                        if (diamond.contains(block.getType()) && TardisPermission.hasPermission(player, "tardis.sonic.diamond") && lore != null && lore.contains("Diamond Upgrade")) {
                             // break block
-                            TARDISSonicDisruptor.breakBlock(plugin, player, block);
+                            TardisSonicDisruptor.breakBlock(plugin, player, block);
                         }
                     } else {
                         assert block != null;
-                        if (TARDISSonicPainter.getPaintable().contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.paint") && lore != null && lore.contains("Painter Upgrade")) {
+                        if (TardisSonicPainter.getPaintable().contains(block.getType()) && TardisPermission.hasPermission(player, "tardis.sonic.paint") && lore != null && lore.contains("Painter Upgrade")) {
                             // paint the block
-                            TARDISSonicPainter.paint(plugin, player, block);
+                            TardisSonicPainter.paint(plugin, player, block);
                         }
                     }
                 }

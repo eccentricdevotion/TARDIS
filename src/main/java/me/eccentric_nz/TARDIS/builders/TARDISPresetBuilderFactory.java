@@ -16,21 +16,21 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.chameleon.TARDISChameleonCircuit;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.chameleon.TardisChameleonCircuit;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.destroyers.TARDISDeinstantPreset;
+import me.eccentric_nz.tardis.destroyers.TardisDeinstantPreset;
 import me.eccentric_nz.tardis.enumeration.Adaption;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.junk.TARDISJunkBuilder;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.junk.TardisJunkBuilder;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisBiome;
+import me.eccentric_nz.tardis.utility.TardisSounds;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -47,33 +47,33 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISPresetBuilderFactory {
+public class TardisPresetBuilderFactory {
 
-    final List<PRESET> no_block_under_door;
-    private final TARDISPlugin plugin;
-    private final HashMap<COMPASS, BlockFace[]> face_map = new HashMap<>();
-    private final List<PRESET> notSubmarinePresets;
+    final List<Preset> no_block_under_door;
+    private final TardisPlugin plugin;
+    private final HashMap<CardinalDirection, BlockFace[]> face_map = new HashMap<>();
+    private final List<Preset> notSubmarinePresets;
 
-    public TARDISPresetBuilderFactory(TARDISPlugin plugin) {
+    public TardisPresetBuilderFactory(TardisPlugin plugin) {
         this.plugin = plugin;
-        face_map.put(COMPASS.SOUTH, new BlockFace[]{BlockFace.SOUTH_WEST, BlockFace.SOUTH_SOUTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_SOUTH_EAST, BlockFace.SOUTH_EAST});
-        face_map.put(COMPASS.EAST, new BlockFace[]{BlockFace.SOUTH_EAST, BlockFace.EAST_SOUTH_EAST, BlockFace.EAST, BlockFace.EAST_NORTH_EAST, BlockFace.NORTH_EAST});
-        face_map.put(COMPASS.NORTH, new BlockFace[]{BlockFace.NORTH_EAST, BlockFace.NORTH_NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_NORTH_WEST, BlockFace.NORTH_WEST});
-        face_map.put(COMPASS.WEST, new BlockFace[]{BlockFace.NORTH_WEST, BlockFace.WEST_NORTH_WEST, BlockFace.WEST, BlockFace.WEST_SOUTH_WEST, BlockFace.SOUTH_WEST});
+        face_map.put(CardinalDirection.SOUTH, new BlockFace[]{BlockFace.SOUTH_WEST, BlockFace.SOUTH_SOUTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_SOUTH_EAST, BlockFace.SOUTH_EAST});
+        face_map.put(CardinalDirection.EAST, new BlockFace[]{BlockFace.SOUTH_EAST, BlockFace.EAST_SOUTH_EAST, BlockFace.EAST, BlockFace.EAST_NORTH_EAST, BlockFace.NORTH_EAST});
+        face_map.put(CardinalDirection.NORTH, new BlockFace[]{BlockFace.NORTH_EAST, BlockFace.NORTH_NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_NORTH_WEST, BlockFace.NORTH_WEST});
+        face_map.put(CardinalDirection.WEST, new BlockFace[]{BlockFace.NORTH_WEST, BlockFace.WEST_NORTH_WEST, BlockFace.WEST, BlockFace.WEST_SOUTH_WEST, BlockFace.SOUTH_WEST});
         no_block_under_door = new ArrayList<>();
-        no_block_under_door.add(PRESET.ANGEL);
-        no_block_under_door.add(PRESET.DUCK);
-        no_block_under_door.add(PRESET.GAZEBO);
-        no_block_under_door.add(PRESET.HELIX);
-        no_block_under_door.add(PRESET.LIBRARY);
-        no_block_under_door.add(PRESET.PANDORICA);
-        no_block_under_door.add(PRESET.ROBOT);
-        no_block_under_door.add(PRESET.SWAMP);
-        no_block_under_door.add(PRESET.TORCH);
-        no_block_under_door.add(PRESET.WELL);
+        no_block_under_door.add(Preset.ANGEL);
+        no_block_under_door.add(Preset.DUCK);
+        no_block_under_door.add(Preset.GAZEBO);
+        no_block_under_door.add(Preset.HELIX);
+        no_block_under_door.add(Preset.LIBRARY);
+        no_block_under_door.add(Preset.PANDORICA);
+        no_block_under_door.add(Preset.ROBOT);
+        no_block_under_door.add(Preset.SWAMP);
+        no_block_under_door.add(Preset.TORCH);
+        no_block_under_door.add(Preset.WELL);
         notSubmarinePresets = new ArrayList<>();
-        notSubmarinePresets.add(PRESET.LAMP);
-        notSubmarinePresets.add(PRESET.MINESHAFT);
+        notSubmarinePresets.add(Preset.LAMP);
+        notSubmarinePresets.add(Preset.MINESHAFT);
     }
 
     /**
@@ -86,30 +86,30 @@ public class TARDISPresetBuilderFactory {
         where.put("tardis_id", bd.getTardisId());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
-            PRESET preset = tardis.getPreset();
-            TARDISBiome biome;
+            Tardis tardis = rs.getTardis();
+            Preset preset = tardis.getPreset();
+            TardisBiome biome;
             // keep the chunk this Police box is in loaded
             Chunk thisChunk = bd.getLocation().getChunk();
             while (!thisChunk.isLoaded()) {
                 thisChunk.load();
             }
             if (bd.isRebuild()) {
-                biome = TARDISStaticUtils.getBiomeAt(Objects.requireNonNull(bd.getLocation().getWorld()).getBlockAt(bd.getLocation()).getRelative(getOppositeFace(bd.getDirection()), 2).getLocation());
+                biome = TardisStaticUtils.getBiomeAt(Objects.requireNonNull(bd.getLocation().getWorld()).getBlockAt(bd.getLocation()).getRelative(getOppositeFace(bd.getDirection()), 2).getLocation());
             } else {
-                biome = TARDISStaticUtils.getBiomeAt(bd.getLocation());
+                biome = TardisStaticUtils.getBiomeAt(bd.getLocation());
                 // disable force field
                 if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(tardis.getUuid())) {
                     plugin.getTrackerKeeper().getActiveForceFields().remove(tardis.getUuid());
-                    TARDISMessage.send(bd.getPlayer().getPlayer(), "FORCE_FIELD", "OFF");
+                    TardisMessage.send(bd.getPlayer().getPlayer(), "FORCE_FIELD", "OFF");
                 }
             }
             if (tardis.getAdaption().equals(Adaption.BIOME)) {
                 preset = adapt(biome, tardis.getAdaption());
             }
-            PRESET demat = tardis.getDemat();
+            Preset demat = tardis.getDemat();
             Material chameleonMaterial = Material.LIGHT_GRAY_TERRACOTTA;
-            if ((tardis.getAdaption().equals(Adaption.BIOME) && preset.equals(PRESET.FACTORY)) || tardis.getAdaption().equals(Adaption.BLOCK) || preset.equals(PRESET.SUBMERGED)) {
+            if ((tardis.getAdaption().equals(Adaption.BIOME) && preset.equals(Preset.FACTORY)) || tardis.getAdaption().equals(Adaption.BLOCK) || preset.equals(Preset.SUBMERGED)) {
                 Block chameleonBlock;
                 // chameleon circuit is on - get block under TARDIS
                 if (bd.getLocation().getBlock().getType() == Material.SNOW) {
@@ -118,14 +118,14 @@ public class TARDISPresetBuilderFactory {
                     chameleonBlock = bd.getLocation().getBlock().getRelative(BlockFace.DOWN);
                 }
                 // determine chameleonMaterial
-                TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
+                TardisChameleonCircuit tcc = new TardisChameleonCircuit(plugin);
                 chameleonMaterial = tcc.getChameleonBlock(chameleonBlock, bd.getPlayer());
             }
             boolean hidden = tardis.isHidden();
             // get submarine preferences
             if (bd.isSubmarine() && notSubmarinePresets.contains(preset)) {
-                preset = PRESET.YELLOW;
-                TARDISMessage.send(bd.getPlayer().getPlayer(), "SUB_UNSUITED");
+                preset = Preset.YELLOW;
+                TardisMessage.send(bd.getPlayer().getPlayer(), "SUB_UNSUITED");
             }
             /*
              * We can always add the chunk, as List.remove() only removes the
@@ -140,38 +140,38 @@ public class TARDISPresetBuilderFactory {
                 bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 // always destroy it first as the player may just be switching presets
                 if (!hidden) {
-                    TARDISDeinstantPreset deinsta = new TARDISDeinstantPreset(plugin);
+                    TardisDeinstantPreset deinsta = new TardisDeinstantPreset(plugin);
                     deinsta.instaDestroyPreset(bd, false, demat);
                 }
                 plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisId());
                 int taskID;
                 if (preset.usesItemFrame()) {
-                    TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, preset);
+                    TardisMaterialisePoliceBox frame = new TardisMaterialisePoliceBox(plugin, bd, preset);
                     taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
                     frame.setTask(taskID);
                 } else {
-                    TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, chameleonMaterial.createBlockData(), tardis.getAdaption());
+                    TardisMaterialisePreset runnable = new TardisMaterialisePreset(plugin, bd, preset, chameleonMaterial.createBlockData(), tardis.getAdaption());
                     taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 }
-                TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");
+                TardisSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");
                 if (bd.getPlayer().getPlayer() != null && plugin.getUtils().inTARDISWorld(bd.getPlayer().getPlayer())) {
-                    TARDISSounds.playTARDISSound(bd.getPlayer().getPlayer().getLocation(), "tardis_land_fast");
+                    TardisSounds.playTARDISSound(bd.getPlayer().getPlayer().getLocation(), "tardis_land_fast");
                 }
-            } else if (!preset.equals(PRESET.INVISIBLE)) {
+            } else if (!preset.equals(Preset.INVISIBLE)) {
                 plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisId());
-                if (preset.equals(PRESET.JUNK)) {
-                    TARDISJunkBuilder runnable = new TARDISJunkBuilder(plugin, bd);
+                if (preset.equals(Preset.JUNK)) {
+                    TardisJunkBuilder runnable = new TardisJunkBuilder(plugin, bd);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
                     int taskID;
                     if (preset.usesItemFrame()) {
-                        TARDISMaterialisePoliceBox frame = new TARDISMaterialisePoliceBox(plugin, bd, preset);
+                        TardisMaterialisePoliceBox frame = new TardisMaterialisePoliceBox(plugin, bd, preset);
                         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
                         frame.setTask(taskID);
                     } else {
-                        TARDISMaterialisePreset runnable = new TARDISMaterialisePreset(plugin, bd, preset, chameleonMaterial.createBlockData(), tardis.getAdaption());
+                        TardisMaterialisePreset runnable = new TardisMaterialisePreset(plugin, bd, preset, chameleonMaterial.createBlockData(), tardis.getAdaption());
                         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                         runnable.setTask(taskID);
                     }
@@ -181,7 +181,7 @@ public class TARDISPresetBuilderFactory {
                 // delay by the usual time so handbrake message shows after materialisation sound
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisId());
-                    new TARDISInstantPreset(plugin, bd, PRESET.INVISIBLE, material.createBlockData(), false).buildPreset();
+                    new TardisInstantPreset(plugin, bd, Preset.INVISIBLE, material.createBlockData(), false).buildPreset();
                 }, 375L);
             }
             // update demat so it knows about the current preset after it has changed
@@ -193,40 +193,40 @@ public class TARDISPresetBuilderFactory {
         }
     }
 
-    private PRESET adapt(TARDISBiome biome, Adaption adaption) {
+    private Preset adapt(TardisBiome biome, Adaption adaption) {
         if (adaption.equals(Adaption.BLOCK)) {
-            return PRESET.ADAPTIVE;
+            return Preset.ADAPTIVE;
         } else {
             return switch (biome.name()) {
-                case "BEACH", "FROZEN_RIVER", "RIVER", "SNOWY_BEACH" -> PRESET.BOAT;
-                case "COLD_OCEAN", "DEEP_COLD_OCEAN", "DEEP_LUKEWARM_OCEAN", "DEEP_OCEAN", "DEEP_WARM_OCEAN", "FROZEN_OCEAN", "LUKEWARM_OCEAN", "OCEAN", "WARM_OCEAN" -> PRESET.YELLOW;
-                case "DESERT", "DESERT_HILLS", "DESERT_LAKES" -> PRESET.DESERT;
-                case "GRAVELLY_MOUNTAINS", "MODIFIED_GRAVELLY_MOUNTAINS", "MOUNTAINS", "SNOWY_MOUNTAINS", "WOODED_MOUNTAINS" -> PRESET.EXTREME_HILLS;
-                case "BIRCH_FOREST", "BIRCH_FOREST_HILLS", "FOREST", "TALL_BIRCH_FOREST", "TALL_BIRCH_HILLS" -> PRESET.FOREST;
-                case "NETHER_WASTES", "SOUL_SAND_VALLEY", "CRIMSON_FOREST", "WARPED_FOREST", "BASALT_DELTAS" -> PRESET.NETHER;
-                case "SNOWY_TUNDRA", "DEEP_FROZEN_OCEAN" -> PRESET.ICE_FLATS;
-                case "ICE_SPIKES" -> PRESET.ICE_SPIKES;
-                case "JUNGLE", "JUNGLE_EDGE", "JUNGLE_HILLS", "MODIFIED_JUNGLE", "MODIFIED_JUNGLE_EDGE" -> PRESET.JUNGLE;
-                case "BADLANDS", "BADLANDS_PLATEAU", "ERODED_BADLANDS", "MODIFIED_BADLANDS_PLATEAU", "MODIFIED_WOODED_BADLANDS_PLATEAU", "WOODED_BADLANDS_PLATEAU" -> PRESET.MESA;
-                case "MUSHROOM_FIELDS", "MUSHROOM_FIELD_SHORE" -> PRESET.SHROOM;
-                case "PLAINS", "SUNFLOWER_PLAINS" -> PRESET.PLAINS;
-                case "DARK_FOREST", "DARK_FOREST_HILLS" -> PRESET.ROOFED_FOREST;
-                case "SAVANNA", "SHATTERED_SAVANNA", "SAVANNA_PLATEAU", "SHATTERED_SAVANNA_PLATEAU" -> PRESET.SAVANNA;
-                case "SWAMP", "SWAMP_HILLS" -> PRESET.SWAMP;
-                case "END_BARRENS", "END_HIGHLANDS", "END_MIDLANDS", "SMALL_END_ISLANDS", "THE_END" -> PRESET.THEEND;
-                case "GIANT_SPRUCE_TAIGA", "GIANT_SPRUCE_TAIGA_HILLS", "GIANT_TREE_TAIGA", "GIANT_TREE_TAIGA_HILLS", "TAIGA", "TAIGA_HILLS", "TAIGA_MOUNTAINS" -> PRESET.TAIGA;
-                case "SNOWY_TAIGA", "SNOWY_TAIGA_HILLS", "SNOWY_TAIGA_MOUNTAINS" -> PRESET.COLD_TAIGA;
-                default -> PRESET.FACTORY;
+                case "BEACH", "FROZEN_RIVER", "RIVER", "SNOWY_BEACH" -> Preset.BOAT;
+                case "COLD_OCEAN", "DEEP_COLD_OCEAN", "DEEP_LUKEWARM_OCEAN", "DEEP_OCEAN", "DEEP_WARM_OCEAN", "FROZEN_OCEAN", "LUKEWARM_OCEAN", "OCEAN", "WARM_OCEAN" -> Preset.YELLOW;
+                case "DESERT", "DESERT_HILLS", "DESERT_LAKES" -> Preset.DESERT;
+                case "GRAVELLY_MOUNTAINS", "MODIFIED_GRAVELLY_MOUNTAINS", "MOUNTAINS", "SNOWY_MOUNTAINS", "WOODED_MOUNTAINS" -> Preset.EXTREME_HILLS;
+                case "BIRCH_FOREST", "BIRCH_FOREST_HILLS", "FOREST", "TALL_BIRCH_FOREST", "TALL_BIRCH_HILLS" -> Preset.FOREST;
+                case "NETHER_WASTES", "SOUL_SAND_VALLEY", "CRIMSON_FOREST", "WARPED_FOREST", "BASALT_DELTAS" -> Preset.NETHER;
+                case "SNOWY_TUNDRA", "DEEP_FROZEN_OCEAN" -> Preset.ICE_FLATS;
+                case "ICE_SPIKES" -> Preset.ICE_SPIKES;
+                case "JUNGLE", "JUNGLE_EDGE", "JUNGLE_HILLS", "MODIFIED_JUNGLE", "MODIFIED_JUNGLE_EDGE" -> Preset.JUNGLE;
+                case "BADLANDS", "BADLANDS_PLATEAU", "ERODED_BADLANDS", "MODIFIED_BADLANDS_PLATEAU", "MODIFIED_WOODED_BADLANDS_PLATEAU", "WOODED_BADLANDS_PLATEAU" -> Preset.MESA;
+                case "MUSHROOM_FIELDS", "MUSHROOM_FIELD_SHORE" -> Preset.SHROOM;
+                case "PLAINS", "SUNFLOWER_PLAINS" -> Preset.PLAINS;
+                case "DARK_FOREST", "DARK_FOREST_HILLS" -> Preset.ROOFED_FOREST;
+                case "SAVANNA", "SHATTERED_SAVANNA", "SAVANNA_PLATEAU", "SHATTERED_SAVANNA_PLATEAU" -> Preset.SAVANNA;
+                case "SWAMP", "SWAMP_HILLS" -> Preset.SWAMP;
+                case "END_BARRENS", "END_HIGHLANDS", "END_MIDLANDS", "SMALL_END_ISLANDS", "THE_END" -> Preset.THEEND;
+                case "GIANT_SPRUCE_TAIGA", "GIANT_SPRUCE_TAIGA_HILLS", "GIANT_TREE_TAIGA", "GIANT_TREE_TAIGA_HILLS", "TAIGA", "TAIGA_HILLS", "TAIGA_MOUNTAINS" -> Preset.TAIGA;
+                case "SNOWY_TAIGA", "SNOWY_TAIGA_HILLS", "SNOWY_TAIGA_MOUNTAINS" -> Preset.COLD_TAIGA;
+                default -> Preset.FACTORY;
             };
         }
     }
 
-    BlockFace getSkullDirection(COMPASS d) {
+    BlockFace getSkullDirection(CardinalDirection d) {
         BlockFace[] faces = face_map.get(d);
-        return faces[TARDISConstants.RANDOM.nextInt(5)];
+        return faces[TardisConstants.RANDOM.nextInt(5)];
     }
 
-    public BlockFace getOppositeFace(COMPASS d) {
+    public BlockFace getOppositeFace(CardinalDirection d) {
         return switch (d) {
             case SOUTH -> BlockFace.NORTH;
             case WEST -> BlockFace.EAST;

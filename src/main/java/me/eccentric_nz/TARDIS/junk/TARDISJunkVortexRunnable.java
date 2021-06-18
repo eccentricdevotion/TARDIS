@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.utility.TARDISParticles;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TardisParticles;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
@@ -34,10 +34,10 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-class TARDISJunkVortexRunnable implements Runnable {
+class TardisJunkVortexRunnable implements Runnable {
 
     private static final int LOOPS = 12;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Location vortexJunkLoc;
     private final Location effectsLoc;
     private final Location destJunkLoc;
@@ -47,7 +47,7 @@ class TARDISJunkVortexRunnable implements Runnable {
     private int task;
     private int fryTask;
 
-    TARDISJunkVortexRunnable(TARDISPlugin plugin, Location vortexJunkLoc, OfflinePlayer player, int id) {
+    TardisJunkVortexRunnable(TardisPlugin plugin, Location vortexJunkLoc, OfflinePlayer player, int id) {
         this.plugin = plugin;
         this.vortexJunkLoc = vortexJunkLoc;
         effectsLoc = this.vortexJunkLoc.clone().add(0.5d, 0, 0.5d);
@@ -61,23 +61,23 @@ class TARDISJunkVortexRunnable implements Runnable {
         if (i < LOOPS) {
             i++;
             if (i == 1) {
-                fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, vortexJunkLoc), 0, 1L);
+                fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TardisJunkItsDangerousRunnable(plugin, vortexJunkLoc), 0, 1L);
             }
             if (plugin.getConfig().getBoolean("junk.particles")) {
                 plugin.getUtils().getJunkTravellers(vortexJunkLoc).forEach((e) -> {
                     if (e instanceof Player p) {
-                        TARDISParticles.sendVortexParticles(effectsLoc, p);
+                        TardisParticles.sendVortexParticles(effectsLoc, p);
                     }
                 });
             }
             if (i == 2) {
                 // play sound
-                TARDISSounds.playTARDISSound(vortexJunkLoc, "junk_arc");
+                TardisSounds.playTARDISSound(vortexJunkLoc, "junk_arc");
             }
             if (i == LOOPS - 1) {
                 // build the tardis at the location
                 BuildData bd = new BuildData(null);
-                bd.setDirection(COMPASS.SOUTH);
+                bd.setDirection(CardinalDirection.SOUTH);
                 bd.setLocation(destJunkLoc);
                 bd.setMalfunction(false);
                 bd.setOutside(true);

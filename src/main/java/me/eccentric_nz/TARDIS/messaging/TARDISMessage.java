@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.messaging;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -27,7 +27,7 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISMessage {
+public class TardisMessage {
 
     public static final String JENKINS_UPDATE_READY = ChatColor.RED + "There is a new tardis build! You are using " + ChatColor.GOLD + "#%s" + ChatColor.RED + ", the latest build is " + ChatColor.GOLD + "#%s" + ChatColor.RED + "!";
     public static final String UPDATE_COMMAND = ChatColor.GOLD + "Visit http://tardisjenkins.duckdns.org:8080/job/TARDIS/ or run the '/tardisadmin update_plugins' command";
@@ -41,8 +41,8 @@ public class TARDISMessage {
      */
     public static void message(Player p, String message) {
         if (p != null) {
-            if (message.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
-                String[] multiline = TARDISChatPaginator.wordWrap(message);
+            if (message.length() > TardisChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
+                String[] multiline = TardisChatPaginator.wordWrap(message);
                 p.sendMessage(multiline);
             } else {
                 p.sendMessage(message);
@@ -51,8 +51,8 @@ public class TARDISMessage {
     }
 
     public static void message(CommandSender cs, String message) {
-        if (message.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
-            String[] multiline = TARDISChatPaginator.wordWrap(message);
+        if (message.length() > TardisChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
+            String[] multiline = TardisChatPaginator.wordWrap(message);
             cs.sendMessage(multiline);
         } else {
             cs.sendMessage(message);
@@ -60,90 +60,90 @@ public class TARDISMessage {
     }
 
     public static void send(Player p, String key) {
-        String local = TARDISPlugin.plugin.getLanguage().getString(key);
-        message(p, TARDISPlugin.plugin.getPluginName() + local);
+        String local = TardisPlugin.plugin.getLanguage().getString(key);
+        message(p, TardisPlugin.plugin.getPluginName() + local);
     }
 
     public static void handlesMessage(Player p, String message) {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDISPlugin.plugin, () -> message(p, HANDLES + message), 2L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TardisPlugin.plugin, () -> message(p, HANDLES + message), 2L);
     }
 
     public static void handlesSend(Player p, String key) {
-        String local = TARDISPlugin.plugin.getLanguage().getString(key);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDISPlugin.plugin, () -> message(p, HANDLES + local), 2L);
+        String local = TardisPlugin.plugin.getLanguage().getString(key);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TardisPlugin.plugin, () -> message(p, HANDLES + local), 2L);
     }
 
     public static void send(Player p, String key, String sub) {
-        String local = TARDISPlugin.plugin.getLanguage().getString(key);
+        String local = TardisPlugin.plugin.getLanguage().getString(key);
         assert local != null;
-        message(p, TARDISPlugin.plugin.getPluginName() + String.format(local, sub));
+        message(p, TardisPlugin.plugin.getPluginName() + String.format(local, sub));
     }
 
     public static void handlesSend(Player p, String key, String sub) {
-        String local = TARDISPlugin.plugin.getLanguage().getString(key);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDISPlugin.plugin, () -> {
+        String local = TardisPlugin.plugin.getLanguage().getString(key);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TardisPlugin.plugin, () -> {
             assert local != null;
             message(p, HANDLES + String.format(local, sub));
         }, 2L);
     }
 
     public static void send(CommandSender cs, String key) {
-        String local = TARDISPlugin.plugin.getLanguage().getString(key);
-        message(cs, TARDISPlugin.plugin.getPluginName() + local);
+        String local = TardisPlugin.plugin.getLanguage().getString(key);
+        message(cs, TardisPlugin.plugin.getPluginName() + local);
     }
 
     public static void send(CommandSender cs, String key, String sub) {
-        String local = TARDISPlugin.plugin.getLanguage().getString(key);
+        String local = TardisPlugin.plugin.getLanguage().getString(key);
         assert local != null;
-        message(cs, TARDISPlugin.plugin.getPluginName() + String.format(local, sub));
+        message(cs, TardisPlugin.plugin.getPluginName() + String.format(local, sub));
     }
 
     public static void send(Player p, String key, boolean handbrake) {
-        String local = TARDISPlugin.plugin.getLanguage().getString(key);
+        String local = TardisPlugin.plugin.getLanguage().getString(key);
         if (handbrake) {
-            message(p, TARDISPlugin.plugin.getPluginName() + local + " " + TARDISPlugin.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+            message(p, TardisPlugin.plugin.getPluginName() + local + " " + TardisPlugin.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
         } else {
-            message(p, TARDISPlugin.plugin.getPluginName() + local + " " + TARDISPlugin.plugin.getLanguage().getString("LEAVING_VORTEX"));
+            message(p, TardisPlugin.plugin.getPluginName() + local + " " + TardisPlugin.plugin.getLanguage().getString("LEAVING_VORTEX"));
         }
     }
 
     public static void send(Player p, String key, String sub, boolean handbrake) {
-        String local = TARDISPlugin.plugin.getLanguage().getString(key);
+        String local = TardisPlugin.plugin.getLanguage().getString(key);
         assert local != null;
         if (handbrake) {
-            message(p, TARDISPlugin.plugin.getPluginName() + String.format(local, sub) + " " + TARDISPlugin.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+            message(p, TardisPlugin.plugin.getPluginName() + String.format(local, sub) + " " + TardisPlugin.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
         } else {
-            message(p, TARDISPlugin.plugin.getPluginName() + String.format(local, sub) + " " + TARDISPlugin.plugin.getLanguage().getString("LEAVING_VORTEX"));
+            message(p, TardisPlugin.plugin.getPluginName() + String.format(local, sub) + " " + TardisPlugin.plugin.getLanguage().getString("LEAVING_VORTEX"));
         }
     }
 
     public static void send(Player p, String key, String one, String two) {
-        String local = TARDISPlugin.plugin.getLanguage().getString(key);
+        String local = TardisPlugin.plugin.getLanguage().getString(key);
         assert local != null;
-        message(p, TARDISPlugin.plugin.getPluginName() + String.format(local, one, two));
+        message(p, TardisPlugin.plugin.getPluginName() + String.format(local, one, two));
     }
 
     public static void send(CommandSender cs, String key, String one, String two) {
-        String local = TARDISPlugin.plugin.getLanguage().getString(key);
+        String local = TardisPlugin.plugin.getLanguage().getString(key);
         assert local != null;
-        message(cs, TARDISPlugin.plugin.getPluginName() + String.format(local, one, two));
+        message(cs, TardisPlugin.plugin.getPluginName() + String.format(local, one, two));
     }
 
     public static void send(Player p, String key, String one, String two, String three) {
-        String local = TARDISPlugin.plugin.getLanguage().getString(key);
+        String local = TardisPlugin.plugin.getLanguage().getString(key);
         assert local != null;
-        message(p, TARDISPlugin.plugin.getPluginName() + String.format(local, one, two, three));
+        message(p, TardisPlugin.plugin.getPluginName() + String.format(local, one, two, three));
     }
 
     public static void handlesSend(Player p, String key, long one, String two, String three) {
-        String local = TARDISPlugin.plugin.getLanguage().getString(key);
+        String local = TardisPlugin.plugin.getLanguage().getString(key);
         assert local != null;
         message(p, HANDLES + String.format(local, one, two, three));
     }
 
     public static void send(CommandSender cs, String key, String one, int two, int three) {
-        String local = TARDISPlugin.plugin.getLanguage().getString(key);
+        String local = TardisPlugin.plugin.getLanguage().getString(key);
         assert local != null;
-        message(cs, TARDISPlugin.plugin.getPluginName() + String.format(local, one, two, three));
+        message(cs, TardisPlugin.plugin.getPluginName() + String.format(local, one, two, three));
     }
 }

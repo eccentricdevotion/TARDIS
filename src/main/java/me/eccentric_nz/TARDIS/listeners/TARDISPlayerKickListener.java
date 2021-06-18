@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.utility.TARDISVoidFall;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.utility.TardisVoidFall;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,11 +29,11 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISPlayerKickListener implements Listener {
+public class TardisPlayerKickListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISPlayerKickListener(TARDISPlugin plugin) {
+    public TardisPlayerKickListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -47,7 +47,7 @@ public class TARDISPlayerKickListener implements Listener {
             if (Objects.equals(plugin.getConfig().getString("preferences.vortex_fall"), "kill")) {
                 player.setHealth(0);
             } else {
-                new TARDISVoidFall(plugin).teleport(player);
+                new TardisVoidFall(plugin).teleport(player);
             }
         }
     }

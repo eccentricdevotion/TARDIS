@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisBuilderInstanceKeeper;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -45,11 +45,11 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISBlockBreakListener implements Listener {
+public class TardisBlockBreakListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISBlockBreakListener(TARDISPlugin plugin) {
+    public TardisBlockBreakListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -71,19 +71,19 @@ public class TARDISBlockBreakListener implements Listener {
             where.put("police_box", 1);
             ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, false);
             if (rsb.resultSet()) {
-                TARDISMessage.send(player, "TARDIS_BREAK");
+                TardisMessage.send(player, "TARDIS_BREAK");
                 event.setCancelled(true);
                 return;
             }
         }
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
-            TARDISMessage.send(player, "NOT_IN_ZERO");
+            TardisMessage.send(player, "NOT_IN_ZERO");
             return;
         }
         Block block = event.getBlock();
         Material blockType = block.getType();
-        if (player.getGameMode().equals(GameMode.CREATIVE) && TARDISBuilderInstanceKeeper.getPrecious().contains(blockType)) {
+        if (player.getGameMode().equals(GameMode.CREATIVE) && TardisBuilderInstanceKeeper.getPrecious().contains(blockType)) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
@@ -107,15 +107,15 @@ public class TARDISBlockBreakListener implements Listener {
             if (isPresetSign(line0, line1, line2)) {
                 event.setCancelled(true);
                 sign.update();
-                if (TARDISPermission.hasPermission(player, "tardis.exterminate")) {
+                if (TardisPermission.hasPermission(player, "tardis.exterminate")) {
                     UUID uuid = player.getUniqueId();
                     // check it is their tardis
                     plugin.getTrackerKeeper().getExterminate().put(uuid, block);
                     long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");
-                    TARDISMessage.send(player, "Q_DELETE", ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET, String.format("%d", timeout));
+                    TardisMessage.send(player, "Q_DELETE", ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET, String.format("%d", timeout));
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getExterminate().remove(uuid), timeout * 20);
                 } else {
-                    TARDISMessage.send(player, "NO_PERM_DELETE");
+                    TardisMessage.send(player, "NO_PERM_DELETE");
                 }
             }
         }
@@ -129,7 +129,7 @@ public class TARDISBlockBreakListener implements Listener {
             for (String r : Objects.requireNonNull(plugin.getConfig().getConfigurationSection("rechargers")).getKeys(false)) {
                 if (r.startsWith("rift")) {
                     // get the location
-                    World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + r + ".world"));
+                    World w = TardisAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + r + ".world"));
                     int x = plugin.getConfig().getInt("rechargers." + r + ".x");
                     int y = plugin.getConfig().getInt("rechargers." + r + ".y");
                     int z = plugin.getConfig().getInt("rechargers." + r + ".z");
@@ -138,10 +138,10 @@ public class TARDISBlockBreakListener implements Listener {
                     if (l.equals(b)) {
                         if (Objects.equals(plugin.getConfig().getString("rechargers." + r + ".uuid"), player.getUniqueId().toString())) {
                             plugin.getConfig().set("rechargers." + r, null);
-                            TARDISMessage.send(player, "RIFT_REMOVED");
+                            TardisMessage.send(player, "RIFT_REMOVED");
                             event.setCancelled(true);
                             // drop Rift Manipulator
-                            event.getBlock().setBlockData(TARDISConstants.AIR);
+                            event.getBlock().setBlockData(TardisConstants.AIR);
                             ItemStack rm = new ItemStack(Material.BEACON, 1);
                             ItemMeta im = rm.getItemMeta();
                             assert im != null;
@@ -150,7 +150,7 @@ public class TARDISBlockBreakListener implements Listener {
                             w.dropItem(loc, rm);
                         } else {
                             event.setCancelled(true);
-                            TARDISMessage.send(player, "RIFT_PLAYER");
+                            TardisMessage.send(player, "RIFT_PLAYER");
                         }
                         break;
                     }

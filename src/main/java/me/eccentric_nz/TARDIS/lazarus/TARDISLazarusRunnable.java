@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.lazarus;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -28,10 +28,10 @@ import org.bukkit.block.data.type.Wall;
  *
  * @author eccentric_nz
  */
-class TARDISLazarusRunnable implements Runnable {
+class TardisLazarusRunnable implements Runnable {
 
     private static final int LOOPS = 12;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Block block;
     private final Wall NORTH_SOUTH = (Wall) Bukkit.createBlockData("minecraft:cobblestone_wall[east=tall,north=none,south=none,up=false,waterlogged=false,west=tall]");
     private final Wall EAST_WEST = (Wall) Bukkit.createBlockData("minecraft:cobblestone_wall[east=none,north=tall,south=tall,up=false,waterlogged=false,west=none]");
@@ -42,7 +42,7 @@ class TARDISLazarusRunnable implements Runnable {
     private int taskID;
     private int i = 0;
 
-    TARDISLazarusRunnable(TARDISPlugin plugin, Block block) {
+    TardisLazarusRunnable(TardisPlugin plugin, Block block) {
         this.plugin = plugin;
         this.block = block;
     }

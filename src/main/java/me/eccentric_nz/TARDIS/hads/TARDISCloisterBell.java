@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.hads;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -39,9 +39,9 @@ import java.util.Objects;
  * is unconscious the Main Logic Junction can still trigger the bell. The Cloister Bell can also be manually rung from
  * the Control Room by crew members.
  */
-public class TARDISCloisterBell implements Runnable {
+public class TardisCloisterBell implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int loops;
     private final int id;
     private final Location centre;
@@ -60,7 +60,7 @@ public class TARDISCloisterBell implements Runnable {
      * @param loops  the number of times to ring the cloister bell
      * @param id     the id of the tardis whose cloister bell we are ringing
      */
-    public TARDISCloisterBell(TARDISPlugin plugin, int loops, int id) {
+    public TardisCloisterBell(TardisPlugin plugin, int loops, int id) {
         this.plugin = plugin;
         this.loops = loops;
         this.id = id;
@@ -72,7 +72,7 @@ public class TARDISCloisterBell implements Runnable {
         reason = "";
     }
 
-    public TARDISCloisterBell(TARDISPlugin plugin, int loops, int id, Player player) {
+    public TardisCloisterBell(TardisPlugin plugin, int loops, int id, Player player) {
         this.plugin = plugin;
         this.loops = loops;
         this.id = id;
@@ -84,7 +84,7 @@ public class TARDISCloisterBell implements Runnable {
         messageOff = false;
     }
 
-    TARDISCloisterBell(TARDISPlugin plugin, int loops, int id, Location current, Player player, String reason) {
+    TardisCloisterBell(TardisPlugin plugin, int loops, int id, Location current, Player player, String reason) {
         this.plugin = plugin;
         this.loops = loops;
         this.id = id;
@@ -96,7 +96,7 @@ public class TARDISCloisterBell implements Runnable {
         messageOff = true;
     }
 
-    public TARDISCloisterBell(TARDISPlugin plugin, int loops, int id, Location current, Player player, boolean messageOn, String reason, boolean messageOff) {
+    public TardisCloisterBell(TardisPlugin plugin, int loops, int id, Location current, Player player, boolean messageOn, String reason, boolean messageOff) {
         this.plugin = plugin;
         this.loops = loops;
         this.id = id;
@@ -111,7 +111,7 @@ public class TARDISCloisterBell implements Runnable {
     @Override
     public void run() {
         if (messageOn && i == 0 && player != null && player.isOnline()) {
-            TARDISMessage.send(player, "CLOISTER_BELL_ON", reason);
+            TardisMessage.send(player, "CLOISTER_BELL_ON", reason);
         }
         if (i < loops) {
             if (centre != null) {
@@ -138,7 +138,7 @@ public class TARDISCloisterBell implements Runnable {
             task = -1;
             plugin.getTrackerKeeper().getCloisterBells().remove(id);
             if (messageOff && player != null && player.isOnline()) {
-                TARDISMessage.send(player, "CLOISTER_BELL_OFF");
+                TardisMessage.send(player, "CLOISTER_BELL_OFF");
             }
         }
     }
@@ -154,9 +154,9 @@ public class TARDISCloisterBell implements Runnable {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
             if (!rs.getTardis().getCreeper().isEmpty()) {
-                return TARDISStaticLocationGetters.getLocationFromDB(rs.getTardis().getCreeper());
+                return TardisStaticLocationGetters.getLocationFromDB(rs.getTardis().getCreeper());
             } else if (!rs.getTardis().getBeacon().isEmpty()) {
-                return TARDISStaticLocationGetters.getLocationFromDB(rs.getTardis().getBeacon());
+                return TardisStaticLocationGetters.getLocationFromDB(rs.getTardis().getBeacon());
             }
         }
         return null;

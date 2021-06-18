@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.net.MalformedURLException;
@@ -31,11 +31,11 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISResourcePackChanger {
+public class TardisResourcePackChanger {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISResourcePackChanger(TARDISPlugin plugin) {
+    public TardisResourcePackChanger(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -54,7 +54,7 @@ public class TARDISResourcePackChanger {
                 Objects.requireNonNull(plugin.getServer().getPlayer(uuid)).setResourcePack(str);
             }
         } catch (MalformedURLException e) {
-            TARDISMessage.send(p, "URL", e.getMessage());
+            TardisMessage.send(p, "URL", e.getMessage());
         }
     }
 }

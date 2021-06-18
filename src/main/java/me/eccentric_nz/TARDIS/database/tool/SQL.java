@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class SQL {
+public class Sql {
 
     public static final List<String> CREATES = Arrays.asList(
 

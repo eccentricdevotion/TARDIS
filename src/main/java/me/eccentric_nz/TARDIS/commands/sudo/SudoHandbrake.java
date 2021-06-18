@@ -16,30 +16,30 @@
  */
 package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.tardis.TARDISHandbrakeCommand;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.tardis.TardisHandbrakeCommand;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 
 import java.util.UUID;
 
 public class SudoHandbrake {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    SudoHandbrake(TARDISPlugin plugin) {
+    SudoHandbrake(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public boolean toggle(CommandSender sender, String[] args, UUID uuid) {
         if (args.length < 3) {
-            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            TardisMessage.send(sender, "TOO_FEW_ARGS");
             return true;
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(uuid.toString())) {
-            return new TARDISHandbrakeCommand(plugin).toggle(null, rs.getTardisId(), args, true);
+            return new TardisHandbrakeCommand(plugin).toggle(null, rs.getTardisId(), args, true);
         }
         return true;
     }

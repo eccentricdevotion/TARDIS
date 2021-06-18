@@ -17,9 +17,9 @@
 package me.eccentric_nz.tardis.commands.preferences;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
-import me.eccentric_nz.tardis.rooms.TARDISWalls;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
+import me.eccentric_nz.tardis.rooms.TardisWalls;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * TabCompleter for /tardisprefs
  */
-public class TARDISPrefsTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisPrefsTabComplete extends TardisCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("auto", "auto_powerup", "auto_rescue", "auto_siege", "build", "beacon", "difficulty", "dnd", "eps", "eps_message", "farm", "flight", "floor", "forcefield", "hads", "hads_type", "hum", "isomorphic", "junk", "key", "key_menu", "language", "lanterns", "lock_containers", "minecart", "quotes", "renderer", "sfx", "siege_floor", "siege_wall", "sign", "sonic", "submarine", "telepathy", "travelbar", "wall", "wool_lights");
     private final ImmutableList<String> DIFF_SUBS = ImmutableList.of("easy", "hard");
@@ -44,9 +44,9 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> MAT_SUBS;
     private final ImmutableList<String> LANGUAGE_SUBS = ImmutableList.of("AFRIKAANS", "ALBANIAN", "ARABIC", "ARMENIAN", "AZERBAIJANI", "BASHKIR", "BASQUE", "BELARUSIAN", "BOSNIAN", "BULGARIAN", "CATALAN", "CHINESE", "CROATIAN", "CZECH", "DANISH", "DUTCH", "ENGLISH", "ESTONIAN", "FINNISH", "FRENCH", "GALICIAN", "GEORGIAN", "GERMAN", "GREEK", "HAITIAN", "HEBREW", "HUNGARIAN", "ICELANDIC", "INDONESIAN", "IRISH", "ITALIAN", "JAPANESE", "KAZAKH", "KIRGHIZ", "KOREAN", "LATIN", "LATVIAN", "LITHUANIAN", "MACEDONIAN", "MALAGASY", "MALAY", "MALTESE", "MONGOLIAN", "NORWEGIAN", "PERSIAN", "POLISH", "PORTUGUESE", "ROMANIAN", "RUSSIAN", "SERBIAN", "SLOVAK", "SLOVENIAN", "SPANISH", "SWAHILI", "SWEDISH", "TAGALOG", "TAJIK", "TATAR", "THAI", "TURKISH", "UKRAINIAN", "UZBEK", "VIETNAMESE", "WELSH");
 
-    public TARDISPrefsTabComplete(TARDISPlugin plugin) {
+    public TardisPrefsTabComplete(TardisPlugin plugin) {
         List<String> mats = new ArrayList<>();
-        TARDISWalls.BLOCKS.forEach((key) -> mats.add(key.toString()));
+        TardisWalls.BLOCKS.forEach((key) -> mats.add(key.toString()));
         MAT_SUBS = ImmutableList.copyOf(mats);
         if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks")) {
             KEY_SUBS = ImmutableList.copyOf(plugin.getBlocksConfig().getStringList("keys"));

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.config;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
@@ -27,13 +27,13 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISSiegeCommand {
+class TardisSiegeCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> siegeArgs = Arrays.asList("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture");
     private final List<String> siegeBool = Arrays.asList("enabled", "butcher", "creeper", "healing", "texture");
 
-    TARDISSiegeCommand(TARDISPlugin plugin) {
+    TardisSiegeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -44,17 +44,17 @@ class TARDISSiegeCommand {
             return true;
         }
         if (args.length < 3) {
-            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            TardisMessage.send(sender, "TOO_FEW_ARGS");
             return true;
         }
         if (!siegeArgs.contains(args[1].toLowerCase(Locale.ENGLISH))) {
-            TARDISMessage.send(sender, "ARG_NOT_VALID");
+            TardisMessage.send(sender, "ARG_NOT_VALID");
             return true;
         }
         if (siegeBool.contains(args[1].toLowerCase(Locale.ENGLISH))) {
             String tf = args[2].toLowerCase(Locale.ENGLISH);
             if (!tf.equals("true") && !tf.equals("false")) {
-                TARDISMessage.send(sender, "TRUE_FALSE");
+                TardisMessage.send(sender, "TRUE_FALSE");
                 return true;
             }
             plugin.getConfig().set("siege." + args[1].toLowerCase(Locale.ENGLISH), Boolean.valueOf(tf));
@@ -65,12 +65,12 @@ class TARDISSiegeCommand {
                 val = Integer.parseInt(args[2]);
             } catch (NumberFormatException nfe) {
                 // not a number
-                TARDISMessage.send(sender, "ARG_LAST_NUMBER");
+                TardisMessage.send(sender, "ARG_LAST_NUMBER");
                 return false;
             }
             plugin.getConfig().set("siege." + args[1].toLowerCase(Locale.ENGLISH), val);
         }
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TardisMessage.send(sender, "CONFIG_UPDATED");
         plugin.saveConfig();
         return true;
     }

@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.utility;
 import com.wimbli.WorldBorder.BorderData;
 import com.wimbli.WorldBorder.Config;
 import com.wimbli.WorldBorder.WorldBorder;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Location;
 
 import java.util.Objects;
@@ -30,11 +30,11 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISWorldBorderChecker {
+public class TardisWorldBorderChecker {
 
     private final WorldBorder border;
 
-    public TARDISWorldBorderChecker(TARDISPlugin plugin) {
+    public TardisWorldBorderChecker(TardisPlugin plugin) {
         border = (WorldBorder) plugin.getPM().getPlugin("WorldBorder");
     }
 

@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.Location;
 
 import java.sql.Connection;
@@ -28,9 +28,9 @@ import java.sql.SQLException;
 
 public class ResultSetTransmat {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
     private final String name;
     private final String prefix;
@@ -51,7 +51,7 @@ public class ResultSetTransmat {
      * @param id     the tardis id to refine the search.
      * @param name   the name of the transmat location to refine the search.
      */
-    public ResultSetTransmat(TARDISPlugin plugin, int id, String name) {
+    public ResultSetTransmat(TardisPlugin plugin, int id, String name) {
         this.plugin = plugin;
         this.id = id;
         this.name = name;
@@ -84,7 +84,7 @@ public class ResultSetTransmat {
                     y = rs.getFloat("y");
                     z = rs.getFloat("z");
                     yaw = rs.getFloat("yaw");
-                    location = new Location(TARDISAliasResolver.getWorldFromAlias(world), x, y, z);
+                    location = new Location(TardisAliasResolver.getWorldFromAlias(world), x, y, z);
                 }
             } else {
                 return false;

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
@@ -31,21 +31,21 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISSpectaclesRunnable implements Runnable {
+public class TardisSpectaclesRunnable implements Runnable {
 
-    private final TARDISPlugin plugin;
-    private final HashMap<COMPASS, Door> lower = new HashMap<>();
+    private final TardisPlugin plugin;
+    private final HashMap<CardinalDirection, Door> lower = new HashMap<>();
     private final Door upper;
 
-    public TARDISSpectaclesRunnable(TARDISPlugin plugin) {
+    public TardisSpectaclesRunnable(TardisPlugin plugin) {
         this.plugin = plugin;
         Door door = (Door) Material.IRON_DOOR.createBlockData();
         door.setHalf(Bisected.Half.BOTTOM);
         door.setHinge(Door.Hinge.RIGHT);
-        lower.put(COMPASS.EAST, calculateFacing(door, COMPASS.EAST));
-        lower.put(COMPASS.SOUTH, calculateFacing(door, COMPASS.SOUTH));
-        lower.put(COMPASS.WEST, calculateFacing(door, COMPASS.WEST));
-        lower.put(COMPASS.NORTH, calculateFacing(door, COMPASS.NORTH));
+        lower.put(CardinalDirection.EAST, calculateFacing(door, CardinalDirection.EAST));
+        lower.put(CardinalDirection.SOUTH, calculateFacing(door, CardinalDirection.SOUTH));
+        lower.put(CardinalDirection.WEST, calculateFacing(door, CardinalDirection.WEST));
+        lower.put(CardinalDirection.NORTH, calculateFacing(door, CardinalDirection.NORTH));
         upper = (Door) Material.IRON_DOOR.createBlockData();
         upper.setHalf(Bisected.Half.TOP);
     }
@@ -73,8 +73,8 @@ public class TARDISSpectaclesRunnable implements Runnable {
         });
     }
 
-    private Door calculateFacing(Door door, COMPASS compass) {
-        switch (compass) {
+    private Door calculateFacing(Door door, CardinalDirection cardinalDirection) {
+        switch (cardinalDirection) {
             case SOUTH -> door.setFacing(BlockFace.SOUTH);
             case WEST -> door.setFacing(BlockFace.WEST);
             case NORTH -> door.setFacing(BlockFace.NORTH);

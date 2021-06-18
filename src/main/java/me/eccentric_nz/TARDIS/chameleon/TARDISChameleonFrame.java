@@ -16,26 +16,26 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-class TARDISChameleonFrame {
+class TardisChameleonFrame {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISChameleonFrame(TARDISPlugin plugin) {
+    TardisChameleonFrame(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
-    void updateChameleonFrame(int id, PRESET preset, String loc) {
+    void updateChameleonFrame(int id, Preset preset, String loc) {
         // get location of Chameleon frame
-        Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(loc);
+        Location location = TardisStaticLocationGetters.getLocationFromBukkitString(loc);
         if (location != null) {
             for (Entity e : location.getChunk().getEntities()) {
                 if (e instanceof ItemFrame frame) {

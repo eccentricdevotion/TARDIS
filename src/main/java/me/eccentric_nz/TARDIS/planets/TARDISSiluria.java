@@ -16,29 +16,29 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISChecker;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisChecker;
 import org.bukkit.ChatColor;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISSiluria {
+public class TardisSiluria {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISSiluria(TARDISPlugin plugin) {
+    public TardisSiluria(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public void loadSilurianUnderworld() {
         String s_world = plugin.getServer().getWorlds().get(0).getName();
         // copy datapack files
-        if (!TARDISChecker.hasDimension("siluria")) {
+        if (!TardisChecker.hasDimension("siluria")) {
             plugin.getServer().reloadData();
             // message console to restart server
-            TARDISMessage.message(plugin.getConsole(), ChatColor.RED + "Siluria data pack has been installed, please restart the server to enable the world.");
+            TardisMessage.message(plugin.getConsole(), ChatColor.RED + "Siluria data pack has been installed, please restart the server to enable the world.");
             // get default server world
             // add world to config
             if (!plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_siluria.time_travel")) {

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
-public enum GUISonicActivator {
+public enum GuiSonicActivator {
 
     // Sonic Activator
     INSTRUCTIONS(1, 7, Material.BOOK),
@@ -29,7 +29,7 @@ public enum GUISonicActivator {
     private final int slot;
     private final Material material;
 
-    GUISonicActivator(int customModelData, int slot, Material material) {
+    GuiSonicActivator(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -49,6 +49,6 @@ public enum GUISonicActivator {
 
     public String getName() {
         String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
+        return TardisStringUtils.sentenceCase(s);
     }
 }

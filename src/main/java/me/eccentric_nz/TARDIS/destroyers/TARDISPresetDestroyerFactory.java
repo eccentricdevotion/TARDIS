@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.chameleon.TARDISChameleonCircuit;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.chameleon.TardisChameleonCircuit;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Adaption;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.junk.TARDISJunkDestroyer;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.junk.TardisJunkDestroyer;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
+import me.eccentric_nz.tardis.utility.TardisSounds;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -48,11 +48,11 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISPresetDestroyerFactory {
+public class TardisPresetDestroyerFactory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISPresetDestroyerFactory(TARDISPlugin plugin) {
+    public TardisPresetDestroyerFactory(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -61,16 +61,16 @@ public class TARDISPresetDestroyerFactory {
         where.put("tardis_id", dd.getTardisId());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
-            PRESET demat = tardis.getDemat();
-            PRESET preset = tardis.getPreset();
+            Tardis tardis = rs.getTardis();
+            Preset demat = tardis.getDemat();
+            Preset preset = tardis.getPreset();
             // load the chunk if unloaded
             if (!Objects.requireNonNull(dd.getLocation().getWorld()).isChunkLoaded(dd.getLocation().getChunk())) {
                 dd.getLocation().getWorld().loadChunk(dd.getLocation().getChunk());
             }
-            if (!demat.equals(PRESET.INVISIBLE)) {
+            if (!demat.equals(Preset.INVISIBLE)) {
                 Material cham_id = Material.LIGHT_GRAY_TERRACOTTA;
-                if ((tardis.getAdaption().equals(Adaption.BIOME) && demat.equals(PRESET.FACTORY)) || demat.equals(PRESET.SUBMERGED) || tardis.getAdaption().equals(Adaption.BLOCK)) {
+                if ((tardis.getAdaption().equals(Adaption.BIOME) && demat.equals(Preset.FACTORY)) || demat.equals(Preset.SUBMERGED) || tardis.getAdaption().equals(Adaption.BLOCK)) {
                     Block chameleonBlock;
                     // chameleon circuit is on - get block under TARDIS
                     if (dd.getLocation().getBlock().getType() == Material.SNOW) {
@@ -79,42 +79,42 @@ public class TARDISPresetDestroyerFactory {
                         chameleonBlock = dd.getLocation().getBlock().getRelative(BlockFace.DOWN);
                     }
                     // determine cham_id
-                    TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
+                    TardisChameleonCircuit tcc = new TardisChameleonCircuit(plugin);
                     cham_id = tcc.getChameleonBlock(chameleonBlock, dd.getPlayer());
                 }
                 int loops = dd.getThrottle().getLoops();
                 if (loops == 3) {
-                    TARDISSounds.playTARDISSound(dd.getLocation(), "tardis_takeoff_fast");
+                    TardisSounds.playTARDISSound(dd.getLocation(), "tardis_takeoff_fast");
                     if (dd.getPlayer() != null && dd.getPlayer().getPlayer() != null && plugin.getUtils().inTARDISWorld(dd.getPlayer().getPlayer())) {
-                        TARDISSounds.playTARDISSound(dd.getPlayer().getPlayer().getLocation(), "tardis_takeoff_fast");
+                        TardisSounds.playTARDISSound(dd.getPlayer().getPlayer().getLocation(), "tardis_takeoff_fast");
                     }
                 }
-                if (preset.equals(PRESET.JUNK_MODE)) {
+                if (preset.equals(Preset.JUNK_MODE)) {
                     dd.setThrottle(SpaceTimeThrottle.JUNK);
                 }
-                if (demat.equals(PRESET.JUNK)) {
-                    TARDISJunkDestroyer runnable = new TARDISJunkDestroyer(plugin, dd);
+                if (demat.equals(Preset.JUNK)) {
+                    TardisJunkDestroyer runnable = new TardisJunkDestroyer(plugin, dd);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
                     plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisId());
-                    if (demat.equals(PRESET.SWAMP)) {
+                    if (demat.equals(Preset.SWAMP)) {
                         // remove door
                         destroyDoor(dd.getTardisId());
                     }
                     int taskID;
                     if (demat.usesItemFrame()) {
-                        TARDISDematerialisePoliceBox frame = new TARDISDematerialisePoliceBox(plugin, dd, demat);
+                        TardisDematerialisePoliceBox frame = new TardisDematerialisePoliceBox(plugin, dd, demat);
                         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, frame, 10L, 20L);
                         frame.setTask(taskID);
                     } else {
-                        TARDISDematerialisePreset runnable = new TARDISDematerialisePreset(plugin, dd, demat, cham_id.createBlockData());
+                        TardisDematerialisePreset runnable = new TardisDematerialisePreset(plugin, dd, demat, cham_id.createBlockData());
                         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                         runnable.setTask(taskID);
                     }
                 }
             } else {
-                new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, dd.isHide(), demat);
+                new TardisDeinstantPreset(plugin).instaDestroyPreset(dd, dd.isHide(), demat);
             }
         }
     }
@@ -127,17 +127,17 @@ public class TARDISPresetDestroyerFactory {
         if (rsd.resultSet()) {
             String dl = rsd.getDoorLocation();
             if (dl != null) {
-                Location l = TARDISStaticLocationGetters.getLocationFromDB(dl);
+                Location l = TardisStaticLocationGetters.getLocationFromDB(dl);
                 if (l != null) {
                     Block b = l.getBlock();
-                    b.setBlockData(TARDISConstants.AIR);
-                    b.getRelative(BlockFace.UP).setBlockData(TARDISConstants.AIR);
+                    b.setBlockData(TardisConstants.AIR);
+                    b.getRelative(BlockFace.UP).setBlockData(TardisConstants.AIR);
                 }
             }
         }
     }
 
-    public void destroySign(Location l, COMPASS d, PRESET p) {
+    public void destroySign(Location l, CardinalDirection d, Preset p) {
         World w = l.getWorld();
         int signx, signz, signy;
         switch (p) {
@@ -249,13 +249,13 @@ public class TARDISPresetDestroyerFactory {
             default -> 2;
         };
         assert w != null;
-        TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, Material.AIR);
-        if (p.equals(PRESET.SWAMP)) {
-            TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, Material.AIR);
+        TardisBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, Material.AIR);
+        if (p.equals(Preset.SWAMP)) {
+            TardisBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, Material.AIR);
         }
     }
 
-    public void destroyHandbrake(Location l, COMPASS d) {
+    public void destroyHandbrake(Location l, CardinalDirection d) {
         int lx;
         int lz;
         switch (d) {
@@ -281,28 +281,28 @@ public class TARDISPresetDestroyerFactory {
         int ty = l.getBlockY() + 2;
         int tz = l.getBlockZ() + lz;
         assert w != null;
-        TARDISBlockSetters.setBlock(w, tx, ty, tz, Material.AIR);
+        TardisBlockSetters.setBlock(w, tx, ty, tz, Material.AIR);
     }
 
-    public void destroyLamp(Location l, PRESET p) {
+    public void destroyLamp(Location l, Preset p) {
         World w = l.getWorld();
         int tx = l.getBlockX();
         int ty = l.getBlockY() + 3;
         int tz = l.getBlockZ();
-        if (p.equals(PRESET.CAKE)) {
+        if (p.equals(Preset.CAKE)) {
             for (int i = (tx - 1); i < (tx + 2); i++) {
                 for (int j = (tz - 1); j < (tz + 2); j++) {
                     assert w != null;
-                    TARDISBlockSetters.setBlock(w, i, ty, j, Material.AIR);
+                    TardisBlockSetters.setBlock(w, i, ty, j, Material.AIR);
                 }
             }
         } else {
             assert w != null;
-            TARDISBlockSetters.setBlock(w, tx, ty, tz, Material.AIR);
+            TardisBlockSetters.setBlock(w, tx, ty, tz, Material.AIR);
         }
     }
 
-    public void destroyDuckEyes(Location l, COMPASS d) {
+    public void destroyDuckEyes(Location l, CardinalDirection d) {
         World w = l.getWorld();
         int leftx, leftz, rightx, rightz;
         int eyey = l.getBlockY() + 3;
@@ -333,11 +333,11 @@ public class TARDISPresetDestroyerFactory {
             }
         }
         assert w != null;
-        TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, Material.AIR);
-        TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, Material.AIR);
+        TardisBlockSetters.setBlock(w, leftx, eyey, leftz, Material.AIR);
+        TardisBlockSetters.setBlock(w, rightx, eyey, rightz, Material.AIR);
     }
 
-    public void destroyMineshaftTorches(Location l, COMPASS d) {
+    public void destroyMineshaftTorches(Location l, CardinalDirection d) {
         World w = l.getWorld();
         int leftx, leftz, rightx, rightz;
         int eyey = l.getBlockY() + 2;
@@ -356,16 +356,16 @@ public class TARDISPresetDestroyerFactory {
             }
         }
         assert w != null;
-        TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, Material.AIR);
-        TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, Material.AIR);
+        TardisBlockSetters.setBlock(w, leftx, eyey, leftz, Material.AIR);
+        TardisBlockSetters.setBlock(w, rightx, eyey, rightz, Material.AIR);
     }
 
-    public void destroyLampTrapdoors(Location l, COMPASS d) {
+    public void destroyLampTrapdoors(Location l, CardinalDirection d) {
         Block lamp = l.getBlock().getRelative(BlockFace.UP, 3).getRelative(getOppositeFace(d));
-        plugin.getGeneralKeeper().getFaces().forEach((f) -> lamp.getRelative(f).setBlockData(TARDISConstants.AIR));
+        plugin.getGeneralKeeper().getFaces().forEach((f) -> lamp.getRelative(f).setBlockData(TardisConstants.AIR));
     }
 
-    private BlockFace getOppositeFace(COMPASS c) {
+    private BlockFace getOppositeFace(CardinalDirection c) {
         return switch (c) {
             case NORTH -> BlockFace.SOUTH;
             case WEST -> BlockFace.EAST;

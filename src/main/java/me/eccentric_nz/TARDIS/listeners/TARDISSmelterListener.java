@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetSmelter;
-import me.eccentric_nz.tardis.rooms.smelter.TARDISSmelterDrop;
-import me.eccentric_nz.tardis.rooms.smelter.TARDISSmelterFuel;
-import me.eccentric_nz.tardis.rooms.smelter.TARDISSmelterOre;
-import me.eccentric_nz.tardis.sonic.TARDISSonicSorterListener;
+import me.eccentric_nz.tardis.rooms.smelter.TardisSmelterDrop;
+import me.eccentric_nz.tardis.rooms.smelter.TardisSmelterFuel;
+import me.eccentric_nz.tardis.rooms.smelter.TardisSmelterOre;
+import me.eccentric_nz.tardis.sonic.TardisSonicSorterListener;
 import org.bukkit.block.Chest;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,11 +32,11 @@ import org.bukkit.inventory.InventoryHolder;
 
 import java.util.List;
 
-public class TARDISSmelterListener implements Listener {
+public class TardisSmelterListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISSmelterListener(TARDISPlugin plugin) {
+    public TardisSmelterListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -52,16 +52,16 @@ public class TARDISSmelterListener implements Listener {
                 return;
             }
             // sort contents
-            TARDISSonicSorterListener.sortInventory(inv);
+            TardisSonicSorterListener.sortInventory(inv);
             // get fuel chests
             List<Chest> fuelChests = rs.getFuelChests();
             List<Chest> oreChests = rs.getOreChests();
             // process chest contents
             switch (rs.getType()) {
-                case FUEL -> new TARDISSmelterFuel().processItems(inv, fuelChests);
-                case SMELT -> new TARDISSmelterOre().processItems(inv, oreChests);
+                case FUEL -> new TardisSmelterFuel().processItems(inv, fuelChests);
+                case SMELT -> new TardisSmelterOre().processItems(inv, oreChests);
                 default -> // DROP
-                        new TARDISSmelterDrop().processItems(inv, fuelChests, oreChests);
+                        new TardisSmelterDrop().processItems(inv, fuelChests, oreChests);
             }
         }
     }

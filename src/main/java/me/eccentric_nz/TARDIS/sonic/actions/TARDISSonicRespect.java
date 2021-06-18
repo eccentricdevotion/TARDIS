@@ -20,16 +20,16 @@ import com.griefcraft.cache.ProtectionCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
 import me.crafter.mc.lockettepro.LocketteProAPI;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.utility.TARDISFactionsChecker;
-import me.eccentric_nz.tardis.utility.TARDISGriefPreventionChecker;
-import me.eccentric_nz.tardis.utility.TARDISRedProtectChecker;
-import me.eccentric_nz.tardis.utility.TARDISTownyChecker;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.utility.TardisFactionsChecker;
+import me.eccentric_nz.tardis.utility.TardisGriefPreventionChecker;
+import me.eccentric_nz.tardis.utility.TardisRedProtectChecker;
+import me.eccentric_nz.tardis.utility.TardisTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-public class TARDISSonicRespect {
+public class TardisSonicRespect {
 
     /**
      * Check whether a player can alter a block with their Sonic Screwdriver
@@ -39,7 +39,7 @@ public class TARDISSonicRespect {
      * @param block  the block to check
      * @return true if the player has permission to alter the block, otherwise false
      */
-    public static boolean checkBlockRespect(TARDISPlugin plugin, Player player, Block block) {
+    public static boolean checkBlockRespect(TardisPlugin plugin, Player player, Block block) {
         // WorldGuard is probably on server + possibly another protection plugin
         if (plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canBuild(player, block.getLocation())) {
             return false;
@@ -47,19 +47,19 @@ public class TARDISSonicRespect {
 
             // Factions
             if (plugin.getPM().isPluginEnabled("Factions") && plugin.getConfig().getBoolean("preferences.respect_factions")) {
-                return TARDISFactionsChecker.isInFaction(player, block.getLocation());
+                return TardisFactionsChecker.isInFaction(player, block.getLocation());
             }
             // Towny
             if (plugin.getPM().isPluginEnabled("Towny")) {
-                return new TARDISTownyChecker(plugin).playerHasPermission(player, block);
+                return new TardisTownyChecker(plugin).playerHasPermission(player, block);
             }
             // GriefPrevention
             if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
-                return !(new TARDISGriefPreventionChecker(plugin).isInClaim(player, block.getLocation()));
+                return !(new TardisGriefPreventionChecker(plugin).isInClaim(player, block.getLocation()));
             }
             // RedProtect
             if (plugin.getPM().isPluginEnabled("RedProtect")) {
-                return TARDISRedProtectChecker.canSonic(player, block);
+                return TardisRedProtectChecker.canSonic(player, block);
             }
             // LockettePro
             if (plugin.getPM().isPluginEnabled("LockettePro")) {

@@ -17,12 +17,12 @@
 package me.eccentric_nz.tardis.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.TardisCommandHelper;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.command.Command;
@@ -53,12 +53,12 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISNetherPortalCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
+public class TardisNetherPortalCommand extends TardisCompleter implements CommandExecutor, TabCompleter {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ImmutableList<String> ENVIRON_SUBS = ImmutableList.of("overworld", "nether");
 
-    public TARDISNetherPortalCommand(TARDISPlugin plugin) {
+    public TardisNetherPortalCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -72,12 +72,12 @@ public class TARDISNetherPortalCommand extends TARDISCompleter implements Comman
             if (player == null) {
                 // must provide coords
                 if (args.length < 4) {
-                    new TARDISCommandHelper(plugin).getCommand("tardisnetherportal", sender);
+                    new TardisCommandHelper(plugin).getCommand("tardisnetherportal", sender);
                     return true;
                 }
-                int x = TARDISNumberParsers.parseInt(args[0]);
-                int y = TARDISNumberParsers.parseInt(args[1]);
-                int z = TARDISNumberParsers.parseInt(args[2]);
+                int x = TardisNumberParsers.parseInt(args[0]);
+                int y = TardisNumberParsers.parseInt(args[1]);
+                int z = TardisNumberParsers.parseInt(args[2]);
                 return o2n(sender, x, y, z, args[3].equalsIgnoreCase("overworld"));
             } else {
                 // get player's coords and environment
@@ -96,11 +96,11 @@ public class TARDISNetherPortalCommand extends TARDISCompleter implements Comman
         y = l.getBlockY();
         z = l.getBlockZ();
         if ((y > 123) || (y < 1)) {
-            TARDISMessage.send(player, "O2N_Y");
+            TardisMessage.send(player, "O2N_Y");
             return false;
         }
         // get player direction
-        String d = TARDISStaticUtils.getPlayersDirection(player, false);
+        String d = TardisStaticUtils.getPlayersDirection(player, false);
         String message = (overworld) ? "O2N_COORDS_N" : "O2N_COORDS_O";
         // get destination coords
         if (overworld) {
@@ -111,14 +111,14 @@ public class TARDISNetherPortalCommand extends TARDISCompleter implements Comman
             dz = z * 8;
         }
         String coords = "X: " + dx + ", " + "Y: " + y + ", " + "Z: " + dz + ", facing " + d;
-        TARDISMessage.send(player, message, coords);
+        TardisMessage.send(player, message, coords);
         return true;
     }
 
     private boolean o2n(CommandSender sender, int x, int y, int z, boolean overworld) {
         int dx, dz;
         if ((y > 123) || (y < 1)) {
-            TARDISMessage.send(sender, "O2N_Y");
+            TardisMessage.send(sender, "O2N_Y");
             return false;
         }
         String message = (overworld) ? "O2N_COORDS_N" : "O2N_COORDS_O";
@@ -131,7 +131,7 @@ public class TARDISNetherPortalCommand extends TARDISCompleter implements Comman
             dz = z * 8;
         }
         String coords = "X: " + dx + ", " + "Y: " + y + ", " + "Z: " + dz;
-        TARDISMessage.send(sender, message, coords);
+        TardisMessage.send(sender, message, coords);
         return true;
     }
 

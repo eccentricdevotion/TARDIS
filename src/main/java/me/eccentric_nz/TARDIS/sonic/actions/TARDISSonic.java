@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class TARDISSonic {
+public class TardisSonic {
 
     private static final List<Material> distance = new ArrayList<>();
 
@@ -67,13 +67,13 @@ public class TARDISSonic {
         distance.add(Material.WARPED_FENCE_GATE);
     }
 
-    public static void standardSonic(TARDISPlugin plugin, Player player, long now) {
+    public static void standardSonic(TardisPlugin plugin, Player player, long now) {
         Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
         Material blockType = targetBlock.getType();
         if (distance.contains(blockType)) {
-            TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+            TardisSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
             // not protected doors - WorldGuard / GriefPrevention / Lockette / Towny
-            if (TARDISSonicRespect.checkBlockRespect(plugin, player, targetBlock)) {
+            if (TardisSonicRespect.checkBlockRespect(plugin, player, targetBlock)) {
                 switch (blockType) {
                     case ACACIA_DOOR:
                     case BIRCH_DOOR:
@@ -143,11 +143,11 @@ public class TARDISSonic {
                 }
             }
         } else {
-            TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
+            TardisSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
         }
     }
 
     private static void powerSurroundingBlock(Block block) {
-        TARDISPlugin.plugin.getTardisHelper().setPowerableBlockInteract(block);
+        TardisPlugin.plugin.getTardisHelper().setPowerableBlockInteract(block);
     }
 }

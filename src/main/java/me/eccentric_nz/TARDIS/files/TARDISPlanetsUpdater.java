@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardischunkgenerator.helpers.TardisPlanetData;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -30,12 +30,12 @@ import java.util.Set;
 /**
  * @author eccentric_nz
  */
-public class TARDISPlanetsUpdater {
+public class TardisPlanetsUpdater {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final FileConfiguration planets_config;
 
-    public TARDISPlanetsUpdater(TARDISPlugin plugin, FileConfiguration planets_config) {
+    public TardisPlanetsUpdater(TardisPlugin plugin, FileConfiguration planets_config) {
         this.plugin = plugin;
         this.planets_config = planets_config;
     }

@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISDioritePreset extends TARDISPreset {
+public class TardisDioritePreset extends TardisPreset {
 
-    public TARDISDioritePreset() {
+    public TardisDioritePreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:diorite";

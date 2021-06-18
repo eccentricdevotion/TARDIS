@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -32,9 +32,9 @@ import java.util.Locale;
  */
 public class ResultSetPortals {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
     private final String prefix;
@@ -45,7 +45,7 @@ public class ResultSetPortals {
      * @param plugin an instance of the main class.
      * @param id     the tardis id to get the doors for.
      */
-    public ResultSetPortals(TARDISPlugin plugin, int id) {
+    public ResultSetPortals(TardisPlugin plugin, int id) {
         this.plugin = plugin;
         this.id = id;
         prefix = this.plugin.getPrefix();

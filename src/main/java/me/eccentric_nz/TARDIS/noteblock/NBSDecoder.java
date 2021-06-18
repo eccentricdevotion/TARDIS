@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
-class NBSDecoder {
+class NbsDecoder {
 
     static Song parse(InputStream inputStream) {
         HashMap<Integer, Layer> layerHashMap = new HashMap<>();

@@ -18,10 +18,10 @@ package me.eccentric_nz.tardis.planets;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -32,9 +32,9 @@ import org.bukkit.entity.EntityType;
 
 import java.io.File;
 
-public class TARDISSilurianStructureRunnable implements Runnable {
+public class TardisSilurianStructureRunnable implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int startx, starty, startz;
     private final String path;
     private boolean running = false;
@@ -46,7 +46,7 @@ public class TARDISSilurianStructureRunnable implements Runnable {
     private Material type;
     private BlockData data;
 
-    TARDISSilurianStructureRunnable(TARDISPlugin plugin, int startx, int starty, int startz, String path) {
+    TardisSilurianStructureRunnable(TardisPlugin plugin, int startx, int starty, int startz, String path) {
         this.plugin = plugin;
         this.startx = startx;
         this.starty = starty;
@@ -67,7 +67,7 @@ public class TARDISSilurianStructureRunnable implements Runnable {
             // get default server world
             String s_world = plugin.getServer().getWorlds().get(0).getName();
             world = plugin.getServer().getWorld(s_world + "_tardis_siluria");
-            obj = TARDISSchematicGZip.unzip(path);
+            obj = TardisSchematicGZip.unzip(path);
             // get dimensions
             assert obj != null;
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
@@ -97,17 +97,17 @@ public class TARDISSilurianStructureRunnable implements Runnable {
                     case AIR:
                         // only set air blocks if the structure part is above the 'stilts'
                         if (level > h - 6) {
-                            TARDISBlockSetters.setBlock(world, x, y, z, data);
+                            TardisBlockSetters.setBlock(world, x, y, z, data);
                         }
                         break;
                     case CHEST:
-                        TARDISBlockSetters.setBlock(world, x, y, z, data);
+                        TardisBlockSetters.setBlock(world, x, y, z, data);
                         chest = world.getBlockAt(x, y, z);
                         if (chest.getType().equals(Material.CHEST)) {
                             try {
                                 // set chest contents
                                 Chest container = (Chest) chest.getState();
-                                container.setLootTable(TARDISConstants.LOOT.get(TARDISConstants.RANDOM.nextInt(11)));
+                                container.setLootTable(TardisConstants.LOOT.get(TardisConstants.RANDOM.nextInt(11)));
                                 container.update();
                             } catch (ClassCastException e) {
                                 plugin.debug("Could not cast " + chest.getType() + "to Silurian Chest." + e.getMessage());
@@ -117,7 +117,7 @@ public class TARDISSilurianStructureRunnable implements Runnable {
                     case SPONGE:
                         Block swap_block = world.getBlockAt(x, y, z);
                         if (!swap_block.getType().isOccluding()) {
-                            TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                            TardisBlockSetters.setBlock(world, x, y, z, Material.AIR);
                         }
                         break;
                     case SPAWNER:
@@ -130,7 +130,7 @@ public class TARDISSilurianStructureRunnable implements Runnable {
                         }, 2L);
                         break;
                     default:
-                        TARDISBlockSetters.setBlock(world, x, y, z, data);
+                        TardisBlockSetters.setBlock(world, x, y, z, data);
                         break;
                 }
                 if (col == d && row < w) {

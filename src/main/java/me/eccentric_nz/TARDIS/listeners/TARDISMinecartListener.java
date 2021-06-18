@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
-import me.eccentric_nz.tardis.utility.TARDISMultiverseInventoriesChecker;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
-import me.eccentric_nz.tardis.utility.TARDISPerWorldInventoryChecker;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
+import me.eccentric_nz.tardis.utility.TardisMultiverseInventoriesChecker;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisPerWorldInventoryChecker;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -49,11 +49,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISMinecartListener implements Listener {
+public class TardisMinecartListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISMinecartListener(TARDISPlugin plugin) {
+    public TardisMinecartListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -67,7 +67,7 @@ public class TARDISMinecartListener implements Listener {
                 String[] data = null;
                 UUID playerUUID = null;
                 int id = 0;
-                COMPASS d = COMPASS.SOUTH;
+                CardinalDirection d = CardinalDirection.SOUTH;
                 Location block_loc = block.getLocation();
                 String bw = Objects.requireNonNull(block_loc.getWorld()).getName();
                 int bx = block_loc.getBlockX();
@@ -98,7 +98,7 @@ public class TARDISMinecartListener implements Listener {
                             whereid.put("tardis_id", id);
                             ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
                             if (rs.resultSet() && !plugin.getTrackerKeeper().getMinecart().contains(id)) {
-                                TARDIS tardis = rs.getTardis();
+                                Tardis tardis = rs.getTardis();
                                 data = tardis.getRail().split(":");
                                 playerUUID = tardis.getUuid();
                                 plugin.getTrackerKeeper().getMinecart().add(id);
@@ -116,7 +116,7 @@ public class TARDISMinecartListener implements Listener {
                         wherep.put("rail", db_loc);
                         ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
                         if (rsp.resultSet()) {
-                            TARDIS tardis = rsp.getTardis();
+                            Tardis tardis = rsp.getTardis();
                             playerUUID = tardis.getUuid();
                             id = tardis.getTardisId();
                             HashMap<String, Object> whereinner = new HashMap<>();
@@ -142,20 +142,20 @@ public class TARDISMinecartListener implements Listener {
                 }
                 if (data != null && data.length > 3) {
                     boolean shouldPrevent = switch (plugin.getInvManager()) {
-                        case MULTIVERSE -> (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[0]));
-                        case PER_WORLD -> (!TARDISPerWorldInventoryChecker.checkWorldsCanShare(bw, data[0]));
+                        case MULTIVERSE -> (!TardisMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[0]));
+                        case PER_WORLD -> (!TardisPerWorldInventoryChecker.checkWorldsCanShare(bw, data[0]));
                         default -> false;
                     };
                     if (shouldPrevent) {
                         if (playerUUID != null && Objects.requireNonNull(plugin.getServer().getPlayer(playerUUID)).isOnline()) {
-                            TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
+                            TardisMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
                         }
                         plugin.getTrackerKeeper().getMinecart().remove(id);
                     } else {
-                        World w = TARDISAliasResolver.getWorldFromAlias(data[0]);
-                        int x = TARDISNumberParsers.parseInt(data[1]);
-                        int y = TARDISNumberParsers.parseInt(data[2]);
-                        int z = TARDISNumberParsers.parseInt(data[3]);
+                        World w = TardisAliasResolver.getWorldFromAlias(data[0]);
+                        int x = TardisNumberParsers.parseInt(data[1]);
+                        int y = TardisNumberParsers.parseInt(data[2]);
+                        int z = TardisNumberParsers.parseInt(data[3]);
                         Location in_out = new Location(w, x, y, z);
                         if (Tag.DOORS.isTagged(material)) {
                             d = getDirection(in_out);
@@ -175,7 +175,7 @@ public class TARDISMinecartListener implements Listener {
         }
     }
 
-    private void teleportMinecart(Vehicle minecart, Location targetLocation, COMPASS d, ItemStack[] inv, EntityType cart) {
+    private void teleportMinecart(Vehicle minecart, Location targetLocation, CardinalDirection d, ItemStack[] inv, EntityType cart) {
         // search for minecart tracks around the target waypoint
         Location trackLocation = findTrack(targetLocation);
         if (trackLocation == null) {
@@ -228,24 +228,24 @@ public class TARDISMinecartListener implements Listener {
         return (Tag.RAILS.isTagged(mat));
     }
 
-    private COMPASS getDirection(Location l) {
+    private CardinalDirection getDirection(Location l) {
         Block centerBlock = l.getBlock();
         Block block;
         for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
             block = centerBlock.getRelative(f);
             if (isTrack(block.getType())) {
-                return COMPASS.valueOf(f.toString());
+                return CardinalDirection.valueOf(f.toString());
             }
         }
         return null;
     }
 
-    private COMPASS switchDirection(COMPASS d) {
+    private CardinalDirection switchDirection(CardinalDirection d) {
         return switch (d) {
-            case NORTH -> COMPASS.SOUTH;
-            case SOUTH -> COMPASS.NORTH;
-            case WEST -> COMPASS.EAST;
-            default -> COMPASS.WEST;
+            case NORTH -> CardinalDirection.SOUTH;
+            case SOUTH -> CardinalDirection.NORTH;
+            case WEST -> CardinalDirection.EAST;
+            default -> CardinalDirection.WEST;
         };
     }
 }

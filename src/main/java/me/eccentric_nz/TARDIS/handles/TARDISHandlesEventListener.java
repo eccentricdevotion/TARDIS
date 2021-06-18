@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.event.*;
 import me.eccentric_nz.tardis.database.data.Program;
 import me.eccentric_nz.tardis.database.resultset.ResultSetProgramFromEvent;
@@ -31,7 +31,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Objects;
 import java.util.UUID;
 
-public class TARDISHandlesEventListener implements Listener {
+public class TardisHandlesEventListener implements Listener {
 
     /**
      * Process the program
@@ -44,8 +44,8 @@ public class TARDISHandlesEventListener implements Listener {
             for (ItemStack is : stack) {
                 // find the ARTRON / DO
                 if (is != null) {
-                    TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(Objects.requireNonNull(is.getItemMeta()).getDisplayName());
-                    TARDISHandlesProcessor processor = new TARDISHandlesProcessor(TARDISPlugin.plugin, program, player, program.getProgramId());
+                    TardisHandlesBlock thb = TardisHandlesBlock.BY_NAME.get(Objects.requireNonNull(is.getItemMeta()).getDisplayName());
+                    TardisHandlesProcessor processor = new TardisHandlesProcessor(TardisPlugin.plugin, program, player, program.getProgramId());
                     switch (thb) {
                         case ARTRON -> {
                             processor.processArtronCommand(i + 1);
@@ -62,35 +62,35 @@ public class TARDISHandlesEventListener implements Listener {
         }
     };
 
-    public void onHandlesArtron(TARDISArtronEvent event) {
+    public void onHandlesArtron(TardisArtronEvent event) {
         getProgram(event.getPlayer().getUniqueId().toString(), "ARTRON");
     }
 
-    public void onHandlesSiegeOff(TARDISSiegeOffEvent event) {
+    public void onHandlesSiegeOff(TardisSiegeOffEvent event) {
         getProgram(event.getPlayer().getUniqueId().toString(), "SIEGE_OFF");
     }
 
-    public void onHandlesSiegeOn(TARDISSiegeEvent event) {
+    public void onHandlesSiegeOn(TardisSiegeEvent event) {
         getProgram(event.getPlayer().getUniqueId().toString(), "SIEGE_ON");
     }
 
-    public void onHandlesMaterialise(TARDISMaterialisationEvent event) {
+    public void onHandlesMaterialise(TardisMaterialisationEvent event) {
         getProgram(event.getPlayer().getUniqueId().toString(), "MATERIALISE");
     }
 
-    public void onHandlesDematerialise(TARDISDematerialisationEvent event) {
+    public void onHandlesDematerialise(TardisDematerialisationEvent event) {
         getProgram(event.getPlayer().getUniqueId().toString(), "DEMATERIALISE");
     }
 
-    public void onHandlesEnter(TARDISEnterEvent event) {
+    public void onHandlesEnter(TardisEnterEvent event) {
         getProgram(event.getPlayer().getUniqueId().toString(), "ENTER");
     }
 
-    public void onHandlesExit(TARDISExitEvent event) {
+    public void onHandlesExit(TardisExitEvent event) {
         getProgram(event.getPlayer().getUniqueId().toString(), "EXIT");
     }
 
-    public void onHandlesHADS(TARDISHADSEvent event) {
+    public void onHandlesHADS(TardisHadsEvent event) {
         getProgram(event.getPlayer().getUniqueId().toString(), "HADS");
     }
 
@@ -106,16 +106,16 @@ public class TARDISHandlesEventListener implements Listener {
      * Retrieve a Program asynchronously from the database
      */
     private void getProgram(String uuid, String event) {
-        if (TARDISPlugin.plugin.getHandlesConfig().getBoolean("enabled")) {
+        if (TardisPlugin.plugin.getHandlesConfig().getBoolean("enabled")) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    ResultSetProgramFromEvent rs = new ResultSetProgramFromEvent(TARDISPlugin.plugin, uuid, event);
+                    ResultSetProgramFromEvent rs = new ResultSetProgramFromEvent(TardisPlugin.plugin, uuid, event);
                     if (rs.resultSet()) {
                         programCallback.execute(rs.getProgram());
                     }
                 }
-            }.runTaskAsynchronously(TARDISPlugin.plugin);
+            }.runTaskAsynchronously(TardisPlugin.plugin);
         }
     }
 

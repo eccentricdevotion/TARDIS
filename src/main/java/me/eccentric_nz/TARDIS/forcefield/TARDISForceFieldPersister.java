@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.forcefield;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 
 import java.sql.Connection;
@@ -28,17 +28,17 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.UUID;
 
-public class TARDISForceFieldPersister {
+public class TardisForceFieldPersister {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
 
-    public TARDISForceFieldPersister(TARDISPlugin plugin) {
+    public TardisForceFieldPersister(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -78,7 +78,7 @@ public class TARDISForceFieldPersister {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     UUID uuid = UUID.fromString(rs.getString("uuid"));
-                    Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
+                    Location location = TardisStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
                     // add to tracker
                     plugin.getTrackerKeeper().getActiveForceFields().put(uuid, location);
                     count++;

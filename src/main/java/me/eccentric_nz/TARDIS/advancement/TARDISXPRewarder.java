@@ -37,7 +37,7 @@ import java.util.Arrays;
  * <p>
  * Credit to comphenix for further contributions: See http://forums.bukkit.org/threads/experiencemanager-was-experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/page-3#post-1273622
  */
-class TARDISXPRewarder {
+class TardisXpRewarder {
 
     private static final int HARD_MAX_LEVEL = 100000;
     private static int[] xpTotalToReachLevel;
@@ -57,7 +57,7 @@ class TARDISXPRewarder {
      * @param player the player for this XPKCalculator object
      * @throws IllegalArgumentException if the player is null
      */
-    TARDISXPRewarder(Player player) {
+    TardisXpRewarder(Player player) {
         Validate.notNull(player, "Player cannot be null");
         this.player = new WeakReference<>(player);
         playerName = player.getName();

@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCount;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
 import me.eccentric_nz.tardis.schematic.ArchiveUpdate;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -41,11 +41,11 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TARDISThemeMenuListener extends TARDISMenuListener implements Listener {
+public class TardisThemeMenuListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISThemeMenuListener(TARDISPlugin plugin) {
+    public TardisThemeMenuListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
     }
@@ -85,10 +85,10 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
                         ItemStack choice = view.getItem(slot);
                         if (choice != null) {
                             String perm = Consoles.schematicFor(choice.getType()).getPermission();
-                            if (TARDISPermission.hasPermission(p, "tardis." + perm)) {
+                            if (TardisPermission.hasPermission(p, "tardis." + perm)) {
                                 // remember the upgrade choice
                                 Schematic schm = Consoles.schematicFor(perm);
-                                TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
+                                TardisUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
                                 int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
                                 int needed = (tud.getPrevious().getPermission().equals(schm.getPermission())) ? upgrade / 2 : upgrade;
                                 if (tud.getLevel() >= needed) {
@@ -132,7 +132,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
     private void wall(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
-            ItemStack[] wall_blocks = new TARDISWallsInventory(plugin).getMenu();
+            ItemStack[] wall_blocks = new TardisWallsInventory(plugin).getMenu();
             Inventory wall = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis Wall Menu");
             wall.setContents(wall_blocks);
             p.openInventory(wall);
@@ -147,7 +147,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
     private void archive(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
-            ItemStack[] archive = new TARDISArchiveInventory(plugin, p).getArchives();
+            ItemStack[] archive = new TardisArchiveInventory(plugin, p).getArchives();
             Inventory menu = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "tardis Archive");
             menu.setContents(archive);
             p.openInventory(menu);
@@ -164,7 +164,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
             p.closeInventory();
             String uuid = p.getUniqueId().toString();
             boolean repair;
-            TARDISRepair tr = new TARDISRepair(plugin, p);
+            TardisRepair tr = new TardisRepair(plugin, p);
             // is it a free repair?
             ResultSetCount rsc = new ResultSetCount(plugin, uuid);
             if (rsc.resultSet() && rsc.getRepair() > 0) {
@@ -192,7 +192,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
     private void clean(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
-            new TARDISRepair(plugin, p).restore(true);
+            new TardisRepair(plugin, p).restore(true);
         }, 1L);
     }
 }

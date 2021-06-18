@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 
 import java.util.HashMap;
@@ -24,11 +24,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkPlayerPersister {
+public class TardisJunkPlayerPersister {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISJunkPlayerPersister(TARDISPlugin plugin) {
+    public TardisJunkPlayerPersister(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

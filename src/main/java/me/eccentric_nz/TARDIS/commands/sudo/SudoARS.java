@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.ars.TARDISARSInventory;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.ars.TardisArsInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -31,17 +31,17 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-class SudoARS {
+class SudoArs {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    SudoARS(TARDISPlugin plugin) {
+    SudoArs(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean showARS(Player player, UUID uuid) {
-        TARDISSudoTracker.SUDOERS.put(player.getUniqueId(), uuid);
-        ItemStack[] tars = new TARDISARSInventory(plugin).getARS();
+        TardisSudoTracker.SUDOERS.put(player.getUniqueId(), uuid);
+        ItemStack[] tars = new TardisArsInventory(plugin).getARS();
         Inventory ars = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
         ars.setContents(tars);
         player.openInventory(ars);

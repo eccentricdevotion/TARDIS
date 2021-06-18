@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.travel.TardisTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,11 +31,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISCheckLocCommand {
+class TardisCheckLocCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISCheckLocCommand(TARDISPlugin plugin) {
+    TardisCheckLocCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -49,18 +49,18 @@ class TARDISCheckLocCommand {
         // check they are a timelord
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "NOT_A_TIMELORD");
+            TardisMessage.send(player, "NOT_A_TIMELORD");
             return true;
         }
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", rs.getTardisId());
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
-            TARDISMessage.send(player, "DIRECTION_NOT_FOUND");
+            TardisMessage.send(player, "DIRECTION_NOT_FOUND");
             return true;
         }
-        COMPASS d = rsc.getDirection();
-        TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
+        CardinalDirection d = rsc.getDirection();
+        TardisTimeTravel tt = new TardisTimeTravel(plugin);
         tt.testSafeLocation(eyeLocation, d);
         return true;
     }

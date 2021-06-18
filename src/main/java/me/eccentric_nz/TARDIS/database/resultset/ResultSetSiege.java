@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,9 +34,9 @@ import java.util.UUID;
  */
 public class ResultSetSiege {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<UUID, Integer> data = new HashMap<>();
     private final String prefix;
 
@@ -45,7 +45,7 @@ public class ResultSetSiege {
      *
      * @param plugin an instance of the main class.
      */
-    public ResultSetSiege(TARDISPlugin plugin) {
+    public ResultSetSiege(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }

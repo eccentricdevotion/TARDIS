@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.commands.utils;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUIWeather;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiWeather;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Objects;
 
-public class TARDISWeatherInventory {
+public class TardisWeatherInventory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ItemStack[] weather;
 
-    public TARDISWeatherInventory(TARDISPlugin plugin) {
+    public TardisWeatherInventory(TardisPlugin plugin) {
         this.plugin = plugin;
         weather = getItemStack();
     }
@@ -43,45 +43,45 @@ public class TARDISWeatherInventory {
 
         ItemStack[] stack = new ItemStack[9];
         // clear
-        ItemStack clear = new ItemStack(GUIWeather.CLEAR.getMaterial(), 1);
+        ItemStack clear = new ItemStack(GuiWeather.CLEAR.getMaterial(), 1);
         ItemMeta sun = clear.getItemMeta();
         assert sun != null;
-        sun.setDisplayName(TARDISStringUtils.uppercaseFirst(Objects.requireNonNull(plugin.getLanguage().getString("WEATHER_CLEAR"))));
-        sun.setCustomModelData(GUIWeather.CLEAR.getCustomModelData());
+        sun.setDisplayName(TardisStringUtils.uppercaseFirst(Objects.requireNonNull(plugin.getLanguage().getString("WEATHER_CLEAR"))));
+        sun.setCustomModelData(GuiWeather.CLEAR.getCustomModelData());
         clear.setItemMeta(sun);
-        stack[GUIWeather.CLEAR.getSlot()] = clear;
+        stack[GuiWeather.CLEAR.getSlot()] = clear;
         // rain
-        ItemStack rain = new ItemStack(GUIWeather.RAIN.getMaterial(), 1);
+        ItemStack rain = new ItemStack(GuiWeather.RAIN.getMaterial(), 1);
         ItemMeta ing = rain.getItemMeta();
         assert ing != null;
-        ing.setDisplayName(TARDISStringUtils.uppercaseFirst(Objects.requireNonNull(plugin.getLanguage().getString("WEATHER_RAIN"))));
-        ing.setCustomModelData(GUIWeather.RAIN.getCustomModelData());
+        ing.setDisplayName(TardisStringUtils.uppercaseFirst(Objects.requireNonNull(plugin.getLanguage().getString("WEATHER_RAIN"))));
+        ing.setCustomModelData(GuiWeather.RAIN.getCustomModelData());
         rain.setItemMeta(ing);
-        stack[GUIWeather.RAIN.getSlot()] = rain;
+        stack[GuiWeather.RAIN.getSlot()] = rain;
         // thunder
-        ItemStack thunder = new ItemStack(GUIWeather.THUNDER.getMaterial(), 1);
+        ItemStack thunder = new ItemStack(GuiWeather.THUNDER.getMaterial(), 1);
         ItemMeta storm = thunder.getItemMeta();
         assert storm != null;
         storm.setDisplayName(plugin.getLanguage().getString("WEATHER_THUNDER"));
-        storm.setCustomModelData(GUIWeather.THUNDER.getCustomModelData());
+        storm.setCustomModelData(GuiWeather.THUNDER.getCustomModelData());
         thunder.setItemMeta(storm);
-        stack[GUIWeather.THUNDER.getSlot()] = thunder;
+        stack[GuiWeather.THUNDER.getSlot()] = thunder;
         // excite
-        ItemStack excit = new ItemStack(GUIWeather.EXCITE.getMaterial(), 1);
+        ItemStack excit = new ItemStack(GuiWeather.EXCITE.getMaterial(), 1);
         ItemMeta ation = excit.getItemMeta();
         assert ation != null;
         ation.setDisplayName(plugin.getLanguage().getString("WEATHER_EXCITE"));
-        ation.setCustomModelData(GUIWeather.EXCITE.getCustomModelData());
+        ation.setCustomModelData(GuiWeather.EXCITE.getCustomModelData());
         excit.setItemMeta(ation);
-        stack[GUIWeather.EXCITE.getSlot()] = excit;
+        stack[GuiWeather.EXCITE.getSlot()] = excit;
         // close
-        ItemStack close = new ItemStack(GUIWeather.CLOSE.getMaterial(), 1);
+        ItemStack close = new ItemStack(GuiWeather.CLOSE.getMaterial(), 1);
         ItemMeta can = close.getItemMeta();
         assert can != null;
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIWeather.CLOSE.getCustomModelData());
+        can.setCustomModelData(GuiWeather.CLOSE.getCustomModelData());
         close.setItemMeta(can);
-        stack[GUIWeather.CLOSE.getSlot()] = close;
+        stack[GuiWeather.CLOSE.getSlot()] = close;
 
         return stack;
     }

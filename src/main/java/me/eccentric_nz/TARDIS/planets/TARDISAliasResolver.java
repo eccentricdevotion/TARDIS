@@ -16,23 +16,23 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 import java.util.HashMap;
 import java.util.Objects;
 
-public class TARDISAliasResolver {
+public class TardisAliasResolver {
 
-    private static final HashMap<String, TARDISPlanet> planets = new HashMap<>();
+    private static final HashMap<String, TardisPlanet> planets = new HashMap<>();
 
     public static String getWorldAlias(World world) {
         return getWorldAlias(world.getName());
     }
 
     public static String getWorldAlias(String world) {
-        return TARDISPlugin.plugin.getPlanetsConfig().getString("planets." + world + ".alias", world);
+        return TardisPlugin.plugin.getPlanetsConfig().getString("planets." + world + ".alias", world);
     }
 
     public static World getWorldFromAlias(String alias) {
@@ -40,7 +40,7 @@ public class TARDISAliasResolver {
         if (world != null) {
             return world;
         } else {
-            for (TARDISPlanet planet : planets.values()) {
+            for (TardisPlanet planet : planets.values()) {
                 if (planet.getAlias().equalsIgnoreCase(alias)) {
                     return planet.getWorld();
                 }
@@ -54,7 +54,7 @@ public class TARDISAliasResolver {
         if (world != null) {
             return alias;
         } else {
-            for (TARDISPlanet planet : planets.values()) {
+            for (TardisPlanet planet : planets.values()) {
                 if (planet.getAlias().equalsIgnoreCase(alias)) {
                     return planet.getName();
                 }
@@ -64,11 +64,11 @@ public class TARDISAliasResolver {
     }
 
     public static void createAliasMap() {
-        for (String s : Objects.requireNonNull(TARDISPlugin.plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false)) {
+        for (String s : Objects.requireNonNull(TardisPlugin.plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false)) {
             World world = Bukkit.getServer().getWorld(s);
             if (world != null) {
-                String alias = TARDISPlugin.plugin.getPlanetsConfig().getString("planets." + s + ".alias", s);
-                TARDISPlanet tp = new TARDISPlanet();
+                String alias = TardisPlugin.plugin.getPlanetsConfig().getString("planets." + s + ".alias", s);
+                TardisPlanet tp = new TardisPlanet();
                 tp.setAlias(!alias.isEmpty() ? alias : s);
                 tp.setName(s);
                 tp.setWorld(world);
@@ -81,7 +81,7 @@ public class TARDISAliasResolver {
         }
     }
 
-    public static HashMap<String, TARDISPlanet> getPlanets() {
+    public static HashMap<String, TardisPlanet> getPlanets() {
         return planets;
     }
 }

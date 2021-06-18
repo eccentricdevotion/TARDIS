@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCreeper;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
@@ -43,11 +43,11 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISExplosionListener implements Listener {
+public class TardisExplosionListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISExplosionListener(TARDISPlugin plugin) {
+    public TardisExplosionListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -78,7 +78,7 @@ public class TARDISExplosionListener implements Listener {
                 return;
             }
             for (String str : plugin.getGeneralKeeper().getProtectBlockMap().keySet()) {
-                Location loc = TARDISStaticLocationGetters.getLocationFromBukkitString(str);
+                Location loc = TardisStaticLocationGetters.getLocationFromBukkitString(str);
                 if (loc != null) {
                     Block block = loc.getBlock();
                     // if the block is a tardis block then remove it

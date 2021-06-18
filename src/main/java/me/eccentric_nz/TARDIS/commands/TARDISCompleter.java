@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISCompleter {
+public class TardisCompleter {
 
     protected List<String> partial(String token, Collection<String> from) {
         return StringUtil.copyPartialMatches(token, from, new ArrayList<>(from.size()));

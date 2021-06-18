@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.ars.TARDISARS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.ars.TardisArs;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 
 import java.io.*;
@@ -29,11 +29,11 @@ import java.util.Locale;
  *
  * @author eccentric_nz
  */
-public class TARDISFileCopier {
+public class TardisFileCopier {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISFileCopier(TARDISPlugin plugin) {
+    public TardisFileCopier(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -119,7 +119,7 @@ public class TARDISFileCopier {
             }
         });
         // copy default room files as well
-        for (TARDISARS ta : TARDISARS.values()) {
+        for (TardisArs ta : TardisArs.values()) {
             if (ta.getOffset() != 0) {
                 String str = basepath + ta.toString().toLowerCase(Locale.ENGLISH) + ".tschm";
                 copy(str, plugin.getResource(ta.toString().toLowerCase(Locale.ENGLISH) + ".tschm"), true);

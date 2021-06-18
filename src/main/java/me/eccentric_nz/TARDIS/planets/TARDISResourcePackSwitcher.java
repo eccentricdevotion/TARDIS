@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -27,11 +27,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 /**
  * @author eccentric_nz
  */
-public class TARDISResourcePackSwitcher implements Listener {
+public class TardisResourcePackSwitcher implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISResourcePackSwitcher(TARDISPlugin plugin) {
+    public TardisResourcePackSwitcher(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

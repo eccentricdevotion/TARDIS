@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.Control;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,11 +41,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISPoliceBoxListener extends TARDISMenuListener implements Listener {
+public class TardisPoliceBoxListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISPoliceBoxListener(TARDISPlugin plugin) {
+    public TardisPoliceBoxListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
     }
@@ -77,7 +77,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                         where.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
-                            TARDIS tardis = rs.getTardis();
+                            Tardis tardis = rs.getTardis();
                             HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", id);
                             wherec.put("type", Control.CHAMELEON.getId());
@@ -93,20 +93,20 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                             switch (slot) {
                                 case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 -> {
                                     // item frame preset
-                                    PRESET selected = PRESET.getItemFramePresetBySlot(slot);
+                                    Preset selected = Preset.getItemFramePresetBySlot(slot);
                                     set.put("chameleon_preset", selected.toString());
                                     if (hasSign) {
                                         updateChameleonSign(rsc.getData(), selected.toString(), player);
                                     }
                                     if (hasFrame) {
-                                        new TARDISChameleonFrame(plugin).updateChameleonFrame(id, selected, rsf.getLocation());
+                                        new TardisChameleonFrame(plugin).updateChameleonFrame(id, selected, rsf.getLocation());
                                     }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + selected.getDisplayName());
+                                    TardisMessage.send(player, "CHAM_SET", ChatColor.AQUA + selected.getDisplayName());
                                 }
                                 case 24 ->
                                         // go to page one (regular presets)
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                            TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
+                                            TardisPresetInventory tpi = new TardisPresetInventory(plugin, player);
                                             ItemStack[] items = tpi.getPresets();
                                             Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Presets");
                                             presetinv.setContents(items);
@@ -115,7 +115,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
                                 case 25 ->
                                         // return to Chameleon Circuit GUI
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                            ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
+                                            ItemStack[] stacks = new TardisChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
                                             Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
                                             gui.setContents(stacks);
                                             player.openInventory(gui);
@@ -137,7 +137,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener implements Liste
 
     private void updateChameleonSign(ArrayList<HashMap<String, String>> map, String preset, Player player) {
         for (HashMap<String, String> entry : map) {
-            TARDISStaticUtils.setSign(entry.get("location"), 3, preset, player);
+            TardisStaticUtils.setSign(entry.get("location"), 3, preset, player);
         }
     }
 }

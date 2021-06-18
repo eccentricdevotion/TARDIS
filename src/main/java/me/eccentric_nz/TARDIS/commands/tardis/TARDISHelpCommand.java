@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.TardisCommandHelper;
 import org.bukkit.command.CommandSender;
 
 import java.util.Locale;
@@ -25,16 +25,16 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISHelpCommand {
+class TardisHelpCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISHelpCommand(TARDISPlugin plugin) {
+    TardisHelpCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean showHelp(CommandSender sender, String[] args) {
-        TARDISCommandHelper tch = new TARDISCommandHelper(plugin);
+        TardisCommandHelper tch = new TardisCommandHelper(plugin);
         if (args.length == 1) {
             tch.getCommand("", sender);
             return true;

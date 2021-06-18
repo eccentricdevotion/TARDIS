@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.api.event.TARDISEnterEvent;
-import me.eccentric_nz.tardis.api.event.TARDISExitEvent;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisEnterEvent;
+import me.eccentric_nz.tardis.api.event.TardisExitEvent;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.mobfarming.TARDISPet;
-import me.eccentric_nz.tardis.travel.TARDISDoorLocation;
-import me.eccentric_nz.tardis.utility.TARDISItemRenamer;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.mobfarming.TardisPet;
+import me.eccentric_nz.tardis.travel.TardisDoorLocation;
+import me.eccentric_nz.tardis.utility.TardisItemRenamer;
+import me.eccentric_nz.tardis.utility.TardisSounds;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -47,13 +47,13 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISDoorListener {
+public class TardisDoorListener {
 
     public final float[][] adjustYaw = new float[4][4];
-    final TARDISPlugin plugin;
+    final TardisPlugin plugin;
     private final int player_artron;
 
-    public TARDISDoorListener(TARDISPlugin plugin) {
+    public TardisDoorListener(TardisPlugin plugin) {
         this.plugin = plugin;
         player_artron = this.plugin.getArtronConfig().getInt("player");
         // yaw adjustments if inner and outer door directions are different
@@ -87,7 +87,7 @@ public class TARDISDoorListener {
      * @param m        whether to play the resource pack sound
      */
     public void movePlayer(Player player, Location location, boolean exit, World from, boolean quotes, int sound, boolean m) {
-        int i = TARDISConstants.RANDOM.nextInt(plugin.getGeneralKeeper().getQuotes().size());
+        int i = TardisConstants.RANDOM.nextInt(plugin.getGeneralKeeper().getQuotes().size());
         World to = location.getWorld();
         boolean allowFlight = player.getAllowFlight();
         boolean crossWorlds = (from != to);
@@ -103,7 +103,7 @@ public class TARDISDoorListener {
                 player.setAllowFlight(true);
             }
             if (quotes) {
-                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
+                if (TardisConstants.RANDOM.nextInt(100) < 3) {
                     TextComponent tcg = new TextComponent("[TARDIS] ");
                     tcg.setColor(ChatColor.GOLD);
                     TextComponent tcl = new TextComponent("Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!");
@@ -116,7 +116,7 @@ public class TARDISDoorListener {
                 }
             }
             if (exit) {
-                plugin.getPM().callEvent(new TARDISExitEvent(player, to));
+                plugin.getPM().callEvent(new TardisExitEvent(player, to));
                 // give some artron energy to player
                 HashMap<String, Object> where = new HashMap<>();
                 UUID uuid = player.getUniqueId();
@@ -131,11 +131,11 @@ public class TARDISDoorListener {
                 }
                 plugin.getTrackerKeeper().getEjecting().remove(uuid);
             } else {
-                plugin.getPM().callEvent(new TARDISEnterEvent(player, from));
+                plugin.getPM().callEvent(new TardisEnterEvent(player, from));
                 if (player.isPlayerTimeRelative()) {
                     setTemporalLocation(player, -1);
                 }
-                TARDISSounds.playTARDISHum(player);
+                TardisSounds.playTARDISHum(player);
             }
             // give a key
             giveKey(player);
@@ -166,7 +166,7 @@ public class TARDISDoorListener {
      * @param d      the direction of the police box
      * @param enter  whether the pets are entering (true) or exiting (false)
      */
-    void movePets(List<TARDISPet> pets, Location l, Player player, COMPASS d, boolean enter) {
+    void movePets(List<TardisPet> pets, Location l, Player player, CardinalDirection d, boolean enter) {
         Location pl = l.clone();
         World w = l.getWorld();
         // will need to adjust this depending on direction Police Box is facing
@@ -192,7 +192,7 @@ public class TARDISDoorListener {
                 }
             }
         }
-        for (TARDISPet pet : pets) {
+        for (TardisPet pet : pets) {
             plugin.setTardisSpawn(true);
             assert w != null;
             LivingEntity ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
@@ -271,11 +271,11 @@ public class TARDISDoorListener {
                 ItemStack oh = inv.getItemInOffHand();
                 if (!inv.contains(m) && !oh.getType().equals(m)) {
                     ItemStack is = new ItemStack(m, 1);
-                    TARDISItemRenamer ir = new TARDISItemRenamer(plugin, player, is);
+                    TardisItemRenamer ir = new TardisItemRenamer(plugin, player, is);
                     ir.setName("tardis Key", true);
                     inv.addItem(is);
                     player.updateInventory();
-                    TARDISMessage.send(player, "KEY_REMIND");
+                    TardisMessage.send(player, "KEY_REMIND");
                 }
             }
         }
@@ -288,7 +288,7 @@ public class TARDISDoorListener {
      * @param d2 the direction the second door is facing
      * @return the angle needed to correct the yaw
      */
-    float adjustYaw(COMPASS d1, COMPASS d2) {
+    float adjustYaw(CardinalDirection d1, CardinalDirection d2) {
         return switch (d1) {
             case EAST -> adjustYaw[0][d2.ordinal()];
             case SOUTH -> adjustYaw[1][d2.ordinal()];
@@ -304,20 +304,20 @@ public class TARDISDoorListener {
      * @param id       the unique tardis identifier i the database
      * @return an instance of the TARDISDoorLocation data class
      */
-    public TARDISDoorLocation getDoor(int doorType, int id) {
-        TARDISDoorLocation tdl = new TARDISDoorLocation();
+    public TardisDoorLocation getDoor(int doorType, int id) {
+        TardisDoorLocation tdl = new TardisDoorLocation();
         // get door location
         HashMap<String, Object> wherei = new HashMap<>();
         wherei.put("door_type", doorType);
         wherei.put("tardis_id", id);
         ResultSetDoors rsd = new ResultSetDoors(plugin, wherei, false);
         if (rsd.resultSet()) {
-            COMPASS d = rsd.getDoorDirection();
+            CardinalDirection d = rsd.getDoorDirection();
             tdl.setD(d);
             String doorLocStr = rsd.getDoorLocation();
-            World cw = TARDISStaticLocationGetters.getWorld(doorLocStr);
+            World cw = TardisStaticLocationGetters.getWorld(doorLocStr);
             tdl.setW(cw);
-            Location tmp_loc = TARDISStaticLocationGetters.getLocationFromDB(doorLocStr);
+            Location tmp_loc = TardisStaticLocationGetters.getLocationFromDB(doorLocStr);
             assert tmp_loc != null;
             int getx = tmp_loc.getBlockX();
             int getz = tmp_loc.getBlockZ();
@@ -360,21 +360,21 @@ public class TARDISDoorListener {
         switch (sound) {
             case 1:
                 if (!m) {
-                    TARDISSounds.playTARDISSound(l, "tardis_door_open");
+                    TardisSounds.playTARDISSound(l, "tardis_door_open");
                 } else {
                     p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
                 }
                 break;
             case 2:
                 if (!m) {
-                    TARDISSounds.playTARDISSound(l, "tardis_door_close");
+                    TardisSounds.playTARDISSound(l, "tardis_door_close");
                 } else {
                     p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
                 }
                 break;
             case 3:
                 if (!m) {
-                    TARDISSounds.playTARDISSound(l, "tardis_enter");
+                    TardisSounds.playTARDISSound(l, "tardis_enter");
                 } else {
                     p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
                 }

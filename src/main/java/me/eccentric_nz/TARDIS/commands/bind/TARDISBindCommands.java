@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.commands.bind;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.commands.TardisCommandHelper;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.Bind;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -38,19 +38,19 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TARDISBindCommands implements CommandExecutor {
+public class TardisBindCommands implements CommandExecutor {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISBindCommands(TARDISPlugin plugin) {
+    public TardisBindCommands(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisbind")) {
-            if (!TARDISPermission.hasPermission(sender, "tardis.update")) {
-                TARDISMessage.send(sender, "NO_PERMS");
+            if (!TardisPermission.hasPermission(sender, "tardis.update")) {
+                TardisMessage.send(sender, "NO_PERMS");
                 return false;
             }
             Player player = null;
@@ -58,24 +58,24 @@ public class TARDISBindCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                TARDISMessage.send(sender, "CMD_PLAYER");
+                TardisMessage.send(sender, "CMD_PLAYER");
                 return false;
             }
             if (args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
-                new TARDISCommandHelper(plugin).getCommand("tardisbind", sender);
+                TardisMessage.send(player, "TOO_FEW_ARGS");
+                new TardisCommandHelper(plugin).getCommand("tardisbind", sender);
                 return false;
             }
             Bind bind;
             try {
                 bind = Bind.valueOf(args[1].toUpperCase());
             } catch (IllegalArgumentException e) {
-                TARDISMessage.send(player, "BIND_NOT_VALID");
+                TardisMessage.send(player, "BIND_NOT_VALID");
                 return false;
             }
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                TardisMessage.send(player, "NOT_A_TIMELORD");
                 return false;
             }
             int id = rs.getTardisId();
@@ -83,12 +83,12 @@ public class TARDISBindCommands implements CommandExecutor {
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                TARDISMessage.send(player, "NOT_IN_TARDIS");
+                TardisMessage.send(player, "NOT_IN_TARDIS");
                 return false;
             }
             if (args[0].equalsIgnoreCase("add")) {
                 if (args.length < bind.getArgs()) {
-                    TARDISMessage.send(player, "TOO_FEW_ARGS");
+                    TardisMessage.send(player, "TOO_FEW_ARGS");
                     return false;
                 }
                 return new BindAdd(plugin).setClick(bind, player, id, args);

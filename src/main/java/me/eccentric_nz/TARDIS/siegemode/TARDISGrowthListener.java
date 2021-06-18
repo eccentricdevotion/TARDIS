@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -34,13 +34,13 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISGrowthListener implements Listener {
+public class TardisGrowthListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int chance;
     private final List<Material> plants = Arrays.asList(Material.AIR, Material.BEETROOTS, Material.CACTUS, Material.CARROTS, Material.COCOA, Material.WHEAT, Material.MELON_STEM, Material.NETHER_WART, Material.POTATOES, Material.PUMPKIN_STEM, Material.SUGAR_CANE);
 
-    public TARDISGrowthListener(TARDISPlugin plugin) {
+    public TardisGrowthListener(TardisPlugin plugin) {
         this.plugin = plugin;
         chance = this.plugin.getConfig().getInt("siege.growth");
     }
@@ -57,8 +57,8 @@ public class TARDISGrowthListener implements Listener {
         if (!plugin.getTrackerKeeper().getSiegeGrowthAreas().containsKey(w)) {
             return;
         }
-        for (TARDISSiegeArea area : plugin.getTrackerKeeper().getSiegeGrowthAreas().get(w)) {
-            if (area.isInSiegeArea(l) && TARDISConstants.RANDOM.nextInt(100) < chance) {
+        for (TardisSiegeArea area : plugin.getTrackerKeeper().getSiegeGrowthAreas().get(w)) {
+            if (area.isInSiegeArea(l) && TardisConstants.RANDOM.nextInt(100) < chance) {
                 // grow an extra step
                 if (species.isAir()) {
                     // with cactus and sugar cane the block returned is AIR
@@ -86,13 +86,13 @@ public class TARDISGrowthListener implements Listener {
                             break;
                         case COCOA:
                             // fully grown is 3
-                            if (data < 4 && TARDISConstants.RANDOM.nextInt(100) < 25) {
+                            if (data < 4 && TardisConstants.RANDOM.nextInt(100) < 25) {
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ageable.setAge(data + 8), 3L);
                             }
                             break;
                         default: // NETHER_WARTS
                             // fully grown is 3
-                            if (data < 2 && TARDISConstants.RANDOM.nextInt(100) < 33) {
+                            if (data < 2 && TardisConstants.RANDOM.nextInt(100) < 33) {
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ageable.setAge(data + 2), 3L);
                             }
                             break;

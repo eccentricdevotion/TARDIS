@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.data.Sonic;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetSonic;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -48,11 +48,11 @@ import java.util.*;
 /**
  * @author eccentric_nz
  */
-public class TARDISSonicGeneratorListener implements Listener {
+public class TardisSonicGeneratorListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISSonicGeneratorListener(TARDISPlugin plugin) {
+    public TardisSonicGeneratorListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -88,7 +88,7 @@ public class TARDISSonicGeneratorListener implements Listener {
                             generate(player, block.getLocation(), s);
                         } else {
                             // open GUI
-                            ItemStack[] items = new TARDISSonicGeneratorInventory(plugin, s, player).getGenerator();
+                            ItemStack[] items = new TardisSonicGeneratorInventory(plugin, s, player).getGenerator();
                             Inventory sgc = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Sonic Generator");
                             sgc.setContents(items);
                             plugin.getTrackerKeeper().getSonicGenerators().put(uuid, block.getLocation());
@@ -168,13 +168,13 @@ public class TARDISSonicGeneratorListener implements Listener {
                 where.put("uuid", p.getUniqueId().toString());
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -cost, where, p);
             } else {
-                TARDISMessage.send(p, "UPGRADE_ABORT_ENERGY");
+                TardisMessage.send(p, "UPGRADE_ABORT_ENERGY");
             }
         }
     }
 
     private void openActivate(Player p) {
-        ItemStack[] items = new TARDISSonicActivatorInventory(plugin).getActivator();
+        ItemStack[] items = new TardisSonicActivatorInventory(plugin).getActivator();
         Inventory sgc = plugin.getServer().createInventory(p, 9, ChatColor.DARK_RED + "Sonic Activator");
         sgc.setContents(items);
         p.openInventory(sgc);
@@ -202,7 +202,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             if (rss.getSonic().isActivated()) {
                 event.setCancelled(true);
                 // set block to AIR
-                b.setBlockData(TARDISConstants.AIR);
+                b.setBlockData(TardisConstants.AIR);
                 // drop a custom FLOWER_POT_ITEM
                 ItemStack is = new ItemStack(Material.FLOWER_POT, 1);
                 ItemMeta im = is.getItemMeta();
@@ -255,7 +255,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             } else {
                 event.setCancelled(true);
                 // only in tardis
-                TARDISMessage.send(p, "NOT_IN_TARDIS");
+                TardisMessage.send(p, "NOT_IN_TARDIS");
             }
         }
     }

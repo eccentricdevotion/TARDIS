@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -26,10 +26,10 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISSQLCondenserUpdate implements Runnable {
+class TardisSqlCondenserUpdate implements Runnable {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final int amount;
     private final HashMap<String, Object> where;
@@ -43,7 +43,7 @@ class TARDISSQLCondenserUpdate implements Runnable {
      * @param amount the amount of blocks to remove
      * @param where  a HashMap&lt;String, Object&gt; of table fields and values to select the records to alter.
      */
-    TARDISSQLCondenserUpdate(TARDISPlugin plugin, int amount, HashMap<String, Object> where) {
+    TardisSqlCondenserUpdate(TardisPlugin plugin, int amount, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.amount = amount;
         this.where = where;

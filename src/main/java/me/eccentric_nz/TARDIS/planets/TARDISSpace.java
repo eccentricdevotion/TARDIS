@@ -18,11 +18,11 @@ package me.eccentric_nz.tardis.planets;
 
 import com.onarandombox.multiverseinventories.MultiverseInventories;
 import com.onarandombox.multiverseinventories.WorldGroup;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.InventoryManager;
-import me.eccentric_nz.tardis.perms.TARDISGroupManagerHandler;
-import me.eccentric_nz.tardis.perms.TARDISPermissionsExHandler;
-import me.eccentric_nz.tardis.perms.TARDISbPermissionsHandler;
+import me.eccentric_nz.tardis.perms.TardisGroupManagerHandler;
+import me.eccentric_nz.tardis.perms.TardisPermissionsExHandler;
+import me.eccentric_nz.tardis.perms.TardisBPermissionsHandler;
 import me.eccentric_nz.tardischunkgenerator.TardisChunkGenerator;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -38,12 +38,12 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISSpace {
+public class TardisSpace {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private World tardisWorld = null;
 
-    public TARDISSpace(TARDISPlugin plugin) {
+    public TardisSpace(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -87,17 +87,17 @@ public class TARDISSpace {
             }
             if (plugin.getConfig().getBoolean("creation.add_perms")) {
                 if (plugin.getPM().isPluginEnabled("GroupManager")) {
-                    TARDISGroupManagerHandler tgmh = new TARDISGroupManagerHandler(plugin);
+                    TardisGroupManagerHandler tgmh = new TardisGroupManagerHandler(plugin);
                     String player = name.substring(13);
                     tgmh.addPerms(player);
                 }
                 if (plugin.getPM().isPluginEnabled("bPermissions")) {
-                    TARDISbPermissionsHandler tbph = new TARDISbPermissionsHandler(plugin);
+                    TardisBPermissionsHandler tbph = new TardisBPermissionsHandler(plugin);
                     String player = name.substring(13);
                     tbph.addPerms(player);
                 }
                 if (plugin.getPM().isPluginEnabled("PermissionsEx")) {
-                    TARDISPermissionsExHandler tpesxh = new TARDISPermissionsExHandler(plugin);
+                    TardisPermissionsExHandler tpesxh = new TardisPermissionsExHandler(plugin);
                     String player = name.substring(13);
                     tpesxh.addPerms(player);
                 }

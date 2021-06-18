@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -27,10 +27,10 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISSQLDelete implements Runnable {
+class TardisSqlDelete implements Runnable {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String table;
     private final HashMap<String, Object> where;
@@ -44,7 +44,7 @@ class TARDISSQLDelete implements Runnable {
      * @param table  the database table name to insert the data into.
      * @param where  a HashMap<String, Object> of table fields and values to select the records to delete.
      */
-    TARDISSQLDelete(TARDISPlugin plugin, String table, HashMap<String, Object> where) {
+    TardisSqlDelete(TardisPlugin plugin, String table, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.table = table;
         this.where = where;

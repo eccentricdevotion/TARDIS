@@ -17,13 +17,13 @@
 package me.eccentric_nz.tardis.rooms;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.api.event.TARDISRoomGrowEvent;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisRoomGrowEvent;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -39,15 +39,15 @@ import java.util.Locale;
  *
  * @author eccentric_nz
  */
-public class TARDISRoomBuilder {
+public class TardisRoomBuilder {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String r;
     private final Location l;
-    private final COMPASS d;
+    private final CardinalDirection d;
     private final Player p;
 
-    public TARDISRoomBuilder(TARDISPlugin plugin, String r, Location l, COMPASS d, Player p) {
+    public TardisRoomBuilder(TardisPlugin plugin, String r, Location l, CardinalDirection d, Player p) {
         this.plugin = plugin;
         this.r = r;
         this.l = l;
@@ -67,7 +67,7 @@ public class TARDISRoomBuilder {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(p.getUniqueId().toString())) {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
-            TARDISRoomData roomData = new TARDISRoomData();
+            TardisRoomData roomData = new TardisRoomData();
             roomData.setTardisId(rs.getTardisId());
             // get wall data, default to orange wool if not set
             Material wall_type, floor_type;
@@ -87,7 +87,7 @@ public class TARDISRoomBuilder {
             String directory = (plugin.getRoomsConfig().getBoolean("rooms." + r + ".user")) ? "user_schematics" : "schematics";
             String path = plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase(Locale.ENGLISH) + ".tschm";
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.unzip(path);
+            JsonObject obj = TardisSchematicGZip.unzip(path);
             assert obj != null;
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             int xzoffset = (dimensions.get("width").getAsInt() / 2);
@@ -111,12 +111,12 @@ public class TARDISRoomBuilder {
             roomData.setSchematic(obj);
             // determine how often to place a block (in ticks) - `room_speed` is the number of BLOCKS to place in a second (20 ticks)
             long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
-            plugin.getPM().callEvent(new TARDISRoomGrowEvent(p, null, null, roomData));
-            TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
+            plugin.getPM().callEvent(new TardisRoomGrowEvent(p, null, null, roomData));
+            TardisRoomRunnable runnable = new TardisRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
             plugin.getTrackerKeeper().getRoomTasks().put(taskID, roomData);
-            TARDISMessage.send(p, "ROOM_CANCEL", String.format("%d", taskID));
+            TardisMessage.send(p, "ROOM_CANCEL", String.format("%d", taskID));
         }
         return true;
     }

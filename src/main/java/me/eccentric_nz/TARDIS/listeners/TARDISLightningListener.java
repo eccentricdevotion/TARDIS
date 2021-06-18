@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import org.bukkit.Location;
@@ -36,11 +36,11 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TARDISLightningListener implements Listener {
+public class TardisLightningListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISLightningListener(TARDISPlugin plugin) {
+    public TardisLightningListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -60,7 +60,7 @@ public class TARDISLightningListener implements Listener {
             World strikeworld = l.getWorld();
             ResultSetTardis rs = new ResultSetTardis(plugin, new HashMap<>(), "", true, 0);
             if (rs.resultSet()) {
-                for (TARDIS t : rs.getData()) {
+                for (Tardis t : rs.getData()) {
                     boolean charging = !t.isRecharging();
                     int id = t.getTardisId();
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

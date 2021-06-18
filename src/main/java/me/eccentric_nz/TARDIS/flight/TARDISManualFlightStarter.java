@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -27,13 +27,13 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-class TARDISManualFlightStarter implements Runnable {
+class TardisManualFlightStarter implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
     private final int id;
 
-    TARDISManualFlightStarter(TARDISPlugin plugin, Player player, int id) {
+    TardisManualFlightStarter(TardisPlugin plugin, Player player, int id) {
         this.plugin = plugin;
         this.player = player;
         this.id = id;
@@ -43,13 +43,13 @@ class TARDISManualFlightStarter implements Runnable {
     public void run() {
         long delay = plugin.getConfig().getLong("travel.manual_flight_delay");
         // start a manual flight session
-        TARDISMessage.send(player, "FLIGHT_ENGAGED");
-        TARDISManualFlightRunnable mfr = new TARDISManualFlightRunnable(plugin, player, id);
+        TardisMessage.send(player, "FLIGHT_ENGAGED");
+        TardisManualFlightRunnable mfr = new TardisManualFlightRunnable(plugin, player, id);
         int taskid = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, mfr, 10L, delay);
         mfr.setTaskId(taskid);
         // play inflight sound
         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            plugin.getServer().getScheduler().runTask(plugin, new TARDISLoopingFlightSound(plugin, player.getLocation(), id));
+            plugin.getServer().getScheduler().runTask(plugin, new TardisLoopingFlightSound(plugin, player.getLocation(), id));
         }
     }
 }

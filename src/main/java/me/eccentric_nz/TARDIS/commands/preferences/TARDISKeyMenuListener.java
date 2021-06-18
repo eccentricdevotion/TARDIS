@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,9 +41,9 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISKeyMenuListener extends TARDISMenuListener implements Listener {
+public class TardisKeyMenuListener extends TardisMenuListener implements Listener {
 
-    public TARDISKeyMenuListener(TARDISPlugin plugin) {
+    public TardisKeyMenuListener(TardisPlugin plugin) {
         super(plugin);
     }
 
@@ -86,7 +86,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener implements Listene
                         keyMeta.setDisplayName(displayName);
                         keyMeta.setCustomModelData(choiceMeta.getCustomModelData());
                         // personalise
-                        keyMeta.getPersistentDataContainer().set(TARDISPlugin.plugin.getTimeLordUuidKey(), TARDISPlugin.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+                        keyMeta.getPersistentDataContainer().set(TardisPlugin.plugin.getTimeLordUuidKey(), TardisPlugin.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
                         // set lore
                         List<String> lore;
                         if (keyMeta.hasLore()) {

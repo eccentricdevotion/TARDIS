@@ -30,7 +30,7 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-class TARDISFactionsUUID {
+class TardisFactionsUuid {
 
     /**
      * Checks whether a location is in the player's faction or 'wilderness'... ie NOT in a claimed faction that this

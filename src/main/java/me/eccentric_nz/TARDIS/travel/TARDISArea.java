@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.data.Area;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -37,11 +37,11 @@ import java.util.Set;
  *
  * @author eccentric_nz
  */
-public class TARDISArea {
+public class TardisArea {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISArea(TARDISPlugin plugin) {
+    public TardisArea(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -76,7 +76,7 @@ public class TARDISArea {
      * @return a TARDISAreaCheck &lt;Area, Boolean&gt; with values dependent on whether the location is within an
      * existing tardis area
      */
-    public TARDISAreaCheck areaCheckInExistingArea(Location l) {
+    public TardisAreaCheck areaCheckInExistingArea(Location l) {
         String w = Objects.requireNonNull(l.getWorld()).getName();
         HashMap<String, Object> where = new HashMap<>();
         where.put("world", w);
@@ -85,11 +85,11 @@ public class TARDISArea {
             for (Area a : rsa.getData()) {
                 // is clicked block within a defined tardis area?
                 if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
-                    return new TARDISAreaCheck(a, true);
+                    return new TardisAreaCheck(a, true);
                 }
             }
         }
-        return new TARDISAreaCheck(null, false);
+        return new TardisAreaCheck(null, false);
     }
 
     /**
@@ -134,7 +134,7 @@ public class TARDISArea {
                 // is time travel destination within a defined tardis area?
                 if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
                     // does the player have permission to travel here
-                    if (!TARDISPermission.hasPermission(p, "tardis.area." + n) || !p.isPermissionSet("tardis.area." + n)) {
+                    if (!TardisPermission.hasPermission(p, "tardis.area." + n) || !p.isPermissionSet("tardis.area." + n)) {
                         plugin.getTrackerKeeper().getPerm().put(p.getUniqueId(), "tardis.area." + n);
                         chk = true;
                         break;
@@ -185,7 +185,7 @@ public class TARDISArea {
                 }
             }
             if (chk) {
-                World w = TARDISAliasResolver.getWorldFromAlias(wStr);
+                World w = TardisAliasResolver.getWorldFromAlias(wStr);
                 if (w != null) {
                     int y = a.getY();
                     if (y == 0) {

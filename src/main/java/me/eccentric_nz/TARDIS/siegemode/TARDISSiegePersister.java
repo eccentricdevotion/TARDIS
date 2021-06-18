@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetSiege;
 import org.bukkit.Chunk;
 
@@ -30,17 +30,17 @@ import java.util.*;
 /**
  * @author eccentric_nz
  */
-public class TARDISSiegePersister {
+public class TardisSiegePersister {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
 
-    public TARDISSiegePersister(TARDISPlugin plugin) {
+    public TardisSiegePersister(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -56,9 +56,9 @@ public class TARDISSiegePersister {
                         plugin.getTrackerKeeper().getInSiegeMode().add(id);
                         if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
                             Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
-                            TARDISSiegeArea tsa = new TARDISSiegeArea(id, c);
+                            TardisSiegeArea tsa = new TardisSiegeArea(id, c);
                             if (plugin.getConfig().getInt("siege.breeding") > 0) {
-                                List<TARDISSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());
+                                List<TardisSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());
                                 if (breeding_areas == null) {
                                     breeding_areas = new ArrayList<>();
                                 }
@@ -66,7 +66,7 @@ public class TARDISSiegePersister {
                                 plugin.getTrackerKeeper().getSiegeBreedingAreas().put(c.getWorld().getName(), breeding_areas);
                             }
                             if (plugin.getConfig().getInt("siege.growth") > 0) {
-                                List<TARDISSiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getName());
+                                List<TardisSiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getName());
                                 if (growth_areas == null) {
                                     growth_areas = new ArrayList<>();
                                 }

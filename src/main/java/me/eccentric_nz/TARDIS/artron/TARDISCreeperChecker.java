@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Creeper;
@@ -34,12 +34,12 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TARDISCreeperChecker {
+public class TardisCreeperChecker {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
 
-    public TARDISCreeperChecker(TARDISPlugin plugin, int id) {
+    public TardisCreeperChecker(TardisPlugin plugin, int id) {
         this.plugin = plugin;
         this.id = id;
     }
@@ -52,14 +52,14 @@ public class TARDISCreeperChecker {
         wheret.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             // only if there is a saved creeper location
             if (!tardis.getCreeper().isEmpty()) {
                 // only if the tardis has been initialised
                 if (tardis.isTardisInit()) {
-                    World w = TARDISStaticLocationGetters.getWorld(tardis.getCreeper());
+                    World w = TardisStaticLocationGetters.getWorld(tardis.getCreeper());
                     if (w != null) {
-                        Location l = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
+                        Location l = TardisStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                         plugin.setTardisSpawn(true);
                         assert l != null;
                         Entity e = w.spawnEntity(l.add(0.0d, 1.0d, 0.0d), EntityType.CREEPER);

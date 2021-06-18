@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TardisConstants;
 
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -36,7 +36,7 @@ public class WeightedChoice<E> {
     }
 
     public E next() {
-        double value = TARDISConstants.RANDOM.nextDouble() * total;
+        double value = TardisConstants.RANDOM.nextDouble() * total;
         return map.higherEntry(value).getValue();
     }
 }

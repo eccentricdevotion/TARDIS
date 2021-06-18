@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.handles;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.OfflinePlayer;
 
-class TARDISHandlesPlaceholder {
+class TardisHandlesPlaceholder {
 
     static String getSubstituted(String s, OfflinePlayer player) {
         return PlaceholderAPI.setPlaceholders(player, s);

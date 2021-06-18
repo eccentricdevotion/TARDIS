@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,18 +30,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-class TARDISHandlesDiskCommand {
+class TardisHandlesDiskCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISHandlesDiskCommand(TARDISPlugin plugin) {
+    TardisHandlesDiskCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean renameDisk(Player player, String[] args) {
         // check perms
-        if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
-            TARDISMessage.send(player, "NO_PERMS");
+        if (!TardisPermission.hasPermission(player, "tardis.handles.program")) {
+            TardisMessage.send(player, "NO_PERMS");
             return true;
         }
         // check if item in hand is a Handles program disk
@@ -51,7 +51,7 @@ class TARDISHandlesDiskCommand {
             assert dim != null;
             if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
                 // get the program_id from the disk
-                int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(dim.getLore()).get(1));
+                int pid = TardisNumberParsers.parseInt(Objects.requireNonNull(dim.getLore()).get(1));
                 // get the name - must be 32 chars or less
                 StringBuilder sb = new StringBuilder();
                 for (int s = 1; s < args.length; s++) {
@@ -59,7 +59,7 @@ class TARDISHandlesDiskCommand {
                 }
                 String name = sb.toString().trim();
                 if (name.length() < 3 || name.length() > 32) {
-                    TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
+                    TardisMessage.send(player, "SAVE_NAME_NOT_VALID");
                     return true;
                 }
                 // rename the disk
@@ -74,7 +74,7 @@ class TARDISHandlesDiskCommand {
                 disk.setItemMeta(dim);
             }
         } else {
-            TARDISMessage.send(player, "HANDLES_DISK");
+            TardisMessage.send(player, "HANDLES_DISK");
         }
         return true;
     }

@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advancement.TardisAdvancementFactory;
 import me.eccentric_nz.tardis.database.resultset.ResultSetChunks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.enumeration.Advancement;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,11 +45,11 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISRoomSeeder implements Listener {
+public class TardisRoomSeeder implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISRoomSeeder(TARDISPlugin plugin) {
+    public TardisRoomSeeder(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -87,29 +87,29 @@ public class TARDISRoomSeeder implements Listener {
                 if (inhand.equals(Material.getMaterial(key))) {
                     // check they are still in the tardis world
                     if (!plugin.getUtils().inTARDISWorld(player)) {
-                        TARDISMessage.send(player, "ROOM_IN_WORLD");
+                        TardisMessage.send(player, "ROOM_IN_WORLD");
                         plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                         return;
                     }
                     // get clicked block location
                     Location b = block.getLocation();
                     // get the growing direction
-                    TARDISRoomDirection trd = new TARDISRoomDirection(block);
+                    TardisRoomDirection trd = new TardisRoomDirection(block);
                     trd.getDirection();
                     if (!trd.isFound()) {
-                        TARDISMessage.send(player, "PLATE_NOT_FOUND");
+                        TardisMessage.send(player, "PLATE_NOT_FOUND");
                         plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                         return;
                     }
                     if (!trd.isAir()) {
-                        TARDISMessage.send(player, "AIR_NOT_FOUND");
+                        TardisMessage.send(player, "AIR_NOT_FOUND");
                         plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                         return;
                     }
-                    COMPASS d = trd.getCompass();
+                    CardinalDirection d = trd.getCompass();
                     BlockFace facing = trd.getFace();
                     // get seed data
-                    TARDISSeedData sd = plugin.getTrackerKeeper().getRoomSeed().get(uuid);
+                    TardisSeedData sd = plugin.getTrackerKeeper().getRoomSeed().get(uuid);
                     Chunk c = Objects.requireNonNull(b.getWorld()).getChunkAt(block.getRelative(BlockFace.valueOf(d.toString()), 4));
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("tardis_id", sd.getId());
@@ -118,7 +118,7 @@ public class TARDISRoomSeeder implements Listener {
                     where.put("z", c.getZ());
                     ResultSetChunks rsc = new ResultSetChunks(plugin, where, false);
                     if (rsc.resultSet()) {
-                        TARDISMessage.send(player, "ROOM_CONSOLE");
+                        TardisMessage.send(player, "ROOM_CONSOLE");
                         plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                         return;
                     }
@@ -128,7 +128,7 @@ public class TARDISRoomSeeder implements Listener {
                         int cy = block.getY();
                         int cz = c.getZ();
                         if ((cx >= sd.getMinx() && cx <= sd.getMaxx()) && (cy >= 48 && cy <= 96) && (cz >= sd.getMinz() && cz <= sd.getMaxz())) {
-                            TARDISMessage.send(player, "ROOM_USE_ARS");
+                            TardisMessage.send(player, "ROOM_USE_ARS");
                             plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                             return;
                         }
@@ -137,20 +137,20 @@ public class TARDISRoomSeeder implements Listener {
                     String r = plugin.getBuildKeeper().getSeeds().get(blockType);
                     // check that the blockType is the same as the one they ran the /tardis room [type] command for
                     if (!sd.getRoom().equals(r)) {
-                        TARDISMessage.send(player, "ROOM_SEED_NOT_VALID", plugin.getTrackerKeeper().getRoomSeed().get(uuid).getRoom());
+                        TardisMessage.send(player, "ROOM_SEED_NOT_VALID", plugin.getTrackerKeeper().getRoomSeed().get(uuid).getRoom());
                         plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                         return;
                     }
                     // adjust the location three blocks out
                     Location l = block.getRelative(facing, 3).getLocation();
                     // build the room
-                    TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, r, l, d, player);
+                    TardisRoomBuilder builder = new TardisRoomBuilder(plugin, r, l, d, player);
                     if (builder.build()) {
                         // remove seed block and set door blocks to AIR as well
-                        block.setBlockData(TARDISConstants.AIR);
+                        block.setBlockData(TardisConstants.AIR);
                         Block doorway = block.getRelative(facing, 2);
-                        doorway.setBlockData(TARDISConstants.AIR);
-                        doorway.getRelative(BlockFace.UP).setBlockData(TARDISConstants.AIR);
+                        doorway.setBlockData(TardisConstants.AIR);
+                        doorway.getRelative(BlockFace.UP).setBlockData(TardisConstants.AIR);
                         plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                         // ok, room growing was successful, so take their energy!
                         int amount = plugin.getRoomsConfig().getInt("rooms." + r + ".cost");
@@ -159,7 +159,7 @@ public class TARDISRoomSeeder implements Listener {
                         plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, set, player);
                         // remove blocks from condenser table if rooms_require_blocks is true
                         if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                            TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
+                            TardisCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
                             c_data.getBlockIDCount().forEach((key1, value) -> {
                                 HashMap<String, Object> wherec = new HashMap<>();
                                 wherec.put("tardis_id", c_data.getTardisId());
@@ -170,7 +170,7 @@ public class TARDISRoomSeeder implements Listener {
                         }
                         // are we doing an advancement?
                         if (plugin.getAdvancementConfig().getBoolean("rooms.enabled")) {
-                            TARDISAdvancementFactory taf = new TARDISAdvancementFactory(plugin, player, Advancement.ROOMS, plugin.getBuildKeeper().getSeeds().size());
+                            TardisAdvancementFactory taf = new TardisAdvancementFactory(plugin, player, Advancement.ROOMS, plugin.getBuildKeeper().getSeeds().size());
                             taf.doAdvancement(r);
                         }
                     }

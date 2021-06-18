@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardis.commands.bind;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -31,17 +31,17 @@ import java.util.List;
 /**
  * TabCompleter for /tardisbind command
  */
-public class TARDISBindTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisBindTabComplete extends TardisCompleter implements TabCompleter {
 
     private final List<String> ROOT_SUBS = ImmutableList.of("add", "remove");
     private final ImmutableList<String> FIRST_SUBS = ImmutableList.of("save", "player", "area", "biome", "hide", "rebuild", "home", "cave", "make_her_blue", "occupy", "chameleon", "transmat");
     private final List<String> CHAM_SUBS = new ArrayList<>();
     private final List<String> BIOME_SUBS = new ArrayList<>();
 
-    public TARDISBindTabComplete() {
+    public TardisBindTabComplete() {
         CHAM_SUBS.add("OFF");
         CHAM_SUBS.add("ADAPT");
-        for (PRESET p : PRESET.values()) {
+        for (Preset p : Preset.values()) {
             CHAM_SUBS.add(p.toString());
         }
         for (Biome b : Biome.values()) {

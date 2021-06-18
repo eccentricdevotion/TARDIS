@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISIcePlainsPreset extends TARDISPreset {
+class TardisIcePlainsPreset extends TardisPreset {
 
-    TARDISIcePlainsPreset() {
+    TardisIcePlainsPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:snow_block";

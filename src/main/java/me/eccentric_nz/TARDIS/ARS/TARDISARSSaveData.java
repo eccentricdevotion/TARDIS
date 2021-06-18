@@ -22,7 +22,7 @@ package me.eccentric_nz.tardis.ars;
  *
  * @author eccentric_nz
  */
-class TARDISARSSaveData {
+class TardisArsSaveData {
 
     private String[][][] data;
     private int id;

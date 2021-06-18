@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,9 +39,9 @@ import java.util.UUID;
  */
 public class ResultSetDiskStorage {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<String, Object> where;
     private final String prefix;
     private int id;
@@ -64,7 +64,7 @@ public class ResultSetDiskStorage {
      * @param plugin an instance of the main class.
      * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      */
-    public ResultSetDiskStorage(TARDISPlugin plugin, HashMap<String, Object> where) {
+    public ResultSetDiskStorage(TardisPlugin plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
         prefix = this.plugin.getPrefix();
@@ -109,7 +109,7 @@ public class ResultSetDiskStorage {
                     if (!rs.wasNull()) {
                         uuid = UUID.fromString(rs.getString("uuid"));
                     } else {
-                        uuid = TARDISStaticUtils.getZERO_UUID();
+                        uuid = TardisStaticUtils.getZERO_UUID();
                     }
                     savesOne = rs.getString("saves_one");
                     if (rs.wasNull()) {

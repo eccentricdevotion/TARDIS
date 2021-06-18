@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -28,9 +28,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class TARDISSonicReplant implements Runnable {
+public class TardisSonicReplant implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Block block;
     private final Block under;
     private final Material type;
@@ -41,7 +41,7 @@ public class TARDISSonicReplant implements Runnable {
     private final Material soul = Material.SOUL_SAND;
     private final HashMap<BlockFace, BlockFace> c_data = new HashMap<>();
 
-    public TARDISSonicReplant(TARDISPlugin plugin, Block block, Material type) {
+    public TardisSonicReplant(TardisPlugin plugin, Block block, Material type) {
         this.plugin = plugin;
         this.block = block;
         under = block.getRelative(BlockFace.DOWN);

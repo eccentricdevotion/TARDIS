@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -29,11 +29,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISAssembleCommand {
+class TardisAssembleCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISAssembleCommand(TARDISPlugin plugin) {
+    TardisAssembleCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -41,7 +41,7 @@ class TARDISAssembleCommand {
         if (player.equalsIgnoreCase("all")) {
             plugin.getTrackerKeeper().getDispersed().clear();
             plugin.getTrackerKeeper().getDispersedTARDII().clear();
-            TARDISMessage.send(sender, "ASSEMBLE_ALL");
+            TardisMessage.send(sender, "ASSEMBLE_ALL");
             return true;
         } else if (player.equalsIgnoreCase("list")) {
             plugin.getTrackerKeeper().getDispersedTARDII().forEach((d) -> plugin.debug("tardis id: " + d));
@@ -57,14 +57,14 @@ class TARDISAssembleCommand {
                 where.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (rs.resultSet()) {
-                    TARDIS tardis = rs.getTardis();
+                    Tardis tardis = rs.getTardis();
                     while (plugin.getTrackerKeeper().getDispersedTARDII().contains(tardis.getTardisId())) {
                         plugin.getTrackerKeeper().getDispersedTARDII().remove(tardis.getTardisId());
                     }
-                    TARDISMessage.send(sender, "ASSEMBLE_PLAYER", player);
+                    TardisMessage.send(sender, "ASSEMBLE_PLAYER", player);
                 }
             } else {
-                TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                TardisMessage.send(sender, "COULD_NOT_FIND_NAME");
                 return true;
             }
         }

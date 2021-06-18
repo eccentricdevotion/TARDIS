@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,12 +39,12 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISPerceptionFilterListener implements Listener {
+public class TardisPerceptionFilterListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Material filter;
 
-    public TARDISPerceptionFilterListener(TARDISPlugin plugin) {
+    public TardisPerceptionFilterListener(TardisPlugin plugin) {
         this.plugin = plugin;
         filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
     }
@@ -61,7 +61,7 @@ public class TARDISPerceptionFilterListener implements Listener {
                 ItemMeta im = is.getItemMeta();
                 assert im != null;
                 if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
-                    if (TARDISPermission.hasPermission(player, "tardis.filter")) {
+                    if (TardisPermission.hasPermission(player, "tardis.filter")) {
                         ItemStack chestPlate = player.getInventory().getChestplate();
                         if (chestPlate == null) {
                             // equip the chest slot with the perception filter
@@ -73,10 +73,10 @@ public class TARDISPerceptionFilterListener implements Listener {
                                 plugin.getFilter().addPerceptionFilter(player);
                             }, 1L);
                         } else {
-                            TARDISMessage.send(player, "FILTER");
+                            TardisMessage.send(player, "FILTER");
                         }
                     } else {
-                        TARDISMessage.send(player, "NO_PERMS");
+                        TardisMessage.send(player, "NO_PERMS");
                     }
                 }
             }

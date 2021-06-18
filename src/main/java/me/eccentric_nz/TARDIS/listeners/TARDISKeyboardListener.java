@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advanced.TardisCircuitChecker;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Biome;
@@ -48,11 +48,11 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISKeyboardListener implements Listener {
+public class TardisKeyboardListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISKeyboardListener(TARDISPlugin plugin) {
+    public TardisKeyboardListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -79,13 +79,13 @@ public class TARDISKeyboardListener implements Listener {
             where.put("location", loc);
             ResultSetControls rs = new ResultSetControls(plugin, where, false);
             if (rs.resultSet()) {
-                TARDISCircuitChecker tcc = null;
+                TardisCircuitChecker tcc = null;
                 if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
-                    tcc = new TARDISCircuitChecker(plugin, rs.getTardisId());
+                    tcc = new TardisCircuitChecker(plugin, rs.getTardisId());
                     tcc.getCircuits();
                 }
                 if (tcc != null && !tcc.hasInput()) {
-                    TARDISMessage.send(player, "INPUT_MISSING");
+                    TardisMessage.send(player, "INPUT_MISSING");
                     return;
                 }
                 Sign sign = (Sign) b.getState();
@@ -118,7 +118,7 @@ public class TARDISKeyboardListener implements Listener {
                 return;
             }
             // location?
-            if (TARDISAliasResolver.getWorldFromAlias(event.getLine(0)) != null) {
+            if (TardisAliasResolver.getWorldFromAlias(event.getLine(0)) != null) {
                 // set location to coords
                 String command = event.getLine(0) + " " + event.getLine(1) + " " + event.getLine(2) + " " + event.getLine(3);
                 p.performCommand("tardistravel " + command);
@@ -141,24 +141,24 @@ public class TARDISKeyboardListener implements Listener {
                             p.performCommand("tardistravel home");
                             plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel home");
                         } else {
-                            TARDISMessage.send(p, "HOME_ALREADY");
+                            TardisMessage.send(p, "HOME_ALREADY");
                         }
                     } else {
-                        TARDISMessage.send(p, "CURRENT_NOT_FOUND");
+                        TardisMessage.send(p, "CURRENT_NOT_FOUND");
                     }
                 } else {
-                    TARDISMessage.send(p, "HOME_NOT_FOUND");
+                    TardisMessage.send(p, "HOME_NOT_FOUND");
                 }
                 removeTracker(id);
                 return;
             }
-            if (Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase("cave") && TARDISPermission.hasPermission(p, "tardis.timetravel.cave")) {
+            if (Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase("cave") && TardisPermission.hasPermission(p, "tardis.timetravel.cave")) {
                 p.performCommand("tardistravel cave");
                 plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel cave");
                 removeTracker(id);
                 return;
             }
-            if (Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase("village") && plugin.getConfig().getBoolean("allow.village_travel") && TARDISPermission.hasPermission(p, "tardis.timetravel.village")) {
+            if (Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase("village") && plugin.getConfig().getBoolean("allow.village_travel") && TardisPermission.hasPermission(p, "tardis.timetravel.village")) {
                 p.performCommand("tardistravel village");
                 plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel village");
                 removeTracker(id);
@@ -201,7 +201,7 @@ public class TARDISKeyboardListener implements Listener {
         } else {
             plugin.debug("Player is not in a tardis!");
         }
-        TARDISMessage.send(p, "KEYBOARD_ERROR");
+        TardisMessage.send(p, "KEYBOARD_ERROR");
         plugin.getTardisHelper().finishSignEditing(p);
     }
 

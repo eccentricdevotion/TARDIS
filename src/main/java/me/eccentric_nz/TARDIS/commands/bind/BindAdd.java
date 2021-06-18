@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.commands.bind;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.tardis.enumeration.Bind;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -34,9 +34,9 @@ import java.util.UUID;
 
 public class BindAdd {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public BindAdd(TARDISPlugin plugin) {
+    public BindAdd(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -53,7 +53,7 @@ public class BindAdd {
                 whered.put("name", which);
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                 if (!rsd.resultSet()) {
-                    TARDISMessage.send(player, "SAVE_NOT_FOUND", ChatColor.GREEN + "/tardis list saves" + ChatColor.RESET);
+                    TardisMessage.send(player, "SAVE_NOT_FOUND", ChatColor.GREEN + "/tardis list saves" + ChatColor.RESET);
                     return true;
                 } else {
                     set.put("type", 0);
@@ -87,11 +87,11 @@ public class BindAdd {
                 wherea.put("area_name", which);
                 ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
                 if (!rsa.resultSet()) {
-                    TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                    TardisMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                     return true;
                 }
-                if (!TARDISPermission.hasPermission(player, "tardis.area." + which) || !player.isPermissionSet("tardis.area." + which)) {
-                    TARDISMessage.send(player, "BIND_NO_AREA_PERM", which);
+                if (!TardisPermission.hasPermission(player, "tardis.area." + which) || !player.isPermissionSet("tardis.area." + which)) {
+                    TardisMessage.send(player, "BIND_NO_AREA_PERM", which);
                     return true;
                 }
                 set.put("name", which.toLowerCase(Locale.ENGLISH));
@@ -109,7 +109,7 @@ public class BindAdd {
                         bindId = plugin.getQueryFactory().doSyncInsert("bind", set);
                     }
                 } catch (IllegalArgumentException iae) {
-                    TARDISMessage.send(player, "BIOME_NOT_VALID");
+                    TardisMessage.send(player, "BIOME_NOT_VALID");
                     return true;
                 }
                 break;
@@ -118,12 +118,12 @@ public class BindAdd {
                     set.put("name", which.toUpperCase(Locale.ENGLISH));
                 } else {
                     // check valid preset
-                    PRESET preset;
+                    Preset preset;
                     try {
-                        preset = PRESET.valueOf(which.toUpperCase(Locale.ENGLISH));
+                        preset = Preset.valueOf(which.toUpperCase(Locale.ENGLISH));
                     } catch (IllegalArgumentException e) {
                         // abort
-                        TARDISMessage.send(player, "ARG_PRESET");
+                        TardisMessage.send(player, "ARG_PRESET");
                         return true;
                     }
                     set.put("name", preset.toString());
@@ -139,7 +139,7 @@ public class BindAdd {
                         set.put("name", which);
                     } else {
                         // abort
-                        TARDISMessage.send(player, "TRANSMAT_NOT_FOUND");
+                        TardisMessage.send(player, "TRANSMAT_NOT_FOUND");
                         return true;
                     }
                 } else {
@@ -153,7 +153,7 @@ public class BindAdd {
         }
         if (bindId != 0) {
             plugin.getTrackerKeeper().getBinder().put(player.getUniqueId(), bindId);
-            TARDISMessage.send(player, "BIND_CLICK");
+            TardisMessage.send(player, "BIND_CLICK");
             return true;
         }
         return false;

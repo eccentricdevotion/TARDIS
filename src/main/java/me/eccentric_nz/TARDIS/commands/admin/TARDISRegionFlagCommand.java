@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
@@ -28,28 +28,28 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISRegionFlagCommand {
+class TardisRegionFlagCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> which = Arrays.asList("entry", "exit");
 
-    TARDISRegionFlagCommand(TARDISPlugin plugin) {
+    TardisRegionFlagCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean toggleEntryExit(CommandSender sender, String[] args) {
         String flag = args[1].toLowerCase(Locale.ENGLISH);
         if (!which.contains(flag)) {
-            TARDISMessage.message(sender, "You need to specify which flag type you want to change to - entry or exit.");
+            TardisMessage.message(sender, "You need to specify which flag type you want to change to - entry or exit.");
             return true;
         }
         if (!plugin.getConfig().getBoolean("creation.default_world")) {
-            TARDISMessage.message(sender, "This command only works if you are using a default world for TARDISes.");
+            TardisMessage.message(sender, "This command only works if you are using a default world for TARDISes.");
             return true;
         }
         String world_name = plugin.getConfig().getString("creation.default_world_name");
         // get all regions for the default world
-        List<String> world_regions = plugin.getWorldGuardUtils().getTARDISRegions(TARDISAliasResolver.getWorldFromAlias(world_name));
+        List<String> world_regions = plugin.getWorldGuardUtils().getTARDISRegions(TardisAliasResolver.getWorldFromAlias(world_name));
         world_regions.forEach((region_id) -> {
             if (flag.endsWith("entry")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world_name);

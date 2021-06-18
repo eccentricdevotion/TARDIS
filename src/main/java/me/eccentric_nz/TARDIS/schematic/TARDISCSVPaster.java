@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.schematic;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -31,11 +31,11 @@ import java.io.IOException;
 /**
  * @author eccentric_nz
  */
-class TARDISCSVPaster {
+class TardisCsvPaster {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISCSVPaster(TARDISPlugin plugin) {
+    TardisCsvPaster(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -72,7 +72,7 @@ class TARDISCSVPaster {
                         Material material = Material.valueOf(tmp);
                         BlockData id = material.createBlockData();
                         assert world != null;
-                        TARDISBlockSetters.setBlock(world, startx, starty, startz, id);
+                        TardisBlockSetters.setBlock(world, startx, starty, startz, id);
                     }
                     startx += 1;
                 }

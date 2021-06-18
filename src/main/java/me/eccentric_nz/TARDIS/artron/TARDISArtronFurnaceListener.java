@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.enumeration.RecipeItem;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Furnace;
@@ -45,13 +45,13 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISArtronFurnaceListener implements Listener {
+public class TardisArtronFurnaceListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final double burnFactor;
     private final short cookTime;
 
-    public TARDISArtronFurnaceListener(TARDISPlugin plugin) {
+    public TardisArtronFurnaceListener(TardisPlugin plugin) {
         this.plugin = plugin;
         burnFactor = plugin.getArtronConfig().getInt("artron_furnace.burn_limit") * plugin.getArtronConfig().getDouble("artron_furnace.burn_time");
         cookTime = (short) (200 * this.plugin.getArtronConfig().getDouble("artron_furnace.cook_time"));
@@ -72,9 +72,9 @@ public class TARDISArtronFurnaceListener implements Listener {
                     if (!lore.get(1).equals("0")) {
                         // track furnace
                         plugin.getTrackerKeeper().getArtronFurnaces().add(l);
-                        TARDISSounds.playTARDISSound(furnace.getLocation(), "artron_furnace");
+                        TardisSounds.playTARDISSound(furnace.getLocation(), "artron_furnace");
                         // get charge level
-                        int charge_level = TARDISNumberParsers.parseInt(lore.get(1));
+                        int charge_level = TardisNumberParsers.parseInt(lore.get(1));
                         double percentage = charge_level / plugin.getArtronConfig().getDouble("full_charge");
                         // determine burn time
                         int burnTime = (int) (percentage * burnFactor);
@@ -138,9 +138,9 @@ public class TARDISArtronFurnaceListener implements Listener {
         if (plugin.getUtils().inTARDISWorld(player)) {
             event.setCancelled(true);
             // only in TARDIS
-            TARDISMessage.send(player, "NOT_IN_TARDIS");
+            TardisMessage.send(player, "NOT_IN_TARDIS");
         }
-        if (TARDISPermission.hasPermission(player, "tardis.furnace")) {
+        if (TardisPermission.hasPermission(player, "tardis.furnace")) {
             Block b = event.getBlock();
             if (plugin.getArtronConfig().getBoolean("artron_furnace.particles")) {
                 plugin.getGeneralKeeper().getArtronFurnaces().add(b);
@@ -148,7 +148,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             plugin.getTardisHelper().nameFurnaceGUI(b, "TARDIS Artron Furnace");
         } else {
             event.setCancelled(true);
-            TARDISMessage.send(player, "NO_PERM_FURNACE");
+            TardisMessage.send(player, "NO_PERM_FURNACE");
         }
     }
 
@@ -169,7 +169,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             im.setDisplayName("TARDIS Artron Furnace");
             im.setCustomModelData(RecipeItem.TARDIS_ARTRON_FURNACE.getCustomModelData());
             is.setItemMeta(im);
-            block.setBlockData(TARDISConstants.AIR);
+            block.setBlockData(TardisConstants.AIR);
             block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);
         }
     }

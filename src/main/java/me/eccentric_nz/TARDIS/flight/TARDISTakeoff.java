@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.travel.TARDISMalfunction;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.travel.TardisMalfunction;
+import me.eccentric_nz.tardis.utility.TardisSounds;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -34,21 +34,21 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISTakeoff {
+public class TardisTakeoff {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISTakeoff(TARDISPlugin plugin) {
+    public TardisTakeoff(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public void run(int id, Block block, Location handbrake, Player player, boolean beac_on, String beacon, boolean bar, SpaceTimeThrottle spaceTimeThrottle) {
         // set the handbrake
-        TARDISHandbrake.setLevers(block, false, true, handbrake.toString(), id, plugin);
+        TardisHandbrake.setLevers(block, false, true, handbrake.toString(), id, plugin);
         if (plugin.getConfig().getBoolean("circuits.damage")) {
             plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
         }
-        TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
+        TardisSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
         if (!beac_on && !beacon.isEmpty()) {
             toggleBeacon(beacon);
         }
@@ -57,23 +57,23 @@ public class TARDISTakeoff {
         HashMap<String, Object> whereh = new HashMap<>();
         whereh.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-        TARDISMessage.send(player, "HANDBRAKE_OFF");
+        TardisMessage.send(player, "HANDBRAKE_OFF");
         plugin.getTrackerKeeper().getInVortex().add(id);
         // check if we should malfunction
         if (!plugin.getTrackerKeeper().getMalfunction().containsKey(id)) {
-            boolean malfunction = new TARDISMalfunction(plugin).isMalfunction();
+            boolean malfunction = new TardisMalfunction(plugin).isMalfunction();
             plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
         }
         // dematerialise
-        new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
+        new TardisDematerialiseToVortex(plugin, id, player, handbrake).run();
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
             // materialise
-            new TARDISMaterialseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();
+            new TardisMaterialiseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();
         } else {
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), spaceTimeThrottle.getFlightTime());
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TardisLoopingFlightSound(plugin, handbrake, id), spaceTimeThrottle.getFlightTime());
         }
         if (bar) {
-            new TARDISTravelBar(plugin).showTravelRemaining(player, spaceTimeThrottle.getFlightTime(), true);
+            new TardisTravelBar(plugin).showTravelRemaining(player, spaceTimeThrottle.getFlightTime(), true);
         }
     }
 
@@ -84,7 +84,7 @@ public class TARDISTakeoff {
         where.put("secondary", 0);
         ResultSetControls rs = new ResultSetControls(plugin, where, false);
         if (rs.resultSet()) {
-            Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
+            Location handbrake = TardisStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
             // should the beacon turn on
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
             boolean beac_on = true;
@@ -97,11 +97,11 @@ public class TARDISTakeoff {
             }
             // set the handbrake
             assert handbrake != null;
-            TARDISHandbrake.setLevers(handbrake.getBlock(), false, true, rs.getLocation(), rs.getTardisId(), plugin);
+            TardisHandbrake.setLevers(handbrake.getBlock(), false, true, rs.getLocation(), rs.getTardisId(), plugin);
             if (plugin.getConfig().getBoolean("circuits.damage")) {
                 plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
             }
-            TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
+            TardisSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
             if (!beac_on && !beacon.isEmpty()) {
                 toggleBeacon(beacon);
             }
@@ -110,29 +110,29 @@ public class TARDISTakeoff {
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-            TARDISMessage.send(player, "HANDBRAKE_OFF");
+            TardisMessage.send(player, "HANDBRAKE_OFF");
             plugin.getTrackerKeeper().getInVortex().add(id);
             // check if we should malfunction
-            boolean malfunction = new TARDISMalfunction(plugin).isMalfunction();
+            boolean malfunction = new TardisMalfunction(plugin).isMalfunction();
             plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
             // dematerialise
-            new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
+            new TardisDematerialiseToVortex(plugin, id, player, handbrake).run();
             if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                 // materialise
-                new TARDISMaterialseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();
+                new TardisMaterialiseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();
             } else {
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), spaceTimeThrottle.getFlightTime());
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TardisLoopingFlightSound(plugin, handbrake, id), spaceTimeThrottle.getFlightTime());
             }
             if (bar) {
-                new TARDISTravelBar(plugin).showTravelRemaining(player, spaceTimeThrottle.getFlightTime(), true);
+                new TardisTravelBar(plugin).showTravelRemaining(player, spaceTimeThrottle.getFlightTime(), true);
             }
         }
     }
 
     private void toggleBeacon(String str) {
-        Location bl = TARDISStaticLocationGetters.getLocationFromDB(str);
+        Location bl = TardisStaticLocationGetters.getLocationFromDB(str);
         assert bl != null;
         Block b = bl.getBlock();
-        b.setBlockData(TARDISConstants.GLASS);
+        b.setBlockData(TardisConstants.GLASS);
     }
 }

@@ -28,7 +28,7 @@ import java.io.IOException;
 /**
  * @author original code by comphenix - https://gist.github.com/aadnk/8138186
  */
-public class TARDISSerializeInventory {
+public class TardisSerializeInventory {
 
     public static String itemStacksToString(ItemStack[] stack) {
         try {

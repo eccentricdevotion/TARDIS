@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.QueryFactory;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -27,9 +27,9 @@ import org.bukkit.block.data.type.Switch;
 
 import java.util.HashMap;
 
-public class TARDISHandbrake {
+public class TardisHandbrake {
 
-    public static void setLevers(Block block, boolean powered, boolean inside, String handbrake_loc, int id, TARDISPlugin plugin) {
+    public static void setLevers(Block block, boolean powered, boolean inside, String handbrake_loc, int id, TardisPlugin plugin) {
         Switch lever = (Switch) block.getBlockData();
         lever.setPowered(powered);
         block.setBlockData(lever);
@@ -42,7 +42,7 @@ public class TARDISHandbrake {
             if (rsc.resultSet()) {
                 for (HashMap<String, String> map : rsc.getData()) {
                     if (!map.get("location").equals(handbrake_loc)) {
-                        Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(map.get("location"));
+                        Location location = TardisStaticLocationGetters.getLocationFromBukkitString(map.get("location"));
                         if (location != null) {
                             Block other = location.getBlock();
                             BlockData blockData = other.getBlockData();

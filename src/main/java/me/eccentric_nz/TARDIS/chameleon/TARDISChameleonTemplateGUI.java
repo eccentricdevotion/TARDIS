@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUIChameleonTemplate;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiChameleonTemplate;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -29,12 +29,12 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-class TARDISChameleonTemplateGUI {
+class TardisChameleonTemplateGUI {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ItemStack[] template;
 
-    TARDISChameleonTemplateGUI(TARDISPlugin plugin) {
+    TardisChameleonTemplateGUI(TardisPlugin plugin) {
         this.plugin = plugin;
         template = getItemStack();
     }
@@ -46,7 +46,7 @@ class TARDISChameleonTemplateGUI {
         ItemMeta bk = back.getItemMeta();
         assert bk != null;
         bk.setDisplayName(plugin.getChameleonGuis().getString("BACK_HELP"));
-        bk.setCustomModelData(GUIChameleonTemplate.BACK_HELP.getCustomModelData());
+        bk.setCustomModelData(GuiChameleonTemplate.BACK_HELP.getCustomModelData());
         back.setItemMeta(bk);
         // info
         ItemStack info = new ItemStack(Material.BOWL, 1);
@@ -54,7 +54,7 @@ class TARDISChameleonTemplateGUI {
         assert io != null;
         io.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
         io.setLore(plugin.getChameleonGuis().getStringList("INFO_TEMPLATE"));
-        io.setCustomModelData(GUIChameleonTemplate.INFO_TEMPLATE.getCustomModelData());
+        io.setCustomModelData(GuiChameleonTemplate.INFO_TEMPLATE.getCustomModelData());
         info.setItemMeta(io);
         // next button
         ItemStack next = new ItemStack(Material.ARROW, 1);
@@ -68,7 +68,7 @@ class TARDISChameleonTemplateGUI {
         assert oe != null;
         oe.setDisplayName("1");
         oe.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_L_FRONT")));
-        oe.setCustomModelData(GUIChameleonTemplate.COL_L_FRONT.getCustomModelData());
+        oe.setCustomModelData(GuiChameleonTemplate.COL_L_FRONT.getCustomModelData());
         one.setItemMeta(oe);
         // two
         ItemStack two = new ItemStack(Material.BOWL, 1);
@@ -76,7 +76,7 @@ class TARDISChameleonTemplateGUI {
         assert to != null;
         to.setDisplayName("2");
         to.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_L_MIDDLE")));
-        to.setCustomModelData(GUIChameleonTemplate.COL_L_MIDDLE.getCustomModelData());
+        to.setCustomModelData(GuiChameleonTemplate.COL_L_MIDDLE.getCustomModelData());
         two.setItemMeta(to);
         // three
         ItemStack three = new ItemStack(Material.BOWL, 1);
@@ -84,7 +84,7 @@ class TARDISChameleonTemplateGUI {
         assert te != null;
         te.setDisplayName("3");
         te.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_L_BACK")));
-        te.setCustomModelData(GUIChameleonTemplate.COL_L_BACK.getCustomModelData());
+        te.setCustomModelData(GuiChameleonTemplate.COL_L_BACK.getCustomModelData());
         three.setItemMeta(te);
         // four
         ItemStack four = new ItemStack(Material.BOWL, 1);
@@ -92,7 +92,7 @@ class TARDISChameleonTemplateGUI {
         assert fr != null;
         fr.setDisplayName("4");
         fr.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_B_MIDDLE")));
-        fr.setCustomModelData(GUIChameleonTemplate.COL_B_MIDDLE.getCustomModelData());
+        fr.setCustomModelData(GuiChameleonTemplate.COL_B_MIDDLE.getCustomModelData());
         four.setItemMeta(fr);
         // five
         ItemStack five = new ItemStack(Material.BOWL, 1);
@@ -100,7 +100,7 @@ class TARDISChameleonTemplateGUI {
         assert fe != null;
         fe.setDisplayName("5");
         fe.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_R_BACK")));
-        fe.setCustomModelData(GUIChameleonTemplate.COL_R_BACK.getCustomModelData());
+        fe.setCustomModelData(GuiChameleonTemplate.COL_R_BACK.getCustomModelData());
         five.setItemMeta(fe);
         // six
         ItemStack six = new ItemStack(Material.BOWL, 1);
@@ -108,7 +108,7 @@ class TARDISChameleonTemplateGUI {
         assert sx != null;
         sx.setDisplayName("6");
         sx.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_R_MIDDLE")));
-        sx.setCustomModelData(GUIChameleonTemplate.COL_R_MIDDLE.getCustomModelData());
+        sx.setCustomModelData(GuiChameleonTemplate.COL_R_MIDDLE.getCustomModelData());
         six.setItemMeta(sx);
         // seven
         ItemStack seven = new ItemStack(Material.BOWL, 1);
@@ -116,7 +116,7 @@ class TARDISChameleonTemplateGUI {
         assert sn != null;
         sn.setDisplayName("7");
         sn.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_R_FRONT")));
-        sn.setCustomModelData(GUIChameleonTemplate.COL_R_FRONT.getCustomModelData());
+        sn.setCustomModelData(GuiChameleonTemplate.COL_R_FRONT.getCustomModelData());
         seven.setItemMeta(sn);
         // eight
         ItemStack eight = new ItemStack(Material.BOWL, 1);
@@ -124,7 +124,7 @@ class TARDISChameleonTemplateGUI {
         assert et != null;
         et.setDisplayName("8");
         et.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_F_MIDDLE")));
-        et.setCustomModelData(GUIChameleonTemplate.COL_F_MIDDLE.getCustomModelData());
+        et.setCustomModelData(GuiChameleonTemplate.COL_F_MIDDLE.getCustomModelData());
         eight.setItemMeta(et);
         // nine
         ItemStack nine = new ItemStack(Material.BOWL, 1);
@@ -132,7 +132,7 @@ class TARDISChameleonTemplateGUI {
         assert ne != null;
         ne.setDisplayName("9");
         ne.setLore(Collections.singletonList(plugin.getChameleonGuis().getString("COL_C_LAMP")));
-        ne.setCustomModelData(GUIChameleonTemplate.COL_C_LAMP.getCustomModelData());
+        ne.setCustomModelData(GuiChameleonTemplate.COL_C_LAMP.getCustomModelData());
         nine.setItemMeta(ne);
         // redstone lamp
         ItemStack lamp = new ItemStack(Material.REDSTONE_LAMP, 1);

@@ -18,8 +18,8 @@ package me.eccentric_nz.tardis.chameleon;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.utility.recalculators.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -36,161 +36,161 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISChameleonPreset {
+public class TardisChameleonPreset {
 
     private static final List<Material> PROBLEM_BLOCKS = Arrays.asList(Material.ACACIA_DOOR, Material.ACACIA_FENCE, Material.ACACIA_SIGN, Material.ACACIA_STAIRS, Material.ACACIA_TRAPDOOR, Material.ACACIA_WALL_SIGN, Material.ANDESITE_STAIRS, Material.ANVIL, Material.BIRCH_DOOR, Material.BIRCH_FENCE, Material.BIRCH_SIGN, Material.BIRCH_STAIRS, Material.BIRCH_TRAPDOOR, Material.BIRCH_WALL_SIGN, Material.BLACK_BED, Material.BLACK_GLAZED_TERRACOTTA, Material.BLACKSTONE_STAIRS, Material.BLUE_BED, Material.BLUE_GLAZED_TERRACOTTA, Material.BRICK_STAIRS, Material.BROWN_BED, Material.BROWN_GLAZED_TERRACOTTA, Material.BROWN_MUSHROOM_BLOCK, Material.CARVED_PUMPKIN, Material.CHIPPED_ANVIL, Material.COBBLESTONE_STAIRS, Material.CRIMSON_BUTTON, Material.CRIMSON_DOOR, Material.CRIMSON_FENCE, Material.CRIMSON_SIGN, Material.CRIMSON_STAIRS, Material.CRIMSON_TRAPDOOR, Material.CRIMSON_WALL_SIGN, Material.CYAN_BED, Material.CYAN_GLAZED_TERRACOTTA, Material.DAMAGED_ANVIL, Material.DARK_OAK_DOOR, Material.DARK_OAK_FENCE, Material.DARK_OAK_SIGN, Material.DARK_OAK_STAIRS, Material.DARK_OAK_TRAPDOOR, Material.DARK_OAK_WALL_SIGN, Material.DARK_PRISMARINE_STAIRS, Material.DIORITE_STAIRS, Material.END_STONE_BRICK_STAIRS, Material.GRANITE_STAIRS, Material.GRAY_BED, Material.GRAY_GLAZED_TERRACOTTA, Material.GREEN_BED, Material.GREEN_GLAZED_TERRACOTTA, Material.IRON_DOOR, Material.IRON_TRAPDOOR, Material.JACK_O_LANTERN, Material.JUNGLE_DOOR, Material.JUNGLE_FENCE, Material.JUNGLE_SIGN, Material.JUNGLE_STAIRS, Material.JUNGLE_TRAPDOOR, Material.JUNGLE_WALL_SIGN, Material.LEVER, Material.LIGHT_BLUE_BED, Material.LIGHT_BLUE_GLAZED_TERRACOTTA, Material.LIGHT_GRAY_BED, Material.LIGHT_GRAY_GLAZED_TERRACOTTA, Material.LIME_BED, Material.LIME_GLAZED_TERRACOTTA, Material.MAGENTA_BED, Material.MAGENTA_GLAZED_TERRACOTTA, Material.MOSSY_COBBLESTONE_STAIRS, Material.MOSSY_STONE_BRICK_STAIRS, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS, Material.OAK_BUTTON, Material.OAK_DOOR, Material.OAK_FENCE, Material.OAK_SIGN, Material.OAK_STAIRS, Material.OAK_TRAPDOOR, Material.OAK_WALL_SIGN, Material.OBSERVER, Material.ORANGE_BED, Material.ORANGE_GLAZED_TERRACOTTA, Material.PINK_BED, Material.PINK_GLAZED_TERRACOTTA, Material.POLISHED_ANDESITE_STAIRS, Material.POLISHED_BLACKSTONE_BUTTON, Material.POLISHED_BLACKSTONE_BRICK_STAIRS, Material.POLISHED_BLACKSTONE_STAIRS, Material.POLISHED_DIORITE_STAIRS, Material.POLISHED_GRANITE_STAIRS, Material.PRISMARINE_BRICK_STAIRS, Material.PRISMARINE_STAIRS, Material.PURPLE_BED, Material.PURPLE_GLAZED_TERRACOTTA, Material.PURPUR_STAIRS, Material.QUARTZ_STAIRS, Material.RAIL, Material.RED_BED, Material.RED_GLAZED_TERRACOTTA, Material.RED_NETHER_BRICK_STAIRS, Material.RED_SANDSTONE_STAIRS, Material.SANDSTONE_STAIRS, Material.SMOOTH_QUARTZ_STAIRS, Material.SMOOTH_RED_SANDSTONE_STAIRS, Material.SMOOTH_SANDSTONE_STAIRS, Material.SPRUCE_DOOR, Material.SPRUCE_FENCE, Material.SPRUCE_SIGN, Material.SPRUCE_STAIRS, Material.SPRUCE_TRAPDOOR, Material.SPRUCE_WALL_SIGN, Material.STONE_BRICK_STAIRS, Material.STONE_BUTTON, Material.STONE_STAIRS, Material.VINE, Material.WALL_TORCH, Material.REDSTONE_WALL_TORCH, Material.SOUL_WALL_TORCH, Material.WARPED_BUTTON, Material.WARPED_DOOR, Material.WARPED_FENCE, Material.WARPED_SIGN, Material.WARPED_STAIRS, Material.WARPED_TRAPDOOR, Material.WARPED_WALL_SIGN, Material.WHITE_BED, Material.WHITE_GLAZED_TERRACOTTA, Material.YELLOW_BED, Material.YELLOW_GLAZED_TERRACOTTA);
-    public final TARDISCustomPreset custom;
-    private final TARDISAndesitePreset andesite;
-    private final TARDISAngelDownPreset angeld;
-    private final TARDISAngelUpPreset angelu;
-    private final TARDISApertureSciencePreset apperture;
-    private final TARDISCakePreset cake;
-    private final TARDISCandyCanePreset candy;
-    private final TARDISChalicePreset chalice;
-    private final TARDISChorusPreset chorus;
-    private final TARDISColumnPreset column;
-    private final TARDISCreepyPreset creepy;
-    private final TARDISDesertPreset desert;
-    private final TARDISDioritePreset diorite;
-    private final TARDISDoubleHelixPreset helix;
-    private final TARDISFactoryPreset factory;
-    private final TARDISFencePreset fence;
-    private final TARDISFlowerPreset flower;
-    private final TARDISGazeboPreset gazebo;
-    private final TARDISGranitePreset granite;
-    private final TARDISGravestonePreset gravestone;
-    private final TARDISInvisiblePreset invisible;
-    private final TARDISJailPreset jail;
-    private final TARDISJunglePreset jungle;
-    private final TARDISJunkPreset junk;
-    private final TARDISLampPostPreset lamp;
-    private final TARDISLibraryPreset library;
-    private final TARDISLighthousePreset lighthouse;
-    private final TARDISMineshaftPreset mine;
-    private final TARDISMushroomPreset shroom;
-    private final TARDISNetherPreset nether;
-    private final TARDISPandoricaPreset pandorica;
-    private final TARDISPartyPreset party;
-    private final TARDISPeanutButterPreset peanut;
-    private final TARDISPineTreePreset pine;
-    private final TARDISPortalPreset portal;
-    private final TARDISPrismarinePreset prismarine;
-    private final TARDISPunkedPreset punked;
-    private final TARDISRobotPreset robot;
-    private final TARDISRubberDuckPreset duck;
-    private final TARDISSnowmanPreset snowman;
-    private final TARDISSubmergedPreset submerged;
-    private final TARDISSwampPreset swamp;
-    private final TARDISTelephoneBoxPreset telephone;
-    private final TARDISTheEndPreset theend;
-    private final TARDISToiletPreset toilet;
-    private final TARDISTopsyTurveyPreset topsyturvey;
-    private final TARDISTorchPreset torch;
-    private final TARDISVillagePreset village;
-    private final TARDISWellPreset well;
-    private final TARDISWindmillPreset windmill;
-    private final TARDISYellowSubmarinePreset yellow;
+    public final TardisCustomPreset custom;
+    private final TardisAndesitePreset andesite;
+    private final TardisAngelDownPreset angeld;
+    private final TardisAngelUpPreset angelu;
+    private final TardisApertureSciencePreset apperture;
+    private final TardisCakePreset cake;
+    private final TardisCandyCanePreset candy;
+    private final TardisChalicePreset chalice;
+    private final TardisChorusPreset chorus;
+    private final TardisColumnPreset column;
+    private final TardisCreepyPreset creepy;
+    private final TardisDesertPreset desert;
+    private final TardisDioritePreset diorite;
+    private final TardisDoubleHelixPreset helix;
+    private final TardisFactoryPreset factory;
+    private final TardisFencePreset fence;
+    private final TardisFlowerPreset flower;
+    private final TardisGazeboPreset gazebo;
+    private final TardisGranitePreset granite;
+    private final TardisGravestonePreset gravestone;
+    private final TardisInvisiblePreset invisible;
+    private final TardisJailPreset jail;
+    private final TardisJunglePreset jungle;
+    private final TardisJunkPreset junk;
+    private final TardisLampPostPreset lamp;
+    private final TardisLibraryPreset library;
+    private final TardisLighthousePreset lighthouse;
+    private final TardisMineshaftPreset mine;
+    private final TardisMushroomPreset shroom;
+    private final TardisNetherPreset nether;
+    private final TardisPandoricaPreset pandorica;
+    private final TardisPartyPreset party;
+    private final TardisPeanutButterPreset peanut;
+    private final TardisPineTreePreset pine;
+    private final TardisPortalPreset portal;
+    private final TardisPrismarinePreset prismarine;
+    private final TardisPunkedPreset punked;
+    private final TardisRobotPreset robot;
+    private final TardisRubberDuckPreset duck;
+    private final TardisSnowmanPreset snowman;
+    private final TardisSubmergedPreset submerged;
+    private final TardisSwampPreset swamp;
+    private final TardisTelephoneBoxPreset telephone;
+    private final TardisTheEndPreset theend;
+    private final TardisToiletPreset toilet;
+    private final TardisTopsyTurveyPreset topsyturvey;
+    private final TardisTorchPreset torch;
+    private final TardisVillagePreset village;
+    private final TardisWellPreset well;
+    private final TardisWindmillPreset windmill;
+    private final TardisYellowSubmarinePreset yellow;
     // biome adaptive presets
-    private final TARDISAdaptivePreset adaptive;
-    private final TARDISRenderPreset render;
-    private final TARDISExtremeHillsPreset extreme;
-    private final TARDISForestPreset forest;
-    private final TARDISIcePlainsPreset flats;
-    private final TARDISIcePlainsSpikesPreset spikes;
-    private final TARDISMesaPreset mesa;
-    private final TARDISPlainsPreset plains;
-    private final TARDISRoofedForestPreset roofed;
-    private final TARDISSavannaPreset savanna;
-    private final TARDISTaigaPreset taiga;
-    private final TARDISColdTaigaPreset cold;
-    private final TARDISBoatPreset boat;
+    private final TardisAdaptivePreset adaptive;
+    private final TardisRenderPreset render;
+    private final TardisExtremeHillsPreset extreme;
+    private final TardisForestPreset forest;
+    private final TardisIcePlainsPreset flats;
+    private final TardisIcePlainsSpikesPreset spikes;
+    private final TardisMesaPreset mesa;
+    private final TardisPlainsPreset plains;
+    private final TardisRoofedForestPreset roofed;
+    private final TardisSavannaPreset savanna;
+    private final TardisTaigaPreset taiga;
+    private final TardisColdTaigaPreset cold;
+    private final TardisBoatPreset boat;
     private int r;
 
-    public TARDISChameleonPreset() {
-        andesite = new TARDISAndesitePreset();
-        angeld = new TARDISAngelDownPreset();
-        angelu = new TARDISAngelUpPreset();
-        apperture = new TARDISApertureSciencePreset();
-        cake = new TARDISCakePreset();
-        candy = new TARDISCandyCanePreset();
-        chalice = new TARDISChalicePreset();
-        chorus = new TARDISChorusPreset();
-        column = new TARDISColumnPreset();
-        creepy = new TARDISCreepyPreset();
-        desert = new TARDISDesertPreset();
-        diorite = new TARDISDioritePreset();
-        duck = new TARDISRubberDuckPreset();
-        factory = new TARDISFactoryPreset();
-        fence = new TARDISFencePreset();
-        flower = new TARDISFlowerPreset();
-        gazebo = new TARDISGazeboPreset();
-        granite = new TARDISGranitePreset();
-        gravestone = new TARDISGravestonePreset();
-        helix = new TARDISDoubleHelixPreset();
-        invisible = new TARDISInvisiblePreset();
-        jail = new TARDISJailPreset();
-        jungle = new TARDISJunglePreset();
-        junk = new TARDISJunkPreset();
-        lamp = new TARDISLampPostPreset();
-        library = new TARDISLibraryPreset();
-        lighthouse = new TARDISLighthousePreset();
-        mine = new TARDISMineshaftPreset();
-        nether = new TARDISNetherPreset();
-        pandorica = new TARDISPandoricaPreset();
-        party = new TARDISPartyPreset();
-        peanut = new TARDISPeanutButterPreset();
-        pine = new TARDISPineTreePreset();
-        portal = new TARDISPortalPreset();
-        prismarine = new TARDISPrismarinePreset();
-        punked = new TARDISPunkedPreset();
-        robot = new TARDISRobotPreset();
-        shroom = new TARDISMushroomPreset();
-        snowman = new TARDISSnowmanPreset();
-        submerged = new TARDISSubmergedPreset();
-        swamp = new TARDISSwampPreset();
-        telephone = new TARDISTelephoneBoxPreset();
-        theend = new TARDISTheEndPreset();
-        toilet = new TARDISToiletPreset();
-        topsyturvey = new TARDISTopsyTurveyPreset();
-        torch = new TARDISTorchPreset();
-        village = new TARDISVillagePreset();
-        well = new TARDISWellPreset();
-        windmill = new TARDISWindmillPreset();
-        yellow = new TARDISYellowSubmarinePreset();
-        custom = new TARDISCustomPreset();
-        adaptive = new TARDISAdaptivePreset();
-        render = new TARDISRenderPreset();
-        extreme = new TARDISExtremeHillsPreset();
-        forest = new TARDISForestPreset();
-        flats = new TARDISIcePlainsPreset();
-        spikes = new TARDISIcePlainsSpikesPreset();
-        mesa = new TARDISMesaPreset();
-        plains = new TARDISPlainsPreset();
-        roofed = new TARDISRoofedForestPreset();
-        savanna = new TARDISSavannaPreset();
-        taiga = new TARDISTaigaPreset();
-        cold = new TARDISColdTaigaPreset();
-        boat = new TARDISBoatPreset();
+    public TardisChameleonPreset() {
+        andesite = new TardisAndesitePreset();
+        angeld = new TardisAngelDownPreset();
+        angelu = new TardisAngelUpPreset();
+        apperture = new TardisApertureSciencePreset();
+        cake = new TardisCakePreset();
+        candy = new TardisCandyCanePreset();
+        chalice = new TardisChalicePreset();
+        chorus = new TardisChorusPreset();
+        column = new TardisColumnPreset();
+        creepy = new TardisCreepyPreset();
+        desert = new TardisDesertPreset();
+        diorite = new TardisDioritePreset();
+        duck = new TardisRubberDuckPreset();
+        factory = new TardisFactoryPreset();
+        fence = new TardisFencePreset();
+        flower = new TardisFlowerPreset();
+        gazebo = new TardisGazeboPreset();
+        granite = new TardisGranitePreset();
+        gravestone = new TardisGravestonePreset();
+        helix = new TardisDoubleHelixPreset();
+        invisible = new TardisInvisiblePreset();
+        jail = new TardisJailPreset();
+        jungle = new TardisJunglePreset();
+        junk = new TardisJunkPreset();
+        lamp = new TardisLampPostPreset();
+        library = new TardisLibraryPreset();
+        lighthouse = new TardisLighthousePreset();
+        mine = new TardisMineshaftPreset();
+        nether = new TardisNetherPreset();
+        pandorica = new TardisPandoricaPreset();
+        party = new TardisPartyPreset();
+        peanut = new TardisPeanutButterPreset();
+        pine = new TardisPineTreePreset();
+        portal = new TardisPortalPreset();
+        prismarine = new TardisPrismarinePreset();
+        punked = new TardisPunkedPreset();
+        robot = new TardisRobotPreset();
+        shroom = new TardisMushroomPreset();
+        snowman = new TardisSnowmanPreset();
+        submerged = new TardisSubmergedPreset();
+        swamp = new TardisSwampPreset();
+        telephone = new TardisTelephoneBoxPreset();
+        theend = new TardisTheEndPreset();
+        toilet = new TardisToiletPreset();
+        topsyturvey = new TardisTopsyTurveyPreset();
+        torch = new TardisTorchPreset();
+        village = new TardisVillagePreset();
+        well = new TardisWellPreset();
+        windmill = new TardisWindmillPreset();
+        yellow = new TardisYellowSubmarinePreset();
+        custom = new TardisCustomPreset();
+        adaptive = new TardisAdaptivePreset();
+        render = new TardisRenderPreset();
+        extreme = new TardisExtremeHillsPreset();
+        forest = new TardisForestPreset();
+        flats = new TardisIcePlainsPreset();
+        spikes = new TardisIcePlainsSpikesPreset();
+        mesa = new TardisMesaPreset();
+        plains = new TardisPlainsPreset();
+        roofed = new TardisRoofedForestPreset();
+        savanna = new TardisSavannaPreset();
+        taiga = new TardisTaigaPreset();
+        cold = new TardisColdTaigaPreset();
+        boat = new TardisBoatPreset();
     }
 
-    static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String[][] strings, boolean asymmetric, boolean duck) {
-        TARDISChameleonColumn tcc;
+    static TardisChameleonColumn buildTARDISChameleonColumn(CardinalDirection d, String[][] strings, boolean asymmetric, boolean duck) {
+        TardisChameleonColumn tcc;
         BlockData[][] blockDataArr = getBlockDataFromArray(strings);
-        if (d.equals(COMPASS.EAST)) {
-            tcc = new TARDISChameleonColumn(blockDataArr);
+        if (d.equals(CardinalDirection.EAST)) {
+            tcc = new TardisChameleonColumn(blockDataArr);
         } else {
-            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d, asymmetric), d, duck));
+            tcc = new TardisChameleonColumn(convertData(rotate2DArray(blockDataArr, d, asymmetric), d, duck));
         }
         return tcc;
     }
 
-    static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String json, boolean asymmetric, boolean duck) {
-        TARDISChameleonColumn tcc;
+    static TardisChameleonColumn buildTARDISChameleonColumn(CardinalDirection d, String json, boolean asymmetric, boolean duck) {
+        TardisChameleonColumn tcc;
         BlockData[][] blockDataArr = getStringArrayFromJSON(json);
-        if (d.equals(COMPASS.EAST)) {
-            tcc = new TARDISChameleonColumn(blockDataArr);
+        if (d.equals(CardinalDirection.EAST)) {
+            tcc = new TardisChameleonColumn(blockDataArr);
         } else {
-            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d, asymmetric), d, duck));
+            tcc = new TardisChameleonColumn(convertData(rotate2DArray(blockDataArr, d, asymmetric), d, duck));
         }
         return tcc;
     }
@@ -229,7 +229,7 @@ public class TARDISChameleonPreset {
         return preset;
     }
 
-    private static BlockData[][] rotate2DArray(BlockData[][] arr, COMPASS d, boolean assymetric) {
+    private static BlockData[][] rotate2DArray(BlockData[][] arr, CardinalDirection d, boolean assymetric) {
         switch (d) {
             case NORTH -> {
                 BlockData[] zero_s = arr[0];
@@ -292,14 +292,14 @@ public class TARDISChameleonPreset {
         }
     }
 
-    private static BlockData[][] convertData(BlockData[][] data, COMPASS d, boolean duck) {
+    private static BlockData[][] convertData(BlockData[][] data, CardinalDirection d, boolean duck) {
         for (int col = 0; col < 10; col++) {
             for (int block = 0; block < 4; block++) {
                 Material mat = data[col][block].getMaterial();
                 if (PROBLEM_BLOCKS.contains(mat)) {
                     switch (mat) {
-                        case BLACK_BED, BLUE_BED, BROWN_BED, CYAN_BED, GRAY_BED, GREEN_BED, LIGHT_BLUE_BED, LIGHT_GRAY_BED, LIME_BED, MAGENTA_BED, ORANGE_BED, PINK_BED, PURPLE_BED, RED_BED, WHITE_BED, YELLOW_BED -> data[col][block] = new TARDISBedRecalculator().recalculate(data[col][block], d);
-                        case WALL_TORCH, REDSTONE_WALL_TORCH, SOUL_WALL_TORCH -> data[col][block] = new TARDISTorchRecalculator().recalculate(data[col][block], d);
+                        case BLACK_BED, BLUE_BED, BROWN_BED, CYAN_BED, GRAY_BED, GREEN_BED, LIGHT_BLUE_BED, LIGHT_GRAY_BED, LIME_BED, MAGENTA_BED, ORANGE_BED, PINK_BED, PURPLE_BED, RED_BED, WHITE_BED, YELLOW_BED -> data[col][block] = new TardisBedRecalculator().recalculate(data[col][block], d);
+                        case WALL_TORCH, REDSTONE_WALL_TORCH, SOUL_WALL_TORCH -> data[col][block] = new TardisTorchRecalculator().recalculate(data[col][block], d);
                         case ACACIA_DOOR, BIRCH_DOOR, CRIMSON_DOOR, DARK_OAK_DOOR, IRON_DOOR, JUNGLE_DOOR, OAK_DOOR, SPRUCE_DOOR, WARPED_DOOR -> {
                             Directional door = (Directional) data[col][block];
                             switch (d) {
@@ -329,14 +329,14 @@ public class TARDISChameleonPreset {
                         }
                         case RAIL -> {
                             Rail rail = (Rail) data[col][block];
-                            if (d == COMPASS.WEST) {
+                            if (d == CardinalDirection.WEST) {
                                 rail.setShape(Rail.Shape.EAST_WEST);
                             } else {
                                 rail.setShape(Rail.Shape.NORTH_SOUTH);
                             }
                             data[col][block] = rail;
                         }
-                        case LEVER -> data[col][block] = new TARDISLeverRecalculator().recalculate(data[col][block], d);
+                        case LEVER -> data[col][block] = new TardisLeverRecalculator().recalculate(data[col][block], d);
                         case ACACIA_SIGN, BIRCH_SIGN, CRIMSON_SIGN, DARK_OAK_SIGN, JUNGLE_SIGN, OAK_SIGN, SPRUCE_SIGN, WARPED_SIGN -> {
                             Rotatable sign = (Rotatable) data[col][block];
                             switch (d) {
@@ -355,15 +355,15 @@ public class TARDISChameleonPreset {
                             }
                             data[col][block] = wall_sign;
                         }
-                        case ACACIA_STAIRS, ANDESITE_STAIRS, BIRCH_STAIRS, BLACKSTONE_STAIRS, BRICK_STAIRS, COBBLESTONE_STAIRS, CRIMSON_STAIRS, DARK_OAK_STAIRS, DARK_PRISMARINE_STAIRS, DIORITE_STAIRS, END_STONE_BRICK_STAIRS, GRANITE_STAIRS, JUNGLE_STAIRS, MOSSY_COBBLESTONE_STAIRS, MOSSY_STONE_BRICK_STAIRS, NETHER_BRICK_STAIRS, OAK_STAIRS, POLISHED_ANDESITE_STAIRS, POLISHED_BLACKSTONE_BRICK_STAIRS, POLISHED_BLACKSTONE_STAIRS, POLISHED_DIORITE_STAIRS, POLISHED_GRANITE_STAIRS, PRISMARINE_BRICK_STAIRS, PRISMARINE_STAIRS, PURPUR_STAIRS, QUARTZ_STAIRS, RED_NETHER_BRICK_STAIRS, RED_SANDSTONE_STAIRS, SANDSTONE_STAIRS, SMOOTH_QUARTZ_STAIRS, SMOOTH_RED_SANDSTONE_STAIRS, SMOOTH_SANDSTONE_STAIRS, SPRUCE_STAIRS, STONE_BRICK_STAIRS, STONE_STAIRS, WARPED_STAIRS -> data[col][block] = new TARDISStairRecalculator().recalculate(data[col][block], d, col, duck);
-                        case ACACIA_BUTTON, BIRCH_BUTTON, CRIMSON_BUTTON, DARK_OAK_BUTTON, JUNGLE_BUTTON, OAK_BUTTON, POLISHED_BLACKSTONE_BUTTON, SPRUCE_BUTTON, STONE_BUTTON, WARPED_BUTTON -> data[col][block] = new TARDISButtonRecalculator().recalculate(data[col][block], d);
-                        case ACACIA_FENCE, BIRCH_FENCE, CRIMSON_FENCE, DARK_OAK_FENCE, JUNGLE_FENCE, NETHER_BRICK_FENCE, OAK_FENCE, SPRUCE_FENCE, WARPED_FENCE -> data[col][block] = new TARDISFenceRecalculator().recalculate(data[col][block], d);
-                        case ACACIA_TRAPDOOR, BIRCH_TRAPDOOR, CRIMSON_TRAPDOOR, DARK_OAK_TRAPDOOR, IRON_TRAPDOOR, JUNGLE_TRAPDOOR, OAK_TRAPDOOR, SPRUCE_TRAPDOOR, WARPED_TRAPDOOR -> data[col][block] = new TARDISTrapdoorRecalculator().recalculate(data[col][block], d);
+                        case ACACIA_STAIRS, ANDESITE_STAIRS, BIRCH_STAIRS, BLACKSTONE_STAIRS, BRICK_STAIRS, COBBLESTONE_STAIRS, CRIMSON_STAIRS, DARK_OAK_STAIRS, DARK_PRISMARINE_STAIRS, DIORITE_STAIRS, END_STONE_BRICK_STAIRS, GRANITE_STAIRS, JUNGLE_STAIRS, MOSSY_COBBLESTONE_STAIRS, MOSSY_STONE_BRICK_STAIRS, NETHER_BRICK_STAIRS, OAK_STAIRS, POLISHED_ANDESITE_STAIRS, POLISHED_BLACKSTONE_BRICK_STAIRS, POLISHED_BLACKSTONE_STAIRS, POLISHED_DIORITE_STAIRS, POLISHED_GRANITE_STAIRS, PRISMARINE_BRICK_STAIRS, PRISMARINE_STAIRS, PURPUR_STAIRS, QUARTZ_STAIRS, RED_NETHER_BRICK_STAIRS, RED_SANDSTONE_STAIRS, SANDSTONE_STAIRS, SMOOTH_QUARTZ_STAIRS, SMOOTH_RED_SANDSTONE_STAIRS, SMOOTH_SANDSTONE_STAIRS, SPRUCE_STAIRS, STONE_BRICK_STAIRS, STONE_STAIRS, WARPED_STAIRS -> data[col][block] = new TardisStairRecalculator().recalculate(data[col][block], d, col, duck);
+                        case ACACIA_BUTTON, BIRCH_BUTTON, CRIMSON_BUTTON, DARK_OAK_BUTTON, JUNGLE_BUTTON, OAK_BUTTON, POLISHED_BLACKSTONE_BUTTON, SPRUCE_BUTTON, STONE_BUTTON, WARPED_BUTTON -> data[col][block] = new TardisButtonRecalculator().recalculate(data[col][block], d);
+                        case ACACIA_FENCE, BIRCH_FENCE, CRIMSON_FENCE, DARK_OAK_FENCE, JUNGLE_FENCE, NETHER_BRICK_FENCE, OAK_FENCE, SPRUCE_FENCE, WARPED_FENCE -> data[col][block] = new TardisFenceRecalculator().recalculate(data[col][block], d);
+                        case ACACIA_TRAPDOOR, BIRCH_TRAPDOOR, CRIMSON_TRAPDOOR, DARK_OAK_TRAPDOOR, IRON_TRAPDOOR, JUNGLE_TRAPDOOR, OAK_TRAPDOOR, SPRUCE_TRAPDOOR, WARPED_TRAPDOOR -> data[col][block] = new TardisTrapdoorRecalculator().recalculate(data[col][block], d);
                         case BROWN_MUSHROOM_BLOCK -> // mushroom
-                                data[col][block] = new TARDISMushroomRecalculator().recalculate(data[col][block], d, col);
+                                data[col][block] = new TardisMushroomRecalculator().recalculate(data[col][block], d, col);
                         case ANVIL, CHIPPED_ANVIL, DAMAGED_ANVIL -> {
                             Directional anvil = (Directional) data[col][block];
-                            if (d != COMPASS.WEST) {
+                            if (d != CardinalDirection.WEST) {
                                 if (anvil.getFacing() == BlockFace.SOUTH) {
                                     anvil.setFacing(BlockFace.WEST);
                                 } else {
@@ -466,7 +466,7 @@ public class TARDISChameleonPreset {
         boat.makePresets(true, false);
     }
 
-    public TARDISChameleonColumn getColumn(PRESET p, COMPASS d) {
+    public TardisChameleonColumn getColumn(Preset p, CardinalDirection d) {
         switch (p) {
             case ANDESITE:
                 return andesite.getBlueprint().get(d);
@@ -601,7 +601,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    public TARDISChameleonColumn getGlass(PRESET p, COMPASS d) {
+    public TardisChameleonColumn getGlass(Preset p, CardinalDirection d) {
         switch (p) {
             case ANDESITE:
                 return andesite.getGlass().get(d);
@@ -736,7 +736,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    public TARDISChameleonColumn getStained(PRESET p, COMPASS d) {
+    public TardisChameleonColumn getStained(Preset p, CardinalDirection d) {
         switch (p) {
             case ANDESITE:
                 return andesite.getStained().get(d);

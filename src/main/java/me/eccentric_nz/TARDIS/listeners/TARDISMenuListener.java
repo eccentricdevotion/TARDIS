@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.sudo.TARDISSudoTracker;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.sudo.TardisSudoTracker;
 import me.eccentric_nz.tardis.enumeration.Storage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -33,12 +33,12 @@ import java.util.Set;
 /**
  * @author eccentric_nz
  */
-public class TARDISMenuListener implements Listener {
+public class TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<String, Integer> titles;
 
-    protected TARDISMenuListener(TARDISPlugin plugin) {
+    protected TardisMenuListener(TardisPlugin plugin) {
         this.plugin = plugin;
         titles = getTitleMap();
     }
@@ -74,7 +74,7 @@ public class TARDISMenuListener implements Listener {
         if (!titles.containsKey(title)) {
             return;
         }
-        TARDISSudoTracker.SUDOERS.remove(event.getPlayer().getUniqueId());
+        TardisSudoTracker.SUDOERS.remove(event.getPlayer().getUniqueId());
     }
 
     private HashMap<String, Integer> getTitleMap() {

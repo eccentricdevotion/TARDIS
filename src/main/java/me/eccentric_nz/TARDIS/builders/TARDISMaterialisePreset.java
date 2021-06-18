@@ -16,22 +16,22 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.chameleon.TARDISChameleonColumn;
-import me.eccentric_nz.tardis.chameleon.TARDISConstructColumn;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.chameleon.TardisChameleonColumn;
+import me.eccentric_nz.tardis.chameleon.TardisConstructColumn;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
 import me.eccentric_nz.tardis.database.data.ReplacedBlock;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.Adaption;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.travel.TARDISDoorLocation;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
-import me.eccentric_nz.tardis.utility.TARDISParticles;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.travel.TardisDoorLocation;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
+import me.eccentric_nz.tardis.utility.TardisParticles;
+import me.eccentric_nz.tardis.utility.TardisSounds;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.TardisChunkGenerator;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -53,17 +53,17 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-class TARDISMaterialisePreset implements Runnable {
+class TardisMaterialisePreset implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final BuildData bd;
     private final int loops;
-    private final PRESET preset;
+    private final Preset preset;
     private final BlockData data;
     private final Adaption adapt;
-    private final TARDISChameleonColumn column;
-    private final TARDISChameleonColumn stained_column;
-    private final TARDISChameleonColumn glass_column;
+    private final TardisChameleonColumn column;
+    private final TardisChameleonColumn stained_column;
+    private final TardisChameleonColumn glass_column;
     private final Material random_colour;
     private final Material random_glass;
     private final ChatColor sign_colour;
@@ -88,7 +88,7 @@ class TARDISMaterialisePreset implements Runnable {
      * @param data   the chameleon block data for the police box
      * @param adapt  the chameleon circuit adaption setting
      */
-    TARDISMaterialisePreset(TARDISPlugin plugin, BuildData bd, PRESET preset, BlockData data, Adaption adapt) {
+    TardisMaterialisePreset(TardisPlugin plugin, BuildData bd, Preset preset, BlockData data, Adaption adapt) {
         this.plugin = plugin;
         this.bd = bd;
         loops = this.bd.getThrottle().getLoops();
@@ -96,13 +96,13 @@ class TARDISMaterialisePreset implements Runnable {
         this.preset = preset;
         this.data = data;
         this.adapt = adapt;
-        if (preset.equals(PRESET.ANGEL)) {
-            plugin.getPresets().setR(TARDISConstants.RANDOM.nextInt(2));
+        if (preset.equals(Preset.ANGEL)) {
+            plugin.getPresets().setR(TardisConstants.RANDOM.nextInt(2));
         }
-        if (this.preset.equals(PRESET.CONSTRUCT)) {
-            column = new TARDISConstructColumn(plugin, bd.getTardisId(), "blueprintData", bd.getDirection()).getColumn();
-            stained_column = new TARDISConstructColumn(plugin, bd.getTardisId(), "stainData", bd.getDirection()).getColumn();
-            glass_column = new TARDISConstructColumn(plugin, bd.getTardisId(), "glassData", bd.getDirection()).getColumn();
+        if (this.preset.equals(Preset.CONSTRUCT)) {
+            column = new TardisConstructColumn(plugin, bd.getTardisId(), "blueprintData", bd.getDirection()).getColumn();
+            stained_column = new TardisConstructColumn(plugin, bd.getTardisId(), "stainData", bd.getDirection()).getColumn();
+            glass_column = new TardisConstructColumn(plugin, bd.getTardisId(), "glassData", bd.getDirection()).getColumn();
         } else {
             column = plugin.getPresets().getColumn(preset, bd.getDirection());
             stained_column = plugin.getPresets().getStained(preset, bd.getDirection());
@@ -110,7 +110,7 @@ class TARDISMaterialisePreset implements Runnable {
         }
         Material[] colours = new Material[]{Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.CYAN_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL};
         Material[] glassColours = new Material[]{Material.WHITE_STAINED_GLASS, Material.ORANGE_STAINED_GLASS, Material.MAGENTA_STAINED_GLASS, Material.LIGHT_BLUE_STAINED_GLASS, Material.YELLOW_STAINED_GLASS, Material.LIME_STAINED_GLASS, Material.PINK_STAINED_GLASS, Material.CYAN_STAINED_GLASS, Material.PURPLE_STAINED_GLASS, Material.BLUE_STAINED_GLASS, Material.BROWN_STAINED_GLASS, Material.GREEN_STAINED_GLASS, Material.RED_STAINED_GLASS};
-        int r = TARDISConstants.RANDOM.nextInt(13);
+        int r = TardisConstants.RANDOM.nextInt(13);
         random_colour = colours[r];
         random_glass = glassColours[r];
         sign_colour = plugin.getUtils().getSignColour();
@@ -122,12 +122,12 @@ class TARDISMaterialisePreset implements Runnable {
             if (column == null || stained_column == null || glass_column == null) {
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
-                TARDISMessage.send(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");
+                TardisMessage.send(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT");
             }
             BlockData[][] datas;
             // get relative locations
             int x = bd.getLocation().getBlockX(), plusx = bd.getLocation().getBlockX() + 1, minusx = bd.getLocation().getBlockX() - 1, y;
-            if (preset.equals(PRESET.SUBMERGED)) {
+            if (preset.equals(Preset.SUBMERGED)) {
                 y = bd.getLocation().getBlockY() - 1;
             } else {
                 y = bd.getLocation().getBlockY();
@@ -135,11 +135,11 @@ class TARDISMaterialisePreset implements Runnable {
             int z = bd.getLocation().getBlockZ(), plusz = bd.getLocation().getBlockZ() + 1, minusz = bd.getLocation().getBlockZ() - 1;
             World world = bd.getLocation().getWorld();
             int signx = 0, signz = 0;
-            boolean hasDodgyDoor = preset.equals(PRESET.SWAMP) || preset.equals(PRESET.TOPSYTURVEY) || preset.equals(PRESET.JAIL);
-            boolean isJunkOrToilet = preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.TOILET);
+            boolean hasDodgyDoor = preset.equals(Preset.SWAMP) || preset.equals(Preset.TOPSYTURVEY) || preset.equals(Preset.JAIL);
+            boolean isJunkOrToilet = preset.equals(Preset.JUNK_MODE) || preset.equals(Preset.TOILET);
             if (i < loops) {
                 i++;
-                if (preset.equals(PRESET.JUNK_MODE)) {
+                if (preset.equals(Preset.JUNK_MODE)) {
                     datas = column.getBlockData();
                 } else {
                     // determine preset to use
@@ -157,10 +157,10 @@ class TARDISMaterialisePreset implements Runnable {
                     UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisId());
                     Player saved = plugin.getServer().getPlayer(playerUUID);
                     if (saved != null) {
-                        TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisId());
+                        TardisDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisId());
                         Location l = idl.getL();
                         plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds());
-                        TARDISSounds.playTARDISSound(saved, "tardis_land_fast", 5L);
+                        TardisSounds.playTARDISSound(saved, "tardis_land_fast", 5L);
                         // put player into travellers table
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("tardis_id", bd.getTardisId());
@@ -170,14 +170,14 @@ class TARDISMaterialisePreset implements Runnable {
                     plugin.getTrackerKeeper().getRescue().remove(bd.getTardisId());
                 }
                 // first run - remember blocks
-                boolean isAdaptive = preset.equals(PRESET.ADAPTIVE);
-                boolean isAdaptiveFactory = preset.equals(PRESET.FACTORY) && adapt.equals(Adaption.BIOME);
-                boolean isJunk = preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.JUNK);
+                boolean isAdaptive = preset.equals(Preset.ADAPTIVE);
+                boolean isAdaptiveFactory = preset.equals(Preset.FACTORY) && adapt.equals(Adaption.BIOME);
+                boolean isJunk = preset.equals(Preset.JUNK_MODE) || preset.equals(Preset.JUNK);
                 if (i == 1) {
                     if (bd.isOutside()) {
                         if (!bd.useMinecartSounds()) {
                             String sound;
-                            if (preset.equals(PRESET.JUNK_MODE)) {
+                            if (preset.equals(Preset.JUNK_MODE)) {
                                 sound = "junk_land";
                             } else {
                                 sound = switch (bd.getThrottle()) {
@@ -185,7 +185,7 @@ class TARDISMaterialisePreset implements Runnable {
                                     default -> "tardis_land";
                                 };
                             }
-                            TARDISSounds.playTARDISSound(bd.getLocation(), sound);
+                            TardisSounds.playTARDISSound(bd.getLocation(), sound);
                         } else {
                             world.playSound(bd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                         }
@@ -265,42 +265,42 @@ class TARDISMaterialisePreset implements Runnable {
                                 if (rail.getType().equals(Material.RAIL) || rail.getType().equals(Material.POWERED_RAIL)) {
                                     change = false;
                                     if (loops == 3) {
-                                        TARDISBlockSetters.setBlock(world, xx, y, zz, rail.getBlockData());
+                                        TardisBlockSetters.setBlock(world, xx, y, zz, rail.getBlockData());
                                     } else {
-                                        TARDISBlockSetters.setBlockAndRemember(world, xx, y, zz, rail.getBlockData(), bd.getTardisId());
+                                        TardisBlockSetters.setBlockAndRemember(world, xx, y, zz, rail.getBlockData(), bd.getTardisId());
                                     }
-                                } else if (preset.equals(PRESET.SWAMP)) {
+                                } else if (preset.equals(Preset.SWAMP)) {
                                     swampSlab = rail;
                                     slab_data = column.getBlockData()[n][yy];
                                     change = false;
-                                } else if (preset.equals(PRESET.SUBMERGED)) {
+                                } else if (preset.equals(Preset.SUBMERGED)) {
                                     change = false;
                                 }
                                 if (world.getEnvironment().equals(World.Environment.NETHER) || world.getEnvironment().equals(World.Environment.THE_END) || world.getGenerator() instanceof TardisChunkGenerator) {
-                                    TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), false);
+                                    TardisBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), false);
                                 }
                             }
                             if (yy == 0 && n == 8 && !plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-                                TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), true);
+                                TardisBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), true);
                             }
                             Material mat = colData[yy].getMaterial();
                             switch (mat) {
                                 case DIRT:
                                 case GRASS_BLOCK:
-                                    BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? data : colData[yy];
-                                    TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisId());
+                                    BlockData subi = (preset.equals(Preset.SUBMERGED)) ? data : colData[yy];
+                                    TardisBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisId());
                                     break;
                                 case WHITE_WOOL:
-                                    Material flower = (preset.equals(PRESET.FLOWER)) ? random_colour : mat;
-                                    TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, flower, bd.getTardisId());
+                                    Material flower = (preset.equals(Preset.FLOWER)) ? random_colour : mat;
+                                    TardisBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, flower, bd.getTardisId());
                                     break;
                                 case LIME_WOOL:
-                                    Material party = (preset.equals(PRESET.PARTY)) ? random_colour : mat;
-                                    TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, party, bd.getTardisId());
+                                    Material party = (preset.equals(Preset.PARTY)) ? random_colour : mat;
+                                    TardisBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, party, bd.getTardisId());
                                     break;
                                 case BLUE_WOOL:
                                     BlockData old = (isAdaptive && adapt.equals(Adaption.BLOCK)) ? data : colData[yy];
-                                    TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, old, bd.getTardisId());
+                                    TardisBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, old, bd.getTardisId());
                                     break;
                                 case TORCH: // lamps, glowstone and torches
                                 case GLOWSTONE:
@@ -311,7 +311,7 @@ class TARDISMaterialisePreset implements Runnable {
                                     } else {
                                         light = colData[yy];
                                     }
-                                    TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, light, bd.getTardisId());
+                                    TardisBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, light, bd.getTardisId());
                                     break;
                                 case IRON_DOOR: // wood, iron & trap doors, rails
                                 case RAIL:
@@ -349,11 +349,11 @@ class TARDISMaterialisePreset implements Runnable {
                                     if (yy == 0) {
                                         if (bd.isSubmarine() && plugin.isWorldGuardOnServer()) {
                                             int sy = y - 1;
-                                            TARDISBlockSetters.setBlockAndRemember(world, xx, sy, zz, Material.SPONGE, bd.getTardisId());
+                                            TardisBlockSetters.setBlockAndRemember(world, xx, sy, zz, Material.SPONGE, bd.getTardisId());
                                             Block sponge = world.getBlockAt(xx, sy, zz);
                                             plugin.getWorldGuardUtils().sponge(sponge, true);
                                         } else if (!plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-                                            TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), false);
+                                            TardisBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), false);
                                         }
                                     }
                                     if (hasDodgyDoor) {
@@ -366,7 +366,7 @@ class TARDISMaterialisePreset implements Runnable {
                                             sdt_data = colData[yy];
                                         }
                                     } else {
-                                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
+                                        TardisBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
                                     }
                                     break;
                                 case ACACIA_SIGN:
@@ -377,8 +377,8 @@ class TARDISMaterialisePreset implements Runnable {
                                 case OAK_SIGN:
                                 case SPRUCE_SIGN:
                                 case WARPED_SIGN:
-                                    if (preset.equals(PRESET.APPERTURE)) {
-                                        TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), false);
+                                    if (preset.equals(Preset.APPERTURE)) {
+                                        TardisBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisId(), false);
                                     }
                                     break;
                                 case ACACIA_WALL_SIGN:
@@ -390,9 +390,9 @@ class TARDISMaterialisePreset implements Runnable {
                                 case SPRUCE_WALL_SIGN:
                                 case WARPED_WALL_SIGN:
                                     // sign - if there is one
-                                    if (preset.equals(PRESET.JUNK_MODE)) {
+                                    if (preset.equals(Preset.JUNK_MODE)) {
                                         // add a sign
-                                        TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
+                                        TardisBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
                                         // remember its location
                                         String location = new Location(world, xx, (y + yy), zz).toString();
                                         plugin.getGeneralKeeper().getProtectBlockMap().put(location, bd.getTardisId());
@@ -408,7 +408,7 @@ class TARDISMaterialisePreset implements Runnable {
                                             s.update();
                                         }
                                     } else if (bd.shouldAddSign()) {
-                                        TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
+                                        TardisBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
                                         Block sign = world.getBlockAt(xx, (y + yy), zz);
                                         if (Tag.SIGNS.isTagged(sign.getType())) {
                                             Sign s = (Sign) sign.getState();
@@ -418,13 +418,13 @@ class TARDISMaterialisePreset implements Runnable {
                                                 wheret.put("tardis_id", bd.getTardisId());
                                                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
                                                 if (rst.resultSet()) {
-                                                    TARDIS tardis = rst.getTardis();
-                                                    String player_name = TARDISStaticUtils.getNick(tardis.getUuid());
+                                                    Tardis tardis = rst.getTardis();
+                                                    String player_name = TardisStaticUtils.getNick(tardis.getUuid());
                                                     if (player_name == null) {
                                                         player_name = tardis.getOwner();
                                                     }
                                                     String owner;
-                                                    if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
+                                                    if (preset.equals(Preset.GRAVESTONE) || preset.equals(Preset.PUNKED) || preset.equals(Preset.ROBOT)) {
                                                         owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
                                                     } else {
                                                         owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
@@ -438,7 +438,7 @@ class TARDISMaterialisePreset implements Runnable {
                                             }
                                             String line1;
                                             String line2;
-                                            if (preset.equals(PRESET.CUSTOM)) {
+                                            if (preset.equals(Preset.CUSTOM)) {
                                                 line1 = plugin.getPresets().custom.getFirstLine();
                                                 line2 = plugin.getPresets().custom.getSecondLine();
                                             } else {
@@ -494,7 +494,7 @@ class TARDISMaterialisePreset implements Runnable {
                                     break;
                                 case LEVER:
                                     // remember this block and do at end
-                                    if (preset.equals(PRESET.JUNK_MODE)) {
+                                    if (preset.equals(Preset.JUNK_MODE)) {
                                         // remember its location
                                         handbrake = world.getBlockAt(xx, (y + yy), zz);
                                         plugin.getGeneralKeeper().getProtectBlockMap().put(handbrake.getLocation().toString(), bd.getTardisId());
@@ -503,23 +503,23 @@ class TARDISMaterialisePreset implements Runnable {
                                     break;
                                 case SKELETON_SKULL:
                                     if (bd.isSubmarine()) {
-                                        TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.GLOWSTONE);
+                                        TardisBlockSetters.setBlock(world, xx, (y + yy), zz, Material.GLOWSTONE);
                                     } else {
                                         Rotatable rotatable = (Rotatable) colData[yy];
                                         rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection()));
-                                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisId());
+                                        TardisBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisId());
                                     }
                                     break;
                                 case LIGHT_GRAY_TERRACOTTA:
                                     BlockData chai = isAdaptiveFactory ? data : colData[yy];
-                                    TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, chai, bd.getTardisId());
+                                    TardisBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, chai, bd.getTardisId());
                                     break;
                                 default: // everything else
                                     if (change) {
                                         if (isJunk && mat.equals(Material.ORANGE_WOOL)) {
-                                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)), bd.getTardisId());
+                                            TardisBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(46)), bd.getTardisId());
                                         } else {
-                                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
+                                            TardisBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisId());
                                         }
                                     }
                                     break;
@@ -527,12 +527,12 @@ class TARDISMaterialisePreset implements Runnable {
                         }
                     }
                 }
-                if (preset.equals(PRESET.JUNK_MODE) && plugin.getConfig().getBoolean("junk.particles")) {
+                if (preset.equals(Preset.JUNK_MODE) && plugin.getConfig().getBoolean("junk.particles")) {
                     // animate particles
                     plugin.getUtils().getJunkTravellers(bd.getLocation()).forEach((e) -> {
                         if (e instanceof Player p) {
                             Location effectsLoc = bd.getLocation().clone().add(0.5d, 0, 0.5d);
-                            TARDISParticles.sendVortexParticles(effectsLoc, p);
+                            TardisParticles.sendVortexParticles(effectsLoc, p);
                         }
                     });
                 }
@@ -594,15 +594,15 @@ class TARDISMaterialisePreset implements Runnable {
                         switch (mat) {
                             case DIRT:
                             case GRASS_BLOCK:
-                                BlockData subi = (preset.equals(PRESET.SUBMERGED)) ? data : coldatas[yy];
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, subi);
+                                BlockData subi = (preset.equals(Preset.SUBMERGED)) ? data : coldatas[yy];
+                                TardisBlockSetters.setBlock(world, xx, (y + yy), zz, subi);
                                 break;
                             case BEDROCK:
-                                if (preset.equals(PRESET.THEEND) && i == loops) {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
-                                    world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
+                                if (preset.equals(Preset.THEEND) && i == loops) {
+                                    TardisBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
+                                    world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TardisConstants.FIRE);
                                 } else {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
+                                    TardisBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                 }
                                 break;
                             case ACACIA_SAPLING:
@@ -644,25 +644,25 @@ class TARDISMaterialisePreset implements Runnable {
                             case WHEAT:
                             case WHITE_TULIP:
                             case WITHER_ROSE:
-                                if (i == loops && (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.MESA) || preset.equals(PRESET.PLAINS) || preset.equals(PRESET.TAIGA) || preset.equals(PRESET.CONSTRUCT) || preset.equals(PRESET.CUSTOM))) {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
+                                if (i == loops && (preset.equals(Preset.GRAVESTONE) || preset.equals(Preset.MESA) || preset.equals(Preset.PLAINS) || preset.equals(Preset.TAIGA) || preset.equals(Preset.CONSTRUCT) || preset.equals(Preset.CUSTOM))) {
+                                    TardisBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                 } else {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.AIR);
+                                    TardisBlockSetters.setBlock(world, xx, (y + yy), zz, Material.AIR);
                                 }
                                 break;
                             case WHITE_WOOL:
-                                Material flower = (preset.equals(PRESET.FLOWER)) ? random_colour : mat;
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, flower);
+                                Material flower = (preset.equals(Preset.FLOWER)) ? random_colour : mat;
+                                TardisBlockSetters.setBlock(world, xx, (y + yy), zz, flower);
                                 break;
                             case LIME_WOOL:
-                                Material party = (preset.equals(PRESET.PARTY)) ? random_colour : mat;
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, party);
+                                Material party = (preset.equals(Preset.PARTY)) ? random_colour : mat;
+                                TardisBlockSetters.setBlock(world, xx, (y + yy), zz, party);
                                 break;
                             case BLUE_WOOL:
-                                if (adapt.equals(Adaption.BLOCK) && (preset.equals(PRESET.ADAPTIVE) || preset.equals(PRESET.SUBMERGED))) {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, data);
+                                if (adapt.equals(Adaption.BLOCK) && (preset.equals(Preset.ADAPTIVE) || preset.equals(Preset.SUBMERGED))) {
+                                    TardisBlockSetters.setBlock(world, xx, (y + yy), zz, data);
                                 } else {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, mat);
+                                    TardisBlockSetters.setBlock(world, xx, (y + yy), zz, mat);
                                 }
                                 break;
                             case TORCH: // lamps, glowstone and torches
@@ -677,9 +677,9 @@ class TARDISMaterialisePreset implements Runnable {
                                 BlockData lamp = light.createBlockData();
                                 if (lamp instanceof Lightable lightable) {
                                     lightable.setLit(true);
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, lightable);
+                                    TardisBlockSetters.setBlock(world, xx, (y + yy), zz, lightable);
                                 } else {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, lamp);
+                                    TardisBlockSetters.setBlock(world, xx, (y + yy), zz, lamp);
                                 }
                                 break;
                             case IRON_DOOR: // wood, iron & trap doors
@@ -699,8 +699,8 @@ class TARDISMaterialisePreset implements Runnable {
                             case SPRUCE_TRAPDOOR:
                             case WARPED_DOOR:
                             case WARPED_TRAPDOOR:
-                                if (preset.usesItemFrame() || preset.equals(PRESET.PANDORICA)) {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
+                                if (preset.usesItemFrame() || preset.equals(Preset.PANDORICA)) {
+                                    TardisBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                     // remember the door location
                                     saveDoorLocation(world, xx, y, yy, zz);
                                 }
@@ -715,49 +715,49 @@ class TARDISMaterialisePreset implements Runnable {
                                 }
                                 break;
                             case NETHERRACK:
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
-                                if (preset.equals(PRESET.TORCH) && i == loops) {
-                                    world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
+                                TardisBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
+                                if (preset.equals(Preset.TORCH) && i == loops) {
+                                    world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TardisConstants.FIRE);
                                 }
                                 break;
                             case NETHER_PORTAL:
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy + 1), zz, Material.OBSIDIAN);
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
+                                TardisBlockSetters.setBlock(world, xx, (y + yy + 1), zz, Material.OBSIDIAN);
+                                TardisBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                 break;
                             case LIGHT_GRAY_STAINED_GLASS:
                                 Material chag = isAdaptiveFactory ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(data.getMaterial()) : mat;
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chag);
+                                TardisBlockSetters.setBlock(world, xx, (y + yy), zz, chag);
                             case WHITE_STAINED_GLASS:
-                                Material chaw = (preset.equals(PRESET.FLOWER)) ? random_glass : mat;
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chaw);
+                                Material chaw = (preset.equals(Preset.FLOWER)) ? random_glass : mat;
+                                TardisBlockSetters.setBlock(world, xx, (y + yy), zz, chaw);
                                 break;
                             case LIME_STAINED_GLASS:
-                                Material chal = (preset.equals(PRESET.PARTY)) ? random_glass : mat;
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chal);
+                                Material chal = (preset.equals(Preset.PARTY)) ? random_glass : mat;
+                                TardisBlockSetters.setBlock(world, xx, (y + yy), zz, chal);
                                 break;
                             case BLUE_STAINED_GLASS:
-                                Material chad = ((preset.equals(PRESET.ADAPTIVE) && adapt.equals(Adaption.BLOCK)) || preset.equals(PRESET.SUBMERGED)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(data.getMaterial()) : mat;
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chad);
+                                Material chad = ((preset.equals(Preset.ADAPTIVE) && adapt.equals(Adaption.BLOCK)) || preset.equals(Preset.SUBMERGED)) ? plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(data.getMaterial()) : mat;
+                                TardisBlockSetters.setBlock(world, xx, (y + yy), zz, chad);
                                 break;
                             case SKELETON_SKULL:
                                 if (bd.isSubmarine()) {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.GLOWSTONE);
+                                    TardisBlockSetters.setBlock(world, xx, (y + yy), zz, Material.GLOWSTONE);
                                 } else {
                                     Rotatable rotatable = (Rotatable) coldatas[yy];
                                     rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection()));
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, rotatable);
+                                    TardisBlockSetters.setBlock(world, xx, (y + yy), zz, rotatable);
                                 }
                                 break;
                             case LIGHT_GRAY_TERRACOTTA:
-                                BlockData chai = (preset.equals(PRESET.FACTORY)) ? data : coldatas[yy];
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chai);
+                                BlockData chai = (preset.equals(Preset.FACTORY)) ? data : coldatas[yy];
+                                TardisBlockSetters.setBlock(world, xx, (y + yy), zz, chai);
                                 break;
                             default: // everything else
                                 if (change) {
                                     if (isJunk && mat.equals(Material.ORANGE_WOOL)) {
-                                        TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)));
+                                        TardisBlockSetters.setBlock(world, xx, (y + yy), zz, plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(46)));
                                     } else {
-                                        TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
+                                        TardisBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                     }
                                 }
                                 break;
@@ -766,10 +766,10 @@ class TARDISMaterialisePreset implements Runnable {
                 }
             } else {
                 if ((hasDodgyDoor) && swampDoorBottom != null) {
-                    TARDISBlockSetters.setBlockAndRemember(world, swampDoorBottom.getX(), swampDoorBottom.getY(), swampDoorBottom.getZ(), sdb_data, bd.getTardisId());
-                    TARDISBlockSetters.setBlockAndRemember(world, swampDoorTop.getX(), swampDoorTop.getY(), swampDoorTop.getZ(), sdt_data, bd.getTardisId());
-                    if (preset.equals(PRESET.SWAMP)) {
-                        TARDISBlockSetters.setBlockAndRemember(world, swampSlab.getX(), swampSlab.getY(), swampSlab.getZ(), slab_data, bd.getTardisId());
+                    TardisBlockSetters.setBlockAndRemember(world, swampDoorBottom.getX(), swampDoorBottom.getY(), swampDoorBottom.getZ(), sdb_data, bd.getTardisId());
+                    TardisBlockSetters.setBlockAndRemember(world, swampDoorTop.getX(), swampDoorTop.getY(), swampDoorTop.getZ(), sdt_data, bd.getTardisId());
+                    if (preset.equals(Preset.SWAMP)) {
+                        TardisBlockSetters.setBlockAndRemember(world, swampSlab.getX(), swampSlab.getY(), swampSlab.getZ(), slab_data, bd.getTardisId());
                     }
                 }
                 if (isJunkOrToilet) {
@@ -807,13 +807,13 @@ class TARDISMaterialisePreset implements Runnable {
                             Player p = plugin.getServer().getPlayer(s);
                             if (p != null) {
                                 String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
-                                TARDISMessage.send(p, message);
+                                TardisMessage.send(p, message);
                                 // TARDIS has travelled so add players to list so they can receive Artron on exit
                                 plugin.getTrackerKeeper().getHasTravelled().add(s);
                             }
                         });
                     } else if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(bd.getPlayer().getUniqueId())) {
-                        TARDISMessage.send(bd.getPlayer().getPlayer(), "JUNK_HANDBRAKE_LEFT_CLICK");
+                        TardisMessage.send(bd.getPlayer().getPlayer(), "JUNK_HANDBRAKE_LEFT_CLICK");
                     }
                     // restore beacon up block if present
                     HashMap<String, Object> whereb = new HashMap<>();
@@ -822,7 +822,7 @@ class TARDISMaterialisePreset implements Runnable {
                     ResultSetBlocks rs = new ResultSetBlocks(plugin, whereb, false);
                     if (rs.resultSet()) {
                         ReplacedBlock rb = rs.getReplacedBlock();
-                        TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlockData());
+                        TardisBlockSetters.setBlock(rb.getLocation(), rb.getBlockData());
                         HashMap<String, Object> whered = new HashMap<>();
                         whered.put("tardis_id", bd.getTardisId());
                         whered.put("police_box", 2);
@@ -831,7 +831,7 @@ class TARDISMaterialisePreset implements Runnable {
                     // tardis has moved so remove HADS damage count
                     plugin.getTrackerKeeper().getDamage().remove(bd.getTardisId());
                     // update demat field in database
-                    TARDISBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisId());
+                    TardisBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisId());
                 }
             }
         }

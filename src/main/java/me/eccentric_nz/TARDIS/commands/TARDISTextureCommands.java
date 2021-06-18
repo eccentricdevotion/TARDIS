@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -39,12 +39,12 @@ import java.util.Locale;
  *
  * @author eccentric_nz
  */
-public class TARDISTextureCommands implements CommandExecutor {
+public class TardisTextureCommands implements CommandExecutor {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> firstArgs = new ArrayList<>();
 
-    public TARDISTextureCommands(TARDISPlugin plugin) {
+    public TardisTextureCommands(TardisPlugin plugin) {
         this.plugin = plugin;
         firstArgs.add("on");
         firstArgs.add("off");
@@ -60,7 +60,7 @@ public class TARDISTextureCommands implements CommandExecutor {
         }
         if (cmd.getName().equalsIgnoreCase("tardistexture")) {
             if (args.length == 0) {
-                new TARDISCommandHelper(plugin).getCommand("tardistexture", sender);
+                new TardisCommandHelper(plugin).getCommand("tardistexture", sender);
                 return true;
             }
             String pref = args[0].toLowerCase(Locale.ENGLISH);
@@ -68,10 +68,10 @@ public class TARDISTextureCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                TARDISMessage.send(sender, "CMD_PLAYER");
+                TardisMessage.send(sender, "CMD_PLAYER");
                 return false;
             }
-            if (TARDISPermission.hasPermission(player, "tardis.texture")) {
+            if (TardisPermission.hasPermission(player, "tardis.texture")) {
                 // get the players preferences
                 String playerUUID = player.getUniqueId().toString();
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUUID);
@@ -104,7 +104,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                                 upd.put("texture_out", args[1]);
                             }
                         } catch (MalformedURLException e) {
-                            TARDISMessage.send(player, "URL", e.getMessage());
+                            TardisMessage.send(player, "URL", e.getMessage());
                             return true;
                         }
                     }
@@ -113,7 +113,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", playerUUID);
                     plugin.getQueryFactory().doUpdate("player_prefs", upd, where);
-                    TARDISMessage.send(player, "PREF_TEXTURE");
+                    TardisMessage.send(player, "PREF_TEXTURE");
                     return true;
                 }
             }

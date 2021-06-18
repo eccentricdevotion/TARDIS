@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.enumeration.Preset;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,9 +37,9 @@ import java.util.UUID;
  */
 public class ResultSetJunk {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<String, Object> where;
     private final String prefix;
     private int id;
@@ -49,7 +49,7 @@ public class ResultSetJunk {
     private String handbrake;
     private String wall;
     private String floor;
-    private PRESET preset;
+    private Preset preset;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the junk table.
@@ -57,7 +57,7 @@ public class ResultSetJunk {
      * @param plugin an instance of the main class.
      * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      */
-    public ResultSetJunk(TARDISPlugin plugin, HashMap<String, Object> where) {
+    public ResultSetJunk(TardisPlugin plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
         prefix = this.plugin.getPrefix();
@@ -105,9 +105,9 @@ public class ResultSetJunk {
                     wall = rs.getString("wall");
                     floor = rs.getString("floor");
                     try {
-                        preset = PRESET.valueOf(rs.getString("preset"));
+                        preset = Preset.valueOf(rs.getString("preset"));
                     } catch (IllegalArgumentException e) {
-                        preset = PRESET.FACTORY;
+                        preset = Preset.FACTORY;
                     }
                 }
             } else {
@@ -159,7 +159,7 @@ public class ResultSetJunk {
         return floor;
     }
 
-    public PRESET getPreset() {
+    public Preset getPreset() {
         return preset;
     }
 }

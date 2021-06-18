@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.commands.dev;
 
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-public class TARDISPresetPermissionLister {
+public class TardisPresetPermissionLister {
 
     public void list(CommandSender sender) {
         sender.sendMessage(ChatColor.GOLD + "[tardis]" + ChatColor.RESET + " Chameleon Preset Permissions:");
-        for (PRESET preset : PRESET.values()) {
+        for (Preset preset : Preset.values()) {
             if (preset.getSlot() != -1) {
                 sender.sendMessage("tardis.preset." + preset.toString().toLowerCase());
             }

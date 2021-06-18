@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.api;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.travel.TardisTimeTravel;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -37,14 +37,14 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISRandomOverworld extends TARDISRandomLocation {
+public class TardisRandomOverworld extends TardisRandomLocation {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Parameters param;
     private final List<World> worlds;
     private Location dest;
 
-    TARDISRandomOverworld(TARDISPlugin plugin, List<String> list, Parameters param) {
+    TardisRandomOverworld(TardisPlugin plugin, List<String> list, Parameters param) {
         super(plugin);
         worlds = getWorlds(list);
         this.plugin = plugin;
@@ -57,8 +57,8 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
         // loop till random attempts limit reached
         for (int n = 0; n < plugin.getConfig().getInt("travel.random_attempts"); n++) {
             // get random values in range
-            int randX = TARDISConstants.RANDOM.nextInt(war.getRangeX());
-            int randZ = TARDISConstants.RANDOM.nextInt(war.getRangeZ());
+            int randX = TardisConstants.RANDOM.nextInt(war.getRangeX());
+            int randZ = TardisConstants.RANDOM.nextInt(war.getRangeZ());
             // get the x coord
             int x = war.getMinX() + randX;
             // get the z coord
@@ -70,7 +70,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
             // get the y coord
             if (param.spaceTardis()) {
                 if (safeOverworld(war.getW(), x, z, param.getCompass())) {
-                    if ((dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && TARDISStaticUtils.isOceanBiome(TARDISStaticUtils.getBiomeAt(dest))) {
+                    if ((dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && TardisStaticUtils.isOceanBiome(TardisStaticUtils.getBiomeAt(dest))) {
                         if (safeSubmarine(dest, param.getCompass(), param.getPlayer())) {
                             break;
                         }
@@ -79,7 +79,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
                 }
             } else {
                 // space for a player / check plugin respect
-                int highest = TARDISStaticLocationGetters.getHighestYIn3x3(war.getW(), x, z);
+                int highest = TardisStaticLocationGetters.getHighestYIn3x3(war.getW(), x, z);
                 Location chk = new Location(war.getW(), x, highest, z);
                 if (plugin.getPluginRespect().getRespect(chk, param)) {
                     return chk;
@@ -89,13 +89,13 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
         return dest;
     }
 
-    private boolean safeOverworld(World world, int wherex, int wherez, COMPASS d) {
+    private boolean safeOverworld(World world, int wherex, int wherez, CardinalDirection d) {
         boolean safe = false;
         int count;
-        int highest = TARDISStaticLocationGetters.getHighestYIn3x3(world, wherex, wherez);
+        int highest = TardisStaticLocationGetters.getHighestYIn3x3(world, wherex, wherez);
         if (highest > 3) {
             Block currentBlock = world.getBlockAt(wherex, highest, wherez);
-            if (TARDISConstants.GOOD_MATERIALS.contains(currentBlock.getType())) {
+            if (TardisConstants.GOOD_MATERIALS.contains(currentBlock.getType())) {
                 currentBlock = currentBlock.getRelative(BlockFace.DOWN);
             }
             Location overworld = currentBlock.getLocation();
@@ -104,13 +104,13 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
                     world.getChunkAt(overworld).load();
                 }
                 // get start location for checking there is enough space
-                int[] gsl = TARDISTimeTravel.getStartLocation(overworld, d);
+                int[] gsl = TardisTimeTravel.getStartLocation(overworld, d);
                 int startx = gsl[0];
                 int resetx = gsl[1];
                 int starty = overworld.getBlockY() + 1;
                 int startz = gsl[2];
                 int resetz = gsl[3];
-                count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, world, d);
+                count = TardisTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, world, d);
             } else {
                 count = 1;
             }
@@ -124,7 +124,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
         return safe;
     }
 
-    private boolean safeSubmarine(Location l, COMPASS d, Player p) {
+    private boolean safeSubmarine(Location l, CardinalDirection d, Player p) {
         boolean safe = false;
         int count = 0;
         Block block = l.getBlock();
@@ -133,7 +133,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
         } while (block.getType().equals(Material.WATER) || block.getType().equals(Material.ICE));
         Location loc = block.getRelative(BlockFace.UP).getLocation();
         for (int n = 0; n < 5; n++) {
-            int[] s = TARDISTimeTravel.getStartLocation(loc, d);
+            int[] s = TardisTimeTravel.getStartLocation(loc, d);
             int level, row, col, rowCount, colCount;
             int startY = loc.getBlockY();
             switch (d) {
@@ -150,7 +150,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
                 for (row = s[0]; row < s[0] + rowCount; row++) {
                     for (col = s[2]; col < s[2] + colCount; col++) {
                         Material mat = Objects.requireNonNull(loc.getWorld()).getBlockAt(row, level, col).getType();
-                        if (!TARDISConstants.GOOD_WATER.contains(mat)) {
+                        if (!TardisConstants.GOOD_WATER.contains(mat)) {
                             count++;
                         }
                     }

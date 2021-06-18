@@ -17,10 +17,10 @@
 package me.eccentric_nz.tardis.commands.config;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.utility.TARDISWorldGuardFlag;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.utility.TardisWorldGuardFlag;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -32,9 +32,9 @@ import java.util.List;
 /**
  * TabCompleter for /tardisadmin
  */
-public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisConfigTabComplete extends TardisCompleter implements TabCompleter {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ImmutableList<String> ROOT_SUBS;
     private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
     private final ImmutableList<String> COLOURS = ImmutableList.of("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
@@ -55,16 +55,16 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
     private final ImmutableList<String> VORTEX_SUBS = ImmutableList.of("kill", "teleport");
     private final ImmutableList<String> WORLD_SUBS;
 
-    public TARDISConfigTabComplete(TARDISPlugin plugin) {
+    public TardisConfigTabComplete(TardisPlugin plugin) {
         this.plugin = plugin;
         ROOT_SUBS = ImmutableList.copyOf(combineLists());
         if (plugin.isWorldGuardOnServer()) {
-            FLAG_SUBS = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
+            FLAG_SUBS = ImmutableList.copyOf(TardisWorldGuardFlag.getFLAG_LOOKUP().keySet());
         } else {
             FLAG_SUBS = ImmutableList.of("none", "build", "entry");
         }
         List<String> tmpPresets = new ArrayList<>();
-        for (PRESET p : PRESET.values()) {
+        for (Preset p : Preset.values()) {
             tmpPresets.add(p.toString());
         }
         PRESETS = ImmutableList.copyOf(tmpPresets);

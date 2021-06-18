@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -33,11 +33,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISCaveFinder {
+public class TardisCaveFinder {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISCaveFinder(TARDISPlugin plugin) {
+    public TardisCaveFinder(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -50,7 +50,7 @@ public class TARDISCaveFinder {
             World w = rsc.getWorld();
             int startx = rsc.getX();
             int startz = rsc.getZ();
-            COMPASS d = rsc.getDirection();
+            CardinalDirection d = rsc.getDirection();
             // Assume all non-nether/non-end world environments are NORMAL
             boolean hoth = (w.getGenerator() != null && w.getGenerator().getClass().getName().contains("hothgenerator"));
             if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END) && !hoth) {
@@ -67,44 +67,44 @@ public class TARDISCaveFinder {
                         switch (directions[i]) {
                             case 0 -> {
                                 // east
-                                TARDISMessage.send(p, "LOOK_E");
+                                TardisMessage.send(p, "LOOK_E");
                                 for (int east = startx; east < plusx; east += step) {
                                     Check chk = isThereRoom(w, east, startz, d);
                                     if (chk.isSafe()) {
-                                        TARDISMessage.send(p, "CAVE_E");
+                                        TardisMessage.send(p, "CAVE_E");
                                         return new Location(w, east, chk.getY(), startz);
                                     }
                                 }
                             }
                             case 1 -> {
                                 // south
-                                TARDISMessage.send(p, "LOOK_S");
+                                TardisMessage.send(p, "LOOK_S");
                                 for (int south = startz; south < plusz; south += step) {
                                     Check chk = isThereRoom(w, startx, south, d);
                                     if (chk.isSafe()) {
-                                        TARDISMessage.send(p, "CAVE_S");
+                                        TardisMessage.send(p, "CAVE_S");
                                         return new Location(w, startx, chk.getY(), south);
                                     }
                                 }
                             }
                             case 2 -> {
                                 // west
-                                TARDISMessage.send(p, "LOOK_W");
+                                TardisMessage.send(p, "LOOK_W");
                                 for (int west = startx; west > minusx; west -= step) {
                                     Check chk = isThereRoom(w, west, startz, d);
                                     if (chk.isSafe()) {
-                                        TARDISMessage.send(p, "CAVE_W");
+                                        TardisMessage.send(p, "CAVE_W");
                                         return new Location(w, west, chk.getY(), startz);
                                     }
                                 }
                             }
                             case 3 -> {
                                 // north
-                                TARDISMessage.send(p, "LOOK_N");
+                                TardisMessage.send(p, "LOOK_N");
                                 for (int north = startz; north > minusz; north -= step) {
                                     Check chk = isThereRoom(w, startx, north, d);
                                     if (chk.isSafe()) {
-                                        TARDISMessage.send(p, "CAVE_N");
+                                        TardisMessage.send(p, "CAVE_N");
                                         return new Location(w, startx, chk.getY(), north);
                                     }
                                 }
@@ -114,15 +114,15 @@ public class TARDISCaveFinder {
                 }
             } else {
                 String env = (w.getGenerator().getClass().getName().contains("hothgenerator")) ? "Hoth World System" : w.getEnvironment().toString();
-                TARDISMessage.send(p, "CAVE_NO_TRAVEL", env);
+                TardisMessage.send(p, "CAVE_NO_TRAVEL", env);
             }
         } else {
-            TARDISMessage.send(p, "CURRENT_NOT_FOUND");
+            TardisMessage.send(p, "CURRENT_NOT_FOUND");
         }
         return null;
     }
 
-    private Check isThereRoom(World w, int x, int z, COMPASS d) {
+    private Check isThereRoom(World w, int x, int z, CardinalDirection d) {
         Check ret = new Check();
         ret.setSafe(false);
         for (int y = 35; y > 14; y--) {

@@ -16,24 +16,24 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 
 /**
  * @author eccentric_nz
  */
-class TARDISJunkTime {
+class TardisJunkTime {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISJunkTime(TARDISPlugin plugin) {
+    TardisJunkTime(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean elapsed(CommandSender sender) {
         // check the Junk tardis is not home already
-        if (new TARDISJunkLocation(plugin).isNotHome()) {
+        if (new TardisJunkLocation(plugin).isNotHome()) {
             long conf = plugin.getConfig().getLong("junk.return");
             if (conf > 0) {
                 long waitTime = conf * 1000;
@@ -43,12 +43,12 @@ class TARDISJunkTime {
                 long mins = returnTime / 60;
                 long secs = returnTime - (mins * 60);
                 String sub = String.format("%d minutes %d seconds", mins, secs);
-                TARDISMessage.send(sender, "JUNK_RETURN_TIME", sub);
+                TardisMessage.send(sender, "JUNK_RETURN_TIME", sub);
             } else {
-                TARDISMessage.send(sender, "JUNK_NO_RETURN");
+                TardisMessage.send(sender, "JUNK_NO_RETURN");
             }
         } else {
-            TARDISMessage.send(sender, "JUNK_AT_HOME");
+            TardisMessage.send(sender, "JUNK_AT_HOME");
         }
         return true;
     }

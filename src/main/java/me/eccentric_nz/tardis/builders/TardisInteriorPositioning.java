@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.ars.TARDISARSMethods;
-import me.eccentric_nz.tardis.ars.TARDISARSSlot;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.database.resultset.ResultSetARS;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.ars.TardisArsMethods;
+import me.eccentric_nz.tardis.ars.TardisArsSlot;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.database.resultset.ResultSetArs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.travel.TARDISDoorLocation;
+import me.eccentric_nz.tardis.travel.TardisDoorLocation;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -42,14 +42,14 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISInteriorPostioning {
+public class TardisInteriorPositioning {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
 
-    public TARDISInteriorPostioning(TARDISPlugin plugin) {
+    public TardisInteriorPositioning(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -76,7 +76,7 @@ public class TARDISInteriorPostioning {
      */
     public static int getTARDISIdFromLocation(Location location) {
         int tips = getTIPSSlot(location);
-        ResultSetTardisID rs = new ResultSetTardisID(TARDISPlugin.plugin);
+        ResultSetTardisID rs = new ResultSetTardisID(TardisPlugin.plugin);
         if (rs.fromTIPSSlot(tips)) {
             return rs.getTardisId();
         } else {
@@ -108,8 +108,8 @@ public class TARDISInteriorPostioning {
      * @param slot the slot position in the grid (a number between 0, 399 inclusive)
      * @return a TIPS Data container
      */
-    public TARDISTIPSData getTIPSData(int slot) {
-        TARDISTIPSData data = new TARDISTIPSData();
+    public TardisTipsData getTIPSData(int slot) {
+        TardisTipsData data = new TardisTipsData();
         int factorX = 0;
         int factorZ = 0;
         int subtract = 0;
@@ -143,8 +143,8 @@ public class TARDISInteriorPostioning {
      *
      * @return a TIPS Data container
      */
-    public TARDISTIPSData getTIPSJunkData() {
-        TARDISTIPSData data = new TARDISTIPSData();
+    public TardisTipsData getTIPSJunkData() {
+        TardisTipsData data = new TardisTipsData();
         int row = -1;
         int col = -1;
         data.setMinX((row * 1024));
@@ -198,12 +198,12 @@ public class TARDISInteriorPostioning {
         // get ARS data
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        ResultSetARS rs = new ResultSetARS(plugin, where);
+        ResultSetArs rs = new ResultSetArs(plugin, where);
         if (rs.resultSet()) {
             // get the exit location
-            TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
+            TardisDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
             Location exitLocation = dl.getL();
-            String[][][] json = TARDISARSMethods.getGridFromJSON(rs.getJson());
+            String[][][] json = TardisArsMethods.getGridFromJSON(rs.getJson());
             Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
             for (Entity e : c.getEntities()) {
                 removeEntity(e, exitLocation);
@@ -213,7 +213,7 @@ public class TARDISInteriorPostioning {
                     for (int z = 0; z < 9; z++) {
                         if (!json[l][x][z].equalsIgnoreCase("STONE")) {
                             // get ARS slot
-                            TARDISARSSlot slot = new TARDISARSSlot();
+                            TardisArsSlot slot = new TardisArsSlot();
                             slot.setChunk(c);
                             slot.setY(l);
                             slot.setX(x);
@@ -226,7 +226,7 @@ public class TARDISInteriorPostioning {
                             for (int y = 0; y < 16; y++) {
                                 for (int col = 0; col < 16; col++) {
                                     for (int row = 0; row < 16; row++) {
-                                        w.getBlockAt(slot.getX() + row, slot.getY() + y, slot.getZ() + col).setBlockData(TARDISConstants.AIR);
+                                        w.getBlockAt(slot.getX() + row, slot.getY() + y, slot.getZ() + col).setBlockData(TardisConstants.AIR);
                                     }
                                 }
                             }
@@ -261,7 +261,7 @@ public class TARDISInteriorPostioning {
         plugin.getQueryFactory().doDelete("travellers", wheret);
     }
 
-    public void reclaimZeroChunk(World w, TARDISTIPSData data) {
+    public void reclaimZeroChunk(World w, TardisTipsData data) {
         // get starting chunk
         Location l = new Location(w, data.getMinX(), 0, data.getMinZ());
         Chunk chunk = w.getChunkAt(l);
@@ -273,7 +273,7 @@ public class TARDISInteriorPostioning {
                 for (int z = 0; z < 16; z++) {
                     int cx = sx + x;
                     int cz = sz + z;
-                    w.getBlockAt(cx, y, cz).setBlockData(TARDISConstants.AIR);
+                    w.getBlockAt(cx, y, cz).setBlockData(TardisConstants.AIR);
                 }
             }
         }

@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.ars;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.commands.sudo.TARDISSudoTracker;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
+import me.eccentric_nz.tardis.commands.sudo.TardisSudoTracker;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,11 +47,11 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
+public class TardisArsMapListener extends TardisArsMethods implements Listener {
 
     private final HashMap<UUID, String> selectedLocation = new HashMap<>();
 
-    public TARDISARSMapListener(TARDISPlugin plugin) {
+    public TardisArsMapListener(TardisPlugin plugin) {
         super(plugin);
     }
 
@@ -69,11 +69,11 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
             UUID playerUUID = player.getUniqueId();
-            UUID uuid = TARDISSudoTracker.SUDOERS.getOrDefault(playerUUID, playerUUID);
+            UUID uuid = TardisSudoTracker.SUDOERS.getOrDefault(playerUUID, playerUUID);
             ids.put(playerUUID, getTardisId(uuid.toString()));
             int slot = event.getRawSlot();
             if (slot != 10 && slot != 45 && !hasLoadedMap.contains(playerUUID)) {
-                TARDISMessage.send(player, "ARS_LOAD");
+                TardisMessage.send(player, "ARS_LOAD");
                 return;
             }
             if (slot >= 0 && slot < 54) {
@@ -103,7 +103,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                         // change levels
                         if (map_data.containsKey(playerUUID)) {
                             switchLevel(view, slot, playerUUID);
-                            TARDISARSMapData md = map_data.get(playerUUID);
+                            TardisArsMapData md = map_data.get(playerUUID);
                             setMap(md.getY(), md.getE(), md.getS(), playerUUID, view);
                             setLore(view, slot, null);
                         } else {
@@ -114,13 +114,13 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                         if (map_data.containsKey(playerUUID)) {
                             // transmat
                             if (!selectedLocation.containsKey(playerUUID)) {
-                                TARDISMessage.send(player, "TRANSMAT_SELECT");
+                                TardisMessage.send(player, "TRANSMAT_SELECT");
                             } else if (selectedLocation.get(playerUUID).equals("TERRACOTTA")) {
                                 setLore(view, slot, plugin.getLanguage().getString("TRANSMAT_RENDER"));
                             } else {
                                 Location tp_loc = getRoomLocation(player);
                                 if (tp_loc != null) {
-                                    TARDISMessage.send(player, "TRANSMAT");
+                                    TardisMessage.send(player, "TRANSMAT");
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         player.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
                                         player.teleport(tp_loc);
@@ -161,13 +161,13 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             where.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (rs.resultSet()) {
-                TARDIS tardis = rs.getTardis();
+                Tardis tardis = rs.getTardis();
                 int pos = tardis.getTIPS();
                 int tx = 0, tz = 0;
                 if (pos != -1) {
                     // tips slot
-                    TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
-                    TARDISTIPSData coords = tips.getTIPSData(pos);
+                    TardisInteriorPositioning tips = new TardisInteriorPositioning(plugin);
+                    TardisTipsData coords = tips.getTIPSData(pos);
                     tx = coords.getCentreX();
                     tz = coords.getCentreZ();
                 }
@@ -194,7 +194,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                 }
                 // set map
                 switchLevel(view, level, playerUUID);
-                TARDISARSMapData md = map_data.get(playerUUID);
+                TardisArsMapData md = map_data.get(playerUUID);
                 md.setY(level - 27);
                 md.setE(east);
                 md.setS(south);
@@ -223,8 +223,8 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             int id = ids.get(playerUUID);
             // determine row and col
             String room = selectedLocation.get(playerUUID);
-            TARDISARSMapData md = map_data.get(playerUUID);
-            TARDISARSSlot a = null;
+            TardisArsMapData md = map_data.get(playerUUID);
+            TardisArsSlot a = null;
             for (int l = 0; l < 3; l++) {
                 if (l != md.getY()) {
                     // skip levels that are not currently showing on the map because they can't be selected
@@ -234,7 +234,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                     for (int c = 0; c < 9; c++) {
                         if (md.getData()[l][r][c].equals(room)) {
                             // will always get the first room of this type on this level
-                            a = new TARDISARSSlot();
+                            a = new TardisArsSlot();
                             a.setChunk(plugin.getLocationUtils().getTARDISChunk(id));
                             a.setY(l);
                             a.setX(r);

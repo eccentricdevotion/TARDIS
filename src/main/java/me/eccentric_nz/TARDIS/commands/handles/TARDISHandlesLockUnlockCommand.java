@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -29,11 +29,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISHandlesLockUnlockCommand {
+class TardisHandlesLockUnlockCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISHandlesLockUnlockCommand(TARDISPlugin plugin) {
+    TardisHandlesLockUnlockCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -57,8 +57,8 @@ class TARDISHandlesLockUnlockCommand {
                 // always lock / unlock both doors
                 plugin.getQueryFactory().doUpdate("doors", setl, wherel);
                 String message = (!lock) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
-                TARDISMessage.handlesSend(player, "DOOR_LOCK", message);
-                TARDISSounds.playTARDISSound(l, "tardis_lock");
+                TardisMessage.handlesSend(player, "DOOR_LOCK", message);
+                TardisSounds.playTARDISSound(l, "tardis_lock");
             }
         }
         return true;

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.sonic.actions.TARDISSonicSound;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.sonic.actions.TardisSonicSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -42,12 +42,12 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISSonicEntityListener implements Listener {
+public class TardisSonicEntityListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Material sonic;
 
-    public TARDISSonicEntityListener(TARDISPlugin plugin) {
+    public TardisSonicEntityListener(TardisPlugin plugin) {
         this.plugin = plugin;
         String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result")).split(":");
         sonic = Material.valueOf(split[0]);
@@ -69,9 +69,9 @@ public class TARDISSonicEntityListener implements Listener {
                 List<String> lore = im.getLore();
                 Entity ent = event.getRightClicked();
                 if (ent instanceof Player scanned) {
-                    TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
-                    if (TARDISPermission.hasPermission(player, "tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade") && player.isSneaking()) {
-                        TARDISMessage.send(player, "SONIC_INV");
+                    TardisSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
+                    if (TardisPermission.hasPermission(player, "tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade") && player.isSneaking()) {
+                        TardisMessage.send(player, "SONIC_INV");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             PlayerInventory pinv = scanned.getInventory();
                             ItemStack[] items = pinv.getStorageContents();
@@ -79,17 +79,17 @@ public class TARDISSonicEntityListener implements Listener {
                             menu.setContents(items);
                             player.openInventory(menu);
                         }, 40L);
-                    } else if (TARDISPermission.hasPermission(player, "tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
-                        TARDISMessage.send(player, "SONIC_PLAYER");
+                    } else if (TardisPermission.hasPermission(player, "tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
+                        TardisMessage.send(player, "SONIC_PLAYER");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             // getHealth() / getMaxHealth() * getHealthScale()
                             double mh = Objects.requireNonNull(scanned.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue();
                             double health = scanned.getHealth() / mh * scanned.getHealthScale();
                             float hunger = (scanned.getFoodLevel() / 20F) * 100;
-                            TARDISMessage.send(player, "SONIC_NAME", scanned.getName());
-                            TARDISMessage.send(player, "SONIC_AGE", convertTicksToTime(scanned.getTicksLived()));
-                            TARDISMessage.send(player, "SONIC_HEALTH", String.format("%f", health));
-                            TARDISMessage.send(player, "SONIC_HUNGER", String.format("%.2f", hunger));
+                            TardisMessage.send(player, "SONIC_NAME", scanned.getName());
+                            TardisMessage.send(player, "SONIC_AGE", convertTicksToTime(scanned.getTicksLived()));
+                            TardisMessage.send(player, "SONIC_HEALTH", String.format("%f", health));
+                            TardisMessage.send(player, "SONIC_HUNGER", String.format("%.2f", hunger));
                         }, 40L);
                     }
                 }

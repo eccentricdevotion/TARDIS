@@ -21,7 +21,7 @@ package me.eccentric_nz.tardis.mobfarming;
  * Earth. They are domesticated by humans for the production of honey, and even an average human like Donna Noble knows
  * that they experienced a profound global downturn in their population during the early 21st century.
  */
-public class TARDISBee extends TARDISMob {
+public class TardisBee extends TardisMob {
 
     private boolean nectar;
     private boolean stung;
@@ -30,7 +30,7 @@ public class TARDISBee extends TARDISMob {
     /**
      * Data storage class for TARDIS bee.
      */
-    TARDISBee() {
+    TardisBee() {
     }
 
     boolean hasNectar() {

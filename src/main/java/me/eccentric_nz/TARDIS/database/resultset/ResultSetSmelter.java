@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.SmelterChest;
 import me.eccentric_nz.tardis.rooms.smelter.Smelter;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -44,9 +44,9 @@ import java.util.List;
  */
 public class ResultSetSmelter {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String where;
     private final String prefix;
     private int smelterId;
@@ -62,7 +62,7 @@ public class ResultSetSmelter {
      * @param plugin an instance of the main class.
      * @param where  the location of the smelter chest.
      */
-    public ResultSetSmelter(TARDISPlugin plugin, String where) {
+    public ResultSetSmelter(TardisPlugin plugin, String where) {
         this.plugin = plugin;
         this.where = where;
         prefix = this.plugin.getPrefix();
@@ -138,7 +138,7 @@ public class ResultSetSmelter {
     }
 
     private List<Chest> getChests(String location, boolean fuel) {
-        Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(location);
+        Location l = TardisStaticLocationGetters.getLocationFromBukkitString(location);
         assert l != null;
         int offset = l.getBlockY() - 68;
         List<Chest> chests = new ArrayList<>();

@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
@@ -40,9 +40,9 @@ import java.util.Map;
  */
 public class ResultSetLamps {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
     private final List<Block> data = new ArrayList<>();
@@ -55,7 +55,7 @@ public class ResultSetLamps {
      * @param where    a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      * @param multiple a boolean indicating whether multiple rows should be fetched
      */
-    public ResultSetLamps(TARDISPlugin plugin, HashMap<String, Object> where, boolean multiple) {
+    public ResultSetLamps(TardisPlugin plugin, HashMap<String, Object> where, boolean multiple) {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
@@ -97,7 +97,7 @@ public class ResultSetLamps {
             if (rs.isBeforeFirst()) {
                 if (multiple) {
                     while (rs.next()) {
-                        Location loc = TARDISStaticLocationGetters.getLocationFromDB(rs.getString("location"));
+                        Location loc = TardisStaticLocationGetters.getLocationFromDB(rs.getString("location"));
                         if (loc != null) {
                             data.add(loc.getBlock());
                         }

@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.enumeration;
 
 import com.google.common.collect.Maps;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
 import java.util.Arrays;
@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * @author eccentric_nz
  */
-public enum PRESET {
+public enum Preset {
 
     ADAPTIVE(Material.BLUE_WOOL, Material.BLUE_WOOL, 0, "ADAPTIVE", "BOX", true, true, "Adaptive Box"),
     ANDESITE(Material.GOLD_INGOT, Material.ANDESITE, 43, "ANDESITE", "BOX", true, true),
@@ -115,12 +115,12 @@ public enum PRESET {
     WEEPING_ANGEL(Material.GRAY_CONCRETE, 16, "", "", false, false, "Weeping Angel");
 
     public final static List<Material> NOT_THESE = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
-    private final static Map<Material, PRESET> BY_MATERIAL = Maps.newHashMap();
-    private final static Map<Integer, PRESET> BY_SLOT = Maps.newHashMap();
-    private final static Map<Integer, PRESET> IF_BY_SLOT = Maps.newHashMap();
+    private final static Map<Material, Preset> BY_MATERIAL = Maps.newHashMap();
+    private final static Map<Integer, Preset> BY_SLOT = Maps.newHashMap();
+    private final static Map<Integer, Preset> IF_BY_SLOT = Maps.newHashMap();
 
     static {
-        for (PRESET preset : values()) {
+        for (Preset preset : values()) {
             if (!NOT_THESE.contains(preset.getCraftMaterial())) {
                 BY_MATERIAL.put(preset.getCraftMaterial(), preset);
                 if (preset.usesItemFrame()) {
@@ -141,7 +141,7 @@ public enum PRESET {
     boolean portal;
     String displayName;
 
-    PRESET(Material craftMaterial, String firstLine, String secondLine, boolean door, boolean portal) {
+    Preset(Material craftMaterial, String firstLine, String secondLine, boolean door, boolean portal) {
         this.craftMaterial = craftMaterial;
         guiDisplay = craftMaterial;
         slot = -1;
@@ -149,10 +149,10 @@ public enum PRESET {
         this.secondLine = secondLine;
         this.door = door;
         this.portal = portal;
-        displayName = ((this.firstLine.contains("_")) ? TARDISStringUtils.capitalise(this.firstLine) : TARDISStringUtils.titleCase(this.firstLine)) + (!this.secondLine.isEmpty() ? " " + TARDISStringUtils.titleCase(secondLine) : "");
+        displayName = ((this.firstLine.contains("_")) ? TardisStringUtils.capitalise(this.firstLine) : TardisStringUtils.titleCase(this.firstLine)) + (!this.secondLine.isEmpty() ? " " + TardisStringUtils.titleCase(secondLine) : "");
     }
 
-    PRESET(Material craftMaterial, int slot, String firstLine, String secondLine, boolean door, boolean portal, String displayName) {
+    Preset(Material craftMaterial, int slot, String firstLine, String secondLine, boolean door, boolean portal, String displayName) {
         this.craftMaterial = craftMaterial;
         guiDisplay = craftMaterial;
         this.slot = slot;
@@ -163,7 +163,7 @@ public enum PRESET {
         this.displayName = displayName;
     }
 
-    PRESET(Material craftMaterial, Material guiDisplay, int slot, String firstLine, String secondLine, boolean door, boolean portal, String displayName) {
+    Preset(Material craftMaterial, Material guiDisplay, int slot, String firstLine, String secondLine, boolean door, boolean portal, String displayName) {
         this.craftMaterial = craftMaterial;
         this.guiDisplay = guiDisplay;
         this.slot = slot;
@@ -174,7 +174,7 @@ public enum PRESET {
         this.displayName = displayName;
     }
 
-    PRESET(Material craftMaterial, Material guiDisplay, int slot, String firstLine, String secondLine, boolean door, boolean portal) {
+    Preset(Material craftMaterial, Material guiDisplay, int slot, String firstLine, String secondLine, boolean door, boolean portal) {
         this.craftMaterial = craftMaterial;
         this.guiDisplay = guiDisplay;
         this.slot = slot;
@@ -182,18 +182,18 @@ public enum PRESET {
         this.secondLine = secondLine;
         this.door = door;
         this.portal = portal;
-        displayName = ((this.firstLine.contains("_")) ? TARDISStringUtils.capitalise(this.firstLine) : TARDISStringUtils.titleCase(this.firstLine)) + (!this.secondLine.isEmpty() ? " " + TARDISStringUtils.titleCase(secondLine) : "");
+        displayName = ((this.firstLine.contains("_")) ? TardisStringUtils.capitalise(this.firstLine) : TardisStringUtils.titleCase(this.firstLine)) + (!this.secondLine.isEmpty() ? " " + TardisStringUtils.titleCase(secondLine) : "");
     }
 
-    public static PRESET getPreset(Material mat) {
+    public static Preset getPreset(Material mat) {
         return BY_MATERIAL.get(mat);
     }
 
-    public static PRESET getItemFramePresetBySlot(int slot) {
+    public static Preset getItemFramePresetBySlot(int slot) {
         return IF_BY_SLOT.get(slot);
     }
 
-    public static PRESET getPresetBySlot(int slot) {
+    public static Preset getPresetBySlot(int slot) {
         return BY_SLOT.get(slot);
     }
 

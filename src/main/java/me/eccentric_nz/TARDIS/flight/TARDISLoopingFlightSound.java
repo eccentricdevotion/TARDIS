@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.Location;
 
 /**
  * @author eccentric_nz
  */
-class TARDISLoopingFlightSound implements Runnable {
+class TardisLoopingFlightSound implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Location location;
     private final int id;
 
-    TARDISLoopingFlightSound(TARDISPlugin plugin, Location location, int id) {
+    TardisLoopingFlightSound(TardisPlugin plugin, Location location, int id) {
         this.plugin = plugin;
         this.location = location;
         this.id = id;
@@ -38,7 +38,7 @@ class TARDISLoopingFlightSound implements Runnable {
     @Override
     public void run() {
         // start looping sfx
-        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> TARDISSounds.playTARDISSound(location, "time_rotor", 0.5f), 1L, 280L);
+        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> TardisSounds.playTARDISSound(location, "time_rotor", 0.5f), 1L, 280L);
         plugin.getTrackerKeeper().getDestinationVortex().put(id, taskID);
     }
 }

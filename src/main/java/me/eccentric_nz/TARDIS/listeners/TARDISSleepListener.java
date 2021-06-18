@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.event.EventHandler;
@@ -29,11 +29,11 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISSleepListener implements Listener {
+public class TardisSleepListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISSleepListener(TARDISPlugin plugin) {
+    public TardisSleepListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

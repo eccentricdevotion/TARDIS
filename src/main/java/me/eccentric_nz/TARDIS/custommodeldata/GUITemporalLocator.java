@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
-public enum GUITemporalLocator {
+public enum GuiTemporalLocator {
 
     // Temporal Locator
     BUTTON_MORN(1, 0, Material.CLOCK, "0 ticks~6 AM"),
@@ -55,7 +55,7 @@ public enum GUITemporalLocator {
     private final Material material;
     private final String lore;
 
-    GUITemporalLocator(int customModelData, int slot, Material material, String lore) {
+    GuiTemporalLocator(int customModelData, int slot, Material material, String lore) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -80,7 +80,7 @@ public enum GUITemporalLocator {
             String[] split = s.split("_");
             return split[1] + " " + split[0];
         } else {
-            return TARDISStringUtils.uppercaseFirst(s);
+            return TardisStringUtils.uppercaseFirst(s);
         }
     }
 

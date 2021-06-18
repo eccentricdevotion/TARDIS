@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
 import me.eccentric_nz.tardischunkgenerator.helpers.TardisPlanetData;
 import org.bukkit.*;
@@ -26,45 +26,45 @@ import org.bukkit.configuration.ConfigurationSection;
 import java.io.File;
 import java.util.*;
 
-public class TARDISWorlds {
+public class TardisWorlds {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISWorlds(TARDISPlugin plugin) {
+    public TardisWorlds(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public static void loadWorld(String world) {
         try {
-            String e = TARDISPlugin.plugin.getPlanetsConfig().getString("planets." + world + ".environment");
+            String e = TardisPlugin.plugin.getPlanetsConfig().getString("planets." + world + ".environment");
             World.Environment environment = World.Environment.valueOf(e);
             WorldCreator worldCreator = WorldCreator.name(world).environment(environment);
-            String g = TARDISPlugin.plugin.getPlanetsConfig().getString("planets." + world + ".generator");
+            String g = TardisPlugin.plugin.getPlanetsConfig().getString("planets." + world + ".generator");
             if (g != null && !g.equalsIgnoreCase("DEFAULT")) {
                 worldCreator.generator(g);
             }
-            boolean hardcore = TARDISPlugin.plugin.getPlanetsConfig().getBoolean("planets." + world + ".hardcore");
+            boolean hardcore = TardisPlugin.plugin.getPlanetsConfig().getBoolean("planets." + world + ".hardcore");
             if (hardcore) {
                 worldCreator.hardcore(true);
             }
             World w = worldCreator.createWorld();
             if (w != null) {
-                String gm = TARDISPlugin.plugin.getPlanetsConfig().getString("planets." + world + ".gamemode");
+                String gm = TardisPlugin.plugin.getPlanetsConfig().getString("planets." + world + ".gamemode");
                 if (gm != null && gm.toUpperCase(Locale.ENGLISH).equals("CREATIVE")) {
-                    TARDISPlugin.plugin.getTardisHelper().setWorldGameMode(world, GameMode.CREATIVE);
+                    TardisPlugin.plugin.getTardisHelper().setWorldGameMode(world, GameMode.CREATIVE);
                 }
-                if (TARDISPlugin.plugin.getPlanetsConfig().contains("planets." + world + ".gamerules")) {
-                    for (String rule : Objects.requireNonNull(TARDISPlugin.plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules")).getKeys(false)) {
+                if (TardisPlugin.plugin.getPlanetsConfig().contains("planets." + world + ".gamerules")) {
+                    for (String rule : Objects.requireNonNull(TardisPlugin.plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules")).getKeys(false)) {
                         GameRule<Boolean> gameRule = (GameRule<Boolean>) GameRule.getByName(rule);
                         assert gameRule != null;
-                        w.setGameRule(gameRule, TARDISPlugin.plugin.getPlanetsConfig().getBoolean("planets." + world + ".gamerules." + rule));
+                        w.setGameRule(gameRule, TardisPlugin.plugin.getPlanetsConfig().getBoolean("planets." + world + ".gamerules." + rule));
                     }
                 }
-                boolean keepSpawnInMemory = TARDISPlugin.plugin.getPlanetsConfig().getBoolean("planets." + world + ".keep_spawn_in_memory");
+                boolean keepSpawnInMemory = TardisPlugin.plugin.getPlanetsConfig().getBoolean("planets." + world + ".keep_spawn_in_memory");
                 w.setKeepSpawnInMemory(keepSpawnInMemory);
             }
         } catch (IllegalArgumentException e) {
-            TARDISPlugin.plugin.debug(ChatColor.RED + "Could not load world '" + world + "'! " + e.getMessage());
+            TardisPlugin.plugin.debug(ChatColor.RED + "Could not load world '" + world + "'! " + e.getMessage());
         }
     }
 
@@ -88,7 +88,7 @@ public class TARDISWorlds {
         });
         // revert lowercase TARDIS world names
         if (plugin.getConfig().getBoolean("conversions.level_names")) {
-            for (Map.Entry<String, String> level : TARDISConstants.REVERT_LEVELS.entrySet()) {
+            for (Map.Entry<String, String> level : TardisConstants.REVERT_LEVELS.entrySet()) {
                 // set the LevelName in level.dat
                 plugin.getTardisHelper().setLevelName(level.getKey(), level.getValue());
                 // rename the planet in planets.yml
@@ -105,13 +105,13 @@ public class TARDISWorlds {
         // now load TARDIS worlds / remove worlds that may have been deleted
         Set<String> cWorlds = Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false);
         cWorlds.forEach((cw) -> {
-            if (!TARDISConstants.PLANETS.contains(cw) && TARDISAliasResolver.getWorldFromAlias(cw) == null) {
+            if (!TardisConstants.PLANETS.contains(cw) && TardisAliasResolver.getWorldFromAlias(cw) == null) {
                 if ((plugin.getWorldManager().equals(WorldManager.NONE) || Objects.requireNonNull(plugin.getPlanetsConfig().getConfigurationSection("planets")).getKeys(false).contains(cw)) && worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
                     plugin.getConsole().sendMessage(plugin.getPluginName() + "Attempting to load world: '" + cw + "'");
                     loadWorld(cw);
                 }
             } else {
-                if (!TARDISConstants.PLANETS.contains(cw) && !cw.equals("TARDIS_Zero_Room") && !cw.equals("TARDIS_TimeVortex") && !worldFolderExists(cw)) {
+                if (!TardisConstants.PLANETS.contains(cw) && !cw.equals("TARDIS_Zero_Room") && !cw.equals("TARDIS_TimeVortex") && !worldFolderExists(cw)) {
                     plugin.getPlanetsConfig().set("planets." + cw, null);
                     plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + "' from planets.yml");
                     // remove records from database that may contain the removed world

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.rooms.TARDISWalls;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.rooms.TardisWalls;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -29,12 +29,12 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISFloorCommand {
+class TardisFloorCommand {
 
     boolean setFloorOrWallBlock(Player player, String[] args) {
         String pref = args[0];
         if (args.length < 2) {
-            TARDISMessage.send(player, "PREF_WALL", pref);
+            TardisMessage.send(player, "PREF_WALL", pref);
             return false;
         }
         String wall_mat;
@@ -50,18 +50,18 @@ class TARDISFloorCommand {
         } else {
             wall_mat = args[1].toUpperCase(Locale.ENGLISH);
         }
-        if (!TARDISWalls.BLOCKS.contains(Material.getMaterial(wall_mat))) {
+        if (!TardisWalls.BLOCKS.contains(Material.getMaterial(wall_mat))) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
-            TARDISMessage.send(player, message, pref);
-            TARDISWalls.BLOCKS.forEach((w) -> player.sendMessage(w.toString()));
+            TardisMessage.send(player, message, pref);
+            TardisWalls.BLOCKS.forEach((w) -> player.sendMessage(w.toString()));
             return true;
         }
         HashMap<String, Object> setw = new HashMap<>();
         setw.put(pref, wall_mat);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
-        TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", setw, where);
-        TARDISMessage.send(player, "PREF_MAT_SET", TARDISStringUtils.uppercaseFirst(pref));
+        TardisPlugin.plugin.getQueryFactory().doUpdate("player_prefs", setw, where);
+        TardisMessage.send(player, "PREF_MAT_SET", TardisStringUtils.uppercaseFirst(pref));
         return true;
     }
 }

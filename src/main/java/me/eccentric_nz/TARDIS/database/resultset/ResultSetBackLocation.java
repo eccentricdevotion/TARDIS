@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.World;
 
 import java.sql.Connection;
@@ -37,9 +37,9 @@ import java.util.Map;
  */
 public class ResultSetBackLocation {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<String, Object> where;
     private final String prefix;
     private int backId;
@@ -48,7 +48,7 @@ public class ResultSetBackLocation {
     private int x;
     private int y;
     private int z;
-    private COMPASS direction;
+    private CardinalDirection direction;
     private boolean submarine;
 
     /**
@@ -57,7 +57,7 @@ public class ResultSetBackLocation {
      * @param plugin an instance of the main class.
      * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      */
-    public ResultSetBackLocation(TARDISPlugin plugin, HashMap<String, Object> where) {
+    public ResultSetBackLocation(TardisPlugin plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
         prefix = this.plugin.getPrefix();
@@ -99,11 +99,11 @@ public class ResultSetBackLocation {
                 while (rs.next()) {
                     backId = rs.getInt("backId");
                     tardisId = rs.getInt("tardisId");
-                    world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
+                    world = TardisAliasResolver.getWorldFromAlias(rs.getString("world"));
                     x = rs.getInt("x");
                     y = rs.getInt("y");
                     z = rs.getInt("z");
-                    direction = COMPASS.valueOf(rs.getString("direction"));
+                    direction = CardinalDirection.valueOf(rs.getString("direction"));
                     submarine = rs.getBoolean("submarine");
                 }
             } else {
@@ -151,7 +151,7 @@ public class ResultSetBackLocation {
         return z;
     }
 
-    public COMPASS getDirection() {
+    public CardinalDirection getDirection() {
         return direction;
     }
 

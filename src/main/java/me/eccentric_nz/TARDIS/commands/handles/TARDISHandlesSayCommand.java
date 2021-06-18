@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 /**
  * @author eccentric_nz
  */
-class TARDISHandlesSayCommand {
+class TardisHandlesSayCommand {
 
     boolean say(Player player, String[] args) {
         StringBuilder sb = new StringBuilder();
@@ -30,7 +30,7 @@ class TARDISHandlesSayCommand {
             sb.append(args[i]).append(" ");
         }
         String message = sb.toString();
-        TARDISMessage.handlesMessage(player, message);
+        TardisMessage.handlesMessage(player, message);
         return true;
     }
 }

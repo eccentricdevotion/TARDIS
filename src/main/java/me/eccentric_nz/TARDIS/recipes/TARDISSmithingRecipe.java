@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -30,12 +30,12 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
-public class TARDISSmithingRecipe {
+public class TardisSmithingRecipe {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<String, SmithingRecipe> smithingRecipes;
 
-    public TARDISSmithingRecipe(TARDISPlugin plugin) {
+    public TardisSmithingRecipe(TardisPlugin plugin) {
         this.plugin = plugin;
         smithingRecipes = new HashMap<>();
     }

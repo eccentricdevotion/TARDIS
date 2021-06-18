@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.builders.TARDISTimeRotor;
-import me.eccentric_nz.tardis.control.TARDISScannerMap;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.builders.TardisTimeRotor;
+import me.eccentric_nz.tardis.control.TardisScannerMap;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.Control;
-import me.eccentric_nz.tardis.handles.TARDISHandlesProcessor;
-import me.eccentric_nz.tardis.handles.TARDISHandlesProgramInventory;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.handles.TardisHandlesProcessor;
+import me.eccentric_nz.tardis.handles.TardisHandlesProgramInventory;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -49,11 +49,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISItemFrameListener implements Listener {
+public class TardisItemFrameListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISItemFrameListener(TARDISPlugin plugin) {
+    public TardisItemFrameListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -69,15 +69,15 @@ public class TARDISItemFrameListener implements Listener {
                     // check they have a tardis
                     ResultSetTardisID rst = new ResultSetTardisID(plugin);
                     if (!rst.fromUUID(uuid.toString())) {
-                        TARDISMessage.send(player, "NO_TARDIS");
+                        TardisMessage.send(player, "NO_TARDIS");
                         return;
                     }
                     int id = rst.getTardisId();
                     switch (control) {
                         case DIRECTION, FRAME, MAP -> {
-                            if (control.equals(Control.MAP) && !TARDISPermission.hasPermission(player, "tardis.scanner.map")) {
+                            if (control.equals(Control.MAP) && !TardisPermission.hasPermission(player, "tardis.scanner.map")) {
                                 plugin.getTrackerKeeper().getPlayers().remove(uuid);
-                                TARDISMessage.send(player, "NO_PERM_MAP");
+                                TardisMessage.send(player, "NO_PERM_MAP");
                                 return;
                             }
                             if (control.equals(Control.MAP)) {
@@ -85,7 +85,7 @@ public class TARDISItemFrameListener implements Listener {
                                 ItemStack map = frame.getItem();
                                 if (map.getType() != Material.MAP && map.getType() != Material.FILLED_MAP) {
                                     plugin.getTrackerKeeper().getPlayers().remove(uuid);
-                                    TARDISMessage.send(player, "SCANNER_NO_MAP");
+                                    TardisMessage.send(player, "SCANNER_NO_MAP");
                                     return;
                                 }
                             }
@@ -121,21 +121,21 @@ public class TARDISItemFrameListener implements Listener {
                                 ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
                                 if (rscl.resultSet()) {
                                     Location scan_loc = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-                                    new TARDISScannerMap(TARDISPlugin.plugin, scan_loc, frame).setMap();
+                                    new TardisScannerMap(TardisPlugin.plugin, scan_loc, frame).setMap();
                                 }
                             }
-                            TARDISMessage.send(player, "FRAME_UPDATE", which);
+                            TardisMessage.send(player, "FRAME_UPDATE", which);
                         }
                         default -> {
                             // ROTOR
                             UUID rotorId = frame.getUniqueId();
-                            TARDISTimeRotor.updateRotorRecord(id, rotorId.toString());
+                            TardisTimeRotor.updateRotorRecord(id, rotorId.toString());
                             plugin.getGeneralKeeper().getTimeRotors().add(rotorId);
                             // set fixed and invisible
                             frame.setFixed(true);
                             frame.setVisible(false);
                             plugin.getTrackerKeeper().getPlayers().remove(uuid);
-                            TARDISMessage.send(player, "ROTOR_UPDATE");
+                            TardisMessage.send(player, "ROTOR_UPDATE");
                         }
                     }
                     return;
@@ -161,7 +161,7 @@ public class TARDISItemFrameListener implements Listener {
                 // if the item frame has a tripwire hook in it
                 if (frame.getItem().getType().equals(Material.TRIPWIRE_HOOK)) {
                     if (plugin.getConfig().getBoolean("allow.power_down") && !rso.getTardis().isPowered()) {
-                        TARDISMessage.send(player, "POWER_DOWN");
+                        TardisMessage.send(player, "POWER_DOWN");
                         return;
                     }
                     String direction;
@@ -199,7 +199,7 @@ public class TARDISItemFrameListener implements Listener {
                             }
                         }
                         frame.setRotation(r);
-                        TARDISMessage.send(player, "DIRECTON_SET", direction);
+                        TardisMessage.send(player, "DIRECTON_SET", direction);
                     }
                 } else {
                     // are they placing a tripwire hook?
@@ -218,7 +218,7 @@ public class TARDISItemFrameListener implements Listener {
                                     default -> Rotation.FLIPPED;
                                 };
                                 frame.setRotation(r);
-                                TARDISMessage.send(player, "DIRECTION_CURRENT", rscl.getDirection().toString());
+                                TardisMessage.send(player, "DIRECTION_CURRENT", rscl.getDirection().toString());
                             }, 4L);
                         }
                     }
@@ -230,14 +230,14 @@ public class TARDISItemFrameListener implements Listener {
             whereh.put("type", 26);
             ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
             if (rsh.resultSet()) {
-                if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
-                    TARDISMessage.send(player, "NO_PERMS");
+                if (!TardisPermission.hasPermission(player, "tardis.handles.use")) {
+                    TardisMessage.send(player, "NO_PERMS");
                     return;
                 }
                 ItemStack is = frame.getItem();
                 if (isHandles(is)) {
                     // play sound
-                    TARDISSounds.playTARDISSound(player, "handles", 5L);
+                    TardisSounds.playTARDISSound(player, "handles", 5L);
                     ItemMeta im = is.getItemMeta();
                     assert im != null;
                     im.setCustomModelData(10000002);
@@ -248,13 +248,13 @@ public class TARDISItemFrameListener implements Listener {
                         is.setItemMeta(im);
                         frame.setItem(is, false);
                     }, 20L);
-                    if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
-                        TARDISMessage.send(player, "NO_PERMS");
+                    if (!TardisPermission.hasPermission(player, "tardis.handles.program")) {
+                        TardisMessage.send(player, "NO_PERMS");
                         return;
                     }
                     if (player.isSneaking()) {
                         // open programming GUI
-                        ItemStack[] handles = new TARDISHandlesProgramInventory(plugin, 0).getHandles();
+                        ItemStack[] handles = new TardisHandlesProgramInventory(plugin, 0).getHandles();
                         Inventory hgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Handles Program");
                         hgui.setContents(handles);
                         player.openInventory(hgui);
@@ -266,12 +266,12 @@ public class TARDISItemFrameListener implements Listener {
                             assert dim != null;
                             if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
                                 // get the program_id from the disk
-                                int pid = TARDISNumberParsers.parseInt(Objects.requireNonNull(dim.getLore()).get(1));
+                                int pid = TardisNumberParsers.parseInt(Objects.requireNonNull(dim.getLore()).get(1));
                                 // query the database
                                 ResultSetProgram rsp = new ResultSetProgram(plugin, pid);
                                 if (rsp.resultSet()) {
                                     // send program to processor
-                                    new TARDISHandlesProcessor(plugin, rsp.getProgram(), player, pid).processDisk();
+                                    new TardisHandlesProcessor(plugin, rsp.getProgram(), player, pid).processDisk();
                                     // check in the disk
                                     HashMap<String, Object> set = new HashMap<>();
                                     set.put("checked", 0);
@@ -287,13 +287,13 @@ public class TARDISItemFrameListener implements Listener {
             } else {
                 ItemStack is = player.getInventory().getItemInMainHand();
                 if (isHandles(is)) {
-                    if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
-                        TARDISMessage.send(player, "NO_PERMS");
+                    if (!TardisPermission.hasPermission(player, "tardis.handles.use")) {
+                        TardisMessage.send(player, "NO_PERMS");
                         return;
                     }
                     // cannot place unless inside the tardis
                     if (!plugin.getUtils().inTARDISWorld(event.getPlayer())) {
-                        TARDISMessage.handlesSend(player, "HANDLES_TARDIS");
+                        TardisMessage.handlesSend(player, "HANDLES_TARDIS");
                         event.setCancelled(true);
                         return;
                     }
@@ -310,10 +310,10 @@ public class TARDISItemFrameListener implements Listener {
                             plugin.getQueryFactory().insertControl(rst.getTardisId(), 26, newLocation, 0);
                         } else {
                             event.setCancelled(true);
-                            TARDISMessage.send(event.getPlayer(), "HANDLES_PLACED");
+                            TardisMessage.send(event.getPlayer(), "HANDLES_PLACED");
                         }
                     } else {
-                        TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
+                        TardisMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                         event.setCancelled(true);
                     }
                 }
@@ -342,7 +342,7 @@ public class TARDISItemFrameListener implements Listener {
                 if (player != null) {
                     if (player.isSneaking()) {
                         event.setCancelled(true);
-                        TARDISSounds.playTARDISSound(player, "handles", 5L);
+                        TardisSounds.playTARDISSound(player, "handles", 5L);
                         ItemMeta im = is.getItemMeta();
                         assert im != null;
                         im.setCustomModelData(10000002);
@@ -379,7 +379,7 @@ public class TARDISItemFrameListener implements Listener {
                 if (!rsc.resultSet()) {
                     return;
                 }
-                TARDISMessage.send(player, "SCANNER_MAP");
+                TardisMessage.send(player, "SCANNER_MAP");
             }
         }
     }

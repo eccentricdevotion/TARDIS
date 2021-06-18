@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.ars.TARDISARSMethods;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.tardis.builders.TARDISTIPSData;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.ars.TardisArsMethods;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
 import me.eccentric_nz.tardis.database.resultset.*;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAngelsAPI;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAngelsApi;
+import me.eccentric_nz.tardis.planets.TardisBiome;
 import me.eccentric_nz.tardis.utility.*;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Difficulty;
@@ -38,13 +38,13 @@ import java.util.*;
 /**
  * @author eccentric_nz
  */
-public class TARDISMonsterRunnable implements Runnable {
+public class TardisMonsterRunnable implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<EntityType> monsters = new ArrayList<>();
     private final List<EntityType> random_monsters = new ArrayList<>();
 
-    public TARDISMonsterRunnable(TARDISPlugin plugin) {
+    public TardisMonsterRunnable(TardisPlugin plugin) {
         this.plugin = plugin;
         monsters.add(EntityType.CAVE_SPIDER);
         monsters.add(EntityType.CREEPER);
@@ -78,7 +78,7 @@ public class TARDISMonsterRunnable implements Runnable {
     @Override
     public void run() {
         // get open portals
-        for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
+        for (Map.Entry<Location, TardisTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
             // only portals in police box worlds
             if (Objects.requireNonNull(map.getKey().getWorld()).getName().contains("tardis")) {
                 continue;
@@ -113,7 +113,7 @@ public class TARDISMonsterRunnable implements Runnable {
             boolean twa = plugin.getPM().isPluginEnabled("TARDISWeepingAngels");
             for (Entity e : entities) {
                 EntityType type = e.getType();
-                TARDISMonster tm = new TARDISMonster();
+                TardisMonster tm = new TardisMonster();
                 String dn = WordUtils.capitalize(type.toString().toLowerCase(Locale.ENGLISH));
                 if (monsters.contains(type)) {
                     found = true;
@@ -187,7 +187,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         case VINDICATOR:
                             Monster monster = (Monster) e;
                             tm.setEquipment(monster.getEquipment());
-                            dn = TARDISStringUtils.uppercaseFirst(type.toString());
+                            dn = TardisStringUtils.uppercaseFirst(type.toString());
                             break;
                         default:
                             break;
@@ -206,18 +206,18 @@ public class TARDISMonsterRunnable implements Runnable {
             if (!found && plugin.getConfig().getBoolean("preferences.spawn_random_monsters")) {
                 // spawn a random mob inside tardis?
                 // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
-                if (TARDISConstants.RANDOM.nextInt(4) == 0 && canSpawn(map.getKey(), TARDISConstants.RANDOM.nextInt(4))) {
+                if (TardisConstants.RANDOM.nextInt(4) == 0 && canSpawn(map.getKey(), TardisConstants.RANDOM.nextInt(4))) {
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", map.getValue().getTardisId());
                     ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
                     if (rs.resultSet() && rs.getTardis().getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
-                        TARDISMonster rtm = new TARDISMonster();
+                        TardisMonster rtm = new TardisMonster();
                         // choose a random monster
-                        EntityType type = random_monsters.get(TARDISConstants.RANDOM.nextInt(random_monsters.size()));
+                        EntityType type = random_monsters.get(TardisConstants.RANDOM.nextInt(random_monsters.size()));
                         rtm.setType(type);
                         String dn = WordUtils.capitalize(type.toString().toLowerCase(Locale.ENGLISH));
                         if (type.equals(EntityType.ZOMBIE_VILLAGER)) {
-                            Profession prof = Profession.values()[TARDISConstants.RANDOM.nextInt(7)];
+                            Profession prof = Profession.values()[TardisConstants.RANDOM.nextInt(7)];
                             rtm.setProfession(prof);
                             dn = "Zombie " + WordUtils.capitalize(prof.toString().toLowerCase(Locale.ENGLISH));
                         }
@@ -231,8 +231,8 @@ public class TARDISMonsterRunnable implements Runnable {
 
     private boolean canSpawn(Location l, int r) {
         // get biome
-        TARDISBiome biome = TARDISStaticUtils.getBiomeAt(l.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(r), 6).getLocation());
-        if (biome.equals(TARDISBiome.MUSHROOM_FIELDS) || biome.equals(TARDISBiome.MUSHROOM_FIELD_SHORE)) {
+        TardisBiome biome = TardisStaticUtils.getBiomeAt(l.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(r), 6).getLocation());
+        if (biome.equals(TardisBiome.MUSHROOM_FIELDS) || biome.equals(TardisBiome.MUSHROOM_FIELD_SHORE)) {
             return false;
         }
         // worldguard
@@ -243,17 +243,17 @@ public class TARDISMonsterRunnable implements Runnable {
         return !Objects.requireNonNull(l.getWorld()).getDifficulty().equals(Difficulty.PEACEFUL);
     }
 
-    private void moveMonster(TARDISTeleportLocation tpl, TARDISMonster m, Entity e, boolean guardian) {
+    private void moveMonster(TardisTeleportLocation tpl, TardisMonster m, Entity e, boolean guardian) {
         Location loc = null;
         if (guardian) {
             // check for pool
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("tardis_id", tpl.getTardisId());
-            ResultSetARS rsa = new ResultSetARS(plugin, wherea);
+            ResultSetArs rsa = new ResultSetArs(plugin, wherea);
             if (rsa.resultSet()) {
                 int l = 0, r = 0, c = 0;
                 // check there is a pool
-                String[][][] json = TARDISARSMethods.getGridFromJSON(rsa.getJson());
+                String[][][] json = TardisArsMethods.getGridFromJSON(rsa.getJson());
                 for (String[][] level : json) {
                     for (String[] row : level) {
                         for (String col : row) {
@@ -267,8 +267,8 @@ public class TARDISMonsterRunnable implements Runnable {
                                     int tx = 0, tz = 0;
                                     if (pos != -1) {
                                         // tips slot
-                                        TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
-                                        TARDISTIPSData coords = tips.getTIPSData(pos);
+                                        TardisInteriorPositioning tips = new TardisInteriorPositioning(plugin);
+                                        TardisTipsData coords = tips.getTIPSData(pos);
                                         tx = coords.getCentreX();
                                         tz = coords.getCentreZ();
                                     }
@@ -301,7 +301,7 @@ public class TARDISMonsterRunnable implements Runnable {
             where.put("tardis_id", tpl.getTardisId());
             ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
             if (rs.resultSet()) {
-                TARDISSounds.playTARDISSound(loc, "tardis_cloister_bell", 10.0f);
+                TardisSounds.playTARDISSound(loc, "tardis_cloister_bell", 10.0f);
             } else {
                 // else message the Time Lord
                 HashMap<String, Object> wheret = new HashMap<>();
@@ -310,7 +310,7 @@ public class TARDISMonsterRunnable implements Runnable {
                 if (rst.resultSet()) {
                     Player p = plugin.getServer().getPlayer(rst.getTardis().getUuid());
                     if (p != null) {
-                        TARDISMessage.send(p, "MONSTER", m.getDisplayName());
+                        TardisMessage.send(p, "MONSTER", m.getDisplayName());
                     }
                 }
                 HashMap<String, Object> wherer = new HashMap<>();
@@ -320,7 +320,7 @@ public class TARDISMonsterRunnable implements Runnable {
                 ResultSetControls rsc = new ResultSetControls(plugin, wherer, false);
                 if (rsc.resultSet()) {
                     // move the location to the y-repeater
-                    loc = TARDISStaticLocationGetters.getLocationFromDB(rsc.getLocation());
+                    loc = TardisStaticLocationGetters.getLocationFromDB(rsc.getLocation());
                     assert loc != null;
                     loc.add(0.5d, 0.125d, 0.5d);
                 }
@@ -364,8 +364,8 @@ public class TARDISMonsterRunnable implements Runnable {
                         es.setArmorContents(m.getEquipment().getArmorContents());
                         es.setItemInMainHand(m.getEquipment().getItemInMainHand());
                         if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-                            if (TARDISAngelsAPI.isDalek(skeleton)) {
-                                TARDISDalekDisguiser.dalekanium(skeleton);
+                            if (TardisAngelsApi.isDalek(skeleton)) {
+                                TardisDalekDisguiser.dalekanium(skeleton);
                             }
                         }
                     }
@@ -436,7 +436,7 @@ public class TARDISMonsterRunnable implements Runnable {
             }
             if (m.getPassenger() != null) {
                 if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels") && m.getPassenger().equals(EntityType.GUARDIAN)) {
-                    TARDISAngelsAPI.getAPI(plugin).setSilentEquipment((LivingEntity) ent);
+                    TardisAngelsApi.getAPI(plugin).setSilentEquipment((LivingEntity) ent);
                 } else {
                     Entity passenger = loc.getWorld().spawnEntity(loc, m.getPassenger());
                     ent.addPassenger(passenger);
@@ -445,7 +445,7 @@ public class TARDISMonsterRunnable implements Runnable {
         }
     }
 
-    private boolean isTimelord(TARDISTeleportLocation tpl, Player player) {
+    private boolean isTimelord(TardisTeleportLocation tpl, Player player) {
         ResultSetCompanions rsc = new ResultSetCompanions(plugin, tpl.getTardisId());
         return (rsc.getCompanions().contains(player.getUniqueId()));
     }

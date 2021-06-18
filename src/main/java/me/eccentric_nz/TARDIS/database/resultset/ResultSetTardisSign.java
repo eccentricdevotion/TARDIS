@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.Adaption;
 
 import java.sql.Connection;
@@ -34,9 +34,9 @@ import java.util.UUID;
  */
 public class ResultSetTardisSign {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String where;
     private final String prefix;
     private int tardisId;
@@ -56,7 +56,7 @@ public class ResultSetTardisSign {
      * @param plugin an instance of the main class.
      * @param where  a String value to search for.
      */
-    public ResultSetTardisSign(TARDISPlugin plugin, String where) {
+    public ResultSetTardisSign(TardisPlugin plugin, String where) {
         this.plugin = plugin;
         this.where = where;
         prefix = this.plugin.getPrefix();

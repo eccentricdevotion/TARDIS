@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.Advancement;
 import org.bukkit.ChatColor;
 
@@ -26,18 +26,18 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISChecker {
+public class TardisChecker {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISChecker(TARDISPlugin plugin) {
+    public TardisChecker(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public static boolean hasDimension(String dimension) {
         boolean exists = true;
-        File container = TARDISPlugin.plugin.getServer().getWorldContainer();
-        String s_world = TARDISPlugin.plugin.getServer().getWorlds().get(0).getName();
+        File container = TardisPlugin.plugin.getServer().getWorldContainer();
+        String s_world = TardisPlugin.plugin.getServer().getWorlds().get(0).getName();
         String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator;
         // check if directories exist
         String dimensionRoot = dataPacksRoot + dimension + File.separator + "data" + File.separator + "tardis" + File.separator;
@@ -65,12 +65,12 @@ public class TARDISChecker {
         File dimFile = new File(dimensionDir, dimension + ".json");
         if (!dimFile.exists()) {
             exists = false;
-            TARDISChecker.copy(dimension + "_d.json", dimFile);
+            TardisChecker.copy(dimension + "_d.json", dimFile);
         }
         File dimTypeFile = new File(dimensionTypeDir, dimension + ".json");
         if (!dimTypeFile.exists()) {
             exists = false;
-            TARDISChecker.copy(dimension + "_dt.json", dimTypeFile);
+            TardisChecker.copy(dimension + "_dt.json", dimTypeFile);
         }
         switch (dimension) {
             case "skaro":
@@ -80,10 +80,10 @@ public class TARDISChecker {
                 File lakes = new File(biomeDir, "skaro_lakes.json");
                 if (!tree.exists()) {
                     exists = false;
-                    TARDISChecker.copy("skaro_tree.json", tree);
-                    TARDISChecker.copy("skaro_desert.json", desert);
-                    TARDISChecker.copy("skaro_hills.json", hills);
-                    TARDISChecker.copy("skaro_lakes.json", lakes);
+                    TardisChecker.copy("skaro_tree.json", tree);
+                    TardisChecker.copy("skaro_desert.json", desert);
+                    TardisChecker.copy("skaro_hills.json", hills);
+                    TardisChecker.copy("skaro_lakes.json", lakes);
                 }
                 break;
             case "gallifrey":
@@ -94,11 +94,11 @@ public class TARDISChecker {
                 File eroded = new File(biomeDir, "gallifrey_eroded.json");
                 if (!plant.exists()) {
                     exists = false;
-                    TARDISChecker.copy("gallifrey_tree.json", plant);
-                    TARDISChecker.copy("gallifrey_grass.json", grass);
-                    TARDISChecker.copy("gallifrey_badlands.json", badlands);
-                    TARDISChecker.copy("gallifrey_plateau.json", plateau);
-                    TARDISChecker.copy("gallifrey_eroded.json", eroded);
+                    TardisChecker.copy("gallifrey_tree.json", plant);
+                    TardisChecker.copy("gallifrey_grass.json", grass);
+                    TardisChecker.copy("gallifrey_badlands.json", badlands);
+                    TardisChecker.copy("gallifrey_plateau.json", plateau);
+                    TardisChecker.copy("gallifrey_eroded.json", eroded);
                 }
                 break;
             default:
@@ -115,8 +115,8 @@ public class TARDISChecker {
     }
 
     public static void updateDimension(String dimension) {
-        File container = TARDISPlugin.plugin.getServer().getWorldContainer();
-        String s_world = TARDISPlugin.plugin.getServer().getWorlds().get(0).getName();
+        File container = TardisPlugin.plugin.getServer().getWorldContainer();
+        String s_world = TardisPlugin.plugin.getServer().getWorlds().get(0).getName();
         String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator;
         // check if directories exist
         String dimensionRoot = dataPacksRoot + dimension + File.separator + "data" + File.separator + "tardis" + File.separator;
@@ -127,19 +127,19 @@ public class TARDISChecker {
             File featureDir = new File(dimensionRoot + "worldgen" + File.separator + "configured_feature");
             // overwrite files
             File dimFile = new File(dimensionDir, dimension + ".json");
-            TARDISChecker.copy(dimension + "_d.json", dimFile);
+            TardisChecker.copy(dimension + "_d.json", dimFile);
             File dimTypeFile = new File(dimensionTypeDir, dimension + ".json");
-            TARDISChecker.copy(dimension + "_dt.json", dimTypeFile);
+            TardisChecker.copy(dimension + "_dt.json", dimTypeFile);
             switch (dimension) {
                 case "skaro":
                     File tree = new File(featureDir, "skaro_tree.json");
                     File desert = new File(biomeDir, "skaro_desert.json");
                     File hills = new File(biomeDir, "skaro_hills.json");
                     File lakes = new File(biomeDir, "skaro_lakes.json");
-                    TARDISChecker.copy("skaro_tree.json", tree);
-                    TARDISChecker.copy("skaro_desert.json", desert);
-                    TARDISChecker.copy("skaro_hills.json", hills);
-                    TARDISChecker.copy("skaro_lakes.json", lakes);
+                    TardisChecker.copy("skaro_tree.json", tree);
+                    TardisChecker.copy("skaro_desert.json", desert);
+                    TardisChecker.copy("skaro_hills.json", hills);
+                    TardisChecker.copy("skaro_lakes.json", lakes);
                     break;
                 case "gallifrey":
                     File plant = new File(featureDir, "gallifrey_tree.json");
@@ -147,11 +147,11 @@ public class TARDISChecker {
                     File badlands = new File(biomeDir, "gallifrey_badlands.json");
                     File plateau = new File(biomeDir, "gallifrey_plateau.json");
                     File eroded = new File(biomeDir, "gallifrey_eroded.json");
-                    TARDISChecker.copy("gallifrey_tree.json", plant);
-                    TARDISChecker.copy("gallifrey_grass.json", grass);
-                    TARDISChecker.copy("gallifrey_badlands.json", badlands);
-                    TARDISChecker.copy("gallifrey_plateau.json", plateau);
-                    TARDISChecker.copy("gallifrey_eroded.json", eroded);
+                    TardisChecker.copy("gallifrey_tree.json", plant);
+                    TardisChecker.copy("gallifrey_grass.json", grass);
+                    TardisChecker.copy("gallifrey_badlands.json", badlands);
+                    TardisChecker.copy("gallifrey_plateau.json", plateau);
+                    TardisChecker.copy("gallifrey_eroded.json", eroded);
                     break;
                 default:
                     // nothing to do
@@ -163,7 +163,7 @@ public class TARDISChecker {
     public static void copy(String filename, File file) {
         InputStream in = null;
         try {
-            in = TARDISPlugin.plugin.getResource(filename);
+            in = TardisPlugin.plugin.getResource(filename);
             OutputStream out = new FileOutputStream(file);
             byte[] buf = new byte[1024];
             int len;

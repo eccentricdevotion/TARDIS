@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 /**
  * @author eccentric_nz
  */
-class TARDISHandlesTellCommand {
+class TardisHandlesTellCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISHandlesTellCommand(TARDISPlugin plugin) {
+    public TardisHandlesTellCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -39,7 +39,7 @@ class TARDISHandlesTellCommand {
                 sb.append(args[i]).append(" ");
             }
             String message = sb.toString();
-            TARDISMessage.handlesMessage(player, message);
+            TardisMessage.handlesMessage(player, message);
         }
         return true;
     }

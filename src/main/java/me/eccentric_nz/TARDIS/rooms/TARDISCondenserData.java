@@ -23,12 +23,12 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TARDISCondenserData {
+public class TardisCondenserData {
 
     private HashMap<String, Integer> blockIDCount = new HashMap<>();
     private int tardisId;
 
-    public TARDISCondenserData() {
+    public TardisCondenserData() {
     }
 
     public HashMap<String, Integer> getBlockIDCount() {

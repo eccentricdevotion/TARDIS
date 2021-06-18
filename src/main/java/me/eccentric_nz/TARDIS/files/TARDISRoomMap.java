@@ -18,8 +18,8 @@ package me.eccentric_nz.tardis.files;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
 import org.bukkit.ChatColor;
 
 import java.io.File;
@@ -36,11 +36,11 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISRoomMap {
+public class TardisRoomMap {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISRoomMap(TARDISPlugin plugin) {
+    public TardisRoomMap(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -85,7 +85,7 @@ public class TARDISRoomMap {
             return false;
         }
         // get JSON
-        JsonObject obj = TARDISSchematicGZip.unzip(fileStr + ".tschm");
+        JsonObject obj = TardisSchematicGZip.unzip(fileStr + ".tschm");
         if (obj == null) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "The supplied file [" + fileStr + ".tschm] is not a tardis JSON schematic!");
             return false;

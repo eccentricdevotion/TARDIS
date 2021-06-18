@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisSounds;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandException;
@@ -38,9 +38,9 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISEPSRunnable implements Runnable {
+public class TardisEpsRunnable implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String message;
     private final Player tl;
     private final List<UUID> players;
@@ -48,7 +48,7 @@ public class TARDISEPSRunnable implements Runnable {
     private final String eps;
     private final String creeper;
 
-    public TARDISEPSRunnable(TARDISPlugin plugin, String message, Player tl, List<UUID> players, int id, String eps, String creeper) {
+    public TardisEpsRunnable(TardisPlugin plugin, String message, Player tl, List<UUID> players, int id, String eps, String creeper) {
         this.plugin = plugin;
         this.message = message;
         this.tl = tl;
@@ -80,14 +80,14 @@ public class TARDISEPSRunnable implements Runnable {
         Location l = getSpawnLocation(id);
         if (l != null) {
             try {
-                TARDISSounds.playTARDISSound(l, "tardis_takeoff");
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> TARDISSounds.playTARDISSound(l, "tardis_land"), 490L);
+                TardisSounds.playTARDISSound(l, "tardis_takeoff");
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> TardisSounds.playTARDISSound(l, "tardis_land"), 490L);
                 plugin.setTardisSpawn(true);
                 // set yaw if npc spawn location has been changed
                 if (!eps.isEmpty()) {
                     String[] creep = creeper.split(":");
-                    double cx = TARDISNumberParsers.parseDouble(creep[1]);
-                    double cz = TARDISNumberParsers.parseDouble(creep[3]);
+                    double cx = TardisNumberParsers.parseDouble(creep[1]);
+                    double cz = TardisNumberParsers.parseDouble(creep[3]);
                     float yaw = getCorrectYaw(cx, cz, l.getX(), l.getZ());
                     l.setYaw(yaw);
                 }
@@ -96,14 +96,14 @@ public class TARDISEPSRunnable implements Runnable {
                 players.forEach((p) -> {
                     Player pp = plugin.getServer().getPlayer(p);
                     if (pp != null) {
-                        TARDISMessage.message(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + message);
+                        TardisMessage.message(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + message);
                     }
                 });
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     players.forEach((p) -> {
                         Player pp = plugin.getServer().getPlayer(p);
                         if (pp != null) {
-                            TARDISMessage.message(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + plugin.getLanguage().getString("EP1_BYE"));
+                            TardisMessage.message(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + plugin.getLanguage().getString("EP1_BYE"));
                         }
                     });
                     plugin.getTardisHelper().removeNPC(npcID, l.getWorld());
@@ -120,7 +120,7 @@ public class TARDISEPSRunnable implements Runnable {
      */
     private Location getSpawnLocation(int id) {
         if (!eps.isEmpty()) {
-            return TARDISStaticLocationGetters.getLocationFromDB(eps);
+            return TardisStaticLocationGetters.getLocationFromDB(eps);
         } else if (plugin.getConfig().getBoolean("creation.create_worlds")) {
             // get world spawn location
             return Objects.requireNonNull(plugin.getServer().getWorld("TARDIS_WORLD_" + tl.getName())).getSpawnLocation();
@@ -132,7 +132,7 @@ public class TARDISEPSRunnable implements Runnable {
             if (rsd.resultSet()) {
                 double x;
                 double z;
-                Location location = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoorLocation());
+                Location location = TardisStaticLocationGetters.getLocationFromDB(rsd.getDoorLocation());
                 switch (rsd.getDoorDirection()) {
                     case NORTH -> {
                         x = 0.5;

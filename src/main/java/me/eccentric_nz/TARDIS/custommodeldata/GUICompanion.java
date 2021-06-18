@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
-public enum GUICompanion {
+public enum GuiCompanion {
 
     // Add Companion
     INFO(1, 45, Material.BOOK),
@@ -31,7 +31,7 @@ public enum GUICompanion {
     private final int slot;
     private final Material material;
 
-    GUICompanion(int customModelData, int slot, Material material) {
+    GuiCompanion(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -52,8 +52,8 @@ public enum GUICompanion {
     public String getName() {
         String s = toString();
         if (s.startsWith("BUTTON")) {
-            TARDISPlugin.plugin.getLanguage().getString("s");
+            TardisPlugin.plugin.getLanguage().getString("s");
         }
-        return TARDISStringUtils.sentenceCase(s);
+        return TardisStringUtils.sentenceCase(s);
     }
 }

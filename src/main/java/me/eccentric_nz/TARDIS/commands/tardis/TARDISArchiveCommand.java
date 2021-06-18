@@ -17,22 +17,22 @@
 package me.eccentric_nz.tardis.commands.tardis;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.tardis.builders.TARDISTIPSData;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
 import me.eccentric_nz.tardis.database.data.Archive;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.ConsoleSize;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.schematic.*;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicBuilder.ArchiveData;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.schematic.TardisSchematicBuilder.ArchiveData;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -44,18 +44,18 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISArchiveCommand {
+class TardisArchiveCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> subs = Arrays.asList("add", "description", "remove", "scan", "update", "y");
 
-    TARDISArchiveCommand(TARDISPlugin plugin) {
+    TardisArchiveCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean zip(Player player, String[] args) {
-        if (!TARDISPermission.hasPermission(player, "tardis.archive")) {
-            TARDISMessage.send(player, "NO_PERMS");
+        if (!TardisPermission.hasPermission(player, "tardis.archive")) {
+            TardisMessage.send(player, "NO_PERMS");
             return true;
         }
         if (args.length < 2) {
@@ -63,32 +63,32 @@ class TARDISArchiveCommand {
         }
         String sub = args[1].toLowerCase(Locale.ENGLISH);
         if (!subs.contains(sub)) {
-            TARDISMessage.send(player, "ARG_NOT_VALID");
+            TardisMessage.send(player, "ARG_NOT_VALID");
             return true;
         }
         String uuid = player.getUniqueId().toString();
         String name = (args.length > 2) ? args[2].toUpperCase(Locale.ENGLISH) : "ARCHIVE";
         if (sub.equals("add") || sub.equals("description") || sub.equals("remove") || sub.equals("update") || sub.equals("y")) {
             if (args.length < 3) {
-                TARDISMessage.send(player, "SCHM_NAME");
+                TardisMessage.send(player, "SCHM_NAME");
                 return true;
             } else {
                 // check name
                 ResultSetArchiveName rsa = new ResultSetArchiveName(plugin, name);
                 boolean exists = rsa.exists();
                 if (sub.equals("add") && exists) {
-                    TARDISMessage.send(player, "ARCHIVE_EXIST", name);
+                    TardisMessage.send(player, "ARCHIVE_EXIST", name);
                     return true;
                 }
                 if ((sub.equals("description") || sub.equals("remove") || sub.equals("update") || sub.equals("y")) && !exists) {
-                    TARDISMessage.send(player, "ARCHIVE_NOT_EXIST", name);
+                    TardisMessage.send(player, "ARCHIVE_NOT_EXIST", name);
                     return true;
                 }
                 if (sub.equals("add")) {
                     // check have not reached limit
                     ResultSetArchiveCount rsc = new ResultSetArchiveCount(plugin, uuid);
                     if (rsc.count() >= plugin.getConfig().getInt("archive.limit")) {
-                        TARDISMessage.send(player, "ARCHIVE_LIMIT");
+                        TardisMessage.send(player, "ARCHIVE_LIMIT");
                         return true;
                     }
                 }
@@ -96,7 +96,7 @@ class TARDISArchiveCommand {
                     // check archive is not active
                     ResultSetArchiveUse rsu = new ResultSetArchiveUse(plugin, uuid, name);
                     if (rsu.inActive()) {
-                        TARDISMessage.send(player, "ARCHIVE_IN_USE");
+                        TardisMessage.send(player, "ARCHIVE_IN_USE");
                         return true;
                     }
                 }
@@ -106,14 +106,14 @@ class TARDISArchiveCommand {
             // update y
             if (args.length > 3 && (args[3].equals("64") || args[3].equals("65"))) {
                 HashMap<String, Object> set = new HashMap<>();
-                set.put("y", TARDISNumberParsers.parseInt(args[3]));
+                set.put("y", TardisNumberParsers.parseInt(args[3]));
                 HashMap<String, Object> wherey = new HashMap<>();
                 wherey.put("uuid", uuid);
                 wherey.put("name", name);
                 plugin.getQueryFactory().doUpdate("archive", set, wherey);
-                TARDISMessage.send(player, "ARCHIVE_UPDATE", name);
+                TardisMessage.send(player, "ARCHIVE_UPDATE", name);
             } else {
-                TARDISMessage.send(player, "ARCHIVE_Y");
+                TardisMessage.send(player, "ARCHIVE_Y");
             }
             return true;
         }
@@ -130,7 +130,7 @@ class TARDISArchiveCommand {
                 where.put("uuid", uuid);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                 if (rs.resultSet()) {
-                    TARDIS tardis = rs.getTardis();
+                    Tardis tardis = rs.getTardis();
                     Schematic current = tardis.getSchematic();
                     // get the schematic start location, width, length and height
                     JsonObject obj = null;
@@ -152,7 +152,7 @@ class TARDISArchiveCommand {
                             return true;
                         }
                         // get JSON
-                        obj = TARDISSchematicGZip.unzip(path);
+                        obj = TardisSchematicGZip.unzip(path);
                     }
                     if (obj != null) {
                         // get dimensions
@@ -190,7 +190,7 @@ class TARDISArchiveCommand {
                                     }
                                 }
                             } catch (IllegalArgumentException e) {
-                                TARDISMessage.send(player, "ARCHIVE_SIZE");
+                                TardisMessage.send(player, "ARCHIVE_SIZE");
                                 return true;
                             }
                         }
@@ -199,8 +199,8 @@ class TARDISArchiveCommand {
                         id = tardis.getTardisId();
                         int sx, sz;
                         if (slot != -1) { // default world - use TIPS
-                            TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                            TARDISTIPSData pos = tintpos.getTIPSData(slot);
+                            TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
+                            TardisTipsData pos = tintpos.getTIPSData(slot);
                             sx = pos.getCentreX();
                             sz = pos.getCentreZ();
                         } else {
@@ -208,10 +208,10 @@ class TARDISArchiveCommand {
                             sx = gsl[0];
                             sz = gsl[2];
                         }
-                        int sy = TARDISConstants.HIGHER.contains(current.getPermission()) ? 65 : 64;
-                        ArchiveData ad = new TARDISSchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c).build();
+                        int sy = TardisConstants.HIGHER.contains(current.getPermission()) ? 65 : 64;
+                        ArchiveData ad = new TardisSchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c).build();
                         if (sub.equals("scan")) {
-                            TARDISMessage.send(player, "ARCHIVE_SCAN");
+                            TardisMessage.send(player, "ARCHIVE_SCAN");
                             return true;
                         }
                         HashMap<String, Object> set = new HashMap<>();
@@ -231,7 +231,7 @@ class TARDISArchiveCommand {
                             set.put("name", name);
                             set.put("y", sy);
                             plugin.getQueryFactory().doInsert("archive", set);
-                            TARDISMessage.send(player, "ARCHIVE_ADD", name);
+                            TardisMessage.send(player, "ARCHIVE_ADD", name);
                             return true;
                         }
                         // update json in database
@@ -239,15 +239,15 @@ class TARDISArchiveCommand {
                         whereu.put("uuid", uuid);
                         whereu.put("name", name);
                         plugin.getQueryFactory().doUpdate("archive", set, whereu);
-                        TARDISMessage.send(player, "ARCHIVE_UPDATE", name);
+                        TardisMessage.send(player, "ARCHIVE_UPDATE", name);
                     } else {
-                        TARDISMessage.send(player, "ARCHIVE_NO_JSON");
+                        TardisMessage.send(player, "ARCHIVE_NO_JSON");
                     }
                 } else {
-                    TARDISMessage.send(player, "CMD_ONLY_TL");
+                    TardisMessage.send(player, "CMD_ONLY_TL");
                 }
             } else {
-                TARDISMessage.send(player, "CMD_IN_WORLD");
+                TardisMessage.send(player, "CMD_IN_WORLD");
             }
             return true;
         }
@@ -268,7 +268,7 @@ class TARDISArchiveCommand {
             whereu.put("uuid", uuid);
             whereu.put("name", name);
             plugin.getQueryFactory().doUpdate("archive", set, whereu);
-            TARDISMessage.send(player, "ARCHIVE_DESC", name);
+            TardisMessage.send(player, "ARCHIVE_DESC", name);
             return true;
         }
         if (sub.equals("remove")) {
@@ -277,7 +277,7 @@ class TARDISArchiveCommand {
             whereu.put("uuid", uuid);
             whereu.put("name", name);
             plugin.getQueryFactory().doDelete("archive", whereu);
-            TARDISMessage.send(player, "ARCHIVE_REMOVE", name);
+            TardisMessage.send(player, "ARCHIVE_REMOVE", name);
         }
         return true;
     }

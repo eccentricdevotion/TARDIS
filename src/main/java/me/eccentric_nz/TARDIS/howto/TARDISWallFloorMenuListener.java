@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.howto;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
-import me.eccentric_nz.tardis.rooms.TARDISWalls;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
+import me.eccentric_nz.tardis.rooms.TardisWalls;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -42,18 +42,18 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISWallFloorMenuListener extends TARDISMenuListener implements Listener {
+public class TardisWallFloorMenuListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<UUID, Integer> scroll = new HashMap<>();
     private final List<UUID> scrolling = new ArrayList<>();
     private final ItemStack[][] blocks;
     private final int rows;
 
-    public TARDISWallFloorMenuListener(TARDISPlugin plugin) {
+    public TardisWallFloorMenuListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
-        rows = TARDISWalls.BLOCKS.size() / 8 + 1;
+        rows = TardisWalls.BLOCKS.size() / 8 + 1;
         blocks = getWallBlocks();
     }
 
@@ -129,7 +129,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
     private void back(Player p) {
         close(p);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
+            ItemStack[] seeds = new TardisSeedsInventory(plugin, p).getMenu();
             Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "tardis Seeds Menu");
             gui.setContents(seeds);
             p.openInventory(gui);
@@ -164,7 +164,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
         ItemStack[][] stacks = new ItemStack[rows][8];
         int r = 0;
         int c = 0;
-        for (Material entry : TARDISWalls.BLOCKS) {
+        for (Material entry : TardisWalls.BLOCKS) {
             ItemStack is = new ItemStack(entry, 1);
             stacks[r][c] = is;
             c++;

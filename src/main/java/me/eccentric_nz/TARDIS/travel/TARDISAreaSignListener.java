@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -36,11 +36,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISAreaSignListener extends TARDISMenuListener implements Listener {
+public class TardisAreaSignListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISAreaSignListener(TARDISPlugin plugin) {
+    public TardisAreaSignListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
     }
@@ -72,13 +72,13 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
                         String area = im.getDisplayName();
                         Location l = plugin.getTardisArea().getNextSpot(area);
                         if (l == null) {
-                            TARDISMessage.send(player, "NO_MORE_SPOTS");
+                            TardisMessage.send(player, "NO_MORE_SPOTS");
                             close(player);
                             return;
                         }
                         // check the player is not already in the area!
                         if (plugin.getTardisArea().areaCheckInExisting(l)) {
-                            TARDISMessage.send(player, "TRAVEL_NO_AREA");
+                            TardisMessage.send(player, "TRAVEL_NO_AREA");
                             close(player);
                             return;
                         }
@@ -96,7 +96,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
                     wheres.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rs = new ResultSetTravellers(plugin, wheres, false);
                     if (rs.resultSet()) {
-                        TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardisId(), player);
+                        TardisSaveSignInventory sst = new TardisSaveSignInventory(plugin, rs.getTardisId(), player);
                         ItemStack[] items = sst.getTerminal();
                         Inventory saveinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis saves");
                         saveinv.setContents(items);

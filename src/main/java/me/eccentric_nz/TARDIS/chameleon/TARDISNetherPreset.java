@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISNetherPreset extends TARDISPreset {
+class TardisNetherPreset extends TardisPreset {
 
-    TARDISNetherPreset() {
+    TardisNetherPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:nether_brick_stairs[half=bottom,facing=south,shape=straight]";

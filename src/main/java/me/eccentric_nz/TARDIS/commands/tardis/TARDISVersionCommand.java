@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.utility.TARDISUpdateChecker;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.utility.TardisUpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -30,11 +30,11 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-class TARDISVersionCommand {
+class TardisVersionCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISVersionCommand(TARDISPlugin plugin) {
+    TardisVersionCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -60,7 +60,7 @@ class TARDISVersionCommand {
         // check for new tardis build
         if (sender.isOp()) {
             sender.sendMessage(pluginName + "Checking for new tardis builds...");
-            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new TARDISUpdateChecker(plugin, sender));
+            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new TardisUpdateChecker(plugin, sender));
         }
         return true;
     }

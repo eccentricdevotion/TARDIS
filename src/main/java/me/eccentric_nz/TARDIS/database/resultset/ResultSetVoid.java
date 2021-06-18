@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,9 +34,9 @@ import java.sql.SQLException;
  */
 public class ResultSetVoid {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int tardisId;
     private final String prefix;
 
@@ -46,7 +46,7 @@ public class ResultSetVoid {
      * @param plugin   an instance of the main class.
      * @param tardisId the tardis id to check
      */
-    public ResultSetVoid(TARDISPlugin plugin, int tardisId) {
+    public ResultSetVoid(TardisPlugin plugin, int tardisId) {
         this.plugin = plugin;
         this.tardisId = tardisId;
         prefix = this.plugin.getPrefix();

@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardis.chatGUI;
+package me.eccentric_nz.tardis.chatgui;
 
 import me.eccentric_nz.tardis.enumeration.Updateable;
-import me.eccentric_nz.tardis.update.TARDISUpdateableCategory;
+import me.eccentric_nz.tardis.update.TardisUpdateableCategory;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISChatGUIJSON {
+public class TardisChatGuiJson {
 
     private final List<TextComponent> sections = new ArrayList<>();
     private final List<TextComponent> controls = new ArrayList<>();
@@ -37,31 +37,31 @@ public class TARDISChatGUIJSON {
     private final List<TextComponent> locations = new ArrayList<>();
     private final List<TextComponent> others = new ArrayList<>();
 
-    public TARDISChatGUIJSON() {
+    public TardisChatGuiJson() {
         int s = 1;
         int c = 1;
         int i = 1;
         int l = 1;
         int o = 1;
-        for (TARDISUpdateableCategory category : TARDISUpdateableCategory.values()) {
+        for (TardisUpdateableCategory category : TardisUpdateableCategory.values()) {
             sections.add(buildTextComponent(s, category.getName(), category.toString().toLowerCase(), "section"));
             s++;
         }
         for (Updateable updateable : Updateable.values()) {
             // counter, updateable.getDescription(), updateable.getName()
-            if (updateable.getCategory() == TARDISUpdateableCategory.CONTROLS) {
+            if (updateable.getCategory() == TardisUpdateableCategory.CONTROLS) {
                 controls.add(buildTextComponent(c, updateable.getDescription(), updateable.getName(), "update"));
                 c++;
             }
-            if (updateable.getCategory() == TARDISUpdateableCategory.INTERFACES) {
+            if (updateable.getCategory() == TardisUpdateableCategory.INTERFACES) {
                 interfaces.add(buildTextComponent(i, updateable.getDescription(), updateable.getName(), "update"));
                 i++;
             }
-            if (updateable.getCategory() == TARDISUpdateableCategory.LOCATIONS) {
+            if (updateable.getCategory() == TardisUpdateableCategory.LOCATIONS) {
                 locations.add(buildTextComponent(l, updateable.getDescription(), updateable.getName(), "update"));
                 l++;
             }
-            if (updateable.getCategory() == TARDISUpdateableCategory.OTHERS) {
+            if (updateable.getCategory() == TardisUpdateableCategory.OTHERS) {
                 others.add(buildTextComponent(o, updateable.getDescription(), updateable.getName(), "update"));
                 o++;
             }

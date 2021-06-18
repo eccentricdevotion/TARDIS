@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.desktop.TARDISRepair;
-import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
+import me.eccentric_nz.tardis.desktop.TardisRepair;
+import me.eccentric_nz.tardis.desktop.TardisUpgradeData;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -30,11 +30,11 @@ import java.util.UUID;
 
 public class SudoRepair {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final UUID uuid;
     private final boolean clean;
 
-    public SudoRepair(TARDISPlugin plugin, UUID uuid, boolean clean) {
+    public SudoRepair(TardisPlugin plugin, UUID uuid, boolean clean) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.clean = clean;
@@ -47,18 +47,18 @@ public class SudoRepair {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
-            TARDISMessage.send(player, "NO_TARDIS");
+            TardisMessage.send(player, "NO_TARDIS");
             return false;
         }
-        TARDIS tardis = rs.getTardis();
+        Tardis tardis = rs.getTardis();
         // get player's current console
         Schematic current_console = tardis.getSchematic();
         int level = tardis.getArtronLevel();
-        TARDISUpgradeData tud = new TARDISUpgradeData();
+        TardisUpgradeData tud = new TardisUpgradeData();
         tud.setPrevious(current_console);
         tud.setLevel(level);
         plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
-        TARDISRepair tr = new TARDISRepair(plugin, player);
+        TardisRepair tr = new TardisRepair(plugin, player);
         tr.restore(clean);
         return true;
     }

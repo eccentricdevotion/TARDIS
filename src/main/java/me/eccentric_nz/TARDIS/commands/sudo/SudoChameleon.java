@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.remote.TARDISRemoteRebuildCommand;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.remote.TardisRemoteRebuildCommand;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
@@ -34,29 +34,29 @@ import java.util.HashMap;
  */
 public class SudoChameleon {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    SudoChameleon(TARDISPlugin plugin) {
+    SudoChameleon(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public boolean setPreset(CommandSender sender, int id, String[] args, OfflinePlayer offlinePlayer) {
         try {
-            PRESET preset = PRESET.valueOf(args[2].toUpperCase());
+            Preset preset = Preset.valueOf(args[2].toUpperCase());
             if (preset.getSlot() == -1) {
-                TARDISMessage.send(sender, "CHAM_NOT_VALID", preset.toString());
+                TardisMessage.send(sender, "CHAM_NOT_VALID", preset.toString());
             } else {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("chameleon_preset", preset.toString());
                 plugin.getQueryFactory().doUpdate("tardis", set, where);
-                TARDISMessage.send(sender, "CHAM_SET", preset.toString());
+                TardisMessage.send(sender, "CHAM_SET", preset.toString());
                 // perform rebuild
-                return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, offlinePlayer, true);
+                return new TardisRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, offlinePlayer, true);
             }
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(sender, "ABANDONED_PRESET");
+            TardisMessage.send(sender, "ABANDONED_PRESET");
         }
         return true;
     }

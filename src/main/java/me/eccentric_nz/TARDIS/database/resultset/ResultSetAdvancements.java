@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 
 import java.sql.*;
 import java.util.*;
@@ -31,9 +31,9 @@ import java.util.*;
  */
 public class ResultSetAdvancements {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
@@ -52,7 +52,7 @@ public class ResultSetAdvancements {
      * @param multiple a boolean setting whether to retrieve more than on record, it true returns an ArrayList that can
      *                 be looped through later.
      */
-    public ResultSetAdvancements(TARDISPlugin plugin, HashMap<String, Object> where, boolean multiple) {
+    public ResultSetAdvancements(TardisPlugin plugin, HashMap<String, Object> where, boolean multiple) {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;

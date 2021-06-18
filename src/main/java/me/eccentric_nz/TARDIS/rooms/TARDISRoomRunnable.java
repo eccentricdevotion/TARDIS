@@ -18,15 +18,15 @@ package me.eccentric_nz.tardis.rooms;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetFarming;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisTimeLordName;
 import me.eccentric_nz.tardis.enumeration.Room;
 import me.eccentric_nz.tardis.enumeration.UseClay;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.utility.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -43,7 +43,7 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
-import static me.eccentric_nz.tardis.schematic.TARDISBannerSetter.setBanners;
+import static me.eccentric_nz.tardis.schematic.TardisBannerSetter.setBanners;
 
 /**
  * The tardis had a swimming pool. After the tardis' crash following the Doctor's tenth regeneration, the pool's water -
@@ -52,9 +52,9 @@ import static me.eccentric_nz.tardis.schematic.TARDISBannerSetter.setBanners;
  *
  * @author eccentric_nz
  */
-public class TARDISRoomRunnable implements Runnable {
+public class TardisRoomRunnable implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Location location;
     private final JsonObject schematic;
     private final int tardisId;
@@ -83,7 +83,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final HashMap<Block, BlockData> torchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> redstoneTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockFace> mushroomBlocks = new HashMap<>();
-    private final HashMap<Block, TARDISBannerData> bannerBlocks = new HashMap<>();
+    private final HashMap<Block, TardisBannerData> bannerBlocks = new HashMap<>();
     private final BlockFace[] repeaterData = new BlockFace[6];
     private final HashMap<Integer, Integer> repeaterOrder = new HashMap<>();
     private final boolean wasResumed;
@@ -95,7 +95,7 @@ public class TARDISRoomRunnable implements Runnable {
     private JsonArray arr;
     private Location aquaSpawn;
 
-    public TARDISRoomRunnable(TARDISPlugin plugin, TARDISRoomData roomData, Player player) {
+    public TardisRoomRunnable(TardisPlugin plugin, TardisRoomData roomData, Player player) {
         this.plugin = plugin;
         this.player = player;
         location = roomData.getLocation();
@@ -175,7 +175,7 @@ public class TARDISRoomRunnable implements Runnable {
                     // process post block list
                     for (String s : postBlocks) {
                         String[] split = s.split("~");
-                        Location location = TARDISStaticLocationGetters.getLocationFromDB(split[0]);
+                        Location location = TardisStaticLocationGetters.getLocationFromDB(split[0]);
                         if (location != null) {
                             Block postBlock = world.getBlockAt(location);
                             BlockData postData = plugin.getServer().createBlockData(split[1]);
@@ -231,25 +231,25 @@ public class TARDISRoomRunnable implements Runnable {
                         }
                     }
                 } else {
-                    TARDISRoomData trd = plugin.getTrackerKeeper().getRoomTasks().get(task);
+                    TardisRoomData trd = plugin.getTrackerKeeper().getRoomTasks().get(task);
                     trd.setPostBlocks(new ArrayList<>());
                     plugin.getTrackerKeeper().getRoomTasks().put(task, trd);
                 }
                 plugin.getBuildKeeper().getRoomProgress().put(player.getUniqueId(), 0);
                 running = true;
-                String grammar = (TARDISConstants.VOWELS.contains(room.substring(0, 1))) ? "an " + room : "a " + room;
+                String grammar = (TardisConstants.VOWELS.contains(room.substring(0, 1))) ? "an " + room : "a " + room;
                 if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                     grammar += " WELL";
                 }
                 if (player != null) {
-                    TARDISMessage.send(player, "ROOM_START", grammar);
+                    TardisMessage.send(player, "ROOM_START", grammar);
                 }
             }
             if (level == h && row == w && col == (c - 1)) {
                 // the entire schematic has been read :)
                 if (iceBlocks.size() > 0) {
                     if (player != null) {
-                        TARDISMessage.send(player, "ICE");
+                        TardisMessage.send(player, "ICE");
                     }
                     // set all the ice to water
                     iceBlocks.forEach((ice) -> ice.setBlockData(Material.WATER.createBlockData()));
@@ -275,7 +275,7 @@ public class TARDISRoomRunnable implements Runnable {
                         ResultSetFarming rsf = new ResultSetFarming(plugin, tardisId);
                         if (rsf.resultSet()) {
                             // resuming room growing...
-                            aquaSpawn = TARDISStaticLocationGetters.getSpawnLocationFromDB(rsf.getFarming().getAquarium());
+                            aquaSpawn = TardisStaticLocationGetters.getSpawnLocationFromDB(rsf.getFarming().getAquarium());
                         }
                     }
                     // add some underwater flora
@@ -287,8 +287,8 @@ public class TARDISRoomRunnable implements Runnable {
                     int minusY = aquaSpawn.getBlockY() - 1;
                     for (int ax = plusX; ax < plusX + 5; ax++) {
                         for (int az = plusZ; az < plusZ + 5; az++) {
-                            if (world.getBlockAt(ax, minusY, az).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
-                                BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
+                            if (world.getBlockAt(ax, minusY, az).getType().equals(Material.SAND) && TardisConstants.RANDOM.nextInt(100) < 66) {
+                                BlockData f = flora.get(TardisConstants.RANDOM.nextInt(flora.size()));
                                 switch (f.getMaterial()) {
                                     case KELP -> {
                                         world.getBlockAt(ax, y + 1, az).setBlockData(f);
@@ -301,7 +301,7 @@ public class TARDISRoomRunnable implements Runnable {
                                         world.getBlockAt(ax, y + 1, az).setBlockData(f);
                                     }
                                     case SEA_PICKLE -> {
-                                        ((SeaPickle) f).setPickles(TARDISConstants.RANDOM.nextInt(4) + 1);
+                                        ((SeaPickle) f).setPickles(TardisConstants.RANDOM.nextInt(4) + 1);
                                         world.getBlockAt(ax, y, az).setBlockData(f);
                                     }
                                     default -> world.getBlockAt(ax, y, az).setBlockData(f);
@@ -311,8 +311,8 @@ public class TARDISRoomRunnable implements Runnable {
                     }
                     for (int bx = minusX; bx > minusX - 5; bx--) {
                         for (int bz = plusZ; bz < plusZ + 5; bz++) {
-                            if (world.getBlockAt(bx, minusY, bz).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
-                                BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
+                            if (world.getBlockAt(bx, minusY, bz).getType().equals(Material.SAND) && TardisConstants.RANDOM.nextInt(100) < 66) {
+                                BlockData f = flora.get(TardisConstants.RANDOM.nextInt(flora.size()));
                                 switch (f.getMaterial()) {
                                     case KELP -> {
                                         world.getBlockAt(bx, y + 1, bz).setBlockData(f);
@@ -325,7 +325,7 @@ public class TARDISRoomRunnable implements Runnable {
                                         world.getBlockAt(bx, y + 1, bz).setBlockData(f);
                                     }
                                     case SEA_PICKLE -> {
-                                        ((SeaPickle) f).setPickles(TARDISConstants.RANDOM.nextInt(4) + 1);
+                                        ((SeaPickle) f).setPickles(TardisConstants.RANDOM.nextInt(4) + 1);
                                         world.getBlockAt(bx, y, bz).setBlockData(f);
                                     }
                                     default -> world.getBlockAt(bx, y, bz).setBlockData(f);
@@ -335,8 +335,8 @@ public class TARDISRoomRunnable implements Runnable {
                     }
                     for (int cx = minusX; cx > minusX - 5; cx--) {
                         for (int cz = minusZ; cz > minusZ - 5; cz--) {
-                            if (world.getBlockAt(cx, minusY, cz).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
-                                BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
+                            if (world.getBlockAt(cx, minusY, cz).getType().equals(Material.SAND) && TardisConstants.RANDOM.nextInt(100) < 66) {
+                                BlockData f = flora.get(TardisConstants.RANDOM.nextInt(flora.size()));
                                 switch (f.getMaterial()) {
                                     case KELP -> {
                                         world.getBlockAt(cx, y + 1, cz).setBlockData(f);
@@ -349,7 +349,7 @@ public class TARDISRoomRunnable implements Runnable {
                                         world.getBlockAt(cx, y + 1, cz).setBlockData(f);
                                     }
                                     case SEA_PICKLE -> {
-                                        ((SeaPickle) f).setPickles(TARDISConstants.RANDOM.nextInt(4) + 1);
+                                        ((SeaPickle) f).setPickles(TardisConstants.RANDOM.nextInt(4) + 1);
                                         world.getBlockAt(cx, y, cz).setBlockData(f);
                                     }
                                     default -> world.getBlockAt(cx, y, cz).setBlockData(f);
@@ -359,8 +359,8 @@ public class TARDISRoomRunnable implements Runnable {
                     }
                     for (int dx = plusX; dx < plusX + 5; dx++) {
                         for (int dz = minusZ; dz > minusZ - 5; dz--) {
-                            if (world.getBlockAt(dx, minusY, dz).getType().equals(Material.SAND) && TARDISConstants.RANDOM.nextInt(100) < 66) {
-                                BlockData f = flora.get(TARDISConstants.RANDOM.nextInt(flora.size()));
+                            if (world.getBlockAt(dx, minusY, dz).getType().equals(Material.SAND) && TardisConstants.RANDOM.nextInt(100) < 66) {
+                                BlockData f = flora.get(TardisConstants.RANDOM.nextInt(flora.size()));
                                 switch (f.getMaterial()) {
                                     case KELP -> {
                                         world.getBlockAt(dx, y + 1, dz).setBlockData(f);
@@ -373,7 +373,7 @@ public class TARDISRoomRunnable implements Runnable {
                                         world.getBlockAt(dx, y + 1, dz).setBlockData(f);
                                     }
                                     case SEA_PICKLE -> {
-                                        ((SeaPickle) f).setPickles(TARDISConstants.RANDOM.nextInt(4) + 1);
+                                        ((SeaPickle) f).setPickles(TardisConstants.RANDOM.nextInt(4) + 1);
                                         world.getBlockAt(dx, y, dz).setBlockData(f);
                                     }
                                     default -> world.getBlockAt(dx, y, dz).setBlockData(f);
@@ -393,7 +393,7 @@ public class TARDISRoomRunnable implements Runnable {
                         int pz = rel.get("z").getAsInt();
                         Art art = Art.valueOf(painting.get("art").getAsString());
                         BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-                        Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetX + px, resetY + py, resetZ + pz));
+                        Location pl = TardisPainting.calculatePosition(art, facing, new Location(world, resetX + px, resetY + py, resetZ + pz));
                         try {
                             Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
                             ent.teleport(pl);
@@ -456,9 +456,9 @@ public class TARDISRoomRunnable implements Runnable {
                 leverBlocks.clear();
                 // update lamp block states
                 if (player != null) {
-                    TARDISMessage.send(player, "ROOM_POWER");
+                    TardisMessage.send(player, "ROOM_POWER");
                 }
-                lampBlocks.forEach((lamp) -> lamp.setBlockData(TARDISConstants.LAMP));
+                lampBlocks.forEach((lamp) -> lamp.setBlockData(TardisConstants.LAMP));
                 lampBlocks.clear();
                 // put torches on
                 torchBlocks.forEach((key, value) -> key.setBlockData(value, true));
@@ -478,11 +478,11 @@ public class TARDISRoomRunnable implements Runnable {
                 task = 0;
                 String rname = (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) ? room + " WELL" : room;
                 if (player != null) {
-                    TARDISMessage.send(player, "ROOM_FINISHED", rname);
+                    TardisMessage.send(player, "ROOM_FINISHED", rname);
                 }
                 plugin.getBuildKeeper().getRoomProgress().remove(player.getUniqueId());
             } else {
-                TARDISRoomData rd = plugin.getTrackerKeeper().getRoomTasks().get(task);
+                TardisRoomData rd = plugin.getTrackerKeeper().getRoomTasks().get(task);
                 // place one block
                 JsonObject v = arr.get(level).getAsJsonArray().get(row).getAsJsonArray().get(col).getAsJsonObject();
                 BlockData data = plugin.getServer().createBlockData(v.get("data").getAsString());
@@ -520,7 +520,7 @@ public class TARDISRoomRunnable implements Runnable {
                 if (type.equals(Material.ORANGE_WOOL)) {
                     if (wallType.equals(Material.ORANGE_WOOL) || ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && (wallType.equals(Material.LIME_WOOL) || wallType.equals(Material.PINK_WOOL)))) {
                         if (ow.equals(Material.ORANGE_WOOL)) {
-                            data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                            data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
                         } else {
                             data = ow.createBlockData();
                         }
@@ -557,7 +557,7 @@ public class TARDISRoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertControl(tardisId, 34, new Location(world, startX, startY, startZ).toString(), 1);
                 }
                 // set drop chest
-                if (type.equals(Material.TRAPPED_CHEST) && room.equals("VAULT") && player != null && TARDISPermission.hasPermission(player, "tardis.vault")) {
+                if (type.equals(Material.TRAPPED_CHEST) && room.equals("VAULT") && player != null && TardisPermission.hasPermission(player, "tardis.vault")) {
                     // determine the min x, y, z coords
                     int mx = startX % 16;
                     if (mx < 0) {
@@ -614,7 +614,7 @@ public class TARDISRoomRunnable implements Runnable {
                     if (room.equals("RENDERER") || room.equals("ZERO")) {
                         plugin.getQueryFactory().doUpdate("tardis", sets, wheres);
                     } else if (room.equals("MAZE")) {
-                        String loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startX, startY + 1, startZ);
+                        String loc_str = TardisStaticLocationGetters.makeLocationStr(world, startX, startY + 1, startZ);
                         plugin.getQueryFactory().insertControl(tardisId, 44, loc_str, 0);
                     } else {
                         ResultSetFarming rsf = new ResultSetFarming(plugin, tardisId);
@@ -634,7 +634,7 @@ public class TARDISRoomRunnable implements Runnable {
                         case IGLOO -> data = Material.PACKED_ICE.createBlockData();
                         case ZERO -> data = Material.PINK_CARPET.createBlockData();
                         default -> {
-                            data = TARDISConstants.BLACK;
+                            data = TardisConstants.BLACK;
                             // add WorldGuard region
                             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                                 String name = "";
@@ -718,11 +718,11 @@ public class TARDISRoomRunnable implements Runnable {
                     rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + data.getAsString());
                 }
                 // remember banners
-                if (TARDISStaticUtils.isBanner(type)) {
+                if (TardisStaticUtils.isBanner(type)) {
                     Block banner = world.getBlockAt(startX, startY, startZ);
                     JsonObject state = v.has("banner") ? v.get("banner").getAsJsonObject() : null;
                     if (state != null) {
-                        TARDISBannerData tbd = new TARDISBannerData(data, state);
+                        TardisBannerData tbd = new TardisBannerData(data, state);
                         bannerBlocks.put(banner, tbd);
                     }
                 }
@@ -792,9 +792,9 @@ public class TARDISRoomRunnable implements Runnable {
                 // always replace bedrock (the door space in ars rooms)
                 if ((type.equals(Material.BEDROCK) && !room.equals("SHELL")) || (type.equals(Material.SOUL_SAND) && room.equals("SHELL"))) {
                     if (checkRoomNextDoor(world.getBlockAt(startX, startY, startZ))) {
-                        data = TARDISConstants.AIR;
+                        data = TardisConstants.AIR;
                     } else {
-                        BlockData wall = (ow.equals(Material.ORANGE_WOOL)) ? plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46)) : ow.createBlockData();
+                        BlockData wall = (ow.equals(Material.ORANGE_WOOL)) ? plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(46)) : ow.createBlockData();
                         data = (wallType.equals(Material.ORANGE_WOOL)) ? wall : wallType.createBlockData();
                     }
                 }
@@ -813,14 +813,14 @@ public class TARDISRoomRunnable implements Runnable {
                         }
                         if (bottomdoorblock != null) {
                             Block topdoorblock = bottomdoorblock.getRelative(BlockFace.UP);
-                            bottomdoorblock.setBlockData(TARDISConstants.AIR);
-                            topdoorblock.setBlockData(TARDISConstants.AIR);
+                            bottomdoorblock.setBlockData(TardisConstants.AIR);
+                            topdoorblock.setBlockData(TardisConstants.AIR);
                         }
                     }
                 }
                 // always remove sponge
                 if (type.equals(Material.SPONGE)) {
-                    data = TARDISConstants.AIR;
+                    data = TardisConstants.AIR;
                 } else {
                     Block existing = world.getBlockAt(startX, startY, startZ);
                     if (!existing.getType().isAir() && !(room.equals("BAMBOO") && existing.getType().equals(Material.BAMBOO))) {
@@ -846,9 +846,9 @@ public class TARDISRoomRunnable implements Runnable {
                 chunkList.add(thisChunk);
                 if (!notThese.contains(type) && !type.equals(Material.MUSHROOM_STEM)) {
                     if (type.equals(Material.WATER)) {
-                        TARDISBlockSetters.setBlock(world, startX, startY, startZ, Material.ICE.createBlockData());
+                        TardisBlockSetters.setBlock(world, startX, startY, startZ, Material.ICE.createBlockData());
                     } else {
-                        TARDISBlockSetters.setBlock(world, startX, startY, startZ, data);
+                        TardisBlockSetters.setBlock(world, startX, startY, startZ, data);
                     }
                 }
                 // remember ice blocks
@@ -873,7 +873,7 @@ public class TARDISRoomRunnable implements Runnable {
                         task = 0;
                         return;
                     }
-                    rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + TARDISConstants.LAMP.getAsString());
+                    rd.getPostBlocks().add(world.getName() + ":" + startX + ":" + startY + ":" + startZ + "~" + TardisConstants.LAMP.getAsString());
                 }
                 if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                     String loc;
@@ -904,7 +904,7 @@ public class TARDISRoomRunnable implements Runnable {
                     }
                 }
                 if (room.equals("MAZE") && type.equals(Material.STONE_PRESSURE_PLATE)) {
-                    String loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startX, startY, startZ);
+                    String loc_str = TardisStaticLocationGetters.makeLocationStr(world, startX, startY, startZ);
                     int maze = 40 + mazeCount;
                     plugin.getQueryFactory().insertControl(tardisId, maze, loc_str, 0);
                     mazeCount++;
@@ -920,7 +920,7 @@ public class TARDISRoomRunnable implements Runnable {
                         switch (type) {
                             case STONE_BUTTON -> { // stone button - TARDISConstants.RANDOM
                                 control_type = 1;
-                                loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startX, startY, startZ);
+                                loc_str = TardisStaticLocationGetters.makeLocationStr(world, startX, startY, startZ);
                             }
                             case MUSHROOM_STEM -> { // repeater
                                 control_type = repeaterOrder.get(r);
@@ -931,11 +931,11 @@ public class TARDISRoomRunnable implements Runnable {
                             }
                             case OAK_BUTTON -> { // oak button - artron
                                 control_type = 6;
-                                loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startX, startY, startZ);
+                                loc_str = TardisStaticLocationGetters.makeLocationStr(world, startX, startY, startZ);
                             }
                             default -> { // cake - handbrake
                                 control_type = 0;
-                                loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startX, startY, startZ);
+                                loc_str = TardisStaticLocationGetters.makeLocationStr(world, startX, startY, startZ);
                             }
                         }
                         plugin.getQueryFactory().insertControl(tardisId, control_type, loc_str, secondary);
@@ -945,7 +945,7 @@ public class TARDISRoomRunnable implements Runnable {
                     // remember the button
                     String loc_str;
                     if (type.equals(Material.OAK_BUTTON)) {
-                        loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startX, startY, startZ);
+                        loc_str = TardisStaticLocationGetters.makeLocationStr(world, startX, startY, startZ);
                         plugin.getQueryFactory().insertControl(tardisId, 17, loc_str, 0);
                     }
                 }
@@ -963,10 +963,10 @@ public class TARDISRoomRunnable implements Runnable {
                     startX = resetX;
                     startZ = resetZ;
                     startY += 1;
-                    int percent = TARDISNumberParsers.roundUp(level * 100, h);
+                    int percent = TardisNumberParsers.roundUp(level * 100, h);
                     if (percent > 0 && player != null) {
                         plugin.getBuildKeeper().getRoomProgress().put(player.getUniqueId(), percent);
-                        TARDISMessage.send(player, "ROOM_PERCENT", room, String.format("%d", percent));
+                        TardisMessage.send(player, "ROOM_PERCENT", room, String.format("%d", percent));
                     }
                     level++;
                 }
@@ -981,7 +981,7 @@ public class TARDISRoomRunnable implements Runnable {
             task = 0;
             String message = ChatColor.RED + "Resumption of room growing was aborted due to: " + ChatColor.RESET + e.getMessage();
             if (player != null) {
-                TARDISMessage.message(player, message);
+                TardisMessage.message(player, message);
             }
             plugin.debug(message);
         }
@@ -994,7 +994,7 @@ public class TARDISRoomRunnable implements Runnable {
         HashMap<String, Object> wherepp = new HashMap<>();
         wherepp.put("uuid", p.getUniqueId().toString());
         plugin.getQueryFactory().doUpdate("player_prefs", setpp, wherepp);
-        TARDISMessage.send(p, "PREF_WAS_ON", "Mob farming");
+        TardisMessage.send(p, "PREF_WAS_ON", "Mob farming");
     }
 
     private boolean checkRoomNextDoor(Block b) {

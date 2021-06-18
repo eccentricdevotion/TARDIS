@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -28,7 +28,7 @@ import java.util.Map;
 
 public class RoomRequiredLister {
 
-    public static void listCondensables(TARDISPlugin plugin, String name, Player player) {
+    public static void listCondensables(TardisPlugin plugin, String name, Player player) {
         HashMap<String, Integer> blockTypes = plugin.getBuildKeeper().getRoomBlockCounts().get(name);
         boolean hasPrefs = false;
         String wall = "ORANGE_WOOL";
@@ -42,7 +42,7 @@ public class RoomRequiredLister {
         // get the tardis id
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "CONDENSE_REQUIRE", name);
+            TardisMessage.send(player, "CONDENSE_REQUIRE", name);
             HashMap<String, Integer> item_counts = new HashMap<>();
             for (Map.Entry<String, Integer> entry : blockTypes.entrySet()) {
                 String bkey;
@@ -75,11 +75,11 @@ public class RoomRequiredLister {
                 }
             }
             if (total == 0) {
-                TARDISMessage.send(player, "CONDENSE_NONE");
+                TardisMessage.send(player, "CONDENSE_NONE");
             }
-            TARDISMessage.send(player, "ROOM_ENERGY", name, plugin.getRoomsConfig().getString("rooms." + name + ".cost"));
+            TardisMessage.send(player, "ROOM_ENERGY", name, plugin.getRoomsConfig().getString("rooms." + name + ".cost"));
         } else {
-            TARDISMessage.send(player, "ID_NOT_FOUND");
+            TardisMessage.send(player, "ID_NOT_FOUND");
         }
     }
 }

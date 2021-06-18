@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisMaterials;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class TARDISSonicPainter {
+public class TardisSonicPainter {
 
     private static final List<Material> PAINTABLE = new ArrayList<>();
 
@@ -170,21 +170,21 @@ public class TARDISSonicPainter {
         return PAINTABLE;
     }
 
-    public static void paint(TARDISPlugin plugin, Player player, Block b) {
+    public static void paint(TardisPlugin plugin, Player player, Block b) {
         // must be in tardis world
         if (!plugin.getUtils().inTARDISWorld(player)) {
-            TARDISMessage.send(player, "UPDATE_IN_WORLD");
+            TardisMessage.send(player, "UPDATE_IN_WORLD");
             return;
         }
         // not protected blocks - WorldGuard / GriefPrevention / Lockette / Towny
-        if (TARDISSonicRespect.checkBlockRespect(plugin, player, b)) {
+        if (TardisSonicRespect.checkBlockRespect(plugin, player, b)) {
             long now = System.currentTimeMillis();
-            TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+            TardisSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
             // check for dye in slot
             PlayerInventory inv = player.getInventory();
             ItemStack dye = inv.getItem(8);
-            if (dye == null || !TARDISMaterials.dyes.contains(dye.getType())) {
-                TARDISMessage.send(player, "SONIC_DYE");
+            if (dye == null || !TardisMaterials.dyes.contains(dye.getType())) {
+                TardisMessage.send(player, "SONIC_DYE");
                 return;
             }
             // don't do anything if it is the same colour
@@ -385,7 +385,7 @@ public class TARDISSonicPainter {
                     break;
             }
         } else {
-            TARDISMessage.send(player, "SONIC_PROTECT");
+            TardisMessage.send(player, "SONIC_PROTECT");
         }
     }
 

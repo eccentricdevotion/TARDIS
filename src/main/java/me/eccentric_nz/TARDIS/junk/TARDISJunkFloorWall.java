@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.rooms.TARDISWalls;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.rooms.TardisWalls;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
@@ -30,11 +30,11 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISJunkFloorWall {
+class TardisJunkFloorWall {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISJunkFloorWall(TARDISPlugin plugin) {
+    TardisJunkFloorWall(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -42,7 +42,7 @@ class TARDISJunkFloorWall {
         String pref = args[0].toLowerCase(Locale.ENGLISH);
         // check args
         if (args.length < 2) {
-            TARDISMessage.send(sender, "PREF_WALL", pref);
+            TardisMessage.send(sender, "PREF_WALL", pref);
             return false;
         }
         String wall_mat;
@@ -58,10 +58,10 @@ class TARDISJunkFloorWall {
         } else {
             wall_mat = args[1].toUpperCase(Locale.ENGLISH);
         }
-        if (!TARDISWalls.BLOCKS.contains(Material.valueOf(wall_mat))) {
+        if (!TardisWalls.BLOCKS.contains(Material.valueOf(wall_mat))) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
-            TARDISMessage.send(sender, message, pref);
-            TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
+            TardisMessage.send(sender, message, pref);
+            TardisWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
             return true;
         }
         // check if player_prefs record
@@ -82,7 +82,7 @@ class TARDISJunkFloorWall {
             where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
             plugin.getQueryFactory().doUpdate("player_prefs", setpp, where);
         }
-        TARDISMessage.send(sender, "PREF_MAT_SET", TARDISStringUtils.uppercaseFirst(pref));
+        TardisMessage.send(sender, "PREF_MAT_SET", TardisStringUtils.uppercaseFirst(pref));
         return true;
     }
 }

@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.ars;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.commands.sudo.TARDISSudoTracker;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.commands.sudo.TardisSudoTracker;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -41,12 +41,12 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISARSListener extends TARDISARSMethods implements Listener {
+public class TardisArsListener extends TardisArsMethods implements Listener {
 
     private List<Material> room_materials;
     private List<String> room_names;
 
-    public TARDISARSListener(TARDISPlugin plugin) {
+    public TardisArsListener(TardisPlugin plugin) {
         super(plugin);
         getRoomIdAndNames();
     }
@@ -65,11 +65,11 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
             UUID playerUUID = player.getUniqueId();
-            UUID uuid = TARDISSudoTracker.SUDOERS.getOrDefault(playerUUID, playerUUID);
+            UUID uuid = TardisSudoTracker.SUDOERS.getOrDefault(playerUUID, playerUUID);
             ids.put(playerUUID, getTardisId(uuid.toString()));
             int slot = event.getRawSlot();
             if (slot != 10 && !hasLoadedMap.contains(playerUUID)) {
-                TARDISMessage.send(player, "ARS_LOAD");
+                TardisMessage.send(player, "ARS_LOAD");
                 return;
             }
             if (slot >= 0 && slot < 54) {
@@ -120,7 +120,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         if (!plugin.getBuildKeeper().getRoomProgress().containsKey(player.getUniqueId())) {
                             close(player);
                         } else {
-                            TARDISMessage.send(player, "ARS_ACTIVE");
+                            TardisMessage.send(player, "ARS_ACTIVE");
                         }
                         break;
                     case 27:
@@ -129,7 +129,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         // switch level
                         if (map_data.containsKey(playerUUID)) {
                             switchLevel(view, slot, playerUUID);
-                            TARDISARSMapData md = map_data.get(playerUUID);
+                            TardisArsMapData md = map_data.get(playerUUID);
                             setMap(md.getY(), md.getE(), md.getS(), playerUUID, view);
                             setLore(view, slot, null);
                         } else {
@@ -227,8 +227,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                 ItemStack ris = view.getItem(slot);
                                 assert ris != null;
                                 String displayName = Objects.requireNonNull(ris.getItemMeta()).getDisplayName();
-                                String room = TARDISARS.ARSFor(ris.getType().toString()).getConfigPath();
-                                if (!TARDISPermission.hasPermission(player, "tardis.room." + room.toLowerCase(Locale.ENGLISH))) {
+                                String room = TardisArs.ARSFor(ris.getType().toString()).getConfigPath();
+                                if (!TardisPermission.hasPermission(player, "tardis.room." + room.toLowerCase(Locale.ENGLISH))) {
                                     setLore(view, slot, plugin.getLanguage().getString("NO_PERM_ROOM_TYPE"));
                                     break;
                                 }
@@ -267,8 +267,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
      * @return true or false
      */
     private boolean checkSavedGrid(UUID playerUUID, int slot, int updown) {
-        TARDISARSMapData md = map_data.get(playerUUID);
-        TARDISARSSaveData sd = save_map_data.get(playerUUID);
+        TardisArsMapData md = map_data.get(playerUUID);
+        TardisArsSaveData sd = save_map_data.get(playerUUID);
         String[][][] grid = sd.getData();
         int yy = md.getY() + updown;
         // avoid ArrayIndexOutOfBoundsException if gravity well extends beyond ARS area
@@ -291,11 +291,11 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
 
     private void getRoomIdAndNames() {
         List<String> custom_names = getCustomRoomNames();
-        TARDISARS[] ars = TARDISARS.values();
+        TardisArs[] ars = TardisArs.values();
         // less non-room types
         room_materials = new ArrayList<>();
         room_names = new ArrayList<>();
-        for (TARDISARS a : ars) {
+        for (TardisArs a : ars) {
             if (a.getOffset() != 0) {
                 room_materials.add(Material.valueOf(a.getMaterial()));
                 room_names.add(a.getDescriptiveName());
@@ -303,9 +303,9 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
         }
         custom_names.forEach((c) -> {
             room_materials.add(Material.valueOf(plugin.getRoomsConfig().getString("rooms." + c + ".seed")));
-            String uc = TARDISStringUtils.uppercaseFirst(c);
+            String uc = TardisStringUtils.uppercaseFirst(c);
             room_names.add(uc);
-            TARDISARS.addNewARS(new ARS() {
+            TardisArs.addNewARS(new Ars() {
                 @Override
                 public String getMaterial() {
                     return plugin.getRoomsConfig().getString("rooms." + c + ".seed");

@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.Consoles;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -28,11 +28,11 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISSetSizeCommand {
+class TardisSetSizeCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISSetSizeCommand(TARDISPlugin plugin) {
+    TardisSetSizeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -41,13 +41,13 @@ class TARDISSetSizeCommand {
         // get the player
         Player p = plugin.getServer().getPlayer(args[1]);
         if (p == null) { // player must be online
-            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            TardisMessage.send(sender, "COULD_NOT_FIND_NAME");
             return true;
         }
         String type = args[2].toUpperCase(Locale.ENGLISH);
         // check size
         if (!Consoles.getBY_NAMES().containsKey(type)) {
-            TARDISMessage.message(sender, "Not a valid console size! Try using tab completion.");
+            TardisMessage.message(sender, "Not a valid console size! Try using tab completion.");
             return true;
         }
         String uuid = p.getUniqueId().toString();
@@ -56,7 +56,7 @@ class TARDISSetSizeCommand {
         HashMap<String, Object> set = new HashMap<>();
         set.put("size", type);
         plugin.getQueryFactory().doUpdate("tardis", set, where);
-        TARDISMessage.message(sender, "Successfully set " + args[1] + "'s console size to " + type);
+        TardisMessage.message(sender, "Successfully set " + args[1] + "'s console size to " + type);
         return true;
     }
 }

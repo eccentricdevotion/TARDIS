@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -27,14 +27,14 @@ import java.util.*;
 /**
  * @author eccentric_nz
  */
-public class TARDISChameleonGuiUpdater {
+public class TardisChameleonGuiUpdater {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final FileConfiguration chameleon_config;
     private final HashMap<String, String> chameleonOptions = new HashMap<>();
     private final HashMap<String, List<String>> chameleonListOptions = new HashMap<>();
 
-    public TARDISChameleonGuiUpdater(TARDISPlugin plugin, FileConfiguration chameleoon_config) {
+    public TardisChameleonGuiUpdater(TardisPlugin plugin, FileConfiguration chameleoon_config) {
         this.plugin = plugin;
         chameleon_config = chameleoon_config;
         chameleonListOptions.put("ADAPT_LORE", Arrays.asList("The Chameleon Circuit", "will choose a preset", "that blends in with", "the environment.", "Use BIOME or BLOCK mode."));

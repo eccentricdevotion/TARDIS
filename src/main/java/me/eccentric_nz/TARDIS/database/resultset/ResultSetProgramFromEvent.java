@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.data.Program;
 
 import java.sql.Connection;
@@ -35,9 +35,9 @@ import java.sql.SQLException;
  */
 public class ResultSetProgramFromEvent {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String uuid;
     private final String event;
     private final String prefix;
@@ -50,7 +50,7 @@ public class ResultSetProgramFromEvent {
      * @param uuid   a player UUID to refine the search.
      * @param event  an event string to refine the search.
      */
-    public ResultSetProgramFromEvent(TARDISPlugin plugin, String uuid, String event) {
+    public ResultSetProgramFromEvent(TardisPlugin plugin, String uuid, String event) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.event = event;

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
-public enum GUIInteriorSounds {
+public enum GuiInteriorSounds {
 
     // tardis Interior Sounds
     ALIEN(3, 0, Material.BOWL),
@@ -41,7 +41,7 @@ public enum GUIInteriorSounds {
     private final int slot;
     private final Material material;
 
-    GUIInteriorSounds(int customModelData, int slot, Material material) {
+    GuiInteriorSounds(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -61,6 +61,6 @@ public enum GUIInteriorSounds {
 
     public String getName() {
         String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
+        return TardisStringUtils.sentenceCase(s);
     }
 }

@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.mobfarming;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.TropicalFish;
 
-public class TARDISFish extends TARDISMob {
+public class TardisFish extends TardisMob {
 
     private TropicalFish.Pattern pattern;
     private DyeColor patternColour;

@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.mobfarming;
 
 import org.bukkit.entity.MushroomCow.Variant;
 
-class TARDISMooshroom extends TARDISMob {
+class TardisMooshroom extends TardisMob {
 
     private Variant variant;
 

@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.maze;
 
-import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TardisConstants;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
-public final class TARDISMazeBuilder {
+public final class TardisMazeBuilder {
 
     private final boolean[][] maze;
     private final BlockData log = Material.DARK_OAK_LOG.createBlockData();
@@ -31,7 +31,7 @@ public final class TARDISMazeBuilder {
     private final int size;
     private final Location location;
 
-    public TARDISMazeBuilder(boolean[][] maze, Location location) {
+    public TardisMazeBuilder(boolean[][] maze, Location location) {
         this.maze = maze;
         this.location = location;
         size = this.maze.length;
@@ -51,7 +51,7 @@ public final class TARDISMazeBuilder {
                     if (maze[w][d]) {
                         block.setBlockData(h < 2 ? log : leaves);
                     } else {
-                        block.setBlockData(TARDISConstants.AIR);
+                        block.setBlockData(TardisConstants.AIR);
                     }
                 }
             }
@@ -59,10 +59,10 @@ public final class TARDISMazeBuilder {
         // make openings
         for (int r = 0; r < 2; r++) {
             assert world != null;
-            world.getBlockAt(x + 10, y + r, z + 5).setBlockData(TARDISConstants.AIR);
-            world.getBlockAt(x + 5, y + r, z).setBlockData(TARDISConstants.AIR);
-            world.getBlockAt(x, y + r, z + 5).setBlockData(TARDISConstants.AIR);
-            world.getBlockAt(x + 5, y + r, z + 10).setBlockData(TARDISConstants.AIR);
+            world.getBlockAt(x + 10, y + r, z + 5).setBlockData(TardisConstants.AIR);
+            world.getBlockAt(x + 5, y + r, z).setBlockData(TardisConstants.AIR);
+            world.getBlockAt(x, y + r, z + 5).setBlockData(TardisConstants.AIR);
+            world.getBlockAt(x + 5, y + r, z + 10).setBlockData(TardisConstants.AIR);
         }
         if (reconfigure) {
             BlockData grass = Material.GRASS_BLOCK.createBlockData();

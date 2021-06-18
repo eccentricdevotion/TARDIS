@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.forcefield;
 import org.bukkit.Location;
 import org.bukkit.World;
 
-public class TARDISForceFieldLocation {
+public class TardisForceFieldLocation {
 
     private final Location topFrontLeft;
     private final Location topFrontRight;
@@ -30,7 +30,7 @@ public class TARDISForceFieldLocation {
     private final Location bottomBackLeft;
     private final Location bottomBackRight;
 
-    public TARDISForceFieldLocation(Location location, double range) {
+    public TardisForceFieldLocation(Location location, double range) {
         double minX = location.getX() - range;
         double minY = location.getY();
         double minZ = location.getZ() - range;

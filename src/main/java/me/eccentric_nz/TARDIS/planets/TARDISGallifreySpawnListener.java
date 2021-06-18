@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Villager;
@@ -32,11 +32,11 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public final class TARDISGallifreySpawnListener implements Listener {
+public final class TardisGallifreySpawnListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISGallifreySpawnListener(TARDISPlugin plugin) {
+    public TardisGallifreySpawnListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -61,10 +61,10 @@ public final class TARDISGallifreySpawnListener implements Listener {
             // it's a Gallifreyan - give it a random profession and outfit!
             Villager villager = (Villager) le;
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                villager.setProfession(Villager.Profession.values()[TARDISConstants.RANDOM.nextInt(Villager.Profession.values().length)]);
+                villager.setProfession(Villager.Profession.values()[TardisConstants.RANDOM.nextInt(Villager.Profession.values().length)]);
                 villager.setVillagerLevel(1); // minimum level is 1
                 villager.setVillagerExperience(1); // should be greater than 0 so villager doesn't lose its profession
-                villager.setVillagerType(Villager.Type.values()[TARDISConstants.RANDOM.nextInt(Villager.Type.values().length)]);
+                villager.setVillagerType(Villager.Type.values()[TardisConstants.RANDOM.nextInt(Villager.Type.values().length)]);
             }, 2L);
         }
     }

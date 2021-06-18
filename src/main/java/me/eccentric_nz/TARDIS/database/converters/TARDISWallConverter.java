@@ -19,8 +19,8 @@ package me.eccentric_nz.tardis.database.converters;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import org.apache.commons.lang.StringUtils;
 
 import java.sql.Connection;
@@ -30,17 +30,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TARDISWallConverter {
+public class TardisWallConverter {
 
     private final String[] find = new String[]{"east=false", "east=true", "north=false", "north=true", "south=false", "south=true", "west=false", "west=true"};
     private final String[] replace = new String[]{"east=none", "east=low", "north=none", "north=low", "south=none", "south=low", "west=none", "west=low"};
     private final List<String> walls = new ArrayList<>();
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
 
-    public TARDISWallConverter(TARDISPlugin plugin) {
+    public TardisWallConverter(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
         walls.add("cobblestone_wall");

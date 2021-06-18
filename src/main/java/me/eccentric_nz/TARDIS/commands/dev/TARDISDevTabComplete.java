@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.dev;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * TabCompleter for /tardisadmin
  */
-public class TARDISDevTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisDevTabComplete extends TardisCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "list", "tree");
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints");

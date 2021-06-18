@@ -18,8 +18,8 @@ package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.utility.TARDISBannerData;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.utility.TardisBannerData;
 import org.bukkit.DyeColor;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
@@ -33,9 +33,9 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISBannerSetter {
+public class TardisBannerSetter {
 
-    public static void setBanners(HashMap<Block, TARDISBannerData> banners) {
+    public static void setBanners(HashMap<Block, TardisBannerData> banners) {
         banners.forEach((key, tbd) -> {
             JsonObject state = tbd.getState();
             if (state != null) {
@@ -53,8 +53,8 @@ public class TARDISBannerSetter {
                 }
                 banner.setPatterns(plist);
                 banner.update();
-                if (TARDISPlugin.plugin.getBlockLogger().isLogging()) {
-                    TARDISPlugin.plugin.getBlockLogger().logPlacement(pbb);
+                if (TardisPlugin.plugin.getBlockLogger().isLogging()) {
+                    TardisPlugin.plugin.getBlockLogger().logPlacement(pbb);
                 }
             }
         });

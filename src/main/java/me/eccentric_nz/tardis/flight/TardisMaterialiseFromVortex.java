@@ -16,27 +16,27 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
-import me.eccentric_nz.tardis.api.event.TARDISMalfunctionEvent;
-import me.eccentric_nz.tardis.api.event.TARDISMaterialisationEvent;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advancement.TardisAdvancementFactory;
+import me.eccentric_nz.tardis.api.event.TardisMalfunctionEvent;
+import me.eccentric_nz.tardis.api.event.TardisMaterialisationEvent;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Advancement;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.hads.TARDISCloisterBell;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.travel.TARDISMalfunction;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.hads.TardisCloisterBell;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.travel.TardisMalfunction;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
+import me.eccentric_nz.tardis.utility.TardisSounds;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -54,15 +54,15 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISMaterialseFromVortex implements Runnable {
+public class TardisMaterialiseFromVortex implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
     private final Player player;
     private final Location handbrake;
     private final SpaceTimeThrottle spaceTimeThrottle;
 
-    public TARDISMaterialseFromVortex(TARDISPlugin plugin, int id, Player player, Location handbrake, SpaceTimeThrottle spaceTimeThrottle) {
+    public TardisMaterialiseFromVortex(TardisPlugin plugin, int id, Player player, Location handbrake, SpaceTimeThrottle spaceTimeThrottle) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;
@@ -77,7 +77,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
         wherenl.put("tardis_id", id);
         ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
         if (!rsn.resultSet()) {
-            TARDISMessage.send(player, "DEST_NO_LOAD");
+            TardisMessage.send(player, "DEST_NO_LOAD");
             return;
         }
         Location exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
@@ -87,7 +87,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
         wherei.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             // get current location for back
             HashMap<String, Object> wherecu = new HashMap<>();
             wherecu.put("tardis_id", id);
@@ -96,7 +96,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                 BukkitScheduler scheduler = plugin.getServer().getScheduler();
                 if (malfunction) {
                     // check for a malfunction
-                    TARDISMalfunction m = new TARDISMalfunction(plugin);
+                    TardisMalfunction m = new TardisMalfunction(plugin);
                     exit = m.getMalfunction(id, player, rscl.getDirection(), handbrake, tardis.getEps(), tardis.getCreeper());
                     if (exit != null) {
                         plugin.getTrackerKeeper().getRescue().remove(id);
@@ -114,17 +114,17 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
-                            TARDISMessage.send(player, "Q_FLY");
+                            TardisMessage.send(player, "Q_FLY");
                             plugin.getTrackerKeeper().getHasDestination().remove(id);
                         }
-                        plugin.getPM().callEvent(new TARDISMalfunctionEvent(player, tardis, exit));
+                        plugin.getPM().callEvent(new TardisMalfunctionEvent(player, tardis, exit));
                         // set beacon colour to red
                         if (!tardis.getBeacon().isEmpty()) {
                             setBeaconUpBlock(tardis.getBeacon(), id);
                         }
                         // play tardis crash sound
                         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                            TARDISSounds.playTARDISSound(handbrake, "tardis_malfunction");
+                            TardisSounds.playTARDISSound(handbrake, "tardis_malfunction");
                         }
                         // add a potion effect to the player
                         player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
@@ -132,7 +132,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         Location location = exit;
                         scheduler.scheduleSyncDelayedTask(plugin, () -> {
                             // sound the cloister bell
-                            TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 6, id, location, plugin.getServer().getPlayer(uuid), true, "a flight malfunction", false);
+                            TardisCloisterBell bell = new TardisCloisterBell(plugin, 6, id, location, plugin.getServer().getPlayer(uuid), true, "a flight malfunction", false);
                             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
                             bell.setTask(taskID);
                             plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
@@ -145,8 +145,8 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     if (!Objects.requireNonNull(exit.getWorld()).isChunkLoaded(exit.getChunk())) {
                         exit.getWorld().loadChunk(exit.getChunk());
                     }
-                    PRESET preset = tardis.getPreset();
-                    COMPASS sd = rsn.getDirection();
+                    Preset preset = tardis.getPreset();
+                    CardinalDirection sd = rsn.getDirection();
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                     boolean minecart = false;
                     boolean bar = false;
@@ -208,14 +208,14 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     if (flight_mode == 2 || flight_mode == 3) {
                         materialisation_delay += 650L;
                         travel_time += 650L;
-                        Runnable runner = (flight_mode == 2) ? new TARDISRegulatorStarter(plugin, player, id) : new TARDISManualFlightStarter(plugin, player, id);
+                        Runnable runner = (flight_mode == 2) ? new TardisRegulatorStarter(plugin, player, id) : new TardisManualFlightStarter(plugin, player, id);
                         // start the flying mode (after demat if not in vortex already)
                         scheduler.scheduleSyncDelayedTask(plugin, runner, flight_mode_delay);
                     }
                     if (bar) {
                         long tt = travel_time;
                         // start travel bar
-                        scheduler.scheduleSyncDelayedTask(plugin, () -> new TARDISTravelBar(plugin).showTravelRemaining(player, tt, false), flight_mode_delay);
+                        scheduler.scheduleSyncDelayedTask(plugin, () -> new TardisTravelBar(plugin).showTravelRemaining(player, tt, false), flight_mode_delay);
                     }
                     // cancel repeating sfx task
                     scheduler.scheduleSyncDelayedTask(plugin, () -> {
@@ -224,25 +224,25 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         }
                     }, materialisation_delay - 140L);
                     boolean mine_sound = minecart;
-                    Location sound_loc = (preset.equals(PRESET.JUNK_MODE)) ? exit : handbrake;
+                    Location sound_loc = (preset.equals(Preset.JUNK_MODE)) ? exit : handbrake;
                     Location external_sound_loc = exit;
                     boolean malchk = malfunction;
                     scheduler.scheduleSyncDelayedTask(plugin, () -> {
                         Location final_location = bd.getLocation();
                         Location l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-                        plugin.getPM().callEvent(new TARDISMaterialisationEvent(player, tardis, final_location));
+                        plugin.getPM().callEvent(new TardisMaterialisationEvent(player, tardis, final_location));
                         plugin.getPresetBuilder().buildPreset(bd);
                         if (!mine_sound) {
-                            if (!preset.equals(PRESET.JUNK_MODE)) {
+                            if (!preset.equals(Preset.JUNK_MODE)) {
                                 if (!malchk) {
-                                    TARDISSounds.playTARDISSound(sound_loc, landSFX);
-                                    TARDISSounds.playTARDISSound(external_sound_loc, landSFX);
+                                    TardisSounds.playTARDISSound(sound_loc, landSFX);
+                                    TardisSounds.playTARDISSound(external_sound_loc, landSFX);
                                 } else {
-                                    TARDISSounds.playTARDISSound(sound_loc, "tardis_emergency_land");
-                                    TARDISSounds.playTARDISSound(external_sound_loc, "tardis_emergency_land");
+                                    TardisSounds.playTARDISSound(sound_loc, "tardis_emergency_land");
+                                    TardisSounds.playTARDISSound(external_sound_loc, "tardis_emergency_land");
                                 }
                             } else {
-                                TARDISSounds.playTARDISSound(sound_loc, "junk_land");
+                                TardisSounds.playTARDISSound(sound_loc, "junk_land");
                             }
                         } else {
                             Objects.requireNonNull(handbrake.getWorld()).playSound(handbrake, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
@@ -282,7 +282,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             if (Objects.requireNonNull(l.getWorld()).equals(final_location.getWorld())) {
                                 int distance = (int) l.distance(final_location);
                                 if (distance > 0 && plugin.getAdvancementConfig().getBoolean("travel.enabled")) {
-                                    TARDISAdvancementFactory taf = new TARDISAdvancementFactory(plugin, player, Advancement.TRAVEL, 1);
+                                    TardisAdvancementFactory taf = new TardisAdvancementFactory(plugin, player, Advancement.TRAVEL, 1);
                                     taf.doAdvancement(distance);
                                 }
                             }
@@ -295,7 +295,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     plugin.getTrackerKeeper().getDamage().remove(id);
                     // set last use
                     long now;
-                    if (TARDISPermission.hasPermission(player, "tardis.prune.bypass")) {
+                    if (TardisPermission.hasPermission(player, "tardis.prune.bypass")) {
                         now = Long.MAX_VALUE;
                     } else {
                         now = System.currentTimeMillis();
@@ -311,12 +311,12 @@ public class TARDISMaterialseFromVortex implements Runnable {
     }
 
     private void setBeaconUpBlock(String str, int id) {
-        Location bl = TARDISStaticLocationGetters.getLocationFromDB(str);
+        Location bl = TardisStaticLocationGetters.getLocationFromDB(str);
         assert bl != null;
         Block b = bl.getBlock();
         while (!b.getType().equals(Material.BEACON) && b.getLocation().getBlockY() > 0) {
             b = b.getRelative(BlockFace.DOWN);
         }
-        TARDISBlockSetters.setBlockAndRemember(b.getRelative(BlockFace.UP), Material.RED_STAINED_GLASS, id, 2);
+        TardisBlockSetters.setBlockAndRemember(b.getRelative(BlockFace.UP), Material.RED_STAINED_GLASS, id, 2);
     }
 }

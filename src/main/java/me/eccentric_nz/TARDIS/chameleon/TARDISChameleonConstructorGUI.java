@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUIChameleonConstructor;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiChameleonConstructor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -25,12 +25,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * @author eccentric_nz
  */
-class TARDISChameleonConstructorGUI {
+class TardisChameleonConstructorGUI {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ItemStack[] construct;
 
-    TARDISChameleonConstructorGUI(TARDISPlugin plugin) {
+    TardisChameleonConstructorGUI(TardisPlugin plugin) {
         this.plugin = plugin;
         construct = getItemStack();
     }
@@ -44,7 +44,7 @@ class TARDISChameleonConstructorGUI {
         ItemMeta bk = back.getItemMeta();
         assert bk != null;
         bk.setDisplayName(plugin.getChameleonGuis().getString("BACK_CHAM_OPTS"));
-        bk.setCustomModelData(GUIChameleonConstructor.BACK_TO_CHAMELEON_CIRCUIT.getCustomModelData());
+        bk.setCustomModelData(GuiChameleonConstructor.BACK_TO_CHAMELEON_CIRCUIT.getCustomModelData());
         back.setItemMeta(bk);
         is[0] = back;
         // help
@@ -52,7 +52,7 @@ class TARDISChameleonConstructorGUI {
         ItemMeta hp = help.getItemMeta();
         assert hp != null;
         hp.setDisplayName(plugin.getChameleonGuis().getString("HELP"));
-        hp.setCustomModelData(GUIChameleonConstructor.HELP.getCustomModelData());
+        hp.setCustomModelData(GuiChameleonConstructor.HELP.getCustomModelData());
         help.setItemMeta(hp);
         is[2] = help;
         // info
@@ -61,7 +61,7 @@ class TARDISChameleonConstructorGUI {
         assert io != null;
         io.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
         io.setLore(plugin.getChameleonGuis().getStringList("INFO_CONSTRUCT"));
-        io.setCustomModelData(GUIChameleonConstructor.INFO.getCustomModelData());
+        io.setCustomModelData(GuiChameleonConstructor.INFO.getCustomModelData());
         info.setItemMeta(io);
         is[3] = info;
         // abort
@@ -69,7 +69,7 @@ class TARDISChameleonConstructorGUI {
         ItemMeta at = abort.getItemMeta();
         assert at != null;
         at.setDisplayName(plugin.getChameleonGuis().getString("ABORT"));
-        at.setCustomModelData(GUIChameleonConstructor.ABORT.getCustomModelData());
+        at.setCustomModelData(GuiChameleonConstructor.ABORT.getCustomModelData());
         abort.setItemMeta(at);
         is[5] = abort;
         // load button
@@ -77,7 +77,7 @@ class TARDISChameleonConstructorGUI {
         ItemMeta ld = load.getItemMeta();
         assert ld != null;
         ld.setDisplayName(plugin.getChameleonGuis().getString("USE_PREV"));
-        ld.setCustomModelData(GUIChameleonConstructor.USE_LAST_SAVED_CONSTRUCT.getCustomModelData());
+        ld.setCustomModelData(GuiChameleonConstructor.USE_LAST_SAVED_CONSTRUCT.getCustomModelData());
         load.setItemMeta(ld);
         is[7] = load;
         // save button
@@ -85,7 +85,7 @@ class TARDISChameleonConstructorGUI {
         ItemMeta se = save.getItemMeta();
         assert se != null;
         se.setDisplayName(plugin.getChameleonGuis().getString("SAVE"));
-        se.setCustomModelData(GUIChameleonConstructor.SAVE_CONSTRUCT.getCustomModelData());
+        se.setCustomModelData(GuiChameleonConstructor.SAVE_CONSTRUCT.getCustomModelData());
         save.setItemMeta(se);
         is[8] = save;
         // lamp button

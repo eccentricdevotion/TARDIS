@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.tardis.custommodeldata.GUIChemistry;
+import me.eccentric_nz.tardis.custommodeldata.GuiChemistry;
 import me.eccentric_nz.tardis.enumeration.RecipeCategory;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
@@ -25,11 +25,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 
-public class TARDISRecipeCategoryInventory {
+public class TardisRecipeCategoryInventory {
 
     private final ItemStack[] menu;
 
-    public TARDISRecipeCategoryInventory() {
+    public TardisRecipeCategoryInventory() {
         menu = getItemStack();
     }
 
@@ -41,7 +41,7 @@ public class TARDISRecipeCategoryInventory {
         assert info_im != null;
         info_im.setDisplayName("Info");
         info_im.setLore(Arrays.asList("Click a button below", "to see the items", "in that recipe category"));
-        info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
+        info_im.setCustomModelData(GuiChemistry.INFO.getCustomModelData());
         info.setItemMeta(info_im);
         stack[4] = info;
         for (RecipeCategory category : RecipeCategory.values()) {

@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.admin.TARDISDeleteCommand;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.admin.TardisDeleteCommand;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -35,17 +35,17 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-class TARDISJunkDelete {
+class TardisJunkDelete {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISJunkDelete(TARDISPlugin plugin) {
+    TardisJunkDelete(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public boolean delete(CommandSender sender) {
         if (!sender.hasPermission("tardis.admin")) {
-            TARDISMessage.send(sender, "CMD_ADMIN");
+            TardisMessage.send(sender, "CMD_ADMIN");
             return true;
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
@@ -60,12 +60,12 @@ class TARDISJunkDelete {
                 bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             }
             if (bb_loc == null) {
-                TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
+                TardisMessage.send(sender, "CURRENT_NOT_FOUND");
                 return true;
             }
             // destroy junk tardis
             DestroyData dd = new DestroyData();
-            dd.setDirection(COMPASS.SOUTH);
+            dd.setDirection(CardinalDirection.SOUTH);
             dd.setLocation(bb_loc);
             dd.setHide(false);
             dd.setOutside(false);
@@ -79,8 +79,8 @@ class TARDISJunkDelete {
             if (cw != null) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     plugin.getInteriorDestroyer().destroyInner(Consoles.schematicFor("junk"), id, cw, -999);
-                    TARDISDeleteCommand.cleanDatabase(id);
-                    TARDISMessage.send(sender, "JUNK_DELETED");
+                    TardisDeleteCommand.cleanDatabase(id);
+                    TardisMessage.send(sender, "JUNK_DELETED");
                 }, 20L);
             }
         }

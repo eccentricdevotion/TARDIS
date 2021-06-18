@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.BiomeLookup;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,12 +39,12 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISDiskCraftListener implements Listener {
+public class TardisDiskCraftListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<InventoryAction> actions = new ArrayList<>();
 
-    public TARDISDiskCraftListener(TARDISPlugin plugin) {
+    public TardisDiskCraftListener(TardisPlugin plugin) {
         this.plugin = plugin;
         actions.add(InventoryAction.PLACE_ALL);
         actions.add(InventoryAction.PLACE_ONE);
@@ -126,7 +126,7 @@ public class TARDISDiskCraftListener implements Listener {
                                         plugin.debug("Could not get biome from craft item! " + e);
                                     }
                                 } else {
-                                    TARDISMessage.send(player, "DISK_BLANK_BIOME");
+                                    TardisMessage.send(player, "DISK_BLANK_BIOME");
                                 }
                             }
                         }
@@ -144,8 +144,8 @@ public class TARDISDiskCraftListener implements Listener {
                                     if (items.size() > 0) {
                                         Material m = items.get(0).getType();
                                         String preset = "";
-                                        if (PRESET.getPreset(m) != null) {
-                                            preset = PRESET.getPreset(m).toString();
+                                        if (Preset.getPreset(m) != null) {
+                                            preset = Preset.getPreset(m).toString();
                                         }
                                         if (!preset.isEmpty()) {
                                             List<String> disk_lore = Collections.singletonList(preset);
@@ -161,7 +161,7 @@ public class TARDISDiskCraftListener implements Listener {
                                         }
                                     }
                                 } else {
-                                    TARDISMessage.send(player, "DISK_BLANK_PRESET");
+                                    TardisMessage.send(player, "DISK_BLANK_PRESET");
                                 }
                             }
                         }

@@ -17,11 +17,11 @@
 package me.eccentric_nz.tardis.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
@@ -40,15 +40,15 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISTeleportCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
+public class TardisTeleportCommand extends TardisCompleter implements CommandExecutor, TabCompleter {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> ROOT_SUBS = new ArrayList<>();
 
-    public TARDISTeleportCommand(TARDISPlugin plugin) {
+    public TardisTeleportCommand(TardisPlugin plugin) {
         this.plugin = plugin;
         for (World w : plugin.getServer().getWorlds()) {
-            ROOT_SUBS.add(TARDISAliasResolver.getWorldAlias(w));
+            ROOT_SUBS.add(TardisAliasResolver.getWorldAlias(w));
         }
     }
 
@@ -63,7 +63,7 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
                 // get player from argument
                 player = plugin.getServer().getPlayer(args[1]);
                 if (player == null || !player.isOnline()) {
-                    TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                    TardisMessage.send(sender, "COULD_NOT_FIND_NAME");
                     return true;
                 }
             }
@@ -71,15 +71,15 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
                 return true;
             }
             if (args.length < 1) {
-                TARDISMessage.send(player, "ARG_TP");
+                TardisMessage.send(player, "ARG_TP");
                 return false;
             }
-            World world = TARDISAliasResolver.getWorldFromAlias(args[0]);
+            World world = TardisAliasResolver.getWorldFromAlias(args[0]);
             if (world != null) {
                 Location spawn;
                 if (args.length == 4 && args[3].equals("not_for_players")) {
-                    int x = TARDISNumberParsers.parseInt(args[1]);
-                    int z = TARDISNumberParsers.parseInt(args[2]);
+                    int x = TardisNumberParsers.parseInt(args[1]);
+                    int z = TardisNumberParsers.parseInt(args[2]);
                     spawn = new Location(world, x, 64, z);
                 } else {
                     spawn = world.getSpawnLocation();
@@ -95,7 +95,7 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
                 spawn.setY(highest + 1);
                 player.teleport(spawn);
             } else {
-                TARDISMessage.send(player, "WORLD_NOT_FOUND");
+                TardisMessage.send(player, "WORLD_NOT_FOUND");
             }
             return true;
         }

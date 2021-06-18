@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -34,12 +34,12 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISPerceptionFilter {
+public class TardisPerceptionFilter {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private Team perceptionFilter;
 
-    public TARDISPerceptionFilter(TARDISPlugin plugin) {
+    public TardisPerceptionFilter(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

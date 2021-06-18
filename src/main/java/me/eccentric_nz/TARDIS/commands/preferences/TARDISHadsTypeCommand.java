@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.enumeration.HADS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.enumeration.Hads;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -27,26 +27,26 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISHadsTypeCommand {
+class TardisHadsTypeCommand {
 
     boolean setHadsPref(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "HADS_NEED");
+            TardisMessage.send(player, "HADS_NEED");
             return false;
         }
         String hadsType = args[1].toUpperCase(Locale.ENGLISH);
         try {
-            HADS.valueOf(hadsType);
+            Hads.valueOf(hadsType);
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, "HADS_NOT_VALID");
+            TardisMessage.send(player, "HADS_NOT_VALID");
             return false;
         }
         HashMap<String, Object> set = new HashMap<>();
         set.put("hads_type", hadsType);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
-        TARDISPlugin.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
-        TARDISMessage.send(player, "HADS_SAVED");
+        TardisPlugin.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
+        TardisMessage.send(player, "HADS_SAVED");
         return true;
     }
 }

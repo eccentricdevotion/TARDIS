@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.api.event.TARDISDematerialisationEvent;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisDematerialisationEvent;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -40,14 +40,14 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISDematerialiseToVortex implements Runnable {
+public class TardisDematerialiseToVortex implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
     private final Player player;
     private final Location handbrake;
 
-    public TARDISDematerialiseToVortex(TARDISPlugin plugin, int id, Player player, Location handbrake) {
+    public TardisDematerialiseToVortex(TardisPlugin plugin, int id, Player player, Location handbrake) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;
@@ -63,7 +63,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
         wherei.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             boolean hidden = tardis.isHidden();
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
@@ -87,7 +87,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
                 bset.put("submarine", rscl.isSubmarine());
                 plugin.getQueryFactory().doUpdate("back", bset, bid);
             }
-            COMPASS cd = rscl.getDirection();
+            CardinalDirection cd = rscl.getDirection();
             boolean sub = rscl.isSubmarine();
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             boolean minecart = false;
@@ -105,24 +105,24 @@ public class TARDISDematerialiseToVortex implements Runnable {
             dd.setSubmarine(sub);
             dd.setTardisId(id);
             dd.setThrottle(spaceTimeThrottle);
-            PRESET preset = tardis.getPreset();
-            if (preset.equals(PRESET.JUNK_MODE)) {
+            Preset preset = tardis.getPreset();
+            if (preset.equals(Preset.JUNK_MODE)) {
                 HashMap<String, Object> wherenl = new HashMap<>();
                 wherenl.put("tardis_id", id);
                 ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
                 if (!rsn.resultSet()) {
-                    TARDISMessage.send(player, "DEST_NO_LOAD");
+                    TardisMessage.send(player, "DEST_NO_LOAD");
                     return;
                 }
                 Location exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
                 dd.setFromToLocation(exit);
                 dd.setThrottle(SpaceTimeThrottle.JUNK);
             }
-            plugin.getPM().callEvent(new TARDISDematerialisationEvent(player, tardis, l));
+            plugin.getPM().callEvent(new TardisDematerialisationEvent(player, tardis, l));
             if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
                 // play demat sfx
                 if (!minecart) {
-                    if (!preset.equals(PRESET.JUNK_MODE)) {
+                    if (!preset.equals(Preset.JUNK_MODE)) {
                         String sound;
                         if (plugin.getTrackerKeeper().getMalfunction().get(id) && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                             sound = "tardis_malfunction_takeoff";
@@ -135,10 +135,10 @@ public class TARDISDematerialiseToVortex implements Runnable {
                                         "tardis_takeoff";
                             };
                         }
-                        TARDISSounds.playTARDISSound(handbrake, sound);
-                        TARDISSounds.playTARDISSound(l, sound);
+                        TardisSounds.playTARDISSound(handbrake, sound);
+                        TardisSounds.playTARDISSound(l, sound);
                     } else {
-                        TARDISSounds.playTARDISSound(handbrake, "junk_takeoff");
+                        TardisSounds.playTARDISSound(handbrake, "junk_takeoff");
                     }
                 } else {
                     Objects.requireNonNull(handbrake.getWorld()).playSound(handbrake, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);

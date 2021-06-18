@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.data.Program;
 import me.eccentric_nz.tardis.database.resultset.ResultSetProgram;
 import org.bukkit.Material;
@@ -26,13 +26,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * @author eccentric_nz
  */
-public class TARDISHandlesProgramInventory {
+public class TardisHandlesProgramInventory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int programId;
     private final ItemStack[] handles;
 
-    public TARDISHandlesProgramInventory(TARDISPlugin plugin, int programId) {
+    public TardisHandlesProgramInventory(TardisPlugin plugin, int programId) {
         this.plugin = plugin;
         this.programId = programId;
         handles = getItemStack();
@@ -59,7 +59,7 @@ public class TARDISHandlesProgramInventory {
             }
         }
         i = 36;
-        for (TARDISHandlesBlock b : TARDISHandlesBlock.getButtons()) {
+        for (TardisHandlesBlock b : TardisHandlesBlock.getButtons()) {
             ItemStack is = new ItemStack(Material.BOWL, 1);
             ItemMeta im = is.getItemMeta();
             assert im != null;
@@ -74,7 +74,7 @@ public class TARDISHandlesProgramInventory {
         }
 
         i = 45;
-        for (TARDISHandlesBlock b : TARDISHandlesBlock.getControls()) {
+        for (TardisHandlesBlock b : TardisHandlesBlock.getControls()) {
             ItemStack is = new ItemStack(Material.PAPER, 1);
             ItemMeta im = is.getItemMeta();
             assert im != null;

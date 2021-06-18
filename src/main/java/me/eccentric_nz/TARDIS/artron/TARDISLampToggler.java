@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetLamps;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
@@ -33,16 +33,16 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISLampToggler {
+public class TardisLampToggler {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final BlockData lamp;
     private final BlockData sea;
 
-    public TARDISLampToggler(TARDISPlugin plugin) {
+    public TardisLampToggler(TardisPlugin plugin) {
         this.plugin = plugin;
-        lamp = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(52));
-        sea = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
+        lamp = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(52));
+        sea = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
     }
 
     public void flickSwitch(int id, UUID uuid, boolean on, boolean lantern) {
@@ -72,7 +72,7 @@ public class TARDISLampToggler {
                     }
                 }
             }
-            BlockData onlamp = (lantern) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
+            BlockData onlamp = (lantern) ? TardisConstants.LANTERN : TardisConstants.LAMP;
             for (Block b : rsl.getData()) {
                 while (!b.getChunk().isLoaded()) {
                     b.getChunk().load();
@@ -81,7 +81,7 @@ public class TARDISLampToggler {
                     if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP))) {
                         BlockData multipleFacing;
                         if (use_wool) {
-                            multipleFacing = TARDISConstants.BLACK;
+                            multipleFacing = TardisConstants.BLACK;
                         } else if (lantern) {
                             multipleFacing = sea;
                         } else {

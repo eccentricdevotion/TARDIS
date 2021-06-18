@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 
 import java.sql.Connection;
@@ -32,10 +32,10 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISPortalPersister {
+public class TardisPortalPersister {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
     private PreparedStatement ps = null;
@@ -43,7 +43,7 @@ public class TARDISPortalPersister {
     private int count = 0;
     private int counta = 0;
 
-    public TARDISPortalPersister(TARDISPlugin plugin) {
+    public TardisPortalPersister(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -52,8 +52,8 @@ public class TARDISPortalPersister {
         try {
             // save the portals
             ps = connection.prepareStatement("INSERT INTO " + prefix + "portals (portal, teleport, direction, tardis_id, abandoned) VALUES (?,?,?,?,?)");
-            for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
-                TARDISTeleportLocation ttpl = map.getValue();
+            for (Map.Entry<Location, TardisTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
+                TardisTeleportLocation ttpl = map.getValue();
                 ps.setString(1, map.getKey().toString());
                 ps.setString(2, ttpl.getLocation().toString());
                 ps.setString(3, ttpl.getDirection().toString());
@@ -100,11 +100,11 @@ public class TARDISPortalPersister {
                     String t = rs.getString("teleport");
                     // check for null worlds
                     if (!p.contains("null") && !t.contains("null")) {
-                        Location portal = TARDISStaticLocationGetters.getLocationFromBukkitString(p);
-                        Location teleport = TARDISStaticLocationGetters.getLocationFromBukkitString(t);
+                        Location portal = TardisStaticLocationGetters.getLocationFromBukkitString(p);
+                        Location teleport = TardisStaticLocationGetters.getLocationFromBukkitString(t);
                         if (portal != null && teleport != null) {
-                            COMPASS direction = COMPASS.valueOf(rs.getString("direction"));
-                            TARDISTeleportLocation ttpl = new TARDISTeleportLocation();
+                            CardinalDirection direction = CardinalDirection.valueOf(rs.getString("direction"));
+                            TardisTeleportLocation ttpl = new TardisTeleportLocation();
                             ttpl.setLocation(teleport);
                             ttpl.setDirection(direction);
                             ttpl.setTardisId(rs.getInt("tardis_id"));

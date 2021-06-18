@@ -20,7 +20,7 @@ import me.ebonjaeger.perworldinventory.PerWorldInventory;
 import me.ebonjaeger.perworldinventory.api.PerWorldInventoryAPI;
 import org.bukkit.Bukkit;
 
-public class TARDISPerWorldInventoryChecker {
+public class TardisPerWorldInventoryChecker {
 
     private static PerWorldInventoryAPI api;
 

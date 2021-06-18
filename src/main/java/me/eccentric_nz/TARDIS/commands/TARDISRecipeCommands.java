@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.custommodeldata.TARDISSeedModel;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.custommodeldata.TardisSeedModel;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.RecipeCategory;
 import me.eccentric_nz.tardis.enumeration.RecipeItem;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.messaging.TARDISRecipeLister;
-import me.eccentric_nz.tardis.recipes.TARDISRecipeCategoryInventory;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.messaging.TardisRecipeLister;
+import me.eccentric_nz.tardis.recipes.TardisRecipeCategoryInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -45,13 +45,13 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISRecipeCommands implements CommandExecutor {
+public class TardisRecipeCommands implements CommandExecutor {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<String, String> recipeItems = new HashMap<>();
     private final HashMap<String, Material> t = new HashMap<>();
 
-    public TARDISRecipeCommands(TARDISPlugin plugin) {
+    public TardisRecipeCommands(TardisPlugin plugin) {
         this.plugin = plugin;
         recipeItems.put("seed", "");
         recipeItems.put("tardis", "");
@@ -96,8 +96,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisrecipe")) {
-            if (!TARDISPermission.hasPermission(sender, "tardis.help")) {
-                TARDISMessage.send(sender, "NO_PERMS");
+            if (!TardisPermission.hasPermission(sender, "tardis.help")) {
+                TardisMessage.send(sender, "NO_PERMS");
                 return true;
             }
             Player player = null;
@@ -106,35 +106,35 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (player == null) {
                 if (args.length == 0) {
-                    new TARDISRecipeLister(sender).list();
+                    new TardisRecipeLister(sender).list();
                 } else {
-                    TARDISMessage.send(sender, "CMD_PLAYER");
+                    TardisMessage.send(sender, "CMD_PLAYER");
                 }
                 return true;
             }
             if (args.length == 0) {
                 // open recipe GUI
-                ItemStack[] emenu = new TARDISRecipeCategoryInventory().getMenu();
+                ItemStack[] emenu = new TardisRecipeCategoryInventory().getMenu();
                 Inventory categories = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Recipe Categories");
                 categories.setContents(emenu);
                 player.openInventory(categories);
                 return true;
             }
             if (!recipeItems.containsKey(args[0].toLowerCase(Locale.ENGLISH))) {
-                new TARDISRecipeLister(sender).list();
+                new TardisRecipeLister(sender).list();
                 return true;
             }
             if (args.length < 1) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                TardisMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             if ((args[0].equalsIgnoreCase("seed") || args[0].equalsIgnoreCase("tardis")) && args.length < 2) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                TardisMessage.send(player, "TOO_FEW_ARGS");
                 return true;
             }
             if ((args[0].equalsIgnoreCase("seed") || args[0].equalsIgnoreCase("tardis")) && args.length == 2) {
                 if (!t.containsKey(args[1].toUpperCase(Locale.ENGLISH))) {
-                    TARDISMessage.send(player, "ARG_NOT_VALID");
+                    TardisMessage.send(player, "ARG_NOT_VALID");
                     return true;
                 }
                 showTARDISRecipe(player, args[1]);
@@ -319,7 +319,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             model = 46;
             tardis = new ItemStack(Material.MUSHROOM_STEM, 1);
         } else {
-            model = TARDISSeedModel.modelByString(type.toUpperCase());
+            model = TardisSeedModel.modelByString(type.toUpperCase());
             tardis = new ItemStack(Material.RED_MUSHROOM_BLOCK, 1);
         }
         ItemMeta seed = tardis.getItemMeta();

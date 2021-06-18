@@ -16,39 +16,39 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.move.TARDISDoorToggler;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.move.TardisDoorToggler;
 import org.bukkit.entity.Player;
 
-public class TARDISDoorCommand {
+public class TardisDoorCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISDoorCommand(TARDISPlugin plugin) {
+    public TardisDoorCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public boolean toggleDoors(Player player, String[] args) {
-        if (!TARDISPermission.hasPermission(player, "tardis.use")) {
-            TARDISMessage.send(player, "NO_PERMS");
+        if (!TardisPermission.hasPermission(player, "tardis.use")) {
+            TardisMessage.send(player, "NO_PERMS");
             return true;
         }
         // must have a tardis
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "NOT_A_TIMELORD");
+            TardisMessage.send(player, "NOT_A_TIMELORD");
             return false;
         }
         if (args.length < 2) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            TardisMessage.send(player, "TOO_FEW_ARGS");
             return false;
         }
         boolean open = (args[1].equalsIgnoreCase("close"));
         // toggle the door
-        new TARDISDoorToggler(plugin, player.getLocation().getBlock(), player, false, open, rs.getTardisId()).toggleDoors();
+        new TardisDoorToggler(plugin, player.getLocation().getBlock(), player, false, open, rs.getTardisId()).toggleDoors();
         return true;
     }
 }

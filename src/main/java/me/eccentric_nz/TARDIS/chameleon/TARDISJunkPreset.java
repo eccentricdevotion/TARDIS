@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 
 /**
  * The Junk tardis is a makeshift tardis created by the Eleventh Doctor and Idris (the embodied matrix of his tardis).
@@ -27,7 +27,7 @@ import me.eccentric_nz.tardis.enumeration.COMPASS;
  *
  * @author eccentric_nz
  */
-public class TARDISJunkPreset extends TARDISPreset {
+public class TardisJunkPreset extends TardisPreset {
 
     final String[][] blueprintData = new String[10][4];
     final String[][] stainedData = new String[10][4];
@@ -36,7 +36,7 @@ public class TARDISJunkPreset extends TARDISPreset {
     final String[][] stainedWest = new String[10][4];
     final String[][] glassWest = new String[10][4];
 
-    public TARDISJunkPreset() {
+    public TardisJunkPreset() {
         // set blueprint data strings
         blueprintData[0][0] = "minecraft:light_gray_wool";
         blueprintData[0][1] = "minecraft:stone_bricks";
@@ -290,15 +290,15 @@ public class TARDISJunkPreset extends TARDISPreset {
 
     @Override
     public void makePresets(boolean assymetric, boolean duck) {
-        for (COMPASS d : COMPASS.values()) {
-            if (d.equals(COMPASS.WEST)) {
-                getBlueprint().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, blueprintWest, false, false));
-                getStained().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, stainedWest, false, false));
-                getGlass().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, glassWest, false, false));
+        for (CardinalDirection d : CardinalDirection.values()) {
+            if (d.equals(CardinalDirection.WEST)) {
+                getBlueprint().put(d, TardisChameleonPreset.buildTARDISChameleonColumn(CardinalDirection.EAST, blueprintWest, false, false));
+                getStained().put(d, TardisChameleonPreset.buildTARDISChameleonColumn(CardinalDirection.EAST, stainedWest, false, false));
+                getGlass().put(d, TardisChameleonPreset.buildTARDISChameleonColumn(CardinalDirection.EAST, glassWest, false, false));
             } else {
-                getBlueprint().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, blueprintData, false, false));
-                getStained().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, stainedData, false, false));
-                getGlass().put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, glassData, false, false));
+                getBlueprint().put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, blueprintData, false, false));
+                getStained().put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, stainedData, false, false));
+                getGlass().put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, glassData, false, false));
             }
         }
     }

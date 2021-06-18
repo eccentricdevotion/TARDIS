@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.schematic;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -32,13 +32,13 @@ import java.util.Objects;
 /**
  * TabCompleter for /tardisschematic
  */
-public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisSchematicTabComplete extends TardisCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("load", "paste", "save", "clear", "replace");
     private final List<String> FILE_SUBS = new ArrayList<>();
     private final List<String> MAT_SUBS = new ArrayList<>();
 
-    public TARDISSchematicTabComplete(File userDir) {
+    public TardisSchematicTabComplete(File userDir) {
         if (userDir.exists()) {
             for (String f : Objects.requireNonNull(userDir.list())) {
                 if (f.endsWith(".tschm")) {

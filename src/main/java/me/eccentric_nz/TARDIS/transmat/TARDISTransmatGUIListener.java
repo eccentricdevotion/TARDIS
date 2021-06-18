@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.transmat;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -35,12 +35,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class TARDISTransmatGUIListener extends TARDISMenuListener implements Listener {
+public class TardisTransmatGuiListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<UUID, String> selectedLocation = new HashMap<>();
 
-    public TARDISTransmatGUIListener(TARDISPlugin plugin) {
+    public TardisTransmatGuiListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
     }
@@ -71,12 +71,12 @@ public class TARDISTransmatGUIListener extends TARDISMenuListener implements Lis
                         switch (slot) {
                             case 17:
                                 if (!selectedLocation.containsKey(player.getUniqueId())) {
-                                    TARDISMessage.send(player, "TRANSMAT_SELECT");
+                                    TardisMessage.send(player, "TRANSMAT_SELECT");
                                 } else {
                                     // transmat to selected location
                                     ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, selectedLocation.get(player.getUniqueId()));
                                     if (rsm.resultSet()) {
-                                        TARDISMessage.send(player, "TRANSMAT");
+                                        TardisMessage.send(player, "TRANSMAT");
                                         Location tp_loc = rsm.getLocation();
                                         tp_loc.setYaw(rsm.getYaw());
                                         tp_loc.setPitch(player.getLocation().getPitch());
@@ -90,7 +90,7 @@ public class TARDISTransmatGUIListener extends TARDISMenuListener implements Lis
                                 break;
                             case 35:
                                 if (!selectedLocation.containsKey(player.getUniqueId())) {
-                                    TARDISMessage.send(player, "TRANSMAT_SELECT");
+                                    TardisMessage.send(player, "TRANSMAT_SELECT");
                                 } else {
                                     // delete
                                     ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, selectedLocation.get(player.getUniqueId()));
@@ -98,7 +98,7 @@ public class TARDISTransmatGUIListener extends TARDISMenuListener implements Lis
                                         HashMap<String, Object> wherer = new HashMap<>();
                                         wherer.put("transmat_id", rsm.getTransmatId());
                                         plugin.getQueryFactory().doDelete("transmats", wherer);
-                                        TARDISMessage.send(player, "TRANSMAT_REMOVED");
+                                        TardisMessage.send(player, "TRANSMAT_REMOVED");
                                         close(player);
                                     }
                                 }

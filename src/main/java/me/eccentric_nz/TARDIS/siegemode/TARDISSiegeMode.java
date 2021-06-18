@@ -16,22 +16,22 @@
  */
 package me.eccentric_nz.tardis.siegemode;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.api.event.TARDISSiegeEvent;
-import me.eccentric_nz.tardis.api.event.TARDISSiegeOffEvent;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisSiegeEvent;
+import me.eccentric_nz.tardis.api.event.TardisSiegeOffEvent;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
+import me.eccentric_nz.tardis.desktop.TardisUpgradeData;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.tardis.enumeration.UseClay;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -51,11 +51,11 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISSiegeMode {
+public class TardisSiegeMode {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISSiegeMode(TARDISPlugin plugin) {
+    public TardisSiegeMode(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -67,7 +67,7 @@ public class TARDISSiegeMode {
         if (!rs.resultSet()) {
             return;
         }
-        TARDIS tardis = rs.getTardis();
+        Tardis tardis = rs.getTardis();
         // get current location
         HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);
@@ -84,12 +84,12 @@ public class TARDISSiegeMode {
             // must have at least 10% power
             int min = (plugin.getArtronConfig().getInt("full_charge") / 100) * plugin.getArtronConfig().getInt("siege_transfer");
             if (min > tardis.getArtronLevel()) {
-                TARDISMessage.send(p, "SIEGE_POWER");
+                TardisMessage.send(p, "SIEGE_POWER");
                 return;
             }
-            plugin.getPM().callEvent(new TARDISSiegeOffEvent(p, tardis));
+            plugin.getPM().callEvent(new TardisSiegeOffEvent(p, tardis));
             // remove siege block
-            siege.setBlockData(TARDISConstants.AIR);
+            siege.setBlockData(TardisConstants.AIR);
             // rebuild preset
             BuildData bd = new BuildData(p.getUniqueId().toString());
             bd.setDirection(rsc.getDirection());
@@ -108,7 +108,7 @@ public class TARDISSiegeMode {
             if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
                 String[] chu = tardis.getChunk().split(":");
                 if (plugin.getConfig().getInt("siege.breeding") > 0) {
-                    List<TARDISSiegeArea> breeding = new ArrayList<>();
+                    List<TardisSiegeArea> breeding = new ArrayList<>();
                     plugin.getTrackerKeeper().getSiegeBreedingAreas().get(chu[0]).forEach((breeding_area) -> {
                         if (breeding_area.getId() != id) {
                             breeding.add(breeding_area);
@@ -121,7 +121,7 @@ public class TARDISSiegeMode {
                     }
                 }
                 if (plugin.getConfig().getInt("siege.growth") > 0) {
-                    List<TARDISSiegeArea> growth = new ArrayList<>();
+                    List<TardisSiegeArea> growth = new ArrayList<>();
                     plugin.getTrackerKeeper().getSiegeGrowthAreas().get(chu[0]).forEach((growth_area) -> {
                         if (growth_area.getId() != id) {
                             growth.add(growth_area);
@@ -137,11 +137,11 @@ public class TARDISSiegeMode {
             if (plugin.getConfig().getBoolean("siege.texture")) {
                 changeTextures(tardis.getUuid().toString(), tardis.getSchematic(), p, false);
             }
-            TARDISMessage.send(p, "SIEGE_OFF");
+            TardisMessage.send(p, "SIEGE_OFF");
         } else {
             // make sure TARDIS is not dispersed
             if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id)) {
-                TARDISMessage.send(p, "NOT_WHILE_DISPERSED");
+                TardisMessage.send(p, "NOT_WHILE_DISPERSED");
                 return;
             }
             // destroy tardis
@@ -159,17 +159,17 @@ public class TARDISSiegeMode {
             // track this siege block
             plugin.getTrackerKeeper().getInSiegeMode().add(id);
             set.put("siege_on", 1);
-            TARDISMessage.send(p, "SIEGE_ON");
-            plugin.getPM().callEvent(new TARDISSiegeEvent(p, tardis));
+            TardisMessage.send(p, "SIEGE_ON");
+            plugin.getPM().callEvent(new TardisSiegeEvent(p, tardis));
             // butcher hostile mobs?
             if (plugin.getConfig().getBoolean("siege.butcher")) {
-                TARDISMessage.send(p, "SIEGE_BUTCHER");
+                TardisMessage.send(p, "SIEGE_BUTCHER");
                 for (Entity ent : p.getNearbyEntities(72d, 32d, 72d)) {
                     if (ent instanceof Monster) {
                         if (ent instanceof Creeper) {
                             // check it is not the Artron Capacitor Creeper
                             Location cl = ent.getLocation();
-                            Location dbl = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
+                            Location dbl = TardisStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                             assert dbl != null;
                             if (cl.getBlockX() == dbl.getBlockX() && cl.getBlockY() == dbl.getBlockY() && cl.getBlockZ() == dbl.getBlockZ()) {
                                 continue;
@@ -181,9 +181,9 @@ public class TARDISSiegeMode {
             }
             if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
                 Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
-                TARDISSiegeArea tsa = new TARDISSiegeArea(id, c);
+                TardisSiegeArea tsa = new TardisSiegeArea(id, c);
                 if (plugin.getConfig().getInt("siege.breeding") > 0) {
-                    List<TARDISSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());
+                    List<TardisSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());
                     if (breeding_areas == null) {
                         breeding_areas = new ArrayList<>();
                     }
@@ -191,7 +191,7 @@ public class TARDISSiegeMode {
                     plugin.getTrackerKeeper().getSiegeBreedingAreas().put(c.getWorld().getName(), breeding_areas);
                 }
                 if (plugin.getConfig().getInt("siege.growth") > 0) {
-                    List<TARDISSiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getName());
+                    List<TardisSiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getName());
                     if (growth_areas == null) {
                         growth_areas = new ArrayList<>();
                     }
@@ -234,7 +234,7 @@ public class TARDISSiegeMode {
                 }
             }
             // change to a saved theme
-            TARDISUpgradeData tud = new TARDISUpgradeData();
+            TardisUpgradeData tud = new TardisUpgradeData();
             tud.setWall(wall);
             tud.setFloor(floor);
             tud.setSiegeWall(sw);
@@ -242,7 +242,7 @@ public class TARDISSiegeMode {
             tud.setSchematic(schm);
             tud.setPrevious(schm);
             // start the rebuild
-            TARDISSiegeWallFloorRunnable ttr = new TARDISSiegeWallFloorRunnable(plugin, p.getUniqueId(), tud, toSiege);
+            TardisSiegeWallFloorRunnable ttr = new TardisSiegeWallFloorRunnable(plugin, p.getUniqueId(), tud, toSiege);
             long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, delay);
             ttr.setTaskId(task);

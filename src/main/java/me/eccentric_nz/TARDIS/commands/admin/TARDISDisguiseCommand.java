@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-public class TARDISDisguiseCommand {
+public class TardisDisguiseCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISDisguiseCommand(TARDISPlugin plugin) {
+    public TardisDisguiseCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -39,14 +39,14 @@ public class TARDISDisguiseCommand {
                 player = (Player) sender;
             }
             if (player == null) {
-                TARDISMessage.message(sender, "You need to specify a player!");
+                TardisMessage.message(sender, "You need to specify a player!");
                 return true;
             }
             EntityType entityType;
             try {
                 entityType = EntityType.valueOf(args[1]);
             } catch (IllegalArgumentException e) {
-                TARDISMessage.message(sender, "You need to specify a valid living entity type!");
+                TardisMessage.message(sender, "You need to specify a valid living entity type!");
                 return true;
             }
             plugin.getTardisHelper().disguise(entityType, player);
@@ -59,7 +59,7 @@ public class TARDISDisguiseCommand {
                 player = (Player) sender;
             }
             if (player == null) {
-                TARDISMessage.message(sender, "You need to specify a player!");
+                TardisMessage.message(sender, "You need to specify a player!");
                 return true;
             }
             plugin.getTardisHelper().undisguise(player);

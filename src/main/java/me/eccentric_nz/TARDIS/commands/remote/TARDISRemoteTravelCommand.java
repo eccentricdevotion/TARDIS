@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.tardis.commands.remote;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.BlockCommandSender;
@@ -38,11 +38,11 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-class TARDISRemoteTravelCommand {
+class TardisRemoteTravelCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISRemoteTravelCommand(TARDISPlugin plugin) {
+    TardisRemoteTravelCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -51,7 +51,7 @@ class TARDISRemoteTravelCommand {
         wherei.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             boolean hidden = tardis.isHidden();
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);
@@ -64,18 +64,18 @@ class TARDISRemoteTravelCommand {
                 resetw = rscl.getWorld().getName();
                 l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
             }
-            COMPASS cd = rscl.getDirection();
+            CardinalDirection cd = rscl.getDirection();
             boolean sub = rscl.isSubmarine();
             HashMap<String, Object> wherenl = new HashMap<>();
             wherenl.put("tardis_id", id);
             ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
             if (!rsn.resultSet() && !(sender instanceof BlockCommandSender)) {
-                TARDISMessage.send(sender, "DEST_NO_LOAD");
+                TardisMessage.send(sender, "DEST_NO_LOAD");
                 return true;
             }
             boolean is_next_sub = rsn.isSubmarine();
             Location exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
-            COMPASS sd = rsn.getDirection();
+            CardinalDirection sd = rsn.getDirection();
             // Removes Blue Box and loads chunk if it unloaded somehow
             if (!Objects.requireNonNull(exit.getWorld()).isChunkLoaded(exit.getChunk())) {
                 exit.getWorld().loadChunk(exit.getChunk());
@@ -114,7 +114,7 @@ class TARDISRemoteTravelCommand {
             bd.setThrottle(SpaceTimeThrottle.NORMAL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 plugin.getPresetBuilder().buildPreset(bd);
-                TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land");
+                TardisSounds.playTARDISSound(bd.getLocation(), "tardis_land");
             }, delay);
             plugin.getTrackerKeeper().getDamage().remove(id);
             // current

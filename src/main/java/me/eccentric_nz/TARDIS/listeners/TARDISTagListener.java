@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,12 +35,12 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author eccentric_nz
  */
-public class TARDISTagListener implements Listener {
+public class TardisTagListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Calendar eggcal = Calendar.getInstance();
 
-    public TARDISTagListener(TARDISPlugin plugin) {
+    public TardisTagListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -81,13 +81,13 @@ public class TARDISTagListener implements Listener {
             if (p.getName().equals(plugin.getTagConfig().getString("it"))) {
                 // find a new player to make it
                 Player newit = getRandomPlayer();
-                if (TARDISPermission.hasPermission(p, "tardis.tag")) {
+                if (TardisPermission.hasPermission(p, "tardis.tag")) {
                     plugin.getServer().broadcastMessage(plugin.getPluginName() + newit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
                 }
                 setConfig(newit.getName());
                 long now = System.currentTimeMillis();
                 long timewasit = now - plugin.getTagConfig().getLong("time");
-                if (TARDISPermission.hasPermission(p, "tardis.tag")) {
+                if (TardisPermission.hasPermission(p, "tardis.tag")) {
                     plugin.getServer().broadcastMessage(plugin.getPluginName() + p + " was 'OOD' for " + getHoursMinutesSeconds(timewasit) + " seconds.");
                 }
                 setConfig(now);
@@ -105,13 +105,13 @@ public class TARDISTagListener implements Listener {
             String p = clicked.getName();
             if (clicked.getName().equals(plugin.getTagConfig().getString("it"))) {
                 Player newit = event.getPlayer();
-                if (TARDISPermission.hasPermission(newit, "tardis.tag")) {
+                if (TardisPermission.hasPermission(newit, "tardis.tag")) {
                     plugin.getServer().broadcastMessage(plugin.getPluginName() + newit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
                 }
                 setConfig(newit.getName());
                 long now = System.currentTimeMillis();
                 long timewasit = now - plugin.getTagConfig().getLong("time");
-                if (TARDISPermission.hasPermission(newit, "tardis.tag")) {
+                if (TardisPermission.hasPermission(newit, "tardis.tag")) {
                     plugin.getServer().broadcastMessage(plugin.getPluginName() + p + " was 'OOD' for " + getHoursMinutesSeconds(timewasit) + " seconds.");
                 }
                 setConfig(now);
@@ -126,7 +126,7 @@ public class TARDISTagListener implements Listener {
     private Player getRandomPlayer() {
         List<Player> players = new ArrayList<>(plugin.getServer().getOnlinePlayers());
         int num = players.size();
-        return players.get(TARDISConstants.RANDOM.nextInt(num));
+        return players.get(TardisConstants.RANDOM.nextInt(num));
     }
 
     /**

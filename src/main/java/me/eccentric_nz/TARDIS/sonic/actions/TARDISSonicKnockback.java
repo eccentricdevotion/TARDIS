@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.forcefield.TARDISForceField;
-import me.eccentric_nz.tardis.utility.TARDISVector3D;
+import me.eccentric_nz.tardis.forcefield.TardisForceField;
+import me.eccentric_nz.tardis.utility.TardisVector3d;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
@@ -26,23 +26,23 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-public class TARDISSonicKnockback {
+public class TardisSonicKnockback {
 
     public static Entity getTargetEntity(Player player) {
         Location observerPos = player.getEyeLocation();
-        TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
-        TARDISVector3D observerStart = new TARDISVector3D(observerPos);
-        TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
+        TardisVector3d observerDir = new TardisVector3d(observerPos.getDirection());
+        TardisVector3d observerStart = new TardisVector3d(observerPos);
+        TardisVector3d observerEnd = observerStart.add(observerDir.multiply(16));
         Entity hit = null;
         // Get nearby players
         for (Entity target : player.getWorld().getNearbyEntities(observerPos, 8.0d, 8.0d, 8.0d)) {
             // only monsters
             if (target instanceof Monster) {
                 // Bounding box of the given player
-                TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
-                TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
-                TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
-                if (target != player && TARDISSonicFreeze.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
+                TardisVector3d targetPos = new TardisVector3d(target.getLocation());
+                TardisVector3d minimum = targetPos.add(-0.5, 0, -0.5);
+                TardisVector3d maximum = targetPos.add(0.5, 1.67, 0.5);
+                if (target != player && TardisSonicFreeze.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
                     if (hit == null || hit.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
                         hit = target;
                     }
@@ -53,6 +53,6 @@ public class TARDISSonicKnockback {
     }
 
     public static void knockback(Player player, Entity target) {
-        TARDISForceField.velocity(target, TARDISForceField.getTrajectory2d(player.getLocation(), target), 0.75d);
+        TardisForceField.velocity(target, TardisForceField.getTrajectory2d(player.getLocation(), target), 0.75d);
     }
 }

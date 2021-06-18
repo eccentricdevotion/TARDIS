@@ -26,7 +26,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author eccentric_nz
  */
-public class TARDISLlama extends TARDISHorse {
+public class TardisLlama extends TardisHorse {
 
     private Llama.Color llamacolor;
     private int strength;
@@ -35,7 +35,7 @@ public class TARDISLlama extends TARDISHorse {
     /**
      * Data storage class for tardis Llama.
      */
-    public TARDISLlama() {
+    public TardisLlama() {
     }
 
     public Llama.Color getLlamacolor() {

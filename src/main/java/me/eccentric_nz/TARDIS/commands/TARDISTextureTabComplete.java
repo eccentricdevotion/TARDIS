@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * TabCompleter for /tardisprefs
  */
-public class TARDISTextureTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisTextureTabComplete extends TardisCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("in", "out", "on", "off");
     private final ImmutableList<String> OFF_SUB = ImmutableList.of("default");

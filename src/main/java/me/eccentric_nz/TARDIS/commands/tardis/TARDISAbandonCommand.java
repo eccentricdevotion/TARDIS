@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.api.event.TARDISAbandonEvent;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.builders.TARDISBuilderUtility;
-import me.eccentric_nz.tardis.commands.admin.TARDISAbandonLister;
-import me.eccentric_nz.tardis.control.TARDISPowerButton;
-import me.eccentric_nz.tardis.database.converters.TARDISAbandonUpdate;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisAbandonEvent;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.builders.TardisBuilderUtility;
+import me.eccentric_nz.tardis.commands.admin.TardisAbandonLister;
+import me.eccentric_nz.tardis.control.TardisPowerButton;
+import me.eccentric_nz.tardis.database.converters.TardisAbandonUpdate;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisAbandoned;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.move.TARDISDoorCloser;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.move.TardisDoorCloser;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -48,15 +48,15 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISAbandonCommand {
+public class TardisAbandonCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISAbandonCommand(TARDISPlugin plugin) {
+    TardisAbandonCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
-    public static Sign getSign(Location l, COMPASS d, PRESET p) {
+    public static Sign getSign(Location l, CardinalDirection d, Preset p) {
         Sign sign = null;
         World w = l.getWorld();
         int signx, signz, signy;
@@ -176,14 +176,14 @@ public class TARDISAbandonCommand {
     }
 
     boolean doAbandon(CommandSender sender, boolean list) {
-        if (TARDISPermission.hasPermission(sender, "tardis.abandon") && plugin.getConfig().getBoolean("abandon.enabled")) {
+        if (TardisPermission.hasPermission(sender, "tardis.abandon") && plugin.getConfig().getBoolean("abandon.enabled")) {
             if (list) {
                 // list abandoned TARDISes
                 if (sender.hasPermission("tardis.admin")) {
-                    new TARDISAbandonLister(plugin).list(sender);
+                    new TardisAbandonLister(plugin).list(sender);
                     return true;
                 } else {
-                    TARDISMessage.send(sender, "NO_PERMS");
+                    TardisMessage.send(sender, "NO_PERMS");
                 }
             } else {
                 // must be a Player
@@ -192,67 +192,67 @@ public class TARDISAbandonCommand {
                     player = (Player) sender;
                 }
                 if (player == null) {
-                    TARDISMessage.send(sender, "CMD_NO_CONSOLE");
+                    TardisMessage.send(sender, "CMD_NO_CONSOLE");
                     return true;
                 }
                 if (!plugin.getConfig().getBoolean("allow.power_down")) {
-                    TARDISMessage.send(sender, "ABANDON_POWER_DOWN");
+                    TardisMessage.send(sender, "ABANDON_POWER_DOWN");
                     return true;
                 }
                 // abandon TARDIS
                 ResultSetTardisAbandoned rs = new ResultSetTardisAbandoned(plugin);
                 if (!rs.fromUUID(player.getUniqueId().toString())) {
-                    TARDISMessage.send(player, "NO_TARDIS");
+                    TardisMessage.send(player, "NO_TARDIS");
                     return true;
                 } else {
-                    PRESET preset = rs.getPreset();
+                    Preset preset = rs.getPreset();
                     // need to be in tardis
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                     if (!rst.resultSet()) {
-                        TARDISMessage.send(player, "NOT_IN_TARDIS");
+                        TardisMessage.send(player, "NOT_IN_TARDIS");
                         return true;
                     }
-                    if (preset.equals(PRESET.JUNK_MODE)) {
-                        TARDISMessage.send(player, "ABANDONED_NOT_JUNK");
+                    if (preset.equals(Preset.JUNK_MODE)) {
+                        TardisMessage.send(player, "ABANDONED_NOT_JUNK");
                         return true;
                     }
                     int id = rs.getTardisId();
                     if (rst.getTardisId() != id) {
-                        TARDISMessage.send(player, "ABANDONED_OWN");
+                        TardisMessage.send(player, "ABANDONED_OWN");
                         return true;
                     }
                     if (!rs.isTardisInit()) {
-                        TARDISMessage.send(player, "ENERGY_NO_INIT");
+                        TardisMessage.send(player, "ENERGY_NO_INIT");
                         return true;
                     }
                     if (!rs.isHandbrakeOn()) {
-                        TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
+                        TardisMessage.send(player, "HANDBRAKE_ENGAGE");
                         return true;
                     }
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                        TARDISMessage.send(player, "NOT_IN_VORTEX");
+                        TardisMessage.send(player, "NOT_IN_VORTEX");
                         return true;
                     }
                     if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-                        TARDISMessage.send(player, "NOT_WHILE_MAT");
+                        TardisMessage.send(player, "NOT_WHILE_MAT");
                         return true;
                     }
-                    new TARDISAbandonUpdate(plugin, id, player.getUniqueId().toString()).run();
+                    new TardisAbandonUpdate(plugin, id, player.getUniqueId().toString()).run();
                     if (rs.isPowered()) {
                         // power down TARDIS
-                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered(), rs.isHidden(), rs.isLightsOn(), player.getLocation(), rs.getArtronLevel(), rs.getSchematic().hasLanterns()).clickButton();
+                        new TardisPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered(), rs.isHidden(), rs.isLightsOn(), player.getLocation(), rs.getArtronLevel(), rs.getSchematic().hasLanterns()).clickButton();
                     }
                     // close the door
-                    new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
-                    TARDISMessage.send(player, "ABANDONED_SUCCESS");
+                    new TardisDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
+                    TardisMessage.send(player, "ABANDONED_SUCCESS");
                     HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", id);
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                     if (rsc.resultSet()) {
                         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                        plugin.getPM().callEvent(new TARDISAbandonEvent(player, id, current));
+                        plugin.getPM().callEvent(new TardisAbandonEvent(player, id, current));
                         // always clear sign
                         if (preset.usesItemFrame()) {
                             World world = rsc.getWorld();
@@ -267,7 +267,7 @@ public class TARDISAbandonCommand {
                                 }
                             }
                             if (found) {
-                                Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
+                                Material dye = TardisBuilderUtility.getMaterialForItemFrame(preset);
                                 ItemStack is = new ItemStack(dye, 1);
                                 ItemMeta im = is.getItemMeta();
                                 assert im != null;
@@ -291,7 +291,7 @@ public class TARDISAbandonCommand {
                 }
             }
         } else {
-            TARDISMessage.send(sender, "NO_PERMS_ABANDON");
+            TardisMessage.send(sender, "NO_PERMS_ABANDON");
         }
         return true;
     }

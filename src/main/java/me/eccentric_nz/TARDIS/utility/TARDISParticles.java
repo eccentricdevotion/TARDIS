@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TardisConstants;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -27,7 +27,7 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISParticles {
+public class TardisParticles {
 
     public static void sendVortexParticles(Location l, Player p) {
         double radials = 0.19634954084936207d;
@@ -78,6 +78,6 @@ public class TARDISParticles {
     }
 
     private static Double randomDouble() {
-        return 10.0 * TARDISConstants.RANDOM.nextDouble();
+        return 10.0 * TardisConstants.RANDOM.nextDouble();
     }
 }

@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetGravity;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.rooms.TARDISGravityWellRunnable;
-import me.eccentric_nz.tardis.utility.TARDISVoidFall;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.rooms.TardisGravityWellRunnable;
+import me.eccentric_nz.tardis.utility.TardisVoidFall;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -47,13 +47,13 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISGravityWellListener implements Listener {
+public class TardisGravityWellListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<Double, Material> woolType = new HashMap<>();
     private final HashMap<Double, String> woolColour = new HashMap<>();
 
-    public TARDISGravityWellListener(TARDISPlugin plugin) {
+    public TardisGravityWellListener(TardisPlugin plugin) {
         this.plugin = plugin;
         woolType.put(0D, Material.PINK_WOOL);
         woolType.put(1D, Material.LIME_WOOL);
@@ -90,7 +90,7 @@ public class TARDISGravityWellListener implements Listener {
             values = plugin.getGeneralKeeper().getGravityUpList().get(loc);
             end = l.getY() + values[1];
             vel = values[2];
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 1);
+            TardisGravityWellRunnable runnable = new TardisGravityWellRunnable(plugin, player, vel, end, x, z, 1);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
             return;
@@ -103,7 +103,7 @@ public class TARDISGravityWellListener implements Listener {
             values = plugin.getGeneralKeeper().getGravityNorthList().get(loc);
             end = l.getZ() - values[1];
             vel = values[2];
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 2);
+            TardisGravityWellRunnable runnable = new TardisGravityWellRunnable(plugin, player, vel, end, x, z, 2);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
             return;
@@ -116,7 +116,7 @@ public class TARDISGravityWellListener implements Listener {
             values = plugin.getGeneralKeeper().getGravityWestList().get(loc);
             end = l.getX() - values[1];
             vel = values[2];
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 3);
+            TardisGravityWellRunnable runnable = new TardisGravityWellRunnable(plugin, player, vel, end, x, z, 3);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
             return;
@@ -129,7 +129,7 @@ public class TARDISGravityWellListener implements Listener {
             values = plugin.getGeneralKeeper().getGravitySouthList().get(loc);
             end = l.getZ() + values[1];
             vel = values[2];
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 4);
+            TardisGravityWellRunnable runnable = new TardisGravityWellRunnable(plugin, player, vel, end, x, z, 4);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
             return;
@@ -142,7 +142,7 @@ public class TARDISGravityWellListener implements Listener {
             values = plugin.getGeneralKeeper().getGravityEastList().get(loc);
             end = l.getX() + values[1];
             vel = values[2];
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 5);
+            TardisGravityWellRunnable runnable = new TardisGravityWellRunnable(plugin, player, vel, end, x, z, 5);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
         }
@@ -177,7 +177,7 @@ public class TARDISGravityWellListener implements Listener {
                             p.setHealth(0);
                         } else {
                             e.setCancelled(true);
-                            new TARDISVoidFall(plugin).teleport(p);
+                            new TardisVoidFall(plugin).teleport(p);
                         }
                     }
                     break;
@@ -207,7 +207,7 @@ public class TARDISGravityWellListener implements Listener {
                 // get tardis_id
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (!rs.fromUUID(player.getUniqueId().toString())) {
-                    TARDISMessage.send(player, "NOT_A_TIMELORD");
+                    TardisMessage.send(player, "NOT_A_TIMELORD");
                     return;
                 }
                 int id = rs.getTardisId();
@@ -237,16 +237,16 @@ public class TARDISGravityWellListener implements Listener {
                                 floor = Material.valueOf(rspp.getFloor());
                             }
                             b.setBlockData(floor.createBlockData(), true);
-                            TARDISMessage.send(player, "GRAVITY_REMOVED");
+                            TardisMessage.send(player, "GRAVITY_REMOVED");
                         }
                     } else {
-                        TARDISMessage.send(player, "GRAVITY_NOT_FOUND");
+                        TardisMessage.send(player, "GRAVITY_NOT_FOUND");
                     }
                 } else {
                     // check the wool block is the right colour
                     Material bit = woolType.get(values[0]);
                     if (!b.getType().equals(bit)) {
-                        TARDISMessage.send(player, "GRAVITY_COLOUR", woolColour.get(values[0]) + ".");
+                        TardisMessage.send(player, "GRAVITY_COLOUR", woolColour.get(values[0]) + ".");
                         return;
                     }
                     // add a record
@@ -285,7 +285,7 @@ public class TARDISGravityWellListener implements Listener {
                             dir = "DOWN";
                         }
                     }
-                    TARDISMessage.send(player, "GRAVITY_SET", dir);
+                    TardisMessage.send(player, "GRAVITY_SET", dir);
                 }
             }
             plugin.getTrackerKeeper().getGravity().remove(uuid);

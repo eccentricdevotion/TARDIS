@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,12 +35,12 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISTemporalListener implements Listener {
+public class TardisTemporalListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> notthese = Arrays.asList("Fob Watch", "Vortex Manipulator");
 
-    public TARDISTemporalListener(TARDISPlugin plugin) {
+    public TardisTemporalListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -51,13 +51,13 @@ public class TARDISTemporalListener implements Listener {
         }
         Player p = event.getPlayer();
         ItemStack inhand = p.getInventory().getItemInMainHand();
-        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.getType().equals(Material.CLOCK) && TARDISPermission.hasPermission(p, "tardis.temporal")) {
+        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.getType().equals(Material.CLOCK) && TardisPermission.hasPermission(p, "tardis.temporal")) {
             if (inhand.hasItemMeta() && Objects.requireNonNull(inhand.getItemMeta()).hasDisplayName() && notthese.contains(inhand.getItemMeta().getDisplayName())) {
                 return;
             }
             p.resetPlayerTime();
             plugin.getTrackerKeeper().getSetTime().remove(p.getUniqueId());
-            TARDISMessage.send(p, "TEMPORAL_RESET");
+            TardisMessage.send(p, "TEMPORAL_RESET");
         }
     }
 }

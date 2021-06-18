@@ -24,7 +24,7 @@ package me.eccentric_nz.tardis.builders;
  *
  * @author eccentric_nz
  */
-public class TARDISTIPSData {
+public class TardisTipsData {
 
     private int slot;
     private int minX;

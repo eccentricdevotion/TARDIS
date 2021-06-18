@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISEntityTracker;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisEntityTracker;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -38,11 +38,11 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISRenderRoomListener implements Listener {
+public class TardisRenderRoomListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISRenderRoomListener(TARDISPlugin plugin) {
+    public TardisRenderRoomListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -60,7 +60,7 @@ public class TARDISRenderRoomListener implements Listener {
     }
 
     public void transmat(Player p) {
-        TARDISMessage.send(p, "TRANSMAT");
+        TardisMessage.send(p, "TRANSMAT");
         // get the tardis the player is in
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", p.getUniqueId().toString());
@@ -72,8 +72,8 @@ public class TARDISRenderRoomListener implements Listener {
             whered.put("door_type", 1);
             ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
             if (rsd.resultSet()) {
-                COMPASS d = rsd.getDoorDirection();
-                Location tp_loc = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoorLocation());
+                CardinalDirection d = rsd.getDoorDirection();
+                Location tp_loc = TardisStaticLocationGetters.getLocationFromDB(rsd.getDoorLocation());
                 assert tp_loc != null;
                 int getx = tp_loc.getBlockX();
                 int getz = tp_loc.getBlockZ();
@@ -106,14 +106,14 @@ public class TARDISRenderRoomListener implements Listener {
                     p.teleport(tp_loc);
                     plugin.getTrackerKeeper().getRenderRoomOccupants().remove(p.getUniqueId());
                     if (plugin.getTrackerKeeper().getRenderedNPCs().containsKey(p.getUniqueId())) {
-                        new TARDISEntityTracker(plugin).removeNPCs(p.getUniqueId());
+                        new TardisEntityTracker(plugin).removeNPCs(p.getUniqueId());
                     }
                 }, 10L);
             } else {
-                TARDISMessage.send(p, "TRANSMAT_NO_CONSOLE");
+                TardisMessage.send(p, "TRANSMAT_NO_CONSOLE");
             }
         } else {
-            TARDISMessage.send(p, "TRANSMAT_NO_TARDIS");
+            TardisMessage.send(p, "TRANSMAT_NO_TARDIS");
         }
     }
 }

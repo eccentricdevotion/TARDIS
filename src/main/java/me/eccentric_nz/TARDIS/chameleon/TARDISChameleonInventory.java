@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUIChameleon;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiChameleon;
 import me.eccentric_nz.tardis.enumeration.Adaption;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -37,16 +37,16 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISChameleonInventory {
+public class TardisChameleonInventory {
 
     private final ItemStack[] terminal;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Adaption adapt;
-    private final PRESET preset;
+    private final Preset preset;
     private final ItemStack on;
     private final ItemStack off;
 
-    public TARDISChameleonInventory(TARDISPlugin plugin, Adaption adapt, PRESET preset) {
+    public TardisChameleonInventory(TardisPlugin plugin, Adaption adapt, Preset preset) {
         this.plugin = plugin;
         this.adapt = adapt;
         this.preset = preset;
@@ -68,7 +68,7 @@ public class TARDISChameleonInventory {
         assert now != null;
         now.setDisplayName(plugin.getChameleonGuis().getString("APPLY"));
         now.setLore(plugin.getChameleonGuis().getStringList("APPLY_LORE"));
-        now.setCustomModelData(GUIChameleon.BUTTON_APPLY.getCustomModelData());
+        now.setCustomModelData(GuiChameleon.BUTTON_APPLY.getCustomModelData());
         apply.setItemMeta(now);
         // Disabled
         ItemStack dis = new ItemStack(Material.BOWL, 1);
@@ -76,7 +76,7 @@ public class TARDISChameleonInventory {
         assert abled != null;
         abled.setDisplayName("Chameleon Circuit");
         abled.setLore(plugin.getChameleonGuis().getStringList("DISABLED_LORE"));
-        abled.setCustomModelData(GUIChameleon.BUTTON_CHAMELEON.getCustomModelData());
+        abled.setCustomModelData(GuiChameleon.BUTTON_CHAMELEON.getCustomModelData());
         dis.setItemMeta(abled);
         // Adaptive
         ItemStack adap = new ItemStack(Material.BOWL, 1);
@@ -84,7 +84,7 @@ public class TARDISChameleonInventory {
         assert tive != null;
         tive.setDisplayName(plugin.getChameleonGuis().getString("ADAPT"));
         tive.setLore(plugin.getChameleonGuis().getStringList("ADAPT_LORE"));
-        tive.setCustomModelData(GUIChameleon.BUTTON_ADAPT.getCustomModelData());
+        tive.setCustomModelData(GuiChameleon.BUTTON_ADAPT.getCustomModelData());
         adap.setItemMeta(tive);
         // Invisible
         ItemStack invis;
@@ -99,7 +99,7 @@ public class TARDISChameleonInventory {
                 ilore.add(plugin.getLanguage().getString("INVISIBILITY_LORE_2"));
             }
             ible.setLore(ilore);
-            ible.setCustomModelData(GUIChameleon.BUTTON_INVISIBLE.getCustomModelData());
+            ible.setCustomModelData(GuiChameleon.BUTTON_INVISIBLE.getCustomModelData());
             invis.setItemMeta(ible);
         } else {
             invis = null;
@@ -110,7 +110,7 @@ public class TARDISChameleonInventory {
         assert tout != null;
         tout.setDisplayName(plugin.getChameleonGuis().getString("SHORT"));
         tout.setLore(plugin.getChameleonGuis().getStringList("SHORT_LORE"));
-        tout.setCustomModelData(GUIChameleon.BUTTON_SHORT.getCustomModelData());
+        tout.setCustomModelData(GuiChameleon.BUTTON_SHORT.getCustomModelData());
         shor.setItemMeta(tout);
         // construction GUI
         ItemStack cons = new ItemStack(Material.BOWL, 1);
@@ -118,10 +118,10 @@ public class TARDISChameleonInventory {
         assert truct != null;
         truct.setDisplayName(plugin.getChameleonGuis().getString("CONSTRUCT"));
         truct.setLore(plugin.getChameleonGuis().getStringList("CONSTRUCT_LORE"));
-        truct.setCustomModelData(GUIChameleon.BUTTON_CONSTRUCT.getCustomModelData());
+        truct.setCustomModelData(GuiChameleon.BUTTON_CONSTRUCT.getCustomModelData());
         cons.setItemMeta(truct);
         // Disabled radio button
-        boolean isFactoryOff = preset.equals(PRESET.FACTORY) && adapt.equals(Adaption.OFF);
+        boolean isFactoryOff = preset.equals(Preset.FACTORY) && adapt.equals(Adaption.OFF);
         ItemStack fac = isFactoryOff ? on.clone() : off.clone();
         ItemMeta tory = fac.getItemMeta();
         String donoff = isFactoryOff ? ChatColor.RED + plugin.getLanguage().getString("DISABLED") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
@@ -137,9 +137,9 @@ public class TARDISChameleonInventory {
         // Invisible radio button
         ItemStack not;
         if (plugin.getConfig().getBoolean("allow.invisibility")) {
-            not = (preset.equals(PRESET.INVISIBLE)) ? on.clone() : off.clone();
+            not = (preset.equals(Preset.INVISIBLE)) ? on.clone() : off.clone();
             ItemMeta blue = not.getItemMeta();
-            String ionoff = (preset.equals(PRESET.INVISIBLE)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+            String ionoff = (preset.equals(Preset.INVISIBLE)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
             assert blue != null;
             blue.setDisplayName(ionoff);
             not.setItemMeta(blue);
@@ -147,7 +147,7 @@ public class TARDISChameleonInventory {
             not = null;
         }
         // Shorted out radio button
-        boolean isNotFactoryInvisibleOrConstruct = !preset.equals(PRESET.INVISIBLE) && !preset.equals(PRESET.FACTORY) && !preset.equals(PRESET.CONSTRUCT);
+        boolean isNotFactoryInvisibleOrConstruct = !preset.equals(Preset.INVISIBLE) && !preset.equals(Preset.FACTORY) && !preset.equals(Preset.CONSTRUCT);
         ItemStack pre = isNotFactoryInvisibleOrConstruct ? on.clone() : off.clone();
         ItemMeta set = pre.getItemMeta();
         String sonoff = isNotFactoryInvisibleOrConstruct ? ChatColor.GREEN + preset.toString() : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
@@ -155,9 +155,9 @@ public class TARDISChameleonInventory {
         set.setDisplayName(sonoff);
         pre.setItemMeta(set);
         // Construct radio button
-        ItemStack bui = (preset.equals(PRESET.CONSTRUCT)) ? on.clone() : off.clone();
+        ItemStack bui = (preset.equals(Preset.CONSTRUCT)) ? on.clone() : off.clone();
         ItemMeta lder = bui.getItemMeta();
-        String conoff = (preset.equals(PRESET.CONSTRUCT)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+        String conoff = (preset.equals(Preset.CONSTRUCT)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
         assert lder != null;
         lder.setDisplayName(conoff);
         bui.setItemMeta(lder);
@@ -166,7 +166,7 @@ public class TARDISChameleonInventory {
         ItemMeta can = close.getItemMeta();
         assert can != null;
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleon.BUTTON_CLOSE.getCustomModelData());
+        can.setCustomModelData(GuiChameleon.BUTTON_CLOSE.getCustomModelData());
         close.setItemMeta(can);
 
         return new ItemStack[]{apply, null, null, null, null, null, null, null, null, null, null, dis, adap, invis, shor, cons, null, null, null, null, fac, biome, not, pre, bui, null, close};

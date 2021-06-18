@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
-public class TARDISHandlesTransmatCommand {
+public class TardisHandlesTransmatCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISHandlesTransmatCommand(TARDISPlugin plugin) {
+    public TardisHandlesTransmatCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -40,7 +40,7 @@ public class TARDISHandlesTransmatCommand {
     public void siteToSiteTransport(Player player, Location transmat) {
         Location location = player.getLocation();
         transmat.setPitch(location.getPitch());
-        TARDISMessage.handlesSend(player, "TRANSMAT");
+        TardisMessage.handlesSend(player, "TRANSMAT");
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             player.playSound(transmat, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
             player.teleport(transmat);

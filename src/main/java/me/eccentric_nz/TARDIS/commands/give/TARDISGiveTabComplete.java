@@ -17,13 +17,13 @@
 package me.eccentric_nz.tardis.commands.give;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.blueprints.*;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.RecipeCategory;
 import me.eccentric_nz.tardis.enumeration.RecipeItem;
-import me.eccentric_nz.tardis.rooms.TARDISWalls;
+import me.eccentric_nz.tardis.rooms.TardisWalls;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -34,7 +34,7 @@ import java.util.*;
 /**
  * TabCompleter for /tardisgive
  */
-public class TARDISGiveTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisGiveTabComplete extends TardisCompleter implements TabCompleter {
 
     private static final List<String> BLUEPRINT_SUBS = new ArrayList<>();
     private final Set<String> GIVE_SUBS = new HashSet<>();
@@ -44,7 +44,7 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
     private final ImmutableList<String> MUSHROOM_SUBS = ImmutableList.of("the_moment", "siege_cube", "ars", "bigger", "budget", "coral", "deluxe", "eleventh", "ender", "plank", "pyramid", "redstone", "steampunk", "thirteenth", "factory", "tom", "twelfth", "war", "small", "medium", "tall", "legacy_bigger", "legacy_budget", "legacy_deluxe", "legacy_eleventh", "legacy_redstone", "pandorica", "master", "creative", "compound", "reducer", "constructor", "lab", "product", "blue_lamp_on", "green_lamp_on", "purple_lamp_on", "red_lamp_on", "blue_lamp", "green_lamp", "purple_lamp", "red_lamp", "heat_block", "custom", "hexagon", "roundel", "roundel_offset", "cog", "advanced_console", "disk_storage", "lamp_off", "lantern_off", "blue_box", "grow");
     private final List<String> MAT_SUBS = new ArrayList<>();
 
-    public TARDISGiveTabComplete(TARDISPlugin plugin) {
+    public TardisGiveTabComplete(TardisPlugin plugin) {
         GIVE_SUBS.add("artron");
         GIVE_SUBS.add("blueprint");
         GIVE_SUBS.add("kit");
@@ -85,7 +85,7 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
                 SEED_SUBS.add(seed);
             }
         }
-        TARDISWalls.BLOCKS.forEach((m) -> MAT_SUBS.add(m.toString()));
+        TardisWalls.BLOCKS.forEach((m) -> MAT_SUBS.add(m.toString()));
     }
 
     public static List<String> getBlueprints() {

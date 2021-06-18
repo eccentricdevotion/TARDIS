@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
@@ -33,17 +33,17 @@ import java.util.Map;
 /**
  * @author eccentric_nz
  */
-public class TARDISSeedBlockPersister {
+public class TardisSeedBlockPersister {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
 
-    public TARDISSeedBlockPersister(TARDISPlugin plugin) {
+    public TardisSeedBlockPersister(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -52,8 +52,8 @@ public class TARDISSeedBlockPersister {
         try {
             // save the seed blocks
             ps = connection.prepareStatement("INSERT INTO " + prefix + "seeds (schematic, wall, floor, location) VALUES (?,?,?,?)");
-            for (Map.Entry<Location, TARDISBuildData> map : plugin.getBuildKeeper().getTrackTARDISSeed().entrySet()) {
-                TARDISBuildData data = map.getValue();
+            for (Map.Entry<Location, TardisBuildData> map : plugin.getBuildKeeper().getTrackTARDISSeed().entrySet()) {
+                TardisBuildData data = map.getValue();
                 ps.setString(1, data.getSchematic().getPermission());
                 ps.setString(2, data.getWallType().toString());
                 ps.setString(3, data.getFloorType().toString());
@@ -85,9 +85,9 @@ public class TARDISSeedBlockPersister {
                     String l = rs.getString("location");
                     // check for null worlds
                     if (!l.contains("null")) {
-                        Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(l);
+                        Location location = TardisStaticLocationGetters.getLocationFromBukkitString(l);
                         if (location != null) {
-                            TARDISBuildData data = new TARDISBuildData();
+                            TardisBuildData data = new TardisBuildData();
                             Schematic schm = Consoles.schematicFor(rs.getString("schematic"));
                             Material wall = Material.valueOf(rs.getString("wall"));
                             Material floor = Material.valueOf(rs.getString("floor"));

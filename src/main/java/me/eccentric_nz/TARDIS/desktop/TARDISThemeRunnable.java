@@ -19,11 +19,11 @@ package me.eccentric_nz.tardis.desktop;
 /**
  * @author eccentric_nz
  */
-public class TARDISThemeRunnable implements Runnable {
+public class TardisThemeRunnable implements Runnable {
 
     int taskID;
 
-    TARDISThemeRunnable() {
+    TardisThemeRunnable() {
     }
 
     public void setTaskID(int taskID) {

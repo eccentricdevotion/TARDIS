@@ -20,7 +20,7 @@ import org.bukkit.Material;
 
 import java.util.HashMap;
 
-public class TARDISSeedModel {
+public class TardisSeedModel {
 
     public static final HashMap<Material, Integer> materialMap = new HashMap<>() {
         {

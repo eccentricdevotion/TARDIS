@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTag;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -30,11 +30,11 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author eccentric_nz
  */
-class TARDISTagCommand {
+class TardisTagCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISTagCommand(TARDISPlugin plugin) {
+    TardisTagCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -50,7 +50,7 @@ class TARDISTagCommand {
             ArrayList<HashMap<String, String>> data = rs.getData();
             data.forEach((map) -> {
                 String p = map.get("player");
-                long t = TARDISNumberParsers.parseLong(map.get("time"));
+                long t = TardisNumberParsers.parseLong(map.get("time"));
                 player.sendMessage(p + ": " + ChatColor.GREEN + getHoursMinutesSeconds(t));
             });
         } else {

@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.commands.TARDISRecipeTabComplete;
-import me.eccentric_nz.tardis.commands.handles.TARDISHandlesTeleportCommand;
-import me.eccentric_nz.tardis.commands.handles.TARDISHandlesTransmatCommand;
-import me.eccentric_nz.tardis.control.TARDISLightSwitch;
-import me.eccentric_nz.tardis.control.TARDISPowerButton;
-import me.eccentric_nz.tardis.control.TARDISRandomButton;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.commands.TardisRecipeTabComplete;
+import me.eccentric_nz.tardis.commands.handles.TardisHandlesTeleportCommand;
+import me.eccentric_nz.tardis.commands.handles.TardisHandlesTransmatCommand;
+import me.eccentric_nz.tardis.control.TardisLightSwitch;
+import me.eccentric_nz.tardis.control.TardisPowerButton;
+import me.eccentric_nz.tardis.control.TardisRandomButton;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.*;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -42,16 +42,16 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TARDISHandlesRequest {
+public class TardisHandlesRequest {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ItemStack handles;
     private final Pattern handlesPattern;
 
-    public TARDISHandlesRequest(TARDISPlugin plugin) {
+    public TardisHandlesRequest(TardisPlugin plugin) {
         this.plugin = plugin;
         handles = getHandles();
-        handlesPattern = TARDISHandlesPattern.getPattern("prefix", false);
+        handlesPattern = TardisHandlesPattern.getPattern("prefix", false);
     }
 
     public void process(UUID uuid, String chat) {
@@ -60,8 +60,8 @@ public class TARDISHandlesRequest {
         if (player == null || !player.isOnline()) {
             return;
         }
-        if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
-            TARDISMessage.send(player, "NO_PERMS");
+        if (!TardisPermission.hasPermission(player, "tardis.handles.use")) {
+            TardisMessage.send(player, "NO_PERMS");
             return;
         }
         // must have a TARDIS
@@ -77,21 +77,21 @@ public class TARDISHandlesRequest {
                 // if placed player must be in TARDIS or be wearing a communicator
                 if (!plugin.getUtils().inTARDISWorld(player)) {
                     // player must have communicator
-                    if (!TARDISPermission.hasPermission(player, "tardis.handles.communicator")) {
-                        TARDISMessage.send(player, "NO_PERM_COMMUNICATOR");
+                    if (!TardisPermission.hasPermission(player, "tardis.handles.communicator")) {
+                        TardisMessage.send(player, "NO_PERM_COMMUNICATOR");
                         return;
                     }
                     PlayerInventory pi = player.getInventory();
                     ItemStack communicator = pi.getHelmet();
                     if (communicator == null || !communicator.hasItemMeta() || !communicator.getType().equals(Material.BIRCH_BUTTON) || !Objects.requireNonNull(communicator.getItemMeta()).getDisplayName().equals("TARDIS Communicator")) {
-                        TARDISMessage.send(player, "HANDLES_COMMUNICATOR");
+                        TardisMessage.send(player, "HANDLES_COMMUNICATOR");
                         return;
                     }
                 }
             } else {
                 // Handles must be in inventory
                 if (!player.getInventory().contains(handles)) {
-                    TARDISMessage.send(player, "HANDLES_INVENTORY");
+                    TardisMessage.send(player, "HANDLES_INVENTORY");
                     return;
                 }
             }
@@ -103,7 +103,7 @@ public class TARDISHandlesRequest {
             List<String> groups = null;
             for (String k : Objects.requireNonNull(plugin.getHandlesConfig().getConfigurationSection("core-commands")).getKeys(true)) {
                 if (!k.equals("travel") && !k.equals("door")) {
-                    Pattern pattern = TARDISHandlesPattern.getPattern(k, false);
+                    Pattern pattern = TardisHandlesPattern.getPattern(k, false);
                     Matcher m = pattern.matcher(removed);
                     if (m.find()) {
                         matched = true;
@@ -125,7 +125,7 @@ public class TARDISHandlesRequest {
                             String tardis = groups.get(1);
                             if (tardis == null || tardis.isEmpty()) {
                                 // tardis recipes
-                                for (String item : TARDISRecipeTabComplete.ROOT_SUBS) {
+                                for (String item : TardisRecipeTabComplete.ROOT_SUBS) {
                                     if (groups.get(2).equalsIgnoreCase(item)) {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardisrecipe " + item), 1L);
                                         return;
@@ -133,7 +133,7 @@ public class TARDISHandlesRequest {
                                 }
                             } else {
                                 // tardis seed block
-                                for (String seed : TARDISRecipeTabComplete.TARDIS_TYPES) {
+                                for (String seed : TardisRecipeTabComplete.TARDIS_TYPES) {
                                     if (groups.get(0).equalsIgnoreCase(seed)) {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardisrecipe tardis " + seed), 1L);
                                         return;
@@ -144,12 +144,12 @@ public class TARDISHandlesRequest {
                                 return;
                             }
                             // don't understand
-                            TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
+                            TardisMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                         }
                         break;
                     case "remind":
                         if (!plugin.getHandlesConfig().getBoolean("reminders.enabled")) {
-                            TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
+                            TardisMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                             return;
                         }
                         if (groups != null) {
@@ -188,15 +188,15 @@ public class TARDISHandlesRequest {
                         break;
                     case "direction":
                         if (groups != null) {
-                            COMPASS direction = null;
+                            CardinalDirection direction = null;
                             if (groups.get(0).equalsIgnoreCase("east")) {
-                                direction = COMPASS.EAST;
+                                direction = CardinalDirection.EAST;
                             } else if (groups.get(0).equalsIgnoreCase("north")) {
-                                direction = COMPASS.NORTH;
+                                direction = CardinalDirection.NORTH;
                             } else if (groups.get(0).equalsIgnoreCase("west")) {
-                                direction = COMPASS.WEST;
+                                direction = CardinalDirection.WEST;
                             } else if (groups.get(0).equalsIgnoreCase("south")) {
-                                direction = COMPASS.SOUTH;
+                                direction = CardinalDirection.SOUTH;
                             }
                             if (direction != null) {
                                 String d = direction.toString();
@@ -212,9 +212,9 @@ public class TARDISHandlesRequest {
                             wherel.put("tardis_id", id);
                             ResultSetTardis rst = new ResultSetTardis(plugin, wherel, "", false, 2);
                             if (rst.resultSet()) {
-                                TARDIS tardis = rst.getTardis();
+                                Tardis tardis = rst.getTardis();
                                 if ((onoff && !tardis.isLightsOn()) || (!onoff && tardis.isLightsOn())) {
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISLightSwitch(plugin, id, tardis.isLightsOn(), player, tardis.getSchematic().hasLanterns()).flickSwitch(), 1L);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisLightSwitch(plugin, id, tardis.isLightsOn(), player, tardis.getSchematic().hasLanterns()).flickSwitch(), 1L);
                                 }
                             }
                         }
@@ -227,10 +227,10 @@ public class TARDISHandlesRequest {
                             wherel.put("tardis_id", id);
                             ResultSetTardis rst = new ResultSetTardis(plugin, wherel, "", false, 2);
                             if (rst.resultSet()) {
-                                TARDIS tardis = rst.getTardis();
+                                Tardis tardis = rst.getTardis();
                                 if ((onoff && tardis.isPowered()) || (!onoff && !tardis.isPowered())) {
                                     if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered(), tardis.isHidden(), tardis.isLightsOn(), player.getLocation(), tardis.getArtronLevel(), tardis.getSchematic().hasLanterns()).clickButton(), 1L);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered(), tardis.isHidden(), tardis.isLightsOn(), player.getLocation(), tardis.getArtronLevel(), tardis.getSchematic().hasLanterns()).clickButton(), 1L);
                                     }
                                 }
                             }
@@ -244,7 +244,7 @@ public class TARDISHandlesRequest {
                             if (rsd.resultSet()) {
                                 for (HashMap<String, String> map : rsd.getData()) {
                                     String dest = map.get("dest_name");
-                                    if (groups.get(0).equalsIgnoreCase(dest) && TARDISPermission.hasPermission(player, "tardis.timetravel")) {
+                                    if (groups.get(0).equalsIgnoreCase(dest) && TardisPermission.hasPermission(player, "tardis.timetravel")) {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel dest " + dest), 1L);
                                         return;
                                     }
@@ -261,15 +261,15 @@ public class TARDISHandlesRequest {
                         wherel.put("tardis_id", id);
                         ResultSetTardis rsr = new ResultSetTardis(plugin, wherel, "", false, 2);
                         if (rsr.resultSet()) {
-                            TARDIS tardis = rsr.getTardis();
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISRandomButton(plugin, player, id, tardis.getArtronLevel(), 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 1L);
+                            Tardis tardis = rsr.getTardis();
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisRandomButton(plugin, player, id, tardis.getArtronLevel(), 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 1L);
                             return;
                         }
                         break;
                     case "travel.player":
                         if (groups != null) {
-                            if (!TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
-                                TARDISMessage.handlesSend(player, "NO_PERM_PLAYER");
+                            if (!TardisPermission.hasPermission(player, "tardis.timetravel.player")) {
+                                TardisMessage.handlesSend(player, "NO_PERM_PLAYER");
                                 return;
                             }
                             for (Player p : plugin.getServer().getOnlinePlayers()) {
@@ -279,7 +279,7 @@ public class TARDISHandlesRequest {
                                     return;
                                 }
                                 // don't understand
-                                TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
+                                TardisMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                             }
                         }
                         break;
@@ -290,20 +290,20 @@ public class TARDISHandlesRequest {
                             if (rsa.resultSet()) {
                                 // cycle through areas
                                 for (String name : rsa.getNames()) {
-                                    if (area.equalsIgnoreCase(name) && (TARDISPermission.hasPermission(player, "tardis.area." + name) || TARDISPermission.hasPermission(player, "tardis.area.*"))) {
+                                    if (area.equalsIgnoreCase(name) && (TardisPermission.hasPermission(player, "tardis.area." + name) || TardisPermission.hasPermission(player, "tardis.area.*"))) {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel area " + name), 1L);
                                         return;
                                     }
                                 }
                                 // don't understand
-                                TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
+                                TardisMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                             }
                         }
                         break;
                     case "travel.biome":
                         if (groups != null) {
-                            if (!TARDISPermission.hasPermission(player, "tardis.timetravel.biome")) {
-                                TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_BIOME");
+                            if (!TardisPermission.hasPermission(player, "tardis.timetravel.biome")) {
+                                TardisMessage.handlesSend(player, "TRAVEL_NO_PERM_BIOME");
                                 return;
                             }
                             String gb = (groups.get(0) == null || groups.get(0).isEmpty()) ? groups.get(1) : groups.get(0);
@@ -316,19 +316,19 @@ public class TARDISHandlesRequest {
                                 }
                             }
                             // don't understand
-                            TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
+                            TardisMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                         }
                         break;
                     case "travel.cave":
-                        if (!TARDISPermission.hasPermission(player, "tardis.timetravel.cave")) {
-                            TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_CAVE");
+                        if (!TardisPermission.hasPermission(player, "tardis.timetravel.cave")) {
+                            TardisMessage.handlesSend(player, "TRAVEL_NO_PERM_CAVE");
                             return;
                         }
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel cave"), 1L);
                         break;
                     case "travel.village":
-                        if (!TARDISPermission.hasPermission(player, "tardis.timetravel.village")) {
-                            TARDISMessage.handlesSend(player, "TRAVEL_NO_PERM_VILLAGE");
+                        if (!TardisPermission.hasPermission(player, "tardis.timetravel.village")) {
+                            TardisMessage.handlesSend(player, "TRAVEL_NO_PERM_VILLAGE");
                             return;
                         }
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel village"), 1L);
@@ -349,25 +349,25 @@ public class TARDISHandlesRequest {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id), 1L);
                         break;
                     case "teleport":
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISHandlesTeleportCommand(plugin).beamMeUp(player), 1L);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisHandlesTeleportCommand(plugin).beamMeUp(player), 1L);
                         break;
                     case "transmat":
                         if (groups != null) {
-                            if (!TARDISPermission.hasPermission(player, "tardis.transmat")) {
-                                TARDISMessage.handlesSend(player, "NO_PERMS");
+                            if (!TardisPermission.hasPermission(player, "tardis.transmat")) {
+                                TardisMessage.handlesSend(player, "NO_PERMS");
                                 return;
                             }
                             Location location = player.getLocation();
                             // must be in their TARDIS
                             if (!plugin.getUtils().inTARDISWorld(location)) {
-                                TARDISMessage.handlesSend(player, "HANDLES_NO_TRANSMAT_WORLD");
+                                TardisMessage.handlesSend(player, "HANDLES_NO_TRANSMAT_WORLD");
                                 return;
                             }
                             ResultSetHandlesTransmat rst = new ResultSetHandlesTransmat(plugin, id);
                             if (rst.findSite(groups.get(0))) {
-                                new TARDISHandlesTransmatCommand(plugin).siteToSiteTransport(player, rst.getLocation());
+                                new TardisHandlesTransmatCommand(plugin).siteToSiteTransport(player, rst.getLocation());
                             } else {
-                                TARDISMessage.handlesSend(player, "HANDLES_NO_TRANSMAT");
+                                TardisMessage.handlesSend(player, "HANDLES_NO_TRANSMAT");
                             }
                         }
                         break;
@@ -375,12 +375,12 @@ public class TARDISHandlesRequest {
                         break;
                 }
                 if (key.equals("remind")) {
-                    TARDISSounds.playTARDISSound(player, "handles_confirmed", 5L);
+                    TardisSounds.playTARDISSound(player, "handles_confirmed", 5L);
                 }
             } else {
                 // try custom-commands
                 for (String k : Objects.requireNonNull(plugin.getHandlesConfig().getConfigurationSection("custom-commands")).getKeys(false)) {
-                    Pattern pattern = TARDISHandlesPattern.getPattern(k, true);
+                    Pattern pattern = TardisHandlesPattern.getPattern(k, true);
                     Matcher m = pattern.matcher(removed);
                     if (m.find()) {
                         matched = true;
@@ -396,10 +396,10 @@ public class TARDISHandlesRequest {
                 //
                 if (matched) {
                     String perm = plugin.getHandlesConfig().getString("custom-commands." + key + ".permission");
-                    if (perm != null && TARDISPermission.hasPermission(player, perm)) {
+                    if (perm != null && TardisPermission.hasPermission(player, perm)) {
                         for (String cmd : plugin.getHandlesConfig().getStringList("custom-commands." + key + ".commands")) {
                             if (cmd.contains("%") && plugin.getPM().isPluginEnabled("PlaceholderAPI")) {
-                                cmd = TARDISHandlesPlaceholder.getSubstituted(cmd, player);
+                                cmd = TardisHandlesPlaceholder.getSubstituted(cmd, player);
                             }
                             // process capture groups (backwards so double digits $13 are replaced before single digits $1)
                             if (groups != null) {
@@ -418,10 +418,10 @@ public class TARDISHandlesRequest {
                             }
                         }
                     }
-                    TARDISSounds.playTARDISSound(player, "handles_confirmed", 5L);
+                    TardisSounds.playTARDISSound(player, "handles_confirmed", 5L);
                 } else {
                     // don't understand
-                    TARDISMessage.handlesSend(player, "HANDLES_NO_COMMAND");
+                    TardisMessage.handlesSend(player, "HANDLES_NO_COMMAND");
                 }
             }
         }

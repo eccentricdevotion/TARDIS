@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -36,13 +36,13 @@ import java.util.List;
  * There are also green forests, golden fields and red deserts, but overall it is a much drier world than Earth. The
  * Sixth Doctor once declared the climate to be "like the Serengeti all year round".
  */
-public class TARDISGallifreyChunkPopulateListener implements Listener {
+public class TardisGallifreyChunkPopulateListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<ChunkInfo> chunks = new ArrayList<>();
     private long timeCheck;
 
-    public TARDISGallifreyChunkPopulateListener(TARDISPlugin plugin) {
+    public TardisGallifreyChunkPopulateListener(TardisPlugin plugin) {
         this.plugin = plugin;
         timeCheck = System.currentTimeMillis() + 3000;
     }
@@ -81,8 +81,8 @@ public class TARDISGallifreyChunkPopulateListener implements Listener {
         chunks.add(chunkInfo);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             // create structure
-            if (TARDISConstants.RANDOM.nextBoolean()) {
-                TARDISBuildGallifreyanStructure tbgs = new TARDISBuildGallifreyanStructure(plugin, chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
+            if (TardisConstants.RANDOM.nextBoolean()) {
+                TardisBuildGallifreyanStructure tbgs = new TardisBuildGallifreyanStructure(plugin, chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
                 int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tbgs, 1L, 1L);
                 tbgs.setTask(task);
             }

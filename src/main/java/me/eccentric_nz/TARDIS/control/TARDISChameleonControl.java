@@ -16,50 +16,50 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.tardis.chameleon.TARDISChameleonInventory;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advanced.TardisCircuitChecker;
+import me.eccentric_nz.tardis.chameleon.TardisChameleonInventory;
 import me.eccentric_nz.tardis.enumeration.Adaption;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-class TARDISChameleonControl {
+class TardisChameleonControl {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISChameleonControl(TARDISPlugin plugin) {
+    TardisChameleonControl(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
-    void openGUI(Player player, int id, Adaption adapt, PRESET preset) {
-        TARDISCircuitChecker tcc = null;
+    void openGUI(Player player, int id, Adaption adapt, Preset preset) {
+        TardisCircuitChecker tcc = null;
         if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
-            tcc = new TARDISCircuitChecker(plugin, id);
+            tcc = new TardisCircuitChecker(plugin, id);
             tcc.getCircuits();
         }
         if (tcc != null && !tcc.hasChameleon()) {
-            TARDISMessage.send(player, "CHAM_MISSING");
+            TardisMessage.send(player, "CHAM_MISSING");
             return;
         }
         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+            TardisMessage.send(player, "SIEGE_NO_CONTROL");
             return;
         }
         if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
-            TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
+            TardisMessage.send(player, "NOT_WHILE_DISPERSED");
             return;
         }
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
+            TardisMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
             return;
         }
         // open Chameleon Circuit GUI
-        ItemStack[] cc = new TARDISChameleonInventory(plugin, adapt, preset).getMenu();
+        ItemStack[] cc = new TardisChameleonInventory(plugin, adapt, preset).getMenu();
         Inventory cc_gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
         cc_gui.setContents(cc);
         player.openInventory(cc_gui);

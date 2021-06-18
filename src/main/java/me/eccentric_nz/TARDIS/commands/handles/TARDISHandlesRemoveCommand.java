@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-class TARDISHandlesRemoveCommand {
+class TardisHandlesRemoveCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISHandlesRemoveCommand(TARDISPlugin plugin) {
+    TardisHandlesRemoveCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -38,9 +38,9 @@ class TARDISHandlesRemoveCommand {
             whereh.put("tardis_id", rs.getTardisId());
             whereh.put("type", 26);
             plugin.getQueryFactory().doDelete("controls", whereh);
-            TARDISMessage.send(player, "HANDLES_DELETED");
+            TardisMessage.send(player, "HANDLES_DELETED");
         } else {
-            TARDISMessage.send(player, "NOT_A_TIMELORD");
+            TardisMessage.send(player, "NOT_A_TIMELORD");
         }
         return true;
     }

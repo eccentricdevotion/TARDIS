@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.travel.TARDISTimeTravel;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.travel.TardisTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -34,16 +34,16 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISEmergencyRelocation {
+public class TardisEmergencyRelocation {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISEmergencyRelocation(TARDISPlugin plugin) {
+    public TardisEmergencyRelocation(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public void relocate(int id, Player p) {
-        TARDISMessage.send(p, "EMERGENCY");
+        TardisMessage.send(p, "EMERGENCY");
         // get the TARDIS
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
@@ -51,20 +51,20 @@ public class TARDISEmergencyRelocation {
         if (rs.resultSet()) {
             // get the servers main world
             World w = plugin.getServer().getWorlds().get(0);
-            Location emergency = new TARDISTimeTravel(plugin).randomDestination(p, 4, 4, 4, COMPASS.EAST, "THIS", w, false, w.getSpawnLocation());
+            Location emergency = new TardisTimeTravel(plugin).randomDestination(p, 4, 4, 4, CardinalDirection.EAST, "THIS", w, false, w.getSpawnLocation());
             if (emergency != null) {
                 BuildData bd = new BuildData(p.getUniqueId().toString());
                 bd.setLocation(emergency);
                 bd.setTardisId(id);
-                bd.setDirection(COMPASS.EAST);
+                bd.setDirection(CardinalDirection.EAST);
                 bd.setMalfunction(false);
                 bd.setSubmarine(false);
                 bd.setThrottle(SpaceTimeThrottle.REBUILD);
-                TARDIS tardis = rs.getTardis();
+                Tardis tardis = rs.getTardis();
                 if (tardis.getPreset().usesItemFrame()) {
-                    new TARDISInstantPoliceBox(plugin, bd, tardis.getPreset()).buildPreset();
+                    new TardisInstantPoliceBox(plugin, bd, tardis.getPreset()).buildPreset();
                 } else {
-                    new TARDISInstantPreset(plugin, bd, tardis.getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();
+                    new TardisInstantPreset(plugin, bd, tardis.getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();
                 }
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
@@ -86,7 +86,7 @@ public class TARDISEmergencyRelocation {
                 setb.put("direction", "EAST");
                 setb.put("submarine", 0);
                 plugin.getQueryFactory().doUpdate("current", setb, whereb);
-                TARDISMessage.send(p, "EMERGENCY_DONE");
+                TardisMessage.send(p, "EMERGENCY_DONE");
                 HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("travel"), wherea, p);

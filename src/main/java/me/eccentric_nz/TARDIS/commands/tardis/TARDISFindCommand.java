@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -32,19 +32,19 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISFindCommand {
+class TardisFindCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISFindCommand(TARDISPlugin plugin) {
+    TardisFindCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean findTARDIS(Player player) {
-        if (TARDISPermission.hasPermission(player, "tardis.find")) {
+        if (TardisPermission.hasPermission(player, "tardis.find")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                TardisMessage.send(player, "NO_TARDIS");
                 return true;
             }
             if (plugin.getDifficulty().equals(Difficulty.EASY) || plugin.getUtils().inGracePeriod(player, true)) {
@@ -52,20 +52,20 @@ class TARDISFindCommand {
                 wherecl.put("tardis_id", rs.getTardisId());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
-                    String world = TARDISAliasResolver.getWorldAlias(rsc.getWorld());
+                    String world = TardisAliasResolver.getWorldAlias(rsc.getWorld());
                     if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                         world = plugin.getMVHelper().getAlias(rsc.getWorld());
                     }
-                    TARDISMessage.send(player, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
+                    TardisMessage.send(player, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
                 } else {
-                    TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                    TardisMessage.send(player, "CURRENT_NOT_FOUND");
                 }
             } else {
-                TARDISMessage.send(player, "DIFF_HARD_FIND", ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET);
+                TardisMessage.send(player, "DIFF_HARD_FIND", ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET);
             }
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            TardisMessage.send(player, "NO_PERMS");
             return false;
         }
     }

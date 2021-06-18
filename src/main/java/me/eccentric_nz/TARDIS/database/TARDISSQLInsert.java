@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,10 +28,10 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISSQLInsert implements Runnable {
+class TardisSqlInsert implements Runnable {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String table;
     private final HashMap<String, Object> data;
@@ -45,7 +45,7 @@ class TARDISSQLInsert implements Runnable {
      * @param table  the database table name to insert the data into.
      * @param data   a HashMap<String, Object> of table fields and values to insert.
      */
-    TARDISSQLInsert(TARDISPlugin plugin, String table, HashMap<String, Object> data) {
+    TardisSqlInsert(TardisPlugin plugin, String table, HashMap<String, Object> data) {
         this.plugin = plugin;
         this.table = table;
         this.data = data;

@@ -16,74 +16,74 @@
  */
 package me.eccentric_nz.tardis.enumeration;
 
-import me.eccentric_nz.tardis.update.TARDISUpdateableCategory;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.update.TardisUpdateableCategory;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.inventory.RecipeChoice;
 
 public enum Updateable {
 
-    ADVANCED(true, true, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.JUKEBOX), TARDISUpdateableCategory.INTERFACES, "tardis Advanced Console"),
-    ARS(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Architectural Reconfiguration System"),
-    ARTRON(true, true, TARDISUpdateableCategory.CONTROLS, "Artron Energy Capacitor button"),
-    BACK(true, true, TARDISUpdateableCategory.CONTROLS, "Previous Location button"),
-    BACKDOOR(false, false, new RecipeChoice.MaterialChoice(Material.IRON_DOOR), TARDISUpdateableCategory.OTHERS, "tardis back door"),
-    BEACON(false, false, true, TARDISUpdateableCategory.LOCATIONS, "The block used to obstruct and turn off the tardis beacon"),
-    BELL(true, true, TARDISUpdateableCategory.OTHERS, "tardis Cloister bell button"),
-    BUTTON(true, true, TARDISUpdateableCategory.CONTROLS, "Random Location button"),
-    CHAMELEON(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Chameleon Circuit"),
-    CONDENSER(true, true, new RecipeChoice.MaterialChoice(Material.CHEST), TARDISUpdateableCategory.OTHERS, "Artron Energy Condenser"),
-    CONTROL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.CONTROLS, "tardis Control Centre Menu"),
-    CREEPER(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Artron Charged Creeper"),
-    DIRECTION(false, true, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.INTERFACES, "Direction item frame"),
-    DISPENSER(true, true, new RecipeChoice.MaterialChoice(Material.DISPENSER), TARDISUpdateableCategory.OTHERS, "Custard Cream dispenser"),
-    DOOR(false, true, new RecipeChoice.MaterialChoice(Material.IRON_DOOR), TARDISUpdateableCategory.OTHERS, "tardis Interior Door"),
-    EPS(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Emergency Programme One"),
-    FARM(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Farm room"),
-    FLIGHT(true, true, TARDISUpdateableCategory.CONTROLS, "Flight Mode button"),
-    FORCEFIELD(true, true, TARDISUpdateableCategory.OTHERS, "tardis Force Field button"),
-    FRAME(false, true, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.OTHERS, "Chameleon item frame"),
-    FUEL(false, false, new RecipeChoice.MaterialChoice(Material.CHEST, Material.TRAPPED_CHEST), TARDISUpdateableCategory.LOCATIONS, "Smelter room fuel chest"),
-    GENERATOR(false, true, new RecipeChoice.MaterialChoice(Material.FLOWER_POT), TARDISUpdateableCategory.INTERFACES, "Sonic Generator"),
-    HANDBRAKE(true, true, new RecipeChoice.MaterialChoice(Material.LEVER), TARDISUpdateableCategory.CONTROLS, "Handbrake"),
-    HINGE(false, false, TARDISUpdateableCategory.OTHERS, "Set the side a door hinge is on"),
-    IGLOO(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Igloo room"),
-    INFO(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "tardis Information System"),
-    KEYBOARD(true, false, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.OTHERS, "Keyboard Input sign"),
-    LIGHT(true, true, TARDISUpdateableCategory.OTHERS, "Console Light switch"),
-    MAP(false, false, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.OTHERS, "tardis Scanner Map"),
-    RAIL(false, false, new RecipeChoice.MaterialChoice(Tag.FENCES), TARDISUpdateableCategory.LOCATIONS, "Rail room entry point"),
-    ROTOR(false, false, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.OTHERS, "Time Rotor item frame"),
-    SAVE_SIGN(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Saved locations and tardis areas"),
-    SCANNER(true, true, TARDISUpdateableCategory.OTHERS, "Exterior Scanner button"),
-    SIEGE(true, false, TARDISUpdateableCategory.INTERFACES, "Siege Mode button"),
-    SMELT(false, false, new RecipeChoice.MaterialChoice(Material.CHEST, Material.TRAPPED_CHEST), TARDISUpdateableCategory.LOCATIONS, "Smelter room drop chest"),
-    STABLE(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Horse Stable room"),
-    STALL(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Llama Stall room"),
-    STORAGE(true, false, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.NOTE_BLOCK), TARDISUpdateableCategory.INTERFACES, "Disk Storage Container"),
-    TELEPATHIC(true, true, new RecipeChoice.MaterialChoice(Material.DAYLIGHT_DETECTOR), TARDISUpdateableCategory.INTERFACES, "Telepathic Circuit"),
-    TEMPORAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Temporal Relocation"),
-    TERMINAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Destination Terminal"),
-    THROTTLE(true, true, new RecipeChoice.MaterialChoice(Material.REPEATER), TARDISUpdateableCategory.CONTROLS, "Space Time Throttle"),
-    TOGGLE_WOOL(true, true, TARDISUpdateableCategory.OTHERS, "Toggle Black Wool behind door"),
-    VAULT(false, false, new RecipeChoice.MaterialChoice(Material.CHEST, Material.TRAPPED_CHEST), TARDISUpdateableCategory.LOCATIONS, "Vault room drop chest"),
-    VILLAGE(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Village room"),
-    WEATHER(true, true, TARDISUpdateableCategory.INTERFACES, "tardis Weather Menu"),
-    WORLD_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER), TARDISUpdateableCategory.CONTROLS, "World Type selector"),
-    X_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER), TARDISUpdateableCategory.CONTROLS, "Random x coordinate setter"),
-    Y_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER), TARDISUpdateableCategory.CONTROLS, "Distance multiplier"),
-    Z_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER), TARDISUpdateableCategory.CONTROLS, "Random z coordinate setter"),
-    ZERO(true, false, TARDISUpdateableCategory.OTHERS, "Zero room transmat button");
+    ADVANCED(true, true, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.JUKEBOX), TardisUpdateableCategory.INTERFACES, "tardis Advanced Console"),
+    ARS(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TardisUpdateableCategory.INTERFACES, "Architectural Reconfiguration System"),
+    ARTRON(true, true, TardisUpdateableCategory.CONTROLS, "Artron Energy Capacitor button"),
+    BACK(true, true, TardisUpdateableCategory.CONTROLS, "Previous Location button"),
+    BACKDOOR(false, false, new RecipeChoice.MaterialChoice(Material.IRON_DOOR), TardisUpdateableCategory.OTHERS, "tardis back door"),
+    BEACON(false, false, true, TardisUpdateableCategory.LOCATIONS, "The block used to obstruct and turn off the tardis beacon"),
+    BELL(true, true, TardisUpdateableCategory.OTHERS, "tardis Cloister bell button"),
+    BUTTON(true, true, TardisUpdateableCategory.CONTROLS, "Random Location button"),
+    CHAMELEON(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TardisUpdateableCategory.INTERFACES, "Chameleon Circuit"),
+    CONDENSER(true, true, new RecipeChoice.MaterialChoice(Material.CHEST), TardisUpdateableCategory.OTHERS, "Artron Energy Condenser"),
+    CONTROL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TardisUpdateableCategory.CONTROLS, "tardis Control Centre Menu"),
+    CREEPER(false, false, true, TardisUpdateableCategory.LOCATIONS, "Artron Charged Creeper"),
+    DIRECTION(false, true, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TardisUpdateableCategory.INTERFACES, "Direction item frame"),
+    DISPENSER(true, true, new RecipeChoice.MaterialChoice(Material.DISPENSER), TardisUpdateableCategory.OTHERS, "Custard Cream dispenser"),
+    DOOR(false, true, new RecipeChoice.MaterialChoice(Material.IRON_DOOR), TardisUpdateableCategory.OTHERS, "tardis Interior Door"),
+    EPS(false, false, true, TardisUpdateableCategory.LOCATIONS, "Emergency Programme One"),
+    FARM(false, false, true, TardisUpdateableCategory.LOCATIONS, "Farm room"),
+    FLIGHT(true, true, TardisUpdateableCategory.CONTROLS, "Flight Mode button"),
+    FORCEFIELD(true, true, TardisUpdateableCategory.OTHERS, "tardis Force Field button"),
+    FRAME(false, true, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TardisUpdateableCategory.OTHERS, "Chameleon item frame"),
+    FUEL(false, false, new RecipeChoice.MaterialChoice(Material.CHEST, Material.TRAPPED_CHEST), TardisUpdateableCategory.LOCATIONS, "Smelter room fuel chest"),
+    GENERATOR(false, true, new RecipeChoice.MaterialChoice(Material.FLOWER_POT), TardisUpdateableCategory.INTERFACES, "Sonic Generator"),
+    HANDBRAKE(true, true, new RecipeChoice.MaterialChoice(Material.LEVER), TardisUpdateableCategory.CONTROLS, "Handbrake"),
+    HINGE(false, false, TardisUpdateableCategory.OTHERS, "Set the side a door hinge is on"),
+    IGLOO(false, false, true, TardisUpdateableCategory.LOCATIONS, "Igloo room"),
+    INFO(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TardisUpdateableCategory.INTERFACES, "tardis Information System"),
+    KEYBOARD(true, false, new RecipeChoice.MaterialChoice(Tag.SIGNS), TardisUpdateableCategory.OTHERS, "Keyboard Input sign"),
+    LIGHT(true, true, TardisUpdateableCategory.OTHERS, "Console Light switch"),
+    MAP(false, false, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TardisUpdateableCategory.OTHERS, "tardis Scanner Map"),
+    RAIL(false, false, new RecipeChoice.MaterialChoice(Tag.FENCES), TardisUpdateableCategory.LOCATIONS, "Rail room entry point"),
+    ROTOR(false, false, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TardisUpdateableCategory.OTHERS, "Time Rotor item frame"),
+    SAVE_SIGN(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TardisUpdateableCategory.INTERFACES, "Saved locations and tardis areas"),
+    SCANNER(true, true, TardisUpdateableCategory.OTHERS, "Exterior Scanner button"),
+    SIEGE(true, false, TardisUpdateableCategory.INTERFACES, "Siege Mode button"),
+    SMELT(false, false, new RecipeChoice.MaterialChoice(Material.CHEST, Material.TRAPPED_CHEST), TardisUpdateableCategory.LOCATIONS, "Smelter room drop chest"),
+    STABLE(false, false, true, TardisUpdateableCategory.LOCATIONS, "Horse Stable room"),
+    STALL(false, false, true, TardisUpdateableCategory.LOCATIONS, "Llama Stall room"),
+    STORAGE(true, false, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.NOTE_BLOCK), TardisUpdateableCategory.INTERFACES, "Disk Storage Container"),
+    TELEPATHIC(true, true, new RecipeChoice.MaterialChoice(Material.DAYLIGHT_DETECTOR), TardisUpdateableCategory.INTERFACES, "Telepathic Circuit"),
+    TEMPORAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TardisUpdateableCategory.INTERFACES, "Temporal Relocation"),
+    TERMINAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TardisUpdateableCategory.INTERFACES, "Destination Terminal"),
+    THROTTLE(true, true, new RecipeChoice.MaterialChoice(Material.REPEATER), TardisUpdateableCategory.CONTROLS, "Space Time Throttle"),
+    TOGGLE_WOOL(true, true, TardisUpdateableCategory.OTHERS, "Toggle Black Wool behind door"),
+    VAULT(false, false, new RecipeChoice.MaterialChoice(Material.CHEST, Material.TRAPPED_CHEST), TardisUpdateableCategory.LOCATIONS, "Vault room drop chest"),
+    VILLAGE(false, false, true, TardisUpdateableCategory.LOCATIONS, "Village room"),
+    WEATHER(true, true, TardisUpdateableCategory.INTERFACES, "tardis Weather Menu"),
+    WORLD_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER), TardisUpdateableCategory.CONTROLS, "World Type selector"),
+    X_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER), TardisUpdateableCategory.CONTROLS, "Random x coordinate setter"),
+    Y_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER), TardisUpdateableCategory.CONTROLS, "Distance multiplier"),
+    Z_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER), TardisUpdateableCategory.CONTROLS, "Random z coordinate setter"),
+    ZERO(true, false, TardisUpdateableCategory.OTHERS, "Zero room transmat button");
 
     private final boolean control;
     private final boolean secondary;
     private final boolean anyBlock;
     private final RecipeChoice.MaterialChoice materialChoice;
-    private final TARDISUpdateableCategory category;
+    private final TardisUpdateableCategory category;
     private final String description;
 
-    Updateable(boolean control, boolean secondary, TARDISUpdateableCategory category, String description) {
+    Updateable(boolean control, boolean secondary, TardisUpdateableCategory category, String description) {
         this.control = control;
         this.secondary = secondary;
         anyBlock = false;
@@ -92,7 +92,7 @@ public enum Updateable {
         this.description = description;
     }
 
-    Updateable(boolean control, boolean secondary, boolean anyBlock, TARDISUpdateableCategory category, String description) {
+    Updateable(boolean control, boolean secondary, boolean anyBlock, TardisUpdateableCategory category, String description) {
         this.control = control;
         this.secondary = secondary;
         this.anyBlock = anyBlock;
@@ -101,7 +101,7 @@ public enum Updateable {
         this.description = description;
     }
 
-    Updateable(boolean control, boolean secondary, RecipeChoice.MaterialChoice materialChoice, TARDISUpdateableCategory category, String description) {
+    Updateable(boolean control, boolean secondary, RecipeChoice.MaterialChoice materialChoice, TardisUpdateableCategory category, String description) {
         this.control = control;
         this.secondary = secondary;
         anyBlock = false;
@@ -114,7 +114,7 @@ public enum Updateable {
         if (this == Updateable.TOGGLE_WOOL) {
             return "toggle_wool";
         } else {
-            return TARDISStringUtils.toDashedLowercase(toString());
+            return TardisStringUtils.toDashedLowercase(toString());
         }
     }
 
@@ -134,7 +134,7 @@ public enum Updateable {
         return materialChoice;
     }
 
-    public TARDISUpdateableCategory getCategory() {
+    public TardisUpdateableCategory getCategory() {
         return category;
     }
 

@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.listeners;
 
 import com.onarandombox.MultiverseAdventure.event.MVAResetEvent;
 import com.onarandombox.MultiverseAdventure.event.MVAResetFinishedEvent;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -29,11 +29,11 @@ import org.bukkit.event.Listener;
  *
  * @author eccentric_nz
  */
-public class TARDISWorldResetListener implements Listener {
+public class TardisWorldResetListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISWorldResetListener(TARDISPlugin plugin) {
+    public TardisWorldResetListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

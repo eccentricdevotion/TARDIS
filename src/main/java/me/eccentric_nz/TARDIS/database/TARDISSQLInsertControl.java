@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -26,10 +26,10 @@ import java.sql.Statement;
 /**
  * @author eccentric_nz
  */
-class TARDISSQLInsertControl implements Runnable {
+class TardisSqlInsertControl implements Runnable {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final int id;
     private final int type;
@@ -47,7 +47,7 @@ class TARDISSQLInsertControl implements Runnable {
      * @param location  the location of the control
      * @param secondary whether the control is a secondary control
      */
-    TARDISSQLInsertControl(TARDISPlugin plugin, int id, int type, String location, int secondary) {
+    TardisSqlInsertControl(TardisPlugin plugin, int id, int type, String location, int secondary) {
         this.plugin = plugin;
         this.id = id;
         this.type = type;

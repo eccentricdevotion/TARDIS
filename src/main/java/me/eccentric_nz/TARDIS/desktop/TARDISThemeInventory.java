@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.custommodeldata.GUIUpgrade;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.custommodeldata.GuiUpgrade;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import org.bukkit.ChatColor;
@@ -38,15 +38,15 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISThemeInventory {
+public class TardisThemeInventory {
 
     private final ItemStack[] menu;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
     private final String current_console;
     private final int level;
 
-    public TARDISThemeInventory(TARDISPlugin plugin, Player player, String current_console, int level) {
+    public TardisThemeInventory(TardisPlugin plugin, Player player, String current_console, int level) {
         this.plugin = plugin;
         this.player = player;
         this.current_console = current_console;
@@ -77,7 +77,7 @@ public class TARDISThemeInventory {
                 }
                 List<String> lore = new ArrayList<>();
                 lore.add("Cost: " + cost);
-                if (!TARDISPermission.hasPermission(player, "tardis." + a.getPermission())) {
+                if (!TardisPermission.hasPermission(player, "tardis." + a.getPermission())) {
                     lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
                 } else if (level < cost && !current_console.equals(a.getPermission())) {
                     lore.add(plugin.getLanguage().getString("UPGRADE_ABORT_ENERGY"));
@@ -96,33 +96,33 @@ public class TARDISThemeInventory {
             }
         }
         // archive consoles
-        if (TARDISPermission.hasPermission(player, "tardis.archive")) {
+        if (TardisPermission.hasPermission(player, "tardis.archive")) {
             ItemStack arc = new ItemStack(Material.BOWL, 1);
             ItemMeta hive_im = arc.getItemMeta();
             assert hive_im != null;
             hive_im.setDisplayName("Archive Consoles");
-            hive_im.setCustomModelData(GUIUpgrade.ARCHIVE_CONSOLES.getCustomModelData());
+            hive_im.setCustomModelData(GuiUpgrade.ARCHIVE_CONSOLES.getCustomModelData());
             arc.setItemMeta(hive_im);
             stack[46] = arc;
         }
         if (plugin.getConfig().getBoolean("allow.repair")) {
             // repair
-            if (TARDISPermission.hasPermission(player, "tardis.repair")) {
+            if (TardisPermission.hasPermission(player, "tardis.repair")) {
                 ItemStack rep = new ItemStack(Material.BOWL, 1);
                 ItemMeta air_im = rep.getItemMeta();
                 assert air_im != null;
                 air_im.setDisplayName("Repair Console");
-                air_im.setCustomModelData(GUIUpgrade.REPAIR_CONSOLE.getCustomModelData());
+                air_im.setCustomModelData(GuiUpgrade.REPAIR_CONSOLE.getCustomModelData());
                 rep.setItemMeta(air_im);
                 stack[47] = rep;
             }
             // clean
-            if (TARDISPermission.hasPermission(player, "tardis.repair")) {
+            if (TardisPermission.hasPermission(player, "tardis.repair")) {
                 ItemStack cle = new ItemStack(Material.BOWL, 1);
                 ItemMeta an_im = cle.getItemMeta();
                 assert an_im != null;
                 an_im.setDisplayName("Clean");
-                an_im.setCustomModelData(GUIUpgrade.CLEAN.getCustomModelData());
+                an_im.setCustomModelData(GuiUpgrade.CLEAN.getCustomModelData());
                 cle.setItemMeta(an_im);
                 stack[48] = cle;
             }
@@ -132,7 +132,7 @@ public class TARDISThemeInventory {
         ItemMeta close_im = close.getItemMeta();
         assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIUpgrade.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GuiUpgrade.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[53] = close;
 

@@ -17,12 +17,12 @@
 package me.eccentric_nz.tardis.files;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetGravity;
-import me.eccentric_nz.tardis.utility.TARDISAntiBuild;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisAntiBuild;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.util.Vector;
 
 import java.sql.Connection;
@@ -39,11 +39,11 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TARDISBlockLoader {
+public class TardisBlockLoader {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISBlockLoader(TARDISPlugin plugin) {
+    public TardisBlockLoader(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -80,7 +80,7 @@ public class TARDISBlockLoader {
         if (rsg.resultSet()) {
             ArrayList<HashMap<String, String>> data = rsg.getData();
             for (HashMap<String, String> map : data) {
-                int i = TARDISNumberParsers.parseInt(map.get("direction"));
+                int i = TardisNumberParsers.parseInt(map.get("direction"));
                 Double[] values = new Double[3];
                 values[0] = Double.valueOf(map.get("direction"));
                 values[1] = Double.valueOf(map.get("distance"));
@@ -113,7 +113,7 @@ public class TARDISBlockLoader {
      * Loads players antibuild preferences. Needed so that the preference is persisted between restarts.
      */
     public void loadAntiBuild() {
-        TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+        TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
         Connection connection = service.getConnection();
         Statement statement = null;
         ResultSet rs = null;
@@ -127,7 +127,7 @@ public class TARDISBlockLoader {
                 while (rs.next()) {
                     Integer id = rs.getInt("tardis_id");
                     String tl = rs.getString("owner");
-                    TARDISAntiBuild tab = new TARDISAntiBuild();
+                    TardisAntiBuild tab = new TardisAntiBuild();
                     // get region vectors
                     String[] split = rs.getString("chunk").split(":");
                     ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(split[0], tl);

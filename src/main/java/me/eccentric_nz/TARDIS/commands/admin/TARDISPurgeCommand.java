@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.destroyers.TARDISExterminator;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.destroyers.TardisExterminator;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -29,11 +29,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISPurgeCommand {
+class TardisPurgeCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISPurgeCommand(TARDISPlugin plugin) {
+    TardisPurgeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -48,14 +48,14 @@ class TARDISPurgeCommand {
         // get the player's tardis id
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(uuid.toString())) {
-            TARDISMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
+            TardisMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
             return true;
         }
         int id = rs.getTardisId();
-        TARDISExterminator purger = new TARDISExterminator(plugin);
+        TardisExterminator purger = new TardisExterminator(plugin);
         purger.cleanHashMaps(id);
         purger.cleanDatabase(id);
-        TARDISMessage.send(sender, "PURGE_PLAYER", args[1]);
+        TardisMessage.send(sender, "PURGE_PLAYER", args[1]);
         return true;
     }
 }

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCount;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
@@ -28,42 +28,42 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISRepairCommand {
+class TardisRepairCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISRepairCommand(TARDISPlugin plugin) {
+    TardisRepairCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean setFreeCount(CommandSender sender, String[] args) {
         if (args.length < 3) {
-            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            TardisMessage.send(sender, "TOO_FEW_ARGS");
             return true;
         }
         // Look up this player's UUID
         OfflinePlayer op = plugin.getServer().getOfflinePlayer(args[1]);
         if (op == null) {
-            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            TardisMessage.send(sender, "COULD_NOT_FIND_NAME");
             return true;
         }
         String uuid = op.getUniqueId().toString();
         ResultSetCount rs = new ResultSetCount(plugin, uuid);
         if (!rs.resultSet()) {
-            TARDISMessage.send(sender, "PLAYER_NO_TARDIS");
+            TardisMessage.send(sender, "PLAYER_NO_TARDIS");
             return true;
         }
         // set repair
         int r = 1;
         if (args.length == 3) {
-            r = TARDISNumberParsers.parseInt(args[2]);
+            r = TardisNumberParsers.parseInt(args[2]);
         }
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid);
         HashMap<String, Object> set = new HashMap<>();
         set.put("repair", r);
         plugin.getQueryFactory().doUpdate("t_count", set, where);
-        TARDISMessage.send(sender, "REPAIR_SET", args[1], "" + r);
+        TardisMessage.send(sender, "REPAIR_SET", args[1], "" + r);
         return true;
     }
 }

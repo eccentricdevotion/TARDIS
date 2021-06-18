@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUIArchive;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiArchive;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisSize;
 import me.eccentric_nz.tardis.enumeration.ConsoleSize;
 import me.eccentric_nz.tardis.schematic.ResultSetArchiveButtons;
@@ -37,13 +37,13 @@ import java.util.Arrays;
  *
  * @author eccentric_nz
  */
-class TARDISArchiveInventory {
+class TardisArchiveInventory {
 
     private final ItemStack[] menu;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
 
-    TARDISArchiveInventory(TARDISPlugin plugin, Player player) {
+    TardisArchiveInventory(TardisPlugin plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         menu = getItemStack();
@@ -70,7 +70,7 @@ class TARDISArchiveInventory {
         ItemMeta back_im = back.getItemMeta();
         assert back_im != null;
         back_im.setDisplayName("Back");
-        back_im.setCustomModelData(GUIArchive.BACK.getCustomModelData());
+        back_im.setCustomModelData(GuiArchive.BACK.getCustomModelData());
         back.setItemMeta(back_im);
         stack[17] = back;
         // size
@@ -78,7 +78,7 @@ class TARDISArchiveInventory {
         ItemMeta size_im = size.getItemMeta();
         assert size_im != null;
         size_im.setDisplayName("Set size");
-        size_im.setCustomModelData(GUIArchive.SET_SIZE.getCustomModelData());
+        size_im.setCustomModelData(GuiArchive.SET_SIZE.getCustomModelData());
         String s = "SMALL";
         String b = "16 x 16 x 16 blocks";
 
@@ -96,7 +96,7 @@ class TARDISArchiveInventory {
         ItemMeta but_im = scan.getItemMeta();
         assert but_im != null;
         but_im.setDisplayName("Scan console");
-        but_im.setCustomModelData(GUIArchive.SCAN_CONSOLE.getCustomModelData());
+        but_im.setCustomModelData(GuiArchive.SCAN_CONSOLE.getCustomModelData());
         scan.setItemMeta(but_im);
         stack[19] = scan;
         // archive
@@ -105,7 +105,7 @@ class TARDISArchiveInventory {
         assert hive_im != null;
         hive_im.setDisplayName("Archive current console");
         hive_im.setLore(Arrays.asList("A random name will", "be generated - use the", "/tardis archive command", "to set your own."));
-        hive_im.setCustomModelData(GUIArchive.ARCHIVE_CURRENT_CONSOLE.getCustomModelData());
+        hive_im.setCustomModelData(GuiArchive.ARCHIVE_CURRENT_CONSOLE.getCustomModelData());
         arc.setItemMeta(hive_im);
         stack[20] = arc;
         // templates
@@ -116,7 +116,7 @@ class TARDISArchiveInventory {
                 ItemMeta late = temp.getItemMeta();
                 assert late != null;
                 late.setDisplayName(c.toString());
-                late.setCustomModelData(GUIArchive.valueOf(c.toString()).getCustomModelData());
+                late.setCustomModelData(GuiArchive.valueOf(c.toString()).getCustomModelData());
                 late.setLore(Arrays.asList("Cobblestone template", c.getBlocks()));
                 temp.setItemMeta(late);
                 stack[t] = temp;
@@ -128,7 +128,7 @@ class TARDISArchiveInventory {
         ItemMeta close_im = close.getItemMeta();
         assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIArchive.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GuiArchive.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[26] = close;
 

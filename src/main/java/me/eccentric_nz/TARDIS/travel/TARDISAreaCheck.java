@@ -18,12 +18,12 @@ package me.eccentric_nz.tardis.travel;
 
 import me.eccentric_nz.tardis.database.data.Area;
 
-public class TARDISAreaCheck {
+public class TardisAreaCheck {
 
     private final Area area;
     private final boolean inArea;
 
-    TARDISAreaCheck(Area area, boolean inArea) {
+    TardisAreaCheck(Area area, boolean inArea) {
         this.area = area;
         this.inArea = inArea;
     }

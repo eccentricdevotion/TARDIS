@@ -22,7 +22,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class TARDISSudoTracker {
+public class TardisSudoTracker {
 
     public static final HashMap<UUID, UUID> SUDOERS = new HashMap<>();
     private static final UUID CONSOLE_UUID = UUID.randomUUID();

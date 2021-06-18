@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -39,9 +39,9 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISSonicMenuListener extends TARDISMenuListener implements Listener {
+public class TardisSonicMenuListener extends TardisMenuListener implements Listener {
 
-    public TARDISSonicMenuListener(TARDISPlugin plugin) {
+    public TardisSonicMenuListener(TardisPlugin plugin) {
         super(plugin);
     }
 

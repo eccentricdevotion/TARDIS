@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -26,15 +26,15 @@ import org.bukkit.inventory.ItemStack;
 
 public class LabCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public LabCommand(TARDISPlugin plugin) {
+    public LabCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public boolean combine(Player player) {
-        if (!TARDISPermission.hasPermission(player, "tardis.lab.combine")) {
-            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Lab");
+        if (!TardisPermission.hasPermission(player, "tardis.lab.combine")) {
+            TardisMessage.send(player, "CHEMISTRY_SUB_PERM", "Lab");
             return true;
         }
         // do stuff

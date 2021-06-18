@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardis.commands;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -30,20 +30,20 @@ import java.util.List;
 /**
  * TabCompleter for /tardisarea
  */
-public class TARDISAreaTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisAreaTabComplete extends TardisCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("start", "end", "parking", "remove", "show", "yard", "invisibility", "direction");
     private final List<String> INVISIBILTY_SUBS = new ArrayList<>();
     private final List<String> DIRECTION_SUBS = new ArrayList<>();
 
-    public TARDISAreaTabComplete() {
+    public TardisAreaTabComplete() {
         INVISIBILTY_SUBS.add("ALLOW");
         INVISIBILTY_SUBS.add("DENY");
-        for (PRESET preset : PRESET.values()) {
+        for (Preset preset : Preset.values()) {
             INVISIBILTY_SUBS.add(preset.toString());
         }
-        for (COMPASS compass : COMPASS.values()) {
-            DIRECTION_SUBS.add(compass.toString());
+        for (CardinalDirection cardinalDirection : CardinalDirection.values()) {
+            DIRECTION_SUBS.add(cardinalDirection.toString());
         }
     }
 

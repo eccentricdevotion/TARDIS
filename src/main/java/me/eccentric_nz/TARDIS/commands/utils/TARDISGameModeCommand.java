@@ -17,9 +17,9 @@
 package me.eccentric_nz.tardis.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.GameMode;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -28,12 +28,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Locale;
 
-public class TARDISGameModeCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
+public class TardisGameModeCommand extends TardisCompleter implements CommandExecutor, TabCompleter {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("SURVIVAL", "s", "CREATIVE", "c", "ADVENTURE", "a", "SPECTATOR", "sp");
 
-    public TARDISGameModeCommand(TARDISPlugin plugin) {
+    public TardisGameModeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -63,7 +63,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
 
     private boolean setPlayerGameMode(CommandSender sender, String[] args, GameMode gm) {
         if (gm == null && args.length < 1) {
-            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            TardisMessage.send(sender, "TOO_FEW_ARGS");
             return true;
         }
         Player player = null;
@@ -71,12 +71,12 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
         if (sender instanceof ConsoleCommandSender) {
             // must specify a player name
             if ((gm == null && args.length < 2) || ((gm != null && args.length < 1))) {
-                TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+                TardisMessage.send(sender, "COULD_NOT_FIND_NAME");
                 return true;
             }
             player = plugin.getServer().getPlayer(gm == null ? args[1] : args[0]);
             if (player == null) {
-                TARDISMessage.send(sender, "NOT_ONLINE");
+                TardisMessage.send(sender, "NOT_ONLINE");
                 return true;
             }
             thirdperson = true;
@@ -85,7 +85,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
             if (gm == null && args.length == 2) {
                 player = plugin.getServer().getPlayer(args[1]);
                 if (player == null) {
-                    TARDISMessage.send(sender, "NOT_ONLINE");
+                    TardisMessage.send(sender, "NOT_ONLINE");
                     return true;
                 }
             } else if (gm != null && args.length == 1) {
@@ -95,7 +95,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
                     player = plugin.getServer().getPlayer(args[0]);
                     thirdperson = true;
                     if (player == null) {
-                        TARDISMessage.send(sender, "NOT_ONLINE");
+                        TardisMessage.send(sender, "NOT_ONLINE");
                         return true;
                     }
                 }
@@ -112,7 +112,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
                     case "a" -> gm = GameMode.ADVENTURE;
                     case "sp" -> gm = GameMode.SPECTATOR;
                     default -> {
-                        TARDISMessage.send(sender, "ARG_GAMEMODE");
+                        TardisMessage.send(sender, "ARG_GAMEMODE");
                         return false;
                     }
                 }
@@ -120,7 +120,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
                 try {
                     gm = GameMode.valueOf(args[0].toUpperCase(Locale.ENGLISH));
                 } catch (IllegalArgumentException e) {
-                    TARDISMessage.send(sender, "ARG_GAMEMODE");
+                    TardisMessage.send(sender, "ARG_GAMEMODE");
                     return false;
                 }
             }
@@ -128,9 +128,9 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
         assert player != null;
         player.setGameMode(gm);
         if (thirdperson) {
-            TARDISMessage.send(sender, "CMD_GAMEMODE_CONSOLE", player.getName(), gm.toString());
+            TardisMessage.send(sender, "CMD_GAMEMODE_CONSOLE", player.getName(), gm.toString());
         }
-        TARDISMessage.send(player, "CMD_GAMEMODE_PLAYER", gm.toString());
+        TardisMessage.send(player, "CMD_GAMEMODE_PLAYER", gm.toString());
         return true;
     }
 

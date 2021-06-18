@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPortals;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Tag;
@@ -41,13 +41,13 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISDoorOpener {
+public class TardisDoorOpener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final UUID uuid;
     private final int id;
 
-    public TARDISDoorOpener(TARDISPlugin plugin, UUID uuid, int id) {
+    public TardisDoorOpener(TardisPlugin plugin, UUID uuid, int id) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.id = id;
@@ -82,8 +82,8 @@ public class TARDISDoorOpener {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-                TARDIS tardis = null;
-                PRESET preset = null;
+                Tardis tardis = null;
+                Preset preset = null;
                 boolean abandoned = false;
                 if (rs.resultSet()) {
                     tardis = rs.getTardis();
@@ -111,22 +111,22 @@ public class TARDISDoorOpener {
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
                 rsc.resultSet();
                 Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                if (preset != null && preset.equals(PRESET.SWAMP)) {
+                if (preset != null && preset.equals(Preset.SWAMP)) {
                     exportal.add(0.0d, 1.0d, 0.0d);
                 }
                 // interior teleport location
                 Location indoor = null;
-                COMPASS indirection = COMPASS.SOUTH;
+                CardinalDirection indirection = CardinalDirection.SOUTH;
                 // exterior teleport location
                 Location exdoor = null;
-                COMPASS exdirection = COMPASS.SOUTH;
+                CardinalDirection exdirection = CardinalDirection.SOUTH;
                 // interior portal
                 Location inportal = null;
                 ResultSetPortals rsp = new ResultSetPortals(plugin, id);
                 rsp.resultSet();
                 for (HashMap<String, String> map : rsp.getData()) {
-                    Location tmp_loc = TARDISStaticLocationGetters.getLocationFromDB(map.get("door_location"));
-                    COMPASS tmp_direction = COMPASS.valueOf(map.get("door_direction"));
+                    Location tmp_loc = TardisStaticLocationGetters.getLocationFromDB(map.get("door_location"));
+                    CardinalDirection tmp_direction = CardinalDirection.valueOf(map.get("door_direction"));
                     if (map.get("door_type").equals("1")) {
                         // clone it because we're going to change it!
                         assert tmp_loc != null;
@@ -161,7 +161,7 @@ public class TARDISDoorOpener {
                     } else {
                         assert tmp_loc != null;
                         exdoor = tmp_loc.clone();
-                        exdirection = COMPASS.valueOf(map.get("door_direction"));
+                        exdirection = CardinalDirection.valueOf(map.get("door_direction"));
                         // adjust for teleport
                         assert preset != null;
                         if (preset.usesItemFrame()) {
@@ -179,12 +179,12 @@ public class TARDISDoorOpener {
                 }
                 if (!checkForSpace(block, indirection)) {
                     // set trackers
-                    TARDISTeleportLocation tp_in = new TARDISTeleportLocation();
+                    TardisTeleportLocation tp_in = new TardisTeleportLocation();
                     tp_in.setLocation(indoor);
                     tp_in.setTardisId(id);
                     tp_in.setDirection(indirection);
                     tp_in.setAbandoned(abandoned);
-                    TARDISTeleportLocation tp_out = new TARDISTeleportLocation();
+                    TardisTeleportLocation tp_out = new TardisTeleportLocation();
                     tp_out.setLocation(exdoor);
                     tp_out.setTardisId(id);
                     tp_out.setDirection(exdirection);
@@ -196,7 +196,7 @@ public class TARDISDoorOpener {
                     // locations
                     if (tardis != null && preset != null && preset.hasPortal()) {
                         plugin.getTrackerKeeper().getPortals().put(exportal, tp_in);
-                        if (preset.equals(PRESET.INVISIBLE) && plugin.getConfig().getBoolean("allow.3d_doors")) {
+                        if (preset.equals(Preset.INVISIBLE) && plugin.getConfig().getBoolean("allow.3d_doors")) {
                             // remember door location
                             plugin.getTrackerKeeper().getInvisibleDoors().put(tardis.getUuid(), other);
                         }
@@ -207,12 +207,12 @@ public class TARDISDoorOpener {
         }
     }
 
-    private boolean checkForSpace(Block b, COMPASS d) {
+    private boolean checkForSpace(Block b, CardinalDirection d) {
         BlockFace face = getOppositeFace(d);
         return (b.getRelative(face).getType().isAir() && b.getRelative(face).getRelative(BlockFace.UP).getType().isAir());
     }
 
-    private BlockFace getOppositeFace(COMPASS d) {
+    private BlockFace getOppositeFace(CardinalDirection d) {
         return switch (d) {
             case SOUTH -> BlockFace.NORTH;
             case WEST -> BlockFace.EAST;

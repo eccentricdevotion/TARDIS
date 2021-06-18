@@ -17,12 +17,12 @@
 package me.eccentric_nz.tardis.commands.tardis;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.enumeration.TardisCommand;
 import me.eccentric_nz.tardis.enumeration.Updateable;
-import me.eccentric_nz.tardis.rooms.TARDISWalls;
+import me.eccentric_nz.tardis.rooms.TardisWalls;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -36,9 +36,9 @@ import java.util.Objects;
 /**
  * TabCompleter for /tardis command
  */
-public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisTabComplete extends TardisCompleter implements TabCompleter {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> ROOT_SUBS = new ArrayList<>();
     private final List<String> ON_OFF_SUBS = ImmutableList.of("on", "off");
     private final List<String> DOOR_SUBS = ImmutableList.of("open", "close");
@@ -56,13 +56,13 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> MAT_SUBS = new ArrayList<>();
     private final List<String> PRESET_SUBS = new ArrayList<>();
 
-    public TARDISTabComplete(TARDISPlugin plugin) {
+    public TardisTabComplete(TardisPlugin plugin) {
         this.plugin = plugin;
         for (TardisCommand tc : TardisCommand.values()) {
             ROOT_SUBS.add(tc.toString());
         }
         RECHARGER_SUBS = getPublicRechargers();
-        for (PRESET preset : PRESET.values()) {
+        for (Preset preset : Preset.values()) {
             PRESET_SUBS.add(preset.toString());
         }
         for (Updateable u : Updateable.values()) {
@@ -72,7 +72,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             }
         }
         SEC_SUBS.add("remove");
-        TARDISWalls.BLOCKS.forEach((m) -> MAT_SUBS.add(m.toString()));
+        TardisWalls.BLOCKS.forEach((m) -> MAT_SUBS.add(m.toString()));
     }
 
     @Override

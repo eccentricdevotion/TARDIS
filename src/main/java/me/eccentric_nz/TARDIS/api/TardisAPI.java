@@ -17,13 +17,13 @@
 package me.eccentric_nz.tardis.api;
 
 import me.eccentric_nz.tardis.blueprints.BlueprintType;
-import me.eccentric_nz.tardis.database.data.TARDIS;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.travel.TARDISPluginRespect;
-import me.eccentric_nz.tardis.utility.TARDISLocationGetters;
-import me.eccentric_nz.tardis.utility.TARDISUtils;
+import me.eccentric_nz.tardis.travel.TardisPluginRespect;
+import me.eccentric_nz.tardis.utility.TardisLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -38,7 +38,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public interface TARDISAPI {
+public interface TardisApi {
 
     /**
      * Fetches a map of tardis owners and ids.
@@ -85,7 +85,7 @@ public interface TARDISAPI {
      * @param id the tardis id to retrieve the data for
      * @return the current tardis data or null if not found
      */
-    TARDISData getTARDISMapData(int id);
+    TardisData getTARDISMapData(int id);
 
     /**
      * Get a random location from a provided list of worlds in the specified environment. If environment is null, then
@@ -300,21 +300,21 @@ public interface TARDISAPI {
      *
      * @return the tardis Utilities instance
      */
-    TARDISUtils getUtils();
+    TardisUtils getUtils();
 
     /**
      * Get a handle for the tardis utilities.
      *
      * @return the tardis Utilities instance
      */
-    TARDISLocationGetters getLocationUtils();
+    TardisLocationGetters getLocationUtils();
 
     /**
      * Get a handle for the tardis Plugin Respect.
      *
      * @return the tardis Plugin Respect instance
      */
-    TARDISPluginRespect getRespect();
+    TardisPluginRespect getRespect();
 
     /**
      * Get the tardis shaped recipes.
@@ -411,25 +411,25 @@ public interface TARDISAPI {
      * Get information from the database for a tardis.
      *
      * @param id the tardis id to get information for
-     * @return return a {@link TARDIS} data object, or null if no data was found
+     * @return return a {@link Tardis} data object, or null if no data was found
      */
-    TARDIS getTardisData(int id);
+    Tardis getTardisData(int id);
 
     /**
      * Convenience method to get information from the database for a tardis.
      *
      * @param uuid the UUID of the Time Lord (player) of the tardis id to get information for
-     * @return return a {@link TARDIS} data object, or null if no data was found
+     * @return return a {@link Tardis} data object, or null if no data was found
      */
-    TARDIS getTardisData(UUID uuid);
+    Tardis getTardisData(UUID uuid);
 
     /**
      * Convenience method to get information from the database for a tardis.
      *
      * @param player the Time Lord (player) of the tardis to get information for
-     * @return return a {@link TARDIS} data object, or null if no data was found
+     * @return return a {@link Tardis} data object, or null if no data was found
      */
-    TARDIS getTardisData(Player player);
+    Tardis getTardisData(Player player);
 
     /**
      * Set the Chameleon Preset for a tardis.
@@ -439,7 +439,7 @@ public interface TARDISAPI {
      * @param rebuild whether to rebuild the tardis exterior
      * @return true if the preset was set
      */
-    boolean setChameleonPreset(int id, PRESET preset, boolean rebuild);
+    boolean setChameleonPreset(int id, Preset preset, boolean rebuild);
 
     /**
      * Convenience method to set the Chameleon Preset for a tardis.
@@ -449,7 +449,7 @@ public interface TARDISAPI {
      * @param rebuild whether to rebuild the tardis exterior
      * @return true if the preset was set
      */
-    boolean setChameleonPreset(UUID uuid, PRESET preset, boolean rebuild);
+    boolean setChameleonPreset(UUID uuid, Preset preset, boolean rebuild);
 
     /**
      * Convenience method to set the Chameleon Preset for a tardis.
@@ -459,7 +459,7 @@ public interface TARDISAPI {
      * @param rebuild whether to rebuild the tardis exterior
      * @return true if the preset was set
      */
-    boolean setChameleonPreset(Player player, PRESET preset, boolean rebuild);
+    boolean setChameleonPreset(Player player, Preset preset, boolean rebuild);
 
     /**
      * Spawn an abandoned tardis at the specified Bukkit Location.
@@ -469,9 +469,9 @@ public interface TARDISAPI {
      * @param preset    the Chameleon preset of the exterior
      * @param direction the direction of the tardis exterior ( this is the direction the player is facing when looking
      *                  at the door)
-     * @throws TARDISException if the console type is not valid or tardis abandonment is disabled on the server
+     * @throws TardisException if the console type is not valid or tardis abandonment is disabled on the server
      */
-    void spawnAbandonedTARDIS(Location location, String type, PRESET preset, COMPASS direction) throws TARDISException;
+    void spawnAbandonedTARDIS(Location location, String type, Preset preset, CardinalDirection direction) throws TardisException;
 
     /**
      * Convenience method to spawn an abandoned tardis at the specified Bukkit Location. The interior will default to
@@ -502,7 +502,7 @@ public interface TARDISAPI {
      * @param artron whether to check for and charge Artron Energy
      * @return a comma separated String containing the wall and floor block names (so they can be restored) if the walls
      * and floor were successfully changed, an empty String if not
-     * @throws TARDISException if the wall or floor type is not valid
+     * @throws TardisException if the wall or floor type is not valid
      */
-    String setDesktopWallAndFloor(UUID uuid, String wall, String floor, boolean artron) throws TARDISException;
+    String setDesktopWallAndFloor(UUID uuid, String wall, String floor, boolean artron) throws TardisException;
 }

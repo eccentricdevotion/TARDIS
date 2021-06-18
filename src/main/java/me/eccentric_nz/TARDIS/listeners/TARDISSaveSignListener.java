@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.Flag;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.flight.TARDISLand;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
-import me.eccentric_nz.tardis.travel.TARDISAreaCheck;
-import me.eccentric_nz.tardis.travel.TARDISAreasInventory;
-import me.eccentric_nz.tardis.travel.TARDISSaveSignInventory;
-import me.eccentric_nz.tardis.travel.TARDISSaveSignPageTwo;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.flight.TardisLand;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
+import me.eccentric_nz.tardis.travel.TardisAreaCheck;
+import me.eccentric_nz.tardis.travel.TardisAreasInventory;
+import me.eccentric_nz.tardis.travel.TardisSaveSignInventory;
+import me.eccentric_nz.tardis.travel.TardisSaveSignPageTwo;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -53,11 +53,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISSaveSignListener extends TARDISMenuListener implements Listener {
+public class TardisSaveSignListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISSaveSignListener(TARDISPlugin plugin) {
+    public TardisSaveSignListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
     }
@@ -142,7 +142,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                             if (save_dest != null) {
                                 if (lore.get(0).startsWith("TARDIS_")) {
                                     close(player);
-                                    TARDISMessage.send(player, "SAVE_NO_TARDIS");
+                                    TardisMessage.send(player, "SAVE_NO_TARDIS");
                                     return;
                                 }
                                 // check the player is allowed!
@@ -159,11 +159,11 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                 int level = rs.getArtronLevel();
                                 int travel = plugin.getArtronConfig().getInt("travel");
                                 if (level < travel) {
-                                    TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
+                                    TardisMessage.send(player, "NOT_ENOUGH_ENERGY");
                                     close(player);
                                     return;
                                 }
-                                TARDISAreaCheck tac = plugin.getTardisArea().areaCheckInExistingArea(save_dest);
+                                TardisAreaCheck tac = plugin.getTardisArea().areaCheckInExistingArea(save_dest);
                                 if (tac.isInArea()) {
                                     // save is in a TARDIS area, so check that the spot is not occupied
                                     HashMap<String, Object> wheresave = new HashMap<>();
@@ -173,7 +173,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     wheresave.put("z", lore.get(3));
                                     ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheresave);
                                     if (rsz.resultSet()) {
-                                        TARDISMessage.send(player, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
+                                        TardisMessage.send(player, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
                                         close(player);
                                         return;
                                     }
@@ -182,13 +182,13 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     wheret.put("tardis_id", id);
                                     ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, wheret, "", false, 2);
                                     if (resultSetTardis.resultSet()) {
-                                        if (invisibility.equals("DENY") && resultSetTardis.getTardis().getPreset().equals(PRESET.INVISIBLE)) {
+                                        if (invisibility.equals("DENY") && resultSetTardis.getTardis().getPreset().equals(Preset.INVISIBLE)) {
                                             // check preset
-                                            TARDISMessage.send(player, "AREA_NO_INVISIBLE");
+                                            TardisMessage.send(player, "AREA_NO_INVISIBLE");
                                             return;
                                         } else if (!invisibility.equals("ALLOW")) {
                                             // force preset
-                                            TARDISMessage.send(player, "AREA_FORCE_PRESET", invisibility);
+                                            TardisMessage.send(player, "AREA_FORCE_PRESET", invisibility);
                                             HashMap<String, Object> wherei = new HashMap<>();
                                             wherei.put("tardis_id", id);
                                             HashMap<String, Object> seti = new HashMap<>();
@@ -202,9 +202,9 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                 if (!save_dest.equals(current) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                     HashMap<String, Object> set = new HashMap<>();
                                     set.put("world", lore.get(0));
-                                    set.put("x", TARDISNumberParsers.parseInt(lore.get(1)));
-                                    set.put("y", TARDISNumberParsers.parseInt(lore.get(2)));
-                                    set.put("z", TARDISNumberParsers.parseInt(lore.get(3)));
+                                    set.put("x", TardisNumberParsers.parseInt(lore.get(1)));
+                                    set.put("y", TardisNumberParsers.parseInt(lore.get(2)));
+                                    set.put("z", TardisNumberParsers.parseInt(lore.get(3)));
                                     int l_size = lore.size();
                                     if (l_size >= 5) {
                                         if (!lore.get(4).isEmpty() && !lore.get(4).equals(ChatColor.GOLD + "Current location")) {
@@ -231,9 +231,9 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                     plugin.getTrackerKeeper().getRescue().remove(id);
                                     close(player);
-                                    TARDISMessage.send(player, "DEST_SET_TERMINAL", im.getDisplayName(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                                    TardisMessage.send(player, "DEST_SET_TERMINAL", im.getDisplayName(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                                        new TARDISLand(plugin, id, player).exitVortex();
+                                        new TardisLand(plugin, id, player).exitVortex();
                                     }
                                 } else if (!lore.contains(ChatColor.GOLD + "Current location")) {
                                     lore.add(ChatColor.GOLD + "Current location");
@@ -242,7 +242,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                 }
                             } else {
                                 close(player);
-                                TARDISMessage.send(player, "DEST_NOT_VALID", im.getDisplayName());
+                                TardisMessage.send(player, "DEST_NOT_VALID", im.getDisplayName());
                             }
                         }
                     }
@@ -255,9 +255,9 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false, 0);
                     if (rs.resultSet()) {
                         plugin.getTrackerKeeper().getArrangers().add(uuid);
-                        TARDISMessage.send(player, "SAVE_ARRANGE");
+                        TardisMessage.send(player, "SAVE_ARRANGE");
                     } else {
-                        TARDISMessage.send(player, "NOT_OWNER");
+                        TardisMessage.send(player, "NOT_OWNER");
                     }
                 }
                 ItemStack own = Objects.requireNonNull(event.getClickedInventory()).getItem(49);
@@ -273,7 +273,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                         }
                     } else {
                         // get id of TARDIS player is in
-                        ownId = TARDISInteriorPostioning.getTARDISIdFromLocation(player.getLocation());
+                        ownId = TardisInteriorPositioning.getTARDISIdFromLocation(player.getLocation());
                     }
                     if (ownId != -1) {
                         int saveId = ownId;
@@ -282,11 +282,11 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                             Inventory inv;
                             ItemStack[] items;
                             if (isSecondPage) {
-                                TARDISSaveSignPageTwo sst = new TARDISSaveSignPageTwo(plugin, saveId, player);
+                                TardisSaveSignPageTwo sst = new TardisSaveSignPageTwo(plugin, saveId, player);
                                 items = sst.getPageTwo();
                                 inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves 2");
                             } else {
-                                TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, saveId, player);
+                                TardisSaveSignInventory sst = new TardisSaveSignInventory(plugin, saveId, player);
                                 items = sst.getTerminal();
                                 inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
                             }
@@ -302,11 +302,11 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                         Inventory inv;
                         ItemStack[] items;
                         if (isSecondPage) {
-                            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, finalId, player);
+                            TardisSaveSignInventory sst = new TardisSaveSignInventory(plugin, finalId, player);
                             items = sst.getTerminal();
                             inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
                         } else {
-                            TARDISSaveSignPageTwo sst = new TARDISSaveSignPageTwo(plugin, finalId, player);
+                            TardisSaveSignPageTwo sst = new TardisSaveSignPageTwo(plugin, finalId, player);
                             items = sst.getPageTwo();
                             inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves 2");
                         }
@@ -317,7 +317,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                 if (slot == 53) {
                     // load TARDIS areas
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        TARDISAreasInventory sst = new TARDISAreasInventory(plugin, player);
+                        TardisAreasInventory sst = new TardisAreasInventory(plugin, player);
                         ItemStack[] items = sst.getTerminal();
                         Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS areas");
                         areainv.setContents(items);
@@ -372,13 +372,13 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
      * @return a Location
      */
     private Location getLocation(List<String> lore) {
-        World w = TARDISAliasResolver.getWorldFromAlias(lore.get(0));
+        World w = TardisAliasResolver.getWorldFromAlias(lore.get(0));
         if (w == null) {
             return null;
         }
-        int x = TARDISNumberParsers.parseInt(lore.get(1));
-        int y = TARDISNumberParsers.parseInt(lore.get(2));
-        int z = TARDISNumberParsers.parseInt(lore.get(3));
+        int x = TardisNumberParsers.parseInt(lore.get(1));
+        int y = TardisNumberParsers.parseInt(lore.get(2));
+        int z = TardisNumberParsers.parseInt(lore.get(3));
         return new Location(w, x, y, z);
     }
 }

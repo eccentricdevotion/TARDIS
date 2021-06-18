@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
-public enum GUIWeather {
+public enum GuiWeather {
 
     // tardis Weather Menu
     CLEAR(1, 0, Material.SUNFLOWER),
@@ -32,7 +32,7 @@ public enum GUIWeather {
     private final int slot;
     private final Material material;
 
-    GUIWeather(int customModelData, int slot, Material material) {
+    GuiWeather(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -52,6 +52,6 @@ public enum GUIWeather {
 
     public String getName() {
         String s = toString();
-        return TARDISStringUtils.uppercaseFirst(s);
+        return TardisStringUtils.uppercaseFirst(s);
     }
 }

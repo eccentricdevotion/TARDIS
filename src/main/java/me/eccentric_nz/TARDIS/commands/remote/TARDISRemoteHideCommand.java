@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.commands.remote;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -35,24 +35,24 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISRemoteHideCommand {
+public class TardisRemoteHideCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISRemoteHideCommand(TARDISPlugin plugin) {
+    public TardisRemoteHideCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public boolean doRemoteHide(CommandSender sender, int id) {
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            TARDISMessage.send(sender, "NOT_IN_VORTEX");
+            TardisMessage.send(sender, "NOT_IN_VORTEX");
             return true;
         }
         HashMap<String, Object> wherecl = new HashMap<>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
-            TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
+            TardisMessage.send(sender, "CURRENT_NOT_FOUND");
             return true;
         }
         OfflinePlayer olp = null;
@@ -69,8 +69,8 @@ public class TARDISRemoteHideCommand {
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-        if (rs.fromID(id) && rs.getPreset().equals(PRESET.INVISIBLE) && olp != null) {
-            TARDISMessage.send(olp.getPlayer(), "INVISIBILITY_ENGAGED");
+        if (rs.fromID(id) && rs.getPreset().equals(Preset.INVISIBLE) && olp != null) {
+            TardisMessage.send(olp.getPlayer(), "INVISIBILITY_ENGAGED");
             return true;
         }
         assert olp != null;
@@ -85,7 +85,7 @@ public class TARDISRemoteHideCommand {
         dd.setTardisId(id);
         dd.setThrottle(SpaceTimeThrottle.REBUILD);
         plugin.getPresetDestroyer().destroyPreset(dd);
-        TARDISMessage.send(sender, "TARDIS_HIDDEN", "/tardisremote [player] rebuild");
+        TardisMessage.send(sender, "TARDIS_HIDDEN", "/tardisremote [player] rebuild");
         // set hidden to true
         HashMap<String, Object> whereh = new HashMap<>();
         whereh.put("tardis_id", id);
@@ -95,7 +95,7 @@ public class TARDISRemoteHideCommand {
         // turn force field off
         if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
             plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
-            TARDISMessage.send(sender, "FORCE_FIELD", "OFF");
+            TardisMessage.send(sender, "FORCE_FIELD", "OFF");
         }
         return true;
     }

@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.custommodeldata.GUISonicConfigurator;
+import me.eccentric_nz.tardis.custommodeldata.GuiSonicConfigurator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 
-public class TARDISSonicConfiguratorInventory {
+public class TardisSonicConfiguratorInventory {
 
     private final ItemStack[] configurator;
 
-    public TARDISSonicConfiguratorInventory() {
+    public TardisSonicConfiguratorInventory() {
         configurator = getItemStack();
     }
 
@@ -38,7 +38,7 @@ public class TARDISSonicConfiguratorInventory {
     private ItemStack[] getItemStack() {
 
         ItemStack[] stack = new ItemStack[27];
-        for (GUISonicConfigurator gui : GUISonicConfigurator.values()) {
+        for (GuiSonicConfigurator gui : GuiSonicConfigurator.values()) {
             if (gui.getSlot() != -1) {
                 ItemStack is = new ItemStack(gui.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
@@ -52,18 +52,18 @@ public class TARDISSonicConfiguratorInventory {
                 stack[gui.getSlot()] = is;
             }
         }
-        ItemStack place = new ItemStack(GUISonicConfigurator.PLACE_SONIC.getMaterial(), 1);
+        ItemStack place = new ItemStack(GuiSonicConfigurator.PLACE_SONIC.getMaterial(), 1);
         ItemMeta pim = place.getItemMeta();
         assert pim != null;
-        pim.setDisplayName(GUISonicConfigurator.PLACE_SONIC.getName());
-        pim.setCustomModelData(GUISonicConfigurator.PLACE_SONIC.getCustomModelData());
+        pim.setDisplayName(GuiSonicConfigurator.PLACE_SONIC.getName());
+        pim.setCustomModelData(GuiSonicConfigurator.PLACE_SONIC.getCustomModelData());
         place.setItemMeta(pim);
         stack[9] = place;
-        ItemStack wool = new ItemStack(GUISonicConfigurator.WAITING.getMaterial(), 1);
+        ItemStack wool = new ItemStack(GuiSonicConfigurator.WAITING.getMaterial(), 1);
         ItemMeta wim = wool.getItemMeta();
         assert wim != null;
         wim.setDisplayName(" ");
-        wim.setCustomModelData(GUISonicConfigurator.WAITING.getCustomModelData());
+        wim.setCustomModelData(GuiSonicConfigurator.WAITING.getCustomModelData());
         wool.setItemMeta(wim);
         for (int i = 10; i < 17; i++) {
             stack[i] = wool;

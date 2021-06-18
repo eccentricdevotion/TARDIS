@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -37,11 +37,11 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISManualFlightListener implements Listener {
+public class TardisManualFlightListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISManualFlightListener(TARDISPlugin plugin) {
+    public TardisManualFlightListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

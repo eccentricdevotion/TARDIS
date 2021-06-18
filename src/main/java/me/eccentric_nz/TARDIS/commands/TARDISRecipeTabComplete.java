@@ -30,12 +30,12 @@ import java.util.Set;
 /**
  * TabCompleter for /tardisrecipe command
  */
-public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisRecipeTabComplete extends TardisCompleter implements TabCompleter {
 
     public static final Set<String> ROOT_SUBS = new HashSet<>();
     public static final List<String> TARDIS_TYPES = ImmutableList.of("ars", "bigger", "budget", "coral", "custom", "deluxe", "eleventh", "ender", "master", "pyramid", "redstone", "rotor", "steampunk", "thirteenth", "tom", "twelfth", "war", "wood", "legacy_budget", "legacy_bigger", "legacy_deluxe", "legacy_eleventh", "legacy_redstone");
 
-    public TARDISRecipeTabComplete() {
+    public TardisRecipeTabComplete() {
         ROOT_SUBS.add("seed");
         ROOT_SUBS.add("tardis");
         for (RecipeItem recipeItem : RecipeItem.values()) {

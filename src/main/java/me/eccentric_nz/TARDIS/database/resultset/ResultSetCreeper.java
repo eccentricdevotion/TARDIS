@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,9 +32,9 @@ import java.sql.SQLException;
  */
 public class ResultSetCreeper {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String location;
     private final String prefix;
 
@@ -44,7 +44,7 @@ public class ResultSetCreeper {
      * @param plugin   an instance of the main class.
      * @param location the location to check for.
      */
-    public ResultSetCreeper(TARDISPlugin plugin, String location) {
+    public ResultSetCreeper(TardisPlugin plugin, String location) {
         this.plugin = plugin;
         this.location = location;
         prefix = this.plugin.getPrefix();

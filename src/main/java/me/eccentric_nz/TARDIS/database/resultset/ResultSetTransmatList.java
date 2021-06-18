@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.data.Transmat;
 
 import java.sql.Connection;
@@ -29,9 +29,9 @@ import java.util.List;
 
 public class ResultSetTransmatList {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
     private final String prefix;
     private final List<Transmat> data = new ArrayList<>();
@@ -42,7 +42,7 @@ public class ResultSetTransmatList {
      * @param plugin an instance of the main class.
      * @param id     the tardis id to refine the search.
      */
-    public ResultSetTransmatList(TARDISPlugin plugin, int id) {
+    public ResultSetTransmatList(TardisPlugin plugin, int id) {
         this.plugin = plugin;
         this.id = id;
         prefix = this.plugin.getPrefix();

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.config;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.Config;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISWorlds;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisWorlds;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 
@@ -29,21 +29,21 @@ import java.io.IOException;
 /**
  * @author eccentric_nz
  */
-class TARDISReloadCommand {
+class TardisReloadCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISReloadCommand(TARDISPlugin plugin) {
+    TardisReloadCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean reloadConfig(CommandSender sender) {
         plugin.reloadConfig();
         // check worlds
-        TARDISWorlds tc = new TARDISWorlds(plugin);
+        TardisWorlds tc = new TardisWorlds(plugin);
         tc.doWorlds();
         plugin.saveConfig();
-        TARDISMessage.send(sender, "RELOADED");
+        TardisMessage.send(sender, "RELOADED");
         return true;
     }
 
@@ -62,16 +62,16 @@ class TARDISReloadCommand {
                 case rooms -> plugin.getRoomsConfig().load(file);
                 case signs -> plugin.getSigns().load(file);
                 default -> {
-                    TARDISMessage.send(sender, "RELOAD_NOT_THESE", args[1]);
+                    TardisMessage.send(sender, "RELOAD_NOT_THESE", args[1]);
                     return true;
                 }
             }
-            TARDISMessage.send(sender, "RELOAD_SUCCESS", config.toString());
+            TardisMessage.send(sender, "RELOAD_SUCCESS", config.toString());
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(sender, "RELOAD_FILE_BAD", args[1]);
+            TardisMessage.send(sender, "RELOAD_FILE_BAD", args[1]);
             return true;
         } catch (InvalidConfigurationException | IOException e) {
-            TARDISMessage.send(sender, "RELOAD_FAIL", args[1]);
+            TardisMessage.send(sender, "RELOAD_FAIL", args[1]);
             return true;
         }
         return true;

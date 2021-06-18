@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -31,11 +31,11 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-class TARDISRechargerCommand {
+class TardisRechargerCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISRechargerCommand(TARDISPlugin plugin) {
+    TardisRechargerCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -45,12 +45,12 @@ class TARDISRechargerCommand {
             player = (Player) sender;
         }
         if (player == null) {
-            TARDISMessage.send(sender, "CHARGER_NO");
+            TardisMessage.send(sender, "CHARGER_NO");
             return true;
         }
         Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50);
         if (!b.getType().equals(Material.BEACON)) {
-            TARDISMessage.send(player, "CHARGER_BEACON");
+            TardisMessage.send(player, "CHARGER_BEACON");
             return true;
         }
         // make sure they're not targeting their inner tardis beacon
@@ -58,7 +58,7 @@ class TARDISRechargerCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet()) {
-            TARDISMessage.send(player, "ENERGY_NO_BEACON");
+            TardisMessage.send(player, "ENERGY_NO_BEACON");
             return true;
         }
         Location l = b.getLocation();
@@ -79,7 +79,7 @@ class TARDISRechargerCommand {
             plugin.getWorldGuardUtils().addRechargerProtection(player, args[1], wg1, wg2);
         }
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TardisMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
 }

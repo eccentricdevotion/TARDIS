@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -33,14 +33,14 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISDelavafier {
+class TardisDelavafier {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final UUID uuid;
     private final BlockData ORANGE = Material.ORANGE_TERRACOTTA.createBlockData();
     private final BlockData GLASS = Material.LIGHT_BLUE_STAINED_GLASS.createBlockData();
 
-    TARDISDelavafier(TARDISPlugin plugin, UUID uuid) {
+    TardisDelavafier(TardisPlugin plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
     }
@@ -51,13 +51,13 @@ class TARDISDelavafier {
         wheret.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             int slot = tardis.getTIPS();
             int startx;
             int startz;
             if (slot != -1) { // default world - use TIPS
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                TARDISTIPSData pos = tintpos.getTIPSData(slot);
+                TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
+                TardisTipsData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();
             } else {
@@ -65,7 +65,7 @@ class TARDISDelavafier {
                 startx = gsl[0];
                 startz = gsl[2];
             }
-            World world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+            World world = TardisStaticLocationGetters.getWorld(tardis.getChunk());
             for (int level = 2; level < 6; level++) {
                 for (int row = 0; row < 32; row++) {
                     for (int col = 0; col < 32; col++) {

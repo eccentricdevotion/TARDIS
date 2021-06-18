@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.commands.handles;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.*;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.flight.TARDISTakeoff;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.flight.TardisTakeoff;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
@@ -37,11 +37,11 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-class TARDISHandlesTakeoffCommand {
+class TardisHandlesTakeoffCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISHandlesTakeoffCommand(TARDISPlugin plugin) {
+    public TardisHandlesTakeoffCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -52,21 +52,21 @@ class TARDISHandlesTakeoffCommand {
         ResultSetTravellers rsv = new ResultSetTravellers(plugin, whereu, false);
         if (rsv.resultSet()) {
             // get tardis
-            int id = TARDISNumberParsers.parseInt(args[2]);
+            int id = TardisNumberParsers.parseInt(args[2]);
             HashMap<String, Object> wherei = new HashMap<>();
             wherei.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
             if (rs.resultSet()) {
-                TARDIS tardis = rs.getTardis();
-                if (tardis.getPreset().equals(PRESET.JUNK)) {
+                Tardis tardis = rs.getTardis();
+                if (tardis.getPreset().equals(Preset.JUNK)) {
                     return true;
                 }
                 if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered()) {
-                    TARDISMessage.handlesSend(player, "POWER_DOWN");
+                    TardisMessage.handlesSend(player, "POWER_DOWN");
                     return true;
                 }
                 if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDidDematToVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-                    TARDISMessage.handlesSend(player, "HANDBRAKE_IN_VORTEX");
+                    TardisMessage.handlesSend(player, "HANDBRAKE_IN_VORTEX");
                     return true;
                 }
                 HashMap<String, Object> whereh = new HashMap<>();
@@ -77,19 +77,19 @@ class TARDISHandlesTakeoffCommand {
                     if (tardis.isHandbrakeOn()) {
                         // check there is enough power for at last random travel
                         if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtronLevel() < plugin.getArtronConfig().getInt("random")) {
-                            TARDISMessage.handlesSend(player, "ENERGY_NOT_ENOUGH");
+                            TardisMessage.handlesSend(player, "ENERGY_NOT_ENOUGH");
                             return true;
                         }
                         // check if door is open
                         if (isDoorOpen(id)) {
-                            TARDISMessage.handlesSend(player, "DOOR_CLOSE");
+                            TardisMessage.handlesSend(player, "DOOR_CLOSE");
                             // track handbrake clicked for takeoff when door closed
                             plugin.getTrackerKeeper().getHasClickedHandbrake().add(id);
                             // give them 30 seconds to close the door
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
                             return true;
                         }
-                        Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+                        Location location = TardisStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                         assert location != null;
                         Block handbrake = location.getBlock();
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, args[1]);
@@ -101,9 +101,9 @@ class TARDISHandlesTakeoffCommand {
                             bar = rsp.isTravelBarOn();
                             spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                         }
-                        new TARDISTakeoff(plugin).run(id, handbrake, location, player, beac_on, tardis.getBeacon(), bar, spaceTimeThrottle);
+                        new TardisTakeoff(plugin).run(id, handbrake, location, player, beac_on, tardis.getBeacon(), bar, spaceTimeThrottle);
                     } else {
-                        TARDISMessage.handlesSend(player, "HANDBRAKE_OFF_ERR");
+                        TardisMessage.handlesSend(player, "HANDBRAKE_OFF_ERR");
                     }
                 }
             }
@@ -117,7 +117,7 @@ class TARDISHandlesTakeoffCommand {
         where.put("door_type", 1);
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
-            Openable door = (Openable) Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromDB(rs.getDoorLocation())).getBlock().getBlockData();
+            Openable door = (Openable) Objects.requireNonNull(TardisStaticLocationGetters.getLocationFromDB(rs.getDoorLocation())).getBlock().getBlockData();
             return door.isOpen();
         }
         return false;

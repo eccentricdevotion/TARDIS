@@ -26,11 +26,11 @@ import org.bukkit.plugin.Plugin;
 /**
  * @author eccentric_nz
  */
-public class TARDISMultiverseHelper {
+public class TardisMultiverseHelper {
 
     private final MultiverseCore mvc;
 
-    public TARDISMultiverseHelper(Plugin mvplugin) {
+    public TardisMultiverseHelper(Plugin mvplugin) {
         mvc = (MultiverseCore) mvplugin;
     }
 

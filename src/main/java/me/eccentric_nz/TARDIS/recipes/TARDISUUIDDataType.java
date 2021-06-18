@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.nio.ByteBuffer;
 import java.util.UUID;
 
-public class TARDISUUIDDataType implements PersistentDataType<byte[], UUID> {
+public class TardisUuidDataType implements PersistentDataType<byte[], UUID> {
 
     @Override
     public @NotNull Class<byte[]> getPrimitiveType() {

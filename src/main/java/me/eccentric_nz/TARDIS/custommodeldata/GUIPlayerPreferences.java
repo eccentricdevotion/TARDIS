@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
-public enum GUIPlayerPreferences {
+public enum GuiPlayerPreferences {
 
     // Player Prefs Menu
     AUTONOMOUS(20, 0, Material.REPEATER),
@@ -59,7 +59,7 @@ public enum GUIPlayerPreferences {
     private final int slot;
     private final Material material;
 
-    GUIPlayerPreferences(int customModelData, int slot, Material material) {
+    GuiPlayerPreferences(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -90,7 +90,7 @@ public enum GUIPlayerPreferences {
         } else if (s.endsWith("SFX")) {
             return "Interior SFX";
         } else {
-            return TARDISStringUtils.capitalise(s);
+            return TardisStringUtils.capitalise(s);
         }
     }
 }

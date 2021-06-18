@@ -16,37 +16,37 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
 /**
  * @author eccentric_nz
  */
-class TARDISJunkReturn {
+class TardisJunkReturn {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISJunkReturn(TARDISPlugin plugin) {
+    TardisJunkReturn(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean recall(CommandSender sender) {
         if (!sender.hasPermission("tardis.admin")) {
-            TARDISMessage.send(sender, "CMD_ADMIN");
+            TardisMessage.send(sender, "CMD_ADMIN");
             return true;
         }
-        TARDISJunkLocation tjl = new TARDISJunkLocation(plugin);
+        TardisJunkLocation tjl = new TardisJunkLocation(plugin);
         if (tjl.isNotHome()) {
             Location home = tjl.getHome();
             // fly home
             DestroyData dd = new DestroyData();
             dd.setLocation(tjl.getCurrent());
-            dd.setDirection(COMPASS.SOUTH);
+            dd.setDirection(CardinalDirection.SOUTH);
             dd.setHide(false);
             dd.setOutside(false);
             dd.setSubmarine(false);
@@ -56,9 +56,9 @@ class TARDISJunkReturn {
             // fly my pretties
             plugin.getGeneralKeeper().setJunkTravelling(true);
             plugin.getGeneralKeeper().setJunkDestination(home);
-            TARDISMessage.send(sender, "JUNK_RETURN");
+            TardisMessage.send(sender, "JUNK_RETURN");
         } else {
-            TARDISMessage.send(sender, "JUNK_AT_HOME");
+            TardisMessage.send(sender, "JUNK_AT_HOME");
         }
         return true;
     }

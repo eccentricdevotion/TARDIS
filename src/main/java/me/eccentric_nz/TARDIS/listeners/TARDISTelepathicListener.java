@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -42,11 +42,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISTelepathicListener implements Listener {
+public class TardisTelepathicListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISTelepathicListener(TARDISPlugin plugin) {
+    public TardisTelepathicListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -83,13 +83,13 @@ public class TARDISTelepathicListener implements Listener {
                     if (rsp.isTelepathyOn()) {
                         // track player
                         plugin.getTrackerKeeper().getTelepaths().put(uuid, o_uuid);
-                        TARDISMessage.send(player, "TELEPATHIC_COMMAND");
+                        TardisMessage.send(player, "TELEPATHIC_COMMAND");
                     } else {
-                        TARDISMessage.send(player, "TELEPATHIC_OFF");
+                        TardisMessage.send(player, "TELEPATHIC_OFF");
                     }
                 }
             }
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> block.setBlockData(TARDISConstants.DAYLIGHT), 3L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> block.setBlockData(TardisConstants.DAYLIGHT), 3L);
         }
     }
 
@@ -109,7 +109,7 @@ public class TARDISTelepathicListener implements Listener {
         }
         event.setCancelled(true);
         // set block to AIR
-        b.setBlockData(TARDISConstants.AIR);
+        b.setBlockData(TardisConstants.AIR);
         // drop a custom DAYLIGHT_DETECTOR
         ItemStack is = new ItemStack(Material.DAYLIGHT_DETECTOR, 1);
         ItemMeta im = is.getItemMeta();

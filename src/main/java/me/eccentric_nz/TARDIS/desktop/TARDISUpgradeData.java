@@ -21,7 +21,7 @@ import me.eccentric_nz.tardis.enumeration.Schematic;
 /**
  * @author eccentric_nz
  */
-public class TARDISUpgradeData {
+public class TardisUpgradeData {
 
     private Schematic schematic;
     private Schematic previous;

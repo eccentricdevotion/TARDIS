@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.builders.MaterialisationData;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.move.TARDISDoorCloser;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.move.TardisDoorCloser;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -44,11 +44,11 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TARDISDeinstantPreset {
+public class TardisDeinstantPreset {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISDeinstantPreset(TARDISPlugin plugin) {
+    public TardisDeinstantPreset(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -59,16 +59,16 @@ public class TARDISDeinstantPreset {
      * @param hide   boolean determining whether to forget the protected Police Box blocks.
      * @param preset the preset to destroy
      */
-    public void instaDestroyPreset(MaterialisationData dd, boolean hide, PRESET preset) {
+    public void instaDestroyPreset(MaterialisationData dd, boolean hide, Preset preset) {
         Location l = dd.getLocation();
-        COMPASS d = dd.getDirection();
+        CardinalDirection d = dd.getDirection();
         int id = dd.getTardisId();
         boolean sub = dd.isSubmarine();
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             // always remove the portal
             plugin.getTrackerKeeper().getPortals().remove(l);
             // toggle the doors if necessary
-            new TARDISDoorCloser(plugin, dd.getPlayer().getUniqueId(), id).closeDoors();
+            new TardisDoorCloser(plugin, dd.getPlayer().getUniqueId(), id).closeDoors();
         }
         World w = l.getWorld();
         // make sure chunk is loaded
@@ -91,7 +91,7 @@ public class TARDISDeinstantPreset {
         } else {
             int sbx = l.getBlockX() - 1;
             int sby;
-            if (preset.equals(PRESET.SUBMERGED)) {
+            if (preset.equals(Preset.SUBMERGED)) {
                 sby = l.getBlockY() - 1;
             } else {
                 sby = l.getBlockY();
@@ -122,7 +122,7 @@ public class TARDISDeinstantPreset {
                             flowerz = l.getBlockZ();
                         }
                     }
-                    TARDISBlockSetters.setBlock(w, flowerx, flowery, flowerz, Material.AIR);
+                    TardisBlockSetters.setBlock(w, flowerx, flowery, flowerz, Material.AIR);
                     break;
                 case DUCK:
                     plugin.getPresetDestroyer().destroyDuckEyes(l, d);
@@ -140,9 +140,9 @@ public class TARDISDeinstantPreset {
                     int swampYTop = (dd.getLocation().getBlockY() + 2);
                     int swampYBottom = (dd.getLocation().getBlockY() + 1);
                     int swampYUnder = (dd.getLocation().getBlockY());
-                    TARDISBlockSetters.setBlock(w, dd.getLocation().getBlockX(), swampYTop, dd.getLocation().getBlockZ(), Material.AIR);
-                    TARDISBlockSetters.setBlock(w, dd.getLocation().getBlockX(), swampYBottom, dd.getLocation().getBlockZ(), Material.AIR);
-                    TARDISBlockSetters.setBlock(w, dd.getLocation().getBlockX(), swampYUnder, dd.getLocation().getBlockZ(), Material.AIR);
+                    TardisBlockSetters.setBlock(w, dd.getLocation().getBlockX(), swampYTop, dd.getLocation().getBlockZ(), Material.AIR);
+                    TardisBlockSetters.setBlock(w, dd.getLocation().getBlockX(), swampYBottom, dd.getLocation().getBlockZ(), Material.AIR);
+                    TardisBlockSetters.setBlock(w, dd.getLocation().getBlockX(), swampYUnder, dd.getLocation().getBlockZ(), Material.AIR);
                     break;
                 default:
                     break;
@@ -159,7 +159,7 @@ public class TARDISDeinstantPreset {
                     for (int zz = 0; zz < 3; zz++) {
                         Block b = w.getBlockAt((sbx + xx), (sby + yy), (sbz + zz));
                         if (!b.getType().isAir()) {
-                            b.setBlockData(TARDISConstants.AIR);
+                            b.setBlockData(TardisConstants.AIR);
                         }
                     }
                 }
@@ -186,7 +186,7 @@ public class TARDISDeinstantPreset {
         tid.put("police_box", 1);
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);
         if (rsb.resultSet()) {
-            rsb.getData().forEach((rb) -> TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlockData()));
+            rsb.getData().forEach((rb) -> TardisBlockSetters.setBlock(rb.getLocation(), rb.getBlockData()));
         }
         // if just hiding don't remove block protection
         if (!hide) {
@@ -194,7 +194,7 @@ public class TARDISDeinstantPreset {
         }
         if (dd.isSiege()) {
             Block siege = dd.getLocation().getBlock();
-            BlockData blockData = plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
+            BlockData blockData = plugin.getServer().createBlockData(TardisMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
             siege.setBlockData(blockData);
         }
         plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(id));

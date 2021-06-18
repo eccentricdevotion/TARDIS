@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.config;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUIConfiguration;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiConfiguration;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -29,12 +29,12 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISConfigMenuInventory {
+public class TardisConfigMenuInventory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ItemStack[] menu;
 
-    public TARDISConfigMenuInventory(TARDISPlugin plugin) {
+    public TardisConfigMenuInventory(TardisPlugin plugin) {
         this.plugin = plugin;
         menu = getItemStack();
     }
@@ -56,7 +56,7 @@ public class TARDISConfigMenuInventory {
                 ItemMeta im = is.getItemMeta();
                 assert im != null;
                 im.setDisplayName(c);
-                int cmd = GUIConfiguration.valueOf(c.split("\\.")[0].toUpperCase()).getCustomModelData();
+                int cmd = GuiConfiguration.valueOf(c.split("\\.")[0].toUpperCase()).getCustomModelData();
                 if (value.equals("false")) {
                     cmd += 100; // xx -> 1xx
                 }
@@ -79,7 +79,7 @@ public class TARDISConfigMenuInventory {
         ItemMeta page = next.getItemMeta();
         assert page != null;
         page.setDisplayName("Next page");
-        page.setCustomModelData(GUIConfiguration.NEXT.getCustomModelData());
+        page.setCustomModelData(GuiConfiguration.NEXT.getCustomModelData());
         next.setItemMeta(page);
         stack[52] = next;
         // player prefs
@@ -87,7 +87,7 @@ public class TARDISConfigMenuInventory {
         ItemMeta prefs = play.getItemMeta();
         assert prefs != null;
         prefs.setDisplayName("Player Preferences");
-        prefs.setCustomModelData(GUIConfiguration.PREFS.getCustomModelData());
+        prefs.setCustomModelData(GuiConfiguration.PREFS.getCustomModelData());
         play.setItemMeta(prefs);
         stack[53] = play;
         return stack;

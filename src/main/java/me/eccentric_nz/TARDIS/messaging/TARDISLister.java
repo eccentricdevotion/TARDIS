@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.tardis.messaging;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.companionGUI.TARDISCompanionInventory;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.companiongui.TardisCompanionInventory;
 import me.eccentric_nz.tardis.database.data.Area;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -47,11 +47,11 @@ import java.util.Set;
  *
  * @author eccentric_nz
  */
-public class TARDISLister {
+public class TardisLister {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISLister(TARDISPlugin plugin) {
+    public TardisLister(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -64,33 +64,33 @@ public class TARDISLister {
      */
     public void list(Player player, String list) {
         if (list.equals("rechargers")) {
-            Set<String> therechargers = Objects.requireNonNull(TARDISPlugin.plugin.getConfig().getConfigurationSection("rechargers")).getKeys(false);
+            Set<String> therechargers = Objects.requireNonNull(TardisPlugin.plugin.getConfig().getConfigurationSection("rechargers")).getKeys(false);
             if (therechargers.size() < 1) {
-                TARDISMessage.send(player, "CHARGER_NONE");
+                TardisMessage.send(player, "CHARGER_NONE");
             }
-            TARDISMessage.message(player, ChatColor.GOLD + "" + ChatColor.UNDERLINE + "TARDIS Rechargers");
-            TARDISMessage.message(player, "Hover to see location (world x, y, z)");
-            if (TARDISPermission.hasPermission(player, "tardis.admin")) {
-                TARDISMessage.message(player, "Click to /tardisteleport");
+            TardisMessage.message(player, ChatColor.GOLD + "" + ChatColor.UNDERLINE + "TARDIS Rechargers");
+            TardisMessage.message(player, "Hover to see location (world x, y, z)");
+            if (TardisPermission.hasPermission(player, "tardis.admin")) {
+                TardisMessage.message(player, "Click to /tardisteleport");
             }
-            TARDISMessage.message(player, "");
+            TardisMessage.message(player, "");
             int n = 1;
             for (String s : therechargers) {
                 // only list public rechargers
                 if (!s.startsWith("rift")) {
                     String w;
                     if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                        w = plugin.getMVHelper().getAlias(TARDISPlugin.plugin.getConfig().getString("rechargers." + s + ".world"));
+                        w = plugin.getMVHelper().getAlias(TardisPlugin.plugin.getConfig().getString("rechargers." + s + ".world"));
                     } else {
-                        w = TARDISAliasResolver.getWorldAlias(TARDISPlugin.plugin.getConfig().getString("rechargers." + s + ".world"));
+                        w = TardisAliasResolver.getWorldAlias(TardisPlugin.plugin.getConfig().getString("rechargers." + s + ".world"));
                     }
-                    String x = TARDISPlugin.plugin.getConfig().getString("rechargers." + s + ".x");
-                    String y = TARDISPlugin.plugin.getConfig().getString("rechargers." + s + ".y");
-                    String z = TARDISPlugin.plugin.getConfig().getString("rechargers." + s + ".z");
+                    String x = TardisPlugin.plugin.getConfig().getString("rechargers." + s + ".x");
+                    String y = TardisPlugin.plugin.getConfig().getString("rechargers." + s + ".y");
+                    String z = TardisPlugin.plugin.getConfig().getString("rechargers." + s + ".z");
                     TextComponent tcr = new TextComponent(n + ". " + s);
                     tcr.setColor(ChatColor.GREEN);
                     tcr.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", w, x, y, z))));
-                    if (TARDISPermission.hasPermission(player, "tardis.admin")) {
+                    if (TardisPermission.hasPermission(player, "tardis.admin")) {
                         tcr.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/tardisteleport %s %s %s not_for_players", w, x, z)));
                     }
                     player.spigot().sendMessage(tcr);
@@ -99,18 +99,18 @@ public class TARDISLister {
             }
         }
         if (list.equals("areas")) {
-            ResultSetAreas rsa = new ResultSetAreas(TARDISPlugin.plugin, null, true, false);
+            ResultSetAreas rsa = new ResultSetAreas(TardisPlugin.plugin, null, true, false);
             int n = 1;
             if (!rsa.resultSet()) {
-                TARDISMessage.send(player, "AREA_NONE");
+                TardisMessage.send(player, "AREA_NONE");
             }
             for (Area a : rsa.getData()) {
                 if (n == 1) {
-                    TARDISMessage.send(player, "AREAS");
-                    TARDISMessage.message(player, "");
+                    TardisMessage.send(player, "AREAS");
+                    TardisMessage.message(player, "");
                 }
                 TextComponent tca = new TextComponent(n + ". [" + a.getAreaName() + "] in world: " + a.getWorld());
-                if (TARDISPermission.hasPermission(player, "tardis.area." + a.getAreaName()) || TARDISPermission.hasPermission(player, "tardis.area.*")) {
+                if (TardisPermission.hasPermission(player, "tardis.area." + a.getAreaName()) || TardisPermission.hasPermission(player, "tardis.area.*")) {
                     tca.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to /tardistravel here")));
                     tca.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/tardistravel area %s", a.getAreaName())));
                 }
@@ -120,22 +120,22 @@ public class TARDISLister {
         } else {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
-            ResultSetTardis rst = new ResultSetTardis(TARDISPlugin.plugin, where, "", false, 0);
+            ResultSetTardis rst = new ResultSetTardis(TardisPlugin.plugin, where, "", false, 0);
             if (rst.resultSet()) {
-                TARDIS tardis = rst.getTardis();
+                Tardis tardis = rst.getTardis();
                 int id = tardis.getTardisId();
                 // list TARDIS saves
                 if (list.equalsIgnoreCase("saves")) {
-                    TARDISMessage.message(player, ChatColor.GOLD + "" + ChatColor.UNDERLINE + "TARDIS " + plugin.getLanguage().getString("SAVES"));
-                    TARDISMessage.message(player, "Hover to see location (world x, y, z)");
-                    TARDISMessage.message(player, "Click to /tardistravel");
-                    TARDISMessage.message(player, "");
+                    TardisMessage.message(player, ChatColor.GOLD + "" + ChatColor.UNDERLINE + "TARDIS " + plugin.getLanguage().getString("SAVES"));
+                    TardisMessage.message(player, "Hover to see location (world x, y, z)");
+                    TardisMessage.message(player, "Click to /tardistravel");
+                    TardisMessage.message(player, "");
                     // get home
                     HashMap<String, Object> wherehl = new HashMap<>();
                     wherehl.put("tardis_id", id);
-                    ResultSetHomeLocation rsh = new ResultSetHomeLocation(TARDISPlugin.plugin, wherehl);
+                    ResultSetHomeLocation rsh = new ResultSetHomeLocation(TardisPlugin.plugin, wherehl);
                     rsh.resultSet();
-                    String homeWorld = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsh.getWorld()) : TARDISAliasResolver.getWorldAlias(rsh.getWorld());
+                    String homeWorld = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsh.getWorld()) : TardisAliasResolver.getWorldAlias(rsh.getWorld());
                     TextComponent tch = new TextComponent(plugin.getLanguage().getString("HOME"));
                     tch.setColor(ChatColor.GREEN);
                     tch.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", homeWorld, rsh.getX(), rsh.getY(), rsh.getZ()))));
@@ -144,12 +144,12 @@ public class TARDISLister {
                     // list other saved destinations
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("tardis_id", id);
-                    ResultSetDestinations rsd = new ResultSetDestinations(TARDISPlugin.plugin, whered, true);
+                    ResultSetDestinations rsd = new ResultSetDestinations(TardisPlugin.plugin, whered, true);
                     if (rsd.resultSet()) {
                         ArrayList<HashMap<String, String>> data = rsd.getData();
                         for (HashMap<String, String> map : data) {
                             if (map.get("type").equals("0")) {
-                                String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.get("world")) : TARDISAliasResolver.getWorldAlias(map.get("world"));
+                                String world = (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.get("world")) : TardisAliasResolver.getWorldAlias(map.get("world"));
                                 TextComponent tcd = new TextComponent(map.get("dest_name"));
                                 tcd.setColor(ChatColor.GREEN);
                                 tcd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, map.get("x"), map.get("y"), map.get("z")))));
@@ -164,13 +164,13 @@ public class TARDISLister {
                     String comps = tardis.getCompanions();
                     if (comps != null && !comps.isEmpty()) {
                         String[] companionData = comps.split(":");
-                        ItemStack[] heads = new TARDISCompanionInventory(plugin, companionData).getSkulls();
+                        ItemStack[] heads = new TardisCompanionInventory(plugin, companionData).getSkulls();
                         // open the GUI
                         Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Companions");
                         inv.setContents(heads);
                         player.openInventory(inv);
                     } else {
-                        TARDISMessage.send(player, "COMPANIONS_NONE");
+                        TardisMessage.send(player, "COMPANIONS_NONE");
                     }
                 }
             }

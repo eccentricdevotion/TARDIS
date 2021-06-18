@@ -17,12 +17,12 @@
 package me.eccentric_nz.tardis.rooms;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisTimeLord;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -34,16 +34,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class TARDISRoomPersister {
+public class TardisRoomPersister {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
     private PreparedStatement ps = null;
     private int count = 0;
 
-    public TARDISRoomPersister(TARDISPlugin plugin) {
+    public TardisRoomPersister(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -51,7 +51,7 @@ public class TARDISRoomPersister {
     public void saveProgress() {
         try {
             ps = connection.prepareStatement("INSERT INTO " + prefix + "room_progress (`direction`, `room`, `location`, `tardis_id`, `progress_row`, `progress_column`, `progress_level`, `middle_type`, `floor_type`, `post_blocks`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            for (TARDISRoomData rd : plugin.getTrackerKeeper().getRoomTasks().values()) {
+            for (TardisRoomData rd : plugin.getTrackerKeeper().getRoomTasks().values()) {
                 ps.setString(1, rd.getDirection().toString());
                 ps.setString(2, rd.getRoom());
                 Location location = rd.getLocation();
@@ -95,18 +95,18 @@ public class TARDISRoomPersister {
                     String directory = (plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user")) ? "user_schematics" : "schematics";
                     String path = plugin.getDataFolder() + File.separator + directory + File.separator + whichroom.toLowerCase(Locale.ENGLISH) + ".tschm";
                     // get JSON
-                    JsonObject obj = TARDISSchematicGZip.unzip(path);
-                    TARDISRoomData rd = new TARDISRoomData();
+                    JsonObject obj = TardisSchematicGZip.unzip(path);
+                    TardisRoomData rd = new TardisRoomData();
                     rd.setSchematic(obj);
                     rd.setRoom(whichroom);
-                    Location location = TARDISStaticLocationGetters.getLocationFromDB(rs.getString("location"));
+                    Location location = TardisStaticLocationGetters.getLocationFromDB(rs.getString("location"));
                     rd.setLocation(location);
                     int id = rs.getInt("tardis_id");
                     rd.setTardisId(id);
                     rd.setRow(rs.getInt("progress_row"));
                     rd.setColumn(rs.getInt("progress_column"));
                     rd.setLevel(rs.getInt("progress_level"));
-                    rd.setDirection(COMPASS.valueOf(rs.getString("direction")));
+                    rd.setDirection(CardinalDirection.valueOf(rs.getString("direction")));
                     rd.setMiddleType(Material.valueOf(rs.getString("middle_type")));
                     rd.setFloorType(Material.valueOf(rs.getString("floor_type")));
                     List<String> postBlocks = new ArrayList<>(Arrays.asList(rs.getString("post_blocks").split("@")));
@@ -117,7 +117,7 @@ public class TARDISRoomPersister {
                     if (rst.fromID(id)) {
                         Player player = plugin.getServer().getPlayer(rst.getUuid());
                         // resume the room growing
-                        TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, rd, player);
+                        TardisRoomRunnable runnable = new TardisRoomRunnable(plugin, rd, player);
                         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
                         runnable.setTask(taskID);
                         // resume tracking progress

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetSounds;
 import org.bukkit.Bukkit;
@@ -33,9 +33,9 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISHumSounds {
+public class TardisHumSounds {
 
-    private final Callback<HumPrefs> prefs = (HumPrefs pref) -> TARDISSounds.playTARDISSound(pref.getPlayer(), pref.getHum());
+    private final Callback<HumPrefs> prefs = (HumPrefs pref) -> TardisSounds.playTARDISSound(pref.getPlayer(), pref.getHum());
     private final Callback<List<UUID>> callback = (List<UUID> data) -> {
         // Do whatever with the data
         data.forEach((u) -> {
@@ -46,7 +46,7 @@ public class TARDISHumSounds {
                     public void run() {
                         HumPrefs p = new HumPrefs(player, true, "tardis_hum");
                         // All the MySQL stuff and what not
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDISPlugin.plugin, u.toString());
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TardisPlugin.plugin, u.toString());
                         if (rsp.resultSet()) {
                             p.setSfx(rsp.isSfxOn());
                             p.setHum((rsp.getHum().isEmpty()) ? "tardis_hum" : "tardis_hum_" + rsp.getHum());
@@ -57,10 +57,10 @@ public class TARDISHumSounds {
                                 public void run() {
                                     prefs.execute(p);
                                 }
-                            }.runTask(TARDISPlugin.plugin);
+                            }.runTask(TardisPlugin.plugin);
                         }
                     }
-                }.runTaskAsynchronously(TARDISPlugin.plugin);
+                }.runTaskAsynchronously(TardisPlugin.plugin);
             }
         });
     };
@@ -69,12 +69,12 @@ public class TARDISHumSounds {
      * Plays an interior hum sound to players who are inside the TARDIS and don't have SFX set to false.
      */
     public void playTARDISHum() {
-        if (TARDISPlugin.plugin.getConfig().getBoolean("allow.sfx")) {
+        if (TardisPlugin.plugin.getConfig().getBoolean("allow.sfx")) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     // All the MySQL stuff and what not
-                    ResultSetSounds rs = new ResultSetSounds(TARDISPlugin.plugin);
+                    ResultSetSounds rs = new ResultSetSounds(TardisPlugin.plugin);
                     if (rs.resultSet()) {
                         List<UUID> data = rs.getData();
                         new BukkitRunnable() {
@@ -82,10 +82,10 @@ public class TARDISHumSounds {
                             public void run() {
                                 callback.execute(data);
                             }
-                        }.runTask(TARDISPlugin.plugin);
+                        }.runTask(TardisPlugin.plugin);
                     }
                 }
-            }.runTaskAsynchronously(TARDISPlugin.plugin);
+            }.runTaskAsynchronously(TardisPlugin.plugin);
         }
     }
 

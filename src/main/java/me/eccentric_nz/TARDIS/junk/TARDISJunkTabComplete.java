@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardis.junk;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.commands.TARDISCompleter;
-import me.eccentric_nz.tardis.rooms.TARDISWalls;
+import me.eccentric_nz.tardis.commands.TardisCompleter;
+import me.eccentric_nz.tardis.rooms.TardisWalls;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -30,14 +30,14 @@ import java.util.List;
 /**
  * TabCompleter for /tardistravel
  */
-public class TARDISJunkTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisJunkTabComplete extends TardisCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("create", "find", "floor", "return", "delete", "time", "wall");
     private final ImmutableList<String> MAT_SUBS;
 
-    public TARDISJunkTabComplete() {
+    public TardisJunkTabComplete() {
         List<String> mats = new ArrayList<>();
-        TARDISWalls.BLOCKS.forEach((m) -> mats.add(m.toString()));
+        TardisWalls.BLOCKS.forEach((m) -> mats.add(m.toString()));
         MAT_SUBS = ImmutableList.copyOf(mats);
     }
 

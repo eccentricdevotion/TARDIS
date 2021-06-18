@@ -16,29 +16,29 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.destroyers.TARDISExterminator;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.destroyers.TardisExterminator;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 /**
  * @author eccentric_nz
  */
-class TARDISExterminateCommand {
+class TardisExterminateCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISExterminateCommand(TARDISPlugin plugin) {
+    TardisExterminateCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean doExterminate(Player player) {
 
         if (!plugin.getTrackerKeeper().getExterminate().containsKey(player.getUniqueId())) {
-            TARDISMessage.send(player, "TARDIS_BREAK_SIGN");
+            TardisMessage.send(player, "TARDIS_BREAK_SIGN");
             return false;
         }
-        TARDISExterminator del = new TARDISExterminator(plugin);
+        TardisExterminator del = new TardisExterminator(plugin);
         return del.exterminate(player, plugin.getTrackerKeeper().getExterminate().get(player.getUniqueId()));
     }
 }

@@ -20,7 +20,7 @@ import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import org.bukkit.entity.Player;
 
-public class TARDISArchLibsDisguise {
+public class TardisArchLibsDisguise {
 
     public static void disguise(Player player, String name) {
         PlayerDisguise playerDisguise = new PlayerDisguise(name);

@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.howto;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.custommodeldata.GUISeeds;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.custommodeldata.GuiSeeds;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import org.bukkit.Material;
@@ -37,13 +37,13 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISSeedsInventory {
+public class TardisSeedsInventory {
 
     private final ItemStack[] menu;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
 
-    public TARDISSeedsInventory(TARDISPlugin plugin, Player player) {
+    public TardisSeedsInventory(TardisPlugin plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         menu = getItemStack();
@@ -59,7 +59,7 @@ public class TARDISSeedsInventory {
         int i = 0;
         // get consoles
         for (Schematic a : Consoles.getBY_NAMES().values()) {
-            if (TARDISPermission.hasPermission(player, "tardis." + a.getPermission()) && !a.getSeedMaterial().equals(Material.COBBLESTONE)) {
+            if (TardisPermission.hasPermission(player, "tardis." + a.getPermission()) && !a.getSeedMaterial().equals(Material.COBBLESTONE)) {
                 Material m = Material.getMaterial(a.getSeed());
                 assert m != null;
                 ItemStack is = new ItemStack(m, 1);
@@ -80,7 +80,7 @@ public class TARDISSeedsInventory {
         ItemMeta close_im = close.getItemMeta();
         assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUISeeds.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GuiSeeds.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[26] = close;
         return stack;

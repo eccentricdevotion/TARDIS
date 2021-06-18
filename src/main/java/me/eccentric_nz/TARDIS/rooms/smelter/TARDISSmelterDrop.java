@@ -24,7 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.List;
 
-public class TARDISSmelterDrop {
+public class TardisSmelterDrop {
 
     public void processItems(Inventory inv, List<Chest> fuelChests, List<Chest> oreChests) {
         // process drop chest contents

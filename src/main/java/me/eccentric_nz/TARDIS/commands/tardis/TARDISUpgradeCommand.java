@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.desktop.TARDISThemeInventory;
-import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
+import me.eccentric_nz.tardis.desktop.TardisThemeInventory;
+import me.eccentric_nz.tardis.desktop.TardisUpgradeData;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -38,17 +38,17 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-class TARDISUpgradeCommand {
+class TardisUpgradeCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISUpgradeCommand(TARDISPlugin plugin) {
+    TardisUpgradeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean openUpgradeGUI(Player player) {
-        if (!TARDISPermission.hasPermission(player, "tardis.upgrade")) {
-            TARDISMessage.send(player, "NO_PERM_UPGRADE");
+        if (!TardisPermission.hasPermission(player, "tardis.upgrade")) {
+            TardisMessage.send(player, "NO_PERM_UPGRADE");
             return true;
         }
         // they must have an existing tardis
@@ -56,13 +56,13 @@ class TARDISUpgradeCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
-            TARDISMessage.send(player, "NO_TARDIS");
+            TardisMessage.send(player, "NO_TARDIS");
             return false;
         }
-        TARDIS tardis = rs.getTardis();
+        Tardis tardis = rs.getTardis();
         // console must in a tardis world
         if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
-            TARDISMessage.send(player, "UPGRADE_ABORT_WORLD");
+            TardisMessage.send(player, "UPGRADE_ABORT_WORLD");
             return true;
         }
         // it must be their own tardis
@@ -71,30 +71,30 @@ class TARDISUpgradeCommand {
         String current_world = Objects.requireNonNull(pl.getWorld()).getName();
         String[] split = tardis.getChunk().split(":");
         if (plugin.getConfig().getBoolean("creation.default_world")) {
-            if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(player, "tardis.create_world")) {
+            if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TardisPermission.hasPermission(player, "tardis.create_world")) {
                 own = (current_world.equals(split[0]));
             } else {
                 // get if player is in TIPS area for their tardis
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                TARDISTIPSData pos = tintpos.getTIPSData(tardis.getTIPS());
+                TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
+                TardisTipsData pos = tintpos.getTIPSData(tardis.getTIPS());
                 own = (pl.getBlockX() > pos.getMinX() && pl.getBlockZ() > pos.getMinZ() && pl.getBlockX() < pos.getMaxX() && pl.getBlockZ() < pos.getMaxZ());
             }
         } else {
             own = (current_world.equals(split[0]));
         }
         if (!own) {
-            TARDISMessage.send(player, "NOT_OWNER");
+            TardisMessage.send(player, "NOT_OWNER");
             return true;
         }
         // get player's current console
         Schematic current_console = tardis.getSchematic();
         int level = tardis.getArtronLevel();
-        TARDISUpgradeData tud = new TARDISUpgradeData();
+        TardisUpgradeData tud = new TardisUpgradeData();
         tud.setPrevious(current_console);
         tud.setLevel(level);
         plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
         // open the upgrade menu
-        ItemStack[] consoles = new TARDISThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
+        ItemStack[] consoles = new TardisThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
         Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis Upgrade Menu");
         upg.setContents(consoles);
         player.openInventory(upg);

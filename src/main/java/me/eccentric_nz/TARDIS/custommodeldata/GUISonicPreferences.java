@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
-public enum GUISonicPreferences {
+public enum GuiSonicPreferences {
 
     // Sonic Prefs Menu
     MARK_I(10000001, 0, Material.BLAZE_ROD, ChatColor.DARK_GRAY),
@@ -48,7 +48,7 @@ public enum GUISonicPreferences {
     private final Material material;
     private final ChatColor chatColor;
 
-    GUISonicPreferences(int customModelData, int slot, Material material, ChatColor chatColor) {
+    GuiSonicPreferences(int customModelData, int slot, Material material, ChatColor chatColor) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -69,7 +69,7 @@ public enum GUISonicPreferences {
 
     public String getName() {
         String s = toString();
-        return TARDISStringUtils.capitalise(s);
+        return TardisStringUtils.capitalise(s);
     }
 
     public ChatColor getChatColor() {

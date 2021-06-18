@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @author eccentric_nz
  */
-public class TARDISWorldGuardFlag {
+public class TardisWorldGuardFlag {
 
     private static final Map<String, StateFlag> FLAG_LOOKUP;
 

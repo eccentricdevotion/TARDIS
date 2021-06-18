@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -34,20 +34,20 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-class TARDISLampsRunnable implements Runnable {
+class TardisLampsRunnable implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Block> lamps;
     private final long end;
     private final BlockData light;
-    private final BlockData BLACK = TARDISConstants.BLACK;
+    private final BlockData BLACK = TardisConstants.BLACK;
     private final BlockData MUSHROOM;
     private final boolean useWool;
     private final boolean lightsOn;
     private int task;
     private Location handbrakeLoc;
 
-    TARDISLampsRunnable(TARDISPlugin plugin, List<Block> lamps, long end, Material light, boolean useWool) {
+    TardisLampsRunnable(TardisPlugin plugin, List<Block> lamps, long end, Material light, boolean useWool) {
         this.plugin = plugin;
         this.lamps = lamps;
         this.end = end;
@@ -57,7 +57,7 @@ class TARDISLampsRunnable implements Runnable {
             lit.setLit(true);
         }
         this.useWool = useWool;
-        MUSHROOM = (this.light.equals(Material.REDSTONE_LAMP)) ? this.plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(52)) : this.plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
+        MUSHROOM = (this.light.equals(Material.REDSTONE_LAMP)) ? this.plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(52)) : this.plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(53));
         lightsOn = (lamps.get(0).getType().equals(this.light.getMaterial()));
     }
 

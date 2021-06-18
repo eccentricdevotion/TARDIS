@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -32,14 +32,14 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 
-class TARDISCustomModelDataChanger {
+class TardisCustomModelDataChanger {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Block block;
     private final Player player;
     private final int id;
 
-    TARDISCustomModelDataChanger(TARDISPlugin plugin, Block block, Player player, int id) {
+    TardisCustomModelDataChanger(TardisPlugin plugin, Block block, Player player, int id) {
         this.plugin = plugin;
         this.block = block;
         this.player = player;
@@ -70,7 +70,7 @@ class TARDISCustomModelDataChanger {
         }
         if (itemFrame != null) {
             ItemStack is = itemFrame.getItem();
-            if (TARDISConstants.DYES.contains(is.getType()) && is.hasItemMeta()) {
+            if (TardisConstants.DYES.contains(is.getType()) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 assert im != null;
                 if (im.hasCustomModelData()) {
@@ -79,10 +79,10 @@ class TARDISCustomModelDataChanger {
                         boolean open = (cmd == 1001);
                         int newData;
                         if (open) {
-                            new TARDISInnerDoorOpener(plugin, uuid, id).openDoor();
+                            new TardisInnerDoorOpener(plugin, uuid, id).openDoor();
                             newData = 1002;
                         } else {
-                            new TARDISInnerDoorCloser(plugin, uuid, id).closeDoor();
+                            new TardisInnerDoorCloser(plugin, uuid, id).closeDoor();
                             newData = 1001;
                         }
                         playDoorSound(open, block.getLocation());
@@ -103,9 +103,9 @@ class TARDISCustomModelDataChanger {
      */
     private void playDoorSound(boolean open, Location l) {
         if (open) {
-            TARDISSounds.playTARDISSound(l, "tardis_door_open");
+            TardisSounds.playTARDISSound(l, "tardis_door_open");
         } else {
-            TARDISSounds.playTARDISSound(l, "tardis_door_close");
+            TardisSounds.playTARDISSound(l, "tardis_door_close");
         }
     }
 }

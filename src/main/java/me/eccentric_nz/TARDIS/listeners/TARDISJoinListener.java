@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advancement.TARDISBook;
-import me.eccentric_nz.tardis.arch.TARDISArchPersister;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advancement.TardisBook;
+import me.eccentric_nz.tardis.arch.TardisArchPersister;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISResourcePackChanger;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisResourcePackChanger;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -44,11 +44,11 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISJoinListener implements Listener {
+public class TardisJoinListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISJoinListener(TARDISPlugin plugin) {
+    public TardisJoinListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -64,7 +64,7 @@ public class TARDISJoinListener implements Listener {
         Player player = event.getPlayer();
         String uuid = player.getUniqueId().toString();
         if (plugin.getKitsConfig().getBoolean("give.join.enabled")) {
-            if (TARDISPermission.hasPermission(player, "tardis.kit.join")) {
+            if (TardisPermission.hasPermission(player, "tardis.kit.join")) {
                 // check if they have the tardis kit
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid);
@@ -83,7 +83,7 @@ public class TARDISJoinListener implements Listener {
             }
         }
         if (plugin.getConfig().getBoolean("allow.achievements")) {
-            if (TARDISPermission.hasPermission(player, "tardis.book")) {
+            if (TardisPermission.hasPermission(player, "tardis.book")) {
                 // check if they have started building a TARDIS yet
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid);
@@ -95,13 +95,13 @@ public class TARDISJoinListener implements Listener {
                     set.put("uuid", uuid);
                     set.put("name", "tardis");
                     plugin.getQueryFactory().doInsert("achievements", set);
-                    TARDISBook book = new TARDISBook(plugin);
+                    TardisBook book = new TardisBook(plugin);
                     // title, author, filename, player
                     book.writeBook("Get transport", "Rassilon", "tardis", player);
                 }
             }
         }
-        if (!plugin.getDifficulty().equals(Difficulty.EASY) && ((plugin.getConfig().getBoolean("allow.player_difficulty") && TARDISPermission.hasPermission(player, "tardis.difficulty")) || (plugin.getConfig().getInt("travel.grace_period") > 0 && TARDISPermission.hasPermission(player, "tardis.create")))) {
+        if (!plugin.getDifficulty().equals(Difficulty.EASY) && ((plugin.getConfig().getBoolean("allow.player_difficulty") && TardisPermission.hasPermission(player, "tardis.difficulty")) || (plugin.getConfig().getInt("travel.grace_period") > 0 && TardisPermission.hasPermission(player, "tardis.create")))) {
             // check if they have t_count record - create one if not
             ResultSetCount rsc = new ResultSetCount(plugin, uuid);
             if (!rsc.resultSet()) {
@@ -111,7 +111,7 @@ public class TARDISJoinListener implements Listener {
                 plugin.getQueryFactory().doInsert("t_count", setc);
             }
         }
-        if (plugin.getConfig().getBoolean("allow.tp_switch") && TARDISPermission.hasPermission(player, "tardis.texture")) {
+        if (plugin.getConfig().getBoolean("allow.tp_switch") && TardisPermission.hasPermission(player, "tardis.texture")) {
             // are they in the TARDIS?
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid);
@@ -121,7 +121,7 @@ public class TARDISJoinListener implements Listener {
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                 if (rsp.resultSet()) {
                     if (rsp.isTextureOn()) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn()), 50L);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn()), 50L);
                     }
                 }
             }
@@ -131,7 +131,7 @@ public class TARDISJoinListener implements Listener {
         wherep.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             String owner = tardis.getOwner();
             String last_known_name = tardis.getLastKnownName();
@@ -149,7 +149,7 @@ public class TARDISJoinListener implements Listener {
                 }
             }
             long now;
-            if (TARDISPermission.hasPermission(player, "tardis.prune.bypass")) {
+            if (TardisPermission.hasPermission(player, "tardis.prune.bypass")) {
                 now = Long.MAX_VALUE;
             } else {
                 now = System.currentTimeMillis();
@@ -160,7 +160,7 @@ public class TARDISJoinListener implements Listener {
             if (!last_known_name.equals(player.getName())) {
                 // update the player's name WG region as it may have changed
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                    World cw = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+                    World cw = TardisStaticLocationGetters.getWorld(tardis.getChunk());
                     // tardis region
                     plugin.getWorldGuardUtils().updateRegionForNameChange(cw, owner, player.getUniqueId(), "tardis");
                 }
@@ -172,7 +172,7 @@ public class TARDISJoinListener implements Listener {
         }
         // re-arch the player
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled")) {
-            new TARDISArchPersister(plugin).reArch(player.getUniqueId());
+            new TardisArchPersister(plugin).reArch(player.getUniqueId());
         }
         // add to perception filter team
         if (plugin.getConfig().getBoolean("allow.perception_filter")) {
@@ -190,7 +190,7 @@ public class TARDISJoinListener implements Listener {
         }
         // notify updates
         if (plugin.getConfig().getBoolean("preferences.notify_update") && plugin.isUpdateFound() && player.isOp()) {
-            TARDISMessage.message(player, String.format(TARDISMessage.JENKINS_UPDATE_READY, plugin.getBuildNumber(), plugin.getUpdateNumber()));
+            TardisMessage.message(player, String.format(TardisMessage.JENKINS_UPDATE_READY, plugin.getBuildNumber(), plugin.getUpdateNumber()));
         }
     }
 }

@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.database.converters;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import org.bukkit.Material;
 
 import java.sql.*;
@@ -30,18 +30,18 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISMaterialIDConverter {
+public class TardisMaterialIdConverter {
 
     public final HashMap<Integer, Material> LEGACY_ID_LOOKUP = new HashMap<>();
     public final HashMap<Integer, String> COLOUR_LOOKUP = new HashMap<>();
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
     private final HashMap<String, String> LEGACY_TYPE_LOOKUP = new HashMap<>();
     private final List<Integer> COLOURED = Arrays.asList(35, 95, 159, 160, 171, 251, 252);
 
-    public TARDISMaterialIDConverter(TARDISPlugin plugin) {
+    public TardisMaterialIdConverter(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
         LEGACY_ID_LOOKUP.put(0, Material.AIR);
@@ -959,7 +959,7 @@ public class TARDISMaterialIDConverter {
                         } else {
                             plugin.debug("Could not convert legacy material, defaulting to AIR!");
                             // update the record
-                            ps.setString(1, TARDISConstants.AIR.getAsString());
+                            ps.setString(1, TardisConstants.AIR.getAsString());
                         }
                         ps.setInt(2, b_id);
                         ps.addBatch();

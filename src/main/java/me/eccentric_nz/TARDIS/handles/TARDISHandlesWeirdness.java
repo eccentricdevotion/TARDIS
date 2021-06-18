@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.handles;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
-public class TARDISHandlesWeirdness {
+public class TardisHandlesWeirdness {
 
     private static final String[] start = new String[70];
     private static final String[] end = new String[70];
@@ -169,7 +169,7 @@ public class TARDISHandlesWeirdness {
     }
 
     public static void say(Player player) {
-        String sentence = start[TARDISConstants.RANDOM.nextInt(70)] + " " + end[TARDISConstants.RANDOM.nextInt(70)];
-        TARDISMessage.handlesMessage(player, sentence);
+        String sentence = start[TardisConstants.RANDOM.nextInt(70)] + " " + end[TardisConstants.RANDOM.nextInt(70)];
+        TardisMessage.handlesMessage(player, sentence);
     }
 }

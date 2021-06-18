@@ -17,17 +17,17 @@
 package me.eccentric_nz.tardis.ars;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.api.event.TARDISRoomGrowEvent;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisRoomGrowEvent;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.rooms.TARDISRoomData;
-import me.eccentric_nz.tardis.rooms.TARDISRoomRunnable;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.rooms.TardisRoomData;
+import me.eccentric_nz.tardis.rooms.TardisRoomRunnable;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -43,15 +43,15 @@ import java.util.Map;
  *
  * @author eccentric_nz
  */
-class TARDISARSRunnable implements Runnable {
+class TardisArsRunnable implements Runnable {
 
-    private final TARDISPlugin plugin;
-    private final TARDISARSSlot slot;
-    private final ARS room;
+    private final TardisPlugin plugin;
+    private final TardisArsSlot slot;
+    private final Ars room;
     private final Player p;
     private final int tardisId;
 
-    TARDISARSRunnable(TARDISPlugin plugin, TARDISARSSlot slot, ARS room, Player p, int tardisId) {
+    TardisArsRunnable(TardisPlugin plugin, TardisArsSlot slot, Ars room, Player p, int tardisId) {
         this.plugin = plugin;
         this.slot = slot;
         this.room = room;
@@ -66,10 +66,10 @@ class TARDISARSRunnable implements Runnable {
         where.put("uuid", p.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
-            World w = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+            Tardis tardis = rs.getTardis();
+            World w = TardisStaticLocationGetters.getWorld(tardis.getChunk());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
-            TARDISRoomData roomData = new TARDISRoomData();
+            TardisRoomData roomData = new TardisRoomData();
             roomData.setTardisId(tardis.getTardisId());
             // get middle data, default to orange wool if not set
             Material wall_type, floor_type;
@@ -84,11 +84,11 @@ class TARDISARSRunnable implements Runnable {
             roomData.setFloorType(floor_type);
             // get start locations
             Location l = new Location(w, slot.getX(), slot.getY(), slot.getZ());
-            roomData.setDirection(COMPASS.SOUTH);
+            roomData.setDirection(CardinalDirection.SOUTH);
             String directory = (plugin.getRoomsConfig().getBoolean("rooms." + whichRoom + ".user")) ? "user_schematics" : "schematics";
             String path = plugin.getDataFolder() + File.separator + directory + File.separator + whichRoom.toLowerCase(Locale.ENGLISH) + ".tschm";
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.unzip(path);
+            JsonObject obj = TardisSchematicGZip.unzip(path);
             // set y offset - this needs to be how many BLOCKS above ground 0 of the 16x16x16 chunk the room starts
             l.setY(l.getY() + room.getOffset());
             roomData.setLocation(l);
@@ -96,8 +96,8 @@ class TARDISARSRunnable implements Runnable {
             roomData.setSchematic(obj);
             // determine how often to place a block (in ticks) - `room_speed` is the number of BLOCKS to place in a second (20 ticks)
             long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
-            plugin.getPM().callEvent(new TARDISRoomGrowEvent(p, tardis, slot, roomData));
-            TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
+            plugin.getPM().callEvent(new TardisRoomGrowEvent(p, tardis, slot, roomData));
+            TardisRoomRunnable runnable = new TardisRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
             plugin.getTrackerKeeper().getRoomTasks().put(taskID, roomData);
@@ -117,7 +117,7 @@ class TARDISARSRunnable implements Runnable {
             set.put("uuid", p.getUniqueId().toString());
             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, set, p);
             if (p.isOnline()) {
-                TARDISMessage.send(p, "ARS_CANCEL", whichRoom, String.format("%d", taskID));
+                TardisMessage.send(p, "ARS_CANCEL", whichRoom, String.format("%d", taskID));
             }
         }
     }

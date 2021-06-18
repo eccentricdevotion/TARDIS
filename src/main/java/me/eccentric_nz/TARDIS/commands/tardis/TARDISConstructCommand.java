@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetConstructSign;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -31,40 +31,40 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-class TARDISConstructCommand {
+class TardisConstructCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> lineNumbers = Arrays.asList("1", "2", "3", "4", "asymmetric");
 
-    TARDISConstructCommand(TARDISPlugin plugin) {
+    TardisConstructCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public boolean setLine(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            TardisMessage.send(player, "TOO_FEW_ARGS");
             return true;
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "NO_TARDIS");
+            TardisMessage.send(player, "NO_TARDIS");
             return true;
         }
         int id = rs.getTardisId();
         // must have a construct
         ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, id);
         if (!rscs.resultSet()) {
-            TARDISMessage.send(player, "NO_CONSTRUCT");
+            TardisMessage.send(player, "NO_CONSTRUCT");
             return true;
         }
         boolean isAsymmetric = args[1].equalsIgnoreCase("asymmetric");
         if (!isAsymmetric && args.length < 3) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            TardisMessage.send(player, "TOO_FEW_ARGS");
             return true;
         }
         // check line number
         if (!lineNumbers.contains(args[1])) {
-            TARDISMessage.send(player, "CONSTRUCT_LINE_NUM");
+            TardisMessage.send(player, "CONSTRUCT_LINE_NUM");
             return true;
         }
         HashMap<String, Object> where = new HashMap<>();
@@ -73,7 +73,7 @@ class TARDISConstructCommand {
         if (isAsymmetric) {
             set.put("asymmetric", rscs.isAsymmetric() ? 0 : 1);
         } else {
-            int l = TARDISNumberParsers.parseInt(args[1]);
+            int l = TardisNumberParsers.parseInt(args[1]);
             // concat line
             StringBuilder sb = new StringBuilder();
             for (int i = 2; i < args.length; i++) {
@@ -86,7 +86,7 @@ class TARDISConstructCommand {
             String raw = ChatColor.translateAlternateColorCodes('&', sb.toString());
             // strip color codes and check length
             if (ChatColor.stripColor(raw).length() > 16) {
-                TARDISMessage.send(player, "CONSTRUCT_LINE_LEN");
+                TardisMessage.send(player, "CONSTRUCT_LINE_LEN");
                 return true;
             }
             set.put("line" + l, raw);
@@ -94,7 +94,7 @@ class TARDISConstructCommand {
         // save it
         plugin.getQueryFactory().doUpdate("chameleon", set, where);
         String message = (isAsymmetric) ? "CONSTRUCT_ASYMMETRIC" : "CONSTRUCT_LINE_SAVED";
-        TARDISMessage.send(player, message);
+        TardisMessage.send(player, message);
         return true;
     }
 }

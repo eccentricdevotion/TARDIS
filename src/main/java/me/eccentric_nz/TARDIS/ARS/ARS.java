@@ -21,7 +21,7 @@ package me.eccentric_nz.tardis.ars;
  *
  * @author eccentric_nz
  */
-public interface ARS {
+public interface Ars {
 
     String getMaterial();
 

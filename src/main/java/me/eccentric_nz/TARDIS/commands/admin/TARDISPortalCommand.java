@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 
 import java.sql.Connection;
@@ -28,15 +28,15 @@ import java.sql.Statement;
 /**
  * @author eccentric_nz
  */
-class TARDISPortalCommand {
+class TardisPortalCommand {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
     private Statement statement = null;
 
-    TARDISPortalCommand(TARDISPlugin plugin) {
+    TardisPortalCommand(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -62,7 +62,7 @@ class TARDISPortalCommand {
                 plugin.debug("Error closing portals table! " + e.getMessage());
             }
         }
-        TARDISMessage.send(sender, "PURGE_PORTAL");
+        TardisMessage.send(sender, "PURGE_PORTAL");
         return true;
     }
 }

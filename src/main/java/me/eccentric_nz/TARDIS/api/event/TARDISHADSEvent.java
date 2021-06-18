@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.tardis.enumeration.HADS;
+import me.eccentric_nz.tardis.enumeration.Hads;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
  * @author eccentric_nz
  */
-public final class TARDISHADSEvent extends TARDISLocationEvent {
+public final class TardisHadsEvent extends TardisLocationEvent {
 
-    private final HADS hadsType;
+    private final Hads hadsType;
 
-    public TARDISHADSEvent(Player player, int tardisId, Location location, HADS hadsType) {
+    public TardisHadsEvent(Player player, int tardisId, Location location, Hads hadsType) {
         super(player, tardisId, location);
         this.hadsType = hadsType;
     }
@@ -37,7 +37,7 @@ public final class TARDISHADSEvent extends TARDISLocationEvent {
      *
      * @return the HADS type
      */
-    public HADS getHADSType() {
+    public Hads getHADSType() {
         return hadsType;
     }
 }

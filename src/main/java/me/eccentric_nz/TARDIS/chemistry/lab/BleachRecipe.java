@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -29,7 +29,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class BleachRecipe {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final NamespacedKey bedKey;
     private final NamespacedKey woolKey;
     private final NamespacedKey carpetKey;
@@ -40,7 +40,7 @@ public class BleachRecipe {
     private final NamespacedKey leggingsKey;
     private final NamespacedKey bootsKey;
 
-    public BleachRecipe(TARDISPlugin plugin) {
+    public BleachRecipe(TardisPlugin plugin) {
         this.plugin = plugin;
         bedKey = new NamespacedKey(this.plugin, "bleached_bed");
         woolKey = new NamespacedKey(this.plugin, "bleached_wool");

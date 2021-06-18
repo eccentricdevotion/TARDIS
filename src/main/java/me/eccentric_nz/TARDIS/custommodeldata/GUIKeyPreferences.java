@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
-public enum GUIKeyPreferences {
+public enum GuiKeyPreferences {
 
     // tardis Key Prefs Menu
     BRASS_YALE(1, 0, Material.GOLD_NUGGET, "First & Sixth Doctors", ChatColor.AQUA),
@@ -45,7 +45,7 @@ public enum GUIKeyPreferences {
     private final String lore;
     private final ChatColor chatColor;
 
-    GUIKeyPreferences(int customModelData, int slot, Material material, String lore, ChatColor chatColor) {
+    GuiKeyPreferences(int customModelData, int slot, Material material, String lore, ChatColor chatColor) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -70,7 +70,7 @@ public enum GUIKeyPreferences {
         if (s.endsWith("ERA")) {
             return "Silver ERA";
         } else {
-            return TARDISStringUtils.capitalise(s);
+            return TardisStringUtils.capitalise(s);
         }
     }
 

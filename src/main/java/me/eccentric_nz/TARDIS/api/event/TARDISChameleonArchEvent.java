@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.tardis.arch.TARDISWatchData;
+import me.eccentric_nz.tardis.arch.TardisWatchData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -25,13 +25,13 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author eccentric_nz
  */
-public final class TARDISChameleonArchEvent extends Event {
+public final class TardisChameleonArchEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
-    private final TARDISWatchData tardisWatchData;
+    private final TardisWatchData tardisWatchData;
 
-    public TARDISChameleonArchEvent(Player player, TARDISWatchData tardisWatchData) {
+    public TardisChameleonArchEvent(Player player, TardisWatchData tardisWatchData) {
         this.player = player;
         this.tardisWatchData = tardisWatchData;
     }
@@ -50,12 +50,12 @@ public final class TARDISChameleonArchEvent extends Event {
     }
 
     /**
-     * Returns the Chameleon Arch {@link me.eccentric_nz.tardis.arch.TARDISWatchData TARDISWatchData} object. This
+     * Returns the Chameleon Arch {@link TardisWatchData TARDISWatchData} object. This
      * contains the 'arched' player's new display name, and the time (in milliseconds) that they became 'arched'.
      *
      * @return the TARDISWatchData object
      */
-    public TARDISWatchData getTardisWatchData() {
+    public TardisWatchData getTardisWatchData() {
         return tardisWatchData;
     }
 

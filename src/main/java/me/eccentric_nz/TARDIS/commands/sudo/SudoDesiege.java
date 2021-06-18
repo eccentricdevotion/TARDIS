@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
@@ -32,9 +32,9 @@ import java.util.UUID;
  */
 class SudoDesiege {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    SudoDesiege(TARDISPlugin plugin) {
+    SudoDesiege(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -77,7 +77,7 @@ class SudoDesiege {
             bd.setTardisId(id);
             bd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getPresetBuilder().buildPreset(bd);
-            TARDISMessage.send(sender, "SIEGE_REBUILT");
+            TardisMessage.send(sender, "SIEGE_REBUILT");
         }
         return true;
     }

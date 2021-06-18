@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -43,13 +43,13 @@ import java.util.*;
 
 public class CureBrewingListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> elements = Arrays.asList("Silver", "Bismuth", "Calcium", "Cobalt");
     private final List<PotionType> cures = Arrays.asList(PotionType.AWKWARD, PotionType.MUNDANE, PotionType.THICK, PotionType.UNCRAFTABLE);
     private final HashMap<PotionType, List<String>> potions = new HashMap<>();
     private final Set<UUID> noPickUps = new HashSet<>();
 
-    public CureBrewingListener(TARDISPlugin plugin) {
+    public CureBrewingListener(TardisPlugin plugin) {
         this.plugin = plugin;
         potions.put(PotionType.FIRE_RESISTANCE, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "MAGMA_CREAM", "NETHER_WART"));
         potions.put(PotionType.INSTANT_HEAL, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "GLISTERING_MELON", "NETHER_WART"));
@@ -78,7 +78,7 @@ public class CureBrewingListener implements Listener {
             Block cauldron = location.getBlock();
             if (item.isOnGround()) {
                 if (cauldron.getType() == Material.CAULDRON) {
-                    if (TARDISPermission.hasPermission(player, "tardis.chemistry.brew")) {
+                    if (TardisPermission.hasPermission(player, "tardis.chemistry.brew")) {
                         // cauldron must have water in it
                         Levelled levelled = (Levelled) cauldron.getBlockData();
                         if (levelled.getLevel() > 0) {

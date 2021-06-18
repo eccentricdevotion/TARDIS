@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.api.event.TARDISArtronEvent;
-import me.eccentric_nz.tardis.artron.TARDISArtronIndicator;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisArtronEvent;
+import me.eccentric_nz.tardis.artron.TardisArtronIndicator;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -32,10 +32,10 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISSQLAlterEnergy implements Runnable {
+class TardisSqlAlterEnergy implements Runnable {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String table;
     private final int amount;
@@ -53,7 +53,7 @@ class TARDISSQLAlterEnergy implements Runnable {
      * @param where  a HashMap&lt;String, Object&gt; of table fields and values to select the records to alter.
      * @param player the player who receives the success message.
      */
-    TARDISSQLAlterEnergy(TARDISPlugin plugin, String table, int amount, HashMap<String, Object> where, Player player) {
+    TardisSqlAlterEnergy(TardisPlugin plugin, String table, int amount, HashMap<String, Object> where, Player player) {
         this.plugin = plugin;
         this.table = table;
         this.amount = amount;
@@ -88,10 +88,10 @@ class TARDISSQLAlterEnergy implements Runnable {
                 @Override
                 public void run() {
                     if (id > 0) {
-                        new TARDISArtronIndicator(plugin).showArtronLevel(player, id, Math.abs(amount));
-                        plugin.getPM().callEvent(new TARDISArtronEvent(player, amount, id));
+                        new TardisArtronIndicator(plugin).showArtronLevel(player, id, Math.abs(amount));
+                        plugin.getPM().callEvent(new TardisArtronEvent(player, amount, id));
                     } else {
-                        TARDISMessage.send(player, "ENERGY_USED", String.format("%d", Math.abs(amount)));
+                        TardisMessage.send(player, "ENERGY_USED", String.format("%d", Math.abs(amount)));
                     }
                 }
             }.runTask(plugin);

@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.mobfarming.TARDISLlama;
-import me.eccentric_nz.tardis.travel.TARDISDoorLocation;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.mobfarming.TardisLlama;
+import me.eccentric_nz.tardis.travel.TardisDoorLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -40,11 +40,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISEjectListener implements Listener {
+public class TardisEjectListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISEjectListener(TARDISPlugin plugin) {
+    public TardisEjectListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -57,7 +57,7 @@ public class TARDISEjectListener implements Listener {
         }
         // check they are still in the tardis world - they could have exited after running the command
         if (!plugin.getUtils().inTARDISWorld(player)) {
-            TARDISMessage.send(player, "EJECT_WORLD");
+            TardisMessage.send(player, "EJECT_WORLD");
             return;
         }
         Entity ent = event.getRightClicked();
@@ -66,7 +66,7 @@ public class TARDISEjectListener implements Listener {
             return;
         }
         // get the exit location
-        TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, plugin.getTrackerKeeper().getEjecting().get(uuid));
+        TardisDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, plugin.getTrackerKeeper().getEjecting().get(uuid));
         Location l = dl.getL();
         // set the entity's direction as you would for a player when exiting
         switch (dl.getD()) {
@@ -91,18 +91,18 @@ public class TARDISEjectListener implements Listener {
             // can't eject OPs or tardis admins
             case PLAYER -> {
                 Player p = (Player) ent;
-                if (p.isOp() || TARDISPermission.hasPermission(p, "tardis.admin")) {
-                    TARDISMessage.send(player, "EJECT_PLAYER");
+                if (p.isOp() || TardisPermission.hasPermission(p, "tardis.admin")) {
+                    TardisMessage.send(player, "EJECT_PLAYER");
                     return;
                 }
                 // check the clicked player is in a tardis world
                 if (!plugin.getUtils().inTARDISWorld(p)) {
-                    TARDISMessage.send(player, "EJECT_WORLD");
+                    TardisMessage.send(player, "EJECT_WORLD");
                     return;
                 }
                 // teleport player and remove from travellers table
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true);
-                TARDISMessage.send(p, "EJECT_MESSAGE", player.getName());
+                TardisMessage.send(p, "EJECT_MESSAGE", player.getName());
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", p.getUniqueId().toString());
                 plugin.getQueryFactory().doDelete("travellers", where);
@@ -149,11 +149,11 @@ public class TARDISEjectListener implements Listener {
                 }
                 ent.remove();
             }
-            case DONKEY, HORSE, MULE, SKELETON_HORSE, ZOMBIE_HORSE -> TARDISMessage.send(player, "EJECT_HORSE");
+            case DONKEY, HORSE, MULE, SKELETON_HORSE, ZOMBIE_HORSE -> TardisMessage.send(player, "EJECT_HORSE");
             case LLAMA -> {
                 event.setCancelled(true);
                 Llama ll = (Llama) ent;
-                TARDISLlama tmlla = new TARDISLlama();
+                TardisLlama tmlla = new TardisLlama();
                 tmlla.setAge(ll.getAge());
                 tmlla.setBaby(!ll.isAdult());
                 double mh = Objects.requireNonNull(ll.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue();
@@ -378,7 +378,7 @@ public class TARDISEjectListener implements Listener {
                 plugin.getTardisHelper().setVillagerWilling(villager, plugin.getTardisHelper().getVillagerWilling(v));
                 ent.remove();
             }
-            default -> TARDISMessage.send(player, "EJECT_NOT_VALID");
+            default -> TardisMessage.send(player, "EJECT_NOT_VALID");
         }
         // stop tracking player
         plugin.getTrackerKeeper().getEjecting().remove(uuid);

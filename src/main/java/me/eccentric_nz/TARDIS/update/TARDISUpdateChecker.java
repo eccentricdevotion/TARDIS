@@ -1,32 +1,32 @@
 package me.eccentric_nz.tardis.update;
 
 import com.google.common.collect.Sets;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.ars.TARDISARSMethods;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.ars.TardisArsMethods;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.data.Farm;
-import me.eccentric_nz.tardis.database.data.TARDIS;
-import me.eccentric_nz.tardis.database.resultset.ResultSetARS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetArs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetFarming;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.Updateable;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Set;
 
-public class TARDISUpdateChecker {
+public class TardisUpdateChecker {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Updateable updateable;
     private final Player player;
-    private final TARDIS tardis;
+    private final Tardis tardis;
     private final String tardis_block;
 
     private final Set<Updateable> mustGrowRoom = Sets.newHashSet(Updateable.FARM, Updateable.FUEL, Updateable.IGLOO, Updateable.SMELT, Updateable.STABLE, Updateable.STALL, Updateable.VAULT, Updateable.VILLAGE);
 
-    public TARDISUpdateChecker(TARDISPlugin plugin, Updateable updateable, Player player, TARDIS tardis, String tardis_block) {
+    public TardisUpdateChecker(TardisPlugin plugin, Updateable updateable, Player player, Tardis tardis, String tardis_block) {
         this.plugin = plugin;
         this.updateable = updateable;
         this.player = player;
@@ -36,31 +36,31 @@ public class TARDISUpdateChecker {
 
     public boolean canUpdate() {
         if (updateable.equals(Updateable.SIEGE) && !plugin.getConfig().getBoolean("siege.enabled")) {
-            TARDISMessage.send(player, "SIEGE_DISABLED");
+            TardisMessage.send(player, "SIEGE_DISABLED");
             return false;
         }
         if (updateable.equals(Updateable.BEACON) && !tardis.isPowered()) {
-            TARDISMessage.send(player, "UPDATE_BEACON");
+            TardisMessage.send(player, "UPDATE_BEACON");
             return false;
         }
-        if (updateable.equals(Updateable.ADVANCED) && !TARDISPermission.hasPermission(player, "tardis.advanced")) {
-            TARDISMessage.send(player, "NO_PERM_ADV");
+        if (updateable.equals(Updateable.ADVANCED) && !TardisPermission.hasPermission(player, "tardis.advanced")) {
+            TardisMessage.send(player, "NO_PERM_ADV");
             return false;
         }
-        if (updateable.equals(Updateable.FORCEFIELD) && !TARDISPermission.hasPermission(player, "tardis.forcefield")) {
-            TARDISMessage.send(player, "NO_PERM_FF");
+        if (updateable.equals(Updateable.FORCEFIELD) && !TardisPermission.hasPermission(player, "tardis.forcefield")) {
+            TardisMessage.send(player, "NO_PERM_FF");
             return false;
         }
-        if (updateable.equals(Updateable.STORAGE) && !TARDISPermission.hasPermission(player, "tardis.storage")) {
-            TARDISMessage.send(player, "NO_PERM_DISK");
+        if (updateable.equals(Updateable.STORAGE) && !TardisPermission.hasPermission(player, "tardis.storage")) {
+            TardisMessage.send(player, "NO_PERM_DISK");
             return false;
         }
-        if (updateable.equals(Updateable.BACKDOOR) && !TARDISPermission.hasPermission(player, "tardis.backdoor")) {
-            TARDISMessage.send(player, "NO_PERM_BACKDOOR");
+        if (updateable.equals(Updateable.BACKDOOR) && !TardisPermission.hasPermission(player, "tardis.backdoor")) {
+            TardisMessage.send(player, "NO_PERM_BACKDOOR");
             return false;
         }
-        if (updateable.equals(Updateable.TEMPORAL) && !TARDISPermission.hasPermission(player, "tardis.temporal")) {
-            TARDISMessage.send(player, "NO_PERM_TEMPORAL");
+        if (updateable.equals(Updateable.TEMPORAL) && !TardisPermission.hasPermission(player, "tardis.temporal")) {
+            TardisMessage.send(player, "NO_PERM_TEMPORAL");
             return false;
         }
         boolean hasFarm = false;
@@ -74,10 +74,10 @@ public class TARDISUpdateChecker {
         if (mustGrowRoom.contains(updateable)) {
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("tardis_id", tardis.getTardisId());
-            ResultSetARS rsa = new ResultSetARS(plugin, wherea);
+            ResultSetArs rsa = new ResultSetArs(plugin, wherea);
             if (rsa.resultSet()) {
                 // check for rooms
-                String[][][] json = TARDISARSMethods.getGridFromJSON(rsa.getJson());
+                String[][][] json = TardisArsMethods.getGridFromJSON(rsa.getJson());
                 for (String[][] level : json) {
                     for (String[] row : level) {
                         for (String col : row) {
@@ -108,30 +108,30 @@ public class TARDISUpdateChecker {
             }
         }
         if (updateable.equals(Updateable.VAULT)) {
-            if (!TARDISPermission.hasPermission(player, "tardis.vault")) {
-                TARDISMessage.send(player, "UPDATE_NO_PERM", "Vault room drop chest");
+            if (!TardisPermission.hasPermission(player, "tardis.vault")) {
+                TardisMessage.send(player, "UPDATE_NO_PERM", "Vault room drop chest");
                 return false;
             }
             // must grow room first
             if (!hasVault) {
-                TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+                TardisMessage.send(player, "UPDATE_ROOM", tardis_block);
                 return false;
             }
         }
         if (updateable.equals(Updateable.FUEL) || updateable.equals(Updateable.SMELT)) {
-            if (!TARDISPermission.hasPermission(player, "tardis.room.smelter")) {
-                TARDISMessage.send(player, "UPDATE_NO_PERM", "Smelter room drop chest");
+            if (!TardisPermission.hasPermission(player, "tardis.room.smelter")) {
+                TardisMessage.send(player, "UPDATE_NO_PERM", "Smelter room drop chest");
                 return false;
             }
             // must grow room first
             if (!hasSmelt) {
-                TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+                TardisMessage.send(player, "UPDATE_ROOM", tardis_block);
                 return false;
             }
         }
         if (updateable.equals(Updateable.FARM) || updateable.equals(Updateable.IGLOO) || updateable.equals(Updateable.STABLE) || updateable.equals(Updateable.STALL) || updateable.equals(Updateable.VILLAGE)) {
-            if (!TARDISPermission.hasPermission(player, "tardis.farm")) {
-                TARDISMessage.send(player, "UPDATE_NO_PERM", tardis_block);
+            if (!TardisPermission.hasPermission(player, "tardis.farm")) {
+                TardisMessage.send(player, "UPDATE_NO_PERM", tardis_block);
                 return false;
             }
             // must grow a room first
@@ -139,48 +139,48 @@ public class TARDISUpdateChecker {
             if (rsf.resultSet()) {
                 Farm farming = rsf.getFarming();
                 if (updateable.equals(Updateable.FARM) && farming.getFarm().isEmpty() && !hasFarm) {
-                    TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+                    TardisMessage.send(player, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
                 if (updateable.equals(Updateable.IGLOO) && farming.getIgloo().isEmpty() && !hasIgloo) {
-                    TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+                    TardisMessage.send(player, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
                 if (updateable.equals(Updateable.STABLE) && farming.getStable().isEmpty() && !hasStable) {
-                    TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+                    TardisMessage.send(player, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
                 if (updateable.equals(Updateable.STALL) && farming.getStall().isEmpty() && !hasStall) {
-                    TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+                    TardisMessage.send(player, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
                 if (updateable.equals(Updateable.VILLAGE) && farming.getVillage().isEmpty() && !hasVillage) {
-                    TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+                    TardisMessage.send(player, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
             }
         }
         if (updateable.equals(Updateable.RAIL) && tardis.getRail().isEmpty()) {
-            TARDISMessage.send(player, "UPDATE_ROOM", tardis_block);
+            TardisMessage.send(player, "UPDATE_ROOM", tardis_block);
             return false;
         }
         if (updateable.equals(Updateable.ZERO) && tardis.getZero().isEmpty()) {
-            TARDISMessage.send(player, "UPDATE_ZERO");
+            TardisMessage.send(player, "UPDATE_ZERO");
             return false;
         }
         if (updateable.equals(Updateable.ARS)) {
-            if (!TARDISPermission.hasPermission(player, "tardis.architectural")) {
-                TARDISMessage.send(player, "NO_PERM_ARS");
+            if (!TardisPermission.hasPermission(player, "tardis.architectural")) {
+                TardisMessage.send(player, "NO_PERM_ARS");
                 return false;
             }
             if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
-                TARDISMessage.send(player, "ARS_OWN_WORLD");
+                TardisMessage.send(player, "ARS_OWN_WORLD");
                 return false;
             }
         }
         if (updateable.equals(Updateable.WEATHER)) {
-            if (!TARDISPermission.hasPermission(player, "tardis.weather.clear") && !TARDISPermission.hasPermission(player, "tardis.weather.rain") && !TARDISPermission.hasPermission(player, "tardis.weather.thunder")) {
-                TARDISMessage.send(player, "NO_PERMS");
+            if (!TardisPermission.hasPermission(player, "tardis.weather.clear") && !TardisPermission.hasPermission(player, "tardis.weather.rain") && !TardisPermission.hasPermission(player, "tardis.weather.thunder")) {
+                TardisMessage.send(player, "NO_PERMS");
                 return false;
             }
         }
@@ -189,12 +189,12 @@ public class TARDISUpdateChecker {
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                TARDISMessage.send(player, "NOT_IN_TARDIS");
+                TardisMessage.send(player, "NOT_IN_TARDIS");
                 return false;
             }
             int thisid = rst.getTardisId();
             if (thisid != tardis.getTardisId()) {
-                TARDISMessage.send(player, "CMD_ONLY_TL");
+                TardisMessage.send(player, "CMD_ONLY_TL");
                 return false;
             }
         }

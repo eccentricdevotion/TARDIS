@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
@@ -35,12 +35,12 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISEntityGriefListener implements Listener {
+public class TardisEntityGriefListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<EntityType> ents = new ArrayList<>();
 
-    public TARDISEntityGriefListener(TARDISPlugin plugin) {
+    public TardisEntityGriefListener(TardisPlugin plugin) {
         this.plugin = plugin;
         ents.add(EntityType.ENDER_DRAGON);
         ents.add(EntityType.FIREBALL);

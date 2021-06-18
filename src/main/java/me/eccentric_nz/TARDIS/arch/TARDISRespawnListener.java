@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,11 +30,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISRespawnListener implements Listener {
+public class TardisRespawnListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISRespawnListener(TARDISPlugin plugin) {
+    public TardisRespawnListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -43,7 +43,7 @@ public class TARDISRespawnListener implements Listener {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         // check if we should re-arch this player
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISArchPersister(plugin).reArch(uuid), 5L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisArchPersister(plugin).reArch(uuid), 5L);
         // remove the player from the travellers table if they respawned in a non-tardis world
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());

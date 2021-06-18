@@ -16,39 +16,39 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.chatGUI.TARDISUpdateChatGUI;
-import me.eccentric_nz.tardis.info.TARDISInfoMenu;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.chatgui.TardisChatGuiUpdater;
+import me.eccentric_nz.tardis.info.TardisInfoMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISInfoMenuButton {
+public class TardisInfoMenuButton {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
 
-    TARDISInfoMenuButton(TARDISPlugin plugin, Player player) {
+    TardisInfoMenuButton(TardisPlugin plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
     }
 
     public void clickButton() {
-        plugin.getTrackerKeeper().getInfoMenu().put(player.getUniqueId(), TARDISInfoMenu.TIS);
+        plugin.getTrackerKeeper().getInfoMenu().put(player.getUniqueId(), TardisInfoMenu.TIS);
         player.sendMessage(ChatColor.GOLD + "-----------TARDIS Information System-----------");
         player.sendMessage(ChatColor.GOLD + "---*" + plugin.getLanguage().getString("TIS_INFO") + "*---");
-        TARDISUpdateChatGUI.sendTextComponent("> TARDIS ", "M", "anual", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "I", "tems", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "C", "omponents", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "S", "onic Components", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "D", "isks", player);
-        TARDISUpdateChatGUI.sendTextComponent("> C", "o", "mmands", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "T", "ARDIS Types", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "R", "ooms", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "F", "ood & Accessories", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "P", "lanets", player);
-        TARDISUpdateChatGUI.sendTextComponent("> ", "E", "xit", player);
+        TardisChatGuiUpdater.sendTextComponent("> TARDIS ", "M", "anual", player);
+        TardisChatGuiUpdater.sendTextComponent("> ", "I", "tems", player);
+        TardisChatGuiUpdater.sendTextComponent("> ", "C", "omponents", player);
+        TardisChatGuiUpdater.sendTextComponent("> ", "S", "onic Components", player);
+        TardisChatGuiUpdater.sendTextComponent("> ", "D", "isks", player);
+        TardisChatGuiUpdater.sendTextComponent("> C", "o", "mmands", player);
+        TardisChatGuiUpdater.sendTextComponent("> ", "T", "ARDIS Types", player);
+        TardisChatGuiUpdater.sendTextComponent("> ", "R", "ooms", player);
+        TardisChatGuiUpdater.sendTextComponent("> ", "F", "ood & Accessories", player);
+        TardisChatGuiUpdater.sendTextComponent("> ", "P", "lanets", player);
+        TardisChatGuiUpdater.sendTextComponent("> ", "E", "xit", player);
     }
 }

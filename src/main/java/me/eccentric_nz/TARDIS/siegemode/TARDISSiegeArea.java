@@ -22,7 +22,7 @@ import org.bukkit.Location;
 /**
  * @author eccentric_nz
  */
-public class TARDISSiegeArea {
+public class TardisSiegeArea {
 
     private static final int MIN_Y = 48;
     private static final int MAX_Y = 80;
@@ -32,7 +32,7 @@ public class TARDISSiegeArea {
     private int minZ;
     private int maxZ;
 
-    public TARDISSiegeArea(int id, Chunk chunk) {
+    public TardisSiegeArea(int id, Chunk chunk) {
         this.id = id;
         setMinMaxXZ(chunk);
     }

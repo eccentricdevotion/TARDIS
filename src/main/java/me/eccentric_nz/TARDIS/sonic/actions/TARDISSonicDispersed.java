@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class TARDISSonicDispersed {
+public class TardisSonicDispersed {
 
-    public static void assemble(TARDISPlugin plugin, Player player) {
+    public static void assemble(TardisPlugin plugin, Player player) {
         // check player's location
         Location tmp = player.getLocation();
         Location pl = new Location(tmp.getWorld(), tmp.getBlockX(), tmp.getBlockY(), tmp.getBlockZ());

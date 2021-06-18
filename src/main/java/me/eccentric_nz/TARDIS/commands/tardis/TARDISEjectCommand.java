@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -28,28 +28,28 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISEjectCommand {
+class TardisEjectCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISEjectCommand(TARDISPlugin plugin) {
+    TardisEjectCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean eject(Player player) {
-        if (!TARDISPermission.hasPermission(player, "tardis.eject")) {
-            TARDISMessage.send(player, "NO_PERMS");
+        if (!TardisPermission.hasPermission(player, "tardis.eject")) {
+            TardisMessage.send(player, "NO_PERMS");
             return true;
         }
         // check they are still in the tardis world
         if (!plugin.getUtils().inTARDISWorld(player)) {
-            TARDISMessage.send(player, "CMD_IN_WORLD");
+            TardisMessage.send(player, "CMD_IN_WORLD");
             return true;
         }
         // must have a tardis
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
-            TARDISMessage.send(player, "NOT_A_TIMELORD");
+            TardisMessage.send(player, "NOT_A_TIMELORD");
             return false;
         }
         int ownerid = rs.getTardisId();
@@ -57,13 +57,13 @@ class TARDISEjectCommand {
         wheret.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {
-            TARDISMessage.send(player, "NOT_IN_TARDIS");
+            TardisMessage.send(player, "NOT_IN_TARDIS");
             return false;
         }
         int thisid = rst.getTardisId();
         // must be timelord of the tardis
         if (thisid != ownerid) {
-            TARDISMessage.send(player, "CMD_ONLY_TL");
+            TardisMessage.send(player, "CMD_ONLY_TL");
             return false;
         }
         // track the player

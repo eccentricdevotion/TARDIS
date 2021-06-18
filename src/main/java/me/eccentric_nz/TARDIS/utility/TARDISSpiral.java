@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-class TARDISSpiral {
+class TardisSpiral {
 
     static final List<Point> SPIRAL;
 

@@ -17,20 +17,20 @@
 package me.eccentric_nz.tardis;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.arch.TARDISWatchData;
+import me.eccentric_nz.tardis.arch.TardisWatchData;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
-import me.eccentric_nz.tardis.display.TARDISDisplayType;
+import me.eccentric_nz.tardis.desktop.TardisUpgradeData;
+import me.eccentric_nz.tardis.display.TardisDisplayType;
 import me.eccentric_nz.tardis.enumeration.Bind;
 import me.eccentric_nz.tardis.enumeration.Updateable;
-import me.eccentric_nz.tardis.flight.TARDISRegulatorRunnable;
-import me.eccentric_nz.tardis.info.TARDISInfoMenu;
-import me.eccentric_nz.tardis.move.TARDISMoveSession;
-import me.eccentric_nz.tardis.move.TARDISTeleportLocation;
-import me.eccentric_nz.tardis.rooms.TARDISRoomData;
-import me.eccentric_nz.tardis.rooms.TARDISSeedData;
-import me.eccentric_nz.tardis.siegemode.TARDISSiegeArea;
-import me.eccentric_nz.tardis.utility.TARDISAntiBuild;
+import me.eccentric_nz.tardis.flight.TardisRegulatorRunnable;
+import me.eccentric_nz.tardis.info.TardisInfoMenu;
+import me.eccentric_nz.tardis.move.TardisMoveSession;
+import me.eccentric_nz.tardis.move.TardisTeleportLocation;
+import me.eccentric_nz.tardis.rooms.TardisRoomData;
+import me.eccentric_nz.tardis.rooms.TardisSeedData;
+import me.eccentric_nz.tardis.siegemode.TardisSiegeArea;
+import me.eccentric_nz.tardis.utility.TardisAntiBuild;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -45,7 +45,7 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISTrackerInstanceKeeper {
+public class TardisTrackerInstanceKeeper {
 
     private final HashMap<Integer, Boolean> malfunction = new HashMap<>();
     private final HashMap<Integer, Integer> cloisterBells = new HashMap<>();
@@ -53,12 +53,12 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<Integer, Integer> destinationVortex = new HashMap<>();
     private final HashMap<Integer, Integer> hasDestination = new HashMap<>();
     private final HashMap<Integer, String> renderer = new HashMap<>();
-    private final HashMap<Integer, TARDISAntiBuild> antiBuild = new HashMap<>();
-    private final HashMap<Integer, TARDISRoomData> roomTasks = new HashMap<>();
+    private final HashMap<Integer, TardisAntiBuild> antiBuild = new HashMap<>();
+    private final HashMap<Integer, TardisRoomData> roomTasks = new HashMap<>();
     private final HashMap<Integer, UUID> rescue = new HashMap<>();
-    private final HashMap<Location, TARDISTeleportLocation> portals = new HashMap<>();
-    private final HashMap<String, List<TARDISSiegeArea>> siegeBreedingAreas = new HashMap<>();
-    private final HashMap<String, List<TARDISSiegeArea>> siegeGrowthAreas = new HashMap<>();
+    private final HashMap<Location, TardisTeleportLocation> portals = new HashMap<>();
+    private final HashMap<String, List<TardisSiegeArea>> siegeBreedingAreas = new HashMap<>();
+    private final HashMap<String, List<TardisSiegeArea>> siegeGrowthAreas = new HashMap<>();
     private final HashMap<String, Sign> sign = new HashMap<>();
     private final HashMap<UUID, Bind> bindRemoval = new HashMap<>();
     private final HashMap<UUID, Block> exterminate = new HashMap<>();
@@ -94,13 +94,13 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, String> players = new HashMap<>();
     private final HashMap<UUID, String> preset = new HashMap<>();
     private final HashMap<UUID, String> telepathicPlacements = new HashMap<>();
-    private final HashMap<UUID, TARDISDisplayType> display = new HashMap<>();
-    private final HashMap<UUID, TARDISInfoMenu> infoMenu = new HashMap<>();
-    private final HashMap<UUID, TARDISMoveSession> moveSessions = new HashMap<>();
-    private final HashMap<UUID, TARDISRegulatorRunnable> regulating = new HashMap<>();
-    private final HashMap<UUID, TARDISSeedData> roomSeed = new HashMap<>();
-    private final HashMap<UUID, TARDISUpgradeData> upgrades = new HashMap<>();
-    private final HashMap<UUID, TARDISWatchData> johnSmith = new HashMap<>();
+    private final HashMap<UUID, TardisDisplayType> display = new HashMap<>();
+    private final HashMap<UUID, TardisInfoMenu> infoMenu = new HashMap<>();
+    private final HashMap<UUID, TardisMoveSession> moveSessions = new HashMap<>();
+    private final HashMap<UUID, TardisRegulatorRunnable> regulating = new HashMap<>();
+    private final HashMap<UUID, TardisSeedData> roomSeed = new HashMap<>();
+    private final HashMap<UUID, TardisUpgradeData> upgrades = new HashMap<>();
+    private final HashMap<UUID, TardisWatchData> johnSmith = new HashMap<>();
     private final HashMap<UUID, Updateable> secondary = new HashMap<>();
     private final HashMap<UUID, UUID> chat = new HashMap<>();
     private final HashMap<UUID, UUID> telepathicRescue = new HashMap<>();
@@ -141,11 +141,11 @@ public class TARDISTrackerInstanceKeeper {
     private final Set<UUID> zeroRoomOccupants = new HashSet<>();
     private String immortalityGate = "";
 
-    public TARDISMoveSession getTARDISMoveSession(Player p) {
+    public TardisMoveSession getTARDISMoveSession(Player p) {
         if (moveSessions.containsKey(p.getUniqueId())) {
             return moveSessions.get(p.getUniqueId());
         }
-        TARDISMoveSession session = new TARDISMoveSession(p);
+        TardisMoveSession session = new TardisMoveSession(p);
         moveSessions.put(p.getUniqueId(), session);
         return session;
     }
@@ -182,11 +182,11 @@ public class TARDISTrackerInstanceKeeper {
         return renderer;
     }
 
-    public HashMap<Integer, TARDISAntiBuild> getAntiBuild() {
+    public HashMap<Integer, TardisAntiBuild> getAntiBuild() {
         return antiBuild;
     }
 
-    public HashMap<Integer, TARDISRoomData> getRoomTasks() {
+    public HashMap<Integer, TardisRoomData> getRoomTasks() {
         return roomTasks;
     }
 
@@ -194,15 +194,15 @@ public class TARDISTrackerInstanceKeeper {
         return rescue;
     }
 
-    public HashMap<Location, TARDISTeleportLocation> getPortals() {
+    public HashMap<Location, TardisTeleportLocation> getPortals() {
         return portals;
     }
 
-    public HashMap<String, List<TARDISSiegeArea>> getSiegeBreedingAreas() {
+    public HashMap<String, List<TardisSiegeArea>> getSiegeBreedingAreas() {
         return siegeBreedingAreas;
     }
 
-    public HashMap<String, List<TARDISSiegeArea>> getSiegeGrowthAreas() {
+    public HashMap<String, List<TardisSiegeArea>> getSiegeGrowthAreas() {
         return siegeGrowthAreas;
     }
 
@@ -346,27 +346,27 @@ public class TARDISTrackerInstanceKeeper {
         return telepathicPlacements;
     }
 
-    public HashMap<UUID, TARDISDisplayType> getDisplay() {
+    public HashMap<UUID, TardisDisplayType> getDisplay() {
         return display;
     }
 
-    public HashMap<UUID, TARDISInfoMenu> getInfoMenu() {
+    public HashMap<UUID, TardisInfoMenu> getInfoMenu() {
         return infoMenu;
     }
 
-    public HashMap<UUID, TARDISRegulatorRunnable> getRegulating() {
+    public HashMap<UUID, TardisRegulatorRunnable> getRegulating() {
         return regulating;
     }
 
-    public HashMap<UUID, TARDISSeedData> getRoomSeed() {
+    public HashMap<UUID, TardisSeedData> getRoomSeed() {
         return roomSeed;
     }
 
-    public HashMap<UUID, TARDISUpgradeData> getUpgrades() {
+    public HashMap<UUID, TardisUpgradeData> getUpgrades() {
         return upgrades;
     }
 
-    public HashMap<UUID, TARDISWatchData> getJohnSmith() {
+    public HashMap<UUID, TardisWatchData> getJohnSmith() {
         return johnSmith;
     }
 

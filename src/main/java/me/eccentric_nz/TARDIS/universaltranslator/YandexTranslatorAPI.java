@@ -30,7 +30,7 @@ import java.net.URL;
  * Makes the generic Yandex API calls. Different service classes can then extend this to make the specific service
  * calls.
  */
-public abstract class YandexTranslatorAPI {
+public abstract class YandexTranslatorApi {
     //Encoding type
 
     static final String ENCODING = "UTF-8";

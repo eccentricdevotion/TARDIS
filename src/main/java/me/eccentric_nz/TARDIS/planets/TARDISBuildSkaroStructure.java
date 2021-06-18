@@ -18,10 +18,10 @@ package me.eccentric_nz.tardis.planets;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -40,9 +40,9 @@ import java.io.File;
  *
  * @author eccentric_nz
  */
-class TARDISBuildSkaroStructure implements Runnable {
+class TardisBuildSkaroStructure implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int startx, y, startz;
     private boolean running = false;
     private int task, starty, h, w, d, level = 0, row = 0;
@@ -57,7 +57,7 @@ class TARDISBuildSkaroStructure implements Runnable {
      * @param y      the start coordinate on the y-axis
      * @param startz the start coordinate on the z-axis
      */
-    TARDISBuildSkaroStructure(TARDISPlugin plugin, int startx, int y, int startz) {
+    TardisBuildSkaroStructure(TardisPlugin plugin, int startx, int y, int startz) {
         this.plugin = plugin;
         this.startx = startx;
         this.y = y;
@@ -71,7 +71,7 @@ class TARDISBuildSkaroStructure implements Runnable {
             String s_world = plugin.getServer().getWorlds().get(0).getName();
             world = plugin.getServer().getWorld(s_world + "_tardis_skaro");
             String path = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
-            path += (TARDISConstants.RANDOM.nextInt(100) > 25) ? "dalek_small.tschm" : "dalek_large.tschm";
+            path += (TardisConstants.RANDOM.nextInt(100) > 25) ? "dalek_small.tschm" : "dalek_large.tschm";
             File file = new File(path);
             if (!file.exists()) {
                 plugin.debug("Could not find the Skaro schematic!");
@@ -80,7 +80,7 @@ class TARDISBuildSkaroStructure implements Runnable {
                 return;
             }
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.unzip(path);
+            JsonObject obj = TardisSchematicGZip.unzip(path);
             // get dimensions
             assert obj != null;
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
@@ -116,13 +116,13 @@ class TARDISBuildSkaroStructure implements Runnable {
                 Material type = data.getMaterial();
                 switch (type) {
                     case CHEST -> {
-                        TARDISBlockSetters.setBlock(world, x, y, z, data);
+                        TardisBlockSetters.setBlock(world, x, y, z, data);
                         Block chest = world.getBlockAt(x, y, z);
                         if (chest.getType().equals(Material.CHEST)) {
                             try {
                                 // set chest contents
                                 Chest container = (Chest) chest.getState();
-                                container.setLootTable(TARDISConstants.LOOT.get(TARDISConstants.RANDOM.nextInt(11)));
+                                container.setLootTable(TardisConstants.LOOT.get(TardisConstants.RANDOM.nextInt(11)));
                                 container.update();
                             } catch (ClassCastException e) {
                                 plugin.debug("Could not cast " + chest.getType() + "to Skaroan Chest." + e.getMessage());
@@ -132,7 +132,7 @@ class TARDISBuildSkaroStructure implements Runnable {
                     case SPONGE -> {
                         Block swap_block = world.getBlockAt(x, y, z);
                         if (!swap_block.getType().isOccluding()) {
-                            TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                            TardisBlockSetters.setBlock(world, x, y, z, Material.AIR);
                         }
                     }
                     case SPAWNER -> {
@@ -144,7 +144,7 @@ class TARDISBuildSkaroStructure implements Runnable {
                             cs.update();
                         }, 2L);
                     }
-                    default -> TARDISBlockSetters.setBlock(world, x, y, z, data);
+                    default -> TardisBlockSetters.setBlock(world, x, y, z, data);
                 }
                 if (col == d && row < w) {
                     row++;

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.messaging;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -33,38 +33,38 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISRoomLister {
+public class TardisRoomLister {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
     private final LinkedHashMap<String, List<String>> options;
 
-    public TARDISRoomLister(TARDISPlugin plugin, Player player) {
+    public TardisRoomLister(TardisPlugin plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         options = createRoomOptions();
     }
 
     public void list() {
-        TARDISMessage.send(player, "ROOM_INFO", String.format("%d", plugin.getGeneralKeeper().getRoomArgs().size()));
-        TARDISMessage.message(player, ChatColor.GRAY + "Click a room name to suggest a command");
-        TARDISMessage.message(player, "");
+        TardisMessage.send(player, "ROOM_INFO", String.format("%d", plugin.getGeneralKeeper().getRoomArgs().size()));
+        TardisMessage.message(player, ChatColor.GRAY + "Click a room name to suggest a command");
+        TardisMessage.message(player, "");
         options.forEach((key, value) -> {
             player.sendMessage(key);
             if (value.size() > 0) {
                 value.forEach((s) -> {
                     TextComponent tcr = new TextComponent("    " + s);
-                    ChatColor colour = (TARDISPermission.hasPermission(player, "tardis.room." + s.toLowerCase())) ? ChatColor.GREEN : ChatColor.RED;
+                    ChatColor colour = (TardisPermission.hasPermission(player, "tardis.room." + s.toLowerCase())) ? ChatColor.GREEN : ChatColor.RED;
                     tcr.setColor(colour);
                     tcr.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
                     tcr.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tardis room " + s));
                     player.spigot().sendMessage(tcr);
                 });
             } else {
-                TARDISMessage.send(player, "ROOM_NONE");
+                TardisMessage.send(player, "ROOM_NONE");
             }
         });
-        TARDISMessage.send(player, "ROOM_GALLERY");
+        TardisMessage.send(player, "ROOM_GALLERY");
         TextComponent tcg = new TextComponent("https://eccentricdevotion.github.io/TARDIS/room-gallery");
         tcg.setColor(ChatColor.AQUA);
         tcg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -27,13 +27,13 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author eccentric_nz
  */
-class TARDISRegulatorStarter implements Runnable {
+class TardisRegulatorStarter implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
     private final int id;
 
-    TARDISRegulatorStarter(TARDISPlugin plugin, Player player, int id) {
+    TardisRegulatorStarter(TardisPlugin plugin, Player player, int id) {
         this.plugin = plugin;
         this.player = player;
         this.id = id;
@@ -41,14 +41,14 @@ class TARDISRegulatorStarter implements Runnable {
 
     @Override
     public void run() {
-        TARDISRegulatorInventory reg = new TARDISRegulatorInventory();
+        TardisRegulatorInventory reg = new TardisRegulatorInventory();
         ItemStack[] items = reg.getRegulator();
         Inventory inv = plugin.getServer().createInventory(player, 54, "Helmic Regulator");
         inv.setContents(items);
         player.openInventory(inv);
         // play inflight sound
         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            plugin.getServer().getScheduler().runTask(plugin, new TARDISLoopingFlightSound(plugin, player.getLocation(), id));
+            plugin.getServer().getScheduler().runTask(plugin, new TardisLoopingFlightSound(plugin, player.getLocation(), id));
         }
     }
 }

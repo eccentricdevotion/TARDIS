@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -29,15 +29,15 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISRoomsUpdater {
+public class TardisRoomsUpdater {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final FileConfiguration rooms_config;
     private final HashMap<String, String> stringOptions = new HashMap<>();
     private final HashMap<String, Integer> integerOptions = new HashMap<>();
     private final HashMap<String, Boolean> booleanOptions = new HashMap<>();
 
-    public TARDISRoomsUpdater(TARDISPlugin plugin, FileConfiguration rooms_config) {
+    public TardisRoomsUpdater(TardisPlugin plugin, FileConfiguration rooms_config) {
         this.plugin = plugin;
         this.rooms_config = rooms_config;
         // boolean

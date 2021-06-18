@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.recipes;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.TARDISSeedModel;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.TardisSeedModel;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.rooms.TARDISWalls;
+import me.eccentric_nz.tardis.rooms.TardisWalls;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -35,16 +35,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class TARDISSeedRecipe {
+public class TardisSeedRecipe {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<Schematic, ShapedRecipe> seedRecipes;
     private final RecipeChoice.MaterialChoice choices;
 
-    public TARDISSeedRecipe(TARDISPlugin plugin) {
+    public TardisSeedRecipe(TardisPlugin plugin) {
         this.plugin = plugin;
         seedRecipes = new HashMap<>();
-        choices = new RecipeChoice.MaterialChoice(TARDISWalls.BLOCKS);
+        choices = new RecipeChoice.MaterialChoice(TardisWalls.BLOCKS);
     }
 
     public void addSeedRecipes() {
@@ -57,8 +57,8 @@ public class TARDISSeedRecipe {
         ItemStack is;
         // catch custom consoles, archives, templates not being in model data list
         int model;
-        if (TARDISSeedModel.materialMap.containsKey(s.getSeedMaterial())) {
-            model = TARDISSeedModel.modelByMaterial(s.getSeedMaterial());
+        if (TardisSeedModel.materialMap.containsKey(s.getSeedMaterial())) {
+            model = TardisSeedModel.modelByMaterial(s.getSeedMaterial());
             if (s.getPermission().equals("delta") || s.getPermission().equals("rotor")) {
                 is = new ItemStack(Material.MUSHROOM_STEM, 1);
             } else {

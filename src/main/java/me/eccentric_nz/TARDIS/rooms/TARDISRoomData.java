@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.rooms;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -32,9 +32,9 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISRoomData {
+public class TardisRoomData {
 
-    private COMPASS direction;
+    private CardinalDirection direction;
     private String room;
     private Location location;
     private Block block;
@@ -47,17 +47,17 @@ public class TARDISRoomData {
     private Material floorType;
     private List<String> postBlocks;
 
-    public TARDISRoomData() {
+    public TardisRoomData() {
         row = 0;
         column = 0;
         level = 0;
     }
 
-    public COMPASS getDirection() {
+    public CardinalDirection getDirection() {
         return direction;
     }
 
-    public void setDirection(COMPASS direction) {
+    public void setDirection(CardinalDirection direction) {
         this.direction = direction;
     }
 

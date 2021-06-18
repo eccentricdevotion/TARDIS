@@ -25,14 +25,14 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author eccentric_nz
  */
-public class TARDISLocationEvent extends Event {
+public class TardisLocationEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
     private final int tardis_id;
     private final Location location;
 
-    TARDISLocationEvent(Player player, int tardisid, Location location) {
+    TardisLocationEvent(Player player, int tardisid, Location location) {
         this.player = player;
         tardis_id = tardisid;
         this.location = location;

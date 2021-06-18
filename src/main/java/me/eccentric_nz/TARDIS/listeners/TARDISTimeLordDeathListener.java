@@ -16,30 +16,30 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.arch.TARDISArchInventory;
-import me.eccentric_nz.tardis.arch.TARDISArchPersister;
-import me.eccentric_nz.tardis.artron.TARDISAdaptiveBoxLampToggler;
-import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
-import me.eccentric_nz.tardis.artron.TARDISLampToggler;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.arch.TardisArchInventory;
+import me.eccentric_nz.tardis.arch.TardisArchPersister;
+import me.eccentric_nz.tardis.artron.TardisAdaptiveBoxLampToggler;
+import me.eccentric_nz.tardis.artron.TardisBeaconToggler;
+import me.eccentric_nz.tardis.artron.TardisLampToggler;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.*;
-import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
-import me.eccentric_nz.tardis.desktop.TARDISWallFloorRunnable;
+import me.eccentric_nz.tardis.desktop.TardisUpgradeData;
+import me.eccentric_nz.tardis.desktop.TardisWallFloorRunnable;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.hads.TARDISCloisterBell;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.move.TARDISDoorCloser;
-import me.eccentric_nz.tardis.siegemode.TARDISSiegeArea;
-import me.eccentric_nz.tardis.travel.TARDISEPSRunnable;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.hads.TardisCloisterBell;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.move.TardisDoorCloser;
+import me.eccentric_nz.tardis.siegemode.TardisSiegeArea;
+import me.eccentric_nz.tardis.travel.TardisEpsRunnable;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -59,11 +59,11 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISTimeLordDeathListener implements Listener {
+public class TardisTimeLordDeathListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISTimeLordDeathListener(TARDISPlugin plugin) {
+    public TardisTimeLordDeathListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -78,13 +78,13 @@ public class TARDISTimeLordDeathListener implements Listener {
         Player player = event.getEntity();
         UUID uuid = player.getUniqueId();
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
-            if (TARDISPermission.hasPermission(player, "tardis.autonomous")) {
+            if (TardisPermission.hasPermission(player, "tardis.autonomous")) {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 // are they a time lord?
                 if (rs.resultSet()) {
-                    TARDIS tardis = rs.getTardis();
+                    Tardis tardis = rs.getTardis();
                     if (tardis.isPowered()) {
                         int id = tardis.getTardisId();
                         String eps = tardis.getEps();
@@ -95,7 +95,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                             // do they have the autonomous circuit on?
                             if (rsp.isAutoOn() && !tardis.isSiegeOn() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
                                 // close doors
-                                new TARDISDoorCloser(plugin, uuid, id).closeDoors();
+                                new TardisDoorCloser(plugin, uuid, id).closeDoors();
                                 Location death_loc = player.getLocation();
                                 int amount = Math.round(plugin.getArtronConfig().getInt("autonomous") * spaceTimeThrottle.getArtronMultiplier());
                                 if (tardis.getArtronLevel() > amount) {
@@ -108,7 +108,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             List<UUID> data = rst.getData();
                                             if (data.size() > 0 && !data.contains(uuid)) {
                                                 // schedule the NPC to appear
-                                                TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEpsMessage(), player, data, id, eps, creeper);
+                                                TardisEpsRunnable EPS_runnable = new TardisEpsRunnable(plugin, rsp.getEpsMessage(), player, data, id, eps, creeper);
                                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
                                             }
                                         }
@@ -122,7 +122,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         plugin.debug("Current record not found!");
                                         return;
                                     }
-                                    COMPASS cd = rsc.getDirection();
+                                    CardinalDirection cd = rsc.getDirection();
                                     Location sl = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                                     // where is home?
                                     HashMap<String, Object> wherehl = new HashMap<>();
@@ -134,7 +134,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     }
                                     World hw = rsh.getWorld();
                                     Location home_loc = new Location(hw, rsh.getX(), rsh.getY(), rsh.getZ());
-                                    COMPASS hd = rsh.getDirection();
+                                    CardinalDirection hd = rsh.getDirection();
                                     boolean sub = rsh.isSubmarine();
                                     Location goto_loc;
                                     boolean going_home = false;
@@ -170,7 +170,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             plugin.getTrackerKeeper().getPerm().remove(player.getUniqueId());
                                             return;
                                         }
-                                        COMPASS fd = (going_home) ? hd : cd;
+                                        CardinalDirection fd = (going_home) ? hd : cd;
                                         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                             // destroy police box
                                             DestroyData dd = new DestroyData();
@@ -192,9 +192,9 @@ public class TARDISTimeLordDeathListener implements Listener {
                                                 plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisId());
                                                 plugin.getTrackerKeeper().getInVortex().add(id);
                                                 // play tardis_takeoff sfx
-                                                TARDISSounds.playTARDISSound(sl, "tardis_takeoff");
+                                                TardisSounds.playTARDISSound(sl, "tardis_takeoff");
                                                 // sound the cloister bell at current location for dematerialisation
-                                                TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 5, id, sl, plugin.getServer().getPlayer(uuid), true, "Time Lord death", false);
+                                                TardisCloisterBell bell = new TardisCloisterBell(plugin, 5, id, sl, plugin.getServer().getPlayer(uuid), true, "Time Lord death", false);
                                                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
                                                 bell.setTask(taskID);
                                                 plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
@@ -219,9 +219,9 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             plugin.getPresetBuilder().buildPreset(bd);
                                             plugin.getTrackerKeeper().getInVortex().add(id);
                                             // play tardis_land sfx
-                                            TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land");
+                                            TardisSounds.playTARDISSound(bd.getLocation(), "tardis_land");
                                             // sound the cloister bell at current location for dematerialisation
-                                            TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 6, id, sl, plugin.getServer().getPlayer(uuid), false, "", true);
+                                            TardisCloisterBell bell = new TardisCloisterBell(plugin, 6, id, sl, plugin.getServer().getPlayer(uuid), false, "", true);
                                             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
                                             bell.setTask(taskID);
                                             plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
@@ -266,13 +266,13 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             // power down
                                             setp.put("powered_on", 0);
                                             // police box lamp, delay it incase the TARDIS needs rebuilding
-                                            if (tardis.getPreset().equals(PRESET.ADAPTIVE)) {
-                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), 1L);
+                                            if (tardis.getPreset().equals(Preset.ADAPTIVE)) {
+                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TardisAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), 1L);
                                             }
                                             // if lights are on, turn them off
-                                            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, tardis.getSchematic().hasLanterns());
+                                            new TardisLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, tardis.getSchematic().hasLanterns());
                                             // if beacon is on turn it off
-                                            new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), id, false);
+                                            new TardisBeaconToggler(plugin).flickSwitch(player.getUniqueId(), id, false);
                                             plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
                                         }
                                     }
@@ -303,21 +303,21 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     dd.setThrottle(spaceTimeThrottle);
                                     plugin.getPresetDestroyer().destroyPreset(dd);
                                     // sound the cloister bell at current location for siege mode
-                                    TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 7, id, sl, plugin.getServer().getPlayer(uuid), true, "Siege mode engaged", false);
+                                    TardisCloisterBell bell = new TardisCloisterBell(plugin, 7, id, sl, plugin.getServer().getPlayer(uuid), true, "Siege mode engaged", false);
                                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
                                     bell.setTask(taskID);
                                     plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
                                     // place siege block
-                                    BlockData blockData = plugin.getServer().createBlockData(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
+                                    BlockData blockData = plugin.getServer().createBlockData(TardisMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
                                     siege.setBlockData(blockData);
                                     // track this siege block
                                     plugin.getTrackerKeeper().getInSiegeMode().add(id);
                                     set.put("siege_on", 1);
                                     if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
                                         Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
-                                        TARDISSiegeArea tsa = new TARDISSiegeArea(id, c);
+                                        TardisSiegeArea tsa = new TardisSiegeArea(id, c);
                                         if (plugin.getConfig().getInt("siege.breeding") > 0) {
-                                            List<TARDISSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());
+                                            List<TardisSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());
                                             if (breeding_areas == null) {
                                                 breeding_areas = new ArrayList<>();
                                             }
@@ -325,7 +325,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             plugin.getTrackerKeeper().getSiegeBreedingAreas().put(c.getWorld().getName(), breeding_areas);
                                         }
                                         if (plugin.getConfig().getInt("siege.growth") > 0) {
-                                            List<TARDISSiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getName());
+                                            List<TardisSiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getName());
                                             if (growth_areas == null) {
                                                 growth_areas = new ArrayList<>();
                                             }
@@ -336,13 +336,13 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     if (plugin.getConfig().getBoolean("siege.texture")) {
                                         // change to a dark theme
                                         Schematic schm = tardis.getSchematic();
-                                        TARDISUpgradeData tud = new TARDISUpgradeData();
+                                        TardisUpgradeData tud = new TardisUpgradeData();
                                         tud.setFloor("BLACK_WOOL");
                                         tud.setWall("GRAY_WOOL");
                                         tud.setSchematic(schm);
                                         tud.setPrevious(schm);
                                         // start the rebuild
-                                        TARDISWallFloorRunnable ttr = new TARDISWallFloorRunnable(plugin, player.getUniqueId(), tud);
+                                        TardisWallFloorRunnable ttr = new TardisWallFloorRunnable(plugin, player.getUniqueId(), tud);
                                         long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
                                         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, delay);
                                         ttr.setTaskID(task);
@@ -350,22 +350,22 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     // update the database
                                     plugin.getQueryFactory().doUpdate("tardis", set, wheres);
                                 } else if (player.isOnline()) {
-                                    TARDISMessage.send(player, "ENERGY_NOT_AUTO");
+                                    TardisMessage.send(player, "ENERGY_NOT_AUTO");
                                 }
                             }
                         }
                     } else if (player.isOnline()) {
-                        TARDISMessage.send(player, "AUTO_POWER");
+                        TardisMessage.send(player, "AUTO_POWER");
                     }
                 }
             }
         }
         // save arched status
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-            new TARDISArchPersister(plugin).save(uuid);
+            new TardisArchPersister(plugin).save(uuid);
             if (plugin.getConfig().getBoolean("arch.clear_inv_on_death")) {
                 // clear inventories
-                new TARDISArchInventory().clear(uuid);
+                new TardisArchInventory().clear(uuid);
             }
         }
     }
@@ -377,7 +377,7 @@ public class TARDISTimeLordDeathListener implements Listener {
         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
         if (rsa.resultSet()) {
             String area = rsa.getArea().getAreaName();
-            if (!TARDISPermission.hasPermission(player, "tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
+            if (!TardisPermission.hasPermission(player, "tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
                 return null;
             }
             l = plugin.getTardisArea().getNextSpot(area);

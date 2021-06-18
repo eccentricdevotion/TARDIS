@@ -17,19 +17,19 @@
 package me.eccentric_nz.tardis.commands.tardis;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetChunks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetLamps;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -45,11 +45,11 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-class TARDISLampsCommand {
+class TardisLampsCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISLampsCommand(TARDISPlugin plugin) {
+    TardisLampsCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -62,22 +62,22 @@ class TARDISLampsCommand {
 
     boolean addLampBlocks(Player owner) {
         // check they have permission
-        if (!TARDISPermission.hasPermission(owner, "tardis.update")) {
-            TARDISMessage.send(owner, "NO_PERMS");
+        if (!TardisPermission.hasPermission(owner, "tardis.update")) {
+            TardisMessage.send(owner, "NO_PERMS");
             return false;
         }
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", owner.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             // check if they have already got lamp records
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, false);
             if (rsl.resultSet()) {
-                TARDISMessage.send(owner, "LAMP_DELETE");
+                TardisMessage.send(owner, "LAMP_DELETE");
                 HashMap<String, Object> wheredel = new HashMap<>();
                 wheredel.put("tardis_id", id);
                 plugin.getQueryFactory().doDelete("lamps", wheredel);
@@ -98,20 +98,20 @@ class TARDISLampsCommand {
                 String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
                 String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
                 // get JSON
-                JsonObject obj = TARDISSchematicGZip.unzip(path);
+                JsonObject obj = TardisSchematicGZip.unzip(path);
                 // get dimensions
                 assert obj != null;
                 JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
                 int h = dimensions.get("height").getAsInt();
-                starty = TARDISConstants.HIGHER.contains(schm.getPermission()) ? 65 : 64;
+                starty = TardisConstants.HIGHER.contains(schm.getPermission()) ? 65 : 64;
                 endy = starty + h;
                 ArrayList<HashMap<String, String>> data = rsc.getData();
                 // loop through the chunks
                 for (HashMap<String, String> map : data) {
                     String w = map.get("world");
-                    World world = TARDISAliasResolver.getWorldFromAlias(w);
-                    int x = TARDISNumberParsers.parseInt(map.get("x"));
-                    int z = TARDISNumberParsers.parseInt(map.get("z"));
+                    World world = TardisAliasResolver.getWorldFromAlias(w);
+                    int x = TardisNumberParsers.parseInt(map.get("x"));
+                    int z = TardisNumberParsers.parseInt(map.get("z"));
                     assert world != null;
                     Chunk chunk = world.getChunkAt(x, z);
                     // find the lamps in the chunks
@@ -127,7 +127,7 @@ class TARDISLampsCommand {
                                     set.put("tardis_id", id);
                                     set.put("location", lamp);
                                     plugin.getQueryFactory().doInsert("lamps", set);
-                                    TARDISMessage.send(owner, "LAMP_ADD", (xx + ":" + yy + ":" + zz));
+                                    TardisMessage.send(owner, "LAMP_ADD", (xx + ":" + yy + ":" + zz));
                                 }
                             }
                         }
@@ -136,7 +136,7 @@ class TARDISLampsCommand {
             }
             return true;
         } else {
-            TARDISMessage.send(owner, "NOT_A_TIMELORD");
+            TardisMessage.send(owner, "NOT_A_TIMELORD");
             return false;
         }
     }

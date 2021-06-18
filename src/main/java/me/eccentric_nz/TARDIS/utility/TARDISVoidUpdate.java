@@ -16,29 +16,29 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
+import me.eccentric_nz.tardis.planets.TardisBiome;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 
 import java.util.HashMap;
 
-import static me.eccentric_nz.tardis.utility.TARDISSpiral.SPIRAL;
+import static me.eccentric_nz.tardis.utility.TardisSpiral.SPIRAL;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISVoidUpdate {
+public class TardisVoidUpdate {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
     private int taskID;
 
-    public TARDISVoidUpdate(TARDISPlugin plugin, int id) {
+    public TardisVoidUpdate(TardisPlugin plugin, int id) {
         this.plugin = plugin;
         this.id = id;
     }
@@ -49,12 +49,12 @@ public class TARDISVoidUpdate {
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             // get start chunk for this tardis
             String[] cstr = tardis.getChunk().split(":");
-            World w = TARDISAliasResolver.getWorldFromAlias(cstr[0]);
-            int cx = TARDISNumberParsers.parseInt(cstr[1]);
-            int cz = TARDISNumberParsers.parseInt(cstr[2]);
+            World w = TardisAliasResolver.getWorldFromAlias(cstr[0]);
+            int cx = TardisNumberParsers.parseInt(cstr[1]);
+            int cz = TardisNumberParsers.parseInt(cstr[2]);
             taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Updater(w, cx, cz), 1L, 20L);
         }
     }
@@ -82,7 +82,7 @@ public class TARDISVoidUpdate {
             int ex = sx + 16;
             int sz = (cz + SPIRAL.get(idx).y) * 16;
             int ez = sz + 16;
-            if (TARDISStaticUtils.getBiomeAt(world.getBlockAt(sx, 64, sz).getLocation()).equals(TARDISBiome.THE_END)) {
+            if (TardisStaticUtils.getBiomeAt(world.getBlockAt(sx, 64, sz).getLocation()).equals(TardisBiome.THE_END)) {
                 for (int x = sx; x < ex; x++) {
                     for (int z = sz; z < ez; z++) {
                         for (int y = 48; y < 81; y += 2) {

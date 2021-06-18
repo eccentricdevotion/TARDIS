@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.update;
 
 import net.md_5.bungee.api.ChatColor;
 
-public enum TARDISUpdateableCategory {
+public enum TardisUpdateableCategory {
 
     CONTROLS(ChatColor.GREEN, "TARDIS Controls"),
     INTERFACES(ChatColor.RED, "TARDIS User Interfaces"),
@@ -28,7 +28,7 @@ public enum TARDISUpdateableCategory {
     private final ChatColor colour;
     private final String name;
 
-    TARDISUpdateableCategory(ChatColor colour, String name) {
+    TardisUpdateableCategory(ChatColor colour, String name) {
         this.colour = colour;
         this.name = name;
     }

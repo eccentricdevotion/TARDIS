@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -40,11 +40,11 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISAreaListener implements Listener {
+public class TardisAreaListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISAreaListener(TARDISPlugin plugin) {
+    public TardisAreaListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -69,13 +69,13 @@ public class TARDISAreaListener implements Listener {
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
                     String locStr = Objects.requireNonNull(block_loc.getWorld()).getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
                     plugin.getTrackerKeeper().getBlock().put(uuid, locStr);
-                    TARDISMessage.send(player, "AREA_END_INFO", ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET);
+                    TardisMessage.send(player, "AREA_END_INFO", ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         plugin.getTrackerKeeper().getArea().remove(uuid);
                         plugin.getTrackerKeeper().getBlock().remove(uuid);
                     }, 1200L);
                 } else {
-                    TARDISMessage.send(player, "AREA_INSIDE");
+                    TardisMessage.send(player, "AREA_INSIDE");
                 }
             } else if (plugin.getTrackerKeeper().getBlock().containsKey(uuid) && plugin.getTrackerKeeper().getEnd().containsKey(uuid)) {
                 Location block_loc = block.getLocation();
@@ -83,28 +83,28 @@ public class TARDISAreaListener implements Listener {
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
                     String[] firstblock = plugin.getTrackerKeeper().getBlock().get(uuid).split(":");
                     if (!Objects.requireNonNull(block_loc.getWorld()).getName().equals(firstblock[0])) {
-                        TARDISMessage.send(player, "AREA_WORLD");
+                        TardisMessage.send(player, "AREA_WORLD");
                         return;
                     }
                     int y = block_loc.getBlockY();
-                    if (y != (TARDISNumberParsers.parseInt(firstblock[2]))) {
-                        TARDISMessage.send(player, "AREA_Y");
+                    if (y != (TardisNumberParsers.parseInt(firstblock[2]))) {
+                        TardisMessage.send(player, "AREA_Y");
                         return;
                     }
                     int minx, minz, maxx, maxz;
-                    if (TARDISNumberParsers.parseInt(firstblock[1]) < block_loc.getBlockX()) {
-                        minx = TARDISNumberParsers.parseInt(firstblock[1]);
+                    if (TardisNumberParsers.parseInt(firstblock[1]) < block_loc.getBlockX()) {
+                        minx = TardisNumberParsers.parseInt(firstblock[1]);
                         maxx = block_loc.getBlockX();
                     } else {
                         minx = block_loc.getBlockX();
-                        maxx = TARDISNumberParsers.parseInt(firstblock[1]);
+                        maxx = TardisNumberParsers.parseInt(firstblock[1]);
                     }
-                    if (TARDISNumberParsers.parseInt(firstblock[3]) < block_loc.getBlockZ()) {
-                        minz = TARDISNumberParsers.parseInt(firstblock[3]);
+                    if (TardisNumberParsers.parseInt(firstblock[3]) < block_loc.getBlockZ()) {
+                        minz = TardisNumberParsers.parseInt(firstblock[3]);
                         maxz = block_loc.getBlockZ();
                     } else {
                         minz = block_loc.getBlockZ();
-                        maxz = TARDISNumberParsers.parseInt(firstblock[3]);
+                        maxz = TardisNumberParsers.parseInt(firstblock[3]);
                     }
                     String n = plugin.getTrackerKeeper().getArea().get(uuid);
                     HashMap<String, Object> set = new HashMap<>();
@@ -116,12 +116,12 @@ public class TARDISAreaListener implements Listener {
                     set.put("maxz", maxz);
                     set.put("y", y + 1);
                     plugin.getQueryFactory().doInsert("areas", set);
-                    TARDISMessage.send(player, "AREA_SAVED", plugin.getTrackerKeeper().getArea().get(uuid));
+                    TardisMessage.send(player, "AREA_SAVED", plugin.getTrackerKeeper().getArea().get(uuid));
                     plugin.getTrackerKeeper().getArea().remove(uuid);
                     plugin.getTrackerKeeper().getBlock().remove(uuid);
                     plugin.getTrackerKeeper().getEnd().remove(uuid);
                 } else {
-                    TARDISMessage.send(player, "AREA_INSIDE");
+                    TardisMessage.send(player, "AREA_INSIDE");
                 }
             }
         }

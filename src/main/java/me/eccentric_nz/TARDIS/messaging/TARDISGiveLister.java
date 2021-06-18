@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.messaging;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.enumeration.RecipeCategory;
 import me.eccentric_nz.tardis.enumeration.RecipeItem;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -32,13 +32,13 @@ import java.util.TreeMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISGiveLister {
+public class TardisGiveLister {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final CommandSender sender;
     private final TreeMap<String, String> dev = new TreeMap<>();
 
-    public TARDISGiveLister(TARDISPlugin plugin, CommandSender sender) {
+    public TardisGiveLister(TardisPlugin plugin, CommandSender sender) {
         this.plugin = plugin;
         this.sender = sender;
         dev.put("artron", "Artron Energy");
@@ -50,11 +50,11 @@ public class TARDISGiveLister {
     }
 
     public void list() {
-        TARDISMessage.message(sender, plugin.getPluginName() + "You can 'give' the following items:");
-        TARDISMessage.message(sender, ChatColor.GRAY + "Hover over command argument to see a description");
-        TARDISMessage.message(sender, ChatColor.GRAY + "Click to suggest a command");
-        TARDISMessage.message(sender, "");
-        TARDISMessage.message(sender, "Admin & development");
+        TardisMessage.message(sender, plugin.getPluginName() + "You can 'give' the following items:");
+        TardisMessage.message(sender, ChatColor.GRAY + "Hover over command argument to see a description");
+        TardisMessage.message(sender, ChatColor.GRAY + "Click to suggest a command");
+        TardisMessage.message(sender, "");
+        TardisMessage.message(sender, "Admin & development");
         for (Map.Entry<String, String> entry : dev.entrySet()) {
             TextComponent tcd = new TextComponent(entry.getKey());
             tcd.setColor(net.md_5.bungee.api.ChatColor.YELLOW);
@@ -62,10 +62,10 @@ public class TARDISGiveLister {
             tcd.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tardisgive [player] " + entry.getKey() + " "));
             sender.spigot().sendMessage(tcd);
         }
-        TARDISMessage.message(sender, "");
+        TardisMessage.message(sender, "");
         for (RecipeCategory category : RecipeCategory.values()) {
             if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE) {
-                TARDISMessage.message(sender, category.getName());
+                TardisMessage.message(sender, category.getName());
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {
                         TextComponent tci = new TextComponent(item.toTabCompletionString());
@@ -76,7 +76,7 @@ public class TARDISGiveLister {
                     }
                 }
             }
-            TARDISMessage.message(sender, "");
+            TardisMessage.message(sender, "");
         }
     }
 }

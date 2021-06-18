@@ -20,9 +20,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.database.converters.TARDISMaterialIDConverter;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.database.converters.TardisMaterialIdConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,20 +32,20 @@ import java.sql.SQLException;
 /**
  * @author eccentric_nz
  */
-public class ARSConverter {
+public class ArsConverter {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
 
-    public ARSConverter(TARDISPlugin plugin) {
+    public ArsConverter(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
 
     public void convertARS() {
-        TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(plugin);
+        TardisMaterialIdConverter tmic = new TardisMaterialIdConverter(plugin);
         PreparedStatement query = null;
         PreparedStatement update = null;
         ResultSet rs = null;

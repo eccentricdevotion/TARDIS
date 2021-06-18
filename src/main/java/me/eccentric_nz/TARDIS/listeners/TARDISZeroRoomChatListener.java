@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -37,11 +37,11 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISZeroRoomChatListener implements Listener {
+public class TardisZeroRoomChatListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISZeroRoomChatListener(TARDISPlugin plugin) {
+    public TardisZeroRoomChatListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -55,7 +55,7 @@ public class TARDISZeroRoomChatListener implements Listener {
         Player zero = event.getPlayer();
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(zero.getUniqueId())) {
             event.setCancelled(true);
-            TARDISMessage.send(zero, "NOT_IN_ZERO");
+            TardisMessage.send(zero, "NOT_IN_ZERO");
         } else if (plugin.getServer().getWorld("TARDIS_Zero_Room") != null) {
             List<Player> inZeroRoom = Objects.requireNonNull(plugin.getServer().getWorld("TARDIS_Zero_Room")).getPlayers();
             inZeroRoom.forEach((p) -> event.getRecipients().remove(p));
@@ -67,7 +67,7 @@ public class TARDISZeroRoomChatListener implements Listener {
         Player player = event.getPlayer();
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
-            TARDISMessage.send(player, "NOT_IN_ZERO");
+            TardisMessage.send(player, "NOT_IN_ZERO");
             return;
         }
         UUID uuid = player.getUniqueId();
@@ -78,16 +78,16 @@ public class TARDISZeroRoomChatListener implements Listener {
                 Player timelord = plugin.getServer().getPlayer(owner);
                 if (timelord != null && timelord.isOnline()) {
                     // message console so it is logged
-                    TARDISMessage.message(plugin.getConsole(), "[tardis] Companion [" + player.getName() + "] ran a telepathic command as Time Lord [" + timelord.getName() + "]");
+                    TardisMessage.message(plugin.getConsole(), "[tardis] Companion [" + player.getName() + "] ran a telepathic command as Time Lord [" + timelord.getName() + "]");
                     if (command.contains("rescue") && command.contains(timelord.getName().toLowerCase(Locale.ENGLISH))) {
                         // track the timelord
                         plugin.getTrackerKeeper().getTelepathicRescue().put(owner, uuid);
                     }
                     // if it is a tardis command run it as the time lord
                     event.setPlayer(timelord);
-                    TARDISMessage.send(player, "TELEPATHIC_RUN", command);
+                    TardisMessage.send(player, "TELEPATHIC_RUN", command);
                 } else {
-                    TARDISMessage.send(player, "TELEPATHIC_ONLINE");
+                    TardisMessage.send(player, "TELEPATHIC_ONLINE");
                 }
             }
             // always stop tracking the player

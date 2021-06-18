@@ -19,12 +19,12 @@ package me.eccentric_nz.tardis.arch;
 /**
  * @author eccentric_nz
  */
-public class TARDISWatchData {
+public class TardisWatchData {
 
     private final String name;
     private final long time;
 
-    TARDISWatchData(String name, long time) {
+    TardisWatchData(String name, long time) {
         this.name = name;
         this.time = time;
     }

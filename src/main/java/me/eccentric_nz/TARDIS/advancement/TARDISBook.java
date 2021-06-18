@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.advancement;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -36,11 +36,11 @@ import java.util.Scanner;
  *
  * @author eccentric_nz
  */
-public class TARDISBook {
+public class TardisBook {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISBook(TARDISPlugin plugin) {
+    public TardisBook(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -84,6 +84,6 @@ public class TARDISBook {
         Inventory inv = p.getInventory();
         inv.addItem(book);
         p.updateInventory();
-        TARDISMessage.send(p, "BOOK_RECEIVE", name);
+        TardisMessage.send(p, "BOOK_RECEIVE", name);
     }
 }

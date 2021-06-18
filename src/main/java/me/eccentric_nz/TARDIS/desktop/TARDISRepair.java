@@ -18,21 +18,21 @@ package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Consoles;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.rooms.TARDISCondenserData;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.rooms.TardisCondenserData;
 import me.eccentric_nz.tardis.schematic.ArchiveUpdate;
 import me.eccentric_nz.tardis.schematic.ResultSetArchive;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
@@ -47,28 +47,28 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISRepair {
+public class TardisRepair {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
 
-    public TARDISRepair(TARDISPlugin plugin, Player player) {
+    public TardisRepair(TardisPlugin plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
     }
 
     public void restore(boolean clean) {
         UUID uuid = player.getUniqueId();
-        TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+        TardisUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             String perm = tardis.getSchematic().getPermission();
             boolean hasLava = tud.getPrevious().getPermission().equals("master") || tud.getPrevious().getPermission().equals("delta");
             if (hasLava) {
-                new TARDISDelavafier(plugin, uuid).swap();
+                new TardisDelavafier(plugin, uuid).swap();
             }
             String wall = "ORANGE_WOOL";
             String floor = "LIGHT_GRAY_WOOL";
@@ -87,7 +87,7 @@ public class TARDISRepair {
             tud.setWall(wall);
             tud.setFloor(floor);
             plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
-            TARDISThemeRunnable ttr = new TARDISThemeRepairRunnable(plugin, uuid, tud, clean);
+            TardisThemeRunnable ttr = new TardisThemeRepairRunnable(plugin, uuid, tud, clean);
             // start the rebuild
             long initial_delay = (hasLava) ? 45L : 5L;
             long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
@@ -112,13 +112,13 @@ public class TARDISRepair {
             where.put("uuid", uuid);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
-                TARDIS tardis = rs.getTardis();
+                Tardis tardis = rs.getTardis();
                 int slot = tardis.getTIPS();
                 int id = tardis.getTardisId();
                 int startx, startz;
                 if (slot != -1) { // default world - use TIPS
-                    TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                    TARDISTIPSData pos = tintpos.getTIPSData(slot);
+                    TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
+                    TardisTipsData pos = tintpos.getTIPSData(slot);
                     startx = pos.getCentreX();
                     startz = pos.getCentreZ();
                 } else {
@@ -126,8 +126,8 @@ public class TARDISRepair {
                     startx = gsl[0];
                     startz = gsl[2];
                 }
-                int starty = TARDISConstants.HIGHER.contains(tardis.getSchematic().getPermission()) ? 65 : 64;
-                World world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+                int starty = TardisConstants.HIGHER.contains(tardis.getSchematic().getPermission()) ? 65 : 64;
+                World world = TardisStaticLocationGetters.getWorld(tardis.getChunk());
                 String wall = "ORANGE_WOOL";
                 String floor = "LIGHT_GRAY_WOOL";
                 Material wall_type = Material.ORANGE_WOOL;
@@ -224,25 +224,25 @@ public class TARDISRepair {
                         if (rsc.getBlockCount() < map.getValue()) {
                             hasRequired = false;
                             int diff = map.getValue() - rsc.getBlockCount();
-                            TARDISMessage.send(player, "CONDENSE_MORE", String.format("%d", diff), Objects.requireNonNull(Material.getMaterial(map.getKey())).toString());
+                            TardisMessage.send(player, "CONDENSE_MORE", String.format("%d", diff), Objects.requireNonNull(Material.getMaterial(map.getKey())).toString());
                         }
                     } else {
                         hasRequired = false;
-                        TARDISMessage.send(player, "CONDENSE_MIN", String.format("%d", map.getValue()), Objects.requireNonNull(Material.getMaterial(map.getKey())).toString());
+                        TardisMessage.send(player, "CONDENSE_MIN", String.format("%d", map.getValue()), Objects.requireNonNull(Material.getMaterial(map.getKey())).toString());
                     }
                 }
                 if (!hasRequired) {
                     player.sendMessage("-----------------------------");
                     return false;
                 }
-                TARDISCondenserData c_data = new TARDISCondenserData();
+                TardisCondenserData c_data = new TardisCondenserData();
                 c_data.setBlockIDCount(blockTypeCount);
                 c_data.setTardisId(id);
                 plugin.getGeneralKeeper().getRoomCondenserData().put(player.getUniqueId(), c_data);
                 return true;
             }
         } else {
-            TARDISMessage.send(player, "REPAIR_FAIL", "No JSON data");
+            TardisMessage.send(player, "REPAIR_FAIL", "No JSON data");
         }
         return false;
     }
@@ -254,7 +254,7 @@ public class TARDISRepair {
         where.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             String perm = tardis.getSchematic().getPermission();
             if (perm.equals("archive")) {
                 // try 1
@@ -291,7 +291,7 @@ public class TARDISRepair {
                 String directory = (tardis.getSchematic().isCustom()) ? "user_schematics" : "schematics";
                 String path = plugin.getDataFolder() + File.separator + directory + File.separator + perm + ".tschm";
                 // get JSON
-                obj = TARDISSchematicGZip.unzip(path);
+                obj = TardisSchematicGZip.unzip(path);
             }
         }
         return obj;

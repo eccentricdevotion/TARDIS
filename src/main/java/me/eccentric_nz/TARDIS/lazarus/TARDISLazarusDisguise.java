@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.lazarus;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class TARDISLazarusDisguise {
+public class TardisLazarusDisguise {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
     private final EntityType entityType;
     private final Object[] options;
 
-    public TARDISLazarusDisguise(TARDISPlugin plugin, Player player, EntityType entityType, Object[] options) {
+    public TardisLazarusDisguise(TardisPlugin plugin, Player player, EntityType entityType, Object[] options) {
         this.plugin = plugin;
         this.player = player;
         this.entityType = entityType;
@@ -37,13 +37,13 @@ public class TARDISLazarusDisguise {
     }
 
     public static void removeDisguise(Player player) {
-        TARDISPlugin.plugin.getTardisHelper().undisguise(player);
+        TardisPlugin.plugin.getTardisHelper().undisguise(player);
     }
 
     public static void runImmortalityGate(Player player) {
-        TARDISPlugin.plugin.getServer().getOnlinePlayers().forEach((p) -> {
+        TardisPlugin.plugin.getServer().getOnlinePlayers().forEach((p) -> {
             if (!p.equals(player)) {
-                TARDISPlugin.plugin.getTardisHelper().disguise(p, player.getUniqueId());
+                TardisPlugin.plugin.getTardisHelper().disguise(p, player.getUniqueId());
             }
         });
     }

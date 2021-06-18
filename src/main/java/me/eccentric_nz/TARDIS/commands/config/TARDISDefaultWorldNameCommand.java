@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.tardis.commands.config;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 
 /**
  * @author eccentric_nz
  */
-class TARDISDefaultWorldNameCommand {
+class TardisDefaultWorldNameCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISDefaultWorldNameCommand(TARDISPlugin plugin) {
+    TardisDefaultWorldNameCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -45,7 +45,7 @@ class TARDISDefaultWorldNameCommand {
         String nodots = StringUtils.replace(t, ".", "_");
         plugin.getConfig().set("creation.default_world_name", nodots);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TardisMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
 }

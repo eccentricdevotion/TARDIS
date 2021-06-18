@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,11 +34,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISChameleonHelpListener extends TARDISMenuListener implements Listener {
+public class TardisChameleonHelpListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISChameleonHelpListener(TARDISPlugin plugin) {
+    public TardisChameleonHelpListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
     }
@@ -74,7 +74,7 @@ public class TARDISChameleonHelpListener extends TARDISMenuListener implements L
                                 case 0:
                                     // back
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
+                                        TardisChameleonConstructorGUI tci = new TardisChameleonConstructorGUI(plugin);
                                         ItemStack[] items = tci.getConstruct();
                                         Inventory chamcon = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Construction");
                                         chamcon.setContents(items);
@@ -84,7 +84,7 @@ public class TARDISChameleonHelpListener extends TARDISMenuListener implements L
                                 case 40:
                                     // next
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        TARDISChameleonTemplateGUI tci = new TARDISChameleonTemplateGUI(plugin);
+                                        TardisChameleonTemplateGUI tci = new TardisChameleonTemplateGUI(plugin);
                                         ItemStack[] items = tci.getTemplate();
                                         Inventory chamtmp = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Template");
                                         chamtmp.setContents(items);

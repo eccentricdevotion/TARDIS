@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISMultiverseInventoriesChecker {
+public class TardisMultiverseInventoriesChecker {
 
     public static boolean checkWorldsCanShare(String from, String to) {
         MultiverseInventories mvi = (MultiverseInventories) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Inventories");

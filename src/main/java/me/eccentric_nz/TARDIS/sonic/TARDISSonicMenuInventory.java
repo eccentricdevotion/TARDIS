@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUISonicPreferences;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiSonicPreferences;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -32,12 +32,12 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISSonicMenuInventory {
+public class TardisSonicMenuInventory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ItemStack[] menu;
 
-    public TARDISSonicMenuInventory(TARDISPlugin plugin) {
+    public TardisSonicMenuInventory(TardisPlugin plugin) {
         this.plugin = plugin;
         menu = getItemStack();
     }
@@ -51,7 +51,7 @@ public class TARDISSonicMenuInventory {
     private ItemStack[] getItemStack() {
 
         ItemStack[] stack = new ItemStack[27];
-        for (GUISonicPreferences sonic : GUISonicPreferences.values()) {
+        for (GuiSonicPreferences sonic : GuiSonicPreferences.values()) {
             if (sonic.getMaterial() == Material.BLAZE_ROD) {
                 ItemStack is = new ItemStack(sonic.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
@@ -71,7 +71,7 @@ public class TARDISSonicMenuInventory {
         info_im.setDisplayName("Instructions");
         List<String> lore = Arrays.asList("Put your Sonic Screwdriver", "in the bottom left most slot", "and then click on the", "Sonic of your choice.");
         info_im.setLore(lore);
-        info_im.setCustomModelData(GUISonicPreferences.INSTRUCTIONS.getCustomModelData());
+        info_im.setCustomModelData(GuiSonicPreferences.INSTRUCTIONS.getCustomModelData());
         info.setItemMeta(info_im);
         stack[22] = info;
         // close
@@ -79,7 +79,7 @@ public class TARDISSonicMenuInventory {
         ItemMeta close_im = close.getItemMeta();
         assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUISonicPreferences.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GuiSonicPreferences.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stack[26] = close;
 

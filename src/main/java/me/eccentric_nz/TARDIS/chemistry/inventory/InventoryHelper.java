@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.inventory;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,10 +32,10 @@ import java.util.*;
 
 public class InventoryHelper implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> INV_TITLES = Arrays.asList("Chemical compounds", "Lab table", "Product crafting", "Material reducer");
 
-    public InventoryHelper(TARDISPlugin plugin) {
+    public InventoryHelper(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

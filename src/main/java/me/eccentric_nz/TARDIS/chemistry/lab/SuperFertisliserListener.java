@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.enumeration.Flag;
 import org.bukkit.GameMode;
@@ -42,7 +42,7 @@ import java.util.Set;
 
 public class SuperFertisliserListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<Material, TreeType> TREE_LOOKUP = new HashMap<>() {
         {
             put(Material.OAK_SAPLING, TreeType.TREE);
@@ -60,7 +60,7 @@ public class SuperFertisliserListener implements Listener {
     };
     private final Set<Material> TREES = new HashSet<>();
 
-    public SuperFertisliserListener(TARDISPlugin plugin) {
+    public SuperFertisliserListener(TardisPlugin plugin) {
         this.plugin = plugin;
         TREES.add(Material.OAK_SAPLING);
         TREES.add(Material.DARK_OAK_SAPLING);
@@ -148,7 +148,7 @@ public class SuperFertisliserListener implements Listener {
                 event.setCancelled(true);
                 TreeType treeType = TREE_LOOKUP.get(block.getType());
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    block.setBlockData(TARDISConstants.AIR);
+                    block.setBlockData(TardisConstants.AIR);
                     block.getWorld().generateTree(block.getLocation(), treeType);
                 }, 3L);
                 int amount = is.getAmount() - 1;

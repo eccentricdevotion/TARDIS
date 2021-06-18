@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.desktop.TARDISBlockScannerData;
-import me.eccentric_nz.tardis.desktop.TARDISUpgradeBlockScanner;
-import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
+import me.eccentric_nz.tardis.desktop.TardisBlockScannerData;
+import me.eccentric_nz.tardis.desktop.TardisUpgradeBlockScanner;
+import me.eccentric_nz.tardis.desktop.TardisUpgradeData;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
@@ -35,11 +35,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISBeaconToggler {
+public class TardisBeaconToggler {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISBeaconToggler(TARDISPlugin plugin) {
+    public TardisBeaconToggler(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -48,7 +48,7 @@ public class TARDISBeaconToggler {
         whereb.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false, 2);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             Schematic schm = tardis.getSchematic();
             if (Consoles.getNO_BEACON().contains(schm)) {
                 // doesn't have a beacon!
@@ -59,13 +59,13 @@ public class TARDISBeaconToggler {
             if (!beacon.isEmpty()) {
                 String[] beaconData = beacon.split(":");
                 if (beaconData.length > 1) {
-                    Location bl = TARDISStaticLocationGetters.getLocationFromDB(beacon);
+                    Location bl = TardisStaticLocationGetters.getLocationFromDB(beacon);
                     assert bl != null;
                     Block b = bl.getBlock();
                     while (!b.getChunk().isLoaded()) {
                         b.getChunk().load();
                     }
-                    b.setBlockData((on) ? TARDISConstants.GLASS : TARDISConstants.POWER);
+                    b.setBlockData((on) ? TardisConstants.GLASS : TardisConstants.POWER);
                     if (!plugin.getGeneralKeeper().getProtectBlockMap().containsKey(bl.toString())) {
                         plugin.getGeneralKeeper().getProtectBlockMap().put(bl.toString(), tardis.getTardisId());
                     }
@@ -80,13 +80,13 @@ public class TARDISBeaconToggler {
 
     private void updateBeacon(Schematic schm, UUID uuid) {
         // determine beacon location and update the tardis table so we don't have to do this again
-        TARDISUpgradeData tud = new TARDISUpgradeData();
+        TardisUpgradeData tud = new TardisUpgradeData();
         tud.setSchematic(schm);
         tud.setPrevious(schm);
         tud.setWall("ORANGE_WOOL");
         tud.setFloor("LIGHT_GRAY_WOOL");
-        TARDISUpgradeBlockScanner scanner = new TARDISUpgradeBlockScanner(plugin, tud, uuid);
-        TARDISBlockScannerData check = scanner.check();
+        TardisUpgradeBlockScanner scanner = new TardisUpgradeBlockScanner(plugin, tud, uuid);
+        TardisBlockScannerData check = scanner.check();
         if (!check.getBeacon().isEmpty()) {
             HashMap<String, Object> set = new HashMap<>();
             set.put("beacon", check.getBeacon());

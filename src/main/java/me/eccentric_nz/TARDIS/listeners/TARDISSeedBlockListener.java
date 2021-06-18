@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.builders.TARDISBuildData;
-import me.eccentric_nz.tardis.builders.TARDISSeedBlockProcessor;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.tardis.custommodeldata.TARDISSeedModel;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.builders.TardisBuildData;
+import me.eccentric_nz.tardis.builders.TardisSeedBlockProcessor;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
+import me.eccentric_nz.tardis.custommodeldata.TardisSeedModel;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.*;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.Player;
@@ -49,11 +49,11 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISSeedBlockListener implements Listener {
+public class TardisSeedBlockListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISSeedBlockListener(TARDISPlugin plugin) {
+    public TardisSeedBlockListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -80,24 +80,24 @@ public class TARDISSeedBlockListener implements Listener {
                 int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
                 MultipleFacing multipleFacing;
                 if (which >= 42 && which <= 45) {
-                    multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
+                    multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(which));
                 } else {
-                    multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.RED_MUSHROOM_DATA.get(which));
+                    multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TardisMushroomBlockData.RED_MUSHROOM_DATA.get(which));
                 }
                 event.getBlockPlaced().setBlockData(multipleFacing);
             }
             List<String> lore = im.getLore();
             assert lore != null;
             Schematic schm = Consoles.getBY_NAMES().get(lore.get(0));
-            Material wall = Material.valueOf(TARDISStringUtils.getValuesFromWallString(lore.get(1)));
-            Material floor = Material.valueOf(TARDISStringUtils.getValuesFromWallString(lore.get(2)));
-            TARDISBuildData seed = new TARDISBuildData();
+            Material wall = Material.valueOf(TardisStringUtils.getValuesFromWallString(lore.get(1)));
+            Material floor = Material.valueOf(TardisStringUtils.getValuesFromWallString(lore.get(2)));
+            TardisBuildData seed = new TardisBuildData();
             seed.setSchematic(schm);
             seed.setWallType(wall);
             seed.setFloorType(floor);
             Location l = event.getBlockPlaced().getLocation();
             plugin.getBuildKeeper().getTrackTARDISSeed().put(l, seed);
-            TARDISMessage.send(player, "SEED_PLACE");
+            TardisMessage.send(player, "SEED_PLACE");
             // now the player has to click the block with the tardis key
         }
     }
@@ -115,7 +115,7 @@ public class TARDISSeedBlockListener implements Listener {
         if (plugin.getBuildKeeper().getTrackTARDISSeed().containsKey(l)) {
             if (!p.getGameMode().equals(GameMode.CREATIVE)) {
                 // get the Seed block data
-                TARDISBuildData data = plugin.getBuildKeeper().getTrackTARDISSeed().get(l);
+                TardisBuildData data = plugin.getBuildKeeper().getTrackTARDISSeed().get(l);
                 // drop a tardis Seed Block
                 World w = l.getWorld();
                 ItemStack is = new ItemStack(event.getBlock().getType(), 1);
@@ -125,8 +125,8 @@ public class TARDISSeedBlockListener implements Listener {
                 }
                 String console = data.getSchematic().getPermission().toUpperCase(Locale.ENGLISH);
                 int model;
-                if (TARDISSeedModel.consoleMap.containsKey(console)) {
-                    model = TARDISSeedModel.modelByString(console);
+                if (TardisSeedModel.consoleMap.containsKey(console)) {
+                    model = TardisSeedModel.modelByString(console);
                 } else {
                     model = 45;
                 }
@@ -140,7 +140,7 @@ public class TARDISSeedBlockListener implements Listener {
                 im.setLore(lore);
                 is.setItemMeta(im);
                 // set the block to AIR
-                event.getBlock().setBlockData(TARDISConstants.AIR);
+                event.getBlock().setBlockData(TardisConstants.AIR);
                 assert w != null;
                 w.dropItemNaturally(l, is);
             }
@@ -171,24 +171,24 @@ public class TARDISSeedBlockListener implements Listener {
                 }
                 if (player.getInventory().getItemInMainHand().getType().equals(Material.valueOf(key))) {
                     if (!plugin.getPlanetsConfig().getBoolean("planets." + Objects.requireNonNull(l.getWorld()).getName() + ".time_travel")) {
-                        TARDISMessage.send(player, "WORLD_NO_TARDIS");
+                        TardisMessage.send(player, "WORLD_NO_TARDIS");
                         return;
                     }
                     if (!Objects.equals(plugin.getConfig().getString("creation.area"), "none")) {
                         String area = plugin.getConfig().getString("creation.area");
                         if (plugin.getTardisArea().areaCheckInExile(area, l)) {
-                            TARDISMessage.send(player, "TARDIS_ONLY_AREA", area);
+                            TardisMessage.send(player, "TARDIS_ONLY_AREA", area);
                             return;
                         }
                     }
                     // grow a tardis
-                    TARDISBuildData seed = plugin.getBuildKeeper().getTrackTARDISSeed().get(l);
+                    TardisBuildData seed = plugin.getBuildKeeper().getTrackTARDISSeed().get(l);
                     // process seed data
-                    if (new TARDISSeedBlockProcessor(plugin).processBlock(seed, l, player)) {
+                    if (new TardisSeedBlockProcessor(plugin).processBlock(seed, l, player)) {
                         // remove seed data
                         plugin.getBuildKeeper().getTrackTARDISSeed().remove(l);
                         // replace seed block with animated grow block
-                        MultipleFacing multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(55));
+                        MultipleFacing multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(55));
                         event.getClickedBlock().setBlockData(multipleFacing);
                     }
                 }

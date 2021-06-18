@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.tool.SQL;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.tool.Sql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -31,14 +31,14 @@ import java.sql.Statement;
  *
  * @author eccentric_nz
  */
-public class TARDISMySQLDatabase {
+public class TardisMySqlDatabase {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private Statement statement = null;
 
-    public TARDISMySQLDatabase(TARDISPlugin plugin) {
+    public TardisMySqlDatabase(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -51,13 +51,13 @@ public class TARDISMySQLDatabase {
             service.testConnection(connection);
             statement = connection.createStatement();
 
-            for (String query : SQL.CREATES) {
+            for (String query : Sql.CREATES) {
                 String subbed = String.format(query, plugin.getConfig().getString("storage.mysql.prefix"));
                 statement.executeUpdate(subbed);
             }
 
             // update tables
-            TARDISMySQLDatabaseUpdater dbu = new TARDISMySQLDatabaseUpdater(plugin, statement);
+            TardisMySqlDatabaseUpdater dbu = new TardisMySqlDatabaseUpdater(plugin, statement);
             dbu.updateTables();
         } catch (SQLException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "MySQL create table error: " + e);

@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.hanging.HangingBreakEvent;
 
-public class TARDISHangingListener implements Listener {
+public class TardisHangingListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISHangingListener(TARDISPlugin plugin) {
+    public TardisHangingListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

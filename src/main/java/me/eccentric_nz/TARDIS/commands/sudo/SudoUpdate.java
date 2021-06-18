@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.builders.TARDISTimeRotor;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.builders.TardisTimeRotor;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Updateable;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.messaging.TARDISUpdateLister;
-import me.eccentric_nz.tardis.update.TARDISUpdateChecker;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.messaging.TardisUpdateLister;
+import me.eccentric_nz.tardis.update.TardisUpdateChecker;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -48,27 +48,27 @@ import java.util.UUID;
  */
 class SudoUpdate {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    SudoUpdate(TARDISPlugin plugin) {
+    SudoUpdate(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean initiate(Player player, String[] args, int id, UUID uuid) {
         if (args.length < 3) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            TardisMessage.send(player, "TOO_FEW_ARGS");
             return false;
         }
-        String tardis_block = TARDISStringUtils.toScoredUppercase(args[2]);
+        String tardis_block = TardisStringUtils.toScoredUppercase(args[2]);
         Updateable updateable;
         try {
             updateable = Updateable.valueOf(tardis_block);
         } catch (IllegalArgumentException e) {
-            new TARDISUpdateLister(player).list();
+            new TardisUpdateLister(player).list();
             return true;
         }
         if (updateable.equals(Updateable.SIEGE) && !plugin.getConfig().getBoolean("siege.enabled")) {
-            TARDISMessage.send(player, "SIEGE_DISABLED");
+            TardisMessage.send(player, "SIEGE_DISABLED");
             return true;
         }
         // get TARDIS data
@@ -76,7 +76,7 @@ class SudoUpdate {
         wheret.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             if (updateable.equals(Updateable.HINGE)) {
                 Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
                 if (block.getType().equals(Material.IRON_DOOR)) {
@@ -100,16 +100,16 @@ class SudoUpdate {
                 // update note block if it's not MUSHROOM_STEM
                 Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
                 if (block.getType().equals(Material.NOTE_BLOCK)) {
-                    BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
+                    BlockData mushroom = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
                     block.setBlockData(mushroom, true);
                 }
             }
-            if (new TARDISUpdateChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {
+            if (new TardisUpdateChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {
                 if (updateable.equals(Updateable.ROTOR) && args.length == 4 && args[3].equalsIgnoreCase("unlock")) {
                     // get Time Rotor frame location
-                    ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                    ItemFrame itemFrame = TardisTimeRotor.getItemFrame(tardis.getRotor());
                     if (itemFrame != null) {
-                        TARDISTimeRotor.unlockRotor(itemFrame);
+                        TardisTimeRotor.unlockRotor(itemFrame);
                         // also need to remove the item frame protection
                         plugin.getGeneralKeeper().getTimeRotors().remove(itemFrame.getUniqueId());
                         // and block protection
@@ -118,15 +118,15 @@ class SudoUpdate {
                         plugin.getGeneralKeeper().getProtectBlockMap().remove(location);
                         String under = block.getRelative(BlockFace.DOWN).getLocation().toString();
                         plugin.getGeneralKeeper().getProtectBlockMap().remove(under);
-                        TARDISMessage.send(player, "ROTOR_UNFIXED");
+                        TardisMessage.send(player, "ROTOR_UNFIXED");
                     }
                     return true;
                 }
-                TARDISSudoTracker.SUDOERS.put(player.getUniqueId(), uuid);
+                TardisSudoTracker.SUDOERS.put(player.getUniqueId(), uuid);
                 plugin.getTrackerKeeper().getPlayers().put(player.getUniqueId(), tardis_block);
-                TARDISMessage.send(player, "UPDATE_CLICK", tardis_block);
+                TardisMessage.send(player, "UPDATE_CLICK", tardis_block);
                 if (updateable.equals(Updateable.DIRECTION)) {
-                    TARDISMessage.send(player, "HOOK_REMIND");
+                    TardisMessage.send(player, "HOOK_REMIND");
                 }
             }
         }

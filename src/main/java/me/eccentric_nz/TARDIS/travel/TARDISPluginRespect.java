@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.Parameters;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravelledTo;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.utility.*;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
@@ -34,19 +34,19 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISPluginRespect {
+public class TardisPluginRespect {
 
-    private final TARDISPlugin plugin;
-    private TARDISTownyChecker tychk;
-    private TARDISWorldBorderChecker borderchk;
-    private TARDISGriefPreventionChecker griefchk;
+    private final TardisPlugin plugin;
+    private TardisTownyChecker tychk;
+    private TardisWorldBorderChecker borderchk;
+    private TardisGriefPreventionChecker griefchk;
     private boolean townyOnServer = false;
     private boolean borderOnServer = false;
     private boolean factionsOnServer = false;
     private boolean griefPreventionOnServer = false;
     private boolean redProtectOnServer = false;
 
-    public TARDISPluginRespect(TARDISPlugin plugin) {
+    public TardisPluginRespect(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -65,9 +65,9 @@ public class TARDISPluginRespect {
         }
         if (plugin.getConfig().getBoolean("travel.per_world_perms")) {
             String perm = Objects.requireNonNull(location.getWorld()).getName();
-            if (!TARDISPermission.hasPermission(flag.getPlayer(), "tardis.travel." + perm)) {
+            if (!TardisPermission.hasPermission(flag.getPlayer(), "tardis.travel." + perm)) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_NO_PERM_WORLD", perm);
+                    TardisMessage.send(flag.getPlayer(), "TRAVEL_NO_PERM_WORLD", perm);
                 }
                 bool = false;
             }
@@ -77,21 +77,21 @@ public class TARDISPluginRespect {
             // check if nether enabled
             if (!plugin.getConfig().getBoolean("travel.nether")) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "Nether");
+                    TardisMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "Nether");
                 }
                 bool = false;
             }
             // check permission
-            if (!TARDISPermission.hasPermission(flag.getPlayer(), "tardis.nether")) {
+            if (!TardisPermission.hasPermission(flag.getPlayer(), "tardis.nether")) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "Nether");
+                    TardisMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "Nether");
                 }
                 bool = false;
             }
             // check if player has to visit first
             if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(flag.getPlayer().getUniqueId().toString(), "NETHER")) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "Nether");
+                    TardisMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "Nether");
                 }
                 bool = false;
             }
@@ -101,34 +101,34 @@ public class TARDISPluginRespect {
             // check if end enabled
             if (!plugin.getConfig().getBoolean("travel.the_end")) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "End");
+                    TardisMessage.send(flag.getPlayer(), "TRAVEL_DISABLED", "End");
                 }
                 bool = false;
             }
             // check permission
-            if (!TARDISPermission.hasPermission(flag.getPlayer(), "tardis.end")) {
+            if (!TardisPermission.hasPermission(flag.getPlayer(), "tardis.end")) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "End");
+                    TardisMessage.send(flag.getPlayer(), "NO_PERM_TRAVEL", "End");
                 }
                 bool = false;
             }
             // check if player has to visit first
             if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(flag.getPlayer().getUniqueId().toString(), "THE_END")) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "End");
+                    TardisMessage.send(flag.getPlayer(), "TRAVEL_NOT_VISITED", "End");
                 }
                 bool = false;
             }
         }
         if (flag.respectWorldGuard() && plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canLand(flag.getPlayer(), location)) {
             if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "WORLDGUARD");
+                TardisMessage.send(flag.getPlayer(), "WORLDGUARD");
             }
             bool = false;
         }
         if (flag.respectTowny() && townyOnServer && !Objects.equals(plugin.getConfig().getString("preferences.respect_towny"), "none") && !tychk.checkTowny(flag.getPlayer(), location)) {
             if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "TOWNY");
+                TardisMessage.send(flag.getPlayer(), "TOWNY");
             }
             bool = false;
         }
@@ -137,33 +137,33 @@ public class TARDISPluginRespect {
                 WorldBorder wb = Objects.requireNonNull(location.getWorld()).getWorldBorder();
                 if (!wb.isInside(location)) {
                     if (flag.messagePlayer()) {
-                        TARDISMessage.send(flag.getPlayer(), "WORLDBORDER");
+                        TardisMessage.send(flag.getPlayer(), "WORLDBORDER");
                     }
                     bool = false;
                 }
             }
             if (borderOnServer && plugin.getConfig().getBoolean("preferences.respect_worldborder") && !borderchk.isInBorder(location)) {
                 if (flag.messagePlayer()) {
-                    TARDISMessage.send(flag.getPlayer(), "WORLDBORDER");
+                    TardisMessage.send(flag.getPlayer(), "WORLDBORDER");
                 }
                 bool = false;
             }
         }
-        if (flag.respectFactions() && factionsOnServer && plugin.getConfig().getBoolean("preferences.respect_factions") && !TARDISFactionsChecker.isInFaction(flag.getPlayer(), location)) {
+        if (flag.respectFactions() && factionsOnServer && plugin.getConfig().getBoolean("preferences.respect_factions") && !TardisFactionsChecker.isInFaction(flag.getPlayer(), location)) {
             if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "FACTIONS");
+                TardisMessage.send(flag.getPlayer(), "FACTIONS");
             }
             bool = false;
         }
         if (flag.respectGriefPrevention() && griefPreventionOnServer && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && griefchk.isInClaim(flag.getPlayer(), location)) {
             if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "GRIEFPREVENTION");
+                TardisMessage.send(flag.getPlayer(), "GRIEFPREVENTION");
             }
             bool = false;
         }
-        if (flag.respectRedProtect() && redProtectOnServer && plugin.getConfig().getBoolean("preferences.respect_red_protect") && !TARDISRedProtectChecker.canBuild(flag.getPlayer(), location)) {
+        if (flag.respectRedProtect() && redProtectOnServer && plugin.getConfig().getBoolean("preferences.respect_red_protect") && !TardisRedProtectChecker.canBuild(flag.getPlayer(), location)) {
             if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "REDPROTECT");
+                TardisMessage.send(flag.getPlayer(), "REDPROTECT");
             }
             bool = false;
         }
@@ -172,9 +172,9 @@ public class TARDISPluginRespect {
                 String areaPerm = plugin.getTrackerKeeper().getPerm().get(flag.getPlayer().getUniqueId());
                 String areaName = "tardis.area." + plugin.getConfig().getString("creation.area");
                 if (areaPerm.equals(areaName)) {
-                    TARDISMessage.send(flag.getPlayer(), "TARDIS_SET_HOME");
+                    TardisMessage.send(flag.getPlayer(), "TARDIS_SET_HOME");
                 } else {
-                    TARDISMessage.send(flag.getPlayer(), "TRAVEL_NO_PERM", areaPerm);
+                    TardisMessage.send(flag.getPlayer(), "TRAVEL_NO_PERM", areaPerm);
                 }
             }
             plugin.getTrackerKeeper().getPerm().remove(flag.getPlayer().getUniqueId());
@@ -189,7 +189,7 @@ public class TARDISPluginRespect {
     public void loadTowny() {
         if (plugin.getPM().getPlugin("Towny") != null) {
             townyOnServer = true;
-            tychk = new TARDISTownyChecker(plugin);
+            tychk = new TardisTownyChecker(plugin);
         }
     }
 
@@ -199,7 +199,7 @@ public class TARDISPluginRespect {
     public void loadWorldBorder() {
         if (plugin.getPM().getPlugin("WorldBorder") != null) {
             borderOnServer = true;
-            borderchk = new TARDISWorldBorderChecker(plugin);
+            borderchk = new TardisWorldBorderChecker(plugin);
         }
     }
 
@@ -219,7 +219,7 @@ public class TARDISPluginRespect {
         if (plugin.getPM().getPlugin("GriefPrevention") != null) {
             plugin.debug("Hooking into GriefPrevention!");
             griefPreventionOnServer = true;
-            griefchk = new TARDISGriefPreventionChecker(plugin);
+            griefchk = new TardisGriefPreventionChecker(plugin);
         }
     }
 
@@ -233,15 +233,15 @@ public class TARDISPluginRespect {
         }
     }
 
-    TARDISTownyChecker getTychk() {
+    TardisTownyChecker getTychk() {
         return tychk;
     }
 
-    TARDISWorldBorderChecker getBorderchk() {
+    TardisWorldBorderChecker getBorderchk() {
         return borderchk;
     }
 
-    TARDISGriefPreventionChecker getGriefchk() {
+    TardisGriefPreventionChecker getGriefchk() {
         return griefchk;
     }
 

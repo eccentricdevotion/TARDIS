@@ -16,34 +16,34 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
-import me.eccentric_nz.tardis.flight.TARDISHandbrake;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.flight.TardisHandbrake;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisSounds;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Locale;
 
-public class TARDISHandbrakeCommand {
+public class TardisHandbrakeCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISHandbrakeCommand(TARDISPlugin plugin) {
+    public TardisHandbrakeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public boolean toggle(Player player, int id, String[] args, boolean admin) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            TardisMessage.send(player, "TOO_FEW_ARGS");
             return true;
         }
         String tf = args[1];
         if (!admin && !tf.equalsIgnoreCase("on") && !tf.equalsIgnoreCase("off")) {
-            TARDISMessage.send(player, "PREF_ON_OFF", "the handbrake");
+            TardisMessage.send(player, "PREF_ON_OFF", "the handbrake");
             return true;
         }
         // actually toggle the lever block
@@ -59,11 +59,11 @@ public class TARDISHandbrakeCommand {
             HashMap<String, Object> set = new HashMap<>();
             set.put("handbrake_on", onoff);
             plugin.getQueryFactory().doUpdate("tardis", set, where);
-            Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+            Location location = TardisStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
             assert location != null;
-            TARDISSounds.playTARDISSound(location, "tardis_handbrake_engage");
+            TardisSounds.playTARDISSound(location, "tardis_handbrake_engage");
             // Changes the lever to on
-            TARDISHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);
+            TardisHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);
             if (bool) {
                 plugin.getTrackerKeeper().getDestinationVortex().remove(id);
                 plugin.getTrackerKeeper().getInVortex().remove(id);
@@ -71,7 +71,7 @@ public class TARDISHandbrakeCommand {
                 plugin.getTrackerKeeper().getDidDematToVortex().remove(id);
             }
             if (!admin) {
-                TARDISMessage.send(player, "HANDBRAKE_ON_OFF", args[1].toUpperCase(Locale.ENGLISH));
+                TardisMessage.send(player, "HANDBRAKE_ON_OFF", args[1].toUpperCase(Locale.ENGLISH));
             }
         }
         return true;

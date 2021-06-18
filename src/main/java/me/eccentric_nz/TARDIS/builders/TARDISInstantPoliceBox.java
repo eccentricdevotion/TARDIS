@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.travel.TARDISDoorLocation;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.travel.TardisDoorLocation;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -36,13 +36,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class TARDISInstantPoliceBox {
+public class TardisInstantPoliceBox {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final BuildData bd;
-    private final PRESET preset;
+    private final Preset preset;
 
-    public TARDISInstantPoliceBox(TARDISPlugin plugin, BuildData bd, PRESET preset) {
+    public TardisInstantPoliceBox(TardisPlugin plugin, BuildData bd, Preset preset) {
         this.plugin = plugin;
         this.bd = bd;
         this.preset = preset;
@@ -58,7 +58,7 @@ public class TARDISInstantPoliceBox {
             UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisId());
             Player saved = plugin.getServer().getPlayer(playerUUID);
             if (saved != null) {
-                TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisId());
+                TardisDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisId());
                 Location l = idl.getL();
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds());
                 // put player into travellers table
@@ -69,8 +69,8 @@ public class TARDISInstantPoliceBox {
             }
             plugin.getTrackerKeeper().getRescue().remove(bd.getTardisId());
         }
-        TARDISBuilderUtility.saveDoorLocation(bd);
-        TARDISBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisId());
+        TardisBuilderUtility.saveDoorLocation(bd);
+        TardisBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisId());
         plugin.getGeneralKeeper().getProtectBlockMap().put(bd.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString(), bd.getTardisId());
         ItemFrame frame = null;
         boolean found = false;
@@ -85,20 +85,20 @@ public class TARDISInstantPoliceBox {
         if (!found) {
             Block block = bd.getLocation().getBlock();
             Block under = block.getRelative(BlockFace.DOWN);
-            block.setBlockData(TARDISConstants.AIR);
-            TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisId(), false);
+            block.setBlockData(TardisConstants.AIR);
+            TardisBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisId(), false);
             // spawn item frame
             frame = (ItemFrame) world.spawnEntity(bd.getLocation(), EntityType.ITEM_FRAME);
         }
         frame.setFacingDirection(BlockFace.UP);
         frame.setRotation(bd.getDirection().getRotation());
-        Material dye = TARDISBuilderUtility.getMaterialForItemFrame(preset);
+        Material dye = TardisBuilderUtility.getMaterialForItemFrame(preset);
         ItemStack is = new ItemStack(dye, 1);
         ItemMeta im = is.getItemMeta();
         assert im != null;
         im.setCustomModelData(1001);
         if (bd.shouldAddSign()) {
-            String pb = (preset.equals(PRESET.WEEPING_ANGEL)) ? "Weeping Angel" : "Police Box";
+            String pb = (preset.equals(Preset.WEEPING_ANGEL)) ? "Weeping Angel" : "Police Box";
             im.setDisplayName(bd.getPlayer().getName() + "'s " + pb);
         }
         is.setItemMeta(im);

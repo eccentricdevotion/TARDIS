@@ -16,34 +16,34 @@
  */
 package me.eccentric_nz.tardis.commands.dev;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.command.CommandSender;
 
 /**
  * @author eccentric_nz
  */
-class TARDISDevListCommand {
+class TardisDevListCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISDevListCommand(TARDISPlugin plugin) {
+    TardisDevListCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean listStuff(CommandSender sender, String[] args) {
         if (args.length > 1 && (args[1].equalsIgnoreCase("preset_perms") || args[1].equalsIgnoreCase("perms") || args[1].equalsIgnoreCase("recipes") || args[1].equalsIgnoreCase("blueprints"))) {
             if (args[1].equalsIgnoreCase("perms")) {
-                new TARDISPermissionLister(plugin).listPerms(sender);
+                new TardisPermissionLister(plugin).listPerms(sender);
                 return true;
             } else if (args[1].equalsIgnoreCase("recipes")) {
-                new TARDISRecipesLister(plugin).listRecipes(sender, args);
+                new TardisRecipesLister(plugin).listRecipes(sender, args);
                 return true;
             } else if (args[1].equalsIgnoreCase("blueprints")) {
-                new TARDISBlueprintsLister().listBlueprints(sender);
+                new TardisBlueprintsLister().listBlueprints(sender);
                 return true;
             } else {
                 // preset permissions
-                new TARDISPresetPermissionLister().list(sender);
+                new TardisPresetPermissionLister().list(sender);
                 return true;
             }
         }

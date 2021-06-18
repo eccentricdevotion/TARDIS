@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
-public enum GUISonicGenerator {
+public enum GuiSonicGenerator {
 
     // Sonic Generator
     MARK_I(10000001, 0, Material.BLAZE_ROD, "", ChatColor.DARK_GRAY),
@@ -64,7 +64,7 @@ public enum GUISonicGenerator {
     private final String lore;
     private final ChatColor chatColor;
 
-    GUISonicGenerator(int customModelData, int slot, Material material, String lore, ChatColor chatColor) {
+    GuiSonicGenerator(int customModelData, int slot, Material material, String lore, ChatColor chatColor) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -86,7 +86,7 @@ public enum GUISonicGenerator {
 
     public String getName() {
         String s = toString();
-        return TARDISStringUtils.capitalise(s);
+        return TardisStringUtils.capitalise(s);
     }
 
     public String getLore() {

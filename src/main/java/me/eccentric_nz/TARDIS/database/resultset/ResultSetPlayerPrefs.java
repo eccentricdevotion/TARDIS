@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.enumeration.HADS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.enumeration.Hads;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,9 +35,9 @@ import java.util.UUID;
  */
 public class ResultSetPlayerPrefs {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String where;
     private final String prefix;
     private int ppId;
@@ -64,7 +64,7 @@ public class ResultSetPlayerPrefs {
     private boolean textureOn;
     private boolean travelBarOn;
     private boolean woolLightsOn;
-    private HADS hadsType;
+    private Hads hadsType;
     private int artronLevel;
     private int flightMode;
     private int throttle;
@@ -85,7 +85,7 @@ public class ResultSetPlayerPrefs {
      * @param plugin an instance of the main class.
      * @param where  the UUID to select the preferences for.
      */
-    public ResultSetPlayerPrefs(TARDISPlugin plugin, String where) {
+    public ResultSetPlayerPrefs(TardisPlugin plugin, String where) {
         this.plugin = plugin;
         this.where = where;
         prefix = this.plugin.getPrefix();
@@ -119,9 +119,9 @@ public class ResultSetPlayerPrefs {
                 hadsOn = rs.getBoolean("hads_on");
                 String ht = rs.getString("hads_type");
                 if (rs.wasNull()) {
-                    hadsType = HADS.DISPLACEMENT;
+                    hadsType = Hads.DISPLACEMENT;
                 } else {
-                    hadsType = HADS.valueOf(ht);
+                    hadsType = Hads.valueOf(ht);
                 }
                 submarineOn = rs.getBoolean("submarine_on");
                 artronLevel = rs.getInt("artron_level");
@@ -214,7 +214,7 @@ public class ResultSetPlayerPrefs {
         return hadsOn;
     }
 
-    public HADS getHadsType() {
+    public Hads getHadsType() {
         return hadsType;
     }
 

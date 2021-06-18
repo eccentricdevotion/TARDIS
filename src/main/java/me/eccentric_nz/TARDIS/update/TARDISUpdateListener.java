@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.update;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.commands.sudo.TARDISSudoTracker;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.commands.sudo.TardisSudoTracker;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
 import me.eccentric_nz.tardis.database.QueryFactory;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Control;
 import me.eccentric_nz.tardis.enumeration.Updateable;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -58,11 +58,11 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISUpdateListener implements Listener {
+public class TardisUpdateListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISUpdateListener(TARDISPlugin plugin) {
+    public TardisUpdateListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -82,7 +82,7 @@ public class TARDISUpdateListener implements Listener {
         Updateable updateable;
         boolean secondary = false;
         if (plugin.getTrackerKeeper().getPlayers().containsKey(playerUUID)) {
-            updateable = Updateable.valueOf(TARDISStringUtils.toScoredUppercase(plugin.getTrackerKeeper().getPlayers().get(playerUUID)));
+            updateable = Updateable.valueOf(TardisStringUtils.toScoredUppercase(plugin.getTrackerKeeper().getPlayers().get(playerUUID)));
         } else if (plugin.getTrackerKeeper().getSecondary().containsKey(playerUUID)) {
             updateable = plugin.getTrackerKeeper().getSecondary().get(playerUUID);
             secondary = true;
@@ -92,7 +92,7 @@ public class TARDISUpdateListener implements Listener {
             HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", plugin.getTrackerKeeper().getSecondaryRemovers().get(playerUUID));
             assert block != null;
-            String location = (block.getType().equals(Material.REPEATER)) ? TARDISStaticLocationGetters.makeLocationStr(block.getLocation()) : block.getLocation().toString();
+            String location = (block.getType().equals(Material.REPEATER)) ? TardisStaticLocationGetters.makeLocationStr(block.getLocation()) : block.getLocation().toString();
             wherec.put("location", location);
             wherec.put("secondary", 1);
             ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
@@ -100,9 +100,9 @@ public class TARDISUpdateListener implements Listener {
                 HashMap<String, Object> whered = new HashMap<>();
                 whered.put("c_id", rsc.getcId());
                 new QueryFactory(plugin).doDelete("controls", whered);
-                TARDISMessage.send(player, "SEC_REMOVED");
+                TardisMessage.send(player, "SEC_REMOVED");
             } else {
-                TARDISMessage.send(player, "SEC_REMOVE_NO_MATCH");
+                TardisMessage.send(player, "SEC_REMOVE_NO_MATCH");
             }
             plugin.getTrackerKeeper().getSecondaryRemovers().remove(playerUUID);
             return;
@@ -111,10 +111,10 @@ public class TARDISUpdateListener implements Listener {
         }
         // check they are still in the TARDIS world
         if (!updateable.equals(Updateable.BACKDOOR) && !plugin.getUtils().inTARDISWorld(player)) {
-            TARDISMessage.send(player, "UPDATE_IN_WORLD");
+            TardisMessage.send(player, "UPDATE_IN_WORLD");
             return;
         }
-        String uuid = (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) ? TARDISSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();
+        String uuid = (TardisSudoTracker.SUDOERS.containsKey(playerUUID)) ? TardisSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
@@ -135,10 +135,10 @@ public class TARDISUpdateListener implements Listener {
             where.put("uuid", uuid);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                TardisMessage.send(player, "NO_TARDIS");
                 return;
             }
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();
@@ -156,7 +156,7 @@ public class TARDISUpdateListener implements Listener {
                 plugin.getTrackerKeeper().getPlayers().remove(playerUUID);
             }
             if (!updateable.isAnyBlock() && !updateable.getMaterialChoice().getChoices().contains(blockType)) {
-                TARDISMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
+                TardisMessage.send(player, "UPDATE_BAD_CLICK", updateable.getName());
                 return;
             }
             switch (updateable) {
@@ -167,7 +167,7 @@ public class TARDISUpdateListener implements Listener {
                     plugin.getTrackerKeeper().getTelepathicPlacements().remove(playerUUID);
                     plugin.getQueryFactory().insertControl(id, 23, blockLocStr, secondary ? 1 : 0);
                     Block detector = block;
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> detector.setBlockData(TARDISConstants.DAYLIGHT), 3L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> detector.setBlockData(TardisConstants.DAYLIGHT), 3L);
                 }
                 case HANDBRAKE -> plugin.getQueryFactory().insertControl(id, 0, blockLocStr, secondary ? 1 : 0);
                 case BEACON -> {
@@ -244,7 +244,7 @@ public class TARDISUpdateListener implements Listener {
                     os.setLine(3, "");
                     os.update();
                 }
-                case ARS -> new UpdateARS(plugin).process(block, tardis.getSchematic(), id, uuid);
+                case ARS -> new UpdateArs(plugin).process(block, tardis.getSchematic(), id, uuid);
                 case BACK -> {
                     plugin.getQueryFactory().insertControl(id, 8, blockLocStr, secondary ? 1 : 0);
                     // insert current into back
@@ -280,7 +280,7 @@ public class TARDISUpdateListener implements Listener {
                     plugin.getUtils().updateStorageId(uuid, id);
                     // always set the block type
                     int bd = (updateable.equals(Updateable.ADVANCED)) ? 50 : 51;
-                    BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(bd));
+                    BlockData mushroom = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(bd));
                     block.setBlockData(mushroom, true);
                 }
                 case INFO -> {
@@ -304,14 +304,14 @@ public class TARDISUpdateListener implements Listener {
                         rblock.setBlockData(repeater);
                     }, 2L);
                 }
-                case SMELT, FUEL -> new TARDISSmelterCommand(plugin).addDropChest(player, updateable, id, block);
-                case VAULT -> new TARDISVaultCommand(plugin).addDropChest(player, id, block);
+                case SMELT, FUEL -> new TardisSmelterCommand(plugin).addDropChest(player, updateable, id, block);
+                case VAULT -> new TardisVaultCommand(plugin).addDropChest(player, id, block);
                 default -> plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
             }
             if (!updateable.equals(Updateable.FUEL) && !updateable.equals(Updateable.SMELT)) {
-                TARDISMessage.send(player, "UPDATE_SET", updateable.getName());
+                TardisMessage.send(player, "UPDATE_SET", updateable.getName());
             }
-            TARDISSudoTracker.SUDOERS.remove(playerUUID);
+            TardisSudoTracker.SUDOERS.remove(playerUUID);
         }
     }
 }

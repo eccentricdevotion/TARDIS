@@ -28,22 +28,22 @@ import org.bukkit.command.CommandSender;
 /**
  * @author eccentric_nz
  */
-public class TARDISRecipeLister {
+public class TardisRecipeLister {
 
     private final CommandSender sender;
 
-    public TARDISRecipeLister(CommandSender sender) {
+    public TardisRecipeLister(CommandSender sender) {
         this.sender = sender;
     }
 
     public void list() {
-        TARDISMessage.send(sender, "RECIPE_VIEW");
-        TARDISMessage.message(sender, ChatColor.GRAY + "Hover over command argument to see a description");
-        TARDISMessage.message(sender, ChatColor.GRAY + "Click to view the recipe");
-        TARDISMessage.message(sender, "");
+        TardisMessage.send(sender, "RECIPE_VIEW");
+        TardisMessage.message(sender, ChatColor.GRAY + "Hover over command argument to see a description");
+        TardisMessage.message(sender, ChatColor.GRAY + "Click to view the recipe");
+        TardisMessage.message(sender, "");
         for (RecipeCategory category : RecipeCategory.values()) {
             if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE) {
-                TARDISMessage.message(sender, category.getName());
+                TardisMessage.message(sender, category.getName());
                 for (RecipeItem item : RecipeItem.values()) {
                     if (item.getCategory() == category) {
                         TextComponent tci = new TextComponent(item.toTabCompletionString());
@@ -53,7 +53,7 @@ public class TARDISRecipeLister {
                         sender.spigot().sendMessage(tci);
                     }
                 }
-                TARDISMessage.message(sender, "");
+                TardisMessage.message(sender, "");
             }
         }
     }

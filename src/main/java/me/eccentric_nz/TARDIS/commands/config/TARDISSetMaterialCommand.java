@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.config;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
@@ -28,11 +28,11 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISSetMaterialCommand {
+class TardisSetMaterialCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISSetMaterialCommand(TARDISPlugin plugin) {
+    TardisSetMaterialCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -40,12 +40,12 @@ class TARDISSetMaterialCommand {
         String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ENGLISH) : section + "." + args[0].toLowerCase(Locale.ENGLISH);
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         if (!checkMaterial(setMaterial)) {
-            TARDISMessage.send(sender, "MATERIAL_NOT_VALID");
+            TardisMessage.send(sender, "MATERIAL_NOT_VALID");
             return false;
         } else {
             plugin.getConfig().set(first, setMaterial);
             plugin.saveConfig();
-            TARDISMessage.send(sender, "CONFIG_UPDATED");
+            TardisMessage.send(sender, "CONFIG_UPDATED");
             return true;
         }
     }
@@ -54,7 +54,7 @@ class TARDISSetMaterialCommand {
         String first = args[0].toLowerCase(Locale.ENGLISH);
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         if (!checkMaterial(setMaterial)) {
-            TARDISMessage.send(sender, "MATERIAL_NOT_VALID");
+            TardisMessage.send(sender, "MATERIAL_NOT_VALID");
             return false;
         } else {
             plugin.getArtronConfig().set(first, setMaterial);
@@ -63,7 +63,7 @@ class TARDISSetMaterialCommand {
             } catch (IOException io) {
                 plugin.debug("Could not save artron.yml, " + io);
             }
-            TARDISMessage.send(sender, "CONFIG_UPDATED");
+            TardisMessage.send(sender, "CONFIG_UPDATED");
             return true;
         }
     }

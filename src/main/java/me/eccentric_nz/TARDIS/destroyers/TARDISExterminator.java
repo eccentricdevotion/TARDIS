@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.tardis.destroyers;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.api.event.TARDISDestructionEvent;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisDestructionEvent;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.*;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -46,11 +46,11 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISExterminator {
+public class TardisExterminator {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISExterminator(TARDISPlugin plugin) {
+    public TardisExterminator(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -61,7 +61,7 @@ public class TARDISExterminator {
                 if (f.isDirectory()) {
                     deleteFolder(f);
                 } else if (!f.delete()) {
-                    TARDISPlugin.plugin.debug("Could not delete file");
+                    TardisPlugin.plugin.debug("Could not delete file");
                 }
             }
         }
@@ -75,7 +75,7 @@ public class TARDISExterminator {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         try {
             if (rs.resultSet()) {
-                TARDIS tardis = rs.getTardis();
+                Tardis tardis = rs.getTardis();
                 boolean hid = tardis.isHidden();
                 String chunkLoc = tardis.getChunk();
                 String owner = tardis.getOwner();
@@ -110,7 +110,7 @@ public class TARDISExterminator {
                     }
                 }
                 cleanHashMaps(id);
-                World cw = TARDISStaticLocationGetters.getWorld(chunkLoc);
+                World cw = TardisStaticLocationGetters.getWorld(chunkLoc);
                 if (cw == null) {
                     plugin.debug("The server could not find the tardis world, has it been deleted?");
                     return false;
@@ -142,7 +142,7 @@ public class TARDISExterminator {
         Location sign_loc = block.getLocation();
         HashMap<String, Object> where = new HashMap<>();
         ResultSetTardis rs;
-        if (TARDISPermission.hasPermission(player, "tardis.delete")) {
+        if (TardisPermission.hasPermission(player, "tardis.delete")) {
             Block blockbehind = null;
             Directional sign = (Directional) block.getBlockData();
             if (sign.getFacing().equals(BlockFace.WEST)) {
@@ -167,13 +167,13 @@ public class TARDISExterminator {
                 wherecl.put("z", bd_loc.getBlockZ());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (!rsc.resultSet()) {
-                    TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                    TardisMessage.send(player, "CURRENT_NOT_FOUND");
                     return false;
                 }
                 where.put("tardis_id", rsc.getTardisId());
                 rs = new ResultSetTardis(plugin, where, "", false, 2);
             } else {
-                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                TardisMessage.send(player, "CURRENT_NOT_FOUND");
                 return false;
             }
         } else {
@@ -181,7 +181,7 @@ public class TARDISExterminator {
             rs = new ResultSetTardis(plugin, where, "", false, 0);
         }
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             String owner = tardis.getOwner();
             String chunkLoc = tardis.getChunk();
@@ -189,12 +189,12 @@ public class TARDISExterminator {
             boolean hasZero = (!tardis.getZero().isEmpty());
             Schematic schm = tardis.getSchematic();
             // need to check that a player is not currently in the TARDIS
-            if (TARDISPermission.hasPermission(player, "tardis.delete")) {
+            if (TardisPermission.hasPermission(player, "tardis.delete")) {
                 HashMap<String, Object> travid = new HashMap<>();
                 travid.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, travid, false);
                 if (rst.resultSet()) {
-                    TARDISMessage.send(player, "TARDIS_NO_DELETE");
+                    TardisMessage.send(player, "TARDIS_NO_DELETE");
                     return false;
                 }
             }
@@ -203,12 +203,12 @@ public class TARDISExterminator {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                TardisMessage.send(player, "CURRENT_NOT_FOUND");
                 return false;
             }
             Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             // get TARDIS direction
-            COMPASS d = rsc.getDirection();
+            CardinalDirection d = rsc.getDirection();
             switch (d) {
                 case EAST -> signx = -2;
                 case SOUTH -> signz = -2;
@@ -227,14 +227,14 @@ public class TARDISExterminator {
                 dd.setSubmarine(rsc.isSubmarine());
                 dd.setTardisId(id);
                 dd.setThrottle(SpaceTimeThrottle.REBUILD);
-                plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, owner));
+                plugin.getPM().callEvent(new TardisDestructionEvent(player, bb_loc, owner));
                 if (!tardis.isHidden()) {
                     // remove Police Box
                     plugin.getPresetDestroyer().destroyPreset(dd);
                 }
-                World cw = TARDISStaticLocationGetters.getWorld(chunkLoc);
+                World cw = TardisStaticLocationGetters.getWorld(chunkLoc);
                 if (cw == null) {
-                    TARDISMessage.send(player, "WORLD_DELETED");
+                    TardisMessage.send(player, "WORLD_DELETED");
                     return true;
                 }
                 if (!cw.getName().toUpperCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) {
@@ -244,15 +244,15 @@ public class TARDISExterminator {
                 removeZeroRoom(tips, hasZero);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     cleanDatabase(id);
-                    TARDISMessage.send(player, "TARDIS_EXTERMINATED");
+                    TardisMessage.send(player, "TARDIS_EXTERMINATED");
                 }, 40L);
             } else {
                 // cancel the event because it's not the player's TARDIS
-                TARDISMessage.send(player, "NOT_OWNER");
+                TardisMessage.send(player, "NOT_OWNER");
             }
             return false;
         } else {
-            TARDISMessage.send(player, "NO_GRIEF");
+            TardisMessage.send(player, "NO_GRIEF");
             return false;
         }
     }
@@ -272,7 +272,7 @@ public class TARDISExterminator {
         if (rsg.resultSet()) {
             ArrayList<HashMap<String, String>> gdata = rsg.getData();
             for (HashMap<String, String> gmap : gdata) {
-                int direction = TARDISNumberParsers.parseInt(gmap.get("direction"));
+                int direction = TardisNumberParsers.parseInt(gmap.get("direction"));
                 switch (direction) {
                     case 1 -> plugin.getGeneralKeeper().getGravityUpList().remove(gmap.get("location"));
                     case 2 -> plugin.getGeneralKeeper().getGravityNorthList().remove(gmap.get("location"));
@@ -307,7 +307,7 @@ public class TARDISExterminator {
             List<Player> players = w.getPlayers();
             Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
             players.forEach((p) -> {
-                TARDISMessage.send(p, "WORLD_RESET");
+                TardisMessage.send(p, "WORLD_RESET");
                 p.teleport(spawn);
             });
             if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
@@ -334,8 +334,8 @@ public class TARDISExterminator {
 
     private void removeZeroRoom(int slot, boolean hasZero) {
         if (slot != -1 && plugin.getConfig().getBoolean("allow.zero_room") && hasZero) {
-            TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
-            TARDISTIPSData coords = tips.getTIPSData(slot);
+            TardisInteriorPositioning tips = new TardisInteriorPositioning(plugin);
+            TardisTipsData coords = tips.getTIPSData(slot);
             World w = plugin.getServer().getWorld("TARDIS_Zero_Room");
             if (w != null) {
                 tips.reclaimZeroChunk(w, coords);

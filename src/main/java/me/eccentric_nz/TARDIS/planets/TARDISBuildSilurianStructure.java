@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.planets;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -33,12 +33,12 @@ import java.io.File;
  *
  * @author eccentric_nz
  */
-class TARDISBuildSilurianStructure {
+class TardisBuildSilurianStructure {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String[] paths;
 
-    TARDISBuildSilurianStructure(TARDISPlugin plugin) {
+    TardisBuildSilurianStructure(TardisPlugin plugin) {
         this.plugin = plugin;
         paths = new String[]{plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_large.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_cross.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_north_south.tschm", plugin.getDataFolder() + File.separator + "schematics" + File.separator + "siluria_east_west.tschm"};
     }
@@ -57,28 +57,28 @@ class TARDISBuildSilurianStructure {
             plugin.debug("Could not find the Silurian schematics!");
             return false;
         }
-        TARDISSilurianStructureRunnable tssr = new TARDISSilurianStructureRunnable(plugin, startx, starty, startz, paths[0]);
+        TardisSilurianStructureRunnable tssr = new TardisSilurianStructureRunnable(plugin, startx, starty, startz, paths[0]);
         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tssr, 1L, 1L);
         tssr.setTask(task);
         // choose a random direction
-        COMPASS compass = COMPASS.values()[TARDISConstants.RANDOM.nextInt(4)];
+        CardinalDirection cardinalDirection = CardinalDirection.values()[TardisConstants.RANDOM.nextInt(4)];
         // get default server world
         String s_world = plugin.getServer().getWorlds().get(0).getName();
         World world = plugin.getServer().getWorld(s_world + "_tardis_siluria");
         // see if the chunk is loaded
         assert world != null;
-        Vector v1 = isChunkLoaded(compass, world.getBlockAt(startx, starty, startz));
+        Vector v1 = isChunkLoaded(cardinalDirection, world.getBlockAt(startx, starty, startz));
         if (v1 != null) {
             startx += v1.getBlockX();
             starty += v1.getBlockY();
             startz += v1.getBlockZ();
             String path;
-            if (TARDISConstants.RANDOM.nextBoolean()) {
+            if (TardisConstants.RANDOM.nextBoolean()) {
                 // cross - paths[1]
                 path = paths[1];
             } else {
                 // straight
-                if (compass.equals(COMPASS.NORTH) || compass.equals(COMPASS.SOUTH)) {
+                if (cardinalDirection.equals(CardinalDirection.NORTH) || cardinalDirection.equals(CardinalDirection.SOUTH)) {
                     // east west - paths[2]
                     path = paths[2];
                 } else {
@@ -86,19 +86,19 @@ class TARDISBuildSilurianStructure {
                     path = paths[3];
                 }
             }
-            TARDISSilurianStructureRunnable secondary = new TARDISSilurianStructureRunnable(plugin, startx, starty, startz, path);
+            TardisSilurianStructureRunnable secondary = new TardisSilurianStructureRunnable(plugin, startx, starty, startz, path);
             int secondaryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, secondary, 20L, 1L);
             secondary.setTask(secondaryTask);
         }
         return false;
     }
 
-    private Vector isChunkLoaded(COMPASS compass, Block block) {
+    private Vector isChunkLoaded(CardinalDirection cardinalDirection, Block block) {
         Chunk chunk = block.getChunk();
         int x = chunk.getX();
         int z = chunk.getZ();
         Vector vector;
-        switch (compass) {
+        switch (cardinalDirection) {
             case WEST -> {
                 vector = new Vector(-16, 17, 0);
                 x -= 1;

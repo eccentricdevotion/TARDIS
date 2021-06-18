@@ -18,10 +18,10 @@ package me.eccentric_nz.tardis.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.rooms.TARDISPainting;
-import me.eccentric_nz.tardis.utility.TARDISBannerData;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.rooms.TardisPainting;
+import me.eccentric_nz.tardis.utility.TardisBannerData;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -37,17 +37,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static me.eccentric_nz.tardis.schematic.TARDISBannerSetter.setBanners;
+import static me.eccentric_nz.tardis.schematic.TardisBannerSetter.setBanners;
 
 /**
  * @author eccentric_nz
  */
-class TARDISSchematicPaster implements Runnable {
+class TardisSchematicPaster implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
     private final HashMap<Block, BlockData> postRedstoneTorches = new HashMap<>();
-    private final HashMap<Block, TARDISBannerData> postBanners = new HashMap<>();
+    private final HashMap<Block, TardisBannerData> postBanners = new HashMap<>();
     private int task, l, r, h, w, d, x, y, z;
     private int counter = 0;
     private double div = 1.0d;
@@ -57,7 +57,7 @@ class TARDISSchematicPaster implements Runnable {
     private boolean running = false;
     private BossBar bb;
 
-    TARDISSchematicPaster(TARDISPlugin plugin, Player player) {
+    TardisSchematicPaster(TardisPlugin plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         l = 0;
@@ -93,7 +93,7 @@ class TARDISSchematicPaster implements Runnable {
             world = player.getWorld();
             // get input array
             arr = obj.get("input").getAsJsonArray();
-            bb = Bukkit.createBossBar("tardis Schematic Paste Progress", BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
+            bb = Bukkit.createBossBar("tardis Schematic Paste Progress", BarColor.WHITE, BarStyle.SOLID, TardisConstants.EMPTY_ARRAY);
             bb.setProgress(0);
             bb.addPlayer(player);
             bb.setVisible(true);
@@ -102,8 +102,8 @@ class TARDISSchematicPaster implements Runnable {
         if (l == h && r == w - 1) {
             for (Map.Entry<Block, BlockData> map : postRedstoneTorches.entrySet()) {
                 map.getKey().setBlockData(map.getValue());
-                if (TARDISPlugin.plugin.getBlockLogger().isLogging()) {
-                    TARDISPlugin.plugin.getBlockLogger().logPlacement(map.getKey());
+                if (TardisPlugin.plugin.getBlockLogger().isLogging()) {
+                    TardisPlugin.plugin.getBlockLogger().logPlacement(map.getKey());
                 }
             }
             setBanners(postBanners);
@@ -118,7 +118,7 @@ class TARDISSchematicPaster implements Runnable {
                     int pz = rel.get("z").getAsInt();
                     Art art = Art.valueOf(painting.get("art").getAsString());
                     BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-                    Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));
+                    Location pl = TardisPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));
                     try {
                         Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
                         ent.teleport(pl);
@@ -151,7 +151,7 @@ class TARDISSchematicPaster implements Runnable {
                 case BLACK_BANNER, BLACK_WALL_BANNER, BLUE_BANNER, BLUE_WALL_BANNER, BROWN_BANNER, BROWN_WALL_BANNER, CYAN_BANNER, CYAN_WALL_BANNER, GRAY_BANNER, GRAY_WALL_BANNER, GREEN_BANNER, GREEN_WALL_BANNER, LIGHT_BLUE_BANNER, LIGHT_BLUE_WALL_BANNER, LIGHT_GRAY_BANNER, LIGHT_GRAY_WALL_BANNER, LIME_BANNER, LIME_WALL_BANNER, MAGENTA_BANNER, MAGENTA_WALL_BANNER, ORANGE_BANNER, ORANGE_WALL_BANNER, PINK_BANNER, PINK_WALL_BANNER, PURPLE_BANNER, PURPLE_WALL_BANNER, RED_BANNER, RED_WALL_BANNER, WHITE_BANNER, WHITE_WALL_BANNER, YELLOW_BANNER, YELLOW_WALL_BANNER -> {
                     JsonObject state = col.has("banner") ? col.get("banner").getAsJsonObject() : null;
                     if (state != null) {
-                        TARDISBannerData tbd = new TARDISBannerData(data, state);
+                        TardisBannerData tbd = new TardisBannerData(data, state);
                         postBanners.put(block, tbd);
                     }
                 }

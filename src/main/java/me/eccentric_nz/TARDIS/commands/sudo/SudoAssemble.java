@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
@@ -30,9 +30,9 @@ import java.util.UUID;
  */
 class SudoAssemble {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    SudoAssemble(TARDISPlugin plugin) {
+    SudoAssemble(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -44,11 +44,11 @@ class SudoAssemble {
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             while (plugin.getTrackerKeeper().getDispersedTARDII().contains(tardis.getTardisId())) {
                 plugin.getTrackerKeeper().getDispersedTARDII().remove(tardis.getTardisId());
             }
-            TARDISMessage.send(sender, "ASSEMBLE_PLAYER", player);
+            TardisMessage.send(sender, "ASSEMBLE_PLAYER", player);
         }
         return true;
     }

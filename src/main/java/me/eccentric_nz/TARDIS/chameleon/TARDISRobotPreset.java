@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISRobotPreset extends TARDISPreset {
+class TardisRobotPreset extends TardisPreset {
 
-    TARDISRobotPreset() {
+    TardisRobotPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:air";

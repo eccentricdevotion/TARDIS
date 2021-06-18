@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,9 +34,9 @@ import java.sql.SQLException;
  */
 public class ResultSetVault {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String where;
     private final int id;
     private final String prefix;
@@ -53,7 +53,7 @@ public class ResultSetVault {
      * @param plugin an instance of the main class.
      * @param where  the location of the drop chest.
      */
-    public ResultSetVault(TARDISPlugin plugin, String where) {
+    public ResultSetVault(TardisPlugin plugin, String where) {
         this.plugin = plugin;
         this.where = where;
         id = -1;
@@ -66,7 +66,7 @@ public class ResultSetVault {
      * @param plugin an instance of the main class.
      * @param id     the tardis_id of the player updating the drop chest.
      */
-    public ResultSetVault(TARDISPlugin plugin, int id) {
+    public ResultSetVault(TardisPlugin plugin, int id) {
         this.plugin = plugin;
         where = "";
         this.id = id;

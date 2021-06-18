@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Repeater;
@@ -40,9 +40,9 @@ import java.util.List;
  */
 public class ResultSetRepeaters {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
     private final int secondary;
     private final int[] diodes = new int[4];
@@ -56,7 +56,7 @@ public class ResultSetRepeaters {
      * @param id        the tardis id to search for.
      * @param secondary the level of control to look for.
      */
-    public ResultSetRepeaters(TARDISPlugin plugin, int id, int secondary) {
+    public ResultSetRepeaters(TardisPlugin plugin, int id, int secondary) {
         this.plugin = plugin;
         this.id = id;
         this.secondary = secondary;
@@ -81,7 +81,7 @@ public class ResultSetRepeaters {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    locations.add(TARDISStaticLocationGetters.getLocationFromDB(rs.getString("location")));
+                    locations.add(TardisStaticLocationGetters.getLocationFromDB(rs.getString("location")));
                 }
             } else {
                 return false;

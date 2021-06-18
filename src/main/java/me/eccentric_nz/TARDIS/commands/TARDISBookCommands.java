@@ -17,11 +17,11 @@
 package me.eccentric_nz.tardis.commands;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advancement.TARDISBook;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advancement.TardisBook;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAdvancements;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -41,14 +41,14 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISBookCommands extends TARDISCompleter implements CommandExecutor, TabCompleter {
+public class TardisBookCommands extends TardisCompleter implements CommandExecutor, TabCompleter {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final LinkedHashMap<String, String> books;
     private final List<String> ROOT_SUBS;
     private final List<String> DO_SUBS = ImmutableList.of("get", "start");
 
-    public TARDISBookCommands(TARDISPlugin plugin) {
+    public TardisBookCommands(TardisPlugin plugin) {
         this.plugin = plugin;
         books = getAchievements();
         ROOT_SUBS = ImmutableList.copyOf(books.keySet());
@@ -59,14 +59,14 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
         // If the player typed /tardisbook then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisbook")) {
             if (args.length < 1) {
-                new TARDISCommandHelper(plugin).getCommand("tardisbook", sender);
+                new TardisCommandHelper(plugin).getCommand("tardisbook", sender);
                 return true;
             }
-            if (TARDISPermission.hasPermission(sender, "tardis.book")) {
+            if (TardisPermission.hasPermission(sender, "tardis.book")) {
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (first.equals("list")) {
                     int b = 1;
-                    TARDISMessage.send(sender, "BOOK_RASS");
+                    TardisMessage.send(sender, "BOOK_RASS");
                     if (books.size() > 0) {
                         for (Map.Entry<String, String> entry : books.entrySet()) {
                             sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
@@ -82,28 +82,28 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                     player = (Player) sender;
                 }
                 if (player == null) {
-                    TARDISMessage.send(sender, "CMD_PLAYER");
+                    TardisMessage.send(sender, "CMD_PLAYER");
                     return true;
                 }
                 if (args.length < 2) {
-                    TARDISMessage.send(player, "BOOK_NEED");
+                    TardisMessage.send(player, "BOOK_NEED");
                     return false;
                 }
                 if (!books.containsKey(first)) {
-                    TARDISMessage.send(player, "BOOK_NOT_FOUND");
+                    TardisMessage.send(player, "BOOK_NOT_FOUND");
                     return true;
                 }
                 String second = args[1].toLowerCase(Locale.ENGLISH);
                 if (second.equals("get")) {
                     // need to check whether they already have been given the book
-                    TARDISBook book = new TARDISBook(plugin);
+                    TardisBook book = new TardisBook(plugin);
                     // title, author, filename, player
                     book.writeBook(books.get(first), "Rassilon", first, player);
                     return true;
                 }
                 if (second.equals("start")) {
                     if (plugin.getAdvancementConfig().getBoolean(first + ".auto")) {
-                        TARDISMessage.send(player, "ACHIEVE_AUTO");
+                        TardisMessage.send(player, "ACHIEVE_AUTO");
                         return true;
                     }
                     // check they have not already started the achievement
@@ -114,11 +114,11 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                     if (rsa.resultSet()) {
                         if (rsa.isCompleted()) {
                             if (!plugin.getAdvancementConfig().getBoolean(first + ".repeatable")) {
-                                TARDISMessage.send(player, "ACHIEVE_ONCE");
+                                TardisMessage.send(player, "ACHIEVE_ONCE");
                                 return true;
                             }
                         } else {
-                            TARDISMessage.send(player, "ACHIEVE_ALREADY_STARTED");
+                            TardisMessage.send(player, "ACHIEVE_ALREADY_STARTED");
                             return true;
                         }
                     }
@@ -126,7 +126,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                     set.put("uuid", player.getUniqueId().toString());
                     set.put("name", first);
                     plugin.getQueryFactory().doInsert("achievements", set);
-                    TARDISMessage.send(player, "ACHIEVE_STARTED", first);
+                    TardisMessage.send(player, "ACHIEVE_STARTED", first);
                     return true;
                 }
             }

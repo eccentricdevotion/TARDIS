@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -30,11 +30,11 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TARDISArtronLevels {
+public class TardisArtronLevels {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISArtronLevels(TARDISPlugin plugin) {
+    public TardisArtronLevels(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -50,7 +50,7 @@ public class TARDISArtronLevels {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", set, where);
-        TARDISArtronRunnable runnable = new TARDISArtronRunnable(plugin, id);
+        TardisArtronRunnable runnable = new TardisArtronRunnable(plugin, id);
         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 480L, 480L);
         runnable.setTask(taskID);
     }
@@ -71,7 +71,7 @@ public class TARDISArtronLevels {
         }
         int level = rs.getArtronLevel();
         if (level - required <= 100) {
-            TARDISMessage.send(p, "ENERGY_LOW");
+            TardisMessage.send(p, "ENERGY_LOW");
             return false;
         }
         return (level > required);

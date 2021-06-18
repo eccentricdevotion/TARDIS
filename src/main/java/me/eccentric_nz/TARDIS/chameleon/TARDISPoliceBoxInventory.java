@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.custommodeldata.GUIChameleonPoliceBoxes;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.custommodeldata.GuiChameleonPoliceBoxes;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -34,14 +34,14 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-class TARDISPoliceBoxInventory {
+class TardisPoliceBoxInventory {
 
     private final List<String> colours = Arrays.asList("Blue", "White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Brown", "Green", "Red", "Black");
     private final ItemStack[] boxes;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
 
-    TARDISPoliceBoxInventory(TARDISPlugin plugin, Player player) {
+    TardisPoliceBoxInventory(TardisPlugin plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         boxes = getItemStack();
@@ -58,7 +58,7 @@ class TARDISPoliceBoxInventory {
         // coloured police boxes
         for (String s : colours) {
             String underscored = s.replace(" ", "_");
-            if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_" + underscored.toLowerCase())) {
+            if (TardisPermission.hasPermission(player, "tardis.preset.police_box_" + underscored.toLowerCase())) {
                 String dye = underscored.toUpperCase() + "_DYE";
                 ItemStack is = new ItemStack(Material.valueOf(dye), 1);
                 ItemMeta im = is.getItemMeta();
@@ -83,7 +83,7 @@ class TARDISPoliceBoxInventory {
         ItemMeta one = page.getItemMeta();
         assert one != null;
         one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
-        one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.getCustomModelData());
+        one.setCustomModelData(GuiChameleonPoliceBoxes.GO_TO_PAGE_1.getCustomModelData());
         page.setItemMeta(one);
         boxes[24] = page;
         // back
@@ -91,7 +91,7 @@ class TARDISPoliceBoxInventory {
         ItemMeta but = back.getItemMeta();
         assert but != null;
         but.setDisplayName("Back");
-        but.setCustomModelData(GUIChameleonPoliceBoxes.BACK.getCustomModelData());
+        but.setCustomModelData(GuiChameleonPoliceBoxes.BACK.getCustomModelData());
         back.setItemMeta(but);
         boxes[25] = back;
         // Cancel / close
@@ -99,7 +99,7 @@ class TARDISPoliceBoxInventory {
         ItemMeta can = close.getItemMeta();
         assert can != null;
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.getCustomModelData());
+        can.setCustomModelData(GuiChameleonPoliceBoxes.CLOSE.getCustomModelData());
         close.setItemMeta(can);
         boxes[26] = close;
 

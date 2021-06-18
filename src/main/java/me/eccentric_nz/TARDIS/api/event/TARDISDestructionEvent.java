@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author eccentric_nz
  */
-public final class TARDISDestructionEvent extends Event {
+public final class TardisDestructionEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
@@ -39,7 +39,7 @@ public final class TARDISDestructionEvent extends Event {
      * @param location the location of the TARDIS exterior preset
      * @param owner    the Time Lord of the TARDIS
      */
-    public TARDISDestructionEvent(Player player, Location location, String owner) {
+    public TardisDestructionEvent(Player player, Location location, String owner) {
         this.player = player;
         this.location = location;
         this.owner = owner;

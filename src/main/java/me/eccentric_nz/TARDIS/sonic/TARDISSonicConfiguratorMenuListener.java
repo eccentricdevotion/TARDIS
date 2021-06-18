@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.data.ConfiguredSonic;
 import me.eccentric_nz.tardis.database.resultset.ResultSetConfiguredSonic;
 import me.eccentric_nz.tardis.enumeration.SonicConfig;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -36,12 +36,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
-public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener implements Listener {
+public class TardisSonicConfiguratorMenuListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<UUID, ConfiguredSonic> sonics = new HashMap<>();
 
-    public TARDISSonicConfiguratorMenuListener(TARDISPlugin plugin) {
+    public TardisSonicConfiguratorMenuListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
     }

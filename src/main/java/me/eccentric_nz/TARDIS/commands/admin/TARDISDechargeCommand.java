@@ -16,25 +16,25 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
  * @author eccentric_nz
  */
-class TARDISDechargeCommand {
+class TardisDechargeCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISDechargeCommand(TARDISPlugin plugin) {
+    TardisDechargeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean removeChargerStatus(CommandSender sender, String[] args) {
         if (!plugin.getConfig().contains("rechargers." + args[1])) {
-            TARDISMessage.send(sender, "CHARGER_NOT_FOUND", ChatColor.AQUA + " /tardis list rechargers" + ChatColor.RESET + " first.");
+            TardisMessage.send(sender, "CHARGER_NOT_FOUND", ChatColor.AQUA + " /tardis list rechargers" + ChatColor.RESET + " first.");
             return true;
         }
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
@@ -42,7 +42,7 @@ class TARDISDechargeCommand {
         }
         plugin.getConfig().set("rechargers." + args[1], null);
         plugin.saveConfig();
-        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TardisMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
 }

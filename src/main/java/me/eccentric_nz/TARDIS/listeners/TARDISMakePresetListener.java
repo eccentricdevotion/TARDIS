@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISMaterials;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisMaterials;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -45,14 +45,14 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISMakePresetListener implements Listener {
+public class TardisMakePresetListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int[] orderx;
     private final int[] orderz;
-    private final String GLASS = addQuotes(TARDISConstants.GLASS.getAsString());
+    private final String GLASS = addQuotes(TardisConstants.GLASS.getAsString());
 
-    public TARDISMakePresetListener(TARDISPlugin plugin) {
+    public TardisMakePresetListener(TardisPlugin plugin) {
         this.plugin = plugin;
         orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
         orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
@@ -82,7 +82,7 @@ public class TARDISMakePresetListener implements Listener {
                 int fx = block_loc.getBlockX();
                 int fy = block_loc.getBlockY();
                 int fz = block_loc.getBlockZ();
-                TARDISMessage.send(player, "PRESET_SCAN");
+                TardisMessage.send(player, "PRESET_SCAN");
                 StringBuilder sb_blue_data = new StringBuilder("[");
                 StringBuilder sb_stain_data = new StringBuilder("[");
                 StringBuilder sb_glass_data = new StringBuilder("[");
@@ -98,7 +98,7 @@ public class TARDISMakePresetListener implements Listener {
                         String dataStr = addQuotes(data.getAsString());
                         if (y == (fy + 3)) {
                             sb_blue_data.append(addQuotes(data.getAsString()));
-                            if (TARDISMaterials.not_glass.contains(material)) {
+                            if (TardisMaterials.not_glass.contains(material)) {
                                 sb_stain_data.append(dataStr);
                                 sb_glass_data.append(dataStr);
                             } else {
@@ -108,7 +108,7 @@ public class TARDISMakePresetListener implements Listener {
                             }
                         } else {
                             sb_blue_data.append(addQuotes(data.getAsString())).append(",");
-                            if (TARDISMaterials.not_glass.contains(material)) {
+                            if (TardisMaterials.not_glass.contains(material)) {
                                 sb_stain_data.append(dataStr).append(",");
                                 sb_glass_data.append(dataStr).append(",");
                             } else {
@@ -168,7 +168,7 @@ public class TARDISMakePresetListener implements Listener {
                     plugin.debug("Could not create and write to " + filename + "! " + e.getMessage());
                 }
                 plugin.getTrackerKeeper().getPreset().remove(uuid);
-                TARDISMessage.send(player, "PRESET_DONE", filename);
+                TardisMessage.send(player, "PRESET_DONE", filename);
             }
         }
     }

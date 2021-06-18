@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.DiskCircuit;
 import me.eccentric_nz.tardis.enumeration.GlowstoneCircuit;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -44,12 +44,12 @@ import java.util.*;
 /**
  * @author eccentric_nz
  */
-public class TARDISConsoleListener implements Listener {
+public class TardisConsoleListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Material> onlythese = new ArrayList<>();
 
-    public TARDISConsoleListener(TARDISPlugin plugin) {
+    public TardisConsoleListener(TardisPlugin plugin) {
         this.plugin = plugin;
         for (DiskCircuit dc : DiskCircuit.values()) {
             if (!onlythese.contains(dc.getMaterial())) {
@@ -65,7 +65,7 @@ public class TARDISConsoleListener implements Listener {
         }
         Player p = event.getPlayer();
         UUID uuid = p.getUniqueId();
-        if (!TARDISPermission.hasPermission(p, "tardis.advanced")) {
+        if (!TardisPermission.hasPermission(p, "tardis.advanced")) {
             return;
         }
         if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {
@@ -83,7 +83,7 @@ public class TARDISConsoleListener implements Listener {
                     event.setCancelled(true);
                     // update block if it's not MUSHROOM_STEM
                     if (b.getType().equals(Material.JUKEBOX)) {
-                        BlockData mushroom = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
+                        BlockData mushroom = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
                         b.setBlockData(mushroom);
                     }
                     int id = rsc.getTardisId();
@@ -101,11 +101,11 @@ public class TARDISConsoleListener implements Listener {
                         // only the time lord of this tardis
                         ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
                         if (!rs.fromBoth(id, uuid.toString())) {
-                            TARDISMessage.send(p, "NOT_OWNER");
+                            TardisMessage.send(p, "NOT_OWNER");
                             return;
                         }
                         if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered()) {
-                            TARDISMessage.send(p, "POWER_DOWN");
+                            TardisMessage.send(p, "POWER_DOWN");
                             return;
                         }
                         Inventory inv = plugin.getServer().createInventory(p, 9, ChatColor.DARK_RED + "tardis Console");
@@ -116,7 +116,7 @@ public class TARDISConsoleListener implements Listener {
                             String console = rsds.getConsole();
                             if (!console.isEmpty()) {
                                 try {
-                                    ItemStack[] stack = TARDISSerializeInventory.itemStacksFromString(console);
+                                    ItemStack[] stack = TardisSerializeInventory.itemStacksFromString(console);
                                     for (ItemStack circuit : stack) {
                                         if (circuit != null && circuit.hasItemMeta()) {
                                             ItemMeta cm = circuit.getItemMeta();
@@ -128,7 +128,7 @@ public class TARDISConsoleListener implements Listener {
                                                         circuit.setType(Material.GLOWSTONE_DUST);
                                                     }
                                                 }
-                                            } else if (TARDISStaticUtils.isMusicDisk(circuit)) {
+                                            } else if (TardisStaticUtils.isMusicDisk(circuit)) {
                                                 assert cm != null;
                                                 cm.setCustomModelData(10000001);
                                                 circuit.setItemMeta(cm);
@@ -163,11 +163,11 @@ public class TARDISConsoleListener implements Listener {
                                 if (rst.resultSet() && rst.getTardis().getUuid() == diskUuid) {
                                     if (uuid == rst.getTardis().getUuid()) {
                                         // time lords can't use their own disks!
-                                        TARDISMessage.send(p, "SECURITY_TIMELORD");
+                                        TardisMessage.send(p, "SECURITY_TIMELORD");
                                         return;
                                     }
                                     // process disk
-                                    TARDISAuthorisedControlDisk tacd = new TARDISAuthorisedControlDisk(plugin, rst.getTardis().getUuid(), im.getLore(), id, p, rst.getTardis().getEps(), rst.getTardis().getCreeper());
+                                    TardisAuthorisedControlDisk tacd = new TardisAuthorisedControlDisk(plugin, rst.getTardis().getUuid(), im.getLore(), id, p, rst.getTardis().getEps(), rst.getTardis().getCreeper());
                                     String processed = tacd.process();
                                     if (processed.equals("success")) {
                                         // success remove disk from hand
@@ -179,16 +179,16 @@ public class TARDISConsoleListener implements Listener {
                                             p.getInventory().setItemInMainHand(null);
                                         }
                                         p.updateInventory();
-                                        TARDISMessage.send(p, "SECURITY_SUCCESS");
+                                        TardisMessage.send(p, "SECURITY_SUCCESS");
                                     } else {
                                         // error message player
-                                        TARDISMessage.send(p, "SECURITY_ERROR", processed);
+                                        TardisMessage.send(p, "SECURITY_ERROR", processed);
                                     }
                                 }
                             }
                         }
                     } else {
-                        TARDISMessage.send(p, "ADV_OPEN");
+                        TardisMessage.send(p, "ADV_OPEN");
                     }
                 }
             }

@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.utility.TARDISMultiverseInventoriesChecker;
-import me.eccentric_nz.tardis.utility.TARDISPerWorldInventoryChecker;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.utility.TardisMultiverseInventoriesChecker;
+import me.eccentric_nz.tardis.utility.TardisPerWorldInventoryChecker;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,11 +30,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISInventoryPluginHelper implements Listener {
+public class TardisInventoryPluginHelper implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISInventoryPluginHelper(TARDISPlugin plugin) {
+    public TardisInventoryPluginHelper(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -47,8 +47,8 @@ public class TARDISInventoryPluginHelper implements Listener {
 
         Player player = event.getPlayer();
         boolean shouldSwitch = switch (plugin.getInvManager()) {
-            case MULTIVERSE -> !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
-            case PER_WORLD -> !TARDISPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+            case MULTIVERSE -> !TardisMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+            case PER_WORLD -> !TardisPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
             default ->
                     // GAMEMODE
                     (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
@@ -57,7 +57,7 @@ public class TARDISInventoryPluginHelper implements Listener {
             // switch to non-fobbed inventory before inventory manager
             UUID uuid = player.getUniqueId();
             if (plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-                new TARDISArchInventory().switchInventories(player, 1);
+                new TardisArchInventory().switchInventories(player, 1);
             }
         }
     }
@@ -71,8 +71,8 @@ public class TARDISInventoryPluginHelper implements Listener {
 
         Player player = event.getPlayer();
         boolean shouldSwitch = switch (plugin.getInvManager()) {
-            case MULTIVERSE -> !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
-            case PER_WORLD -> !TARDISPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+            case MULTIVERSE -> !TardisMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+            case PER_WORLD -> !TardisPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
             default ->
                     // GAMEMODE
                     (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
@@ -81,7 +81,7 @@ public class TARDISInventoryPluginHelper implements Listener {
             // switch to back to fobbed inventory after MVI and MI
             UUID uuid = player.getUniqueId();
             if (plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-                new TARDISArchInventory().switchInventories(player, 0);
+                new TardisArchInventory().switchInventories(player, 0);
             }
         }
     }

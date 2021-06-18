@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
-public enum GUIDestinationTerminal {
+public enum GuiDestinationTerminal {
 
     // Destination Terminal
     STEP_10(1, 1, Material.WHITE_WOOL),
@@ -50,7 +50,7 @@ public enum GUIDestinationTerminal {
     private final int slot;
     private final Material material;
 
-    GUIDestinationTerminal(int customModelData, int slot, Material material) {
+    GuiDestinationTerminal(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -72,17 +72,17 @@ public enum GUIDestinationTerminal {
         String s = toString();
         if (s.startsWith("STEP")) {
             String[] split = s.split("_");
-            return TARDISPlugin.plugin.getLanguage().getString("BUTTON_STEP") + ": " + (TARDISNumberParsers.parseInt(split[1]) * TARDISPlugin.plugin.getConfig().getInt("travel.terminal_step"));
+            return TardisPlugin.plugin.getLanguage().getString("BUTTON_STEP") + ": " + (TardisNumberParsers.parseInt(split[1]) * TardisPlugin.plugin.getConfig().getInt("travel.terminal_step"));
         } else if (s.startsWith("POSITIVE")) {
-            return TARDISPlugin.plugin.getLanguage().getString("BUTTON_POS");
+            return TardisPlugin.plugin.getLanguage().getString("BUTTON_POS");
         } else if (s.startsWith("NEGATIVE")) {
-            return TARDISPlugin.plugin.getLanguage().getString("BUTTON_NEG");
+            return TardisPlugin.plugin.getLanguage().getString("BUTTON_NEG");
         } else if (this == X || this == Z) {
             return s;
         } else if (this == NETHER || this == THE_END) {
-            return TARDISStringUtils.capitalise(s);
+            return TardisStringUtils.capitalise(s);
         } else {
-            return TARDISPlugin.plugin.getLanguage().getString(s);
+            return TardisPlugin.plugin.getLanguage().getString(s);
         }
     }
 }

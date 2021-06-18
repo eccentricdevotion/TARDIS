@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.destroyers.TARDISPruner;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.destroyers.TardisPruner;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.FileUtil;
 
@@ -28,29 +28,29 @@ import java.io.File;
 /**
  * @author eccentric_nz
  */
-class TARDISPruneCommand {
+class TardisPruneCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISPruneCommand(TARDISPlugin plugin) {
+    TardisPruneCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean startPruning(CommandSender sender, String[] args) {
-        TARDISPruner pruner = new TARDISPruner(plugin);
+        TardisPruner pruner = new TardisPruner(plugin);
         if (args[1].equalsIgnoreCase("list") && args.length == 3) {
-            TARDISMessage.send(sender, "PRUNE_INFO");
+            TardisMessage.send(sender, "PRUNE_INFO");
             return true;
         }
         try {
-            TARDISMessage.send(sender, "BACKUP_DB");
+            TardisMessage.send(sender, "BACKUP_DB");
             // backup database
             File oldFile = new File(plugin.getDataFolder() + File.separator + "tardis.db");
             File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
             // back up the file
             FileUtil.copy(oldFile, newFile);
             int days = Integer.parseInt(args[1]);
-            TARDISMessage.send(sender, "PRUNE_START");
+            TardisMessage.send(sender, "PRUNE_START");
             pruner.prune(sender, days);
             return true;
         } catch (NumberFormatException nfe) {
@@ -60,8 +60,8 @@ class TARDISPruneCommand {
     }
 
     boolean listPrunes(CommandSender sender, String[] args) {
-        int days = TARDISNumberParsers.parseInt(args[1]);
-        TARDISPruner pruner = new TARDISPruner(plugin);
+        int days = TardisNumberParsers.parseInt(args[1]);
+        TardisPruner pruner = new TardisPruner(plugin);
         pruner.list(sender, days);
         return true;
     }

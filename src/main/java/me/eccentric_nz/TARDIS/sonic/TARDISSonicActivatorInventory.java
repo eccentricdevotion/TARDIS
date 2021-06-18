@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUISonicActivator;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiSonicActivator;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -31,12 +31,12 @@ import java.util.Set;
 /**
  * @author eccentric_nz
  */
-class TARDISSonicActivatorInventory {
+class TardisSonicActivatorInventory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ItemStack[] activator;
 
-    TARDISSonicActivatorInventory(TARDISPlugin plugin) {
+    TardisSonicActivatorInventory(TardisPlugin plugin) {
         this.plugin = plugin;
         activator = getItemStack();
     }
@@ -69,7 +69,7 @@ class TARDISSonicActivatorInventory {
         ItemMeta close_im = close.getItemMeta();
         assert close_im != null;
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUISonicActivator.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GuiSonicActivator.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
 
         return new ItemStack[]{null, null, null, null, null, null, null, info, close};

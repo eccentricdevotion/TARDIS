@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISForestPreset extends TARDISPreset {
+class TardisForestPreset extends TardisPreset {
 
-    TARDISForestPreset() {
+    TardisForestPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:oak_log[axis=y]";

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.sonic.actions.TARDISSonicRedstone;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.sonic.actions.TardisSonicRedstone;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonRetractEvent;
@@ -26,11 +26,11 @@ import org.bukkit.event.block.BlockRedstoneEvent;
 /**
  * @author eccentric_nz
  */
-public class TARDISRedstoneListener implements Listener {
+public class TardisRedstoneListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISRedstoneListener(TARDISPlugin plugin) {
+    public TardisRedstoneListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -47,7 +47,7 @@ public class TARDISRedstoneListener implements Listener {
         String block = event.getBlock().getLocation().toString();
         if (plugin.getGeneralKeeper().getSonicPistons().contains(block)) {
             event.setCancelled(true);
-            TARDISSonicRedstone.setExtension(plugin, event.getBlock());
+            TardisSonicRedstone.setExtension(plugin, event.getBlock());
         }
     }
 }

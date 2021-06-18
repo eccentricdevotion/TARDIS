@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -37,9 +37,9 @@ import java.util.UUID;
  */
 public class ResultSetForcefield {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String where;
     private final String prefix;
     private UUID uuid;
@@ -51,7 +51,7 @@ public class ResultSetForcefield {
      * @param plugin an instance of the main class.
      * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      */
-    public ResultSetForcefield(TARDISPlugin plugin, String where) {
+    public ResultSetForcefield(TardisPlugin plugin, String where) {
         this.plugin = plugin;
         this.where = where;
         prefix = this.plugin.getPrefix();
@@ -78,14 +78,14 @@ public class ResultSetForcefield {
             if (rs.isBeforeFirst()) {
                 rs.next();
                 uuid = UUID.fromString(rs.getString("uuid"));
-                world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
+                world = TardisAliasResolver.getWorldFromAlias(rs.getString("world"));
                 int x = rs.getInt("x");
                 int y = rs.getInt("y");
                 int z = rs.getInt("z");
                 location = new Location(world, x, y, z);
                 // check location is not in a tardis area
                 if (!plugin.getTardisArea().areaCheckInExisting(location)) {
-                    TARDISMessage.send(plugin.getServer().getPlayer(uuid), "FORCE_FIELD_IN_AREA");
+                    TardisMessage.send(plugin.getServer().getPlayer(uuid), "FORCE_FIELD_IN_AREA");
                     return false;
                 }
             } else {

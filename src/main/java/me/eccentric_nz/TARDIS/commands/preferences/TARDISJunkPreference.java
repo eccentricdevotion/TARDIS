@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetJunk;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -32,11 +32,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISJunkPreference {
+class TardisJunkPreference {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISJunkPreference(TARDISPlugin plugin) {
+    TardisJunkPreference(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -48,7 +48,7 @@ class TARDISJunkPreference {
         where.put("uuid", ustr);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             // get current preset
             String current = tardis.getPreset().toString();
@@ -57,7 +57,7 @@ class TARDISJunkPreference {
             wheret.put("uuid", ustr);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (rst.resultSet()) {
-                TARDISMessage.send(player, "JUNK_PRESET_OUTSIDE");
+                TardisMessage.send(player, "JUNK_PRESET_OUTSIDE");
                 return true;
             }
             if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(uuid)) {
@@ -65,17 +65,17 @@ class TARDISJunkPreference {
                 long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
                 long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
                 if (now < then) {
-                    TARDISMessage.send(player.getPlayer(), "COOLDOWN", String.format("%d", cooldown / 1000));
+                    TardisMessage.send(player.getPlayer(), "COOLDOWN", String.format("%d", cooldown / 1000));
                     return true;
                 }
             }
             // make sure is opposite
             if (current.equals("JUNK_MODE") && arg.equalsIgnoreCase("on")) {
-                TARDISMessage.send(player, "JUNK_ALREADY_ON");
+                TardisMessage.send(player, "JUNK_ALREADY_ON");
                 return true;
             }
             if (!current.equals("JUNK_MODE") && arg.equalsIgnoreCase("off")) {
-                TARDISMessage.send(player, "JUNK_ALREADY_OFF");
+                TardisMessage.send(player, "JUNK_ALREADY_OFF");
                 return true;
             }
             // check if they have a junk record
@@ -105,7 +105,7 @@ class TARDISJunkPreference {
                 sett.put("chameleon_demat", current);
                 // set chameleon adaption to OFF
                 sett.put("adapti_on", 0);
-                TARDISMessage.send(player, "JUNK_PRESET_ON");
+                TardisMessage.send(player, "JUNK_PRESET_ON");
                 cham_set = "JUNK_MODE";
             }
             if (arg.equalsIgnoreCase("off")) {
@@ -113,7 +113,7 @@ class TARDISJunkPreference {
                 String preset = (has) ? rsj.getPreset().toString() : current;
                 sett.put("chameleon_preset", preset);
                 sett.put("chameleon_demat", "JUNK_MODE");
-                TARDISMessage.send(player, "JUNK_PRESET_OFF");
+                TardisMessage.send(player, "JUNK_PRESET_OFF");
                 cham_set = preset;
             }
             // update tardis table
@@ -127,7 +127,7 @@ class TARDISJunkPreference {
             ResultSetControls rsc = new ResultSetControls(plugin, whereh, true);
             if (rsc.resultSet()) {
                 for (HashMap<String, String> map : rsc.getData()) {
-                    TARDISStaticUtils.setSign(map.get("location"), 3, cham_set, player);
+                    TardisStaticUtils.setSign(map.get("location"), 3, cham_set, player);
                 }
             }
             // rebuild

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.artron.TARDISLampToggler;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.artron.TardisLampToggler;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -25,15 +25,15 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISLightSwitch {
+public class TardisLightSwitch {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
     private final boolean lightsOn;
     private final Player player;
     private final boolean lanterns;
 
-    public TARDISLightSwitch(TARDISPlugin plugin, int id, boolean lightsOn, Player player, boolean lanterns) {
+    public TardisLightSwitch(TardisPlugin plugin, int id, boolean lightsOn, Player player, boolean lanterns) {
         this.plugin = plugin;
         this.id = id;
         this.lightsOn = lightsOn;
@@ -46,10 +46,10 @@ public class TARDISLightSwitch {
         wherel.put("tardis_id", id);
         HashMap<String, Object> setl = new HashMap<>();
         if (lightsOn) {
-            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, lanterns);
+            new TardisLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, lanterns);
             setl.put("lights_on", 0);
         } else {
-            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false, lanterns);
+            new TardisLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false, lanterns);
             setl.put("lights_on", 1);
         }
         plugin.getQueryFactory().doUpdate("tardis", setl, wherel);

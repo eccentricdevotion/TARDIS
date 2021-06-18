@@ -21,7 +21,7 @@ import org.bukkit.Rotation;
 /**
  * @author eccentric_nz
  */
-public enum COMPASS {
+public enum CardinalDirection {
 
     EAST(Rotation.FLIPPED),
     SOUTH(Rotation.COUNTER_CLOCKWISE),
@@ -30,7 +30,7 @@ public enum COMPASS {
 
     private final Rotation rotation;
 
-    COMPASS(Rotation rotation) {
+    CardinalDirection(Rotation rotation) {
         this.rotation = rotation;
     }
 

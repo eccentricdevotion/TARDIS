@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class TARDISArtronEvent extends Event {
+public class TardisArtronEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
@@ -31,11 +31,11 @@ public class TARDISArtronEvent extends Event {
     private final int tardisId;
     private int artronLevel = 0;
 
-    public TARDISArtronEvent(Player player, int amount, int tardisId) {
+    public TardisArtronEvent(Player player, int amount, int tardisId) {
         this.player = player;
         this.amount = amount;
         this.tardisId = tardisId;
-        ResultSetTardisArtron rs = new ResultSetTardisArtron(TARDISPlugin.plugin);
+        ResultSetTardisArtron rs = new ResultSetTardisArtron(TardisPlugin.plugin);
         if (rs.fromID(this.tardisId)) {
             artronLevel = rs.getArtronLevel();
         }

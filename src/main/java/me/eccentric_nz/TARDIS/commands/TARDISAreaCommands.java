@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.data.Area;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -47,19 +47,19 @@ import java.util.Locale;
  *
  * @author eccentric_nz
  */
-public class TARDISAreaCommands implements CommandExecutor {
+public class TardisAreaCommands implements CommandExecutor {
 
     public static final BlockData SNOW = Material.SNOW_BLOCK.createBlockData();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISAreaCommands(TARDISPlugin plugin) {
+    public TardisAreaCommands(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (!sender.hasPermission("tardis.admin")) {
-            TARDISMessage.send(sender, "NO_PERM_AREA");
+            TardisMessage.send(sender, "NO_PERM_AREA");
             return true;
         }
         Player player = null;
@@ -70,54 +70,54 @@ public class TARDISAreaCommands implements CommandExecutor {
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardisarea")) {
             if (args.length == 0) {
-                new TARDISCommandHelper(plugin).getCommand("tardisarea", sender);
+                new TardisCommandHelper(plugin).getCommand("tardisarea", sender);
                 return true;
             }
             if (player == null) {
-                TARDISMessage.send(sender, "CMD_PLAYER");
+                TardisMessage.send(sender, "CMD_PLAYER");
                 return false;
             }
             switch (args[0].toLowerCase()) {
                 case "start":
                     // check name is unique and acceptable
                     if (args.length < 2 || !args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                        TARDISMessage.send(player, "AREA_NAME_NOT_VALID");
+                        TardisMessage.send(player, "AREA_NAME_NOT_VALID");
                         return false;
                     }
                     ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
                     if (rsa.resultSet()) {
                         for (String s : rsa.getNames()) {
                             if (s.equals(args[1])) {
-                                TARDISMessage.send(player, "AREA_IN_USE");
+                                TardisMessage.send(player, "AREA_IN_USE");
                                 return false;
                             }
                         }
                     }
                     plugin.getTrackerKeeper().getArea().put(player.getUniqueId(), args[1]);
-                    TARDISMessage.send(player, "AREA_CLICK_START");
+                    TardisMessage.send(player, "AREA_CLICK_START");
                     return true;
                 case "end":
                     if (!plugin.getTrackerKeeper().getBlock().containsKey(player.getUniqueId())) {
-                        TARDISMessage.send(player, "AREA_NO_START");
+                        TardisMessage.send(player, "AREA_NO_START");
                         return false;
                     }
                     plugin.getTrackerKeeper().getEnd().put(player.getUniqueId(), "end");
-                    TARDISMessage.send(player, "AREA_CLICK_END");
+                    TardisMessage.send(player, "AREA_CLICK_END");
                     return true;
                 case "parking":
                     if (args.length < 2) {
-                        TARDISMessage.send(player, "AREA_NEED");
+                        TardisMessage.send(player, "AREA_NEED");
                         return false;
                     }
                     if (args.length < 3) {
-                        TARDISMessage.send(player, "AREA_PARK");
+                        TardisMessage.send(player, "AREA_PARK");
                         return false;
                     }
                     int park;
                     try {
                         park = Integer.parseInt(args[2]);
                     } catch (NumberFormatException nfe) {
-                        TARDISMessage.send(player, "AREA_PARK");
+                        TardisMessage.send(player, "AREA_PARK");
                         return false;
                     }
                     HashMap<String, Object> where = new HashMap<>();
@@ -125,28 +125,28 @@ public class TARDISAreaCommands implements CommandExecutor {
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("parking_distance", park);
                     plugin.getQueryFactory().doUpdate("areas", set, where);
-                    TARDISMessage.send(player, "AREA_PARK_SET", args[1]);
+                    TardisMessage.send(player, "AREA_PARK_SET", args[1]);
                     return true;
                 case "remove":
                     if (args.length < 2) {
-                        TARDISMessage.send(player, "AREA_NEED");
+                        TardisMessage.send(player, "AREA_NEED");
                         return false;
                     }
                     HashMap<String, Object> wherer = new HashMap<>();
                     wherer.put("area_name", args[1]);
                     plugin.getQueryFactory().doDelete("areas", wherer);
-                    TARDISMessage.send(player, "AREA_DELETE", args[1]);
+                    TardisMessage.send(player, "AREA_DELETE", args[1]);
                     return true;
                 case "show":
                     if (args.length < 2) {
-                        TARDISMessage.send(player, "AREA_NEED");
+                        TardisMessage.send(player, "AREA_NEED");
                         return false;
                     }
                     HashMap<String, Object> wherea = new HashMap<>();
                     wherea.put("area_name", args[1]);
                     ResultSetAreas rsaShow = new ResultSetAreas(plugin, wherea, false, false);
                     if (!rsaShow.resultSet()) {
-                        TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                        TardisMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                         return false;
                     }
                     Area a = rsaShow.getArea();
@@ -154,7 +154,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     int miz = a.getMinZ();
                     int max = a.getMaxX();
                     int maz = a.getMaxZ();
-                    World w = TARDISAliasResolver.getWorldFromAlias(a.getWorld());
+                    World w = TardisAliasResolver.getWorldFromAlias(a.getWorld());
                     assert w != null;
                     Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
                     b1.setBlockData(SNOW);
@@ -168,7 +168,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     return true;
                 case "yard":
                     if (args.length < 2) {
-                        TARDISMessage.send(player, "AREA_NEED");
+                        TardisMessage.send(player, "AREA_NEED");
                         return false;
                     }
                     // set some basic defaults
@@ -181,11 +181,11 @@ public class TARDISAreaCommands implements CommandExecutor {
                                 dock = Material.valueOf(args[3].toUpperCase(Locale.ENGLISH)).createBlockData();
                             }
                         } catch (IllegalArgumentException e) {
-                            TARDISMessage.send(player, "ARG_MATERIAL");
+                            TardisMessage.send(player, "ARG_MATERIAL");
                             return true;
                         }
                         if (!fill.getMaterial().isBlock() || !dock.getMaterial().isBlock() || !fill.getMaterial().isSolid() || !dock.getMaterial().isSolid()) {
-                            TARDISMessage.send(player, "ARG_NOT_BLOCK");
+                            TardisMessage.send(player, "ARG_NOT_BLOCK");
                             return true;
                         }
                     }
@@ -193,7 +193,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     yardWhere.put("area_name", args[1]);
                     ResultSetAreas rsaYard = new ResultSetAreas(plugin, yardWhere, false, false);
                     if (!rsaYard.resultSet()) {
-                        TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                        TardisMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                         return false;
                     }
                     Area yardArea = rsaYard.getArea();
@@ -201,7 +201,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     int yardMinZ = yardArea.getMinZ();
                     int yardMaxX = yardArea.getMaxX();
                     int yardMaxZ = yardArea.getMaxZ();
-                    World yardWorld = TARDISAliasResolver.getWorldFromAlias(yardArea.getWorld());
+                    World yardWorld = TardisAliasResolver.getWorldFromAlias(yardArea.getWorld());
                     for (int x = yardMinX; x <= yardMaxX; x++) {
                         for (int z = yardMinZ; z <= yardMaxZ; z++) {
                             assert yardWorld != null;
@@ -216,26 +216,26 @@ public class TARDISAreaCommands implements CommandExecutor {
                     return true;
                 case "invisibility":
                     if (args.length < 2) {
-                        TARDISMessage.send(player, "AREA_NEED");
+                        TardisMessage.send(player, "AREA_NEED");
                         return false;
                     }
                     if (args.length < 3) {
-                        TARDISMessage.send(player, "AREA_INVISIBILITY_ARG");
+                        TardisMessage.send(player, "AREA_INVISIBILITY_ARG");
                         return false;
                     }
                     HashMap<String, Object> invisWhere = new HashMap<>();
                     invisWhere.put("area_name", args[1]);
                     ResultSetAreas rsaInvis = new ResultSetAreas(plugin, invisWhere, false, false);
                     if (!rsaInvis.resultSet()) {
-                        TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                        TardisMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                         return false;
                     }
                     String value = args[2].toUpperCase(Locale.ENGLISH);
                     if (!value.equals("ALLOW") && !value.equals("DENY")) {
                         try {
-                            PRESET.valueOf(value);
+                            Preset.valueOf(value);
                         } catch (IllegalArgumentException e) {
-                            TARDISMessage.send(player, "ARG_PRESET");
+                            TardisMessage.send(player, "ARG_PRESET");
                             return false;
                         }
                     }
@@ -244,32 +244,32 @@ public class TARDISAreaCommands implements CommandExecutor {
                     HashMap<String, Object> whereInvis = new HashMap<>();
                     whereInvis.put("area_name", args[1]);
                     plugin.getQueryFactory().doUpdate("areas", invisSet, whereInvis);
-                    TARDISMessage.send(player, "AREA_INVISIBILITY_SET", args[1]);
+                    TardisMessage.send(player, "AREA_INVISIBILITY_SET", args[1]);
                     return true;
                 case "direction":
                     if (args.length < 2) {
-                        TARDISMessage.send(player, "AREA_NEED");
+                        TardisMessage.send(player, "AREA_NEED");
                         return false;
                     }
                     if (args.length < 3) {
-                        TARDISMessage.send(player, "AREA_DIRECTION_ARG");
+                        TardisMessage.send(player, "AREA_DIRECTION_ARG");
                         return false;
                     }
                     HashMap<String, Object> dirWhere = new HashMap<>();
                     dirWhere.put("area_name", args[1]);
                     ResultSetAreas rsaDir = new ResultSetAreas(plugin, dirWhere, false, false);
                     if (!rsaDir.resultSet()) {
-                        TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                        TardisMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                         return false;
                     }
                     String dir = args[2].toUpperCase(Locale.ENGLISH);
                     try {
-                        COMPASS.valueOf(dir);
+                        CardinalDirection.valueOf(dir);
                     } catch (IllegalArgumentException e) {
                         if (dir.equals("NONE")) {
                             dir = "";
                         } else {
-                            TARDISMessage.send(player, "ARG_DIRECTION");
+                            TardisMessage.send(player, "ARG_DIRECTION");
                             return false;
                         }
                     }
@@ -278,7 +278,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     HashMap<String, Object> whereDir = new HashMap<>();
                     whereDir.put("area_name", args[1]);
                     plugin.getQueryFactory().doUpdate("areas", dirSet, whereDir);
-                    TARDISMessage.send(player, "AREA_DIRECTION_SET", args[1]);
+                    TardisMessage.send(player, "AREA_DIRECTION_SET", args[1]);
                     return true;
                 default:
                     return false;
@@ -293,7 +293,7 @@ public class TARDISAreaCommands implements CommandExecutor {
         private final Block b2;
         private final Block b3;
         private final Block b4;
-        private final BlockData air = TARDISConstants.AIR;
+        private final BlockData air = TardisConstants.AIR;
 
         SetAir(Block b1, Block b2, Block b3, Block b4) {
             this.b1 = b1;

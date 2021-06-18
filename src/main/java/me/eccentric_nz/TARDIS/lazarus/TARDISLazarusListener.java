@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.lazarus;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisPowered;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -40,12 +40,12 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISLazarusListener implements Listener {
+public class TardisLazarusListener implements Listener {
 
     final BlockData WALL = Material.COBBLESTONE_WALL.createBlockData();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISLazarusListener(TARDISPlugin plugin) {
+    public TardisLazarusListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -57,7 +57,7 @@ public class TARDISLazarusListener implements Listener {
             if (plugin.getTrackerKeeper().getLazarus().containsKey(player.getUniqueId())) {
                 return;
             }
-            if (TARDISPermission.hasPermission(player, "tardis.lazarus")) {
+            if (TardisPermission.hasPermission(player, "tardis.lazarus")) {
                 Block b = event.getClickedBlock();
                 String l = b.getLocation().toString();
                 // is it a lazarus plate?
@@ -70,7 +70,7 @@ public class TARDISLazarusListener implements Listener {
                     if (plugin.getConfig().getBoolean("allow.power_down")) {
                         ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
                         if (rs.fromID(rsc.getTardisId()) && !rs.isPowered()) {
-                            TARDISMessage.send(player, "POWER_DOWN");
+                            TardisMessage.send(player, "POWER_DOWN");
                             return;
                         }
                     }
@@ -82,9 +82,9 @@ public class TARDISLazarusListener implements Listener {
                     // open the GUI
                     Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
                     if (player.isSneaking()) {
-                        inv.setContents(new TARDISLazarusExtraInventory(plugin).getTerminal());
+                        inv.setContents(new TardisLazarusExtraInventory(plugin).getTerminal());
                     } else {
-                        inv.setContents(new TARDISLazarusInventory(plugin).getTerminal());
+                        inv.setContents(new TardisLazarusInventory(plugin).getTerminal());
                     }
                     player.openInventory(inv);
                 }

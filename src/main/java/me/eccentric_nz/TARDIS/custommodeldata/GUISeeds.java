@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
-public enum GUISeeds {
+public enum GuiSeeds {
 
     // tardis Seeds Menu
     ARS(1, 0, Material.QUARTZ_BLOCK),
@@ -51,7 +51,7 @@ public enum GUISeeds {
     private final int slot;
     private final Material material;
 
-    GUISeeds(int customModelData, int slot, Material material) {
+    GuiSeeds(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -72,11 +72,11 @@ public enum GUISeeds {
     public String getName() {
         String s = toString();
         if (s.endsWith("DOCTORS")) {
-            return TARDISStringUtils.capitalise(s.replace("DOCTORS", "DOCTOR'S")) + " Console";
+            return TardisStringUtils.capitalise(s.replace("DOCTORS", "DOCTOR'S")) + " Console";
         } else if (s.endsWith("MASTERS")) {
-            return TARDISStringUtils.capitalise(s.replace("MASTERS", "MASTER'S")) + " Console";
+            return TardisStringUtils.capitalise(s.replace("MASTERS", "MASTER'S")) + " Console";
         } else {
-            return TARDISStringUtils.capitalise(s) + " Console";
+            return TardisStringUtils.capitalise(s) + " Console";
         }
     }
 }

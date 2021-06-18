@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advanced.TardisCircuitChecker;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.travel.TARDISSaveSignInventory;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.travel.TardisSaveSignInventory;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -31,22 +31,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-class TARDISSaveSign {
+class TardisSaveSign {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISSaveSign(TARDISPlugin plugin) {
+    TardisSaveSign(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     void openGUI(Player player, int id) {
-        TARDISCircuitChecker tcc = null;
+        TardisCircuitChecker tcc = null;
         if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
-            tcc = new TARDISCircuitChecker(plugin, id);
+            tcc = new TardisCircuitChecker(plugin, id);
             tcc.getCircuits();
         }
         if (tcc != null && !tcc.hasMemory()) {
-            TARDISMessage.send(player, "NO_MEM_CIRCUIT");
+            TardisMessage.send(player, "NO_MEM_CIRCUIT");
             return;
         }
         if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(player.getUniqueId()) && plugin.getDifficulty().equals(Difficulty.HARD)) {
@@ -57,9 +57,9 @@ class TARDISSaveSign {
                 if (!lore.get(0).equals("Blank")) {
                     // read the lore from the disk
                     String world = lore.get(1);
-                    int x = TARDISNumberParsers.parseInt(lore.get(2));
-                    int y = TARDISNumberParsers.parseInt(lore.get(3));
-                    int z = TARDISNumberParsers.parseInt(lore.get(4));
+                    int x = TardisNumberParsers.parseInt(lore.get(2));
+                    int y = TardisNumberParsers.parseInt(lore.get(3));
+                    int z = TardisNumberParsers.parseInt(lore.get(4));
                     HashMap<String, Object> set_next = new HashMap<>();
                     set_next.put("world", world);
                     set_next.put("x", x);
@@ -68,7 +68,7 @@ class TARDISSaveSign {
                     set_next.put("direction", lore.get(6));
                     boolean sub = Boolean.parseBoolean(lore.get(7));
                     set_next.put("submarine", (sub) ? 1 : 0);
-                    TARDISMessage.send(player, "LOC_SET", true);
+                    TardisMessage.send(player, "LOC_SET", true);
                     // update next
                     HashMap<String, Object> where_next = new HashMap<>();
                     where_next.put("tardis_id", id);
@@ -76,14 +76,14 @@ class TARDISSaveSign {
                     plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
                 }
             } else {
-                TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, player);
+                TardisSaveSignInventory sst = new TardisSaveSignInventory(plugin, id, player);
                 ItemStack[] items = sst.getTerminal();
                 Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
                 inv.setContents(items);
                 player.openInventory(inv);
             }
         } else {
-            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, player);
+            TardisSaveSignInventory sst = new TardisSaveSignInventory(plugin, id, player);
             ItemStack[] items = sst.getTerminal();
             Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS saves");
             inv.setContents(items);

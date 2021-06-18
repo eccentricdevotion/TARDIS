@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -28,23 +28,23 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISRenameSavedLocationCommand {
+class TardisRenameSavedLocationCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISRenameSavedLocationCommand(TARDISPlugin plugin) {
+    TardisRenameSavedLocationCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean doRenameSave(Player player, String[] args) {
-        if (TARDISPermission.hasPermission(player, "tardis.save")) {
+        if (TardisPermission.hasPermission(player, "tardis.save")) {
             if (args.length < 3) {
-                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                TardisMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                TardisMessage.send(player, "NO_TARDIS");
                 return false;
             }
             int id = rs.getTardisId();
@@ -53,14 +53,14 @@ class TARDISRenameSavedLocationCommand {
             whered.put("tardis_id", id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
-                TARDISMessage.send(player, "SAVE_NOT_FOUND");
+                TardisMessage.send(player, "SAVE_NOT_FOUND");
                 return false;
             }
             if (!args[2].matches("[A-Za-z0-9_]{2,16}")) {
-                TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
+                TardisMessage.send(player, "SAVE_NAME_NOT_VALID");
                 return false;
             } else if (args[2].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
-                TARDISMessage.send(player, "SAVE_RESERVED");
+                TardisMessage.send(player, "SAVE_RESERVED");
                 return false;
             } else {
                 int destID = rsd.getDestId();
@@ -69,11 +69,11 @@ class TARDISRenameSavedLocationCommand {
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("dest_name", args[2]);
                 plugin.getQueryFactory().doUpdate("destinations", set, did);
-                TARDISMessage.send(player, "DEST_RENAMED", args[2]);
+                TardisMessage.send(player, "DEST_RENAMED", args[2]);
             }
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            TardisMessage.send(player, "NO_PERMS");
             return false;
         }
     }

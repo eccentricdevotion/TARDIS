@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardis.display;
 
-public enum TARDISDisplayType {
+public enum TardisDisplayType {
 
     ALL("&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%"),
     BIOME("&6B&7%BIOME%"),
@@ -10,7 +10,7 @@ public enum TARDISDisplayType {
 
     private final String format;
 
-    TARDISDisplayType(String format) {
+    TardisDisplayType(String format) {
         this.format = format;
     }
 

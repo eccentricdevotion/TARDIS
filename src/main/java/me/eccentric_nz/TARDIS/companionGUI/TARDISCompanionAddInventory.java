@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardis.companionGUI;
+package me.eccentric_nz.tardis.companiongui;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUICompanion;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiCompanion;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisCompanions;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,14 +33,14 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISCompanionAddInventory {
+public class TardisCompanionAddInventory {
 
     private final Player player;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final UUID uuid;
     private final ItemStack[] players;
 
-    public TARDISCompanionAddInventory(TARDISPlugin plugin, Player player) {
+    public TardisCompanionAddInventory(TardisPlugin plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         uuid = this.player.getUniqueId();
@@ -106,7 +106,7 @@ public class TARDISCompanionAddInventory {
         ItemMeta can = close.getItemMeta();
         assert can != null;
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUICompanion.BUTTON_CLOSE.getCustomModelData());
+        can.setCustomModelData(GuiCompanion.BUTTON_CLOSE.getCustomModelData());
         close.setItemMeta(can);
         heads[53] = close;
 

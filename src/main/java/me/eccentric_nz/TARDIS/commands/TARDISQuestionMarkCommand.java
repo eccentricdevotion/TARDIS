@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.commands;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,18 +27,18 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISQuestionMarkCommand implements CommandExecutor {
+public class TardisQuestionMarkCommand implements CommandExecutor {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISQuestionMarkCommand(TARDISPlugin plugin) {
+    public TardisQuestionMarkCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardis?")) {
-            TARDISCommandHelper tch = new TARDISCommandHelper(plugin);
+            TardisCommandHelper tch = new TardisCommandHelper(plugin);
             switch (args.length) {
                 case 2 -> {
                     String cmds = args[0].toLowerCase(Locale.ENGLISH) + " " + args[1].toLowerCase(Locale.ENGLISH);

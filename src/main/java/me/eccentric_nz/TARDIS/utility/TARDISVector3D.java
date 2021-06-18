@@ -21,7 +21,7 @@ package me.eccentric_nz.tardis.utility;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public class TARDISVector3D {
+public class TardisVector3d {
 
     // Use protected members, like Bukkit
     public final double x;
@@ -35,7 +35,7 @@ public class TARDISVector3D {
      * @param y the y coordinate
      * @param z the z coordinate
      */
-    private TARDISVector3D(double x, double y, double z) {
+    private TardisVector3d(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -46,7 +46,7 @@ public class TARDISVector3D {
      *
      * @param location - the location to copy.
      */
-    public TARDISVector3D(Location location) {
+    public TardisVector3d(Location location) {
         this(location.toVector());
     }
 
@@ -55,7 +55,7 @@ public class TARDISVector3D {
      *
      * @param vector - the mutable real Bukkit vector to copy.
      */
-    public TARDISVector3D(Vector vector) {
+    public TardisVector3d(Vector vector) {
         if (vector == null) {
             throw new IllegalArgumentException("Vector cannot be NULL.");
         }
@@ -70,11 +70,11 @@ public class TARDISVector3D {
      * @param other - the other vector.
      * @return The new result vector.
      */
-    public TARDISVector3D add(TARDISVector3D other) {
+    public TardisVector3d add(TardisVector3d other) {
         if (other == null) {
             throw new IllegalArgumentException("other cannot be NULL");
         }
-        return new TARDISVector3D(x + other.x, y + other.y, z + other.z);
+        return new TardisVector3d(x + other.x, y + other.y, z + other.z);
     }
 
     /**
@@ -85,8 +85,8 @@ public class TARDISVector3D {
      * @param z the z coordinate to add
      * @return The new result vector.
      */
-    public TARDISVector3D add(double x, double y, double z) {
-        return new TARDISVector3D(this.x + x, this.y + y, this.z + z);
+    public TardisVector3d add(double x, double y, double z) {
+        return new TardisVector3d(this.x + x, this.y + y, this.z + z);
     }
 
     /**
@@ -95,11 +95,11 @@ public class TARDISVector3D {
      * @param other - the other position.
      * @return The new result position.
      */
-    public TARDISVector3D subtract(TARDISVector3D other) {
+    public TardisVector3d subtract(TardisVector3d other) {
         if (other == null) {
             throw new IllegalArgumentException("other cannot be NULL");
         }
-        return new TARDISVector3D(x - other.x, y - other.y, z - other.z);
+        return new TardisVector3d(x - other.x, y - other.y, z - other.z);
     }
 
     /**
@@ -108,8 +108,8 @@ public class TARDISVector3D {
      * @param factor - multiplier.
      * @return The new result.
      */
-    public TARDISVector3D multiply(int factor) {
-        return new TARDISVector3D(x * factor, y * factor, z * factor);
+    public TardisVector3d multiply(int factor) {
+        return new TardisVector3d(x * factor, y * factor, z * factor);
     }
 
     /**
@@ -118,8 +118,8 @@ public class TARDISVector3D {
      * @param factor - multiplier.
      * @return The new result.
      */
-    public TARDISVector3D multiply(double factor) {
-        return new TARDISVector3D(x * factor, y * factor, z * factor);
+    public TardisVector3d multiply(double factor) {
+        return new TardisVector3d(x * factor, y * factor, z * factor);
     }
 
     /**
@@ -127,8 +127,8 @@ public class TARDISVector3D {
      *
      * @return The new result.
      */
-    public TARDISVector3D abs() {
-        return new TARDISVector3D(Math.abs(x), Math.abs(y), Math.abs(z));
+    public TardisVector3d abs() {
+        return new TardisVector3d(Math.abs(x), Math.abs(y), Math.abs(z));
     }
 
     @Override

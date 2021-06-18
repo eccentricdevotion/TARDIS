@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.tardis.enumeration.DiskCircuit;
 import me.eccentric_nz.tardis.enumeration.GlowstoneCircuit;
 import me.eccentric_nz.tardis.enumeration.Storage;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -48,13 +48,13 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISStorageListener extends TARDISMenuListener implements Listener {
+public class TardisStorageListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> inv_titles = new ArrayList<>();
     private final List<Material> onlythese = new ArrayList<>();
 
-    public TARDISStorageListener(TARDISPlugin plugin) {
+    public TardisStorageListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
         for (Storage s : Storage.values()) {
@@ -92,7 +92,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                         Location loc = p.getLocation();
                         Objects.requireNonNull(loc.getWorld()).dropItemNaturally(loc, stack);
                         view.setItem(i, new ItemStack(Material.AIR));
-                        TARDISMessage.send(p, "ADV_NO_STORE");
+                        TardisMessage.send(p, "ADV_NO_STORE");
                     }
                 }
             }
@@ -212,7 +212,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
             if (ims.hasDisplayName() && ims.getDisplayName().equals("Area Storage Disk")) {
                 event.setCancelled(true);
                 Player p = event.getPlayer();
-                TARDISMessage.send(p, "ADV_NO_DROP");
+                TardisMessage.send(p, "ADV_NO_DROP");
             }
         }
     }
@@ -228,7 +228,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                 }
             }
         }
-        String serialized = TARDISSerializeInventory.itemStacksToString(inv.getContents());
+        String serialized = TardisSerializeInventory.itemStacksToString(inv.getContents());
         HashMap<String, Object> set = new HashMap<>();
         set.put(column, serialized);
         HashMap<String, Object> where = new HashMap<>();
@@ -242,14 +242,14 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
             try {
                 if (!serialized.isEmpty()) {
                     if (s.equals(Storage.AREA)) {
-                        stack = TARDISSerializeInventory.itemStacksFromString(new TARDISAreaDisks(plugin).checkDisksForNewAreas(p));
+                        stack = TardisSerializeInventory.itemStacksFromString(new TardisAreaDisks(plugin).checkDisksForNewAreas(p));
                     } else {
-                        stack = TARDISSerializeInventory.itemStacksFromString(serialized);
+                        stack = TardisSerializeInventory.itemStacksFromString(serialized);
                     }
                 } else if (s.equals(Storage.AREA)) {
-                    stack = new TARDISAreaDisks(plugin).makeDisks(p);
+                    stack = new TardisAreaDisks(plugin).makeDisks(p);
                 } else {
-                    stack = TARDISSerializeInventory.itemStacksFromString(s.getEmpty());
+                    stack = TardisSerializeInventory.itemStacksFromString(s.getEmpty());
                 }
                 for (ItemStack is : stack) {
                     if (is != null && is.hasItemMeta()) {
@@ -264,7 +264,7 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                                     is.setItemMeta(im);
                                 }
                             } else {
-                                if (TARDISStaticUtils.isMusicDisk(is)) {
+                                if (TardisStaticUtils.isMusicDisk(is)) {
                                     im.setCustomModelData(10000001);
                                 } else if (is.getType().equals(Material.LIME_WOOL)) {
                                     im.setCustomModelData(86);

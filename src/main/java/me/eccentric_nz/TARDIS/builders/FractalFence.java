@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.builders;
 
-import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TardisConstants;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -68,9 +68,9 @@ public class FractalFence {
         }
         int n = 0;
         while (n < 60) {
-            int rx = minx + TARDISConstants.RANDOM.nextInt(6);
-            int ry = miny + TARDISConstants.RANDOM.nextInt(5);
-            int rz = minz + TARDISConstants.RANDOM.nextInt(6);
+            int rx = minx + TardisConstants.RANDOM.nextInt(6);
+            int ry = miny + TardisConstants.RANDOM.nextInt(5);
+            int rz = minz + TardisConstants.RANDOM.nextInt(6);
             points.add(new Vector(rx, ry, rz));
             n++;
         }

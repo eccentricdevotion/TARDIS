@@ -17,32 +17,32 @@
 package me.eccentric_nz.tardis.desktop;
 
 import com.google.gson.*;
-import me.eccentric_nz.tardis.TARDISBuilderInstanceKeeper;
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.api.event.TARDISDesktopThemeEvent;
-import me.eccentric_nz.tardis.ars.TARDISARSJettison;
-import me.eccentric_nz.tardis.ars.TARDISARSMethods;
+import me.eccentric_nz.tardis.TardisBuilderInstanceKeeper;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.api.event.TardisDesktopThemeEvent;
+import me.eccentric_nz.tardis.ars.TardisArsJettison;
+import me.eccentric_nz.tardis.ars.TardisArsMethods;
 import me.eccentric_nz.tardis.builders.FractalFence;
-import me.eccentric_nz.tardis.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.tardis.builders.TARDISTIPSData;
-import me.eccentric_nz.tardis.builders.TARDISTimeRotor;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
+import me.eccentric_nz.tardis.builders.TardisTipsData;
+import me.eccentric_nz.tardis.builders.TardisTimeRotor;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
 import me.eccentric_nz.tardis.database.data.Archive;
-import me.eccentric_nz.tardis.database.data.TARDIS;
-import me.eccentric_nz.tardis.database.resultset.ResultSetARS;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.database.resultset.ResultSetArs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.ConsoleSize;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.schematic.ArchiveReset;
 import me.eccentric_nz.tardis.schematic.ResultSetArchive;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.tardis.utility.TARDISBlockSetters;
-import me.eccentric_nz.tardis.utility.TARDISMaterials;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
+import me.eccentric_nz.tardis.utility.TardisBlockSetters;
+import me.eccentric_nz.tardis.utility.TardisMaterials;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -62,11 +62,11 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
+public class TardisFullThemeRunnable extends TardisThemeRunnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final UUID uuid;
-    private final TARDISUpgradeData tud;
+    private final TardisUpgradeData tud;
     private final List<Block> lampBlocks = new ArrayList<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
@@ -112,7 +112,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private ConsoleSize size_next;
     private ConsoleSize size_prev;
 
-    TARDISFullThemeRunnable(TARDISPlugin plugin, UUID uuid, TARDISUpgradeData tud) {
+    TardisFullThemeRunnable(TardisPlugin plugin, UUID uuid, TardisUpgradeData tud) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.tud = tud;
@@ -134,7 +134,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 } else {
                     // abort
                     Player cp = plugin.getServer().getPlayer(uuid);
-                    TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                    TardisMessage.send(cp, "ARCHIVE_NOT_FOUND");
                     // cancel task
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     return;
@@ -150,7 +150,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 } else {
                     // abort
                     Player cp = plugin.getServer().getPlayer(uuid);
-                    TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                    TardisMessage.send(cp, "ARCHIVE_NOT_FOUND");
                     // cancel task
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     return;
@@ -170,7 +170,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     return;
                 }
                 // get JSON
-                obj = TARDISSchematicGZip.unzip(path);
+                obj = TardisSchematicGZip.unzip(path);
                 size_next = tud.getSchematic().getConsoleSize();
             } else {
                 obj = archive_next.getJson();
@@ -188,7 +188,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     return;
                 }
                 // get JSON
-                JsonObject prevObj = TARDISSchematicGZip.unzip(prevPath);
+                JsonObject prevObj = TardisSchematicGZip.unzip(prevPath);
                 assert prevObj != null;
                 JsonObject prevDimensions = prevObj.get("dimensions").getAsJsonObject();
                 ph = prevDimensions.get("height").getAsInt();
@@ -217,10 +217,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
             }
-            TARDIS tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             slot = tardis.getTIPS();
             id = tardis.getTardisId();
-            chunk = TARDISStaticLocationGetters.getChunk(tardis.getChunk());
+            chunk = TardisStaticLocationGetters.getChunk(tardis.getChunk());
             if (tud.getPrevious().getPermission().equals("ender")) {
                 // remove ender crystal
                 for (Entity end : chunk.getEntities()) {
@@ -231,18 +231,18 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             if (tardis.getRotor() != null) {
                 // remove item frame and delete UUID in db
-                ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                ItemFrame itemFrame = TardisTimeRotor.getItemFrame(tardis.getRotor());
                 // only if entity still exists
                 if (itemFrame != null) {
                     itemFrame.setItem(null, false);
                     itemFrame.remove();
                 }
-                TARDISTimeRotor.updateRotorRecord(id, "");
+                TardisTimeRotor.updateRotorRecord(id, "");
             }
             chunks = getChunks(chunk, tud.getSchematic());
             if (!tardis.getCreeper().isEmpty()) {
                 // remove the charged creeper
-                Location creeper = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
+                Location creeper = TardisStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                 assert creeper != null;
                 Entity ent = Objects.requireNonNull(creeper.getWorld()).spawnEntity(creeper, EntityType.EGG);
                 ent.getNearbyEntities(1.5d, 1.5d, 1.5d).forEach((e) -> {
@@ -253,8 +253,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 ent.remove();
             }
             if (slot != -1) { // default world - use TIPS
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                TARDISTIPSData pos = tintpos.getTIPSData(slot);
+                TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
+                TardisTipsData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();
             } else {
@@ -265,10 +265,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             if (tud.getSchematic().getPermission().equals("archive")) {
                 starty = archive_next.getY();
             } else {
-                starty = TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
+                starty = TardisConstants.HIGHER.contains(tud.getSchematic().getPermission()) ? 65 : 64;
             }
             downgrade = (h < ph || w < pw);
-            world = TARDISStaticLocationGetters.getWorld(tardis.getChunk());
+            world = TardisStaticLocationGetters.getWorld(tardis.getChunk());
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
             wg1 = new Location(world, startx, starty, startz);
             wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (c - 1));
@@ -307,7 +307,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     Player pv = plugin.getServer().getPlayer(u);
                     if (pv != null) { // may have gone offline!
                         pv.teleport(loc);
-                        TARDISMessage.send(pv, "UPGRADE_TELEPORT");
+                        TardisMessage.send(pv, "UPGRADE_TELEPORT");
                     }
                 });
             }
@@ -315,7 +315,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             plugin.getQueryFactory().doDelete("lamps", wherel);
-            plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
+            plugin.getPM().callEvent(new TardisDesktopThemeEvent(player, tardis, tud));
         }
         if (level == (h - 1) && row == (w - 1)) {
             // we're finished
@@ -363,7 +363,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
             }
             lampBlocks.forEach((lamp) -> {
-                BlockData l = (tud.getSchematic().hasLanterns() || (archive_next != null && archive_next.isLanterns())) ? TARDISConstants.LANTERN : TARDISConstants.LAMP;
+                BlockData l = (tud.getSchematic().hasLanterns() || (archive_next != null && archive_next.isLanterns())) ? TardisConstants.LANTERN : TardisConstants.LAMP;
                 lamp.setBlockData(l);
             });
             lampBlocks.clear();
@@ -371,7 +371,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 FractalFence.grow(fractalBlocks.get(f), f);
             }
             if (postBedrock != null) {
-                postBedrock.setBlockData(TARDISConstants.GLASS);
+                postBedrock.setBlockData(TardisConstants.GLASS);
             }
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 if (slot == -1) {
@@ -393,7 +393,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             // jettison blocks if downgrading to smaller size
             if (downgrade) {
-                List<TARDISARSJettison> jettisons = getJettisons(size_next, size_prev, chunk);
+                List<TardisArsJettison> jettisons = getJettisons(size_next, size_prev, chunk);
                 jettisons.forEach((jet) -> {
                     // remove the room
                     setAir(jet.getX(), jet.getY(), jet.getZ(), jet.getChunk().getWorld(), 16);
@@ -416,7 +416,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 setr.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", refund, setr, null);
                 if (player.isOnline()) {
-                    TARDISMessage.send(player, "ENERGY_RECOVERED", String.format("%d", refund));
+                    TardisMessage.send(player, "ENERGY_RECOVERED", String.format("%d", refund));
                 }
             } else if (tud.getSchematic().getPermission().equals("coral") && tud.getPrevious().getConsoleSize().equals(ConsoleSize.TALL)) {
                 // clean up space above coral console
@@ -428,7 +428,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", id);
             plugin.getQueryFactory().doDelete("chunks", wherec);
-            List<Chunk> chunkList = TARDISStaticUtils.getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, c);
+            List<Chunk> chunkList = TardisStaticUtils.getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, c);
             // update chunks list in DB
             chunkList.stream().map((hunk) -> {
                 HashMap<String, Object> setc = new HashMap<>();
@@ -441,7 +441,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;
-            TARDISMessage.send(player, "UPGRADE_FINISHED");
+            TardisMessage.send(player, "UPGRADE_FINISHED");
         } else {
             JsonArray floor = arr.get(level).getAsJsonArray();
             JsonArray r = (JsonArray) floor.get(row);
@@ -474,29 +474,29 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
                 if (type.equals(Material.NOTE_BLOCK)) {
                     // remember the location of this Disk Storage
-                    String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String storage = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 14, storage, 0);
                     // set block data to correct MUSHROOM_STEM
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
+                    data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(51));
                 }
                 if (type.equals(Material.ORANGE_WOOL)) {
                     if (wall_type == Material.ORANGE_WOOL) {
-                        data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                        data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
                     } else {
                         data = wall_type.createBlockData();
                     }
                 }
                 if (type.equals(Material.BLUE_WOOL)) {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
+                    data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(54));
                 }
                 if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && tud.getSchematic().getPermission().equals("delta")) {
                     fractalBlocks.add(world.getBlockAt(x, y, z));
                 }
                 if (type.equals(Material.WHITE_STAINED_GLASS) && tud.getSchematic().getPermission().equals("war")) {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
+                    data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(47));
                 }
                 if (type.equals(Material.WHITE_TERRACOTTA) && tud.getSchematic().getPermission().equals("war")) {
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(48));
+                    data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(48));
                 }
                 if (type.equals(Material.LIGHT_GRAY_WOOL)) {
                     data = floor_type.createBlockData();
@@ -506,12 +506,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                      * mob spawner will be converted to the correct id by
                      * setBlock(), but remember it for the scanner.
                      */
-                    String scanner = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String scanner = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 33, scanner, 0);
                 }
                 if (type.equals(Material.CHEST)) {
                     // remember the location of the condenser chest
-                    String condenser = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String condenser = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 34, condenser, 0);
                 }
                 if (type.equals(Material.IRON_DOOR)) {
@@ -532,29 +532,29 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
                 if (type.equals(Material.STONE_BUTTON)) { // random button
                     // remember the location of this button
-                    String button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String button = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 1, button, 0);
                 }
                 if (type.equals(Material.JUKEBOX)) {
                     // remember the location of this Advanced Console
-                    String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String advanced = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 15, advanced, 0);
                     // set block data to correct MUSHROOM_STEM
-                    data = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
+                    data = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
                 }
                 if (type.equals(Material.CAKE)) {
                     /*
                      * This block will be converted to a lever by setBlock(),
                      * but remember it so we can use it as the handbrake!
                      */
-                    String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String handbrakeloc = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 0, handbrakeloc, 0);
                     // get current ARS json
                     HashMap<String, Object> wherer = new HashMap<>();
                     wherer.put("tardis_id", id);
-                    ResultSetARS rsa = new ResultSetARS(plugin, wherer);
+                    ResultSetArs rsa = new ResultSetArs(plugin, wherer);
                     if (rsa.resultSet()) {
-                        String[][][] existing = TARDISARSMethods.getGridFromJSON(rsa.getJson());
+                        String[][][] existing = TardisArsMethods.getGridFromJSON(rsa.getJson());
                         if (downgrade) {
                             // reset slots to stone
                             switch (size_prev) {
@@ -691,14 +691,14 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                      * setBlock(), but remember it for the Artron Energy
                      * Capacitor.
                      */
-                    String woodbuttonloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String woodbuttonloc = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 6, woodbuttonloc, 0);
                 }
                 if (type.equals(Material.DAYLIGHT_DETECTOR)) {
                     /*
                      * remember the telepathic circuit.
                      */
-                    String telepathicloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String telepathicloc = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 23, telepathicloc, 0);
                 }
                 if (type.equals(Material.BEACON) && tud.getSchematic().getPermission().equals("ender")) {
@@ -708,9 +708,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
                 }
                 // if it's an iron/gold/diamond/emerald/beacon/redstone/bedrock/conduit/netherite block put it in the blocks table
-                if (TARDISBuilderInstanceKeeper.getPrecious().contains(type)) {
+                if (TardisBuilderInstanceKeeper.getPrecious().contains(type)) {
                     HashMap<String, Object> setpb = new HashMap<>();
-                    String loc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    String loc = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                     setpb.put("tardis_id", id);
                     setpb.put("location", loc);
                     setpb.put("data", "minecraft:air");
@@ -723,8 +723,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     /*
                      * spawn an item frame and place the time rotor in it
                      */
-                    TARDISBlockSetters.setBlock(world, x, y, z, (tud.getSchematic().getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
-                    TARDISTimeRotor.setItemFrame(tud.getSchematic().getPermission(), new Location(world, x, y + 1, z), id);
+                    TardisBlockSetters.setBlock(world, x, y, z, (tud.getSchematic().getPermission().equals("delta")) ? Material.POLISHED_BLACKSTONE_BRICKS : Material.STONE_BRICKS);
+                    TardisTimeRotor.setItemFrame(tud.getSchematic().getPermission(), new Location(world, x, y + 1, z), id);
                 } else if (type.equals(Material.IRON_DOOR)) { // doors
                     postDoorBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.LEVER)) {
@@ -741,9 +741,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (Tag.WALL_SIGNS.isTagged(type)) {
                     postSignBlocks.put(world.getBlockAt(x, y, z), data);
-                } else if (TARDISMaterials.infested.contains(type)) {
+                } else if (TardisMaterials.infested.contains(type)) {
                     // legacy monster egg stone for controls
-                    TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                    TardisBlockSetters.setBlock(world, x, y, z, Material.AIR);
                 } else if (type.equals(Material.MUSHROOM_STEM)) { // mushroom stem for repeaters
                     // save repeater location
                     if (j < 6) {
@@ -780,15 +780,15 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     }
                 } else if (type.equals(Material.BROWN_MUSHROOM) && tud.getSchematic().getPermission().equals("master")) {
                     // spawn locations for two villagers
-                    TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                    TardisBlockSetters.setBlock(world, x, y, z, Material.AIR);
                     plugin.setTardisSpawn(true);
                     world.spawnEntity(new Location(world, x + 0.5, y + 0.25, z + 0.5), EntityType.VILLAGER);
                 } else if (type.equals(Material.SPONGE)) {
-                    TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                    TardisBlockSetters.setBlock(world, x, y, z, Material.AIR);
                 } else {
                     BlockState state = world.getBlockAt(x, y, z).getState();
                     plugin.getTardisHelper().removeTileEntity(state);
-                    TARDISBlockSetters.setBlock(world, x, y, z, data);
+                    TardisBlockSetters.setBlock(world, x, y, z, data);
                 }
             }
             // remove items
@@ -810,64 +810,64 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
         }
     }
 
-    private List<TARDISARSJettison> getJettisons(ConsoleSize next, ConsoleSize prev, Chunk chunk) {
-        List<TARDISARSJettison> list = new ArrayList<>();
+    private List<TardisArsJettison> getJettisons(ConsoleSize next, ConsoleSize prev, Chunk chunk) {
+        List<TardisArsJettison> list = new ArrayList<>();
         switch (prev) {
             case MASSIVE:
                 switch (next) {
                     case TALL:
                         // the 5 chunks on the same level &
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 6));
+                        list.add(new TardisArsJettison(chunk, 1, 4, 6));
+                        list.add(new TardisArsJettison(chunk, 1, 5, 6));
+                        list.add(new TardisArsJettison(chunk, 1, 6, 4));
+                        list.add(new TardisArsJettison(chunk, 1, 6, 5));
+                        list.add(new TardisArsJettison(chunk, 1, 6, 6));
                         // the 5 chunks on the level above
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 6));
+                        list.add(new TardisArsJettison(chunk, 2, 4, 6));
+                        list.add(new TardisArsJettison(chunk, 2, 5, 6));
+                        list.add(new TardisArsJettison(chunk, 2, 6, 4));
+                        list.add(new TardisArsJettison(chunk, 2, 6, 5));
+                        list.add(new TardisArsJettison(chunk, 2, 6, 6));
 
                         break;
                     case MEDIUM:
                         // the 5 chunks on the same level &
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 6));
+                        list.add(new TardisArsJettison(chunk, 1, 4, 6));
+                        list.add(new TardisArsJettison(chunk, 1, 5, 6));
+                        list.add(new TardisArsJettison(chunk, 1, 6, 4));
+                        list.add(new TardisArsJettison(chunk, 1, 6, 5));
+                        list.add(new TardisArsJettison(chunk, 1, 6, 6));
                         // the 9 chunks on the level above
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 6));
+                        list.add(new TardisArsJettison(chunk, 2, 4, 4));
+                        list.add(new TardisArsJettison(chunk, 2, 4, 5));
+                        list.add(new TardisArsJettison(chunk, 2, 4, 6));
+                        list.add(new TardisArsJettison(chunk, 2, 5, 4));
+                        list.add(new TardisArsJettison(chunk, 2, 5, 5));
+                        list.add(new TardisArsJettison(chunk, 2, 5, 6));
+                        list.add(new TardisArsJettison(chunk, 2, 6, 4));
+                        list.add(new TardisArsJettison(chunk, 2, 6, 5));
+                        list.add(new TardisArsJettison(chunk, 2, 6, 6));
                         break;
                     case SMALL:
                         // the 8 chunks on the same level &
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 6));
+                        list.add(new TardisArsJettison(chunk, 1, 4, 5));
+                        list.add(new TardisArsJettison(chunk, 1, 4, 6));
+                        list.add(new TardisArsJettison(chunk, 1, 5, 4));
+                        list.add(new TardisArsJettison(chunk, 1, 5, 5));
+                        list.add(new TardisArsJettison(chunk, 1, 5, 6));
+                        list.add(new TardisArsJettison(chunk, 1, 6, 4));
+                        list.add(new TardisArsJettison(chunk, 1, 6, 5));
+                        list.add(new TardisArsJettison(chunk, 1, 6, 6));
                         // the 9 chunks on the level above
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 6));
+                        list.add(new TardisArsJettison(chunk, 2, 4, 4));
+                        list.add(new TardisArsJettison(chunk, 2, 4, 5));
+                        list.add(new TardisArsJettison(chunk, 2, 4, 6));
+                        list.add(new TardisArsJettison(chunk, 2, 5, 4));
+                        list.add(new TardisArsJettison(chunk, 2, 5, 5));
+                        list.add(new TardisArsJettison(chunk, 2, 5, 6));
+                        list.add(new TardisArsJettison(chunk, 2, 6, 4));
+                        list.add(new TardisArsJettison(chunk, 2, 6, 5));
+                        list.add(new TardisArsJettison(chunk, 2, 6, 6));
                         break;
                     default:
                         // same size do nothing
@@ -878,21 +878,21 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 switch (next) {
                     case MEDIUM:
                         // the 4 chunks on the level above
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
+                        list.add(new TardisArsJettison(chunk, 2, 4, 4));
+                        list.add(new TardisArsJettison(chunk, 2, 4, 5));
+                        list.add(new TardisArsJettison(chunk, 2, 5, 4));
+                        list.add(new TardisArsJettison(chunk, 2, 5, 5));
                         break;
                     case SMALL:
                         // the 3 chunks on the same level &
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 5));
+                        list.add(new TardisArsJettison(chunk, 1, 4, 5));
+                        list.add(new TardisArsJettison(chunk, 1, 5, 4));
+                        list.add(new TardisArsJettison(chunk, 1, 5, 5));
                         // the 4 chunks on the level above
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
+                        list.add(new TardisArsJettison(chunk, 2, 4, 4));
+                        list.add(new TardisArsJettison(chunk, 2, 4, 5));
+                        list.add(new TardisArsJettison(chunk, 2, 5, 4));
+                        list.add(new TardisArsJettison(chunk, 2, 5, 5));
                         break;
                     default:
                         // same size or bigger do nothing
@@ -902,9 +902,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             case MEDIUM:
                 // same size or bigger do nothing
                 if (next == ConsoleSize.SMALL) {// the 3 chunks on the same level
-                    list.add(new TARDISARSJettison(chunk, 1, 4, 5));
-                    list.add(new TARDISARSJettison(chunk, 1, 5, 4));
-                    list.add(new TARDISARSJettison(chunk, 1, 5, 5));
+                    list.add(new TardisArsJettison(chunk, 1, 4, 5));
+                    list.add(new TardisArsJettison(chunk, 1, 5, 4));
+                    list.add(new TardisArsJettison(chunk, 1, 5, 5));
                 }
                 break;
             default: // SMALL size do nothing
@@ -920,7 +920,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     Block b = jw.getBlockAt(xx, yy, zz);
                     BlockState state = b.getState();
                     plugin.getTardisHelper().removeTileEntity(state);
-                    b.setBlockData(TARDISConstants.AIR);
+                    b.setBlockData(TardisConstants.AIR);
                 }
             }
         }

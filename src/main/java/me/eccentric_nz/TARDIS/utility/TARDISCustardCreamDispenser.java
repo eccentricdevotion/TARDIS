@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.artron.TARDISArtronLevels;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.artron.TardisArtronLevels;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -31,14 +31,14 @@ import org.bukkit.util.Vector;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class TARDISCustardCreamDispenser {
+public class TardisCustardCreamDispenser {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
     private final Block block;
     private final int id;
 
-    public TARDISCustardCreamDispenser(TARDISPlugin plugin, Player player, Block block, int id) {
+    public TardisCustardCreamDispenser(TardisPlugin plugin, Player player, Block block, int id) {
         this.plugin = plugin;
         this.player = player;
         this.block = block;
@@ -48,11 +48,11 @@ public class TARDISCustardCreamDispenser {
     public void dispense() {
         // block must be a dispenser
         if (!block.getType().equals(Material.DISPENSER)) {
-            TARDISMessage.send(player, "DISPENSER_TYPE");
+            TardisMessage.send(player, "DISPENSER_TYPE");
             return;
         }
         // check artron energy level
-        TARDISArtronLevels tardisArtronLevels = new TARDISArtronLevels(plugin);
+        TardisArtronLevels tardisArtronLevels = new TardisArtronLevels(plugin);
         if (tardisArtronLevels.checkLevel(id, plugin.getArtronConfig().getInt("custard_cream"), player)) {
             ItemStack cookie = new ItemStack(Material.COOKIE, 1);
             ItemMeta im = cookie.getItemMeta();

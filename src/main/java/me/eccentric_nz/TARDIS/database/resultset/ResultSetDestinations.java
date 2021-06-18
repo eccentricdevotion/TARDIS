@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,9 +33,9 @@ import java.util.Map;
  */
 public class ResultSetDestinations {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
@@ -59,7 +59,7 @@ public class ResultSetDestinations {
      * @param where    a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      * @param multiple a boolean indicating whether multiple rows should be fetched
      */
-    public ResultSetDestinations(TARDISPlugin plugin, HashMap<String, Object> where, boolean multiple) {
+    public ResultSetDestinations(TardisPlugin plugin, HashMap<String, Object> where, boolean multiple) {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;

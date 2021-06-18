@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,11 +26,11 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 /**
  * @author eccentric_nz
  */
-public class TARDISFakeChatListener implements Listener {
+public class TardisFakeChatListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISFakeChatListener(TARDISPlugin plugin) {
+    public TardisFakeChatListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

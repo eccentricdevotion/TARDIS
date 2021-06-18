@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility.recalculators;
 
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
@@ -24,7 +24,7 @@ import org.bukkit.block.data.Directional;
 /**
  * @author eccentric_nz
  */
-public class TARDISStairRecalculator {
+public class TardisStairRecalculator {
 
     /**
      * Recalculate the data for directional block (STAIR) when the tardis preset changes direction.
@@ -35,7 +35,7 @@ public class TARDISStairRecalculator {
      * @param duck whether this is the Rubber Duck preset
      * @return the recalculated block data
      */
-    public BlockData recalculate(BlockData b, COMPASS d, int col, boolean duck) {
+    public BlockData recalculate(BlockData b, CardinalDirection d, int col, boolean duck) {
         Directional stair = (Directional) b;
         switch (d) {
             case SOUTH:

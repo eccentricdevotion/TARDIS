@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-public class TARDISRedProtectChecker {
+public class TardisRedProtectChecker {
 
     /**
      * Checks to see whether the specified location is within a GriefPrevention claim.

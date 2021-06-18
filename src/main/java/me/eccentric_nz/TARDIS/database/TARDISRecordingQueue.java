@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.database;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class TARDISRecordingQueue {
+public class TardisRecordingQueue {
 
     private static final LinkedBlockingQueue<String> QUEUE = new LinkedBlockingQueue<>();
 

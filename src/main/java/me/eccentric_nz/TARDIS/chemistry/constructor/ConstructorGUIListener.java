@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.chemistry.constructor;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.chemistry.element.Element;
 import me.eccentric_nz.tardis.chemistry.element.ElementBuilder;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,9 +33,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Objects;
 
-public class ConstructorGUIListener extends TARDISMenuListener implements Listener {
+public class ConstructorGuiListener extends TardisMenuListener implements Listener {
 
-    public ConstructorGUIListener(TARDISPlugin plugin) {
+    public ConstructorGuiListener(TardisPlugin plugin) {
         super(plugin);
     }
 

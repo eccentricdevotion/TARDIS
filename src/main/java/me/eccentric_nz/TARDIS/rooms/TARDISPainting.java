@@ -20,7 +20,7 @@ import org.bukkit.Art;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 
-public class TARDISPainting {
+public class TardisPainting {
 
     public static Location calculatePosition(Art art, BlockFace facing, Location loc) {
         switch (art) {

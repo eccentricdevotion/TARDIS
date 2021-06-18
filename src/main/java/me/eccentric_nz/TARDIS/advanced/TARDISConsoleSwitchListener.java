@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.tardis.advanced;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.ars.TARDISARSInventory;
-import me.eccentric_nz.tardis.chameleon.TARDISChameleonInventory;
-import me.eccentric_nz.tardis.control.TARDISScanner;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.ars.TardisArsInventory;
+import me.eccentric_nz.tardis.chameleon.TardisChameleonInventory;
+import me.eccentric_nz.tardis.control.TardisScanner;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.travel.TARDISSaveSignInventory;
-import me.eccentric_nz.tardis.travel.TARDISTemporalLocatorInventory;
-import me.eccentric_nz.tardis.travel.TARDISTerminalInventory;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.travel.TardisSaveSignInventory;
+import me.eccentric_nz.tardis.travel.TardisTemporalLocatorInventory;
+import me.eccentric_nz.tardis.travel.TardisTerminalInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -49,12 +49,12 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISConsoleSwitchListener implements Listener {
+public class TardisConsoleSwitchListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Integer> gui_circuits = Arrays.asList(10001966, 10001973, 10001974, 10001975, 10001976, 10001977, 20001966, 20001973, 20001974, 20001975, 20001976, 20001977);
 
-    public TARDISConsoleSwitchListener(TARDISPlugin plugin) {
+    public TardisConsoleSwitchListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -69,7 +69,7 @@ public class TARDISConsoleSwitchListener implements Listener {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
                 event.setCancelled(true);
-                TARDISMessage.send(p, "NOT_IN_TARDIS");
+                TardisMessage.send(p, "NOT_IN_TARDIS");
             }
             if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
                 event.setCancelled(true);
@@ -85,33 +85,33 @@ public class TARDISConsoleSwitchListener implements Listener {
                             where.put("uuid", p.getUniqueId().toString());
                             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                             if (rs.resultSet()) {
-                                TARDIS tardis = rs.getTardis();
+                                Tardis tardis = rs.getTardis();
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                     ItemStack[] stack = null;
                                     Inventory new_inv = null;
                                     switch (cmd) { // Chameleon circuit
                                         case 10001966, 20001966 -> {
                                             new_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Chameleon Circuit");
-                                            stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
+                                            stack = new TardisChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
                                         } // ars circuit
                                         case 10001973, 20001973 -> {
                                             new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
-                                            stack = new TARDISARSInventory(plugin).getARS();
+                                            stack = new TardisArsInventory(plugin).getARS();
                                         } // Temporal circuit
                                         case 10001974, 20001974 -> {
                                             new_inv = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "Temporal Locator");
-                                            stack = new TARDISTemporalLocatorInventory(plugin).getTemporal();
+                                            stack = new TardisTemporalLocatorInventory(plugin).getTemporal();
                                         } // Memory circuit (saves/areas)
                                         case 10001975, 20001975 -> {
                                             new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis saves");
-                                            stack = new TARDISSaveSignInventory(plugin, tardis.getTardisId(), p).getTerminal();
+                                            stack = new TardisSaveSignInventory(plugin, tardis.getTardisId(), p).getTerminal();
                                         } // Input circuit (terminal)
                                         case 10001976, 20001976 -> {
                                             new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Destination Terminal");
-                                            stack = new TARDISTerminalInventory(plugin).getTerminal();
+                                            stack = new TardisTerminalInventory(plugin).getTerminal();
                                         }
                                         default -> // scanner circuit
-                                                TARDISScanner.scan(p, tardis.getTardisId(), plugin.getServer().getScheduler());
+                                                TardisScanner.scan(p, tardis.getTardisId(), plugin.getServer().getScheduler());
                                     }
                                     // close inventory
                                     p.closeInventory();
@@ -122,7 +122,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                                     }
                                 }, 1L);
                             } else {
-                                TARDISMessage.send(p, "NO_TARDIS");
+                                TardisMessage.send(p, "NO_TARDIS");
                             }
                         }
                     }

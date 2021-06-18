@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.flight;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetRepeaters;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -35,10 +35,10 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-class TARDISManualFlightRunnable implements Runnable {
+class TardisManualFlightRunnable implements Runnable {
 
     private static final int LOOPS = 10;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Location> target;
     private final List<String> controls = Arrays.asList("Helmic Regulator", "Astrosextant Rectifier", "Gravitic Anomaliser", "Absolute Tesseractulator");
     private final Player player;
@@ -46,7 +46,7 @@ class TARDISManualFlightRunnable implements Runnable {
     private int taskId;
     private int i = 0;
 
-    TARDISManualFlightRunnable(TARDISPlugin plugin, Player player, int id) {
+    TardisManualFlightRunnable(TardisPlugin plugin, Player player, int id) {
         this.plugin = plugin;
         this.player = player;
         target = getRepeaterList(id);
@@ -61,12 +61,12 @@ class TARDISManualFlightRunnable implements Runnable {
         if (i < LOOPS) {
             i++;
             if (target.size() < 4) {
-                TARDISMessage.send(player, "FLIGHT_BAD");
+                TardisMessage.send(player, "FLIGHT_BAD");
                 return;
             }
-            int r = TARDISConstants.RANDOM.nextInt(4);
+            int r = TardisConstants.RANDOM.nextInt(4);
             Location loc = target.get(r);
-            TARDISMessage.send(player, "FLIGHT_CLICK", controls.get(r));
+            TardisMessage.send(player, "FLIGHT_CLICK", controls.get(r));
             Objects.requireNonNull(loc.getWorld()).playEffect(loc, Effect.STEP_SOUND, 152);
             plugin.getTrackerKeeper().getFlight().put(player.getUniqueId(), loc.toString());
         } else {
@@ -77,7 +77,7 @@ class TARDISManualFlightRunnable implements Runnable {
             plugin.getTrackerKeeper().getFlight().remove(uuid);
             // adjust location
             if (blocks != 0) {
-                Location adjusted = new TARDISFlightAdjustment(plugin).getLocation(plugin.getTrackerKeeper().getFlightData().get(uuid), blocks);
+                Location adjusted = new TardisFlightAdjustment(plugin).getLocation(plugin.getTrackerKeeper().getFlightData().get(uuid), blocks);
                 plugin.getTrackerKeeper().getFlightData().get(uuid).setLocation(adjusted);
             }
             plugin.getTrackerKeeper().getRepeaters().remove(uuid);

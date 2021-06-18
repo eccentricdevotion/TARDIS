@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advanced.TardisCircuitChecker;
 import me.eccentric_nz.tardis.api.Parameters;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.Flag;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,19 +41,19 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-class TARDISHomeCommand {
+class TardisHomeCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISHomeCommand(TARDISPlugin plugin) {
+    TardisHomeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean setHome(Player player, String[] args) {
-        if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
+        if (TardisPermission.hasPermission(player, "tardis.timetravel")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                TardisMessage.send(player, "NOT_A_TIMELORD");
                 return false;
             }
             int id = rs.getTardisId();
@@ -62,10 +62,10 @@ class TARDISHomeCommand {
                 String which;
                 try {
                     which = args[2].toUpperCase(Locale.ENGLISH);
-                    PRESET.valueOf(which);
+                    Preset.valueOf(which);
                 } catch (IllegalArgumentException e) {
                     // abort
-                    TARDISMessage.send(player, "ARG_PRESET");
+                    TardisMessage.send(player, "ARG_PRESET");
                     return true;
                 }
                 // update home record
@@ -74,17 +74,17 @@ class TARDISHomeCommand {
                 HashMap<String, Object> seth = new HashMap<>();
                 seth.put("preset", which);
                 plugin.getQueryFactory().doUpdate("homes", seth, whereh);
-                TARDISMessage.send(player, "CHAM_SET", which);
+                TardisMessage.send(player, "CHAM_SET", which);
             } else {
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
                 String world = Objects.requireNonNull(eyeLocation.getWorld()).getName();
-                COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
+                CardinalDirection player_d = CardinalDirection.valueOf(TardisStaticUtils.getPlayersDirection(player, false));
                 if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                    TARDISMessage.send(player, "NO_WORLD_TRAVEL");
+                    TardisMessage.send(player, "NO_WORLD_TRAVEL");
                     return true;
                 }
                 if (!plugin.getTardisArea().areaCheckInExisting(eyeLocation)) {
-                    TARDISMessage.send(player, "AREA_NO_HOME", ChatColor.AQUA + "/tardistravel area [area name]");
+                    TardisMessage.send(player, "AREA_NO_HOME", ChatColor.AQUA + "/tardistravel area [area name]");
                     return true;
                 }
                 if (!plugin.getPluginRespect().getRespect(eyeLocation, new Parameters(player, Flag.getDefaultFlags()))) {
@@ -97,16 +97,16 @@ class TARDISHomeCommand {
                 }
                 // check the world is not excluded
                 if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
-                    TARDISMessage.send(player, "NO_WORLD_TRAVEL");
+                    TardisMessage.send(player, "NO_WORLD_TRAVEL");
                     return true;
                 }
-                TARDISCircuitChecker tcc = null;
+                TardisCircuitChecker tcc = null;
                 if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
-                    tcc = new TARDISCircuitChecker(plugin, id);
+                    tcc = new TardisCircuitChecker(plugin, id);
                     tcc.getCircuits();
                 }
                 if (tcc != null && !tcc.hasMemory()) {
-                    TARDISMessage.send(player, "NO_MEM_CIRCUIT");
+                    TardisMessage.send(player, "NO_MEM_CIRCUIT");
                     return true;
                 }
                 // check they are not in the tardis
@@ -115,7 +115,7 @@ class TARDISHomeCommand {
                 wherettrav.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                 if (rst.resultSet()) {
-                    TARDISMessage.send(player, "TARDIS_NO_INSIDE");
+                    TardisMessage.send(player, "TARDIS_NO_INSIDE");
                     return true;
                 }
                 // check it is not another Time Lords home location
@@ -126,7 +126,7 @@ class TARDISHomeCommand {
                 where.put("z", eyeLocation.getBlockZ());
                 ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, where);
                 if (rsh.resultSet()) {
-                    TARDISMessage.send(player, "TARDIS_NO_HOME");
+                    TardisMessage.send(player, "TARDIS_NO_HOME");
                     return true;
                 }
                 HashMap<String, Object> tid = new HashMap<>();
@@ -139,11 +139,11 @@ class TARDISHomeCommand {
                 set.put("direction", player_d.toString());
                 set.put("submarine", isSub(eyeLocation) ? 1 : 0);
                 plugin.getQueryFactory().doUpdate("homes", set, tid);
-                TARDISMessage.send(player, "HOME_SET");
+                TardisMessage.send(player, "HOME_SET");
             }
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            TardisMessage.send(player, "NO_PERMS");
             return false;
         }
     }

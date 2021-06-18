@@ -23,7 +23,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public enum TARDISARS implements ARS {
+public enum TardisArs implements Ars {
 
     ANTIGRAVITY("SANDSTONE", "Anti-gravity Well", 1),
     APIARY("BEE_NEST", "Apiary", 1),
@@ -65,10 +65,10 @@ public enum TARDISARS implements ARS {
     SLOT("STONE", "Empty slot", 0),
     CONSOLE("", "Console", 0);
 
-    private final static HashMap<String, ARS> EXTENDED_MATERIAL = new HashMap<>();
+    private final static HashMap<String, Ars> EXTENDED_MATERIAL = new HashMap<>();
 
     static {
-        for (ARS room : values()) {
+        for (Ars room : values()) {
             EXTENDED_MATERIAL.put(room.getMaterial(), room);
         }
     }
@@ -78,7 +78,7 @@ public enum TARDISARS implements ARS {
     private final String configPath;
     private final int offset;
 
-    TARDISARS(String material, String descriptiveName, int offset) {
+    TardisArs(String material, String descriptiveName, int offset) {
         this.material = material;
         this.descriptiveName = descriptiveName;
         configPath = toString();
@@ -91,7 +91,7 @@ public enum TARDISARS implements ARS {
      * @param mat the Material of the ars to get
      * @return ars if found, or null
      */
-    public static ARS ARSFor(String mat) {
+    public static Ars ARSFor(String mat) {
         if (Consoles.getBY_MATERIALS().containsKey(mat)) {
             return CONSOLE;
         } else {
@@ -99,7 +99,7 @@ public enum TARDISARS implements ARS {
         }
     }
 
-    public static void addNewARS(ARS room) {
+    public static void addNewARS(Ars room) {
         if (!EXTENDED_MATERIAL.containsKey(room.getMaterial())) {
             EXTENDED_MATERIAL.put(room.getMaterial(), room);
         }

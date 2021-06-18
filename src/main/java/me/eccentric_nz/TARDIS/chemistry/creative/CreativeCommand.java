@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.chemistry.creative;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.chemistry.element.ElementInventory;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -29,15 +29,15 @@ import java.util.Locale;
 
 public class CreativeCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public CreativeCommand(TARDISPlugin plugin) {
+    public CreativeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public boolean open(Player player, String[] args) {
-        if (!TARDISPermission.hasPermission(player, "tardis.chemistry.creative")) {
-            TARDISMessage.send(player, "CHEMISTRY_SUB_PERM", "Creative");
+        if (!TardisPermission.hasPermission(player, "tardis.chemistry.creative")) {
+            TardisMessage.send(player, "CHEMISTRY_SUB_PERM", "Creative");
             return true;
         }
         Creative creative;

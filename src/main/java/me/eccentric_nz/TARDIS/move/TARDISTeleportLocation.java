@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import org.bukkit.Location;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISTeleportLocation {
+public class TardisTeleportLocation {
 
     private Location location;
     private int tardisId;
-    private COMPASS direction;
+    private CardinalDirection direction;
     private boolean abandoned;
 
     public Location getLocation() {
@@ -45,11 +45,11 @@ public class TARDISTeleportLocation {
         this.tardisId = tardisId;
     }
 
-    public COMPASS getDirection() {
+    public CardinalDirection getDirection() {
         return direction;
     }
 
-    public void setDirection(COMPASS direction) {
+    public void setDirection(CardinalDirection direction) {
         this.direction = direction;
     }
 

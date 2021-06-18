@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands;
 
 import com.google.common.collect.ImmutableList;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -30,12 +30,12 @@ import java.util.Objects;
 /**
  * TabCompleter for /tardisroom
  */
-public class TARDISRoomTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisRoomTabComplete extends TardisCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add", "blocks", "required");
     private final ArrayList<String> ROOM_SUBS = new ArrayList<>();
 
-    public TARDISRoomTabComplete(TARDISPlugin plugin) {
+    public TardisRoomTabComplete(TardisPlugin plugin) {
         // rooms - only add if enabled in the config
         Objects.requireNonNull(plugin.getRoomsConfig().getConfigurationSection("rooms")).getKeys(false).forEach((r) -> {
             if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {

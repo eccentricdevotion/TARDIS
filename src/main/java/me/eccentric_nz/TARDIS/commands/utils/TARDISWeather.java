@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.commands.utils;
 import me.eccentric_nz.tardis.enumeration.Weather;
 import org.bukkit.World;
 
-public class TARDISWeather {
+public class TardisWeather {
 
     public static void setRain(World world) {
         world.setStorm(true);

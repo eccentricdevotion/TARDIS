@@ -29,14 +29,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TARDISChemistryTabComplete extends TARDISCompleter implements TabCompleter {
+public class TardisChemistryTabComplete extends TardisCompleter implements TabCompleter {
 
     private final List<String> ROOT_SUBS = Arrays.asList("gui", "formula", "recipe");
     private final List<String> GUI_SUBS = Arrays.asList("creative", "construct", "compound", "reduce", "product", "lab");
     private final List<String> FORMULA_SUBS = new ArrayList<>();
     private final List<String> CREATIVE_SUBS = Arrays.asList("elements", "compounds", "products", "lab");
 
-    public TARDISChemistryTabComplete() {
+    public TardisChemistryTabComplete() {
         for (Compound compound : Compound.values()) {
             FORMULA_SUBS.add(compound.toString());
         }

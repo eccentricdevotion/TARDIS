@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.planets.TARDISAngelsAPI;
-import me.eccentric_nz.tardis.planets.TARDISBiome;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.planets.TardisAngelsApi;
+import me.eccentric_nz.tardis.planets.TardisBiome;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Bee;
@@ -39,12 +39,12 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISSpawnListener implements Listener {
+public class TardisSpawnListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<SpawnReason> good_spawns = new ArrayList<>();
 
-    public TARDISSpawnListener(TARDISPlugin plugin) {
+    public TardisSpawnListener(TardisPlugin plugin) {
         this.plugin = plugin;
         good_spawns.add(SpawnReason.BEEHIVE);
         good_spawns.add(SpawnReason.BREEDING);
@@ -97,7 +97,7 @@ public class TARDISSpawnListener implements Listener {
                 return;
             }
             if (spawnReason.equals(SpawnReason.BEEHIVE) || (spawnReason.equals(SpawnReason.DEFAULT) && event.getEntity() instanceof Bee)) {
-                int random = TARDISConstants.RANDOM.nextInt(1200) + 1200;
+                int random = TardisConstants.RANDOM.nextInt(1200) + 1200;
                 ((Bee) event.getEntity()).setCannotEnterHiveTicks(random);
                 return;
             }
@@ -106,10 +106,10 @@ public class TARDISSpawnListener implements Listener {
                 event.setCancelled(true);
             }
             if (spawnReason.equals(SpawnReason.BUILD_SNOWMAN) && plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-                if (TARDISConstants.RANDOM.nextInt(100) < 3) {
+                if (TardisConstants.RANDOM.nextInt(100) < 3) {
                     // spawn a Dalek instead
                     LivingEntity le = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
-                    TARDISAngelsAPI.getAPI(plugin).setDalekEquipment(le, false);
+                    TardisAngelsApi.getAPI(plugin).setDalekEquipment(le, false);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> event.getEntity().remove(), 2L);
                 }
             }
@@ -140,15 +140,15 @@ public class TARDISSpawnListener implements Listener {
         for (int col = -3; col < 4; col++) {
             for (int row = -3; row < 4; row++) {
                 assert w != null;
-                TARDISBiome b = TARDISStaticUtils.getBiomeAt(w.getBlockAt(x + col, 64, z + row).getLocation());
-                if (b.equals(TARDISBiome.DEEP_OCEAN)) {
+                TardisBiome b = TardisStaticUtils.getBiomeAt(w.getBlockAt(x + col, 64, z + row).getLocation());
+                if (b.equals(TardisBiome.DEEP_OCEAN)) {
                     found++;
                 }
-                if (found < 3 && !b.equals(TARDISBiome.DEEP_OCEAN)) {
+                if (found < 3 && !b.equals(TardisBiome.DEEP_OCEAN)) {
                     // reset count - not three in a row
                     found = 0;
                 }
-                if (found == 3 && !b.equals(TARDISBiome.DEEP_OCEAN)) {
+                if (found == 3 && !b.equals(TardisBiome.DEEP_OCEAN)) {
                     // found 3 consecutive blocks in a row, increment 3x3 row count
                     three_by_three++;
                     // reset count

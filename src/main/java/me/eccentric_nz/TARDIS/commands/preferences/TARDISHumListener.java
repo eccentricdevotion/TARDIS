@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISSounds;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisSounds;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,14 +34,14 @@ import java.util.*;
 /**
  * @author eccentric_nz
  */
-public class TARDISHumListener extends TARDISMenuListener implements Listener {
+public class TardisHumListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<Integer, Long> sounds = new HashMap<>();
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final HashMap<UUID, Integer> last = new HashMap<>();
 
-    public TARDISHumListener(TARDISPlugin plugin) {
+    public TardisHumListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
         sounds.put(0, 27402L);
@@ -78,7 +78,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                             setr.put("hum", "");
                             plugin.getQueryFactory().doUpdate("player_prefs", setr, wherer);
                             close(p);
-                            TARDISMessage.send(p, "HUM_SAVED");
+                            TardisMessage.send(p, "HUM_SAVED");
                             break;
                         case 15:
                             // toggle play save
@@ -97,10 +97,10 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                                 long now = System.currentTimeMillis();
                                 if (cooldown.containsKey(uuid) && now < cooldown.get(uuid) + sounds.get(last.get(uuid))) {
                                     close(p);
-                                    TARDISMessage.send(p, "HUM_WAIT");
+                                    TardisMessage.send(p, "HUM_WAIT");
                                 } else {
                                     assert im != null;
-                                    TARDISSounds.playTARDISSound(p, "tardis_hum_" + im.getDisplayName().toLowerCase(Locale.ENGLISH), 5L);
+                                    TardisSounds.playTARDISSound(p, "tardis_hum_" + im.getDisplayName().toLowerCase(Locale.ENGLISH), 5L);
                                     last.put(uuid, slot);
                                     cooldown.put(uuid, System.currentTimeMillis());
                                 }
@@ -112,7 +112,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                                 set.put("hum", im.getDisplayName().toLowerCase(Locale.ENGLISH));
                                 plugin.getQueryFactory().doUpdate("player_prefs", set, where);
                                 close(p);
-                                TARDISMessage.send(p, "HUM_SAVED");
+                                TardisMessage.send(p, "HUM_SAVED");
                             }
                             break;
                     }

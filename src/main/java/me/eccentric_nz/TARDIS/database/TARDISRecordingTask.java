@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetBlocks;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,18 +26,18 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class TARDISRecordingTask implements Runnable {
+public class TardisRecordingTask implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
 
-    public TARDISRecordingTask(TARDISPlugin plugin) {
+    public TardisRecordingTask(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
 
     private void save() {
-        if (!TARDISRecordingQueue.getQUEUE().isEmpty()) {
+        if (!TardisRecordingQueue.getQUEUE().isEmpty()) {
             insertIntoDatabase();
         }
     }
@@ -47,34 +47,34 @@ public class TARDISRecordingTask implements Runnable {
         Connection connection;
         try {
             int perBatch = 100;
-            if (!TARDISRecordingQueue.getQUEUE().isEmpty()) {
-                TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+            if (!TardisRecordingQueue.getQUEUE().isEmpty()) {
+                TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
                 connection = service.getConnection();
                 // Handle dead connections
                 if (connection == null || connection.isClosed()) {
-                    if (TARDISRecordingManager.failedDbConnectionCount == 0) {
+                    if (TardisRecordingManager.failedDbConnectionCount == 0) {
                         plugin.debug("tardis database error. Connection should be there but it's not. Leaving actions to log in queue.");
                     }
-                    TARDISRecordingManager.failedDbConnectionCount++;
-                    if (TARDISRecordingManager.failedDbConnectionCount > 5) {
+                    TardisRecordingManager.failedDbConnectionCount++;
+                    if (TardisRecordingManager.failedDbConnectionCount > 5) {
                         plugin.debug("Too many problems connecting. Giving up for a bit.");
                         scheduleNextRecording();
                     }
                     plugin.debug("Database connection still missing, incrementing count.");
                     return;
                 } else {
-                    TARDISRecordingManager.failedDbConnectionCount = 0;
+                    TardisRecordingManager.failedDbConnectionCount = 0;
                 }
                 // Connection valid, proceed
                 connection.setAutoCommit(false);
                 s = connection.prepareStatement("INSERT INTO " + prefix + "blocks (tardis_id, location, data, police_box) VALUES (?, ?, ?, 1)");
                 int i = 0;
-                while (!TARDISRecordingQueue.getQUEUE().isEmpty()) {
+                while (!TardisRecordingQueue.getQUEUE().isEmpty()) {
                     if (connection.isClosed()) {
                         plugin.debug("tardis database error. We have to bail in the middle of building primary bulk insert query.");
                         break;
                     }
-                    String a = TARDISRecordingQueue.getQUEUE().poll();
+                    String a = TardisRecordingQueue.getQUEUE().poll();
                     // poll() returns null if queue is empty
                     if (a == null) {
                         break;
@@ -83,7 +83,7 @@ public class TARDISRecordingTask implements Runnable {
                     where.put("location", a);
                     ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
                     if (rs.resultSet()) {
-                        String loco = Objects.requireNonNull(TARDISStaticLocationGetters.getLocationFromBukkitString(a)).add(0.0d, -1.0d, 0.0d).toString();
+                        String loco = Objects.requireNonNull(TardisStaticLocationGetters.getLocationFromBukkitString(a)).add(0.0d, -1.0d, 0.0d).toString();
                         s.setInt(1, rs.getReplacedBlock().getTardisId());
                         s.setString(2, loco);
                         s.setString(3, "minecraft:grass_path");
@@ -91,7 +91,7 @@ public class TARDISRecordingTask implements Runnable {
                     }
                     // Break out of the loop and just commit what we have
                     if (i >= perBatch) {
-                        plugin.debug("Recorder: Batch max exceeded, running insert. Queue remaining: " + TARDISRecordingQueue.getQUEUE().size());
+                        plugin.debug("Recorder: Batch max exceeded, running insert. Queue remaining: " + TardisRecordingQueue.getQUEUE().size());
                         break;
                     }
                     i++;
@@ -125,8 +125,8 @@ public class TARDISRecordingTask implements Runnable {
 
     private int getTickDelayForNextBatch() {
         // If we have too many rejected connections, increase the schedule
-        if (TARDISRecordingManager.failedDbConnectionCount > 5) {
-            return TARDISRecordingManager.failedDbConnectionCount * 20;
+        if (TardisRecordingManager.failedDbConnectionCount > 5) {
+            return TardisRecordingManager.failedDbConnectionCount * 20;
         }
         return 5;
     }
@@ -136,6 +136,6 @@ public class TARDISRecordingTask implements Runnable {
             plugin.debug("Can't schedule new recording tasks as plugin is now disabled. If you're shutting down the server, ignore me.");
             return;
         }
-        plugin.setRecordingTask(plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, new TARDISRecordingTask(plugin), getTickDelayForNextBatch()));
+        plugin.setRecordingTask(plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, new TardisRecordingTask(plugin), getTickDelayForNextBatch()));
     }
 }

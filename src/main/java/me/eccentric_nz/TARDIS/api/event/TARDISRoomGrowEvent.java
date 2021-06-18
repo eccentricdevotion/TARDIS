@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.tardis.api.event;
 
-import me.eccentric_nz.tardis.ars.TARDISARSSlot;
-import me.eccentric_nz.tardis.database.data.TARDIS;
-import me.eccentric_nz.tardis.rooms.TARDISRoomData;
+import me.eccentric_nz.tardis.ars.TardisArsSlot;
+import me.eccentric_nz.tardis.database.data.Tardis;
+import me.eccentric_nz.tardis.rooms.TardisRoomData;
 import org.bukkit.entity.Player;
 
 /**
  * @author eccentric_nz
  */
-public final class TARDISRoomGrowEvent extends TARDISEvent {
+public final class TardisRoomGrowEvent extends TardisEvent {
 
-    private final TARDISARSSlot slot;
-    private final TARDISRoomData roomData;
+    private final TardisArsSlot slot;
+    private final TardisRoomData roomData;
 
     /**
      * A room growing event.
@@ -39,7 +39,7 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
      *                 #getRoomData()}.getLocation()
      * @param roomData the TARDISRoomData data object
      */
-    public TARDISRoomGrowEvent(Player player, TARDIS tardis, TARDISARSSlot slot, TARDISRoomData roomData) {
+    public TardisRoomGrowEvent(Player player, Tardis tardis, TardisArsSlot slot, TardisRoomData roomData) {
         super(player, tardis);
         this.slot = slot;
         this.roomData = roomData;
@@ -47,21 +47,21 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
 
     /**
      * Returns the Architectural Reconfiguration System position data object. Use the {@link
-     * me.eccentric_nz.tardis.ars.TARDISARSSlot TARDISARSSlot}'s getter methods to retrieve the coordinates.
+     * TardisArsSlot TARDISARSSlot}'s getter methods to retrieve the coordinates.
      *
      * @return the TARDISARSSlot object or null if the room was manually grown
      */
-    public TARDISARSSlot getSlot() {
+    public TardisArsSlot getSlot() {
         return slot;
     }
 
     /**
-     * Returns the room data object. Use the {@link me.eccentric_nz.tardis.rooms.TARDISRoomData TARDISRoomData}'s getter
+     * Returns the room data object. Use the {@link TardisRoomData TARDISRoomData}'s getter
      * methods to retrieve the room type, wall and floor materials.
      *
      * @return the TARDISRoomData object
      */
-    private TARDISRoomData getRoomData() {
+    private TardisRoomData getRoomData() {
         return roomData;
     }
 }

@@ -21,24 +21,24 @@ import java.io.Serial;
 /**
  * @author eccentric_nz
  */
-public class TARDISException extends Exception {
+public class TardisException extends Exception {
 
     @Serial
     private static final long serialVersionUID = -5152771166812835530L;
 
-    public TARDISException() {
+    public TardisException() {
 
     }
 
-    public TARDISException(String message) {
+    public TardisException(String message) {
         super(message);
     }
 
-    public TARDISException(Throwable cause) {
+    public TardisException(Throwable cause) {
         super(cause);
     }
 
-    public TARDISException(String message, Throwable cause) {
+    public TardisException(String message, Throwable cause) {
         super(message, cause);
     }
 }

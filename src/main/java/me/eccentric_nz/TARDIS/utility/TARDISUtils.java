@@ -17,13 +17,13 @@
 package me.eccentric_nz.tardis.utility;
 
 import me.crafter.mc.lockettepro.LocketteProAPI;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCount;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.tardis.display.TARDISDisplayType;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.display.TardisDisplayType;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardischunkgenerator.TardisChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -49,11 +49,11 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-public class TARDISUtils {
+public class TardisUtils {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISUtils(TARDISPlugin plugin) {
+    public TardisUtils(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -68,7 +68,7 @@ public class TARDISUtils {
 
     public boolean canGrowRooms(String chunk) {
         String[] data = chunk.split(":");
-        World room_world = TARDISStaticLocationGetters.getWorld(chunk);
+        World room_world = TardisStaticLocationGetters.getWorld(chunk);
         ChunkGenerator gen = room_world.getGenerator();
         String dn = "TARDIS_TimeVortex";
         if (plugin.getConfig().getBoolean("creation.default_world")) {
@@ -177,7 +177,7 @@ public class TARDISUtils {
                 if (grace_count < grace) {
                     inGracePeriod = true;
                     if (update) {
-                        TARDISMessage.send(p, "GRACE_PERIOD", String.format("%d", (grace - (grace_count + 1))));
+                        TardisMessage.send(p, "GRACE_PERIOD", String.format("%d", (grace - (grace_count + 1))));
                         // update the grace count if the tardis has travelled
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", p.getUniqueId().toString());
@@ -185,7 +185,7 @@ public class TARDISUtils {
                         set.put("grace", (grace_count + 1));
                         plugin.getQueryFactory().doUpdate("t_count", set, where);
                     }
-                } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && TARDISPermission.hasPermission(p, "tardis.difficulty")) {
+                } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && TardisPermission.hasPermission(p, "tardis.difficulty")) {
                     // check player difficulty preference
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
                     if (rsp.resultSet()) {
@@ -193,7 +193,7 @@ public class TARDISUtils {
                     }
                 }
             }
-        } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && TARDISPermission.hasPermission(p, "tardis.difficulty")) {
+        } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && TardisPermission.hasPermission(p, "tardis.difficulty")) {
             // check player difficulty preference
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
             if (rsp.resultSet()) {
@@ -267,14 +267,14 @@ public class TARDISUtils {
     }
 
     public String actionBarFormat(Player player) {
-        TARDISDisplayType displayType = plugin.getTrackerKeeper().getDisplay().get(player.getUniqueId());
+        TardisDisplayType displayType = plugin.getTrackerKeeper().getDisplay().get(player.getUniqueId());
         return switch (displayType) {
-            case BIOME -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat().replace("%BIOME%", TARDISStaticUtils.getBiomeAt(player.getLocation()).name()));
+            case BIOME -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat().replace("%BIOME%", TardisStaticUtils.getBiomeAt(player.getLocation()).name()));
             case COORDS -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat().replace("%X%", String.format("%,d", player.getLocation().getBlockX())).replace("%Y%", String.format("%,d", player.getLocation().getBlockY())).replace("%Z%", String.format("%,d", player.getLocation().getBlockZ())));
             case DIRECTION -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat().replace("%FACING%", getFacing(player)).replace("%FACING_XZ%", getFacingXZ(player)));
             case TARGET_BLOCK -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat().replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
             default -> // ALL
-                    ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(plugin.getConfig().getString("display.all")).replace("%X%", String.format("%,d", player.getLocation().getBlockX())).replace("%Y%", String.format("%,d", player.getLocation().getBlockY())).replace("%Z%", String.format("%,d", player.getLocation().getBlockZ())).replace("%FACING%", getFacing(player)).replace("%FACING_XZ%", getFacingXZ(player)).replace("%YAW%", String.format("%.1f", player.getLocation().getYaw())).replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch())).replace("%BIOME%", TARDISStaticUtils.getBiomeAt(player.getLocation()).name()).replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
+                    ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(plugin.getConfig().getString("display.all")).replace("%X%", String.format("%,d", player.getLocation().getBlockX())).replace("%Y%", String.format("%,d", player.getLocation().getBlockY())).replace("%Z%", String.format("%,d", player.getLocation().getBlockZ())).replace("%FACING%", getFacing(player)).replace("%FACING_XZ%", getFacingXZ(player)).replace("%YAW%", String.format("%.1f", player.getLocation().getYaw())).replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch())).replace("%BIOME%", TardisStaticUtils.getBiomeAt(player.getLocation()).name()).replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
         };
     }
 }

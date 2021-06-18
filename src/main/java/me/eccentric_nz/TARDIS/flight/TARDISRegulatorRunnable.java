@@ -29,14 +29,14 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-public class TARDISRegulatorRunnable extends TARDISRegulatorSlot implements Runnable {
+public class TardisRegulatorRunnable extends TardisRegulatorSlot implements Runnable {
 
     private final InventoryView view;
     private final List<Integer> directions = Arrays.asList(0, 1, 2, 3);
     private int slot;
     private int taskId;
 
-    TARDISRegulatorRunnable(InventoryView view) {
+    TardisRegulatorRunnable(InventoryView view) {
         this.view = view;
         slot = 20;
     }

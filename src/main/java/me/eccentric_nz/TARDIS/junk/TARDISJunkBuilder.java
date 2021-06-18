@@ -18,11 +18,11 @@ package me.eccentric_nz.tardis.junk;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.builders.BuildData;
-import me.eccentric_nz.tardis.custommodeldata.TARDISMushroomBlockData;
+import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.tardis.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
 import me.eccentric_nz.tardis.utility.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -44,9 +44,9 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkBuilder implements Runnable {
+public class TardisJunkBuilder implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final BuildData bd;
     private final int sx, sy, sz;
     private final Location loc;
@@ -56,7 +56,7 @@ public class TARDISJunkBuilder implements Runnable {
     private int fryTask;
     private int i = 0;
 
-    public TARDISJunkBuilder(TARDISPlugin plugin, BuildData bd) {
+    public TardisJunkBuilder(TardisPlugin plugin, BuildData bd) {
         this.plugin = plugin;
         this.bd = bd;
         loc = this.bd.getLocation();
@@ -76,10 +76,10 @@ public class TARDISJunkBuilder implements Runnable {
                 if (i == 2) {
                     plugin.getUtils().getJunkTravellers(loc).forEach((e) -> {
                         if (e instanceof Player p) {
-                            TARDISSounds.playTARDISSound(p, "junk_land", 5L);
+                            TardisSounds.playTARDISSound(p, "junk_land", 5L);
                         }
                     });
-                    fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, loc), 0, 1L);
+                    fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TardisJunkItsDangerousRunnable(plugin, loc), 0, 1L);
                 }
                 if (i == 1) {
                     // get wall and floor prefs
@@ -99,7 +99,7 @@ public class TARDISJunkBuilder implements Runnable {
                     Block postTerminalBlock = null;
                     // get JSON
                     String path = plugin.getDataFolder() + File.separator + "schematics" + File.separator + "junk.tschm";
-                    JsonObject obj = TARDISSchematicGZip.unzip(path);
+                    JsonObject obj = TardisSchematicGZip.unzip(path);
                     // get dimensions
                     assert obj != null;
                     JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
@@ -126,30 +126,30 @@ public class TARDISJunkBuilder implements Runnable {
                                      * by setBlockAndRemember(), but remember it
                                      * so we can use it as the handbrake!
                                      */
-                                    String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                                    String handbrakeloc = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                                     plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 0, handbrakeloc, 0);
                                 }
                                 if (type.equals(Material.STONE_BUTTON)) {
                                     // remember location 1
-                                    String stone_button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                                    String stone_button = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                                     plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 1, stone_button, 0);
                                 }
                                 if (type.equals(Material.OAK_BUTTON)) {
                                     // remember location 6
-                                    String wood_button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                                    String wood_button = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                                     plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 6, wood_button, 0);
                                 }
                                 if (type.equals(Material.REPEATER)) {
                                     // remember location 3
-                                    String repeater = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                                    String repeater = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                                     plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 2, repeater, 0);
                                 }
                                 if (type.equals(Material.COMPARATOR)) {
                                     // remember location 2
-                                    String comparator = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                                    String comparator = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                                     plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 3, comparator, 0);
                                 }
-                                if (TARDISMaterials.infested.contains(type)) {
+                                if (TardisMaterials.infested.contains(type)) {
                                     // insert / update control 9
                                     plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 9, (new Location(world, x, y, z)).toString(), 0);
                                     // remember block
@@ -157,29 +157,29 @@ public class TARDISJunkBuilder implements Runnable {
                                 }
                                 if (type.equals(Material.TRIPWIRE_HOOK)) {
                                     // remember location 4
-                                    String trip = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                                    String trip = TardisStaticLocationGetters.makeLocationStr(world, x, y, z);
                                     plugin.getQueryFactory().insertSyncControl(bd.getTardisId(), 4, trip, 0);
                                 }
                                 switch (type) {
-                                    case SPONGE, AIR -> TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                                    case SPONGE, AIR -> TardisBlockSetters.setBlock(world, x, y, z, Material.AIR);
                                     case CAKE -> {
                                         BlockData handbrake = Material.LEVER.createBlockData();
                                         Switch lever = (Switch) handbrake;
                                         lever.setAttachedFace(FaceAttachable.AttachedFace.FLOOR);
                                         lever.setFacing(BlockFace.SOUTH);
-                                        TARDISBlockSetters.setBlockAndRemember(world, x, y, z, lever, bd.getTardisId());
+                                        TardisBlockSetters.setBlockAndRemember(world, x, y, z, lever, bd.getTardisId());
                                     }
                                     case ORANGE_WOOL -> {
                                         BlockData stem;
                                         if (wall_type.equals(Material.ORANGE_WOOL)) {
-                                            stem = plugin.getServer().createBlockData(TARDISMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
+                                            stem = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(46));
                                         } else {
                                             stem = wall_type.createBlockData();
                                         }
-                                        TARDISBlockSetters.setBlockAndRemember(world, x, y, z, stem, bd.getTardisId());
+                                        TardisBlockSetters.setBlockAndRemember(world, x, y, z, stem, bd.getTardisId());
                                     }
-                                    case LIGHT_GRAY_WOOL -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisId());
-                                    default -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisId());
+                                    case LIGHT_GRAY_WOOL -> TardisBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisId());
+                                    default -> TardisBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisId());
                                 }
                             }
                         }
@@ -198,7 +198,7 @@ public class TARDISJunkBuilder implements Runnable {
                     // just animate particles
                     plugin.getUtils().getJunkTravellers(loc).forEach((e) -> {
                         if (e instanceof Player p) {
-                            TARDISParticles.sendVortexParticles(effectsLoc, p);
+                            TardisParticles.sendVortexParticles(effectsLoc, p);
                         }
                     });
                 }

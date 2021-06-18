@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.commands.admin;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -32,11 +32,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISDesiegeCommand {
+class TardisDesiegeCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISDesiegeCommand(TARDISPlugin plugin) {
+    TardisDesiegeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -49,7 +49,7 @@ class TARDISDesiegeCommand {
             // get the player's tardis id
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(uuid.toString())) {
-                TARDISMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
+                TardisMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
                 return true;
             }
             int id = rs.getTardisId();
@@ -91,11 +91,11 @@ class TARDISDesiegeCommand {
                 bd.setTardisId(id);
                 bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getPresetBuilder().buildPreset(bd);
-                TARDISMessage.send(sender, "SIEGE_REBUILT");
+                TardisMessage.send(sender, "SIEGE_REBUILT");
             }
             return true;
         } else {
-            TARDISMessage.send(sender, "NOT_ONLINE");
+            TardisMessage.send(sender, "NOT_ONLINE");
             return true;
         }
     }

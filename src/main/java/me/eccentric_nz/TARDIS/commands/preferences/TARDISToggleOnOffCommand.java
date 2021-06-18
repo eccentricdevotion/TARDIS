@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.artron.TARDISBeaconToggler;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.artron.TardisBeaconToggler;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
@@ -30,13 +30,13 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISToggleOnOffCommand {
+class TardisToggleOnOffCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> was;
 
 
-    TARDISToggleOnOffCommand(TARDISPlugin plugin) {
+    TardisToggleOnOffCommand(TardisPlugin plugin) {
         this.plugin = plugin;
         was = Arrays.asList("auto", "auto_powerup", "auto_siege", "beacon", "build", "difficulty", "dnd", "eps", "farm", "hads", "lock_containers", "minecart", "renderer", "submarine", "travelbar", "telepathy");
     }
@@ -44,27 +44,27 @@ class TARDISToggleOnOffCommand {
     public boolean toggle(Player player, String[] args) {
         String pref = args[0];
         if (pref.equals("auto") && !plugin.getConfig().getBoolean("allow.autonomous")) {
-            TARDISMessage.send(player, "AUTO_DISABLED");
+            TardisMessage.send(player, "AUTO_DISABLED");
             return true;
         }
         if (pref.equals("auto_powerup") && !plugin.getConfig().getBoolean("allow.power_down")) {
-            TARDISMessage.send(player, "POWER_DOWN_DISABLED");
+            TardisMessage.send(player, "POWER_DOWN_DISABLED");
             return true;
         }
         if (pref.equals("eps") && !plugin.getConfig().getBoolean("allow.emergency_npc")) {
-            TARDISMessage.send(player, "EP1_DISABLED");
+            TardisMessage.send(player, "EP1_DISABLED");
             return true;
         }
         if (pref.equals("hads") && !plugin.getConfig().getBoolean("allow.hads")) {
-            TARDISMessage.send(player, "HADS_DISBALED");
+            TardisMessage.send(player, "HADS_DISBALED");
             return true;
         }
         if (pref.equals("lock_containers") && !plugin.isWorldGuardOnServer()) {
-            TARDISMessage.send(player, "WG_DISABLED");
+            TardisMessage.send(player, "WG_DISABLED");
             return true;
         }
         if (pref.equals("lock_containers") && !plugin.getUtils().inTARDISWorld(player)) {
-            TARDISMessage.send(player, "CMD_IN_WORLD");
+            TardisMessage.send(player, "CMD_IN_WORLD");
             return true;
         }
         HashMap<String, Object> setp = new HashMap<>();
@@ -80,12 +80,12 @@ class TARDISToggleOnOffCommand {
                     // get tardis id
                     ResultSetTardisID rsi = new ResultSetTardisID(plugin);
                     if (rsi.fromUUID(uuid.toString())) {
-                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), true);
+                        new TardisBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), true);
                     }
                 }
             }
             String grammar = (was.contains(pref)) ? "PREF_WAS_ON" : "PREF_WERE_ON";
-            TARDISMessage.send(player, grammar, pref);
+            TardisMessage.send(player, grammar, pref);
         }
         if (args[1].equalsIgnoreCase("off")) {
             if (args[0].equalsIgnoreCase("lock_containers")) {
@@ -97,12 +97,12 @@ class TARDISToggleOnOffCommand {
                     // get tardis id
                     ResultSetTardisID rsi = new ResultSetTardisID(plugin);
                     if (rsi.fromUUID(uuid.toString())) {
-                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), false);
+                        new TardisBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), false);
                     }
                 }
             }
             String grammar = (was.contains(pref)) ? "PREF_WAS_OFF" : "PREF_WERE_OFF";
-            TARDISMessage.send(player, grammar, pref);
+            TardisMessage.send(player, grammar, pref);
         }
         if (setp.size() > 0) {
             plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);

@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.data.StandbyData;
 import me.eccentric_nz.tardis.enumeration.Consoles;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.schematic.ResultSetArchive;
 
 import java.sql.Connection;
@@ -37,12 +37,12 @@ import java.util.UUID;
  */
 public class ResultSetStandby {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
 
-    public ResultSetStandby(TARDISPlugin plugin) {
+    public ResultSetStandby(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -59,14 +59,14 @@ public class ResultSetStandby {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     StandbyData sd;
-                    PRESET preset;
+                    Preset preset;
                     try {
-                        preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                        preset = Preset.valueOf(rs.getString("chameleon_preset"));
                     } catch (IllegalArgumentException e) {
-                        preset = PRESET.FACTORY;
+                        preset = Preset.FACTORY;
                     }
                     switch (rs.getString("size")) {
-                        case "JUNK" -> sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, PRESET.JUNK, false);
+                        case "JUNK" -> sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, Preset.JUNK, false);
                         case "ARCHIVE" -> {
                             HashMap<String, Object> wherea = new HashMap<>();
                             wherea.put("uuid", rs.getString("uuid"));

@@ -21,7 +21,7 @@ import org.bukkit.util.Vector;
 /**
  * @author eccentric_nz
  */
-public class TARDISAntiBuild {
+public class TardisAntiBuild {
 
     private Vector max;
     private Vector min;

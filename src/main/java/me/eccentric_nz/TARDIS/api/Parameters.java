@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.api;
 
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.Flag;
 import org.bukkit.entity.Player;
 
@@ -39,7 +39,7 @@ public class Parameters {
     private boolean respectTowny = false;
     private boolean respectWorldGuard = false;
     private boolean spaceTardis = false;
-    private COMPASS compass;
+    private CardinalDirection cardinalDirection;
 
     public Parameters(Player p, List<Flag> flags) {
         player = p;
@@ -128,12 +128,12 @@ public class Parameters {
         return spaceTardis;
     }
 
-    public COMPASS getCompass() {
-        return compass;
+    public CardinalDirection getCompass() {
+        return cardinalDirection;
     }
 
-    public void setCompass(COMPASS compass) {
-        this.compass = compass;
+    public void setCompass(CardinalDirection cardinalDirection) {
+        this.cardinalDirection = cardinalDirection;
     }
 
     public Player getPlayer() {

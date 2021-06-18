@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISVillagePreset extends TARDISPreset {
+class TardisVillagePreset extends TardisPreset {
 
-    TARDISVillagePreset() {
+    TardisVillagePreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:cobblestone";

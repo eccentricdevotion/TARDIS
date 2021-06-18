@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISApertureSciencePreset extends TARDISPreset {
+class TardisApertureSciencePreset extends TardisPreset {
 
-    TARDISApertureSciencePreset() {
+    TardisApertureSciencePreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:orange_wool";

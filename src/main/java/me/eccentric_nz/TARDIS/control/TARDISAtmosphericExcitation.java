@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -39,11 +39,11 @@ import java.util.Objects;
  * The Tenth Doctor used a device above the inside of the door of the tardis to excite the atmosphere, causing snow, in
  * an attempt to cheer up Donna Noble.
  */
-public class TARDISAtmosphericExcitation {
+public class TardisAtmosphericExcitation {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISAtmosphericExcitation(TARDISPlugin plugin) {
+    public TardisAtmosphericExcitation(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -69,7 +69,7 @@ public class TARDISAtmosphericExcitation {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 firework.detonate();
                 // after x ticks, start snow particles and place snow on ground
-                TARDISExcitationRunnable runnable = new TARDISExcitationRunnable(plugin, l, p);
+                TardisExcitationRunnable runnable = new TardisExcitationRunnable(plugin, l, p);
                 runnable.task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 35L, 10L);
             }, 2L);
         }

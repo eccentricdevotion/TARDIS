@@ -17,12 +17,12 @@
 package me.eccentric_nz.tardis.commands.dev;
 
 import com.google.common.collect.Sets;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advancement.TARDISAdvancementFactory;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advancement.TardisAdvancementFactory;
 import me.eccentric_nz.tardis.builders.FractalFence;
-import me.eccentric_nz.tardis.commands.TARDISCommandHelper;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.commands.TardisCommandHelper;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
@@ -44,12 +44,12 @@ import java.util.Set;
  *
  * @author eccentric_nz
  */
-public class TARDISDevCommand implements CommandExecutor {
+public class TardisDevCommand implements CommandExecutor {
 
     private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "list", "tree");
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISDevCommand(TARDISPlugin plugin) {
+    public TardisDevCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -59,40 +59,40 @@ public class TARDISDevCommand implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("tardisdev")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
                 if (args.length == 0) {
-                    new TARDISCommandHelper(plugin).getCommand("tardisadmin", sender);
+                    new TardisCommandHelper(plugin).getCommand("tardisadmin", sender);
                     return true;
                 }
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (!firstsStr.contains(first)) {
-                    TARDISMessage.send(sender, "ARG_NOT_VALID");
+                    TardisMessage.send(sender, "ARG_NOT_VALID");
                     return false;
                 }
                 if (args.length == 1) {
                     if (first.equals("add_regions")) {
-                        return new TARDISAddRegionsCommand(plugin).doCheck(sender);
+                        return new TardisAddRegionsCommand(plugin).doCheck(sender);
                     }
                 }
                 if (first.equals("advancements")) {
-                    TARDISAdvancementFactory.checkAdvancement(args[1]);
+                    TardisAdvancementFactory.checkAdvancement(args[1]);
                     return true;
                 }
                 if (first.equals("list")) {
-                    return new TARDISDevListCommand(plugin).listStuff(sender, args);
+                    return new TardisDevListCommand(plugin).listStuff(sender, args);
                 }
                 if (args.length < 2) {
-                    TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                    TardisMessage.send(sender, "TOO_FEW_ARGS");
                     return false;
                 }
                 if (first.equals("tree")) {
                     if (sender instanceof Player p) {
                         Block l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation().getBlock();
-                        int which = TARDISNumberParsers.parseInt(args[1]);
+                        int which = TardisNumberParsers.parseInt(args[1]);
                         FractalFence.grow(l, which);
                     }
                 }
                 return true;
             } else {
-                TARDISMessage.send(sender, "CMD_ADMIN");
+                TardisMessage.send(sender, "CMD_ADMIN");
                 return false;
             }
         }

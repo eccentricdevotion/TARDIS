@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.Control;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,11 +41,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISPresetListener extends TARDISMenuListener implements Listener {
+public class TardisPresetListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISPresetListener(TARDISPlugin plugin) {
+    public TardisPresetListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
     }
@@ -77,7 +77,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                         where.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
-                            TARDIS tardis = rs.getTardis();
+                            Tardis tardis = rs.getTardis();
                             // set the Chameleon Circuit sign(s)
                             HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("tardis_id", id);
@@ -104,15 +104,15 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                         updateChameleonSign(rsf.getData(), "CUSTOM", player);
                                     }
                                     if (hasFrame) {
-                                        new TARDISChameleonFrame(plugin).updateChameleonFrame(id, PRESET.CUSTOM, rsf.getLocation());
+                                        new TardisChameleonFrame(plugin).updateChameleonFrame(id, Preset.CUSTOM, rsf.getLocation());
                                     }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Server's Custom");
+                                    TardisMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Server's Custom");
                                     break;
                                 case 51:
                                     // return to Chameleon Circuit GUI
                                     close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        ItemStack[] stacks = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
+                                        ItemStack[] stacks = new TardisChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
                                         Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
                                         gui.setContents(stacks);
                                         player.openInventory(gui);
@@ -122,7 +122,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // go to page two (coloured police boxes)
                                     close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        ItemStack[] boxes = new TARDISPoliceBoxInventory(plugin, player).getBoxes();
+                                        ItemStack[] boxes = new TardisPoliceBoxInventory(plugin, player).getBoxes();
                                         Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Police Boxes");
                                         gui.setContents(boxes);
                                         player.openInventory(gui);
@@ -132,15 +132,15 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     close(player);
                                     break;
                                 default:
-                                    PRESET selected = PRESET.getPresetBySlot(slot);
+                                    Preset selected = Preset.getPresetBySlot(slot);
                                     set.put("chameleon_preset", selected.toString());
                                     if (hasSign) {
                                         updateChameleonSign(rsf.getData(), selected.toString(), player);
                                     }
                                     if (hasFrame) {
-                                        new TARDISChameleonFrame(plugin).updateChameleonFrame(id, selected, rsf.getLocation());
+                                        new TardisChameleonFrame(plugin).updateChameleonFrame(id, selected, rsf.getLocation());
                                     }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + selected.getDisplayName());
+                                    TardisMessage.send(player, "CHAM_SET", ChatColor.AQUA + selected.getDisplayName());
                                     break;
                             }
                             if (set.size() > 0) {
@@ -158,7 +158,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
 
     private void updateChameleonSign(ArrayList<HashMap<String, String>> map, String preset, Player player) {
         for (HashMap<String, String> entry : map) {
-            TARDISStaticUtils.setSign(entry.get("location"), 3, preset, player);
+            TardisStaticUtils.setSign(entry.get("location"), 3, preset, player);
         }
     }
 }

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.rooms;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -26,9 +26,9 @@ import org.bukkit.util.Vector;
  *
  * @author eccentric_nz
  */
-public class TARDISGravityWellRunnable implements Runnable {
+public class TardisGravityWellRunnable implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player p;
     private final double up;
     private final double end;
@@ -37,7 +37,7 @@ public class TARDISGravityWellRunnable implements Runnable {
     private final int dir;
     private int task;
 
-    public TARDISGravityWellRunnable(TARDISPlugin plugin, Player p, double up, double end, int x, int z, int dir) {
+    public TardisGravityWellRunnable(TardisPlugin plugin, Player p, double up, double end, int x, int z, int dir) {
         this.plugin = plugin;
         this.p = p;
         this.up = up;

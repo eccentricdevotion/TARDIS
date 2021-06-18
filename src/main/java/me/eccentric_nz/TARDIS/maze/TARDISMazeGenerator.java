@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.maze;
 
-import me.eccentric_nz.tardis.TARDISConstants;
+import me.eccentric_nz.tardis.TardisConstants;
 
 import java.util.ArrayDeque;
 import java.util.Random;
 
-public class TARDISMazeGenerator {
+public class TardisMazeGenerator {
 
     private final boolean[][] field; // The field we are cutting into
     private final ArrayDeque<Integer[]> tracker; // stack to trace location
@@ -30,7 +30,7 @@ public class TARDISMazeGenerator {
     private final int act_rows; // number of rows in the real maze
     private final int act_cols; // number of columns in the real maze
 
-    public TARDISMazeGenerator() {
+    public TardisMazeGenerator() {
         act_rows = 5;
         act_cols = 5;
         rows = 11;
@@ -119,8 +119,8 @@ public class TARDISMazeGenerator {
         // a temp array to access the stack
         Integer[] loc = new Integer[2];
         // pick a random start location - the location must be odd to be valid
-        int start_row_index = TARDISConstants.RANDOM.nextInt(act_rows - 1) * 2 + 1;
-        int start_col_index = TARDISConstants.RANDOM.nextInt(act_cols - 1) * 2 + 1;
+        int start_row_index = TardisConstants.RANDOM.nextInt(act_rows - 1) * 2 + 1;
+        int start_col_index = TardisConstants.RANDOM.nextInt(act_cols - 1) * 2 + 1;
         loc[0] = start_row_index;
         loc[1] = start_col_index;
         tracker.addFirst(loc);

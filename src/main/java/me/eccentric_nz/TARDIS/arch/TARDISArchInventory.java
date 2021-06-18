@@ -22,8 +22,8 @@
  */
 package me.eccentric_nz.tardis.arch;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -32,16 +32,16 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.UUID;
 
-public class TARDISArchInventory {
+public class TardisArchInventory {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
-    private final String prefix = TARDISPlugin.plugin.getPrefix();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
+    private final String prefix = TardisPlugin.plugin.getPrefix();
 
     void switchInventories(Player p, int arch) {
         String uuid = p.getUniqueId().toString();
         String name = p.getName();
-        String inv = TARDISArchSerialization.toDatabase(p.getInventory().getContents());
-        String arm = TARDISArchSerialization.toDatabase(p.getInventory().getArmorContents());
+        String inv = TardisArchSerialization.toDatabase(p.getInventory().getContents());
+        String arm = TardisArchSerialization.toDatabase(p.getInventory().getArmorContents());
         Statement statement = null;
         PreparedStatement ps = null;
         ResultSet rsInv = null;
@@ -81,8 +81,8 @@ public class TARDISArchInventory {
             if (rsToInv.next()) {
                 // set their inventory to the saved one
                 try {
-                    ItemStack[] i = TARDISArchSerialization.fromDatabase(rsToInv.getString("inventory"));
-                    ItemStack[] a = TARDISArchSerialization.fromDatabase(rsToInv.getString("armour"));
+                    ItemStack[] i = TardisArchSerialization.fromDatabase(rsToInv.getString("inventory"));
+                    ItemStack[] a = TardisArchSerialization.fromDatabase(rsToInv.getString("armour"));
                     p.getInventory().setContents(i);
                     p.getInventory().setArmorContents(a);
                 } catch (IOException ex) {
@@ -97,8 +97,8 @@ public class TARDISArchInventory {
                 p.getInventory().setHelmet(null);
                 // give a fob watch if it is the Chameleon Arch inventory
                 if (arch == 0) {
-                    TARDISPlugin.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDISPlugin.plugin, () -> {
-                        ShapedRecipe recipe = TARDISPlugin.plugin.getFigura().getShapedRecipes().get("Fob Watch");
+                    TardisPlugin.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TardisPlugin.plugin, () -> {
+                        ShapedRecipe recipe = TardisPlugin.plugin.getFigura().getShapedRecipes().get("Fob Watch");
                         ItemStack result = recipe.getResult();
                         result.setAmount(1);
                         p.getInventory().addItem(result);

@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.custommodeldata.GUIChameleonPresets;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.custommodeldata.GuiChameleonPresets;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -32,13 +32,13 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-class TARDISPresetInventory {
+class TardisPresetInventory {
 
     private final ItemStack[] terminal;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
 
-    TARDISPresetInventory(TARDISPlugin plugin, Player player) {
+    TardisPresetInventory(TardisPlugin plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         terminal = getItemStack();
@@ -52,9 +52,9 @@ class TARDISPresetInventory {
     private ItemStack[] getItemStack() {
         ItemStack[] stacks = new ItemStack[54];
 
-        for (PRESET preset : PRESET.values()) {
-            if (!PRESET.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesItemFrame()) {
-                if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
+        for (Preset preset : Preset.values()) {
+            if (!Preset.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesItemFrame()) {
+                if (TardisPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
                     ItemStack is = new ItemStack(preset.getGuiDisplay(), 1);
                     ItemMeta im = is.getItemMeta();
                     assert im != null;
@@ -69,7 +69,7 @@ class TARDISPresetInventory {
         ItemMeta but = back.getItemMeta();
         assert but != null;
         but.setDisplayName("Back");
-        but.setCustomModelData(GUIChameleonPresets.BACK.getCustomModelData());
+        but.setCustomModelData(GuiChameleonPresets.BACK.getCustomModelData());
         back.setItemMeta(but);
         stacks[51] = back;
         // page two
@@ -77,7 +77,7 @@ class TARDISPresetInventory {
         ItemMeta two = page.getItemMeta();
         assert two != null;
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-        two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData());
+        two.setCustomModelData(GuiChameleonPresets.GO_TO_PAGE_2.getCustomModelData());
         page.setItemMeta(two);
         stacks[52] = page;
         // Cancel / close
@@ -85,7 +85,7 @@ class TARDISPresetInventory {
         ItemMeta can = close.getItemMeta();
         assert can != null;
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
+        can.setCustomModelData(GuiChameleonPresets.CLOSE.getCustomModelData());
         close.setItemMeta(can);
         stacks[53] = close;
 

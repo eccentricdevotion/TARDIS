@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.enumeration.Preset;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,18 +35,18 @@ import java.sql.SQLException;
  */
 public class ResultSetTardisPreset {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
-    private PRESET preset;
+    private Preset preset;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the tardis table.
      *
      * @param plugin an instance of the main class.
      */
-    public ResultSetTardisPreset(TARDISPlugin plugin) {
+    public ResultSetTardisPreset(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -70,9 +70,9 @@ public class ResultSetTardisPreset {
             if (rs.isBeforeFirst()) {
                 rs.next();
                 try {
-                    preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                    preset = Preset.valueOf(rs.getString("chameleon_preset"));
                 } catch (IllegalArgumentException e) {
-                    preset = PRESET.FACTORY;
+                    preset = Preset.FACTORY;
                 }
                 return true;
             }
@@ -94,7 +94,7 @@ public class ResultSetTardisPreset {
         }
     }
 
-    public PRESET getPreset() {
+    public Preset getPreset() {
         return preset;
     }
 }

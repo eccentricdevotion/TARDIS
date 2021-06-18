@@ -1,9 +1,9 @@
 package me.eccentric_nz.tardis.commands.sudo;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
@@ -11,9 +11,9 @@ import java.util.UUID;
 
 class SudoDeadlock {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    SudoDeadlock(TARDISPlugin plugin) {
+    SudoDeadlock(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -33,10 +33,10 @@ class SudoDeadlock {
                 HashMap<String, Object> whered = new HashMap<>();
                 whered.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("doors", setd, whered);
-                TARDISMessage.send(sender, "DOOR_LOCK", lockedUnlocked);
+                TardisMessage.send(sender, "DOOR_LOCK", lockedUnlocked);
             }
         } else {
-            TARDISMessage.send(sender, "NO_TARDIS");
+            TardisMessage.send(sender, "NO_TARDIS");
         }
         return true;
     }

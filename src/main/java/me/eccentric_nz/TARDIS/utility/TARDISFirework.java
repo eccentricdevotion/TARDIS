@@ -18,7 +18,7 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.*;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.entity.Firework;
@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class TARDISFirework {
+public class TardisFirework {
 
     private static final Random RANDOM = new Random();
     private static final Color[] COLORS;
@@ -46,7 +46,7 @@ public class TARDISFirework {
 
     private final FireworkMeta meta;
 
-    private TARDISFirework(FireworkMeta meta, boolean isClean) {
+    private TardisFirework(FireworkMeta meta, boolean isClean) {
         if (isClean) {
             this.meta = meta;
         } else {
@@ -56,11 +56,11 @@ public class TARDISFirework {
         }
     }
 
-    public static TARDISFirework randomize() {
+    public static TardisFirework randomize() {
         FireworkMeta meta = getCleanMeta();
         meta.setPower(RANDOM.nextInt(3) + 1);
         meta.addEffects(randomizeEffects(1, 2, 1, 2));
-        return new TARDISFirework(meta, true);
+        return new TardisFirework(meta, true);
     }
 
     private static int calculateRandom(int min, int max) throws IllegalArgumentException {
@@ -103,7 +103,7 @@ public class TARDISFirework {
         return f;
     }
 
-    public void displayEffects(TARDISPlugin plugin, Location l) {
+    public void displayEffects(TardisPlugin plugin, Location l) {
         Firework f = launch(l);
         new BukkitRunnable() {
             @Override

@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetVault;
-import me.eccentric_nz.tardis.sonic.TARDISSonicSorterListener;
+import me.eccentric_nz.tardis.sonic.TardisSonicSorterListener;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -36,11 +36,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TARDISVaultListener implements Listener {
+public class TardisVaultListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISVaultListener(TARDISPlugin plugin) {
+    public TardisVaultListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -62,7 +62,7 @@ public class TARDISVaultListener implements Listener {
                 List<String> chestLocations = new ArrayList<>();
                 chestLocations.add(loc);
                 // sort contents
-                TARDISSonicSorterListener.sortInventory(inv);
+                TardisSonicSorterListener.sortInventory(inv);
                 World w = chest.getWorld();
                 // get vault dimensions
                 int sx = rs.getX();
@@ -125,7 +125,7 @@ public class TARDISVaultListener implements Listener {
                                             // put it in the chest
                                             cinv.setItem(cinv.firstEmpty(), get);
                                             // sort the chest
-                                            TARDISSonicSorterListener.sortInventory(cinv);
+                                            TardisSonicSorterListener.sortInventory(cinv);
                                             // get any other stacks
                                             slot = inv.first(m);
                                         }

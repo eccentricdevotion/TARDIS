@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.move;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Tag;
@@ -36,13 +36,13 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISDoorCloser {
+public class TardisDoorCloser {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final UUID uuid;
     private final int id;
 
-    public TARDISDoorCloser(TARDISPlugin plugin, UUID uuid, int id) {
+    public TardisDoorCloser(TardisPlugin plugin, UUID uuid, int id) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.id = id;
@@ -103,7 +103,7 @@ public class TARDISDoorCloser {
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
             rsc.resultSet();
             Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            if (rs.getTardis().getPreset().equals(PRESET.SWAMP)) {
+            if (rs.getTardis().getPreset().equals(Preset.SWAMP)) {
                 exportal.add(0.0d, 1.0d, 0.0d);
             }
             // unset trackers

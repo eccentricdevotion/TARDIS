@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISJailPreset extends TARDISPreset {
+class TardisJailPreset extends TardisPreset {
 
-    TARDISJailPreset() {
+    TardisJailPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:stone_bricks";

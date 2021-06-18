@@ -24,13 +24,13 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author eccentric_nz
  */
-public final class TARDISZeroRoomExitEvent extends Event {
+public final class TardisZeroRoomExitEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
     private final int tardisId;
 
-    public TARDISZeroRoomExitEvent(Player player, int tardisId) {
+    public TardisZeroRoomExitEvent(Player player, int tardisId) {
         this.player = player;
         this.tardisId = tardisId;
     }

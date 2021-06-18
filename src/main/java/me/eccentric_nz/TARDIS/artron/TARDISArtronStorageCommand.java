@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -40,12 +40,12 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISArtronStorageCommand implements CommandExecutor {
+public class TardisArtronStorageCommand implements CommandExecutor {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<String> firstArgs = new ArrayList<>();
 
-    public TARDISArtronStorageCommand(TARDISPlugin plugin) {
+    public TardisArtronStorageCommand(TardisPlugin plugin) {
         this.plugin = plugin;
         firstArgs.add("tardis");
         firstArgs.add("timelord");
@@ -56,8 +56,8 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
         // If the player typed /tardisartron then do the following...
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardisartron")) {
-            if (!TARDISPermission.hasPermission(sender, "tardis.store")) {
-                TARDISMessage.send(sender, "NO_PERMS");
+            if (!TardisPermission.hasPermission(sender, "tardis.store")) {
+                TardisMessage.send(sender, "NO_PERMS");
                 return true;
             }
             if (args.length < 2) {
@@ -68,28 +68,28 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                TARDISMessage.send(sender, "CMD_PLAYER");
+                TardisMessage.send(sender, "CMD_PLAYER");
                 return true;
             }
             ItemStack is = player.getInventory().getItemInMainHand();
             if (!is.hasItemMeta()) {
-                TARDISMessage.send(player, "CELL_IN_HAND");
+                TardisMessage.send(player, "CELL_IN_HAND");
                 return true;
             }
             if (is.getAmount() > 1) {
-                TARDISMessage.send(player, "CELL_ONE");
+                TardisMessage.send(player, "CELL_ONE");
                 return true;
             }
             ItemMeta im = is.getItemMeta();
             assert im != null;
             String name = im.getDisplayName();
             if (!name.equals("Artron Storage Cell")) {
-                TARDISMessage.send(player, "CELL_IN_HAND");
+                TardisMessage.send(player, "CELL_IN_HAND");
                 return true;
             }
             String which = args[0].toLowerCase(Locale.ENGLISH);
             if (!firstArgs.contains(which)) {
-                TARDISMessage.send(player, "CELL_WHICH");
+                TardisMessage.send(player, "CELL_WHICH");
                 return false;
             }
             // must be a timelord
@@ -98,14 +98,14 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             if (which.equals("tardis")) {
                 ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
                 if (!rs.fromUUID(playerUUID)) {
-                    TARDISMessage.send(player, "NO_TARDIS");
+                    TardisMessage.send(player, "NO_TARDIS");
                     return true;
                 }
                 current_level = rs.getArtronLevel();
             } else {
                 ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, playerUUID);
                 if (!rs.resultSet()) {
-                    TARDISMessage.send(player, "NO_TARDIS");
+                    TardisMessage.send(player, "NO_TARDIS");
                     return true;
                 }
                 current_level = rs.getArtronLevel();
@@ -114,30 +114,30 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             try {
                 amount = Integer.parseInt(args[1]);
                 if (amount < 0) {
-                    TARDISMessage.send(player, "ENERGY_NOT_NEG");
+                    TardisMessage.send(player, "ENERGY_NOT_NEG");
                     return true;
                 }
             } catch (NumberFormatException n) {
-                TARDISMessage.send(player, "ARG_SEC_NUMBER");
+                TardisMessage.send(player, "ARG_SEC_NUMBER");
                 return false;
             }
             // must have sufficient energy
             if (which.equals("tardis")) {
                 if (current_level - amount < plugin.getArtronConfig().getInt("comehere")) {
-                    TARDISMessage.send(player, "CELL_NO_TRANSFER");
+                    TardisMessage.send(player, "CELL_NO_TRANSFER");
                     return true;
                 }
             } else if (current_level - amount < 0) {
-                TARDISMessage.send(player, "CELL_NOT_ENOUGH");
+                TardisMessage.send(player, "CELL_NOT_ENOUGH");
                 return true;
             }
             List<String> lore = im.getLore();
             assert lore != null;
-            int level = TARDISNumberParsers.parseInt(lore.get(1));
+            int level = TardisNumberParsers.parseInt(lore.get(1));
             int new_amount = amount + level;
             int max = plugin.getArtronConfig().getInt("full_charge");
             if (new_amount > max) {
-                TARDISMessage.send(player, "CELL_NO_CHARGE", String.format("%d", (max - level)));
+                TardisMessage.send(player, "CELL_NO_CHARGE", String.format("%d", (max - level)));
                 return false;
             }
             lore.set(1, "" + new_amount);
@@ -156,7 +156,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 table = "player_prefs";
             }
             plugin.getQueryFactory().alterEnergyLevel(table, -amount, where, player);
-            TARDISMessage.send(player, "CELL_CHARGED", String.format("%d", new_amount));
+            TardisMessage.send(player, "CELL_CHARGED", String.format("%d", new_amount));
             return true;
         }
         return false;

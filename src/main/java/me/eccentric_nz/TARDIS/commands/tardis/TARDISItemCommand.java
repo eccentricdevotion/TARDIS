@@ -18,34 +18,34 @@ package me.eccentric_nz.tardis.commands.tardis;
 
 import me.eccentric_nz.tardis.enumeration.GlowstoneCircuit;
 import me.eccentric_nz.tardis.enumeration.RecipeItem;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class TARDISItemCommand {
+public class TardisItemCommand {
 
     public boolean update(Player player, String[] args) {
         if (args.length < 2) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            TardisMessage.send(player, "TOO_FEW_ARGS");
             return true;
         }
         if (!args[1].equalsIgnoreCase("hand") && !args[1].equalsIgnoreCase("inventory")) {
-            TARDISMessage.send(player, "ARG_ITEM");
+            TardisMessage.send(player, "ARG_ITEM");
             return true;
         }
         if (args[1].equalsIgnoreCase("hand")) {
             ItemStack inHand = player.getInventory().getItemInMainHand();
             if (!inHand.hasItemMeta()) {
-                TARDISMessage.send(player, "ITEM_IN_HAND");
+                TardisMessage.send(player, "ITEM_IN_HAND");
                 return true;
             }
             ItemMeta im = inHand.getItemMeta();
             assert im != null;
             if (!im.hasDisplayName()) {
-                TARDISMessage.send(player, "ITEM_IN_HAND");
+                TardisMessage.send(player, "ITEM_IN_HAND");
                 return true;
             }
             // strip color codes
@@ -62,38 +62,38 @@ public class TARDISItemCommand {
                     }
                 } else {
                     if (im.hasCustomModelData()) {
-                        TARDISMessage.send(player, "ITEM_HAS_DATA");
+                        TardisMessage.send(player, "ITEM_HAS_DATA");
                         return true;
                     }
                     inHand.setItemMeta(im);
                 }
                 player.updateInventory();
-                TARDISMessage.send(player, "ITEM_UPDATED");
+                TardisMessage.send(player, "ITEM_UPDATED");
             }
         } else {
             int i = 0;
             for (ItemStack is : player.getInventory()) {
                 if (is != null && is.hasItemMeta()) {
-                    TARDISMessage.message(player, is.getType().toString());
+                    TardisMessage.message(player, is.getType().toString());
                     ItemMeta im = is.getItemMeta();
                     assert im != null;
                     if (im.hasDisplayName()) {
                         // strip color codes
                         String stripped = ChatColor.stripColor(im.getDisplayName());
-                        TARDISMessage.message(player, stripped);
+                        TardisMessage.message(player, stripped);
                         // look up display name
                         RecipeItem recipeItem = RecipeItem.getByName(stripped);
-                        TARDISMessage.message(player, recipeItem.toString());
+                        TardisMessage.message(player, recipeItem.toString());
                         if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
                             if (is.getType().equals(Material.FILLED_MAP)) {
-                                TARDISMessage.message(player, "Filled Map!");
+                                TardisMessage.message(player, "Filled Map!");
                                 GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
                                 if (glowstone != null) {
-                                    TARDISMessage.message(player, "Found '" + glowstone.getDisplayName() + "' converting to GLOWSTONE_DUST");
+                                    TardisMessage.message(player, "Found '" + glowstone.getDisplayName() + "' converting to GLOWSTONE_DUST");
                                     is.setType(Material.GLOWSTONE_DUST);
                                     i++;
                                 } else {
-                                    TARDISMessage.message(player, "IllegalArgumentException for " + stripped);
+                                    TardisMessage.message(player, "IllegalArgumentException for " + stripped);
                                 }
                             }
                             if (!im.hasCustomModelData()) {
@@ -106,7 +106,7 @@ public class TARDISItemCommand {
                 }
             }
             if (i > 0) {
-                TARDISMessage.send(player, "ITEMS_UPDATED", "" + i);
+                TardisMessage.send(player, "ITEMS_UPDATED", "" + i);
                 player.updateInventory();
             }
         }

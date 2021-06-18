@@ -16,21 +16,21 @@
  */
 package me.eccentric_nz.tardis.chameleon;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.tardis.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.advanced.TardisCircuitChecker;
+import me.eccentric_nz.tardis.advanced.TardisCircuitDamager;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.tardis.database.resultset.ResultSetControls;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
 import me.eccentric_nz.tardis.enumeration.Control;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.DiskCircuit;
-import me.eccentric_nz.tardis.enumeration.PRESET;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISMaterials;
-import me.eccentric_nz.tardis.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardis.enumeration.Preset;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisMaterials;
+import me.eccentric_nz.tardis.utility.TardisStaticUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -42,15 +42,15 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISShellRoomConstructor {
+public class TardisShellRoomConstructor {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int[] orderx;
     private final int[] orderz;
-    private final String GLASS = addQuotes(TARDISConstants.GLASS.getAsString());
+    private final String GLASS = addQuotes(TardisConstants.GLASS.getAsString());
     private Block sign;
 
-    public TARDISShellRoomConstructor(TARDISPlugin plugin) {
+    public TardisShellRoomConstructor(TardisPlugin plugin) {
         this.plugin = plugin;
         orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
         orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
@@ -75,7 +75,7 @@ public class TARDISShellRoomConstructor {
                     assert w != null;
                     Block fb = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
                     if (!fb.getType().isAir()) {
-                        if (TARDISMaterials.doors.contains(fb.getType())) {
+                        if (TardisMaterials.doors.contains(fb.getType())) {
                             hasDoor = true;
                         } else {
                             hasBlock = true;
@@ -84,11 +84,11 @@ public class TARDISShellRoomConstructor {
                 }
             }
             if (!hasBlock && !hasDoor) {
-                TARDISMessage.send(player, "SHELL_MIN_BLOCKS");
+                TardisMessage.send(player, "SHELL_MIN_BLOCKS");
                 return;
             }
-            TARDIS tardis = rs.getTardis();
-            TARDISMessage.send(player, "PRESET_SCAN");
+            Tardis tardis = rs.getTardis();
+            TardisMessage.send(player, "PRESET_SCAN");
             StringBuilder sb_blue_data = new StringBuilder("[");
             StringBuilder sb_stain_data = new StringBuilder("[");
             StringBuilder sb_glass_data = new StringBuilder("[");
@@ -106,7 +106,7 @@ public class TARDISShellRoomConstructor {
                     }
                     if (y == (fy + 3)) {
                         sb_blue_data.append(addQuotes(data.getAsString()));
-                        if (TARDISMaterials.not_glass.contains(material)) {
+                        if (TardisMaterials.not_glass.contains(material)) {
                             sb_stain_data.append(dataStr);
                             sb_glass_data.append(dataStr);
                         } else {
@@ -116,7 +116,7 @@ public class TARDISShellRoomConstructor {
                         }
                     } else {
                         sb_blue_data.append(addQuotes(data.getAsString())).append(",");
-                        if (TARDISMaterials.not_glass.contains(material)) {
+                        if (TardisMaterials.not_glass.contains(material)) {
                             sb_stain_data.append(dataStr).append(",");
                             sb_glass_data.append(dataStr).append(",");
                         } else {
@@ -181,7 +181,7 @@ public class TARDISShellRoomConstructor {
         HashMap<String, Object> wheree = new HashMap<>();
         wheree.put("tardis_id", id);
         plugin.getQueryFactory().alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("shell") * -1, wheree, player);
-        TARDISMessage.send(player, "PRESET_CONSTRUCTED");
+        TardisMessage.send(player, "PRESET_CONSTRUCTED");
         // update tardis table
         HashMap<String, Object> sett = new HashMap<>();
         sett.put("chameleon_preset", "CONSTRUCT");
@@ -196,7 +196,7 @@ public class TARDISShellRoomConstructor {
         ResultSetControls rsc = new ResultSetControls(plugin, whereh, true);
         if (rsc.resultSet()) {
             for (HashMap<String, String> map : rsc.getData()) {
-                TARDISStaticUtils.setSign(map.get("location"), 3, "CONSTRUCT", player);
+                TardisStaticUtils.setSign(map.get("location"), 3, "CONSTRUCT", player);
             }
         }
         HashMap<String, Object> where = new HashMap<>();
@@ -204,18 +204,18 @@ public class TARDISShellRoomConstructor {
         where.put("type", Control.FRAME.getId());
         ResultSetControls rsf = new ResultSetControls(plugin, where, false);
         if (rsf.resultSet()) {
-            new TARDISChameleonFrame(plugin).updateChameleonFrame(id, PRESET.CONSTRUCT, rsf.getLocation());
+            new TardisChameleonFrame(plugin).updateChameleonFrame(id, Preset.CONSTRUCT, rsf.getLocation());
         }
-        TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Construct");
+        TardisMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Construct");
         // rebuild
         player.performCommand("tardis rebuild");
         // damage the circuit if configured
         if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
-            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+            TardisCircuitChecker tcc = new TardisCircuitChecker(plugin, id);
             tcc.getCircuits();
             // decrement uses
             int uses_left = tcc.getChameleonUses();
-            new TARDISCircuitDamager(plugin, DiskCircuit.CHAMELEON, uses_left, id, player).damage();
+            new TardisCircuitDamager(plugin, DiskCircuit.CHAMELEON, uses_left, id, player).damage();
         }
     }
 

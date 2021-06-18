@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.utility.recalculators;
 
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
@@ -24,7 +24,7 @@ import org.bukkit.block.data.Directional;
 /**
  * @author eccentric_nz
  */
-public class TARDISTrapdoorRecalculator {
+public class TardisTrapdoorRecalculator {
 
     /**
      * Recalculate the data for directional block (TRAPDOOR) when the tardis preset changes direction.
@@ -33,7 +33,7 @@ public class TARDISTrapdoorRecalculator {
      * @param d the new direction of the tardis
      * @return the recalculated byte
      */
-    public BlockData recalculate(BlockData b, COMPASS d) {
+    public BlockData recalculate(BlockData b, CardinalDirection d) {
         Directional trap = (Directional) b;
         switch (d) {
             case SOUTH:

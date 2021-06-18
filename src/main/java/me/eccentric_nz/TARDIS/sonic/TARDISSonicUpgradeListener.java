@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.sonic;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -38,13 +38,13 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISSonicUpgradeListener implements Listener {
+public class TardisSonicUpgradeListener implements Listener {
 
     private final Material sonicMaterial;
     private final HashMap<String, String> upgrades = new HashMap<>();
     private final HashMap<Integer, String> customModelData = new HashMap<>();
 
-    public TARDISSonicUpgradeListener(TARDISPlugin plugin) {
+    public TardisSonicUpgradeListener(TardisPlugin plugin) {
         String[] split = Objects.requireNonNull(plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result")).split(":");
         sonicMaterial = Material.valueOf(split[0]);
         upgrades.put("Admin Upgrade", "admin");
@@ -108,7 +108,7 @@ public class TARDISSonicUpgradeListener implements Listener {
                     p = (Player) human;
                 }
                 // make sure the player has permission
-                if (p == null || !TARDISPermission.hasPermission(p, "tardis.sonic." + upgrades.get(upgrade))) {
+                if (p == null || !TardisPermission.hasPermission(p, "tardis.sonic." + upgrades.get(upgrade))) {
                     ci.setResult(null);
                     return;
                 }
@@ -163,10 +163,10 @@ public class TARDISSonicUpgradeListener implements Listener {
             assert key != null;
             if (!key.hasItemMeta() || !Objects.requireNonNull(key.getItemMeta()).hasDisplayName() || !ChatColor.stripColor(key.getItemMeta().getDisplayName()).equals("tardis Key")) {
                 ci.setResult(null);
-                TARDISMessage.send(event.getView().getPlayer(), "REMOTE_KEY");
+                TardisMessage.send(event.getView().getPlayer(), "REMOTE_KEY");
             }
         } else if (recipe instanceof SmithingRecipe) {
-            TARDISPlugin.plugin.debug("SmithingRecipe");
+            TardisPlugin.plugin.debug("SmithingRecipe");
         }
     }
 }

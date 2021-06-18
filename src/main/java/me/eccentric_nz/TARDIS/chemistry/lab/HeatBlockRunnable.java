@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.chemistry.lab;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -36,16 +36,16 @@ public class HeatBlockRunnable implements Runnable {
 
     private static final List<Vector> INNER_VECTORS = new ArrayList<>(Arrays.asList(new Vector(-1.0, 0.0, 1.0), new Vector(0.0, 0.0, 1.0), new Vector(1.0, 0.0, 1.0), new Vector(-1.0, 0.0, 0.0), new Vector(1.0, 0.0, 0.0), new Vector(-1.0, 0.0, -1.0), new Vector(0.0, 0.0, -1.0), new Vector(1.0, 0.0, -1.0)));
     private static final List<Vector> OUTER_VECTORS = new ArrayList<>(Arrays.asList(new Vector(-2.0, 0.0, 2.0), new Vector(-1.0, 0.0, 2.0), new Vector(0.0, 0.0, 2.0), new Vector(1.0, 0.0, 2.0), new Vector(2.0, 0.0, 2.0), new Vector(-2.0, 0.0, 1.0), new Vector(2.0, 0.0, 1.0), new Vector(-2.0, 0.0, 0.0), new Vector(2.0, 0.0, 0.0), new Vector(-2.0, 0.0, -1.0), new Vector(2.0, 0.0, -1.0), new Vector(-2.0, 0.0, -2.0), new Vector(-1.0, 0.0, -2.0), new Vector(0.0, 0.0, -2.0), new Vector(1.0, 0.0, -2.0), new Vector(2.0, 0.0, -2.0)));
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public HeatBlockRunnable(TARDISPlugin plugin) {
+    public HeatBlockRunnable(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public void run() {
         for (String s : plugin.getTrackerKeeper().getHeatBlocks()) {
-            Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(s);
+            Location location = TardisStaticLocationGetters.getLocationFromBukkitString(s);
             if (location != null) {
                 BlockData blockData = location.getBlock().getBlockData();
                 if (blockData.getMaterial().equals(Material.MUSHROOM_STEM) && blockData.getAsString().equals("minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=true]")) {
@@ -63,7 +63,7 @@ public class HeatBlockRunnable implements Runnable {
             if (world != null) {
                 Collections.shuffle(INNER_VECTORS);
                 for (Vector inner : INNER_VECTORS) {
-                    if (TARDISConstants.RANDOM.nextInt(100) > 25) {
+                    if (TardisConstants.RANDOM.nextInt(100) > 25) {
                         Block ib = location.getWorld().getHighestBlockAt(location.clone().add(inner));
                         Material im = ib.getType();
                         if (im.equals(Material.SNOW)) {
@@ -73,7 +73,7 @@ public class HeatBlockRunnable implements Runnable {
                                 snow.setLayers(layers);
                                 ib.setBlockData(snow);
                             } else {
-                                ib.setBlockData(TARDISConstants.AIR);
+                                ib.setBlockData(TardisConstants.AIR);
                             }
                             return;
                         } else if (im.equals(Material.ICE) || im.equals(Material.PACKED_ICE)) {
@@ -88,7 +88,7 @@ public class HeatBlockRunnable implements Runnable {
                                 Block ob = location.getWorld().getHighestBlockAt(location.clone().add(outer));
                                 Material om = ob.getType();
                                 if (om.equals(Material.SNOW)) {
-                                    ob.setBlockData(TARDISConstants.AIR);
+                                    ob.setBlockData(TardisConstants.AIR);
                                     return;
                                 } else if (om.equals(Material.ICE) || om.equals(Material.PACKED_ICE)) {
                                     ob.setBlockData(Material.WATER.createBlockData());

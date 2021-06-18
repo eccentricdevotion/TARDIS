@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.lazarus;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
@@ -28,7 +28,7 @@ import me.libraryaddict.disguise.disguisetypes.watchers.*;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.*;
 
-public class TARDISLazarusLibs {
+public class TardisLazarusLibs {
 
     private final Player player;
     private final String disguise;
@@ -36,7 +36,7 @@ public class TARDISLazarusLibs {
     private final boolean hasOption;
     private final boolean isBaby;
 
-    public TARDISLazarusLibs(Player player, String disguise, Object choice, boolean hasOption, boolean isBaby) {
+    public TardisLazarusLibs(Player player, String disguise, Object choice, boolean hasOption, boolean isBaby) {
         this.player = player;
         this.disguise = disguise;
         this.choice = choice;
@@ -52,7 +52,7 @@ public class TARDISLazarusLibs {
 
     public static void runImmortalityGate(Player player) {
         PlayerDisguise playerDisguise = new PlayerDisguise(player.getName());
-        TARDISPlugin.plugin.getServer().getOnlinePlayers().forEach((p) -> {
+        TardisPlugin.plugin.getServer().getOnlinePlayers().forEach((p) -> {
             if (!p.equals(player)) {
                 DisguiseAPI.disguiseToAll(p, playerDisguise);
             }
@@ -70,7 +70,7 @@ public class TARDISLazarusLibs {
             try {
                 livingWatcher = mobDisguise.getWatcher();
             } catch (NoSuchMethodError e) {
-                TARDISMessage.message(player, "LIBS");
+                TardisMessage.message(player, "LIBS");
                 return;
             }
             switch (dt) {
@@ -115,7 +115,7 @@ public class TARDISLazarusLibs {
                     LlamaWatcher llamaWatcher = (LlamaWatcher) livingWatcher;
                     llamaWatcher.setColor((Llama.Color) choice);
                     if (hasOption) {
-                        llamaWatcher.setCarpet(DyeColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
+                        llamaWatcher.setCarpet(DyeColor.values()[TardisConstants.RANDOM.nextInt(16)]);
                     }
                     break;
                 case OCELOT:
@@ -201,8 +201,8 @@ public class TARDISLazarusLibs {
                 case TROPICAL_FISH:
                     TropicalFishWatcher tropicalFishWatcher = (TropicalFishWatcher) livingWatcher;
                     tropicalFishWatcher.setPattern((TropicalFish.Pattern) choice);
-                    tropicalFishWatcher.setBodyColor(DyeColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
-                    tropicalFishWatcher.setPatternColor(DyeColor.values()[TARDISConstants.RANDOM.nextInt(16)]);
+                    tropicalFishWatcher.setBodyColor(DyeColor.values()[TardisConstants.RANDOM.nextInt(16)]);
+                    tropicalFishWatcher.setPatternColor(DyeColor.values()[TardisConstants.RANDOM.nextInt(16)]);
                     break;
                 case MUSHROOM_COW:
                     MushroomCowWatcher mushroomCowWatcher = (MushroomCowWatcher) livingWatcher;

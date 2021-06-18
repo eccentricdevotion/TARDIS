@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUIInteriorSounds;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiInteriorSounds;
 import me.eccentric_nz.tardis.enumeration.Hum;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -32,12 +32,12 @@ import java.util.List;
  *
  * @author eccentric_nz
  */
-class TARDISHumInventory {
+class TardisHumInventory {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ItemStack[] sounds;
 
-    TARDISHumInventory(TARDISPlugin plugin) {
+    TardisHumInventory(TardisPlugin plugin) {
         this.plugin = plugin;
         sounds = getItemStack();
     }
@@ -56,7 +56,7 @@ class TARDISHumInventory {
             ItemMeta im = is.getItemMeta();
             assert im != null;
             im.setDisplayName(hum.toString());
-            im.setCustomModelData(GUIInteriorSounds.valueOf(hum.toString()).getCustomModelData());
+            im.setCustomModelData(GuiInteriorSounds.valueOf(hum.toString()).getCustomModelData());
             is.setItemMeta(im);
             options.add(is);
         }
@@ -75,7 +75,7 @@ class TARDISHumInventory {
         assert save != null;
         save.setDisplayName("Action");
         save.setLore(Collections.singletonList("PLAY"));
-        save.setCustomModelData(GUIInteriorSounds.ACTION.getCustomModelData());
+        save.setCustomModelData(GuiInteriorSounds.ACTION.getCustomModelData());
         play.setItemMeta(save);
         stack[15] = play;
         // close
@@ -83,7 +83,7 @@ class TARDISHumInventory {
         ItemMeta c_im = close.getItemMeta();
         assert c_im != null;
         c_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        c_im.setCustomModelData(GUIInteriorSounds.CLOSE.getCustomModelData());
+        c_im.setCustomModelData(GuiInteriorSounds.CLOSE.getCustomModelData());
         close.setItemMeta(c_im);
         stack[17] = close;
 

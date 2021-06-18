@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.chemistry.compound;
 
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -40,7 +40,7 @@ public class GlueListener implements Listener {
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Objects.equals(event.getHand(), EquipmentSlot.HAND)) {
             Player player = event.getPlayer();
             Block block = event.getClickedBlock();
-            if (TARDISPermission.hasPermission(player, "tardis.chemistry.glue") && block != null && block.getType().equals(Material.PISTON)) {
+            if (TardisPermission.hasPermission(player, "tardis.chemistry.glue") && block != null && block.getType().equals(Material.PISTON)) {
                 ItemStack is = event.getItem();
                 if (is != null && is.getType().equals(Material.GLASS_BOTTLE) && is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();

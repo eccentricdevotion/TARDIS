@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.utility.recalculators;
 
 import com.google.common.collect.Sets;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
@@ -27,7 +27,7 @@ import java.util.Set;
 /**
  * @author eccentric_nz
  */
-public class TARDISFenceRecalculator {
+public class TardisFenceRecalculator {
 
     private final Set<BlockFace> eastwest = Sets.newHashSet(BlockFace.WEST, BlockFace.EAST);
     private final Set<BlockFace> northsouth = Sets.newHashSet(BlockFace.SOUTH, BlockFace.NORTH);
@@ -39,12 +39,12 @@ public class TARDISFenceRecalculator {
      * @param d the new direction of the tardis
      * @return the recalculated block data
      */
-    public BlockData recalculate(BlockData b, COMPASS d) {
+    public BlockData recalculate(BlockData b, CardinalDirection d) {
         MultipleFacing fence = (MultipleFacing) b;
         // get all set faces
         Set<BlockFace> has = fence.getFaces();
         Set<BlockFace> set = null;
-        if (d.equals(COMPASS.NORTH) || d.equals(COMPASS.SOUTH)) {
+        if (d.equals(CardinalDirection.NORTH) || d.equals(CardinalDirection.SOUTH)) {
             if (has.equals(eastwest)) {
                 set = northsouth;
             } else if (has.equals(northsouth)) {

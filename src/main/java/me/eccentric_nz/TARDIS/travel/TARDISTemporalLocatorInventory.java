@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUITemporalLocator;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiTemporalLocator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -31,12 +31,12 @@ import java.util.Collections;
  *
  * @author eccentric_nz
  */
-public class TARDISTemporalLocatorInventory {
+public class TardisTemporalLocatorInventory {
 
     private final ItemStack[] temporal;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISTemporalLocatorInventory(TARDISPlugin plugin) {
+    public TardisTemporalLocatorInventory(TardisPlugin plugin) {
         this.plugin = plugin;
         temporal = getItemStack();
     }
@@ -48,7 +48,7 @@ public class TARDISTemporalLocatorInventory {
      */
     private ItemStack[] getItemStack() {
         ItemStack[] clocks = new ItemStack[27];
-        for (GUITemporalLocator clock : GUITemporalLocator.values()) {
+        for (GuiTemporalLocator clock : GuiTemporalLocator.values()) {
             ItemStack is = new ItemStack(clock.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             assert im != null;

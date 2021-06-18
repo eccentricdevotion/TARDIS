@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.planets.TARDISAliasResolver;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
@@ -30,18 +30,18 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISJunkFind {
+class TardisJunkFind {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISJunkFind(TARDISPlugin plugin) {
+    TardisJunkFind(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public boolean find(CommandSender sender) {
         // get current location
-        if (!TARDISPermission.hasPermission(sender, "tardis.junk")) {
-            TARDISMessage.send(sender, "JUNK_NO_PERM");
+        if (!TardisPermission.hasPermission(sender, "tardis.junk")) {
+            TardisMessage.send(sender, "JUNK_NO_PERM");
             return true;
         }
         // get junk tardis id
@@ -52,13 +52,13 @@ class TARDISJunkFind {
             wherec.put("tardis_id", rs.getTardisId());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
             if (rsc.resultSet()) {
-                String world = TARDISAliasResolver.getWorldAlias(rsc.getWorld());
+                String world = TardisAliasResolver.getWorldAlias(rsc.getWorld());
                 if (plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                     world = plugin.getMVHelper().getAlias(rsc.getWorld());
                 }
-                TARDISMessage.send(sender, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
+                TardisMessage.send(sender, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
             } else {
-                TARDISMessage.send(sender, "JUNK_NOT_FOUND");
+                TardisMessage.send(sender, "JUNK_NOT_FOUND");
             }
             return true;
         }

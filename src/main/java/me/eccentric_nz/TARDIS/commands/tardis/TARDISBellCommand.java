@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.hads.TARDISCloisterBell;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.hads.TardisCloisterBell;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
-public class TARDISBellCommand {
+public class TardisBellCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISBellCommand(TARDISPlugin plugin) {
+    public TardisBellCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -42,14 +42,14 @@ public class TARDISBellCommand {
                 if (plugin.getTrackerKeeper().getCloisterBells().containsKey(id)) {
                     stopCloisterBell(id);
                 } else {
-                    TARDISMessage.send(player, "CLOISTER_BELL_CMD", "off");
+                    TardisMessage.send(player, "CLOISTER_BELL_CMD", "off");
                 }
                 return true;
             } else if (args[1].equalsIgnoreCase("on")) {
                 if (!plugin.getTrackerKeeper().getCloisterBells().containsKey(id)) {
                     startCloisterBell(id);
                 } else {
-                    TARDISMessage.send(player, "CLOISTER_BELL_CMD", "on");
+                    TardisMessage.send(player, "CLOISTER_BELL_CMD", "on");
                 }
                 return true;
             }
@@ -63,7 +63,7 @@ public class TARDISBellCommand {
     }
 
     private void startCloisterBell(int id) {
-        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, Integer.MAX_VALUE, id);
+        TardisCloisterBell bell = new TardisCloisterBell(plugin, Integer.MAX_VALUE, id);
         int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
         bell.setTask(taskId);
         plugin.getTrackerKeeper().getCloisterBells().put(id, taskId);

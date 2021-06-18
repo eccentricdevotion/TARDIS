@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.desktop;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.tardis.listeners.TARDISMenuListener;
-import me.eccentric_nz.tardis.rooms.TARDISWalls;
+import me.eccentric_nz.tardis.listeners.TardisMenuListener;
+import me.eccentric_nz.tardis.rooms.TardisWalls;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -43,18 +43,18 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISWallMenuListener extends TARDISMenuListener implements Listener {
+public class TardisWallMenuListener extends TardisMenuListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<UUID, Integer> scroll = new HashMap<>();
     private final List<UUID> scrolling = new ArrayList<>();
     private final ItemStack[][] blocks;
     private final int rows;
 
-    public TARDISWallMenuListener(TARDISPlugin plugin) {
+    public TardisWallMenuListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
-        rows = TARDISWalls.BLOCKS.size() / 8 + 1;
+        rows = TardisWalls.BLOCKS.size() / 8 + 1;
         blocks = getWallBlocks();
     }
 
@@ -125,7 +125,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
     }
 
     private void setWallFloorBlock(Player p, UUID uuid, String str, boolean isWall) {
-        TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+        TardisUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
         if (isWall) {
             // open the floor block GUI
             tud.setWall(str);
@@ -134,7 +134,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
             tud.setFloor(str);
             close(p, false);
             // start the upgrade
-            new TARDISThemeProcessor(plugin, uuid).changeDesktop();
+            new TardisThemeProcessor(plugin, uuid).changeDesktop();
         }
         plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
     }
@@ -169,7 +169,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
     private void floor(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
-            ItemStack[] wall_blocks = new TARDISWallsInventory(plugin).getMenu();
+            ItemStack[] wall_blocks = new TardisWallsInventory(plugin).getMenu();
             Inventory wall = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "tardis Floor Menu");
             wall.setContents(wall_blocks);
             p.openInventory(wall);
@@ -204,7 +204,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
         ItemStack[][] stacks = new ItemStack[rows][8];
         int r = 0;
         int c = 0;
-        for (Material entry : TARDISWalls.BLOCKS) {
+        for (Material entry : TardisWalls.BLOCKS) {
             ItemStack is = new ItemStack(entry, 1);
             stacks[r][c] = is;
             c++;

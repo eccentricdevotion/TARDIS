@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.lazarus;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.custommodeldata.GUIGeneticManipulator;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.custommodeldata.GuiGeneticManipulator;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -36,13 +36,13 @@ import java.util.Objects;
  *
  * @author eccentric_nz
  */
-class TARDISLazarusInventory {
+class TardisLazarusInventory {
 
     private final ItemStack[] terminal;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final List<Material> disguises = new ArrayList<>();
 
-    TARDISLazarusInventory(TARDISPlugin plugin) {
+    TardisLazarusInventory(TardisPlugin plugin) {
         this.plugin = plugin;
         // maximum number of eggs is 45
         disguises.add(Material.BAT_SPAWN_EGG);
@@ -128,7 +128,7 @@ class TARDISLazarusInventory {
         assert master != null;
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
         master.setLore(Collections.singletonList(plugin.getLanguage().getString("SET_OFF")));
-        master.setCustomModelData(GUIGeneticManipulator.BUTTON_MASTER.getCustomModelData());
+        master.setCustomModelData(GuiGeneticManipulator.BUTTON_MASTER.getCustomModelData());
         the.setItemMeta(master);
         eggs[45] = the;
         ItemStack adult = new ItemStack(Material.HOPPER, 1);
@@ -136,7 +136,7 @@ class TARDISLazarusInventory {
         assert baby != null;
         baby.setDisplayName(plugin.getLanguage().getString("BUTTON_AGE"));
         baby.setLore(Collections.singletonList("ADULT"));
-        baby.setCustomModelData(GUIGeneticManipulator.BUTTON_AGE.getCustomModelData());
+        baby.setCustomModelData(GuiGeneticManipulator.BUTTON_AGE.getCustomModelData());
         adult.setItemMeta(baby);
         eggs[47] = adult;
         ItemStack typ = new ItemStack(Material.CYAN_DYE, 1);
@@ -144,7 +144,7 @@ class TARDISLazarusInventory {
         assert col != null;
         col.setDisplayName(plugin.getLanguage().getString("BUTTON_TYPE"));
         col.setLore(Collections.singletonList("WHITE"));
-        col.setCustomModelData(GUIGeneticManipulator.BUTTON_TYPE.getCustomModelData());
+        col.setCustomModelData(GuiGeneticManipulator.BUTTON_TYPE.getCustomModelData());
         typ.setItemMeta(col);
         eggs[48] = typ;
         ItemStack tamed = new ItemStack(Material.LEAD, 1);
@@ -157,7 +157,7 @@ class TARDISLazarusInventory {
         }
         opts.add(ChatColor.RED + "FALSE");
         tf.setLore(opts);
-        tf.setCustomModelData(GUIGeneticManipulator.BUTTON_OPTS.getCustomModelData());
+        tf.setCustomModelData(GuiGeneticManipulator.BUTTON_OPTS.getCustomModelData());
         tamed.setItemMeta(tf);
         eggs[49] = tamed;
         // add buttons
@@ -165,7 +165,7 @@ class TARDISLazarusInventory {
         ItemMeta ove = rem.getItemMeta();
         assert ove != null;
         ove.setDisplayName(plugin.getLanguage().getString("BUTTON_RESTORE"));
-        ove.setCustomModelData(GUIGeneticManipulator.BUTTON_RESTORE.getCustomModelData());
+        ove.setCustomModelData(GuiGeneticManipulator.BUTTON_RESTORE.getCustomModelData());
         rem.setItemMeta(ove);
         eggs[51] = rem;
         // set
@@ -173,14 +173,14 @@ class TARDISLazarusInventory {
         ItemMeta sim = s.getItemMeta();
         assert sim != null;
         sim.setDisplayName(plugin.getLanguage().getString("BUTTON_DNA"));
-        sim.setCustomModelData(GUIGeneticManipulator.BUTTON_DNA.getCustomModelData());
+        sim.setCustomModelData(GuiGeneticManipulator.BUTTON_DNA.getCustomModelData());
         s.setItemMeta(sim);
         eggs[52] = s;
         ItemStack can = new ItemStack(Material.BOWL, 1);
         ItemMeta cel = can.getItemMeta();
         assert cel != null;
         cel.setDisplayName(plugin.getLanguage().getString("BUTTON_CANCEL"));
-        cel.setCustomModelData(GUIGeneticManipulator.BUTTON_CANCEL.getCustomModelData());
+        cel.setCustomModelData(GuiGeneticManipulator.BUTTON_CANCEL.getCustomModelData());
         can.setItemMeta(cel);
         eggs[53] = can;
 

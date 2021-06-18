@@ -24,13 +24,13 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author eccentric_nz
  */
-public final class TARDISGeneticManipulatorDisguiseEvent extends Event {
+public final class TardisGeneticManipulatorDisguiseEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
     private final String disguise;
 
-    public TARDISGeneticManipulatorDisguiseEvent(Player player, String disguise) {
+    public TardisGeneticManipulatorDisguiseEvent(Player player, String disguise) {
         this.player = player;
         this.disguise = disguise;
     }

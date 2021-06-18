@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.artron;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisArtron;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,14 +31,14 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISArtronIndicator {
+public class TardisArtronIndicator {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final ScoreboardManager manager;
     private final int fc;
     private final Material filter;
 
-    public TARDISArtronIndicator(TARDISPlugin plugin) {
+    public TardisArtronIndicator(TardisPlugin plugin) {
         this.plugin = plugin;
         manager = plugin.getServer().getScoreboardManager();
         fc = plugin.getArtronConfig().getInt("full_charge");
@@ -91,9 +91,9 @@ public class TARDISArtronIndicator {
                     }
                 }, 150L);
             } else if (used > 0) {
-                TARDISMessage.send(p, "ENERGY_USED", String.format("%d", used));
+                TardisMessage.send(p, "ENERGY_USED", String.format("%d", used));
             } else {
-                TARDISMessage.send(p, "ENERGY_LEVEL", String.format("%d", percent));
+                TardisMessage.send(p, "ENERGY_LEVEL", String.format("%d", percent));
             }
         }
     }

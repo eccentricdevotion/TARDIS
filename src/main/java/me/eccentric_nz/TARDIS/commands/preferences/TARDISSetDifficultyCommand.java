@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.commands.preferences;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -26,29 +26,29 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISSetDifficultyCommand {
+class TardisSetDifficultyCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISSetDifficultyCommand(TARDISPlugin plugin) {
+    TardisSetDifficultyCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean setDiff(Player player, String[] args) {
         if (!plugin.getConfig().getBoolean("allow.player_difficulty")) {
-            TARDISMessage.send(player, "CMD_DISABLED");
+            TardisMessage.send(player, "CMD_DISABLED");
             return true;
         }
-        if (!TARDISPermission.hasPermission(player, "tardis.difficulty")) {
-            TARDISMessage.send(player, "NO_PERMS");
+        if (!TardisPermission.hasPermission(player, "tardis.difficulty")) {
+            TardisMessage.send(player, "NO_PERMS");
             return true;
         }
         if (args.length < 2) {
-            TARDISMessage.send(player, "TOO_FEW_ARGS");
+            TardisMessage.send(player, "TOO_FEW_ARGS");
             return false;
         }
         if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("hard")) {
-            TARDISMessage.send(player, "ARG_DIFF");
+            TardisMessage.send(player, "ARG_DIFF");
             return true;
         }
         int diff = (args[1].equalsIgnoreCase("easy")) ? 1 : 0;
@@ -57,7 +57,7 @@ class TARDISSetDifficultyCommand {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         plugin.getQueryFactory().doUpdate("player_prefs", set, where);
-        TARDISMessage.send(player, "DIFF_SAVED");
+        TardisMessage.send(player, "DIFF_SAVED");
         return true;
     }
 }

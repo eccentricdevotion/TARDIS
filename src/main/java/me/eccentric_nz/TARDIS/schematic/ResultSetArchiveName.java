@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.schematic;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,13 +29,13 @@ import java.sql.SQLException;
  */
 public class ResultSetArchiveName {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String name;
     private final String prefix;
 
-    public ResultSetArchiveName(TARDISPlugin plugin, String name) {
+    public ResultSetArchiveName(TardisPlugin plugin, String name) {
         this.plugin = plugin;
         this.name = name;
         prefix = this.plugin.getPrefix();

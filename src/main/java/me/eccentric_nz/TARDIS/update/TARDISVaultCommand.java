@@ -17,10 +17,10 @@
 
 package me.eccentric_nz.tardis.update;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.database.resultset.ResultSetVault;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -30,11 +30,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TARDISVaultCommand {
+class TardisVaultCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISVaultCommand(TARDISPlugin plugin) {
+    TardisVaultCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -44,7 +44,7 @@ class TARDISVaultCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet() && rst.getTardisId() != id) {
-            TARDISMessage.send(player, "CMD_ONLY_TL");
+            TardisMessage.send(player, "CMD_ONLY_TL");
             return true;
         }
         Location l = b.getLocation();

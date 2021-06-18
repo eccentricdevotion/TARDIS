@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,11 +38,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISGlassesListener implements Listener {
+public class TardisGlassesListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISGlassesListener(TARDISPlugin plugin) {
+    public TardisGlassesListener(TardisPlugin plugin) {
         this.plugin = plugin;
         checkGlasses(this.plugin);
     }
@@ -71,7 +71,7 @@ public class TARDISGlassesListener implements Listener {
         }
     }
 
-    private void checkGlasses(TARDISPlugin plugin) {
+    private void checkGlasses(TardisPlugin plugin) {
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> plugin.getTrackerKeeper().getSpectacleWearers().forEach((uuid) -> {
             Player p = plugin.getServer().getPlayer(uuid);
             if (p != null && p.isOnline()) {
@@ -90,7 +90,7 @@ public class TARDISGlassesListener implements Listener {
                         // if run out then remove them and the potion effect
                         pi.setHelmet(null);
                         p.removePotionEffect(PotionEffectType.NIGHT_VISION);
-                        TARDISMessage.send(p, "GLASSES_DONE");
+                        TardisMessage.send(p, "GLASSES_DONE");
                         p.getWorld().dropItemNaturally(p.getLocation(), new ItemStack(Material.PAPER, 1));
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new removeFromMap(uuid), 20L);
                     } else {

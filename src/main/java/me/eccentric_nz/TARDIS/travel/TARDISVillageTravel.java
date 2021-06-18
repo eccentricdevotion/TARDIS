@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.StructureType;
 import org.bukkit.World;
@@ -34,11 +34,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISVillageTravel {
+public class TardisVillageTravel {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISVillageTravel(TARDISPlugin plugin) {
+    public TardisVillageTravel(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -56,7 +56,7 @@ public class TARDISVillageTravel {
                 case NETHER -> loc = world.locateNearestStructure(location, StructureType.NETHER_FORTRESS, 64, false);
                 case THE_END -> {
                     loc = world.locateNearestStructure(location, StructureType.END_CITY, 64, false);
-                    int highesty = TARDISStaticLocationGetters.getHighestYIn3x3(world, rs.getX(), rs.getZ());
+                    int highesty = TardisStaticLocationGetters.getHighestYIn3x3(world, rs.getX(), rs.getZ());
                     assert loc != null;
                     loc.setY(highesty);
                 }
@@ -72,7 +72,7 @@ public class TARDISVillageTravel {
             while (unsafe) {
                 boolean clear = true;
                 for (BlockFace f : plugin.getGeneralKeeper().getSurrounding()) {
-                    if (!TARDISConstants.GOOD_MATERIALS.contains(b.getRelative(f).getType())) {
+                    if (!TardisConstants.GOOD_MATERIALS.contains(b.getRelative(f).getType())) {
                         b = b.getRelative(BlockFace.UP);
                         clear = false;
                         break;
@@ -83,7 +83,7 @@ public class TARDISVillageTravel {
             loc.setY(b.getY());
             return loc;
         } else {
-            TARDISMessage.send(p, "CURRENT_NOT_FOUND");
+            TardisMessage.send(p, "CURRENT_NOT_FOUND");
             return null;
         }
     }

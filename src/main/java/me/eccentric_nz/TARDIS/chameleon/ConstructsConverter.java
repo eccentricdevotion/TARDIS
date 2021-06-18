@@ -20,9 +20,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.database.converters.TARDISMaterialIDConverter;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.database.converters.TardisMaterialIdConverter;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
@@ -38,18 +38,18 @@ import java.util.regex.Pattern;
 
 public class ConstructsConverter {
 
-    private final TARDISPlugin plugin;
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisPlugin plugin;
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
 
-    public ConstructsConverter(TARDISPlugin plugin) {
+    public ConstructsConverter(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
 
     public void convertConstructs() {
-        TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(plugin);
+        TardisMaterialIdConverter tmic = new TardisMaterialIdConverter(plugin);
         PreparedStatement query = null;
         PreparedStatement update = null;
         ResultSet rs = null;

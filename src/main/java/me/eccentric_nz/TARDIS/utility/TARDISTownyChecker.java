@@ -25,7 +25,7 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyPermission;
 import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -36,12 +36,12 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISTownyChecker {
+public class TardisTownyChecker {
 
     private final Towny towny;
     private TownyRegion tr;
 
-    public TARDISTownyChecker(TARDISPlugin plugin) {
+    public TardisTownyChecker(TardisPlugin plugin) {
         towny = (Towny) plugin.getPM().getPlugin("Towny");
         // get the respect_towny setting
         try {

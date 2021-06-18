@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.blueprints;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -30,7 +30,7 @@ import java.util.UUID;
 
 public class BlueprintProcessor {
 
-    public static void addPermission(TARDISPlugin plugin, ItemStack is, Player player) {
+    public static void addPermission(TardisPlugin plugin, ItemStack is, Player player) {
         ItemMeta im = is.getItemMeta();
         if (im != null) {
             PersistentDataContainer pdc = im.getPersistentDataContainer();
@@ -49,7 +49,7 @@ public class BlueprintProcessor {
                     set.put("uuid", diskUuid.toString());
                     set.put("permission", perm);
                     plugin.getQueryFactory().doInsert("blueprint", set);
-                    TARDISMessage.send(player, "BLUEPRINT", Objects.requireNonNull(im.getLore()).get(0));
+                    TardisMessage.send(player, "BLUEPRINT", Objects.requireNonNull(im.getLore()).get(0));
                 }
             }
         }

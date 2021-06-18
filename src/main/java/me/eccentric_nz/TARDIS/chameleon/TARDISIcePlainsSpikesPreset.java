@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISIcePlainsSpikesPreset extends TARDISPreset {
+class TardisIcePlainsSpikesPreset extends TardisPreset {
 
-    TARDISIcePlainsSpikesPreset() {
+    TardisIcePlainsSpikesPreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:packed_ice";

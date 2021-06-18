@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.files;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -29,15 +29,15 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-public class TARDISRecipesUpdater {
+public class TardisRecipesUpdater {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final FileConfiguration recipes_config;
     private final HashMap<String, String> flavours = new HashMap<>();
     private final HashMap<String, String> colours = new HashMap<>();
     private final HashMap<String, Integer> damage = new HashMap<>();
 
-    public TARDISRecipesUpdater(TARDISPlugin plugin, FileConfiguration recipes_config) {
+    public TardisRecipesUpdater(TardisPlugin plugin, FileConfiguration recipes_config) {
         this.plugin = plugin;
         this.recipes_config = recipes_config;
         flavours.put("Licorice", "BLACK_DYE");

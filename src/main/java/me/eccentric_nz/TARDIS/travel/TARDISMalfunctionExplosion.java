@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.travel;
 
-import me.eccentric_nz.tardis.TARDISConstants;
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.data.TARDIS;
+import me.eccentric_nz.tardis.TardisConstants;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetRepeaters;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.utility.TARDISFirework;
+import me.eccentric_nz.tardis.utility.TardisFirework;
 import org.bukkit.Location;
 
 import java.util.HashMap;
@@ -36,16 +36,16 @@ import java.util.List;
  * The Tenth Doctor used a device above the inside of the door of the tardis to excite the atmosphere, causing snow, in
  * an attempt to cheer up Donna Noble.
  */
-public class TARDISMalfunctionExplosion implements Runnable {
+public class TardisMalfunctionExplosion implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int id;
     private final long end;
     private boolean started = false;
     private List<Location> locations;
     private int task;
 
-    public TARDISMalfunctionExplosion(TARDISPlugin plugin, int id, long end) {
+    public TardisMalfunctionExplosion(TardisPlugin plugin, int id, long end) {
         this.plugin = plugin;
         this.id = id;
         this.end = end;
@@ -58,7 +58,7 @@ public class TARDISMalfunctionExplosion implements Runnable {
             where.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
-                TARDIS tardis = rs.getTardis();
+                Tardis tardis = rs.getTardis();
                 ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, tardis.getTardisId(), 0);
                 if (rsr.resultSet()) {
                     locations = rsr.getLocations();
@@ -70,8 +70,8 @@ public class TARDISMalfunctionExplosion implements Runnable {
         if (time > end) {
             plugin.getServer().getScheduler().cancelTask(task);
         } else {
-            Location l = locations.get(TARDISConstants.RANDOM.nextInt(4));
-            TARDISFirework.randomize().displayEffects(plugin, l.add(0.5, 0.5, 0.5));
+            Location l = locations.get(TardisConstants.RANDOM.nextInt(4));
+            TardisFirework.randomize().displayEffects(plugin, l.add(0.5, 0.5, 0.5));
         }
     }
 

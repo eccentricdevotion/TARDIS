@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.sonic.actions;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.control.TARDISAtmosphericExcitation;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.control.TardisAtmosphericExcitation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
 import org.bukkit.ChatColor;
@@ -31,9 +31,9 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class TARDISSonicAtmospheric {
+public class TardisSonicAtmospheric {
 
-    public static void makeItSnow(TARDISPlugin plugin, Player player, Block b) {
+    public static void makeItSnow(TardisPlugin plugin, Player player, Block b) {
         // check the text on the sign
         Sign sign = (Sign) b.getState();
         String line0 = ChatColor.stripColor(sign.getLine(0));
@@ -69,7 +69,7 @@ public class TARDISSonicAtmospheric {
                     wherecl.put("z", bd_loc.getBlockZ());
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (rsc.resultSet() && !plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
-                        new TARDISAtmosphericExcitation(plugin).excite(tid, player);
+                        new TardisAtmosphericExcitation(plugin).excite(tid, player);
                         plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
                     }
                 }
@@ -77,7 +77,7 @@ public class TARDISSonicAtmospheric {
         }
     }
 
-    private static boolean isPresetSign(TARDISPlugin plugin, String l0, String l1, String l2) {
+    private static boolean isPresetSign(TardisPlugin plugin, String l0, String l1, String l2) {
         if (l0.equalsIgnoreCase("WEEPING") || l0.equalsIgnoreCase("$50,000")) {
             return (plugin.getGeneralKeeper().getSign_lookup().containsKey(l0) && l1.equals(plugin.getGeneralKeeper().getSign_lookup().get(l0)));
         } else {

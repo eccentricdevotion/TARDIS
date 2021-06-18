@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
-import me.eccentric_nz.tardis.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
+import me.eccentric_nz.tardis.utility.TardisStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
@@ -36,9 +36,9 @@ import java.util.Locale;
  */
 public class ResultSetConsole {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final int tardisId;
     private final String prefix;
     private Block sign;
@@ -54,7 +54,7 @@ public class ResultSetConsole {
      * @param plugin   - an instance of the main class
      * @param tardisId - the tardis_id to get the data for
      */
-    public ResultSetConsole(TARDISPlugin plugin, int tardisId) {
+    public ResultSetConsole(TardisPlugin plugin, int tardisId) {
         this.plugin = plugin;
         this.tardisId = tardisId;
         prefix = this.plugin.getPrefix();
@@ -77,7 +77,7 @@ public class ResultSetConsole {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
+                Location l = TardisStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
                 if (l == null) {
                     return false;
                 }
@@ -130,7 +130,7 @@ public class ResultSetConsole {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
+                Location l = TardisStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
                 if (l == null) {
                     return false;
                 }

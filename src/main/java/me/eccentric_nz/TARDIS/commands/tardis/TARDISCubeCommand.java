@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.commands.tardis;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -29,40 +29,40 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISCubeCommand {
+class TardisCubeCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    TARDISCubeCommand(TARDISPlugin plugin) {
+    TardisCubeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     boolean whoHasCube(Player player) {
         // check they have tardis
-        if (TARDISPermission.hasPermission(player, "tardis.find")) {
+        if (TardisPermission.hasPermission(player, "tardis.find")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
-                TARDISMessage.send(player, "NO_TARDIS");
+                TardisMessage.send(player, "NO_TARDIS");
                 return true;
             }
             int id = rs.getTardisId();
             if (!plugin.getTrackerKeeper().getIsSiegeCube().contains(id)) {
-                TARDISMessage.send(player, "SIEGE_NOT_SIEGED");
+                TardisMessage.send(player, "SIEGE_NOT_SIEGED");
                 return true;
             }
             // get the player who is carrying the Siege cube
             for (Map.Entry<UUID, Integer> map : plugin.getTrackerKeeper().getSiegeCarrying().entrySet()) {
                 if (map.getValue() == id) {
                     String p = Objects.requireNonNull(plugin.getServer().getPlayer(map.getKey())).getName();
-                    TARDISMessage.send(player, "SIEGE_CARRIER", p);
+                    TardisMessage.send(player, "SIEGE_CARRIER", p);
                     return true;
                 }
             }
             // not found
-            TARDISMessage.send(player, "SIEGE_CARRIER", "no one!");
+            TardisMessage.send(player, "SIEGE_CARRIER", "no one!");
             return true;
         } else {
-            TARDISMessage.send(player, "NO_PERMS");
+            TardisMessage.send(player, "NO_PERMS");
             return false;
         }
     }

@@ -22,7 +22,7 @@ package me.eccentric_nz.tardis.ars;
  *
  * @author eccentric_nz
  */
-class TARDISARSMapData {
+class TardisArsMapData {
 
     private String[][][] data;
     private int e;

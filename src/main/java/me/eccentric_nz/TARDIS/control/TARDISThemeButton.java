@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardis.control;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.tardis.desktop.TARDISThemeInventory;
-import me.eccentric_nz.tardis.desktop.TARDISUpgradeData;
+import me.eccentric_nz.tardis.desktop.TardisThemeInventory;
+import me.eccentric_nz.tardis.desktop.TardisUpgradeData;
 import me.eccentric_nz.tardis.enumeration.Schematic;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -30,15 +30,15 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author eccentric_nz
  */
-public class TARDISThemeButton {
+public class TardisThemeButton {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final Player player;
     private final Schematic current_console;
     private final int level;
     private final int id;
 
-    public TARDISThemeButton(TARDISPlugin plugin, Player player, Schematic current_console, int level, int id) {
+    public TardisThemeButton(TardisPlugin plugin, Player player, Schematic current_console, int level, int id) {
         this.plugin = plugin;
         this.player = player;
         this.current_console = current_console;
@@ -50,16 +50,16 @@ public class TARDISThemeButton {
         // check player is in own tardis
         int p_tid = getTardisId(player.getUniqueId().toString());
         if (p_tid != id) {
-            TARDISMessage.send(player, "UPGRADE_OWN");
+            TardisMessage.send(player, "UPGRADE_OWN");
             return;
         }
         // get player's current console
-        TARDISUpgradeData tud = new TARDISUpgradeData();
+        TardisUpgradeData tud = new TardisUpgradeData();
         tud.setPrevious(current_console);
         tud.setLevel(level);
         plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
         // open the upgrade menu
-        ItemStack[] consoles = new TARDISThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
+        ItemStack[] consoles = new TardisThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
         Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "tardis Upgrade Menu");
         upg.setContents(consoles);
         player.openInventory(upg);

@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.tardis.junk;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISJunkReturnRunnable implements Runnable {
+public class TardisJunkReturnRunnable implements Runnable {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final long waitTime;
 
-    public TARDISJunkReturnRunnable(TARDISPlugin plugin) {
+    public TardisJunkReturnRunnable(TardisPlugin plugin) {
         this.plugin = plugin;
         waitTime = this.plugin.getConfig().getLong("junk.return") * 1000;
     }
@@ -41,7 +41,7 @@ public class TARDISJunkReturnRunnable implements Runnable {
         long now = System.currentTimeMillis();
         if (lastUsed + waitTime > now) {
             // check the Junk tardis is not home already
-            TARDISJunkLocation tjl = new TARDISJunkLocation(plugin);
+            TardisJunkLocation tjl = new TardisJunkLocation(plugin);
             // compare locations
             if (tjl.isNotHome()) {
                 Location current = tjl.getCurrent();
@@ -56,7 +56,7 @@ public class TARDISJunkReturnRunnable implements Runnable {
                     hChunk.load();
                 }
                 // bring her home
-                new TARDISJunkReturn(plugin).recall(plugin.getConsole());
+                new TardisJunkReturn(plugin).recall(plugin.getConsole());
             }
         }
     }

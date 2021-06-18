@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -32,12 +32,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TARDISSmithingListener implements Listener {
+public class TardisSmithingListener implements Listener {
 
     private final HashMap<String, String> upgrades = new HashMap<>();
     private final HashMap<Integer, String> customModelData = new HashMap<>();
 
-    public TARDISSmithingListener() {
+    public TardisSmithingListener() {
         upgrades.put("Admin Upgrade", "admin");
         upgrades.put("Bio-scanner Upgrade", "bio");
         upgrades.put("Redstone Upgrade", "redstone");
@@ -96,7 +96,7 @@ public class TARDISSmithingListener implements Listener {
                     p = (Player) human;
                 }
                 // make sure the player has permission
-                if (p == null || !TARDISPermission.hasPermission(p, "tardis.sonic." + upgrades.get(upgrade))) {
+                if (p == null || !TardisPermission.hasPermission(p, "tardis.sonic." + upgrades.get(upgrade))) {
                     event.setResult(null);
                     return;
                 }

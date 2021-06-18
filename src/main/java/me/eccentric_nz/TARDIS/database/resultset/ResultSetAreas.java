@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.database.resultset;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.database.TARDISDatabaseConnection;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.data.Area;
 
 import java.sql.Connection;
@@ -37,9 +37,9 @@ import java.util.Map;
  */
 public class ResultSetAreas {
 
-    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
+    private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
     private final boolean onlyNames;
@@ -56,7 +56,7 @@ public class ResultSetAreas {
      * @param multiple  a boolean indicating whether multiple rows should be fetched
      * @param onlyNames a boolean indicating whether to fetch a list of area names
      */
-    public ResultSetAreas(TARDISPlugin plugin, HashMap<String, Object> where, boolean multiple, boolean onlyNames) {
+    public ResultSetAreas(TardisPlugin plugin, HashMap<String, Object> where, boolean multiple, boolean onlyNames) {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;

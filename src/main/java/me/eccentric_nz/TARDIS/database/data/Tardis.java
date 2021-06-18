@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.database.data;
 
 import me.eccentric_nz.tardis.enumeration.Adaption;
-import me.eccentric_nz.tardis.enumeration.PRESET;
+import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -27,7 +27,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDIS {
+public class Tardis {
 
     private final int tardisId;
     private final UUID uuid;
@@ -38,8 +38,8 @@ public class TARDIS {
     private final Schematic schematic;
     private final boolean abandoned;
     private final String companions;
-    private final PRESET preset;
-    private final PRESET demat;
+    private final Preset preset;
+    private final Preset demat;
     private final Adaption adaption;
     private final int artronLevel;
     private final String creeper;
@@ -60,7 +60,7 @@ public class TARDIS {
     private final boolean siegeOn;
     private final int monsters;
 
-    public TARDIS(int tardisId, UUID uuid, String owner, String lastKnownName, String chunk, int tips, Schematic schematic, boolean abandoned, String companions, PRESET preset, PRESET demat, int adapt, int artronLevel, String creeper, String beacon, boolean handbrakeOn, boolean tardisInit, boolean recharging, boolean hidden, long lastUse, boolean isoOn, String eps, String rail, String renderer, String zero, UUID rotor, boolean powered, boolean lightsOn, boolean siegeOn, int monsters) {
+    public Tardis(int tardisId, UUID uuid, String owner, String lastKnownName, String chunk, int tips, Schematic schematic, boolean abandoned, String companions, Preset preset, Preset demat, int adapt, int artronLevel, String creeper, String beacon, boolean handbrakeOn, boolean tardisInit, boolean recharging, boolean hidden, long lastUse, boolean isoOn, String eps, String rail, String renderer, String zero, UUID rotor, boolean powered, boolean lightsOn, boolean siegeOn, int monsters) {
         this.tardisId = tardisId;
         this.uuid = uuid;
         this.owner = owner;
@@ -188,7 +188,7 @@ public class TARDIS {
      *
      * @return the exterior PRESET
      */
-    public PRESET getPreset() {
+    public Preset getPreset() {
         return preset;
     }
 
@@ -197,7 +197,7 @@ public class TARDIS {
      *
      * @return the exterior PRESET
      */
-    public PRESET getDemat() {
+    public Preset getDemat() {
         return demat;
     }
 

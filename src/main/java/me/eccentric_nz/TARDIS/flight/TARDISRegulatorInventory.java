@@ -27,11 +27,11 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-class TARDISRegulatorInventory {
+class TardisRegulatorInventory {
 
     private final ItemStack[] regulator;
 
-    TARDISRegulatorInventory() {
+    TardisRegulatorInventory() {
         regulator = getItemStack();
     }
 

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.messaging;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.ChatColor;
 
 import java.util.Arrays;
@@ -27,9 +27,9 @@ import java.util.List;
  * The TARDISChatPaginator takes a raw string of arbitrary length and breaks it down into an array of strings
  * appropriate for displaying on the Minecraft player console.
  */
-public class TARDISChatPaginator {
+public class TardisChatPaginator {
 
-    static int GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH = TARDISPlugin.plugin.getConfig().getInt("preferences.chat_width"); // Will never wrap, even with the largest characters
+    static int GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH = TardisPlugin.plugin.getConfig().getInt("preferences.chat_width"); // Will never wrap, even with the largest characters
 
     /**
      * Breaks a raw string up into a series of lines. Words are wrapped using spaces as decimeters and the newline

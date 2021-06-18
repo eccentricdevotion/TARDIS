@@ -23,9 +23,9 @@ package me.eccentric_nz.tardis.chameleon;
  *
  * @author eccentric_nz
  */
-class TARDISYellowSubmarinePreset extends TARDISPreset {
+class TardisYellowSubmarinePreset extends TardisPreset {
 
-    TARDISYellowSubmarinePreset() {
+    TardisYellowSubmarinePreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:yellow_wool";

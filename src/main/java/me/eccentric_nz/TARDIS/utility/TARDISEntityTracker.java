@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardis.utility;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.control.TARDISScanner;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.control.TardisScanner;
 import me.eccentric_nz.tardischunkgenerator.disguise.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -31,16 +31,16 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISEntityTracker {
+public class TardisEntityTracker {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISEntityTracker(TARDISPlugin plugin) {
+    public TardisEntityTracker(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     public void addNPCs(Location exterior, Location interior, UUID uuid) {
-        List<Entity> ents = TARDISScanner.getNearbyEntities(exterior, 6);
+        List<Entity> ents = TardisScanner.getNearbyEntities(exterior, 6);
         List<UUID> npcids = new ArrayList<>();
         for (Entity e : ents) {
             if (e instanceof LivingEntity) {

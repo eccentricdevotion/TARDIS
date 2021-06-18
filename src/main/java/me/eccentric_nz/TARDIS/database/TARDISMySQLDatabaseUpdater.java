@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.database;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.ChatColor;
 
 import java.sql.ResultSet;
@@ -33,7 +33,7 @@ import java.util.Map;
  *
  * @author eccentric_nz
  */
-class TARDISMySQLDatabaseUpdater {
+class TardisMySqlDatabaseUpdater {
 
     private final List<String> areaUpdates = new ArrayList<>();
     private final List<String> tardisUpdates = new ArrayList<>();
@@ -47,10 +47,10 @@ class TARDISMySQLDatabaseUpdater {
     private final List<String> sonicUpdates = new ArrayList<>();
     private final HashMap<String, String> uuidUpdates = new HashMap<>();
     private final Statement statement;
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String prefix;
 
-    TARDISMySQLDatabaseUpdater(TARDISPlugin plugin, Statement statement) {
+    TardisMySqlDatabaseUpdater(TardisPlugin plugin, Statement statement) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
         this.statement = statement;
@@ -267,7 +267,7 @@ class TARDISMySQLDatabaseUpdater {
                 String dispersedAlter = "ALTER TABLE " + prefix + "dispersed ADD tardis_id int(11)";
                 statement.executeUpdate(dispersedAlter);
                 // update tardis_id column for existing records
-                new TARDISDispersalUpdater(plugin).updateTardisIds();
+                new TardisDispersalUpdater(plugin).updateTardisIds();
             }
             // add repair to t_count
             String repQuery = "SHOW COLUMNS FROM " + prefix + "t_count LIKE 'repair'";
@@ -326,7 +326,7 @@ class TARDISMySQLDatabaseUpdater {
             plugin.debug("MySQL database add fields error: " + e.getMessage() + " " + e.getErrorCode());
         }
         if (i > 0) {
-            plugin.getConsole().sendMessage(TARDISPlugin.plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the MySQL database!");
+            plugin.getConsole().sendMessage(TardisPlugin.plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the MySQL database!");
         }
     }
 }

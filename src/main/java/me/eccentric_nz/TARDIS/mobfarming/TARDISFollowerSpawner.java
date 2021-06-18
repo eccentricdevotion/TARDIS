@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardis.mobfarming;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.enumeration.COMPASS;
-import me.eccentric_nz.tardis.planets.TARDISAngelsAPI;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.enumeration.CardinalDirection;
+import me.eccentric_nz.tardis.planets.TardisAngelsApi;
 import me.eccentric_nz.tardisweepingangels.TardisWeepingAngelsApi;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
@@ -29,15 +29,15 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class TARDISFollowerSpawner {
+public class TardisFollowerSpawner {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISFollowerSpawner(TARDISPlugin plugin) {
+    public TardisFollowerSpawner(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
-    public void spawn(List<TARDISFollower> followers, Location location, Player player, COMPASS direction, boolean enter) {
+    public void spawn(List<TardisFollower> followers, Location location, Player player, CardinalDirection direction, boolean enter) {
         Location pl = location.clone();
         World w = location.getWorld();
         // will need to adjust this depending on direction Police Box is facing
@@ -51,8 +51,8 @@ public class TARDISFollowerSpawner {
                 default -> pl.add(-1, 0, 1);
             }
         }
-        TardisWeepingAngelsApi twa = TARDISAngelsAPI.getAPI(TARDISPlugin.plugin);
-        for (TARDISFollower follower : followers) {
+        TardisWeepingAngelsApi twa = TardisAngelsApi.getAPI(TardisPlugin.plugin);
+        for (TardisFollower follower : followers) {
             plugin.setTardisSpawn(true);
             assert w != null;
             ArmorStand stand = (ArmorStand) w.spawnEntity(pl, EntityType.ARMOR_STAND);

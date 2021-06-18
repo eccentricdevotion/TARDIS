@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardis.listeners;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.QueryFactory;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravelledTo;
 import org.bukkit.World.Environment;
@@ -32,11 +32,11 @@ import java.util.HashMap;
 /**
  * @author Technoguyfication
  */
-public class TARDISWorldChangeListener implements Listener {
+public class TardisWorldChangeListener implements Listener {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISWorldChangeListener(TARDISPlugin plugin) {
+    public TardisWorldChangeListener(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

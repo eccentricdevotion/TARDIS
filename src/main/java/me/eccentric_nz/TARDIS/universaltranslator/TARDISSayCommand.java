@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.universaltranslator;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
-import me.eccentric_nz.tardis.blueprints.TARDISPermission;
+import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.tardis.messaging.TARDISMessage;
+import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -36,24 +36,24 @@ import java.util.Locale;
  *
  * @author eccentric_nz
  */
-public class TARDISSayCommand implements CommandExecutor {
+public class TardisSayCommand implements CommandExecutor {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
     private final String UT = ChatColor.GOLD + "[tardis Universal Translator]" + ChatColor.RESET + " ";
 
-    public TARDISSayCommand(TARDISPlugin plugin) {
+    public TardisSayCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardissay")) {
-            if (!TARDISPermission.hasPermission(sender, "tardis.translate")) {
-                TARDISMessage.send(sender, "NO_PERMS");
+            if (!TardisPermission.hasPermission(sender, "tardis.translate")) {
+                TardisMessage.send(sender, "NO_PERMS");
                 return false;
             }
             if (args.length < 2) {
-                TARDISMessage.send(sender, "TOO_FEW_ARGS");
+                TardisMessage.send(sender, "TOO_FEW_ARGS");
                 return false;
             }
             String preferedLang = "ENGLISH";
@@ -86,10 +86,10 @@ public class TARDISSayCommand implements CommandExecutor {
                 } catch (Exception ex) {
                     plugin.debug("Could not get translation! " + ex);
                     ex.printStackTrace();
-                    TARDISMessage.send(sender, "YT_UNAVAILABLE");
+                    TardisMessage.send(sender, "YT_UNAVAILABLE");
                 }
             } catch (IllegalArgumentException e) {
-                TARDISMessage.send(sender, "LANG_NOT_VALID");
+                TardisMessage.send(sender, "LANG_NOT_VALID");
             }
         }
         return false;

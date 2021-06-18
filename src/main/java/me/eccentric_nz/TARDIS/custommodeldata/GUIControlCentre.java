@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardis.custommodeldata;
 
-import me.eccentric_nz.tardis.utility.TARDISStringUtils;
+import me.eccentric_nz.tardis.utility.TardisStringUtils;
 import org.bukkit.Material;
 
-public enum GUIControlCentre {
+public enum GuiControlCentre {
 
     // Control Centre
     BUTTON_CLOSE(1, 53, Material.BOWL),
@@ -52,7 +52,7 @@ public enum GUIControlCentre {
     private final int slot;
     private final Material material;
 
-    GUIControlCentre(int customModelData, int slot, Material material) {
+    GuiControlCentre(int customModelData, int slot, Material material) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -72,6 +72,6 @@ public enum GUIControlCentre {
 
     public String getName() {
         String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
+        return TardisStringUtils.sentenceCase(s);
     }
 }

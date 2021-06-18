@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardis.noteblock;
 
-import me.eccentric_nz.tardis.TARDISPlugin;
+import me.eccentric_nz.tardis.TardisPlugin;
 import org.bukkit.entity.Player;
 
-public class TARDISPlayThemeCommand {
+public class TardisPlayThemeCommand {
 
-    private final TARDISPlugin plugin;
+    private final TardisPlugin plugin;
 
-    public TARDISPlayThemeCommand(TARDISPlugin plugin) {
+    public TardisPlayThemeCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -32,7 +32,7 @@ public class TARDISPlayThemeCommand {
             return true;
         }
         plugin.getTrackerKeeper().getEggs().add(p.getUniqueId());
-        Song s = NBSDecoder.parse(plugin.getResource("theme.nbs"));
+        Song s = NbsDecoder.parse(plugin.getResource("theme.nbs"));
         SongPlayer sp = new SongPlayer(s);
         sp.addPlayer(p);
         sp.setPlaying(true);
