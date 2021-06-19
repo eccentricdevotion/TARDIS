@@ -180,7 +180,7 @@ public class TARDISConstants {
     public static final List<Particle.DustOptions> DUSTOPTIONS = Arrays.asList(new Particle.DustOptions(Color.fromRGB(0, 102, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 153, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 204, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 204), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 153), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 102), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 153), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 204), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 204, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 153, 255), 1));
 
     /**
-     * An empty BARFlag array for use with TARDIS boss bars
+     * An empty BarFlag array for use with TARDIS boss bars
      */
     public static final BarFlag[] EMPTY_ARRAY = new BarFlag[0];
 

@@ -189,7 +189,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("MultiInv", "3.3.6");
         versions.put("My_Worlds", "1.16.1");
         versions.put("PerWorldInventory", "2.3.0");
-        versions.put("TARDISChunkGenerator", "4.7.0");
+        versions.put("TARDISChunkGenerator", "4.7.1");
         versions.put("Towny", "0.95");
         versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.0");
@@ -422,8 +422,8 @@ public class TARDIS extends JavaPlugin {
             startBeeTicks();
             startSiegeTicks();
             if (pm.isPluginEnabled("TARDISChunkGenerator")) {
-                TARDISSpace alwaysNight = new TARDISSpace(this);
                 if (getConfig().getBoolean("creation.keep_night")) {
+                    TARDISSpace alwaysNight = new TARDISSpace(this);
                     alwaysNight.keepNight();
                 }
             }
