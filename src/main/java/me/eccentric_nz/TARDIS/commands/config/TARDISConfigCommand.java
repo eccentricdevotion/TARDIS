@@ -242,6 +242,9 @@ public class TARDISConfigCommand implements CommandExecutor {
                     }
                     plugin.getConfig().set("database", dbtype);
                 }
+                if (first.equals("include") || first.equals("exclude")) {
+                    return new TARDISSetWorldInclusionCommand(plugin).setWorldStatus(sender, args);
+                }
                 if (first.equals("siege")) {
                     return new TARDISSiegeCommand(plugin).setOption(sender, args);
                 }

@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.admin;
+package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
+
+import java.util.Arrays;
 
 /**
  * @author eccentric_nz
@@ -35,25 +36,17 @@ class TARDISSetWorldInclusionCommand {
 
     boolean setWorldStatus(CommandSender sender, String[] args) {
         String first = args[0];
-        // get world name
-        int count = args.length;
-        StringBuilder buf = new StringBuilder();
-        for (int i = 1; i < count; i++) {
-            buf.append(args[i]).append(" ");
-        }
-        String tmp = buf.toString();
-        String t = tmp.substring(0, tmp.length() - 1);
-        // need to make there are no periods(.) in the text
-        String nodots = StringUtils.replace(t, ".", "_");
+        // get world name with no periods(.)
+        String name = String.join(" ", Arrays.copyOfRange(args, 1, args.length)).replace(".", "_");
         // check the world actually exists!
-        if (TARDISAliasResolver.getWorldFromAlias(nodots) == null) {
+        if (TARDISAliasResolver.getWorldFromAlias(name) == null) {
             TARDISMessage.send(sender, "WORLD_NOT_FOUND");
             return false;
         }
         if (first.equals("include")) {
-            plugin.getPlanetsConfig().set("planets." + nodots + ".time_travel", true);
+            plugin.getPlanetsConfig().set("planets." + name + ".time_travel", true);
         } else {
-            plugin.getPlanetsConfig().set("planets." + nodots + ".time_travel", false);
+            plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
         }
         plugin.savePlanetsConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
