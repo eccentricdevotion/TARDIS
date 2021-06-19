@@ -140,6 +140,7 @@ public class TARDISStainedGlassLookup {
         stain.put(Material.BUBBLE_CORAL_BLOCK, Material.MAGENTA_STAINED_GLASS);
         stain.put(Material.BUBBLE_CORAL_FAN, Material.MAGENTA_STAINED_GLASS);
         stain.put(Material.BUBBLE_CORAL_WALL_FAN, Material.MAGENTA_STAINED_GLASS);
+        stain.put(Material.BUDDING_AMETHYST, Material.PURPLE_STAINED_GLASS);
         stain.put(Material.CACTUS, Material.GREEN_STAINED_GLASS);
         stain.put(Material.CAKE, Material.BROWN_STAINED_GLASS);
         stain.put(Material.CAMPFIRE, Material.ORANGE_STAINED_GLASS);
@@ -372,6 +373,7 @@ public class TARDISStainedGlassLookup {
         stain.put(Material.LARGE_FERN, Material.GREEN_STAINED_GLASS);
         stain.put(Material.LECTERN, Material.BROWN_STAINED_GLASS);
         stain.put(Material.LEVER, Material.LIGHT_GRAY_STAINED_GLASS);
+        stain.put(Material.LIGHT, Material.YELLOW_STAINED_GLASS);
         stain.put(Material.LIGHT_BLUE_BANNER, Material.LIGHT_BLUE_STAINED_GLASS);
         stain.put(Material.LIGHT_BLUE_BED, Material.LIGHT_BLUE_STAINED_GLASS);
         stain.put(Material.LIGHT_BLUE_CARPET, Material.LIGHT_BLUE_STAINED_GLASS);
