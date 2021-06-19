@@ -39,8 +39,8 @@ public class TARDISBiomeFinder {
         this.plugin = plugin;
     }
 
-    public void run(World w, Biome biome, Player player, int id, COMPASS direction) {
-        Location tb = plugin.getTardisHelper().searchBiome(w, biome, player);
+    public void run(World w, Biome biome, Player player, int id, COMPASS direction, Location current) {
+        Location tb = plugin.getTardisHelper().searchBiome(w, biome, player, current);
         // cancel biome finder
         if (tb == null) {
             TARDISMessage.send(player, "BIOME_NOT_FOUND");

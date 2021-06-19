@@ -523,7 +523,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     }
                                     w = rsc.getWorld();
                                 }
-                                new TARDISBiomeFinder(plugin).run(w, biome, player, id, rsc.getDirection());
+                                Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                                new TARDISBiomeFinder(plugin).run(w, biome, player, id, rsc.getDirection(), current);
                             } catch (IllegalArgumentException iae) {
                                 TARDISMessage.send(player, "BIOME_NOT_VALID");
                                 return true;
