@@ -20,6 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+
 /**
  * @author eccentric_nz
  */
@@ -27,18 +29,14 @@ class TARDISHandlesTellCommand {
 
     private final TARDIS plugin;
 
-    public TARDISHandlesTellCommand(TARDIS plugin) {
+    TARDISHandlesTellCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
     boolean message(String[] args) {
         Player player = plugin.getServer().getPlayer(args[1]);
         if (player != null) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 2; i < args.length; i++) {
-                sb.append(args[i]).append(" ");
-            }
-            String message = sb.toString();
+            String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
             TARDISMessage.handlesMessage(player, message);
         }
         return true;

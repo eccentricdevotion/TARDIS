@@ -27,6 +27,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -65,11 +66,7 @@ public class TARDISSayCommand implements CommandExecutor {
                     }
                 }
             }
-            StringBuilder sb = new StringBuilder();
-            for (int i = 1; i < args.length; i++) {
-                sb.append(" ").append(args[i]);
-            }
-            String whatToTranslate = sb.substring(1);
+            String whatToTranslate = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
             String lang = args[0].toUpperCase(Locale.ENGLISH);
             try {
                 Language to = Language.valueOf(lang);

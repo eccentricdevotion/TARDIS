@@ -252,42 +252,18 @@ class TARDISHandlesScanCommand {
                     String m = message;
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         switch (entry.getKey()) {
-                            case AREA_EFFECT_CLOUD:
-                                player.sendMessage("    Cyberman: " + entry.getValue());
-                                break;
-                            case LLAMA_SPIT:
-                                player.sendMessage("    Dalek: " + entry.getValue());
-                                break;
-                            case ARMOR_STAND:
-                                player.sendMessage("    Empty Child: " + entry.getValue());
-                                break;
-                            case ARROW:
-                                player.sendMessage("    Ice Warrior: " + entry.getValue());
-                                break;
-                            case SPLASH_POTION:
-                                player.sendMessage("    Silent: " + entry.getValue());
-                                break;
-                            case BOAT:
-                                player.sendMessage("    Silurian: " + entry.getValue());
-                                break;
-                            case FIREWORK:
-                                player.sendMessage("    Sontaran: " + entry.getValue());
-                                break;
-                            case EGG:
-                                player.sendMessage("    Strax: " + entry.getValue());
-                                break;
-                            case ENDER_CRYSTAL:
-                                player.sendMessage("    Vashta Nerada: " + entry.getValue());
-                                break;
-                            case DRAGON_FIREBALL:
-                                player.sendMessage("    Weeping Angel: " + entry.getValue());
-                                break;
-                            case FISHING_HOOK:
-                                player.sendMessage("    Zygon: " + entry.getValue());
-                                break;
-                            default:
-                                player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + m);
-                                break;
+                            case AREA_EFFECT_CLOUD -> player.sendMessage("    Cyberman: " + entry.getValue());
+                            case LLAMA_SPIT -> player.sendMessage("    Dalek: " + entry.getValue());
+                            case ARMOR_STAND -> player.sendMessage("    Empty Child: " + entry.getValue());
+                            case ARROW -> player.sendMessage("    Ice Warrior: " + entry.getValue());
+                            case SPLASH_POTION -> player.sendMessage("    Silent: " + entry.getValue());
+                            case BOAT -> player.sendMessage("    Silurian: " + entry.getValue());
+                            case FIREWORK -> player.sendMessage("    Sontaran: " + entry.getValue());
+                            case EGG -> player.sendMessage("    Strax: " + entry.getValue());
+                            case ENDER_CRYSTAL -> player.sendMessage("    Vashta Nerada: " + entry.getValue());
+                            case DRAGON_FIREBALL -> player.sendMessage("    Weeping Angel: " + entry.getValue());
+                            case FISHING_HOOK -> player.sendMessage("    Zygon: " + entry.getValue());
+                            default -> player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + m);
                         }
                     }, 3L);
                 }

@@ -174,11 +174,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                             return new SudoRepair(plugin, uuid, false).repair();
                         case "travel":
                             // get arguments
-                            StringBuilder sb = new StringBuilder();
-                            for (int i = 2; i < args.length; i++) {
-                                sb.append(" ").append(args[i]);
-                            }
-                            return plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + offlinePlayer.getName() + " travel" + sb);
+                            return plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + offlinePlayer.getName() + " travel " + String.join(" ", Arrays.copyOfRange(args, 2, args.length)));
                         default: // update
                             if (sender instanceof ConsoleCommandSender) {
                                 TARDISMessage.send(sender, "CMD_NO_CONSOLE");

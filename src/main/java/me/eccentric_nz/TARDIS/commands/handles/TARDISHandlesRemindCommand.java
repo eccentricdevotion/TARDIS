@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -36,11 +37,7 @@ class TARDISHandlesRemindCommand {
     }
 
     boolean doReminder(Player player, String[] args) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 2; i < args.length - 1; i++) {
-            sb.append(args[i]).append(" ");
-        }
-        String message = sb.toString();
+        String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length - 1));
         // the last argument should be a number
         long when = TARDISNumberParsers.parseLong(args[args.length - 1]);
         if (when == 0) {

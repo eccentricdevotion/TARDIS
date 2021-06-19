@@ -26,6 +26,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -51,11 +52,7 @@ class TARDISHandlesDiskCommand {
                 // get the program_id from the disk
                 int pid = TARDISNumberParsers.parseInt(dim.getLore().get(1));
                 // get the name - must be 32 chars or less
-                StringBuilder sb = new StringBuilder();
-                for (int s = 1; s < args.length; s++) {
-                    sb.append(args[s]).append(" ");
-                }
-                String name = sb.toString().trim();
+                String name = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
                 if (name.length() < 3 || name.length() > 32) {
                     TARDISMessage.send(player, "SAVE_NAME_NOT_VALID");
                     return true;
