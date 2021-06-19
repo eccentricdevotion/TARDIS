@@ -217,6 +217,12 @@ public class TARDISBlocksUpdater {
             chameleon.addAll(blocks);
             chameleon.sort(Comparator.naturalOrder());
             blocks_config.set("chameleon_blocks", chameleon);
+            // lamp blocks
+            List<String> lamps = blocks_config.getStringList("lamp_blocks");
+            lamps.add("LANTERN");
+            lamps.add("LIGHT");
+            lamps.add("SOUL_LANTERN");
+            blocks_config.set("lamp_blocks", lamps);
             // under door blocks
             List<String> under = blocks_config.getStringList("under_door_blocks");
             under.add("AMETHYST_CLUSTER");

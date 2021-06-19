@@ -424,6 +424,9 @@ lamp_blocks:
   - SEA_LANTERN
   - SHROOMLIGHT
   - TORCH
+  - LIGHT
+  - LANTERN
+  - SOUL_LANTERN
 under_door_blocks:
   - ACACIA_BUTTON
   - ACACIA_DOOR
