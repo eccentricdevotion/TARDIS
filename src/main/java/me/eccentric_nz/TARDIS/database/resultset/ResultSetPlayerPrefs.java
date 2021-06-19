@@ -47,6 +47,7 @@ public class ResultSetPlayerPrefs {
     private boolean autoSiegeOn;
     private boolean beaconOn;
     private boolean buildOn;
+    private boolean closeGUIOn;
     private boolean DND;
     private boolean easyDifficulty;
     private boolean epsOn;
@@ -130,6 +131,7 @@ public class ResultSetPlayerPrefs {
                 siegeWall = rs.getString("siege_wall");
                 siegeFloor = rs.getString("siege_floor");
                 buildOn = rs.getBoolean("build_on");
+                closeGUIOn = rs.getBoolean("close_gui_on");
                 epsOn = rs.getBoolean("eps_on");
                 // if empty use default
                 String message = rs.getString("eps_message");
@@ -241,6 +243,10 @@ public class ResultSetPlayerPrefs {
         return buildOn;
     }
 
+    public boolean isCloseGUIOn() {
+        return closeGUIOn;
+    }
+
     public boolean isEpsOn() {
         return epsOn;
     }
@@ -284,7 +290,7 @@ public class ResultSetPlayerPrefs {
     public boolean isWoolLightsOn() {
         return woolLightsOn;
     }
-    
+
     public boolean isSignOn() {
         return signOn;
     }

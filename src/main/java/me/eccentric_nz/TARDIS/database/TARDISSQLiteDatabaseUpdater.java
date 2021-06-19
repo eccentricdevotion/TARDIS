@@ -79,6 +79,7 @@ class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("auto_siege_on INTEGER DEFAULT 0");
         prefsupdates.add("beacon_on INTEGER DEFAULT 1");
         prefsupdates.add("build_on INTEGER DEFAULT 1");
+        prefsupdates.add("close_gui_on INTEGER DEFAULT 1");
         prefsupdates.add("difficulty INTEGER DEFAULT 0");
         prefsupdates.add("dnd_on INTEGER DEFAULT 0");
         prefsupdates.add("eps_message TEXT DEFAULT ''");

@@ -76,6 +76,7 @@ class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("auto_rescue_on int(1) DEFAULT '0'");
         prefsupdates.add("auto_siege_on int(1) DEFAULT '0'");
         prefsupdates.add("build_on int(1) DEFAULT '1'");
+        prefsupdates.add("close_gui_on int(1) DEFAULT '1'");
         prefsupdates.add("difficulty int(1) DEFAULT '0'");
         prefsupdates.add("dnd_on int(1) DEFAULT '0'");
         prefsupdates.add("farm_on int(1) DEFAULT '0'");

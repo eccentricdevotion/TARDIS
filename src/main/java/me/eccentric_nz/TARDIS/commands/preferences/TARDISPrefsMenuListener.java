@@ -66,6 +66,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener implements Liste
         lookup.put("Autonomous Siege", "auto_siege_on");
         lookup.put("Autonomous", "auto_on");
         lookup.put("Beacon", "beacon_on");
+        lookup.put("Close GUI", "close_gui_on");
         lookup.put("Companion Build", "build_on");
         lookup.put("Do Not Disturb", "dnd_on");
         lookup.put("Easy Difficulty", "difficulty");

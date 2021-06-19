@@ -60,6 +60,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("auto_siege");
         firstArgs.add("beacon");
         firstArgs.add("build");
+        firstArgs.add("close_gui");
         firstArgs.add("difficulty");
         firstArgs.add("dnd");
         firstArgs.add("eps");

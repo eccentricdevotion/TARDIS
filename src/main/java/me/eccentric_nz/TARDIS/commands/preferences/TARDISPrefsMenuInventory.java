@@ -71,6 +71,7 @@ public class TARDISPrefsMenuInventory {
         values.add(rsp.isAutoSiegeOn());
         values.add(rsp.isAutoRescueOn());
         values.add(rsp.isBeaconOn());
+        values.add(rsp.isCloseGUIOn());
         values.add(rsp.isDND());
         values.add(rsp.isEpsOn());
         values.add(rsp.isHadsOn());
@@ -86,11 +87,14 @@ public class TARDISPrefsMenuInventory {
         values.add(rsp.isTravelbarOn());
         values.add(rsp.isFarmOn());
         values.add(rsp.isTelepathyOn());
-        // get preset
+        // get TARDIS preset
+        Tardis tardis = null;
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid.toString());
         ResultSetTardis rst = new ResultSetTardis(plugin, wherep, "", false, 0);
-        if (rst.resultSet()) {
+        boolean hasTARDIS = rst.resultSet();
+        if (hasTARDIS) {
+            tardis = rst.getTardis();
             values.add(rst.getTardis().getPreset().equals(PRESET.JUNK_MODE)); // junk mode
         } else {
             values.add(false);
@@ -107,15 +111,6 @@ public class TARDISPrefsMenuInventory {
             values.add(!plugin.getWorldGuardUtils().queryContainers(world, plugin.getServer().getPlayer(uuid).getName()));
         } else {
             values.add(false);
-        }
-
-        // get TARDIS preset
-        Tardis tardis = null;
-        HashMap<String, Object> wherej = new HashMap<>();
-        wherej.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, wherej, "", false, 0);
-        if (rs.resultSet()) {
-            tardis = rs.getTardis();
         }
         // make a stack
         ItemStack[] stack = new ItemStack[36];
