@@ -81,27 +81,26 @@ public class TARDISDoorListener {
     /**
      * A method to teleport the player into and out of the TARDIS.
      *
-     * @param player the player to teleport
+     * @param player   the player to teleport
      * @param location the location to teleport to
-     * @param exit whether the player is entering or exiting the TARDIS, if true
-     * they are exiting
-     * @param from the world they are teleporting from
-     * @param quotes whether the player will receive a TARDIS quote message
-     * @param sound an integer representing the sound to play
-     * @param m whether to play the resource pack sound
-     * @param instant whether to teleport the player out in this tick
+     * @param exit     whether the player is entering or exiting the TARDIS, if true
+     *                 they are exiting
+     * @param from     the world they are teleporting from
+     * @param quotes   whether the player will receive a TARDIS quote message
+     * @param sound    an integer representing the sound to play
+     * @param minecart whether to play the resource pack sound
+     * @param instant  whether to teleport the player out in this tick
      */
-    public void movePlayer(Player player, Location location, boolean exit, World from, boolean quotes, int sound, boolean m, boolean instant) {
+    public void movePlayer(Player player, Location location, boolean exit, World from, boolean quotes, int sound, boolean minecart, boolean instant) {
         // teleport player on this tick if instant is true
         if (instant) {
-            playDoorSound(player, sound, location, m);
+            playDoorSound(player, sound, location, minecart);
             doPlayerMove(player, location, exit, from, quotes);
         } else {
             // play the door sound 5 ticks (1/4s) later
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                playDoorSound(player, sound, location, m);
+                playDoorSound(player, sound, location, minecart);
             }, 5L);
-
             // actually teleport the player 10 ticks (1/2s) later
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 doPlayerMove(player, location, exit, from, quotes);
@@ -115,7 +114,6 @@ public class TARDISDoorListener {
         boolean allowFlight = player.getAllowFlight();
         boolean crossWorlds = (from != to);
         boolean isSurvival = checkSurvival(to);
-
         player.teleport(location);
         if (player.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds && !isSurvival)) {
             player.setAllowFlight(true);
@@ -143,15 +141,21 @@ public class TARDISDoorListener {
                 plugin.getQueryFactory().alterEnergyLevel("player_prefs", player_artron, where, player);
                 plugin.getTrackerKeeper().getHasTravelled().remove(uuid);
             }
+            // set player time when exiting TARDIS
             if (plugin.getTrackerKeeper().getSetTime().containsKey(uuid)) {
-                setTemporalLocation(player, plugin.getTrackerKeeper().getSetTime().get(uuid));
+                // player should be temporally relocated (time passes relative to world time)
+                setTemporalLocation(player, plugin.getTrackerKeeper().getSetTime().get(uuid), true);
                 plugin.getTrackerKeeper().getSetTime().remove(uuid);
+            } else {
+                // player time is reset to world time
+                setTemporalLocation(player, -1, true);
             }
             plugin.getTrackerKeeper().getEjecting().remove(uuid);
         } else {
             plugin.getPM().callEvent(new TARDISEnterEvent(player, from));
-            if (player.isPlayerTimeRelative()) {
-                setTemporalLocation(player, -1);
+            if (plugin.getConfig().getBoolean("creation.keep_night")) {
+                // set the player's time to midnight
+                setTemporalLocation(player, 18000, false);
             }
             TARDISSounds.playTARDISHum(player);
         }
@@ -189,35 +193,35 @@ public class TARDISDoorListener {
      * A method to transport player pets (tamed mobs) into and out of the
      * TARDIS.
      *
-     * @param pets a list of the player's pets found nearby
-     * @param l the location to teleport pets to
-     * @param player the player who owns the pets
-     * @param d the direction of the police box
-     * @param enter whether the pets are entering (true) or exiting (false)
+     * @param pets      a list of the player's pets found nearby
+     * @param location  the location to teleport pets to
+     * @param player    the player who owns the pets
+     * @param direction the direction of the police box
+     * @param enter     whether the pets are entering (true) or exiting (false)
      */
-    void movePets(List<TARDISPet> pets, Location l, Player player, COMPASS d, boolean enter) {
-        Location pl = l.clone();
-        World w = l.getWorld();
+    void movePets(List<TARDISPet> pets, Location location, Player player, COMPASS direction, boolean enter) {
+        Location pl = location.clone();
+        World w = location.getWorld();
         // will need to adjust this depending on direction Police Box is facing
         if (enter) {
-            pl.setZ(l.getZ() + 1);
+            pl.setZ(location.getZ() + 1);
         } else {
-            switch (d) {
+            switch (direction) {
                 case NORTH:
-                    pl.setX(l.getX() + 1);
-                    pl.setZ(l.getZ() + 1);
+                    pl.setX(location.getX() + 1);
+                    pl.setZ(location.getZ() + 1);
                     break;
                 case WEST:
-                    pl.setX(l.getX() + 1);
-                    pl.setZ(l.getZ() - 1);
+                    pl.setX(location.getX() + 1);
+                    pl.setZ(location.getZ() - 1);
                     break;
                 case SOUTH:
-                    pl.setX(l.getX() - 1);
-                    pl.setZ(l.getZ() - 1);
+                    pl.setX(location.getX() - 1);
+                    pl.setZ(location.getZ() - 1);
                     break;
                 default:
-                    pl.setX(l.getX() - 1);
-                    pl.setZ(l.getZ() + 1);
+                    pl.setX(location.getX() - 1);
+                    pl.setZ(location.getZ() + 1);
                     break;
             }
         }
@@ -333,7 +337,7 @@ public class TARDISDoorListener {
      * Get door location data for teleport entry and exit of the TARDIS.
      *
      * @param doortype a reference to the door_type field in the doors table
-     * @param id the unique TARDIS identifier i the database
+     * @param id       the unique TARDIS identifier i the database
      * @return an instance of the TARDISDoorLocation data class
      */
     public static TARDISDoorLocation getDoor(int doortype, int id) {
@@ -353,26 +357,26 @@ public class TARDISDoorListener {
             int getx = tmp_loc.getBlockX();
             int getz = tmp_loc.getBlockZ();
             switch (d) {
-                case NORTH:
+                case NORTH -> {
                     // z -ve
                     tmp_loc.setX(getx + 0.5);
                     tmp_loc.setZ(getz - 0.5);
-                    break;
-                case EAST:
+                }
+                case EAST -> {
                     // x +ve
                     tmp_loc.setX(getx + 1.5);
                     tmp_loc.setZ(getz + 0.5);
-                    break;
-                case SOUTH:
+                }
+                case SOUTH -> {
                     // z +ve
                     tmp_loc.setX(getx + 0.5);
                     tmp_loc.setZ(getz + 1.5);
-                    break;
-                case WEST:
+                }
+                case WEST -> {
                     // x -ve
                     tmp_loc.setX(getx - 0.5);
                     tmp_loc.setZ(getz + 0.5);
-                    break;
+                }
             }
             tdl.setL(tmp_loc);
         }
@@ -380,34 +384,34 @@ public class TARDISDoorListener {
     }
 
     /**
-     * Plays a door sound when the iron door is clicked.
+     * Plays a door sound when the TARDIS door is clicked.
      *
-     * @param p a player to play the sound for
-     * @param sound the sound to play
-     * @param l a location to play the sound at
-     * @param m whether to play the TARDIS sound or a Minecraft substitute
+     * @param player   a player to play the sound for
+     * @param sound    the sound to play
+     * @param location a location to play the sound at
+     * @param minecart whether to play the TARDIS sound or a Minecraft substitute
      */
-    private void playDoorSound(Player p, int sound, Location l, boolean m) {
+    private void playDoorSound(Player player, int sound, Location location, boolean minecart) {
         switch (sound) {
             case 1:
-                if (!m) {
-                    TARDISSounds.playTARDISSound(l, "tardis_door_open");
+                if (!minecart) {
+                    TARDISSounds.playTARDISSound(location, "tardis_door_open");
                 } else {
-                    p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
+                    player.playSound(player.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
                 }
                 break;
             case 2:
-                if (!m) {
-                    TARDISSounds.playTARDISSound(l, "tardis_door_close");
+                if (!minecart) {
+                    TARDISSounds.playTARDISSound(location, "tardis_door_close");
                 } else {
-                    p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
+                    player.playSound(player.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
                 }
                 break;
             case 3:
-                if (!m) {
-                    TARDISSounds.playTARDISSound(l, "tardis_enter");
+                if (!minecart) {
+                    TARDISSounds.playTARDISSound(location, "tardis_enter");
                 } else {
-                    p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
+                    player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
                 }
                 break;
             default:
@@ -419,37 +423,44 @@ public class TARDISDoorListener {
      * Set a player's time relative to the server time. Based on Essentials
      * /ptime command.
      *
-     * @param p the player to set the time for
-     * @param t the ticks to set the time to
+     * @param player the player to set the time for
+     * @param ticks  the ticks to set the time to
      */
-    private void setTemporalLocation(Player p, long t) {
-        if (p.isOnline()) {
-            if (t != -1) {
-                long time = p.getPlayerTime();
-                time -= time % 24000L;
-                time += 24000L + t;
-                long calculatedtime = time - p.getWorld().getTime();
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    p.setPlayerTime(calculatedtime, true);
-                    if (plugin.getConfig().getBoolean("allow.perception_filter")) {
-                        plugin.getFilter().addPerceptionFilter(p);
-                    }
-                    plugin.getTrackerKeeper().getTemporallyLocated().add(p.getUniqueId());
-                }, 10L);
+    private void setTemporalLocation(Player player, long ticks, boolean relative) {
+        if (player.isOnline()) {
+            if (ticks != -1) {
+                if (relative) {
+                    player.resetPlayerTime();
+                    long time = player.getPlayerTime();
+                    time -= time % 24000L;
+                    time += 24000L + ticks;
+                    long calculatedtime = time - player.getWorld().getTime();
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        player.setPlayerTime(calculatedtime, true);
+                        if (plugin.getConfig().getBoolean("allow.perception_filter")) {
+                            plugin.getFilter().addPerceptionFilter(player);
+                        }
+                        plugin.getTrackerKeeper().getTemporallyLocated().add(player.getUniqueId());
+                    }, 10L);
+                } else {
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        player.setPlayerTime(18000, false);
+                    }, 10L);
+                }
             } else {
-                p.resetPlayerTime();
+                player.resetPlayerTime();
                 boolean remove = true;
                 Material m = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
-                for (ItemStack is : p.getInventory().getArmorContents()) {
+                for (ItemStack is : player.getInventory().getArmorContents()) {
                     if (is != null && is.getType().equals(m)) {
                         remove = false;
                     }
                 }
-                if (remove && plugin.getTrackerKeeper().getTemporallyLocated().contains(p.getUniqueId())) {
+                if (remove && plugin.getTrackerKeeper().getTemporallyLocated().contains(player.getUniqueId())) {
                     if (plugin.getConfig().getBoolean("allow.perception_filter")) {
-                        plugin.getFilter().removePerceptionFilter(p);
+                        plugin.getFilter().removePerceptionFilter(player);
                     }
-                    plugin.getTrackerKeeper().getTemporallyLocated().remove(p.getUniqueId());
+                    plugin.getTrackerKeeper().getTemporallyLocated().remove(player.getUniqueId());
                 }
             }
         }
@@ -458,11 +469,11 @@ public class TARDISDoorListener {
     /**
      * Remove player from the travellers table.
      *
-     * @param u the UUID of the player to remove
+     * @param uuid the UUID of the player to remove
      */
-    void removeTraveller(UUID u) {
+    void removeTraveller(UUID uuid) {
         HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", u.toString());
+        where.put("uuid", uuid.toString());
         plugin.getQueryFactory().doSyncDelete("travellers", where);
     }
 }

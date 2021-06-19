@@ -53,7 +53,6 @@ import me.eccentric_nz.TARDIS.hads.TARDISHadsPersister;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISBeeWaker;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
 import me.eccentric_nz.TARDIS.move.TARDISSpectaclesRunnable;
@@ -414,14 +413,7 @@ public class TARDIS extends JavaPlugin {
             loadWorldGuard();
             loadPluginRespect();
             startZeroHealing();
-            startBeeTicks();
             startSiegeTicks();
-            if (pm.isPluginEnabled("TARDISChunkGenerator")) {
-                TARDISSpace alwaysNight = new TARDISSpace(this);
-                if (getConfig().getBoolean("creation.keep_night")) {
-                    alwaysNight.keepNight();
-                }
-            }
             if (pm.isPluginEnabled("dynmap") && getConfig().getBoolean("preferences.enable_dynmap")) {
                 tardisDynmap = new TARDISDynmap(this);
                 tardisDynmap.enable();
@@ -758,15 +750,6 @@ public class TARDIS extends JavaPlugin {
     private void startZeroHealing() {
         if (getConfig().getBoolean("allow.zero_room")) {
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISZeroRoomRunnable(this), 20, getConfig().getLong("preferences.heal_speed"));
-        }
-    }
-
-    /**
-     * Starts a repeating task that wakes bees in the Apiary room.
-     */
-    private void startBeeTicks() {
-        if (getConfig().getBoolean("preferences.wake_bees")) {
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISBeeWaker(this), 40, 500);
         }
     }
 
