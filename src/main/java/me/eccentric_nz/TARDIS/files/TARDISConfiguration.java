@@ -107,6 +107,7 @@ public class TARDISConfiguration {
         booleanOptions.put("preferences.nerf_pistons.only_tardis_worlds", true);
         booleanOptions.put("preferences.no_coords", false);
         booleanOptions.put("preferences.no_creative_condense", false);
+        booleanOptions.put("preferences.no_enchanted_condense", true);
         booleanOptions.put("preferences.notify_update", true);
         booleanOptions.put("preferences.open_door_policy", false);
         booleanOptions.put("preferences.render_entities", false);

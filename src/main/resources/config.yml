@@ -98,6 +98,7 @@ preferences:
   spawn_limit: 10
   no_coords: false
   no_creative_condense: false
+  no_enchanted_condense: true
   vortex_fall: kill
   wake_bees: true
   chat_width: 55
