@@ -65,18 +65,24 @@ public class TARDISMaterialisePoliceBox implements Runnable {
     public void run() {
         if (!plugin.getTrackerKeeper().getDematerialising().contains(bd.getTardisID())) {
             World world = bd.getLocation().getWorld();
+            Block block = bd.getLocation().getBlock();
+            Block light = block.getRelative(BlockFace.UP, 2);
             if (i < loops) {
                 i++;
                 int cmd;
                 switch (i % 3) {
                     case 2: // stained
                         cmd = 1003;
+                        light.setBlockData(TARDISConstants.AIR);
                         break;
                     case 1: // glass
                         cmd = 1004;
+                        light.setBlockData(TARDISConstants.AIR);
                         break;
                     default: // preset
                         cmd = 1001;
+                        // set a light block
+                        light.setBlockData(TARDISConstants.LIGHT);
                         break;
                 }
                 // first run
@@ -92,7 +98,6 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                         }
                     }
                     if (!found) {
-                        Block block = bd.getLocation().getBlock();
                         Block under = block.getRelative(BlockFace.DOWN);
                         block.setBlockData(TARDISConstants.AIR);
                         TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);

@@ -81,8 +81,8 @@ public class TARDISInstantPoliceBox {
                 break;
             }
         }
+        Block block = bd.getLocation().getBlock();
         if (!found) {
-            Block block = bd.getLocation().getBlock();
             Block under = block.getRelative(BlockFace.DOWN);
             block.setBlockData(TARDISConstants.AIR);
             TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
@@ -103,5 +103,7 @@ public class TARDISInstantPoliceBox {
         frame.setItem(is, false);
         frame.setFixed(true);
         frame.setVisible(false);
+        // set a light block
+        block.getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.LIGHT);
     }
 }

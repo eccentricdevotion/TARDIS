@@ -269,8 +269,8 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             // power down
                                             setp.put("powered_on", 0);
                                             // police box lamp, delay it incase the TARDIS needs rebuilding
-                                            if (tardis.getPreset().equals(PRESET.ADAPTIVE)) {
-                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false), 1L);
+                                            if (tardis.getPreset().equals(PRESET.ADAPTIVE) || tardis.getPreset().usesItemFrame()) {
+                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, tardis.getPreset()), 1L);
                                             }
                                             // if lights are on, turn them off
                                             new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, tardis.getSchematic().hasLanterns());

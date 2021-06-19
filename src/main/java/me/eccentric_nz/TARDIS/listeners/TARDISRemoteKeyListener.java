@@ -122,8 +122,8 @@ public class TARDISRemoteKeyListener implements Listener {
                     TARDISMessage.send(player, "DOOR_LOCK", message);
                     TARDISAdaptiveBoxLampToggler tpblt = new TARDISAdaptiveBoxLampToggler(plugin);
                     TARDISSounds.playTARDISSound(l, "tardis_lock");
-                    tpblt.toggleLamp(id, !powered);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> tpblt.toggleLamp(id, powered), 6L);
+                    tpblt.toggleLamp(id, !powered, preset);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> tpblt.toggleLamp(id, powered, preset), 6L);
                 }
             } else if (preset.equals(PRESET.INVISIBLE)) {
                 HashMap<String, Object> whered = new HashMap<>();

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -25,6 +26,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -53,18 +55,22 @@ public class TARDISDematerialisePoliceBox implements Runnable {
     @Override
     public void run() {
         World world = dd.getLocation().getWorld();
+        Block light = dd.getLocation().getBlock().getRelative(BlockFace.UP, 2);
         if (i < loops) {
             i++;
             int cmd;
             switch (i % 3) {
                 case 2: // stained
                     cmd = 1003;
+                    light.setBlockData(TARDISConstants.AIR);
                     break;
                 case 1: // glass
                     cmd = 1004;
+                    light.setBlockData(TARDISConstants.AIR);
                     break;
                 default: // preset
                     cmd = 1001;
+                    light.setBlockData(TARDISConstants.LIGHT);
                     break;
             }
             // first run - play sound
@@ -122,6 +128,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
         } else {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
+            light.setBlockData(TARDISConstants.AIR);
             new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, false, preset);
         }
     }

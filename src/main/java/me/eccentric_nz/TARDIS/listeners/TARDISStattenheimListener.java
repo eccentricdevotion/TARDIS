@@ -344,8 +344,8 @@ public class TARDISStattenheimListener implements Listener {
                             new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
                         }
                         // police box lamp
-                        if (preset.equals(PRESET.ADAPTIVE)) {
-                            new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true);
+                        if (preset.equals(PRESET.ADAPTIVE) || preset.usesItemFrame()) {
+                            new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true, preset);
                         }
                         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
                     }

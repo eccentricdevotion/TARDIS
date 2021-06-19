@@ -21,6 +21,7 @@ import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.entity.EntityType;
 import org.bukkit.loot.LootTable;
@@ -163,6 +164,20 @@ public class TARDISConstants {
      * BlockData for ICE
      */
     public static final BlockData ICE = Material.ICE.createBlockData();
+
+    /**
+     * BlockData setter for LIGHT
+     */
+    private static Levelled setLight() {
+        Levelled levelled = (Levelled) Material.LIGHT.createBlockData();
+        levelled.setLevel(7);
+        return levelled;
+    }
+
+    /**
+     * BlockData for LIGHT
+     */
+    public static final Levelled LIGHT = setLight();
 
     /**
      * A list of loot tables to populate TARDIS planet chests
