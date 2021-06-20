@@ -38,6 +38,7 @@ import me.eccentric_nz.TARDIS.chemistry.product.GlowStickRunnable;
 import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.converters.*;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTIPS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.dynmap.TARDISDynmap;
@@ -392,6 +393,7 @@ public class TARDIS extends JavaPlugin {
             utils = new TARDISUtils(this);
             locationUtils = new TARDISLocationGetters(this);
             buildKeeper.setSeeds(getSeeds());
+            new ResultSetTIPS(this).fillUsedSlotList();
             new TARDISConsoleLoader(this).addSchematics();
             loadFiles();
             disguisesOnServer = pm.isPluginEnabled("LibsDisguises");

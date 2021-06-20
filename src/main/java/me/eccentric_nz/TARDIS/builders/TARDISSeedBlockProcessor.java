@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
@@ -142,9 +143,19 @@ public class TARDISSeedBlockProcessor {
                 }
                 // get player direction
                 String d = TARDISStaticUtils.getPlayersDirection(player, false);
+                // get TIPs slot
+                int slot = -1000001;
+                if (schm.getPermission().equals("junk")) {
+                    slot = -999;
+                } else if (tips) {
+                    slot = new TARDISInteriorPostioning(plugin).getFreeSlot();
+                    TARDISBuilderInstanceKeeper.getTipsSlots().add(slot);
+                }
                 // save data to database (tardis table)
                 String chun = cw + ":" + cx + ":" + cz;
                 HashMap<String, Object> set = new HashMap<>();
+                // save the slot
+                set.put("tips", slot);
                 set.put("uuid", player.getUniqueId().toString());
                 set.put("owner", playerNameStr);
                 set.put("chunk", chun);
@@ -210,7 +221,7 @@ public class TARDISSeedBlockProcessor {
                 // police box needs to use chameleon id/data
                 if (chunkworld != null) {
                     plugin.getPM().callEvent(new TARDISCreationEvent(player, lastInsertId, l));
-                    TARDISBuilderInner builder = new TARDISBuilderInner(plugin, schm, chunkworld, lastInsertId, player, wall_type, floor_type, tips);
+                    TARDISBuilderInner builder = new TARDISBuilderInner(plugin, schm, chunkworld, lastInsertId, player, wall_type, floor_type, slot);
                     int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
                     builder.setTask(task);
                     // delay building exterior
