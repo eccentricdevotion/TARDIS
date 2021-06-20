@@ -10,24 +10,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-class ARSRoomCounts {
+public class ARSRoomCounts {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
-    private final Pattern regex = Pattern.compile("\\b([A-Z_]+)\\b(?<!STONE)");
+    private final List<String> STONE = Collections.singletonList("STONE");
     private final List<Double> numberOfRoomsPerTARDIS = new ArrayList<>();
 
-    ARSRoomCounts(TARDIS plugin) {
+    public ARSRoomCounts(TARDIS plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
 
-    Map<String, Integer> getRoomCounts() {
+    public Map<String, Integer> getRoomCounts() {
         HashMap<String, Integer> data = new HashMap<>();
         Statement statement = null;
         ResultSet rs = null;
@@ -37,25 +35,21 @@ class ARSRoomCounts {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
             if (rs.isBeforeFirst()) {
-                if (rs.isBeforeFirst()) {
-                    while (rs.next()) {
-                        String json = rs.getString("json");
-                        Matcher matcher = regex.matcher(json);
-                        double num = 0;
-                        if (matcher.matches()) {
-                            while (matcher.find()) {
-                                // only count if not a console block
-                                if (Consoles.getBY_MATERIALS().keySet().contains(matcher.group())) {
-                                    num += 1.0;
-                                    String room = TARDISARS.ARSFor(matcher.group()).toString();
-                                    plugin.debug("matched: " + room);
-                                    int count = (data.containsKey(room)) ? data.get(room) + 1 : 1;
-                                    data.put(room, count);
-                                }
-                            }
+                while (rs.next()) {
+                    String json = rs.getString("json").replaceAll("[\"\\[\\]]", "");
+                    double num = 0;
+                    List<String> materials = new ArrayList<>(Arrays.asList(json.split(",")));
+                    materials.removeAll(STONE);
+                    for (String material : materials) {
+                        // only count if not a console block
+                        if (!Consoles.getBY_MATERIALS().keySet().contains(material)) {
+                            num += 1.0;
+                            String room = TARDISARS.ARSFor(material).toString();
+                            int count = (data.containsKey(room)) ? data.get(room) + 1 : 1;
+                            data.put(room, count);
                         }
-                        numberOfRoomsPerTARDIS.add(num);
                     }
+                    numberOfRoomsPerTARDIS.add(num);
                 }
             }
         } catch (SQLException e) {
@@ -75,7 +69,7 @@ class ARSRoomCounts {
         return data;
     }
 
-    String getMedian() {
+    public String getMedian() {
         Collections.sort(numberOfRoomsPerTARDIS);
         double middle;
         if (numberOfRoomsPerTARDIS.size() % 2 == 0) {
