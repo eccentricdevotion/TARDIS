@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import com.google.common.collect.Sets;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.builders.FractalFence;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -33,6 +34,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -46,7 +48,7 @@ import java.util.Set;
  */
 public class TARDISDevCommand implements CommandExecutor {
 
-    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "list", "tree");
+    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "list", "tree", "stats");
     private final TARDIS plugin;
 
     public TARDISDevCommand(TARDIS plugin) {
@@ -70,6 +72,14 @@ public class TARDISDevCommand implements CommandExecutor {
                 if (args.length == 1) {
                     if (first.equals("add_regions")) {
                         return new TARDISAddRegionsCommand(plugin).doCheck(sender);
+                    }
+                    if (first.equals("stats")) {
+                        ARSRoomCounts arsRoomCounts = new ARSRoomCounts(plugin);
+                        for (Map.Entry<String, Integer> entry : arsRoomCounts.getRoomCounts().entrySet()) {
+                            plugin.debug(entry.getKey() + ": " + entry.getValue());
+                        }
+                        plugin.debug(arsRoomCounts.getMedian());
+                        return true;
                     }
                 }
                 if (first.equals("advancements")) {
