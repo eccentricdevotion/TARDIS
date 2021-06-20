@@ -57,15 +57,15 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
             // get the z coord
             int z = war.getMinZ() + randZ;
             // get the spawn point
-            Location endSpawn = war.getW().getSpawnLocation();
-            int highest = TARDISStaticLocationGetters.getHighestYin3x3(war.getW(), endSpawn.getBlockX() + x, endSpawn.getBlockZ() + z);
+            Location endSpawn = war.getWorld().getSpawnLocation();
+            int highest = TARDISStaticLocationGetters.getHighestYin3x3(war.getWorld(), endSpawn.getBlockX() + x, endSpawn.getBlockZ() + z);
             int startx, starty, startz, resetx, resetz, count = 0;
             if (highest > 40) {
-                Block currentBlock = war.getW().getBlockAt(x, highest, z);
+                Block currentBlock = war.getWorld().getBlockAt(x, highest, z);
                 Location chunk_loc = currentBlock.getLocation();
                 if (plugin.getPluginRespect().getRespect(chunk_loc, param)) {
-                    while (!war.getW().getChunkAt(chunk_loc).isLoaded()) {
-                        war.getW().getChunkAt(chunk_loc).load();
+                    while (!war.getWorld().getChunkAt(chunk_loc).isLoaded()) {
+                        war.getWorld().getChunkAt(chunk_loc).load();
                     }
                     if (param.spaceTardis()) {
                         // get start location for checking there is enough space
@@ -75,7 +75,7 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
                         starty = chunk_loc.getBlockY() + 1;
                         startz = gsl[2];
                         resetz = gsl[3];
-                        count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, war.getW(), param.getCompass());
+                        count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, war.getWorld(), param.getCompass());
                     }
                 } else {
                     count = 1;
@@ -84,7 +84,7 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
                 count = 1;
             }
             if (count == 0) {
-                dest = (highest > 0) ? new Location(war.getW(), x, highest, z) : null;
+                dest = (highest > 0) ? new Location(war.getWorld(), x, highest, z) : null;
             }
             return dest;
         }

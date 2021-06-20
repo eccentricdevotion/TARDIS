@@ -100,30 +100,6 @@
                     <url>http://tardisjenkins.duckdns.org:8080/plugin/repository/everything/</url>
                 </repository>
             </repositories>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.3.1-SNAPSHOT</version>
-                        <configuration>
-                            <!--<additionalparam>-Xdoclint:none</additionalparam>-->
-                            <quiet/>
-                            <excludePackageNames>com.*:org.*</excludePackageNames>
-                            <release>16</release>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>javadoc-jar</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
     </profiles>
     <build>
