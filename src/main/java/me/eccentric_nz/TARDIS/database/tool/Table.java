@@ -58,6 +58,7 @@ public enum Table {
     tag,
     tardis,
     transmats,
+    travel_stats,
     traveled_to,
     travellers,
     vaults,

@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -25,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -96,13 +98,15 @@ public class TARDISRescue {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, where);
+        TravelType travelType = (rescue) ? TravelType.RESCUE : TravelType.PLAYER;
         if (!rescue) {
             TARDISMessage.send(player, "RESCUE_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 new TARDISLand(plugin, id, player).exitVortex();
+                plugin.getPM().callEvent(new TARDISTravelEvent(player, null, travelType, id));
             }
         }
-        plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
+        plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), travelType));
         if (rescue) {
             plugin.getTrackerKeeper().getRescue().put(id, saved);
         }

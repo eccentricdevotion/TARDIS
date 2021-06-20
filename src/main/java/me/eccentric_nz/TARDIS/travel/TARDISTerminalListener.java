@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -165,12 +166,13 @@ public class TARDISTerminalListener implements Listener {
                                 HashMap<String, Object> wheret = new HashMap<>();
                                 wheret.put("tardis_id", terminalIDs.get(uuid));
                                 plugin.getQueryFactory().doSyncUpdate("next", set, wheret);
-                                plugin.getTrackerKeeper().getHasDestination().put(terminalIDs.get(uuid), plugin.getArtronConfig().getInt("travel"));
+                                plugin.getTrackerKeeper().getHasDestination().put(terminalIDs.get(uuid), new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.TERMINAL));
                                 plugin.getTrackerKeeper().getRescue().remove(terminalIDs.get(uuid));
                                 close(player);
                                 TARDISMessage.send(player, "DEST_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid)));
                                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid))) {
                                     new TARDISLand(plugin, terminalIDs.get(uuid), player).exitVortex();
+                                    plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.TERMINAL, terminalIDs.get(uuid)));
                                 }
                                 // damage the circuit if configured
                                 if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.input") > 0) {

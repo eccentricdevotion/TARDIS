@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
+import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -51,7 +52,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<Integer, Integer> cloisterBells = new HashMap<>();
     private final HashMap<Integer, Integer> hadsDamage = new HashMap<>();
     private final HashMap<Integer, Integer> destinationVortex = new HashMap<>();
-    private final HashMap<Integer, Integer> hasDestination = new HashMap<>();
+    private final HashMap<Integer, TravelCostAndType> hasDestination = new HashMap<>();
     private final HashMap<Integer, String> renderer = new HashMap<>();
     private final HashMap<Integer, TARDISAntiBuild> antiBuild = new HashMap<>();
     private final HashMap<Integer, TARDISRoomData> roomTasks = new HashMap<>();
@@ -213,7 +214,7 @@ public class TARDISTrackerInstanceKeeper {
      *
      * @return a Map of TARDIS ids and the Artron cost of the travel
      */
-    public HashMap<Integer, Integer> getHasDestination() {
+    public HashMap<Integer, TravelCostAndType> getHasDestination() {
         return hasDestination;
     }
 

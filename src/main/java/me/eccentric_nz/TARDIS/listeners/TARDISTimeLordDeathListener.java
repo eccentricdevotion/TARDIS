@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.arch.TARDISArchInventory;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
@@ -30,10 +31,7 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
@@ -234,6 +232,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             HashMap<String, Object> wheret = new HashMap<>();
                                             wheret.put("tardis_id", id);
                                             plugin.getQueryFactory().doUpdate("tardis", seth, wheret);
+                                            plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.AUTONOMOUS, id));
                                         }, 500L);
                                         // set current
                                         HashMap<String, Object> setc = new HashMap<>();

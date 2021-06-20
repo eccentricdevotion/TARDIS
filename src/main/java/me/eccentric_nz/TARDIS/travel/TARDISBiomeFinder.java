@@ -18,8 +18,10 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import org.bukkit.Location;
@@ -85,10 +87,11 @@ public class TARDISBiomeFinder {
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
         TARDISMessage.send(player, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
-        plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
+        plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.BIOME));
         plugin.getTrackerKeeper().getRescue().remove(id);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             new TARDISLand(plugin, id, player).exitVortex();
+            plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.BIOME, id));
         }
     }
 

@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
+import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesPattern;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesRequest;
@@ -91,6 +93,7 @@ public class TARDISChatListener implements Listener {
                             }
                             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
                                 new TARDISLand(plugin, rd.getTardis_id(), rescuer).exitVortex();
+                                plugin.getPM().callEvent(new TARDISTravelEvent(rescuer, null, TravelType.RANDOM, rd.getTardis_id()));
                             }
                         }
                     }, 2L);

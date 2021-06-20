@@ -298,6 +298,10 @@ public class Main {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("transmat_id"), rs.getInt("tardis_id"), rs.getString("name"), rs.getString("world"), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"), rs.getFloat("yaw")) + end;
                                         bw.write(str);
                                         break;
+                                    case travel_stats:
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("travel_stats_id"), rs.getString("travel_type"), rs.getInt("tardis_id"), rs.getString("uuid")) + end;
+                                        bw.write(str);
+                                        break;
                                     case traveled_to:
                                         str = String.format(SQL.VALUES.get(i), rs.getString("uuid"), rs.getString("environment")) + end;
                                         bw.write(str);

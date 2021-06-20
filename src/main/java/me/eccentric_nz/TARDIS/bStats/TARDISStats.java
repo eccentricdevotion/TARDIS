@@ -14,11 +14,12 @@ public class TARDISStats {
     public void startMetrics() {
         // start bStats metrics
         Metrics metrics = new Metrics(plugin, pluginId);
-        // TODO how often each type of travel is enabled/used (saves, biome, cave, village, etc.)
         // console types
         metrics.addCustomChart(new Metrics.AdvancedPie("console_types", () -> new ConsoleTypes(plugin).getMap()));
         // chameleon presets
         metrics.addCustomChart(new Metrics.AdvancedPie("chameleon_presets", () -> new ChameleonPresets(plugin).getMap()));
+        // how often each type of travel is used (saves, biome, cave, village, etc.)
+        metrics.addCustomChart(new Metrics.AdvancedPie("travel_types", () -> new TravelTypes(plugin).getMap()));
         // TIPS or create_worlds
         metrics.addCustomChart(new Metrics.SimplePie("using_tips", () -> !plugin.getConfig().getBoolean("creation.create_worlds", false) ? "true" : "false"));
         // End / Nether travel enabled
