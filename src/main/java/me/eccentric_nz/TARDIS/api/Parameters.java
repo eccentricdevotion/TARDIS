@@ -41,8 +41,14 @@ public class Parameters {
     private boolean spaceTardis = false;
     private COMPASS compass;
 
-    public Parameters(Player p, List<Flag> flags) {
-        player = p;
+    /**
+     * Data holder for parameters related to finding a TARDIS time Travel location
+     *
+     * @param player the player to check the parameters for
+     * @param flags  a list of flags to check
+     */
+    public Parameters(Player player, List<Flag> flags) {
+        this.player = player;
         for (Flag f : flags) {
             switch (f) {
                 case MESSAGE_PLAYER:
@@ -84,58 +90,128 @@ public class Parameters {
         }
     }
 
+    /**
+     * Whether to message the player
+     *
+     * @return true if we should message the player
+     */
     public boolean messagePlayer() {
         return messagePlayer;
     }
 
+    /**
+     * Check whether the player has permission for a TARDIS area
+     *
+     * @return true if the player has permission
+     */
     public boolean permsArea() {
         return permsArea;
     }
 
+    /**
+     * Check whether the player has permission to travel to the Nether
+     *
+     * @return true if the player has permission
+     */
     public boolean permsNether() {
         return permsNether;
     }
 
+    /**
+     * Check whether the player has permission to travel to The End
+     *
+     * @return true if the player has permission
+     */
     public boolean permsTheEnd() {
         return permsTheEnd;
     }
 
+    /**
+     * Whether to check the world border
+     *
+     * @return true if we're checking world borders
+     */
     public boolean repectWorldBorder() {
         return repectWorldBorder;
     }
 
+    /**
+     * Check if we should be respecting Faction areas
+     *
+     * @return the value of config option 'preferences.respect_factions'
+     */
     public boolean respectFactions() {
         return respectFactions;
     }
 
+    /**
+     * Check if we should be respecting Greif Prevention claims
+     *
+     * @return the value of config option 'preferences.respect_grief_prevention'
+     */
     public boolean respectGreifPrevention() {
         return respectGreifPrevention;
     }
 
+    /**
+     * Check if we should be respecting RedProtect areas
+     *
+     * @return the value of config option 'preferences.respect_red_protect'
+     */
     public boolean respectRedProtect() {
         return respectRedProtect;
     }
 
+    /**
+     * Check if we should be respecting Towny areas
+     *
+     * @return the value of config option 'preferences.respect_towny'
+     */
     public boolean respectTowny() {
         return respectTowny;
     }
 
+    /**
+     * Check if we should be respecting WorldGuard regions
+     *
+     * @return the value of config option 'preferences.respect_worldguard'
+     */
     public boolean respectWorldguard() {
         return respectWorldguard;
     }
 
+    /**
+     * Check if there is space for a TARDIS to land
+     *
+     * @return true if there is space
+     */
     boolean spaceTardis() {
         return spaceTardis;
     }
 
+    /**
+     * Gets the TARDIS exterior direction
+     *
+     * @return the direction
+     */
     public COMPASS getCompass() {
         return compass;
     }
 
+    /**
+     * Sets the TARDIS exterior direction
+     *
+     * @param compass the direction to set
+     */
     public void setCompass(COMPASS compass) {
         this.compass = compass;
     }
 
+    /**
+     * Gets the player these parameters apply to
+     *
+     * @return the player
+     */
     public Player getPlayer() {
         return player;
     }

@@ -62,13 +62,13 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
             int x = war.getMinX() + randX;
             // get the z coord
             int z = war.getMinZ() + randZ;
-            Location tmp = new Location(war.getW(), x, 64, z);
-            while (!war.getW().getChunkAt(tmp).isLoaded()) {
-                war.getW().getChunkAt(tmp).load();
+            Location tmp = new Location(war.getWorld(), x, 64, z);
+            while (!war.getWorld().getChunkAt(tmp).isLoaded()) {
+                war.getWorld().getChunkAt(tmp).load();
             }
             // get the y coord
             if (param.spaceTardis()) {
-                if (safeOverworld(war.getW(), x, z, param.getCompass())) {
+                if (safeOverworld(war.getWorld(), x, z, param.getCompass())) {
                     if ((dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.WATER)) && TARDISStaticUtils.isOceanBiome(TARDISStaticUtils.getBiomeAt(dest))) {
                         if (safeSubmarine(dest, param.getCompass(), param.getPlayer())) {
                             break;
@@ -78,8 +78,8 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
                 }
             } else {
                 // space for a player / check plugin respect
-                int highest = TARDISStaticLocationGetters.getHighestYin3x3(war.getW(), x, z);
-                Location chk = new Location(war.getW(), x, highest, z);
+                int highest = TARDISStaticLocationGetters.getHighestYin3x3(war.getWorld(), x, z);
+                Location chk = new Location(war.getWorld(), x, highest, z);
                 if (plugin.getPluginRespect().getRespect(chk, param)) {
                     return chk;
                 }

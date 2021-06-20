@@ -30,6 +30,12 @@ public final class TARDISChameleonArchEvent extends Event {
     private final Player player;
     private final TARDISWatchData tardisWatchData;
 
+    /**
+     * A TARDIS Chameleon Arch event.
+     *
+     * @param player          the player who is using the Chameleon Arch
+     * @param tardisWatchData the data involved in the event
+     */
     public TARDISChameleonArchEvent(Player player, TARDISWatchData tardisWatchData) {
         this.player = player;
         this.tardisWatchData = tardisWatchData;

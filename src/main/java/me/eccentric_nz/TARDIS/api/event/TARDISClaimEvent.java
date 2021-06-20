@@ -27,6 +27,13 @@ public final class TARDISClaimEvent extends TARDISEvent {
 
     private final Location location;
 
+    /**
+     * An abandoned TARDIS claim event.
+     *
+     * @param player   the player who is claiming an abandoned TARDIS
+     * @param tardis   the TARDIS data involved in the event
+     * @param location the location of the TARDIS exterior
+     */
     public TARDISClaimEvent(Player player, Tardis tardis, Location location) {
         super(player, tardis);
         this.location = location;
