@@ -70,7 +70,7 @@ public class TARDISBuilderInner implements Runnable {
     private final Player player;
     private final Material wall_type;
     private final Material floor_type;
-    private final boolean tips;
+    private final int tips;
     private final HashMap<Block, BlockData> postDoorBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
@@ -115,10 +115,9 @@ public class TARDISBuilderInner implements Runnable {
      *                   creation stack, this material determines the makeup of the TARDIS walls.
      * @param floor_type a material type determined from the TARDIS seed block, or 35 (if TARDIS was made via the
      *                   creation stack), this material determines the makeup of the TARDIS floors.
-     * @param tips       a boolean determining where this TARDIS will be built -------- false:own world, underground -
-     *                   true:default world--------
+     * @param tips       an int determining where this TARDIS will be built ---- -1:own world, > 0:default world ----
      */
-    public TARDISBuilderInner(TARDIS plugin, Schematic schm, World world, int dbID, Player player, Material wall_type, Material floor_type, boolean tips) {
+    public TARDISBuilderInner(TARDIS plugin, Schematic schm, World world, int dbID, Player player, Material wall_type, Material floor_type, int tips) {
         this.plugin = plugin;
         this.schm = schm;
         this.world = world;
@@ -159,20 +158,14 @@ public class TARDISBuilderInner implements Runnable {
             d = dimensions.get("length").getAsInt() - 1;
             div = (h + 1.0d) * w * (d + 1.0d);
             playerUUID = player.getUniqueId().toString();
-
             // calculate startx, starty, startz
-            if (tips) { // default world - use TIPS
+            if (tips > -1000001) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                int slot;
-                if (schm.getPermission().equals("junk")) {
-                    slot = -999;
+                if (tips == -999) {
                     pos = tintpos.getTIPSJunkData();
                 } else {
-                    slot = tintpos.getFreeSlot();
-                    pos = tintpos.getTIPSData(slot);
+                    pos = tintpos.getTIPSData(tips);
                 }
-                // save the slot
-                set.put("tips", slot);
                 startx = pos.getCentreX();
                 resetx = pos.getCentreX();
                 startz = pos.getCentreZ();
@@ -283,11 +276,9 @@ public class TARDISBuilderInner implements Runnable {
             }
             TARDISBannerSetter.setBanners(postBannerBlocks);
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                if (tips) {
-                    if (pos != null) {
-                        String name = (schm.getPermission().equals("junk")) ? "junk" : player.getName();
-                        plugin.getWorldGuardUtils().addWGProtection(name, pos, world);
-                    }
+                if (pos != null) {
+                    String name = (schm.getPermission().equals("junk")) ? "junk" : player.getName();
+                    plugin.getWorldGuardUtils().addWGProtection(name, pos, world);
                 } else {
                     plugin.getWorldGuardUtils().addWGProtection(player, wg1, wg2);
                 }
