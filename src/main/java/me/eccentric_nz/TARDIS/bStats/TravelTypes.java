@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
-public class ConsoleTypes {
+public class TravelTypes {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
@@ -21,32 +21,32 @@ public class ConsoleTypes {
      *
      * @param plugin an instance of the main class.
      */
-    ConsoleTypes(TARDIS plugin) {
+    TravelTypes(TARDIS plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
 
     /**
-     * Retrieves an SQL ResultSet from the TARDIS table and maps console types to the number of times they are used.
+     * Retrieves an SQL ResultSet from the travel_stats table and maps travel types to the number of times they are used.
      *
-     * @return a map of console types and count values
+     * @return a map of travel types and count values
      */
     public HashMap<String, Integer> getMap() {
         HashMap<String, Integer> data = new HashMap<>();
         Statement statement = null;
         ResultSet rs = null;
-        String query = "SELECT size, count(size) AS count_of FROM " + prefix + "tardis GROUP BY size";
+        String query = "SELECT travel_type, count(travel_type) AS count_of FROM " + prefix + "travel_stats GROUP BY travel_type";
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    data.put(rs.getString("size"), rs.getInt("count_of"));
+                    data.put(rs.getString("travel_type"), rs.getInt("count_of"));
                 }
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis table getting console types! " + e.getMessage());
+            plugin.debug("ResultSet error for travel_stats table getting travel types! " + e.getMessage());
         } finally {
             try {
                 if (rs != null) {
@@ -56,7 +56,7 @@ public class ConsoleTypes {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing tardis table for console types! " + e.getMessage());
+                plugin.debug("Error closing travel_stats table for travel types! " + e.getMessage());
             }
         }
         return data;

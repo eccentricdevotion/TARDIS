@@ -17,10 +17,13 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
+import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -35,7 +38,7 @@ public class TARDISFastReturnButton {
     private final int id;
     private final int level;
 
-    public TARDISFastReturnButton(TARDIS plugin, Player player, int id, int level) {
+    TARDISFastReturnButton(TARDIS plugin, Player player, int id, int level) {
         this.plugin = plugin;
         this.player = player;
         this.id = id;
@@ -67,10 +70,11 @@ public class TARDISFastReturnButton {
                     HashMap<String, Object> wherel = new HashMap<>();
                     wherel.put("tardis_id", id);
                     plugin.getQueryFactory().doSyncUpdate("next", set, wherel);
-                    plugin.getTrackerKeeper().getHasDestination().put(id, cost);
+                    plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(cost, TravelType.BACK));
                     plugin.getTrackerKeeper().getRescue().remove(id);
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         new TARDISLand(plugin, id, player).exitVortex();
+                        plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.BACK, id));
                     }
                     TARDISMessage.send(player, "PREV_SET", rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                 } else {

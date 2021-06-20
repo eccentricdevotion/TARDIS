@@ -218,7 +218,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     // Remove energy from TARDIS and sets database
                                     TARDISMessage.send(player, "HANDBRAKE_ON");
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                                        int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id) * spaceTimeThrottle.getArtronMultiplier());
+                                        int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * spaceTimeThrottle.getArtronMultiplier());
                                         HashMap<String, Object> wheret = new HashMap<>();
                                         wheret.put("tardis_id", id);
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);

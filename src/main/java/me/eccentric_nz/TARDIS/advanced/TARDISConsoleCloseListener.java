@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
@@ -30,6 +31,7 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
@@ -129,6 +131,8 @@ public class TARDISConsoleCloseListener implements Listener {
                             if (lore != null) {
                                 String first = lore.get(0);
                                 if (!first.equals("Blank")) {
+                                    TravelType travelType = TravelType.SAVE;
+                                    ;
                                     switch (mat) {
                                         case MUSIC_DISC_BLOCKS: // area
                                             // check the current location is not in this area already
@@ -164,7 +168,8 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 set_next.put("direction", rsc.getDirection().toString());
                                             }
                                             TARDISMessage.send(p, "TRAVEL_APPROVED", first);
-                                            plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
+                                            travelType = TravelType.AREA;
+                                            plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), travelType));
                                             break;
                                         case MUSIC_DISC_CAT: // biome
                                             // find a biome location
@@ -217,6 +222,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 set_next.put("direction", rsc.getDirection().toString());
                                                 set_next.put("submarine", 0);
                                                 TARDISMessage.send(p, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                                                travelType = TravelType.BIOME;
                                             }
                                             break;
                                         case MUSIC_DISC_WAIT: // player
@@ -241,6 +247,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 }
                                                 TARDISRescue to_player = new TARDISRescue(plugin);
                                                 to_player.rescue(p, toUUID, id, rsc.getDirection(), false, false);
+                                                travelType = TravelType.PLAYER;
                                             } else {
                                                 TARDISMessage.send(p, "NO_PERM_PLAYER");
                                                 continue;
@@ -278,6 +285,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                     plugin.debug("Invalid PRESET value: " + lore.get(5));
                                                 }
                                                 TARDISMessage.send(p, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                                                travelType = TravelType.SAVE;
                                             } else {
                                                 TARDISMessage.send(p, "TRAVEL_NO_PERM_SAVE");
                                                 continue;
@@ -290,7 +298,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                         // update next
                                         where_next.put("tardis_id", id);
                                         plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);
-                                        plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
+                                        plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), travelType));
                                     }
                                     if (set_tardis.size() > 0) {
                                         // update tardis
@@ -300,6 +308,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                     plugin.getTrackerKeeper().getRescue().remove(id);
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                         new TARDISLand(plugin, id, p).exitVortex();
+                                        plugin.getPM().callEvent(new TARDISTravelEvent(p, null, TravelType.SAVE, id));
                                     }
                                     if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
                                         plugin.getTrackerKeeper().getHasNotClickedHandbrake().add(id);
@@ -329,11 +338,12 @@ public class TARDISConsoleCloseListener implements Listener {
                                 plugin.getTrackerKeeper().getSubmarine().remove(id);
                                 where_next.put("tardis_id", id);
                                 plugin.getQueryFactory().doSyncUpdate("next", set_next, where_next);
-                                plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("random_circuit"));
+                                plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("random_circuit"), TravelType.RANDOM));
                                 plugin.getTrackerKeeper().getHasRandomised().add(id);
                                 TARDISMessage.send(p, "RANDOMISER");
                                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                     new TARDISLand(plugin, id, p).exitVortex();
+                                    plugin.getPM().callEvent(new TARDISTravelEvent(p, null, TravelType.RANDOM, id));
                                 }
                                 if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.randomiser") > 0) {
                                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);

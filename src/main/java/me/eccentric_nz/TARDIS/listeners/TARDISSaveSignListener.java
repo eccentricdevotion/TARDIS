@@ -18,17 +18,16 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
-import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
-import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
-import me.eccentric_nz.TARDIS.travel.TARDISSaveSignPageTwo;
+import me.eccentric_nz.TARDIS.travel.*;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -227,12 +226,14 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", id);
                                     plugin.getQueryFactory().doSyncUpdate("next", set, wheret);
-                                    plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                                    TravelType travelType = (is.getItemMeta().getDisplayName().equals("Home")) ? TravelType.HOME : TravelType.SAVE;
+                                    plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, travelType));
                                     plugin.getTrackerKeeper().getRescue().remove(id);
                                     close(player);
                                     TARDISMessage.send(player, "DEST_SET_TERMINAL", im.getDisplayName(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                         new TARDISLand(plugin, id, player).exitVortex();
+                                        plugin.getPM().callEvent(new TARDISTravelEvent(player, null, travelType, id));
                                     }
                                 } else if (!lore.contains(ChatColor.GOLD + "Current location")) {
                                     lore.add(ChatColor.GOLD + "Current location");

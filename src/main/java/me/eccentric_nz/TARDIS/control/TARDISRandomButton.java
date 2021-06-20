@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -24,11 +25,13 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -195,10 +198,11 @@ public class TARDISRandomButton {
                     HashMap<String, Object> wherel = new HashMap<>();
                     wherel.put("tardis_id", id);
                     plugin.getQueryFactory().doSyncUpdate("next", set, wherel);
-                    plugin.getTrackerKeeper().getHasDestination().put(id, cost);
+                    plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(cost, TravelType.RANDOM));
                     plugin.getTrackerKeeper().getRescue().remove(id);
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         new TARDISLand(plugin, id, player).exitVortex();
+                        plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.RANDOM, id));
                     }
                 } else if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                     plugin.getTrackerKeeper().getMalfunction().put(id, true);
