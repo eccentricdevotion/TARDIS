@@ -86,7 +86,7 @@ class TardisRoomCommand {
             tcc = new TardisCircuitChecker(plugin, id);
             tcc.getCircuits();
         }
-        if (tcc != null && !tcc.hasARS()) {
+        if (tcc != null && !tcc.hasArs()) {
             TardisMessage.send(player, "ARS_MISSING");
             return true;
         }

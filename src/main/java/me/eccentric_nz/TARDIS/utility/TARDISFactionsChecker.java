@@ -33,16 +33,16 @@ public class TardisFactionsChecker {
      * Checks whether a location is in the player's faction or 'wilderness'... ie NOT in a claimed faction that this
      * player doesn't belong to.
      *
-     * @param p a player
-     * @param l the location instance to check.
+     * @param player a player
+     * @param location the location instance to check.
      * @return true or false depending on whether the player belongs to the faction who controls the location
      */
-    public static boolean isInFaction(Player p, Location l) {
+    public static boolean isInFaction(Player player, Location location) {
         try {
             Class.forName("com.massivecraft.factions.entity.MPlayer");
-            return TardisPlugin.plugin.getTardisHelper().isInFaction(p, l);
+            return TardisPlugin.plugin.getTardisHelper().isInFaction(player, location);
         } catch (Exception e) {
-            return new TardisFactionsUuid().isInFaction(p, l);
+            return new TardisFactionsUuid().isInFaction(player, location);
         }
     }
 }

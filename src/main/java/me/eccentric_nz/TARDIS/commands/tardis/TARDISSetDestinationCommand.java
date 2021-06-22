@@ -20,7 +20,7 @@ import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.advanced.TardisCircuitChecker;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.Flag;
@@ -46,7 +46,7 @@ class TardisSetDestinationCommand {
 
     boolean doSetDestination(Player player, String[] args) {
         if (TardisPermission.hasPermission(player, "tardis.save")) {
-            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            ResultSetTardisId rs = new ResultSetTardisId(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 TardisMessage.send(player, "NO_TARDIS");
                 return false;

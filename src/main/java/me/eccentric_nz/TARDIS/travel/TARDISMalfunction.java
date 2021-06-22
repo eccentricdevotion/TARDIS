@@ -114,7 +114,7 @@ public class TardisMalfunction {
                 double percent = malfunctionDamage / 100.0d;
                 switch (circuit) {
                     case ARS:
-                        if (tcc.hasARS()) {
+                        if (tcc.hasArs()) {
                             damage = (int) (plugin.getConfig().getDouble("circuits.uses.ars") * percent);
                             usesLeft = tcc.getArsUses() - damage;
                             damage(circuit, usesLeft, id, p);

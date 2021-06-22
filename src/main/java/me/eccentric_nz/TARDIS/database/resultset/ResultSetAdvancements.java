@@ -38,7 +38,7 @@ public class ResultSetAdvancements {
     private final boolean multiple;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
     private final String prefix;
-    private int aId;
+    private int advancementId;
     private UUID uuid;
     private String name;
     private String amount;
@@ -100,7 +100,7 @@ public class ResultSetAdvancements {
                     }
                     data.add(row);
                 }
-                aId = rs.getInt("a_id");
+                advancementId = rs.getInt("a_id");
                 uuid = UUID.fromString(rs.getString("uuid"));
                 name = rs.getString("name");
                 amount = rs.getString("amount");
@@ -129,8 +129,8 @@ public class ResultSetAdvancements {
         return true;
     }
 
-    public int getaId() {
-        return aId;
+    public int getAdvancementId() {
+        return advancementId;
     }
 
     public UUID getUuid() {

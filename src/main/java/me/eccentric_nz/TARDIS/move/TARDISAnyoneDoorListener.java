@@ -151,7 +151,7 @@ public class TardisAnyoneDoorListener extends TardisDoorListener implements List
                         Material m = Material.getMaterial(key);
                         if (action == Action.LEFT_CLICK_BLOCK) {
                             // must be the owner
-                            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                            ResultSetTardisId rs = new ResultSetTardisId(plugin);
                             if (rs.fromUUID(playerUUID.toString())) {
                                 if (rs.getTardisId() != id) {
                                     TardisMessage.send(player, "DOOR_LOCK_UNLOCK");

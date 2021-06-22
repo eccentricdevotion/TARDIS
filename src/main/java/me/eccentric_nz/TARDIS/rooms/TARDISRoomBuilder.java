@@ -20,7 +20,7 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.api.event.TardisRoomGrowEvent;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.schematic.TardisSchematicGZip;
@@ -64,7 +64,7 @@ public class TardisRoomBuilder {
      * @return true or false
      */
     public boolean build() {
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (rs.fromUUID(p.getUniqueId().toString())) {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
             TardisRoomData roomData = new TardisRoomData();

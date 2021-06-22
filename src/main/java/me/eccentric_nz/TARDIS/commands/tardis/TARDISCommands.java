@@ -21,7 +21,7 @@ import me.eccentric_nz.tardis.advanced.TardisDiskWriterCommand;
 import me.eccentric_nz.tardis.arch.TardisArchCommand;
 import me.eccentric_nz.tardis.chatgui.TardisChatGuiUpdater;
 import me.eccentric_nz.tardis.commands.TardisCommandHelper;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.TardisCommand;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
@@ -85,7 +85,7 @@ public class TardisCommands implements CommandExecutor {
                 TardisMessage.send(sender, "CMD_PLAYER");
                 return false;
             }
-            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            ResultSetTardisId rs = new ResultSetTardisId(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 TardisMessage.send(player, "NOT_A_TIMELORD");
                 return true;

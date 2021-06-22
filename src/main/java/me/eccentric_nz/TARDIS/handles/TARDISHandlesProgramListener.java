@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.handles;
 
 import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardis.advanced.TardisSerializeInventory;
+import me.eccentric_nz.tardis.advanced.TardisInventorySerializer;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -280,7 +280,7 @@ public class TardisHandlesProgramListener implements Listener {
             // validate the program
             TardisHandlesValidator validator = new TardisHandlesValidator(stack, player);
             if (validator.validateDisk()) {
-                String serialized = TardisSerializeInventory.itemStacksToString(stack);
+                String serialized = TardisInventorySerializer.itemStacksToString(stack);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("uuid", uuid);
                 set.put("name", "Untitled Disk");

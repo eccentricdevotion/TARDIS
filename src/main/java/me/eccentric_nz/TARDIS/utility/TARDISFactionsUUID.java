@@ -36,15 +36,15 @@ class TardisFactionsUuid {
      * Checks whether a location is in the player's faction or 'wilderness'... ie NOT in a claimed faction that this
      * player doesn't belong to.
      *
-     * @param p a player
-     * @param l the location instance to check.
+     * @param player a player
+     * @param location the location instance to check.
      * @return true or false depending on whether the player belongs to the faction who controls the location
      */
-    public boolean isInFaction(Player p, Location l) {
+    public boolean isInFaction(Player player, Location location) {
         boolean bool = true;
-        MPlayer mPlayer = MPlayer.get(p);
+        MPlayer mPlayer = MPlayer.get(player);
         Faction mPlayerFaction = mPlayer.getFaction();
-        Location factionLocation = l.clone();
+        Location factionLocation = location.clone();
         Faction locationFaction = BoardColl.get().getFactionAt(PS.valueOf(factionLocation));
         if (!mPlayerFaction.equals(locationFaction) && !locationFaction.isNone()) {
             bool = false;

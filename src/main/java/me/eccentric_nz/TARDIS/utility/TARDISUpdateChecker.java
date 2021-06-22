@@ -82,7 +82,7 @@ public class TardisUpdateChecker implements Runnable {
      */
     private JsonObject fetchLatestJenkinsBuild() {
         try {
-            // We're connecting to tardis's Jenkins REST api
+            // We're connecting to TARDIS's Jenkins REST api
             URL url = new URL("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/api/json");
             // Create a connection
             URLConnection request = url.openConnection();
@@ -91,8 +91,8 @@ public class TardisUpdateChecker implements Runnable {
             // Convert to a JSON object
             JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent()));
             return root.getAsJsonObject();
-        } catch (Exception ex) {
-            plugin.debug("Failed to check for a snapshot update on tardis Jenkins.");
+        } catch (Exception exception) {
+            plugin.debug("Failed to check for a snapshot update on TARDIS Jenkins.");
         }
         return null;
     }

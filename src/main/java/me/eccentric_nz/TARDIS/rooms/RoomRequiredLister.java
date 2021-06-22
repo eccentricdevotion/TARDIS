@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.rooms;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
@@ -40,7 +40,7 @@ public class RoomRequiredLister {
             floor = rsp.getFloor();
         }
         // get the tardis id
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {
             TardisMessage.send(player, "CONDENSE_REQUIRE", name);
             HashMap<String, Integer> item_counts = new HashMap<>();

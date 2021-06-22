@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.junk;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import org.bukkit.Location;
 
 import java.util.HashMap;
@@ -40,7 +40,7 @@ class TardisJunkLocation {
 
     boolean isNotHome() {
         // check the Junk tardis is not home already
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             id = rs.getTardisId();
             // get current location

@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.commands.tardis;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.apache.commons.lang.math.NumberUtils;
@@ -44,7 +44,7 @@ class TardisReorderSavedLocationCommand {
                 TardisMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
-            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            ResultSetTardisId rs = new ResultSetTardisId(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 TardisMessage.send(player, "NO_TARDIS");
                 return false;

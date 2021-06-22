@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.commands.bind;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.commands.TardisCommandHelper;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.enumeration.Bind;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
@@ -73,7 +73,7 @@ public class TardisBindCommands implements CommandExecutor {
                 TardisMessage.send(player, "BIND_NOT_VALID");
                 return false;
             }
-            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            ResultSetTardisId rs = new ResultSetTardisId(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 TardisMessage.send(player, "NOT_A_TIMELORD");
                 return false;

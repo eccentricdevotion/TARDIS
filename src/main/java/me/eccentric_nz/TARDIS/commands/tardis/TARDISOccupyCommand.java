@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.commands.tardis;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.ChatColor;
@@ -56,7 +56,7 @@ class TardisOccupyCommand {
                     return true;
                 }
             } else if (plugin.getUtils().inTARDISWorld(player)) {
-                ResultSetTardisID rsid = new ResultSetTardisID(plugin);
+                ResultSetTardisId rsid = new ResultSetTardisId(plugin);
                 // if TIPS determine tardis_id from player location
                 if (plugin.getConfig().getBoolean("creation.default_world") && !player.hasPermission("tardis.create_world")) {
                     int slot = TardisInteriorPositioning.getTIPSSlot(player.getLocation());

@@ -322,7 +322,7 @@ public class Tardises implements TardisApi {
 
     @Override
     public List<String> getPlayersInTARDIS(UUID uuid) {
-        ResultSetTardisID rs = new ResultSetTardisID(TardisPlugin.plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(TardisPlugin.plugin);
         if (rs.fromUUID(uuid.toString())) {
             return getPlayersInTARDIS(rs.getTardisId());
         } else {
@@ -615,7 +615,7 @@ public class Tardises implements TardisApi {
     @Override
     public boolean setDestination(UUID uuid, Location location, boolean travel) {
         // get tardis_id
-        ResultSetTardisID rst = new ResultSetTardisID(TardisPlugin.plugin);
+        ResultSetTardisId rst = new ResultSetTardisId(TardisPlugin.plugin);
         if (rst.fromUUID(uuid.toString())) {
             return setDestination(rst.getTardisId(), location, travel);
         } else {
@@ -712,7 +712,7 @@ public class Tardises implements TardisApi {
     @Override
     public boolean setChameleonPreset(UUID uuid, Preset preset, boolean rebuild) {
         // get tardis_id
-        ResultSetTardisID rst = new ResultSetTardisID(TardisPlugin.plugin);
+        ResultSetTardisId rst = new ResultSetTardisId(TardisPlugin.plugin);
         if (rst.fromUUID(uuid.toString())) {
             return setChameleonPreset(rst.getTardisId(), preset, rebuild);
         } else {

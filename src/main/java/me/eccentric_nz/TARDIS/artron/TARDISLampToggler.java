@@ -21,7 +21,7 @@ import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetLamps;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisTimeLord;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -55,7 +55,7 @@ public class TardisLampToggler {
             boolean use_wool = false;
             if (rsp.resultSet()) {
                 // only use player preference if the tardis id of the timelord/companion is the same as the tardis id they are in
-                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                ResultSetTardisId rs = new ResultSetTardisId(plugin);
                 if (rs.fromUUID(uuid.toString()) && rs.getTardisId() == id) {
                     lantern = rsp.isLanternsOn();
                     use_wool = rsp.isWoolLightsOn();

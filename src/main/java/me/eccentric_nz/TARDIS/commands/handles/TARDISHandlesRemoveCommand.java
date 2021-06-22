@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.handles;
 
 import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
@@ -32,7 +32,7 @@ class TardisHandlesRemoveCommand {
     }
 
     boolean purge(Player player) {
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", rs.getTardisId());

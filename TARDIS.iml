@@ -20,24 +20,31 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:21.0" level="project" />
-    <orderEntry type="library" name="Maven: net.md-5:bungeecord-chat:1.16-R0.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: net.md-5:bungeecord-chat:1.16-R0.4" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.27" level="project" />
-    <orderEntry type="library" name="Maven: io.papermc:paperlib:1.0.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.spigotmc:spigot:1.16.5-R0.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: io.papermc:paperlib:1.0.6-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:3.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.rauschig:jarchivelib:1.2.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.20" level="project" />
+    <orderEntry type="library" name="Maven: org.swinglabs:swing-layout:1.0.3" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.7" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:21.0.1" level="project" />
     <orderEntry type="library" name="Maven: com.sk89q.worldedit:worldedit-core:7.3.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.sk89q.worldedit.worldedit-libs:core:7.3.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.antlr:antlr4:4.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.antlr:antlr-runtime:3.5.2" level="project" />
     <orderEntry type="library" name="Maven: org.antlr:ST4:4.3" level="project" />
     <orderEntry type="library" name="Maven: org.abego.treelayout:org.abego.treelayout.core:1.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish:javax.json:1.0.4" level="project" />
     <orderEntry type="library" name="Maven: com.ibm.icu:icu4j:61.1" level="project" />
-    <orderEntry type="library" name="Maven: com.sk89q.worldedit.worldedit-libs:core:7.3.0-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: de.schlichtherle:truezip:6.8.4" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.mozilla:rhino-runtime:1.7.13" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.code.findbugs:jsr305:1.3.9" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.logging.log4j:log4j-api:2.8.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.logging.log4j:log4j-api:2.14.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: it.unimi.dsi:fastutil:8.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.antlr:antlr4-runtime:4.9.1" level="project" />
     <orderEntry type="library" name="Maven: com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT" level="project" />
@@ -119,13 +126,7 @@
     <orderEntry type="library" name="Maven: net.coreprotect:coreprotect:19.5" level="project" />
     <orderEntry type="library" name="Maven: us.dynmap:dynmap-api:3.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: us.dynmap:DynmapCoreAPI:all:3.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.rauschig:jarchivelib:1.2.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.20" level="project" />
-    <orderEntry type="library" name="Maven: org.swinglabs:swing-layout:1.0.3" level="project" />
-    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.7" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains:annotations:21.0.1" level="project" />
     <orderEntry type="module" module-name="TARDISChunkGenerator" />
-    <orderEntry type="library" name="Maven: org.spigotmc:spigot:1.16.5-R0.1-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="TARDISWeepingAngels" />
     <orderEntry type="module-library">
       <library name="Maven: net.citizensnpcs:citizensapi:2.0.27-SNAPSHOT">
@@ -136,6 +137,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:3.3.0" level="project" />
   </component>
 </module>

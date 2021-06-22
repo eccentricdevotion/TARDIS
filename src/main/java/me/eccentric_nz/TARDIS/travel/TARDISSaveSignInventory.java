@@ -22,7 +22,7 @@ import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
 import me.eccentric_nz.tardis.custommodeldata.GuiSaves;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
 import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import me.eccentric_nz.tardis.utility.TardisNumberParsers;
@@ -175,7 +175,7 @@ public class TardisSaveSignInventory {
         }
         ItemStack own = null;
         // is it this player's TARDIS?
-        ResultSetTardisID rstid = new ResultSetTardisID(plugin);
+        ResultSetTardisId rstid = new ResultSetTardisId(plugin);
         if (rstid.fromUUID(player.getUniqueId().toString())) {
             // add button to view own saves (if in another player's TARDIS)
             if (rstid.getTardisId() != id) {

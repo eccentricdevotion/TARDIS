@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.junk;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.commands.admin.TardisDeleteCommand;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.destroyers.DestroyData;
 import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.enumeration.Consoles;
@@ -48,7 +48,7 @@ class TardisJunkDelete {
             TardisMessage.send(sender, "CMD_ADMIN");
             return true;
         }
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             int id = rs.getTardisId();
             // get the current location

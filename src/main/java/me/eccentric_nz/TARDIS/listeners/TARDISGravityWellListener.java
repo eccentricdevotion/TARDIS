@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.listeners;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetGravity;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.rooms.TardisGravityWellRunnable;
 import me.eccentric_nz.tardis.utility.TardisVoidFall;
@@ -205,7 +205,7 @@ public class TardisGravityWellListener implements Listener {
             Block b = event.getClickedBlock();
             if (b != null) {
                 // get tardis_id
-                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                ResultSetTardisId rs = new ResultSetTardisId(plugin);
                 if (!rs.fromUUID(player.getUniqueId().toString())) {
                     TardisMessage.send(player, "NOT_A_TIMELORD");
                     return;

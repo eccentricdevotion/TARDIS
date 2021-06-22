@@ -268,7 +268,7 @@ class TardisListenerRegistrar {
             plugin.getPM().registerEvents(new TardisSelectWatchListener(plugin), plugin);
             plugin.getPM().registerEvents(new TardisRespawnListener(plugin), plugin);
             if (plugin.getConfig().getBoolean("arch.switch_inventory")) {
-                if (!plugin.getInvManager().equals(InventoryManager.NONE)) {
+                if (!plugin.getInventoryManager().equals(InventoryManager.NONE)) {
                     plugin.getPM().registerEvents(new TardisInventoryPluginHelper(plugin), plugin);
                 }
             }

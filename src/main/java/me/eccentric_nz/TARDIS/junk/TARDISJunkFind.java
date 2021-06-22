@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.junk;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.enumeration.WorldManager;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.planets.TardisAliasResolver;
@@ -45,7 +45,7 @@ class TardisJunkFind {
             return true;
         }
         // get junk tardis id
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             // get current location
             HashMap<String, Object> wherec = new HashMap<>();

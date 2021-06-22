@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.commands.sudo;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.commands.tardis.TardisHandbrakeCommand;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 
@@ -37,7 +37,7 @@ public class SudoHandbrake {
             TardisMessage.send(sender, "TOO_FEW_ARGS");
             return true;
         }
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (rs.fromUUID(uuid.toString())) {
             return new TardisHandbrakeCommand(plugin).toggle(null, rs.getTardisId(), args, true);
         }

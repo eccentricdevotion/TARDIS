@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.control;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.advanced.TardisCircuitChecker;
-import me.eccentric_nz.tardis.advanced.TardisSerializeInventory;
+import me.eccentric_nz.tardis.advanced.TardisInventorySerializer;
 import me.eccentric_nz.tardis.api.event.TardisZeroRoomEnterEvent;
 import me.eccentric_nz.tardis.api.event.TardisZeroRoomExitEvent;
 import me.eccentric_nz.tardis.ars.TardisArsInventory;
@@ -223,7 +223,7 @@ public class TardisControlListener implements Listener {
                                             TardisMessage.send(player, "NO_PERM_UPGRADE");
                                             return;
                                         }
-                                        if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
+                                        if (tcc != null && !tcc.hasArs() && !plugin.getUtils().inGracePeriod(player, true)) {
                                             TardisMessage.send(player, "ARS_MISSING");
                                             return;
                                         }
@@ -235,7 +235,7 @@ public class TardisControlListener implements Listener {
                                             TardisMessage.send(player, "NO_PERM_ROOMS");
                                             return;
                                         }
-                                        if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
+                                        if (tcc != null && !tcc.hasArs() && !plugin.getUtils().inGracePeriod(player, true)) {
                                             TardisMessage.send(player, "ARS_MISSING");
                                             return;
                                         }
@@ -283,16 +283,16 @@ public class TardisControlListener implements Listener {
                                     if (rsstore.resultSet()) {
                                         try {
                                             if (!rsstore.getSavesOne().isEmpty()) {
-                                                stack = TardisSerializeInventory.itemStacksFromString(rsstore.getSavesOne());
+                                                stack = TardisInventorySerializer.itemStacksFromString(rsstore.getSavesOne());
                                             } else {
-                                                stack = TardisSerializeInventory.itemStacksFromString(Storage.SAVE_1.getEmpty());
+                                                stack = TardisInventorySerializer.itemStacksFromString(Storage.SAVE_1.getEmpty());
                                             }
                                         } catch (IOException ex) {
                                             plugin.debug("Could not get Storage Inventory: " + ex.getMessage());
                                         }
                                     } else {
                                         try {
-                                            stack = TardisSerializeInventory.itemStacksFromString(Storage.SAVE_1.getEmpty());
+                                            stack = TardisInventorySerializer.itemStacksFromString(Storage.SAVE_1.getEmpty());
                                             for (ItemStack is : stack) {
                                                 if (is != null && is.hasItemMeta()) {
                                                     ItemMeta im = is.getItemMeta();

@@ -178,7 +178,7 @@ public class TardisPrefsMenuListener extends TardisMenuListener implements Liste
                             assert lore != null;
                             if (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF"))) {
                                 // get this player's TARDIS
-                                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                                ResultSetTardisId rs = new ResultSetTardisId(plugin);
                                 if (rs.fromUUID(uuid.toString())) {
                                     int id = rs.getTardisId();
                                     // must not be in the vortex or materialising
@@ -406,7 +406,7 @@ public class TardisPrefsMenuListener extends TardisMenuListener implements Liste
                     is.setItemMeta(im);
                     if (im.getDisplayName().equals("Beacon")) {
                         // get tardis id
-                        ResultSetTardisID rsi = new ResultSetTardisID(plugin);
+                        ResultSetTardisId rsi = new ResultSetTardisId(plugin);
                         if (rsi.fromUUID(uuid.toString())) {
                             new TardisBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), !bool);
                         }

@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.sonic.actions;
 
 import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -33,7 +33,7 @@ public class TardisSonicDispersed {
         if (pl.equals(pb)) {
             UUID uuid = player.getUniqueId();
             // get tardis id
-            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            ResultSetTardisId rs = new ResultSetTardisId(plugin);
             if (rs.fromUUID(uuid.toString())) {
                 // rebuild
                 plugin.getTrackerKeeper().getDispersed().remove(uuid);

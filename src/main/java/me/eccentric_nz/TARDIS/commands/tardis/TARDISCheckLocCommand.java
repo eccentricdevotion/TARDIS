@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.commands.tardis;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.travel.TardisTimeTravel;
@@ -47,7 +47,7 @@ class TardisCheckLocCommand {
             eyeLocation.setY(yplusone + 1);
         }
         // check they are a timelord
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
             TardisMessage.send(player, "NOT_A_TIMELORD");
             return true;

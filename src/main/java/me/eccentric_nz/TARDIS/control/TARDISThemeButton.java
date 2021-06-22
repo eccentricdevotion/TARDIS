@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.control;
 
 import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.desktop.TardisThemeInventory;
 import me.eccentric_nz.tardis.desktop.TardisUpgradeData;
 import me.eccentric_nz.tardis.enumeration.Schematic;
@@ -67,7 +67,7 @@ public class TardisThemeButton {
 
     private int getTardisId(String uuid) {
         int tid = 0;
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (rs.fromUUID(uuid)) {
             tid = rs.getTardisId();
         }

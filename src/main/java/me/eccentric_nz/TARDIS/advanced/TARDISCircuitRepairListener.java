@@ -62,55 +62,55 @@ public class TardisCircuitRepairListener implements Listener {
         int slot = event.getRawSlot();
         if (slot == 2) {
             // they clicked the output slot
-            AnvilInventory anvil = (AnvilInventory) event.getInventory();
-            ItemStack[] items = anvil.getContents();
-            ItemStack first = items[0];
+            AnvilInventory anvilInventory = (AnvilInventory) event.getInventory();
+            ItemStack[] itemStacks = anvilInventory.getContents();
+            ItemStack first = itemStacks[0];
             // is it a redstone with item meta?
             if (first != null && first.getType().equals(Material.GLOWSTONE_DUST) && first.hasItemMeta() && first.getAmount() == 1) {
                 // get the item meta
-                ItemMeta fim = first.getItemMeta();
-                assert fim != null;
-                if (fim.hasDisplayName() && fim.hasCustomModelData()) {
+                ItemMeta firstItemMeta = first.getItemMeta();
+                assert firstItemMeta != null;
+                if (firstItemMeta.hasDisplayName() && firstItemMeta.hasCustomModelData()) {
                     // get the display name
-                    String dnf = fim.getDisplayName();
-                    if (dnf.startsWith("tardis") && dnf.endsWith("Circuit")) {
-                        if (fim.hasLore()) {
+                    String firstDisplayName = firstItemMeta.getDisplayName();
+                    if (firstDisplayName.startsWith("TARDIS") && firstDisplayName.endsWith("Circuit")) {
+                        if (firstItemMeta.hasLore()) {
                             // get the lore
-                            List<String> flore = fim.getLore();
-                            assert flore != null;
-                            String stripped = ChatColor.stripColor(flore.get(1));
-                            if (!stripped.equals("unlimited")) {
+                            List<String> firstLore = firstItemMeta.getLore();
+                            assert firstLore != null;
+                            String strippedLore = ChatColor.stripColor(firstLore.get(1));
+                            if (!strippedLore.equals("unlimited")) {
                                 // get the uses left
-                                int left = TardisNumberParsers.parseInt(stripped);
+                                int left = TardisNumberParsers.parseInt(strippedLore);
                                 // get max uses for this circuit
-                                int ctm = (fim.hasCustomModelData()) ? fim.getCustomModelData() : 10001963;
-                                int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(ctm));
+                                int customModelData = (firstItemMeta.hasCustomModelData()) ? firstItemMeta.getCustomModelData() : 10001963;
+                                int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(customModelData));
                                 // is it used?
                                 if (left < uses) {
-                                    ItemStack two = items[1];
+                                    ItemStack second = itemStacks[1];
                                     // is it redstone?
-                                    if (two != null && two.getType().equals(Material.GLOWSTONE_DUST)) {
+                                    if (second != null && second.getType().equals(Material.GLOWSTONE_DUST)) {
                                         // how many in the stack?
-                                        int amount = two.getAmount();
-                                        int repair_max = uses - left;
-                                        int repair_to = (amount > repair_max) ? uses : left + amount;
-                                        int remaining = (amount > repair_max) ? amount - repair_max : 0;
+                                        int amount = second.getAmount();
+                                        int repairMax = uses - left;
+                                        int repairTo = (amount > repairMax) ? uses : left + amount;
+                                        int remaining = (amount > repairMax) ? amount - repairMax : 0;
                                         // clone the map
                                         ItemStack clone = first.clone();
-                                        ItemMeta cim = clone.getItemMeta();
-                                        List<String> clore = new ArrayList<>();
-                                        clore.add("Uses left");
-                                        clore.add(ChatColor.YELLOW + "" + repair_to);
-                                        assert cim != null;
-                                        cim.setLore(clore);
-                                        clone.setItemMeta(cim);
+                                        ItemMeta cloneItemMeta = clone.getItemMeta();
+                                        List<String> cloneLore = new ArrayList<>();
+                                        cloneLore.add("Uses left");
+                                        cloneLore.add(ChatColor.YELLOW + "" + repairTo);
+                                        assert cloneItemMeta != null;
+                                        cloneItemMeta.setLore(cloneLore);
+                                        clone.setItemMeta(cloneItemMeta);
                                         // set the item in slot 0 to the new repaired map
-                                        anvil.setItem(0, clone);
+                                        anvilInventory.setItem(0, clone);
                                         // set the amount in slot 1
                                         if (remaining > 0) {
-                                            anvil.setItem(1, new ItemStack(Material.REDSTONE, remaining));
+                                            anvilInventory.setItem(1, new ItemStack(Material.REDSTONE, remaining));
                                         } else {
-                                            anvil.setItem(1, new ItemStack(Material.AIR));
+                                            anvilInventory.setItem(1, new ItemStack(Material.AIR));
                                         }
                                     }
                                 }

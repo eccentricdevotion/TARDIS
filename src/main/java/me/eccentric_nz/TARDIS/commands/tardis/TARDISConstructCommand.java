@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.commands.tardis;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetConstructSign;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.ChatColor;
@@ -45,7 +45,7 @@ class TardisConstructCommand {
             TardisMessage.send(player, "TOO_FEW_ARGS");
             return true;
         }
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
             TardisMessage.send(player, "NO_TARDIS");
             return true;

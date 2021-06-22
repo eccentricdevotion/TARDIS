@@ -2,7 +2,7 @@ package me.eccentric_nz.tardis.commands.sudo;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 
@@ -18,7 +18,7 @@ class SudoDeadlock {
     }
 
     boolean toggleDeadlock(UUID uuid, CommandSender sender) {
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(plugin);
         // does the player have a TARDIS
         if (rs.fromUUID(uuid.toString())) {
             int id = rs.getTardisId();

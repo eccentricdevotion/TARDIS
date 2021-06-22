@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * The synchronic feedback circuit, along with the multi-loop stabiliser, was an essential component for a smooth
- * rematerialisation of a tardis.
+ * rematerialisation of a TARDIS.
  *
  * @author eccentric_nz
  */
@@ -80,68 +80,68 @@ public class TardisCircuitChecker {
     }
 
     /**
-     * Checks the tardis's Advanced Console inventory to see which circuits are installed.
+     * Checks the TARDIS's Advanced Console inventory to see which circuits are installed.
      */
-    public void getCircuits() {
+    public void getCircuits() { // TODO Make this "get" method actually return something.
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
-        if (rs.resultSet()) {
-            ItemStack[] items;
+        ResultSetDiskStorage resultSetDiskStorage = new ResultSetDiskStorage(plugin, where);
+        if (resultSetDiskStorage.resultSet()) {
+            ItemStack[] itemStacks;
             try {
-                items = TardisSerializeInventory.itemStacksFromString(rs.getConsole());
-                for (ItemStack is : items) {
-                    if (is != null && is.hasItemMeta()) {
-                        ItemMeta im = is.getItemMeta();
-                        assert im != null;
-                        if (im.hasDisplayName()) {
-                            String dn = im.getDisplayName();
-                            if (dn.equals("tardis ars Circuit")) {
+                itemStacks = TardisInventorySerializer.itemStacksFromString(resultSetDiskStorage.getConsole());
+                for (ItemStack itemStack : itemStacks) {
+                    if (itemStack != null && itemStack.hasItemMeta()) {
+                        ItemMeta itemMeta = itemStack.getItemMeta();
+                        assert itemMeta != null;
+                        if (itemMeta.hasDisplayName()) {
+                            String displayName = itemMeta.getDisplayName();
+                            if (displayName.equals("TARDIS ARS Circuit")) {
                                 ars = true;
-                                arsUses = getUses(im);
+                                arsUses = getUses(itemMeta);
                             }
-                            if (dn.equals("tardis Chameleon Circuit")) {
+                            if (displayName.equals("TARDIS Chameleon Circuit")) {
                                 chameleon = true;
-                                chameleonUses = getUses(im);
+                                chameleonUses = getUses(itemMeta);
                             }
-                            if (dn.equals("tardis Input Circuit")) {
+                            if (displayName.equals("TARDIS Input Circuit")) {
                                 input = true;
-                                inputUses = getUses(im);
+                                inputUses = getUses(itemMeta);
                             }
-                            if (dn.equals("tardis Invisibility Circuit")) {
+                            if (displayName.equals("TARDIS Invisibility Circuit")) {
                                 invisibility = true;
-                                invisibilityUses = getUses(im);
+                                invisibilityUses = getUses(itemMeta);
                             }
-                            if (dn.equals("tardis Materialisation Circuit")) {
+                            if (displayName.equals("TARDIS Materialisation Circuit")) {
                                 materialisation = true;
-                                materialisationUses = getUses(im);
+                                materialisationUses = getUses(itemMeta);
                             }
-                            if (dn.equals("tardis Memory Circuit")) {
+                            if (displayName.equals("TARDIS Memory Circuit")) {
                                 memory = true;
-                                memoryUses = getUses(im);
+                                memoryUses = getUses(itemMeta);
                             }
-                            if (dn.equals("tardis Randomiser Circuit")) {
+                            if (displayName.equals("TARDIS Randomiser Circuit")) {
                                 randomiser = true;
-                                randomiserUses = getUses(im);
+                                randomiserUses = getUses(itemMeta);
                             }
-                            if (dn.equals("tardis Scanner Circuit")) {
+                            if (displayName.equals("TARDIS Scanner Circuit")) {
                                 scanner = true;
-                                scannerUses = getUses(im);
+                                scannerUses = getUses(itemMeta);
                             }
-                            if (dn.equals("tardis Temporal Circuit")) {
+                            if (displayName.equals("TARDIS Temporal Circuit")) {
                                 temporal = true;
-                                temporalUses = getUses(im);
+                                temporalUses = getUses(itemMeta);
                             }
                         }
                     }
                 }
-            } catch (IOException ex) {
-                plugin.debug("Could not get console items: " + ex);
+            } catch (IOException ioException) {
+                plugin.debug("Could not get console items: " + ioException);
             }
         }
     }
 
-    public boolean hasARS() {
+    public boolean hasArs() {
         return ars;
     }
 
@@ -216,13 +216,13 @@ public class TardisCircuitChecker {
     /**
      * Get the number of uses this circuit has left.
      *
-     * @param im the ItemMeta to check
+     * @param itemMeta the ItemMeta to check
      * @return the number of uses
      */
-    private int getUses(ItemMeta im) {
+    private int getUses(ItemMeta itemMeta) {
         int uses = 0;
-        if (im.hasLore()) {
-            List<String> lore = im.getLore();
+        if (itemMeta.hasLore()) {
+            List<String> lore = itemMeta.getLore();
             assert lore != null;
             String stripped = ChatColor.stripColor(lore.get(1));
             if (!stripped.equals("unlimited")) {

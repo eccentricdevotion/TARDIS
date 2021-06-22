@@ -161,7 +161,7 @@ public class TardisControlMenuListener extends TardisMenuListener implements Lis
                                         TardisMessage.send(player, "NO_PERM_ROOMS");
                                         return;
                                     }
-                                    if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
+                                    if (tcc != null && !tcc.hasArs() && !plugin.getUtils().inGracePeriod(player, true)) {
                                         TardisMessage.send(player, "ARS_MISSING");
                                         return;
                                     }

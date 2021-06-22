@@ -19,6 +19,7 @@ package me.eccentric_nz.tardis.utility;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.control.TardisScanner;
 import me.eccentric_nz.tardischunkgenerator.disguise.*;
+import me.eccentric_nz.tardischunkgenerator.disguise.Fox;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
@@ -62,17 +63,17 @@ public class TardisEntityTracker {
                 Object[] options = null;
                 switch (e.getType()) {
                     case CAT:
-                        options = new Object[]{((Cat) e).getCatType(), ((Tameable) e).isTamed(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{((Cat) e).getCatType(), ((Tameable) e).isTamed(), Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case PANDA:
-                        options = new Object[]{GENE.getFromPandaGene(((Panda) e).getMainGene()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{Gene.getFromPandaGene(((Panda) e).getMainGene()), Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case DONKEY:
                     case MULE:
-                        options = new Object[]{((ChestedHorse) e).isCarryingChest(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{((ChestedHorse) e).isCarryingChest(), Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case PIG:
-                        options = new Object[]{((Pig) e).hasSaddle(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{((Pig) e).hasSaddle(), Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case CREEPER:
                         options = new Object[]{((Creeper) e).isPowered()};
@@ -81,31 +82,31 @@ public class TardisEntityTracker {
                         options = new Object[]{((Enderman) e).getCarriedBlock() != null};
                         break;
                     case SHEEP:
-                        options = new Object[]{((Sheep) e).getColor(), ((Tameable) e).isTamed(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{((Sheep) e).getColor(), ((Tameable) e).isTamed(), Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case WOLF:
-                        options = new Object[]{((Wolf) e).getCollarColor(), ((Tameable) e).isTamed(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{((Wolf) e).getCollarColor(), ((Tameable) e).isTamed(), Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case HORSE:
-                        options = new Object[]{((Horse) e).getColor(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{((Horse) e).getColor(), Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case LLAMA:
-                        options = new Object[]{((Llama) e).getColor(), ((Llama) e).getInventory().getDecor() != null, AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{((Llama) e).getColor(), ((Llama) e).getInventory().getDecor() != null, Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case OCELOT:
-                        options = new Object[]{((Tameable) e).isTamed(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{((Tameable) e).isTamed(), Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case PARROT:
-                        options = new Object[]{((Parrot) e).getVariant(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{((Parrot) e).getVariant(), Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case RABBIT:
-                        options = new Object[]{((Rabbit) e).getRabbitType(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{((Rabbit) e).getRabbitType(), Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case VILLAGER:
-                        options = new Object[]{PROFESSION.getFromVillagerProfession(((Villager) e).getProfession()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{Profession.getFromVillagerProfession(((Villager) e).getProfession()), Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case ZOMBIE_VILLAGER:
-                        options = new Object[]{PROFESSION.getFromVillagerProfession(Objects.requireNonNull(((ZombieVillager) e).getVillagerProfession())), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{Profession.getFromVillagerProfession(Objects.requireNonNull(((ZombieVillager) e).getVillagerProfession())), Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case SLIME:
                     case MAGMA_CUBE:
@@ -115,7 +116,7 @@ public class TardisEntityTracker {
                     case TURTLE:
                     case ZOMBIE:
                     case BEE:
-                        options = new Object[]{AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case SNOWMAN:
                         options = new Object[]{((Snowman) e).isDerp()};
@@ -127,10 +128,10 @@ public class TardisEntityTracker {
                         options = new Object[]{((TropicalFish) e).getPattern()};
                         break;
                     case MUSHROOM_COW:
-                        options = new Object[]{MUSHROOM_COW.getFromMushroomCowType(((MushroomCow) e).getVariant()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{Mooshroom.getFromMushroomCowType(((MushroomCow) e).getVariant()), Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     case FOX:
-                        options = new Object[]{FOX.getFromFoxType(((Fox) e).getFoxType()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                        options = new Object[]{Fox.getFromFoxType(((org.bukkit.entity.Fox) e).getFoxType()), Age.getFromBoolean(!((Ageable) e).isAdult())};
                         break;
                     default:
                         break;

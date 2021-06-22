@@ -47,43 +47,43 @@ public class TardisBook {
     /**
      * Read text from a file and write it to a book. The book is then placed in the player's inventory.
      *
-     * @param title_reward The name of the book
+     * @param bookTitle The name of the book
      * @param author       Who wrote the book
      * @param name         The name of the text file
-     * @param p            The player who will receive the book
+     * @param player            The player who will receive the book
      */
-    public void writeBook(String title_reward, String author, String name, Player p) {
+    public void writeBook(String bookTitle, String author, String name, Player player) {
         // read the file
         File file = new File(plugin.getDataFolder() + File.separator + "books" + File.separator + name + ".txt");
         StringBuilder fileContents = new StringBuilder((int) file.length());
-        String book_str = "";
-        String ls = System.getProperty("line.separator");
+        String bookString = "";
+        String lineSeparator = System.getProperty("line.separator");
         try {
             try (Scanner scanner = new Scanner(file)) {
                 while (scanner.hasNextLine()) {
-                    fileContents.append(scanner.nextLine()).append(ls);
+                    fileContents.append(scanner.nextLine()).append(lineSeparator);
                 }
-                book_str = fileContents.toString();
+                bookString = fileContents.toString();
             }
-        } catch (FileNotFoundException f) {
+        } catch (FileNotFoundException fileNotFoundException) {
             plugin.debug("Could not find file");
         }
-        book_str = book_str.replaceAll("@p", p.getName());
+        bookString = bookString.replaceAll("@p", player.getName());
         // two line breaks = new page
-        List<String> pages = Arrays.asList(book_str.split(ls + ls));
+        List<String> pages = Arrays.asList(bookString.split(lineSeparator + lineSeparator));
         // make the book
         ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
-        BookMeta meta = (BookMeta) book.getItemMeta();
-        String[] title = title_reward.split(" - ");
-        assert meta != null;
-        meta.setTitle(title[0]);
-        meta.setAuthor(author);
-        meta.setPages(pages);
-        book.setItemMeta(meta);
+        BookMeta bookMeta = (BookMeta) book.getItemMeta();
+        String[] title = bookTitle.split(" - ");
+        assert bookMeta != null;
+        bookMeta.setTitle(title[0]);
+        bookMeta.setAuthor(author);
+        bookMeta.setPages(pages);
+        book.setItemMeta(bookMeta);
         // put the book in the player's inventory
-        Inventory inv = p.getInventory();
-        inv.addItem(book);
-        p.updateInventory();
-        TardisMessage.send(p, "BOOK_RECEIVE", name);
+        Inventory inventory = player.getInventory();
+        inventory.addItem(book);
+        player.updateInventory();
+        TardisMessage.send(player, "BOOK_RECEIVE", name);
     }
 }

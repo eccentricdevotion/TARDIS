@@ -22,7 +22,7 @@ import me.eccentric_nz.tardis.ars.TardisArsMethods;
 import me.eccentric_nz.tardis.ars.TardisArsSlot;
 import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
 import me.eccentric_nz.tardis.database.resultset.ResultSetArs;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.travel.TardisDoorLocation;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -76,7 +76,7 @@ public class TardisInteriorPositioning {
      */
     public static int getTARDISIdFromLocation(Location location) {
         int tips = getTIPSSlot(location);
-        ResultSetTardisID rs = new ResultSetTardisID(TardisPlugin.plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(TardisPlugin.plugin);
         if (rs.fromTIPSSlot(tips)) {
             return rs.getTardisId();
         } else {

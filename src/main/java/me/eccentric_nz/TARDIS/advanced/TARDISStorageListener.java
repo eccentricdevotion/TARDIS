@@ -43,7 +43,7 @@ import java.util.*;
 
 /**
  * Banshee Circuits were components of TARDISes, emergency defence mechanisms used as a last resort when all other
- * systems had failed. They allowed a tardis to use whatever resources were available to ensure the survival of the ship
+ * systems had failed. They allowed a TARDIS to use whatever resources were available to ensure the survival of the ship
  * and its crew.
  *
  * @author eccentric_nz
@@ -51,48 +51,48 @@ import java.util.*;
 public class TardisStorageListener extends TardisMenuListener implements Listener {
 
     private final TardisPlugin plugin;
-    private final List<String> inv_titles = new ArrayList<>();
-    private final List<Material> onlythese = new ArrayList<>();
+    private final List<String> invTitles = new ArrayList<>();
+    private final List<Material> onlyThese = new ArrayList<>();
 
     public TardisStorageListener(TardisPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
-        for (Storage s : Storage.values()) {
-            inv_titles.add(s.getTitle());
+        for (Storage storage : Storage.values()) {
+            invTitles.add(storage.getTitle());
         }
-        for (DiskCircuit dc : DiskCircuit.values()) {
-            if (!onlythese.contains(dc.getMaterial())) {
-                onlythese.add(dc.getMaterial());
+        for (DiskCircuit diskCircuit : DiskCircuit.values()) {
+            if (!onlyThese.contains(diskCircuit.getMaterial())) {
+                onlyThese.add(diskCircuit.getMaterial());
             }
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onDiskStorageClose(InventoryCloseEvent event) {
-        InventoryView view = event.getView();
-        String title = view.getTitle();
-        if (inv_titles.contains(title)) {
+        InventoryView inventoryView = event.getView();
+        String title = inventoryView.getTitle();
+        if (invTitles.contains(title)) {
             // which inventory screen is it?
             String[] split = title.split(" ");
-            String tmp = split[0].toUpperCase(Locale.ENGLISH);
+            String temp = split[0].toUpperCase(Locale.ENGLISH);
             if (split.length > 2) {
-                tmp = tmp + "_" + split[2];
+                temp = temp + "_" + split[2];
             }
-            Storage store = Storage.valueOf(tmp);
+            Storage store = Storage.valueOf(temp);
             saveCurrentStorage(event.getInventory(), store.getTable(), (Player) event.getPlayer());
-        } else if (!title.equals(ChatColor.DARK_RED + "tardis Console") && !title.equals(ChatColor.DARK_RED + "Handles Program")) {
+        } else if (!title.equals(ChatColor.DARK_RED + "TARDOS Console") && !title.equals(ChatColor.DARK_RED + "Handles Program")) {
             // scan the inventory for area disks and spit them out
             for (int i = 0; i < event.getInventory().getSize(); i++) {
-                ItemStack stack = view.getItem(i);
-                if (stack != null && stack.getType().equals(Material.MUSIC_DISC_BLOCKS) && stack.hasItemMeta()) {
-                    ItemMeta ims = stack.getItemMeta();
-                    assert ims != null;
-                    if (ims.hasDisplayName() && ims.getDisplayName().equals("Area Storage Disk")) {
-                        Player p = (Player) event.getPlayer();
-                        Location loc = p.getLocation();
-                        Objects.requireNonNull(loc.getWorld()).dropItemNaturally(loc, stack);
-                        view.setItem(i, new ItemStack(Material.AIR));
-                        TardisMessage.send(p, "ADV_NO_STORE");
+                ItemStack itemStack = inventoryView.getItem(i);
+                if (itemStack != null && itemStack.getType().equals(Material.MUSIC_DISC_BLOCKS) && itemStack.hasItemMeta()) {
+                    ItemMeta itemMeta = itemStack.getItemMeta();
+                    assert itemMeta != null;
+                    if (itemMeta.hasDisplayName() && itemMeta.getDisplayName().equals("Area Storage Disk")) {
+                        Player player = (Player) event.getPlayer();
+                        Location location = player.getLocation();
+                        Objects.requireNonNull(location.getWorld()).dropItemNaturally(location, itemStack);
+                        inventoryView.setItem(i, new ItemStack(Material.AIR));
+                        TardisMessage.send(player, "ADV_NO_STORE");
                     }
                 }
             }
@@ -101,9 +101,9 @@ public class TardisStorageListener extends TardisMenuListener implements Listene
 
     @EventHandler(ignoreCancelled = true)
     public void onDiskStorageInteract(InventoryClickEvent event) {
-        InventoryView view = event.getView();
-        String title = view.getTitle();
-        if (!inv_titles.contains(title)) {
+        InventoryView inventoryView = event.getView();
+        String title = inventoryView.getTitle();
+        if (!invTitles.contains(title)) {
             return;
         }
         int slot = event.getRawSlot();
@@ -114,87 +114,87 @@ public class TardisStorageListener extends TardisMenuListener implements Listene
         // get the storage record
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
-        ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
-        if (rs.resultSet()) {
+        ResultSetDiskStorage resultSetDiskStorage = new ResultSetDiskStorage(plugin, where);
+        if (resultSetDiskStorage.resultSet()) {
             // which inventory screen is it?
             String[] split = title.split(" ");
-            String tmp = split[0].toUpperCase(Locale.ENGLISH);
+            String temp = split[0].toUpperCase(Locale.ENGLISH);
             if (split.length > 2) {
-                tmp = tmp + "_" + split[2];
+                temp = temp + "_" + split[2];
             }
-            Storage store = Storage.valueOf(tmp);
+            Storage storage = Storage.valueOf(temp);
             if (slot < 6 || slot == 18 || slot == 26) {
-                saveCurrentStorage(event.getClickedInventory(), store.getTable(), player);
+                saveCurrentStorage(event.getClickedInventory(), storage.getTable(), player);
             }
             switch (slot) {
                 case 0:
-                    if (!store.equals(Storage.SAVE_1)) {
+                    if (!storage.equals(Storage.SAVE_1)) {
                         // switch to saves
-                        loadInventory(rs.getSavesOne(), player, Storage.SAVE_1);
+                        loadInventory(resultSetDiskStorage.getSavesOne(), player, Storage.SAVE_1);
                     }
                     break;
                 case 1:
-                    if (!store.equals(Storage.AREA)) {
+                    if (!storage.equals(Storage.AREA)) {
                         // switch to areas
-                        loadInventory(rs.getAreas(), player, Storage.AREA);
+                        loadInventory(resultSetDiskStorage.getAreas(), player, Storage.AREA);
                     }
                     break;
                 case 2:
-                    if (!store.equals(Storage.PLAYER)) {
+                    if (!storage.equals(Storage.PLAYER)) {
                         // switch to players
-                        loadInventory(rs.getPlayers(), player, Storage.PLAYER);
+                        loadInventory(resultSetDiskStorage.getPlayers(), player, Storage.PLAYER);
                     }
                     break;
                 case 3:
-                    if (!store.equals(Storage.BIOME_1)) {
+                    if (!storage.equals(Storage.BIOME_1)) {
                         // switch to biomes
-                        loadInventory(rs.getBiomesOne(), player, Storage.BIOME_1);
+                        loadInventory(resultSetDiskStorage.getBiomesOne(), player, Storage.BIOME_1);
                     }
                     break;
                 case 4:
-                    if (!store.equals(Storage.PRESET_1)) {
+                    if (!storage.equals(Storage.PRESET_1)) {
                         // switch to presets
-                        loadInventory(rs.getPresetsOne(), player, Storage.PRESET_1);
+                        loadInventory(resultSetDiskStorage.getPresetsOne(), player, Storage.PRESET_1);
                     }
                     break;
                 case 5:
-                    if (!store.equals(Storage.CIRCUIT)) {
+                    if (!storage.equals(Storage.CIRCUIT)) {
                         // switch to circuits
-                        loadInventory(rs.getCircuits(), player, Storage.CIRCUIT);
+                        loadInventory(resultSetDiskStorage.getCircuits(), player, Storage.CIRCUIT);
                     }
                     break;
                 default:
                     break;
             }
-            switch (store) {
+            switch (storage) {
                 case BIOME_1:
                     if (slot == 26) {// switch to biome 2
-                        loadInventory(rs.getBiomesTwo(), player, Storage.BIOME_2);
+                        loadInventory(resultSetDiskStorage.getBiomesTwo(), player, Storage.BIOME_2);
                     }
                     break;
                 case BIOME_2:
                     if (slot == 18) {// switch to biome 1
-                        loadInventory(rs.getBiomesOne(), player, Storage.BIOME_1);
+                        loadInventory(resultSetDiskStorage.getBiomesOne(), player, Storage.BIOME_1);
                     }
                     break;
                 case PRESET_1:
                     if (slot == 26) {// switch to preset 2
-                        loadInventory(rs.getPresetsTwo(), player, Storage.PRESET_2);
+                        loadInventory(resultSetDiskStorage.getPresetsTwo(), player, Storage.PRESET_2);
                     }
                     break;
                 case PRESET_2:
                     if (slot == 18) {// switch to preset 1
-                        loadInventory(rs.getPresetsOne(), player, Storage.PRESET_1);
+                        loadInventory(resultSetDiskStorage.getPresetsOne(), player, Storage.PRESET_1);
                     }
                     break;
                 case SAVE_1:
                     if (slot == 26) {// switch to save 2
-                        loadInventory(rs.getSavesTwo(), player, Storage.SAVE_2);
+                        loadInventory(resultSetDiskStorage.getSavesTwo(), player, Storage.SAVE_2);
                     }
                     break;
                 case SAVE_2:
                     if (slot == 18) {// switch to save 1
-                        loadInventory(rs.getSavesOne(), player, Storage.SAVE_1);
+                        loadInventory(resultSetDiskStorage.getSavesOne(), player, Storage.SAVE_1);
                     }
                     break;
                 default: // no extra pages
@@ -205,93 +205,93 @@ public class TardisStorageListener extends TardisMenuListener implements Listene
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerDropAreaDisk(PlayerDropItemEvent event) {
-        ItemStack stack = event.getItemDrop().getItemStack();
-        if (stack.getType().equals(Material.MUSIC_DISC_BLOCKS) && stack.hasItemMeta()) {
-            ItemMeta ims = stack.getItemMeta();
-            assert ims != null;
-            if (ims.hasDisplayName() && ims.getDisplayName().equals("Area Storage Disk")) {
+        ItemStack itemStack = event.getItemDrop().getItemStack();
+        if (itemStack.getType().equals(Material.MUSIC_DISC_BLOCKS) && itemStack.hasItemMeta()) {
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            assert itemMeta != null;
+            if (itemMeta.hasDisplayName() && itemMeta.getDisplayName().equals("Area Storage Disk")) {
                 event.setCancelled(true);
-                Player p = event.getPlayer();
-                TardisMessage.send(p, "ADV_NO_DROP");
+                Player player = event.getPlayer();
+                TardisMessage.send(player, "ADV_NO_DROP");
             }
         }
     }
 
-    private void saveCurrentStorage(Inventory inv, String column, Player p) {
+    private void saveCurrentStorage(Inventory inventory, String column, Player player) {
         // loop through inventory contents and remove any items that are not disks or circuits
         for (int i = 27; i < 54; i++) {
-            ItemStack is = inv.getItem(i);
-            if (is != null) {
-                if (!onlythese.contains(is.getType())) {
-                    Objects.requireNonNull(p.getLocation().getWorld()).dropItemNaturally(p.getLocation(), is);
-                    inv.setItem(i, new ItemStack(Material.AIR));
+            ItemStack itemStack = inventory.getItem(i);
+            if (itemStack != null) {
+                if (!onlyThese.contains(itemStack.getType())) {
+                    Objects.requireNonNull(player.getLocation().getWorld()).dropItemNaturally(player.getLocation(), itemStack);
+                    inventory.setItem(i, new ItemStack(Material.AIR));
                 }
             }
         }
-        String serialized = TardisSerializeInventory.itemStacksToString(inv.getContents());
+        String serialized = TardisInventorySerializer.itemStacksToString(inventory.getContents());
         HashMap<String, Object> set = new HashMap<>();
         set.put(column, serialized);
         HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", p.getUniqueId().toString());
+        where.put("uuid", player.getUniqueId().toString());
         plugin.getQueryFactory().doUpdate("storage", set, where);
     }
 
-    private void loadInventory(String serialized, Player p, Storage s) {
+    private void loadInventory(String serialized, Player player, Storage storage) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            ItemStack[] stack = null;
+            ItemStack[] itemStacks = null;
             try {
                 if (!serialized.isEmpty()) {
-                    if (s.equals(Storage.AREA)) {
-                        stack = TardisSerializeInventory.itemStacksFromString(new TardisAreaDisks(plugin).checkDisksForNewAreas(p));
+                    if (storage.equals(Storage.AREA)) {
+                        itemStacks = TardisInventorySerializer.itemStacksFromString(new TardisAreaDisks(plugin).checkDisksForNewAreas(player));
                     } else {
-                        stack = TardisSerializeInventory.itemStacksFromString(serialized);
+                        itemStacks = TardisInventorySerializer.itemStacksFromString(serialized);
                     }
-                } else if (s.equals(Storage.AREA)) {
-                    stack = new TardisAreaDisks(plugin).makeDisks(p);
+                } else if (storage.equals(Storage.AREA)) {
+                    itemStacks = new TardisAreaDisks(plugin).makeDisks(player);
                 } else {
-                    stack = TardisSerializeInventory.itemStacksFromString(s.getEmpty());
+                    itemStacks = TardisInventorySerializer.itemStacksFromString(storage.getEmpty());
                 }
-                for (ItemStack is : stack) {
-                    if (is != null && is.hasItemMeta()) {
-                        ItemMeta im = is.getItemMeta();
-                        assert im != null;
-                        if (im.hasDisplayName()) {
-                            if (is.getType().equals(Material.FILLED_MAP)) {
-                                GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
-                                if (glowstone != null) {
-                                    im.setCustomModelData(glowstone.getCustomModelData());
-                                    is.setType(Material.GLOWSTONE_DUST);
-                                    is.setItemMeta(im);
+                for (ItemStack itemStack : itemStacks) {
+                    if (itemStack != null && itemStack.hasItemMeta()) {
+                        ItemMeta itemMeta = itemStack.getItemMeta();
+                        assert itemMeta != null;
+                        if (itemMeta.hasDisplayName()) {
+                            if (itemStack.getType().equals(Material.FILLED_MAP)) {
+                                GlowstoneCircuit glowstoneCircuit = GlowstoneCircuit.getByName().get(itemMeta.getDisplayName());
+                                if (glowstoneCircuit != null) {
+                                    itemMeta.setCustomModelData(glowstoneCircuit.getCustomModelData());
+                                    itemStack.setType(Material.GLOWSTONE_DUST);
+                                    itemStack.setItemMeta(itemMeta);
                                 }
                             } else {
-                                if (TardisStaticUtils.isMusicDisk(is)) {
-                                    im.setCustomModelData(10000001);
-                                } else if (is.getType().equals(Material.LIME_WOOL)) {
-                                    im.setCustomModelData(86);
-                                    is.setType(Material.BOWL);
-                                    is.setItemMeta(im);
-                                } else if (is.getType().equals(Material.RED_WOOL)) {
-                                    im.setCustomModelData(87);
-                                    is.setType(Material.BOWL);
-                                    is.setItemMeta(im);
-                                } else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasCustomModelData() && im.getDisplayName().equals("Circuits")) {
-                                    im.setCustomModelData(10001985);
+                                if (TardisStaticUtils.isMusicDisk(itemStack)) {
+                                    itemMeta.setCustomModelData(10000001);
+                                } else if (itemStack.getType().equals(Material.LIME_WOOL)) {
+                                    itemMeta.setCustomModelData(86);
+                                    itemStack.setType(Material.BOWL);
+                                    itemStack.setItemMeta(itemMeta);
+                                } else if (itemStack.getType().equals(Material.RED_WOOL)) {
+                                    itemMeta.setCustomModelData(87);
+                                    itemStack.setType(Material.BOWL);
+                                    itemStack.setItemMeta(itemMeta);
+                                } else if (itemStack.getType().equals(Material.GLOWSTONE_DUST) && !itemMeta.hasCustomModelData() && itemMeta.getDisplayName().equals("Circuits")) {
+                                    itemMeta.setCustomModelData(10001985);
                                 }
-                                is.setItemMeta(im);
+                                itemStack.setItemMeta(itemMeta);
                             }
                         }
                     }
                 }
-            } catch (IOException ex) {
-                plugin.debug("Could not get inventory from database! " + ex);
+            } catch (IOException ioException) {
+                plugin.debug("Could not get inventory from database! " + ioException);
             }
             // close inventory
-            p.closeInventory();
-            if (stack != null) {
+            player.closeInventory();
+            if (itemStacks != null) {
                 // open new inventory
-                Inventory inv = plugin.getServer().createInventory(p, 54, s.getTitle());
-                inv.setContents(stack);
-                p.openInventory(inv);
+                Inventory inventory = plugin.getServer().createInventory(player, 54, storage.getTitle());
+                inventory.setContents(itemStacks);
+                player.openInventory(inventory);
             }
         }, 1L);
     }

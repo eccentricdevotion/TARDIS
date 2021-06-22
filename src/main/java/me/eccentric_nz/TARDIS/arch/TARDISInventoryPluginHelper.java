@@ -46,7 +46,7 @@ public class TardisInventoryPluginHelper implements Listener {
     public void onPlayerWorldChangeLOWEST(PlayerChangedWorldEvent event) {
 
         Player player = event.getPlayer();
-        boolean shouldSwitch = switch (plugin.getInvManager()) {
+        boolean shouldSwitch = switch (plugin.getInventoryManager()) {
             case MULTIVERSE -> !TardisMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
             case PER_WORLD -> !TardisPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
             default ->
@@ -70,7 +70,7 @@ public class TardisInventoryPluginHelper implements Listener {
     public void onPlayerWorldChangeNORMAL(PlayerChangedWorldEvent event) {
 
         Player player = event.getPlayer();
-        boolean shouldSwitch = switch (plugin.getInvManager()) {
+        boolean shouldSwitch = switch (plugin.getInventoryManager()) {
             case MULTIVERSE -> !TardisMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
             case PER_WORLD -> !TardisPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
             default ->

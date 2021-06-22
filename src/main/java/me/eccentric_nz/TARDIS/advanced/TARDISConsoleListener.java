@@ -47,13 +47,13 @@ import java.util.*;
 public class TardisConsoleListener implements Listener {
 
     private final TardisPlugin plugin;
-    private final List<Material> onlythese = new ArrayList<>();
+    private final List<Material> onlyThese = new ArrayList<>();
 
     public TardisConsoleListener(TardisPlugin plugin) {
         this.plugin = plugin;
-        for (DiskCircuit dc : DiskCircuit.values()) {
-            if (!onlythese.contains(dc.getMaterial())) {
-                onlythese.add(dc.getMaterial());
+        for (DiskCircuit diskCircuit : DiskCircuit.values()) {
+            if (!onlyThese.contains(diskCircuit.getMaterial())) {
+                onlyThese.add(diskCircuit.getMaterial());
             }
         }
     }
@@ -63,132 +63,132 @@ public class TardisConsoleListener implements Listener {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        Player p = event.getPlayer();
-        UUID uuid = p.getUniqueId();
-        if (!TardisPermission.hasPermission(p, "tardis.advanced")) {
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+        if (!TardisPermission.hasPermission(player, "tardis.advanced")) {
             return;
         }
         if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {
             return;
         }
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            Block b = event.getClickedBlock();
-            if (b != null && (b.getType().equals(Material.JUKEBOX) || b.getType().equals(Material.MUSHROOM_STEM))) {
+            Block block = event.getClickedBlock();
+            if (block != null && (block.getType().equals(Material.JUKEBOX) || block.getType().equals(Material.MUSHROOM_STEM))) {
                 // is it a tardis console?
-                HashMap<String, Object> wherec = new HashMap<>();
-                wherec.put("location", b.getLocation().toString());
-                wherec.put("type", 15);
-                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
-                if (rsc.resultSet()) {
+                HashMap<String, Object> whereConsole = new HashMap<>();
+                whereConsole.put("location", block.getLocation().toString());
+                whereConsole.put("type", 15);
+                ResultSetControls resultSetControls = new ResultSetControls(plugin, whereConsole, false);
+                if (resultSetControls.resultSet()) {
                     event.setCancelled(true);
                     // update block if it's not MUSHROOM_STEM
-                    if (b.getType().equals(Material.JUKEBOX)) {
+                    if (block.getType().equals(Material.JUKEBOX)) {
                         BlockData mushroom = plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(50));
-                        b.setBlockData(mushroom);
+                        block.setBlockData(mushroom);
                     }
-                    int id = rsc.getTardisId();
+                    int id = resultSetControls.getTardisId();
                     // determine key item
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
+                    ResultSetPlayerPrefs resultSetPlayerPrefs = new ResultSetPlayerPrefs(plugin, uuid.toString());
                     String key;
-                    if (rsp.resultSet()) {
-                        key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
+                    if (resultSetPlayerPrefs.resultSet()) {
+                        key = (!resultSetPlayerPrefs.getKey().isEmpty()) ? resultSetPlayerPrefs.getKey() : plugin.getConfig().getString("preferences.key");
                     } else {
                         key = plugin.getConfig().getString("preferences.key");
                     }
-                    onlythese.add(Material.valueOf(key));
+                    onlyThese.add(Material.valueOf(key));
                     ItemStack disk = event.getPlayer().getInventory().getItemInMainHand();
-                    if (onlythese.contains(disk.getType()) && disk.hasItemMeta() || Objects.equals(key, "AIR")) {
+                    if (onlyThese.contains(disk.getType()) && disk.hasItemMeta() || Objects.equals(key, "AIR")) {
                         // only the time lord of this tardis
-                        ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
-                        if (!rs.fromBoth(id, uuid.toString())) {
-                            TardisMessage.send(p, "NOT_OWNER");
+                        ResultSetTardisPowered resultSetTardisPowered = new ResultSetTardisPowered(plugin);
+                        if (!resultSetTardisPowered.fromBoth(id, uuid.toString())) {
+                            TardisMessage.send(player, "NOT_OWNER");
                             return;
                         }
-                        if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered()) {
-                            TardisMessage.send(p, "POWER_DOWN");
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !resultSetTardisPowered.isPowered()) {
+                            TardisMessage.send(player, "POWER_DOWN");
                             return;
                         }
-                        Inventory inv = plugin.getServer().createInventory(p, 9, ChatColor.DARK_RED + "tardis Console");
+                        Inventory inventory = plugin.getServer().createInventory(player, 9, ChatColor.DARK_RED + "tardis Console");
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", uuid.toString());
-                        ResultSetDiskStorage rsds = new ResultSetDiskStorage(plugin, where);
-                        if (rsds.resultSet()) {
-                            String console = rsds.getConsole();
+                        ResultSetDiskStorage resultSetDiskStorage = new ResultSetDiskStorage(plugin, where);
+                        if (resultSetDiskStorage.resultSet()) {
+                            String console = resultSetDiskStorage.getConsole();
                             if (!console.isEmpty()) {
                                 try {
-                                    ItemStack[] stack = TardisSerializeInventory.itemStacksFromString(console);
-                                    for (ItemStack circuit : stack) {
+                                    ItemStack[] itemStacks = TardisInventorySerializer.itemStacksFromString(console);
+                                    for (ItemStack circuit : itemStacks) {
                                         if (circuit != null && circuit.hasItemMeta()) {
-                                            ItemMeta cm = circuit.getItemMeta();
+                                            ItemMeta itemMeta = circuit.getItemMeta();
                                             if (circuit.getType().equals(Material.FILLED_MAP)) {
-                                                assert cm != null;
-                                                if (cm.hasDisplayName()) {
-                                                    GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(cm.getDisplayName());
-                                                    if (glowstone != null) {
+                                                assert itemMeta != null;
+                                                if (itemMeta.hasDisplayName()) {
+                                                    GlowstoneCircuit glowstoneCircuit = GlowstoneCircuit.getByName().get(itemMeta.getDisplayName());
+                                                    if (glowstoneCircuit != null) {
                                                         circuit.setType(Material.GLOWSTONE_DUST);
                                                     }
                                                 }
                                             } else if (TardisStaticUtils.isMusicDisk(circuit)) {
-                                                assert cm != null;
-                                                cm.setCustomModelData(10000001);
-                                                circuit.setItemMeta(cm);
+                                                assert itemMeta != null;
+                                                itemMeta.setCustomModelData(10000001);
+                                                circuit.setItemMeta(itemMeta);
                                             }
                                         }
                                     }
-                                    inv.setContents(stack);
-                                } catch (IOException ex) {
+                                    inventory.setContents(itemStacks);
+                                } catch (IOException ioException) {
                                     plugin.debug("Could not read console from database!");
                                 }
                             }
                         } else {
                             // create new storage record
-                            HashMap<String, Object> setstore = new HashMap<>();
-                            setstore.put("uuid", uuid.toString());
-                            setstore.put("tardis_id", id);
-                            plugin.getQueryFactory().doInsert("storage", setstore);
+                            HashMap<String, Object> setStorage = new HashMap<>();
+                            setStorage.put("uuid", uuid.toString());
+                            setStorage.put("tardis_id", id);
+                            plugin.getQueryFactory().doInsert("storage", setStorage);
                         }
                         // open gui
-                        p.openInventory(inv);
-                    } else if (disk.equals(Material.MUSIC_DISC_FAR)) {
-                        ItemMeta im = disk.getItemMeta();
-                        assert im != null;
-                        if (im.hasDisplayName() && im.getDisplayName().equals("Authorised Control Disk")) {
+                        player.openInventory(inventory);
+                    } else if (disk.getType().equals(Material.MUSIC_DISC_FAR)) {
+                        ItemMeta itemMeta = disk.getItemMeta();
+                        assert itemMeta != null;
+                        if (itemMeta.hasDisplayName() && itemMeta.getDisplayName().equals("Authorised Control Disk")) {
                             // get the UUID from the disk
-                            if (im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
-                                UUID diskUuid = im.getPersistentDataContainer().get(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID());
+                            if (itemMeta.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
+                                UUID diskUuid = itemMeta.getPersistentDataContainer().get(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID());
                                 // is the disk uuid the same as the tardis uuid?
                                 HashMap<String, Object> where = new HashMap<>();
                                 where.put("tardis_id", id);
-                                ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 2);
-                                if (rst.resultSet() && rst.getTardis().getUuid() == diskUuid) {
-                                    if (uuid == rst.getTardis().getUuid()) {
+                                ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, where, "", false, 2);
+                                if (resultSetTardis.resultSet() && resultSetTardis.getTardis().getUuid() == diskUuid) {
+                                    if (uuid == resultSetTardis.getTardis().getUuid()) {
                                         // time lords can't use their own disks!
-                                        TardisMessage.send(p, "SECURITY_TIMELORD");
+                                        TardisMessage.send(player, "SECURITY_TIMELORD");
                                         return;
                                     }
                                     // process disk
-                                    TardisAuthorisedControlDisk tacd = new TardisAuthorisedControlDisk(plugin, rst.getTardis().getUuid(), im.getLore(), id, p, rst.getTardis().getEps(), rst.getTardis().getCreeper());
-                                    String processed = tacd.process();
+                                    TardisAuthorisedControlDisk tardisAuthorisedControlDisk = new TardisAuthorisedControlDisk(plugin, resultSetTardis.getTardis().getUuid(), itemMeta.getLore(), id, player, resultSetTardis.getTardis().getEps(), resultSetTardis.getTardis().getCreeper());
+                                    String processed = tardisAuthorisedControlDisk.process();
                                     if (processed.equals("success")) {
                                         // success remove disk from hand
-                                        int amount = p.getInventory().getItemInMainHand().getAmount();
+                                        int amount = player.getInventory().getItemInMainHand().getAmount();
                                         int adjusted = amount - 1;
                                         if (adjusted > 0) {
-                                            p.getInventory().getItemInMainHand().setAmount(adjusted);
+                                            player.getInventory().getItemInMainHand().setAmount(adjusted);
                                         } else {
-                                            p.getInventory().setItemInMainHand(null);
+                                            player.getInventory().setItemInMainHand(null);
                                         }
-                                        p.updateInventory();
-                                        TardisMessage.send(p, "SECURITY_SUCCESS");
+                                        player.updateInventory();
+                                        TardisMessage.send(player, "SECURITY_SUCCESS");
                                     } else {
                                         // error message player
-                                        TardisMessage.send(p, "SECURITY_ERROR", processed);
+                                        TardisMessage.send(player, "SECURITY_ERROR", processed);
                                     }
                                 }
                             }
                         }
                     } else {
-                        TardisMessage.send(p, "ADV_OPEN");
+                        TardisMessage.send(player, "ADV_OPEN");
                     }
                 }
             }

@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.sonic.actions;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.control.TardisAtmosphericExcitation;
 import me.eccentric_nz.tardis.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -41,7 +41,7 @@ public class TardisSonicAtmospheric {
         String line2 = ChatColor.stripColor(sign.getLine(2));
         if (isPresetSign(plugin, line0, line1, line2)) {
             // get tardis id
-            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            ResultSetTardisId rs = new ResultSetTardisId(plugin);
             if (rs.fromUUID(player.getUniqueId().toString())) {
                 int tid = rs.getTardisId();
                 Block blockbehind = null;

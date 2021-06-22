@@ -74,7 +74,7 @@ public class TardisSpace {
             String inventory_group = plugin.getConfig().getString("creation.inventory_group");
             assert inventory_group != null;
             if (!inventory_group.equals("0")) {
-                if (plugin.getInvManager() == InventoryManager.MULTIVERSE) {
+                if (plugin.getInventoryManager() == InventoryManager.MULTIVERSE) {
                     MultiverseInventories mi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
                     assert mi != null;
                     WorldGroup wgp = mi.getGroupManager().getGroup(inventory_group);

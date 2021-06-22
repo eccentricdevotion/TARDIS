@@ -67,7 +67,7 @@ public class TardisItemFrameListener implements Listener {
                 Control control = Control.valueOf(plugin.getTrackerKeeper().getPlayers().get(uuid).toUpperCase());
                 if (control.equals(Control.DIRECTION) || control.equals(Control.FRAME) || control.equals(Control.ROTOR) || control.equals(Control.MAP)) {
                     // check they have a tardis
-                    ResultSetTardisID rst = new ResultSetTardisID(plugin);
+                    ResultSetTardisId rst = new ResultSetTardisId(plugin);
                     if (!rst.fromUUID(uuid.toString())) {
                         TardisMessage.send(player, "NO_TARDIS");
                         return;
@@ -298,7 +298,7 @@ public class TardisItemFrameListener implements Listener {
                         return;
                     }
                     // must have a tardis
-                    ResultSetTardisID rst = new ResultSetTardisID(plugin);
+                    ResultSetTardisId rst = new ResultSetTardisId(plugin);
                     if (rst.fromUUID(uuid.toString())) {
                         // check if they have a handles block
                         HashMap<String, Object> wherec = new HashMap<>();
@@ -355,7 +355,7 @@ public class TardisItemFrameListener implements Listener {
                         }, 40L);
                     } else {
                         // is it the players handles?
-                        ResultSetTardisID rst = new ResultSetTardisID(plugin);
+                        ResultSetTardisId rst = new ResultSetTardisId(plugin);
                         if (rst.fromUUID(player.getUniqueId().toString()) && rsc.getTardisId() == rst.getTardisId()) {
                             // remove control record
                             HashMap<String, Object> wherec = new HashMap<>();

@@ -141,7 +141,7 @@ public class TardisMinecartListener implements Listener {
                         break;
                 }
                 if (data != null && data.length > 3) {
-                    boolean shouldPrevent = switch (plugin.getInvManager()) {
+                    boolean shouldPrevent = switch (plugin.getInventoryManager()) {
                         case MULTIVERSE -> (!TardisMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[0]));
                         case PER_WORLD -> (!TardisPerWorldInventoryChecker.checkWorldsCanShare(bw, data[0]));
                         default -> false;

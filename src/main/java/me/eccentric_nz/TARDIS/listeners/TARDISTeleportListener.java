@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.listeners;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -68,7 +68,7 @@ public class TardisTeleportListener implements Listener {
                 // stop tracking telepaths
                 plugin.getTrackerKeeper().getTelepaths().remove(p.getUniqueId());
             } else if (world_to.contains("tardis") && !cause.equals(TeleportCause.PLUGIN)) {
-                ResultSetTardisID rsid = new ResultSetTardisID(plugin);
+                ResultSetTardisId rsid = new ResultSetTardisId(plugin);
                 // if TIPS determine tardis_id from player location
                 if (plugin.getConfig().getBoolean("creation.default_world")) {
                     if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && p.hasPermission("tardis.create_world")) {

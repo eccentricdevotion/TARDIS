@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.rooms;
 import me.eccentric_nz.tardis.TardisConstants;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.enumeration.CardinalDirection;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Effect;
@@ -100,7 +100,7 @@ public class TardisJettisonSeeder implements Listener {
                     // get clicked block location
                     Location l = block.getRelative(facing, 3).getLocation();
                     // get the tardis id
-                    ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                    ResultSetTardisId rs = new ResultSetTardisId(plugin);
                     if (rs.fromUUID(player.getUniqueId().toString())) {
                         int id = rs.getTardisId();
                         TardisRoomRemover remover = new TardisRoomRemover(plugin, r, l, d, id);

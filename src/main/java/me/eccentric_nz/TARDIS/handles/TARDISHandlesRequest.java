@@ -65,7 +65,7 @@ public class TardisHandlesRequest {
             return;
         }
         // must have a TARDIS
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (rs.fromUUID(uuid.toString())) {
             int id = rs.getTardisId();
             // check for placed Handles

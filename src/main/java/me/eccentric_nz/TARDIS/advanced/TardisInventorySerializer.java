@@ -28,40 +28,40 @@ import java.io.IOException;
 /**
  * @author original code by comphenix - https://gist.github.com/aadnk/8138186
  */
-public class TardisSerializeInventory {
+public class TardisInventorySerializer {
 
-    public static String itemStacksToString(ItemStack[] stack) {
+    public static String itemStacksToString(ItemStack[] itemStacks) {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             // Write the size of the stack
             try (BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream)) {
                 // Write the size of the stack
-                dataOutput.writeInt(stack.length);
-                for (ItemStack is : stack) {
-                    dataOutput.writeObject(is);
+                dataOutput.writeInt(itemStacks.length);
+                for (ItemStack itemStack : itemStacks) {
+                    dataOutput.writeObject(itemStack);
                 }
                 // Serialize that array
             }
             return Base64Coder.encodeLines(outputStream.toByteArray());
-        } catch (IOException e) {
-            throw new IllegalStateException("Unable to save item stacks.", e);
+        } catch (IOException ioException) {
+            throw new IllegalStateException("Unable to save item stacks.", ioException);
         }
     }
 
     public static ItemStack[] itemStacksFromString(String data) throws IOException {
         try {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
-            ItemStack[] stack;
+            ItemStack[] itemStacks;
             try (BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream)) {
-                stack = new ItemStack[dataInput.readInt()];
+                itemStacks = new ItemStack[dataInput.readInt()];
                 // Read the serialized ItemStacks
-                for (int i = 0; i < stack.length; i++) {
-                    stack[i] = (ItemStack) dataInput.readObject();
+                for (int i = 0; i < itemStacks.length; i++) {
+                    itemStacks[i] = (ItemStack) dataInput.readObject();
                 }
             }
-            return stack;
-        } catch (ClassNotFoundException e) {
-            throw new IOException("Unable to decode class type.", e);
+            return itemStacks;
+        } catch (ClassNotFoundException classNotFoundException) {
+            throw new IOException("Unable to decode class type.", classNotFoundException);
         }
     }
 }

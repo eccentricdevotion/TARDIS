@@ -469,7 +469,7 @@ public class TardisFarmer {
                     }
                 }
                 if (bees.size() > 0 || farmtotal > 0 || horses.size() > 0 || villagers.size() > 0 || pets.size() > 0 || polarbears.size() > 0 || llamas.size() > 0 || parrots.size() > 0 || pandas.size() > 0 || rabbits.size() > 0 || fish != null || followers.size() > 0) {
-                    boolean canfarm = switch (plugin.getInvManager()) {
+                    boolean canfarm = switch (plugin.getInventoryManager()) {
                         case MULTIVERSE -> TardisMultiverseInventoriesChecker.checkWorldsCanShare(from, to);
                         case PER_WORLD -> TardisPerWorldInventoryChecker.checkWorldsCanShare(from, to);
                         default -> true;

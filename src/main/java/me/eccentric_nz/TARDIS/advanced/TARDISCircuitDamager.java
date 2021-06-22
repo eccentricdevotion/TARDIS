@@ -37,83 +37,83 @@ import java.util.Locale;
 public class TardisCircuitDamager {
 
     private final TardisPlugin plugin;
-    private final DiskCircuit circuit;
+    private final DiskCircuit diskCircuit;
     private final int id;
-    private final Player p;
-    private int uses_left;
+    private final Player player;
+    private int usesLeft;
 
-    public TardisCircuitDamager(TardisPlugin plugin, DiskCircuit circuit, int uses_left, int id, Player p) {
+    public TardisCircuitDamager(TardisPlugin plugin, DiskCircuit diskCircuit, int usesLeft, int id, Player player) {
         this.plugin = plugin;
-        this.circuit = circuit;
-        this.uses_left = uses_left;
+        this.diskCircuit = diskCircuit;
+        this.usesLeft = usesLeft;
         this.id = id;
-        this.p = p;
+        this.player = player;
     }
 
     public void damage() {
-        if (uses_left == 0) {
-            uses_left = plugin.getConfig().getInt("circuits.uses." + circuit.toString().toLowerCase(Locale.ENGLISH));
+        if (usesLeft == 0) {
+            usesLeft = plugin.getConfig().getInt("circuits.uses." + diskCircuit.toString().toLowerCase(Locale.ENGLISH));
         }
-        if ((uses_left - 1) <= 0) {
+        if ((usesLeft - 1) <= 0) {
             // destroy
-            setCircuitDamage(circuit.getName(), 0, true);
-            TardisMessage.send(p, "CIRCUIT_VAPOUR", circuit.getName());
+            setCircuitDamage(diskCircuit.getName(), 0, true);
+            TardisMessage.send(player, "CIRCUIT_VAPOUR", diskCircuit.getName());
         } else {
             // decrement
-            int decremented = uses_left - 1;
+            int decremented = usesLeft - 1;
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                setCircuitDamage(circuit.getName(), decremented, false);
-                TardisMessage.send(p, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));
+                setCircuitDamage(diskCircuit.getName(), decremented, false);
+                TardisMessage.send(player, "CIRCUIT_USES", diskCircuit.getName(), String.format("%d", decremented));
             }, 5L);
         }
     }
 
-    private void setCircuitDamage(String c, int decremented, boolean destroy) {
+    private void setCircuitDamage(String circuitName, int decremented, boolean destroy) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
-        if (rs.resultSet()) {
-            ItemStack[] items;
+        ResultSetDiskStorage resultSetDiskStorage = new ResultSetDiskStorage(plugin, where);
+        if (resultSetDiskStorage.resultSet()) {
+            ItemStack[] itemStacks;
             ItemStack[] clone = new ItemStack[9];
             int i = 0;
             try {
-                items = TardisSerializeInventory.itemStacksFromString(rs.getConsole());
-                for (ItemStack is : items) {
-                    if (is != null && is.hasItemMeta()) {
-                        ItemMeta im = is.getItemMeta();
-                        assert im != null;
-                        if (im.hasDisplayName()) {
-                            String dn = im.getDisplayName();
-                            if (dn.equals(c)) {
+                itemStacks = TardisInventorySerializer.itemStacksFromString(resultSetDiskStorage.getConsole());
+                for (ItemStack itemStack : itemStacks) {
+                    if (itemStack != null && itemStack.hasItemMeta()) {
+                        ItemMeta itemMeta = itemStack.getItemMeta();
+                        assert itemMeta != null;
+                        if (itemMeta.hasDisplayName()) {
+                            String displayName = itemMeta.getDisplayName();
+                            if (displayName.equals(circuitName)) {
                                 if (destroy) {
                                     clone[i] = null;
                                 } else {
                                     // set uses
-                                    List<String> lore = im.getLore();
+                                    List<String> lore = itemMeta.getLore();
                                     if (lore == null) {
                                         lore = Arrays.asList("Uses left", "");
                                     }
                                     String stripped = ChatColor.YELLOW + "" + decremented;
                                     lore.set(1, stripped);
-                                    im.setLore(lore);
-                                    is.setItemMeta(im);
-                                    clone[i] = is;
+                                    itemMeta.setLore(lore);
+                                    itemStack.setItemMeta(itemMeta);
+                                    clone[i] = itemStack;
                                 }
                             } else {
-                                clone[i] = is;
+                                clone[i] = itemStack;
                             }
                         }
                     }
                     i++;
                 }
-                String serialized = TardisSerializeInventory.itemStacksToString(clone);
+                String serialized = TardisInventorySerializer.itemStacksToString(clone);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("console", serialized);
-                HashMap<String, Object> wheret = new HashMap<>();
+                HashMap<String, Object> wheret = new HashMap<>(); // TODO Figure out how ED names these HashMap variables.
                 wheret.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("storage", set, wheret);
-            } catch (IOException ex) {
-                plugin.debug("Could not get console items: " + ex);
+            } catch (IOException ioException) {
+                plugin.debug("Could not get console items: " + ioException);
             }
         }
     }

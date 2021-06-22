@@ -21,7 +21,7 @@ import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.builders.TardisInteriorPositioning;
 import me.eccentric_nz.tardis.custommodeldata.GuiSaves;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDestinations;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -131,7 +131,7 @@ public class TardisSaveSignPageTwo {
             bucket.setItemMeta(delete);
             ItemStack own;
             // is it this player's tardis?
-            ResultSetTardisID rstid = new ResultSetTardisID(plugin);
+            ResultSetTardisId rstid = new ResultSetTardisId(plugin);
             if (rstid.fromUUID(player.getUniqueId().toString())) {
                 // add button to view own saves (if in another player's tardis)
                 if (rstid.getTardisId() != id) {

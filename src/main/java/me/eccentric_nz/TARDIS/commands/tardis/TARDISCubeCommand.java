@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.commands.tardis;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
@@ -40,7 +40,7 @@ class TardisCubeCommand {
     boolean whoHasCube(Player player) {
         // check they have tardis
         if (TardisPermission.hasPermission(player, "tardis.find")) {
-            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            ResultSetTardisId rs = new ResultSetTardisId(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 TardisMessage.send(player, "NO_TARDIS");
                 return true;

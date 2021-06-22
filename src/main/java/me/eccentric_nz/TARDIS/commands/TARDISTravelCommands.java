@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands;
 
 import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardis.advanced.TardisSerializeInventory;
+import me.eccentric_nz.tardis.advanced.TardisInventorySerializer;
 import me.eccentric_nz.tardis.api.Parameters;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.builders.BuildData;
@@ -447,11 +447,11 @@ public class TardisTravelCommands implements CommandExecutor {
                                 ResultSetDiskStorage rsb = new ResultSetDiskStorage(plugin, whereb);
                                 if (rsb.resultSet()) {
                                     try {
-                                        ItemStack[] disks1 = TardisSerializeInventory.itemStacksFromString(rsb.getBiomesOne());
+                                        ItemStack[] disks1 = TardisInventorySerializer.itemStacksFromString(rsb.getBiomesOne());
                                         if (TardisBiomeReaderListener.hasBiomeDisk(disks1, upper)) {
                                             hasBiomeDisk = true;
                                         } else {
-                                            ItemStack[] disks2 = TardisSerializeInventory.itemStacksFromString(rsb.getBiomesTwo());
+                                            ItemStack[] disks2 = TardisInventorySerializer.itemStacksFromString(rsb.getBiomesTwo());
                                             if (TardisBiomeReaderListener.hasBiomeDisk(disks2, upper)) {
                                                 hasBiomeDisk = true;
                                             }

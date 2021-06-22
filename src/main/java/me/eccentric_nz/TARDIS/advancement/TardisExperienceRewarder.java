@@ -37,117 +37,118 @@ import java.util.Arrays;
  * <p>
  * Credit to comphenix for further contributions: See http://forums.bukkit.org/threads/experiencemanager-was-experienceutils-make-giving-taking-exp-a-bit-more-intuitive.54450/page-3#post-1273622
  */
-class TardisXpRewarder {
+class TardisExperienceRewarder {
 
     private static final int HARD_MAX_LEVEL = 100000;
-    private static int[] xpTotalToReachLevel;
+    private static int[] experienceTotalToReachLevel;
 
     static {
         // 25 is an arbitrary value for the initial table size - the actual
         // value isn't critically important since the table is resized as needed.
-        initLookupTables(25);
+        initializeLookupTables(25);
     }
 
     private final WeakReference<Player> player;
     private final String playerName;
 
     /**
-     * Create a new XPKCalculator for the given player.
+     * Creates a new TardisExperienceRewarder for the given player.
      *
-     * @param player the player for this XPKCalculator object
+     * @param player the player for this TardisExperienceRewarder object
      * @throws IllegalArgumentException if the player is null
      */
-    TardisXpRewarder(Player player) {
+    TardisExperienceRewarder(Player player) {
         Validate.notNull(player, "Player cannot be null");
         this.player = new WeakReference<>(player);
         playerName = player.getName();
     }
 
     /**
-     * Initialize the XP lookup table. See http://minecraft.gamepedia.com/Experience
+     * Initializes the experience lookup table. See http://minecraft.gamepedia.com/Experience
      *
      * @param maxLevel The highest level handled by the lookup tables
      */
-    private static void initLookupTables(int maxLevel) {
-        xpTotalToReachLevel = new int[maxLevel];
+    private static void initializeLookupTables(int maxLevel) {
+        experienceTotalToReachLevel = new int[maxLevel];
 
-        for (int i = 0; i < xpTotalToReachLevel.length; i++) {
-            xpTotalToReachLevel[i] = i >= 30 ? (int) (3.5 * i * i - 151.5 * i + 2220) : i >= 16 ? (int) (1.5 * i * i - 29.5 * i + 360) : 17 * i;
+        for (int i = 0; i < experienceTotalToReachLevel.length; i++) {
+            experienceTotalToReachLevel[i] = i >= 30 ? (int) (3.5 * i * i - 151.5 * i + 2220) : i >= 16 ? (int) (1.5 * i * i - 29.5 * i + 360) : 17 * i;
         }
     }
 
     /**
-     * Calculate the level that the given XP quantity corresponds to, without using the lookup tables. This is needed if
-     * getLevelForExp() is called with an XP quantity beyond the range of the existing lookup tables.
+     * Calculates the level that the given experience quantity corresponds to, without using the lookup tables. This is needed if
+     * getLevelForExperience() is called with an experience quantity beyond the range of the existing lookup tables.
      *
-     * @param exp the amount of experience
+     * @param experience the amount of experience
      * @return the experience level
      */
-    private static int calculateLevelForExp(int exp) {
+    private static int calculateLevelForExp(int experience) {
         int level = 0;
-        int curExp = 7; // level 1
-        int incr = 10;
+        int currentExperience = 7; // level 1
+        int increment = 10;
 
-        while (curExp <= exp) {
-            curExp += incr;
+        while (currentExperience <= experience) {
+            currentExperience += increment;
             level++;
-            incr += (level % 2 == 0) ? 3 : 4;
+            increment += (level % 2 == 0) ? 3 : 4;
         }
         return level;
     }
 
     /**
-     * Get the Player associated with this XPKCalculator.
+     * Get the Player associated with this TardisExperienceRewarder.
      *
      * @return the Player object
      * @throws IllegalStateException if the player is no longer online
      */
     private Player getPlayer() {
-        Player p = player.get();
-        if (p == null) {
+        Player player = this.player.get();
+        if (player == null) {
             throw new IllegalStateException("Player " + playerName + " is not online");
         }
-        return p;
+        return player;
     }
 
     /**
      * Adjust the player's XP by the given amount in an intelligent fashion. Works around some of the non-intuitive
      * behaviour of the basic Bukkit player.giveExp() method.
      *
-     * @param amt Amount of XP, may be negative
+     * @param amount Amount of XP, may be negative
      */
-    void changeExp(int amt) {
-        changeExp((double) amt);
+    void changeExp(int amount) {
+        changeExp((double) amount);
     }
 
     /**
      * Adjust the player's XP by the given amount in an intelligent fashion. Works around some of the non-intuitive
      * behaviour of the basic Bukkit player.giveExp() method.
      *
-     * @param amt Amount of XP, may be negative
+     * @param amount Amount of XP, may be negative
      */
-    private void changeExp(double amt) {
-        setExp(getCurrentFractionalXP(), amt);
+    private void changeExp(double amount) {
+        setExp(getCurrentFractionalExp(), amount);
     }
 
-    private void setExp(double base, double amt) {
-        int xp = (int) Math.max(base + amt, 0);
+    private void setExp(double base, double amount) {
+        int xp = (int) Math.max(base + amount, 0);
 
-        Player p = getPlayer();
-        int curLvl = p.getLevel();
-        int newLvl = getLevelForExp(xp);
+        Player player = getPlayer();
+        int currentLevel = player.getLevel();
+        int newLevel = getLevelForExp(xp);
 
         // Increment level
-        if (curLvl != newLvl) {
-            p.setLevel(newLvl);
+        if (currentLevel != newLevel) {
+            player.setLevel(newLevel);
         }
         // Increment total experience - this should force the server to send an update packet
         if (xp > base) {
-            p.setTotalExperience(p.getTotalExperience() + xp - (int) base);
+            player.setTotalExperience(player.getTotalExperience() + xp - (int) base);
         }
 
-        double pct = (base - getXpForLevel(newLvl) + amt) / (double) (getXpNeededToLevelUp(newLvl));
-        p.setExp((float) pct);
+        // TODO Figure out what "pct" is.
+        double pct = (base - getXpForLevel(newLevel) + amount) / (double) (getXpNeededToLevelUp(newLevel));
+        player.setExp((float) pct);
     }
 
     /**
@@ -155,11 +156,11 @@ class TardisXpRewarder {
      *
      * @return The player's total XP with fractions.
      */
-    private double getCurrentFractionalXP() {
-        Player p = getPlayer();
+    private double getCurrentFractionalExp() {
+        Player player = getPlayer();
 
-        int lvl = p.getLevel();
-        return getXpForLevel(lvl) + (double) (getXpNeededToLevelUp(lvl) * p.getExp());
+        int lvl = player.getLevel();
+        return getXpForLevel(lvl) + (double) (getXpNeededToLevelUp(lvl) * player.getExp());
     }
 
     /**
@@ -173,13 +174,13 @@ class TardisXpRewarder {
         if (exp <= 0) {
             return 0;
         }
-        if (exp > xpTotalToReachLevel[xpTotalToReachLevel.length - 1]) {
+        if (exp > experienceTotalToReachLevel[experienceTotalToReachLevel.length - 1]) {
             // need to extend the lookup tables
             int newMax = calculateLevelForExp(exp) * 2;
             Validate.isTrue(newMax <= HARD_MAX_LEVEL, "Level for exp " + exp + " > hard max level " + HARD_MAX_LEVEL);
-            initLookupTables(newMax);
+            initializeLookupTables(newMax);
         }
-        int pos = Arrays.binarySearch(xpTotalToReachLevel, exp);
+        int pos = Arrays.binarySearch(experienceTotalToReachLevel, exp);
         return pos < 0 ? -pos - 2 : pos;
     }
 
@@ -204,9 +205,9 @@ class TardisXpRewarder {
      */
     private int getXpForLevel(int level) {
         Validate.isTrue(level >= 0 && level <= HARD_MAX_LEVEL, "Invalid level " + level + "(must be in range 0.." + HARD_MAX_LEVEL + ")");
-        if (level >= xpTotalToReachLevel.length) {
-            initLookupTables(level * 2);
+        if (level >= experienceTotalToReachLevel.length) {
+            initializeLookupTables(level * 2);
         }
-        return xpTotalToReachLevel[level];
+        return experienceTotalToReachLevel[level];
     }
 }

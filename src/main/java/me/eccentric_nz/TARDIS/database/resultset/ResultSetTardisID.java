@@ -29,7 +29,7 @@ import java.sql.SQLException;
  *
  * @author eccentric_nz
  */
-public class ResultSetTardisID {
+public class ResultSetTardisId {
 
     private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
@@ -42,7 +42,7 @@ public class ResultSetTardisID {
      *
      * @param plugin an instance of the main class.
      */
-    public ResultSetTardisID(TardisPlugin plugin) {
+    public ResultSetTardisId(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }

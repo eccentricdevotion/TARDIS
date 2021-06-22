@@ -267,7 +267,7 @@ public class TardisSaveSignListener extends TardisMenuListener implements Listen
                     int ownId = -1;
                     if (cmd == 138) {
                         // get player's TARDIS id
-                        ResultSetTardisID rstid = new ResultSetTardisID(plugin);
+                        ResultSetTardisId rstid = new ResultSetTardisId(plugin);
                         if (rstid.fromUUID(uuid.toString())) {
                             ownId = rstid.getTardisId();
                         }

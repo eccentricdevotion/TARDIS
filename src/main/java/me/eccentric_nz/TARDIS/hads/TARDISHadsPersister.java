@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.hads;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.TardisDatabaseConnection;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -62,7 +62,7 @@ public class TardisHadsPersister {
                 ps.setInt(4, l.getBlockY());
                 ps.setInt(5, l.getBlockZ());
                 // get tardis_id
-                ResultSetTardisID rst = new ResultSetTardisID(plugin);
+                ResultSetTardisId rst = new ResultSetTardisId(plugin);
                 rst.fromUUID(uuid);
                 ps.setInt(6, rst.getTardisId());
                 count += ps.executeUpdate();

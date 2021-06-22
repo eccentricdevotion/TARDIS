@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.commands.admin;
 
 import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.destroyers.TardisExterminator;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
@@ -46,7 +46,7 @@ class TardisPurgeCommand {
             uuid = plugin.getServer().getOfflinePlayer(((Player) sender).getUniqueId()).getUniqueId();
         }
         // get the player's tardis id
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (!rs.fromUUID(uuid.toString())) {
             TardisMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
             return true;

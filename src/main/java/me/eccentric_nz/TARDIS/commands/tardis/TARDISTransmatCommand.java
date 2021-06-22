@@ -52,7 +52,7 @@ class TardisTransmatCommand {
             return true;
         }
         // must be a time lord
-        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
             TardisMessage.send(player, "NOT_A_TIMELORD");
             return true;

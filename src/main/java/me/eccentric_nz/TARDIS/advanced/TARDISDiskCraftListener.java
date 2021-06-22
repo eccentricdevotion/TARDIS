@@ -55,75 +55,75 @@ public class TardisDiskCraftListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onCraftBiomePresetDisk(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        Inventory inv = event.getInventory();
+        Inventory inventory = event.getInventory();
         int slot = event.getRawSlot();
-        if (inv.getType().equals(InventoryType.WORKBENCH) && slot < 10 && actions.contains(event.getAction())) {
+        if (inventory.getType().equals(InventoryType.WORKBENCH) && slot < 10 && actions.contains(event.getAction())) {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                if (checkSlots(inv)) {
+                if (checkSlots(inventory)) {
                     // get the other ingredients
-                    List<ItemStack> items = getOtherItems(inv);
+                    List<ItemStack> otherItems = getOtherItems(inventory);
                     ItemStack disk;
-                    if (inv.contains(Material.MUSIC_DISC_CAT)) {
+                    if (inventory.contains(Material.MUSIC_DISC_CAT)) {
                         // check it is a Biome Storage Disk
-                        ItemStack is = inv.getItem(inv.first(Material.MUSIC_DISC_CAT));
-                        if (is != null && is.hasItemMeta()) {
-                            ItemMeta im = is.getItemMeta();
-                            assert im != null;
-                            if (im.hasDisplayName() && im.getDisplayName().equals("Biome Storage Disk") && im.hasLore()) {
-                                List<String> lore = im.getLore();
-                                int ladder = inv.first(Material.LADDER);
+                        ItemStack itemStack = inventory.getItem(inventory.first(Material.MUSIC_DISC_CAT));
+                        if (itemStack != null && itemStack.hasItemMeta()) {
+                            ItemMeta itemMeta = itemStack.getItemMeta();
+                            assert itemMeta != null;
+                            if (itemMeta.hasDisplayName() && itemMeta.getDisplayName().equals("Biome Storage Disk") && itemMeta.hasLore()) {
+                                List<String> lore = itemMeta.getLore();
+                                int ladder = inventory.first(Material.LADDER);
                                 assert lore != null;
                                 if (lore.get(0).equals("Blank")) {
-                                    List<String> disk_lore = new ArrayList<>();
+                                    List<String> diskLore = new ArrayList<>();
                                     // biome disk
-                                    if (items.size() > 1 && ladder > 0) {
+                                    if (otherItems.size() > 1 && ladder > 0) {
                                         // mega biome
-                                        items.remove(inv.getItem(ladder));
-                                        String lookup = items.get(0).getType() + "_B";
+                                        otherItems.remove(inventory.getItem(ladder));
+                                        String lookup = otherItems.get(0).getType() + "_B";
                                         try {
                                             String biome = BiomeLookup.valueOf(lookup).getUpper();
-                                            disk_lore.add(biome);
-                                        } catch (IllegalArgumentException e) {
-                                            plugin.debug("Could not get biome from craft item! " + e);
+                                            diskLore.add(biome);
+                                        } catch (IllegalArgumentException illegalArgumentException) {
+                                            plugin.debug("Could not get biome from craft item! " + illegalArgumentException);
                                         }
                                     } else {
                                         // regular biome
-                                        String lookup = items.get(0).getType() + "_B";
+                                        String lookup = otherItems.get(0).getType() + "_B";
                                         try {
                                             String biome = BiomeLookup.valueOf(lookup).getRegular();
-                                            disk_lore.add(biome);
-                                        } catch (IllegalArgumentException e) {
-                                            plugin.debug("Could not get biome from craft item! " + e);
+                                            diskLore.add(biome);
+                                        } catch (IllegalArgumentException illegalArgumentException) {
+                                            plugin.debug("Could not get biome from craft item! " + illegalArgumentException);
                                         }
                                     }
-                                    if (disk_lore.size() > 0) {
+                                    if (diskLore.size() > 0) {
                                         disk = new ItemStack(Material.MUSIC_DISC_CAT, 1);
-                                        ItemMeta dim = disk.getItemMeta();
-                                        assert dim != null;
-                                        dim.setDisplayName("Biome Storage Disk");
-                                        dim.setLore(disk_lore);
-                                        dim.setCustomModelData(10000001);
-                                        disk.setItemMeta(dim);
-                                        inv.setItem(0, disk);
+                                        ItemMeta diskMeta = disk.getItemMeta();
+                                        assert diskMeta != null;
+                                        diskMeta.setDisplayName("Biome Storage Disk");
+                                        diskMeta.setLore(diskLore);
+                                        diskMeta.setCustomModelData(10000001);
+                                        disk.setItemMeta(diskMeta);
+                                        inventory.setItem(0, disk);
                                         player.updateInventory();
                                     }
                                 } else if (BiomeLookup.BY_REG.containsKey(lore.get(0)) && ladder > 0) {
                                     // upgrade to mega biome
-                                    List<String> disk_lore = new ArrayList<>();
+                                    List<String> diskLore = new ArrayList<>();
                                     try {
                                         String biome = BiomeLookup.getBiome(lore.get(0)).getUpper();
-                                        disk_lore.add(biome);
+                                        diskLore.add(biome);
                                         disk = new ItemStack(Material.MUSIC_DISC_CAT, 1);
-                                        ItemMeta dim = disk.getItemMeta();
-                                        assert dim != null;
-                                        dim.setDisplayName("Biome Storage Disk");
-                                        dim.setLore(disk_lore);
-                                        dim.setCustomModelData(10000001);
-                                        disk.setItemMeta(dim);
-                                        inv.setItem(0, disk);
+                                        ItemMeta diskMeta = disk.getItemMeta();
+                                        assert diskMeta != null;
+                                        diskMeta.setDisplayName("Biome Storage Disk");
+                                        diskMeta.setLore(diskLore);
+                                        diskMeta.setCustomModelData(10000001);
+                                        disk.setItemMeta(diskMeta);
+                                        inventory.setItem(0, disk);
                                         player.updateInventory();
-                                    } catch (IllegalArgumentException e) {
-                                        plugin.debug("Could not get biome from craft item! " + e);
+                                    } catch (IllegalArgumentException illegalArgumentException) {
+                                        plugin.debug("Could not get biome from craft item! " + illegalArgumentException);
                                     }
                                 } else {
                                     TardisMessage.send(player, "DISK_BLANK_BIOME");
@@ -132,31 +132,31 @@ public class TardisDiskCraftListener implements Listener {
                         }
                     } else {
                         // check it is a Preset Storage Disk
-                        ItemStack is = inv.getItem(inv.first(Material.MUSIC_DISC_MALL));
-                        if (is != null && is.hasItemMeta()) {
-                            ItemMeta im = is.getItemMeta();
-                            assert im != null;
-                            if (im.hasDisplayName() && im.getDisplayName().equals("Preset Storage Disk") && im.hasLore()) {
-                                List<String> lore = im.getLore();
+                        ItemStack itemStack = inventory.getItem(inventory.first(Material.MUSIC_DISC_MALL));
+                        if (itemStack != null && itemStack.hasItemMeta()) {
+                            ItemMeta itemMeta = itemStack.getItemMeta();
+                            assert itemMeta != null;
+                            if (itemMeta.hasDisplayName() && itemMeta.getDisplayName().equals("Preset Storage Disk") && itemMeta.hasLore()) {
+                                List<String> lore = itemMeta.getLore();
                                 assert lore != null;
                                 if (lore.get(0).equals("Blank")) {
                                     // preset disk
-                                    if (items.size() > 0) {
-                                        Material m = items.get(0).getType();
+                                    if (otherItems.size() > 0) {
+                                        Material material = otherItems.get(0).getType();
                                         String preset = "";
-                                        if (Preset.getPreset(m) != null) {
-                                            preset = Preset.getPreset(m).toString();
+                                        if (Preset.getPreset(material) != null) {
+                                            preset = Preset.getPreset(material).toString();
                                         }
                                         if (!preset.isEmpty()) {
-                                            List<String> disk_lore = Collections.singletonList(preset);
+                                            List<String> diskLore = Collections.singletonList(preset);
                                             disk = new ItemStack(Material.MUSIC_DISC_MALL, 1);
-                                            ItemMeta dim = disk.getItemMeta();
-                                            assert dim != null;
-                                            dim.setDisplayName("Preset Storage Disk");
-                                            dim.setLore(disk_lore);
-                                            dim.setCustomModelData(10000001);
-                                            disk.setItemMeta(dim);
-                                            inv.setItem(0, disk);
+                                            ItemMeta diskMeta = disk.getItemMeta();
+                                            assert diskMeta != null;
+                                            diskMeta.setDisplayName("Preset Storage Disk");
+                                            diskMeta.setLore(diskLore);
+                                            diskMeta.setCustomModelData(10000001);
+                                            disk.setItemMeta(diskMeta);
+                                            inventory.setItem(0, disk);
                                             player.updateInventory();
                                         }
                                     }
@@ -171,30 +171,30 @@ public class TardisDiskCraftListener implements Listener {
         }
     }
 
-    private boolean checkSlots(Inventory inv) {
+    private boolean checkSlots(Inventory inventory) {
         boolean check = false;
         int count = 0;
         for (int i = 1; i < 10; i++) {
-            if (inv.getItem(i) != null && !Objects.requireNonNull(inv.getItem(i)).getType().isAir()) {
+            if (inventory.getItem(i) != null && !Objects.requireNonNull(inventory.getItem(i)).getType().isAir()) {
                 count++;
             }
         }
-        if ((inv.contains(Material.MUSIC_DISC_CAT) || inv.contains(Material.MUSIC_DISC_MALL)) && count > 1) {
+        if ((inventory.contains(Material.MUSIC_DISC_CAT) || inventory.contains(Material.MUSIC_DISC_MALL)) && count > 1) {
             check = true;
         }
         return check;
     }
 
-    private List<ItemStack> getOtherItems(Inventory inv) {
-        List<ItemStack> items = new ArrayList<>();
-        for (ItemStack is : inv.getContents()) {
-            if (is != null) {
-                Material m = is.getType();
-                if (!m.equals(Material.MUSIC_DISC_CAT) && !m.equals(Material.MUSIC_DISC_MALL) && !m.isAir()) {
-                    items.add(is);
+    private List<ItemStack> getOtherItems(Inventory inventory) {
+        List<ItemStack> itemStacks = new ArrayList<>();
+        for (ItemStack itemStack : inventory.getContents()) {
+            if (itemStack != null) {
+                Material material = itemStack.getType();
+                if (!material.equals(Material.MUSIC_DISC_CAT) && !material.equals(Material.MUSIC_DISC_MALL) && !material.isAir()) {
+                    itemStacks.add(itemStack);
                 }
             }
         }
-        return items;
+        return itemStacks;
     }
 }

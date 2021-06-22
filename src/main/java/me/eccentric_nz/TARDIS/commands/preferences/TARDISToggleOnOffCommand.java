@@ -18,7 +18,7 @@ package me.eccentric_nz.tardis.commands.preferences;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.artron.TardisBeaconToggler;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.entity.Player;
 
@@ -78,7 +78,7 @@ class TardisToggleOnOffCommand {
                 if (pref.equals("beacon")) {
                     UUID uuid = player.getUniqueId();
                     // get tardis id
-                    ResultSetTardisID rsi = new ResultSetTardisID(plugin);
+                    ResultSetTardisId rsi = new ResultSetTardisId(plugin);
                     if (rsi.fromUUID(uuid.toString())) {
                         new TardisBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), true);
                     }
@@ -95,7 +95,7 @@ class TardisToggleOnOffCommand {
                 if (pref.equals("beacon")) {
                     UUID uuid = player.getUniqueId();
                     // get tardis id
-                    ResultSetTardisID rsi = new ResultSetTardisID(plugin);
+                    ResultSetTardisId rsi = new ResultSetTardisId(plugin);
                     if (rsi.fromUUID(uuid.toString())) {
                         new TardisBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), false);
                     }

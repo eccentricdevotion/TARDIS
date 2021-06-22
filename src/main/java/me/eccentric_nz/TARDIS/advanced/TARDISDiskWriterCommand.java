@@ -48,23 +48,23 @@ public class TardisDiskWriterCommand {
     }
 
     public boolean writeSave(Player player, String[] args) {
-        ItemStack is;
+        ItemStack itemStack;
         if (plugin.getDifficulty().equals(Difficulty.MEDIUM)) {
-            is = new ItemStack(Material.MUSIC_DISC_CHIRP, 1);
-            ItemMeta im = is.getItemMeta();
-            assert im != null;
-            im.setDisplayName("Save Storage Disk");
-            im.setLore(Collections.singletonList("Blank"));
-            im.setCustomModelData(10000001);
-            is.setItemMeta(im);
+            itemStack = new ItemStack(Material.MUSIC_DISC_CHIRP, 1);
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            assert itemMeta != null;
+            itemMeta.setDisplayName("Save Storage Disk");
+            itemMeta.setLore(Collections.singletonList("Blank"));
+            itemMeta.setCustomModelData(10000001);
+            itemStack.setItemMeta(itemMeta);
         } else {
-            is = player.getInventory().getItemInMainHand();
+            itemStack = player.getInventory().getItemInMainHand();
         }
-        if (is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            assert im != null;
-            if (im.hasDisplayName() && im.getDisplayName().equals("Save Storage Disk")) {
-                List<String> lore = im.getLore();
+        if (itemStack.hasItemMeta()) {
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            assert itemMeta != null;
+            if (itemMeta.hasDisplayName() && itemMeta.getDisplayName().equals("Save Storage Disk")) {
+                List<String> lore = itemMeta.getLore();
                 assert lore != null;
                 if (!lore.get(0).equals("Blank")) {
                     TardisMessage.send(player, "DISK_ONLY_BLANK");
@@ -80,46 +80,46 @@ public class TardisDiskWriterCommand {
                 }
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                if (!rs.resultSet()) {
+                ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, where, "", false, 0);
+                if (!resultSetTardis.resultSet()) {
                     TardisMessage.send(player, "NO_TARDIS");
                     return false;
                 } else {
-                    Tardis tardis = rs.getTardis();
+                    Tardis tardis = resultSetTardis.getTardis();
                     int id = tardis.getTardisId();
                     Preset preset = tardis.getPreset();
                     // check has unique name - this will always return false in HARD & MEDIUM difficulty
                     // TODO Check for disk lore if MEDIUM difficulty
-                    HashMap<String, Object> wherename = new HashMap<>();
-                    wherename.put("tardis_id", id);
-                    wherename.put("dest_name", args[1]);
-                    wherename.put("type", 0);
-                    ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
-                    if (rsd.resultSet()) {
+                    HashMap<String, Object> whereName = new HashMap<>();
+                    whereName.put("tardis_id", id);
+                    whereName.put("dest_name", args[1]);
+                    whereName.put("type", 0);
+                    ResultSetDestinations resultSetDestinations = new ResultSetDestinations(plugin, whereName, false);
+                    if (resultSetDestinations.resultSet()) {
                         TardisMessage.send(player, "SAVE_EXISTS");
                         return true;
                     }
                     // get current destination
-                    HashMap<String, Object> wherecl = new HashMap<>();
-                    wherecl.put("tardis_id", id);
-                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                    if (!rsc.resultSet()) {
+                    HashMap<String, Object> whereCurrentLocation = new HashMap<>();
+                    whereCurrentLocation.put("tardis_id", id);
+                    ResultSetCurrentLocation resultSetCurrentLocation = new ResultSetCurrentLocation(plugin, whereCurrentLocation);
+                    if (!resultSetCurrentLocation.resultSet()) {
                         TardisMessage.send(player, "CURRENT_NOT_FOUND");
                         return true;
                     }
                     lore.set(0, args[1]);
-                    lore.add(1, rsc.getWorld().getName());
-                    lore.add(2, "" + rsc.getX());
-                    lore.add(3, "" + rsc.getY());
-                    lore.add(4, "" + rsc.getZ());
+                    lore.add(1, resultSetCurrentLocation.getWorld().getName());
+                    lore.add(2, "" + resultSetCurrentLocation.getX());
+                    lore.add(3, "" + resultSetCurrentLocation.getY());
+                    lore.add(4, "" + resultSetCurrentLocation.getZ());
                     lore.add(5, preset.toString());
-                    lore.add(6, rsc.getDirection().toString());
-                    lore.add(7, (rsc.isSubmarine()) ? "true" : "false");
-                    im.setLore(lore);
-                    is.setItemMeta(im);
+                    lore.add(6, resultSetCurrentLocation.getDirection().toString());
+                    lore.add(7, (resultSetCurrentLocation.isSubmarine()) ? "true" : "false");
+                    itemMeta.setLore(lore);
+                    itemStack.setItemMeta(itemMeta);
                     if (plugin.getDifficulty().equals(Difficulty.MEDIUM)) {
                         // save the disk to storage
-                        boolean isSpace = saveDiskToStorage(player, is);
+                        boolean isSpace = saveDiskToStorage(player, itemStack);
                         if (!isSpace) {
                             TardisMessage.send(player, "SAVE_STORAGE_FULL");
                             return true;
@@ -133,52 +133,52 @@ public class TardisDiskWriterCommand {
         return true;
     }
 
-    private boolean saveDiskToStorage(Player player, ItemStack is) {
+    private boolean saveDiskToStorage(Player player, ItemStack itemStack) {
         UUID uuid = player.getUniqueId();
         // check if they have room for this save disk
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
-        ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
-        if (rs.resultSet()) {
+        ResultSetDiskStorage resultSetDiskStorage = new ResultSetDiskStorage(plugin, where);
+        if (resultSetDiskStorage.resultSet()) {
             try {
-                ItemStack[] saves1 = TardisSerializeInventory.itemStacksFromString(rs.getSavesOne());
+                ItemStack[] saves1 = TardisInventorySerializer.itemStacksFromString(resultSetDiskStorage.getSavesOne());
                 int slot = getNextFreeSlot(saves1);
                 if (slot != -1) {
-                    saves1[slot] = is;
-                    String serialized = TardisSerializeInventory.itemStacksToString(saves1);
+                    saves1[slot] = itemStack;
+                    String serialized = TardisInventorySerializer.itemStacksToString(saves1);
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("saves_one", serialized);
-                    HashMap<String, Object> whereu = new HashMap<>();
-                    whereu.put("uuid", uuid.toString());
-                    plugin.getQueryFactory().doUpdate("storage", set, whereu);
+                    HashMap<String, Object> whereUuid = new HashMap<>();
+                    whereUuid.put("uuid", uuid.toString());
+                    plugin.getQueryFactory().doUpdate("storage", set, whereUuid);
                     return true;
                 } else {
-                    ItemStack[] saves2 = TardisSerializeInventory.itemStacksFromString(rs.getSavesTwo());
+                    ItemStack[] saves2 = TardisInventorySerializer.itemStacksFromString(resultSetDiskStorage.getSavesTwo());
                     slot = getNextFreeSlot(saves2);
                     if (slot != -1) {
-                        saves2[slot] = is;
-                        String serialized = TardisSerializeInventory.itemStacksToString(saves2);
+                        saves2[slot] = itemStack;
+                        String serialized = TardisInventorySerializer.itemStacksToString(saves2);
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("saves_two", serialized);
-                        HashMap<String, Object> whereu = new HashMap<>();
-                        whereu.put("uuid", uuid.toString());
-                        plugin.getQueryFactory().doUpdate("storage", set, whereu);
+                        HashMap<String, Object> whereUuid = new HashMap<>();
+                        whereUuid.put("uuid", uuid.toString());
+                        plugin.getQueryFactory().doUpdate("storage", set, whereUuid);
                         return true;
                     } else {
                         return false;
                     }
                 }
-            } catch (IOException ex) {
-                plugin.debug("Could not get save disks: " + ex);
+            } catch (IOException ioException) {
+                plugin.debug("Could not get save disks: " + ioException);
             }
         }
         return false;
     }
 
-    private int getNextFreeSlot(ItemStack[] stack) {
+    private int getNextFreeSlot(ItemStack[] itemStacks) {
         int slot = -1;
-        for (int s = 27; s < stack.length; s++) {
-            ItemStack disk = stack[s];
+        for (int s = 27; s < itemStacks.length; s++) {
+            ItemStack disk = itemStacks[s];
             if (disk == null) {
                 slot = s;
                 break;
@@ -188,12 +188,12 @@ public class TardisDiskWriterCommand {
     }
 
     public boolean writePlayer(Player player, String[] args) {
-        ItemStack is = player.getInventory().getItemInMainHand();
-        if (is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            assert im != null;
-            if (im.hasDisplayName() && im.getDisplayName().equals("Player Storage Disk")) {
-                List<String> lore = im.getLore();
+        ItemStack itemStack = player.getInventory().getItemInMainHand();
+        if (itemStack.hasItemMeta()) {
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            assert itemMeta != null;
+            if (itemMeta.hasDisplayName() && itemMeta.getDisplayName().equals("Player Storage Disk")) {
+                List<String> lore = itemMeta.getLore();
                 assert lore != null;
                 if (!lore.get(0).equals("Blank")) {
                     TardisMessage.send(player, "DISK_ONLY_BLANK");
@@ -213,14 +213,14 @@ public class TardisDiskWriterCommand {
                 }
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                if (!rs.resultSet()) {
+                ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, where, "", false, 0);
+                if (!resultSetTardis.resultSet()) {
                     TardisMessage.send(player, "NO_TARDIS");
                     return false;
                 } else {
                     lore.set(0, args[1]);
-                    im.setLore(lore);
-                    is.setItemMeta(im);
+                    itemMeta.setLore(lore);
+                    itemStack.setItemMeta(itemMeta);
                     TardisMessage.send(player, "DISK_PLAYER_SAVED");
                     return true;
                 }
@@ -230,12 +230,12 @@ public class TardisDiskWriterCommand {
     }
 
     public boolean eraseDisk(Player player) {
-        ItemStack is = player.getInventory().getItemInMainHand();
-        if (is.hasItemMeta() && disks.contains(Objects.requireNonNull(is.getItemMeta()).getDisplayName())) {
-            ItemMeta im = is.getItemMeta();
+        ItemStack itemStack = player.getInventory().getItemInMainHand();
+        if (itemStack.hasItemMeta() && disks.contains(Objects.requireNonNull(itemStack.getItemMeta()).getDisplayName())) {
+            ItemMeta itemMeta = itemStack.getItemMeta();
             List<String> lore = Collections.singletonList("Blank");
-            im.setLore(lore);
-            is.setItemMeta(im);
+            itemMeta.setLore(lore);
+            itemStack.setItemMeta(itemMeta);
             TardisMessage.send(player, "DISK_ERASE");
         } else {
             TardisMessage.send(player, "DISK_HAND_ERASE");
@@ -244,17 +244,17 @@ public class TardisDiskWriterCommand {
     }
 
     public boolean writeSaveToControlDisk(Player player, String[] args) {
-        ItemStack is = player.getInventory().getItemInMainHand();
-        if (is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            assert im != null;
-            if (im.hasDisplayName() && im.getDisplayName().equals("Authorised Control Disk") && im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
+        ItemStack itemStack = player.getInventory().getItemInMainHand();
+        if (itemStack.hasItemMeta()) {
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            assert itemMeta != null;
+            if (itemMeta.hasDisplayName() && itemMeta.getDisplayName().equals("Authorised Control Disk") && itemMeta.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
                 if (args.length < 2) {
                     TardisMessage.send(player, "TOO_FEW_ARGS");
                     return false;
                 }
-                ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                if (!rs.fromUUID(player.getUniqueId().toString())) {
+                ResultSetTardisId resultSetTardisId = new ResultSetTardisId(plugin);
+                if (!resultSetTardisId.fromUUID(player.getUniqueId().toString())) {
                     TardisMessage.send(player, "NO_TARDIS");
                     return false;
                 } else {
@@ -262,22 +262,22 @@ public class TardisDiskWriterCommand {
                     if (args[1].equalsIgnoreCase("home")) {
                         save = "Home";
                     } else {
-                        HashMap<String, Object> wherename = new HashMap<>();
-                        wherename.put("tardis_id", rs.getTardisId());
-                        wherename.put("dest_name", args[1]);
-                        wherename.put("type", 0);
-                        ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
-                        if (!rsd.resultSet()) {
+                        HashMap<String, Object> whereName = new HashMap<>();
+                        whereName.put("tardis_id", resultSetTardisId.getTardisId());
+                        whereName.put("dest_name", args[1]);
+                        whereName.put("type", 0);
+                        ResultSetDestinations resultSetDestinations = new ResultSetDestinations(plugin, whereName, false);
+                        if (!resultSetDestinations.resultSet()) {
                             TardisMessage.send(player, "SAVE_NOT_FOUND", ChatColor.GREEN + "/tardis list saves" + ChatColor.RESET);
                             return true;
                         }
                         save = args[1];
                     }
-                    List<String> lore = im.getLore();
+                    List<String> lore = itemMeta.getLore();
                     assert lore != null;
                     lore.add(save);
-                    im.setLore(lore);
-                    is.setItemMeta(im);
+                    itemMeta.setLore(lore);
+                    itemStack.setItemMeta(itemMeta);
                     TardisMessage.send(player, "DISK_LOC_SAVED");
                     return true;
                 }

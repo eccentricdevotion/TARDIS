@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * The visual stabiliser circuit controlled the tardis' outward appearance. Its removal rendered the ship invisible.
+ * The visual stabiliser circuit controlled the TARDIS's outward appearance. Its removal rendered the ship invisible.
  *
  * @author eccentric_nz
  */
@@ -51,121 +51,121 @@ class TardisAreaDisks {
      * Makes an array of item stacks containing the default Storage GUI top and any area storage disks the player has
      * permission for.
      *
-     * @param p the player to create the array for
+     * @param player the player to create the array for
      * @return an array of item stacks
      */
-    ItemStack[] makeDisks(Player p) {
+    ItemStack[] makeDisks(Player player) {
 
         List<ItemStack> areas = new ArrayList<>();
         // get the areas this player has access to
-        ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, false);
-        if (rsa.resultSet()) {
+        ResultSetAreas resultSetAreas = new ResultSetAreas(plugin, null, false, false);
+        if (resultSetAreas.resultSet()) {
             // cycle through areas
-            rsa.getData().forEach((a) -> {
-                String name = a.getAreaName();
-                if (TardisPermission.hasPermission(p, "tardis.area." + name) || TardisPermission.hasPermission(p, "tardis.area.*")) {
-                    ItemStack is = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
-                    ItemMeta im = is.getItemMeta();
-                    assert im != null;
-                    im.setDisplayName("Area Storage Disk");
+            resultSetAreas.getData().forEach((area) -> {
+                String name = area.getAreaName();
+                if (TardisPermission.hasPermission(player, "tardis.area." + name) || TardisPermission.hasPermission(player, "tardis.area.*")) {
+                    ItemStack itemStack = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
+                    ItemMeta itemMeta = itemStack.getItemMeta(); // fixme
+                    assert itemMeta != null;
+                    itemMeta.setDisplayName("Area Storage Disk");
                     List<String> lore = new ArrayList<>();
                     lore.add(name);
-                    lore.add(a.getWorld());
-                    im.setLore(lore);
-                    im.setCustomModelData(10000001);
-                    is.setItemMeta(im);
-                    areas.add(is);
+                    lore.add(area.getWorld());
+                    itemMeta.setLore(lore);
+                    itemMeta.setCustomModelData(10000001);
+                    itemStack.setItemMeta(itemMeta);
+                    areas.add(itemStack);
                 }
             });
         }
-        ItemStack[] stack = new ItemStack[54];
+        ItemStack[] itemStacks = new ItemStack[54];
         // set default top slots
         try {
-            stack = TardisSerializeInventory.itemStacksFromString(Storage.AREA.getEmpty());
-        } catch (IOException ex) {
-            plugin.debug("Could not get make Area Disk Inventory: " + ex);
+            itemStacks = TardisInventorySerializer.itemStacksFromString(Storage.AREA.getEmpty());
+        } catch (IOException ioException) {
+            plugin.debug("Could not get make Area Disk Inventory: " + ioException);
         }
         // set saved slots
         int i = 27;
-        for (ItemStack st : areas) {
-            stack[i] = st;
+        for (ItemStack area : areas) {
+            itemStacks[i] = area;
             i++;
         }
-        return stack;
+        return itemStacks;
     }
 
     /**
-     * Checks the players current area disks and adds any new ones they have permission for.
+     * Checks the player's current area disks and adds any new ones they have permission for.
      *
-     * @param p the player to check for
+     * @param player the player to check for
      * @return a serialized String
      */
-    String checkDisksForNewAreas(Player p) {
+    String checkDisksForNewAreas(Player player) {
         String serialized = "";
         // get the player's storage record
         HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", p.getUniqueId().toString());
-        ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
-        if (rs.resultSet()) {
-            List<String> player_has = new ArrayList<>();
-            String serilized_areas = rs.getAreas();
+        where.put("uuid", player.getUniqueId().toString());
+        ResultSetDiskStorage resultSetDiskStorage = new ResultSetDiskStorage(plugin, where);
+        if (resultSetDiskStorage.resultSet()) {
+            List<String> playerHas = new ArrayList<>();
+            String serializedAreas = resultSetDiskStorage.getAreas();
             try {
                 // check storage inventory
-                ItemStack[] areas = TardisSerializeInventory.itemStacksFromString(serilized_areas);
-                for (ItemStack a : areas) {
-                    if (a != null && a.getType().equals(Material.MUSIC_DISC_BLOCKS) && a.hasItemMeta()) {
-                        ItemMeta ima = a.getItemMeta();
-                        assert ima != null;
-                        if (ima.hasLore()) {
-                            player_has.add(Objects.requireNonNull(ima.getLore()).get(0));
+                ItemStack[] areas = TardisInventorySerializer.itemStacksFromString(serializedAreas);
+                for (ItemStack area : areas) {
+                    if (area != null && area.getType().equals(Material.MUSIC_DISC_BLOCKS) && area.hasItemMeta()) {
+                        ItemMeta areaItemMeta = area.getItemMeta();
+                        assert areaItemMeta != null;
+                        if (areaItemMeta.hasLore()) {
+                            playerHas.add(Objects.requireNonNull(areaItemMeta.getLore()).get(0));
                         }
                     }
                 }
                 // check console inventory
-                ItemStack[] console = TardisSerializeInventory.itemStacksFromString(rs.getConsole());
-                for (ItemStack c : console) {
-                    if (c != null && c.getType().equals(Material.MUSIC_DISC_BLOCKS) && c.hasItemMeta()) {
-                        ItemMeta imc = c.getItemMeta();
-                        assert imc != null;
-                        if (imc.hasLore()) {
-                            player_has.add(Objects.requireNonNull(imc.getLore()).get(0));
+                ItemStack[] consoleItems = TardisInventorySerializer.itemStacksFromString(resultSetDiskStorage.getConsole());
+                for (ItemStack consoleItem : consoleItems) {
+                    if (consoleItem != null && consoleItem.getType().equals(Material.MUSIC_DISC_BLOCKS) && consoleItem.hasItemMeta()) {
+                        ItemMeta consoleItemMeta = consoleItem.getItemMeta();
+                        assert consoleItemMeta != null;
+                        if (consoleItemMeta.hasLore()) {
+                            playerHas.add(Objects.requireNonNull(consoleItemMeta.getLore()).get(0));
                         }
                     }
                 }
                 // check player inventory
-                ItemStack[] player = p.getInventory().getContents();
-                for (ItemStack y : player) {
-                    if (y != null && y.getType().equals(Material.MUSIC_DISC_BLOCKS) && y.hasItemMeta()) {
-                        ItemMeta imy = y.getItemMeta();
-                        assert imy != null;
-                        if (imy.hasLore()) {
-                            player_has.add(Objects.requireNonNull(imy.getLore()).get(0));
+                ItemStack[] playerItems = player.getInventory().getContents();
+                for (ItemStack playerItem : playerItems) {
+                    if (playerItem != null && playerItem.getType().equals(Material.MUSIC_DISC_BLOCKS) && playerItem.hasItemMeta()) {
+                        ItemMeta playerItemMeta = playerItem.getItemMeta();
+                        assert playerItemMeta != null;
+                        if (playerItemMeta.hasLore()) {
+                            playerHas.add(Objects.requireNonNull(playerItemMeta.getLore()).get(0));
                         }
                     }
                 }
-                Inventory inv = plugin.getServer().createInventory(p, 54);
-                inv.setContents(areas);
-                ResultSetAreas rsa = new ResultSetAreas(plugin, null, true, false);
+                Inventory inventory = plugin.getServer().createInventory(player, 54);
+                inventory.setContents(areas);
+                ResultSetAreas resultSetAreas = new ResultSetAreas(plugin, null, true, false);
                 int count = 0;
-                if (rsa.resultSet()) {
+                if (resultSetAreas.resultSet()) {
                     // cycle through areas
-                    for (Area map : rsa.getData()) {
+                    for (Area map : resultSetAreas.getData()) {
                         String name = map.getAreaName();
-                        if ((!player_has.contains(name) && TardisPermission.hasPermission(p, "tardis.area." + name)) || (!player_has.contains(name) && TardisPermission.hasPermission(p, "tardis.area.*"))) {
+                        if ((!playerHas.contains(name) && TardisPermission.hasPermission(player, "tardis.area." + name)) || (!playerHas.contains(name) && TardisPermission.hasPermission(player, "tardis.area.*"))) {
                             // add new area if there is room
-                            int empty = getNextEmptySlot(inv);
-                            if (empty != -1) {
-                                ItemStack is = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
-                                ItemMeta im = is.getItemMeta();
-                                assert im != null;
-                                im.setDisplayName("Area Storage Disk");
+                            int nextEmptySlot = getNextEmptySlot(inventory);
+                            if (nextEmptySlot != -1) {
+                                ItemStack itemStack = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
+                                ItemMeta itemMeta = itemStack.getItemMeta();
+                                assert itemMeta != null;
+                                itemMeta.setDisplayName("Area Storage Disk");
                                 List<String> lore = new ArrayList<>();
                                 lore.add(name);
                                 lore.add(map.getWorld());
-                                im.setLore(lore);
-                                im.setCustomModelData(10000001);
-                                is.setItemMeta(im);
-                                inv.setItem(empty, is);
+                                itemMeta.setLore(lore);
+                                itemMeta.setCustomModelData(10000001);
+                                itemStack.setItemMeta(itemMeta);
+                                inventory.setItem(nextEmptySlot, itemStack);
                                 count++;
                             }
                         }
@@ -173,12 +173,12 @@ class TardisAreaDisks {
                 }
                 // return the serialized string
                 if (count > 0) {
-                    return TardisSerializeInventory.itemStacksToString(inv.getContents());
+                    return TardisInventorySerializer.itemStacksToString(inventory.getContents());
                 } else {
-                    return serilized_areas;
+                    return serializedAreas;
                 }
-            } catch (IOException ex) {
-                plugin.debug("Could not get NEW Area Disk Inventory: " + ex);
+            } catch (IOException ioException) {
+                plugin.debug("Could not get NEW Area Disk Inventory: " + ioException);
             }
         }
         return serialized;
@@ -187,12 +187,12 @@ class TardisAreaDisks {
     /**
      * Finds the first empty slot greater than 27.
      *
-     * @param inv the inventory to search
+     * @param inventory the inventory to search
      * @return the empty slot number or -1 if not found
      */
-    int getNextEmptySlot(Inventory inv) {
+    int getNextEmptySlot(Inventory inventory) {
         for (int i = 27; i < 54; i++) {
-            if (inv.getItem(i) == null || Objects.requireNonNull(inv.getItem(i)).getType().isAir()) {
+            if (inventory.getItem(i) == null || Objects.requireNonNull(inventory.getItem(i)).getType().isAir()) {
                 return i;
             }
         }

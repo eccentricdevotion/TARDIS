@@ -31,7 +31,7 @@ import me.eccentric_nz.tardis.commands.remote.TardisRemoteRebuildCommand;
 import me.eccentric_nz.tardis.database.resultset.ResultSetArs;
 import me.eccentric_nz.tardis.database.resultset.ResultSetAreas;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisConsole;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.enumeration.Preset;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import me.eccentric_nz.tardis.enumeration.Updateable;
@@ -81,7 +81,7 @@ public class TardisSudoCommand extends TardisCompleter implements CommandExecuto
                     return true;
                 }
                 UUID uuid = offlinePlayer.getUniqueId();
-                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                ResultSetTardisId rs = new ResultSetTardisId(plugin);
                 if (!rs.fromUUID(uuid.toString())) {
                     TardisMessage.send(sender, "PLAYER_NO_TARDIS");
                     return true;

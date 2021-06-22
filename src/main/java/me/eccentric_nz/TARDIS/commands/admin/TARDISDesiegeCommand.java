@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.commands.admin;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.builders.BuildData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetHomeLocation;
-import me.eccentric_nz.tardis.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.tardis.database.resultset.ResultSetTardisId;
 import me.eccentric_nz.tardis.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
@@ -47,7 +47,7 @@ class TardisDesiegeCommand {
             // get the player's UUID
             UUID uuid = p.getUniqueId();
             // get the player's tardis id
-            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            ResultSetTardisId rs = new ResultSetTardisId(plugin);
             if (!rs.fromUUID(uuid.toString())) {
                 TardisMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
                 return true;
