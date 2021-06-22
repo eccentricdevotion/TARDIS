@@ -118,7 +118,7 @@ public class TardisAdvancementFactory {
                     grantAdvancement(advancement, player);
                     assert rewardType != null;
                     if (rewardType.equalsIgnoreCase("XP")) {
-                        new TardisExperienceRewarder(player).changeExp(rewardAmount);
+                        new TardisExperienceRewarder(player).changeExperience(rewardAmount);
                     } else {
                         ItemStack itemStack = new ItemStack(Material.valueOf(rewardType), rewardAmount);
                         Inventory inventory = player.getInventory();

@@ -83,7 +83,7 @@ class TardisExperienceRewarder {
      * @param experience the amount of experience
      * @return the experience level
      */
-    private static int calculateLevelForExp(int experience) {
+    private static int calculateLevelForExperience(int experience) {
         int level = 0;
         int currentExperience = 7; // level 1
         int increment = 10;
@@ -114,10 +114,10 @@ class TardisExperienceRewarder {
      * Adjust the player's XP by the given amount in an intelligent fashion. Works around some of the non-intuitive
      * behaviour of the basic Bukkit player.giveExp() method.
      *
-     * @param amount Amount of XP, may be negative
+     * @param amount Amount of experience, may be negative
      */
-    void changeExp(int amount) {
-        changeExp((double) amount);
+    void changeExperience(int amount) {
+        changeExperience((double) amount);
     }
 
     /**
@@ -126,11 +126,11 @@ class TardisExperienceRewarder {
      *
      * @param amount Amount of XP, may be negative
      */
-    private void changeExp(double amount) {
-        setExp(getCurrentFractionalExp(), amount);
+    private void changeExperience(double amount) {
+        setExperience(getCurrentFractionalExp(), amount);
     }
 
-    private void setExp(double base, double amount) {
+    private void setExperience(double base, double amount) {
         int xp = (int) Math.max(base + amount, 0);
 
         Player player = getPlayer();
@@ -176,7 +176,7 @@ class TardisExperienceRewarder {
         }
         if (exp > experienceTotalToReachLevel[experienceTotalToReachLevel.length - 1]) {
             // need to extend the lookup tables
-            int newMax = calculateLevelForExp(exp) * 2;
+            int newMax = calculateLevelForExperience(exp) * 2;
             Validate.isTrue(newMax <= HARD_MAX_LEVEL, "Level for exp " + exp + " > hard max level " + HARD_MAX_LEVEL);
             initializeLookupTables(newMax);
         }
