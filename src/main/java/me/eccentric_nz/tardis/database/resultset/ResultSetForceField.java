@@ -35,7 +35,7 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class ResultSetForcefield {
+public class ResultSetForceField {
 
     private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
@@ -51,7 +51,7 @@ public class ResultSetForcefield {
      * @param plugin an instance of the main class.
      * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      */
-    public ResultSetForcefield(TardisPlugin plugin, String where) {
+    public ResultSetForceField(TardisPlugin plugin, String where) {
         this.plugin = plugin;
         this.where = where;
         prefix = this.plugin.getPrefix();

@@ -25,12 +25,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * @author eccentric_nz
  */
-class TardisChameleonConstructorGUI {
+class TardisChameleonConstructorGui {
 
     private final TardisPlugin plugin;
     private final ItemStack[] construct;
 
-    TardisChameleonConstructorGUI(TardisPlugin plugin) {
+    TardisChameleonConstructorGui(TardisPlugin plugin) {
         this.plugin = plugin;
         construct = getItemStack();
     }

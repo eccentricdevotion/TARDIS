@@ -74,7 +74,7 @@ public class TardisChameleonHelpListener extends TardisMenuListener implements L
                                 case 0:
                                     // back
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        TardisChameleonConstructorGUI tci = new TardisChameleonConstructorGUI(plugin);
+                                        TardisChameleonConstructorGui tci = new TardisChameleonConstructorGui(plugin);
                                         ItemStack[] items = tci.getConstruct();
                                         Inventory chamcon = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Construction");
                                         chamcon.setContents(items);

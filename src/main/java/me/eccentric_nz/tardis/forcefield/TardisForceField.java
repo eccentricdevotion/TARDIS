@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardis.forcefield;
 
 import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardis.database.resultset.ResultSetForcefield;
+import me.eccentric_nz.tardis.database.resultset.ResultSetForceField;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardisCompanions;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -57,7 +57,7 @@ public class TardisForceField implements Runnable {
     }
 
     public static boolean addToTracker(Player player) {
-        ResultSetForcefield rsff = new ResultSetForcefield(TardisPlugin.plugin, player.getUniqueId().toString());
+        ResultSetForceField rsff = new ResultSetForceField(TardisPlugin.plugin, player.getUniqueId().toString());
         if (rsff.resultSet()) {
             TardisPlugin.plugin.getTrackerKeeper().getActiveForceFields().put(rsff.getUuid(), rsff.getLocation());
             return true;
