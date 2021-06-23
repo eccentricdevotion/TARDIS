@@ -26,7 +26,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TardisSqlCondenserUpdate implements Runnable {
+class TardisSqlCondenserUpdater implements Runnable {
 
     private final TardisPlugin plugin;
     private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
@@ -43,7 +43,7 @@ class TardisSqlCondenserUpdate implements Runnable {
      * @param amount the amount of blocks to remove
      * @param where  a HashMap&lt;String, Object&gt; of table fields and values to select the records to alter.
      */
-    TardisSqlCondenserUpdate(TardisPlugin plugin, int amount, HashMap<String, Object> where) {
+    TardisSqlCondenserUpdater(TardisPlugin plugin, int amount, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.amount = amount;
         this.where = where;

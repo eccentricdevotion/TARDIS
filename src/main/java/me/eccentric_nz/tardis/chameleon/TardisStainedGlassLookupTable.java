@@ -26,11 +26,11 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class TardisStainedGlassLookup {
+public class TardisStainedGlassLookupTable {
 
     private final HashMap<Material, Material> stain = new HashMap<>();
 
-    public TardisStainedGlassLookup() {
+    public TardisStainedGlassLookupTable() {
         stain.put(Material.ACACIA_BUTTON, Material.BROWN_STAINED_GLASS);
         stain.put(Material.ACACIA_FENCE, Material.BROWN_STAINED_GLASS);
         stain.put(Material.ACACIA_FENCE_GATE, Material.BROWN_STAINED_GLASS);

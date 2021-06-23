@@ -25,14 +25,14 @@ import java.sql.*;
 /**
  * @author eccentric_nz
  */
-public class TardisSaveIconUpdate {
+public class TardisSaveIconUpdater {
 
     private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TardisPlugin plugin;
     private final String prefix;
 
-    public TardisSaveIconUpdate(TardisPlugin plugin) {
+    public TardisSaveIconUpdater(TardisPlugin plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }

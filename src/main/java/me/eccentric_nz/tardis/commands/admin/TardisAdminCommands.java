@@ -23,7 +23,7 @@ import me.eccentric_nz.tardis.database.tool.Converter;
 import me.eccentric_nz.tardis.maze.TardisMazeBuilder;
 import me.eccentric_nz.tardis.maze.TardisMazeGenerator;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
-import me.eccentric_nz.tardis.utility.UpdateTardisPlugins;
+import me.eccentric_nz.tardis.utility.TardisPluginsUpdater;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
@@ -115,7 +115,7 @@ public class TardisAdminCommands implements CommandExecutor {
                             TardisMessage.message(sender, "You must be a server operator to run this command!");
                             return true;
                         }
-                        return new UpdateTardisPlugins(plugin).fetchFromJenkins(sender);
+                        return new TardisPluginsUpdater(plugin).fetchFromJenkins(sender);
                     }
                     if (first.equals("maze")) {
                         if (sender instanceof Player p) {

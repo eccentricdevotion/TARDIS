@@ -26,7 +26,7 @@ import java.sql.Statement;
 /**
  * @author eccentric_nz
  */
-class TardisSqlInsertControl implements Runnable {
+class TardisSqlControlInserter implements Runnable {
 
     private final TardisPlugin plugin;
     private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
@@ -47,7 +47,7 @@ class TardisSqlInsertControl implements Runnable {
      * @param location  the location of the control
      * @param secondary whether the control is a secondary control
      */
-    TardisSqlInsertControl(TardisPlugin plugin, int id, int type, String location, int secondary) {
+    TardisSqlControlInserter(TardisPlugin plugin, int id, int type, String location, int secondary) {
         this.plugin = plugin;
         this.id = id;
         this.type = type;

@@ -28,7 +28,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TardisSqlInsert implements Runnable {
+class TardisSqlInserter implements Runnable {
 
     private final TardisPlugin plugin;
     private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
@@ -45,7 +45,7 @@ class TardisSqlInsert implements Runnable {
      * @param table  the database table name to insert the data into.
      * @param data   a HashMap<String, Object> of table fields and values to insert.
      */
-    TardisSqlInsert(TardisPlugin plugin, String table, HashMap<String, Object> data) {
+    TardisSqlInserter(TardisPlugin plugin, String table, HashMap<String, Object> data) {
         this.plugin = plugin;
         this.table = table;
         this.data = data;

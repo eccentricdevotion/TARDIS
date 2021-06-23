@@ -47,12 +47,12 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TardisRepair {
+public class TardisRepairer {
 
     private final TardisPlugin plugin;
     private final Player player;
 
-    public TardisRepair(TardisPlugin plugin, Player player) {
+    public TardisRepairer(TardisPlugin plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
     }

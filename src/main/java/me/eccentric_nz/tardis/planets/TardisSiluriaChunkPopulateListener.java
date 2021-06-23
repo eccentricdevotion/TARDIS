@@ -78,7 +78,7 @@ public class TardisSiluriaChunkPopulateListener implements Listener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             chunks.add(chunkInfo);
             // create structure
-            isBuilding = new TardisBuildSilurianStructure(plugin).buildCity(x, y, z);
+            isBuilding = new TardisSilurianStructureBuilder(plugin).buildCity(x, y, z);
         }, 2L);
     }
 }

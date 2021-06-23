@@ -40,7 +40,7 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-class TardisBuildGallifreyanStructure implements Runnable {
+class TardisGallifreyanStructureBuilder implements Runnable {
 
     private final TardisPlugin plugin;
     private final int startx, y, startz;
@@ -62,7 +62,7 @@ class TardisBuildGallifreyanStructure implements Runnable {
      * @param y      the start coordinate on the y-axis
      * @param startz the start coordinate on the z-axis
      */
-    TardisBuildGallifreyanStructure(TardisPlugin plugin, int startx, int y, int startz) {
+    TardisGallifreyanStructureBuilder(TardisPlugin plugin, int startx, int y, int startz) {
         this.plugin = plugin;
         this.startx = startx;
         this.y = y;

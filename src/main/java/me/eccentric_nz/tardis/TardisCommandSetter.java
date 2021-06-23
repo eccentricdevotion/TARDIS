@@ -131,7 +131,7 @@ class TardisCommandSetter {
         Objects.requireNonNull(plugin.getCommand("tardisnetherportal")).setExecutor(tardisNetherPortalCommand);
         Objects.requireNonNull(plugin.getCommand("tardisnetherportal")).setTabCompleter(tardisNetherPortalCommand);
         Objects.requireNonNull(plugin.getCommand("tardis?")).setExecutor(new TardisQuestionMarkCommand(plugin));
-        Objects.requireNonNull(plugin.getCommand("tardis?")).setTabCompleter(new TardisQuestionTabComplete(plugin));
+        Objects.requireNonNull(plugin.getCommand("tardis?")).setTabCompleter(new TardisQuestionMarkTabComplete(plugin));
         Objects.requireNonNull(plugin.getCommand("tardisinfo")).setExecutor(info);
         Objects.requireNonNull(plugin.getCommand("handles")).setExecutor(new TardisHandlesCommand(plugin));
         Objects.requireNonNull(plugin.getCommand("handles")).setTabCompleter(new TardisHandlesTabComplete());

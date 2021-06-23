@@ -74,9 +74,9 @@ public class TardisSayCommand implements CommandExecutor {
             try {
                 Language to = Language.valueOf(lang);
                 Language from = Language.valueOf(preferedLang);
-                Translate.setKey("trnsl.1.1.20170312T202552Z.b0bd3c7ce48fe120.8d084aec9ae76b8d17b7882cd3026202c61ee7e0");
+                Translator.setKey("trnsl.1.1.20170312T202552Z.b0bd3c7ce48fe120.8d084aec9ae76b8d17b7882cd3026202c61ee7e0");
                 try {
-                    String translatedText = Translate.execute(whatToTranslate, from, to);
+                    String translatedText = Translator.execute(whatToTranslate, from, to);
                     if (sender instanceof Player player) {
                         player.chat(UT + translatedText);
                     } else {

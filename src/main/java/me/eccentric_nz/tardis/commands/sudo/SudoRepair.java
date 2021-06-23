@@ -19,7 +19,7 @@ package me.eccentric_nz.tardis.commands.sudo;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.data.Tardis;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTardis;
-import me.eccentric_nz.tardis.desktop.TardisRepair;
+import me.eccentric_nz.tardis.desktop.TardisRepairer;
 import me.eccentric_nz.tardis.desktop.TardisUpgradeData;
 import me.eccentric_nz.tardis.enumeration.Schematic;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
@@ -58,7 +58,7 @@ public class SudoRepair {
         tud.setPrevious(current_console);
         tud.setLevel(level);
         plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
-        TardisRepair tr = new TardisRepair(plugin, player);
+        TardisRepairer tr = new TardisRepairer(plugin, player);
         tr.restore(clean);
         return true;
     }

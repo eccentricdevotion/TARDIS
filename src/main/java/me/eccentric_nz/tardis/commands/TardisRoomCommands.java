@@ -20,7 +20,7 @@ import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardis.files.TardisRoomMap;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
-import me.eccentric_nz.tardis.rooms.RoomRequiredLister;
+import me.eccentric_nz.tardis.rooms.RoomRequirementsLister;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -138,7 +138,7 @@ public class TardisRoomCommands implements CommandExecutor {
                         TardisMessage.send(player, "COULD_NOT_FIND_ROOM");
                         return true;
                     }
-                    RoomRequiredLister.listCondensables(plugin, name, player);
+                    RoomRequirementsLister.listCondensables(plugin, name, player);
                     return true;
                 }
                 case "add" -> {

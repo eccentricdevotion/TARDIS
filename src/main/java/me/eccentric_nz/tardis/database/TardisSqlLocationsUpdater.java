@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * @author eccentric_nz
  */
-class TardisSqlUpdateLocations implements Runnable {
+class TardisSqlLocationsUpdater implements Runnable {
 
     private final TardisPlugin plugin;
     private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
@@ -45,7 +45,7 @@ class TardisSqlUpdateLocations implements Runnable {
      * @param data   a HashMap<String, Object> of table fields and values to insert.
      * @param id     the tardis_id
      */
-    TardisSqlUpdateLocations(TardisPlugin plugin, HashMap<String, Object> data, String biome, int id) {
+    TardisSqlLocationsUpdater(TardisPlugin plugin, HashMap<String, Object> data, String biome, int id) {
         this.plugin = plugin;
         this.data = data;
         this.biome = biome;

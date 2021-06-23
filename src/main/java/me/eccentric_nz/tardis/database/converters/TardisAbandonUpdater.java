@@ -28,7 +28,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TardisAbandonUpdate {
+public class TardisAbandonUpdater {
 
     private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
@@ -37,7 +37,7 @@ public class TardisAbandonUpdate {
     private final String uuid;
     private final String prefix;
 
-    public TardisAbandonUpdate(TardisPlugin plugin, int id, String uuid) {
+    public TardisAbandonUpdater(TardisPlugin plugin, int id, String uuid) {
         this.plugin = plugin;
         this.id = id;
         this.uuid = uuid;

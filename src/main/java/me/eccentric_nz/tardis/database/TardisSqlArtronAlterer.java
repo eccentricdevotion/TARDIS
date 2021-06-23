@@ -32,7 +32,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TardisSqlAlterEnergy implements Runnable {
+class TardisSqlArtronAlterer implements Runnable {
 
     private final TardisPlugin plugin;
     private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
@@ -53,7 +53,7 @@ class TardisSqlAlterEnergy implements Runnable {
      * @param where  a HashMap&lt;String, Object&gt; of table fields and values to select the records to alter.
      * @param player the player who receives the success message.
      */
-    TardisSqlAlterEnergy(TardisPlugin plugin, String table, int amount, HashMap<String, Object> where, Player player) {
+    TardisSqlArtronAlterer(TardisPlugin plugin, String table, int amount, HashMap<String, Object> where, Player player) {
         this.plugin = plugin;
         this.table = table;
         this.amount = amount;

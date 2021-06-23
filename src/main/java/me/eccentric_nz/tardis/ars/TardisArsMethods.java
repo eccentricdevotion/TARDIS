@@ -29,7 +29,7 @@ import me.eccentric_nz.tardis.enumeration.Consoles;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.DiskCircuit;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
-import me.eccentric_nz.tardis.rooms.RoomRequiredLister;
+import me.eccentric_nz.tardis.rooms.RoomRequirementsLister;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
@@ -316,7 +316,7 @@ public class TardisArsMethods {
                                 String message = (tap.getChanged().size() > 1) ? "ARS_CONDENSE_MULTIPLE" : "ARS_CONDENSE";
                                 TardisMessage.send(player, message);
                                 if (tap.getChanged().size() == 1) {
-                                    RoomRequiredLister.listCondensables(plugin, tap.getChanged().entrySet().iterator().next().getValue().toString(), player);
+                                    RoomRequirementsLister.listCondensables(plugin, tap.getChanged().entrySet().iterator().next().getValue().toString(), player);
                                 }
                                 revert(playerUUID);
                                 player.closeInventory();

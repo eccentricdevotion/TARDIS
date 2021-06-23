@@ -164,7 +164,7 @@ public class TardisThemeMenuListener extends TardisMenuListener implements Liste
             p.closeInventory();
             String uuid = p.getUniqueId().toString();
             boolean repair;
-            TardisRepair tr = new TardisRepair(plugin, p);
+            TardisRepairer tr = new TardisRepairer(plugin, p);
             // is it a free repair?
             ResultSetCount rsc = new ResultSetCount(plugin, uuid);
             if (rsc.resultSet() && rsc.getRepair() > 0) {
@@ -192,7 +192,7 @@ public class TardisThemeMenuListener extends TardisMenuListener implements Liste
     private void clean(Player p) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
-            new TardisRepair(plugin, p).restore(true);
+            new TardisRepairer(plugin, p).restore(true);
         }, 1L);
     }
 }

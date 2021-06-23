@@ -51,7 +51,7 @@ public class QueryFactory {
      * @param data  a HashMap&lt;String, Object&gt; of table fields and values to insert.
      */
     public void doInsert(String table, HashMap<String, Object> data) {
-        TardisSqlInsert insert = new TardisSqlInsert(plugin, table, data);
+        TardisSqlInserter insert = new TardisSqlInserter(plugin, table, data);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, insert);
     }
 
@@ -125,7 +125,7 @@ public class QueryFactory {
      * @param where a HashMap&lt;String, Object&gt; of table fields and values to select the records to update.
      */
     public void doUpdate(String table, HashMap<String, Object> data, HashMap<String, Object> where) {
-        TardisSqlUpdate update = new TardisSqlUpdate(plugin, table, data, where);
+        TardisSqlUpdater update = new TardisSqlUpdater(plugin, table, data, where);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, update);
     }
 
@@ -137,7 +137,7 @@ public class QueryFactory {
      * @param where a HashMap&lt;String, Object&gt; of table fields and values to select the records to update.
      */
     public void doSyncUpdate(String table, HashMap<String, Object> data, HashMap<String, Object> where) {
-        TardisSqlUpdate update = new TardisSqlUpdate(plugin, table, data, where);
+        TardisSqlUpdater update = new TardisSqlUpdater(plugin, table, data, where);
         plugin.getServer().getScheduler().runTask(plugin, update);
     }
 
@@ -148,7 +148,7 @@ public class QueryFactory {
      * @param where a HashMap&lt;String, Object&gt; of table fields and values to select the records to delete.
      */
     public void doDelete(String table, HashMap<String, Object> where) {
-        TardisSqlDelete delete = new TardisSqlDelete(plugin, table, where);
+        TardisSqlDeleter delete = new TardisSqlDeleter(plugin, table, where);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, delete);
     }
 
@@ -201,7 +201,7 @@ public class QueryFactory {
      * @param p      the player who receives the success message.
      */
     public void alterEnergyLevel(String table, int amount, HashMap<String, Object> where, Player p) {
-        TardisSqlAlterEnergy alter = new TardisSqlAlterEnergy(plugin, table, amount, where, p);
+        TardisSqlArtronAlterer alter = new TardisSqlArtronAlterer(plugin, table, amount, where, p);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, alter);
     }
 
@@ -212,7 +212,7 @@ public class QueryFactory {
      * @param where  a HashMap&lt;String, Object&gt; of table fields and values to select the records to alter.
      */
     public void alterCondenserBlockCount(int amount, HashMap<String, Object> where) {
-        TardisSqlCondenserUpdate condense = new TardisSqlCondenserUpdate(plugin, amount, where);
+        TardisSqlCondenserUpdater condense = new TardisSqlCondenserUpdater(plugin, amount, where);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, condense);
     }
 
@@ -225,7 +225,7 @@ public class QueryFactory {
      * @param s    what level the control is (0 primary, 1 secondary (BAKER), 2 tertiary (WOOD))
      */
     public void insertControl(int id, int type, String l, int s) {
-        TardisSqlInsertControl control = new TardisSqlInsertControl(plugin, id, type, l, s);
+        TardisSqlControlInserter control = new TardisSqlControlInserter(plugin, id, type, l, s);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, control);
     }
 
@@ -275,7 +275,7 @@ public class QueryFactory {
      * @param id    the tardis_id
      */
     public void insertLocations(HashMap<String, Object> data, String biome, int id) {
-        TardisSqlInsertLocations locate = new TardisSqlInsertLocations(plugin, data, biome, id);
+        TardisSqlLocationsInserter locate = new TardisSqlLocationsInserter(plugin, data, biome, id);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, locate);
     }
 
@@ -287,7 +287,7 @@ public class QueryFactory {
      * @param id    the tardis_id
      */
     public void updateLocations(HashMap<String, Object> data, String biome, int id) {
-        TardisSqlUpdateLocations locate = new TardisSqlUpdateLocations(plugin, data, biome, id);
+        TardisSqlLocationsUpdater locate = new TardisSqlLocationsUpdater(plugin, data, biome, id);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, locate);
     }
 

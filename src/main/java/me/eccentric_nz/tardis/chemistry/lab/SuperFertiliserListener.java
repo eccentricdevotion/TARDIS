@@ -40,7 +40,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class SuperFertisliserListener implements Listener {
+public class SuperFertiliserListener implements Listener {
 
     private final TardisPlugin plugin;
     private final HashMap<Material, TreeType> TREE_LOOKUP = new HashMap<>() {
@@ -60,7 +60,7 @@ public class SuperFertisliserListener implements Listener {
     };
     private final Set<Material> TREES = new HashSet<>();
 
-    public SuperFertisliserListener(TardisPlugin plugin) {
+    public SuperFertiliserListener(TardisPlugin plugin) {
         this.plugin = plugin;
         TREES.add(Material.OAK_SAPLING);
         TREES.add(Material.DARK_OAK_SAPLING);

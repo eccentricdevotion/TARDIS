@@ -28,7 +28,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TardisSqlUpdate implements Runnable {
+class TardisSqlUpdater implements Runnable {
 
     private final TardisPlugin plugin;
     private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
@@ -47,7 +47,7 @@ class TardisSqlUpdate implements Runnable {
      * @param data   a HashMap<String, Object> of table fields and values update.
      * @param where  a HashMap<String, Object> of table fields and values to select the records to update.
      */
-    TardisSqlUpdate(TardisPlugin plugin, String table, HashMap<String, Object> data, HashMap<String, Object> where) {
+    TardisSqlUpdater(TardisPlugin plugin, String table, HashMap<String, Object> data, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.table = table;
         this.data = data;

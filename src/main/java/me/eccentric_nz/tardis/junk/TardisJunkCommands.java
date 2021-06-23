@@ -78,7 +78,7 @@ public class TardisJunkCommands implements CommandExecutor {
                     return new TardisJunkReturn(plugin).recall(sender);
                 }
                 if (first.equals("delete")) {
-                    return new TardisJunkDelete(plugin).delete(sender);
+                    return new TardisJunkDeleter(plugin).delete(sender);
                 }
                 return true;
             }

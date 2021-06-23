@@ -35,11 +35,11 @@ import java.util.Objects;
 /**
  * @author eccentric_nz
  */
-class TardisJunkDelete {
+class TardisJunkDeleter {
 
     private final TardisPlugin plugin;
 
-    TardisJunkDelete(TardisPlugin plugin) {
+    TardisJunkDeleter(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 

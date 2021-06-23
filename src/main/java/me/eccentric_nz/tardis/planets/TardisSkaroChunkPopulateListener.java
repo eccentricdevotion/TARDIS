@@ -84,7 +84,7 @@ public class TardisSkaroChunkPopulateListener implements Listener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             chunks.add(chunkInfo);
             // create structure
-            TardisBuildSkaroStructure tbss = new TardisBuildSkaroStructure(plugin, chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
+            TardisSkaroStructureBuilder tbss = new TardisSkaroStructureBuilder(plugin, chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, tbss, 1L, 1L);
             tbss.setTask(task);
         }, 2L);

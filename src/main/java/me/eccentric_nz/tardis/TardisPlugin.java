@@ -361,7 +361,7 @@ public class TardisPlugin extends JavaPlugin {
                 conversions++;
             }
             if (!getConfig().getBoolean("conversions.icons")) {
-                new TardisSaveIconUpdate(this).addIcons();
+                new TardisSaveIconUpdater(this).addIcons();
                 getConfig().set("conversions.icons", true);
                 conversions++;
             }

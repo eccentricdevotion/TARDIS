@@ -30,7 +30,7 @@ import me.eccentric_nz.tardis.mobfarming.TardisFarmer;
 import me.eccentric_nz.tardis.mobfarming.TardisFollowerSpawner;
 import me.eccentric_nz.tardis.mobfarming.TardisPetsAndFollowers;
 import me.eccentric_nz.tardis.utility.TardisStaticUtils;
-import me.eccentric_nz.tardis.utility.TardisVoidUpdate;
+import me.eccentric_nz.tardis.utility.TardisVoidUpdater;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -124,7 +124,7 @@ public class TardisMoveListener implements Listener {
                     plugin.getQueryFactory().doSyncInsert("travellers", set);
                     // check to see whether the tardis has been updated to VOID biome
                     if (!new ResultSetVoid(plugin, id).hasUpdatedToVOID()) {
-                        new TardisVoidUpdate(plugin, id).updateBiome();
+                        new TardisVoidUpdater(plugin, id).updateBiome();
                         // add tardis id to void table
                         plugin.getQueryFactory().addToVoid(id);
                     }

@@ -26,7 +26,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RoomRequiredLister {
+public class RoomRequirementsLister {
 
     public static void listCondensables(TardisPlugin plugin, String name, Player player) {
         HashMap<String, Integer> blockTypes = plugin.getBuildKeeper().getRoomBlockCounts().get(name);

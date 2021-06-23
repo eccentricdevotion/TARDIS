@@ -15,14 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class UpdateTardisPlugins {
+public class TardisPluginsUpdater {
 
     private final TardisPlugin plugin;
     private final List<String> FILES = new ArrayList<>();
     private final List<String> URLS = new ArrayList<>();
     private final AtomicBoolean updateInProgress = new AtomicBoolean(false);
 
-    public UpdateTardisPlugins(TardisPlugin plugin) {
+    public TardisPluginsUpdater(TardisPlugin plugin) {
         this.plugin = plugin;
         FILES.add("tardis.jar");
         FILES.add("TARDISChunkGenerator.jar");

@@ -29,13 +29,13 @@ import java.util.*;
 /**
  * TabCompleter for /tardis?
  */
-public class TardisQuestionTabComplete extends TardisCompleter implements TabCompleter {
+public class TardisQuestionMarkTabComplete extends TardisCompleter implements TabCompleter {
 
     private final TardisPlugin plugin;
     private final ImmutableList<String> ROOT_SUBS;
     private final List<String> notThese = Arrays.asList("aliases", "description", "usage", "permission", "permission-message");
 
-    public TardisQuestionTabComplete(TardisPlugin plugin) {
+    public TardisQuestionMarkTabComplete(TardisPlugin plugin) {
         this.plugin = plugin;
         List<String> roots = new ArrayList<>();
         for (ROOT_COMMAND rc : TardisCommandHelper.ROOT_COMMAND.values()) {

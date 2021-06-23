@@ -32,13 +32,13 @@ import static me.eccentric_nz.tardis.utility.TardisSpiral.SPIRAL;
 /**
  * @author eccentric_nz
  */
-public class TardisVoidUpdate {
+public class TardisVoidUpdater {
 
     private final TardisPlugin plugin;
     private final int id;
     private int taskID;
 
-    public TardisVoidUpdate(TardisPlugin plugin, int id) {
+    public TardisVoidUpdater(TardisPlugin plugin, int id) {
         this.plugin = plugin;
         this.id = id;
     }

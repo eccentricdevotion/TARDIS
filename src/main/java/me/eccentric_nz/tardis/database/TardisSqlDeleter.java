@@ -27,7 +27,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TardisSqlDelete implements Runnable {
+class TardisSqlDeleter implements Runnable {
 
     private final TardisPlugin plugin;
     private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
@@ -44,7 +44,7 @@ class TardisSqlDelete implements Runnable {
      * @param table  the database table name to insert the data into.
      * @param where  a HashMap<String, Object> of table fields and values to select the records to delete.
      */
-    TardisSqlDelete(TardisPlugin plugin, String table, HashMap<String, Object> where) {
+    TardisSqlDeleter(TardisPlugin plugin, String table, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.table = table;
         this.where = where;

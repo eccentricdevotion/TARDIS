@@ -40,7 +40,7 @@ import java.io.File;
  *
  * @author eccentric_nz
  */
-class TardisBuildSkaroStructure implements Runnable {
+class TardisSkaroStructureBuilder implements Runnable {
 
     private final TardisPlugin plugin;
     private final int startx, y, startz;
@@ -57,7 +57,7 @@ class TardisBuildSkaroStructure implements Runnable {
      * @param y      the start coordinate on the y-axis
      * @param startz the start coordinate on the z-axis
      */
-    TardisBuildSkaroStructure(TardisPlugin plugin, int startx, int y, int startz) {
+    TardisSkaroStructureBuilder(TardisPlugin plugin, int startx, int y, int startz) {
         this.plugin = plugin;
         this.startx = startx;
         this.y = y;
