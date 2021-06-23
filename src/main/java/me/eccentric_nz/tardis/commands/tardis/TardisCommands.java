@@ -117,7 +117,7 @@ public class TardisCommands implements CommandExecutor {
                 case colorize:
                     new TardisColouriseCommand(plugin).updateBeaconGlass(player);
                 case comehere:
-                    return new TardisComehereCommand(plugin).doComeHere(player);
+                    return new TardisComeHereCommand(plugin).doComeHere(player);
                 case construct:
                     return new TardisConstructCommand(plugin).setLine(player, args);
                 case cube:

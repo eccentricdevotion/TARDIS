@@ -29,12 +29,12 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-class TardisChameleonTemplateGUI {
+class TardisChameleonTemplateGui {
 
     private final TardisPlugin plugin;
     private final ItemStack[] template;
 
-    TardisChameleonTemplateGUI(TardisPlugin plugin) {
+    TardisChameleonTemplateGui(TardisPlugin plugin) {
         this.plugin = plugin;
         template = getItemStack();
     }

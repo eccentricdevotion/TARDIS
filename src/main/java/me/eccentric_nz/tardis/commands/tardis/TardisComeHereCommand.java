@@ -53,11 +53,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TardisComehereCommand {
+class TardisComeHereCommand {
 
     private final TardisPlugin plugin;
 
-    TardisComehereCommand(TardisPlugin plugin) {
+    TardisComeHereCommand(TardisPlugin plugin) {
         this.plugin = plugin;
     }
 
