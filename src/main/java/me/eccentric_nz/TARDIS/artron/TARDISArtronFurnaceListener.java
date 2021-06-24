@@ -48,12 +48,12 @@ public class TARDISArtronFurnaceListener implements Listener {
 
     private final TARDIS plugin;
     private final double burnFactor;
-    private final short cookTime;
+    private final int cookTime;
 
     public TARDISArtronFurnaceListener(TARDIS plugin) {
         this.plugin = plugin;
         burnFactor = plugin.getArtronConfig().getInt("artron_furnace.burn_limit") * plugin.getArtronConfig().getDouble("artron_furnace.burn_time");
-        cookTime = (short) (200 * this.plugin.getArtronConfig().getDouble("artron_furnace.cook_time"));
+        cookTime = 200 * this.plugin.getArtronConfig().getInt("artron_furnace.cook_time");
     }
 
     @EventHandler(ignoreCancelled = true)
