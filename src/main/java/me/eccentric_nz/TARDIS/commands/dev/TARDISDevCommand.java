@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.builders.FractalFence;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
@@ -48,7 +49,7 @@ import java.util.Set;
  */
 public class TARDISDevCommand implements CommandExecutor {
 
-    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "list", "tree", "stats");
+    private final Set<String> firstsStr = Sets.newHashSet("add_regions", "advancements", "list", "set_biome", "stats", "tree");
     private final TARDIS plugin;
 
     public TARDISDevCommand(TARDIS plugin) {
@@ -93,10 +94,16 @@ public class TARDISDevCommand implements CommandExecutor {
                     TARDISMessage.send(sender, "TOO_FEW_ARGS");
                     return false;
                 }
+                if (first.equals("set_biome")) {
+                    if (sender instanceof Player p) {
+                        Chunk chunk = p.getLocation().getChunk();
+                        plugin.getTardisHelper().setCustomBiome(args[1], chunk);
+                        return true;
+                    }
+                }
                 if (first.equals("tree")) {
-                    if (sender instanceof Player) {
-                        Player p = (Player) sender;
-                        Block l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation().getBlock();
+                    if (sender instanceof Player player) {
+                        Block l = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation().getBlock();
                         int which = TARDISNumberParsers.parseInt(args[1]);
                         FractalFence.grow(l, which);
                     }
