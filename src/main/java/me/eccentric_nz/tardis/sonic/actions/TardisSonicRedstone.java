@@ -21,6 +21,7 @@ import me.eccentric_nz.tardis.TardisConstants;
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlock;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
+import me.eccentric_nz.tardis.light.Light;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -160,11 +161,11 @@ public class TardisSonicRedstone {
                     if (TardisMushroomBlock.isChemistryStemOn(multipleFacing)) {
                         multipleFacing = TardisMushroomBlock.getChemistryStemOff(multipleFacing);
                         // delete light source
-                        plugin.getTardisHelper().deleteLight(block.getLocation());
+                        Light.deleteLight(block.getLocation());
                     } else if (TardisMushroomBlock.isChemistryStemOff(multipleFacing)) {
                         multipleFacing = TardisMushroomBlock.getChemistryStemOn(multipleFacing);
                         // create light source
-                        plugin.getTardisHelper().createLight(block.getLocation());
+                        Light.createLight(block.getLocation());
                     }
                     block.setBlockData(multipleFacing, true);
                     break;

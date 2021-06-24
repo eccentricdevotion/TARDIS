@@ -14,19 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardis.arch;
+package me.eccentric_nz.tardis.disguise;
 
-import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardis.disguise.TardisDisguiser;
-import org.bukkit.entity.Player;
+public enum Age {
 
-public class TardisArchDisguise {
+    BABY(-24000),
+    ADULT(1);
 
-    public static void disguise(Player player, String name) {
-        TardisDisguiser.disguise(player, name);
+    private final int age;
+
+    Age(int age) {
+        this.age = age;
     }
 
-    public static void undisguise(Player player) {
-        TardisDisguiser.reset(player);
+    public static Age getFromBoolean(boolean b) {
+        return (b) ? BABY : ADULT;
+    }
+
+    public int getAge() {
+        return age;
     }
 }

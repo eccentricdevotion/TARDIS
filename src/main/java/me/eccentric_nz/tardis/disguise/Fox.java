@@ -14,19 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardis.arch;
+package me.eccentric_nz.tardis.disguise;
 
-import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardis.disguise.TardisDisguiser;
-import org.bukkit.entity.Player;
+import net.minecraft.server.v1_16_R3.EntityFox;
 
-public class TardisArchDisguise {
+public enum Fox {
 
-    public static void disguise(Player player, String name) {
-        TardisDisguiser.disguise(player, name);
+    RED(EntityFox.Type.RED),
+    SNOW(EntityFox.Type.SNOW);
+
+    private final EntityFox.Type nmsType;
+
+    Fox(EntityFox.Type nmsType) {
+        this.nmsType = nmsType;
     }
 
-    public static void undisguise(Player player) {
-        TardisDisguiser.reset(player);
+    public static Fox getFromFoxType(org.bukkit.entity.Fox.Type type) {
+        return Fox.valueOf(type.toString());
+    }
+
+    public EntityFox.Type getNmsType() {
+        return nmsType;
     }
 }

@@ -18,8 +18,8 @@ package me.eccentric_nz.tardis.utility;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.control.TardisScanner;
-import me.eccentric_nz.tardischunkgenerator.disguise.*;
-import me.eccentric_nz.tardischunkgenerator.disguise.Fox;
+import me.eccentric_nz.tardis.disguise.Fox;
+import me.eccentric_nz.tardis.disguise.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
@@ -136,7 +136,7 @@ public class TardisEntityTracker {
                     default:
                         break;
                 }
-                plugin.getTardisHelper().disguiseArmourStand(stand, e.getType(), options);
+                TardisArmorStandDisguiser.disguiseArmourStand(stand, e.getType(), options);
             }
         }
         if (npcids.size() > 0) {
@@ -148,7 +148,7 @@ public class TardisEntityTracker {
         plugin.getTrackerKeeper().getRenderedNPCs().get(uuid).forEach((i) -> {
             Entity npc = Bukkit.getEntity(i);
             if (npc != null) {
-                plugin.getTardisHelper().undisguiseArmourStand((ArmorStand) npc);
+                TardisArmorStandDisguiser.undisguiseArmourStand((ArmorStand) npc);
                 npc.remove();
             }
         });

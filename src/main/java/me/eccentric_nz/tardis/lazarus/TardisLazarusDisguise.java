@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardis.lazarus;
 
 import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.disguise.TardisDisguiser;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
@@ -37,22 +38,22 @@ public class TardisLazarusDisguise {
     }
 
     public static void removeDisguise(Player player) {
-        TardisPlugin.plugin.getTardisHelper().undisguise(player);
+        TardisDisguiser.undisguise(player);
     }
 
     public static void runImmortalityGate(Player player) {
         TardisPlugin.plugin.getServer().getOnlinePlayers().forEach((p) -> {
             if (!p.equals(player)) {
-                TardisPlugin.plugin.getTardisHelper().disguise(p, player.getUniqueId());
+                TardisDisguiser.disguise(p, player.getUniqueId());
             }
         });
     }
 
     public void createDisguise() {
         if (entityType.equals(EntityType.PLAYER)) {
-            plugin.getTardisHelper().disguise(player, UUID.fromString("f84c6a79-0a4e-45e0-879b-cd49ebd4c4e2")); // or 91f25eb5-2b0e-46bc-8437-401c6017f369
+            TardisDisguiser.disguise(player, UUID.fromString("f84c6a79-0a4e-45e0-879b-cd49ebd4c4e2")); // or 91f25eb5-2b0e-46bc-8437-401c6017f369
         } else {
-            plugin.getTardisHelper().disguise(entityType, player, options);
+            TardisDisguiser.disguise(entityType, player, options);
         }
     }
 }

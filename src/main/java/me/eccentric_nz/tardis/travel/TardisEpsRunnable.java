@@ -18,6 +18,7 @@ package me.eccentric_nz.tardis.travel;
 
 import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.database.resultset.ResultSetDoors;
+import me.eccentric_nz.tardis.disguise.TardisEpsDisguiser;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.utility.TardisNumberParsers;
 import me.eccentric_nz.tardis.utility.TardisSounds;
@@ -92,7 +93,7 @@ public class TardisEpsRunnable implements Runnable {
                     l.setYaw(yaw);
                 }
                 // create NPC
-                int npcID = plugin.getTardisHelper().spawnEmergencyProgrammeOne(tl, l);
+                int npcID = TardisEpsDisguiser.spawnEmergencyProgrammeOne(tl, l);
                 players.forEach((p) -> {
                     Player pp = plugin.getServer().getPlayer(p);
                     if (pp != null) {
@@ -106,7 +107,7 @@ public class TardisEpsRunnable implements Runnable {
                             TardisMessage.message(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + plugin.getLanguage().getString("EP1_BYE"));
                         }
                     });
-                    plugin.getTardisHelper().removeNPC(npcID, l.getWorld());
+                    TardisEpsDisguiser.removeNpc(npcID, l.getWorld());
                 }, 1000L);
             } catch (CommandException e) {
                 plugin.debug(e.getMessage());

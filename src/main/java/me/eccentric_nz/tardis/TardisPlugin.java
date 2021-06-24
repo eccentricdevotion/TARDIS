@@ -39,6 +39,7 @@ import me.eccentric_nz.tardis.database.*;
 import me.eccentric_nz.tardis.database.converters.*;
 import me.eccentric_nz.tardis.destroyers.TardisDestroyerInner;
 import me.eccentric_nz.tardis.destroyers.TardisPresetDestroyerFactory;
+import me.eccentric_nz.tardis.disguise.TardisDisguiseListener;
 import me.eccentric_nz.tardis.dynmap.TardisDynmap;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
 import me.eccentric_nz.tardis.enumeration.InventoryManager;
@@ -52,6 +53,7 @@ import me.eccentric_nz.tardis.hads.TardisHadsPersister;
 import me.eccentric_nz.tardis.handles.TardisHandlesRunnable;
 import me.eccentric_nz.tardis.info.TardisInformationSystemListener;
 import me.eccentric_nz.tardis.junk.TardisJunkReturnRunnable;
+import me.eccentric_nz.tardis.light.RequestSteamMachine;
 import me.eccentric_nz.tardis.mobfarming.TardisBeeWaker;
 import me.eccentric_nz.tardis.move.TardisMonsterRunnable;
 import me.eccentric_nz.tardis.move.TardisPortalPersister;
@@ -100,6 +102,7 @@ import java.util.regex.Pattern;
  */
 public class TardisPlugin extends JavaPlugin {
 
+    public static final RequestSteamMachine MACHINE = new RequestSteamMachine();
     public static TardisPlugin plugin;
     private final TardisDatabaseConnection service = TardisDatabaseConnection.getINSTANCE();
     private final TardisArea tardisArea = new TardisArea(this);
@@ -242,6 +245,9 @@ public class TardisPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (MACHINE.isStarted()) {
+            MACHINE.shutdown();
+        }
         if (hasVersion) {
             if (tardisDynmap != null) {
                 tardisDynmap.disable();
@@ -290,6 +296,10 @@ public class TardisPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // register disguise listener
+        getServer().getPluginManager().registerEvents(new TardisDisguiseListener(this), this);
+        // start RequestStreamMachine
+        MACHINE.start(2, 400);
         pluginManager = getServer().getPluginManager();
         pluginName = ChatColor.GOLD + "[" + getDescription().getName() + "]" + ChatColor.RESET + " ";
         plugin = this;

@@ -14,19 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardis.arch;
+package me.eccentric_nz.tardis.disguise;
 
-import me.eccentric_nz.tardis.TardisPlugin;
-import me.eccentric_nz.tardis.disguise.TardisDisguiser;
-import org.bukkit.entity.Player;
+import net.minecraft.server.v1_16_R3.EntityMushroomCow;
+import org.bukkit.entity.MushroomCow;
 
-public class TardisArchDisguise {
+public enum Mooshroom {
 
-    public static void disguise(Player player, String name) {
-        TardisDisguiser.disguise(player, name);
+    BROWN(EntityMushroomCow.Type.BROWN),
+    RED(EntityMushroomCow.Type.RED);
+
+    private final EntityMushroomCow.Type nmsType;
+
+    Mooshroom(EntityMushroomCow.Type nmsType) {
+        this.nmsType = nmsType;
     }
 
-    public static void undisguise(Player player) {
-        TardisDisguiser.reset(player);
+    public static Mooshroom getFromMushroomCowType(MushroomCow.Variant variant) {
+        return Mooshroom.valueOf(variant.toString());
+    }
+
+    public EntityMushroomCow.Type getNmsType() {
+        return nmsType;
     }
 }

@@ -21,6 +21,7 @@ import me.eccentric_nz.tardis.advanced.TardisCircuitChecker;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.database.resultset.*;
 import me.eccentric_nz.tardis.enumeration.Difficulty;
+import me.eccentric_nz.tardis.keyboard.TardisKeyboardGuiController;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import me.eccentric_nz.tardis.planets.TardisAliasResolver;
 import org.bukkit.Material;
@@ -90,7 +91,7 @@ public class TardisKeyboardListener implements Listener {
                 }
                 Sign sign = (Sign) b.getState();
                 plugin.getTrackerKeeper().getSign().put(loc, sign);
-                plugin.getTardisHelper().openSignGUI(player, sign);
+                TardisKeyboardGuiController.openSignGui(player, sign);
             }
         }
     }
@@ -197,12 +198,12 @@ public class TardisKeyboardListener implements Listener {
                 removeTracker(id);
                 return;
             }
-            plugin.getTardisHelper().finishSignEditing(p);
+            TardisKeyboardGuiController.finishSignEditing(p);
         } else {
             plugin.debug("Player is not in a tardis!");
         }
         TardisMessage.send(p, "KEYBOARD_ERROR");
-        plugin.getTardisHelper().finishSignEditing(p);
+        TardisKeyboardGuiController.finishSignEditing(p);
     }
 
     private boolean currentIsNotHome(ResultSetHomeLocation rsh, ResultSetCurrentLocation rsc) {

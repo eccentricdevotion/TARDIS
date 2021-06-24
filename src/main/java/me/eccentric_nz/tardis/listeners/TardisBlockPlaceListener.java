@@ -21,6 +21,7 @@ import me.eccentric_nz.tardis.TardisPlugin;
 import me.eccentric_nz.tardis.blueprints.TardisPermission;
 import me.eccentric_nz.tardis.custommodeldata.TardisMushroomBlockData;
 import me.eccentric_nz.tardis.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.tardis.light.Light;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -98,7 +99,7 @@ public class TardisBlockPlaceListener implements Listener {
                     }
                     event.getBlockPlaced().setBlockData(multipleFacing, light);
                     if (light) {
-                        plugin.getTardisHelper().createLight(event.getBlockPlaced().getLocation());
+                        Light.createLight(event.getBlockPlaced().getLocation());
                     }
                     return;
                 }

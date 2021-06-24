@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardis.commands.admin;
 
 import me.eccentric_nz.tardis.TardisPlugin;
+import me.eccentric_nz.tardis.disguise.TardisDisguiser;
 import me.eccentric_nz.tardis.messaging.TardisMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
@@ -49,7 +50,7 @@ public class TardisDisguiseCommand {
                 TardisMessage.message(sender, "You need to specify a valid living entity type!");
                 return true;
             }
-            plugin.getTardisHelper().disguise(entityType, player);
+            TardisDisguiser.disguise(entityType, player);
         }
         if (args[0].equalsIgnoreCase("undisguise")) {
             Player player = null;
@@ -62,7 +63,7 @@ public class TardisDisguiseCommand {
                 TardisMessage.message(sender, "You need to specify a player!");
                 return true;
             }
-            plugin.getTardisHelper().undisguise(player);
+            TardisDisguiser.undisguise(player);
         }
         return true;
     }

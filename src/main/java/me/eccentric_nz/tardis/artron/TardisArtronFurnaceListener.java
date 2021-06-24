@@ -145,7 +145,7 @@ public class TardisArtronFurnaceListener implements Listener {
             if (plugin.getArtronConfig().getBoolean("artron_furnace.particles")) {
                 plugin.getGeneralKeeper().getArtronFurnaces().add(b);
             }
-            plugin.getTardisHelper().nameFurnaceGUI(b, "TARDIS Artron Furnace");
+            plugin.getTardisHelper().nameFurnaceGui(b, "TARDIS Artron Furnace");
         } else {
             event.setCancelled(true);
             TardisMessage.send(player, "NO_PERM_FURNACE");
