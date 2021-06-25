@@ -122,7 +122,7 @@ public class TardisRemoteKeyListener implements Listener {
                     String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
                     TardisMessage.send(player, "DOOR_LOCK", message);
                     TardisAdaptiveBoxLampToggler tpblt = new TardisAdaptiveBoxLampToggler(plugin);
-                    TardisSounds.playTARDISSound(l, "tardis_lock");
+                    TardisSounds.playTardisSound(l, "tardis_lock");
                     tpblt.toggleLamp(id, !powered);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> tpblt.toggleLamp(id, powered), 6L);
                 }

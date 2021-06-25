@@ -35,7 +35,7 @@ import java.util.UUID;
  */
 public class TardisHumSounds {
 
-    private final Callback<HumPrefs> prefs = (HumPrefs pref) -> TardisSounds.playTARDISSound(pref.getPlayer(), pref.getHum());
+    private final Callback<HumPrefs> prefs = (HumPrefs pref) -> TardisSounds.playTardisSound(pref.getPlayer(), pref.getHum());
     private final Callback<List<UUID>> callback = (List<UUID> data) -> {
         // Do whatever with the data
         data.forEach((u) -> {

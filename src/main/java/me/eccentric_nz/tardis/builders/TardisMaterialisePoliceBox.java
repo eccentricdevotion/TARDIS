@@ -109,7 +109,7 @@ public class TardisMaterialisePoliceBox implements Runnable {
                                             "tardis_land";
                                 };
                             }
-                            TardisSounds.playTARDISSound(bd.getLocation(), sound);
+                            TardisSounds.playTardisSound(bd.getLocation(), sound);
                         } else {
                             world.playSound(bd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                         }

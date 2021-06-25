@@ -115,8 +115,8 @@ public class TardisPlugin extends JavaPlugin {
     private final TardisChatGuiJson jsonKeeper = new TardisChatGuiJson();
     private final List<String> cleanUpWorlds = new ArrayList<>();
     private final HashMap<String, String> versions = new HashMap<>();
-    private Calendar afterCal;
-    private Calendar beforeCal;
+    private Calendar afterCalendar;
+    private Calendar beforeCalendar;
     private ConsoleCommandSender console;
     private File quotesFile = null;
     private FileConfiguration advancementConfig;
@@ -140,9 +140,9 @@ public class TardisPlugin extends JavaPlugin {
     private TardisChameleonPreset presets;
     private TardisPerceptionFilter filter;
     private TardisPluginRespect pluginRespect;
-    private TardisSeedRecipe obstructionum;
-    private TardisShapedRecipe figura;
-    private TardisShapelessRecipe incomposita;
+    private TardisSeedRecipe seedRecipe;
+    private TardisShapedRecipe shapedRecipe;
+    private TardisShapelessRecipe shapelessRecipe;
     private TardisUtils utils;
     private TardisLocationGetters locationUtils;
     private TardisWorldGuardUtils worldGuardUtils;
@@ -343,7 +343,7 @@ public class TardisPlugin extends JavaPlugin {
             loadCustomConfigs();
             loadLanguage();
             loadSigns();
-            loadChameleonGUIs();
+            loadChameleonGuis();
             new TardisConfiguration(this).checkConfig();
             prefix = getConfig().getString("storage.mysql.prefix");
             loadDatabase();
@@ -351,7 +351,7 @@ public class TardisPlugin extends JavaPlugin {
             int conversions = 0;
             // update database materials
             if (!getConfig().getBoolean("conversions.ars_materials")) {
-                new ArsConverter(this).convertARS();
+                new ArsConverter(this).convertArs();
                 getConfig().set("conversions.ars_materials", true);
                 conversions++;
             }
@@ -408,12 +408,12 @@ public class TardisPlugin extends JavaPlugin {
                 difficulty = Difficulty.EASY;
             }
             // register recipes
-            obstructionum = new TardisSeedRecipe(this);
-            obstructionum.addSeedRecipes();
-            figura = new TardisShapedRecipe(this);
-            figura.addShapedRecipes();
-            incomposita = new TardisShapelessRecipe(this);
-            incomposita.addShapelessRecipes();
+            seedRecipe = new TardisSeedRecipe(this);
+            seedRecipe.addSeedRecipes();
+            shapedRecipe = new TardisShapedRecipe(this);
+            shapedRecipe.addShapedRecipes();
+            shapelessRecipe = new TardisShapelessRecipe(this);
+            shapelessRecipe.addShapelessRecipes();
             new TardisSmithingRecipe(this).addSmithingRecipes();
             TardisInformationSystemListener info = new TardisListenerRegistrar(this).registerListeners();
             new TardisCommandSetter(this, info).loadCommands();
@@ -644,7 +644,7 @@ public class TardisPlugin extends JavaPlugin {
     /**
      * Loads the Chameleon GUIs file.
      */
-    private void loadChameleonGUIs() {
+    private void loadChameleonGuis() {
         // check file exists
         File file;
         file = new File(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml");
@@ -828,7 +828,7 @@ public class TardisPlugin extends JavaPlugin {
         Plugin tcg = pluginManager.getPlugin("TARDISChunkGenerator");
         if (tcg != null && tcg.isEnabled()) {
             debug("Hooking into TARDISChunkGenerator!");
-            tardisHelper = (TardisHelperPlugin) getPM().getPlugin("TARDISChunkGenerator");
+            tardisHelper = (TardisHelperPlugin) getPluginManager().getPlugin("TARDISChunkGenerator");
             return true;
         }
         return false;
@@ -1004,18 +1004,18 @@ public class TardisPlugin extends JavaPlugin {
     private void setDates() {
         int month = getTagConfig().getInt("month") - 1;
         int day = getTagConfig().getInt("day");
-        beforeCal = Calendar.getInstance();
-        beforeCal.set(Calendar.HOUR, 0);
-        beforeCal.set(Calendar.MINUTE, 0);
-        beforeCal.set(Calendar.SECOND, 0);
-        beforeCal.set(Calendar.MONTH, month);
-        beforeCal.set(Calendar.DATE, day);
-        afterCal = Calendar.getInstance();
-        afterCal.set(Calendar.HOUR, 23);
-        afterCal.set(Calendar.MINUTE, 59);
-        afterCal.set(Calendar.SECOND, 59);
-        afterCal.set(Calendar.MONTH, month);
-        afterCal.set(Calendar.DATE, day);
+        beforeCalendar = Calendar.getInstance();
+        beforeCalendar.set(Calendar.HOUR, 0);
+        beforeCalendar.set(Calendar.MINUTE, 0);
+        beforeCalendar.set(Calendar.SECOND, 0);
+        beforeCalendar.set(Calendar.MONTH, month);
+        beforeCalendar.set(Calendar.DATE, day);
+        afterCalendar = Calendar.getInstance();
+        afterCalendar.set(Calendar.HOUR, 23);
+        afterCalendar.set(Calendar.MINUTE, 59);
+        afterCalendar.set(Calendar.SECOND, 59);
+        afterCalendar.set(Calendar.MONTH, month);
+        afterCalendar.set(Calendar.DATE, day);
         // reset config
         getTagConfig().set("it", "");
     }
@@ -1056,9 +1056,9 @@ public class TardisPlugin extends JavaPlugin {
      *
      * @return true if TWA is the correct version
      */
-    public boolean checkTWA() {
-        if (getPM().isPluginEnabled("TARDISWeepingAngels")) {
-            Plugin twa = getPM().getPlugin("TARDISWeepingAngels");
+    public boolean checkTwa() {
+        if (getPluginManager().isPluginEnabled("TARDISWeepingAngels")) {
+            Plugin twa = getPluginManager().getPlugin("TARDISWeepingAngels");
             assert twa != null;
             Version version = new Version(twa.getDescription().getVersion());
             return (version.compareTo(new Version("3.3.1")) >= 0);
@@ -1174,28 +1174,28 @@ public class TardisPlugin extends JavaPlugin {
         return presets;
     }
 
-    public TardisShapedRecipe getFigura() {
-        return figura;
+    public TardisShapedRecipe getShapedRecipe() {
+        return shapedRecipe;
     }
 
-    public TardisSeedRecipe getOobstructionum() {
-        return obstructionum;
+    public TardisSeedRecipe getSeedRecipe() {
+        return seedRecipe;
     }
 
-    public TardisShapelessRecipe getIncomposita() {
-        return incomposita;
+    public TardisShapelessRecipe getShapelessRecipe() {
+        return shapelessRecipe;
     }
 
     public TardisPerceptionFilter getFilter() {
         return filter;
     }
 
-    public Calendar getBeforeCal() {
-        return beforeCal;
+    public Calendar getBeforeCalendar() {
+        return beforeCalendar;
     }
 
-    public Calendar getAfterCal() {
-        return afterCal;
+    public Calendar getAfterCalendar() {
+        return afterCalendar;
     }
 
     public HashMap<String, Integer> getCondensables() {
@@ -1246,7 +1246,7 @@ public class TardisPlugin extends JavaPlugin {
         return disguisesOnServer;
     }
 
-    public PluginManager getPM() {
+    public PluginManager getPluginManager() {
         return pluginManager;
     }
 
@@ -1254,7 +1254,7 @@ public class TardisPlugin extends JavaPlugin {
         return tardisCopier;
     }
 
-    public Tardises getTardisAPI() {
+    public Tardises getTardisApi() {
         return new Tardises();
     }
 
@@ -1307,7 +1307,7 @@ public class TardisPlugin extends JavaPlugin {
         return sonicUuidKey;
     }
 
-    public PersistentDataType<byte[], UUID> getPersistentDataTypeUUID() {
+    public PersistentDataType<byte[], UUID> getPersistentDataTypeUuid() {
         return persistentDataTypeUUID;
     }
 
@@ -1347,8 +1347,8 @@ public class TardisPlugin extends JavaPlugin {
         try {
             String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
             planetsConfig.save(new File(planetsPath));
-        } catch (IOException io) {
-            plugin.debug("Could not save planets.yml, " + io.getMessage());
+        } catch (IOException ioException) {
+            plugin.debug("Could not save planets.yml, " + ioException.getMessage());
         }
     }
 }

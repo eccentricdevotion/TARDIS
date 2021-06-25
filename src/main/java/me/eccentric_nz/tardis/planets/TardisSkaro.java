@@ -49,7 +49,7 @@ public class TardisSkaro {
                 plugin.getPlanetsConfig().set("planets." + s_world + "_tardis_skaro.time_travel", true);
                 plugin.savePlanetsConfig();
                 // make sure TARDISWeepingAngels can re-disguise Daleks in the Skaro world
-                Plugin twa = plugin.getPM().getPlugin("TARDISWeepingAngels");
+                Plugin twa = plugin.getPluginManager().getPlugin("TARDISWeepingAngels");
                 if (twa != null) {
                     twa.getConfig().set("daleks.worlds.Skaro", 500);
                     twa.saveConfig();

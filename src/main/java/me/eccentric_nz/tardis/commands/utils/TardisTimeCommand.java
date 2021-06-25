@@ -61,9 +61,9 @@ public class TardisTimeCommand extends TardisCompleter implements CommandExecuto
                 }
                 Location location = player.getLocation();
                 World world = location.getWorld();
-                if (plugin.getUtils().inTARDISWorld(player)) {
+                if (plugin.getUtils().inTardisWorld(player)) {
                     // get TARDIS player is in
-                    int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player);
+                    int id = plugin.getTardisApi().getIdOfTARDISPlayerIsIn(player);
                     // get current TARDIS location
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("tardis_id", id);

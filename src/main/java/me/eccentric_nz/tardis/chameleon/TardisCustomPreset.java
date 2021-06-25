@@ -84,9 +84,9 @@ public class TardisCustomPreset {
             asymmetric = true;
         }
         for (CardinalDirection d : CardinalDirection.values()) {
-            blueprint.put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, custom_data[0], asymmetric, false));
-            stained.put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, custom_data[1], asymmetric, false));
-            glass.put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, custom_data[2], asymmetric, false));
+            blueprint.put(d, TardisChameleonPreset.buildTardisChameleonColumn(d, custom_data[0], asymmetric, false));
+            stained.put(d, TardisChameleonPreset.buildTardisChameleonColumn(d, custom_data[1], asymmetric, false));
+            glass.put(d, TardisChameleonPreset.buildTardisChameleonColumn(d, custom_data[2], asymmetric, false));
         }
         if (custom_data[3] != null && !custom_data[3].isEmpty()) {
             firstLine = custom_data[3];

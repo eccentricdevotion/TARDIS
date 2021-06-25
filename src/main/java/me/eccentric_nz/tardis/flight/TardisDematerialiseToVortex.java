@@ -118,7 +118,7 @@ public class TardisDematerialiseToVortex implements Runnable {
                 dd.setFromToLocation(exit);
                 dd.setThrottle(SpaceTimeThrottle.JUNK);
             }
-            plugin.getPM().callEvent(new TardisDematerialisationEvent(player, tardis, l));
+            plugin.getPluginManager().callEvent(new TardisDematerialisationEvent(player, tardis, l));
             if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
                 // play demat sfx
                 if (!minecart) {
@@ -135,10 +135,10 @@ public class TardisDematerialiseToVortex implements Runnable {
                                         "tardis_takeoff";
                             };
                         }
-                        TardisSounds.playTARDISSound(handbrake, sound);
-                        TardisSounds.playTARDISSound(l, sound);
+                        TardisSounds.playTardisSound(handbrake, sound);
+                        TardisSounds.playTardisSound(l, sound);
                     } else {
-                        TardisSounds.playTARDISSound(handbrake, "junk_takeoff");
+                        TardisSounds.playTardisSound(handbrake, "junk_takeoff");
                     }
                 } else {
                     Objects.requireNonNull(handbrake.getWorld()).playSound(handbrake, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);

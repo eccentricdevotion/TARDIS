@@ -34,9 +34,9 @@ public class BlueprintProcessor {
         ItemMeta im = is.getItemMeta();
         if (im != null) {
             PersistentDataContainer pdc = im.getPersistentDataContainer();
-            if (pdc.has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
+            if (pdc.has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUuid())) {
                 // check disk UUID is same as player UUID
-                UUID diskUuid = pdc.get(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID());
+                UUID diskUuid = pdc.get(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUuid());
                 assert diskUuid != null;
                 if (!diskUuid.equals(player.getUniqueId())) {
                     return;

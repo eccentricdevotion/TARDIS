@@ -157,7 +157,7 @@ public class TardisCraftListener implements Listener {
                     HumanEntity human = event.getView().getPlayer();
                     if (human instanceof Player) {
                         ItemMeta im = is.getItemMeta();
-                        im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), human.getUniqueId());
+                        im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUuid(), human.getUniqueId());
                         List<String> lore = im.getLore();
                         if (lore == null) {
                             lore = new ArrayList<>();

@@ -144,7 +144,7 @@ public class Tardis {
      *
      * @return the TIPS slot number, or -1 if the server is not using TIPS
      */
-    public int getTIPS() {
+    public int getTips() {
         return tips;
     }
 

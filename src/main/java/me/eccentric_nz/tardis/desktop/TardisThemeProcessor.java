@@ -169,7 +169,7 @@ class TardisThemeProcessor {
         // check if there are any rooms that need to be jettisoned
         if (w < pw || h < ph) {
             // we need more space!
-            if (checkARSGrid(size_prev, size_next, uuid)) {
+            if (checkArsGrid(size_prev, size_next, uuid)) {
                 TardisMessage.send(plugin.getServer().getPlayer(uuid), "UPGRADE_ABORT_SPACE");
                 plugin.getTrackerKeeper().getUpgrades().remove(uuid);
                 if (tud.getPrevious().getPermission().equals("archive")) {
@@ -220,7 +220,7 @@ class TardisThemeProcessor {
         ttr.setTaskID(task);
     }
 
-    private boolean checkARSGrid(ConsoleSize prev, ConsoleSize next, UUID uuid) {
+    private boolean checkArsGrid(ConsoleSize prev, ConsoleSize next, UUID uuid) {
         // get ars
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());

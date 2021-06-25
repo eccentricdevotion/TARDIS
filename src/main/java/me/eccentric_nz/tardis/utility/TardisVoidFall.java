@@ -38,7 +38,7 @@ public class TardisVoidFall {
 
     public void teleport(Player p) {
         // get tardis player was in
-        int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(p);
+        int id = plugin.getTardisApi().getIdOfTARDISPlayerIsIn(p);
         // get inner door location
         HashMap<String, Object> wherei = new HashMap<>();
         wherei.put("door_type", 1);

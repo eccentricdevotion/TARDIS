@@ -72,7 +72,7 @@ class TardisJunkVortexRunnable implements Runnable {
             }
             if (i == 2) {
                 // play sound
-                TardisSounds.playTARDISSound(vortexJunkLoc, "junk_arc");
+                TardisSounds.playTardisSound(vortexJunkLoc, "junk_arc");
             }
             if (i == LOOPS - 1) {
                 // build the tardis at the location

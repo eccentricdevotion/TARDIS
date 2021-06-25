@@ -69,7 +69,7 @@ public class TardisStandbyMode implements Runnable {
                     setp.put("powered_on", 0);
                     OfflinePlayer player = plugin.getServer().getOfflinePlayer(standbyData.getUuid());
                     if (player.isOnline()) {
-                        TardisSounds.playTARDISSound(Objects.requireNonNull(player.getPlayer()).getLocation(), "power_down");
+                        TardisSounds.playTardisSound(Objects.requireNonNull(player.getPlayer()).getLocation(), "power_down");
                         TardisMessage.send(player.getPlayer(), "POWER_OFF_AUTO");
                     }
                     long delay = 0;

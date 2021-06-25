@@ -87,7 +87,7 @@ public class TardisSiegeMode {
                 TardisMessage.send(p, "SIEGE_POWER");
                 return;
             }
-            plugin.getPM().callEvent(new TardisSiegeOffEvent(p, tardis));
+            plugin.getPluginManager().callEvent(new TardisSiegeOffEvent(p, tardis));
             // remove siege block
             siege.setBlockData(TardisConstants.AIR);
             // rebuild preset
@@ -160,7 +160,7 @@ public class TardisSiegeMode {
             plugin.getTrackerKeeper().getInSiegeMode().add(id);
             set.put("siege_on", 1);
             TardisMessage.send(p, "SIEGE_ON");
-            plugin.getPM().callEvent(new TardisSiegeEvent(p, tardis));
+            plugin.getPluginManager().callEvent(new TardisSiegeEvent(p, tardis));
             // butcher hostile mobs?
             if (plugin.getConfig().getBoolean("siege.butcher")) {
                 TardisMessage.send(p, "SIEGE_BUTCHER");

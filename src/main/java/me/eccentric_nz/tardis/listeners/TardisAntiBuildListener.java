@@ -167,7 +167,7 @@ public class TardisAntiBuildListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onCompanionBuild(BlockPlaceEvent event) {
         Player p = event.getPlayer();
-        if (!plugin.getUtils().inTARDISWorld(p)) {
+        if (!plugin.getUtils().inTardisWorld(p)) {
             return;
         }
         ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
@@ -185,7 +185,7 @@ public class TardisAntiBuildListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onCompanionBreak(BlockBreakEvent event) {
         Player p = event.getPlayer();
-        if (!plugin.getUtils().inTARDISWorld(p)) {
+        if (!plugin.getUtils().inTardisWorld(p)) {
             return;
         }
         ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
@@ -207,7 +207,7 @@ public class TardisAntiBuildListener implements Listener {
             return;
         }
         Player p = event.getPlayer();
-        if (!plugin.getUtils().inTARDISWorld(p)) {
+        if (!plugin.getUtils().inTardisWorld(p)) {
             return;
         }
         ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
@@ -245,7 +245,7 @@ public class TardisAntiBuildListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onCompanionEntityClick(PlayerInteractEntityEvent event) {
         Player p = event.getPlayer();
-        if (!plugin.getUtils().inTARDISWorld(p)) {
+        if (!plugin.getUtils().inTardisWorld(p)) {
             return;
         }
         ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
@@ -263,7 +263,7 @@ public class TardisAntiBuildListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onCompanionDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player p) {
-            if (!plugin.getUtils().inTARDISWorld(p)) {
+            if (!plugin.getUtils().inTardisWorld(p)) {
                 return;
             }
             ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
@@ -282,7 +282,7 @@ public class TardisAntiBuildListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onCompanionBreakHanging(HangingBreakByEntityEvent event) {
         if (event.getRemover() instanceof Player p) {
-            if (!plugin.getUtils().inTARDISWorld(p)) {
+            if (!plugin.getUtils().inTardisWorld(p)) {
                 return;
             }
             ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());

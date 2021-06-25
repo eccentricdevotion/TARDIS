@@ -218,7 +218,7 @@ public class TardisFullThemeRunnable extends TardisThemeRunnable {
                 plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
             }
             Tardis tardis = rs.getTardis();
-            slot = tardis.getTIPS();
+            slot = tardis.getTips();
             id = tardis.getTardisId();
             chunk = TardisStaticLocationGetters.getChunk(tardis.getChunk());
             if (tud.getPrevious().getPermission().equals("ender")) {
@@ -254,7 +254,7 @@ public class TardisFullThemeRunnable extends TardisThemeRunnable {
             }
             if (slot != -1) { // default world - use TIPS
                 TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
-                TardisTipsData pos = tintpos.getTIPSData(slot);
+                TardisTipsData pos = tintpos.getTipsData(slot);
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();
             } else {
@@ -315,7 +315,7 @@ public class TardisFullThemeRunnable extends TardisThemeRunnable {
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             plugin.getQueryFactory().doDelete("lamps", wherel);
-            plugin.getPM().callEvent(new TardisDesktopThemeEvent(player, tardis, tud));
+            plugin.getPluginManager().callEvent(new TardisDesktopThemeEvent(player, tardis, tud));
         }
         if (level == (h - 1) && row == (w - 1)) {
             // we're finished

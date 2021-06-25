@@ -46,7 +46,7 @@ class TardisOccupyCommand {
             String occupied;
             if (rst.resultSet()) {
                 // only if they're not in the tardis world
-                if (!plugin.getUtils().inTARDISWorld(player)) {
+                if (!plugin.getUtils().inTardisWorld(player)) {
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("uuid", player.getUniqueId().toString());
                     plugin.getQueryFactory().doDelete("travellers", whered);
@@ -55,12 +55,12 @@ class TardisOccupyCommand {
                     TardisMessage.send(player, "OCCUPY_MUST_BE_OUT");
                     return true;
                 }
-            } else if (plugin.getUtils().inTARDISWorld(player)) {
+            } else if (plugin.getUtils().inTardisWorld(player)) {
                 ResultSetTardisId rsid = new ResultSetTardisId(plugin);
                 // if TIPS determine tardis_id from player location
                 if (plugin.getConfig().getBoolean("creation.default_world") && !player.hasPermission("tardis.create_world")) {
-                    int slot = TardisInteriorPositioning.getTIPSSlot(player.getLocation());
-                    if (!rsid.fromTIPSSlot(slot)) {
+                    int slot = TardisInteriorPositioning.getTipsSlot(player.getLocation());
+                    if (!rsid.fromTipsSlot(slot)) {
                         TardisMessage.send(player, "OCCUPY_MUST_BE_IN");
                         return false;
                     }

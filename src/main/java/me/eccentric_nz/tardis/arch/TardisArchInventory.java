@@ -98,7 +98,7 @@ public class TardisArchInventory {
                 // give a fob watch if it is the Chameleon Arch inventory
                 if (arch == 0) {
                     TardisPlugin.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TardisPlugin.plugin, () -> {
-                        ShapedRecipe recipe = TardisPlugin.plugin.getFigura().getShapedRecipes().get("Fob Watch");
+                        ShapedRecipe recipe = TardisPlugin.plugin.getShapedRecipe().getShapedRecipes().get("Fob Watch");
                         ItemStack result = recipe.getResult();
                         result.setAmount(1);
                         p.getInventory().addItem(result);

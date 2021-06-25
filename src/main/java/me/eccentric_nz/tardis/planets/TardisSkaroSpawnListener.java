@@ -38,11 +38,11 @@ import java.util.Objects;
 public class TardisSkaroSpawnListener implements Listener {
 
     private final TardisPlugin plugin;
-    private final TardisWeepingAngelsApi twaAPI;
+    private final TardisWeepingAngelsApi tardisWeepingAngelsApi;
 
     public TardisSkaroSpawnListener(TardisPlugin plugin) {
         this.plugin = plugin;
-        twaAPI = TardisAngelsApi.getAPI(this.plugin);
+        tardisWeepingAngelsApi = TardisAngelsApi.getApi(this.plugin);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -64,7 +64,7 @@ public class TardisSkaroSpawnListener implements Listener {
             }
             LivingEntity le = event.getEntity();
             // it's a Dalek - disguise it!
-            twaAPI.setDalekEquipment(le, false);
+            tardisWeepingAngelsApi.setDalekEquipment(le, false);
             if (plugin.getPlanetsConfig().getBoolean("planets." + s_world + "_tardis_skaro.flying_daleks") && TardisConstants.RANDOM.nextInt(100) < 10) {
                 // make the Dalek fly
                 EntityEquipment ee = le.getEquipment();

@@ -23,6 +23,6 @@ import org.bukkit.entity.Skeleton;
 public class TardisDalekDisguiser {
 
     public static void dalekanium(Skeleton skeleton) {
-        TardisAngelsApi.getAPI(TardisPlugin.plugin).setDalekEquipment(skeleton, false);
+        TardisAngelsApi.getApi(TardisPlugin.plugin).setDalekEquipment(skeleton, false);
     }
 }

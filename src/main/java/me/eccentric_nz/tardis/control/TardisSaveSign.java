@@ -39,7 +39,7 @@ class TardisSaveSign {
         this.plugin = plugin;
     }
 
-    void openGUI(Player player, int id) {
+    void openGui(Player player, int id) {
         TardisCircuitChecker tcc = null;
         if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
             tcc = new TardisCircuitChecker(plugin, id);

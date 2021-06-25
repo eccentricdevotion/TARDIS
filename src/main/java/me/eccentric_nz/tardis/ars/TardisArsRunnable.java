@@ -96,7 +96,7 @@ class TardisArsRunnable implements Runnable {
             roomData.setSchematic(obj);
             // determine how often to place a block (in ticks) - `room_speed` is the number of BLOCKS to place in a second (20 ticks)
             long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
-            plugin.getPM().callEvent(new TardisRoomGrowEvent(p, tardis, slot, roomData));
+            plugin.getPluginManager().callEvent(new TardisRoomGrowEvent(p, tardis, slot, roomData));
             TardisRoomRunnable runnable = new TardisRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);

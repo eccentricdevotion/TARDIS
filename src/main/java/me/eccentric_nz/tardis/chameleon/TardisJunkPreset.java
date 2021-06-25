@@ -292,13 +292,13 @@ public class TardisJunkPreset extends TardisPreset {
     public void makePresets(boolean assymetric, boolean duck) {
         for (CardinalDirection d : CardinalDirection.values()) {
             if (d.equals(CardinalDirection.WEST)) {
-                getBlueprint().put(d, TardisChameleonPreset.buildTARDISChameleonColumn(CardinalDirection.EAST, blueprintWest, false, false));
-                getStained().put(d, TardisChameleonPreset.buildTARDISChameleonColumn(CardinalDirection.EAST, stainedWest, false, false));
-                getGlass().put(d, TardisChameleonPreset.buildTARDISChameleonColumn(CardinalDirection.EAST, glassWest, false, false));
+                getBlueprint().put(d, TardisChameleonPreset.buildTardisChameleonColumn(CardinalDirection.EAST, blueprintWest, false, false));
+                getStained().put(d, TardisChameleonPreset.buildTardisChameleonColumn(CardinalDirection.EAST, stainedWest, false, false));
+                getGlass().put(d, TardisChameleonPreset.buildTardisChameleonColumn(CardinalDirection.EAST, glassWest, false, false));
             } else {
-                getBlueprint().put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, blueprintData, false, false));
-                getStained().put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, stainedData, false, false));
-                getGlass().put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, glassData, false, false));
+                getBlueprint().put(d, TardisChameleonPreset.buildTardisChameleonColumn(d, blueprintData, false, false));
+                getStained().put(d, TardisChameleonPreset.buildTardisChameleonColumn(d, stainedData, false, false));
+                getGlass().put(d, TardisChameleonPreset.buildTardisChameleonColumn(d, glassData, false, false));
             }
         }
     }

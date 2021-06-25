@@ -78,12 +78,12 @@ public class TardisUpgradeBlockScanner {
         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            int slot = tardis.getTIPS();
+            int slot = tardis.getTips();
             int startz;
             int startx;
             if (slot != -1) { // default world - use TIPS
                 TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
-                TardisTipsData pos = tintpos.getTIPSData(slot);
+                TardisTipsData pos = tintpos.getTipsData(slot);
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();
             } else {

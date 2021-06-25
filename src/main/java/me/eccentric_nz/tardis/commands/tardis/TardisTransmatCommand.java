@@ -121,7 +121,7 @@ class TardisTransmatCommand {
             Location location = player.getLocation();
             if (args[1].equalsIgnoreCase("add")) {
                 // must be in their TARDIS
-                if (!plugin.getUtils().inTARDISWorld(location)) {
+                if (!plugin.getUtils().inTardisWorld(location)) {
                     TardisMessage.send(player, "CMD_IN_WORLD");
                     return true;
                 }

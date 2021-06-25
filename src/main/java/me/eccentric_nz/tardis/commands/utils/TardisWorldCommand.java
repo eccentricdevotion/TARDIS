@@ -54,7 +54,7 @@ public class TardisWorldCommand extends TardisCompleter implements CommandExecut
 
     public TardisWorldCommand(TardisPlugin plugin) {
         this.plugin = plugin;
-        WORLD_SUBS.addAll(plugin.getTardisAPI().getWorlds());
+        WORLD_SUBS.addAll(plugin.getTardisApi().getWorlds());
         for (WorldType wt : WorldType.values()) {
             TYPE_SUBS.add(wt.toString());
         }
@@ -203,7 +203,7 @@ public class TardisWorldCommand extends TardisCompleter implements CommandExecut
                         if (args.length > 4) {
                             // Check generator exists
                             String[] split = args[4].split(":", 2);
-                            Plugin gen = plugin.getPM().getPlugin(split[0]);
+                            Plugin gen = plugin.getPluginManager().getPlugin(split[0]);
                             if (gen == null) {
                                 TardisMessage.send(sender, "WORLD_GEN", args[4]);
                                 return true;

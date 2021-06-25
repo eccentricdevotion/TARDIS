@@ -218,9 +218,9 @@ public class TardisPoliceBoxDoorListener extends TardisDoorListener implements L
      */
     private void playDoorSound(boolean open, Location l) {
         if (open) {
-            TardisSounds.playTARDISSound(l, "tardis_door_open");
+            TardisSounds.playTardisSound(l, "tardis_door_open");
         } else {
-            TardisSounds.playTARDISSound(l, "tardis_door_close");
+            TardisSounds.playTardisSound(l, "tardis_door_close");
         }
     }
 }

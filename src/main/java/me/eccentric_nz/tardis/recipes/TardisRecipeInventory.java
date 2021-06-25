@@ -86,10 +86,10 @@ public class TardisRecipeInventory {
                 if (arg != null) {
                     ItemStack result;
                     if (isShapeless(str)) {
-                        ShapelessRecipe shapeless = plugin.getIncomposita().getShapelessRecipes().get(str);
+                        ShapelessRecipe shapeless = plugin.getShapelessRecipe().getShapelessRecipes().get(str);
                         result = shapeless.getResult();
                     } else {
-                        ShapedRecipe shaped = plugin.getFigura().getShapedRecipes().get(str);
+                        ShapedRecipe shaped = plugin.getShapedRecipe().getShapedRecipes().get(str);
                         result = shaped.getResult();
                     }
                     ItemMeta im = result.getItemMeta();

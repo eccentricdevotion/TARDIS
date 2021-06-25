@@ -91,7 +91,7 @@ public enum TardisArs implements Ars {
      * @param mat the Material of the ars to get
      * @return ars if found, or null
      */
-    public static Ars ARSFor(String mat) {
+    public static Ars arsFor(String mat) {
         if (Consoles.getBY_MATERIALS().containsKey(mat)) {
             return CONSOLE;
         } else {
@@ -99,7 +99,7 @@ public enum TardisArs implements Ars {
         }
     }
 
-    public static void addNewARS(Ars room) {
+    public static void addNewArs(Ars room) {
         if (!EXTENDED_MATERIAL.containsKey(room.getMaterial())) {
             EXTENDED_MATERIAL.put(room.getMaterial(), room);
         }

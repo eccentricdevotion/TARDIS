@@ -171,7 +171,7 @@ public class TardisSiegeListener implements Listener {
         if (!hasSiegeCubeName(is)) {
             return;
         }
-        if (plugin.getUtils().inTARDISWorld(p)) {
+        if (plugin.getUtils().inTardisWorld(p)) {
             event.setCancelled(true);
             TardisMessage.send(p, "SIEGE_NO_TARDIS");
             return;
@@ -232,7 +232,7 @@ public class TardisSiegeListener implements Listener {
             return;
         }
         Location loc = event.getBlock().getLocation();
-        if (plugin.getUtils().inTARDISWorld(loc)) {
+        if (plugin.getUtils().inTardisWorld(loc)) {
             event.setCancelled(true);
             TardisMessage.send(p, "SIEGE_NO_TARDIS");
             return;
@@ -283,7 +283,7 @@ public class TardisSiegeListener implements Listener {
             return;
         }
         Player p = event.getPlayer();
-        if (plugin.getUtils().inTARDISWorld(p)) {
+        if (plugin.getUtils().inTardisWorld(p)) {
             event.setCancelled(true);
             TardisMessage.send(p, "SIEGE_NO_TARDIS");
         }

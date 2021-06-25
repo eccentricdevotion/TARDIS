@@ -51,7 +51,7 @@ public class TardisFollowerSpawner {
                 default -> pl.add(-1, 0, 1);
             }
         }
-        TardisWeepingAngelsApi twa = TardisAngelsApi.getAPI(TardisPlugin.plugin);
+        TardisWeepingAngelsApi twa = TardisAngelsApi.getApi(TardisPlugin.plugin);
         for (TardisFollower follower : followers) {
             plugin.setTardisSpawn(true);
             assert w != null;

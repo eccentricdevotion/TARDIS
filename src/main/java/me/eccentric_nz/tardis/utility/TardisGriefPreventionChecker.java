@@ -33,7 +33,7 @@ public class TardisGriefPreventionChecker {
     private final GriefPrevention griefprevention;
 
     public TardisGriefPreventionChecker(TardisPlugin plugin) {
-        griefprevention = (GriefPrevention) plugin.getPM().getPlugin("GriefPrevention");
+        griefprevention = (GriefPrevention) plugin.getPluginManager().getPlugin("GriefPrevention");
     }
 
     /**

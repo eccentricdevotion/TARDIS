@@ -164,10 +164,10 @@ public class TardisBuilderInner implements Runnable {
                 int slot;
                 if (schm.getPermission().equals("junk")) {
                     slot = -999;
-                    pos = tintpos.getTIPSJunkData();
+                    pos = tintpos.getTipsJunkData();
                 } else {
                     slot = tintpos.getFreeSlot();
-                    pos = tintpos.getTIPSData(slot);
+                    pos = tintpos.getTipsData(slot);
                 }
                 // save the slot
                 set.put("tips", slot);

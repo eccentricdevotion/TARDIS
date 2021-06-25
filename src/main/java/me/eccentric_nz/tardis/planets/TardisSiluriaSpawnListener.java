@@ -34,11 +34,11 @@ import java.util.Objects;
 public final class TardisSiluriaSpawnListener implements Listener {
 
     private final TardisPlugin plugin;
-    private final TardisWeepingAngelsApi twaAPI;
+    private final TardisWeepingAngelsApi tardisWeepingAngelsApi;
 
     public TardisSiluriaSpawnListener(TardisPlugin plugin) {
         this.plugin = plugin;
-        twaAPI = TardisAngelsApi.getAPI(plugin);
+        tardisWeepingAngelsApi = TardisAngelsApi.getApi(plugin);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -61,7 +61,7 @@ public final class TardisSiluriaSpawnListener implements Listener {
             }
             LivingEntity le = event.getEntity();
             // it's a Silurian - disguise it!
-            twaAPI.setSilurianEquipment(le, false);
+            tardisWeepingAngelsApi.setSilurianEquipment(le, false);
         }
     }
 }

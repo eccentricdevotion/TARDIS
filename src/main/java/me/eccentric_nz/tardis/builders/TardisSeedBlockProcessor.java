@@ -210,7 +210,7 @@ public class TardisSeedBlockProcessor {
                 bd.setThrottle(SpaceTimeThrottle.NORMAL);
                 // police box needs to use chameleon id/data
                 if (chunkworld != null) {
-                    plugin.getPM().callEvent(new TardisCreationEvent(player, lastInsertId, l));
+                    plugin.getPluginManager().callEvent(new TardisCreationEvent(player, lastInsertId, l));
                     TardisBuilderInner builder = new TardisBuilderInner(plugin, schm, chunkworld, lastInsertId, player, wall_type, floor_type, tips);
                     int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
                     builder.setTask(task);

@@ -252,7 +252,7 @@ public class TardisAbandonCommand {
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                     if (rsc.resultSet()) {
                         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                        plugin.getPM().callEvent(new TardisAbandonEvent(player, id, current));
+                        plugin.getPluginManager().callEvent(new TardisAbandonEvent(player, id, current));
                         // always clear sign
                         if (preset.usesItemFrame()) {
                             World world = rsc.getWorld();

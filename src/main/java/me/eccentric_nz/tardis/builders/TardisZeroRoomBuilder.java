@@ -57,7 +57,7 @@ public class TardisZeroRoomBuilder {
             where.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", set, where);
         }
-        TardisTipsData pos = tintpos.getTIPSData(slot);
+        TardisTipsData pos = tintpos.getTipsData(slot);
         int x = pos.getCentreX();
         int y = 64;
         int z = pos.getCentreZ();

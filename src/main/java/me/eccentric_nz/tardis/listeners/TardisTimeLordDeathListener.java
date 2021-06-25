@@ -192,7 +192,7 @@ public class TardisTimeLordDeathListener implements Listener {
                                                 plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisId());
                                                 plugin.getTrackerKeeper().getInVortex().add(id);
                                                 // play tardis_takeoff sfx
-                                                TardisSounds.playTARDISSound(sl, "tardis_takeoff");
+                                                TardisSounds.playTardisSound(sl, "tardis_takeoff");
                                                 // sound the cloister bell at current location for dematerialisation
                                                 TardisCloisterBell bell = new TardisCloisterBell(plugin, 5, id, sl, plugin.getServer().getPlayer(uuid), true, "Time Lord death", false);
                                                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
@@ -219,7 +219,7 @@ public class TardisTimeLordDeathListener implements Listener {
                                             plugin.getPresetBuilder().buildPreset(bd);
                                             plugin.getTrackerKeeper().getInVortex().add(id);
                                             // play tardis_land sfx
-                                            TardisSounds.playTARDISSound(bd.getLocation(), "tardis_land");
+                                            TardisSounds.playTardisSound(bd.getLocation(), "tardis_land");
                                             // sound the cloister bell at current location for dematerialisation
                                             TardisCloisterBell bell = new TardisCloisterBell(plugin, 6, id, sl, plugin.getServer().getPlayer(uuid), false, "", true);
                                             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);

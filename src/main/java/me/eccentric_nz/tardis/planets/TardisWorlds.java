@@ -76,7 +76,7 @@ public class TardisWorlds {
             if (!plugin.getPlanetsConfig().contains("planets." + worldName) && !worldName.equals(defWorld)) {
                 TardisPlanetData data = plugin.getTardisHelper().getLevelData(w.getName());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".enabled", false);
-                plugin.getPlanetsConfig().set("planets." + worldName + ".time_travel", !isTARDISDataPackWorld(worldName));
+                plugin.getPlanetsConfig().set("planets." + worldName + ".time_travel", !isTardisDataPackWorld(worldName));
                 plugin.getPlanetsConfig().set("planets." + worldName + ".resource_pack", "default");
                 plugin.getPlanetsConfig().set("planets." + worldName + ".gamemode", data.getGameMode().toString());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".world_type", data.getWorldType().toString());
@@ -146,7 +146,7 @@ public class TardisWorlds {
         return false;
     }
 
-    private boolean isTARDISDataPackWorld(String p) {
+    private boolean isTardisDataPackWorld(String p) {
         return (p.endsWith("tardis_gallifrey") || p.endsWith("tardis_siluria") || p.endsWith("tardis_skaro"));
     }
 }

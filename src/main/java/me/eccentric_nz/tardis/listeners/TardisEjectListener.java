@@ -56,7 +56,7 @@ public class TardisEjectListener implements Listener {
             return;
         }
         // check they are still in the tardis world - they could have exited after running the command
-        if (!plugin.getUtils().inTARDISWorld(player)) {
+        if (!plugin.getUtils().inTardisWorld(player)) {
             TardisMessage.send(player, "EJECT_WORLD");
             return;
         }
@@ -96,7 +96,7 @@ public class TardisEjectListener implements Listener {
                     return;
                 }
                 // check the clicked player is in a tardis world
-                if (!plugin.getUtils().inTARDISWorld(p)) {
+                if (!plugin.getUtils().inTardisWorld(p)) {
                     TardisMessage.send(player, "EJECT_WORLD");
                     return;
                 }

@@ -95,7 +95,7 @@ public class TardisFobWatchListener implements Listener {
                     player.setDisplayName(name);
                     player.setPlayerListName(name);
                 }, 5L);
-                plugin.getPM().callEvent(new TardisChameleonArchEvent(player, twd));
+                plugin.getPluginManager().callEvent(new TardisChameleonArchEvent(player, twd));
             } else if (plugin.getTrackerKeeper().getJohnSmith().get(uuid).getTime() <= System.currentTimeMillis()) {
                 // no permission check, always allow 'de-fobbing'
                 if (plugin.isDisguisesOnServer()) {
@@ -114,7 +114,7 @@ public class TardisFobWatchListener implements Listener {
                 }, 5L);
                 // remove player from arched table
                 new TardisArchPersister(plugin).removeArch(uuid);
-                plugin.getPM().callEvent(new TardisChameleonArchOffEvent(player));
+                plugin.getPluginManager().callEvent(new TardisChameleonArchOffEvent(player));
             }
         }
     }

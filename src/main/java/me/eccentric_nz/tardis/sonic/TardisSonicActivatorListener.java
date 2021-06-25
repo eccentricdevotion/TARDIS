@@ -57,7 +57,7 @@ public class TardisSonicActivatorListener extends TardisMenuListener implements 
 
     private List<ItemStack> getStacks() {
         // get the Sonic Generator recipe
-        ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get("Sonic Generator");
+        ShapedRecipe recipe = plugin.getShapedRecipe().getShapedRecipes().get("Sonic Generator");
         List<ItemStack> mats = new ArrayList<>(recipe.getIngredientMap().values());
         mats.removeAll(Collections.singleton(null));
         return mats;

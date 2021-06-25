@@ -76,7 +76,7 @@ public class TardisJunkBuilder implements Runnable {
                 if (i == 2) {
                     plugin.getUtils().getJunkTravellers(loc).forEach((e) -> {
                         if (e instanceof Player p) {
-                            TardisSounds.playTARDISSound(p, "junk_land", 5L);
+                            TardisSounds.playTardisSound(p, "junk_land", 5L);
                         }
                     });
                     fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TardisJunkItsDangerousRunnable(plugin, loc), 0, 1L);

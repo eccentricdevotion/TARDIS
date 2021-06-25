@@ -77,7 +77,7 @@ public class TardisScanner {
 
     public static TardisScannerData scan(Player player, int id, BukkitScheduler bsched) {
         TardisScannerData data = new TardisScannerData();
-        TardisSounds.playTARDISSound(player.getLocation(), "tardis_scanner");
+        TardisSounds.playTardisSound(player.getLocation(), "tardis_scanner");
         Location scan_loc;
         String whereIsIt;
         CardinalDirection tardisDirection;
@@ -119,7 +119,7 @@ public class TardisScanner {
                         visible = false;
                     }
                 }
-                if (TardisPlugin.plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                if (TardisPlugin.plugin.getPluginManager().isPluginEnabled("TARDISWeepingAngels")) {
                     if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
                         EntityEquipment ee = ((LivingEntity) k).getEquipment();
                         assert ee != null;
@@ -362,7 +362,7 @@ public class TardisScanner {
                     int required = plugin.getArtronConfig().getInt("render");
                     if (level > required) {
                         bsched.scheduleSyncDelayedTask(plugin, () -> {
-                            if (player.isOnline() && plugin.getUtils().inTARDISWorld(player)) {
+                            if (player.isOnline() && plugin.getUtils().inTardisWorld(player)) {
                                 TardisExteriorRenderer ter = new TardisExteriorRenderer(plugin);
                                 ter.render(renderer, data.getScanLocation(), id, player, data.getTardisDirection(), data.getTime(), data.getScannedBiome());
                             }

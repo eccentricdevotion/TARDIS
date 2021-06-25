@@ -47,7 +47,7 @@ class TardisAddRegionsCommand {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
         if (plugin.isWorldGuardOnServer()) {
-            wg = (WorldGuardPlugin) plugin.getPM().getPlugin("WorldGuard");
+            wg = (WorldGuardPlugin) plugin.getPluginManager().getPlugin("WorldGuard");
         }
     }
 
@@ -86,7 +86,7 @@ class TardisAddRegionsCommand {
                         String rn = "TARDIS_" + tl;
                         if (!config.contains("regions." + rn)) {
                             TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
-                            TardisTipsData td = tintpos.getTIPSData(t);
+                            TardisTipsData td = tintpos.getTipsData(t);
                             plugin.getWorldGuardUtils().addWGProtection(tl, td, TardisAliasResolver.getWorldFromAlias(dw));
                         }
                     }

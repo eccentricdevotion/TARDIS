@@ -229,7 +229,7 @@ class TardisDematerialisePreset implements Runnable {
                                         "tardis_takeoff";
                             };
                         }
-                        TardisSounds.playTARDISSound(dd.getLocation(), sound);
+                        TardisSounds.playTardisSound(dd.getLocation(), sound);
                     } else {
                         assert world != null;
                         world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);

@@ -114,7 +114,7 @@ class TardisRemoteTravelCommand {
             bd.setThrottle(SpaceTimeThrottle.NORMAL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 plugin.getPresetBuilder().buildPreset(bd);
-                TardisSounds.playTARDISSound(bd.getLocation(), "tardis_land");
+                TardisSounds.playTardisSound(bd.getLocation(), "tardis_land");
             }, delay);
             plugin.getTrackerKeeper().getDamage().remove(id);
             // current

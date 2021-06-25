@@ -51,7 +51,7 @@ public class TardisBiomeFinderOld implements Runnable {
         limitS = startZ + 30000;
         limitW = startX - 30000;
         limitN = startZ - 30000;
-        if (plugin.getPM().isPluginEnabled("WorldBorder")) {
+        if (plugin.getPluginManager().isPluginEnabled("WorldBorder")) {
             // get the border limit for this world
             TardisWorldBorderChecker wb = new TardisWorldBorderChecker(plugin);
             int[] data = wb.getBorderDistance(w.getName());

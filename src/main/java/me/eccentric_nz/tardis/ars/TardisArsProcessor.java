@@ -58,7 +58,7 @@ class TardisArsProcessor {
                             slot.setY(l);
                             slot.setX(x);
                             slot.setZ(z);
-                            jettison.put(slot, TardisArs.ARSFor(start[l][x][z]));
+                            jettison.put(slot, TardisArs.arsFor(start[l][x][z]));
                             // if it is a gravity well on the top or bottom levels jettison the other half too
                             if (start[l][x][z].equals("SANDSTONE") && l == 2) {
                                 TardisArsJettison uslot = new TardisArsJettison();
@@ -86,7 +86,7 @@ class TardisArsProcessor {
                                         slot.setY(l);
                                         slot.setX(x);
                                         slot.setZ(z);
-                                        changed.put(slot, TardisArs.ARSFor(end[l][x][z]));
+                                        changed.put(slot, TardisArs.arsFor(end[l][x][z]));
                                     }
                                     break;
                                 case "MOSSY_COBBLESTONE":
@@ -97,7 +97,7 @@ class TardisArsProcessor {
                                         slot.setY(l - 1);
                                         slot.setX(x);
                                         slot.setZ(z);
-                                        changed.put(slot, TardisArs.ARSFor(end[l][x][z]));
+                                        changed.put(slot, TardisArs.arsFor(end[l][x][z]));
                                     }
                                     break;
                                 default:
@@ -106,7 +106,7 @@ class TardisArsProcessor {
                                     slot.setY(l);
                                     slot.setX(x);
                                     slot.setZ(z);
-                                    changed.put(slot, TardisArs.ARSFor(end[l][x][z]));
+                                    changed.put(slot, TardisArs.arsFor(end[l][x][z]));
                                     break;
                             }
                         }

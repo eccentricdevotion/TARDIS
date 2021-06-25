@@ -52,13 +52,13 @@ class TardisRecipesLister {
                 }
             }
         } else {
-            for (Map.Entry<String, ShapedRecipe> shaped : plugin.getFigura().getShapedRecipes().entrySet()) {
+            for (Map.Entry<String, ShapedRecipe> shaped : plugin.getShapedRecipe().getShapedRecipes().entrySet()) {
                 sender.sendMessage(TardisStringUtils.toUnderscoredUppercase(shaped.getKey()) + "(\"" + shaped.getKey() + "\", Material." + shaped.getValue().getResult().getType() + ", " + RecipeItem.getByName(shaped.getKey()).getCustomModelData() + "),");
             }
-            for (Map.Entry<String, ShapelessRecipe> shapeless : plugin.getIncomposita().getShapelessRecipes().entrySet()) {
+            for (Map.Entry<String, ShapelessRecipe> shapeless : plugin.getShapelessRecipe().getShapelessRecipes().entrySet()) {
                 sender.sendMessage(TardisStringUtils.toUnderscoredUppercase(shapeless.getKey()) + "(\"" + shapeless.getKey() + "\", Material." + shapeless.getValue().getResult().getType() + ", " + RecipeItem.getByName(shapeless.getKey()).getCustomModelData() + "),");
             }
-            for (Map.Entry<Schematic, ShapedRecipe> seed : plugin.getOobstructionum().getSeedRecipes().entrySet()) {
+            for (Map.Entry<Schematic, ShapedRecipe> seed : plugin.getSeedRecipe().getSeedRecipes().entrySet()) {
                 int model;
                 String material;
                 if (TardisSeedModel.materialMap.containsKey(seed.getKey().getSeedMaterial())) {
@@ -74,7 +74,7 @@ class TardisRecipesLister {
                 }
                 sender.sendMessage(seed.getKey().getPermission().toUpperCase() + "_SEED(\"" + seed.getKey().getPermission() + "\", Material." + material + ", " + model + "),");
             }
-            if (plugin.checkTWA()) {
+            if (plugin.checkTwa()) {
                 for (Monster m : Monster.values()) {
                     sender.sendMessage(m.toString() + "_HEAD(\"" + m.getName() + " Head\", Material." + m.getMaterial().toString() + ", " + m.getCustomModelData() + "),");
                 }

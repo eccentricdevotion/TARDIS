@@ -185,7 +185,7 @@ public class TardisAdminCommands implements CommandExecutor {
                     return new TardisEnterCommand(plugin).enterTARDIS(sender, args);
                 }
                 if (first.equals("delete")) {
-                    return new TardisDeleteCommand(plugin).deleteTARDIS(sender, args);
+                    return new TardisDeleteCommand(plugin).deleteTardis(sender, args);
                 }
                 if (first.equals("repair")) {
                     return new TardisRepairCommand(plugin).setFreeCount(sender, args);

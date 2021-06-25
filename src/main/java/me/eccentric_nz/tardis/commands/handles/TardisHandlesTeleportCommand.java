@@ -49,7 +49,7 @@ public class TardisHandlesTeleportCommand {
         // set destination to the player's location
         Location location = player.getLocation();
         // must be outside the tardis
-        if (plugin.getUtils().inTARDISWorld(location)) {
+        if (plugin.getUtils().inTardisWorld(location)) {
             TardisMessage.handlesSend(player, "TARDIS_OUTSIDE");
             return;
         }
@@ -74,7 +74,7 @@ public class TardisHandlesTeleportCommand {
             return;
         }
         // plugin respect
-        if (plugin.getPluginRespect().getRespect(location, new Parameters(player, Flag.getAPIFlags()))) {
+        if (plugin.getPluginRespect().getRespect(location, new Parameters(player, Flag.getApiFlags()))) {
             // get direction
             HashMap<String, Object> wherecl = new HashMap<>();
             wherecl.put("tardis_id", id);

@@ -198,17 +198,17 @@ public class TardisStattenheimListener implements Listener {
                             count = TardisTimeTravel.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), player_d);
                         }
                         Block under = remoteLocation.getBlock().getRelative(BlockFace.DOWN);
-                        if (plugin.getPM().isPluginEnabled("LockettePro")) {
+                        if (plugin.getPluginManager().isPluginEnabled("LockettePro")) {
                             if (LocketteProAPI.isProtected(remoteLocation.getBlock()) || LocketteProAPI.isProtected(under) || plugin.getUtils().checkSurrounding(under)) {
                                 count = 1;
                             }
                         }
-                        if (plugin.getPM().isPluginEnabled("BlockLocker")) {
+                        if (plugin.getPluginManager().isPluginEnabled("BlockLocker")) {
                             if (BlockLockerAPIv2.isProtected(remoteLocation.getBlock()) || BlockLockerAPIv2.isProtected(under)) {
                                 count = 1;
                             }
                         }
-                        if (plugin.getPM().isPluginEnabled("LWC")) {
+                        if (plugin.getPluginManager().isPluginEnabled("LWC")) {
                             ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
                             if (protectionCache != null) {
                                 Protection protection = protectionCache.getProtection(remoteLocation.getBlock());

@@ -93,7 +93,7 @@ public class ResultSetTardisId {
      * @param slot the TIPS slot number to check
      * @return true or false depending on whether the tardis id exists in the table
      */
-    public boolean fromTIPSSlot(int slot) {
+    public boolean fromTipsSlot(int slot) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT tardis_id FROM " + prefix + "tardis WHERE tips = ?";

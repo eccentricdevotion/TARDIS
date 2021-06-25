@@ -62,7 +62,7 @@ public class TardisArsMapListener extends TardisArsMethods implements Listener {
      * @param event a player clicking an inventory slot
      */
     @EventHandler(ignoreCancelled = true)
-    public void onARSMapClick(InventoryClickEvent event) {
+    public void onArsMapClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "TARDIS Map")) {
@@ -162,12 +162,12 @@ public class TardisArsMapListener extends TardisArsMethods implements Listener {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
-                int pos = tardis.getTIPS();
+                int pos = tardis.getTips();
                 int tx = 0, tz = 0;
                 if (pos != -1) {
                     // tips slot
                     TardisInteriorPositioning tips = new TardisInteriorPositioning(plugin);
-                    TardisTipsData coords = tips.getTIPSData(pos);
+                    TardisTipsData coords = tips.getTipsData(pos);
                     tx = coords.getCentreX();
                     tz = coords.getCentreZ();
                 }

@@ -237,7 +237,7 @@ public class TardisItemFrameListener implements Listener {
                 ItemStack is = frame.getItem();
                 if (isHandles(is)) {
                     // play sound
-                    TardisSounds.playTARDISSound(player, "handles", 5L);
+                    TardisSounds.playTardisSound(player, "handles", 5L);
                     ItemMeta im = is.getItemMeta();
                     assert im != null;
                     im.setCustomModelData(10000002);
@@ -292,7 +292,7 @@ public class TardisItemFrameListener implements Listener {
                         return;
                     }
                     // cannot place unless inside the tardis
-                    if (!plugin.getUtils().inTARDISWorld(event.getPlayer())) {
+                    if (!plugin.getUtils().inTardisWorld(event.getPlayer())) {
                         TardisMessage.handlesSend(player, "HANDLES_TARDIS");
                         event.setCancelled(true);
                         return;
@@ -342,7 +342,7 @@ public class TardisItemFrameListener implements Listener {
                 if (player != null) {
                     if (player.isSneaking()) {
                         event.setCancelled(true);
-                        TardisSounds.playTARDISSound(player, "handles", 5L);
+                        TardisSounds.playTardisSound(player, "handles", 5L);
                         ItemMeta im = is.getItemMeta();
                         assert im != null;
                         im.setCustomModelData(10000002);

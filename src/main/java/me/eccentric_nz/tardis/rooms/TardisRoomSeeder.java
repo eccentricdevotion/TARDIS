@@ -86,7 +86,7 @@ public class TardisRoomSeeder implements Listener {
                 assert key != null;
                 if (inhand.equals(Material.getMaterial(key))) {
                     // check they are still in the tardis world
-                    if (!plugin.getUtils().inTARDISWorld(player)) {
+                    if (!plugin.getUtils().inTardisWorld(player)) {
                         TardisMessage.send(player, "ROOM_IN_WORLD");
                         plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                         return;
@@ -123,7 +123,7 @@ public class TardisRoomSeeder implements Listener {
                         return;
                     }
                     // check they are not in an ars chunk
-                    if (sd.hasARS()) {
+                    if (sd.hasArs()) {
                         int cx = c.getX();
                         int cy = block.getY();
                         int cz = c.getZ();

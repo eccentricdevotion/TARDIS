@@ -208,7 +208,7 @@ public class TardisHandbrakeListener implements Listener {
                                             TardisTimeRotor.setRotor(TardisTimeRotor.getRotorModelData(itemFrame), itemFrame, false);
                                         }
                                     }
-                                    TardisSounds.playTARDISSound(handbrake_loc, "tardis_handbrake_engage");
+                                    TardisSounds.playTardisSound(handbrake_loc, "tardis_handbrake_engage");
                                     // Changes the lever to on
                                     TardisHandbrake.setLevers(block, true, inside, handbrake_loc.toString(), id, plugin);
                                     // Check if it's at a recharge point

@@ -42,14 +42,14 @@ class TardisVersionCommand {
         String pluginName = plugin.getPluginName();
         List<String> hooks = plugin.getDescription().getSoftDepend();
         String tardisversion = plugin.getDescription().getVersion();
-        String chunkversion = Objects.requireNonNull(plugin.getPM().getPlugin("TARDISChunkGenerator")).getDescription().getVersion();
+        String chunkversion = Objects.requireNonNull(plugin.getPluginManager().getPlugin("TARDISChunkGenerator")).getDescription().getVersion();
         String cb = Bukkit.getVersion();
         // send server and tardis versions
         sender.sendMessage(pluginName + "Server version: " + ChatColor.AQUA + cb);
         sender.sendMessage(pluginName + "tardis version: " + ChatColor.AQUA + tardisversion);
         sender.sendMessage(pluginName + "TARDISChunkGenerator version: " + ChatColor.AQUA + chunkversion);
         // send dependent plugin versions
-        for (Plugin hook : plugin.getPM().getPlugins()) {
+        for (Plugin hook : plugin.getPluginManager().getPlugins()) {
             PluginDescriptionFile desc = hook.getDescription();
             String name = desc.getName();
             String version = desc.getVersion();

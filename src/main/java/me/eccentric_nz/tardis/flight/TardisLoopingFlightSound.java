@@ -38,7 +38,7 @@ class TardisLoopingFlightSound implements Runnable {
     @Override
     public void run() {
         // start looping sfx
-        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> TardisSounds.playTARDISSound(location, "time_rotor", 0.5f), 1L, 280L);
+        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> TardisSounds.playTardisSound(location, "time_rotor", 0.5f), 1L, 280L);
         plugin.getTrackerKeeper().getDestinationVortex().put(id, taskID);
     }
 }

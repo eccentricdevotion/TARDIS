@@ -136,7 +136,7 @@ public class TardisSudoCommand extends TardisCompleter implements CommandExecuto
                                     plugin.getQueryFactory().doInsert("ars", seta);
                                 }
                             }
-                            return new SudoArs(plugin).showARS((Player) sender, uuid);
+                            return new SudoArs(plugin).showArs((Player) sender, uuid);
                         case "assemble":
                             return new SudoAssemble(plugin).restore(sender, uuid, offlinePlayer.getName());
                         case "back":

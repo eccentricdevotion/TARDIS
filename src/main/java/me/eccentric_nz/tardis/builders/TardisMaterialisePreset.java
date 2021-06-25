@@ -160,7 +160,7 @@ class TardisMaterialisePreset implements Runnable {
                         TardisDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisId());
                         Location l = idl.getL();
                         plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds());
-                        TardisSounds.playTARDISSound(saved, "tardis_land_fast", 5L);
+                        TardisSounds.playTardisSound(saved, "tardis_land_fast", 5L);
                         // put player into travellers table
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("tardis_id", bd.getTardisId());
@@ -185,7 +185,7 @@ class TardisMaterialisePreset implements Runnable {
                                     default -> "tardis_land";
                                 };
                             }
-                            TardisSounds.playTARDISSound(bd.getLocation(), sound);
+                            TardisSounds.playTardisSound(bd.getLocation(), sound);
                         } else {
                             world.playSound(bd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                         }

@@ -198,7 +198,7 @@ class TardisHostileDispersal {
         }, 15L);
         plugin.getTrackerKeeper().getDispersed().put(uuid, l);
         plugin.getTrackerKeeper().getDispersedTARDII().add(id);
-        plugin.getPM().callEvent(new TardisHadsEvent(hostile, id, l, Hads.DISPERSAL));
+        plugin.getPluginManager().callEvent(new TardisHadsEvent(hostile, id, l, Hads.DISPERSAL));
     }
 
     private List<Material> buildList() {

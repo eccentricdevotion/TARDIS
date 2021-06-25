@@ -117,14 +117,14 @@ public class TardisMaterialiseFromVortex implements Runnable {
                             TardisMessage.send(player, "Q_FLY");
                             plugin.getTrackerKeeper().getHasDestination().remove(id);
                         }
-                        plugin.getPM().callEvent(new TardisMalfunctionEvent(player, tardis, exit));
+                        plugin.getPluginManager().callEvent(new TardisMalfunctionEvent(player, tardis, exit));
                         // set beacon colour to red
                         if (!tardis.getBeacon().isEmpty()) {
                             setBeaconUpBlock(tardis.getBeacon(), id);
                         }
                         // play tardis crash sound
                         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                            TardisSounds.playTARDISSound(handbrake, "tardis_malfunction");
+                            TardisSounds.playTardisSound(handbrake, "tardis_malfunction");
                         }
                         // add a potion effect to the player
                         player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
@@ -230,19 +230,19 @@ public class TardisMaterialiseFromVortex implements Runnable {
                     scheduler.scheduleSyncDelayedTask(plugin, () -> {
                         Location final_location = bd.getLocation();
                         Location l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-                        plugin.getPM().callEvent(new TardisMaterialisationEvent(player, tardis, final_location));
+                        plugin.getPluginManager().callEvent(new TardisMaterialisationEvent(player, tardis, final_location));
                         plugin.getPresetBuilder().buildPreset(bd);
                         if (!mine_sound) {
                             if (!preset.equals(Preset.JUNK_MODE)) {
                                 if (!malchk) {
-                                    TardisSounds.playTARDISSound(sound_loc, landSFX);
-                                    TardisSounds.playTARDISSound(external_sound_loc, landSFX);
+                                    TardisSounds.playTardisSound(sound_loc, landSFX);
+                                    TardisSounds.playTardisSound(external_sound_loc, landSFX);
                                 } else {
-                                    TardisSounds.playTARDISSound(sound_loc, "tardis_emergency_land");
-                                    TardisSounds.playTARDISSound(external_sound_loc, "tardis_emergency_land");
+                                    TardisSounds.playTardisSound(sound_loc, "tardis_emergency_land");
+                                    TardisSounds.playTardisSound(external_sound_loc, "tardis_emergency_land");
                                 }
                             } else {
-                                TardisSounds.playTARDISSound(sound_loc, "junk_land");
+                                TardisSounds.playTardisSound(sound_loc, "junk_land");
                             }
                         } else {
                             Objects.requireNonNull(handbrake.getWorld()).playSound(handbrake, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);

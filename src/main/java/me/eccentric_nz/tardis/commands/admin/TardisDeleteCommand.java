@@ -63,7 +63,7 @@ public class TardisDeleteCommand {
         });
     }
 
-    boolean deleteTARDIS(CommandSender sender, String[] args) {
+    boolean deleteTardis(CommandSender sender, String[] args) {
         boolean junk = (args[1].toLowerCase(Locale.ENGLISH).equals("junk"));
         int tmp = -1;
         int abandoned = (args.length > 2 && args[2].equals("abandoned")) ? 1 : 0;
@@ -103,7 +103,7 @@ public class TardisDeleteCommand {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
-            int tips = tardis.getTIPS();
+            int tips = tardis.getTips();
             Schematic schm = tardis.getSchematic();
             String chunkLoc = tardis.getChunk();
             boolean hidden = tardis.isHidden();
@@ -133,7 +133,7 @@ public class TardisDeleteCommand {
                 TardisMessage.send(sender, "CURRENT_NOT_FOUND");
                 return true;
             }
-            plugin.getPM().callEvent(new TardisDestructionEvent(player, bb_loc, tardis.getOwner()));
+            plugin.getPluginManager().callEvent(new TardisDestructionEvent(player, bb_loc, tardis.getOwner()));
             // destroy outer TARDIS
             if (!hidden) {
                 UUID u = rs.getTardis().getUuid();
@@ -164,7 +164,7 @@ public class TardisDeleteCommand {
                     if (plugin.getWorldManager().equals(WorldManager.MYWORLDS)) {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds unload " + wname);
                     }
-                    if (plugin.getPM().isPluginEnabled("WorldBorder")) {
+                    if (plugin.getPluginManager().isPluginEnabled("WorldBorder")) {
                         // wb <world> clear
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + wname + " clear");
                     }

@@ -35,7 +35,7 @@ public class TardisWorldBorderChecker {
     private final WorldBorder border;
 
     public TardisWorldBorderChecker(TardisPlugin plugin) {
-        border = (WorldBorder) plugin.getPM().getPlugin("WorldBorder");
+        border = (WorldBorder) plugin.getPluginManager().getPlugin("WorldBorder");
     }
 
     /**

@@ -40,7 +40,7 @@ public class TardisSleepListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerSleep(PlayerBedEnterEvent event) {
         Location b = event.getBed().getLocation();
-        if (plugin.getUtils().inTARDISWorld(b) && Objects.requireNonNull(b.getWorld()).getEnvironment().equals(Environment.THE_END)) {
+        if (plugin.getUtils().inTardisWorld(b) && Objects.requireNonNull(b.getWorld()).getEnvironment().equals(Environment.THE_END)) {
             event.setCancelled(true);
         }
     }

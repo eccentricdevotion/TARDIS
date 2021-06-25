@@ -37,7 +37,7 @@ public final class TardisHadsEvent extends TardisLocationEvent {
      *
      * @return the HADS type
      */
-    public Hads getHADSType() {
+    public Hads getHadsType() {
         return hadsType;
     }
 }

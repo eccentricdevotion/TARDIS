@@ -172,7 +172,7 @@ public class TardisSonicPainter {
 
     public static void paint(TardisPlugin plugin, Player player, Block b) {
         // must be in tardis world
-        if (!plugin.getUtils().inTARDISWorld(player)) {
+        if (!plugin.getUtils().inTardisWorld(player)) {
             TardisMessage.send(player, "UPDATE_IN_WORLD");
             return;
         }

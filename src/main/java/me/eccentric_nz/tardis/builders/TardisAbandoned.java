@@ -84,7 +84,7 @@ public class TardisAbandoned {
         bd.setTardisId(lastInsertId);
         bd.setPlayer(player);
         bd.setThrottle(SpaceTimeThrottle.REBUILD);
-        plugin.getPM().callEvent(new TardisCreationEvent(null, lastInsertId, l));
+        plugin.getPluginManager().callEvent(new TardisCreationEvent(null, lastInsertId, l));
         TardisBuildAbandoned builder = new TardisBuildAbandoned(plugin, schm, chunkworld, lastInsertId, player);
         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
         builder.setTask(task);
@@ -101,7 +101,7 @@ public class TardisAbandoned {
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             }
-            TardisSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");
+            TardisSounds.playTardisSound(bd.getLocation(), "tardis_land_fast");
         }, schm.getConsoleSize().getDelay());
     }
 }

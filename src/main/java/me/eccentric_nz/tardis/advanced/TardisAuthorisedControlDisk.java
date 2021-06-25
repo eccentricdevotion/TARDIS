@@ -111,7 +111,7 @@ public class TardisAuthorisedControlDisk {
         }
         if (location != null) {
             if (atPlayerLocation) {
-                if (plugin.getUtils().inTARDISWorld(timeLord)) {
+                if (plugin.getUtils().inTardisWorld(timeLord)) {
                     return "The Time Lord must be outside the TARDIS.";
                 }
                 // check respect
@@ -142,7 +142,7 @@ public class TardisAuthorisedControlDisk {
                 if (plugin.getConfig().getBoolean("circuits.damage")) {
                     plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
                 }
-                TardisSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
+                TardisSounds.playTardisSound(handbrake, "tardis_handbrake_release");
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("handbrake_on", 0);
                 HashMap<String, Object> whereHandbrake = new HashMap<>();

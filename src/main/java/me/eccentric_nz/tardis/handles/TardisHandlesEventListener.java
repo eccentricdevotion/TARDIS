@@ -90,7 +90,7 @@ public class TardisHandlesEventListener implements Listener {
         getProgram(event.getPlayer().getUniqueId().toString(), "EXIT");
     }
 
-    public void onHandlesHADS(TardisHadsEvent event) {
+    public void onHandlesHads(TardisHadsEvent event) {
         getProgram(event.getPlayer().getUniqueId().toString(), "HADS");
     }
 

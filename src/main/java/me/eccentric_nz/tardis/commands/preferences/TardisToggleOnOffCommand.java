@@ -63,7 +63,7 @@ class TardisToggleOnOffCommand {
             TardisMessage.send(player, "WG_DISABLED");
             return true;
         }
-        if (pref.equals("lock_containers") && !plugin.getUtils().inTARDISWorld(player)) {
+        if (pref.equals("lock_containers") && !plugin.getUtils().inTardisWorld(player)) {
             TardisMessage.send(player, "CMD_IN_WORLD");
             return true;
         }

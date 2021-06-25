@@ -157,7 +157,7 @@ public class TardisRecipeCommands implements CommandExecutor {
 
     // Maps still seem to use numeric values
     private void showShapedRecipe(Player player, String str) {
-        ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(str);
+        ShapedRecipe recipe = plugin.getShapedRecipe().getShapedRecipes().get(str);
         player.discoverRecipe(recipe.getKey());
         player.closeInventory();
         plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
@@ -229,7 +229,7 @@ public class TardisRecipeCommands implements CommandExecutor {
     }
 
     private void showShapelessRecipe(Player player, String str) {
-        ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(str);
+        ShapelessRecipe recipe = plugin.getShapelessRecipe().getShapelessRecipes().get(str);
         player.discoverRecipe(recipe.getKey());
         List<ItemStack> ingredients = recipe.getIngredientList();
         plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());

@@ -73,7 +73,7 @@ public class TardisTemporalLocatorListener extends TardisMenuListener implements
                     TardisMessage.send(player, "TEMPORAL_SET", String.format("%d", time));
                     // damage the circuit if configured
                     if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
-                        int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId());
+                        int id = plugin.getTardisApi().getIdOfTARDISPlayerIsIn(player.getUniqueId());
                         TardisCircuitChecker tcc = new TardisCircuitChecker(plugin, id);
                         tcc.getCircuits();
                         // decrement uses

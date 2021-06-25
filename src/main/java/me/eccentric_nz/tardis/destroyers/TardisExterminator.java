@@ -80,7 +80,7 @@ public class TardisExterminator {
                 String chunkLoc = tardis.getChunk();
                 String owner = tardis.getOwner();
                 UUID uuid = tardis.getUuid();
-                int tips = tardis.getTIPS();
+                int tips = tardis.getTips();
                 boolean hasZero = (!tardis.getZero().isEmpty());
                 Schematic schm = tardis.getSchematic();
                 HashMap<String, Object> wherecl = new HashMap<>();
@@ -185,7 +185,7 @@ public class TardisExterminator {
             int id = tardis.getTardisId();
             String owner = tardis.getOwner();
             String chunkLoc = tardis.getChunk();
-            int tips = tardis.getTIPS();
+            int tips = tardis.getTips();
             boolean hasZero = (!tardis.getZero().isEmpty());
             Schematic schm = tardis.getSchematic();
             // need to check that a player is not currently in the TARDIS
@@ -227,7 +227,7 @@ public class TardisExterminator {
                 dd.setSubmarine(rsc.isSubmarine());
                 dd.setTardisId(id);
                 dd.setThrottle(SpaceTimeThrottle.REBUILD);
-                plugin.getPM().callEvent(new TardisDestructionEvent(player, bb_loc, owner));
+                plugin.getPluginManager().callEvent(new TardisDestructionEvent(player, bb_loc, owner));
                 if (!tardis.isHidden()) {
                     // remove Police Box
                     plugin.getPresetDestroyer().destroyPreset(dd);
@@ -320,7 +320,7 @@ public class TardisExterminator {
             if (plugin.getWorldManager().equals(WorldManager.MYWORLDS)) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds unload " + name);
             }
-            if (plugin.getPM().isPluginEnabled("WorldBorder")) {
+            if (plugin.getPluginManager().isPluginEnabled("WorldBorder")) {
                 // wb <world> clear
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " clear");
             }
@@ -335,7 +335,7 @@ public class TardisExterminator {
     private void removeZeroRoom(int slot, boolean hasZero) {
         if (slot != -1 && plugin.getConfig().getBoolean("allow.zero_room") && hasZero) {
             TardisInteriorPositioning tips = new TardisInteriorPositioning(plugin);
-            TardisTipsData coords = tips.getTIPSData(slot);
+            TardisTipsData coords = tips.getTipsData(slot);
             World w = plugin.getServer().getWorld("TARDIS_Zero_Room");
             if (w != null) {
                 tips.reclaimZeroChunk(w, coords);

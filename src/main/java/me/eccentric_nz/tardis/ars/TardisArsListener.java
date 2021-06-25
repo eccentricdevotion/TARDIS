@@ -58,7 +58,7 @@ public class TardisArsListener extends TardisArsMethods implements Listener {
      * @param event a player clicking an inventory slot
      */
     @EventHandler(ignoreCancelled = true)
-    public void onARSTerminalClick(InventoryClickEvent event) {
+    public void onArsTerminalClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Architectural Reconfiguration")) {
@@ -227,7 +227,7 @@ public class TardisArsListener extends TardisArsMethods implements Listener {
                                 ItemStack ris = view.getItem(slot);
                                 assert ris != null;
                                 String displayName = Objects.requireNonNull(ris.getItemMeta()).getDisplayName();
-                                String room = TardisArs.ARSFor(ris.getType().toString()).getConfigPath();
+                                String room = TardisArs.arsFor(ris.getType().toString()).getConfigPath();
                                 if (!TardisPermission.hasPermission(player, "tardis.room." + room.toLowerCase(Locale.ENGLISH))) {
                                     setLore(view, slot, plugin.getLanguage().getString("NO_PERM_ROOM_TYPE"));
                                     break;
@@ -305,7 +305,7 @@ public class TardisArsListener extends TardisArsMethods implements Listener {
             room_materials.add(Material.valueOf(plugin.getRoomsConfig().getString("rooms." + c + ".seed")));
             String uc = TardisStringUtils.uppercaseFirst(c);
             room_names.add(uc);
-            TardisArs.addNewARS(new Ars() {
+            TardisArs.addNewArs(new Ars() {
                 @Override
                 public String getMaterial() {
                     return plugin.getRoomsConfig().getString("rooms." + c + ".seed");

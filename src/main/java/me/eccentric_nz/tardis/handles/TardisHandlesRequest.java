@@ -75,7 +75,7 @@ public class TardisHandlesRequest {
             ResultSetControls rsc = new ResultSetControls(plugin, where, false);
             if (rsc.resultSet()) {
                 // if placed player must be in TARDIS or be wearing a communicator
-                if (!plugin.getUtils().inTARDISWorld(player)) {
+                if (!plugin.getUtils().inTardisWorld(player)) {
                     // player must have communicator
                     if (!TardisPermission.hasPermission(player, "tardis.handles.communicator")) {
                         TardisMessage.send(player, "NO_PERM_COMMUNICATOR");
@@ -359,7 +359,7 @@ public class TardisHandlesRequest {
                             }
                             Location location = player.getLocation();
                             // must be in their TARDIS
-                            if (!plugin.getUtils().inTARDISWorld(location)) {
+                            if (!plugin.getUtils().inTardisWorld(location)) {
                                 TardisMessage.handlesSend(player, "HANDLES_NO_TRANSMAT_WORLD");
                                 return;
                             }
@@ -375,7 +375,7 @@ public class TardisHandlesRequest {
                         break;
                 }
                 if (key.equals("remind")) {
-                    TardisSounds.playTARDISSound(player, "handles_confirmed", 5L);
+                    TardisSounds.playTardisSound(player, "handles_confirmed", 5L);
                 }
             } else {
                 // try custom-commands
@@ -398,7 +398,7 @@ public class TardisHandlesRequest {
                     String perm = plugin.getHandlesConfig().getString("custom-commands." + key + ".permission");
                     if (perm != null && TardisPermission.hasPermission(player, perm)) {
                         for (String cmd : plugin.getHandlesConfig().getStringList("custom-commands." + key + ".commands")) {
-                            if (cmd.contains("%") && plugin.getPM().isPluginEnabled("PlaceholderAPI")) {
+                            if (cmd.contains("%") && plugin.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
                                 cmd = TardisHandlesPlaceholder.getSubstituted(cmd, player);
                             }
                             // process capture groups (backwards so double digits $13 are replaced before single digits $1)
@@ -418,7 +418,7 @@ public class TardisHandlesRequest {
                             }
                         }
                     }
-                    TardisSounds.playTARDISSound(player, "handles_confirmed", 5L);
+                    TardisSounds.playTardisSound(player, "handles_confirmed", 5L);
                 } else {
                     // don't understand
                     TardisMessage.handlesSend(player, "HANDLES_NO_COMMAND");

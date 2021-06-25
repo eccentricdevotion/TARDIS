@@ -70,13 +70,13 @@ public class UpdateDoor {
             if (rst.resultSet()) {
                 type = (secondary) ? 4 : 3;
                 // check the world
-                if (!plugin.getUtils().inTARDISWorld(player)) {
+                if (!plugin.getUtils().inTardisWorld(player)) {
                     TardisMessage.send(player, "NOT_IN_TARDIS");
                     return;
                 }
             } else {
                 type = 2;
-                if (plugin.getUtils().inTARDISWorld(player)) {
+                if (plugin.getUtils().inTardisWorld(player)) {
                     TardisMessage.send(player, "TARDIS_OUTSIDE");
                     return;
                 }

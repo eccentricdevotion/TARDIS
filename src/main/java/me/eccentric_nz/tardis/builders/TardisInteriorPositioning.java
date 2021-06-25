@@ -60,7 +60,7 @@ public class TardisInteriorPositioning {
      * @param location the player's current location in the TARDIS world
      * @return the TIPS slot number
      */
-    public static int getTIPSSlot(Location location) {
+    public static int getTipsSlot(Location location) {
         int px = location.getBlockX();
         int pz = location.getBlockZ();
         int col = px / 1024;
@@ -74,10 +74,10 @@ public class TardisInteriorPositioning {
      * @param location the player's current location in the TARDIS world
      * @return the TARDIS id
      */
-    public static int getTARDISIdFromLocation(Location location) {
-        int tips = getTIPSSlot(location);
+    public static int getTardisIdFromLocation(Location location) {
+        int tips = getTipsSlot(location);
         ResultSetTardisId rs = new ResultSetTardisId(TardisPlugin.plugin);
-        if (rs.fromTIPSSlot(tips)) {
+        if (rs.fromTipsSlot(tips)) {
             return rs.getTardisId();
         } else {
             return -1;
@@ -108,7 +108,7 @@ public class TardisInteriorPositioning {
      * @param slot the slot position in the grid (a number between 0, 399 inclusive)
      * @return a TIPS Data container
      */
-    public TardisTipsData getTIPSData(int slot) {
+    public TardisTipsData getTipsData(int slot) {
         TardisTipsData data = new TardisTipsData();
         int factorX = 0;
         int factorZ = 0;
@@ -143,7 +143,7 @@ public class TardisInteriorPositioning {
      *
      * @return a TIPS Data container
      */
-    public TardisTipsData getTIPSJunkData() {
+    public TardisTipsData getTipsJunkData() {
         TardisTipsData data = new TardisTipsData();
         int row = -1;
         int col = -1;

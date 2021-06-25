@@ -58,7 +58,7 @@ class TardisHandlesLockUnlockCommand {
                 plugin.getQueryFactory().doUpdate("doors", setl, wherel);
                 String message = (!lock) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
                 TardisMessage.handlesSend(player, "DOOR_LOCK", message);
-                TardisSounds.playTARDISSound(l, "tardis_lock");
+                TardisSounds.playTardisSound(l, "tardis_lock");
             }
         }
         return true;

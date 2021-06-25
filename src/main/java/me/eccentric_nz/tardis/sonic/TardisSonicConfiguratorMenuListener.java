@@ -99,8 +99,8 @@ public class TardisSonicConfiguratorMenuListener extends TardisMenuListener impl
         ItemMeta im = sonic.getItemMeta();
         ConfiguredSonic configuredSonic;
         assert im != null;
-        if (im.getPersistentDataContainer().has(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID())) {
-            configuredSonic = getConfiguredSonic(im.getPersistentDataContainer().get(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID()), im);
+        if (im.getPersistentDataContainer().has(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUuid())) {
+            configuredSonic = getConfiguredSonic(im.getPersistentDataContainer().get(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUuid()), im);
         } else {
             configuredSonic = createConfiguredSonic(player, view);
         }
@@ -351,7 +351,7 @@ public class TardisSonicConfiguratorMenuListener extends TardisMenuListener impl
             // create a new UUID
             UUID sonicUuid = UUID.randomUUID();
             // set the UUID to the sonic
-            im.getPersistentDataContainer().set(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID(), sonicUuid);
+            im.getPersistentDataContainer().set(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUuid(), sonicUuid);
             is.setItemMeta(im);
             // prepare data for database insertion
             HashMap<String, Object> set = new HashMap<>();

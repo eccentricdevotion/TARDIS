@@ -99,7 +99,7 @@ public class TardisCommands implements CommandExecutor {
                     return new TardisAbandonCommand(plugin).doAbandon(sender, args.length > 1);
                 case add:
                     if (args.length == 1) {
-                        return new TardisAddCompanionCommand(plugin).doAddGUI(player);
+                        return new TardisAddCompanionCommand(plugin).doAddGui(player);
                     } else {
                         return new TardisAddCompanionCommand(plugin).doAdd(player, args);
                     }
@@ -108,7 +108,7 @@ public class TardisCommands implements CommandExecutor {
                 case archive:
                     return new TardisArchiveCommand(plugin).zip(player, args);
                 case arsremove:
-                    return new TardisArsRemoveCommand(plugin).resetARS(player);
+                    return new TardisArsRemoveCommand(plugin).resetArs(player);
                 case bell:
                     return new TardisBellCommand(plugin).toggle(rs.getTardisId(), player, args);
                 case check_loc:
@@ -125,7 +125,7 @@ public class TardisCommands implements CommandExecutor {
                 case desktop:
                 case upgrade:
                 case theme:
-                    return new TardisUpgradeCommand(plugin).openUpgradeGUI(player);
+                    return new TardisUpgradeCommand(plugin).openUpgradeGui(player);
                 case direction:
                     return new TardisDirectionCommand(plugin).changeDirection(player, args);
                 case door:

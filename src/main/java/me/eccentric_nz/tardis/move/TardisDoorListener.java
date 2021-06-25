@@ -116,7 +116,7 @@ public class TardisDoorListener {
                 }
             }
             if (exit) {
-                plugin.getPM().callEvent(new TardisExitEvent(player, to));
+                plugin.getPluginManager().callEvent(new TardisExitEvent(player, to));
                 // give some artron energy to player
                 HashMap<String, Object> where = new HashMap<>();
                 UUID uuid = player.getUniqueId();
@@ -131,7 +131,7 @@ public class TardisDoorListener {
                 }
                 plugin.getTrackerKeeper().getEjecting().remove(uuid);
             } else {
-                plugin.getPM().callEvent(new TardisEnterEvent(player, from));
+                plugin.getPluginManager().callEvent(new TardisEnterEvent(player, from));
                 if (player.isPlayerTimeRelative()) {
                     setTemporalLocation(player, -1);
                 }
@@ -360,21 +360,21 @@ public class TardisDoorListener {
         switch (sound) {
             case 1:
                 if (!m) {
-                    TardisSounds.playTARDISSound(l, "tardis_door_open");
+                    TardisSounds.playTardisSound(l, "tardis_door_open");
                 } else {
                     p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
                 }
                 break;
             case 2:
                 if (!m) {
-                    TardisSounds.playTARDISSound(l, "tardis_door_close");
+                    TardisSounds.playTardisSound(l, "tardis_door_close");
                 } else {
                     p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
                 }
                 break;
             case 3:
                 if (!m) {
-                    TardisSounds.playTARDISSound(l, "tardis_enter");
+                    TardisSounds.playTardisSound(l, "tardis_enter");
                 } else {
                     p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
                 }

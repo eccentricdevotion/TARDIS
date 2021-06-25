@@ -37,7 +37,7 @@ public class TardisFollower {
     }
 
     private void checkEntity(Entity entity, UUID player) {
-        TardisWeepingAngelsApi twa = TardisAngelsApi.getAPI(TardisPlugin.plugin);
+        TardisWeepingAngelsApi twa = TardisAngelsApi.getApi(TardisPlugin.plugin);
         FollowerChecker followerChecker = twa.isClaimedMonster(entity, player);
         if (!followerChecker.getMonster().equals(Monster.WEEPING_ANGEL)) {
             valid = true;

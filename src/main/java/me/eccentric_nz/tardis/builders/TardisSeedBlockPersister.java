@@ -52,7 +52,7 @@ public class TardisSeedBlockPersister {
         try {
             // save the seed blocks
             ps = connection.prepareStatement("INSERT INTO " + prefix + "seeds (schematic, wall, floor, location) VALUES (?,?,?,?)");
-            for (Map.Entry<Location, TardisBuildData> map : plugin.getBuildKeeper().getTrackTARDISSeed().entrySet()) {
+            for (Map.Entry<Location, TardisBuildData> map : plugin.getBuildKeeper().getTrackTardisSeed().entrySet()) {
                 TardisBuildData data = map.getValue();
                 ps.setString(1, data.getSchematic().getPermission());
                 ps.setString(2, data.getWallType().toString());
@@ -94,7 +94,7 @@ public class TardisSeedBlockPersister {
                             data.setSchematic(schm);
                             data.setWallType(wall);
                             data.setFloorType(floor);
-                            plugin.getBuildKeeper().getTrackTARDISSeed().put(location, data);
+                            plugin.getBuildKeeper().getTrackTardisSeed().put(location, data);
                             count++;
                         }
                     }

@@ -51,7 +51,7 @@ public class TardisSounds {
             hum = "tardis_hum";
         }
         if (userSFX) {
-            playTARDISSound(p.getLocation(), hum);
+            playTardisSound(p.getLocation(), hum);
         }
     }
 
@@ -62,7 +62,7 @@ public class TardisSounds {
      * @param s      The sound to play
      * @param volume The volume to play the sound at
      */
-    public static void playTARDISSound(Location l, String s, float volume) {
+    public static void playTardisSound(Location l, String s, float volume) {
         Objects.requireNonNull(l.getWorld()).playSound(l, s, VOLUME * volume, 1.0f);
     }
 
@@ -72,7 +72,7 @@ public class TardisSounds {
      * @param l The location
      * @param s The sound to play
      */
-    public static void playTARDISSound(Location l, String s) {
+    public static void playTardisSound(Location l, String s) {
         Objects.requireNonNull(l.getWorld()).playSound(l, s, VOLUME, 1.0f);
     }
 
@@ -82,7 +82,7 @@ public class TardisSounds {
      * @param p The player
      * @param s The sound to play
      */
-    public static void playTARDISSound(Player p, String s) {
+    public static void playTardisSound(Player p, String s) {
         p.playSound(p.getLocation(), s, VOLUME, 1.0f);
     }
 
@@ -93,7 +93,7 @@ public class TardisSounds {
      * @param s The sound to play
      * @param d The delay time
      */
-    public static void playTARDISSound(Player p, String s, long d) {
+    public static void playTardisSound(Player p, String s, long d) {
         TardisPlugin.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TardisPlugin.plugin, () -> p.playSound(p.getLocation(), s, VOLUME, 1.0f), d);
     }
 

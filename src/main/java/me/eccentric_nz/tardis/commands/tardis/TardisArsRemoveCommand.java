@@ -40,8 +40,8 @@ class TardisArsRemoveCommand {
         this.plugin = plugin;
     }
 
-    boolean resetARS(Player player) {
-        // check they are a timelord
+    boolean resetArs(Player player) {
+        // check they are a Time Lord
         ResultSetTardisId rs = new ResultSetTardisId(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
             TardisMessage.send(player, "NOT_A_TIMELORD");

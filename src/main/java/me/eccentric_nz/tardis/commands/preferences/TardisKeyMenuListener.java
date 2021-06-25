@@ -86,7 +86,7 @@ public class TardisKeyMenuListener extends TardisMenuListener implements Listene
                         keyMeta.setDisplayName(displayName);
                         keyMeta.setCustomModelData(choiceMeta.getCustomModelData());
                         // personalise
-                        keyMeta.getPersistentDataContainer().set(TardisPlugin.plugin.getTimeLordUuidKey(), TardisPlugin.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+                        keyMeta.getPersistentDataContainer().set(TardisPlugin.plugin.getTimeLordUuidKey(), TardisPlugin.plugin.getPersistentDataTypeUuid(), player.getUniqueId());
                         // set lore
                         List<String> lore;
                         if (keyMeta.hasLore()) {

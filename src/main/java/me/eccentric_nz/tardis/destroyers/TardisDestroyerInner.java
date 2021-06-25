@@ -60,9 +60,9 @@ public class TardisDestroyerInner {
         TardisInteriorPositioning tips = new TardisInteriorPositioning(plugin);
         TardisTipsData coords;
         if (schematic.getPermission().equals("junk")) {
-            coords = tips.getTIPSJunkData();
+            coords = tips.getTipsJunkData();
         } else {
-            coords = tips.getTIPSData(slot);
+            coords = tips.getTipsData(slot);
         }
         tips.reclaimChunks(w, id);
         wgl = new Location(w, coords.getMinX(), 64, coords.getMinZ());

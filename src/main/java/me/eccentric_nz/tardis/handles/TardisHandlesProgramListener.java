@@ -59,7 +59,7 @@ public class TardisHandlesProgramListener implements Listener {
      * @param event a player clicking an inventory slot
      */
     @EventHandler(ignoreCancelled = true)
-    public void onHandlesGUIClick(InventoryClickEvent event) {
+    public void onHandlesGuiClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Handles Program")) {

@@ -34,11 +34,11 @@ public class TardisAngelsApi {
      * @param plugin - a tardis plugin instance
      * @return the TARDISWeepingAngelsAPI
      */
-    public static TardisWeepingAngelsApi getAPI(TardisPlugin plugin) {
-        Plugin p = plugin.getPM().getPlugin("TARDISWeepingAngels");
+    public static TardisWeepingAngelsApi getApi(TardisPlugin plugin) {
+        Plugin p = plugin.getPluginManager().getPlugin("TARDISWeepingAngels");
         TardisWeepingAngelsPlugin twa = (TardisWeepingAngelsPlugin) p;
         assert twa != null;
-        return twa.getWeepingAngelsAPI();
+        return twa.getWeepingAngelsApi();
     }
 
     public static boolean isDalek(Skeleton skeleton) {

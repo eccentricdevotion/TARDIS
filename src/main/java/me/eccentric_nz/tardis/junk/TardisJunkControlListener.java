@@ -63,7 +63,7 @@ public class TardisJunkControlListener implements Listener {
         repeaterMap.put(2, 10);
         repeaterMap.put(3, 100);
         repeaterMap.put(4, 1000);
-        worlds = this.plugin.getTardisAPI().getOverWorlds();
+        worlds = this.plugin.getTardisApi().getOverWorlds();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

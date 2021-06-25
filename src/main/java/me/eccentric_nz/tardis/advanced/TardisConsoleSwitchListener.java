@@ -96,7 +96,7 @@ public class TardisConsoleSwitchListener implements Listener {
                                         } // ars circuit
                                         case 10001973, 20001973 -> {
                                             newInventory = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
-                                            itemStacks = new TardisArsInventory(plugin).getARS();
+                                            itemStacks = new TardisArsInventory(plugin).getArs();
                                         } // Temporal circuit
                                         case 10001974, 20001974 -> {
                                             newInventory = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Temporal Locator");

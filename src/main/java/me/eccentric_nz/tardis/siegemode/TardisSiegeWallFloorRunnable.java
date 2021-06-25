@@ -131,11 +131,11 @@ class TardisSiegeWallFloorRunnable implements Runnable {
                 plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
             }
             Tardis tardis = rs.getTardis();
-            int slot = tardis.getTIPS();
+            int slot = tardis.getTips();
             int id = tardis.getTardisId();
             if (slot != -1) { // default world - use TIPS
                 TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
-                TardisTipsData pos = tintpos.getTIPSData(slot);
+                TardisTipsData pos = tintpos.getTipsData(slot);
                 startX = pos.getCentreX();
                 startZ = pos.getCentreZ();
             } else {

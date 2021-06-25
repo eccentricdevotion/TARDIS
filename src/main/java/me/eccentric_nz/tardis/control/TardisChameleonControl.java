@@ -36,7 +36,7 @@ class TardisChameleonControl {
         this.plugin = plugin;
     }
 
-    void openGUI(Player player, int id, Adaption adapt, Preset preset) {
+    void openGui(Player player, int id, Adaption adapt, Preset preset) {
         TardisCircuitChecker tcc = null;
         if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
             tcc = new TardisCircuitChecker(plugin, id);

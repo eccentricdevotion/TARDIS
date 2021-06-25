@@ -41,9 +41,9 @@ class TardisPreset {
 
     public void makePresets(boolean assymetric, boolean duck) {
         for (CardinalDirection d : CardinalDirection.values()) {
-            blueprint.put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, blueprintData, assymetric, duck));
-            stained.put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, stainedData, assymetric, duck));
-            glass.put(d, TardisChameleonPreset.buildTARDISChameleonColumn(d, glassData, assymetric, duck));
+            blueprint.put(d, TardisChameleonPreset.buildTardisChameleonColumn(d, blueprintData, assymetric, duck));
+            stained.put(d, TardisChameleonPreset.buildTardisChameleonColumn(d, stainedData, assymetric, duck));
+            glass.put(d, TardisChameleonPreset.buildTardisChameleonColumn(d, glassData, assymetric, duck));
         }
     }
 

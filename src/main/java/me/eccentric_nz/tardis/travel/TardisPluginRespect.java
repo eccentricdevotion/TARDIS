@@ -187,7 +187,7 @@ public class TardisPluginRespect {
      * Checks if the Towny plugin is available, and loads support if it is.
      */
     public void loadTowny() {
-        if (plugin.getPM().getPlugin("Towny") != null) {
+        if (plugin.getPluginManager().getPlugin("Towny") != null) {
             townyOnServer = true;
             tychk = new TardisTownyChecker(plugin);
         }
@@ -197,7 +197,7 @@ public class TardisPluginRespect {
      * Checks if the WorldBorder plugin is available, and loads support if it is.
      */
     public void loadWorldBorder() {
-        if (plugin.getPM().getPlugin("WorldBorder") != null) {
+        if (plugin.getPluginManager().getPlugin("WorldBorder") != null) {
             borderOnServer = true;
             borderchk = new TardisWorldBorderChecker(plugin);
         }
@@ -207,7 +207,7 @@ public class TardisPluginRespect {
      * Checks if the Factions plugin is available, and loads support if it is.
      */
     public void loadFactions() {
-        if (plugin.getPM().getPlugin("Factions") != null) {
+        if (plugin.getPluginManager().getPlugin("Factions") != null) {
             factionsOnServer = true;
         }
     }
@@ -216,7 +216,7 @@ public class TardisPluginRespect {
      * Checks if the GriefPrevention plugin is available, and loads support if it is.
      */
     public void loadGriefPrevention() {
-        if (plugin.getPM().getPlugin("GriefPrevention") != null) {
+        if (plugin.getPluginManager().getPlugin("GriefPrevention") != null) {
             plugin.debug("Hooking into GriefPrevention!");
             griefPreventionOnServer = true;
             griefchk = new TardisGriefPreventionChecker(plugin);
@@ -227,7 +227,7 @@ public class TardisPluginRespect {
      * Checks if the GriefPrevention plugin is available, and loads support if it is.
      */
     public void loadRedProtect() {
-        if (plugin.getPM().getPlugin("RedProtect") != null) {
+        if (plugin.getPluginManager().getPlugin("RedProtect") != null) {
             plugin.debug("Hooking into RedProtect!");
             redProtectOnServer = true;
         }

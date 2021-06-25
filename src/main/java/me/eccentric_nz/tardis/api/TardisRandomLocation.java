@@ -75,7 +75,7 @@ class TardisRandomLocation {
         maxZ = cz;
         // get the limits of the world
         // is WorldBorder enabled, and is there a border set for this world?
-        if (plugin.getPM().isPluginEnabled("WorldBorder") && Config.Border(w.getName()) != null) {
+        if (plugin.getPluginManager().isPluginEnabled("WorldBorder") && Config.Border(w.getName()) != null) {
             BorderData border = Config.Border(w.getName());
             minX = (int) border.getX() - border.getRadiusX();
             maxX = (int) border.getX() + border.getRadiusX();

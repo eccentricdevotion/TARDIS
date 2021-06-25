@@ -110,7 +110,7 @@ public class TardisUpdateListener implements Listener {
             return;
         }
         // check they are still in the TARDIS world
-        if (!updateable.equals(Updateable.BACKDOOR) && !plugin.getUtils().inTARDISWorld(player)) {
+        if (!updateable.equals(Updateable.BACKDOOR) && !plugin.getUtils().inTardisWorld(player)) {
             TardisMessage.send(player, "UPDATE_IN_WORLD");
             return;
         }

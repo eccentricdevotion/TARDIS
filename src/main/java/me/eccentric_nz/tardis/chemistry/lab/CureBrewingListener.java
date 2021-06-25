@@ -69,7 +69,7 @@ public class CureBrewingListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onItemDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
-        if (!plugin.getUtils().inTARDISWorld(player)) {
+        if (!plugin.getUtils().inTardisWorld(player)) {
             return;
         }
         Item item = event.getItemDrop();

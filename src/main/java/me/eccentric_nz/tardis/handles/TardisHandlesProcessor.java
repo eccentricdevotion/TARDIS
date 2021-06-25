@@ -490,7 +490,7 @@ public class TardisHandlesProcessor {
                                                     plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisId());
                                                     plugin.getTrackerKeeper().getInVortex().add(id);
                                                     // play tardis_takeoff sfx
-                                                    TardisSounds.playTARDISSound(current, "tardis_takeoff");
+                                                    TardisSounds.playTardisSound(current, "tardis_takeoff");
                                                 } else {
                                                     plugin.getPresetDestroyer().removeBlockProtection(id);
                                                     set.put("hidden", 0);
@@ -512,7 +512,7 @@ public class TardisHandlesProcessor {
                                                 plugin.getPresetBuilder().buildPreset(bd);
                                                 plugin.getTrackerKeeper().getInVortex().add(id);
                                                 // play tardis_land sfx
-                                                TardisSounds.playTARDISSound(bd.getLocation(), "tardis_land");
+                                                TardisSounds.playTardisSound(bd.getLocation(), "tardis_land");
                                                 // set handbrake on
                                                 HashMap<String, Object> seth = new HashMap<>();
                                                 seth.put("handbrake_on", 1);
@@ -563,7 +563,7 @@ public class TardisHandlesProcessor {
                                 break;
                             case TAKE_OFF:
                                 // player must be in TARDIS
-                                if (plugin.getUtils().inTARDISWorld(player.getLocation())) {
+                                if (plugin.getUtils().inTardisWorld(player.getLocation())) {
                                     plugin.getServer().dispatchCommand(plugin.getConsole(), "handles takeoff " + uuid + " " + id);
                                 }
                                 break;

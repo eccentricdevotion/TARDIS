@@ -96,7 +96,7 @@ public class TardisDematerialisePoliceBox implements Runnable {
                             default -> // NORMAL
                                     "tardis_takeoff";
                         };
-                        TardisSounds.playTARDISSound(dd.getLocation(), sound);
+                        TardisSounds.playTardisSound(dd.getLocation(), sound);
                     } else {
                         world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                     }

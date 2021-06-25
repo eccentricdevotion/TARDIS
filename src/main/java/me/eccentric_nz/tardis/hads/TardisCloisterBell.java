@@ -125,7 +125,7 @@ public class TardisCloisterBell implements Runnable {
             if (player != null && player.isOnline()) {
                 // play sound at Time Lords location (if they are not in the tardis and not within range of the tardis exterior)
                 Location location = player.getLocation();
-                if (!plugin.getUtils().inTARDISWorld(player)) {
+                if (!plugin.getUtils().inTardisWorld(player)) {
                     assert current != null;
                     if (!isInPoliceBoxRange(current, location)) {
                         Objects.requireNonNull(location.getWorld()).playSound(location, "cloister_bell", 1.0f, 1.0f);

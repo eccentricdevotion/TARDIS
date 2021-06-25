@@ -248,7 +248,7 @@ public class TardisDiskWriterCommand {
         if (itemStack.hasItemMeta()) {
             ItemMeta itemMeta = itemStack.getItemMeta();
             assert itemMeta != null;
-            if (itemMeta.hasDisplayName() && itemMeta.getDisplayName().equals("Authorised Control Disk") && itemMeta.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
+            if (itemMeta.hasDisplayName() && itemMeta.getDisplayName().equals("Authorised Control Disk") && itemMeta.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUuid())) {
                 if (args.length < 2) {
                     TardisMessage.send(player, "TOO_FEW_ARGS");
                     return false;

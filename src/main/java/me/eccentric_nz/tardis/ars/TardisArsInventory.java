@@ -186,7 +186,7 @@ public class TardisArsInventory {
         return is;
     }
 
-    public ItemStack[] getARS() {
+    public ItemStack[] getArs() {
         return ars;
     }
 }

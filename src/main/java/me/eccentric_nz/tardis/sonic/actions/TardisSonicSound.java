@@ -42,7 +42,7 @@ public class TardisSonicSound {
             im.addItemFlags(ItemFlag.values());
             player.getInventory().getItemInMainHand().setItemMeta(im);
             timeout.put(player.getUniqueId(), now + cooldown);
-            TardisSounds.playTARDISSound(player.getLocation(), sound);
+            TardisSounds.playTardisSound(player.getLocation(), sound);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 ItemStack is = player.getInventory().getItemInMainHand();
                 if (is.hasItemMeta()) {

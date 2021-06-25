@@ -215,7 +215,7 @@ public class TardisArtronCapacitorListener implements Listener {
                                     // has the tardis been initialised?
                                     if (!init) {
                                         // kickstart the tardis Artron Energy Capacitor
-                                        TardisSounds.playTARDISSound(block.getLocation(), "power_up");
+                                        TardisSounds.playTardisSound(block.getLocation(), "power_up");
                                         if (abandoned) {
                                             // transfer ownership to the player who clicked
                                             claimAbandoned(player, id, block, tardis);
@@ -326,7 +326,7 @@ public class TardisArtronCapacitorListener implements Listener {
             if (pu) {
                 new TardisDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
                 TardisMessage.send(player, "ABANDON_CLAIMED");
-                plugin.getPM().callEvent(new TardisClaimEvent(player, tardis, current));
+                plugin.getPluginManager().callEvent(new TardisClaimEvent(player, tardis, current));
             }
             if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
                 Preset preset = tardis.getPreset();

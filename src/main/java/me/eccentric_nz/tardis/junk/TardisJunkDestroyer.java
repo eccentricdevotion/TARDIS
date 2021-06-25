@@ -77,7 +77,7 @@ public class TardisJunkDestroyer implements Runnable {
                         plugin.getGeneralKeeper().getJunkTravellers().add(p.getUniqueId());
                     }
                 });
-                TardisSounds.playTARDISSound(junkLoc, "junk_takeoff");
+                TardisSounds.playTardisSound(junkLoc, "junk_takeoff");
                 fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TardisJunkItsDangerousRunnable(plugin, junkLoc), 0, 1L);
             }
             if (i == 25) {

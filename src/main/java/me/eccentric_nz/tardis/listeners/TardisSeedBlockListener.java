@@ -96,7 +96,7 @@ public class TardisSeedBlockListener implements Listener {
             seed.setWallType(wall);
             seed.setFloorType(floor);
             Location l = event.getBlockPlaced().getLocation();
-            plugin.getBuildKeeper().getTrackTARDISSeed().put(l, seed);
+            plugin.getBuildKeeper().getTrackTardisSeed().put(l, seed);
             TardisMessage.send(player, "SEED_PLACE");
             // now the player has to click the block with the tardis key
         }
@@ -112,10 +112,10 @@ public class TardisSeedBlockListener implements Listener {
     public void onSeedBlockBreak(BlockBreakEvent event) {
         Location l = event.getBlock().getLocation();
         Player p = event.getPlayer();
-        if (plugin.getBuildKeeper().getTrackTARDISSeed().containsKey(l)) {
+        if (plugin.getBuildKeeper().getTrackTardisSeed().containsKey(l)) {
             if (!p.getGameMode().equals(GameMode.CREATIVE)) {
                 // get the Seed block data
-                TardisBuildData data = plugin.getBuildKeeper().getTrackTARDISSeed().get(l);
+                TardisBuildData data = plugin.getBuildKeeper().getTrackTardisSeed().get(l);
                 // drop a tardis Seed Block
                 World w = l.getWorld();
                 ItemStack is = new ItemStack(event.getBlock().getType(), 1);
@@ -144,7 +144,7 @@ public class TardisSeedBlockListener implements Listener {
                 assert w != null;
                 w.dropItemNaturally(l, is);
             }
-            plugin.getBuildKeeper().getTrackTARDISSeed().remove(l);
+            plugin.getBuildKeeper().getTrackTardisSeed().remove(l);
         }
     }
 
@@ -160,7 +160,7 @@ public class TardisSeedBlockListener implements Listener {
         }
         if (event.getClickedBlock() != null) {
             Location l = event.getClickedBlock().getLocation();
-            if (plugin.getBuildKeeper().getTrackTARDISSeed().containsKey(l)) {
+            if (plugin.getBuildKeeper().getTrackTardisSeed().containsKey(l)) {
                 Player player = event.getPlayer();
                 String key;
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
@@ -182,11 +182,11 @@ public class TardisSeedBlockListener implements Listener {
                         }
                     }
                     // grow a tardis
-                    TardisBuildData seed = plugin.getBuildKeeper().getTrackTARDISSeed().get(l);
+                    TardisBuildData seed = plugin.getBuildKeeper().getTrackTardisSeed().get(l);
                     // process seed data
                     if (new TardisSeedBlockProcessor(plugin).processBlock(seed, l, player)) {
                         // remove seed data
-                        plugin.getBuildKeeper().getTrackTARDISSeed().remove(l);
+                        plugin.getBuildKeeper().getTrackTardisSeed().remove(l);
                         // replace seed block with animated grow block
                         MultipleFacing multipleFacing = (MultipleFacing) plugin.getServer().createBlockData(TardisMushroomBlockData.MUSHROOM_STEM_DATA.get(55));
                         event.getClickedBlock().setBlockData(multipleFacing);

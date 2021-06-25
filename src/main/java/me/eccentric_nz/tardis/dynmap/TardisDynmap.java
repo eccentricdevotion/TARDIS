@@ -23,8 +23,8 @@ public class TardisDynmap {
     private static final String INFO = "<div class=\"regioninfo\"><div class=\"infowindow\"><span style=\"font-weight:bold;\">Time Lord:</span> %owner%<br/><span style=\"font-weight:bold;\">Console type:</span> %console%<br/><span style=\"font-weight:bold;\">Chameleon circuit:</span> %chameleon%<br/><span style=\"font-weight:bold;\">Location:</span> %location%<br/><span style=\"font-weight:bold;\">Door:</span> %door%<br/><span style=\"font-weight:bold;\">Powered on:</span> %powered%<br/><span style=\"font-weight:bold;\">Siege mode:</span> %siege%<br/><span style=\"font-weight:bold;\">Occupants:</span> %occupants%</div></div>";
     private final TardisPlugin plugin;
     private Plugin dynmap;
-    private DynmapAPI api;
-    private MarkerAPI markerapi;
+    private DynmapAPI dynmapApi;
+    private MarkerAPI markerApi;
     private boolean reload = false;
     private boolean stop;
     private Layer tardisLayer;
@@ -45,12 +45,12 @@ public class TardisDynmap {
         /*
          * Get dynmap
          */
-        dynmap = plugin.getPM().getPlugin("dynmap");
+        dynmap = plugin.getPluginManager().getPlugin("dynmap");
         /*
          * Get API
          */
-        api = (DynmapAPI) dynmap;
-        plugin.getPM().registerEvents(new TARDISServerListener(), plugin);
+        dynmapApi = (DynmapAPI) dynmap;
+        plugin.getPluginManager().registerEvents(new TardisServerListener(), plugin);
         /*
          * If enabled, activate
          */
@@ -64,8 +64,8 @@ public class TardisDynmap {
         /*
          * Now, get markers API
          */
-        markerapi = api.getMarkerAPI();
-        if (markerapi == null) {
+        markerApi = dynmapApi.getMarkerAPI();
+        if (markerApi == null) {
             Bukkit.getLogger().log(Level.WARNING, "Error loading Dynmap marker API!");
             return;
         }
@@ -84,9 +84,9 @@ public class TardisDynmap {
             reload = true;
         }
         /*
-         * Now, add marker set for TardisAPI
+         * Now, add marker set for TardisApi
          */
-        tardisLayer = new TARDISLayer();
+        tardisLayer = new TardisLayer();
         /*
          * Set up update job - based on period
          */
@@ -108,20 +108,20 @@ public class TardisDynmap {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new MarkerUpdate(), 100L);
     }
 
-    private String formatInfoWindow(String who, TardisData data) {
+    private String formatInfoWindow(String who, TardisData tardisData) {
         String window = INFO;
         window = window.replace("%owner%", who);
-        window = window.replace("%console%", data.getConsole());
-        window = window.replace("%chameleon%", data.getChameleon());
-        String l = "x: " + data.getLocation().getBlockX() + ", y: " + data.getLocation().getBlockY() + ", z: " + data.getLocation().getBlockZ();
-        window = window.replace("%location%", l);
-        window = window.replace("%powered%", data.getPowered());
-        window = window.replace("%door%", data.getDoor());
-        window = window.replace("%siege%", data.getSiege());
+        window = window.replace("%console%", tardisData.getConsole());
+        window = window.replace("%chameleon%", tardisData.getChameleon());
+        String location = "x: " + tardisData.getLocation().getBlockX() + ", y: " + tardisData.getLocation().getBlockY() + ", z: " + tardisData.getLocation().getBlockZ();
+        window = window.replace("%location%", location);
+        window = window.replace("%powered%", tardisData.getPowered());
+        window = window.replace("%door%", tardisData.getDoor());
+        window = window.replace("%siege%", tardisData.getSiege());
         StringBuilder travellers = new StringBuilder();
-        if (data.getOccupants().size() > 0) {
-            for (String o : data.getOccupants()) {
-                travellers.append(o).append("<br />");
+        if (tardisData.getOccupants().size() > 0) {
+            for (String occupant : tardisData.getOccupants()) {
+                travellers.append(occupant).append("<br />");
             }
         } else {
             travellers = new StringBuilder("Empty");
@@ -133,25 +133,25 @@ public class TardisDynmap {
     private abstract class Layer {
 
         MarkerSet set;
-        MarkerIcon deficon;
-        String labelfmt;
+        MarkerIcon defaultIcon;
+        String labelFormat;
         Map<String, Marker> markers = new HashMap<>();
 
         Layer() {
-            set = markerapi.getMarkerSet("tardis");
+            set = markerApi.getMarkerSet("tardis");
             if (set == null) {
-                set = markerapi.createMarkerSet("tardis", "TARDISes", null, false);
+                set = markerApi.createMarkerSet("tardis", "TARDISes", null, false);
             } else {
                 set.setMarkerSetLabel("TARDISes");
             }
             if (set == null) {
-                Bukkit.getLogger().log(Level.WARNING, "Error creating tardis marker set");
+                Bukkit.getLogger().log(Level.WARNING, "Error creating TARDIS marker set");
                 return;
             }
             set.setLayerPriority(0);
             set.setHideByDefault(false);
-            deficon = markerapi.getMarkerIcon("tardis");
-            labelfmt = "%name% (TARDIS)";
+            defaultIcon = markerApi.getMarkerIcon("tardis");
+            labelFormat = "%name% (TARDIS)";
         }
 
         void cleanup() {
@@ -163,48 +163,48 @@ public class TardisDynmap {
         }
 
         void updateMarkerSet() {
-            Map<String, Marker> newmap = new HashMap<>();
+            Map<String, Marker> newMap = new HashMap<>();
             /*
              * Build new map
              */
             Map<String, TardisData> marks = getMarkers();
             marks.keySet().forEach((name) -> {
-                Location loc = marks.get(name).getLocation();
-                String wname = Objects.requireNonNull(loc.getWorld()).getName();
+                Location location = marks.get(name).getLocation();
+                String worldName = Objects.requireNonNull(location.getWorld()).getName();
                 /*
                  * Get location
                  */
-                String id = wname + "/" + name;
-                String label = labelfmt.replace("%name%", name);
+                String id = worldName + "/" + name;
+                String label = labelFormat.replace("%name%", name);
                 /*
                  * See if we already have marker
                  */
-                Marker m = markers.remove(id);
-                if (m == null) {
+                Marker marker = markers.remove(id);
+                if (marker == null) {
                     /*
                      * Not found? Need new one
                      */
-                    m = set.createMarker(id, label, wname, loc.getX(), loc.getY(), loc.getZ(), deficon, false);
+                    marker = set.createMarker(id, label, worldName, location.getX(), location.getY(), location.getZ(), defaultIcon, false);
                 } else {
                     /*
                      * Else, update position if needed
                      */
-                    m.setLocation(wname, loc.getX(), loc.getY(), loc.getZ());
-                    m.setLabel(label);
-                    m.setMarkerIcon(deficon);
+                    marker.setLocation(worldName, location.getX(), location.getY(), location.getZ());
+                    marker.setLabel(label);
+                    marker.setMarkerIcon(defaultIcon);
                 }
                 /*
                  * Build popup
                  */
-                String desc = formatInfoWindow(name, marks.get(name));
+                String description = formatInfoWindow(name, marks.get(name));
                 /*
                  * Set popup
                  */
-                m.setDescription(desc);
+                marker.setDescription(description);
                 /*
                  * Add to new map
                  */
-                newmap.put(id, m);
+                newMap.put(id, marker);
             });
             /*
              * Now, review old map - anything left is gone
@@ -214,7 +214,7 @@ public class TardisDynmap {
              * And replace with new map
              */
             markers.clear();
-            markers = newmap;
+            markers = newMap;
         }
 
         /*
@@ -223,12 +223,12 @@ public class TardisDynmap {
         public abstract Map<String, TardisData> getMarkers();
     }
 
-    private class TARDISServerListener implements Listener {
+    private class TardisServerListener implements Listener {
 
         @EventHandler
         public void onPluginEnable(PluginEnableEvent event) {
-            Plugin p = event.getPlugin();
-            String name = p.getDescription().getName();
+            Plugin plugin = event.getPlugin();
+            String name = plugin.getDescription().getName();
             if (name.equals("dynmap")) {
                 if (dynmap.isEnabled()) {
                     activate();
@@ -237,23 +237,23 @@ public class TardisDynmap {
         }
     }
 
-    private class TARDISLayer extends Layer {
+    private class TardisLayer extends Layer {
 
-        TARDISLayer() {
+        TardisLayer() {
             super();
         }
 
         /*
-         * Get current markers, by timelord with location
+         * Get current markers, by Time Lord with location
          */
         @Override
         public Map<String, TardisData> getMarkers() {
             HashMap<String, TardisData> map = new HashMap<>();
-            HashMap<String, Integer> tl = plugin.getTardisAPI().getTimelordMap();
-            tl.forEach((key, value) -> {
+            HashMap<String, Integer> timeLordMap = plugin.getTardisApi().getTimeLordMap();
+            timeLordMap.forEach((key, value) -> {
                 TardisData data;
                 try {
-                    data = plugin.getTardisAPI().getTARDISMapData(value);
+                    data = plugin.getTardisApi().getTardisMapData(value);
                     if (data.getLocation() != null) {
                         map.put(key, data);
                     }

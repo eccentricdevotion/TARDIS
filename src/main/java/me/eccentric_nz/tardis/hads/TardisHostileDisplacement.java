@@ -162,7 +162,7 @@ class TardisHostileDisplacement {
                         if (player != hostile) {
                             hostile.sendMessage(message);
                         }
-                        plugin.getPM().callEvent(new TardisHadsEvent(hostile, id, fl, Hads.DISPLACEMENT));
+                        plugin.getPluginManager().callEvent(new TardisHadsEvent(hostile, id, fl, Hads.DISPLACEMENT));
                         break;
                     } else {
                         TardisMessage.send(player, "HADS_PROTECTED");

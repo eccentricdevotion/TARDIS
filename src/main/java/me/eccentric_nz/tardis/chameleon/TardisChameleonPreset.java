@@ -173,7 +173,7 @@ public class TardisChameleonPreset {
         boat = new TardisBoatPreset();
     }
 
-    static TardisChameleonColumn buildTARDISChameleonColumn(CardinalDirection d, String[][] strings, boolean asymmetric, boolean duck) {
+    static TardisChameleonColumn buildTardisChameleonColumn(CardinalDirection d, String[][] strings, boolean asymmetric, boolean duck) {
         TardisChameleonColumn tcc;
         BlockData[][] blockDataArr = getBlockDataFromArray(strings);
         if (d.equals(CardinalDirection.EAST)) {
@@ -184,7 +184,7 @@ public class TardisChameleonPreset {
         return tcc;
     }
 
-    static TardisChameleonColumn buildTARDISChameleonColumn(CardinalDirection d, String json, boolean asymmetric, boolean duck) {
+    static TardisChameleonColumn buildTardisChameleonColumn(CardinalDirection d, String json, boolean asymmetric, boolean duck) {
         TardisChameleonColumn tcc;
         BlockData[][] blockDataArr = getStringArrayFromJSON(json);
         if (d.equals(CardinalDirection.EAST)) {

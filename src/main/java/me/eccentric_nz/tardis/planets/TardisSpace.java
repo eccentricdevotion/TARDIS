@@ -75,28 +75,28 @@ public class TardisSpace {
             assert inventory_group != null;
             if (!inventory_group.equals("0")) {
                 if (plugin.getInventoryManager() == InventoryManager.MULTIVERSE) {
-                    MultiverseInventories mi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
+                    MultiverseInventories mi = (MultiverseInventories) plugin.getPluginManager().getPlugin("Multiverse-Inventories");
                     assert mi != null;
                     WorldGroup wgp = mi.getGroupManager().getGroup(inventory_group);
                     wgp.addWorld(name);
                 }
             }
-            if (plugin.getPM().isPluginEnabled("WorldBorder")) {
+            if (plugin.getPluginManager().isPluginEnabled("WorldBorder")) {
                 // wb <world> set <radius> <x> <z>
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " set " + plugin.getConfig().getInt("creation.border_radius") + " 0 0");
             }
             if (plugin.getConfig().getBoolean("creation.add_perms")) {
-                if (plugin.getPM().isPluginEnabled("GroupManager")) {
+                if (plugin.getPluginManager().isPluginEnabled("GroupManager")) {
                     TardisGroupManagerHandler tgmh = new TardisGroupManagerHandler(plugin);
                     String player = name.substring(13);
                     tgmh.addPerms(player);
                 }
-                if (plugin.getPM().isPluginEnabled("bPermissions")) {
+                if (plugin.getPluginManager().isPluginEnabled("bPermissions")) {
                     TardisBPermissionsHandler tbph = new TardisBPermissionsHandler(plugin);
                     String player = name.substring(13);
                     tbph.addPerms(player);
                 }
-                if (plugin.getPM().isPluginEnabled("PermissionsEx")) {
+                if (plugin.getPluginManager().isPluginEnabled("PermissionsEx")) {
                     TardisPermissionsExHandler tpesxh = new TardisPermissionsExHandler(plugin);
                     String player = name.substring(13);
                     tpesxh.addPerms(player);

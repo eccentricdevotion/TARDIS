@@ -46,7 +46,7 @@ class TardisUpgradeCommand {
         this.plugin = plugin;
     }
 
-    boolean openUpgradeGUI(Player player) {
+    boolean openUpgradeGui(Player player) {
         if (!TardisPermission.hasPermission(player, "tardis.upgrade")) {
             TardisMessage.send(player, "NO_PERM_UPGRADE");
             return true;
@@ -76,7 +76,7 @@ class TardisUpgradeCommand {
             } else {
                 // get if player is in TIPS area for their tardis
                 TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
-                TardisTipsData pos = tintpos.getTIPSData(tardis.getTIPS());
+                TardisTipsData pos = tintpos.getTipsData(tardis.getTips());
                 own = (pl.getBlockX() > pos.getMinX() && pl.getBlockZ() > pos.getMinZ() && pl.getBlockX() < pos.getMaxX() && pl.getBlockZ() < pos.getMaxZ());
             }
         } else {

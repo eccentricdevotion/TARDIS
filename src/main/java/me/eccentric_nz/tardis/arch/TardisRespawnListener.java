@@ -48,7 +48,7 @@ public class TardisRespawnListener implements Listener {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
-        if (rs.resultSet() && !plugin.getUtils().inTARDISWorld(player)) {
+        if (rs.resultSet() && !plugin.getUtils().inTardisWorld(player)) {
             HashMap<String, Object> whereT = new HashMap<>();
             whereT.put("uuid", uuid.toString());
             plugin.getQueryFactory().doDelete("travellers", whereT);

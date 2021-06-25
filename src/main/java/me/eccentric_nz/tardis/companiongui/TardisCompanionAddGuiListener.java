@@ -50,7 +50,7 @@ public class TardisCompanionAddGuiListener extends TardisMenuListener implements
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onCompanionAddGUIClick(InventoryClickEvent event) {
+    public void onCompanionAddGuiClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
         if (name.equals(ChatColor.DARK_RED + "Add Companion")) {

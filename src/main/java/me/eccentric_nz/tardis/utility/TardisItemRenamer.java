@@ -62,7 +62,7 @@ public class TardisItemRenamer {
                 lore.add(format + "This key belongs to");
                 lore.add(format + player.getName());
                 im.setLore(lore);
-                im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+                im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUuid(), player.getUniqueId());
             }
             try {
                 RecipeItem recipeItem = RecipeItem.valueOf(TardisStringUtils.toScoredUppercase(name));

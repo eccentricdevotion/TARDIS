@@ -54,11 +54,11 @@ class TardisHandlesScanCommand {
         this.plugin = plugin;
         this.player = player;
         this.id = id;
-        inTARDIS = plugin.getUtils().inTARDISWorld(this.player);
+        inTARDIS = plugin.getUtils().inTardisWorld(this.player);
     }
 
     boolean sayScan() {
-        TardisSounds.playTARDISSound(player.getLocation(), "handles_scanner");
+        TardisSounds.playTardisSound(player.getLocation(), "handles_scanner");
         Location scan_loc;
         String whereIsIt;
         CardinalDirection tardisDirection;
@@ -104,7 +104,7 @@ class TardisHandlesScanCommand {
                         visible = false;
                     }
                 }
-                if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                if (plugin.getPluginManager().isPluginEnabled("TARDISWeepingAngels")) {
                     if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
                         EntityEquipment ee = ((LivingEntity) k).getEquipment();
                         assert ee != null;

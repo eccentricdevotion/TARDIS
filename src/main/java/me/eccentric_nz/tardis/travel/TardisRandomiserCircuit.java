@@ -71,6 +71,6 @@ public class TardisRandomiserCircuit {
         });
         Parameters params = new Parameters(p, Flag.getDefaultFlags());
         params.setCompass(d);
-        return plugin.getTardisAPI().getRandomLocation(allowedWorlds, null, params);
+        return plugin.getTardisApi().getRandomLocation(allowedWorlds, null, params);
     }
 }

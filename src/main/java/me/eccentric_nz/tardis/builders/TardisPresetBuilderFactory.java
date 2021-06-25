@@ -154,9 +154,9 @@ public class TardisPresetBuilderFactory {
                     taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 }
-                TardisSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");
-                if (bd.getPlayer().getPlayer() != null && plugin.getUtils().inTARDISWorld(bd.getPlayer().getPlayer())) {
-                    TardisSounds.playTARDISSound(bd.getPlayer().getPlayer().getLocation(), "tardis_land_fast");
+                TardisSounds.playTardisSound(bd.getLocation(), "tardis_land_fast");
+                if (bd.getPlayer().getPlayer() != null && plugin.getUtils().inTardisWorld(bd.getPlayer().getPlayer())) {
+                    TardisSounds.playTardisSound(bd.getPlayer().getPlayer().getLocation(), "tardis_land_fast");
                 }
             } else if (!preset.equals(Preset.INVISIBLE)) {
                 plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisId());

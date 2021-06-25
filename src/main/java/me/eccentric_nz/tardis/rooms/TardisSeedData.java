@@ -31,7 +31,7 @@ public class TardisSeedData {
     private int maxx;
     private int minz;
     private int maxz;
-    private boolean ARS;
+    private boolean ars;
 
     public int getId() {
         return id;
@@ -83,11 +83,11 @@ public class TardisSeedData {
         maxz = z + 4;
     }
 
-    boolean hasARS() {
-        return ARS;
+    boolean hasArs() {
+        return ars;
     }
 
-    public void setARS(boolean ARS) {
-        this.ARS = ARS;
+    public void setArs(boolean ars) {
+        this.ars = ars;
     }
 }

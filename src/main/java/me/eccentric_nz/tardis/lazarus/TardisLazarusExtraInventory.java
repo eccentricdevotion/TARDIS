@@ -124,7 +124,7 @@ class TardisLazarusExtraInventory {
             i++;
         }
         // if TARDISWeepingAngels is enabled angels, cybermen and ice warriors will be available
-        if (plugin.checkTWA()) {
+        if (plugin.checkTwa()) {
             ItemStack weep = new ItemStack(Material.BRICK, 1);
             ItemMeta ing = weep.getItemMeta();
             assert ing != null;

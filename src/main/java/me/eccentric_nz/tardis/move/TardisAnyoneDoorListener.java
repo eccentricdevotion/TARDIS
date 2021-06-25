@@ -257,7 +257,7 @@ public class TardisAnyoneDoorListener extends TardisDoorListener implements List
                                                 if (isPoliceBox) {
                                                     new TardisCustomModelDataChanger(plugin, block, player, id).toggleOuterDoor();
                                                 } else {
-                                                    if (door_type == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TardisRedProtectChecker.shouldToggleDoor(block)) {
+                                                    if (door_type == 1 || !plugin.getPluginManager().isPluginEnabled("RedProtect") || TardisRedProtectChecker.shouldToggleDoor(block)) {
                                                         new TardisDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                                     } else {
                                                         new TardisInnerDoorOpener(plugin, playerUUID, id).openDoor();

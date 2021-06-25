@@ -105,7 +105,7 @@ class TardisHandlesLandCommand {
                         if (rsc.resultSet()) {
                             Location location = TardisStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                             assert location != null;
-                            TardisSounds.playTARDISSound(location, "tardis_handbrake_engage");
+                            TardisSounds.playTardisSound(location, "tardis_handbrake_engage");
                             // Changes the lever to on
                             TardisHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);
                             // Check if it's at a recharge point

@@ -93,7 +93,7 @@ class TardisRoomCommand {
         int level = tardis.getArtronLevel();
         String chunk = tardis.getChunk();
         Schematic schm = tardis.getSchematic();
-        int tips = tardis.getTIPS();
+        int tips = tardis.getTips();
         // check they are in the tardis
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", uuid.toString());
@@ -179,7 +179,7 @@ class TardisRoomCommand {
         wherea.put("tardis_id", id);
         wherea.put("type", 10);
         ResultSetControls rsc = new ResultSetControls(plugin, wherea, false);
-        sd.setARS(rsc.resultSet());
+        sd.setArs(rsc.resultSet());
         plugin.getTrackerKeeper().getRoomSeed().put(uuid, sd);
         TardisMessage.send(player, "ROOM_SEED_INFO", room, plugin.getRoomsConfig().getString("rooms." + room + ".seed"));
         return true;

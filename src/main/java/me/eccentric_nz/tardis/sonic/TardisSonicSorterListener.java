@@ -159,21 +159,21 @@ public class TardisSonicSorterListener implements Listener {
                     Block block = event.getClickedBlock();
                     if (block != null && sortables.contains(block.getType())) {
                         boolean allow = true;
-                        if (plugin.getPM().isPluginEnabled("LockettePro")) {
+                        if (plugin.getPluginManager().isPluginEnabled("LockettePro")) {
                             if (LocketteProAPI.isProtected(block)) {
                                 allow = false;
                             }
                         }
-                        if (plugin.getPM().isPluginEnabled("BlockLocker")) {
+                        if (plugin.getPluginManager().isPluginEnabled("BlockLocker")) {
                             if (BlockLockerAPIv2.isProtected(block)) {
                                 allow = false;
                             }
                         }
-                        if (plugin.getPM().isPluginEnabled("Towny")) {
+                        if (plugin.getPluginManager().isPluginEnabled("Towny")) {
                             allow = new TardisTownyChecker(plugin).checkTowny(player, block.getLocation());
                         }
                         // LWCX
-                        if (plugin.getPM().isPluginEnabled("LWC")) {
+                        if (plugin.getPluginManager().isPluginEnabled("LWC")) {
                             ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
                             if (protectionCache != null) {
                                 Protection protection = protectionCache.getProtection(block);

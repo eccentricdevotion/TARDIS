@@ -45,7 +45,7 @@ import java.util.List;
 public class TardisChemistryCommand implements CommandExecutor {
 
     private final TardisPlugin plugin;
-    private final List<String> GUIS = Arrays.asList("creative", "construct", "compound", "reduce", "product", "lab");
+    private final List<String> guis = Arrays.asList("creative", "construct", "compound", "reduce", "product", "lab");
 
     public TardisChemistryCommand(TardisPlugin plugin) {
         this.plugin = plugin;
@@ -99,7 +99,7 @@ public class TardisChemistryCommand implements CommandExecutor {
                     return true;
                 }
                 String which = args[1].toLowerCase();
-                if (!GUIS.contains(which)) {
+                if (!guis.contains(which)) {
                     TardisMessage.message(player, "");
                     return false;
                 }

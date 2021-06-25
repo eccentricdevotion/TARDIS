@@ -187,7 +187,7 @@ public class TardisSaveSignInventory {
                 own.setItemMeta(saves);
             } else {
                 // get TARDIS id of TARDIS player is in as they may have switched using the 'load my saves' button
-                int tid = TardisInteriorPositioning.getTARDISIdFromLocation(player.getLocation());
+                int tid = TardisInteriorPositioning.getTardisIdFromLocation(player.getLocation());
                 if (tid != id) {
                     own = new ItemStack(GuiSaves.LOAD_SAVES_FROM_THIS_TARDIS.getMaterial(), 1);
                     ItemMeta saves = own.getItemMeta();

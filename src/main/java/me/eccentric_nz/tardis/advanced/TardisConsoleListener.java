@@ -154,8 +154,8 @@ public class TardisConsoleListener implements Listener {
                         assert itemMeta != null;
                         if (itemMeta.hasDisplayName() && itemMeta.getDisplayName().equals("Authorised Control Disk")) {
                             // get the UUID from the disk
-                            if (itemMeta.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
-                                UUID diskUuid = itemMeta.getPersistentDataContainer().get(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID());
+                            if (itemMeta.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUuid())) {
+                                UUID diskUuid = itemMeta.getPersistentDataContainer().get(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUuid());
                                 // is the disk uuid the same as the tardis uuid?
                                 HashMap<String, Object> where = new HashMap<>();
                                 where.put("tardis_id", id);

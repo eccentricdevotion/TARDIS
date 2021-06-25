@@ -120,7 +120,7 @@ public class TardisBuilderInstanceKeeper {
         return PRECIOUS;
     }
 
-    public HashMap<Location, TardisBuildData> getTrackTARDISSeed() {
+    public HashMap<Location, TardisBuildData> getTrackTardisSeed() {
         return trackTARDISSeed;
     }
 

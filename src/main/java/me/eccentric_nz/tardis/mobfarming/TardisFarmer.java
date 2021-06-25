@@ -126,7 +126,7 @@ public class TardisFarmer {
                 for (Entity entity : mobs) {
                     switch (entity.getType()) {
                         case ARMOR_STAND:
-                            if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                            if (plugin.getPluginManager().isPluginEnabled("TARDISWeepingAngels")) {
                                 TardisFollower follower = new TardisFollower(entity, p.getUniqueId());
                                 if (follower.isValid()) {
                                     followers.add(follower);
@@ -994,7 +994,7 @@ public class TardisFarmer {
                     pets.add(pet);
                     entity.remove();
                 }
-            } else if (entity.getType().equals(EntityType.ARMOR_STAND) && plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+            } else if (entity.getType().equals(EntityType.ARMOR_STAND) && plugin.getPluginManager().isPluginEnabled("TARDISWeepingAngels")) {
                 TardisFollower follower = new TardisFollower(entity, player.getUniqueId());
                 if (follower.isValid()) {
                     followers.add(follower);

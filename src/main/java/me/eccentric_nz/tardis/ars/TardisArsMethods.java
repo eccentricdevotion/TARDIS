@@ -160,7 +160,7 @@ public class TardisArsMethods {
         assert im != null;
         im.setDisplayName(room);
         if (!room.equals("Empty slot")) {
-            String config_path = TardisArs.ARSFor(material.toString()).getConfigPath();
+            String config_path = TardisArs.arsFor(material.toString()).getConfigPath();
             List<String> lore = Collections.singletonList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost"));
             im.setLore(lore);
         } else {
@@ -345,7 +345,7 @@ public class TardisArsMethods {
                         // damage the circuit if configured
                         if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
                             // get the id of the TARDIS this player is in
-                            int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(playerUUID);
+                            int id = plugin.getTardisApi().getIdOfTARDISPlayerIsIn(playerUUID);
                             TardisCircuitChecker tcc = new TardisCircuitChecker(plugin, id);
                             tcc.getCircuits();
                             // decrement uses
@@ -420,7 +420,7 @@ public class TardisArsMethods {
             for (int j = 0; j < 5; j++) {
                 int slot = i + (j * 9);
                 Material material = Material.valueOf(map[indexx][indexz]);
-                String name = TardisArs.ARSFor(map[indexx][indexz]).getDescriptiveName();
+                String name = TardisArs.arsFor(map[indexx][indexz]).getDescriptiveName();
                 setSlot(view, slot, material, name, playerUUID, false);
                 indexz++;
             }

@@ -43,7 +43,7 @@ class TardisEmergencyProgrammeCommand {
 
     boolean showEP1(Player p) {
         if (plugin.getConfig().getBoolean("allow.emergency_npc")) {
-            if (!plugin.getUtils().inTARDISWorld(p)) {
+            if (!plugin.getUtils().inTardisWorld(p)) {
                 TardisMessage.send(p, "CMD_IN_WORLD");
                 return true;
             }

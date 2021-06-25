@@ -172,7 +172,7 @@ public class TardisGravityWellListener implements Listener {
                     }
                     break;
                 case VOID:
-                    if (l.getBlockY() < 1 && plugin.getUtils().inTARDISWorld(p)) {
+                    if (l.getBlockY() < 1 && plugin.getUtils().inTardisWorld(p)) {
                         if (Objects.equals(plugin.getConfig().getString("preferences.vortex_fall"), "kill")) {
                             p.setHealth(0);
                         } else {

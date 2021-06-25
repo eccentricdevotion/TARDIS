@@ -81,8 +81,8 @@ public class TardisEpsRunnable implements Runnable {
         Location l = getSpawnLocation(id);
         if (l != null) {
             try {
-                TardisSounds.playTARDISSound(l, "tardis_takeoff");
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> TardisSounds.playTARDISSound(l, "tardis_land"), 490L);
+                TardisSounds.playTardisSound(l, "tardis_takeoff");
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> TardisSounds.playTardisSound(l, "tardis_land"), 490L);
                 plugin.setTardisSpawn(true);
                 // set yaw if npc spawn location has been changed
                 if (!eps.isEmpty()) {

@@ -42,7 +42,7 @@ public class TardisTownyChecker {
     private TownyRegion tr;
 
     public TardisTownyChecker(TardisPlugin plugin) {
-        towny = (Towny) plugin.getPM().getPlugin("Towny");
+        towny = (Towny) plugin.getPluginManager().getPlugin("Towny");
         // get the respect_towny setting
         try {
             tr = TownyRegion.valueOf(plugin.getConfig().getString("preferences.respect_towny"));

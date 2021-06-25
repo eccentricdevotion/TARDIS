@@ -42,7 +42,7 @@ class TardisEjectCommand {
             return true;
         }
         // check they are still in the tardis world
-        if (!plugin.getUtils().inTARDISWorld(player)) {
+        if (!plugin.getUtils().inTardisWorld(player)) {
             TardisMessage.send(player, "CMD_IN_WORLD");
             return true;
         }

@@ -45,7 +45,7 @@ public interface TardisApi {
      *
      * @return a map of tardis owner names and tardis ids
      */
-    HashMap<String, Integer> getTimelordMap();
+    HashMap<String, Integer> getTimeLordMap();
 
     /**
      * Retrieves a tardis's current location.
@@ -85,7 +85,7 @@ public interface TardisApi {
      * @param id the tardis id to retrieve the data for
      * @return the current tardis data or null if not found
      */
-    TardisData getTARDISMapData(int id);
+    TardisData getTardisMapData(int id);
 
     /**
      * Get a random location from a provided list of worlds in the specified environment. If environment is null, then

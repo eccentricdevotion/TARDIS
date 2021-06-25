@@ -76,8 +76,8 @@ public class TardisTeleportListener implements Listener {
                             return;
                         }
                     } else {
-                        int slot = TardisInteriorPositioning.getTIPSSlot(p.getLocation());
-                        if (!rsid.fromTIPSSlot(slot)) {
+                        int slot = TardisInteriorPositioning.getTipsSlot(p.getLocation());
+                        if (!rsid.fromTipsSlot(slot)) {
                             return;
                         }
                     }

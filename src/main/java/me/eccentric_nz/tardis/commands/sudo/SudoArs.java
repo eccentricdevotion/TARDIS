@@ -39,9 +39,9 @@ class SudoArs {
         this.plugin = plugin;
     }
 
-    boolean showARS(Player player, UUID uuid) {
+    boolean showArs(Player player, UUID uuid) {
         TardisSudoTracker.SUDOERS.put(player.getUniqueId(), uuid);
-        ItemStack[] tars = new TardisArsInventory(plugin).getARS();
+        ItemStack[] tars = new TardisArsInventory(plugin).getArs();
         Inventory ars = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
         ars.setContents(tars);
         player.openInventory(ars);

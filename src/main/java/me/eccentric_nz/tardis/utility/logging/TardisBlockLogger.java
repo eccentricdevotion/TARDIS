@@ -25,7 +25,7 @@ import org.bukkit.plugin.PluginManager;
 public class TardisBlockLogger {
 
     private final TardisPlugin plugin;
-    private CoreProtectAPI coreProtectAPI = null;
+    private CoreProtectAPI coreProtectApi = null;
     private boolean logging = false;
 
     public TardisBlockLogger(TardisPlugin plugin) {
@@ -54,16 +54,16 @@ public class TardisBlockLogger {
                 return;
             }
             plugin.getServer().getConsoleSender().sendMessage(plugin.getPluginName() + "Connecting to CoreProtect");
-            coreProtectAPI = CoreProtect;
+            coreProtectApi = CoreProtect;
             logging = true;
         }
     }
 
     public void logPlacement(Block block) {
-        coreProtectAPI.logPlacement("tardis", block.getLocation(), block.getType(), block.getBlockData());
+        coreProtectApi.logPlacement("tardis", block.getLocation(), block.getType(), block.getBlockData());
     }
 
     public void logRemoval(Block block) {
-        coreProtectAPI.logRemoval("tardis", block.getLocation(), block.getType(), block.getBlockData());
+        coreProtectApi.logRemoval("tardis", block.getLocation(), block.getType(), block.getBlockData());
     }
 }

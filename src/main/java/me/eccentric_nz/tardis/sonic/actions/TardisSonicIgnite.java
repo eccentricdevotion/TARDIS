@@ -35,7 +35,7 @@ public class TardisSonicIgnite {
                 if (!lightable.isLit()) {
                     lightable.setLit(true);
                     b.setBlockData(lightable);
-                    plugin.getPM().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
+                    plugin.getPluginManager().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
                 }
                 return;
             }
@@ -43,7 +43,7 @@ public class TardisSonicIgnite {
             if (b.getType().equals(Material.TNT)) {
                 b.setBlockData(TardisConstants.AIR);
                 b.getWorld().spawnEntity(b.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.PRIMED_TNT);
-                plugin.getPM().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
+                plugin.getPluginManager().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
                 return;
             }
             if (above.getType().isAir()) {
@@ -51,7 +51,7 @@ public class TardisSonicIgnite {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     above.setBlockData(TardisConstants.FIRE);
                     // call a block ignite event
-                    plugin.getPM().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
+                    plugin.getPluginManager().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
                 }, 2L);
             }
         }

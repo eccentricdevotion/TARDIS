@@ -103,10 +103,10 @@ public class TardisWallFloorRunnable extends TardisThemeRunnable {
                 plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
             }
             Tardis tardis = rs.getTardis();
-            int slot = tardis.getTIPS();
+            int slot = tardis.getTips();
             if (slot != -1) { // default world - use TIPS
                 TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
-                TardisTipsData pos = tintpos.getTIPSData(slot);
+                TardisTipsData pos = tintpos.getTipsData(slot);
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();
             } else {
@@ -124,7 +124,7 @@ public class TardisWallFloorRunnable extends TardisThemeRunnable {
             // set running
             running = true;
             player = plugin.getServer().getPlayer(uuid);
-            plugin.getPM().callEvent(new TardisDesktopThemeEvent(player, tardis, tud));
+            plugin.getPluginManager().callEvent(new TardisDesktopThemeEvent(player, tardis, tud));
             // remove upgrade data
             plugin.getTrackerKeeper().getUpgrades().remove(uuid);
         }

@@ -195,12 +195,12 @@ class TardisArchiveCommand {
                             }
                         }
                         // calculate startx, starty, startz
-                        int slot = tardis.getTIPS();
+                        int slot = tardis.getTips();
                         id = tardis.getTardisId();
                         int sx, sz;
                         if (slot != -1) { // default world - use TIPS
                             TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
-                            TardisTipsData pos = tintpos.getTIPSData(slot);
+                            TardisTipsData pos = tintpos.getTipsData(slot);
                             sx = pos.getCentreX();
                             sz = pos.getCentreZ();
                         } else {

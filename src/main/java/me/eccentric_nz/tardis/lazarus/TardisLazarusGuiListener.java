@@ -102,7 +102,7 @@ public class TardisLazarusGuiListener extends TardisMenuListener implements List
                     // remember selection
                     assert im != null;
                     String display = im.getDisplayName();
-                    if (twaMonsters.contains(display) && !plugin.checkTWA()) {
+                    if (twaMonsters.contains(display) && !plugin.checkTwa()) {
                         im.setLore(Collections.singletonList("Genetic modification not available!"));
                         is.setItemMeta(im);
                     } else {
@@ -171,7 +171,7 @@ public class TardisLazarusGuiListener extends TardisMenuListener implements List
                 TardisLazarusRunnable runnable = new TardisLazarusRunnable(plugin, b);
                 int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 6L, 6L);
                 runnable.setTaskID(taskId);
-                TardisSounds.playTARDISSound(player.getLocation(), "lazarus_machine");
+                TardisSounds.playTardisSound(player.getLocation(), "lazarus_machine");
                 // undisguise the player
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     if (twaMonsters.contains(disguises.get(uuid))) {
@@ -182,7 +182,7 @@ public class TardisLazarusGuiListener extends TardisMenuListener implements List
                         TardisLazarusDisguise.removeDisguise(player);
                     }
                     TardisMessage.send(player, "GENETICS_RESTORED");
-                    plugin.getPM().callEvent(new TardisGeneticManipulatorUndisguiseEvent(player));
+                    plugin.getPluginManager().callEvent(new TardisGeneticManipulatorUndisguiseEvent(player));
                 }, 80L);
                 // open the door
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -198,7 +198,7 @@ public class TardisLazarusGuiListener extends TardisMenuListener implements List
                 TardisLazarusRunnable runnable = new TardisLazarusRunnable(plugin, b);
                 int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 6L, 6L);
                 runnable.setTaskID(taskId);
-                TardisSounds.playTARDISSound(player.getLocation(), "lazarus_machine");
+                TardisSounds.playTardisSound(player.getLocation(), "lazarus_machine");
                 // disguise the player
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     if (plugin.isDisguisesOnServer()) {
@@ -214,7 +214,7 @@ public class TardisLazarusGuiListener extends TardisMenuListener implements List
                             TardisLazarusDisguise.runImmortalityGate(player);
                         }
                         plugin.getServer().broadcastMessage(plugin.getPluginName() + "The Master (aka " + player.getName() + ") has cloned his genetic template to all players. Behold the Master Race!");
-                        plugin.getPM().callEvent(new TardisGeneticManipulatorDisguiseEvent(player, player.getName()));
+                        plugin.getPluginManager().callEvent(new TardisGeneticManipulatorDisguiseEvent(player, player.getName()));
                         // schedule a delayed task to remove the disguise
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             plugin.getServer().getOnlinePlayers().forEach((p) -> {
@@ -226,7 +226,7 @@ public class TardisLazarusGuiListener extends TardisMenuListener implements List
                             });
                             plugin.getServer().broadcastMessage(plugin.getPluginName() + "Lord Rassilon has reset the Master Race back to human form.");
                             plugin.getTrackerKeeper().setImmortalityGate("");
-                            plugin.getPM().callEvent(new TardisGeneticManipulatorUndisguiseEvent(player));
+                            plugin.getPluginManager().callEvent(new TardisGeneticManipulatorUndisguiseEvent(player));
                         }, 3600L);
                     } else if (disguises.containsKey(uuid)) {
                         String disguise = disguises.get(uuid);
@@ -431,7 +431,7 @@ public class TardisLazarusGuiListener extends TardisMenuListener implements List
                             }
                         }
                         TardisMessage.send(player, "GENETICS_MODIFIED", disguise);
-                        plugin.getPM().callEvent(new TardisGeneticManipulatorDisguiseEvent(player, disguise));
+                        plugin.getPluginManager().callEvent(new TardisGeneticManipulatorDisguiseEvent(player, disguise));
                     }
                 }, 80L);
                 // open the door

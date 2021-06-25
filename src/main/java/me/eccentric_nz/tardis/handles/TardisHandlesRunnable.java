@@ -43,7 +43,7 @@ public class TardisHandlesRunnable implements Runnable {
                 if (currentTime > r.getTime()) {
                     Player player = plugin.getServer().getPlayer(r.getUuid());
                     if (player != null && player.isOnline()) {
-                        TardisSounds.playTARDISSound(player, "handles_reminder");
+                        TardisSounds.playTardisSound(player, "handles_reminder");
                         TardisMessage.handlesSend(player, "HANDLES_REMINDER", r.getReminder());
                         // remove the reminder...
                         HashMap<String, Object> where = new HashMap<>();

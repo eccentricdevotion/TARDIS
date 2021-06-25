@@ -110,7 +110,7 @@ public class TardisMonsterRunnable implements Runnable {
             if (!take_action) {
                 continue;
             }
-            boolean twa = plugin.getPM().isPluginEnabled("TARDISWeepingAngels");
+            boolean twa = plugin.getPluginManager().isPluginEnabled("TARDISWeepingAngels");
             for (Entity e : entities) {
                 EntityType type = e.getType();
                 TardisMonster tm = new TardisMonster();
@@ -263,12 +263,12 @@ public class TardisMonsterRunnable implements Runnable {
                                 wheret.put("tardis_id", tpl.getTardisId());
                                 ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
                                 if (rs.resultSet()) {
-                                    int pos = rs.getTardis().getTIPS();
+                                    int pos = rs.getTardis().getTips();
                                     int tx = 0, tz = 0;
                                     if (pos != -1) {
                                         // tips slot
                                         TardisInteriorPositioning tips = new TardisInteriorPositioning(plugin);
-                                        TardisTipsData coords = tips.getTIPSData(pos);
+                                        TardisTipsData coords = tips.getTipsData(pos);
                                         tx = coords.getCentreX();
                                         tz = coords.getCentreZ();
                                     }
@@ -301,7 +301,7 @@ public class TardisMonsterRunnable implements Runnable {
             where.put("tardis_id", tpl.getTardisId());
             ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
             if (rs.resultSet()) {
-                TardisSounds.playTARDISSound(loc, "tardis_cloister_bell", 10.0f);
+                TardisSounds.playTardisSound(loc, "tardis_cloister_bell", 10.0f);
             } else {
                 // else message the Time Lord
                 HashMap<String, Object> wheret = new HashMap<>();
@@ -363,7 +363,7 @@ public class TardisMonsterRunnable implements Runnable {
                         assert es != null;
                         es.setArmorContents(m.getEquipment().getArmorContents());
                         es.setItemInMainHand(m.getEquipment().getItemInMainHand());
-                        if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                        if (plugin.getPluginManager().isPluginEnabled("TARDISWeepingAngels")) {
                             if (TardisAngelsApi.isDalek(skeleton)) {
                                 TardisDalekDisguiser.dalekanium(skeleton);
                             }
@@ -435,8 +435,8 @@ public class TardisMonsterRunnable implements Runnable {
                 ent.setCustomName(m.getName());
             }
             if (m.getPassenger() != null) {
-                if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels") && m.getPassenger().equals(EntityType.GUARDIAN)) {
-                    TardisAngelsApi.getAPI(plugin).setSilentEquipment((LivingEntity) ent);
+                if (plugin.getPluginManager().isPluginEnabled("TARDISWeepingAngels") && m.getPassenger().equals(EntityType.GUARDIAN)) {
+                    TardisAngelsApi.getApi(plugin).setSilentEquipment((LivingEntity) ent);
                 } else {
                     Entity passenger = loc.getWorld().spawnEntity(loc, m.getPassenger());
                     ent.addPassenger(passenger);

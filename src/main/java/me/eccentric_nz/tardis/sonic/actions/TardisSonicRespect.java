@@ -46,27 +46,27 @@ public class TardisSonicRespect {
         } else { // keep checking
 
             // Factions
-            if (plugin.getPM().isPluginEnabled("Factions") && plugin.getConfig().getBoolean("preferences.respect_factions")) {
+            if (plugin.getPluginManager().isPluginEnabled("Factions") && plugin.getConfig().getBoolean("preferences.respect_factions")) {
                 return TardisFactionsChecker.isInFaction(player, block.getLocation());
             }
             // Towny
-            if (plugin.getPM().isPluginEnabled("Towny")) {
+            if (plugin.getPluginManager().isPluginEnabled("Towny")) {
                 return new TardisTownyChecker(plugin).playerHasPermission(player, block);
             }
             // GriefPrevention
-            if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
+            if (plugin.getPluginManager().isPluginEnabled("GriefPrevention")) {
                 return !(new TardisGriefPreventionChecker(plugin).isInClaim(player, block.getLocation()));
             }
             // RedProtect
-            if (plugin.getPM().isPluginEnabled("RedProtect")) {
+            if (plugin.getPluginManager().isPluginEnabled("RedProtect")) {
                 return TardisRedProtectChecker.canSonic(player, block);
             }
             // LockettePro
-            if (plugin.getPM().isPluginEnabled("LockettePro")) {
+            if (plugin.getPluginManager().isPluginEnabled("LockettePro")) {
                 return !LocketteProAPI.isProtected(block);
             }
             // LWCX
-            if (plugin.getPM().isPluginEnabled("LWC")) {
+            if (plugin.getPluginManager().isPluginEnabled("LWC")) {
                 ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
                 if (protectionCache != null) {
                     Protection protection = protectionCache.getProtection(block);
@@ -76,7 +76,7 @@ public class TardisSonicRespect {
                 }
             }
             // BlockLocker
-            if (plugin.getPM().isPluginEnabled("BlockLocker")) {
+            if (plugin.getPluginManager().isPluginEnabled("BlockLocker")) {
                 return !BlockLockerAPIv2.isProtected(block);
             }
         }

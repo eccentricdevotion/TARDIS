@@ -105,23 +105,23 @@ public class TardisSpawnListener implements Listener {
             if (!good_spawns.contains(spawnReason)) {
                 event.setCancelled(true);
             }
-            if (spawnReason.equals(SpawnReason.BUILD_SNOWMAN) && plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+            if (spawnReason.equals(SpawnReason.BUILD_SNOWMAN) && plugin.getPluginManager().isPluginEnabled("TARDISWeepingAngels")) {
                 if (TardisConstants.RANDOM.nextInt(100) < 3) {
                     // spawn a Dalek instead
                     LivingEntity le = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
-                    TardisAngelsApi.getAPI(plugin).setDalekEquipment(le, false);
+                    TardisAngelsApi.getApi(plugin).setDalekEquipment(le, false);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> event.getEntity().remove(), 2L);
                 }
             }
         } else {
             // only TARDIS locations
-            if (isTARDISBiome(l)) {
+            if (isTardisBiome(l)) {
                 event.setCancelled(true);
             }
         }
     }
 
-    private boolean isTARDISBiome(Location l) {
+    private boolean isTardisBiome(Location l) {
         /*
          * Looping through all the TARDISes on the server and checking
          * a 3x3 area around their location is too expensive, instead

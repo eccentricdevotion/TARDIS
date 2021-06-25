@@ -113,12 +113,12 @@ public class TardisRepairer {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
-                int slot = tardis.getTIPS();
+                int slot = tardis.getTips();
                 int id = tardis.getTardisId();
                 int startx, startz;
                 if (slot != -1) { // default world - use TIPS
                     TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
-                    TardisTipsData pos = tintpos.getTIPSData(slot);
+                    TardisTipsData pos = tintpos.getTipsData(slot);
                     startx = pos.getCentreX();
                     startz = pos.getCentreZ();
                 } else {

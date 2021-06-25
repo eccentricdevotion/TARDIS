@@ -100,7 +100,7 @@ public class TardisHumListener extends TardisMenuListener implements Listener {
                                     TardisMessage.send(p, "HUM_WAIT");
                                 } else {
                                     assert im != null;
-                                    TardisSounds.playTARDISSound(p, "tardis_hum_" + im.getDisplayName().toLowerCase(Locale.ENGLISH), 5L);
+                                    TardisSounds.playTardisSound(p, "tardis_hum_" + im.getDisplayName().toLowerCase(Locale.ENGLISH), 5L);
                                     last.put(uuid, slot);
                                     cooldown.put(uuid, System.currentTimeMillis());
                                 }

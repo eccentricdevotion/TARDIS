@@ -51,7 +51,7 @@ public class TardisVaultListener implements Listener {
         InventoryHolder holder = inv.getHolder();
         if (holder instanceof org.bukkit.block.Chest chest) {
             Location l = chest.getLocation();
-            if (plugin.getUtils().inTARDISWorld(l)) {
+            if (plugin.getUtils().inTardisWorld(l)) {
                 String loc = l.toString();
                 // check is drop chest
                 ResultSetVault rs = new ResultSetVault(plugin, loc);

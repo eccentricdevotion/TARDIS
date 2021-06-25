@@ -234,10 +234,10 @@ public class TardisGiveCommand implements CommandExecutor {
         String item_to_give = items.get(item);
         ItemStack result;
         if (item.equals("save-storage-disk") || item.equals("preset-storage-disk") || item.equals("biome-storage-disk") || item.equals("player-storage-disk") || item.equals("bowl-of-custard") || item.equals("jelly-baby") || item.equals("schematic-wand")) {
-            ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(item_to_give);
+            ShapelessRecipe recipe = plugin.getShapelessRecipe().getShapelessRecipes().get(item_to_give);
             result = recipe.getResult();
         } else {
-            ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(item_to_give);
+            ShapedRecipe recipe = plugin.getShapedRecipe().getShapedRecipes().get(item_to_give);
             result = recipe.getResult();
         }
         if (item.equals("invisible")) {
@@ -260,7 +260,7 @@ public class TardisGiveCommand implements CommandExecutor {
         if (item.equals("key") || item.equals("control")) {
             ItemMeta im = result.getItemMeta();
             assert im != null;
-            im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+            im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUuid(), player.getUniqueId());
             List<String> lore = im.getLore();
             if (lore == null) {
                 lore = new ArrayList<>();
@@ -281,17 +281,17 @@ public class TardisGiveCommand implements CommandExecutor {
 
     private void giveItem(String item, Player player) {
         ItemStack result;
-        if (plugin.getIncomposita().getShapelessRecipes().containsKey(item)) {
-            ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(item);
+        if (plugin.getShapelessRecipe().getShapelessRecipes().containsKey(item)) {
+            ShapelessRecipe recipe = plugin.getShapelessRecipe().getShapelessRecipes().get(item);
             result = recipe.getResult();
         } else {
-            ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(item);
+            ShapedRecipe recipe = plugin.getShapedRecipe().getShapedRecipes().get(item);
             result = recipe.getResult();
             if (result.hasItemMeta()) {
                 ItemMeta im = result.getItemMeta();
                 assert im != null;
                 if (im.hasDisplayName() && (im.getDisplayName().contains("Key") || im.getDisplayName().contains("Authorised Control Disk"))) {
-                    im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+                    im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUuid(), player.getUniqueId());
                     if (im.hasLore()) {
                         List<String> lore = im.getLore();
                         String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
@@ -366,7 +366,7 @@ public class TardisGiveCommand implements CommandExecutor {
             }
         }
         if (player != null) {
-            ItemStack bp = plugin.getTardisAPI().getTARDISBlueprintItem(blueprint, player);
+            ItemStack bp = plugin.getTardisApi().getTARDISBlueprintItem(blueprint, player);
             player.getInventory().addItem(bp);
             player.updateInventory();
             TardisMessage.send(player, "GIVE_ITEM", sender.getName(), "a TARDIS Blueprint Disk");
@@ -439,7 +439,7 @@ public class TardisGiveCommand implements CommandExecutor {
     }
 
     private boolean giveTachyon(CommandSender sender, String player, String amount) {
-        if (!plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
+        if (!plugin.getPluginManager().isPluginEnabled("TARDISVortexManipulator")) {
             TardisMessage.send(sender, "RECIPE_VORTEX");
             return true;
         }
@@ -454,7 +454,7 @@ public class TardisGiveCommand implements CommandExecutor {
             TardisMessage.send(sender, "ARG_MAX");
             return true;
         }
-        ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get("Artron Storage Cell");
+        ShapedRecipe recipe = plugin.getShapedRecipe().getShapedRecipes().get("Artron Storage Cell");
         ItemStack result = recipe.getResult();
         result.setAmount(amount);
         // add lore and enchantment

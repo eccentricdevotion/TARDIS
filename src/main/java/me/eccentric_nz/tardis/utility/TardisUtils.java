@@ -78,7 +78,7 @@ public class TardisUtils {
         return (data[0].contains("TARDIS_WORLD_") || special);
     }
 
-    public boolean inTARDISWorld(Player player) {
+    public boolean inTardisWorld(Player player) {
         // check they are still in the TARDIS world
         World world = plugin.getServer().getWorlds().get(0);
         String name = "";
@@ -98,7 +98,7 @@ public class TardisUtils {
         return name.equals("TARDIS_WORLD_" + player.getName()) || special;
     }
 
-    public boolean inTARDISWorld(Location loc) {
+    public boolean inTardisWorld(Location loc) {
         // check they are still in the TARDIS world
         World world = loc.getWorld();
         assert world != null;

@@ -64,7 +64,7 @@ public class TardisWorldGuardUtils {
     public TardisWorldGuardUtils(TardisPlugin plugin) {
         this.plugin = plugin;
         if (plugin.isWorldGuardOnServer()) {
-            wgp = (WorldGuardPlugin) plugin.getPM().getPlugin("WorldGuard");
+            wgp = (WorldGuardPlugin) plugin.getPluginManager().getPlugin("WorldGuard");
             wg = WorldGuard.getInstance().getPlatform();
         }
     }

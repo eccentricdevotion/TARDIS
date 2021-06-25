@@ -65,7 +65,7 @@ public class Tardises implements TardisApi {
     private final Connection connection = service.getConnection();
 
     @Override
-    public HashMap<String, Integer> getTimelordMap() {
+    public HashMap<String, Integer> getTimeLordMap() {
         HashMap<String, Integer> timelords = new HashMap<>();
         Statement statement = null;
         ResultSet rs = null;
@@ -135,7 +135,7 @@ public class Tardises implements TardisApi {
     }
 
     @Override
-    public TardisData getTARDISMapData(int id) {
+    public TardisData getTardisMapData(int id) {
         TardisData data = null;
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
@@ -182,12 +182,12 @@ public class Tardises implements TardisApi {
 
     @Override
     public Location getRandomLocation(List<String> worlds, Environment environment, Player p) {
-        return getRandomLocation(getWorlds(), null, new Parameters(p, Flag.getAPIFlags()));
+        return getRandomLocation(getWorlds(), null, new Parameters(p, Flag.getApiFlags()));
     }
 
     @Override
     public Location getRandomLocation(List<String> worlds, Player p) {
-        return getRandomLocation(getWorlds(), null, new Parameters(p, Flag.getAPIFlags()));
+        return getRandomLocation(getWorlds(), null, new Parameters(p, Flag.getApiFlags()));
     }
 
     @Override
@@ -408,22 +408,22 @@ public class Tardises implements TardisApi {
 
     @Override
     public HashMap<String, ShapedRecipe> getShapedRecipes() {
-        return TardisPlugin.plugin.getFigura().getShapedRecipes();
+        return TardisPlugin.plugin.getShapedRecipe().getShapedRecipes();
     }
 
     @Override
     public HashMap<String, ShapelessRecipe> getShapelessRecipes() {
-        return TardisPlugin.plugin.getIncomposita().getShapelessRecipes();
+        return TardisPlugin.plugin.getShapelessRecipe().getShapelessRecipes();
     }
 
     @Override
     public ItemStack getTARDISShapeItem(String item, Player player) {
         ItemStack result;
         if (item.equals("Save Storage Disk") || item.equals("Preset Storage Disk") || item.equals("Biome Storage Disk") || item.equals("Player Storage Disk") || item.equals("Bowl of Custard") || item.endsWith("Jelly Baby")) {
-            ShapelessRecipe recipe = TardisPlugin.plugin.getIncomposita().getShapelessRecipes().get(item);
+            ShapelessRecipe recipe = TardisPlugin.plugin.getShapelessRecipe().getShapelessRecipes().get(item);
             result = recipe.getResult();
         } else {
-            ShapedRecipe recipe = TardisPlugin.plugin.getFigura().getShapedRecipes().get(item);
+            ShapedRecipe recipe = TardisPlugin.plugin.getShapedRecipe().getShapedRecipes().get(item);
             if (recipe == null) {
                 return null;
             }
@@ -449,7 +449,7 @@ public class Tardises implements TardisApi {
         if (item.equals("TARDIS Key") || item.equals("Authorised Control Disk")) {
             ItemMeta im = result.getItemMeta();
             assert im != null;
-            im.getPersistentDataContainer().set(TardisPlugin.plugin.getTimeLordUuidKey(), TardisPlugin.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+            im.getPersistentDataContainer().set(TardisPlugin.plugin.getTimeLordUuidKey(), TardisPlugin.plugin.getPersistentDataTypeUuid(), player.getUniqueId());
             List<String> lore = im.getLore();
             if (lore == null) {
                 lore = new ArrayList<>();
@@ -466,7 +466,7 @@ public class Tardises implements TardisApi {
 
     @Override
     public HashMap<Schematic, ShapedRecipe> getSeedRecipes() {
-        return TardisPlugin.plugin.getOobstructionum().getSeedRecipes();
+        return TardisPlugin.plugin.getSeedRecipe().getSeedRecipes();
     }
 
     @Override
@@ -552,7 +552,7 @@ public class Tardises implements TardisApi {
                 assert im != null;
                 im.setCustomModelData(10000001);
                 PersistentDataContainer pdc = im.getPersistentDataContainer();
-                pdc.set(TardisPlugin.plugin.getTimeLordUuidKey(), TardisPlugin.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+                pdc.set(TardisPlugin.plugin.getTimeLordUuidKey(), TardisPlugin.plugin.getPersistentDataTypeUuid(), player.getUniqueId());
                 pdc.set(TardisPlugin.plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
                 im.setDisplayName("TARDIS Blueprint Disk");
                 List<String> lore = Arrays.asList(TardisStringUtils.capitalise(item), "Valid only for", player.getName());

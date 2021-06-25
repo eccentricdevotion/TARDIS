@@ -55,7 +55,7 @@ public class TardisQuitListener implements Listener {
         // remove if Junk TARDIS traveller
         if (plugin.getGeneralKeeper().getJunkTravellers().contains(uuid)) {
             // check if they are in the vortex
-            if (plugin.getUtils().inTARDISWorld(player)) {
+            if (plugin.getUtils().inTardisWorld(player)) {
                 // set their location to the junk TARDISes destination
                 plugin.getTrackerKeeper().getJunkRelog().put(uuid, plugin.getGeneralKeeper().getJunkDestination());
             }

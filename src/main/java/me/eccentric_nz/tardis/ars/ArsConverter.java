@@ -44,7 +44,7 @@ public class ArsConverter {
         prefix = this.plugin.getPrefix();
     }
 
-    public void convertARS() {
+    public void convertArs() {
         TardisMaterialIdConverter tmic = new TardisMaterialIdConverter(plugin);
         PreparedStatement query = null;
         PreparedStatement update = null;

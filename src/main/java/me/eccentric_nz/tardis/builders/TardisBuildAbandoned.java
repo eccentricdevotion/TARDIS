@@ -137,7 +137,7 @@ class TardisBuildAbandoned implements Runnable {
             // calculate startX, startY, startZ
             TardisInteriorPositioning tintpos = new TardisInteriorPositioning(plugin);
             int slot = tintpos.getFreeSlot();
-            pos = tintpos.getTIPSData(slot);
+            pos = tintpos.getTipsData(slot);
             // save the slot
             set.put("tips", slot);
             startX = pos.getCentreX();

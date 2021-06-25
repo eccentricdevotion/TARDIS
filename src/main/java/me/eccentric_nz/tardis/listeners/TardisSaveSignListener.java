@@ -273,7 +273,7 @@ public class TardisSaveSignListener extends TardisMenuListener implements Listen
                         }
                     } else {
                         // get id of TARDIS player is in
-                        ownId = TardisInteriorPositioning.getTARDISIdFromLocation(player.getLocation());
+                        ownId = TardisInteriorPositioning.getTardisIdFromLocation(player.getLocation());
                     }
                     if (ownId != -1) {
                         int saveId = ownId;

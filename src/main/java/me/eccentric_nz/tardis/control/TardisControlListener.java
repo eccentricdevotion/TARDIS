@@ -239,7 +239,7 @@ public class TardisControlListener implements Listener {
                                             TardisMessage.send(player, "ARS_MISSING");
                                             return;
                                         }
-                                        ItemStack[] tars = new TardisArsInventory(plugin).getARS();
+                                        ItemStack[] tars = new TardisArsInventory(plugin).getArs();
                                         Inventory ars = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
                                         ars.setContents(tars);
                                         player.openInventory(ars);
@@ -349,7 +349,7 @@ public class TardisControlListener implements Listener {
                                     // exit zero room
                                     plugin.getTrackerKeeper().getZeroRoomOccupants().remove(player.getUniqueId());
                                     plugin.getGeneralKeeper().getRendererListener().transmat(player);
-                                    plugin.getPM().callEvent(new TardisZeroRoomExitEvent(player, id));
+                                    plugin.getPluginManager().callEvent(new TardisZeroRoomExitEvent(player, id));
                                     break;
                                 case 20:
                                     // toggle black wool blocks behind door
@@ -385,7 +385,7 @@ public class TardisControlListener implements Listener {
                                         TardisMessage.send(player, "NO_PERMS");
                                         return;
                                     }
-                                    TardisSounds.playTARDISSound(player, "handles", 5L);
+                                    TardisSounds.playTardisSound(player, "handles", 5L);
                                     if (!TardisPermission.hasPermission(player, "tardis.handles.program")) {
                                         TardisMessage.send(player, "NO_PERMS");
                                         return;
@@ -432,7 +432,7 @@ public class TardisControlListener implements Listener {
                                     if (TardisPermission.hasPermission(player, "tardis.forcefield")) {
                                         if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(player.getUniqueId())) {
                                             plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
-                                            TardisSounds.playTARDISSound(blockLocation, "tardis_force_field_down");
+                                            TardisSounds.playTardisSound(blockLocation, "tardis_force_field_down");
                                             TardisMessage.send(player, "FORCE_FIELD", "OFF");
                                         } else {
                                             // check there is enough artron
@@ -441,7 +441,7 @@ public class TardisControlListener implements Listener {
                                                 return;
                                             }
                                             if (TardisForceField.addToTracker(player)) {
-                                                TardisSounds.playTARDISSound(blockLocation, "tardis_force_field_up");
+                                                TardisSounds.playTardisSound(blockLocation, "tardis_force_field_up");
                                                 TardisMessage.send(player, "FORCE_FIELD", "ON");
                                             }
                                         }
@@ -467,11 +467,11 @@ public class TardisControlListener implements Listener {
                                     break;
                                 case 31:
                                     // chameleon sign
-                                    new TardisChameleonControl(plugin).openGUI(player, id, tardis.getAdaption(), tardis.getPreset());
+                                    new TardisChameleonControl(plugin).openGui(player, id, tardis.getAdaption(), tardis.getPreset());
                                     break;
                                 case 32:
                                     // save_sign
-                                    new TardisSaveSign(plugin).openGUI(player, id);
+                                    new TardisSaveSign(plugin).openGui(player, id);
                                     break;
                                 case 33:
                                     // scanner
@@ -573,7 +573,7 @@ public class TardisControlListener implements Listener {
                         ResultSetJunk rsj = new ResultSetJunk(plugin, wherej);
                         if (rsj.resultSet()) {
                             // save_sign
-                            new TardisSaveSign(plugin).openGUI(player, rsj.getTardisId());
+                            new TardisSaveSign(plugin).openGui(player, rsj.getTardisId());
                         }
                     }
                 }
@@ -592,7 +592,7 @@ public class TardisControlListener implements Listener {
             TardisMessage.send(player, "ZERO_READY");
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 new TardisExteriorRenderer(plugin).transmat(player, CardinalDirection.SOUTH, zero);
-                plugin.getPM().callEvent(new TardisZeroRoomEnterEvent(player, id));
+                plugin.getPluginManager().callEvent(new TardisZeroRoomEnterEvent(player, id));
             }, 20L);
             plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
             HashMap<String, Object> wherez = new HashMap<>();

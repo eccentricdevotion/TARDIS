@@ -89,7 +89,7 @@ class TardisSqlArtronAlterer implements Runnable {
                 public void run() {
                     if (id > 0) {
                         new TardisArtronIndicator(plugin).showArtronLevel(player, id, Math.abs(amount));
-                        plugin.getPM().callEvent(new TardisArtronEvent(player, amount, id));
+                        plugin.getPluginManager().callEvent(new TardisArtronEvent(player, amount, id));
                     } else {
                         TardisMessage.send(player, "ENERGY_USED", String.format("%d", Math.abs(amount)));
                     }

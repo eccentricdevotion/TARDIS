@@ -714,7 +714,7 @@ public class TardisTravelCommands implements CommandExecutor {
                                     if (rsc.resultSet()) {
                                         Parameters parameters = new Parameters(player, Flag.getNoMessageFlags());
                                         parameters.setCompass(rsc.getDirection());
-                                        Location l = plugin.getTardisAPI().getRandomLocation(worlds, world.getEnvironment(), parameters);
+                                        Location l = plugin.getTardisApi().getRandomLocation(worlds, world.getEnvironment(), parameters);
                                         if (l != null) {
                                             set.put("world", Objects.requireNonNull(l.getWorld()).getName());
                                             set.put("x", l.getBlockX());
@@ -995,7 +995,7 @@ public class TardisTravelCommands implements CommandExecutor {
             int limits = startz + 30000;
             int limitw = startx - 30000;
             int limitn = startz - 30000;
-            if (plugin.getPM().isPluginEnabled("WorldBorder")) {
+            if (plugin.getPluginManager().isPluginEnabled("WorldBorder")) {
                 // get the border limit for this world
                 TardisWorldBorderChecker wb = new TardisWorldBorderChecker(plugin);
                 int[] data = wb.getBorderDistance(w.getName());
